@@ -13,6 +13,7 @@ from gaphor.misc.action import register_action
 from klass import ClassItem
 from component import ComponentItem
 from attribute import AttributeItem
+from dependency import DependencyItem
 from operation import OperationItem
 from nameditem import NamedItem
 from interface import InterfaceItem
@@ -560,7 +561,6 @@ class DependencyTypeAction(RadioAction):
     def update(self):
         try:
             item = get_parent_focus_item(self._window)
-            from dependency import DependencyItem
             if isinstance(item, DependencyItem):
                 self.active = (item.get_dependency_type() == self.dependency_type)
         except NoFocusItemError:
@@ -570,7 +570,9 @@ class DependencyTypeAction(RadioAction):
         if self.active:
             item = get_parent_focus_item(self._window)
             item.set_dependency_type(self.dependency_type)
-
+            #item.auto_dependency = False
+            self._window.get_action_pool().execute('AutoDependency', active=False)
+        
 
 class DependencyTypeDependencyAction(DependencyTypeAction):
     id = 'DependencyTypeDependency'
@@ -606,6 +608,29 @@ class DependencyTypeImplementationAction(DependencyTypeAction):
     dependency_type = UML.Implementation
 
 register_action(DependencyTypeImplementationAction, 'ItemFocus')
+
+class AutoDependencyAction(CheckAction):
+    id = 'AutoDependency'
+    label = 'Automatic'
+    tooltip = 'Automatically determine the dependency type'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, DependencyItem):
+                self.active = item.auto_dependency
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        item.auto_dependency = self.active
+
+register_action(AutoDependencyAction, 'ItemFocus')
 
 
 class IndirectlyInstantiatedComponentAction(CheckAction):

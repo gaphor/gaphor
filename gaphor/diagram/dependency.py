@@ -45,14 +45,16 @@ class DependencyItem(RelationshipItem):
     dependency_popup_menu = (
 	'separator',
 	'Dependency type', (
+            'AutoDependency',
+            'separator',
 	    'DependencyTypeDependency',
 	    'DependencyTypeUsage',
 	    'DependencyTypeRealization')
-	    #'DependencyTypeImplementation')
     )
 
     def __init__(self, id=None):
 	self.dependency_type = UML.Dependency
+        self.auto_dependency = True
 
         RelationshipItem.__init__(self, id)
 
@@ -68,10 +70,13 @@ class DependencyItem(RelationshipItem):
     def save(self, save_func):
 	RelationshipItem.save(self, save_func)
 	save_func('dependency_type', self.dependency_type.__name__)
+        save_func('auto_dependency', self.auto_dependency)
 
     def load(self, name, value):
 	if name == 'dependency_type':
 	    self.set_dependency_type(getattr(UML, value))
+        elif name == 'auto_dependency':
+            self.auto_dependency = eval(value)
 	else:
 	    RelationshipItem.load(self, name, value)
 
@@ -86,34 +91,29 @@ class DependencyItem(RelationshipItem):
 
     def set_dependency_type(self, dependency_type):
 	self.dependency_type = dependency_type
-        self._set_stereotype_text()
         self._set_line_style()
-
-    def _set_stereotype_text(self):
-        dependency_type = self.dependency_type
-
-	if dependency_type is UML.Usage:
-	    self._stereotype.set_text(STEREOTYPE_OPEN + 'use' + STEREOTYPE_CLOSE)
-	elif dependency_type is UML.Realization:
-	    self._stereotype.set_text(STEREOTYPE_OPEN + 'realize' + STEREOTYPE_CLOSE)
-	elif dependency_type is UML.Implementation:
-	    self._stereotype.set_text(STEREOTYPE_OPEN + 'implements' + STEREOTYPE_CLOSE)
-	else:
-	    self._stereotype.set_text('')
 
     def _set_line_style(self, c1=None):
         """Display a depenency as a dashed arrow, with optional stereotype.
         """
         from interface import InterfaceItem
+        dependency_type = self.dependency_type
         c1 = c1 or self.handles[0].connected_to
         if c1 and self.dependency_type is UML.Usage and isinstance(c1, InterfaceItem):
             if self.get_property('has_head'):
                 self.set(dash=None, has_head=0)
-                self._stereotype.set_text('')
+            self._stereotype.set_text('')
         else:
             if not self.get_property('has_head'):
                 self.set(dash=(7.0, 5.0), has_head=1)
-                self._set_stereotype_text()
+            if dependency_type is UML.Usage:
+                self._stereotype.set_text(STEREOTYPE_OPEN + 'use' + STEREOTYPE_CLOSE)
+            elif dependency_type is UML.Realization:
+                self._stereotype.set_text(STEREOTYPE_OPEN + 'realize' + STEREOTYPE_CLOSE)
+            elif dependency_type is UML.Implementation:
+                self._stereotype.set_text(STEREOTYPE_OPEN + 'implements' + STEREOTYPE_CLOSE)
+            else:
+                self._stereotype.set_text('')
 
     def update_label(self, p1, p2):
         w, h = self._stereotype.to_pango_layout(True).get_pixel_size()
@@ -192,6 +192,13 @@ class DependencyItem(RelationshipItem):
                 relation.supplier = s1
                 relation.client = s2
             self.subject = relation
+        if self.auto_dependency:
+            # Determine the dependency_type if only one handle is connected
+            #from interface import InterfaceItem
+            if c1 and isinstance(c1.subject, UML.Interface):
+                self.set_dependency_type(UML.Usage)
+            else:
+                self.set_dependency_type(UML.Dependency)
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
         """See RelationshipItem.confirm_disconnect_handle().

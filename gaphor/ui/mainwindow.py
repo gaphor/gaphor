@@ -20,6 +20,8 @@ class MainWindow(AbstractWindow):
     menu = ('_File', (
                 'FileNew',
                 'FileOpen',
+                'Recent files', (
+                    'To be implemented',),
                 '<FileOpenSlot>',
                 'separator',
                 'FileSave',

@@ -23,4 +23,3 @@ class ConsoleWindow(AbstractWindow):
                                size=(400, 400),
                                contents=console)
 
-import editoractions

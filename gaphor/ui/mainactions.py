@@ -1,4 +1,4 @@
-# vim: sw=4
+# vim: sw=4:et
 """
 Main window actions.
 """
@@ -27,19 +27,19 @@ class WorkerThread(Thread):
 
     def __init__(self, function):
         Thread.__init__(self)
-	#self.setDaemon(True)
+        #self.setDaemon(True)
         self.function = function
         self.error = None
 
     def start_blocking(self):
-	"""The thread is launched, however, as long as the thread is active
-	the main loop is ran.
-	"""
+        """The thread is launched, however, as long as the thread is active
+        the main loop is ran.
+        """
         Thread.start(self)
-	main = gobject.main_context_default()
-	# Run main iterations as long as this thread exists.
+        main = gobject.main_context_default()
+        # Run main iterations as long as this thread exists.
         while self.isAlive():
-	    main.iteration(False)
+            main.iteration(False)
 
     def run(self):
         try:
@@ -68,25 +68,25 @@ def show_status_window(title, message, parent=None, queue=None):
     vbox.pack_start(progress_bar, expand=False, fill=False, padding=0)
 
     def progress_idle_handler(progress_bar, queue):
-	#print '.',
-	percentage = 0
-	try:
-	    while True:
-		percentage = queue.get_nowait()
-	except Queue.Empty:
-	    pass
-	if percentage:
-	    progress_bar.set_fraction(percentage / 100.0)
-	return True
+        #print '.',
+        percentage = 0
+        try:
+            while True:
+                percentage = queue.get_nowait()
+        except Queue.Empty:
+            pass
+        if percentage:
+            progress_bar.set_fraction(percentage / 100.0)
+        return True
 
     if queue:
-	idle_id = gobject.idle_add(progress_idle_handler, progress_bar, queue, priority=gobject.PRIORITY_LOW)
-	# Make sure the idle fucntion is removed as soon as the window
-	# is destroyed.
-	def remove_progress_idle_handler(window, idle_id):
-	    #print 'remove_progress_idle_handler', idle_id
-	    gobject.source_remove(idle_id)
-	win.connect('destroy', remove_progress_idle_handler, idle_id)
+        idle_id = gobject.idle_add(progress_idle_handler, progress_bar, queue, priority=gobject.PRIORITY_LOW)
+        # Make sure the idle fucntion is removed as soon as the window
+        # is destroyed.
+        def remove_progress_idle_handler(window, idle_id):
+            #print 'remove_progress_idle_handler', idle_id
+            gobject.source_remove(idle_id)
+        win.connect('destroy', remove_progress_idle_handler, idle_id)
 
     win.show_all()
     return win
@@ -150,7 +150,7 @@ class OpenAction(Action):
             try:
                 import gaphor.storage as storage
                 log.debug('Loading from: %s' % filename)
-		queue = Queue.Queue()
+                queue = Queue.Queue()
                 win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, self._window.get_window(), queue)
                 self.filename = filename
                 gc.collect()
@@ -207,7 +207,7 @@ class SaveAsAction(Action):
             if not filename.endswith(DEFAULT_EXT):
                 filename = filename + DEFAULT_EXT
 
-	    queue = Queue.Queue()
+            queue = Queue.Queue()
             log.debug('Saving to: %s' % filename)
             win = show_status_window('Saving...', 'Saving model to %s' % filename, self._window.get_window(), queue)
             worker = WorkerThread(lambda: storage.save(filename, status_queue=lambda m: queue.put_nowait(m) and 1))
@@ -249,6 +249,20 @@ class SaveAction(SaveAsAction):
             SaveAsAction.execute(self)
 
 register_action(SaveAction)
+
+
+class CloseAction(Action):
+    id = 'FileClose'
+    stock_id = 'gtk-close'
+    tooltip='Close the diagram window'
+
+    def init(self, window):
+        self._window = window
+
+    def execute(self):
+        self._window.close()
+
+register_action(CloseAction)
 
 
 class QuitAction(Action):
@@ -317,33 +331,58 @@ class AboutAction(Action):
 
     def execute(self):
         logo = gtk.gdk.pixbuf_new_from_file (gaphor.resource('DataDir') + '/pixmaps/logo.png')
-	version = gaphor.resource('Version')
-        about = gtk.Dialog("About Gaphor", self._window.get_window(), 0, (gtk.STOCK_OK, gtk.RESPONSE_OK))
-	vbox = about.vbox
+        version = gaphor.resource('Version')
+        about = gtk.Dialog("About Gaphor", self._window.get_window(), gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
+        about.set_default_response(gtk.RESPONSE_OK)
+        vbox = about.vbox
 
-	image = gtk.Image()
-	image.set_from_pixbuf(logo)
-	vbox.pack_start(image)
+        image = gtk.Image()
+        image.set_from_pixbuf(logo)
+        vbox.pack_start(image)
 
-	def add_label(text, padding_x=0, padding_y=0):
-	    label = gtk.Label(text)
-	    label.set_property('use-markup', True)
-	    label.set_padding(padding_x, padding_y)
-	    label.set_justify(gtk.JUSTIFY_CENTER)
-	    vbox.pack_start(label)
+        notebook = gtk.Notebook()
+        notebook.set_scrollable(True)
+        #notebook.set_show_border(False)
+        notebook.set_border_width(4)
+        notebook.set_tab_pos(gtk.POS_BOTTOM)
+        vbox.pack_start(notebook)
 
-	#add_label('<span size="xx-large" weight="bold">Gaphor</span>')
-	add_label('<span weight="bold">version %s</span>' % version)
-	add_label('<span variant="smallcaps">UML Modeling tool for GNOME</span>', 8, 8)
-	add_label('<span size="small">Copyright (c) 2001-2004 Arjan J. Molenaar</span>', 8, 8)
-	vbox.pack_start(gtk.HSeparator())
-	add_label('This software is published\n'
-		  'under the terms of the\n'
-		  '<span weight="bold">GNU General Public License v2</span>.\n'
-		  'See the COPYING file for details.', 0, 8)
-	vbox.show_all()
+        tab_vbox = gtk.VBox()
+
+        def add_label(text, padding_x=0, padding_y=0):
+            label = gtk.Label(text)
+            label.set_property('use-markup', True)
+            label.set_padding(padding_x, padding_y)
+            label.set_justify(gtk.JUSTIFY_CENTER)
+            tab_vbox.pack_start(label)
+
+        #add_label('<span size="xx-large" weight="bold">Gaphor</span>')
+        add_label('<span weight="bold">version %s</span>' % version)
+        add_label('<span variant="smallcaps">UML Modeling tool for GNOME</span>', 8, 8)
+        add_label('<span size="small">Copyright (c) 2001-2004 Arjan J. Molenaar</span>', 8, 8)
+        #vbox.pack_start(gtk.HSeparator())
+        notebook.append_page(tab_vbox, gtk.Label('About'))
+
+        tab_vbox = gtk.VBox()
+        
+        add_label('This software is published\n'
+                  'under the terms of the\n'
+                  '<span weight="bold">GNU General Public License v2</span>.\n'
+                  'See the COPYING file for details.', 0, 8)
+        notebook.append_page(tab_vbox, gtk.Label('License'))
+
+        tab_vbox = gtk.VBox()
+        
+        add_label('Gaphor is written by:\n'
+                  'Arjan Molenaar\n'
+                  'Jeroen Vloothuis\n'
+                  'wrobell')
+        add_label('')
+        notebook.append_page(tab_vbox, gtk.Label('Authors'))
+
+        vbox.show_all()
         about.run()
-	about.destroy()
+        about.destroy()
 
 register_action(AboutAction)
 
@@ -390,7 +429,7 @@ class OpenElementAction(Action):
     def execute(self):
         element = self._window.get_tree_view().get_selected_element()
         if isinstance(element, UML.Diagram):
-	    self._window.show_diagram(element)
+            self._window.show_diagram(element)
         else:
             log.debug('No action defined for element %s' % type(element).__name__)
 

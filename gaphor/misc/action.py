@@ -138,6 +138,8 @@ class ObjectAction(object):
 
 
 
+_no_default = object()
+
 class ActionPool(object):
     """ActionPool contains a set of actions that can be executed.
     """
@@ -165,17 +167,25 @@ class ActionPool(object):
                 action.update()
         return action
 
-    def execute(self, action_id):
+    def execute(self, action_id, active=_no_default):
         """Run an action, identified by its action id. If the action does
         not yet exists, it is created.
+
+        For check and radio actions, active may be set to set the state for the
+        action.
 
         This is the rigt way to run an action (Action.execute() should not be
         called directly!)
         """
-        global _dependent_actions
-        #print 'ActionPool: executing', action_id
+        global _dependent_actions, _no_default
+
         action = self.get_action(action_id)
+
+        # Set state for CheckAction's:
+        if isinstance(action, CheckAction) and active is not _no_default:
+            action.active = bool(active)
         action.execute()
+
         # Fetch dependent actions and ask them to update themselves.
         for d in _dependent_actions.get(action_id) or ():
             try:
@@ -244,20 +254,16 @@ def action_dependencies(action, *dependency_ids):
     action_id = action.id
 
     for di in dependency_ids:
-        try:
-            dependencies = _dependent_actions[di]
-        except KeyError:
-            # Declare a new dependency action_id -> ddi
-            dependencies = [action_id]
-            _dependent_actions[di] = dependencies
-        else:
-            if action_id not in dependencies:
-                dependencies.append(action_id)
+        dependencies = _dependent_actions.setdefault(di, [])
+        if action_id not in dependencies:
+            dependencies.append(action_id)
 
 
 # Slots
 
 def register_action_for_slot(action, slot, *dependency_ids):
+    """Register an action class for a specific slot.
+    """
     global _registered_slots
     register_action(action, *dependency_ids)
     path = slot.split('/')
@@ -270,6 +276,12 @@ def register_action_for_slot(action, slot, *dependency_ids):
     #print _registered_slots
 
 def get_actions_for_slot(slot):
+    """Return a the action ids for a specific slot as a tuple-menu.
+    E.g.
+      ('DummyAction',
+       'submenu', (
+           'DummySubAction,))
+    """
     global _registered_slots
     def get_actions_tuple(d):
         l = []

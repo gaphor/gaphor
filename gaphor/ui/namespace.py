@@ -446,6 +446,9 @@ class NamespaceView(gtk.TreeView):
 #        print 'do_drag_begin'
 
     def do_drag_data_get(self, context, selection_data, info, time):
+        """Get the data to be dropped by do_drag_data_received().
+        We send the id of the dragged element.
+        """
         #log.debug('do_drag_data_get')
         selection = self.get_selection()
         model, iter = selection.get_selected()
@@ -457,43 +460,59 @@ class NamespaceView(gtk.TreeView):
                 selection_data.set(selection_data.target, 8, element.name)
 
     def do_drag_data_delete (self, context):
-        print 'Delete the data!'
+        """DnD magic. do not touch
+        """
         self.emit_stop_by_name('drag-data-delete')
-        #context.finish(gtk.TRUE, time)
 
     # Drop
     def do_drag_data_received(self, context, x, y, selection, info, time):
+        """Drop the data send by do_drag_data_get().
+        """
         self.emit_stop_by_name('drag-data-received')
         #print 'drag_data_received'
-        model = self.get_model()
         data = selection.data
         drop_info = self.get_dest_row_at_pos(x, y)
         if drop_info:
+            #print 'drop_info', drop_info
+            model = self.get_model()
             factory = resource(UML.ElementFactory)
             element = factory.lookup(data)
             path, position = drop_info
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)
+            assert dest_element
             # Add the item to the parent if it is dropped on the same level,
             # else add it to the item.
             if position in (gtk.TREE_VIEW_DROP_BEFORE, gtk.TREE_VIEW_DROP_AFTER):
                 parent_iter = model.iter_parent(iter)
                 dest_element = model.get_value(parent_iter, 0)
+            #print element.name, dest_element.name
             try:
-                # Avoid root elements to be 
-                if element.namespace:
-                    raise AttributeError
-                elif dest_element:
-                    # Set package. This only works for classifiers, packages and
-                    # diagrams. Properties and operations should not be moved.
-                    element.package = dest_element
+                # Check if element is part of the namespace of dest_element:
+                ns = dest_element
+                while ns:
+                    if ns is element:
+                        raise AttributeError
+                    ns = ns.namespace
+
+                # Set package. This only works for classifiers, packages and
+                # diagrams. Properties and operations should not be moved.
+                element.package = dest_element
+
             except AttributeError:
                 #print dir(context)
                 context.drop_finish(gtk.FALSE, time)
             else:
                 context.drop_finish(gtk.TRUE, time)
+                # Finally let's try to select the element again.
+                path = model.path_from_element(element)
+                self.expand_row(path[:-1], False)
+                selection = self.get_selection()
+                selection.select_path(path)
 
     def do_drag_drop(self, context, x, y, time):
+        """DnD magic. do not touch
+        """
         self.emit_stop_by_name('drag-drop')
         #print 'drag_drop',context,x,y,time
         self.drag_get_data(context, context.targets[-1], time)

@@ -8,20 +8,6 @@ from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 import gtk
 import diacanvas
 
-class CloseAction(Action):
-    id = 'FileClose'
-    stock_id = 'gtk-close'
-    tooltip='Close the diagram window'
-
-    def init(self, window):
-	self._window = window
-
-    def execute(self):
-	self._window.close()
-
-register_action(CloseAction)
-
-
 class RunAction(Action):
     id = 'EditorRun'
     label = '_Run'

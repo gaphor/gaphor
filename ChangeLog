@@ -1,8 +1,26 @@
+2004-07-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/dependency.py: Added a new property auto_dependency,
+	this will try to automatically set the dependency type (Usage is set
+	if the head is connected to an Interface).
+	* gaphor/misc/actions.py (ActionPool.execute): added extra optional
+	parameter 'active', this can set the state for check- and
+	radio-actions.
+	* gaphor/diagram/itemactions.py: Added new action AutoDependency.
+
+2004-07-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainactions.py: Added authors to the About dialog.
+	* gaphor/diagram/interface.py: fixed small bug that prohibited a
+	required interface to be shown on the bottom.
+
 2004-07-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/interface.py: Fixed to use Usage and Implementation
 	dependencies. Now a half-a circle is shown on for required Interfaces
 	(using the Usage dependency).
+	& gaphor/ui/namespace.py: Treeview DnD for classes and packages works
+	again.
 
 2004-07-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
