@@ -82,6 +82,7 @@ class EditorWindow(AbstractWindow):
         
         self.source = source
         self.result = result
+        paned.show_all()
 
         self._construct_window(name='editor',
                                title='Gaphor Editor',

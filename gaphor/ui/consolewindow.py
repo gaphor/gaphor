@@ -16,6 +16,7 @@ class ConsoleWindow(AbstractWindow):
 
     def construct(self):
         console = GTKInterpreterConsole()
+        console.show()
 
         self._construct_window(name='console',
                                title='Gaphor Console',
