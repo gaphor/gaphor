@@ -56,6 +56,9 @@ class config_Gaphor(Command):
         pass
 
     def run(self):
+        import pygtk
+        pygtk.require('2.0')
+
         #self.pkg_config_check('gobject-2.0', '2.0.0')
         #self.pkg_config_check('gtk+-2.0', '2.0.0')
         #self.pkg_config_check('pygtk-2.0', '1.99.15')

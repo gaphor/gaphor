@@ -1,3 +1,7 @@
+2002-06-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	
+	* setup.py: first do a pygtk.require() before config_Gaphor.
+
 2002-06-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	(here, only the most important changes are noted)
