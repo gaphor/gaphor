@@ -86,7 +86,7 @@ class ImplementationItem(relationship.RelationshipItem):
     def on_update(self, affine):
         # change look into solid line when connected to folded interface
         if isinstance(self.handles[0].connected_to, 
-                gaphor.diagram.interface.InterfaceItem):
+                gaphor.diagram.interface.InterfaceItem) and self.handles[0].connected_to.is_folded():
             self.set(**self.folded_interface_look)
         else:
             self.set(**self.default_look)

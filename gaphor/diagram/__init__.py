@@ -53,6 +53,7 @@ def initialize_item(item_class, default_uml_class=None):
 	_uml_to_item_map[default_uml_class] = item_class
 
 from placementtool import PlacementTool
+from classifier import ClassifierItem
 from actor import ActorItem
 from klass import ClassItem
 from comment import CommentItem

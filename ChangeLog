@@ -1,3 +1,12 @@
+2004-10-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/classifier.py: new class. Generic subclass for
+	Class, Interface, Component, Actor, etc.
+	* gaphor/diagram/actor.py: made subclass of ClassifierItem.
+	* gaphor/diagram/klass.py: made subclass of ClassifierItem.
+	* gaphor/diagram/interface.py: made subclass of ClassItem.
+	* gaphor/diagram/itemactions.py: Made changes to Fold/Unfold actions.
+
 2004-10-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/properties/py: refactored association code. made

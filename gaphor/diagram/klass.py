@@ -15,67 +15,12 @@ import gaphor.UML as UML
 from gaphor.diagram import initialize_item
 from gaphor.i18n import _
 
-from nameditem import NamedItem
-from feature import FeatureItem
+from classifier import ClassifierItem
 from attribute import AttributeItem
 from operation import OperationItem
 
-STEREOTYPE_OPEN = '\xc2\xab' # '<<'
-STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
-
-class Compartment(list):
-    """Specify a compartment in a class item.
-    A compartment has a line on top and a list of FeatureItems.
-    """
-
-    def __init__(self, name, owner):
-        self.name = name
-        self.owner = owner
-        self.visible = True
-        self.separator = diacanvas.shape.Path()
-        self.separator.set_line_width(2.0)
-        self.sep_y = 0
-
-    def save(self, save_func):
-        #log.debug('Compartment.save: %s' % self)
-        for item in self:
-            save_func(None, item)
-
-    def has_item(self, item):
-        """Check if the compartment already contains an item with the
-        same subject as item.
-        """
-        s = item.subject
-        local_elements = [f.subject for f in self]
-        return s and s in local_elements
-
-    def pre_update(self, width, height, affine):
-        """Calculate the size of the feates in this compartment.
-        """
-        if self.visible:
-            self.sep_y = height
-            height += ClassItem.COMP_MARGIN_Y
-            for f in self:
-                w, h = f.get_size(update=True)
-                #log.debug('feature: %f, %f' % (w, h))
-                f.set_pos(ClassItem.COMP_MARGIN_X, height)
-                f.set_property('visible', True)
-                height += h
-                width = max(width, w + 2 * ClassItem.COMP_MARGIN_X)
-            height += ClassItem.COMP_MARGIN_Y
-        else:
-            for f in self:
-                f.set_property('visible', False)
-        return width, height
-
-    def update(self, width, affine):
-        if self.visible:
-            for f in self:
-                self.owner.update_child(f, affine)
-            self.separator.line(((0, self.sep_y), (width, self.sep_y)))
-
         
-class ClassItem(NamedItem, diacanvas.CanvasGroupable):
+class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     """This item visualizes a Class instance.
 
     A ClassItem contains two compartments (Compartment): one for
@@ -92,17 +37,9 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
                             '',
                             1, gobject.PARAM_READWRITE),
     }
-    HEAD_MARGIN_X=30
-    HEAD_MARGIN_Y=10
-    COMP_MARGIN_X=5
-    COMP_MARGIN_Y=5
-
-    FONT_STEREOTYPE='sans 10'
-    FONT_ABSTRACT='sans bold italic 10'
-    FROM_FONT='sans 8'
 
     stereotype_list = []
-    popup_menu = NamedItem.popup_menu + (
+    popup_menu = ClassifierItem.popup_menu + (
         'Fold',
         'separator',
         'AbstractClass',
@@ -117,26 +54,9 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     )
 
     def __init__(self, id=None):
-        NamedItem.__init__(self, id)
-        self.set(height=50, width=100)
-        self._attributes = Compartment('attributes', self)
-        self._operations = Compartment('operations', self)
-        self._border = diacanvas.shape.Path()
-        self._border.set_line_width(2.0)
-
-        self.has_stereotype = False
-        self._stereotype = diacanvas.shape.Text()
-        self._stereotype.set_font_description(pango.FontDescription(self.FONT_STEREOTYPE))
-        self._stereotype.set_alignment(pango.ALIGN_CENTER)
-        #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
-        self._stereotype.set_markup(False)
-        #self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
-
-        self._from = diacanvas.shape.Text()
-        self._from.set_font_description(pango.FontDescription(ClassItem.FROM_FONT))
-        self._from.set_alignment(pango.ALIGN_CENTER)
-        #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
-        self._from.set_markup(False)
+        ClassifierItem.__init__(self, id)
+        self._attributes = self.create_compartment('attributes')
+        self._operations = self.create_compartment('operations')
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -144,13 +64,12 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         # attributes or operations.
         self.save_property(save_func, 'show-attributes')
         self.save_property(save_func, 'show-operations')
-        NamedItem.save(self, save_func)
+        ClassifierItem.save(self, save_func)
 
     def postload(self):
-        NamedItem.postload(self)
+        ClassifierItem.postload(self)
         self.sync_attributes()
         self.sync_operations()
-        self.on_subject_notify__isAbstract(self.subject)
 
     def get_popup_menu(self):
         """In the popup menu a submenu is created with Stereotypes than can be
@@ -171,9 +90,9 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
             Class = UML.Class
 
             # Find classes that are superclasses of our subject
-            _mro = filter(lambda e:issubclass(e, NamedElement), type(self.subject).__mro__)
+            mro = filter(lambda e:issubclass(e, NamedElement), type(self.subject).__mro__)
             # Find out their names
-            names = map(getattr, _mro, ['__name__'] * len(_mro))
+            names = map(getattr, mro, ['__name__'] * len(mro))
             # Find stereotypes that extend out metaclass
             classes = self._subject._factory.select(lambda e: e.isKindOf(Class) and e.name in names)
 
@@ -183,7 +102,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
                     stereotype_action = ApplyStereotypeAction(stereotype)
                     register_action(stereotype_action, 'ItemFocus')
                     stereotype_list.append(stereotype_action.id)
-        return NamedItem.get_popup_menu(self)
+        return ClassifierItem.get_popup_menu(self)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'show-attributes':
@@ -195,14 +114,14 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
             self._operations.visible = value
             self.request_update()
         else:
-            NamedItem.do_set_property(self, pspec, value)
+            ClassifierItem.do_set_property(self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'show-attributes':
             return self._attributes.visible
         elif pspec.name == 'show-operations':
             return self._operations.visible
-        return NamedItem.do_get_property(self, pspec)
+        return ClassifierItem.do_get_property(self, pspec)
 
     def _create_attribute(self, attribute):
         """Create a new attribute item.
@@ -217,50 +136,13 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         new = OperationItem()
         new.subject = operation
         self.add(new)
-        
-    def sync_uml_elements(self, elements, compartment, creator=None):
-        """Common function for on_subject_notify__ownedAttribute() and
-        on_subject_notify__ownedOperation().
-        - elements: the list of attributes or operations in the model
-        - compartment: our local representation
-        - creator: factory method for creating new attr. or oper.'s
-        """
-        # extract the UML elements from the compartment
-        local_elements = [f.subject for f in compartment]
-
-        # map local element with compartment element
-        mapping = dict(zip(local_elements, compartment))
-
-        to_add = [el for el in elements if el not in local_elements]
-
-        #print 'sync_elems:', elements, local_elements, to_add
-
-        # Remove no longer present elements:
-        for el in [el for el in local_elements if el not in elements]:
-            self.remove(mapping[el])
-
-        # sync local elements with elements
-        del compartment[:]
-
-        for el in elements:
-            if el in to_add:
-                #print 'sync_elems: creating', el
-                creator(el)
-            else:
-                compartment.append(mapping[el])
-
-        #log.debug('elements order in model: %s' % [f.name for f in elements])
-        #log.debug('elements order in diagram: %s' % [f.subject.name for f in compartment])
-        assert tuple([f.subject for f in compartment]) == tuple(elements)
-
-        self.request_update()
-            
 
     def sync_attributes(self):
         """Sync the contents of the attributes compartment with the data
         in self.subject.
         """
         owned_attributes = [a for a in self.subject.ownedAttribute if not a.association]
+        log.debug('sync_attributes %s' % owned_attributes)
         self.sync_uml_elements(owned_attributes, self._attributes,
                            self._create_attribute)
 
@@ -277,154 +159,37 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         Note: This method is also called from ExtensionItem.confirm_connect_handle
         """
         subject = self.subject
-        applied_stereotype = self.subject.appliedStereotype
-        if applied_stereotype:
-            # Return a nice name to display as stereotype:
-            # make first character lowercase unless the second character is uppercase.
-            s = ', '.join([s and len(s) > 1 and s[1].isupper() and s \
-                           or s and s[0].lower() + s[1:] \
-                           or str(s) for s in map(getattr, applied_stereotype, ['name'] * len(applied_stereotype))])
-            # Phew!
-            self._stereotype.set_text(STEREOTYPE_OPEN + s + STEREOTYPE_CLOSE)
-            self.has_stereotype = True
-        elif isinstance(subject, UML.Stereotype):
-            self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
-            self.has_stereotype = True
-        elif isinstance(subject, UML.Interface):
-            self._stereotype.set_text(STEREOTYPE_OPEN + 'interface' + STEREOTYPE_CLOSE)
-            self.has_stereotype = True
-        elif isinstance(subject, UML.Class) and subject.extension:
-            self._stereotype.set_text(STEREOTYPE_OPEN + 'metaclass' + STEREOTYPE_CLOSE)
-            self.has_stereotype = True
-        else:
-            self.has_stereotype = False
-        self.request_update()
+        applied_stereotype = subject.appliedStereotype
+        if not ClassifierItem.update_stereotype(self):
+            if isinstance(subject, UML.Stereotype):
+                self.set_stereotype('stereotype')
+                return True
+            elif isinstance(subject, UML.Class) and subject.extension:
+                self.set_stereotype('metaclass')
+                return True
 
     def on_subject_notify(self, pspec, notifiers=()):
         #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        NamedItem.on_subject_notify(self, pspec,
-                                    ('ownedAttribute', 'ownedOperation',
-                                     'namespace', 'namespace.name',
-                                     'isAbstract', 'appliedStereotype'))
+        ClassifierItem.on_subject_notify(self, pspec,
+                                    ('ownedAttribute', 'ownedOperation') + notifiers)
         # Create already existing attributes and operations:
         if self.subject:
             self.sync_attributes()
             self.sync_operations()
-            self.on_subject_notify__namespace(self.subject)
-            self.on_subject_notify__isAbstract(self.subject)
-            self.update_stereotype()
         self.request_update()
 
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
         """Called when the ownedAttribute property of our subject changes.
         """
-        #log.debug('on_subject_notify__ownedAttribute')
+        log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
         self.sync_attributes()
 
     def on_subject_notify__ownedOperation(self, subject, pspec=None):
         """Called when the ownedOperation property of our subject changes.
         """
-        #log.debug('on_subject_notify__ownedOperation')
+        log.debug('on_subject_notify__ownedOperation')
         self.sync_operations()
-
-    def on_subject_notify__namespace(self, subject, pspec=None):
-        """Add a line '(from ...)' to the class item if subject's namespace
-        is not the same as the namespace of this diagram.
-        """
-        #print 'on_subject_notify__namespace', self, subject
-        if self.subject and self.subject.namespace and self.canvas and \
-           self.canvas.diagram.namespace is not self.subject.namespace:
-            self._from.set_text(_('(from %s)') % self.subject.namespace.name)
-        else:
-            self._from.set_text('')
-        self.request_update()
-
-    def on_subject_notify__namespace_name(self, subject, pspec=None):
-        print 'on_subject_notify__namespace_name', self, subject
-        self.on_subject_notify__namespace(subject, pspec)
-
-    def on_subject_notify__isAbstract(self, subject, pspec=None):
-        subject = self.subject
-        if subject.isAbstract:
-            self._name.set_font_description(pango.FontDescription(self.FONT_ABSTRACT))
-        else:
-            self._name.set_font_description(pango.FontDescription(self.FONT))
-        self.request_update()
-
-    def on_subject_notify__appliedStereotype(self, subject, pspec=None):
-        if self.subject:
-            self.update_stereotype()
-
-    def on_update(self, affine):
-        """Overrides update callback.
-        """
-        has_stereotype = self.has_stereotype
-
-        width = 0
-        height = ClassItem.HEAD_MARGIN_Y
-
-        #self.sync_attributes()
-        #self.sync_operations()
-
-        compartments = (self._attributes, self._operations)
-
-        if has_stereotype:
-            st_width, st_height = self._stereotype.to_pango_layout(True).get_pixel_size()
-            width = st_width + ClassItem.HEAD_MARGIN_X/2
-            st_y = height = height / 2
-            height += st_height
-
-        # Update class name
-        name_width, name_height = self.get_name_size()
-        name_y = height
-        height += name_height
-        
-        height += ClassItem.HEAD_MARGIN_Y
-        width = max(width, name_width + ClassItem.HEAD_MARGIN_X)
-
-        for comp in compartments: width, height = comp.pre_update(width, height, affine)
-
-        self.set(min_width=width, min_height=height)
-
-        #if affine:
-        width = max(width, self.width)
-        height = max(height, self.height)
-
-        # TODO: update stereotype
-        if has_stereotype:
-            self._stereotype.set_pos((0, st_y))
-            self._stereotype.set_max_width(width)
-            self._stereotype.set_max_height(st_height)
-
-        # We know the width of all text components and set it:
-        # Note: here the upadte flag is set for all sub-items (again)!
-        #    self._name.set_property('width', width)
-        self.update_name(x=0, y=name_y, width=width, height=name_height)
-
-        self._from.set_pos((0, name_y + name_height-2))
-        self._from.set_max_width(width)
-        self._from.set_max_height(name_height)
-
-        for comp in compartments:
-            comp.update(width, affine)
-
-        NamedItem.on_update(self, affine)
-
-        self._border.rectangle((0,0),(width, height))
-        self.expand_bounds(1.0)
-
-    def on_shape_iter(self):
-        yield self._border
-        for s in NamedItem.on_shape_iter(self):
-            yield s
-        if self.has_stereotype:
-            yield self._stereotype
-        yield self._from
-        if self._attributes.visible:
-            yield self._attributes.separator
-        if self._operations.visible:
-            yield self._operations.separator
 
     # Groupable
 

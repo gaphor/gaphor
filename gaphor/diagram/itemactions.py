@@ -853,32 +853,47 @@ class Fold(Action):
         get_undo_manager().commit_transaction()
 
 
-class UnfoldAction(Fold):
-    id = 'Unfold'
-    label = '_Unfold'
-    tooltip = 'View details'
-
-    def isSensitive(self, item):
-        return isinstance(item, InterfaceItem)
-
-    def newElement(self, diag):
-        return diag.create(gaphor.diagram.ClassItem)
-
-register_action(UnfoldAction, 'ItemFocus')
-
-
-class FoldAction(Fold):
+class FoldAction(Action):
     id = 'Fold'
     label = '_Fold'
     tooltip = 'Hide details'
 
-    def isSensitive(self, item):
-        return isinstance(item, ClassItem) and isinstance(item.subject, UML.Interface)
+    def init(self, window):
+        self._window = window
 
-    def newElement(self, diag):
-        return diag.create(gaphor.diagram.InterfaceItem)
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            self.sensitive = isinstance(item, InterfaceItem)
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        #log.debug('Action %s: %s' % (self.id, item.subject.name))
+
+        get_undo_manager().begin_transaction()
+        item.set_property('drawing-style', InterfaceItem.DRAW_ICON)
+        get_undo_manager().commit_transaction()
 
 register_action(FoldAction, 'ItemFocus')
+
+
+class UnfoldAction(FoldAction):
+    id = 'Unfold'
+    label = '_Unfold'
+    tooltip = 'View details'
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        #log.debug('Action %s: %s' % (self.id, item.subject.name))
+
+        get_undo_manager().begin_transaction()
+        item.set_property('drawing-style', InterfaceItem.DRAW_COMPARTMENT)
+        get_undo_manager().commit_transaction()
+
+register_action(UnfoldAction, 'ItemFocus')
 
 
 class ApplyStereotypeAction(CheckAction, ObjectAction):

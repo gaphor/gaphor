@@ -242,7 +242,7 @@ class InterfacePlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new Interface item'
     stock_id = 'gaphor-interface'
     name = 'Interface'
-    type = diagram.ClassItem
+    type = diagram.InterfaceItem
     subject_type = UML.Interface
 
     def _execute(self):

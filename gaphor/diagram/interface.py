@@ -14,6 +14,7 @@ from gaphor.diagram import initialize_item
 from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.implementation import ImplementationItem
 from nameditem import NamedItem
+from klass import ClassItem
 from relationship import RelationshipItem
 
 
@@ -33,7 +34,7 @@ def make_arc(radius, edges, q=0):
 def alter_arc(arc, offsetx=0, offsety=0):
     return [(x+offsetx, y+offsety) for x, y in arc]
 
-class InterfaceItem(NamedItem):
+class InterfaceItem(ClassItem):
     """This item represents an interface drawn as a dot. The class-like
     representation is provided by ClassItem. These representations can be
     switched by using the Fold and Unfold actions.
@@ -60,12 +61,12 @@ class InterfaceItem(NamedItem):
         alter_arc(make_arc(14, edges=10, q=1) + make_arc(14,edges=10, q=2), offsetx=12, offsety=10)
     ]
 
-    popup_menu = NamedItem.popup_menu + ('Unfold',)
+    #popup_menu = NamedItem.popup_menu + ('Unfold',)
 
     def __init__(self, id=None):
-        NamedItem.__init__(self, id)
-        r2 = self.RADIUS * 2
-        self.set(height=r2, width=r2)
+        ClassItem.__init__(self, id)
+
+        #self.drawing_style = self.DRAW_ICON
 
         self.usage_items = 0
         self.implementation_items = 0
@@ -78,11 +79,36 @@ class InterfaceItem(NamedItem):
         self._required = diacanvas.shape.Path()
         self._required.set_line_width(2.0)
 
-        # Do not allow resizing of the node
-        for h in self.handles:
-            h.set_property('movable', 0)
+    def set_drawing_style(self, style):
+        """In addition to setting the drawing style, the handles are
+        make non-movable if the icon (folded) style is used.
+        """
+        ClassItem.set_drawing_style(self, style)
+        if self.drawing_style == self.DRAW_ICON:
+            r2 = self.RADIUS * 2
+            self.set(height=r2, width=r2)
+            # Do not allow resizing of the node
+            for h in self.handles:
+                h.set_property('movable', 0)
+        else:
+            # Do allow resizing of the node
+            for h in self.handles:
+                h.set_property('movable', 1)
 
-    def on_update(self, affine):
+    def get_popup_menu(self):
+        if self.drawing_style == self.DRAW_ICON:
+            return NamedItem.popup_menu + ('Unfold',)
+        else:
+            return ClassItem.get_popup_menu(self)
+
+    def is_folded(self):
+        return self.drawing_style == self.DRAW_ICON
+
+    def update_stereotype(self):
+        if not ClassItem.update_stereotype(self):
+            self.set_stereotype('interface')
+ 
+    def update_icon(self, affine):
         right, top = self.handles[diacanvas.HANDLE_NE].get_pos_i()
         left, bottom = self.handles[diacanvas.HANDLE_SW].get_pos_i()
         right -= 0.1
@@ -123,7 +149,7 @@ class InterfaceItem(NamedItem):
 
         self.update_name(x=r - w/2, y=r2, width=w, height=h)
 
-        NamedItem.on_update(self, affine)
+        #NamedItem.on_update(self, affine)
 
         look_type = self.look_type
         if look_type & self.REQUIRED:
@@ -134,38 +160,47 @@ class InterfaceItem(NamedItem):
             self._interface.ellipse((r, r), r2, r2)
 
         # update the bounding box:
-        ulx, uly, lrx, lry = self.bounds
-        if w > r2:
-            ulx = r - w/2
-            lrx = r + w/2
-        self.set_bounds((ulx, uly-1, lrx+1, lry+h))
+        #ulx, uly, lrx, lry = self.bounds
+        #if w > r2:
+        #    ulx = r - w/2
+        #    lrx = r + w/2
+        #self.set_bounds((ulx, uly-1, lrx+1, lry+h))
 
-#    def on_handle_motion(self, handle, wx, wy, mask):
-#        # Make sure the element works with diacanavs2 <= 0.12.0.
-#        if handle not in self.handles[:7]:
-#            return wx, wy
-#        return NamedItem.on_handle_motion(self, handle, wx, wy, mask)
+    def on_update(self, affine):
+        ClassItem.on_update(self, affine)
+
+        # update bounding box
+        if self.drawing_style == self.DRAW_ICON:
+            r = self.RADIUS
+            r2 = r * 2
+            w, h = self.get_name_size()
+            ulx, uly, lrx, lry = self.bounds
+            if w > r2:
+                ulx = r - w/2
+                lrx = r + w/2
+            self.set_bounds((ulx, uly-1, lrx+1, lry+h))
 
     def on_shape_iter(self):
-        look_type = self.look_type
-        if look_type & self.REQUIRED:
-            yield self._required
-        if look_type & self.PROVIDED:
-            yield self._interface
+        if self.drawing_style == self.DRAW_ICON:
+            look_type = self.look_type
+            if look_type & self.REQUIRED:
+                yield self._required
+            if look_type & self.PROVIDED:
+                yield self._interface
 
-        for s in NamedItem.on_shape_iter(self):
+        for s in ClassItem.on_shape_iter(self):
             yield s
 
     def on_connect_handle(self, handle):
         self.request_update()
         
-        return NamedItem.on_connect_handle(self, handle)
+        return ClassItem.on_connect_handle(self, handle)
 
     def on_disconnect_handle(self, handle):
         self.request_update()
-        return NamedItem.on_disconnect_handle(self, handle)
+        return ClassItem.on_disconnect_handle(self, handle)
 
-    def _getLookType(self):
+    def get_look_type(self):
         if self.usage_items > 0 and self.implementation_items == 0:
             return self.REQUIRED
         elif self.usage_items > 0 and self.implementation_items > 0:
@@ -173,7 +208,7 @@ class InterfaceItem(NamedItem):
         else:
             return self.PROVIDED
 
-    look_type = property(_getLookType)
+    look_type = property(get_look_type)
 
 
 initialize_item(InterfaceItem, UML.Interface)
