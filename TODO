@@ -7,17 +7,6 @@ As always, there is much to do...
 - Add some sort of ordering in the NamespaceView.
 - Items visible/hidden doesn't work properly when opening a diagram.
 
----
-It seems like PyObject's do not live as long as GObject objects. Once a PyObject
-object has no references to itself, it can be destroyed (or at least it's
-dictionary can). This should have been prevented in the pygobject_dealloc()
-function in the PyGTK package. For most items there is no problem, since they
-are referenced by a UML modelelement. Some, such as CommentLineItem, end up
-with an empty dictionary after loading.
-
-Currently gaphor/storage.py contains a lot of debug stuff, COmmentLineItem uses
-get/set_data to store its id.
----
 - Diagram items should be created for lots of model elements
   (we currently have Actor, UseCase, Comment and the fancy line that connects
    a comment with another model element). Also a buch of relationships are
@@ -41,8 +30,8 @@ More specific:
   moved from the DiagramItems to the data elements.
 - A more pattern driven design (using Factories, Singletons etc.). We're doing
   a pretty good job already, though...
-- Add features to classes (attribute and operation).
-
+- Let commands determine if they are visible/sensible, instead of a
+  has_capability function on the diagram item.
 - Create a Classifier item, which should function as superclass for Class,
   Interface, Stereotype, Datatype, etc.
 

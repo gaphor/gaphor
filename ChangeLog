@@ -1,3 +1,7 @@
+2002-03-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: check versions of modules.
+
 2002-03-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/association.py: fixed bug that didn't show

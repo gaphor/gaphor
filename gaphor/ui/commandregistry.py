@@ -16,7 +16,7 @@ class _CommandExecuter(object):
 	self.executing = 0
 
     def __call__(self, ui_component, name, type=-1, state=0):
-	print 'CommandExecuter.__call__:', ui_component, name, type, state
+	#print 'CommandExecuter.__call__:', ui_component, name, type, state
 	if not self.executing:
 	    self.executing = 1
 	    try:

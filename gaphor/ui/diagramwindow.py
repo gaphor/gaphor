@@ -72,7 +72,7 @@ class DiagramWindow(AbstractWindow):
 
 	self._construct_window(name='diagram',
 			       title=title,
-			       size=(400, 400),
+			       size=(550, 550),
 			       contents=table,
 			       params={ 'window': self })
 

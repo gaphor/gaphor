@@ -36,22 +36,24 @@ class config_Gaphor(Command):
     description="Configure Gaphor"
 
     user_options = [
-	('pkg-config=', None, 'Path to pkg-config'),
+	#('pkg-config=', None, 'Path to pkg-config'),
     ]
 
-    pkg_config_checked=False
-    config_failed=False
+    #pkg_config_checked=False
+    config_failed=[]
 
     def initialize_options(self):
-	self.pkg_config = 'pkg-config'
+	#self.pkg_config = 'pkg-config'
+        pass
 
     def finalize_options(self):
 	# Check for existence of pkg-config
-	status, output = getstatusoutput('%s --version' % self.pkg_config)
-	if status != 0:
-	    print 'pkg-config not found.'
-	    raise SystemExit
-	print 'Found pkg-config version %s' % output
+	#status, output = getstatusoutput('%s --version' % self.pkg_config)
+	#if status != 0:
+	#    print 'pkg-config not found.'
+	#    raise SystemExit
+	#print 'Found pkg-config version %s' % output
+        pass
 
     def run(self):
 	#self.pkg_config_check('gobject-2.0', '2.0.0')
@@ -63,25 +65,34 @@ class config_Gaphor(Command):
 	#self.pkg_config_check('diacanvas2', '0.9.1')
 
 	self.module_check('xml.parsers.expat')
-	self.module_check('gobject')
+	#self.module_check('gobject', 'glib_version', (2, 0))
+	self.module_check('gtk', 'gtk_version', (2, 0),
+                                 'pygtk_version', (1, 99, 16))
 	self.module_check('gnome')
 	self.module_check('gnome.ui')
 	self.module_check('gnome.canvas')
 	self.module_check('bonobo')
 	self.module_check('bonobo.ui')
 	self.module_check('gconf')
-	self.module_check('diacanvas')
+	self.module_check('diacanvas', 'diacanvas_version', (0, 9, 2))
 
+        print ''
 	if self.config_failed:
 	    print 'Config failed.'
+            print 'The following modules can not be found or are to old:'
+            print ' ', str(self.config_failed)[1:-1]
+            print ''
 	    raise SystemExit
+        else:
+            print 'Config succeeded.'
+            print 'You can run Gaphor by typing: python setup.py run'
 
     def pkg_config_check(self, package, version):
 	"""Check for availability of a package via pkg-config."""
 	retval = os.system('%s --exists %s' % (self.pkg_config, package))
 	if retval:
 	    print '!!! Required package %s not found.' % package
-	    self.config_failed = True
+	    self.config_failed.append(package)
 	    return
 	pkg_version_str = getoutput('%s --modversion %s' % (self.pkg_config, package))
 	pkg_version = map(int, pkg_version_str.split('.'))
@@ -90,17 +101,40 @@ class config_Gaphor(Command):
 	    print "Found '%s', version %s." % (package, pkg_version_str)
 	else:
 	    print "!!! Package '%s' has version %s, should have at least version %s." % ( package, pkg_version_str, version )
-	    self.config_failed = True
+	    self.config_failed.append(package)
 
-    def module_check(self, module):
+    def module_check(self, module, *version_checks):
+        """Check for the availability of a module.
+
+        version_checks is a set of ket/version pairs that should be true.
+        """
 	try:
-	    __import__(module)
+	    mod = __import__(module)
 	except ImportError:
 	    print "!!! Required module '%s' not found." % module
-	    self.config_failed = True
+	    self.config_failed.append(module)
 	else:
 	    print "Module '%s' found." % module
+            while version_checks:
+                self.version_check(mod, version_checks[0], version_checks[1])
+                version_checks = version_checks[2:]
 
+    def version_check(self, module, key, ver):
+        import string
+        s_ver = string.join(map(str, ver), '.')
+        print "  Checking key '%s.%s' >= %s..." % (module.__name__, key, s_ver),
+        try:
+            modver = getattr(module, key)
+        except:
+            print "Not found." % key
+            self.config_failed.append(module.__name__)
+        else:
+            s_modver = string.join(map(str, modver), '.')
+            if modver >= ver:
+                print "Okay (%s)." % s_modver
+            else:
+                print "Failed (%s)" % s_modver
+                self.config_failed.append(module.__name__)
 
 class build_py_Gaphor(build_py):
 
