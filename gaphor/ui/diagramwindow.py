@@ -119,4 +119,4 @@ class DiagramWindow(object):
 
     def __unlink(self, name, dummy1, dummy2):
 	if name == '__unlink__':
-	    self.window.destroy()
+	    self.close()

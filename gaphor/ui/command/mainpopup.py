@@ -22,7 +22,16 @@ class OpenModelElementCommand(Command):
 	    #winfact.create (DiagramWindow, diagram=self.__element)
 	    newwin = DiagramWindow()
 	    newwin.construct()
+	    # Also listen to the key accelerators of the owner window
+	    main_win = self.__window.get_window()
+	    diag_win = newwin.get_window()
+	    diag_win.add_accel_group(main_win.get_accel_group())
+	    diag_win.set_transient_for (main_win)
 	    newwin.set_diagram(self.__element)
+	    def handle_wr(x):
+		print 'diag_win died:', x
+	    import weakref
+	    self.wr = weakref.ref (diag_win, handle_wr)
 	else:
 	    print 'No action defined for element', self.__element.__class__.__name__
 

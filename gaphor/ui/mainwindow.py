@@ -69,10 +69,9 @@ class MainWindow(object):
 
     def close(self):
 	self.__window.destroy()
-	del self.__window
-	del self.__ui_component
-	del self.__model
-	del self.__view
+	#del self.__ui_component
+	#del self.__model
+	#del self.__view
 
     def __destroy_event_cb (self, window):
         cmd_reg = GaphorResource('CommandRegistry')
