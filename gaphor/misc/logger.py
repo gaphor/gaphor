@@ -11,7 +11,7 @@ class Logger(object):
     INFO = 2
     WARNING = 3
     ERROR = 4
-    FATAL = 5
+    CRITICAL = 5
 
     def __init__(self):
 	self.__log_level = Logger.DEBUG
@@ -27,7 +27,7 @@ class Logger(object):
 	    pass
 
     def set_log_level(self, level):
-	assert level >= Logger.DEBUG and level <= Logger.FATAL
+	assert level >= Logger.DEBUG and level <= Logger.CRITICAL
 	self.__log_level = level
 	
     def get_log_level(self, level):
@@ -36,7 +36,7 @@ class Logger(object):
     log_level = property(get_log_level, get_log_level, None, 'Log level')
 
     def log(self, level, message, exc=None):
-	assert level >= Logger.DEBUG and level <= Logger.FATAL
+	assert level >= Logger.DEBUG and level <= Logger.CRITICAL
 	handled = False
 	for logger in self.__loggers:
 	    try:
@@ -59,13 +59,13 @@ class Logger(object):
     def error(self, message, exc=None):
 	self.log(Logger.ERROR, message, exc)
 
-    def fatal(self, message, exc=None):
-	self.log(Logger.FATAL, message, exc)
+    def critical(self, message, exc=None):
+	self.log(Logger.CRITICAL, message, exc)
 
     def default_logger(self, level, message, exc=None):
 	"""The default logger sends log information to stdout."""
 	if level >= self.__log_level:
-	    print '[Gaphor-%s] %s' % (('DEBUG', 'INFO', 'WARNING', 'ERROR', 'FATAL' )[level - 1], message)
+	    print '[Gaphor-%s] %s' % (('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL' )[level - 1], message)
 	    if exc:
 		print '[Gaphor-Exception]', exc
 

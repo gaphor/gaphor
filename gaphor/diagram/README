@@ -4,25 +4,22 @@ Diagrams typically contain a diacanvas.Canvas. This Canvas contains a bunch of
 items. Those items are one way or another related to some UML.Element.
 
 In the UML module a class Presentation is defined. It defines the relation
-between one Element and multiple Presentations.
+between one Element and its Presentations.
 
 In the UML module all relations between objects are presented as associations.
 
 There are some conflicts that have to be resolved when using Presentation in
 conjunction with diacanvas.CanvasItem:
 
-Both classes have the methods connect(), disconnect() and emit(). This can
-be resolved by creating a signal named 'subject' for the CanvasItem and 
-enforcing the methods to be directed to the CanvasItem's ones.
+The default signature of the methods connect() and disconnect() is slightly
+different.
+
+This is resolved by overriding connect() and disconnect() and let them act
+the same way as UML.Element's.
+The unlink() method is added to remove the item from the canvas. This should
+be used in stead of disconnecting directly from the parent object.
+
+A __unlink__ signal is added.
 
 Element.presentation connects to '__unlink__' of Presentation.subject.
-
-Both connect() and disconnect() have a slightly different syntax:
-
-CanvasItem:				Presentation:
-connect('name', handler, *args)		connect(('name',..), handler, *args)
-					connect('name', handler, *args)
-disconnect(id)				disconnect(handler, *args)
-emit('name', *args)			notify('name')
-handler(*args, *user_args)		hanler('name', *user_args)
 

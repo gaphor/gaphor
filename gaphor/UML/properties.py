@@ -280,7 +280,7 @@ class association(umlproperty):
         Return True if notification should be send, False otherwise."""
         if self.upper > 1:
             if value in self._get(obj):
-                log.debug('association: value already in obj: %s' % value)
+                #log.debug('association: value already in obj: %s' % value)
                 return False
             self._get(obj).items.append(value)
         else:

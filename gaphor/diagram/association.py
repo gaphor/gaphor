@@ -19,7 +19,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     """
     
     def __init__(self, id=None):
-        RelationshipItem.__init__(self, None)
+        RelationshipItem.__init__(self, id)
 
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.
@@ -37,9 +37,9 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 
     def load (self, name, value):
         # end_head and end_tail were used in an older Gaphor version
-        if name in ( 'head_end', 'end_head' ):
+        if name in ( 'head_end', 'head-end' ):
             self._head_end.subject = value
-        elif name in ( 'tail_end', 'end_tail' ):
+        elif name in ( 'tail_end', 'tail-end' ):
             self._tail_end.subject = value
         else:
             RelationshipItem.load(self, name, value)
@@ -156,9 +156,10 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
         for assoc in GaphorResource(UML.ElementFactory).itervalues():
             if isinstance(assoc, Association):
                 #print 'assoc.memberEnd', assoc.memberEnd
-                end1, end2 = assoc.memberEnd[0:1]
+                end1 = assoc.memberEnd[0]
+                end2 = assoc.memberEnd[1]
                 if (end1.type is head_subject and end2.type is tail_subject) \
-                or (end2.type is head_subject and end1.type is tail_subject):
+                   or (end2.type is head_subject and end1.type is tail_subject):
                     # check if this entry is not yet in the diagram
                     # Return if the association is not (yet) on the canvas
                     for item in assoc.presentation:
@@ -366,17 +367,29 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasAbstractGroup, Diagra
 
     def on_name_notify(self, label, pspec):
         assert label is self._name
-        if self.subject.name != self._name.get_property('text'):
-            self.subject.name = self._name.get_property('text')
+        text = self._name.get_property('text')
+        if self.subject.name != text:
+            self.subject.name = text
 
     def on_mult_notify(self, label, pspec):
         assert label is self._mult
-        self.subject.multiplicity = self._mult.get_property('text')
+        text = self._mult.get_property('text')
+        if not self.subject.lowerValue:
+            self.subject.lowerValue = GaphorResource('ElementFactory').create(UML.LiteralSpecification)
+        self.subject.lowerValue.value = text
 
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec,
-                        notifiers + ('aggregation', 'name', 'multiplicity'))
-
+                        notifiers + ('aggregation', 'name', 'lowerValue'))
+        # Set name:
+        if self.subject:
+            if self.subject.name:
+                self._name.set_property('text', self.subject.name)
+            if self.subject.lowerValue:
+                # Add a callback to lowerValue
+                self._mult.set_property('text', self.subject.lowerValue.value)
+        self.request_update()
+        
     def on_subject_notify__aggregation(self, subject, pspec):
         self.request_update()
 
@@ -384,8 +397,11 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasAbstractGroup, Diagra
         if subject.name != self._name.get_property('text'):
             self._name.set_property('text', subject.name)
 
-    def on_subject_notify__multiplicity(self, subject, pspec):
-        print 'multiplicity', subject, subject.lowerValue
+    def on_subject_notify__lowerValue(self, subject, pspec):
+        print 'lowerValue', subject, subject.lowerValue
+        if self.subject.lowerValue:
+            self._mult.set_property('text', self.subject.lowerValue.value)
+        # Add a callback to lowerValue
 
     def on_update(self, affine):
         diacanvas.CanvasItem.on_update(self, affine)
