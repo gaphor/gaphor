@@ -68,7 +68,7 @@ class GeneralizationItem(relationship.RelationshipItem):
             s2 = c2.subject
             relation = self.find_relationship(s1, s2)
             if not relation:
-                relation = GaphorResource(UML.ElementFactory).create(UML.Generalization)
+                relation = gaphor.resource(UML.ElementFactory).create(UML.Generalization)
                 relation.general = s1
                 relation.specific = s2
             self.subject = relation

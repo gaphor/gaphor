@@ -3,6 +3,7 @@
 
 import sys
 import gtk
+import gaphor
 from abstractwindow import AbstractWindow
 
 _WELCOME_TEXT = """Welcome in Gaphor's Editor!
@@ -37,7 +38,7 @@ class EditorWindow(AbstractWindow):
 	    'ui': gaphor.ui,
 	    'misc': gaphor.misc,
 	    'diagram': gaphor.diagram,
-	    'element_factory': GaphorResource('ElementFactory'),
+	    'element_factory': gaphor.resource('ElementFactory'),
 	    'clear': self.clear_results
 	}
 

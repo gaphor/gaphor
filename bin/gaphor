@@ -1,5 +1,5 @@
 #!python
 
-from gaphor import Gaphor
+import gaphor
 
-Gaphor().main()
+gaphor.main()

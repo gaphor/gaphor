@@ -20,6 +20,7 @@ import UML
 import parser
 import diagram
 import diacanvas
+import gaphor
 
 __all__ = [ 'load', 'save' ]
 
@@ -92,7 +93,7 @@ def save(filename=None, factory=None):
             save_value(name, value)
 
     if not factory:
-        factory = GaphorResource(UML.ElementFactory)
+        factory = gaphor.resource(UML.ElementFactory)
 
     buffer = StringIO()
     buffer.write('<?xml version="1.0"?>\n')
@@ -209,8 +210,7 @@ def load (filename, factory=None):
         #gc.collect()
         #print '===================================== pre load succeeded =='
         if not factory:
-            from gaphor import Gaphor
-            factory = Gaphor.get_resource(UML.ElementFactory)
+            factory = gaphor.get_resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
         _load(elements, factory)
@@ -231,7 +231,7 @@ def load (filename, factory=None):
         log.info('file %s could not be loaded' % filename)
         import traceback
         traceback.print_exc()
-        raise GaphorError, 'Could not load file %s (%s)' % (filename, e)
+        raise #GaphorError, 'Could not load file %s (%s)' % (filename, e)
 
 def verify (filename):
     """Try to load the file. If loading succeeded, this file is

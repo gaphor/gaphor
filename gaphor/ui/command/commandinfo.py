@@ -5,6 +5,7 @@ about commands. The gaphor.ui modules make use of this class to set
 the state of GUI components (esp. menu items).
 """
 from operator import isSequenceType
+import gaphor
 import gaphor.UML as UML
 from gaphor.misc.command import Command
 
@@ -62,5 +63,5 @@ class CommandInfo(object):
     def register(self):
 	"""Add the CommandInfo to a CommandRegistry, this should make it
 	easely accessible."""
-	GaphorResource('CommandRegistry').register(self)
+	gaphor.resource('CommandRegistry').register(self)
 

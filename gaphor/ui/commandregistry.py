@@ -5,6 +5,7 @@ These commands are registered to the CommandRegistry from which they can be
 instantiated and added as commands for the specific menu items.
 """
 
+import gaphor
 from gaphor.misc.command import StatefulCommand
 
 class _CommandExecuter(object):
@@ -37,7 +38,7 @@ class _CommandExecuter(object):
 class CommandRegistry(object):
     """
     One object can contain a bunch of CommandInfo objects. Normally you
-    would access this through the GaphorResource() function.
+    would access this through the gaphor.resource() function.
     """
 
     def __init__(self):
@@ -141,5 +142,5 @@ class CommandRegistry(object):
 	return listeners
 
 # Register the registry as application wide resource.
-GaphorResource(CommandRegistry)
+gaphor.resource(CommandRegistry)
 

@@ -4,6 +4,7 @@
 import gobject
 import gtk
 from diacanvas import CanvasView
+import gaphor
 
 class DiagramView(CanvasView):
     TARGET_STRING = 0
@@ -49,7 +50,7 @@ class DiagramView(CanvasView):
         if data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
 	    from gaphor.diagram import get_diagram_item
 	    print 'drag_data_received:', data.data, info
-	    elemfact = GaphorResource('ElementFactory')
+	    elemfact = gaphor.resource('ElementFactory')
 	    element = elemfact.lookup(data.data)
 	    assert element
 	    item_class = get_diagram_item(element.__class__)

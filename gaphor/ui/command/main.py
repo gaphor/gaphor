@@ -16,6 +16,7 @@ import gaphor.UML as UML
 import gaphor.diagram as diagram
 import gc
 import traceback
+import gaphor
 
 DEFAULT_EXT='.gaphor'
 
@@ -25,7 +26,7 @@ class NewCommand(Command):
 	self._window = params['window']
 
     def execute(self):
-	factory = GaphorResource(UML.ElementFactory)
+	factory = gaphor.resource(UML.ElementFactory)
 	factory.flush()
 	gc.collect()
 	model = factory.create(UML.Package)
@@ -172,7 +173,6 @@ class RevertCommand(Command):
     def execute(self):
 	if self._window.get_filename():
 	    log.debug('Loading from: %s' % filename)
-	    #GaphorResource(UML.ElementFactory).flush()
 
 	    try:
 		import gaphor.storage as storage
@@ -208,7 +208,7 @@ class CreateDiagramCommand(Command):
 	self._parent = params.get('element')
 
     def execute(self):
-	elemfact = GaphorResource(UML.ElementFactory)
+	elemfact = gaphor.resource(UML.ElementFactory)
 	diagram = elemfact.create(UML.Diagram)
 	if self._parent:
 	    diagram.package = self._parent
@@ -249,10 +249,9 @@ class AboutCommand(Command):
 
     def execute(self):
 	import gnome.ui
-	from gaphor import Gaphor
-	logo = gtk.gdk.pixbuf_new_from_file (Gaphor().get_datadir() + '/pixmaps/logo.png')
+	logo = gtk.gdk.pixbuf_new_from_file (gaphor.resource('DataDir') + '/pixmaps/logo.png')
 	about = gnome.ui.About(name = 'Gaphor',
-			   version = Gaphor.VERSION,
+			   version = gaphor.resource('Version'),
 			   copyright = 'Copyright (c) 2001-2003 Arjan J. Molenaar',
 			   comments = 'UML Modeling for GNOME',
 			   authors = ('Arjan J. Molenaar <arjanmolenaar@hetnet.nl>',),

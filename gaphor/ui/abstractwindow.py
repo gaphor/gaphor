@@ -1,10 +1,10 @@
 # vim:sw=4
 
+import gobject, gtk, bonobo.ui
+import gaphor
 from gaphor.misc.signal import Signal
 from gaphor.misc.logger import Logger
 from commandregistry import CommandRegistry
-import gobject, gtk, bonobo.ui
-from gaphor import Gaphor
 
 class AbstractWindow(object):
     """
@@ -125,10 +125,9 @@ class AbstractWindow(object):
 	ui_component = bonobo.ui.Component (name)
 	ui_component.set_container (ui_container.corba_objref ())
 
-	gaphor = Gaphor()
-	bonobo.ui.util_set_ui (ui_component, gaphor.get_datadir(),
+	bonobo.ui.util_set_ui (ui_component, gaphor.resource('DataDir'),
 			       'gaphor-' + name + '-ui.xml',
-			       gaphor.NAME)
+			       'gaphor')
 	window.set_contents(contents)
 	self.__destroy_id = window.connect('destroy', self._on_window_destroy)
 	# On focus in/out a log handler is added to the logger.
@@ -139,7 +138,7 @@ class AbstractWindow(object):
 	self._set_state(AbstractWindow.STATE_ACTIVE)
 
 	# Set commands, for menu and (possible) popup menus:
-	command_registry = GaphorResource(CommandRegistry)
+	command_registry = gaphor.resource(CommandRegistry)
 
 	ui_component.set_translate ('/', command_registry.get_command_xml(context=name + '.'))
 	verbs = command_registry.get_verbs(context=name + '.menu',
@@ -171,7 +170,7 @@ class AbstractWindow(object):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	context = self.__name + '.popup'
 	capable_elements = list()
-	command_registry = GaphorResource(CommandRegistry)
+	command_registry = gaphor.resource(CommandRegistry)
 
 	# Create commands with the right parameters set:
 	ui_component = self.__ui_component
@@ -253,7 +252,7 @@ class AbstractWindow(object):
     def _on_capability_update(self):
 	"""Activate or deactivate commands with capabilities."""
 	if self.__state == AbstractWindow.STATE_ACTIVE:
-	    command_registry = GaphorResource(CommandRegistry)
+	    command_registry = gaphor.resource(CommandRegistry)
 	    _caps = self.__capabilities
 	    for name, type, caps in command_registry.get_capabilities(self.__name + '.menu'):
 		#log.debug('Checking caps for %s %s' % (name, caps))

@@ -17,7 +17,7 @@ from feature import FeatureItem
 from attribute import AttributeItem
 from operation import OperationItem
 
-class Compartment(object):
+class Compartment(list):
     """Specify a compartment in a class item.
     A compartment has a line on top and a list of FeatureItems.
     """
@@ -26,73 +26,50 @@ class Compartment(object):
         self.name = name
         self.owner = owner
         self.visible = True
-        self.items = []
         self.separator = diacanvas.shape.Path()
         self.separator.set_line_width(2.0)
         self.sep_y = 0
 
     def save(self, save_func):
-        #log.debug('Compartment.save: %s' % self.items)
-        for item in self.items:
+        #log.debug('Compartment.save: %s' % self)
+        for item in self:
             save_func(None, item)
 
-    # Loading is done directly in the FeatureItem
-
-    def create(self, feature):
-        assert isinstance(feature, UML.Feature)
-        for f in self.items:
-            if f.subject is feature:
-                return
-        if isinstance(feature, UML.Property):
-            if feature.association:
-                return
-            item = AttributeItem()
-        elif isinstance(feature, UML.Operation):
-            item = OperationItem()
-        else:
-            raise ValueError, 'Unsupported class type for compartment: %s' % type(feature).__name__
-        item.set_property('subject', feature)
-
-        self.owner.add(item)
-        self.owner.request_update()
-        item.focus()
-
-    def append(self, item):
-        if item not in self.items:
-            self.items.append(item)
-
-    def remove(self, feature):
-        for f in self.items:
-            if f.subject is feature:
-                self.owner.remove(f)
-                return
-        self.owner.request_update()
-
     def pre_update(self, width, height, affine):
+        """Calculate the size of the feates in this compartment.
+        """
         if self.visible:
             self.sep_y = height
             height += ClassItem.COMP_MARGIN_Y
-            for f in self.items:
+            for f in self:
                 w, h = f.get_size(update=True)
-                log.debug('feature: %f, %f' % (w, h))
+                #log.debug('feature: %f, %f' % (w, h))
                 f.set_pos(ClassItem.COMP_MARGIN_X, height)
                 f.set_property('visible', True)
                 height += h
                 width = max(width, w + 2 * ClassItem.COMP_MARGIN_X)
             height += ClassItem.COMP_MARGIN_Y
         else:
-            for f in self.items:
+            for f in self:
                 f.set_property('visible', False)
         return width, height
 
     def update(self, width, affine):
         if self.visible:
-            for f in self.items:
+            for f in self:
                 self.owner.update_child(f, affine)
             self.separator.line(((0, self.sep_y), (width, self.sep_y)))
 
 
 class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
+    """This item visualizes a Class instance.
+
+    A ClassItem contains two compartments (Compartment): one for
+    attributes and one for operations. To add and remove such features
+    the ClassItem implements the CanvasGroupable interface.
+    Items can be added by callling class.add() and class.remove().
+    This is used to handle CanvasItems, not UML objects!
+    """
     __gproperties__ = {
         'show-attributes': (gobject.TYPE_BOOLEAN, 'show attributes',
                             '',
@@ -121,18 +98,10 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         self.save_property(save_func, 'show-attributes')
         self.save_property(save_func, 'show-operations')
         ClassifierItem.save(self, save_func)
-        #for comp in (self._attributes, self._operations):
-            #comp.save(save_func)
 
     def postload(self):
         ClassifierItem.postload(self)
-        #self.on_subject_notify__ownedAttribute(self.subject)
-        #self.on_subject_notify__ownedOperation(self.subject)
-        for f in self.subject.ownedAttribute:
-            if not f.association:
-                self._attributes.create(f)
-        for f in self.subject.ownedOperation:
-            self._operations.create(f)
+        self.sync_compartments()
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'show-attributes':
@@ -161,58 +130,80 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
             return self._operations.visible
         return ClassifierItem.has_capability(self, capability)
 
+    def _create_attribute(self, attribute):
+        """Create a new attribute item.
+        """
+        new = AttributeItem()
+        new.subject = attribute
+        self.add(new)
+
+    def _create_operation(self, operation):
+        """Create a new operation item.
+        """
+        new = OperationItem()
+        new.subject = operation
+        self.add(new)
+        
+    def sync_features(self, features, compartment, creator=None):
+        """Common function for on_subject_notify__ownedAttribute() and
+        on_subject_notify__ownedOperation().
+        - features: the list of attributes or operations in the model
+        - compartment: our local representation
+        - creator: factory method for creating new attr. or oper.'s
+        """
+        # Extract the UML elements from the compartment
+        my_features = map(getattr, compartment,
+                      ['subject'] * len(compartment))
+
+        for a in [f for f in features if f not in my_features]:
+            creator(a)
+
+        tmp = [f for f in my_features if f not in features]
+        if tmp:
+            # Create a feature->item mapping
+            mapping = dict(zip(my_features, compartment))
+            for a in tmp:
+                self.remove(mapping[a])
+            
+    def sync_compartments(self):
+        """Sync the contents of the attributes and operations compartments
+        with the data in self.subject.
+        """
+        attributes = [a for a in self.subject.ownedAttribute if not a.association]
+        self.sync_features(attributes, self._attributes, self._create_attribute)
+        self.sync_features(self.subject.ownedOperation, self._operations,
+                           self._create_operation)
+
     def on_subject_notify(self, pspec, notifiers=()):
         ClassifierItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation'))
         # Create already existing attributes and operations:
         if self.subject:
-            for f in self.subject.ownedAttribute:
-                if not f.association:
-                    self._attributes.create(f)
-            for f in self.subject.ownedOperation:
-                self._operations.create(f)
+            self.sync_compartments()
         self.request_update()
 
-    def sync_owned_features(self, features, compartment):
-        """Common function for on_subject_notify__ownedAttribute() and
-        on_subject_notify__ownedOperation().
-        """
-        featlen = len(features)
-        mylen = len(compartment.items)
-        myfeat = map(getattr, compartment.items,
-                      ['subject'] * len(compartment.items))
-        if featlen > mylen: # item added
-            for a in features:
-                if a not in myfeat:
-                    compartment.create(a)
-                    break
-        elif featlen < mylen: # item removed
-            for a in myfeat:
-                if a not in features:
-                    compartment.remove(a)
-                    break
-
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
-        # Note: This method is also called in postload()
+        """Called when the ownedAttribute property of our subject changes.
+        """
         #log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
-        attr = []
-        for a in subject.ownedAttribute:
-            if not a.association:
-                attr.append(a)
-        self.sync_owned_features(attr, self._attributes)
-        #self.compare_owned_features(subject.ownedAttribute, self._attributes)
+        attributes = [a for a in subject.ownedAttribute if not a.association]
+        self.sync_features(attributes, self._attributes, self._create_attribute)
 
     def on_subject_notify__ownedOperation(self, subject, pspec=None):
-        # Note: This method is also called in postload()
+        """Called when the ownedOperation property of our subject changes.
+        """
         #log.debug('on_subject_notify__ownedOperation')
-        self.sync_owned_features(subject.ownedOperation, self._operations)
+        self.sync_features(subject.ownedOperation, self._operations,
+                                 self._create_operation)
 
     def on_update(self, affine):
-        """Overrides update callback. If affine is None, it is called just for
-        updating the item width and height."""
+        """Overrides update callback.
+        """
 
         width = 0
         height = ClassItem.HEAD_MARGIN_Y
+
+        compartments = (self._attributes, self._operations)
 
         # TODO: update stereotype
 
@@ -220,17 +211,11 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         w, name_height = self.get_name_size()
         height += name_height
         name_y = height / 2
-        #self.update_name(x=0, y=self.height / 2,
-        #                 width=self.width, height=h)
-        #if affine:
-        #    a = self._name.get_property('affine')
-        #    a = (a[0], a[1], a[2], a[3], a[4], height / 2)
-        #    self._name.set(affine=a, height=h)
         
         height += ClassItem.HEAD_MARGIN_Y
         width = w + ClassItem.HEAD_MARGIN_X
 
-        for comp in (self._attributes, self._operations):
+        for comp in compartments:
             width, height = comp.pre_update(width, height, affine)
 
         self.set(min_width=width, min_height=height)
@@ -244,7 +229,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         #    self._name.set_property('width', width)
         self.update_name(x=0, y=name_y, width=width, height=name_height)
 
-        for comp in (self._attributes, self._operations):
+        for comp in compartments:
             comp.update(width, affine)
 
         ClassifierItem.on_update(self, affine)
@@ -264,7 +249,8 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     # Groupable
 
     def on_groupable_add(self, item):
-        """Add an attribute or operation."""
+        """Add an attribute or operation.
+        """
         #if isinstance(item.subject, UML.Property):
         if isinstance(item, AttributeItem):
             #log.debug('Adding attribute %s' % item)
@@ -282,13 +268,14 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         return 1
 
     def on_groupable_remove(self, item):
-        """Remove a feature subitem."""
-        if item in self._attributes.items:
-            self._attributes.items.remove(item)
-            self.set_child_of(None)
-        elif item in self._operations.items:
-            self._operations.items.remove(item)
-            self.set_child_of(None)
+        """Remove a feature subitem.
+        """
+        if item in self._attributes:
+            self._attributes.remove(item)
+            item.set_child_of(None)
+        elif item in self._operations:
+            self._operations.remove(item)
+            item.set_child_of(None)
         else:
             log.warning('feature %s not found in feature list' % item)
             return 0
@@ -298,40 +285,12 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
 
     def on_groupable_iter(self):
         #log.debug('on_groupable_iter')
-        for i in self._attributes.items:
+        for i in self._attributes:
             #log.debug('on_groupable_iter (attr): %s' % i)
             yield i
-        for i in self._operations.items:
+        for i in self._operations:
             #log.debug('on_groupable_iter (oper): %s' % i)
             yield i
-
-    def on_groupable_length(self):
-        return len(self._attributes.items) + len(self._operations.items)
-
-    def on_groupable_pos(self, item):
-        if item in self._attributes.items:
-            return self._attributes.items.index(item)
-        elif item in self._operations.items:
-            return len(self._attributes.items) + self._operations.items.index(item)
-        else:
-            return -1
-
-    def __on_subject_update(self, name, old_value, new_value):
-        """Update self when the subject changes."""
-        if name == '__unlink__':
-            for f in self.__features:
-                f.set_subject(None)
-            #assert len(self.__features) == 0, '%d features still exist' % len(self.__features)
-            ClassifierItem.on_subject_update(self, name, old_value, new_value)
-        elif name == 'name':
-            self._name.set(text=self.subject.name)
-        elif name == 'feature' and (self.canvas and not self.canvas.in_undo):
-            # Only hande the feature if we're part of a diagram
-            #log.debug('on_subject_update(%s, %s)' % (old_value, new_value))
-            if old_value == 'add':
-                self._add_feature(new_value)
-            elif old_value == 'remove':
-                self._remove_feature(new_value)
 
 
 gobject.type_register(ClassItem)

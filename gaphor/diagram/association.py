@@ -14,6 +14,7 @@ import pango
 import diacanvas
 import diacanvas.shape
 import diacanvas.geometry
+import gaphor
 import gaphor.UML as UML
 
 from diagramitem import DiagramItem
@@ -210,7 +211,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
             # Find all associations and determine if the properties on the
             # association ends have a type that points to the class.
             Association = UML.Association
-            for assoc in GaphorResource(UML.ElementFactory).itervalues():
+            for assoc in gaphor.resource(UML.ElementFactory).itervalues():
                 if isinstance(assoc, Association):
                     #print 'assoc.memberEnd', assoc.memberEnd
                     end1 = assoc.memberEnd[0]
@@ -236,7 +237,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
             else:
                 # TODO: How should we handle other types than Class???
 
-                element_factory = GaphorResource(UML.ElementFactory)
+                element_factory = gaphor.resource(UML.ElementFactory)
                 relation = element_factory.create(UML.Association)
                 head_end = element_factory.create(UML.Property)
                 head_end.lowerValue = element_factory.create(UML.LiteralSpecification)
@@ -277,16 +278,6 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     def on_groupable_iter(self):
         return iter([self._head_end, self._tail_end])
 
-    def on_groupable_length(self):
-        return 2
-
-    def on_groupable_pos(self, item):
-        if item is self._head_end:
-            return 0
-        elif item is self._tail_end:
-            return 1
-        return -1
-
 
 class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
     """An association end represents one end of an association. An association
@@ -315,7 +306,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 
     def __init__(self, id=None):
         self.__gobject_init__()
-        DiagramItem.__init__(self) #, id)
+        DiagramItem.__init__(self)
         self.set_flags(diacanvas.COMPOSITE)
         
         font = pango.FontDescription(AssociationEnd.FONT)
@@ -501,7 +492,6 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         b2 = self._mult_bounds
         self._name_border.rectangle((b1[0], b1[1]), (b1[2], b1[3]))
         self._mult_border.rectangle((b2[0], b2[1]), (b2[2], b2[3]))
-        #self._border.rectangle((x1 + 0.5, y1 + 0.5), (x2 - 0.5, y2 - 0.5))
         self.set_bounds((min(b1[0], b2[0]), min(b1[1], b2[1]),
                          max(b1[2], b2[2]), max(b1[3], b2[3])))
 
@@ -563,7 +553,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
             log.info('editing mult done: %s' % new_text)
             if not self.subject.lowerValue:
                 log.debug('creating new lowerValue')
-                self.subject.lowerValue = GaphorResource('ElementFactory').create(UML.LiteralSpecification)
+                self.subject.lowerValue = gaphor.resource(UML.ElementFactory).create(UML.LiteralSpecification)
                 log.debug('created: %s' % self.subject.lowerValue)
             if new_text != self.subject.lowerValue.value:
                 self.subject.lowerValue.value = new_text

@@ -3,8 +3,8 @@
 
 import gtk
 import namespace
+import gaphor
 import gaphor.UML as UML
-import gaphor.version as version
 from abstractwindow import AbstractWindow
 
 class MainWindow(AbstractWindow):
@@ -18,7 +18,7 @@ class MainWindow(AbstractWindow):
 	self.__filename = None
 	self.__transient_windows = list()
 	# Act on changes in the element factory resource
-	factory = GaphorResource(UML.ElementFactory)
+	factory = gaphor.resource(UML.ElementFactory)
 	factory.connect(self.__on_element_factory_signal)
 
     def get_model(self):
@@ -39,7 +39,7 @@ class MainWindow(AbstractWindow):
 	return self.__transient_windows
 
     def construct(self):
-	model = namespace.NamespaceModel(GaphorResource(UML.ElementFactory))
+	model = namespace.NamespaceModel(gaphor.resource(UML.ElementFactory))
 	view = namespace.NamespaceView(model)
 	scrolled_window = gtk.ScrolledWindow()
 	scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -54,7 +54,7 @@ class MainWindow(AbstractWindow):
 
 
 	self._construct_window(name='main',
-			       title='Gaphor v' + version.VERSION,
+			       title='Gaphor v' + gaphor.resource('Version'),
 			       size=(220, 400),
 			       contents=scrolled_window,
 			       params={ 'window': self })
@@ -75,7 +75,7 @@ class MainWindow(AbstractWindow):
 	Window is destroyed... Quit the application.
 	"""
 	AbstractWindow._on_window_destroy(self, window)
-	GaphorResource(UML.ElementFactory).disconnect(self.__on_element_factory_signal)
+	gaphor.resource(UML.ElementFactory).disconnect(self.__on_element_factory_signal)
 	del self.__model
 	del self.__view
 
@@ -83,7 +83,7 @@ class MainWindow(AbstractWindow):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	node = self.get_model().node_from_path(path)
 	element = self.get_model().element_from_node(node)
-	cmd_reg = GaphorResource('CommandRegistry')
+	cmd_reg = gaphor.resource('CommandRegistry')
 	cmd = cmd_reg.get_command('main.popup', 'OpenModelElement')
 	cmd.set_parameters({ 'window': self,
 			     'element': element })
@@ -118,6 +118,6 @@ class MainWindow(AbstractWindow):
 
     def __on_element_factory_signal(self, obj, key):
 	#print '__on_element_factory_signal', key
-	factory = GaphorResource(UML.ElementFactory)
+	factory = gaphor.resource(UML.ElementFactory)
 	self.set_capability('model', not factory.is_empty())
 

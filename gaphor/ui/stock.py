@@ -1,7 +1,7 @@
 # vim:sw=4
 
 import gtk
-from gaphor import Gaphor
+import gaphor
 import gaphor.UML as UML
 import os.path as path
 
@@ -58,7 +58,6 @@ def get_stock_id(element):
 def add_stock_icons(stock_icons, icon_dir=''):
     global _uml_to_stock_id_map
     global _icon_factory
-    #icon_factory = GaphorResource(gtk.IconFactory)
     iconlist = []
 
     for si in stock_icons:
@@ -80,9 +79,8 @@ def add_stock_icons(stock_icons, icon_dir=''):
 # Initialization:
 #
 # We should do some special initialization for the icon factory:
-#icon_factory = gtk.IconFactory() #GaphorResource(gtk.IconFactory)
 #icon_factory.add_default()
 #del icon_factory
 
-add_stock_icons(_default_stock_icons, Gaphor().get_datadir() + '/pixmaps/')
+add_stock_icons(_default_stock_icons, gaphor.resource('DataDir') + '/pixmaps/')
 

@@ -263,7 +263,7 @@ class association(umlproperty):
         # if we needed to set our own side, set the opposite
         if self._set2(obj, value):
             # Set opposite side.
-            # Use value.__class__ since the property may be overridden:
+            # Use type(value) since the property may be overridden:
             if self.opposite:
                 getattr(type(value), self.opposite)._set(value, obj)
             self.notify(obj)

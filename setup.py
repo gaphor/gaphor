@@ -272,7 +272,7 @@ class run_Gaphor(Command):
         self.run_command('build')
 
         import os.path
-        from gaphor import Gaphor
+        import gaphor
         #os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
         if self.command:
             print 'Executing command: %s...' % self.command
@@ -292,7 +292,7 @@ class run_Gaphor(Command):
             print 'Executing file: %s...' % self.file
             execfile(self.file, {})
         else:
-            Gaphor().main()
+            gaphor.main()
 
 
 setup(name='gaphor',

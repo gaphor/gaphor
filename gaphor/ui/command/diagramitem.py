@@ -1,9 +1,10 @@
 # vim:sw=4
 
-from gaphor.misc.command import Command
 from commandinfo import CommandInfo
-import gaphor.diagram as diagram
+import gaphor
 import gaphor.UML as UML
+import gaphor.diagram as diagram
+from gaphor.misc.command import Command
 
 class PointerCommand(Command):
 
@@ -35,7 +36,7 @@ class PlacementCommand(Command):
 	"""Create a new instance of the item and return it."""
         item = self._window.get_diagram().create(self.type)
 	if self.subject_type:
-	    subject = GaphorResource('ElementFactory').create(self.subject_type)
+	    subject = gaphor.resource('ElementFactory').create(self.subject_type)
 	    try:
 		print 'set subject'
 		#item.set_property('subject', subject)

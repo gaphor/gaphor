@@ -2,10 +2,11 @@
 """elementfactory.py
 """
 
+from diagram import Diagram
+import gaphor
 import gaphor.misc.uniqueid as uniqueid
 #import weakref
 from element import Element
-from diagram import Diagram
 
 class ElementFactory(object):
     """The ElementFactory is used to create elements ans do lookups to
@@ -128,4 +129,4 @@ class ElementFactory(object):
             self.notify(element, 'create')
 
 # Make one ElementFactory instance an application-wide resource
-GaphorResource(ElementFactory)
+gaphor.resource(ElementFactory)

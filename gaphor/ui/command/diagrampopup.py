@@ -3,10 +3,11 @@ Commands related to the Diagram (DiaCanvas)
 """
 # vim: sw=4
 
+import diacanvas
 from gaphor.misc.command import Command, StatefulCommand
 from commandinfo import CommandInfo
+import gaphor
 import gaphor.UML as UML
-import diacanvas
 import gaphor.diagram as diagram
 
 CONTEXT='diagram.popup'
@@ -37,7 +38,7 @@ class CreateAttributeCommand(Command):
 	print 'creating attribute'
         subject = get_parent_focus_item(self._window).subject
         assert isinstance(subject, UML.Class)
-        elemfact = GaphorResource(UML.ElementFactory)
+        elemfact = gaphor.resource(UML.ElementFactory)
         attribute = elemfact.create(UML.Property)
         attribute.name = 'new'
         subject.ownedAttribute = attribute
@@ -57,7 +58,7 @@ class CreateOperationCommand(Command):
     def execute(self):
         subject = get_parent_focus_item(self._window).subject
         assert isinstance(subject, UML.Classifier)
-        elemfact = GaphorResource(UML.ElementFactory)
+        elemfact = gaphor.resource(UML.ElementFactory)
         operation = elemfact.create(UML.Operation)
         operation.name = 'new'
         subject.ownedOperation = operation
@@ -76,15 +77,16 @@ class DeleteFeatureCommand(Command):
 
     def execute(self):
         #subject = get_parent_focus_item(self._window).subject
-        subject = self._window.get_view().focus_item.item
-        assert isinstance(subject, UML.Feature)
-        subject.unlink()
+        item = self._window.get_view().focus_item.item
+        #assert isinstance(subject, (UML.Property, UML.Operation))
+	
+        item.subject.unlink()
 
-#CommandInfo (name='DeleteAttribute', _label='Delete A_ttribute',
-#             _tip='Delete the selected attribute',
-#             context=CONTEXT, subject=UML.Attribute,
-#             sensitive=('show-attributes',),
-#             command_class=DeleteFeatureCommand).register()
+CommandInfo (name='DeleteAttribute', _label='Delete A_ttribute',
+             _tip='Delete the selected attribute',
+             context=CONTEXT, subject=UML.Property,
+             sensitive=('show-attributes',),
+             command_class=DeleteFeatureCommand).register()
 
 CommandInfo (name='DeleteOperation', _label='Delete O_peration',
              _tip='Delete the selected operation',

@@ -1,17 +1,11 @@
 #!/usr/bin/env python
 # vim:sw=4
-"""
-This is the main package for Gaphor, a Python based UML editor.
-
-An extra function is installed in the builtin namespace: GaphorResource().
-This function can be used to locate application wide resources, such as
-object factories.
-GaphorError is also added to the builtin namespace: for Gaphor specific
-errors.
-
+"""This is the main package for Gaphor, a Python based UML editor.
 """
 
-# Check for GTK-2.0, since we need it anyway.
+__all__ = [ 'main', 'resource', 'GaphorError' ]
+
+# Check for GTK-2.0, since we need it anyway...
 import pygtk
 pygtk.require('2.0')
 del pygtk
@@ -21,6 +15,16 @@ import misc.logger
 import version
 import types
 
+import gaphor.version
+
+_resources = {
+    'Name': 'gaphor',
+    'Version': gaphor.version.VERSION,
+    'DataDir': gaphor.version.DATA_DIR
+}
+
+_main_window = None
+
 class GaphorError(Exception):
     """
     Gaphor specific exception class
@@ -29,106 +33,76 @@ class GaphorError(Exception):
             self.args = args
 
 
-class Gaphor(object):
-    """Gaphor main app.
-    This is a Singleton object that is used as a access point
-    to unique resources within Gaphor. The method main() is called once to
-    start an interactive instance of Gaphor. If an application wants to use
-    Gaphor's functionallity, but not the GUI, that application should not call
-    main().
-
-    Resources can be accessed through the get() method. Resources can be
-    Python classes or strings. In case of classes, get() will try to find an
-    existing class, if none is found, it will create one. No parameters will
-    be passed to that class.
-
-    In case of a string resource, a lookup will be done in the GConf
-    configuration tree. This is currently not implemented though...
+def main():
+    """Start the interactive application.
     """
+    global _resources
+    # Import stuff here, since the user might not need all the GUI stuff
+    import gtk
+    import bonobo
+    import gnome
+    # Initialize gnome.ui, since we need some definitions from it
+    import gnome.ui
+    from ui import MainWindow
+    gnome.init('gaphor', gaphor.version.VERSION)
+    # should we set a default icon here or something?
+    main_window = MainWindow()
+    main_window.construct()
+    # When the state changes to CLOSED, quit the application
+    main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and bonobo.main_quit())
+    #mainwin = GaphorResource(WindowFactory).create(type=MainWindow)
+    _resources['MainWindow'] = main_window
+    #gtk.threads_init()
+    #gtk.threads_enter()
+    bonobo.main()
+    #gtk.threads_leave()
+    log.info('Bye!')
 
-    __metaclass__ = misc.singleton.Singleton
 
-    NAME='gaphor'
-    VERSION=version.VERSION
-    TITLE='Gaphor v' + VERSION
+def get_conf(self, key):
+    if not self.__conf:
+	from gaphor.misc.conf import Conf
+	self.__conf = Conf(self.NAME)
+    return self.__conf[key]
 
-    __resources = { }
 
-    def __init__(self):
-        self.__main_window = None
-        self.__conf = None
+_no_default = []
 
-    def main(self):
-        import gtk
-	import bonobo
-        import gnome
-        # Initialize gnome.ui, since we need some definitions from it
-        import gnome.ui
-        from ui import MainWindow
-        gnome.init(Gaphor.NAME, Gaphor.VERSION)
-        # should we set a default icon here or something?
-        self.__main_window = MainWindow()
-        self.__main_window.construct()
-        # When the state changes to CLOSED, quit the application
-        self.__main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and bonobo.main_quit())
-        #mainwin = GaphorResource(WindowFactory).create(type=MainWindow)
+def resource(r, default=_no_default):
+    """Locate a resource.
 
-	#gtk.threads_init()
-	#gtk.threads_enter()
-        bonobo.main()
-	#gtk.threads_leave()
-        log.info('Bye!')
+    Resource should be the class of the resource to look for or a string. In
+    case of a string the resource will be looked up in the GConf configuration.
 
-    def get_main_window(self):
-        return self.__main_window
+    example: Get the element factory:
+	    elemfact = gaphor.resource(gaphor.UML.ElementFactory)
 
-    def get_conf(self, key):
-        if not self.__conf:
-            from gaphor.misc.conf import Conf
-            self.__conf = Conf(self.NAME)
-        return self.__conf[key]
+    Also builtin resources are 'Name', 'Version' and 'DataDir'. In case main()
+    is run, 'MainWindow' points to the main window of the application.
 
-    def get_datadir(self):
-        import gaphor.version
-        return gaphor.version.DATA_DIR
+    If a class name is given as a resource, the resource is created if not
+    yet available. If the resource is a string, KeyError is issued if the
+    resource could not be localed, unless a default value was set.
+    """
+    global _resources
+    try:
+	return _resources[r]
+    except KeyError:
+	pass
+    # Handle string-like resources 
+    if isinstance (r, types.StringType):
+	# TODO: It might be a GConf resource string
 
-    def get_version(self):
-	return VERSION
-
-    def get_resource(resource): # as staticmethod:
-        """*Static method*
-        Locate a resource. Resource should be the class of the resource to
-        look for or a string. In case of a string the resource will be looked
-        up in the GConf configuration.
-
-        example: Get the element factory:
-                elemfact = Gaphor.get(gaphor.UML.ElementFactory)
-
-        or (with Gaphor installed in the builtin namespace):
-                elemfact = GaphorResource(gaphor.UML.ElementFactory)
-        """
-        if isinstance (resource, types.StringType):
-            hash = Gaphor.__resources
-            if hash.has_key(resource):
-                return hash[resource]
-        else:
-            hash = Gaphor.__resources
-            if hash.has_key(resource):
-                return hash[resource]
-            try:
-                log.debug('Adding new resource: %s' % resource.__name__)
-                r = resource()
-                hash[resource] = r
-                hash[resource.__name__] = r
-                return r
-            except Exception, e:
-                raise GaphorError, 'Could not create resource %s (%s)' % (str(resource), str(e))
-
-    get_resource = staticmethod(get_resource)
+	if default is not _no_default:
+	    return default
+	raise KeyError, 'No resource with name "%s"' % r
+    # Instantiate the resource and return it
+    i = r()
+    _resources[r] = i
+    _resources[r.__name__] = i
+    return i
 
 
 import __builtin__
-__builtin__.__dict__['GaphorError'] = GaphorError
-__builtin__.__dict__['GaphorResource'] = Gaphor.get_resource
 __builtin__.__dict__['log'] = misc.logger.Logger()
 

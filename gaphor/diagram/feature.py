@@ -98,7 +98,7 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
 
     def on_update(self, affine):
         CanvasItem.on_update(self, affine)
-        log.debug('FeatureItem.on_update: %f, %f' % self.get_size(True))
+        #log.debug('FeatureItem.on_update: %f, %f' % self.get_size(True))
 
     def on_event(self, event):
         if event.type == diacanvas.EVENT_BUTTON_PRESS:

@@ -11,6 +11,7 @@
 __all__ = [ 'parse_property', 'parse_operation' ]
 
 import re
+import gaphor
 
 # Visibility (optional) ::= '+' | '-' | '#'
 vis_subpat = r'\s*(?P<vis>[-+#])?'
@@ -106,7 +107,7 @@ def parse_operation(self, s):
         # TODO: clean other attributes
     else:
         from uml2 import Parameter, LiteralString
-        element_factory = GaphorResource("ElementFactory")
+        element_factory = gaphor.resource("ElementFactory")
         g = m.group
         vis = g('vis')
         if vis == '+':
