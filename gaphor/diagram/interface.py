@@ -98,7 +98,7 @@ class InterfaceItem(ClassItem):
 
     def get_popup_menu(self):
         if self.drawing_style == self.DRAW_ICON:
-            return NamedItem.popup_menu + ('Unfold',)
+            return NamedItem.popup_menu + ('separator', 'Unfold',)
         else:
             return ClassItem.get_popup_menu(self)
 
