@@ -37,8 +37,8 @@ def save(filename=None, factory=None):
         This applies to both UML as well as canvas items.
         """
         # Save a reference to the object:
-        assert value.id, 'Referenced element %s has no id' % value
-        buffer.write('<%s><ref refid="%s"/></%s>\n' % (name, value.id, name))
+        if value.id: #, 'Referenced element %s has no id' % value
+            buffer.write('<%s><ref refid="%s"/></%s>\n' % (name, value.id, name))
 
     def save_collection(name, value):
         """Save a list of references.
@@ -47,8 +47,8 @@ def save(filename=None, factory=None):
             buffer.write('<%s><reflist>' % name)
             for v in value:
                 #save_reference(name, v)
-                assert v.id, 'Referenced element %s has no id' % v
-                buffer.write('<ref refid="%s"/>' % v.id)
+                if v.id: #, 'Referenced element %s has no id' % v
+                    buffer.write('<ref refid="%s"/>' % v.id)
             buffer.write('</reflist></%s>' % name)
 
     def save_value(name, value):
