@@ -86,6 +86,9 @@ class Writer:
         """
         params = { }
         type = a.typeValue and a.typeValue.get('value')
+        if type is None:
+            raise ValueError('ERROR! type is not specified for property %s.%s' % (a.class_name, a.name))
+
         if type.lower() == 'boolean':
             # FixMe: Should this be a boolean or an integer?
             # Integer is save and compattable with python2.2.
@@ -156,14 +159,12 @@ class Writer:
         if not navigable:
             # from this side, the association is not navigable
             return True
-        try:
-            #derived, name = parse_association_name(head['name'])
-            name = head.name
-            derived = int(head.isDerived or 0)
-        except KeyError:
-            msg('ERROR! no name, but navigable: %s (%s.%s)' %
-                (head.id, head.class_name, head.name))
-            return True
+
+        name = head.name
+        if name is None:
+            raise ValueError('ERROR! no name, but navigable: %s (%s.%s)' % (head.id, head.class_name, head.name))
+
+        derived = int(head.isDerived or 0)
 
         #lower, upper, subsets, redefines = parse_association_multiplicity(head.lowerValue)
         #print head.id, head.lowerValue
