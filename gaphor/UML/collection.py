@@ -8,16 +8,16 @@ class CollectionError(Exception):
 class collection(object):
 
     def __init__(self, property, object, type):
-	self.property = property
-	self.object = object
-	self.type = type
-	self.items = []
+        self.property = property
+        self.object = object
+        self.type = type
+        self.items = []
 
     def __len__(self):
         return len(self.items)
 
     def __setitem__(self, key, value):
-	raise CollectionError, 'items should not be overwritten.'
+        raise CollectionError, 'items should not be overwritten.'
 
     def __delitem__(self, key):
         self.remove(key)
@@ -29,41 +29,41 @@ class collection(object):
         return self.items.__getslice__(i, j)
 
     def __setslice__(self, i, j, s):
-	raise CollectionError, 'items should not be overwritten.'
+        raise CollectionError, 'items should not be overwritten.'
 
     def __delslice__(self, i, j):
-	raise CollectionError, 'items should not be deleted this way.'
+        raise CollectionError, 'items should not be deleted this way.'
 
     def __contains__(self, obj):
         return self.items.__contains__(obj)
 
     def __iter__(self):
-	return iter(self.items)
+        return iter(self.items)
 
     def __str__(self):
-	return str(self.items)
+        return str(self.items)
 
     __repr__ = __str__
 
     def __nonzero__(self):
-	return self.items!=[]
+        return self.items!=[]
 
     def append(self, value):
-	if isinstance(value, self.type):
-	    self.property._set(self.object, value)
-	else:
-	    raise CollectionError, 'Object is not of type %s' % self.type.__name__
+        if isinstance(value, self.type):
+            self.property._set(self.object, value)
+        else:
+            raise CollectionError, 'Object is not of type %s' % self.type.__name__
 
     def remove(self, value):
-	if value in self.items:
-	    self.property.__delete__(self.object, value)
-	else:
-	    raise AttributeError, '%s not in collection' % value
+        if value in self.items:
+            self.property.__delete__(self.object, value)
+        else:
+            raise AttributeError, '%s not in collection' % value
 
     def index(self, key):
-	"""Given an object, return the position of that object in the
-	collection."""
-	return self.items.index(key)
+        """Given an object, return the position of that object in the
+        collection."""
+        return self.items.index(key)
     
     # OCL members (from SMW by Ivan Porres, http://www.abo.fi/~iporres/smw)
 
