@@ -7,46 +7,49 @@ import gaphor.UML as UML
 import os.path as path
 
 STOCK_ACTOR = 'gaphor-actor'
-STOCK_USECASE = 'gaphor-usecase'
-STOCK_PACKAGE = 'gaphor-package'
+STOCK_ASSOCIATION = 'gaphor-association'
+STOCK_CLASS = 'gaphor-class'
 STOCK_COMMENT = 'gaphor-comment'
 STOCK_COMMENT_LINE = 'gaphor-comment-line'
-STOCK_GENERALIZATION = 'gaphor-generalization'
-STOCK_ASSOCIATION = 'gaphor-association'
 STOCK_DEPENDENCY = 'gaphor-dependency'
-STOCK_REALIZATION = 'gaphor-realization'
-STOCK_INCLUDE = 'gaphor-include'
-STOCK_EXTEND = 'gaphor-extend'
 STOCK_DIAGRAM = 'gaphor-diagram'
+STOCK_EXTEND = 'gaphor-extend'
+STOCK_GENERALIZATION = 'gaphor-generalization'
+STOCK_INCLUDE = 'gaphor-include'
+STOCK_PACKAGE = 'gaphor-package'
+STOCK_REALIZATION = 'gaphor-realization'
+STOCK_USECASE = 'gaphor-usecase'
 
 uml_to_stock_id_map = {
     UML.Actor: STOCK_ACTOR,
-    UML.UseCase: STOCK_USECASE,
-    UML.Package: STOCK_PACKAGE,
-    UML.Comment: STOCK_COMMENT,
-    UML.Generalization: STOCK_GENERALIZATION,
     UML.Association: STOCK_ASSOCIATION,
+    UML.Class: STOCK_CLASS,
+    UML.Comment: STOCK_COMMENT,
     UML.Dependency: STOCK_DEPENDENCY,
-    UML.Include: STOCK_INCLUDE,
+    UML.Diagram: STOCK_DIAGRAM,
     UML.Extend: STOCK_EXTEND,
-    UML.Diagram: STOCK_DIAGRAM
+    UML.Generalization: STOCK_GENERALIZATION,
+    UML.Include: STOCK_INCLUDE,
+    UML.Package: STOCK_PACKAGE,
+    UML.UseCase: STOCK_USECASE
 }
 
 # Definition of stock items to be added, will be deleted at the end
 # of this fils file.
 default_stock_items = (
-    (STOCK_DIAGRAM,	'_Diagram',	'diagram24.png', 'diagram16.png'),
     (STOCK_ACTOR,	'_Actor',	'actor24.png', 'actor16.png'),
-    (STOCK_USECASE,	'_Use case',	'usecase24.png', 'usecase16.png'),
-    (STOCK_PACKAGE,	'_Package',	'package24.png', 'package16.png'),
+    (STOCK_ASSOCIATION,	'A_ssociation',	'association24.png', 'association16.png'),
+    (STOCK_CLASS,	'_Class',	'class24.png', 'class16.png'),
+    (STOCK_DEPENDENCY,	'_Dependency',	'dependency24.png', 'dependency16.png'),
+    (STOCK_DIAGRAM,	'_Diagram',	'diagram24.png', 'diagram16.png'),
+    (STOCK_EXTEND,	'_Extend',	None, None),
     (STOCK_COMMENT,	'_Comment',	'comment24.png', 'comment16.png'),
     (STOCK_COMMENT_LINE, 'Comment _line', None, None),
     (STOCK_GENERALIZATION, '_Generalization', 'generalization24.png', 'generalization16.png'),
-    (STOCK_ASSOCIATION,	'A_ssociation',	'association24.png', 'association16.png'),
-    (STOCK_DEPENDENCY,	'_Dependency',	'dependency24.png', 'dependency16.png'),
-    (STOCK_REALIZATION,	'_Realization',	None, None),
     (STOCK_INCLUDE,	'_Include',	None, None),
-    (STOCK_EXTEND,	'_Extend',	None, None)
+    (STOCK_PACKAGE,	'_Package',	'package24.png', 'package16.png'),
+    (STOCK_REALIZATION,	'_Realization',	None, None),
+    (STOCK_USECASE,	'_Use case',	'usecase24.png', 'usecase16.png')
 )
 
 default_icon_dir = path.dirname(path.abspath(__file__)) + '/icons/'

@@ -197,3 +197,4 @@ class ActorItem(ModelElementItem):
 	    self.subject.name = text
 	    self.__name_update()
 
+gobject.type_register(ActorItem)

@@ -10,6 +10,7 @@ from gaphor.misc.signal import Signal as _Signal
 #from misc.storage import Storage
 import weakref, gc
 from element import Element
+from diagram import Diagram
 
 class ElementFactory(_Singleton):
 
@@ -71,7 +72,7 @@ class ElementFactory(_Singleton):
 	for key, value in self.__elements.items():
 	    print 'ElementFactory: unlinking', value
 	    #print 'references:', gc.get_referrers(value)
-	    if isinstance (value, UML.Diagram):
+	    if isinstance (value, Diagram):
 		value.canvas.clear_undo()
 		value.canvas.clear_redo()
 	    value.unlink()

@@ -98,3 +98,4 @@ class Gaphor(Singleton):
 import __builtin__
 __builtin__.__dict__['GaphorError'] = GaphorError
 __builtin__.__dict__['gaphorResource'] = Gaphor.getResource
+

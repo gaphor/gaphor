@@ -1,8 +1,6 @@
 # vim:sw=4
 
-import gaphor.misc as misc
-
-class SequenceError(misc.GaphorError):
+class SequenceError(GaphorError):
     pass
 	
 class Sequence:

@@ -62,5 +62,4 @@ class DiagramItemFactory(Singleton):
 	is typically used for ModelElement like elements. Relationships can
 	exist without being bound to a UML object.
 	"""
-	gobject.type_register(item_class)
 	DiagramItemFactory.__diagram2uml[item_class] = uml_class

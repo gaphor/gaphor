@@ -29,6 +29,7 @@ class DiagramWindow:
 	insert_menu = ()
 
 	items=((stock.STOCK_ACTOR, diagram.ActorItem, 'Actor'),
+		(stock.STOCK_CLASS, diagram.ClassItem, 'Class'),
 		(stock.STOCK_USECASE, diagram.UseCaseItem, 'UseCase'),
 		(stock.STOCK_PACKAGE, diagram.PackageItem, 'Package'),
 		(stock.STOCK_COMMENT, diagram.CommentItem, 'Comment'),

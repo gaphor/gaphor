@@ -1,0 +1,68 @@
+'''
+ClassMember diagram item
+'''
+# vim:sw=4
+
+from modelelement import ModelElementItem
+import diacanvas
+import pango
+import gobject
+from diacanvas import CanvasText
+from diagramitem import DiagramItem
+
+class ClassMember(CanvasText, DiagramItem):
+    """
+    Classmembers are model elements who recide inside a ClassItem, such as
+    methods and attributes. Those items can have comments attached, but only on
+    the left and right side.
+    Note that classmembers can also be used inside objects.
+    """
+    __gproperties__ = {
+	'subject':	(gobject.TYPE_PYOBJECT, 'subject',
+			 'subject held by the relationship',
+			 gobject.PARAM_READWRITE),
+    }
+    FONT='sans 10'
+
+    def __init__(self):
+	diacanvas.CanvasText.__init__(self)
+	font = pango.FontDescription(ClassMember.FONT)
+	self.set(font=font, width=self.width,
+			alignment=pango.ALIGN_CENTER)
+	w, h = self.__name.get_property('layout').get_pixel_size()
+	self.set(height=h)
+	self.connect('text_changed', self.on_text_changed)
+	self.subject = None
+
+    def do_set_property (self, pspec, value):
+	if pspec.name == 'subject':
+	    print 'Setting subject:', value
+	    self._set_subject(value)
+	else:
+	    raise AttributeError, 'Unknown property %s' % pspec.name
+
+    def do_get_property(self, pspec):
+	if pspec.name == 'subject':
+	    return self.subject
+	else:
+	    raise AttributeError, 'Unknown property %s' % pspec.name
+
+    def load(self, store):
+	#ModelElementItem.load(self, store)
+	pass
+
+#    def on_update(self, affine):
+#	#ModelElementItem.on_update(self, affine)
+#	pass
+
+    def on_subject_update(self, name, old_value, new_value):
+	if name == 'name':
+	    self.set(text=self.subject.name)
+
+    def on_text_changed(self, text_item, text):
+	if text != self.subject.name:
+	    self.subject.name = text
+
+gobject.type_register(ClassMember)
+diacanvas.set_callbacks(ClassMember)
+

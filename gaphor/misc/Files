@@ -1,7 +1,6 @@
 __init__.py
 GConf.py
 command.py
-gaphorerror.py
 menufactory.py
 signal.py
 singleton.py

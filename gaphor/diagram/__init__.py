@@ -1,6 +1,7 @@
 # All model items...
 
 from actor import *
+from klass import *
 from comment import *
 from commentline import *
 from usecase import *
@@ -18,6 +19,7 @@ import gaphor.UML as UML
 
 f = gaphorResource(DiagramItemFactory)
 f.register (ActorItem, UML.Actor)
+f.register (ClassItem, UML.Class)
 f.register (CommentItem, UML.Comment)
 f.register (UseCaseItem, UML.UseCase)
 f.register (PackageItem, UML.Package)

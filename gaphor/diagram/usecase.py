@@ -1,10 +1,11 @@
 '''
-UseCaseItem diagram item
+eseCaseItempango diagram item
 '''
 # vim:sw=4
 
 from modelelement import ModelElementItem
 import diacanvas
+import gobject
 import pango
 
 class UseCaseItem(ModelElementItem):
@@ -111,4 +112,6 @@ class UseCaseItem(ModelElementItem):
     def on_text_changed(self, text_item, text):
 	if text != self.subject.name:
 	    self.subject.name = text
+
+gobject.type_register(UseCaseItem)
 

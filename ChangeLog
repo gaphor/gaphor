@@ -3,6 +3,11 @@
 	* gaphor/gaphor.py: Added GaphorError here. Added a generic resource
 	locator here. Added GaphorError and the resource locator
 	(gaphorResource) to the builtin namespace.
+	* gaphor/diagram/diagramitemfactory.py (register): do no longer
+	gobject.type_register(). Let every class take care of that for
+	themselves.
+	* gaphor/diagram/klass.py: New file. Implementation of Classes
+	(named klass, to avoid name conflicts with python).
 
 2002-08-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

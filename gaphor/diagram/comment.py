@@ -5,6 +5,7 @@ CommentItem diagram item
 
 from modelelement import ModelElementItem
 import diacanvas
+import gobject
 import pango
 
 class CommentItem(ModelElementItem):
@@ -124,4 +125,6 @@ class CommentItem(ModelElementItem):
 	self.__body_update()
 	if text != self.subject.body:
 	    self.subject.body = text
+
+gobject.type_register(CommentItem)
 
