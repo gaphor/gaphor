@@ -121,6 +121,28 @@ class UseCasePlacementAction(NamespacePlacementAction):
 register_action(UseCasePlacementAction)
 
 
+class IncludePlacementAction(PlacementAction):
+    id = 'InsertInclude'
+    label = '_Include'
+    tooltip = 'Create a new Include'
+    stock_id = 'gaphor-dependency'
+    name = 'Include'
+    type = diagram.IncludeItem
+
+register_action(IncludePlacementAction)
+
+
+class ExtendPlacementAction(PlacementAction):
+    id = 'InsertExtend'
+    label = '_Extend'
+    tooltip = 'Create a new Extend'
+    stock_id = 'gaphor-dependency'
+    name = 'Extend'
+    type = diagram.ExtendItem
+
+register_action(ExtendPlacementAction)
+
+
 class ClassPlacementAction(NamespacePlacementAction):
     id = 'InsertClass'
     label = '_Class'

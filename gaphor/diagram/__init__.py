@@ -62,6 +62,8 @@ from package import PackageItem
 from interface import InterfaceItem
 from relationship import RelationshipItem
 from dependency import DependencyItem
+from include import IncludeItem
+from extend import ExtendItem
 from generalization import GeneralizationItem
 from implementation import ImplementationItem
 from association import AssociationItem

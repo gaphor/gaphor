@@ -101,7 +101,9 @@ class MainWindow(AbstractWindow):
         ("Use Cases", (
                 'InsertUseCase',
                 'InsertActor',
-                'InsertUseCaseAssociation')),
+                'InsertUseCaseAssociation',
+                'InsertInclude',
+                'InsertExtend')),
         ("Profiles", (
                 'InsertProfile',
                 'InsertMetaClass',
