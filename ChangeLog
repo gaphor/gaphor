@@ -1,3 +1,8 @@
+2004-11-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/klass.py: save width/height when
+	subject.ownedAttribute and subject.ownedOperation change.
+
 2004-11-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* data/plugins/xmiexport/__init__.py: Added action with save dialog.

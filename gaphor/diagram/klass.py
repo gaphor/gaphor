@@ -185,12 +185,16 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         """
         #log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
+        self.preserve_property('width')
+        self.preserve_property('height')
         self.sync_attributes()
 
     def on_subject_notify__ownedOperation(self, subject, pspec=None):
         """Called when the ownedOperation property of our subject changes.
         """
         #log.debug('on_subject_notify__ownedOperation')
+        self.preserve_property('width')
+        self.preserve_property('height')
         self.sync_operations()
 
     # Groupable
