@@ -1,3 +1,11 @@
+2004-05-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/menufactory.py: fixed a few bugs
+	* gaphor/diagram/relationship.py: made a generic find_relationship()
+	function.
+	* gaphor/diagram/(dependency|generalization|flow).py: use this
+	function.
+
 2004-05-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/misc/action.py: no longer register actions as stock items.

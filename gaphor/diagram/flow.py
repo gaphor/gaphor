@@ -42,14 +42,9 @@ class FlowItem(RelationshipItem, diacanvas.CanvasGroupable):
     def find_relationship(self, head_subject, tail_subject):
         """See RelationshipItem.find_relationship().
         """
-        for edge in head_subject.incoming:
-            if tail_subject is edge.target:
-                # Check if the dependency is not already in our diagram
-                for item in self.subject.presentation:
-                    if item.canvas is self.canvas and item is not self:
-                        break
-                else:
-                    return edge
+        return self._find_relationship(head_subject, tail_subject,
+                                       ('source', 'outgoing'),
+                                       ('target', 'incoming'))
 
     def allow_connect_handle(self, handle, connecting_to):
         """See RelationshipItem.allow_connect_handle().

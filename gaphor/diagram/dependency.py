@@ -94,6 +94,10 @@ class DependencyItem(RelationshipItem):
     def find_relationship(self, head_subject, tail_subject):
         """See RelationshipItem.find_relationship().
         """
+        return self._find_relationship(head_subject, tail_subject,
+                                       ('supplier', 'supplierDependency'),
+                                       ('client', 'clientDependency'))
+
         for supplier in head_subject.supplierDependency:
             #print 'supplier', supplier, supplier.client, tail_subject
             if tail_subject in supplier.client:

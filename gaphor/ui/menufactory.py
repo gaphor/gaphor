@@ -164,15 +164,20 @@ class MenuFactory(object):
                 if action.stock_id:
                     item = gtk.ImageMenuItem(action.stock_id, self.accel_group)
                     # stock_info: (id, label, mod, key, translationdomain)
+                    # Set the label right
+                    item.get_children()[0].set_text_with_mnemonic(label)
                 else:
                     item = gtk.MenuItem(label)
                 item.connect('activate', self.on_item_activate, action.id)
 
+            # If possible, set a accelarator (and the accelerator is not yet
+            # set by the stock id):
             if action.accel and not (stock_info and stock_info[3]):
                 modifier, keyval = _mod_and_keyval_from_accel(action.accel)
                 #print 'adding accel', action.accel, 'to', action.id, gtk.accelerator_name(modifier, keyval)
                 item.add_accelerator("activate", self.accel_group,
                                      keyval, modifier, gtk.ACCEL_VISIBLE);
+
             # Connect to the event so we can push/pop status messages:
             item.show()
             item.connect('event', self.on_item_event, action.id)

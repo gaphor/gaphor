@@ -22,6 +22,10 @@ class GeneralizationItem(relationship.RelationshipItem):
     def find_relationship(self, head_subject, tail_subject):
         """See RelationshipItem.find_relationship().
         """
+        return self._find_relationship(head_subject, tail_subject,
+                                       ('general', None),
+                                       ('specific', 'generalization'))
+
 	if self.subject and \
 	   self.subject.general is head_subject and \
 	   self.subject.specific is tail_subject:
@@ -36,7 +40,7 @@ class GeneralizationItem(relationship.RelationshipItem):
                     if item.canvas is self.canvas and item is not self:
                         break
                 else:
-                    return spec
+                    return gen
         return None
 
     def allow_connect_handle(self, handle, connecting_to):
