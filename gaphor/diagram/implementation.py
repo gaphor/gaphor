@@ -10,22 +10,22 @@ import gaphor.diagram.interface
 import relationship
 
 class ImplementationItem(relationship.RelationshipItem):
+    default_look = {
+        'dash': (7.0, 5.0),
+        'has_head': 1,
+        'head_fill_color': 0,
+        'head_a': 15.0,
+        'head_b': 15.0,
+        'head_c': 10.0,
+        'head_d': 10.0,
+    }
+    folded_interface_look = {
+        'dash': None,
+        'has_head': 0,
+    }
 
     def __init__(self, id = None):
         relationship.RelationshipItem.__init__(self, id)
-        self.default_look = {
-            'dash': (7.0, 5.0),
-            'has_head': 1,
-            'head_fill_color': 0,
-            'head_a': 15.0,
-            'head_b': 15.0,
-            'head_c': 10.0,
-            'head_d': 10.0,
-        }
-        self.folded_interface_look = {
-            'dash': None,
-            'has_head': 0,
-        }
         self.set(**self.default_look)
         
     # Gaphor Connection Protocol
