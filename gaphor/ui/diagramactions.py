@@ -162,6 +162,10 @@ class SelectAllAction(Action):
     def init(self, window):
 	self._window = window
 
+    def update(self):
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = bool(diagram_tab)
+
     def execute(self):
 	self._window.get_current_diagram_view().select_all()
 
@@ -173,11 +177,7 @@ class DeselectAllAction(Action):
 
     def init(self, window):
 	self._window = window
-#	window.get_current_diagram_view().connect('select-item', self.on_select_item)
-#	window.get_current_diagram_view().connect('unselect-item', self.on_select_item)
-#	self.on_select_item(window.get_current_diagram_view(), None)
 
-#    def on_select_item(self, view, select_item):
     def update(self):
 	diagram_tab = self._window.get_current_diagram_tab()
 	self.sensitive = diagram_tab and len(diagram_tab.get_view().selected_items) > 0
@@ -196,11 +196,7 @@ class DeleteAction(Action):
 
     def init(self, window):
 	self._window = window
-#	window.get_current_diagram_view().connect('select-item', self.on_select_item)
-#	window.get_current_diagram_view().connect('unselect-item', self.on_select_item)
-#	self.on_select_item(window.get_current_diagram_view(), None)
 
-#    def on_select_item(self, view, select_item):
     def update(self):
 	diagram_tab = self._window.get_current_diagram_tab()
 	self.sensitive = diagram_tab and len(diagram_tab.get_view().selected_items) > 0
@@ -224,6 +220,10 @@ class ZoomInAction(Action):
     def init(self, window):
 	self._window = window
 
+    def update(self):
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = bool(diagram_tab)
+
     def execute(self):
 	view = self._window.get_current_diagram_view()
 	view.set_zoom(view.get_zoom() + 0.1)
@@ -238,6 +238,10 @@ class ZoomOutAction(Action):
 
     def init(self, window):
 	self._window = window
+
+    def update(self):
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = bool(diagram_tab)
 
     def execute(self):
 	view = self._window.get_current_diagram_view()
@@ -254,6 +258,10 @@ class Zoom100Action(Action):
     def init(self, window):
 	self._window = window
 
+    def update(self):
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = bool(diagram_tab)
+
     def execute(self):
 	self._window.get_current_diagram_view().set_zoom(1.0)
 
@@ -269,6 +277,7 @@ class SnapToGridAction(CheckAction):
 
     def update(self):
 	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = bool(diagram_tab)
 	self.active = diagram_tab and diagram_tab.get_canvas().get_property('snap_to_grid')
 
     def execute(self):
@@ -285,7 +294,9 @@ class ShowGridAction(CheckAction):
 	self._window = window
 
     def update(self):
+	print 'update', self
 	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = bool(diagram_tab)
 	self.active = diagram_tab and diagram_tab.get_canvas().get_property('grid_color') != diagram_tab.get_canvas().get_property('grid_bg') 
 
     def execute(self):

@@ -1,8 +1,9 @@
 2004-03-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/attribute.py, operation.py: Added popup menu.
-	* gaphor/ui/diagramactions.py: Added action ShowGrid.
-	* gaphor/ui/mainwindow.py: Added ShowGrid to menu.
+	* gaphor/ui/diagramactions.py: Added action ShowGrid. Made actions non
+	sensitive when no diagram is shown
+	* gaphor/ui/mainwindow.py: Added ShowGrid to menu. fixed TabChange.
 
 2004-03-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

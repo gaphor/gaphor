@@ -76,9 +76,6 @@ class MainWindow(AbstractWindow):
         self.__filename = None
         self.__transient_windows = []
         self.notebook_map = {}
-        # Act on changes in the element factory resource
-        #factory = gaphor.resource(UML.ElementFactory)
-        #factory.connect(self.__on_element_factory_signal)
 
     def get_model(self):
         self._check_state(AbstractWindow.STATE_ACTIVE)
@@ -117,7 +114,7 @@ class MainWindow(AbstractWindow):
         
         view.connect_after('event-after', self.on_view_event)
         view.connect('row-activated', self.on_view_row_activated)
-        view.connect('cursor-changed', self.on_view_cursor_changed)
+        view.connect_after('cursor-changed', self.on_view_cursor_changed)
         view.set_size_request(200, 200)
 
         #scrolled_window.show_all()
@@ -135,7 +132,7 @@ class MainWindow(AbstractWindow):
         notebook.set_scrollable(True)
         notebook.set_show_border(False)
  
-        notebook.connect('switch-page', self.on_notebook_switch_page)
+        notebook.connect_after('switch-page', self.on_notebook_switch_page)
 
         paned.pack2(notebook)
         paned.show_all()
