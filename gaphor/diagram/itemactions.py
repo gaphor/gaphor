@@ -209,19 +209,19 @@ class OrthogonalAction(CheckAction):
 	try:
 	    fi = get_parent_focus_item(self._window)
 	    if fi and isinstance(fi, diacanvas.CanvasLine):
-		self.sensitive = fi.get_property('orthogonal')
+		self.active = fi.get_property('orthogonal')
 	except NoFocusItemError:
 	    pass
 
-    def execute(self, orthogonal):
+    def execute(self):
         fi = get_parent_focus_item(self._window)
         view = self._window.get_view()
         assert isinstance(fi, diacanvas.CanvasLine)
         #orthogonal = not fi.get_property('orthogonal')
-        log.debug('Setting orthogonal for %s: %d' % (fi, orthogonal))
-        if orthogonal and len(fi.handles) < 3:
+        #log.debug('Setting orthogonal for %s: %d' % (fi, orthogonal))
+        if self.active and len(fi.handles) < 3:
             fi.set_property('add_segment', 0)
-        fi.set_property('orthogonal', orthogonal)
+        fi.set_property('orthogonal', self.active)
         #import traceback
         #traceback.print_stack()
 
