@@ -1,3 +1,8 @@
+2002-03-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: fixed bug that didn't show
+	aggregation properly when a diagram was loaded.
+
 2002-03-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* setup.py, setup.cfg: Distutils setup scripts.

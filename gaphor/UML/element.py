@@ -100,9 +100,7 @@ class Element(object):
 	    pres.remove(presentation)
 	    if len(pres) == 0:
 		print self, 'No more presentations: unlinking...'
-		self.__save_undo_data()
-		# unlink, but do not destroy __undo_data
-	        self.__unlink()
+	        self.undoable_unlink()
     
     def presentations(self):
 	"""Return a list of presentation elements that hold a reference to the
@@ -120,6 +118,11 @@ class Element(object):
         return type(self)==type(anotherO)
 
     # Lifecycle:
+
+    def undoable_unlink(self):
+	self.__save_undo_data()
+	# unlink, but do not destroy __undo_data
+	self.__unlink()
 
     def unlink(self):
 	"""Remove all references to the object."""
@@ -353,7 +356,8 @@ class Element(object):
 	for key in self.__dict__.keys():
 	    if self.__dict__[key] is seq:
 	        break
-	self.__real_sequence_add(key, seq, obj)
+	#self.__real_sequence_add(key, seq, obj)
+	self.__setattr__(key, obj)
 	self.__flush()
 
     def sequence_remove(self, seq, obj):

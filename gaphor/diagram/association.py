@@ -80,17 +80,17 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	elif capability == 'tail_is_navigable':
 	    return self.tail_end and self.tail_end.isNavigable or False
 	elif capability == 'head_ak_none':
-	    return self.head_end and (self.head_end.aggregation is UML.AK_NONE) or False
+	    return self.head_end and (self.head_end.aggregation == UML.AK_NONE) or False
 	elif capability == 'head_ak_aggregate':
-	    return self.head_end and (self.head_end.aggregation is UML.AK_AGGREGATE) or False
+	    return self.head_end and (self.head_end.aggregation == UML.AK_AGGREGATE) or False
 	elif capability == 'head_ak_composite':
-	    return self.head_end and (self.head_end.aggregation is UML.AK_COMPOSITE) or False
+	    return self.head_end and (self.head_end.aggregation == UML.AK_COMPOSITE) or False
 	elif capability == 'tail_ak_none':
-	    return self.tail_end and (self.tail_end.aggregation is UML.AK_NONE) or False
+	    return self.tail_end and (self.tail_end.aggregation == UML.AK_NONE) or False
 	elif capability == 'tail_ak_aggregate':
-	    return self.tail_end and (self.tail_end.aggregation is UML.AK_AGGREGATE) or False
+	    return self.tail_end and (self.tail_end.aggregation == UML.AK_AGGREGATE) or False
 	elif capability == 'tail_ak_composite':
-	    return self.tail_end and (self.tail_end.aggregation is UML.AK_COMPOSITE) or False
+	    return self.tail_end and (self.tail_end.aggregation == UML.AK_COMPOSITE) or False
 	else:
 	    return RelationshipItem.has_capability(self, capability)
 
@@ -158,7 +158,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 		name_dy = -ofs - name_h # - height
 		mult_dx = -ofs - mult_w
 		mult_dy = ofs
-	elif abs_rc >= 0 and abs_rc <= 0.2:
+	elif 0 <= abs_rc <= 0.2:
 	    #print 'vertical line'
 	    if v:
 		name_dx = -ofs - name_w # - width
@@ -198,33 +198,29 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	# Update line endings:
 	if self.head_end and self.tail_end:
 	    # Update line ends using the aggregation and isNavigable values:
-	    if self.head_end.aggregation == UML.AK_NONE:
-		# No aggregation, but we need a navigatable arrow
-		if self.tail_end.isNavigable and not self.head_end.isNavigable:
-		    self.set(has_tail=1,
-			     tail_a=0.0, tail_b=15.0, tail_c=6.0, tail_d=6.0)
-		else:
-		    self.set(has_tail=0)
-	    else:
-		self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6)
-		if self.head_end.aggregation == UML.AK_COMPOSITE:
-		    self.set(tail_fill_color=diacanvas.color(0,0,0,255))
-		else:         
-		    self.set(tail_fill_color=diacanvas.color(0,0,0,0))
+	    self.set(has_tail=0, has_head=0)
 
-	    if self.tail_end.aggregation == UML.AK_NONE:
-		# No aggregation, but we need a navigatable arrow
-		if self.head_end.isNavigable and not self.tail_end.isNavigable:
+	    if self.head_end.aggregation == UML.AK_NONE:
+	       if self.head_end.isNavigable and not self.tail_end.isNavigable:
 		    self.set(has_head=1,
 			     head_a=0.0, head_b=15.0, head_c=6.0, head_d=6.0)
-		else:
-		    self.set(has_head=0)
 	    else:
 		self.set(has_head=1, head_a=20, head_b=10, head_c=6, head_d=6)
-		if self.tail_end.aggregation == UML.AK_COMPOSITE:
+		if self.head_end.aggregation == UML.AK_COMPOSITE:
 		    self.set(head_fill_color=diacanvas.color(0,0,0,255))
-		else:         
+		else:
 		    self.set(head_fill_color=diacanvas.color(0,0,0,0))
+
+	    if self.tail_end.aggregation == UML.AK_NONE:
+	       if self.tail_end.isNavigable and not self.head_end.isNavigable:
+		    self.set(has_tail=1,
+			     tail_a=0.0, tail_b=15.0, tail_c=6.0, tail_d=6.0)
+	    else:
+		self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6)
+		if self.tail_end.aggregation == UML.AK_COMPOSITE:
+		    self.set(tail_fill_color=diacanvas.color(0,0,0,255))
+		else:
+		    self.set(tail_fill_color=diacanvas.color(0,0,0,0))
 		    
 	RelationshipItem.on_update(self, affine)
 

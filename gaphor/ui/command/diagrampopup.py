@@ -39,7 +39,7 @@ class CreateAttributeCommand(Command):
 	elemfact = GaphorResource(UML.ElementFactory)
 	attribute = elemfact.create(UML.Attribute)
 	attribute.name = 'new'
-	subject.feature.append(attribute)
+	subject.feature = attribute
 
 CommandInfo (name='CreateAttribute', _label='New _Attribute',
 	     _tip='Create a new attribute',
@@ -58,13 +58,37 @@ class CreateOperationCommand(Command):
 	elemfact = GaphorResource(UML.ElementFactory)
 	operation = elemfact.create(UML.Operation)
 	operation.name = 'new'
-	subject.feature.append(operation)
+	subject.feature = operation
 
 CommandInfo (name='CreateOperation', _label='New _Operation',
 	     _tip='Create a new operation',
 	     context=CONTEXT, subject=UML.Class,
 	     sensitive=('show-operations',),
 	     command_class=CreateOperationCommand).register()
+
+
+class DeleteFeatureCommand(Command):
+
+    def set_parameters(self, params):
+	self._window = params['window']
+
+    def execute(self):
+	#subject = get_parent_focus_item(self._window).subject
+	subject = self._window.get_view().focus_item.item.subject
+	assert isinstance(subject, UML.Feature)
+	subject.undoable_unlink()
+
+CommandInfo (name='DeleteAttribute', _label='Delete A_ttribute',
+	     _tip='Delete the selected attribute',
+	     context=CONTEXT, subject=UML.Attribute,
+	     sensitive=('show-attributes',),
+	     command_class=DeleteFeatureCommand).register()
+
+CommandInfo (name='DeleteOperation', _label='Delete O_peration',
+	     _tip='Delete the selected operation',
+	     context=CONTEXT, subject=UML.Operation,
+	     sensitive=('show-operations',),
+	     command_class=DeleteFeatureCommand).register()
 
 
 class ShowAttributesCommand(StatefulCommand):

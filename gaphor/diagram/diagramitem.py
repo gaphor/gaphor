@@ -12,8 +12,11 @@ class DiagramItem(object):
 	self.__subject = None
 	self.connect ('notify::parent', DiagramItem.on_parent_notify)
 
-    def get_subject(self):
-	"""Get the subject that is represented by this diagram item."""
+    def get_subject(self, x=None, y=None):
+	"""Get the subject that is represented by this diagram item.
+	A (x,y) coordinate can be given (relative to the item) so a
+	diagram item can return another subject that the default when the
+	mouse pointer is on a specific place over the item."""
 	return self.__subject
 
     def set_subject(self, subject):

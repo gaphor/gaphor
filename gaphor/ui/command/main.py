@@ -234,8 +234,8 @@ class AboutCommand(Command):
 
     def execute(self):
 	import gnome.ui
-	import gaphor.Gaphor as Gaphor
-	logo = gtk.gdk.pixbuf_new_from_file (Gaphor.get_datadir() + '/pixmaps/logo.png')
+	from gaphor import Gaphor
+	logo = gtk.gdk.pixbuf_new_from_file (Gaphor().get_datadir() + '/pixmaps/logo.png')
 	about = gnome.ui.About(name = 'Gaphor',
 			   version = Gaphor.VERSION,
 			   copyright = 'Copyright (c) 2001-2003 Arjan J. Molenaar',

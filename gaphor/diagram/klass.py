@@ -142,6 +142,7 @@ class ClassItem(ModelElementItem):
 	"""Update a list of features (attributes or operations) and return
 	the max width and the new y coordinate."""
 	self.on_update(None)
+	self.request_update()
 
     def on_update(self, affine):
 	"""Overrides update callback. If affine is None, it is called just for
@@ -238,6 +239,7 @@ class ClassItem(ModelElementItem):
 	if isinstance(item.subject, UML.Feature):
 	    #log.debug('Adding feature %s' % item)
 	    self.__features.append(item)
+	    self.request_update()
 	    return 1
 	else:
 	    log.warning('feature %s is not a Feature' % item)
@@ -247,6 +249,7 @@ class ClassItem(ModelElementItem):
 	"""Remove a feature subitem."""
 	if item in self.__features:
 	    self.__features.remove(item)
+	    self.request_update()
 	    #log.debug('Feature removed: %s' % item)
 	    return 1
 	else:

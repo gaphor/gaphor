@@ -61,6 +61,11 @@ class FeatureItem(CanvasText, DiagramItem):
     def on_subject_update(self, name, old_value, new_value):
 	if name == 'name':
 	    self.set(text=self.subject.name)
+	elif name == '__unlink__':
+	    if self.parent:
+		self.parent.remove(self)
+	else:
+	    DiagramItem.on_subject_update(self, name, old_value, new_value)
 
     def on_text_changed(self, text_item, text):
 	if self.subject and text != self.subject.name:

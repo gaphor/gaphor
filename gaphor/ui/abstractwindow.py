@@ -196,7 +196,7 @@ class AbstractWindow(object):
 		    break
 	    if not name.startswith('/'):
 		name = '/commands/' + name
-	    self.__ui_component.set_prop(name, 'hidden', hidden)
+	    ui_component.set_prop(name, 'hidden', hidden)
 
 	# Creating a brand new menu every time does something wierd with
 	# callbacks.
@@ -216,14 +216,16 @@ class AbstractWindow(object):
 		    for c in caps:
 			if not e.has_capability(c):
 			    # disable the command:
-			    self.__ui_component.set_prop('/commands/' + name,
-							 type, '0')
+			    log.debug('disabling command %s' % name)
+			    ui_component.set_prop('/commands/' + name,
+						  type, '0')
 			    is_disabled = True
 			    break
 		    else:
 			# all capabilities are available:
-			self.__ui_component.set_prop('/commands/' + name,
-						     type, '1')
+			log.debug('enabling command %s' % name)
+			ui_component.set_prop('/commands/' + name,
+					      type, '1')
 		    if is_disabled:
 			break
 	
