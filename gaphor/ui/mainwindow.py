@@ -125,7 +125,8 @@ class MainWindow(AbstractWindow):
                 'InsertPackage',
                 'InsertAssociation',
                 'InsertDependency',
-                'InsertGeneralization')),
+                'InsertGeneralization',
+                'InsertImplementation')),
         ("Actions", (
                 'InsertAction',
                 'InsertInitialNode',

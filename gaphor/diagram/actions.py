@@ -345,6 +345,17 @@ class GeneralizationPlacementAction(PlacementAction):
 register_action(GeneralizationPlacementAction)
 
 
+class ImplementationPlacementAction(PlacementAction):
+    id = 'InsertImplementation'
+    label = '_Implementation'
+    tooltip = 'Create a new Implementation'
+    stock_id = 'gaphor-implementation'
+    name = 'Implementation'
+    type = diagram.ImplementationItem
+
+register_action(ImplementationPlacementAction)
+
+
 class FlowPlacementAction(PlacementAction):
     id = 'InsertFlow'
     label = '_Flow'

@@ -54,6 +54,10 @@
     <file>generalization24.png</file>
     <element>Generalization</element>
   </icon>
+  <icon id="gaphor-implementation">
+    <file>implementation24.png</file>
+    <element>Implementation</element>
+  </icon>
   <icon id="gaphor-initial-node">
     <file>initialnode24.png</file>
     <element>InitialNode</element>

@@ -63,6 +63,7 @@ from interface import InterfaceItem
 from relationship import RelationshipItem
 from dependency import DependencyItem
 from generalization import GeneralizationItem
+from implementation import ImplementationItem
 from association import AssociationItem
 from extension import ExtensionItem
 from node import InitialNodeItem, ActivityFinalNodeItem, DecisionNodeItem
