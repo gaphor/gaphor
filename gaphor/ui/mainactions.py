@@ -200,6 +200,7 @@ register_action(OpenAction)
 class SaveAsAction(Action):
     id = 'FileSaveAs'
     stock_id = 'gtk-save-as'
+    tooltip = 'Save the model to a new file'
 
     def init(self, window):
         self._window = window
@@ -272,6 +273,7 @@ register_action(SaveAsAction)
 class SaveAction(SaveAsAction):
     id = 'FileSave'
     stock_id = 'gtk-save'
+    tooltip = 'Save the model to a file'
 
     def execute(self):
         filename = self._window.get_filename()
