@@ -170,7 +170,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 
     def update_dir(self, p1, p2):
         #self._dir.line(((10, 0), (10, 10), (0, 5)))
-        w, h = 10, 10
+        w, h = 12, 10
 
         x = p1[0] < p2[0] and w + 2 or -2
         #x = 12
@@ -203,7 +203,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         #log.debug('label pos = (%d, %d)' % (x, y))
 	#return x, y, max(x + 10, x + w), max(y + 10, y + h)
         #self._dir.line(((10 + x, 0 + y), (10 + x, 10 + y), (0 + x, 5 + y)))
-        self._dir.line((r(10, 0), r(10, 10), r(0, 5)))
+        self._dir.line((r(w, 0), r(w, h), r(0, h/2)))
         self._dir.set_cyclic(True)
 
 	return x, y, x + w, y + h
