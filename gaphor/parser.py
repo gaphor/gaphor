@@ -26,10 +26,16 @@ canvasitem objects can also contain a list of canvasitems (canvasitems can be
 nested). They also have a unique ID by which they have been added to the
 dictionary returned by parse(). Each canvasitem has a type, which maps to a
 class name in the gaphor.diagram module.
+
+The generator parse_generator(filename, loader) may be used if the loading
+takes a long time. The yielded values are the percentage of the file read.
 """
 
 __all__ = [ 'parse', 'ParserException' ]
 
+from __future__ import generators
+
+import os
 from xml.sax import handler
 
 import gaphor.misc.odict
@@ -279,21 +285,50 @@ class GaphorLoader(handler.ContentHandler):
         section is opened."""
         self.in_cdata = 0
 
+
 def parse(filename):
     """Parse a file and return a dictionary ID:element/canvasitem.
     """
+    loader = GaphorLoader()
+
+    for x in parse_generator(filename, loader):
+        pass
+    return loader.elements
+
+
+def parse_generator(filename, loader):
+    """The generator based version of parse().
+    parses the file filename and load it with ContentHandler loader.
+    """
+    assert isinstance(loader, GaphorLoader), 'loader should be a GaphorLoader'
     from xml.sax import make_parser
     parser = make_parser()
-
-    loader = GaphorLoader()
 
     parser.setProperty(handler.property_lexical_handler, loader)
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    parser.parse(filename)
-    #parser.close()
-    return loader.elements
+    for percentage in parse_file(filename, parser):
+        yield percentage
+
+
+def parse_file(filename, parser):
+    """Parse the file filename with parser.
+    """
+    file_size = os.stat(filename)[6]
+    f = open(filename, 'rb')
+    block_size = 512
+
+    block = f.read(block_size)
+    read_size = len(block)
+    while block:
+        parser.feed(block)
+        block = f.read(block_size)
+        read_size = read_size + len(block)
+        yield (read_size * 100) / file_size
+
+    parser.close()
+    f.close()
 
 if __name__ == '__main__':
     parse('ns.xml')

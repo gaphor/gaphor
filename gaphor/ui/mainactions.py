@@ -11,45 +11,13 @@ import gaphor.diagram as diagram
 import gc
 import traceback
 from threading import Thread
-import Queue
 
 import gaphor
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
+from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.i18n import _
 
 DEFAULT_EXT='.gaphor'
-
-class WorkerThread(Thread):
-    """Run a function within a thread. The worker thread has a blocking
-    start_blocking() function, which calls the GObject main loop every
-    now and then.
-    """
-
-    def __init__(self, function):
-        Thread.__init__(self)
-        #self.setDaemon(True)
-        self.function = function
-        self.error = None
-
-    def start_blocking(self):
-        """The thread is launched, however, as long as the thread is active
-        the main loop is ran.
-        """
-        if hasattr(sys, 'winver'):
-            self.run()
-        else:
-            Thread.start(self)
-            main = gobject.main_context_default()
-            # Run main iterations as long as this thread exists.
-            while self.isAlive():
-                main.iteration(False)
-
-    def run(self):
-        try:
-            self.function()
-        except Exception, e:
-            log.error(_('Error occured while in worker thread'), e)
-            self.error = e
 
 def show_status_window(title, message, parent=None, queue=None):
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -75,15 +43,16 @@ def show_status_window(title, message, parent=None, queue=None):
         percentage = 0
         try:
             while True:
-                percentage = queue.get_nowait()
-        except Queue.Empty:
+                percentage = queue.get()
+        except QueueEmpty:
             pass
         if percentage:
             progress_bar.set_fraction(percentage / 100.0)
         return True
 
     if queue:
-        idle_id = gobject.idle_add(progress_idle_handler, progress_bar, queue, priority=gobject.PRIORITY_LOW)
+        idle_id = gobject.idle_add(progress_idle_handler, progress_bar, queue,
+                                   priority=gobject.PRIORITY_LOW)
         # Make sure the idle fucntion is removed as soon as the window
         # is destroyed.
         def remove_progress_idle_handler(window, idle_id):
@@ -153,13 +122,14 @@ class OpenAction(Action):
             try:
                 import gaphor.storage as storage
                 log.debug('Loading from: %s' % filename)
-                queue = Queue.Queue()
+                queue = Queue()
                 win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, self._window.get_window(), queue)
                 self.filename = filename
                 gc.collect()
-                worker = WorkerThread(lambda: storage.load(filename, status_queue=lambda m: queue.put_nowait(m) and 1))
+                worker = GIdleThread(storage.load_generator(filename), queue)
                 self._window.action_pool.insensivate_actions()
-                worker.start_blocking()
+                worker.start()
+                worker.wait()
                 if worker.error:
                     log.error('Error while loading model from file %s: %s' % (filename, worker.error))
 
@@ -210,13 +180,14 @@ class SaveAsAction(Action):
             if not filename.endswith(DEFAULT_EXT):
                 filename = filename + DEFAULT_EXT
 
-            queue = Queue.Queue()
+            queue = Queue()
             log.debug('Saving to: %s' % filename)
             win = show_status_window('Saving...', 'Saving model to %s' % filename, self._window.get_window(), queue)
-            worker = WorkerThread(lambda: storage.save(filename, status_queue=lambda m: queue.put_nowait(m) and 1))
+            worker = GIdleThread(storage.save_generator(filename), queue)
             action_states = self._window.action_pool.get_action_states()
             self._window.action_pool.insensivate_actions()
-            worker.start_blocking()
+            worker.start()
+            worker.wait()
             if worker.error:
                 log.error('Error while saving model to file %s: %s' % (filename, worker.error))
 

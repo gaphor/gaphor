@@ -11,6 +11,8 @@ verify(filename)
     we have a valid model, just a valid file).
 """
 
+from __future__ import generators
+
 from cStringIO import StringIO
 from xml.sax.saxutils import escape
 import types
@@ -28,10 +30,11 @@ __all__ = [ 'load', 'save' ]
 FILE_FORMAT_VERSION = '3.0'
 
 def save(filename=None, factory=None, status_queue=None):
-    for status in save_coroutine(filename, factory):
-        status_queue(status)
+    for status in save_generator(filename, factory):
+        if status_queue:
+            status_queue(status)
 
-def save_coroutine(filename=None, factory=None):
+def save_generator(filename=None, factory=None):
     """Save the current model to @filename. If no filename is given,
     standard out is used.
     """
@@ -141,10 +144,11 @@ def save_coroutine(filename=None, factory=None):
 
 
 def load_elements(elements, factory, status_queue=None):
-    for status in load_elements_coroutine(elements, factory):
-        status_queue(status)
+    for status in load_elements_generator(elements, factory):
+        if status_queue:
+            status_queue(status)
 
-def load_elements_coroutine(elements, factory):
+def load_elements_generator(elements, factory):
     """Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
@@ -239,19 +243,36 @@ def load_elements_coroutine(elements, factory):
 
 
 def load(filename, factory=None, status_queue=None):
-    '''Load a file and create a model if possible.
+    """Load a file and create a model if possible.
     Optionally, a status queue function can be given, to which the
     progress is written (as status_queue(progress)).
     Exceptions: GaphorError.
-    '''
+    """
+    for status in load_generator(filename, factory):
+        if status_queue:
+            status_queue(status)
+
+def load_generator(filename, factory=None):
+    """Load a file and create a model if possible.
+    This function is a generator. It will yield values from 0 to 100 (%)
+    to indicate its progression.
+
+    Exceptions: GaphorError.
+    """
     log.info('Loading file %s' % os.path.basename(filename))
     try:
-        elements = parser.parse(filename) #dom.parse (filename)
-        if status_queue:
-            status_queue(100)
+        # Use the incremental parser and yield the percentage of the file.
+        loader = parser.GaphorLoader()
+        for percentage in parser.parse_generator(filename, loader):
+            if percentage:
+                yield percentage / 2
+            else:
+                yield percentage
+        elements = loader.elements
+        #elements = parser.parse(filename)
+        #yield 100
     except Exception, e:
-        print e
-        log.error('File could no be parsed')
+        log.error('File could no be parsed', e)
         raise
 
     try:
@@ -259,10 +280,14 @@ def load(filename, factory=None, status_queue=None):
             factory = gaphor.resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
-        load_elements(elements, factory, status_queue)
+        for percentage in load_elements_generator(elements, factory):
+            if percentage:
+                yield percentage / 2 + 50
+            else:
+                yield percentage
         gc.collect()
     except Exception, e:
-        log.info('file %s could not be loaded' % filename)
+        log.info('file %s could not be loaded' % filename, e)
         import traceback
         traceback.print_exc()
         raise
