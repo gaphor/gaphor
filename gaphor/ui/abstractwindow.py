@@ -95,7 +95,7 @@ class AbstractWindow(object):
     def _set_log_message(self, level, message, exc=None):
 	"""Set log messages with level INFO or higher in the status bar."""
 	if level > Logger.DEBUG:
-	    self.set_message(message)
+	    self.set_message(str(message))
 	    main = gobject.main_context_default()
 	    # If an exception is provided, also send the message to stdout
 	    if exc:

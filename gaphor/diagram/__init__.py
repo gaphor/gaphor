@@ -10,20 +10,7 @@ import diacanvas
 
 # Map UML elements to their (default) representation.
 
-import gaphor.UML as UML
-
-_uml_to_item_map = {
-#    UML.Actor: ActorItem,
-#    UML.Association: AssociationItem,
-#    UML.Class: ClassItem,
-#    UML.Comment: CommentItem,
-#    UML.Dependency: DependencyItem,
-#    UML.Generalization: GeneralizationItem,
-#    UML.Package: PackageItem,
-#    UML.UseCase: UseCaseItem,
-}
-
-del UML
+_uml_to_item_map = { }
 
 def get_diagram_item(element):
     global _uml_to_item_map
@@ -59,15 +46,15 @@ def initialize_item(item_class, default_uml_class=None):
     if default_uml_class:
 	_uml_to_item_map[default_uml_class] = item_class
 
-from placementtool import *
-from actor import *
-from klass import *
-from comment import *
-from commentline import *
-from usecase import *
-from package import *
-from relationship import *
-from dependency import *
-from generalization import *
-from association import *
+from placementtool import PlacementTool
+from actor import ActorItem
+from klass import ClassItem
+from comment import CommentItem
+from commentline import CommentLineItem
+from usecase import UseCaseItem
+from package import PackageItem
+from relationship import RelationshipItem
+from dependency import DependencyItem
+from generalization import GeneralizationItem
+from association import AssociationItem
 

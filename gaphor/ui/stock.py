@@ -20,6 +20,7 @@ STOCK_GENERALIZATION = 'gaphor-generalization'
 STOCK_INCLUDE = 'gaphor-include'
 STOCK_OPERATION = 'gaphor-operation'
 STOCK_PACKAGE = 'gaphor-package'
+STOCK_PARAMETER = 'gaphor-parameter'
 STOCK_PROPERTY = 'gaphor-property'
 STOCK_REALIZATION = 'gaphor-realization'
 STOCK_USECASE = 'gaphor-usecase'
@@ -64,6 +65,7 @@ add_stock_icon(STOCK_GENERALIZATION, icon_dir, ('generalization24.png', 'general
 add_stock_icon(STOCK_OPERATION,	icon_dir, ('pointer24.png', 'pointer16.png'), UML.Operation)
 add_stock_icon(STOCK_PACKAGE,	icon_dir, ('package24.png', 'package16.png'), UML.Package)
 add_stock_icon(STOCK_PROPERTY,	icon_dir, ('pointer24.png', 'pointer16.png'), UML.Property)
+add_stock_icon(STOCK_PARAMETER,	icon_dir, ('pointer24.png', 'pointer16.png'), UML.Parameter)
 add_stock_icon(STOCK_USECASE,	icon_dir, ('usecase24.png', 'usecase16.png'), UML.UseCase)
 
 del icon_dir

@@ -42,6 +42,7 @@ class RelationshipItem(DiagramLine, DiagramItem):
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
     disconnect = DiagramItem.disconnect
+    notify = DiagramItem.notify
 
     def has_capability(self, capability):
         return super(RelationshipItem, self).has_capability(capability)

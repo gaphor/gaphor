@@ -44,6 +44,7 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
     disconnect = DiagramItem.disconnect
+    notify = DiagramItem.notify
 
     def save(self, save_func):
         for prop in ('affine',):
@@ -111,6 +112,7 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
             return True
         if event.type == diacanvas.EVENT_2BUTTON_PRESS:
             log.debug('FeatureItem.on_event: 2button_press')
+            # First make sure the complete string is parsed!
             self.start_editing(self._expression)
             return True
         else:

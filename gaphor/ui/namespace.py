@@ -187,8 +187,8 @@ class NamespaceModel(gtk.GenericTreeModel):
             if len(owned_members) == 0:
                 path = self.path_from_element(element)
                 self.row_has_child_toggled(path, self.get_iter(path))
-        else:
-            log.debug('model is in sync for "%s"' % element.name)
+        #else:
+            #log.debug('model is in sync for "%s"' % element.name)
 
     def on_factory_signals (self, obj, pspec):
         if pspec == 'model':

@@ -120,7 +120,7 @@ class ElementFactory(object):
         #if not element: return
 	#log.debug('element %s send signal %s' % (element, name))
         if pspec == '__unlink__' and self._elements.has_key(element.id):
-            log.debug('Unlinking element: %s' % element)
+            #log.debug('Unlinking element: %s' % element)
             del self._elements[element.id]
             self.notify(element, 'remove')
         elif pspec == '__relink__' and not self._elements.has_key(element.id):

@@ -43,7 +43,7 @@ params_subpat = r'\s*\(\s*(?P<params>[^)]+)?\)'
 rest_subpat = r'\s*(,\s*(?P<rest>.*))?'
 
 # Direction of a parameter (optional, default in) ::= 'in' | 'out' | 'inout'
-dir_subpat = r'\s*(?P<dir>in|out|inout)?'
+dir_subpat = r'\s*((?P<dir>in|out|inout)\s)?'
 
 # Some trailing garbage => no valid syntax...
 garbage_subpat = r'\s*(?P<garbage>.*)'
@@ -285,35 +285,34 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
     if not name or no_render_pat.match(name):
         return name
 
-    if visibility or is_derived or type or multiplicity or default or tags:
-        all = False
-    else:
-        all = True
+    # Render all fields if they all are set to False
+    if not (visibility or is_derived or type or multiplicity or default or tags):
+       visibility = is_derived = type = multiplicity = default = tags = True
 
     s = StringIO()
 
-    if all or visibility:
+    if visibility:
         s.write(vis_map[self.visibility])
         s.write(' ')
 
-    if all or is_derived:
+    if is_derived:
         if self.isDerived: s.write('/')
 
     s.write(name)
     
-    if (all or type) and self.typeValue and self.typeValue.value:
+    if type and self.typeValue and self.typeValue.value:
         s.write(': %s' % self.typeValue.value)
 
-    if (all or multiplicity) and self.upperValue and self.upperValue.value:  
+    if multiplicity and self.upperValue and self.upperValue.value:  
         if self.lowerValue and self.lowerValue.value:
             s.write('[%s..%s]' % (self.lowerValue.value, self.upperValue.value))
         else:
             s.write('[%s]' % self.upperValue.value)
 
-    if (all or default) and self.defaultValue and self.defaultValue.value:
+    if default and self.defaultValue and self.defaultValue.value:
         s.write(' = %s' % self.defaultValue.value)
 
-    if (all or tags) and self.taggedValue and self.taggedValue.value:
+    if tags and self.taggedValue and self.taggedValue.value:
         s.write(' { %s }' % self.taggedValue.value)
     s.reset()
     return s.read()
@@ -359,7 +358,8 @@ def render_property(self, *args, **kwargs):
     else:
         return render_attribute(self, *args, **kwargs)
 
-def render_operation(self):
+def render_operation(self, visibility=False, type=False, multiplicity=False,
+                           default=False, tags=False, direction=False):
     """Create a OCL representation of the operation,
     Returns the operation as a string.
     """
@@ -367,33 +367,50 @@ def render_operation(self):
     if no_render_pat.match(name):
         return name
 
-    s = '%s %s(' % (vis_map[self.visibility], name) 
+    # Render all fields if they all are set to False
+    if not (visibility or type or multiplicity or default or tags or direction):
+       visibility = type = multiplicity = default = tags = direction = True
+
+    s = StringIO()
+    if visibility:
+        s.write(vis_map[self.visibility])
+        s.write(' ')
+
+    s.write(name)
+    s.write('(')
+
     for p in self.formalParameter:
         #print p # direction, name, type, mult, default, tags
-        s += '%s %s' % (p.direction, p.name) 
-        if p.typeValue and p.typeValue.value:
-            s += ': %s' % p.typeValue.value
-        if p.upperValue and p.upperValue.value:  
+        if direction:
+            s.write(p.direction)
+            s.write(' ')
+        s.write(p.name)
+        if type and p.typeValue and p.typeValue.value:
+            s.write(': %s' % p.typeValue.value)
+        if multiplicity and p.upperValue and p.upperValue.value:  
             if p.lowerValue and p.lowerValue.value:
-                s += '[%s..%s]' % (p.lowerValue.value, p.upperValue.value)
+                s.write('[%s..%s]' % (p.lowerValue.value, p.upperValue.value))
             else:
-                s += '[%s]' % p.upperValue.value
-        if p.defaultValue and p.defaultValue.value:
-            s += ' = %s' % p.defaultValue.value
-        if p.taggedValue and p.taggedValue.value:
-            s += ' { %s }' % p.taggedValue.value
+                s.write('[%s]' % p.upperValue.value)
+        if default and p.defaultValue and p.defaultValue.value:
+            s.write(' = %s' % p.defaultValue.value)
+        if tags and  p.taggedValue and p.taggedValue.value:
+            s.write(' { %s }' % p.taggedValue.value)
         if p is not self.formalParameter[-1]:
-            s += ', '
-    s += ')'
+            s.write(', ')
+
+    s.write(')')
+
     rr = self.returnResult and self.returnResult[0]
     if rr:
-        if rr.typeValue and rr.typeValue.value:
-            s += ': %s' % rr.typeValue.value
-        if rr.upperValue and rr.upperValue.value:  
+        if type and rr.typeValue and rr.typeValue.value:
+            s.write(': %s' % rr.typeValue.value)
+        if multiplicity and rr.upperValue and rr.upperValue.value:  
             if rr.lowerValue and rr.lowerValue.value:
-                s += '[%s..%s]' % (rr.lowerValue.value, rr.upperValue.value)
+                s.write('[%s..%s]' % (rr.lowerValue.value, rr.upperValue.value))
             else:
-                s += '[%s]' % rr.upperValue.value
-        if rr.taggedValue and rr.taggedValue.value:
-            s += ' { %s }' % rr.taggedValue.value
-    return s
+                s.write('[%s]' % rr.upperValue.value)
+        if tags and rr.taggedValue and rr.taggedValue.value:
+            s.write(' { %s }' % rr.taggedValue.value)
+    s.reset()
+    return s.read()

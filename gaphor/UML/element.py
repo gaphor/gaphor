@@ -100,7 +100,7 @@ class Element(object):
 
     def unlink(self):
         """Unlink the element."""
-        log.debug('Element.unlink(%s)' % self)
+        #log.debug('Element.unlink(%s)' % self)
         self.__unlink('__unlink__')
 
     def relink(self):
@@ -137,16 +137,17 @@ class Element(object):
             except ValueError:
                 pass
 
-    def notify(self, name, cb_name=None):
+    def notify(self, name, cb_name=None, pspec=None):
         """Send notification to attached callbacks that a property
         has changed. the __relink__ signal uses the callbacks for __unlink__.
         """
         cb_list = self._observers.get(cb_name or name, ())
         #log.debug('Element.notify: %s' % cb_list)
-        try:
-            pspec = getattr(type(self), name)
-        except AttributeError:
-            pspec = name
+        if not pspec:
+            try:
+                pspec = getattr(type(self), name)
+            except AttributeError:
+                pspec = name
         
         # Use a copy of the list to ensure all items are notified
         for cb_data in list(cb_list):

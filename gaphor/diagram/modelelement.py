@@ -34,6 +34,7 @@ class ModelElementItem (diacanvas.CanvasElement, DiagramItem):
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
     disconnect = DiagramItem.disconnect
+    notify = DiagramItem.notify
 
     def save(self, save_func):
         for prop in ('affine', 'width', 'height', 'auto-resize'):

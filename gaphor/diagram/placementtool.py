@@ -40,14 +40,14 @@ class PlacementTool(diacanvas.PlacementTool):
 
     def do_button_press_event(self, view, event):
         view.unselect_all()
-        print 'Gaphor: on_button_press_event: %s' % self.__dict__
+        #print 'Gaphor: on_button_press_event: %s' % self.__dict__
         view.set_tool(None)
         return diacanvas.PlacementTool.do_button_press_event(self, view, event)
 
     def do_button_release_event(self, view, event):
         view.set_tool(None)
         self.is_released = True
-        print 'Gaphor: do_button_release_event: %s' % self.__dict__
+        #print 'Gaphor: do_button_release_event: %s' % self.__dict__
         #return diacanvas.PlacementTool.do_button_release_event(self, view, event)
         return False
 

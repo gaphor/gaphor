@@ -61,9 +61,11 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     def load (self, name, value):
         # end_head and end_tail were used in an older Gaphor version
         if name in ( 'head_end', 'head_subject' ):
-            self._head_end.subject = value
+            #type(self._head_end).subject.load(self._head_end, value)
+            self._head_end.load('subject', value)
         elif name in ( 'tail_end', 'tail_subject' ):
-            self._tail_end.subject = value
+            #type(self._tail_end).subject.load(self._tail_end, value)
+            self._tail_end.load('subject', value)
         else:
             RelationshipItem.load(self, name, value)
 
@@ -260,7 +262,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
                 self._tail_end.subject = tail_end
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
-        log.debug('AssociationItem.confirm_disconnect_handle')
+        #log.debug('AssociationItem.confirm_disconnect_handle')
         if self.subject:
             del self.subject
             del self._head_end.subject
@@ -332,9 +334,11 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
     disconnect = DiagramItem.disconnect
+    notify = DiagramItem.notify
 
     def postload(self):
-        self.set_text()
+        DiagramItem.postload(self)
+        #self.set_text()
 
     def set_text(self):
         """Set the text on the association end.
@@ -448,8 +452,8 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec,
                         notifiers + ('aggregation', 'name', 'lowerValue'))
-        print 'w/ assoc', self.subject and self.subject.association
-        self.set_text()
+        #print 'w/ assoc', self.subject and self.subject.association
+        #self.set_text()
         if self.subject:
             #self._name.set_text(self.subject.name or '')
             self.on_subject_notify__lowerValue(self.subject, None)
@@ -477,7 +481,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 
         if self.subject and self.subject.lowerValue:
             self.__the_lowerValue = self.subject.lowerValue
-            log.debug('Have a lowerValue: %s' % self.subject.lowerValue)
+            #log.debug('Have a lowerValue: %s' % self.subject.lowerValue)
             self.subject.lowerValue.connect('value', self.on_lowerValue_notify__value)
             #self._mult.set_text(self.subject.lowerValue.value or '')
         #else:

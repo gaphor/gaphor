@@ -35,8 +35,10 @@ class diagramassociation(association):
         return association._set2(self, obj, value)
 
     def _del(self, obj, value):
-        print 'diagramassociation._del', obj, value, value.id
+        #print 'diagramassociation._del', obj, value, value.id
         obj.preserve_property(self.name)
+        # TODO: Add some extra notification here to tell the diagram
+        # item that the reference is about to be removed.
         association._del(self, obj, value)
         if len(value.presentation) == 0 or \
            len(value.presentation) == 1 and obj in value.presentation:
@@ -92,7 +94,7 @@ class DiagramItem(Presentation):
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'subject':
-            print 'set subject:', value
+            #print 'set subject:', value
             if value:
                 self.subject = value
             elif self.subject:
@@ -114,10 +116,10 @@ class DiagramItem(Presentation):
 
     def load(self, name, value):
         if name == 'subject':
-            print 'loading subject', value
+            #print 'loading subject', value
             type(self).subject.load(self, value)
         else:
-            log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
+            #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
             try:
                 self.set_property(name, eval(value))
             except:
@@ -130,7 +132,7 @@ class DiagramItem(Presentation):
     def unlink(self):
         """Send the unlink signal and remove itself from the canvas.
         """
-        log.debug('DiagramItem.unlink(%s)' % self)
+        #log.debug('DiagramItem.unlink(%s)' % self)
         # emit the __unlink__ signal the way UML.Element would have done:
         self.emit('__unlink__', '__unlink__')
         # remove the subject if we have one
@@ -179,11 +181,14 @@ class DiagramItem(Presentation):
                 key = (handler_or_id,) + args
                 ids = self.__handler_to_id[key]
             except KeyError, e:
-                print e
+                log.error(e)
             else:
                 for id in ids:
                     CanvasItem.disconnect(self, id)
                 del self.__handler_to_id[key]
+
+    def notify(self, name, pspec=None):
+        CanvasItem.notify(self, name)
 
     def get_subject(self, x=None, y=None):
         """Get the subject that is represented by this diagram item.

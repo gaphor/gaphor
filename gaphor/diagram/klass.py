@@ -125,7 +125,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         return ClassifierItem.do_get_property(self, pspec)
 
     def has_capability(self, capability):
-        log.debug('has_capability: %s' % capability)
+        #log.debug('has_capability: %s' % capability)
         if capability == 'show-attributes':
             return self._attributes.visible
         elif capability == 'show-operations':

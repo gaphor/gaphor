@@ -45,6 +45,7 @@ class CommentLineItem(DiagramLine, DiagramItem):
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
     disconnect = DiagramItem.disconnect
+    notify = DiagramItem.notify
 
     def on_notify_comment_parent(self, comment, pspec):
         if not comment.parent and self.parent:

@@ -77,20 +77,27 @@ class umlproperty(object):
         Deriviates are also triggered to send a notify signal.
         """
         try:
-            obj.notify(self.name)
-        except:
-            pass
+            obj.notify(self.name, pspec=self)
+        except Exception, e:
+            log.error(str(e))
 
         # we need to check if a deriviate is part of the current object:
         # TODO: can we do this faster?
-        mro = type(obj).__mro__
         try:
-            for d in self.deriviates:
-                for c in mro:
-                    if d in c.__dict__.values():
-                        d.notify(obj)
+            deriviates = self.deriviates
         except AttributeError:
             pass # no derivedunion or redefine attribute
+        else:
+            values = []
+            for c in type(obj).__mro__:
+                values.extend(c.__dict__.values())
+
+            for d in deriviates:
+                if d in values:
+                    try:
+                        d.notify(obj)
+                    except Exception, e:
+                        log.error(e)
 
 
 class attribute(umlproperty):
@@ -111,7 +118,6 @@ class attribute(umlproperty):
         #print 'attribute.load:', self.name, self.type, value,
         if self.type is not object:
             value = self.type(value)
-        print value
         #if not isinstance(value, self.type):
         #    if type(self.type) is not type(()):
         #    else:
@@ -133,6 +139,7 @@ class attribute(umlproperty):
     def _set(self, obj, value):
         if value is not None and not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type
+        #self.old = self._get(obj)
         if value == self.default and hasattr(obj, self._name):
             delattr(obj, self._name)
         else:
@@ -140,6 +147,7 @@ class attribute(umlproperty):
         self.notify(obj)
 
     def _del(self, obj, value=None):
+        #self.old = self._get(obj)
         try:
             delattr(obj, self._name)
         except AttributeError:
@@ -169,12 +177,12 @@ class enumeration(umlproperty):
 
     def load(self, obj, value):
         if not value in self.values:
-            raise AttributeError, 'Value should be in %s' % str(self.values)
+            raise AttributeError, 'Value should be one of %s' % str(self.values)
         setattr(obj, self._name, value)
 
     def _set(self, obj, value):
         if not value in self.values:
-            raise AttributeError, 'Value should be in %s' % str(self.values)
+            raise AttributeError, 'Value should be one of %s' % str(self.values)
         if value != self._get(obj):
             if value == self.default:
                 delattr(obj, self._name)
@@ -266,16 +274,18 @@ class association(umlproperty):
         # Remove old value only for uni-directional associations
         if self.upper == 1:
             old = self._get(obj)
-            # do nothing if we are assigned our existing value:
+            # do nothing if we are assigned our current value:
             if value is old:
                 return
             if old:
                 self.__delete__(obj, old)
             if value is None:
-                self.notify(obj)
+                #self.notify(obj)
                 return
 
         # if we needed to set our own side, set the opposite
+        # Call _set2() so we can make sure the opposite side is set before
+        # a signal is emited.
         if self._set2(obj, value):
             # Set opposite side.
             # Use type(value) since the property may be overridden:
@@ -303,9 +313,9 @@ class association(umlproperty):
             return getattr(obj, self._name)
         except AttributeError:
             if self.upper > 1:
-                l = collection(self, obj, self.type)
-                setattr(obj, self._name, l)
-                return l
+                c = collection(self, obj, self.type)
+                setattr(obj, self._name, c)
+                return c
             else:
                 return None
 

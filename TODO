@@ -2,6 +2,10 @@ check Classifier.substitution, InstanceSpecification.slot.
 
 As always, there is much to do...
 
+- Signal handling should work better for canvas items. Currently one has to
+  keep a backup reference of the model element, so it can be hard to change
+  the canvas item once a reference is destroyed.
+  
 - Class: Association end properties are shown in the tree view
 - Undo/redo functionality doesn;t work as espected
 - Implement and test attribute/operation parser.
