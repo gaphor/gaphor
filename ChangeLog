@@ -1,4 +1,9 @@
-2005-01-11  wrobell <wrobell@pld-linux.org>
+2005-01-24  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/association.py: use one rotation function (update_dir
+	method and xs rotation refactorized), show direction arrow on proper
+	side of association name
+
+2005-01-24  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/itemactions.py gaphor/diagram/association.py: UML 2.0
 	navigability support
 

@@ -9,7 +9,7 @@
 
 from __future__ import generators
 
-from math import atan, pi, sin, cos
+from math import atan, pi, sin, cos, fabs
 
 import gobject
 import pango
@@ -204,10 +204,8 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         """
         w, h = self._label.to_pango_layout(True).get_pixel_size()
 
-        x = p1[0] > p2[0] and w + 2 or -2
-        x = (p1[0] + p2[0]) / 2.0 - x
-        y = p1[1] <= p2[1] and h or 0
-        y = (p1[1] + p2[1]) / 2.0 - y
+        x = (p1[0] + p2[0] - w) / 2.0
+        y = (p1[1] + p2[1] - h) / 2.0 - 10
 
         self._label.set_pos((x, y))
         #log.debug('label pos = (%d, %d)' % (x, y))
@@ -221,38 +219,34 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         Keep in mind that self.subject.memberEnd[0].class_ points to the class
         *not* pointed to by the arrow.
         """
-        x = p1[0] < p2[0] and -8 or 8
-        y = p1[1] >= p2[1] and -8 or 8
-        x = (p1[0] + p2[0]) / 2.0 + x
-        y = (p1[1] + p2[1]) / 2.0 + y
+        w, h = self._label.to_pango_layout(True).get_pixel_size()
+
+        x = (p1[0] + p2[0]) / 2.0
+        y = (p1[1] + p2[1]) / 2.0 - 10
+
+        w = w / 2.0 + 10
         
-        try:
-            angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0])) #/ pi * 180.0
-        except ZeroDivisionError:
-            angle = pi * 1.5
-
-        # Invert angle if member ends are inverted
+        # If member ends are inverted then invert angle
+        # and put direction triangle on other side of label
         if self.subject.memberEnd[0] is self._tail_end.subject:
-            angle += pi
+            angle = pi
+            if p1[0] > p2[0]: w = -w
+        else:
+            angle = 0
+            if p1[0] < p2[0]: w = -w
 
-        if p1[0] < p2[0]:
-            angle += pi
-        elif p1[0] == p2[0] and p1[1] > p2[1]:
-            angle += pi
-        #log.debug('rotation angle is %s' % (angle/pi * 180.0))
+        # align to association name
+        x += w
 
-        sin_angle = sin(angle)
-        cos_angle = cos(angle)
+        # move the second point so direction triangle is parallel to line
+        # p1, p2 
+        p2 = p2[0] + w, p2[1] - 10
 
-        def r(a, b):
-            return (cos_angle * a - sin_angle * b + x, \
-                    sin_angle * a + cos_angle * b + y)
-
-        # Create an arrow around (0, 0), so it can be easely rotated:
-        self._dir.line((r(-6, 0), r(6, -5), r(6, 5)))
+        self._dir.line(rotate((x, y), p2, ((-6, 0), (6, -5), (6, 5)), 0, 0, angle))
         self._dir.set_cyclic(True)
 
         return x, y, x + 12, y + 10
+
 
     def on_update(self, affine):
         """Update the shapes and sub-items of the association."""
@@ -313,8 +307,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
                                                handles[middle].get_pos_i())
 
         if self._show_direction and self.subject and self.subject.memberEnd:
-            b0 = self.update_dir(handles[middle-1].get_pos_i(),
-                                 handles[middle].get_pos_i())
+            b0 = self.update_dir(handles[middle-1].get_pos_i(), handles[middle].get_pos_i())
         else:
             b0 = self.bounds
 
@@ -873,42 +866,40 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
             #log.info('editing done')
 
 
-def rotate(p1, p2, points):
+def rotate(p1, p2, points, x0 = 0, y0 = 0, dangle = 0):
     """
-    Rotate points around p1. Rotation angle is determined by line (p0, p1).
-    Every point is moved into p1 + (10, 0) after rotation.
+    Rotate points around p1 (origin of path determined by points is in (0, 0).
+    Rotation angle is determined by line (p0, p1).
+    Points are moved by vector (x0, y0) before rotation and by vector
+    p1 after rotation.
     """
     try:
         angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0]))
     except ZeroDivisionError:
         angle = pi * 1.5
         
+    angle += dangle
+
+    if p2[0] < p1[0]:
+        angle += pi
 
     sin_angle = sin(angle)
     cos_angle = cos(angle)
 
     def r(a, b, x, y):
+        a += x0
+        b += y0
         return (cos_angle * a - sin_angle * b + x,
                 sin_angle * a + cos_angle * b + y)
 
-    x0 = p1[0] < p2[0] and 10 or -10
-    y0 = 0
-
-    # rotate around the (10, 0)
-    x0, y0 = r(x0, y0, 0, 0)
-
-    # move to the destination point
-    x0 += p1[0]
-    y0 += p1[1]
-
-    return [ r(x, y, x0, y0) for x, y in points ]
+    return [ r(x, y, p1[0], p1[1]) for x, y in points ]
 
 
-def xs(self, p0, p1, name):
+def xs(self, p1, p2, name):
     """
     Utility function to draw xs (unknown navigability).
     """
-    points = rotate(p0, p1, ((-4, -4), (4, 4), (4, -4), (-4, 4)))
+    points = rotate(p1, p2, ((-4, -4), (4, 4), (4, -4), (-4, 4)), x0 = 10)
     getattr(self, '_%s_xa' % name).line(points[0:2])
     getattr(self, '_%s_xb' % name).line(points[2:])
 
