@@ -28,7 +28,6 @@ class ClassItem(ModelElementItem):
 	self.__border = diacanvas.shape.Path()
 	self.__border.set_line_width(2.0)
 	self.__name = diacanvas.CanvasText()
-	#self.__name = Text()
 	self.add_construction(self.__name)
 	assert self.__name != None
 	font = pango.FontDescription(ClassItem.NAME_FONT)

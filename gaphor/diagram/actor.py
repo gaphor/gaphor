@@ -24,8 +24,8 @@ class ActorItem(ModelElementItem):
     def __init__(self):
 	ModelElementItem.__init__(self)
 	self.set(height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
-		 width=(ActorItem.ARM * 2))
-	self.set(min_height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
+		 width=(ActorItem.ARM * 2),
+		 min_height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
 		 min_width=(ActorItem.ARM * 2))
 	# Head
 	self.__head = diacanvas.shape.Ellipse()

@@ -25,13 +25,12 @@ CONFIG_STATUS_DEPENDENCIES = $(FILES_FILES)
 all-local: gaphor/UML/modelelements.py
 
 gaphor/UML/modelelements.py: $(GEN_UML) $(METAMODEL_XMI)
-	$(GEN_UML) $(METAMODEL_XMI) 2>&1 > genmodelelements.py
-	-echo "We have our own presentation element class (gaphor.UML.Diagram)"
-	grep -v "PresentationElement" genmodelelements.py > gaphor/UML/modelelements.py
-	rm -f genmodelelements.py
+	$(GEN_UML) $(METAMODEL_XMI) > genmodelelements.py
+	mv genmodelelements.py gaphor/UML/modelelements.py
 
 clean-local:
 	find . -name *.py[co] -exec rm -f {} ';'
+	rm -f gaphor/UML/modelelements.py
 
 INSTALLDIR=$(DESTDIR)$(pythondir)/
 

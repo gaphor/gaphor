@@ -49,9 +49,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 		path = self.get_path(element)
 		#print 'ownedElement ADD', element, element.namespace, path
 		iter = self.get_iter(path)
-		#print 'path =', path, 'iter =', iter
 		self.row_inserted(path, iter)
-		#print 'done'
 		for child in element.ownedElement:
 		    recursive_add(child)
 	    recursive_add(new_value)

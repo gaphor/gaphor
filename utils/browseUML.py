@@ -13,7 +13,7 @@ sys.path.append("..")
 
 from gaphor.UML import *
 
-done = [ ]
+done = [ object ]
 def print_vars(cls):
     global done
     done.append(cls)

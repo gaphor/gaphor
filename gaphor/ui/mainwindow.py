@@ -18,7 +18,7 @@ class MainWindow(AbstractWindow):
     def __init__(self):
 	AbstractWindow.__init__(self)
 	self.__filename = None
-	self.__transient_window = list()
+	self.__transient_windows = list()
 	factory = GaphorResource(UML.ElementFactory)
 	factory.connect(self.__on_element_factory_signal, factory)
 
@@ -35,6 +35,9 @@ class MainWindow(AbstractWindow):
 
     def get_filename(self):
 	return self.__filename
+
+    def get_transient_windows(self):
+	return self.__transient_windows
 
     def construct(self):
 	model = namespace.NamespaceModel(GaphorResource(UML.ElementFactory))
@@ -65,7 +68,7 @@ class MainWindow(AbstractWindow):
 	window_win = window.get_window()
 	window_win.add_accel_group(mywin.get_accel_group())
 	window_win.set_transient_for (mywin)
-	self.__transient_window.append(window)
+	self.__transient_windows.append(window)
 	window.connect(self.__on_transient_window_closed)
 
     def _on_window_destroy (self, window):
@@ -106,9 +109,9 @@ class MainWindow(AbstractWindow):
 					        'path': path })
 
     def __on_transient_window_closed(self, window):
-	assert window in self.__transient_window
+	assert window in self.__transient_windows
 	log.debug('%s closed.' % window)
-	self.__transient_window.remove(window)
+	self.__transient_windows.remove(window)
 
     def __on_transient_window_notify_title(self, window):
 	pass

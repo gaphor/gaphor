@@ -1,124 +1,405 @@
 #!/usr/bin/env python
 # vim: sw=4
 # MetaModel Parser: Parse the UML metamodel definition version 1.3 file
-# as defined by the OMG.
-#
-# This script will produce the following files:
-#	Activity_Graphs.py
-#	Collaborations.py
-#	Common_Behavior.py
-#	Core.py
-#	Data_Types.py
-#	Model_Management.py
-#	State_Machines.py
-#	UML.py
-#	Use_Cases.py
-#	Enum_Types.py (part of Data_Types.py: contains the enumerations)
+# as defined by the OMG and create python code to be used by Gaphor.
 #
 # Note that the output is written to STDOUT and the status messages and errors
 # are written to STDERR.
-
+#
+# - Although References are stored, nothing is done with them, since they
+#   we also have AssociationEnds, which contain the same information and more.
+# - Note that this model is just a start. In the end the data model should be
+#   narrowed to the model defined in chapter 5 of the OMG UML 1.4 specs
+#   (Model Interchange Using XMI).
+# - Once Gaphor is mature enough, the data model will be drawn in Gaphor
+#   (for documentation and demonstration purposes) and Gaphor will provide
+#   its own data model.
+#
 import sys, getopt
 from xmllib import *
 import types
+import traceback
 
 msg = sys.stderr.write
 
-default_values = {
-    "Name": "''",
-    "Boolean": "0",
-    "VisibilityKind": "VK_PUBLIC",
-    "OrderingKind": "OK_UNORDERED",
-    "ChangeableKind": "CK_CHANGEABLE",
-    "ScopeKind": "SK_INSTANCE",
-    "PseudostateKind": "PK_CHOICE",
-    "ParameterDirectionKind": "PDK_IN",
-    "AggregationKind": "AK_NONE",
-    "CallConcurrencyKind": "CCK_SEQUENTIAL",
-    "Expression": "None",
-    "ActionExpression": "None",
-    "IterationExpression": "None",
-    "MappingExpression": "None",
-    "BooleanExpression": "None",
-    "TimeExpression": "None",
-    "TypeExpression": "None",
-    "ObjectSetExpression": "None",
-    "ProcedureExpression": "None",
-    "ArgListsExpression": "None",
-    "Multiplicity": "1", # Defaults to Int
-    "Integer": "1", # Defaults to Int
-    "UnlimitedInteger": "1", # Defaults to Long
-    "String": "''", # Defaults to String
-    "Geometry": "None", # Defaults to a list (of length 4)
-    "LocationReference": "None"
+# Used to map DataTypes to Python primitives:
+primitives = {
+    'Geometry': 'list',
+    'LocationReference': 'str',
+    'Boolean': 'int',
+    'String':'str',
+    'UnlimitedInteger': 'long',
+    'Integer': 'int',
+    'Name': 'str'
 }
 
 # For those classes no class definition is generated:
 custom_elements = [
-    "Element",
+    'Element',
+    'PresentationElement' # ModelElement.presentation is set to not navigable
 ]
 
-# These are some dictionaries where the objects are stored in. Package contains
-# the top level objects. All other dictionaries are just for ease of lookup.
-packages = { }
-datatypes = { }
-classes = { }
-associations = { }
+default_values = {
+    'isNavigable': 'True',
+    'Name': '\'\'',
+    'Boolean': 'False',
+    'VisibilityKind': 'VK_PUBLIC',
+    'OrderingKind': 'OK_UNORDERED',
+    'ChangeableKind': 'CK_CHANGEABLE',
+    'ScopeKind': 'SK_INSTANCE',
+    'PseudostateKind': 'PK_CHOICE',
+    'ParameterDirectionKind': 'PDK_IN',
+    'AggregationKind': 'AK_NONE',
+    'CallConcurrencyKind': 'CCK_SEQUENTIAL',
+    'Expression': 'None',
+    'ActionExpression': 'None',
+    'IterationExpression': 'None',
+    'MappingExpression': 'None',
+    'BooleanExpression': 'None',
+    'TimeExpression': 'None',
+    'TypeExpression': 'None',
+    'ObjectSetExpression': 'None',
+    'ProcedureExpression': 'None',
+    'ArgListsExpression': 'None',
+    'Multiplicity': '1', # Defaults to Int
+    'Integer': '1', # Defaults to Int
+    'UnlimitedInteger': '1', # Defaults to Long
+    'String': '\'\'', # Defaults to String
+    'Geometry': 'None', # Defaults to a list (of length 4)
+    'LocationReference': 'None'
+}
 
-# UML 1.3 namespace:
+translations = {
+    'ActivityGraph.partition': (lambda a: a, 'isNavigable', False),
+    'Classifier.collaboration': (lambda a: a, 'name', 'classifierCollaboration'),
+    'Classifier.classifierRole': (lambda a: a, 'name', 'classifierBaseRole'),
+    'Collaboration.collaboration': (lambda a: a, 'isNavigable', False),
+    'Collaboration.participatingLink': (lambda a: a, 'isNavigable', False),
+    'CollaborationInstanceSet.collaboration': (lambda a: a, 'isNavigable', False),
+    'Feature.classifierRole': (lambda a: a.other_end(), 'isNavigable', False),
+    'Instance.collaborationInstanceSet': (lambda a: a, 'isNavigable', False),
+    'Link.owner': (lambda a: a, 'name', 'linkOwner'),
+    'Link.playedRole': (lambda a: a, 'name', 'playedAssociationRole'),
+    'Link.collaborationInstanceSet': (lambda a: a, 'isNavigable', False),
+    'Message.sender': (lambda a: a.other_end(), 'isNavigable', False),
+    'Message.receiver': (lambda a: a.other_end(), 'isNavigable', False),
+    'ModelElement.collaborationInstanceSet': (lambda a: a, 'isNavigable', False),
+    'ModelElement.presentation': (lambda a: a, 'isNavigable', False),
+    'Operation.collaboration': (lambda a: a, 'name', 'operationCollaboration'),
+    'Package.elementImport': (lambda a: a, 'name', 'packageImport'),
+    'State.entry': (lambda a: a.other_end(), 'name', 'entryState'),
+    'State.exit': (lambda a: a.other_end(), 'name', 'exitState'),
+    'State.doActivity': (lambda a: a.other_end(), 'name', 'doActivityState'),
+    'Stimulus.argument': (lambda a: a.other_end(), 'name', 'argumentStimulus'),
+    'Stimulus.sender': (lambda a: a.other_end(), 'name', 'senderStimulus'),
+    'Stimulus.receiver': (lambda a: a.other_end(), 'name', 'receiverStimulus'),
+}
+
+# An overall dictionary where all elements will be indexed by their id
+elements = { }
+
+# Data classes
+
+class ModelElement:
+    def __init__(self, id, name):
+	global elements
+	self.id = id
+	self.name = name
+	elements[id] = self
+    
+    def resolve_references(self):
+	pass
+
+class Package(ModelElement):
+    def __init__(self, id, name):
+	ModelElement.__init__(self, id, name)
+	self.imports = [ ]
+	self.datatypes = [ ]
+	self.classes = [ ]
+	self.associations = [ ]
+	
+    def add_import(self, i):
+	self.imports.append(i)
+	
+    def add_datatype(self, d):
+	self.datatypes.append(d)
+	
+    def add_class(self, c):
+	self.classes.append(c)
+	
+    def add_association(self, a):
+	self.associations.append(a)
+
+class Import(ModelElement):
+    def __init__(self, id, name, importedNamespace):
+	ModelElement.__init__(self, id, name)
+	self.importedNamespace = importedNamespace
+
+    def resolve_references(self):
+	global elements
+	self.importedNamespace = elements[self.importedNamespace]
+
+    def str(self):
+	return 'from %s import *\n' % self.importedNamespace.name
+
+class Class(ModelElement):
+    def __init__(self, id, name, isAbstract, supertypes):
+	ModelElement.__init__(self, id, name)
+	self.isAbstract = isAbstract == 'true'
+	self.supertypes = supertypes and supertypes.split(' ') or None
+	self.attributes = [ ]
+	self.references = [ ]
+	self.associationEnds = [ ]
+
+    def add_attribute(self, a):
+	self.attributes.append(a)
+
+    def add_reference(self, r):
+	self.references.append(r)
+
+    def add_association_end(self, ae):
+	self.associationEnds.append(ae)
+
+    def is_referenced(self, ae):
+	for r in self.references:
+	    if r.referencedEnd is ae:
+		return True
+	return False
+
+    def resolve_references(self):
+	global elements
+	if self.supertypes:
+	    n = [ ]
+	    for id in self.supertypes:
+		n.append(elements[id])
+	    self.supertypes = n
+	
+    def doimpl(self, done):
+	"Create a string containing all attributes and associations."
+	if self in done:
+	    return ''
+	s = ''
+	for t in self.supertypes or ():
+	    s += t.doimpl(done)
+	if self.attributes or self.references:
+	    s += '    # from %s:\n' % self.name
+	# Build attributes: 'name': (default value, type)
+	for a in self.attributes:
+	    s += '    ' + a.str() + ',\n'
+	# Build associations: 'name': (default or 'Sequence', type[, other_end])
+	#for r in self.references:
+	#    s += '    ' + r.str() + ',\n'
+	for e in self.associationEnds:
+	    if e.str() != '':
+		s += '    ' + e.str() + ',\n'
+	done.append(self)
+	return s
+
+    def defstr(self, done):
+	"""Return the class definition. the list done is used to create
+	definitions of supertypes before the actual class."""
+	if self in done:
+	    return ''
+	s = ''
+	for t in self.supertypes or ():
+	    s += t.defstr(done)
+	s += 'class %s(' % self.name
+	if self.supertypes:
+	    for t in self.supertypes:
+		s += '%s,' % t.name
+	else:
+	    s += 'Element,'
+	s = s[:-1] + '): __abstract__ = %s\n' % (self.isAbstract and 'True' or 'False')
+	done.append(self)
+	return s
+
+    def implstr(self):
+	"Return the dict structure here"
+	if self.isAbstract:
+	    return ''
+	s = '%s.__attributes__ = {\n' % self.name
+	s += self.doimpl([ ])
+	s = s[:-2] + '\n}\n\n'
+	return s
+
+class DataType(ModelElement):
+    def __init__(self, id, name):
+	ModelElement.__init__(self, id, name)
+	self.isEnumeration = 0
+	self.enumvalues = [ ]
+
+    def is_enumeration(self):
+	self.isEnumeration = 1
+
+    def add_enumvalue(self, val):
+	self.enumvalues.append(val)
+
+    def str(self):
+	s = ''
+	if self.isEnumeration:
+	    for e in self.enumvalues:
+		s = s + "%s = '%s'\n" % (e.upper(), e)
+	    s += 'class %s(Enum):\n' % self.name
+	    s += '    _values = ['
+	    for e in self.enumvalues:
+		s += ' %s,' % e.upper()
+	    s = s[:-1] + ' ]\n\n'
+	else:
+	    s = 'class %s(%s): pass\n\n' % (self.name, primitives[self.name])
+	return s
+
+class Attribute(ModelElement):
+    def __init__(self, id, name, type):
+	ModelElement.__init__(self, id, name)
+	self.type = type
+	self.multiplicity = None
+
+    def set_multiplicity(self, m):
+	self.multiplicity = m
+
+    def resolve_references(self):
+	global elements
+	self.type = elements[self.type]
+
+    def str(self):
+	s = "'%s': ( " % self.name
+	if default_values.has_key(self.name):
+	    s += '%s' % default_values[self.name]
+	else:
+	    try:
+		s += '%s' % default_values[self.type.name]
+	    except KeyError, e:
+		msg('No default value found for type %s' % self.type.name)
+		s += 'None'
+	s += ', %s )' % self.type.name
+	return s
+
+class Reference(Attribute):
+    def __init__(self, id, name, type, referencedEnd):
+	Attribute.__init__(self, id, name, type)
+	self.referencedEnd = referencedEnd
+
+    def resolve_references(self):
+	Attribute.resolve_references(self)
+	global elements
+	self.referencedEnd = elements[self.referencedEnd]
+	# Set it navigable:
+	#self.referencedEnd.isNavigable = True
+
+    def str(self):
+	return self.referencedEnd.str()[:-4]
+
+class Association(ModelElement):
+    def __init__(self, id, name):
+	ModelElement.__init__(self, id, name)
+	self.associationEnds = [ ]
+
+    def add_association_end(self, ae):
+	self.associationEnds.append(ae)
+
+    def other_end(self, ae):
+	if ae is self.associationEnds[0]:
+	    return self.associationEnds[1]
+	else:
+	    return self.associationEnds[0]
+
+class AssociationEnd(ModelElement):
+    def __init__(self, id, name, type, association, isNavigable):
+	ModelElement.__init__(self, id, name)
+	self.type = type
+	self.isNavigable = isNavigable == 'true'
+	self.multiplicity = None #Multiplicity(1, 1, 'false', 'false')
+	self.association = association
+
+    def set_multiplicity(self, m):
+	self.multiplicity = m
+
+    def resolve_references(self):
+	global elements
+	self.type = elements[self.type]
+
+    def other_end(self):
+	return self.association.other_end(self)
+
+    def str(self):
+	if not self.isNavigable:
+	    return ''
+
+	s = "'%s': ( %s, %s" % (self.name, self.multiplicity.str(), self.type.name)
+	# Get the association end on the other end of the association:
+	e = self.other_end()
+	# Add reverse entry if the other end is navigable too:
+	if e.isNavigable:
+	    s += ", '%s'" % e.name
+	s += ' )'
+	return s
+
+class Multiplicity:
+    def __init__(self, lower, upper, isOrdered, isUnique):
+	self.lower = lower
+	self.upper = upper
+	self.isOrdered = isOrdered == 'true'
+	self.isUnique = isUnique == 'true'
+
+    def str(self):
+	if self.upper == -1:
+	    return 'Sequence'
+	return 'None'
+
+# UML 1.3 namespace (don't forget the trailing space):
 NS='omg.org/mof.Model/1.3 '
 
 # This is the parser. It's a bit hackish and maybe it only works for the
 # UML 1.3 MetaModel (which is enough actually). The parser is stack based:
-# for packages, classes, datatypes and associatiions new maps are created.
+# for packages, classes, datatypes and associations new maps are created.
 class MetaModelParser(XMLParser):
 
     def __init__(self, **kw):
-	self.__level = [ ]
+	self.mmstack = [ ]
 	self.xmifield = None
 	# These are the elements we can expect in the MetaModel:
 	self.elements = {
-	    "XMI": (self.start_XMI, self.end_XMI),
-	    "XMI.CorbaTcAlias": (self.start_XMI, self.end_XMI),
-	    "XMI.CorbaTcBoolean": (self.start_XMI, self.end_XMI),
-	    "XMI.CorbaTcEnum": (self.start_XMICorbaTcEnum, self.end_XMICorbaTcEnum),
-	    "XMI.CorbaTcEnumLabel": (self.start_XMICorbaTcEnumLabel, self.end_XMICorbaTcEnumLabel),
-	    "XMI.CorbaTcLong": (self.start_XMI, self.end_XMI),
-	    "XMI.CorbaTcString": (self.start_XMI, self.end_XMI),
-	    "XMI.CorbaTypeCode": (self.start_XMI, self.end_XMI),
-	    "XMI.any": (self.start_XMI, self.end_XMI),
-	    "XMI.content": (self.start_XMI, self.end_XMI),
-	    "XMI.field": (self.start_XMIfield, self.end_XMIfield),
-	    "XMI.header": (self.start_XMI, self.end_XMI),
-	    "XMI.metamodel": (self.start_XMI, self.end_XMI),
-	    "XMI.model": (self.start_XMI, self.end_XMI),
-	    "omg.org/mof.Model/1.3 Association": (self.start_Association, self.end_Association),
-	    "omg.org/mof.Model/1.3 AssociationEnd": (self.start_AssociationEnd, self.end_AssociationEnd),
-	    "omg.org/mof.Model/1.3 AssociationEnd.multiplicity": (self.start_multiplicity, self.end_multiplicity),
-	    "omg.org/mof.Model/1.3 Attribute": (self.start_Attribute, self.end_Attribute),
-	    "omg.org/mof.Model/1.3 Class": (self.start_Class, self.end_Class),
-	    "omg.org/mof.Model/1.3 DataType": (self.start_DataType, self.end_DataType),
-	    "omg.org/mof.Model/1.3 DataType.typeCode": (self.start_DataTypetypeCode, self.end_DataTypetypeCode),
-	    "omg.org/mof.Model/1.3 Import": (self.start_Import, self.end_Import),
-	    "omg.org/mof.Model/1.3 Namespace.contents": (self.start_Namespacecontents, self.end_Namespacecontents),
-	    "omg.org/mof.Model/1.3 Package": (self.start_Package, self.end_Package),
-	    "omg.org/mof.Model/1.3 Reference": (self.start_Reference, self.end_Reference),
-	    "omg.org/mof.Model/1.3 StructuralFeature.multiplicity": (self.start_multiplicity, self.end_multiplicity),
-	    "omg.org/mof.Model/1.3 Tag": (self.start_Tag, self.end_Tag),
-	    "omg.org/mof.Model/1.3 Tag.values": (self.start_Tagvalues, self.end_Tagvalues)
+	    'XMI': (self.start_XMI, self.end_XMI),
+	    'XMI.CorbaTcAlias': (self.start_XMI, self.end_XMI),
+	    'XMI.CorbaTcBoolean': (self.start_XMI, self.end_XMI),
+	    'XMI.CorbaTcEnum': (self.start_XMICorbaTcEnum, self.end_XMICorbaTcEnum),
+	    'XMI.CorbaTcEnumLabel': (self.start_XMICorbaTcEnumLabel, self.end_XMICorbaTcEnumLabel),
+	    'XMI.CorbaTcLong': (self.start_XMI, self.end_XMI),
+	    'XMI.CorbaTcString': (self.start_XMI, self.end_XMI),
+	    'XMI.CorbaTypeCode': (self.start_XMI, self.end_XMI),
+	    'XMI.any': (self.start_XMI, self.end_XMI),
+	    'XMI.content': (self.start_XMI, self.end_XMI),
+	    'XMI.field': (self.start_XMIfield, self.end_XMIfield),
+	    'XMI.header': (self.start_XMI, self.end_XMI),
+	    'XMI.metamodel': (self.start_XMI, self.end_XMI),
+	    'XMI.model': (self.start_XMI, self.end_XMI),
+	    NS + 'Association': (self.start_Association, self.end_Association),
+	    NS + 'AssociationEnd': (self.start_AssociationEnd, self.end_AssociationEnd),
+	    NS + 'AssociationEnd.multiplicity': (self.start_multiplicity, self.end_multiplicity),
+	    NS + 'Attribute': (self.start_Attribute, self.end_Attribute),
+	    NS + 'Class': (self.start_Class, self.end_Class),
+	    NS + 'DataType': (self.start_DataType, self.end_DataType),
+	    NS + 'DataType.typeCode': (self.start_DataTypetypeCode, self.end_DataTypetypeCode),
+	    NS + 'Import': (self.start_Import, self.end_Import),
+	    NS + 'Namespace.contents': (self.start_Namespacecontents, self.end_Namespacecontents),
+	    NS + 'Package': (self.start_Package, self.end_Package),
+	    NS + 'Reference': (self.start_Reference, self.end_Reference),
+	    NS + 'StructuralFeature.multiplicity': (self.start_multiplicity, self.end_multiplicity),
+	    NS + 'Tag': (self.start_Tag, self.end_Tag),
+	    NS + 'Tag.values': (self.start_Tagvalues, self.end_Tagvalues)
 	}
 	apply(XMLParser.__init__, (self,), kw)
 
-    def level(self):
-        return self.__level[0]
+    def push(self, val):
+	self.mmstack.insert(0, val)
 
-    def inc_level(self, dict):
-	if len (self.__level) > 0:
-	    self.__level[0][dict['id']] = dict
-        self.__level.insert(0, dict)
+    def pop(self):
+	val = self.mmstack[0]
+	self.mmstack.remove(val)
+	return val
 
-    def dec_level(self):
-        self.__level.pop(0)
+    def peek(self):
+	return self.mmstack[0]
 
     def handle_xml(self, encoding, standalone):
 	pass
@@ -134,60 +415,64 @@ class MetaModelParser(XMLParser):
 	pass
 
     def start_Association(self, data):
-	dict = {"tag": "association",
-		"id": data[NS + "xmi.id"],
-		"name": data[NS + "name"] } 
-	associations[dict['id']] = dict
-	self.inc_level(dict)
-	msg("a")
+	assert isinstance(self.peek(), Package)
+	a = Association(id=data[NS + 'xmi.id'], name=data[NS + 'name'])
+	self.peek().add_association(a)
+	self.push(a)
+	msg('a')
 
     def end_Association(self):
-        self.dec_level()
+        self.pop()
 
     def start_AssociationEnd(self, data):
-	dict = {"tag": "associationend",
-		"id": data[NS + "xmi.id"],
-		"name": data[NS + "name"],
-		"type": data[NS + "type"],
-		"aggregation": data[NS + "aggregation"] } 
-        self.inc_level(dict)
+	assert isinstance(self.peek(), Association)
+	ae = AssociationEnd(id=data[NS + 'xmi.id'],
+	                    name=data[NS + 'name'],
+			    type=data[NS + 'type'],
+			    association=self.peek(),
+			    isNavigable=data[NS + 'isNavigable'])
+        self.peek().add_association_end(ae)
+	self.push(ae)
 
     def end_AssociationEnd(self):
-        self.dec_level()
+        self.pop()
 
     def start_Attribute(self, data):
-	dict = {"tag": "attribute",
-		"name": data[NS + "name"],
-		"id": data[NS + "xmi.id"],
-		"type": data[NS + "type"] }
-        self.inc_level(dict)
+	assert isinstance(self.peek(), Class)
+	a = Attribute(id=data[NS + 'xmi.id'],
+	              name=data[NS + 'name'],
+		      type=data[NS + 'type'])
+        self.peek().add_attribute(a)
+	self.push(a)
 
     def end_Attribute(self):
-        self.dec_level()
+        self.pop()
 
     def start_Class(self, data):
-	dict = {"tag": "class",
-		"name": data[NS + "name"],
-		"id": data[NS + "xmi.id"] }
-	if data.has_key(NS + "supertypes"):
-		dict["supertypes"] = data[NS + "supertypes"]
-	classes[dict['id']] = dict
-        self.inc_level(dict)
-	msg("c")
+	assert isinstance(self.peek(), Package)
+	if data.has_key(NS + 'supertypes'):
+	    supertypes = data[NS + 'supertypes']
+	else:
+	    supertypes = None
+	c = Class(id=data[NS + 'xmi.id'],
+	          name=data[NS + 'name'],
+		  isAbstract=data[NS + 'isAbstract'],
+		  supertypes=supertypes)
+	self.peek().add_class(c)
+        self.push(c)
+	msg('c')
 
     def end_Class(self):
-        self.dec_level()
+        self.pop()
 
     def start_DataType(self, data):
-	dict = {"tag": "datatype",
-		"name": data[NS + "name"],
-		"id": data[NS + "xmi.id"] }
-	datatypes[dict['id']] = dict
-        self.inc_level(dict)
-	msg("d")
+	d = DataType(id=data[NS + 'xmi.id'], name=data[NS + 'name'])
+	self.peek().add_datatype(d)
+        self.push(d)
+	msg('d')
 
     def end_DataType(self):
-        self.dec_level()
+        self.pop()
 
     def start_DataTypetypeCode(self, data):
         pass
@@ -196,26 +481,29 @@ class MetaModelParser(XMLParser):
         pass
 
     def start_XMICorbaTcEnum(self, data):
-        self.enumlabel = [ ]
+	assert isinstance(self.peek(), DataType)
+        self.peek().is_enumeration()
 
     def end_XMICorbaTcEnum(self):
-        self.level()["enumeration"] = self.enumlabel
+	pass
 
     def start_XMICorbaTcEnumLabel(self, data):
-        self.enumlabel.append(data["xmi.tcName"])
+        self.peek().add_enumvalue(data['xmi.tcName'])
 
     def end_XMICorbaTcEnumLabel(self):
         pass
 
     def start_Import(self, data):
-	dict = {"tag": "import",
-		"name": data[NS + "name"],
-		"id": data[NS + "xmi.id"],
-		"importedNamespace": data[NS + "importedNamespace"] }
-        self.inc_level(dict)
+	assert isinstance(self.peek(), Package)
+	i = Import(id=data[NS + 'xmi.id'],
+	           name=data[NS + 'name'],
+		   importedNamespace=data[NS + 'importedNamespace'])
+	self.peek().add_import(i)
+	self.push(i)
+	msg('i')
 
     def end_Import(self):
-        self.dec_level()
+        self.pop()
 
     def start_Namespacecontents(self, data):
 	pass
@@ -224,39 +512,40 @@ class MetaModelParser(XMLParser):
 	pass
 
     def start_Package(self, data):
-	dict = {"tag": "package",
-		"id": data[NS + "xmi.id"],
-		"name": data[NS +"name"] }
-	packages[dict['id']] = dict
-        self.inc_level(dict)
-	msg("Parsing package: " + dict['name'] + "\n ")
+	p = Package(id=data[NS + 'xmi.id'],
+		    name=data[NS + 'name'])
+	msg('Parsing package: ' + data[NS + 'name'] + '\n ')
+	self.push(p)
 
     def end_Package(self):
-	self.dec_level()
-	msg("\n")
+	self.pop()
+	msg('\n')
 
     def start_Reference(self, data):
-	dict = {"tag": "reference",
-		"id": data[NS + "xmi.id"],
-		"name": data[NS + "name"],
-		"type": data[NS + "type"],
-		"referencedEnd": data[NS + "referencedEnd"] }
-	self.inc_level(dict)
+	r = Reference(id=data[NS + 'xmi.id'],
+		      name=data[NS + 'name'],
+		      type=data[NS + 'type'],
+		      referencedEnd=data[NS + 'referencedEnd'])
+	self.peek().add_reference(r)
+	self.push(r)
 
     def end_Reference(self):
-	self.dec_level()
+	self.pop()
 
     def start_multiplicity(self, data):
+	assert isinstance(self.peek(), AssociationEnd) or isinstance(self.peek(), Attribute)
 	self.multiplicity = []
 
     def end_multiplicity(self):
-	self.level()['lower'] = int(self.multiplicity[0])
-	self.level()['upper'] = int(self.multiplicity[1])
-	self.level()['is_ordered'] = self.multiplicity[2] == "true"
-	self.level()['is_unique'] = self.multiplicity[3] == "true"
+	m = Multiplicity(lower=int(self.multiplicity[0]),
+	                 upper=int(self.multiplicity[1]),
+	                 isOrdered=self.multiplicity[2],
+			 isUnique=self.multiplicity[3])
+	self.peek().set_multiplicity(m)
+	del self.multiplicity
 
     def start_XMIfield(self, data):
-	self.xmifield = ""
+	self.xmifield = ''
 
     def end_XMIfield(self):
 	self.multiplicity.append(self.xmifield)
@@ -281,30 +570,33 @@ class MetaModelParser(XMLParser):
 
     def handle_cdata(self, data):
 	"Should not have CDATA."
+	pass
 
     def handle_proc(self, name, data):
 	"Should not have to need processing"
+	pass
 
     def handle_comment(self, data):
 	"Skip comments."
+	pass
 
     def syntax_error(self, message):
         msg('error at line ' + self.lineno + ': ' +  message)
 
     def unknown_starttag(self, tag, attrs):
 	msg ('*** UNKNOWN TAG: ' + tag)
-	raise ValueException, tag + " not supported."
+	raise ValueException, tag + ' not supported.'
 
     def unknown_endtag(self, tag):
 	pass
 
     def unknown_entityref(self, ref):
 	msg('*** UNKNOWN ENTITYREF: &' + ref + ';')
-	raise ValueException, tag + " not supported."
+	raise ValueException, tag + ' not supported.'
 
     def unknown_charref(self, ref):
 	msg('*** UNKNOWN CHARREF: &#' + ref + ';')
-	raise ValueException, tag + " not supported."
+	raise ValueException, tag + ' not supported.'
 
 #####
 ##### Start of the execution
@@ -315,13 +607,13 @@ args = sys.argv[1:]
 if args:
     file = args[0]
 else:
-    msg("Usage: " + sys.argv[0] + " <UML MetaModel file.xmi>\n")
+    msg('Usage: ' + sys.argv[0] + ' <UML MetaModel file.xmi>\nThe Python data model is written to stdout')
     sys.exit(1)
 
 try:
     f = open(file, 'r')
 except IOError, e:
-    msg (file, ":", e)
+    msg (file, ':', e)
     sys.exit(1)
 
 data = f.read()
@@ -337,170 +629,64 @@ except Error, e:
     msg(e)
     sys.exit(1)
 
-# At this point we have parsed the .XMI file and we can now construct the
-# data that has to be written to the <PackageName>.py files
-# The 'packages' map now has the structure:
-# a0:
-#	a15:
-#		importedNamespace: a16
-#		tag: import
-#		name: Activity_Graphs
-#		id: a15
-#	name: UML
-#	tag: package
-#	a??:
-#		tag: association
-#		a??:
-#			tag: associationend
-#	...
-#
-# The first thing we do is create a new map ('out') which contains all classes
-# in the package. All attributes and associations are added to the class map.
-# After that we use it to construct a file called <package>.py. This file
-# is written in proper Python and should work without any further code.
-# All produced files depend on Element.py. The Element contains
-# code that checks the class' '_attrdef' structure and checks the type of class
-# that is to be assigned to the class.
+for e in elements.values():
+    e.resolve_references()
 
-#try:
-#    f = open('UML.py', 'w')
-#except IOError, e:
-#    msg(file, ":", e)
-#    sys.exit(1)
-f = sys.stdout
-out = f.write
+# TODO: Create extra references based on AssociationEnd's values.
+# Some AssociationEnds are not referenced from a Class by a Reference tag,
+# We can provide one, so the model can be more tight.
+# I don't know how this will affect double association names...
+def translate_names (name, a):
+    """For some reason, there are some names used double in the meta model.
+    This function filters the double entries and gives them unique names or
+    changes the navigability.
+    name: name of the class
+    a: association end that references the class
+    """
+    try:
+	x = translations[name + '.' + a.name]
+	ass = x[0](a)
+	msg('[' + name + '.' + a.name + '] ' + ass.other_end().type.name + '.' + ass.name + ': ' + x[1] + ' := ' + str(x[2]) + '\n')
+	assert hasattr(ass, x[1])
+	ass.__dict__[x[1]] = x[2]
+    except KeyError, e:
+	pass
+	    
+for p in filter(lambda p: isinstance(p, Package), elements.values()):
+    for a in p.associations:
+	assert len(a.associationEnds) == 2
+	a1 = a.associationEnds[0]
+	a2 = a.associationEnds[1]
+	#if a1 not in a2.type.references:
+	#if a1.type.is_referenced(a2) or a2.type.is_referenced(a1):
+	a2.type.add_association_end(a1)
+	a1.type.add_association_end(a2)
+	translate_names(a1.type.name, a2)
+	translate_names(a2.type.name, a1)
 
-msg("Writing definitions...")
+out = sys.stdout.write
 
-# Header and import statements
-out("# MetaModel definition.\n")
-out("# This file is generated, do not edit.\n")
-out("\n")
-out("import types\n")
-out("from element import *\n")
-out("\n# Enumeration types:\n")
+out('# MetaModel definition.\n')
+out('# This file is generated by genUML.py, do not edit.\n\n')
+out('import types\n')
+out('from element import Element, Sequence, Enum\n')
+out('\n# Datatypes:\n')
 
-cnt = 0
-for key in datatypes.keys():
-    # If we have an enumeration type, define them:
-    if datatypes[key].has_key("enumeration"):
-	out("\n")
-	for enum in datatypes[key]["enumeration"]:
-	    out(enum.upper() + " = '" + enum + "'\n")
-	out("class " + datatypes[key]["name"] + "(Enumeration_):\n")
-	out("    _values = [ ")
-	for enum in datatypes[key]["enumeration"]:
-	    out(enum.upper() + ", ")
-	out("]\n")
-	cnt += 1
+for d in filter(lambda e: isinstance(e, DataType), elements.values()):
+    if d.name not in custom_elements:
+	out(d.str())
 
-msg("Wrote " + str(cnt) + " enumeration types.\n")
+out('\n# Class definitions:\n')
 
-out("\n# Class definitions:\n")
+done = [ ]
+for c in filter(lambda e: isinstance(e, Class) and e.name in custom_elements, elements.values()):
+    done.append(c)
 
-# First write class definitions:
-cnt = 0
-done = { }
+for c in filter(lambda e: isinstance(e, Class), elements.values()):
+    out(c.defstr(done)) # provide empty list
 
-# Create all class definitions. We should create them in the right order,
-# otherwise the interpreter will error.
-def write_class(key):
-    global cnt
-    if classes.has_key(key) and not done.has_key(key):
-	if classes[key]["name"] in custom_elements:
-	    return
-	# Examine supertypes 
-	if classes[key].has_key("supertypes"):
-	    super = [ ]
-	    for s in classes[key]["supertypes"].split(' '):
-		super.append(classes[s]["name"])
-		if not done.has_key(s):
-		    write_class(s)
-
-	    # Now add yourself:
-	    out("class " + classes[key]["name"] + "(" + super[0])
-	    for i in xrange (1, len(super)):
-		out(", " + super[i])
-	    out("): _attrdef = { }\n")
-	else:	
-	    out("class " + classes[key]["name"] + "(Element): _attrdef = { }\n")
-	done[key] = 0
-	cnt += 1
-
-for key in classes.keys():
-    write_class(key)
-
-del done
-
-msg("Wrote " + str(cnt)  + " class definitions.\n")
-
-out("\n# Attributes:\n")
-cnt = 0
-
-# Examine attributes
-for cls in classes.keys():
-    cls_name = classes[cls]["name"]
-    for attr in classes[cls].keys():
-	the_attr = classes[cls][attr]
-	if isinstance (the_attr, types.DictType) and the_attr["tag"] == "attribute":
-	    if classes.has_key(the_attr["type"]):
-		out(cls_name + "._attrdef['" + the_attr["name"] + "'] = ( " + default_values[classes[the_attr["type"]]["name"]] + ", " + classes[the_attr["type"]]["name"] + " )\n")
-	    elif datatypes.has_key(the_attr["type"]):
-		out(cls_name + "._attrdef['" + the_attr["name"] + "'] = ( " + default_values[datatypes[the_attr["type"]]["name"]] + ", " + datatypes[the_attr["type"]]["name"] + " )\n")
-	    else:
-		raise ValueError, "Unknown tag: " + the_attr["type"]
-	    cnt += 1
-
-msg("Wrote " + str(cnt) + " attribute definitions.\n")
-
-out("\n# Associations, ordered by pair\n")
-
-# And at last add associations:
-cnt = 0
-def write_assoc(assend1, assend2):
-    global cnt
-    
-    def is_referenced(cls, id):
-	for key in cls.keys():
-	    the_rel = cls[key]
-	    if isinstance (the_rel, types.DictType) and the_rel["tag"] == "reference" and the_rel["referencedEnd"] == id:
-		return 1
-	return 0
-
-    if classes[assend1["type"]]["name"] not in custom_elements:
-	mult = 'None'
-	if assend2["upper"] == -1: # multiplicity = '*'
-	    mult = 'Sequence'
-        if is_referenced(classes[assend2["type"]], assend1["id"]) \
-	    or is_referenced(classes[assend1["type"]], assend2["id"]):
-	    out(classes[assend1["type"]]["name"] + "._attrdef['" + \
-			assend2["name"] + "'] = ( " + mult + ", " + \
-			classes[assend2["type"]]["name"] + ", '" + \
-			assend1["name"] + "' )\n")
-	else:
-	    out(classes[assend1["type"]]["name"] + "._attrdef['" + \
-			assend2["name"] + "'] = ( " + mult + ", " + \
-			classes[assend2["type"]]["name"] + " )\n")
-	cnt += 1
-
-for ass in associations.keys():
-    the_ass = associations[ass]
-    if isinstance (the_ass, types.DictType) and the_ass["tag"] == "association":
-	assend1 = None
-	assend2 = None
-	for assend in the_ass.keys():
-	    the_assend = the_ass[assend]
-	    if isinstance (the_assend, types.DictType) and the_assend["tag"] == "associationend":
-		if assend1 is None:
-		    assend1 = the_assend
-		else:
-		    assend2 = the_assend
-
-	write_assoc(assend1, assend2)
-	write_assoc(assend2, assend1)
-
-msg ("Wrote " + str(cnt) + " associations.\n")
-
-if f is not sys.stdout:
-    f.close()
+out('\n# Class implementations:\n')
+for c in filter(lambda e: isinstance(e, Class), elements.values()):
+    if c.name not in custom_elements:
+	out(c.implstr())
 

@@ -2,9 +2,9 @@
 
 import inspect
 
-class SequenceError(GaphorError):
+class SequenceError(Exception):
     pass
-	
+
 class Sequence:
     '''A Sequence class has the following properties:
     - A sequence is an unordered list of unique elements.
@@ -14,7 +14,7 @@ class Sequence:
       sequence_{add|remove}() functions are called to allow
       bi-directional relations to be added and deleted.
       Note that the Sequence itself does not add items to its list, it
-      only invokes the owning object if something needs to be done.'''
+      only invokes the owner object if something needs to be done.'''
 
     def __init__(self, owner, type):
 	self.owner = owner

@@ -7,7 +7,7 @@ __author__ = 'Arjan Molenaar'
 __version__ = '$revision$'
 __date__ = '$date$'
 
-from modelelements import Namespace
+from modelelements import * #Namespace, Name, VisibilityKind, VK_PUBLIC, Boolean, Dependency, Constraint, Flow, Comment, TemplateParameter, Stereotype, TaggedValue, Generalization, ModelElement
 #import gobject
 import diacanvas
 import gaphor.misc.uniqueid as uniqueid
@@ -52,10 +52,31 @@ class _Canvas(diacanvas.Canvas):
 
 
 class Diagram(Namespace):
-
-    _attrdef = { 'canvas': ( None, diacanvas.Canvas ) }
-    # Diagram item to UML model element mapping:
-#    diagram2UML = { }
+    __abstract__ = False
+    __attributes__ = {
+        # from ModelElement:
+	'name': ( '', Name ),
+	'visibility': ( VK_PUBLIC, VisibilityKind ),
+	'isSpecification': ( False, Boolean ),
+	'namespace': ( None, Namespace, 'ownedElement' ),
+	'clientDependency': ( Sequence, Dependency, 'client' ),
+	'constraint': ( Sequence, Constraint, 'constrainedElement' ),
+	'targetFlow': ( Sequence, Flow, 'target' ),
+	'sourceFlow': ( Sequence, Flow, 'source' ),
+	'comment': ( Sequence, Comment, 'annotatedElement' ),
+	'templateParameter': ( Sequence, TemplateParameter, 'template' ),
+	'stereotype': ( Sequence, Stereotype ),
+	'taggedValue': ( Sequence, TaggedValue, 'modelElement' ),
+	# from GeneralizableElement:
+	'isRoot': ( False, Boolean ),
+	'isLeaf': ( False, Boolean ),
+	'isAbstract': ( False, Boolean ),
+	'generalization': ( Sequence, Generalization, 'child' ),
+	# from Namespace:
+	'ownedElement': ( Sequence, ModelElement, 'namespace' ),
+	# from Diagram:
+	'canvas': ( None, diacanvas.Canvas )
+    }
 
     def __init__(self, id):
 	Namespace.__init__(self, id)

@@ -1,3 +1,11 @@
+2002-02-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* utils/genUML.py: new generation script.
+	* gaphor/UML/element.py: reorganized. Overall more readable.
+	* gaphor/diagram/association.py: Added multiplicity and association
+	end name.
+	* *: several updates and fixes.
+
 2002-01-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/mainwindow.py, gaphor/ui/command/main.py: added

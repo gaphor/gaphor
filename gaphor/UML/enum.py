@@ -1,5 +1,5 @@
 
-class Enumeration_:
+class Enum:
     '''The Enumerration class is an abstract class that can be used to create
     enumerated types. One should inherit from Enumeration and define a variable
     '_values' at class level, which holds a list of valid values for the class.

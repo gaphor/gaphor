@@ -63,14 +63,17 @@ class Gaphor(misc.singleton.Singleton):
 	from ui import MainWindow
 	gnome.init(Gaphor.NAME, Gaphor.VERSION)
 	# should we set a default icon here or something?
-	mainwin = MainWindow()
-	mainwin.construct()
+	self.__main_window = MainWindow()
+	self.__main_window.construct()
 	# When the state changes to CLOSED, quit the application
-	mainwin.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and bonobo.main_quit())
+	self.__main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and bonobo.main_quit())
 	#mainwin = GaphorResource(WindowFactory).create(type=MainWindow)
 
 	bonobo.main()
 	log.info('Bye!')
+
+    def get_main_window(self):
+	return self.__main_window
 
     def get_resource(resource):
 	"""
