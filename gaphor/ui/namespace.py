@@ -23,7 +23,12 @@ class NamespaceModel(gtk.GenericTreeModel):
 	if not isinstance (factory, UML.ElementFactory):
 	    raise AttributeError
 
-	self.model = factory.lookup(1);
+	self.model = None
+	for e in factory.values():
+	    if isinstance(e, UML.Model):
+		self.model = e
+		break
+	#self.model = factory.lookup(1);
 	# Init parent:
 	gtk.GenericTreeModel.__init__(self)
 	# We own the references to the iterators.
@@ -65,7 +70,7 @@ class NamespaceModel(gtk.GenericTreeModel):
     def __factory_signals (self, key, obj, factory):
         if key == 'create' and isinstance (obj, UML.Namespace):
 	    obj.connect (self.__element_signals, obj)
-	    if obj.id == 1:
+	    if isinstance(obj, UML.Model): #obj.id == 1:
 		self.model = obj
 	elif key == 'remove' and isinstance (obj, UML.Namespace):
 	    if obj is self.model:

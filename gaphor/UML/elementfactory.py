@@ -6,7 +6,7 @@ consistency checking should also be included.'''
 
 #import misc.singleton as Singleton
 from gaphor.misc.signal import Signal as _Signal
-#from misc.storage import Storage
+import gaphor.misc.uniqueid as uniqueid
 import weakref, gc
 from element import Element
 from diagram import Diagram
@@ -28,29 +28,34 @@ class ElementFactory(object):
 
     def __init__ (self):
 	self.__elements = { }
-	self.__index = 1
 	self.__signal = _Signal()
 
     def create (self, type):
-        obj = type(self.__index)
-	self.__elements[self.__index] = obj
-	self.__index += 1
-	obj.connect (self.__element_signal, weakref.ref(obj))
-	self.__emit_create (obj)
+	return self.create_as(type, uniqueid.generate_id())
+        #obj = type(self.__index)
+	#self.__elements[self.__index] = obj
+	#self.__index += 1
+	#obj.connect (self.__element_signal, weakref.ref(obj))
+	#self.__emit_create (obj)
 	#print 'ElementFactory:', str(self.__index), 'elements in the factory'
-	return obj
+	#return obj
 
     def create_as (self, type, id):
 	'''Create a new model element of type 'type' with 'id' as its ID.
 	This method should only be used when loading models. If the ID is
 	higher that the current id that should be used for the next item, the
 	ID for the next item is set to id + 1.'''
-	old_index = self.__index
-	self.__index = id
-	obj = self.create (type)
-	if old_index > self.__index:
-	    self.__index = old_index
+        obj = type(id)
+	self.__elements[id] = obj
+	obj.connect (self.__element_signal, weakref.ref(obj))
+	self.__emit_create (obj)
 	return obj
+	#old_index = self.__index
+	#self.__index = id
+	#obj = self.create (type)
+	#if old_index > self.__index:
+	#    self.__index = old_index
+	#return obj
 
     def lookup (self, id):
 	try:
@@ -77,7 +82,7 @@ class ElementFactory(object):
 		value.canvas.clear_redo()
 	    value.unlink()
 	assert len(self.__elements) == 0, 'Still items in the factory: %s' % str(self.__elements.values())
-	self.__index = 1
+	#self.__index = 1
 
     def connect (self, signal_func, *data):
 	self.__signal.connect (signal_func, *data)

@@ -17,31 +17,13 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 			 'subject held by the relationship',
 			 gobject.PARAM_READWRITE),
     }
-    __savable_properties = [ 'affine', 'line_width',
+    __savable_properties = [ 'affine', 'line-width',
 			'color', 'cap', 'join', 'orthogonal', 'horizontal' ]
     def __init__(self):
 	self.__gobject_init__()
 	DiagramItem.__init__(self)
 	self.subject = None
-	self.__id = -1
-
-#    def save (self, store):
-#	for prop in RelationshipItem.__savable_properties:
-#	    store.save_property(prop)
-#	points = [ ]
-#	for h in self.handles:
-#	    pos = h.get_pos_i ()
-#	    #print 'pos:', pos, h.get_property('pos_i')
-#	    points.append (pos)
-#	store.save_attribute ('points', points)
-#	c = self.handles[0].connected_to
-#	if c:
-#	    store.save_attribute ('head_connection', c)
-#	c = self.handles[-1].connected_to
-#	if c:
-#	    store.save_attribute ('tail_connection', c)
-#	if self.subject:
-#	    store.save_attribute('subject', self.subject)
+	self.__id = None
 
     def save (self, save_func):
 	for prop in RelationshipItem.__savable_properties:
@@ -49,7 +31,6 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	points = [ ]
 	for h in self.handles:
 	    pos = h.get_pos_i ()
-	    #print 'pos:', pos, h.get_property('pos_i')
 	    points.append (pos)
 	save_func ('points', points)
 	c = self.handles[0].connected_to
@@ -77,39 +58,19 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	    self.set_property(name, value)
 	else:
 	    self.set_property(name, eval(value))
-#	# Subject may have been omited.
-#	try:
-#	    subject = store.reference('subject')
-#	    assert len(subject) == 1
-#	    self._set_subject(subject[0])
-#	except ValueError:
-#	    pass
-#	for prop in RelationshipItem.__savable_properties:
-
-#    def postload(self, store):
-#	for name, refs in store.references().items():
-#	    if name == 'head_connection':
-#		assert len(refs) == 1
-#		refs[0].connect_handle (self.handles[0])
-#	    elif name == 'tail_connection':
-#		assert len(refs) == 1
-#		refs[0].connect_handle (self.handles[-1])
 
     def postload(self):
-	print 'postload:', self
 	if hasattr(self, '_load_head_connection'):
 	    self._load_head_connection.connect_handle (self.handles[0])
 	    del self._load_head_connection
-	elif hasattr(self, '_load_tail_connection'):
+	if hasattr(self, '_load_tail_connection'):
 	    self._load_tail_connection.connect_handle (self.handles[-1])
 	    del self._load_tail_connection
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
-	    #print self, 'id', value
-	    self.__id = int(value)
+	    self.__id = value
 	elif pspec.name == 'subject':
-	    #print 'Setting subject:', value
 	    self._set_subject(value)
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name

@@ -425,14 +425,13 @@ The signals protocol is:
 		self.__dict__[name] = float (value)
 	    else:
 		if value and value != '':
-		    print 'loading val:', value, 'for', name, self
+		    #print 'loading val:', value, 'for', name, self
 		    self.__dict__[name] = value
 	    self.__queue (name, None, value)
 	
     def postload (self):
 	'''Do some things after the items are initialized... This is basically
 	used for Diagrams.'''
-	print 'postload:', self.id, self
 	self.__flush()
 
 

@@ -48,9 +48,6 @@ class FeatureItem(CanvasText, DiagramItem):
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
-    def load(self, store):
-	#ModelElementItem.load(self, store)
-	pass
 
 #    def on_update(self, affine):
 #	#ModelElementItem.on_update(self, affine)

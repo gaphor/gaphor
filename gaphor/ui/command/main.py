@@ -9,7 +9,7 @@ QuitCommand
 """
 
 from gaphor.misc.command import Command
-from gaphor.misc.storage import Storage
+import gaphor.misc.storage as storage
 from commandinfo import CommandInfo
 import sys
 import gtk
@@ -27,7 +27,7 @@ class NewCommand(Command):
 
     def execute(self):
 	fact = GaphorResource(UML.ElementFactory)
-	fact.flush()
+	#fact.flush()
 	gc.collect()
 	model = fact.create(UML.Model)
 	diagram = fact.create(UML.Diagram)
@@ -56,14 +56,13 @@ class OpenCommand(Command):
 	    filename = filesel.get_filename()
 	    if filename and len(filename) > 0:
 		log.debug('Loading from: %s' % filename)
-		GaphorResource(UML.ElementFactory).flush()
+		#GaphorResource(UML.ElementFactory).flush()
 		#GaphorResource(diagram.DiagramItemFactory).flush()
 
 		gc.collect()
 
-		store = Storage()
 		try:
-		    store.load(filename)
+		    storage.load(filename)
 		    self._window.set_filename(filename)
 		except Exception, e:
 		    import traceback
@@ -95,9 +94,8 @@ class SaveCommand(Command):
 	    if not filename.endswith(DEFAULT_EXT):
 		filename = filename + DEFAULT_EXT
 	    log.debug('Saving to: %s' % filename)
-	    store = Storage()
 	    try:
-		store.save(filename)
+		storage.save(filename)
 		self._window.set_filename(filename)
 	    except Exception, e:
 		log.error('Failed to save to file %s: %s' % (filename, e))
@@ -126,9 +124,8 @@ class SaveAsCommand(Command):
 	    if not filename.endswith(DEFAULT_EXT):
 		filename = filename + DEFAULT_EXT
 	    log.debug('Saving to: %s' % filename)
-	    store = Storage()
 	    try:
-		store.save(filename)
+		storage.save(filename)
 		self._window.set_filename(filename)
 	    except Exception, e:
 		log.error('Failed to save to file %s: %s' % (filename, e))
@@ -148,11 +145,10 @@ class RevertCommand(Command):
     def execute(self):
 	if self._window.get_filename():
 	    log.debug('Loading from: %s' % filename)
-	    GaphorResource(UML.ElementFactory).flush()
+	    #GaphorResource(UML.ElementFactory).flush()
 
-	    store = Storage()
 	    try:
-		store.load(filename)
+		storage.load(filename)
 	    except Exception, e:
 		import traceback
 		log.error('Error while loading model from file %s: %s' % (filename, e))

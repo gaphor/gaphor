@@ -8,7 +8,9 @@ __version__ = '$revision$'
 __date__ = '$date$'
 
 from modelelements import Namespace
+#import gobject
 import diacanvas
+import gaphor.misc.uniqueid as uniqueid
 
 class _Canvas(diacanvas.Canvas):
     '''
@@ -19,7 +21,6 @@ class _Canvas(diacanvas.Canvas):
 	    'grid_ofs_y', 'grid_color', 'grid_bg' ]
 
     def save(self, save_func):
-	print '_Canvas.save'
 	for prop in _Canvas._savable_canvas_properties:
 	    save_func(prop, self.get_property(prop))
 	save_func('root_affine', self.root.get_property('affine'))
@@ -39,7 +40,6 @@ class _Canvas(diacanvas.Canvas):
 	self.update_now ()
 
     def postload(self):
-	print 'postload:', self
 	self.update_now ()
 
 	# setting allow-undo to 1 here will cause update info from later
@@ -48,13 +48,14 @@ class _Canvas(diacanvas.Canvas):
 	self.clear_redo()
 	self.set_property ("allow_undo", 1)
 
+#gobject.type_register(_Canvas)
+
 
 class Diagram(Namespace):
-    __index = 1
 
     _attrdef = { 'canvas': ( None, diacanvas.Canvas ) }
     # Diagram item to UML model element mapping:
-    diagram2UML = { }
+#    diagram2UML = { }
 
     def __init__(self, id):
 	Namespace.__init__(self, id)
@@ -68,86 +69,7 @@ class Diagram(Namespace):
 	ID and it is attached to the diagram's root item.
 	"""
 	obj = type()
-	obj.set_property('id', Diagram.__index)
+	obj.set_property('id', uniqueid.generate_id())
 	obj.set_property('parent', self.canvas.root)
-	Diagram.__index += 1
 	return obj
 
-#    def save(self, save_func):
-	# Save the diagram attributes, but not the canvas
-	#self_canvas = self.canvas
-	#del self.__dict__['canvas']
-#	Namespace.save (self, save_func)
-	#self.__dict__['canvas'] = self_canvas
-	#del self_canvas
-
-	# Save attributes of the canvas:
-	#canvas_store = store.new (self.canvas)
-#	for prop in Diagram._savable_canvas_properties:
-#	    save_func(prop, self.canvas.get_property(prop))
-	    #canvas_store.save_property(prop)
-
-#	save_func('root_affine', self.canvas.root.get_property('affine'))
-	#canvas_store.save_attribute ('root_affine', self.canvas.root.get_property('affine'))
-	
-	# Save child items:
-#	for item in self.canvas.root.children:
-#	    save_func(None, item) #item.save(canvas_store.new(item))
-
-#    def load (self, store):
-#	#print 'Doing Namespace'
-#        Namespace.load (self, store)
-#	#print 'Namespace done'
-#
-#	self.canvas.set_property ("allow_undo", 0)
-
-#	# First create the canvas:
-#	canvas_store = store.canvas()
-#	for name, value in canvas_store.values().items():
-#	    #print 'Diagram: loading attribute', name
-#	    if name == 'root_affine':
-#	    	self.canvas.root.set_property('affine', eval(value))
-#	    else:
-#		#print 'value = "%s"' % value
-#		v = eval(value)
-#		self.canvas.set_property (name, v)
-#
-#	item_dict = canvas_store.canvas_items()
-#	
-#	for id, item_store in item_dict.items():
-#	    #log.debug('Creating item %s with id %i' % (str(item_store.type()), id))
-#	    type = item_store.type()
-#	    item = type()
-#	    if id > Diagram.__index:
-#		Diagram.__index = id + 1
-#
-#	    self.canvas.root.add(item)
-#	    item_store.add_cid_to_item_mapping (id, item)
-#	    item.set_property ('id', id)
-#	    item.load(item_store)
-#
-#	self.canvas.update_now ()
-
-    def __postload (self, store): 
-        '''We use postload() to connect objects to each other. This can not
-	be done in the load() method, since objects can change their size and
-	contents after we have connected to them (since they are not yet
-	initialized). We use a transformation table here to retrieve the objects
-	and their CID. '''
-
-	Namespace.postload(self, store)
-	# All objects are loaded and the fields are properly set.
-	item_dict = store.canvas().canvas_items()
-	
-	for id, item_store in item_dict.items():
-	    #print 'Postprocessing item ' + str(item_store.type()) + ' with id ' + str(id)
-	    item = store.lookup_item(id)
-	    item.postload(item_store)
-
-	self.canvas.update_now ()
-
-	# setting allow-undo to 1 here will cause update info from later
-	# created elements to be put on the undo stack.
-	#self.canvas.set_property ("allow_undo", 1)
-	self.canvas.clear_undo()
-	self.canvas.clear_redo()

@@ -29,23 +29,22 @@ class CommentItem(ModelElementItem):
 	self.__body.connect('text_changed', self.on_text_changed)
 
     def postload(self):
-	print 'setting body: "%s"' % self.subject.body
 	self.__body.set(text=self.subject.body)
 
     def _set_subject(self, subject):
 	"""Set a new subject. We make sure that the body of the comment
 	is visible here."""
 	ModelElementItem._set_subject(self, subject)
-	self.__body.set(text=self.subject and self.subject.name or '')
-	#self.__body_update()
+	self.__body.set(text=self.subject and self.subject.body or '')
 	self.request_update()
 
     def on_update(self, affine):
-	# Outline the text:
+	# Outline the text, first tell the text how width it may become:
+	self.__body.set_property('width',
+			self.width - CommentItem.EAR - CommentItem.OFFSET)
 	w, h = self.__body.get_property('layout').get_pixel_size()
 	self.set(min_height=h + CommentItem.OFFSET * 2)
-	self.__body.set(width=self.width - CommentItem.EAR - CommentItem.OFFSET,
-			height=self.height - CommentItem.OFFSET * 2)
+	self.__body.set_property('height', self.height - CommentItem.OFFSET * 2)
 	self.update_child(self.__body, affine)
 	ModelElementItem.on_update(self, affine)
 

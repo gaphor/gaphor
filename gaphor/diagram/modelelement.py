@@ -58,13 +58,11 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
 	    self.set_property(name, eval(value))
 
     def postload(self):
-	print 'postload:', self
 	pass
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
-	    #print self, 'id', value
-	    self.__id = int(value)
+	    self.__id = value
 	elif pspec.name == 'subject':
 	    #print 'Setting subject:', value
 	    self._set_subject(value)

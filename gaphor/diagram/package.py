@@ -40,10 +40,6 @@ class PackageItem(ModelElementItem):
     def __name_update (self):
 	'''Center the name text in the package body.'''
 
-    def load(self, store):
-	ModelElementItem.load(self, store)
-	self.__name_update()
-
     def on_update(self, affine):
 	# Center the text
 	layout = self.__name.get_property('layout')
