@@ -13,9 +13,9 @@ run () {
 	fi
 }
 
-ACLOCAL=`type aclocal | awk '{ print $3 }'`
-AUTOMAKE=`type automake | awk '{ print $3 }'`
-AUTOCONF=`type autoconf | awk '{ print $3 }'`
+ACLOCAL=`which aclocal`
+AUTOMAKE=`which automake`
+AUTOCONF=`which autoconf`
 
 if test ! -x "${ACLOCAL}" \
 || test ! -x "${AUTOMAKE}" \

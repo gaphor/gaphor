@@ -141,6 +141,7 @@ AC_CONFIG_FILES([bin/gaphor], [chmod +x bin/gaphor])
 AC_CONFIG_FILES(
 	Makefile
 	data/Makefile
+	data/pixmaps/Makefile
 	utils/Makefile
 	gaphor/config.py
 	po/Makefile.in
