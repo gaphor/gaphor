@@ -160,8 +160,13 @@ class OpenAction(RevertAction):
     tooltip = 'Load a Gaphor project from a file'
 
     def execute(self):
-        filesel = gtk.FileSelection('Open Gaphor file')
-        filesel.hide_fileop_buttons()
+        if gtk.gtk_version < (2, 4, 0):
+            filesel = gtk.FileSelection('Open Gaphor model')
+            filesel.hide_fileop_buttons()
+        else:
+            filesel = gtk.FileChooserDialog(title='Open Gaphor model',
+                                            action=gtk.FILE_CHOOSER_ACTION_OPEN,
+                                            buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
         filesel.set_filename(self.filename or '')
 
         response = filesel.run()
