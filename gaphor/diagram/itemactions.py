@@ -720,9 +720,11 @@ class Fold(Action):
 
         # center new element diagram in the centre of old one
         x, y = item.get_property('affine')[4:]
-        new_el.on_update(new_el.get_property('affine'))
+        #new_el.on_update(new_el.get_property('affine'))
         new_el.move(x + (item.width - new_el.width) / 2.0,
                     y + (item.height - new_el.height) / 2.0)
+
+	# TODO: reattach handles that have been  connected to 'item'
 
         # remove old diagram element
         item.unlink()

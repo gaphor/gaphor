@@ -480,7 +480,10 @@ class NamespaceView(gtk.TreeView):
                 parent_iter = model.iter_parent(iter)
                 dest_element = model.get_value(parent_iter, 0)
             try:
-                if dest_element:
+                # Avoid root elements to be 
+                if element.namespace:
+                    raise AttributeError
+                elif dest_element:
                     # Set package. This only works for classifiers, packages and
                     # diagrams. Properties and operations should not be moved.
                     element.package = dest_element

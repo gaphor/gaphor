@@ -185,7 +185,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
         """
         # TODO: Should allow to connect to Class and Actor.
         #log.debug('AssociationItem.allow_connect_handle')
-        if isinstance(connecting_to.subject, (UML.Class, UML.Actor)):
+        if isinstance(connecting_to.subject, UML.Classifier):
             return True
         return False
 
@@ -246,9 +246,12 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
                 relation.package = self.canvas.diagram.namespace
                 relation.memberEnd = head_end
                 relation.memberEnd = tail_end
-                head_end.type = tail_end.class_ = head_type
-                tail_end.type = head_end.class_ = tail_type
-
+                #head_end.type = tail_end.class_ = head_type
+                #tail_end.type = head_end.class_ = tail_type
+                head_end.type = head_type
+                tail_end.type = tail_type
+                head_type.ownedAttribute = tail_end
+                tail_type.ownedAttribute = head_end
                 # copy text from ends to AssociationEnds:
                 #head_end.name = self._head_end._name.get_property('text')
                 #head_end.multiplicity = self._head__end._mult.get_property('text')
