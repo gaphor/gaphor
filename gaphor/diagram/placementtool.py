@@ -36,6 +36,13 @@ class PlacementTool(diacanvas.PlacementTool):
                 
         return item
 
+    def _move_item(self, view, event, item):
+        """Move the newly created item to the desired position.
+        """
+        #wx, wy = view.window_to_world(event.x, event.y)
+        ix, iy = item.affine_point_w2i(event.x, event.y)
+        item.move(ix, iy)
+
     def _grab_handle(self, view, event, item):
         if not self.is_released:
             if isinstance(item, diacanvas.CanvasElement):
