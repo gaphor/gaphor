@@ -294,14 +294,15 @@ class ShowGridAction(CheckAction):
 	self._window = window
 
     def update(self):
-	print 'update', self
 	diagram_tab = self._window.get_current_diagram_tab()
 	self.sensitive = bool(diagram_tab)
 	self.active = diagram_tab and diagram_tab.get_canvas().get_property('grid_color') != diagram_tab.get_canvas().get_property('grid_bg') 
 
     def execute(self):
-	canvas = self._window.get_current_diagram_tab().get_canvas()
-	canvas.set_property('grid_color', self.active and 255 or canvas.get_property('grid_bg'))
+	tab = self._window.get_current_diagram_tab()
+	if tab:
+	    canvas = tab.get_canvas()
+	    canvas.set_property('grid_color', self.active and 255 or canvas.get_property('grid_bg'))
 
 register_action(ShowGridAction)
 

@@ -2,31 +2,22 @@ check Classifier.substitution, InstanceSpecification.slot.
 
 As always, there is much to do...
 
-- Signal handling should work better for canvas items. Currently one has to
-  keep a backup reference of the model element, so it can be hard to change
-  the canvas item once a reference is destroyed.
-  
+- fix accelarators (HOW?)
+- Let the item box behave the same way as the toolbox in GIMP.
+
 - Define a proper scheme for flushing models. Currently a lot of elements
   have references around. This has to do with how PyGtk references python
   and C objects. We should do something like: clean all diagram items,
   then clean the rest of the elements in the ElementFactory.
 
-- Class: Association end properties are shown in the tree view
+#- Class: Association end properties are shown in the tree view
 - Undo/redo functionality doesn;t work as espected
 #- Implement and test attribute/operation parser.
-- Convert Data model to use the parsed attributes + operations.
-- Attributes are not added to classes that are loaded.
+#- Convert Data model to use the parsed attributes + operations.
 #- Operation is not part of namespace (assoc. should be bi-dir.)
 
 - Make sure than, when a model is loaded and saved again, both save files do
   not differ.
-
-- attributes and operations visible for classes.
-- deselect doesn't work properly on all elements...
-- fix Class implementation.
-- add commands for attribute/operation removal.
-- Add some sort of ordering in the NamespaceView.
-- Items visible/hidden doesn't work properly when opening a diagram.
 
 - reordering of model elements doesn't work properly.
 

@@ -21,6 +21,12 @@ class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
     OFFSET=5
     FONT='sans 10'
 
+    popup_menu = (
+        'EditItem',
+        'separator',
+        'EditDelete',
+    )
+
     def __init__(self, id=None):
         ModelElementItem.__init__(self, id)
         self.set(min_width=CommentItem.EAR + 2 * CommentItem.OFFSET,
@@ -35,6 +41,9 @@ class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
 
     def postload(self):
         self._body.set_text(self.subject.body or '')
+
+    def edit(self):
+	self.start_editing(self._body)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'body':
@@ -82,7 +91,7 @@ class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
 
     def on_event (self, event):
         if event.type == diacanvas.EVENT_2BUTTON_PRESS:
-            self.start_editing(self._body)
+            self.edit()
             return True
         else:
             return ModelElementItem.on_event(self, event)

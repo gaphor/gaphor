@@ -11,7 +11,7 @@ from feature import FeatureItem
 class AttributeItem(FeatureItem):
 
     popup_menu = FeatureItem.popup_menu + (
-        'EditFeature',
+        'EditItem',
         'DeleteAttribute',
         'separator',
         'CreateAttribute'

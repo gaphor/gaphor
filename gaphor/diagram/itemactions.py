@@ -112,8 +112,8 @@ class CreateOperationAction(Action):
 register_action(CreateOperationAction, 'ShowOperations')
 
 
-class EditFeatureAction(Action):
-    id = 'EditFeature'
+class EditItemAction(Action):
+    id = 'EditItem'
     label = 'Edit'
     tooltip='Edit'
 
@@ -125,7 +125,7 @@ class EditFeatureAction(Action):
         #assert isinstance(subject, (UML.Property, UML.Operation))
         item.edit()
 
-register_action(EditFeatureAction, 'EditFeature')
+register_action(EditItemAction)
 
 
 class DeleteFeatureAction(Action):

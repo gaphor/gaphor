@@ -7,6 +7,7 @@ import gtk
 import gaphor
 import gaphor.UML as UML
 
+print '===> ',UML.__file__
 STOCK_POINTER = 'gaphor-pointer'
 STOCK_ACTOR = 'gaphor-actor'
 STOCK_ASSOCIATION = 'gaphor-association'

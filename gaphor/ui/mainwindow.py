@@ -206,12 +206,19 @@ class MainWindow(AbstractWindow):
         content = self.notebook.get_nth_page(current)
         return self.notebook_map.get(content)
 
-    def set_current_page(self, window):
-        for c, w in self.notebook_map.iteritems():
-            if window is w:
-                num = self.notebook.page_num(c)
+    def set_current_page(self, tab):
+        for p, t in self.notebook_map.iteritems():
+            if tab is t:
+                num = self.notebook.page_num(p)
                 self.notebook.set_current_page(num)
                 return
+
+    def set_tab_label(self, tab, label):
+        for p, t in self.notebook_map.iteritems():
+            if tab is t:
+                l = gtk.Label(label)
+                l.show()
+                self.notebook.set_tab_label(p, l)
 
     def get_tabs(self):
         return self.notebook_map.values()
@@ -258,7 +265,7 @@ class MainWindow(AbstractWindow):
         self.execute_action('SelectRow')
 
     def on_notebook_switch_page(self, notebook, tab, page_num):
-        print notebook, tab, page_num
+        #print notebook, tab, page_num
         self.execute_action('TabChange')
 
 #    def on_transient_window_closed(self, window):

@@ -12,6 +12,7 @@ from feature import FeatureItem
 class OperationItem(FeatureItem):
 
     popup_menu = FeatureItem.popup_menu + (
+        'EditItem',
         'DeleteOperation',
         'separator',
         'CreateOperation'

@@ -108,9 +108,11 @@ class DiagramTab(object):
             vitem = view.focus_item
             if vitem:
                 item = vitem.item
-                self.owning_window._construct_popup_menu(menu_def=item.get_popup_menu(),
+                popup_menu = item.get_popup_menu()
+                if popup_menu:
+                    self.owning_window._construct_popup_menu(menu_def=popup_menu,
                                            event=event)
-            return True
+                    return True
         return False
 
     def __on_view_focus_item(self, view, focus_item):
@@ -128,12 +130,10 @@ class DiagramTab(object):
     def __on_diagram_event(self, element, pspec):
         if pspec == '__unlink__':
             self.close()
-        else:
-            try:
-                if pspec.name == 'name':
-                    self.get_window().set_title(self.diagram.name or '<None>')
-            except:
-                pass
+        elif pspec.name == 'name':
+            print 'Trying to set name to', element.name
+            self.owning_window.set_tab_label(self, element.name)
+            #self.get_window().set_title(self.diagram.name or '<None>')
 
 import diagramactions
 import gaphor.diagram.actions

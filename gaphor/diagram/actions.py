@@ -36,6 +36,7 @@ class PointerAction(RadioAction):
     stock_id = 'gaphor-pointer'
     group = 'placementtools'
     accel = 'C-p'
+    tooltip = 'Pointer'
 
     def init(self, window):
 	self._window = window
@@ -125,6 +126,7 @@ class ClassPlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new Class item'
     stock_id = 'gaphor-class'
     name = 'Class'
+    accel = 'C-c'
     type = diagram.ClassItem
     subject_type = UML.Class
 

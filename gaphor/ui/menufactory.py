@@ -288,6 +288,7 @@ class MenuFactory(object):
         they are when creating a normal menu.
         """
         wrapbox = gaphor.misc.wrapbox.HWrapBox()
+        tooltips = gtk.Tooltips()
         groups = { }
         for id in menu_def:
             action = self.get_action(id)
@@ -341,6 +342,7 @@ class MenuFactory(object):
                     pass
                 else:
                     item.set_label(label)
+                tooltips.set_tip(item, action.tooltip or action.label.replace('_', ''))
                 item.set_property('visible', action.visible)
                 item.set_property('sensitive', action.sensitive)
                 self.connect_item_to_action('notify::visible', action, item,
@@ -349,5 +351,7 @@ class MenuFactory(object):
                                             self.on_menu_item_notify_action)
                 wrapbox.pack(item, False, False, False, False)
                 item.show()
+        tooltips.enable()
+        wrapbox.tooltips = tooltips
         return wrapbox
 

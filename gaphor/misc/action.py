@@ -158,6 +158,20 @@ class ActionPool(object):
             dep_action.update()
 
 
+def _mod_and_keyval_from_accel(accel):
+    keyval = 0
+    modifier = 0
+    if accel:
+        accel = accel.upper()
+        if accel.find('S-') != -1:
+            modifier |= gtk.gdk.SHIFT_MASK
+        if accel.find('C-') != -1:
+            modifier |= gtk.gdk.CONTROL_MASK
+        if accel.find('M-') != -1:
+            modifier |= gtk.gdk.MOD1_MASK
+        keyval = ord(accel.split('-')[-1])
+    return modifier, keyval
+
 def register_action(action, *dependency_ids):
     """Register an action so it can be looked up for on demand menu creation.
     """
@@ -167,19 +181,13 @@ def register_action(action, *dependency_ids):
     if action.stock_id:
         stock_info = gtk.stock_lookup(action.stock_id)
         if not stock_info and action.label:
-            keyval = 0
-            modifier = 0
-            if action.accel:
-                accel = action.accel.upper()
-                if accel.find('S-') != -1:
-                    modifier |= gtk.gdk.SHIFT_MASK
-                if accel.find('C-') != -1:
-                    modifier |= gtk.gdk.CONTROL_MASK
-                if accel.find('M-') != -1:
-                    modifier |= gtk.gdk.MOD1_MASK
-                keyval = ord(accel[-1])
+            modifier, keyval = _mod_and_keyval_from_accel(action.accel)
             #print (((action.stock_id, action.label, modifier, keyval, 'gaphor'),))
-            gtk.stock_add(((action.stock_id, action.label, modifier, keyval, 'gtk20'),))
+            gtk.stock_add(((action.stock_id, action.label, modifier, keyval, 'gaphor'),))
+        #elif stock_info and action.accel:
+        #    # update accelerator for this (registered) stock item
+        #    modifier, keyval = _mod_and_keyval_from_accel(action.accel)
+        #    gtk.stock_add(((stock_info[0], stock_info[1], modifier, keyval, stock_info[4]),))
     if dependency_ids:
         action_dependencies(action, *dependency_ids)
 
