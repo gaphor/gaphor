@@ -62,14 +62,11 @@ class MainWindow(AbstractWindow):
                 'ViewZoom100')
 
     wrapbox =  ('Pointer',
-                'separator',
                 'InsertClass',
                 'InsertPackage',
-                'separator',
                 'InsertAssociation',
                 'InsertDependency',
                 'InsertGeneralization',
-                'separator',
                 'InsertComment',
                 'InsertCommentLine',
                 'InsertAction',
@@ -159,6 +156,7 @@ class MainWindow(AbstractWindow):
                                contents=paned)
                                #contents=scrolled_window)
         wrapbox = self.menu_factory.create_wrapbox(self.wrapbox)
+        wrapbox.set_size_request(-1, 120)
         #wrapbox.set_aspect_ratio(1/256)
         vbox.pack_start(wrapbox, expand=False)
         wrapbox.show()

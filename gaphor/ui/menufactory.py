@@ -294,7 +294,7 @@ class MenuFactory(object):
             action = self.get_action(id)
             if not action:
                 if id == 'separator':
-                    sep = gtk.HSeparator()
+                    sep = gtk.VSeparator()
                     wrapbox.add(sep)
                     sep.show()
                     continue
