@@ -105,7 +105,8 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         'CreateOperation',
         'separator',
         'ShowAttributes',
-        'ShowOperations'
+        'ShowOperations',
+        '<ClassPopupSlot>'
     )
 
     def __init__(self, id=None):
@@ -145,24 +146,35 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         self.on_subject_notify__isAbstract(self.subject)
 
     def get_popup_menu(self):
-        from itemactions import ApplyStereotypeAction, register_action
-        # TODO: We should find the Stereotypes who have an Extension relationship
-        #       with a Class who's name is the name of this class or one of its
-        #       supertypes.
-        NamedElement = UML.NamedElement
-        Class = UML.Class
-
+        """In the popup menu a submenu is created with Stereotypes than can be
+        applied to this classifier (Class, Interface).
+        If the class itself is a metaclass, an option is added to check if the class
+        exists.
+        """
         stereotype_list = self.stereotype_list
         stereotype_list[:] = []
-        _mro = filter(lambda e:issubclass(e, NamedElement), type(self.subject).__mro__)
-        names = map(getattr, _mro, ['__name__'] * len(_mro))
-        classes = self._subject._factory.select(lambda e: e.isKindOf(Class) and e.name in names)
-        for class_ in classes:
-            for extension in class_.extension:
-                stereotype = extension.ownedEnd.type
-                stereotype_action = ApplyStereotypeAction(stereotype)
-                register_action(stereotype_action, 'ItemFocus')
-                stereotype_list.append(stereotype_action.id)
+        if isinstance(subject, UML.Class) and subject.extension:
+            # Add an action that can be used to check if the metaclass is an
+            # existing metaclass
+            pass
+        else:
+            from itemactions import ApplyStereotypeAction, register_action
+            NamedElement = UML.NamedElement
+            Class = UML.Class
+
+            # Find classes that are superclasses of our subject
+            _mro = filter(lambda e:issubclass(e, NamedElement), type(self.subject).__mro__)
+            # Find out their names
+            names = map(getattr, _mro, ['__name__'] * len(_mro))
+            # Find stereotypes that extend out metaclass
+            classes = self._subject._factory.select(lambda e: e.isKindOf(Class) and e.name in names)
+
+            for class_ in classes:
+                for extension in class_.extension:
+                    stereotype = extension.ownedEnd.type
+                    stereotype_action = ApplyStereotypeAction(stereotype)
+                    register_action(stereotype_action, 'ItemFocus')
+                    stereotype_list.append(stereotype_action.id)
         return NamedItem.get_popup_menu(self)
 
     def do_set_property(self, pspec, value):

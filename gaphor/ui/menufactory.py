@@ -310,7 +310,6 @@ class MenuFactory(object):
                 #item.set_property('stock-id', action.stock_id)
                 item.add(icon)
                 icon.show()
-                pass
             else:
                 item.set_label(label)
             if tooltips:
@@ -333,9 +332,17 @@ class MenuFactory(object):
         if groups is None:
             groups = { }
         for id in menu_def:
+                # TODO: Allow toolbox slots
+                #elif id.startswith('<') and id.endswith('>'):
+                #    # We're dealing with a placeholder here, strip the <>
+                #    slot_def = get_actions_for_slot(id[1:-1])
+                #    self._create_menu_items(slot_def, groups, menu, item)
                 item = self.create_button(id, groups, tooltips)
                 #wrapbox.pack(item, False, False, False, False)
-                wrapbox.add(item)
+                try:
+                    wrapbox.add(item)
+                except TypeError, e:
+                    log.error('Could not create item for %s' % id, e)
         tooltips.enable()
         wrapbox.tooltips = tooltips
         return wrapbox

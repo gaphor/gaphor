@@ -17,6 +17,19 @@ from relationship import RelationshipItem
 
 
 class InterfaceItem(NamedItem):
+    """This item represents an interface drawn as a dot. The class-like
+    representation is provided by ClassItem. These representations can be switched
+    by using the Fold and Unfold actions.
+
+    TODO: Provided interfaces are shown by a Implementation dependency,
+          Required interfaces are shown by a Usage dependency (not association).
+          
+          Interfaces may also be used to specify required interfaces, which are
+          specified by a usage dependency between the classifier and the
+          corresponding interfaces. Required interfaces specify services that a
+          classifier needs in order to perform its function and fulfill its own
+          obligations to its clients.
+    """
     RADIUS=10
 
     PROVIDED = 0
@@ -53,6 +66,8 @@ class InterfaceItem(NamedItem):
             h.set_property('movable', 0)
 
     def on_update(self, affine):
+
+        # Figure out if this interface represents a required, provided or wired look.
         self.association_items = 0
         self.implementation_items = 0
         for connected_item in self.canvas.select(lambda i: i.handles and \
@@ -64,8 +79,6 @@ class InterfaceItem(NamedItem):
             if isinstance(connected_item,
                     gaphor.diagram.implementation.ImplementationItem):
                 self.implementation_items += 1
-
-
 
         # Center the text
         r = self.RADIUS
@@ -93,8 +106,7 @@ class InterfaceItem(NamedItem):
         self.set_bounds((ulx, uly-1, lrx+1, lry+h))
 
     def on_handle_motion(self, handle, wx, wy, mask):
-        """Make sure the element works with diacanavs2 <= 0.12.0.
-        """
+        # Make sure the element works with diacanavs2 <= 0.12.0.
         if handle not in self.handles[:7]:
             return wx, wy
         return NamedItem.on_handle_motion(self, handle, wx, wy, mask)
@@ -113,6 +125,13 @@ class InterfaceItem(NamedItem):
         for s in NamedItem.on_shape_iter(self):
             yield s
 
+    def on_connect_handle(self, handle):
+        self.request_update()
+        return NamedItem.on_connect_handle(self, handle)
+
+    def on_disconnect_handle(self, handle):
+        self.request_update()
+        return NamedItem.on_disconnect_handle(self, handle)
 
     def _getLookType(self):
         if self.association_items > 0 and self.implementation_items == 0:
@@ -124,9 +143,5 @@ class InterfaceItem(NamedItem):
 
     look_type = property(_getLookType)
 
-
-#    def on_editable_start_editing(self, shape):
-#        NamedItem.on_editable_start_editing(self, shape)
-#        self._name.set_max_width(0)
 
 initialize_item(InterfaceItem, UML.Interface)

@@ -8,10 +8,10 @@ pygtk.require('2.0')
 del pygtk
 
 # Should we do this:
-from abstractwindow import AbstractWindow
-from mainwindow import MainWindow
-from diagramview import DiagramView
-from editorwindow import EditorWindow
+#from abstractwindow import AbstractWindow
+#from mainwindow import MainWindow
+#from diagramview import DiagramView
+#from editorwindow import EditorWindow
 
 # Create stock items
 import stock

@@ -6,8 +6,11 @@ import namespace
 import gaphor
 import gaphor.UML as UML
 from abstractwindow import AbstractWindow
+from diagramtab import DiagramTab
 from toolbox import Toolbox
 
+# Load actions
+import mainactions, diagramactions
 
 class MainWindow(AbstractWindow):
     """The main window for the application.
@@ -17,14 +20,18 @@ class MainWindow(AbstractWindow):
     menu = ('_File', (
                 'FileNew',
                 'FileOpen',
+                '<FileOpenSlot>',
                 'separator',
                 'FileSave',
                 'FileSaveAs',
+                '<FileSaveSlot>',
                 'separator',
                 '_Export', (
-                    'FileExportSVG',),
+                    'FileExportSVG',
+                    '<FileExportSlot>'),
                 'separator',
                 'FileCloseTab',
+                '<FileSlot>',
                 'separator',
                 'FileQuit'),
             '_Edit', (
@@ -34,7 +41,8 @@ class MainWindow(AbstractWindow):
                 'EditDelete',
                 'separator',
                 'EditSelectAll',
-                'EditDeselectAll'),
+                'EditDeselectAll',
+                '<EditSlot>'),
             '_Diagram', (
                 'ViewZoomIn',
                 'ViewZoomOut',
@@ -43,13 +51,15 @@ class MainWindow(AbstractWindow):
                 'SnapToGrid',
                 'ShowGrid',
                 'separator',
-                'CreateDiagram'),
+                'CreateDiagram',
+                '<DiagramSlot>'),
             '_Window', (
                 'OpenEditorWindow',
                 'OpenConsoleWindow',
                 '<WindowSlot>'),
             '_Help', (
-                'About',)
+                'About',
+                '<HelpSlot>')
             )
 
     toolbar =  ('FileOpen',
@@ -87,7 +97,7 @@ class MainWindow(AbstractWindow):
                 'InsertDecisionNode',
                 'InsertFlow')),
         ("Components", (
-                'InsertComponent', )),
+                'InsertComponent',)),
         ("Profiles", (
                 'InsertProfile',
                 'InsertStereotype',
@@ -98,7 +108,8 @@ class MainWindow(AbstractWindow):
                 'separator',
                 'CreateDiagram',
                 'separator',
-                'RefreshNamespaceModel')
+                'RefreshNamespaceModel',
+                '<NamespacePopupSlot>')
 
     def __init__(self):
         AbstractWindow.__init__(self)
@@ -132,6 +143,21 @@ class MainWindow(AbstractWindow):
     def get_current_diagram_view(self):
         tab = self.get_current_diagram_tab()
         return tab and tab.get_view()
+
+    def show_diagram(self, diagram):
+        """Show a Diagram element in a new tab. If a tab is already open,
+        show that one instead.
+        """
+        # Try to find an existing window/tab and let it get focus:
+        for tab in self.get_tabs():
+            if tab.get_diagram() is diagram:
+                self.set_current_page(tab)
+                return tab
+
+        tab = DiagramTab(self)
+        tab.set_diagram(diagram)
+        tab.construct()
+        return tab
 
     def construct(self):
         model = namespace.NamespaceModel(gaphor.resource(UML.ElementFactory))
@@ -298,5 +324,3 @@ class MainWindow(AbstractWindow):
         #self.set_capability('model', not factory.is_empty())
 
 gtk.accel_map_add_filter('gaphor')
-
-import mainactions

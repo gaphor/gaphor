@@ -79,7 +79,14 @@ override Classifier.inheritedMember
 Classifier.inheritedMember = derivedunion('inheritedMember', 0, '*')
 %%
 override Classifier.general
-Classifier.general = derivedunion('inheritedMember', 0, '*')
+def classifier_general(self):
+    return [g.general for g in self.generalization]
+
+Classifier.general = property(classifier_general, doc="")
+del classifier_general
+%%
+override Class.superClass
+Class.superClass = Classifier.general
 %%
 override Namespace.importedMember
 Namespace.importedMember = derivedunion('importedMember', 0, '*')

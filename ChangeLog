@@ -1,3 +1,10 @@
+2004-06-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainwindow.py, gaphor/ui/toolbox.py: explicitly import
+	actions.
+	* doc/plugin.txt: explenation how plugins work
+	* setup.py: Boost version to 0.5.0.
+
 2004-06-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/plugin.py: new file. provided stuff needed by possible

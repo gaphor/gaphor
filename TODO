@@ -25,7 +25,7 @@ As always, there is much to do...
 #- Make sure than, when a model is loaded and saved again, both save files do
 #  not differ.
 
-- Exporting diagrams to UML XMI, code, images (SVG/png), etc.
+- Exporting diagrams to UML XMI, code, images (SVG/png), etc. - make a plugin!
 
 #- Set up a plugin architecture. Since the internals of gaphor are pretty
    modular, plugins should not be that hard.
@@ -73,10 +73,10 @@ and of course the usual: Comment, Association, Generalization and Dependency.
 Thoughts:
 - Profiles are reusable and its common to share them with different models.
 - Stereotypes can only be owned by Profiles, not by (normal) Packages.
-- I think having associations in this one is not very useful, though.
 - We have to do a lookup if a MetaClass is actually part of the model.
 - a stereotype can contain an image, that can be used in stead of its name
-- Profiles should be saved with the model too.
+- Profiles should be saved with the model too. And iit should be possible to
+  "update" a profile within a model.
 
 Maybe it would be nice to create Stereotypes without creating the diagrams.
 Via a dialog once can select which class (Operation, Class, etc.) is

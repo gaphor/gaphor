@@ -277,7 +277,7 @@ class OpenEditorWindowAction(Action):
         self._window = window
 
     def execute(self):
-        from gaphor.ui import EditorWindow
+        from gaphor.ui.editorwindow import EditorWindow
         
         ew = EditorWindow()
         ew.construct()
@@ -304,26 +304,6 @@ class OpenConsoleWindowAction(Action):
         self._window.set_message('Console launched')
 
 register_action(OpenConsoleWindowAction)
-
-
-class OpenStereotypeWindowAction(Action):
-    id = 'OpenStereotypeWindow'
-    label = 'S_tereotypes'
-    tooltip = 'Open the Gaphor Stereotypes'
-
-    def init(self, window):
-        self._window = window
-
-    def execute(self):
-        from gaphor.ui.stereotypewindow import StereotypeWindow
-        
-        ew = StereotypeWindow()
-        #ew.construct(self._window.get_window())
-        ew.run(self._window.get_window())
-        #self._window.add_transient_window(ew)
-        #self._window.set_message('Stereortypes launched')
-
-register_action(OpenStereotypeWindowAction)
 
 
 class AboutAction(Action):
@@ -410,20 +390,7 @@ class OpenElementAction(Action):
     def execute(self):
         element = self._window.get_tree_view().get_selected_element()
         if isinstance(element, UML.Diagram):
-            # Try to find an existing window/tab and let it get focus:
-            for tab in self._window.get_tabs():
-                if tab.get_diagram() is element:
-                    self._window.set_current_page(tab)
-                    return
-            # Import here to avoid cyclic references
-            from gaphor.ui.diagramtab import DiagramTab
-            diagram_tab = DiagramTab(self._window)
-            #diagram_tab.set_owning_window(self._window)
-            #diagram_tab.sub_window = False
-            diagram_tab.set_diagram(element)
-            diagram_tab.construct()
-            #self._window.add_transient_window(diagram_window)
-            #self._window.new_notebook_tab(diagram_window, element.name)
+	    self._window.show_diagram(element)
         else:
             log.debug('No action defined for element %s' % type(element).__name__)
 

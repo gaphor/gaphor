@@ -45,18 +45,18 @@ def main():
     # Import stuff here, since the user might not need all the GUI stuff
     import gtk
     # Load plugin definitions:
+    import diagram
     import pluginmanager
-    from ui import MainWindow
+    from ui.mainwindow import MainWindow
 
     resource('PluginManager').bootstrap()
 
     # should we set a default icon here or something?
-    main_window = MainWindow()
+    main_window = resource(MainWindow)
     main_window.construct()
     # When the state changes to CLOSED, quit the application
     main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and gtk.main_quit())
     # Make the mainwindow accessable as a resource
-    resource('MainWindow', main_window)
     #gtk.threads_init()
     #gtk.threads_enter()
     # Start with a clean nice new model

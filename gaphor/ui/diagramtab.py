@@ -6,6 +6,9 @@ from diagramview import DiagramView
 from abstractwindow import AbstractWindow
 from gaphor.diagram.itemtool import ItemTool
 
+import diagramactions
+import gaphor.diagram.actions
+
 class DiagramTab(object):
     
     def __init__(self, owning_window):
@@ -139,5 +142,3 @@ class DiagramTab(object):
             self.owning_window.set_tab_label(self, element.name)
             #self.get_window().set_title(self.diagram.name or '<None>')
 
-import diagramactions
-import gaphor.diagram.actions

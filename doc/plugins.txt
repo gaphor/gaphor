@@ -13,3 +13,95 @@ for the plugin:
  - Code that should be ran before and after installation, before and after
    removal.
 
+A typical plugin.xml file looks like this:
+
+<?xml version="1.0"?>
+<plugin name="UML metamodel sanity check"
+        version="0.1"
+        author="Arjan Molenaar">
+  <description>
+    A description of what this thing does.
+  </description>
+
+  <require>
+    <!--
+      Define modules and plugins that are needed for this plugin to function
+      properly.
+    -->
+    <module name="os.path"/>
+    <plugin name="anotherPlugin"/>
+  </require>
+
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+    <action id="MyPlugin"
+            label="Do a typical thing with the plugin"
+            icon-file="myicon.png"
+            tooltip="bla bla"
+            class="MyPluginAction" slot="WindowSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      -->
+      <depends action="ItemFocus"/>
+    </action>
+  </provide>
+</plugin>
+
+
+A plugin contains three sections:
+description
+	A description of the plugin (could be shown in a plugin browser for example)
+	This is just a text field.
+require
+	Prerequisits for this plugin (such as exptic modules and other plugins)
+provide
+	Actions that are provided by this plugin
+	
+The require section can contain modules and plugins that are needed for this plugin
+to work.
+
+The <provide> section contains the actions that can be added to the application.
+An action is a Python class that extends gaphor.plugin.Action (or CheckAction for
+checkbox actions or RadioAction for radiobutton actions). An action has an
+id
+	Id is a unique identifier for the action
+label
+	A label that is shown in the menu
+tooltip
+	some extra information
+icon-file
+	A file containing a nice (24x24) image, preferbly a PNG image.
+class
+	The Action class to load from the module. The Action class should be
+	visible through __init__.py (class names like 'test.TestAction' do not
+	work)
+slot
+	Slots are predefined places in a menu where new actions can be added.
+
+Slots
+-----
+Currently the following slots are defined:
+
+Main window
+
+main menu:
+	slot name		menu		comment
+	FileOpenSlot		File		after the 'Open' item
+	FileSaveSlot		File		after the 'Save' item
+	FileExportSlot		File/Export	
+	FileSlot		File		After the 'Close' item
+	EditSlot		Edit
+	DiagramSlot		Diagram
+	WindowSlot		Window
+	HelpSlot		Help
+
+Items in a diagram can have additional actions too:
+
+	item:	slot name:
+	Class	ClassPopupSlot
+
+More slots are likely to be defined in the future.
+
