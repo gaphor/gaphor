@@ -116,28 +116,27 @@ class MainWindow(AbstractWindow):
                 'ViewZoomOut',
                 'ViewZoom100')
 
-    wrapboxes = {
-        "": (
+    wrapboxes = [
+        ("", (
                 'Pointer',
                 'InsertComment',
-                'InsertCommentLine'),
-        "Classes": (
+                'InsertCommentLine')),
+        ("Classes", (
                 'InsertClass',
                 'InsertPackage',
                 'InsertAssociation',
                 'InsertDependency',
-                'InsertGeneralization'),
-        "Actions": (
+                'InsertGeneralization')),
+        ("Actions", (
                 'InsertAction',
                 'InsertInitialNode',
                 'InsertActivityFinalNode',
                 'InsertDecisionNode',
-                'InsertFlow'),
-        "Stereotypes": (
+                'InsertFlow')),
+        ("Stereotypes", (
                 'InsertStereotype',
-                'InsertExtension')
-                
-    }
+                'InsertExtension'))
+    ]
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',
                 'separator',
@@ -224,7 +223,7 @@ class MainWindow(AbstractWindow):
 
 	# Create icon boxes in the lower left corner of the window.
         wrapbox_groups = { }
-        for title, items in self.wrapboxes.items():
+        for title, items in self.wrapboxes:
             wrapbox = self.menu_factory.create_wrapbox(items,
                                                        groups=wrapbox_groups)
             if title:
