@@ -8,6 +8,10 @@ import gaphor.UML as UML
 from abstractwindow import AbstractWindow
 
 def on_wrapbox_decorator_toggled(button, content):
+    """This function is called when the Wrapbox decorator is clicked. It
+    changes the visibility of the content and the arrow in front of the
+    button label.
+    """
     # Fetch the arrow item:
     arrow = button.get_children()[0].get_children()[0]
     if not content.get_property('visible'):
@@ -54,15 +58,6 @@ def make_wrapbox_decorator(title, content, expanded=False):
     on_wrapbox_decorator_toggled(button, content)
 
     return vbox
-
-def make_wrapbox(title, action_ids, menu_factory):
-    for action in action_ids:
-        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_default, groups=wrapbox_groups)
-        #wrapbox.set_size_request(160, 120)
-        #wrapbox.set_aspect_ratio(256)
-        #wrapbox_dec = make_wrapbox_decorator(wrapbox_classes)
-        vbox.pack_start(wrapbox.table, expand=False)
-        wrapbox.table.show()
 
 
 class MainWindow(AbstractWindow):
@@ -221,6 +216,7 @@ class MainWindow(AbstractWindow):
 
         vbox.set_border_width(3)
 
+	# Create icon boxes in the lower left corner of the window.
         wrapbox_groups = { }
         wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_default, groups=wrapbox_groups)
         #wrapbox_dec = make_wrapbox_decorator('Generic', wrapbox.table, expanded=True)
@@ -229,38 +225,12 @@ class MainWindow(AbstractWindow):
         wrapbox.table.show()
 
         wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_classes, groups=wrapbox_groups)
-        #wrapbox.set_size_request(160, 120)
-        #wrapbox.set_aspect_ratio(256)
         wrapbox_dec = make_wrapbox_decorator('Classes', wrapbox.table)
         vbox.pack_start(wrapbox_dec, expand=False)
 
         wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_actions, groups=wrapbox_groups)
-        #wrapbox.set_size_request(160, 120)
-        #wrapbox.set_aspect_ratio(256)
         wrapbox_dec = make_wrapbox_decorator('Actions', wrapbox.table)
         vbox.pack_start(wrapbox_dec, expand=False)
-
-        #wrapbox.show()
-        #vbox.set_resize_mode(gtk.RESIZE_QUEUE)
-        #wrapbox.set_resize_mode(gtk.RESIZE_QUEUE)
-        #scrolled_window = gtk.ScrolledWindow()
-        #scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
-        #scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
-        #scrolled_window.add_with_viewport(wrapbox)
-        #scrolled_window.show()
-        #ns_paned.pack2(scrolled_window)#, expand=False)
-        #wrapbox.queue_resize()
-        #wrapbox.set_size_request(0,0)
-
-        #def print_me(wrapbox, rect, mutex):
-        #    print wrapbox, rect, mutex
-        #    if not mutex:
-        #        mutex.append(1)
-        #        wrapbox.queue_resize()
-        #        mutex.remove(1)
-
-        #paned.connect('motion-notify-event', print_me)
-        #wrapbox.connect('size-allocate', print_me, [])
 
     def add_transient_window(self, window):
         """Add a window as a sub-window of the main application.
