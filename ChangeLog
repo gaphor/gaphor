@@ -1,3 +1,9 @@
+2004-11-12  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	* gaphor/diagram/association.py: Implemented find_relationship().
+	* gaphor/diagram/itemactions.py: Implemented CreateLinks action. This
+	action is called after a DND action to that canvas and re-creates
+	existing relationships.
+
 2004-11-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/klass.py: save width/height when
