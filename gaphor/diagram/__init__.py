@@ -1,3 +1,4 @@
 # Initiator for the 'diagram' module.
 
-import usecase
+from diagram import *
+from usecase import *

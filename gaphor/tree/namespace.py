@@ -19,11 +19,11 @@ class NamespaceModel(gtk.GenericTreeModel):
     def __element_signals (self, key, obj):
 	if key == 'name':
 	    path = self.get_path (obj)
-	    iter = self.get_iter (*path)
+	    iter = self.get_iter (path)
 	    self.row_changed (path,  iter)
         elif key == 'namespace' and obj.namespace:
 	    path = self.get_path(obj)
-	    iter = self.get_iter(*path)
+	    iter = self.get_iter(path)
 	    print 'Namespace set for', obj, path
 	    self.row_inserted (path, iter)
 	elif key == '__unlink__':
