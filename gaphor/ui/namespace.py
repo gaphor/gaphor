@@ -9,7 +9,7 @@ import gtk
 import stock
 
 import gaphor.UML as UML
-
+from gaphor import resource
 import operator
 
 # The following items will not be shown in the treeview, although they
@@ -208,7 +208,7 @@ class NamespaceModel(gtk.GenericTreeModel):
                     # we have found the removed element
                     #path = self.path_from_element(child[0])
                     path = self.path_from_element(element) + (index,)
-                    log.debug('NS: removing node "%s" from "%s" (path=%s)' % (child[0].name, element.name, path))
+                    #log.debug('NS: removing node "%s" from "%s" (path=%s)' % (child[0].name, element.name, path))
                     #print 'path=', child[0].name, path
                     try:
                         self.detach_notifiers_from_node(child)
@@ -248,28 +248,28 @@ class NamespaceModel(gtk.GenericTreeModel):
     # TreeModel methods:
 
     def on_get_flags(self):
-        """returns the GtkTreeModelFlags for this particular type of model
+        """Returns the GtkTreeModelFlags for this particular type of model.
 	"""
         return 0
 
     def on_get_n_columns(self):
-        """returns the number of columns in the model
+        """Returns the number of columns in the model.
 	"""
         return 1
 
     def on_get_column_type(self, index):
-        """returns the type of a column in the model
+        """Returns the type of a column in the model.
 	"""
         return gobject.TYPE_PYOBJECT
 
     def on_get_path (self, node):
-        """returns the path for a node as a tuple (0, 1, 1)
+        """Returns the path for a node as a tuple (0, 1, 1).
 	"""
         #print 'on_get_path', node
         return self.path_from_element(node[0])
 
     def on_get_iter(self, path):
-        """returns the node corresponding to the given path.
+        """Returns the node corresponding to the given path.
         The path is a tuple of values, like (0 1 1). Returns None if no
         iterator can be created.
 	"""
@@ -277,7 +277,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         return self.node_from_path(path)
 
     def on_get_value(self, node, column):
-        """returns the model element that matches 'node'.
+        """Returns the model element that matches 'node'.
 	"""
         assert column == 0, 'column can only be 0'
         #print 'on_get_value', node, column
@@ -344,11 +344,17 @@ class NamespaceView(gtk.TreeView):
         ('text/plain', 0, TARGET_STRING),
         ('gaphor/element-id', 0, TARGET_ELEMENT_ID)]
     # Can not set signals for some reason...
-#    __gsignals__ = { 'drag_begin': 'override',
-#                         'drag_data_get': 'override',
-#                         'drag_data_delete': 'override',
-#                     'drag_data_received': 'override' }
+    #__gsignals__ = { 'drag-drop': 'override',
+    #                 'drag-data-get': 'override',
+    #                 'drag-data-delete': 'override',
+    #                 'drag-data-received': 'override' }
 
+    # namespaces are normally refered to by 'package'
+    namespaces = {
+        UML.Property: 'class_',
+        UML.Operation: 'class_',
+    }
+        
     def __init__(self, model):
         assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
         self.__gobject_init__()
@@ -377,18 +383,22 @@ class NamespaceView(gtk.TreeView):
 
         # DND info:
         # drag
+        self.enable_model_drag_source(gtk.gdk.BUTTON1_MASK,
+                             [NamespaceView.DND_TARGETS[-1]],
+                             gtk.gdk.ACTION_DEFAULT | gtk.gdk.ACTION_MOVE)
         self.drag_source_set(gtk.gdk.BUTTON1_MASK | gtk.gdk.BUTTON3_MASK,
                              NamespaceView.DND_TARGETS,
                              gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
-        #self.connect('drag_begin', NamespaceView.do_drag_begin)
-        self.connect('drag_data_get', NamespaceView.do_drag_data_get)
-        #self.connect('drag_data_delete', NamespaceView.do_drag_data_delete)
+        self.connect('drag-data-get', NamespaceView.do_drag_data_get)
+
         # drop
-        #self.drag_dest_set (gtk.DEST_DEFAULT_ALL, NamespaceView.DND_TARGETS[:-1],
-        #                    gtk.gdk.ACTION_COPY)
-        #self.connect('drag_data_received', NamespaceView.do_drag_data_received)
-        #self.connect('drag_motion', NamespaceView.do_drag_motion)
-        #self.connect('drag_drop', NamespaceView.do_drag_drop)
+        #self.drag_dest_set (gtk.DEST_DEFAULT_ALL, [NamespaceView.DND_TARGETS[-1]],
+        #                    gtk.gdk.ACTION_DEFAULT)
+        self.enable_model_drag_dest([NamespaceView.DND_TARGETS[-1]],
+                                    gtk.gdk.ACTION_DEFAULT)
+        self.connect('drag-data-received', NamespaceView.do_drag_data_received)
+        self.connect('drag-drop', NamespaceView.do_drag_drop)
+        self.connect('drag-data-delete', NamespaceView.do_drag_data_delete)
 
     def get_selected_element(self):
         selection = self.get_selection()
@@ -432,36 +442,55 @@ class NamespaceView(gtk.TreeView):
 #    def do_drag_begin (self, context):
 #        print 'do_drag_begin'
 
-    def do_drag_data_get (self, context, selection_data, info, time):
-        log.debug('do_drag_data_get')
+    def do_drag_data_get(self, context, selection_data, info, time):
+        #log.debug('do_drag_data_get')
         selection = self.get_selection()
         model, iter = selection.get_selected()
         if iter:
-            element = model.get_value (iter, 0)
+            element = model.get_value(iter, 0)
             if info == NamespaceView.TARGET_ELEMENT_ID:
                 selection_data.set(selection_data.target, 8, str(element.id))
             else:
                 selection_data.set(selection_data.target, 8, element.name)
 
-    def do_drag_data_delete (self, context, data):
+    def do_drag_data_delete (self, context):
         print 'Delete the data!'
+        self.emit_stop_by_name('drag-data-delete')
+        #context.finish(gtk.TRUE, time)
 
     # Drop
-    def do_drag_motion(self, context, x, y, time):
-        print 'drag_motion', x, y
-        return 1
-   
-    def do_drag_data_received(self, w, context, x, y, data, info, time):
-        print 'drag_data_received'
-        if data and data.format == 8:
-            print 'drag_data_received:', data.data
-            context.finish(gtk.TRUE, gtk.FALSE, time)
-        else:
-            context.finish(gtk.FALSE, gtk.FALSE, time)
-        gobject.emit_stop_by_name('drag_data_received')
+    def do_drag_data_received(self, context, x, y, selection, info, time):
+        self.emit_stop_by_name('drag-data-received')
+        #print 'drag_data_received'
+        model = self.get_model()
+        data = selection.data
+        drop_info = self.get_dest_row_at_pos(x, y)
+        if drop_info:
+            factory = resource(UML.ElementFactory)
+            element = factory.lookup(data)
+            path, position = drop_info
+            iter = model.get_iter(path)
+            dest_element = model.get_value(iter, 0)
+            # Add the item to the parent if it is dropped on the same level,
+            # else add it to the item.
+            if position in (gtk.TREE_VIEW_DROP_BEFORE, gtk.TREE_VIEW_DROP_AFTER):
+                parent_iter = model.iter_parent(iter)
+                dest_element = model.get_value(parent_iter, 0)
+            try:
+                if dest_element:
+                    setattr(element,
+                            self.namespaces.get(type(element), 'package'),
+                            dest_element)
+            except AttributeError:
+                #print dir(context)
+                context.drop_finish(gtk.FALSE, time)
+            else:
+                context.drop_finish(gtk.TRUE, time)
 
     def do_drag_drop(self, context, x, y, time):
-        print 'drag_drop'
+        self.emit_stop_by_name('drag-drop')
+        #print 'drag_drop',context,x,y,time
+        self.drag_get_data(context, context.targets[-1], time)
         return 1
 
 gobject.type_register(NamespaceModel)

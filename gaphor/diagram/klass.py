@@ -210,7 +210,6 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         """Sync the contents of the attributes compartment with the data
         in self.subject.
         """
-        print 'sync_attributes'
         owned_attributes = [a for a in self.subject.ownedAttribute if not a.association]
         self.sync_features(owned_attributes, self._attributes,
                            self._create_attribute)
