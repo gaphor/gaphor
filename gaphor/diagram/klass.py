@@ -93,6 +93,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     FONT_ABSTRACT='sans bold italic 10'
 
     popup_menu = NamedItem.popup_menu + (
+        'Fold',
         'separator',
         'AbstractClass',
         'separator',

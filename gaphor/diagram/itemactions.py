@@ -5,6 +5,7 @@ Commands related to the Diagram (DiaCanvas)
 
 import diacanvas
 import gaphor
+import gaphor.diagram
 import gaphor.UML as UML
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 
@@ -13,6 +14,7 @@ from component import ComponentItem
 from attribute import AttributeItem
 from operation import OperationItem
 from nameditem import NamedItem
+from interface import InterfaceItem
 from association import AssociationEnd
 
 class NoFocusItemError(gaphor.GaphorError):
@@ -689,3 +691,66 @@ class MoveDownAction(MoveAction):
         return len(collection) > 0 and collection[-1] != item.subject
 
 register_action(MoveDownAction, 'ItemFocus')
+
+
+class Fold(Action):
+    accel = 'C-f'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            self.sensitive = self.isSensitive(item)
+
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        log.debug('Action %s: %s' % (self.id, item.subject.name))
+
+        # create interface diagram element and assign model element to
+        # diagram element
+        diag = self._window.get_current_diagram()
+        new_el = self.newElement(diag)
+        new_el.subject = item.subject
+
+        # move new element
+        x, y = item.get_property('affine')[4:]
+        affine = new_el.get_property('affine')
+        new_el.set_property('affine', affine[:4] + (x, y))
+
+        # remove old diagram element
+        item.unlink()
+
+
+class UnfoldAction(Fold):
+    id = 'Unfold'
+    label = '_Unfold'
+    tooltip = 'View details'
+
+    def isSensitive(self, item):
+        return isinstance(item, InterfaceItem)
+
+    def newElement(self, diag):
+        return diag.create(gaphor.diagram.ClassItem)
+
+register_action(UnfoldAction, 'ItemFocus')
+
+
+class FoldAction(Fold):
+    id = 'Fold'
+    label = '_Fold'
+    tooltip = 'Hide details'
+
+    def isSensitive(self, item):
+        return isinstance(item, ClassItem) and isinstance(item.subject, UML.Interface)
+
+    def newElement(self, diag):
+        return diag.create(gaphor.diagram.InterfaceItem)
+
+
+register_action(FoldAction, 'ItemFocus')

@@ -17,6 +17,8 @@ from relationship import RelationshipItem
 class InterfaceItem(NamedItem):
     RADIUS=10
 
+    popup_menu = NamedItem.popup_menu + ('Unfold',)
+
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
         r2 = self.RADIUS * 2
