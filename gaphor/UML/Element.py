@@ -16,7 +16,7 @@
 #
 
 
-import types, copy
+import types, copy, weakref, gc
 
 # Some default types as defined in the MetaModel.
 class Integer(int): pass
@@ -108,10 +108,16 @@ class Element:
     '''Element is the base class for *all* UML MetaModel classes. The
 attributes and relations are defined by a <class>._attrdef structure.
 A class does not need to define any local variables itself: Element will
-retrieve all information from the _attrdef structure.'''
+retrieve all information from the _attrdef structure.
+Element._hash is a table containing all assigned objects as weak references.'''
+    _index = 1
     _attrdef = { }
-    def __init__(self, id):
-	self.__dict__["_Element__id"] = id
+    _hash = { }
+
+    def __init__(self):
+	self.__dict__["_Element__id"] = Element._index
+	Element._hash[Element._index] = weakref.ref (self)
+	Element._index += 1
 
     def __get_attr_info(self, key, klass):
         '''Find the record for 'key' in the <class>._attrdef map.'''
@@ -248,6 +254,14 @@ retrieve all information from the _attrdef structure.'''
 	    else:
 	        del obj.__dict__[rec[2]]
 	
+def Element_hash_gc():
+    '''Do a garbage collection on the hash table, also removing
+    weak references that do not point to valid objects.'''
+    gc.collect()
+    for k in Element._hash.keys():
+	if Element._hash[k]() is None:
+		del Element._hash[k]
+
 if __name__ == '__main__':
 
     print "\n============== Starting Element tests... ============\n"
@@ -258,7 +272,7 @@ if __name__ == '__main__':
 
     A._attrdef["seq"] = ( Sequence, types.StringType )
 
-    a = A(1)
+    a = A()
     assert a.seq.list == [ ]
 
     aap = "aap"
@@ -287,7 +301,7 @@ if __name__ == '__main__':
     A._attrdef["str"] = ( "one", types.StringType )
     A._attrdef["seq"] = ( Sequence, types.StringType )
 
-    a = A(1)
+    a = A()
 
     assert a.str == 'one'
     assert a.seq.list == [ ]
@@ -315,7 +329,7 @@ if __name__ == '__main__':
     A._attrdef['ref1'] = ( None, A, 'ref2' )
     A._attrdef['ref2'] = ( None, A, 'ref1' )
 
-    a = A(1)
+    a = A()
 
     assert a.ref1 is None
     assert a.ref2 is None
@@ -331,8 +345,8 @@ if __name__ == '__main__':
     #print a.ref2
     assert a.ref2 is None
 
-    a = A(1)
-    b = A(2)
+    a = A()
+    b = A()
     
     a.ref1 = b
     assert a.ref1 is b
@@ -355,7 +369,7 @@ if __name__ == '__main__':
     A._attrdef['ref'] = ( None, A, 'seq' )
     A._attrdef['seq'] = ( Sequence, A, 'ref' )
 
-    a = A(1)
+    a = A()
 
     assert a.ref is None
     assert a.seq.list == [ ]
@@ -372,8 +386,8 @@ if __name__ == '__main__':
     assert a.ref is a
     assert a.seq.list == [ a ]
 
-    a = A(1)
-    b = A(2)
+    a = A()
+    b = A()
 
     a.ref = a
     assert a.ref is a
@@ -420,11 +434,11 @@ if __name__ == '__main__':
     A._attrdef['seq1'] = ( Sequence, A, 'seq2' )
     A._attrdef['seq2'] = ( Sequence, A, 'seq1' )
 
-    a = A(1)
+    a = A()
     assert a.seq1.list == [ ]
     assert a.seq2.list == [ ]
 
-    b = A(2)
+    b = A()
     assert b.seq1.list == [ ]
     assert b.seq2.list == [ ]
 
@@ -468,6 +482,17 @@ if __name__ == '__main__':
     assert a.seq2.list == [ b ]
     assert b.seq1.list == [ a ]
     assert b.seq2.list == [ a ]
+
+    print "\tOK ==="
+
+    print "=== Hashing:",
+
+    # Only the last two instances ('a' and 'b') should be 
+    Element_hash_gc()
+    i = 0
+    for k in Element._hash.keys():
+	    i += 1;
+    assert (i == 2)
 
     print "\tOK ==="
 

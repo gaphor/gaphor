@@ -9,10 +9,10 @@ sys.path.append("../gaphor")
 
 import UML
 
-model = UML.Model(1)
+model = UML.Model()
 model.name = "MyModel"
 
-package = UML.Package(2)
+package = UML.Package()
 package.name = "MyPackage"
 
 model.ownedElement = package
@@ -24,9 +24,9 @@ if __name__ == "__main__":
 	print "package.namespace = " + str(package.namespace)
 	print "==="
 
-klass1 = UML.Class(3)
+klass1 = UML.Class()
 klass1.name = "MyClass1"
-klass2 = UML.Class(4)
+klass2 = UML.Class()
 klass2.name = "MyClass2"
 
 package.ownedElement = klass1
@@ -39,11 +39,11 @@ if __name__ == "__main__":
 	print "klass2.namespace = " + str(klass2.namespace)
 	print "==="
 
-assend1 = UML.AssociationEnd(5)
+assend1 = UML.AssociationEnd()
 assend1.name = "MyAssEnd1"
-assend2 = UML.AssociationEnd(6)
+assend2 = UML.AssociationEnd()
 assend2.name = "MyAssEnd2"
-ass = UML.Association(7)
+ass = UML.Association()
 ass.name = "MyAssociation"
 
 assend1.association = ass

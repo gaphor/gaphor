@@ -1,3 +1,7 @@
+2002-01-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/*: implemented Comment class (and actor class
+	  basically)
 2001-12-29  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/Element.py: Reimplemented, now all sorts of relations

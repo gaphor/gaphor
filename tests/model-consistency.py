@@ -26,8 +26,8 @@ for c in testlist:
 	if len(c._attrdef[key]) == 3:
 	    mult, c2, key2 = c._attrdef[key]
 	    print c.__name__ + "." + key + " <-> " + c2.__name__ + "." + key2,
-	    i1 = c(1)
-	    i2 = c2(2)
+	    i1 = c()
+	    i2 = c2()
 	    try:
 		i1.__setattr__(key, i2)
 	    except AttributeError, e:
