@@ -1,3 +1,10 @@
+2002-08-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/operation.py, gaphor/diagram/attribute.py: new files
+	* gaphor/diagram/klass.py: works with new data model
+	* gaphor/diagram/association.py: works with new data model (kinda)
+	* Several changes...
+
 2002-06-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 	
 	* setup.py: first do a pygtk.require() before config_Gaphor.
