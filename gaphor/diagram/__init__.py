@@ -4,6 +4,7 @@ from actor import *
 from comment import *
 from commentline import *
 from usecase import *
+from package import *
 from relationship import *
 from dependency import *
 from generalization import *
@@ -19,6 +20,7 @@ f = DiagramItemFactory()
 f.register (ActorItem, UML.Actor)
 f.register (CommentItem, UML.Comment)
 f.register (UseCaseItem, UML.UseCase)
+f.register (PackageItem, UML.Package)
 
 del f
 del UML

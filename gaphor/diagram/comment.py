@@ -65,7 +65,7 @@ class CommentItem(ModelElementItem):
 	self.__border.line(((w - ear, 1), (w- ear, ear), (w, ear), (w - ear, 1),
 			    (1, 1), (1, h), (w, h), (w, ear)))
 	self.__border.request_update()
-	self.update_child(affine, self.__body)
+	self.update_child(self.__body, affine)
 
     def on_get_shape_iter(self):
 	return self.__border

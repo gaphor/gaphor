@@ -113,7 +113,7 @@ class Storage(object):
 	    element = self.__info.factory.lookup (store.id())
 	    #print element
 	    if not element:
-		raise ValueError, 'Element with id %d was created but can not be found anymore.' % id
+		raise ValueError, 'Element with id %d was created but can not be found anymore.' % store.id()
 
 	    element.load (store)
 	    
@@ -128,7 +128,7 @@ class Storage(object):
 	    element = self.__info.factory.lookup (store.id())
 	    #print element
 	    if not element:
-		raise ValueError, 'Element with id %d was created but can not be found anymore.' % id
+		raise ValueError, 'Element with id %d was created but can not be found anymore.' % store.id()
 
 	    element.postload (store)
 	    
@@ -137,8 +137,8 @@ class Storage(object):
 	#doc.freeDoc ()
 
     def add_cid_to_item_mapping(self, cid, item):
-	self.__info.itemfactory.set_next_id(cid + 1)
 	if not self.__info.cid2item.has_key(cid):
+	    self.__info.itemfactory.set_next_id(cid + 1)
 	    self.__info.cid2item[cid] = item
 	else:
 	    raise TypeError, 'CID %d is stored multiple times' % cid
@@ -306,7 +306,10 @@ class Storage(object):
 		refid = ref.getAttribute(Storage.REFID)
 		if refid[0] == 'c':
 		    key = int(refid[1:])
-		    refelem = self.__info.cid2item[key]
+		    # We have the possibility that a canvas item is not yet
+		    # created, so we should be cautious with assigning refelems
+		    if self.__info.cid2item.has_key(key):
+			refelem = self.__info.cid2item[key]
 		elif refid[0] == 'a':
 		    key = int(refid[1:])
 		    refelem = self.__info.factory.lookup(key)
@@ -362,4 +365,3 @@ class Storage(object):
 		return reflist
 	raise ValueError, 'No reference found with name %s' % name
 
-#xml.initParser()

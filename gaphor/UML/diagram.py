@@ -21,7 +21,6 @@ class Diagram(Namespace):
 	    'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
 	    'grid_ofs_y', 'grid_color', 'grid_bg' ]
     _savable_root_item_properties = [ 'affine', ]
-    #__index = 0
 
     def __init__(self, id):
 	Namespace.__init__(self, id)
