@@ -93,7 +93,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         self._dir.set_fill(diacanvas.shape.FILL_SOLID)
         self._dir.set_cyclic(True)
 
-    def save (self, save_func):
+    def save(self, save_func):
         RelationshipItem.save(self, save_func)
         self.save_property(save_func, 'show-direction')
         if self._head_end.subject:
@@ -101,7 +101,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         if self._tail_end.subject:
             save_func('tail-subject', self._tail_end.subject)
 
-    def load (self, name, value):
+    def load(self, name, value):
         # end_head and end_tail were used in an older Gaphor version
         if name in ( 'head_end', 'head_subject', 'head-subject' ):
             #type(self._head_end).subject.load(self._head_end, value)
@@ -117,7 +117,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         self._head_end.postload()
         self._tail_end.postload()
 
-    def do_set_property (self, pspec, value):
+    def do_set_property(self, pspec, value):
         if pspec.name == 'head-subject':
             self._head_end.subject = value
         elif pspec.name == 'tail-subject':
@@ -236,7 +236,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 
         return x, y, x + 12, y + 10
 
-    def on_update (self, affine):
+    def on_update(self, affine):
         """Update the shapes and sub-items of the association."""
         # Update line endings:
         head_subject = self._head_end.subject
@@ -349,7 +349,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             return True
         return False
 
-    def confirm_connect_handle (self, handle):
+    def confirm_connect_handle(self, handle):
         """This method is called after a connection is established. This method
         sets the internal state of the line and updates the data model.
         """
@@ -422,7 +422,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
                 self._head_end.subject = head_end
                 self._tail_end.subject = tail_end
 
-    def confirm_disconnect_handle (self, handle, was_connected_to):
+    def confirm_disconnect_handle(self, handle, was_connected_to):
         #log.debug('AssociationItem.confirm_disconnect_handle')
         if self.subject:
             # First delete the Property's at the ends, otherwise they will
@@ -742,7 +742,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         d2 = drp(self._mult_bounds, p)
         try:
             d3 = diacanvas.geometry.distance_point_point(self._point1, p)
-            d4, dummy = diacanvas.geometry.distance_line_point(self._point1, self._point2, p, 1.0, diacanvas.shape.CAP_ROUND)
+            d4, dummy = diacanvas.geometry.distance_line_point(self._point1, self._point2, p, 1.0, 0) #diacanvas.shape.CAP_ROUND)
             if d3 < 15 and d4 < 5:
                 d3 = 0.0
         except Exception, e:

@@ -127,7 +127,7 @@ class DependencyItem(RelationshipItem):
 
         return x, y, x + w, y + h
 
-    def on_update (self, affine):
+    def on_update(self, affine):
         self._set_line_style();
         RelationshipItem.on_update(self, affine)
         handles = self.handles
@@ -161,7 +161,7 @@ class DependencyItem(RelationshipItem):
         except AttributeError:
             return 0
 
-    def confirm_connect_handle (self, handle):
+    def confirm_connect_handle(self, handle):
         """See RelationshipItem.confirm_connect_handle().
 
         In case of an Implementation, the head should be connected to an
@@ -183,6 +183,7 @@ class DependencyItem(RelationshipItem):
                 relation.supplier = s1
                 relation.client = s2
             self.subject = relation
+
         if self.auto_dependency:
             # Determine the dependency_type if only one handle is connected
             #from interface import InterfaceItem
@@ -191,7 +192,7 @@ class DependencyItem(RelationshipItem):
             else:
                 self.set_dependency_type(UML.Dependency)
 
-    def confirm_disconnect_handle (self, handle, was_connected_to):
+    def confirm_disconnect_handle(self, handle, was_connected_to):
         """See RelationshipItem.confirm_disconnect_handle().
         """
         #print 'confirm_disconnect_handle', handle
