@@ -1,4 +1,4 @@
-# vim: sw=4:et
+# vim:sw=4:et
 """
 Commands related to the Diagram (DiaCanvas)
 """
@@ -901,7 +901,7 @@ class CreateLinksAction(Action):
         for item in items:
             for pres in item.presentation:
                 if pres.canvas is canvas:
-                    yield item
+                    yield pres
 
     def execute(self):
         diagram_tab = self._window.get_current_diagram_tab()
@@ -909,8 +909,9 @@ class CreateLinksAction(Action):
             item = view_item.item
             if isinstance(item, gaphor.diagram.ClassifierItem):
                 for dep in item.subject.supplierDependency:
-                    # TODO: check if a dependency already has a presentation
-                    # on this canvas
+                    for pres in dep.presentation:
+                        if pres.canvas is item.canvas:
+                            continue
                     for opposite in self.find_items_on_this_canvas(dep.client, item.canvas):
                         new_item = diagram_tab.get_diagram().create(gaphor.diagram.DependencyItem)
                         item.connect_handle(new_item.handles[0])
