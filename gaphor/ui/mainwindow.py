@@ -97,9 +97,11 @@ class MainWindow(AbstractWindow):
                 'InsertComponent',)),
         ("Use Cases", (
                 'InsertUseCase',
-                'InsertActor')),
+                'InsertActor',
+                'InsertUseCaseAssociation')),
         ("Profiles", (
                 'InsertProfile',
+                'InsertMetaClass',
                 'InsertStereotype',
                 'InsertExtension')),
     ]

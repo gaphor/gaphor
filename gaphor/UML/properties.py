@@ -315,9 +315,11 @@ class association(umlproperty):
             return getattr(obj, self._name)
         except AttributeError:
             if self.upper > 1:
-                c = collection(self, obj, self.type)
-                setattr(obj, self._name, c)
-                return c
+                # Create the empty collection here since it might be used to
+                # add 
+                #c = collection(self, obj, self.type)
+                #setattr(obj, self._name, c)
+                return []
             else:
                 return None
 
@@ -332,10 +334,14 @@ class association(umlproperty):
         """Real setter, avoid doing the assertion check twice.
         Return True if notification should be send, False otherwise."""
         if self.upper > 1:
-            if value in self._get(obj):
+            c = self._get(obj)
+            if not c:
+                c = collection(self, obj, self.type)
+                setattr(obj, self._name, c)
+            elif value in c:
                 #log.debug('association: value already in obj: %s' % value)
                 return False
-            self._get(obj).items.append(value)
+            c.items.append(value)
         else:
             if value is self._get(obj):
                 #log.debug('association: value already in obj: %s' % value)
@@ -353,13 +359,15 @@ class association(umlproperty):
         """Delete value from the association."""
         #print '_del', self, obj, value
         if self.upper > 1:
-            items = self._get(obj).items
-            try:
-                items.remove(value)
-            except:
-                pass
-            if not items:
-                delattr(obj, self._name)
+            c = self._get(obj)
+            if c:
+                items = c.items
+                try:
+                    items.remove(value)
+                except:
+                    pass
+                if not items:
+                    delattr(obj, self._name)
         else:
             try:
                 delattr(obj, self._name)
@@ -445,7 +453,6 @@ class derivedunion(umlproperty):
         else:
             u = list()
             for s in self.subsets:
-                #tmp = getattr(obj, s)
                 tmp = s.__get__(obj)
                 if tmp:
                     # append or extend tmp (is it a list or not)

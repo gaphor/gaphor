@@ -406,12 +406,12 @@ class RenameElementAction(Action):
 
     def execute(self):
         view = self._window.get_tree_view()
-        selection = view.get_selection()
-        model, iter = selection.get_selected()
-        if not iter:
-            return
-        element = model.get_value(iter, 0)
-        path = model.path_from_element(element)
+        element = view.get_selected_element()
+        #model, iter = selection.get_selected()
+        #if not iter:
+            #return
+        #element = model.get_value(iter, 0)
+        path = view.get_model().path_from_element(element)
         column = view.get_column(0)
         cell = column.get_cell_renderers()[1]
         cell.set_property('editable', 1)

@@ -1,3 +1,11 @@
+2004-07-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: Added association UseCase <-> Property and
+	Actor <-> Property, so associations can work right (there was no
+	possible relationship possible between Actors and UseCases.
+	* gaphor/ui/mainwindow.py: Added toolbox entries for usecase assoc.
+	and metaclass.
+	* gaphor/diagram/actions.py: Added UseCaseAssociation and MetaClass actions.
 2004-07-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	Intermediate Windows Release 20040702

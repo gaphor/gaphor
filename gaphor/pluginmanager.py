@@ -82,12 +82,14 @@ class Plugin(object):
 	mod = __import__(self.path, globals(), locals(), [])
 	self.module = mod
 	self.initialized = True
-	self.status = 'Imported'
+	if mod:
+	    self.status = 'Imported'
 
 	for action in self.provided_actions:
 	    try:
 		action.import_action(self)
 	    except Exception, e:
+		self.status += '\nFailed to import action %s (%s)' % (action.id or action.class_, e)
 		log.error('Failed to import action %s' % (action.id or action.class_), e)
 
 
@@ -278,6 +280,8 @@ class PluginManager(object):
 	    except Exception, e:
 		log.error('Could not load plugin definition %s' % plugin_xml, e)
 
+    def get_plugins(self):
+	return self.plugins.values()
 
 # Make one default plugin manager
 import gaphor

@@ -15,7 +15,7 @@ class TestUML2(unittest.TestCase):
         self.assertEquals(c.namespace, p)
         self.failUnless(c in p.ownedElement)
         
-    def __on_owned_member(self, name):
+    def __on_owned_member(self, pspec, name):
         self.owned_member_called = True
 
     def testOwnedMember(self):

@@ -417,7 +417,7 @@ class NamespaceView(gtk.TreeView):
         except KeyError:
             stock_id = stock.get_stock_id(type(value))
             if stock_id:
-                icon = self.render_icon (stock_id, gtk.ICON_SIZE_MENU, '')
+                icon = self.render_icon(stock_id, gtk.ICON_SIZE_MENU, '')
             else:
                 icon = None
             self.icon_cache[type(value)] = icon

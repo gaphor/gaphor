@@ -273,14 +273,14 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
             # Phew!
             self._stereotype.set_text(STEREOTYPE_OPEN + s + STEREOTYPE_CLOSE)
             self.has_stereotype = True
-        elif isinstance(subject, UML.Class) and subject.extension:
-            self._stereotype.set_text(STEREOTYPE_OPEN + 'metaclass' + STEREOTYPE_CLOSE)
-            self.has_stereotype = True
         elif isinstance(subject, UML.Stereotype):
             self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
             self.has_stereotype = True
         elif isinstance(subject, UML.Interface):
             self._stereotype.set_text(STEREOTYPE_OPEN + 'interface' + STEREOTYPE_CLOSE)
+            self.has_stereotype = True
+        elif isinstance(subject, UML.Class) and subject.extension:
+            self._stereotype.set_text(STEREOTYPE_OPEN + 'metaclass' + STEREOTYPE_CLOSE)
             self.has_stereotype = True
         else:
             self.has_stereotype = False

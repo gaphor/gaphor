@@ -132,6 +132,12 @@ class ClassPlacementAction(NamespacePlacementAction):
 
 register_action(ClassPlacementAction)
 
+class MetaClassPlacementAction(ClassPlacementAction):
+    id = 'InsertMetaClass'
+    label = '_Metaclass'
+
+register_action(MetaClassPlacementAction)
+
 
 class InterfacePlacementTool(diacanvas.PlacementTool):
     """The Interface placement tool creates an InterfaceItem and a
@@ -322,6 +328,12 @@ class AssociationPlacementAction(PlacementAction):
     type = diagram.AssociationItem
 
 register_action(AssociationPlacementAction)
+
+
+class UseCaseAssociationPlacementAction(AssociationPlacementAction):
+    id = 'InsertUseCaseAssociation'
+
+register_action(UseCaseAssociationPlacementAction)
 
 
 class ExtensionPlacementAction(PlacementAction):
