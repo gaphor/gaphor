@@ -1,3 +1,8 @@
+2005-01-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainactions.py: fixed small bug, now recent-files also
+	works with an empty recent-files list.
+
 2005-01-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/misc/action.py: fixed ObjectAction for use with slots.

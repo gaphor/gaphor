@@ -672,7 +672,7 @@ class RecentFilesSlot(DynamicMenu):
         DynamicMenu.__init__(self, slot_id)
 
     def get_menu(self):
-        recent_files = resource('recent-files', ())
+        recent_files = resource('recent-files', [])
         window = resource('MainWindow')
         file_list = []
         for f, i in zip(recent_files, xrange(len(recent_files))):
