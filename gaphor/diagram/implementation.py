@@ -6,14 +6,27 @@ Implementation - - - -|>
 import gaphor
 import gaphor.UML as UML
 from gaphor.diagram import initialize_item
+import gaphor.diagram.interface
 import relationship
 
 class ImplementationItem(relationship.RelationshipItem):
 
     def __init__(self, id = None):
         relationship.RelationshipItem.__init__(self, id)
-        self.set(dash = (7.0, 5.0), has_head = 1, head_fill_color = 0,
-            head_a = 15.0, head_b = 15.0, head_c = 10.0, head_d = 10.0)
+        self.default_look = {
+            'dash': (7.0, 5.0),
+            'has_head': 1,
+            'head_fill_color': 0,
+            'head_a': 15.0,
+            'head_b': 15.0,
+            'head_c': 10.0,
+            'head_d': 10.0,
+        }
+        self.folded_interface_look = {
+            'dash': None,
+            'has_head': 0,
+        }
+        self.set(**self.default_look)
         
     # Gaphor Connection Protocol
 
@@ -45,7 +58,7 @@ class ImplementationItem(relationship.RelationshipItem):
             or head.connected_to and tail.connected_to \
                 and head.connected_to.subject != tail.connected_to.subject
 
-	print 'Implementation.allow_connect_handle:', can_connect
+        print 'Implementation.allow_connect_handle:', can_connect
         return can_connect
 
 
@@ -57,7 +70,7 @@ class ImplementationItem(relationship.RelationshipItem):
             s2 = c2.subject
             relation = self.find_relationship(s1, s2)
             if not relation:
-		print 'No relationship found'
+                print 'No relationship found'
                 relation = gaphor.resource(UML.ElementFactory).create(UML.Implementation)
                 relation.contract = s1
                 relation.implementatingClassifier = s2
@@ -69,5 +82,17 @@ class ImplementationItem(relationship.RelationshipItem):
         """
         if self.subject:
             del self.subject
+
+
+    def on_update(self, affine):
+        # change look into solid line when connected to folded interface
+        if isinstance(self.handles[0].connected_to, 
+                gaphor.diagram.interface.InterfaceItem):
+            self.set(**self.folded_interface_look)
+        else:
+            self.set(**self.default_look)
+
+        relationship.RelationshipItem.on_update(self, affine)
+
 
 initialize_item(ImplementationItem, UML.Implementation)
