@@ -11,7 +11,6 @@ import gaphor.config
 from gaphor.misc.menufactory import MenuFactory, Menu, MenuItem, MenuSeparator, MenuPlaceholder, MenuStockItem
 import stock
 
-print '\n\n\n*** ' + __file__
 
 class MainWindow:
     """
@@ -69,7 +68,7 @@ class MainWindow:
 	app_bar = gnome.ui.AppBar (has_progress=0, has_status=1,
 				   interactivity=gnome.ui.PREFERENCES_USER)
 	app.set_statusbar(app_bar)
-	model = namespace.NamespaceModel(UML.ElementFactory())
+	model = namespace.NamespaceModel(gaphorResource(UML.ElementFactory))
 	view = namespace.NamespaceView(model)
 
 	menu_factory = MenuFactory(menu=menu, accelgroup=accelgroup,

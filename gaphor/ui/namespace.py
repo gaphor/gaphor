@@ -89,9 +89,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 	# We own the references to the iterators.
 	self.set_property ('leak_references', 0)
 
-	#self.factory == UML.ElementFactory()
 	factory.connect (self.__factory_signals, factory)
-	#del self.factory
 
 	# Set signals to all Namespace objects in the factory:
 	for element in factory.values():

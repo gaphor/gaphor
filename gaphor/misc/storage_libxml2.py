@@ -10,8 +10,8 @@ import libxml2 as xml
 
 class StorageInfo:
     def __init__(self):
-	self.factory = UML.ElementFactory()
-	self.itemfactory = diagram.DiagramItemFactory()
+	self.factory = gaphorResource(UML.ElementFactory)
+	self.itemfactory = gaphorResource(diagram.DiagramItemFactory)
 	self.cid2item = { }
 	self.doc=None
 

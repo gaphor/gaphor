@@ -71,6 +71,9 @@ class ElementFactory(_Singleton):
 	for key, value in self.__elements.items():
 	    print 'ElementFactory: unlinking', value
 	    #print 'references:', gc.get_referrers(value)
+	    if isinstance (value, UML.Diagram):
+		value.canvas.clear_undo()
+		value.canvas.clear_redo()
 	    value.unlink()
 	assert len(self.__elements) == 0, 'Still items in the factory: %s' % str(self.__elements.values())
 	self.__index = 1

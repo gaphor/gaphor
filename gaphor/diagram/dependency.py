@@ -48,7 +48,7 @@ class DependencyItem(relationship.RelationshipItem):
 	    s2 = c2.subject
 	    relation = self.find_relationship(s1, s2)
 	    if not relation:
-		relation = UML.ElementFactory().create(UML.Dependency)
+		relation = gaphorResource(UML.ElementFactory).create(UML.Dependency)
 		relation.supplier = s1
 		relation.client = s2
 	    self._set_subject(relation)

@@ -16,7 +16,7 @@ from diagramitemfactory import *
 
 import gaphor.UML as UML
 
-f = DiagramItemFactory()
+f = gaphorResource(DiagramItemFactory)
 f.register (ActorItem, UML.Actor)
 f.register (CommentItem, UML.Comment)
 f.register (UseCaseItem, UML.UseCase)

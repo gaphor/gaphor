@@ -8,8 +8,6 @@ __version__ = '$revision$'
 __date__ = '$date$'
 
 from modelelements import Namespace
-from elementfactory import ElementFactory
-
 import diacanvas
 
 
@@ -27,7 +25,7 @@ class Diagram(Namespace):
         self.canvas = diacanvas.Canvas()
 	print 'Diagram:', self.canvas
 	self.canvas.set_undo_stack_depth(10)
-	self.canvas.set_property ("allow_undo", 0) # was 1
+	self.canvas.set_property ("allow_undo", 1) # was 1
 	print 'Diagram: allow undo =', self.canvas.get_property('allow_undo')
 
     def save(self, store):
@@ -98,4 +96,4 @@ class Diagram(Namespace):
 
 	self.canvas.update_now ()
 
-	self.canvas.set_property ("allow_undo", 0) # was 1
+	self.canvas.set_property ("allow_undo", 1) # was 1

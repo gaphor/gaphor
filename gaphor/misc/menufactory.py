@@ -3,7 +3,7 @@
 import gtk
 
 
-class Menu:
+class Menu(object):
 
     def __init__(self, *menu):
 	self._menu = menu
@@ -12,7 +12,7 @@ class Menu:
 	return self._menu
 
 
-class BaseMenuItem:
+class BaseMenuItem(object):
 
     def __init__(self, right=0, comment=None, command=None, submenu=None):
 	self.__right = right
@@ -93,7 +93,7 @@ class MenuPlaceholder(BaseMenuItem):
 	    if e[0] == key:
 		return e
 
-class MenuSeparator:
+class MenuSeparator(object):
     """
     Menu Item for a separator (vertical bar) in the menu.
     """
@@ -101,7 +101,7 @@ class MenuSeparator:
 	pass
 
 
-class MenuFactory:
+class MenuFactory(object):
 
     def __init__(self, menu=None, accelgroup=None, statusbar=None):
 	self.__menu = menu
@@ -119,7 +119,9 @@ class MenuFactory:
 
     def create_menu(self):
 
-	command_cb = self.__handle_command_cb
+	command_execute_cb = self.__handle_command_execute_cb
+	command_is_valid_cb = self.__handle_command_is_valid_cb
+	validate_submenu_cb = self.__handle_validate_submenu_cb
 	sensitive_cb = self.__handle_sensitive_cb
 	set_comment_cb = self.__handle_set_comment_cb
 	unset_comment_cb = self.__handle_unset_comment_cb
@@ -148,7 +150,8 @@ class MenuFactory:
 		# Set the command, if any
 		command = item.get_command()
 		if command:
-		    menuitem.connect('activate', command_cb, command)
+		    menuitem.command = command
+		    menuitem.connect('activate', command_execute_cb)
 
 		# Add a comment
 		comment = item.get_comment()
@@ -164,6 +167,8 @@ class MenuFactory:
 		    for subitem in item.get_submenu():
 			create_menu(submenu, subitem)
 		    menuitem.set_submenu(submenu)
+		    # Handle menu item validation somewhere else...
+		    #menuitem.connect('activate', validate_submenu_cb)
 
 	    menuitem.show()
 
@@ -173,17 +178,39 @@ class MenuFactory:
 	menubar.show()
 	return menubar
 
-    def __handle_command_cb (self, item, command):
-	print item, command
+    def __handle_command_execute_cb (self, item):
 	try:
-	    if command.is_valid():
-		msg = command.execute()
+	    if item.command.is_valid():
+		msg = item.command.execute()
 	except Exception, e:
 	    msg = 'Operation failed: ' + str(e)
 	sb = self.__statusbar
 	if sb and sb.flags() & gtk.REALIZED:
 	    sb.pop()
 	    sb.push(str(msg or ''))
+
+    def __handle_validate_submenu_cb (self, item):
+	menu = item.get_submenu()
+	assert menu
+	for child in menu.get_children():
+	    try:
+		if child.command.is_valid():
+		    child.set_sensitive(1)
+		else:
+		    child.set_sensitive(0)
+	    except Exception, e:
+		# Probably no attribute named command
+		pass #print 'Validate submenu', item, e
+
+    def __handle_command_is_valid_cb (self, item, event):
+	print item, event
+	try:
+	    if item.command.is_valid():
+		item.set_sensitive(1)
+	    else:
+		item.set_sensitive(0)
+	except Exception, e:
+	    print e
 
     def __handle_sensitive_cb (self, item, sensitive):
 	item.set_property("sensitive", sensitive)

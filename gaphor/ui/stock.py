@@ -35,7 +35,7 @@ uml_to_stock_id_map = {
 # Definition of stock items to be added, will be deleted at the end
 # of this fils file.
 default_stock_items = (
-    (STOCK_DIAGRAM,	'_Diagram',	'class24.png', 'class16.png'),
+    (STOCK_DIAGRAM,	'_Diagram',	'diagram24.png', 'diagram16.png'),
     (STOCK_ACTOR,	'_Actor',	'actor24.png', 'actor16.png'),
     (STOCK_USECASE,	'_Use case',	'usecase24.png', 'usecase16.png'),
     (STOCK_PACKAGE,	'_Package',	'package24.png', 'package16.png'),
@@ -62,8 +62,7 @@ def get_stock_id(element):
 	    pass
 
 def add_stock_items(stock_items, icon_dir=''):
-    icon_factory = gtk.IconFactory()
-    icon_factory.add_default()
+    icon_factory = gaphorResource(gtk.IconFactory)
 
     stocklist = []
     iconlist = []
@@ -90,6 +89,11 @@ def add_stock_items(stock_items, icon_dir=''):
 #
 # Initialization:
 #
+# We should do some special initialization for the icon factory:
+icon_factory = gaphorResource(gtk.IconFactory)
+icon_factory.add_default()
+del icon_factory
+
 add_stock_items(default_stock_items, default_icon_dir)
 
 # Remove stock item definitions, GTK+ knows about them, so we don't

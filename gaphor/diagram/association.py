@@ -144,9 +144,10 @@ class AssociationItem(relationship.RelationshipItem):
 	    s2 = c2.subject
 	    end_head, end_tail, relation = self.find_relationship(s1, s2)
 	    if not relation:
-		relation = UML.ElementFactory().create(UML.Association)
-		end_head = UML.ElementFactory().create(UML.AssociationEnd)
-		end_tail = UML.ElementFactory().create(UML.AssociationEnd)
+		element_factory = gaphorResource(UML.ElementFactory)
+		relation = element_factory.create(UML.Association)
+		end_head = element_factory.create(UML.AssociationEnd)
+		end_tail = element_factory.create(UML.AssociationEnd)
 		relation.connection = end_head
 		relation.connection = end_tail
 		end_head.participant = s1

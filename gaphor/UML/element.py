@@ -25,7 +25,7 @@ a tupple as value.  A tupple contains two or three fields:
 
 if __name__ == '__main__':
     import sys
-    sys.path.append('..')
+    sys.path.append('../..')
 
 import types, copy
 from enumeration import Enumeration_
@@ -47,7 +47,7 @@ Geometry = types.ListType
 FALSE = 0
 TRUE = not FALSE
 
-class Element:
+class Element(object):
     '''Element is the base class for *all* UML MetaModel classes. The
 attributes and relations are defined by a <class>._attrdef structure.
 A class does not need to define any local variables itself: Element will
@@ -173,7 +173,11 @@ The signals protocol is:
 	    if klass in done:
 	        return None
 	    done.append(klass)
-	    dict = klass._attrdef
+	    try:
+		dict = klass._attrdef
+	    except AttributeError:
+		return None
+
 	    #print 'Checking ' + klass.__name__
 	    if dict.has_key(key):
 		return dict[key]
@@ -552,8 +556,11 @@ if __name__ == '__main__':
     b = A(7)
     a.seq = b
     assert b.ref is a
-    assert a.seq.list == [ a, b ]
-
+    try:
+	a.seq.list.index(a)
+	a.seq.list.index(b)
+    except:
+	raise AssertionError, 'elements are not in list'
     
     del a.seq[a]
     assert a.ref is None

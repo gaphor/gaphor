@@ -33,7 +33,7 @@ class DiagramItemFactory(Singleton):
 	elif DiagramItemFactory.__diagram2uml.has_key(type):
 	    uml_type = DiagramItemFactory.__diagram2uml[type]
 	    if uml_type:
-		factory = UML.ElementFactory()
+		factory = gaphorResource(UML.ElementFactory)
 		subject = factory.create (uml_type)
 		if issubclass (uml_type, UML.Namespace):
 		    subject.namespace = diagram.namespace
