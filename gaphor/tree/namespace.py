@@ -17,28 +17,33 @@ class NamespaceModel(gtk.GenericTreeModel):
     <object>.ownerElement list.
     """
 
-    def __element_signals (self, key, obj):
+    def __element_signals (self, key, old_value, new_value, obj):
 	if key == 'name':
 	    path = self.get_path (obj)
 	    if path != ():
 		# During loading, the item may be connected, but is not
 		# in the tree path (ie. the namespace is not set).
-		iter = self.get_iter (path)
-		self.row_changed (path,  iter)
+		iter = self.get_iter(path)
+		self.row_changed(path,  iter)
         elif key == 'namespace' and obj.namespace:
 	    # FixMe: How should we handle elements that are being moved? The
 	    # Namespace changes, but this happens before the tree is notified.
 	    path = self.get_path(obj)
-	    print 'Namespace path =', path, type(path)
+	    #print 'Namespace path =', path, type(path)
 	    iter = self.get_iter(path)
-	    print 'Namespace set for', obj, path
-	    self.row_inserted (path, iter)
+	    #print 'Namespace set for', obj, path
+	    self.row_inserted(path, iter)
+	#elif key == 'ownedElement' and old_value == 'remove':
+	#    path = self.get_path(new_value)
+	#    if path != ():
+	#	self.row_deleted (path)
 	elif key == '__unlink__':
-	    print 'Destroying', obj
+	    pass # Stuff is handled in namespace and ownedElement keys...
+	    #print 'Destroying', obj
 
     def __factory_signals (self, key, obj, factory):
         if key == 'create' and isinstance (obj, UML.Namespace):
-	    print 'Object added'
+	    #print 'Object added'
 	    obj.connect (self.__element_signals, obj)
 	    if obj.id == 1:
 		self.model = obj
@@ -56,7 +61,8 @@ class NamespaceModel(gtk.GenericTreeModel):
 	    else:
 		path = self.get_path (obj)
 		print 'Removing object', obj, path
-		self.row_deleted (path)
+		if path != ():
+		    self.row_deleted (path)
 	    obj.disconnect (self.__element_signals)
 
     def __init__(self, factory):

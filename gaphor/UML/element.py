@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
 import types, copy
 from enumeration import Enumeration_
-from sequence import Sequence
+from sequence import Sequence, SequenceError
 #from misc import Signal
 from misc.signal import Signal
 
@@ -79,7 +79,7 @@ one of the diagrams.
 	#if elements.has_key(self.__dict__['__id']):
 	#    del elements[self.__dict__['__id']]
 	#print 'Element.__unlink()', self
-        self.__emit("__unlink__")
+        self.__emit("__unlink__", None, None)
 	for key in self.__dict__.keys():
 	    # In case of a cyclic reference, we should check if the element
 	    # not yet has been removed.
@@ -102,7 +102,7 @@ one of the diagrams.
     
     def unlink(self):
 	'''Remove all references to the object.'''
-	print 'Element.unlink():', self
+	#print 'Element.unlink():', self
 	# Notify other objects that we want to unlink()
 	self.__unlink ()
 	if self.__dict__.has_key ('__undodata'):
@@ -118,7 +118,7 @@ one of the diagrams.
 	    if (len(pres) == 1) and \
 	    		self.__dict__.has_key('__undodata'):
 		self.__load_undo_data()
-		self.__emit('__relink__')
+		self.__emit('__relink__', None, None)
 
     def remove_presentation (self, presentation):
 	'''Remove a presentation element from the list. If no more presentation
@@ -190,22 +190,58 @@ one of the diagrams.
 	    self.__dict__[key] = Sequence(self, type)
 	return self.__dict__[key]
 
-    def __getattr__(self, key):
-	if key == 'id':
-	    return self.__dict__['__id']
-	elif self.__dict__.has_key(key):
+    def get(self, key):
+	if self.__dict__.has_key(key):
 	    # Key is already in the object
 	    return self.__dict__[key]
 	else:
-	    #if key[0] != '_':
-		#print 'Unknown attr: Element.__getattr__(' + key + ')'
-	    rec = self.__get_attr_info (key, self.__class__)
-	    if rec[0] is Sequence:
+	    info = self.__get_attr_info (key, self.__class__)
+	    if info[0] is Sequence:
 		# We do not have a sequence here... create it and return it.
-		return self.__ensure_seq (key, rec[1])
+		self.__dict__[key] = Sequence(self, info[1])
+		return self.__dict__[key]
 	    else:
 	        # Otherwise, return the default value
-	        return copy.copy(rec[0])
+	        return copy.copy(info[0])
+
+    def __set(self, key, obj):
+	old_value = None
+	if self.__dict__.has_key(key):
+	    old_value = self.__dict__[key]
+	self.__dict__[key] = obj
+	self.__queue(key, old_value, obj)
+
+    def __del(self, key, dummy=None):
+	'''Remove an attribute.'''
+	old_value = None
+	if self.__dict__.has_key(key):
+	    old_value = self.__dict__[key]
+	    del self.__dict__[key]
+	    self.__emit(key, old_value, None)
+
+    def __sequence_add(self, key, obj):
+	if not self.__dict__.has_key(key):
+	    info = self.__get_attr_info(key, self.__class__)
+	    self.__dict__[key] = Sequence(self, info[1])
+	seq = self.__dict__[key]
+	self.__real_sequence_add(key, seq, obj)
+
+    def __real_sequence_add(self, key, seq, obj):
+	list = seq.list
+	if list.count(obj) == 0:
+	    list.append(obj)
+	    list.sort()
+	    self.__queue(key, 'add', seq.index(obj))
+
+    def __sequence_remove(self, key, obj):
+	self.__emit(key, 'remove', obj)
+	self.__dict__[key].list.remove(obj)
+
+    def __getattr__(self, key):
+	if key == 'id':
+	    return self.__dict__['__id']
+	else:
+	    return self.get(key)
 
     def __setattr__(self, key, value):
         '''Before we set a value, several things happen:
@@ -216,78 +252,71 @@ one of the diagrams.
 	      both sides can have a multiplicity of '1'.
 	   b. Set up a new relationship between self-value and value-self.'''
 
-	rec = self.__get_attr_info (key, self.__class__)
+	info = self.__get_attr_info (key, self.__class__)
 	#print 'Element:__setattr__(' + key + ')' + str(rec)
-	if len(rec) == 2: # Attribute or one-way relation
-	    if rec[0] is Sequence:
-		#print '__setattr__', key, value
-	        self.__ensure_seq (key, rec[1]).append(value)
+	if len(info) == 2: # Attribute or one-way relation
+	    if info[0] is Sequence:
+	        self.__sequence_add(key, value)
 	    else:
-		self.__dict__[key] = value
-	    self.__emit (key)
+		self.__set(key, value)
 	else:
-	    xrec = value.__get_attr_info (rec[2], value.__class__)
+	    xkey = info[2]
+	    xinfo = value.__get_attr_info (xkey, value.__class__)
+
 	    #print '__setattr__x', xrec
-	    if len(xrec) > 2:
-	        assert xrec[2] == key
-	    if self.__dict__.has_key(key):
-		#print 'del old...'
+	    if len(xinfo) > 2:
+	        assert xinfo[2] == key
+
+	    # We have to remove our reference from the current 'other side'
+	    if self.__dict__.has_key(key) and info[0] is not Sequence:
 	        xself = self.__dict__[key]
-		# Keep the relationship if we have a n:m relationship
-		if rec[0] is not Sequence or xrec[0] is not Sequence:
-		    if rec[0] is Sequence:
-			#print 'del-seq-item rec'
-			#self.__del_seq_item(self.__dict__[key], xself)
-			if xself in self.__dict__[key].list:
-			    self.__dict__[key].list.remove(xself)
-		    elif self.__dict__.has_key(key):
-			    #print 'del-item rec'
-			    del self.__dict__[key]
-		    if xrec[0] is Sequence:
-			#print 'del-seq-item xrec'
-			#xself.__del_seq_item(xself.__dict__[rec[2]], self)
-			xself.__dict__[rec[2]].list.remove (self)
-		    elif xself.__dict__.has_key(rec[2]):
-			    #print 'del-item xrec'
-			    del xself.__dict__[rec[2]]
+		if xinfo[0] is Sequence:
+		    xself.__sequence_remove(xkey, self)
+		else:
+		    xself.__del(xkey)
+
 	    # Establish the relationship
-	    if rec[0] is Sequence:
+	    if info[0] is Sequence:
 	    	#print 'add to seq'
-		self.__ensure_seq(key, rec[1]).append (value)
+		self.__sequence_add(key, value)
 	    else:
 		#print 'add to item'
-		self.__dict__[key] = value
-	    if xrec[0] is Sequence:
+		self.__set(key, value)
+
+	    if xinfo[0] is Sequence:
 		#print 'add to xseq'
-		value.__ensure_seq(rec[2], xrec[1]).append (self)
+		value.__sequence_add(xkey, self)
 	    else:
 		#print 'add to xitem'
-		value.__dict__[rec[2]] = self
-	    self.__emit (key)
-	    value.__emit (rec[2])
-	    
+		value.__set(xkey, self)
+	self.__flush()
+
     def __delattr__(self, key):
-	rec = self.__get_attr_info (key, self.__class__)
-	if rec[0] is Sequence:
+	info = self.__get_attr_info (key, self.__class__)
+	if info[0] is Sequence:
 	    raise AttributeError, 'Element: you can not remove a sequence'
 	if not self.__dict__.has_key(key):
 	    return
-	xval = self.__dict__[key]
-	if len(rec) > 2: # Bi-directional relationship
-	    xrec = xval.__get_attr_info (rec[2], rec[1])
-	    if xrec[0] is Sequence:
-		#xval.__del_seq_item(xval.__dict__[rec[2]], self)
-		#xval.__dict__[rec[2]].list.remove (self)
-		# Handle it via sequence_remove()
-		del xval.__dict__[rec[2]][self]
+
+	if len(info) > 2:
+	    xself = self.__dict__[key]
+	    xkey = info[2]
+	    xinfo = xself.__get_attr_info (xkey, info[1])
+	    if xinfo[0] is Sequence:
+		xself.__sequence_remove(xkey, self)
 	    else:
-	        del xval.__dict__[rec[2]]
-		del self.__dict__[key]
-		self.__emit (key)
-		xval.__emit(rec[2])
-	else:
-	    del self.__dict__[key]
-	    self.__emit (key)
+		xself.__del(xkey)
+	self.__del(key)
+	self.__flush()
+
+    def sequence_add(self, seq, obj):
+	'''Add an entry. Should only be called by Sequence instances.
+	This function adds an object to the sequence.'''
+	for key in self.__dict__.keys():
+	    if self.__dict__[key] is seq:
+	        break
+	self.__real_sequence_add(key, seq, obj)
+	self.__flush()
 
     def sequence_remove(self, seq, obj):
         '''Remove an entry. Should only be called by Sequence's implementation.
@@ -298,19 +327,19 @@ one of the diagrams.
 	        break
 	#print 'Element.sequence_remove', key
 	#seq_len = len (seq)
-	rec = self.__get_attr_info (key, self.__class__)
-	if rec[0] is not Sequence:
+	info = self.__get_attr_info (key, self.__class__)
+	if info[0] is not Sequence:
 	    raise AttributeError, 'Element: This should be called from Sequence'
 	seq.list.remove(obj)
-	if len(rec) > 2: # Bi-directional relationship
-	    xrec = obj.__get_attr_info (rec[2], obj.__class__) #rec[1])
-	    if xrec[0] is Sequence:
-		obj.__dict__[rec[2]].list.remove (self)
+	if len(info) > 2:
+	    xself = obj
+	    xkey = info[2]
+	    xinfo = xself.__get_attr_info (xkey, info[1])
+	    if xinfo[0] is Sequence:
+		xself.__sequence_remove(xkey, self)
 	    else:
-		del obj.__dict__[rec[2]]
-	    obj.__emit (rec[2])
-	self.__emit (key)
-	#assert len (seq) == seq_len - 1
+		xself.__del(xkey)
+	self.__flush()
 
     # Functions used by the signal functions
     def connect (self, signal_func, *data):
@@ -319,8 +348,14 @@ one of the diagrams.
     def disconnect (self, signal_func):
 	self.__dict__['__signal'].disconnect (signal_func)
 
-    def __emit (self, key):
-	self.__dict__['__signal'].emit (key)
+    def __queue (self, key, old_value_or_action, new_value):
+	self.__dict__['__signal'].queue (key, old_value_or_action, new_value)
+
+    def __flush (self):
+	self.__dict__['__signal'].flush ()
+
+    def __emit (self, key, old_value_or_action, new_value):
+	self.__dict__['__signal'].emit (key, old_value_or_action, new_value)
 
     def save(self, store):
 	for key in self.__dict__.keys():
@@ -344,7 +379,7 @@ one of the diagrams.
 	    else:
 		if value and value != '':
 		    self.__dict__[name] = value
-	    self.__emit (name)
+	    self.__emit (name, None, value)
 	
 	for name, reflist in store.references().items():
 	    attr_info = self.__get_attr_info (name, self.__class__)
@@ -355,10 +390,10 @@ one of the diagrams.
 		    self.__ensure_seq (name, attr_info[1])
 		    if refelem not in self.__dict__[name]:
 			self.__dict__[name].list.append (refelem)
-			self.__emit (name)
+			self.__emit (name, 'add', refelem)
 		else:
 		    self.__dict__[name] = refelem
-		    self.__emit (name)
+		    self.__emit (name, None, refelem)
 
     def postload (self, store):
 	'''Do some things after the items are initialized... This is basically
@@ -548,7 +583,7 @@ if __name__ == '__main__':
     assert b.seq.list == [ a, b ]
 
     del b.seq[a]
-    assert a.ref is None
+    assert a.ref is None, 'a.ref = ' + str(a.ref)
     assert a.seq.list == [ ]
     assert b.ref is b
     assert b.seq.list == [ b ]
@@ -667,10 +702,14 @@ if __name__ == '__main__':
     
     a.rel = b
     assert z.cb_data[0] == 'rel'
-    assert z.cb_data[1] == 'one'
-    assert z.cb_data[2] == 'two'
+    assert z.cb_data[1] == None  # old_value
+    assert z.cb_data[2] == b     # new_value
+    assert z.cb_data[3] == 'one'
+    assert z.cb_data[4] == 'two'
     assert y.cb_data[0] == 'rel'
-    assert y.cb_data[1] == 'three'
+    assert y.cb_data[1] == None
+    assert y.cb_data[2] == b
+    assert y.cb_data[3] == 'three'
     
     a.disconnect (z.callback)
     #data = a.__dict__['__signals'][0]

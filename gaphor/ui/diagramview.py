@@ -109,7 +109,7 @@ class DiagramView:
 	    print 'UML.flush'
 	    del self.diagram
 	    factory.flush ()
-	    store = Storage(factory)
+	    store = Storage()
 	    store.save('c.xml')
 	    print 'UML.load'
 	    store.load ('a.xml')
@@ -120,7 +120,7 @@ class DiagramView:
 	    view.set_canvas (self.diagram.canvas)
 	elif action == FILE_SAVE:
 	    factory = UML.ElementFactory ()
-	    store = Storage(factory)
+	    store = Storage()
 	    store.save ('a.xml')
 	elif action == FILE_DUMP:
 	    factory = UML.ElementFactory ()

@@ -3,6 +3,8 @@ from actor import *
 from comment import *
 from commentline import *
 from usecase import *
+from relationship import *
+from dependency import *
 
 from diagramitemfactory import *
 

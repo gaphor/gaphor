@@ -10,7 +10,8 @@ uml_PYTHON = \
 	sequence.py	\
 	element.py	\
 	elementfactory.py \
-	modelelements.py
+	modelelements.py \
+	diagram.py
 
 all-local: modelelements.py
 

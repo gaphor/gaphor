@@ -13,10 +13,10 @@
     name	CDATA	#REQUIRED
     refid	IDREF	#REQUIRED >
 
-<!ELEMENT Value EMPTY >
+<!ELEMENT Value (#PCDATA) >
 <!ATTLIST Value
     name 	CDATA	#REQUIRED
-    value	CDATA	#REQUIRED >
+    value	CDATA	#IMPLIED >
 
 <!ELEMENT Canvas (Value | CanvasItem)* >
 

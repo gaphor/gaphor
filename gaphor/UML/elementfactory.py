@@ -13,7 +13,7 @@ from element import Element
 
 class ElementFactory(Singleton):
 
-    def __element_signal (self, key, obj):
+    def __element_signal (self, key, old_value, new_value, obj):
 	if key == '__unlink__' and self.__elements.has_key(obj.id):
 	    print 'Unlinking element', obj
 	    del self.__elements[obj.id]
@@ -34,7 +34,7 @@ class ElementFactory(Singleton):
 	self.__index += 1
 	obj.connect (self.__element_signal, obj)
 	self.__emit_create (obj)
-	print 'ElementFactory:', str(self.__index), 'elements in the factory'
+	#print 'ElementFactory:', str(self.__index), 'elements in the factory'
 	return obj
 
     def create_as (self, type, id):
@@ -47,7 +47,6 @@ class ElementFactory(Singleton):
 	self.create (type)
 	if old_index > self.__index:
 	    self.__index = old_index
-
 
     def lookup (self, id):
 	try:
@@ -64,16 +63,17 @@ class ElementFactory(Singleton):
     def flush(self):
 	'''Flush all elements in the UML.elements table.'''
 	for key, value in self.__elements.items():
+	    print 'ElementFactory: unlinking', value
 	    value.unlink()
-	assert len(self.__elements) == 0
-	return None
-	while 1:
-	    try:
-		(key, value) = self.__elements.popitem()
-	    except KeyError:
-		break;
-	    value.unlink()
-	    assert len(self.__elements) == 0
+	assert len(self.__elements) == 0, 'Still items in the factory: %s' % str(self.__elements.values())
+	self.__index = 1
+	#while 1:
+	#    try:
+	#	(key, value) = self.__elements.popitem()
+	#    except KeyError:
+	#	break;
+	#    value.unlink()
+	#    assert len(self.__elements) == 0
 
     def connect (self, signal_func, *data):
 	self.__signal.connect (signal_func, *data)

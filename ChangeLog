@@ -1,3 +1,23 @@
+2002-07-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* doc/gaphor.dtd: Allow text data in Value tag.
+	* gaphor/UML/element.py: Restructured get/set attr stuff. Now it is
+	more readable and better usable for e.g. tree models.
+	* gaphor/UML/element.py: Changed signal protocol. Now old and new
+	values are also parameters.
+	* gaphor/diagram/(relationship.py|diagramitem.py|dependency.py):
+	new files.
+	* gaphor/misc/signal.py: Added signal queueing options (queue(),
+	flush())
+	* gaphor/misc: Added parsers using both libxml2 or xml.dom.minidom.
+	(work in progress).
+
+2002-03-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/storage.py: Now use the standard Python XML stuff
+	(with expat).
+	* Various feature improvements and other nifty things...
+
 2002-03-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/registrar.py: renamed to diagramitemfactory.py and

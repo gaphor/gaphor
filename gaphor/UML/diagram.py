@@ -86,10 +86,13 @@ class Diagram(Namespace):
 	# First create the canvas:
 	canvas_store = store.canvas()
 	for name, value in canvas_store.values().items():
+	    print 'Diagram: loading attribute', name
 	    if name == 'root_affine':
 	    	self.canvas.root.set_property('affine', eval(value))
 	    else:
-		self.canvas.set_property (name, eval(value))
+		print 'value = "%s"' % value
+		v = eval(value)
+		self.canvas.set_property (name, v)
 
 	item_dict = canvas_store.canvas_items()
 	

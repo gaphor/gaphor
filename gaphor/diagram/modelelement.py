@@ -5,20 +5,16 @@ ModelElementItem
 Abstract base class for element-like Diagram items.
 '''
 
-if __name__ == '__main__':
-    import sys
-    sys.path.append('..')
-    del sys
-
 import gobject
 import diacanvas
+from diagramitem import DiagramItem
 
 __revision__ = '$revision$'
 __author__ = 'Arjan J. Molenaar'
 __date__ = '$date$'
 
 
-class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
+class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, DiagramItem):
     __gproperties__ = {
 	'id':		(gobject.TYPE_PYOBJECT, 'id',
 			 'Identification number of the canvas item',
@@ -33,10 +29,10 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
 
     def __init__(self):
 	self.__gobject_init__()
+	DiagramItem.__init__(self)
 	self.subject = None
 	self.auto_resize = 0
 	self.__id = -1
-	self.connect ('notify::parent', ModelElementItem.on_parent_notify)
 
     def save (self, store):
 	store.save_property('affine')
@@ -52,22 +48,14 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
 
     def postload(self, store):
 	pass
+
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
 	    print self, 'id', value
 	    self.__id = int(value)
 	elif pspec.name == 'subject':
 	    print 'Setting subject:', value
-	    self.preserve_property('subject')
-	    if value != self.subject:
-		if self.subject:
-		    self.subject.remove_presentation(self)
-		    self.subject.disconnect(self.on_subject_update)
-		self.subject = value
-		if value:
-		    value.connect(self.on_subject_update)
-		    value.add_presentation(self)
-
+	    self._set_subject(value)
 	elif pspec.name == 'auto-resize':
 	    self.auto_resize = value
 	else:
@@ -85,44 +73,14 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
 
     # DiaCanvasItem callbacks
     def on_glue(self, handle, wx, wy):
-	if handle.owner.allow_connect_handle (handle, self):
-	    return diacanvas.CanvasElement.on_glue (self, handle, wx, wy)
-	# Dummy value with large distance value
-	return None
+	return self._on_glue(handle, wx, wy, diacanvas.CanvasElement)
 
     def on_connect_handle (self, handle):
-	if handle.owner.allow_connect_handle (handle, self):
-	    ret = diacanvas.CanvasElement.on_connect_handle (self, handle)
-	    if ret != 0:
-		handle.owner.confirm_connect_handle(handle)
-		return ret
-	return 0
+	return self._on_connect_handle(handle, diacanvas.CanvasElement)
 
     def on_disconnect_handle (self, handle):
-	if handle.owner.allow_disconnect_handle (handle):
-	    ret = diacanvas.CanvasElement.on_disconnect_handle (self, handle)
-	    if ret != 0:
-		handle.owner.confirm_disconnect_handle(handle, self)
-		return ret
-	return 0
+	return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
 
-    def on_parent_notify (self, parent):
-	print self
-	if self.subject:
-	    if self.parent:
-		print 'Have Parent', self, parent
-		self.subject.add_presentation (self)
-	    else:
-		print 'No parent...', self, parent
-		self.subject.remove_presentation (self)
-
-    def on_subject_update (self, name):
-	if name == '__unlink__':
-	    #self.set_property('subject', None)
-	    if self.parent:
-		    self.parent.remove(self)
-	else:
-	    print 'ModelElementItem: unhandled signal "%s"' % str(name)
 
 gobject.type_register(ModelElementItem)
 diacanvas.set_callbacks(ModelElementItem)

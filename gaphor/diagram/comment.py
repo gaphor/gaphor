@@ -112,12 +112,12 @@ class CommentItem(ModelElementItem):
 	else:
 	    return -1
 
-    def on_subject_update(self, name):
+    def on_subject_update(self, name, old_value, new_value):
 	if name == 'body':
 	    self.__body.set(text=self.subject.body)
 	    self.__body_update()
 	else:
-	    ModelElementItem.on_subject_update(self, name)
+	    ModelElementItem.on_subject_update(self, name, old_value, new_value)
 
     def on_text_changed(self, text):
 	self.__body_update()

@@ -29,6 +29,17 @@ class DiagramItemFactory(Singleton):
 		obj.set_property('subject', subject)
 	return obj
 
+    def set_next_id(self, id):
+	"""
+	set_next_id() sets the id to use for the next canvas item that will
+	be created.
+	"""
+	if id > self.__index:
+	    self.__index = id
+
+    def flush(self):
+	self.__index = 1
+
     def register(self, item_class, uml_class):
 	gobject.type_register(item_class)
 	DiagramItemFactory.__diagram2uml[item_class] = uml_class

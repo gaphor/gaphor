@@ -52,6 +52,11 @@ class UseCaseItem(ModelElementItem):
 	self.__border.request_update()
 	self.__name.update_now()
 
+    def on_handle_motion (self, handle, wx, wy, mask):
+	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
+	self.__name_update()
+	return retval
+
     def on_get_shape_iter(self):
 	return self.__border
 
@@ -60,15 +65,6 @@ class UseCaseItem(ModelElementItem):
 
     def on_shape_value(self, iter):
 	return iter
-
-#    def on_move(self, x, y):
-#	self.__name.request_update()
-#	ModelElementItem.on_move(self, x, y)
-
-#    def on_handle_motion (self, handle, wx, wy, mask):
-#	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
-#	self.__name_update()
-#	return retval
 
     # Groupable
 
@@ -104,12 +100,12 @@ class UseCaseItem(ModelElementItem):
 	else:
 	    return -1
 
-    def on_subject_update(self, name):
+    def on_subject_update(self, name, old_value, new_value):
 	if name == 'name':
 	    self.__name.set(text=self.subject.name)
 	    self.__name_update()
 	else:
-	    ModelElementItem.on_subject_update(self, name)
+	    ModelElementItem.on_subject_update(self, name, old_value, new_value)
 
     def on_text_changed(self, text):
 	if text != self.subject.name:

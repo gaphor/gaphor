@@ -14,3 +14,33 @@ We also need some sort of Sequence object (a 'list-deluxe') that will allow us
 to add and remove elements from the list. We can use the List object for that,
 but we should check the object that is added to the list for its type. 
 
+
+Signals
+~~~~~~~
+UML elements should emit signals if their state changes. This can be done
+by means of the misc.signal.Signal class. All what's left is to define a
+protocol (the arguments that the UML element supplies).
+
+The following cases can occur:
+1. Unidirectional relationships or attributes:
+   a. Set data
+   b. Set data and overwrite old data
+   c. Remove the attribute
+2. Bidirectional relationships
+   a. multiplicity of '1'
+   b. multiplicity of '*'
+
+For non-sequence attributes we can do something like this
+
+	def signal_handler(attribute_name, old_value, new_value, *custom_args):
+	    pass
+
+where old_value and new_value is None (or the default value) in case no value
+was set before.
+
+For sequences we can only add and remove values. We can do this with the
+same amount of attributes, only old_value will be one of 'add' or 'remove' and
+new_value will contain the value that is added or removed.
+
+
+

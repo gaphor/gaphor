@@ -173,13 +173,12 @@ class ActorItem(ModelElementItem):
 	else:
 	    return -1
 
-    def on_subject_update(self, name):
+    def on_subject_update(self, name, old_value, new_value):
 	if name == 'name':
 	    self.__name.set(text=self.subject.name)
 	    self.__name_update()
 	else:
-	    ModelElementItem.on_subject_update(self, name)
-
+	    ModelElementItem.on_subject_update(self, name, old_value, new_value)
     def on_text_changed(self, text):
 	if text != self.subject.name:
 	    self.subject.name = text
