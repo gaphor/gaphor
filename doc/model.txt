@@ -1,0 +1,16 @@
+UML Model
+~~~~~~~~~
+
+The UML model that should hold all information. It would be nice if the model
+looks like the UML MetaModel. In order to keep the model consistent a lot of
+bi-directional relations have to be made. Those relations have a multiplicity
+of '0..1', '1', '1..*' or '*'. For simplicity we reduce this to '1' and '*'.
+
+For the objects that have a multiplicity of 1 we can simply assign a
+value to the attribute. If a new value is assigned to the value we can simply
+replace it.
+
+We also need some sort of Sequence object (a 'list-deluxe') that will allow us
+to add and remove elements from the list. We can use the List object for that,
+but we should check the object that is added to the list for its type. 
+

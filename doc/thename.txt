@@ -1,0 +1,3 @@
+Gaphor is the name of this application. It's name is based on the word
+"gnome", which translates to Dutch as "kabouter" (goblin, elf) and
+"zinspreuk" (motto, device, aphorism). "Aphorism" 

@@ -1,0 +1,69 @@
+GModeler Plan
+-------------
+
+GModeler is different from other modeling engines in that it is created
+as Free Software, with extensibility in mind. GModeler is also different in
+that it produced nice diagrams.
+
+The motto is: What you see is what you have. All information should be in
+the diagrams.
+
+To come up with a real modeling evironment a lot of things have to
+be done:
+- Make the UML model editable through a tree-view and the diagrams.
+- Store and load projects
+
+What we have:
+- A generated UML meta-model (UML module).
+
+What we need:
+- A Tree view
+- A Diagram editing facility
+- Property dialogs
+- Save/Load functionality
+- Extension points (e.g. for code generation)
+
+Tree view
+---------
+I think it's nice to have a MetaModel browser first. At this point a browser
+is available, but it outputs text. To get comfortable with the GtkTreeModel
+interface it would be a nice exercise to browse the meta-model through a
+graphical interface.
+
+Diagrams
+--------
+We need to create diagram objects for the representation of elements. It would
+be easiest (aand fastest) to create those in C. We can create a small python
+interface on top of it. My guess is that this won't be very hard, just a lot
+of work.
+
+Property dialogs
+-----------------
+Maybe we can use something similar to the property editor in one of the GTK+
+demos (also available in the DiaCanvas2 demo).
+It would be nice if we can generate property dialogs based on the information
+of the MetaModel (UML module).
+
+Save and load
+-------------
+The pure Python objects could be saved by the Pickle module. It would be nicer
+however, to store the information as XMI file.
+
+We also need some way to save the diagrams. I think it will be easiest to
+let the diagrams store themselves as XML data also. This way we can embed
+diagram information in the XML file.
+
+Extension points
+----------------
+That's why we use Python... It should be easy...
+
+So the plan will be:
+- Create a Tree view of the Meta model
+- Create a tree view of some live data
+- Some elements to visualize (first Use Cases)
+- Create new use cases on the canvas and on the tree view
+- DND support between the tree view and the Diagram
+- Load and save functionality (maybe a full blown XMI parser)
+
+Oh, and find a nice name for this project...
+
