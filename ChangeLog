@@ -1,3 +1,11 @@
+2004-09-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainactions.py: Removed multithread stuff.
+	* gaphor/misc/gidlethread.py: new file. A speudo-thread implementation
+	based on the GObject main loop.
+	* gaphor/storage.py, gaphor/parser.py: rewrote the load and save
+	functions to generators, to be used by the GIdleThread.
+
 2004-09-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* setup.py: always do config check before build
