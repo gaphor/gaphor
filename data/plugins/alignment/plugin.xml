@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<plugin name="Alignment"
+        version="0.1"
+        author="Jeroen Vloothuis">
+  <description>
+        This plugin extends Gaphor with XMI alignment actions.
+  </description>
+
+  <require>
+    <!--
+      Define modules and plugins that are needed for this plugin to function
+      properly.
+    - ->
+    <module name="xml.sax.saxutils.XMLGenerator"/>
+    -->
+  </require>
+
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+    <action id="AlignHorizontal"
+            label="Align horizontal"
+            tooltip="Align diagram elements horizontally"
+            class="AlignHorizontal" slot="DiagramSlot"/>
+    <action id="AlignVertical"
+            label="Align vertical"
+            tooltip="Align diagram elements vertically"
+            class="AlignVertical" slot="DiagramSlot"/>
+  </provide>
+</plugin>

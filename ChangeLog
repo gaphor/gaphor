@@ -1,9 +1,14 @@
+2004-11-07  Jeroen Vloothuis  <jeroen@vloothuis.net>
+        * data/plugins/alignment: Added a plugin for adjusting the
+        alignment of diagram items. Currentyl does horizontal and
+        vertical alignment.
+
 2004-11-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/diagramactions.py: Made a start if simple copy/paste
 	functionality.
 
-2004-11-04  Jeroen Vloothuis <jeroen@vloothuis.net>
+2004-11-04  Jeroen Vloothuis  <jeroen@vloothuis.net>
         * gaphor/ui/diagramactions.py: Implemented a confirmation dialog for
         the delete action.
 
