@@ -1,1 +1,17 @@
-New and improved interface
+
+0.5.0
+-----
+- Support for Stereotypes
+- Support for UseCases
+- Plugins
+- Packages can be reordered
+- Interfaces
+
+0.4.0
+-----
+- Support for Actions
+- Support for Components
+
+0.3.0
+-----
+- New and improved interface

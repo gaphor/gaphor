@@ -415,6 +415,35 @@ class CreateDiagramAction(Action):
 register_action(CreateDiagramAction, 'SelectRow')
 
 
+class DeleteDiagramAction(Action):
+    id = 'DeleteDiagram'
+    label = '_Delete diagram'
+    stock_id = 'gtk-delete'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        element = self._window.get_tree_view().get_selected_element()
+        self.sensitive = isinstance(element, UML.Diagram)
+
+    def execute(self):
+        diagram = self._window.get_tree_view().get_selected_element()
+        assert isinstance(diagram, UML.Diagram)
+        m = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_QUESTION,
+                              gtk.BUTTONS_YES_NO,
+                              'Do you really want to delete diagram %s?\n\n'
+                              'This will possibly delete diagram items\n'
+                              'that are not shown in other diagrams.\n'
+                              'This operation is not undoable!' \
+                              % (diagram.name or '<None>'))
+        if (m.run() == gtk.RESPONSE_YES):
+            diagram.unlink()
+        m.destroy()
+
+register_action(DeleteDiagramAction, 'SelectRow')
+
+
 class OpenElementAction(Action):
     id = 'OpenModelElement'
     label = '_Open'

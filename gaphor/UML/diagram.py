@@ -101,22 +101,14 @@ class Diagram(Namespace, PackageableElement):
 
     def unlink(self):
 	self.canvas.set_property('allow_undo', False)
-	self.canvas.clear_undo()
-	self.canvas.clear_redo()
-	def dispose(item):
-	    try:
-		for i in item.groupable_iter():
-		    dispose(i)
-	    except AttributeError:
-		pass
+	# Make sure all canvas items are unlinked
+	for item in self.canvas.select():
 	    try:
 		item.unlink()
 	    except:
 		pass
-	    # Clear all references on a C-level
-	    item.dispose()
 
-	#for i in self.canvas.root.children:
-	#    dispose(i)
+	self.canvas.clear_undo()
+	self.canvas.clear_redo()
 
 	Namespace.unlink(self)

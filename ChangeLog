@@ -1,3 +1,7 @@
+2004-07-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainactions.py: Added DeleteDiagram action.
+
 2004-07-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/dependency.py: Added a new property auto_dependency,

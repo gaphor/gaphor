@@ -54,6 +54,7 @@ class MainWindow(AbstractWindow):
                 'ShowGrid',
                 'separator',
                 'CreateDiagram',
+                'DeleteDiagram',
                 '<DiagramSlot>'),
             '_Window', (
                 'OpenEditorWindow',
@@ -111,6 +112,7 @@ class MainWindow(AbstractWindow):
                 'OpenModelElement',
                 'separator',
                 'CreateDiagram',
+                'DeleteDiagram',
                 'separator',
                 'RefreshNamespaceModel',
                 '<NamespacePopupSlot>')
