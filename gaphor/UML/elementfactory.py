@@ -1,18 +1,19 @@
 # vim: sw=4
-'''management.py
-This module contains some functions for managing UML models. This
-includes saving, loading and flushing models. In the future things like
-consistency checking should also be included.'''
+'''elementfactory.py
+'''
 
 #import misc.singleton as Singleton
 from gaphor.misc.signal import Signal as _Signal
 import gaphor.misc.uniqueid as uniqueid
 import weakref, gc
 from element import Element
+from modelelements import Model
 from diagram import Diagram
 
 class ElementFactory(object):
-
+    '''The ElementFactory is used to create elements ans do lookups to
+    elements. A model can contain only one Model element, though.
+    '''
     def __element_signal (self, key, old_value, new_value, obj):
 	element = obj()
 	if not element:
@@ -21,47 +22,48 @@ class ElementFactory(object):
 	    log.debug('Unlinking element: %s' % element)
 	    del self.__elements[element.id]
 	    self.__emit_remove (element)
+	    if isinstance (element, Model):
+		self.__model = None
 	elif key == '__relink__' and not self.__elements.has_key(element.id):
 	    log.debug('Relinking element: %s' % element)
 	    self.__elements[element.id] = element
+	    if isinstance (element, Model):
+		self.__model = element
 	    self.__emit_create (element)
 
     def __init__ (self):
 	self.__elements = { }
 	self.__signal = _Signal()
+	self.__model = None
 
     def create (self, type):
+	'''Create a new Model element of type type'''
 	return self.create_as(type, uniqueid.generate_id())
-        #obj = type(self.__index)
-	#self.__elements[self.__index] = obj
-	#self.__index += 1
-	#obj.connect (self.__element_signal, weakref.ref(obj))
-	#self.__emit_create (obj)
-	#print 'ElementFactory:', str(self.__index), 'elements in the factory'
-	#return obj
 
     def create_as (self, type, id):
 	'''Create a new model element of type 'type' with 'id' as its ID.
 	This method should only be used when loading models. If the ID is
 	higher that the current id that should be used for the next item, the
 	ID for the next item is set to id + 1.'''
+	assert issubclass(type, Element)
+	if type is Model and self.__model:
+	    raise ValueError, 'Trying to create a Model element, while there already is a model'
         obj = type(id)
 	self.__elements[id] = obj
 	obj.connect (self.__element_signal, weakref.ref(obj))
+	if type is Model:
+	    self.__model = obj
 	self.__emit_create (obj)
 	return obj
-	#old_index = self.__index
-	#self.__index = id
-	#obj = self.create (type)
-	#if old_index > self.__index:
-	#    self.__index = old_index
-	#return obj
 
     def lookup (self, id):
 	try:
 	    return self.__elements[id]
 	except KeyError:
 	    return None
+
+    def get_model(self):
+	return self.__model
 
     def keys (self):
         return self.__elements.keys()

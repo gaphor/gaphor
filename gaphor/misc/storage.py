@@ -202,8 +202,14 @@ def _load (doc, factory):
 	load_node(node, element)
 
     # Postprocess the element, give them a chance to clean up etc.
+    diagrams = []
     for node in rootnode.childNodes:
 	element = factory.lookup (node.getAttribute(ID))
+	element.postload()
+	if isinstance (element, UML.Diagram):
+	    diagrams.append((node, element))
+
+    for node, element in diagrams:
 	postload_node(node, element)
 
 def load (filename):

@@ -51,7 +51,7 @@ class DiagramView(CanvasView):
 	    import gaphor.diagram as diagram
 	    print 'drag_data_received:', data.data, info
 	    elemfact = GaphorResource('ElementFactory')
-	    element = elemfact.lookup(int(data.data))
+	    element = elemfact.lookup(data.data)
 	    assert element
 	    if isinstance(element, UML.Actor):
 		item = self.create (diagram.ActorItem)

@@ -21,20 +21,15 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def __init__(self, factory):
 	if not isinstance (factory, UML.ElementFactory):
-	    raise AttributeError
-
-	self.model = None
-	for e in factory.values():
-	    if isinstance(e, UML.Model):
-		self.model = e
-		break
-	#self.model = factory.lookup(1);
+	    raise AttributeError, 'factory should be a gaphor.UML.ElementFactory'
 	# Init parent:
 	gtk.GenericTreeModel.__init__(self)
 	# We own the references to the iterators.
 	self.set_property ('leak_references', 0)
 
 	factory.connect (self.__factory_signals, factory)
+
+	self.model = factory.get_model()
 
 	# Set signals to all Namespace objects in the factory:
 	for element in factory.values():
