@@ -10,6 +10,7 @@ from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 
 from klass import ClassItem
 from nameditem import NamedItem
+from association import AssociationEnd
 
 class NoFocusItemError(gaphor.GaphorError):
     pass
@@ -26,6 +27,17 @@ def get_parent_focus_item(window):
 		item = item.parent
 	    return item
     raise NoFocusItemError, 'No item has focus.'
+
+class ItemNewSubjectAction(Action):
+    id = 'ItemNewSubject'
+
+    def init(self, window):
+	self._window = window
+
+    def execute(self):
+	self._window.execute_action('ItemFocus')
+
+register_action(ItemNewSubjectAction)
 
 class ItemRenameAction(Action):
     id = 'ItemRename'
@@ -50,8 +62,49 @@ class ItemRenameAction(Action):
 
 register_action(ItemRenameAction, 'ItemFocus')
 
+
+class EditItemAction(Action):
+    id = 'EditItem'
+    label = 'Edit'
+    tooltip='Edit'
+
+    def init(self, window):
+        self._window = window
+
+    def execute(self):
+        item = self._window.get_current_diagram_view().focus_item.item
+        #assert isinstance(subject, (UML.Property, UML.Operation))
+        item.edit()
+
+register_action(EditItemAction, 'ItemFocus')
+
+
+class AbstractClassAction(CheckAction):
+    id = 'AbstractClass'
+    label = 'Abstract class'
+    tooltip='Abstract class'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+	try:
+	    item = get_parent_focus_item(self._window)
+	except NoFocusItemError:
+	    pass
+	else:
+	    if isinstance(item, ClassItem):
+		self.active = item.subject and item.subject.isAbstract
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        item.subject.isAbstract = self.active
+
+register_action(AbstractClassAction, 'ItemFocus')
+
+
 # NOTE: attributes and operations can now only be created on classes,
-#       actors and uuse-cases are also classifiers, but we can't add 
+#       actors and use-cases are also classifiers, but we can't add 
 #       attrs and opers via the UI right now.
 
 class CreateAttributeAction(Action):
@@ -110,22 +163,6 @@ class CreateOperationAction(Action):
 	# TODO: Select this item for editing
 
 register_action(CreateOperationAction, 'ShowOperations', 'ItemFocus')
-
-
-class EditItemAction(Action):
-    id = 'EditItem'
-    label = 'Edit'
-    tooltip='Edit'
-
-    def init(self, window):
-        self._window = window
-
-    def execute(self):
-        item = self._window.get_current_diagram_view().focus_item.item
-        #assert isinstance(subject, (UML.Property, UML.Operation))
-        item.edit()
-
-register_action(EditItemAction, 'ItemFocus')
 
 
 class DeleteFeatureAction(Action):
@@ -417,3 +454,53 @@ class TailCompositeAction(AggregationAction):
     aggregation = 'composite'
 
 register_action(TailCompositeAction, 'ItemFocus')
+
+
+class AssociationEndRenameNameAction(Action):
+    id = 'AssociationEndRenameName'
+    label = '_Rename'
+    tooltip = 'Rename selected item'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+	view = self._window.get_current_diagram_view()
+	fi = view.focus_item
+	if not fi:
+	    self.sensitive = False
+	else:
+	    if isinstance(fi.item, AssociationEnd):
+		self.sensitive = True
+
+    def execute(self):
+        item = self._window.get_current_diagram_view().focus_item.item
+	if item.subject:
+	    item.edit_name()
+
+register_action(AssociationEndRenameNameAction, 'ItemFocus')
+
+
+class AssociationEndRenameMultAction(Action):
+    id = 'AssociationEndRenameMult'
+    label = '_Rename'
+    tooltip = 'Rename selected item'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+	view = self._window.get_current_diagram_view()
+	fi = view.focus_item
+	if not fi:
+	    self.sensitive = False
+	else:
+	    if isinstance(fi.item, AssociationEnd):
+		self.sensitive = True
+
+    def execute(self):
+        item = self._window.get_current_diagram_view().focus_item.item
+	if item.subject:
+	    item.edit_mult()
+
+register_action(AssociationEndRenameMultAction, 'ItemFocus')

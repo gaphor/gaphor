@@ -5,6 +5,7 @@ import gtk
 from gtk.gdk import CONTROL_MASK, SHIFT_MASK
 from gtk.gdk import BUTTON_PRESS, _2BUTTON_PRESS, BUTTON_PRESS_MASK
 import diacanvas
+from nameditem import NamedItem
 from association import AssociationEnd
 
 SHIFT_CONTROL_MASK = CONTROL_MASK | SHIFT_MASK
@@ -16,12 +17,16 @@ class ItemTool(diacanvas.view.Tool):
         'motion_notify_event': 'override'
     }
 
-    def __init__(self):
+    def __init__(self, action_pool):
         """item_factory is a callable. It is used to create a CanvasItem
         that is displayed on the diagram.
         """
         self.__gobject_init__()
         self.grabbed_item = None
+        self.action_pool = action_pool
+
+    def execute_action(self, action_id):
+        self.action_pool.execute(action_id)
 
     def do_button_press_event(self, view, event):
         view_item = view.get_item_at(event.x, event.y)
@@ -34,15 +39,16 @@ class ItemTool(diacanvas.view.Tool):
             return False
 
         # Select the item. Doesn't matter which mouse button was pressed.
-        if event.state & CONTROL_MASK and view_itemm.is_selected():
+        if event.state & CONTROL_MASK and view_item.is_selected():
             view.unselect(view_item)
-            view.focus(None)
+            #view.focus(None)
             item.request_update()
             return True
         else:
             if not event.state & SHIFT_CONTROL_MASK and \
-               not view_item.is_selected:
-                view.unselect_all()
+               not view_item.is_selected():
+                #view.unselect_all()
+                self.execute_action('EditDeselectAll')
             view.focus(view_item)
 
         if event.type == BUTTON_PRESS:
@@ -55,14 +61,16 @@ class ItemTool(diacanvas.view.Tool):
         elif event.type == _2BUTTON_PRESS:
             # On double clicks, the item is normally edited.
             # TODO: invoke Actions here
-            if hasattr(item, 'edit'):
-                item.edit()
+            if isinstance(item, NamedItem):
+                self.execute_action('ItemRename')
             elif isinstance(item, AssociationEnd):
                 x, y = view_item.w2i(event.x, event.y)
                 if item.point_name(x, y) < item.point_mult(x, y):
-                    item.edit_name()
+                    #item.edit_name()
+                    self.execute_action('AssociationEndRenameName')
                 else:
-                    item.edit_mult()
+                    self.execute_action('AssociationEndRenameMult')
+                    #item.edit_mult()
         return True
 
     def do_button_release_event(self, view, event):

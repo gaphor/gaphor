@@ -1,8 +1,16 @@
 2004-04-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/placementtool.py: use new PlacementTool from
-	diacanvas (CVS)
+	diacanvas (CVS).
 	* gaphor/diagram/itemtool.py: New file. Handles items the *new* way.
+	* gaphor/diagram/klass.py: Added isAbstract handling.
+	* gaphor/diagram/itemactions.py: added action for isAbstract.
+	* gaphor/diagram/association.py: small updates.
+	* gaphor/diagram/diagramitem.py: emit action on the main window
+	if a subject is (un)set.
+	* gaphor/__init__.py: Now a new diagram is created on startup
+	* gaphor/ui/mainactions.py: Open the "main" diagram when creating
+	a new model.
 
 2004-04-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

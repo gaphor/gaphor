@@ -99,8 +99,8 @@ class UndoAction(Action):
 	self.sensitive = diagram_tab and diagram_tab.get_canvas().get_undo_depth() > 0
 
     def execute(self):
-	log.debug('UndoCommand')
 	self._window.get_current_diagram_view().canvas.pop_undo()
+	self.update()
 
 register_action(UndoAction, 'EditUndoStack')
 
@@ -119,6 +119,7 @@ class RedoAction(Action):
 
     def execute(self):
 	self._window.get_current_diagram_view().canvas.pop_redo()
+	self.update()
 
 register_action(RedoAction, 'EditUndoStack')
 
@@ -144,6 +145,7 @@ class SelectAction(Action):
 
 register_action(SelectAction)
 
+
 class FocusAction(Action):
     """Dummy action that is "called" when the selected items on the canvas
     change.
@@ -154,6 +156,7 @@ class FocusAction(Action):
 	pass
 
 register_action(FocusAction)
+
 
 class SelectAllAction(Action):
     id = 'EditSelectAll'
@@ -171,6 +174,7 @@ class SelectAllAction(Action):
 	self._window.get_current_diagram_view().select_all()
 
 register_action(SelectAllAction)
+
 
 class DeselectAllAction(Action):
     id = 'EditDeselectAll'

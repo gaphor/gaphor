@@ -512,31 +512,12 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         drp = diacanvas.geometry.distance_rectangle_point
         d1 = drp(self._name_bounds, p)
         d2 = drp(self._mult_bounds, p)
-        print 'AssociationEnd:', d1, d2
         return min(d1, d2)
-
-    def on_event(self, event):
-        if event.type == diacanvas.EVENT_2BUTTON_PRESS and event.button == 1:
-            log.info('Edit Association ends')
-            x, y = self.affine_point_w2i (event.x, event.y)
-            nb = self._name_bounds
-            mb = self._mult_bounds
-            if nb[0] < x < nb[2] and nb[1] < y < nb[3]:
-                #log.info('Edit Association ends name')
-                self.edit_name()
-            elif mb[0] < x < mb[2] and mb[1] < y < mb[3]:
-                #log.info('Edit Association ends mult')
-                self.edit_mult()
-            else:
-                log.info('Edit Association ends nothing %d, %d, %s, %s' % (x, y, nb, mb))
-            return True
-        else:
-            return diacanvas.CanvasItem.on_event(self, event)
 
     def on_shape_iter(self):
         yield self._name
         yield self._mult
-        if self.is_selected():
+        if self.is_selected() and self.subject:
             yield self._name_border
             yield self._mult_border
 
@@ -550,11 +531,6 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 
     def on_editable_start_editing(self, shape):
         pass
-#        if shape == self._name:
-#            log.info('editing name')
-#        elif shape == self._mult:
-#            log.info('editing mult')
-        #self.preserve_property('name')
 
     def on_editable_editing_done(self, shape, new_text):
         if shape in (self._name, self._mult):

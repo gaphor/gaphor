@@ -55,6 +55,9 @@ class AbstractWindow(object):
         self._check_state(AbstractWindow.STATE_ACTIVE)
         return self.window
 
+    def get_action_pool(self):
+        return self.action_pool
+
     def get_state(self):
         return self.__state
 

@@ -6,6 +6,7 @@ Such as a modifier 'subject' property and a unique id.
 import gobject
 from diacanvas import CanvasItem
 
+from gaphor import resource
 import gaphor.misc.uniqueid as uniqueid
 from gaphor.UML import Element, Presentation
 from gaphor.UML.properties import association
@@ -292,7 +293,6 @@ class DiagramItem(Presentation):
         subject_connect_helper = self._subject_connect_helper
         subject_disconnect_helper = self._subject_disconnect_helper
 
-        # TODO: Queue signal emissions. 
         if old_subject:
             for n in notifiers:
                 #self._subject_disconnect(self.__the_subject, n)
@@ -304,7 +304,13 @@ class DiagramItem(Presentation):
                 #log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
                 #self._subject_connect(self.subject, n)
                 subject_connect_helper(subject, callback_prefix, n)
-
+        # Execute some sort of ItemNewSubject action
+        try:
+            main_window = resource('MainWindow')
+        except KeyError:
+            pass
+        else:
+            main_window.execute_action('ItemNewSubject')
         self.request_update()
 
     # DiaCanvasItem callbacks
@@ -351,6 +357,7 @@ class DiagramItem(Presentation):
             ret = parent_class.on_disconnect_handle (self, handle)
             if ret != 0:
                 handle.owner.confirm_disconnect_handle(handle, self)
+                # TODO: call ConnectAction
                 return ret
         #else:
             #print self.__class__.__name__, 'Disconnecting NOT allowed.'

@@ -6,7 +6,6 @@ import gtk
 from diacanvas import CanvasView
 import gaphor
 from gaphor.diagram import get_diagram_item
-from gaphor.diagram.itemtool import ItemTool
 
 class DiagramView(CanvasView):
     TARGET_STRING = 0
@@ -25,8 +24,6 @@ class DiagramView(CanvasView):
 	else:
 	    canvas = None
 	CanvasView.__init__(self, canvas)
-	item_tool = ItemTool()
-	self.get_default_tool().set_item_tool(item_tool)
 	self.diagram = diagram
 	# Drop
 	self.drag_dest_set (gtk.DEST_DEFAULT_ALL, DiagramView.DND_TARGETS,

@@ -4,6 +4,7 @@
 import gtk
 from diagramview import DiagramView
 from abstractwindow import AbstractWindow
+from gaphor.diagram.itemtool import ItemTool
 
 class DiagramTab(object):
     
@@ -35,7 +36,7 @@ class DiagramTab(object):
             self.__on_diagram_undo(diagram.canvas)
 
     def construct(self):
-        title = self.diagram and self.diagram.name or 'NoName'
+        title = self.diagram and self.diagram.name or '<None>'
 
         table = gtk.Table(2,2, gtk.FALSE)
         table.set_row_spacings (4)
@@ -66,6 +67,9 @@ class DiagramTab(object):
         view.connect('select_item', self.__on_view_select_item)
         view.connect('unselect_item', self.__on_view_select_item)
         self.view = view
+
+	item_tool = ItemTool(self.owning_window.get_action_pool())
+	view.get_default_tool().set_item_tool(item_tool)
 
         table.show_all()
 

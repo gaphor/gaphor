@@ -41,7 +41,12 @@ class NewAction(Action):
 	self._window.set_filename(None)
 	self._window.set_message('Created a new model')
 	factory.notify_model()
+	# Expand the first row:
 	self._window.get_tree_view().expand_row(self._window.get_model().path_from_element(model), False)
+	# Select the diagram, so it can be opened by the OpenModelElement action
+	selection = self._window.get_tree_view().get_selection()
+	selection.select_path((0,0))
+	self._window.execute_action('OpenModelElement')
 
 register_action(NewAction)
 

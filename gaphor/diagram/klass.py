@@ -64,7 +64,6 @@ class Compartment(list):
 
 
 class ClassItem(NamedItem, diacanvas.CanvasGroupable):
-#class ClassItem(NamedItem):
     """This item visualizes a Class instance.
 
     A ClassItem contains two compartments (Compartment): one for
@@ -86,7 +85,11 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     COMP_MARGIN_X=5
     COMP_MARGIN_Y=5
 
+    FONT_ABSTRACT='sans bold italic 10'
+
     popup_menu = NamedItem.popup_menu + (
+        'separator',
+        'AbstractClass',
         'separator',
         'CreateAttribute',
         'CreateOperation',
@@ -114,6 +117,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     def postload(self):
         NamedItem.postload(self)
         self.sync_compartments()
+        self.on_subject_notify__isAbstract(self.subject)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'show-attributes':
@@ -180,10 +184,11 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
     def on_subject_notify(self, pspec, notifiers=()):
         #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation'))
+        NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation', 'isAbstract'))
         # Create already existing attributes and operations:
         if self.subject:
             self.sync_compartments()
+            self.on_subject_notify__isAbstract(self.subject)
         self.request_update()
 
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
@@ -200,6 +205,13 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         #log.debug('on_subject_notify__ownedOperation')
         self.sync_features(subject.ownedOperation, self._operations,
                                  self._create_operation)
+
+    def on_subject_notify__isAbstract(self, subject, pspec=None):
+        subject = self.subject
+        if subject.isAbstract:
+            self._name.set_font_description(pango.FontDescription(self.FONT_ABSTRACT))
+        else:
+            self._name.set_font_description(pango.FontDescription(self.FONT))
 
     def on_update(self, affine):
         """Overrides update callback.
