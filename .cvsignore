@@ -26,3 +26,10 @@ intl
 ABOUT-NLS
 COPYING
 .lclintrc
+mkChangeLog.stamp
+ignore-too
+mkChangeLog
+py-compile
+stamp-h1
+depcomp
+

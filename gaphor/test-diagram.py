@@ -68,6 +68,9 @@ win.connect ('destroy', mainquit)
 del win
 print "diagram displayed"
 
+for k in UML.Element._hash.keys():
+    print "Element", k, ":", UML.Element._hash[k]().__dict__
+
 gtk.main()
 
 #print "Comment.ann.Elem.:", comment.annotatedElement.list
@@ -79,6 +82,7 @@ print "UseCase.presentation:", usecase.presentation.list
 print "removing diagram..."
 del dia
 gc.collect()
+UML.Element_hash_gc()
 print "Comment.presentation:", comment.presentation.list
 print "Actor.presentation:", actor.presentation.list
 print "UseCase.presentation:", usecase.presentation.list

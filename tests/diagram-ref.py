@@ -29,6 +29,22 @@ print_hash()
 assert (cnt == 2)
 
 print "Deleting created items:"
+del item
+del dia
+print_hash()
+assert (cnt == 0)
+
+print "Creating diagram:"
+dia = diagram.Diagram()
+print_hash()
+assert (cnt == 1)
+
+print "Creating item:"
+item = dia.create_item (diagram.Actor)
+print_hash()
+assert (cnt == 2)
+
+print "Deleting created items:"
 del dia
 del item
 print_hash()

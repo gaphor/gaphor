@@ -2,4 +2,4 @@ Makefile
 Makefile.in
 *.pyc
 *.pyo
-ModelElement.py
+ModelElements.py
