@@ -180,10 +180,9 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
         """This method is called by a canvas item if the user tries to connect
         this object's handle. allow_connect_handle() checks if the line is
         allowed to be connected. In this case that means that one end of the
-        line should be connected to a Class or Actor.
+        line should be connected to a Classifier.
         Returns: TRUE if connection is allowed, FALSE otherwise.
         """
-        # TODO: Should allow to connect to Class and Actor.
         #log.debug('AssociationItem.allow_connect_handle')
         if isinstance(connecting_to.subject, UML.Classifier):
             return True
