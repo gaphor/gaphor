@@ -4,13 +4,13 @@
 This module is initialized from gaphor.ui.diagramwindow
 """
 import diacanvas
-import gaphor
-import gaphor.UML as UML
-import gaphor.diagram as diagram
+
+from gaphor import resource
+from gaphor import UML
+from gaphor import diagram
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
-from gaphor import resource
 
 def register_action(action, *args):
     _register_action(action, *args)
@@ -86,7 +86,7 @@ class PlacementAction(RadioAction):
         """Create a new instance of the item and return it."""
         item = self._window.get_current_diagram().create(self.type)
         if self.subject_type:
-            subject = gaphor.resource('ElementFactory').create(self.subject_type)
+            subject = resource(UML.ElementFactory).create(self.subject_type)
             try:
                 #print 'set subject'
                 #item.set_property('subject', subject)
@@ -192,7 +192,7 @@ class InterfacePlacementTool(diacanvas.PlacementTool):
         self.handle_tool = diacanvas.view.HandleTool()
 
     def do_button_press_event(self, view, event):
-        factory = gaphor.resource('ElementFactory')
+        factory = resource(UML.ElementFactory)
         diag = self._window.get_current_diagram()
         iface = factory.create(UML.Interface)
         iface.package = diag.namespace

@@ -19,11 +19,13 @@ import types
 import sys
 import os.path
 import gc
-import UML
-import parser
-import diagram
+
 import diacanvas
-import gaphor
+
+from gaphor import UML
+from gaphor import parser
+from gaphor import diagram
+from gaphor import resource
 from gaphor.i18n import _
 #from gaphor.misc.xmlwriter import XMLWriter
 
@@ -123,11 +125,11 @@ def save_generator(writer=None, factory=None):
             save_value(name, value)
 
     if not factory:
-        factory = gaphor.resource(UML.ElementFactory)
+        factory = resource(UML.ElementFactory)
 
     writer.startDocument()
     writer.startElement('gaphor', { 'version': FILE_FORMAT_VERSION,
-                                    'gaphor-version': gaphor.resource('Version') })
+                                    'gaphor-version': resource('Version') })
 
     size = factory.size()
     n = 0
@@ -285,7 +287,7 @@ def load_generator(filename, factory=None):
 
     try:
         if not factory:
-            factory = gaphor.resource(UML.ElementFactory)
+            factory = resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
         for percentage in load_elements_generator(elements, factory, gaphor_version):

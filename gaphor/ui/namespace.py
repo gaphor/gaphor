@@ -8,7 +8,7 @@ import gobject
 import gtk
 import stock
 
-import gaphor.UML as UML
+from gaphor import UML
 from gaphor import resource
 from gaphor.undomanager import get_undo_manager
 import operator

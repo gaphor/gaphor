@@ -6,14 +6,14 @@ Main window actions.
 import sys
 import gobject
 import gtk
-import gaphor.UML as UML
-import gaphor.diagram as diagram
-import gaphor.undomanager as undomanager
 import gc
 import traceback
 from threading import Thread
 
-import gaphor
+from gaphor import resource
+from gaphor import UML
+from gaphor import diagram
+from gaphor import undomanager
 #from gaphor.undomanager import UndoTransactionAspect, weave_method
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
@@ -77,7 +77,7 @@ class NewAction(Action):
         self._window = window
 
     def execute(self):
-        factory = gaphor.resource(UML.ElementFactory)
+        factory = resource(UML.ElementFactory)
         if factory.size():
             dialog = gtk.MessageDialog(self._window.get_window(),
                 gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -88,7 +88,6 @@ class NewAction(Action):
             if answer != gtk.RESPONSE_YES:
                 return
 
-        factory = gaphor.resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
         model = factory.create(UML.Package)
@@ -123,7 +122,7 @@ class RevertAction(Action):
 
         action_states = self._window.action_pool.get_action_states()
         try:
-            import gaphor.storage as storage
+            from gaphor import storage
             log.debug('Loading from: %s' % filename)
             queue = Queue()
             win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, self._window.get_window(), queue)
@@ -204,14 +203,14 @@ class SaveAsAction(Action):
 
     def init(self, window):
         self._window = window
-        self.factory = gaphor.resource('ElementFactory')
+        self.factory = resource(UML.ElementFactory)
         #self.factory.connect(self.on_element_factory)
         #self.on_element_factory(self)
         # Disconnect when the window is closed:
         #window.connect(self.on_window_closed)
 
     def on_element_factory(self, *args):
-        #factory = gaphor.resource('ElementFactory')
+        #factory = resource(UML.ElementFactory)
         if self.factory.values():
             self.sensitive = True
         else:
@@ -223,7 +222,7 @@ class SaveAsAction(Action):
 
     def save(self, filename):
         if filename and len(filename) > 0:
-            import gaphor.storage as storage
+            from gaphor import storage
             if not filename.endswith(DEFAULT_EXT):
                 filename = filename + DEFAULT_EXT
 
@@ -383,8 +382,8 @@ class AboutAction(Action):
         self._window = window
 
     def execute(self):
-        logo = gtk.gdk.pixbuf_new_from_file (gaphor.resource('DataDir') + '/pixmaps/logo.png')
-        version = gaphor.resource('Version')
+        logo = gtk.gdk.pixbuf_new_from_file (resource('DataDir') + '/pixmaps/logo.png')
+        version = resource('Version')
         about = gtk.Dialog("About Gaphor", self._window.get_window(), gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
         about.set_default_response(gtk.RESPONSE_OK)
         vbox = about.vbox
@@ -454,7 +453,7 @@ class CreateDiagramAction(Action):
 
     def execute(self):
         element = self._window.get_tree_view().get_selected_element()
-        diagram = gaphor.resource('ElementFactory').create(UML.Diagram)
+        diagram = resource(UML.ElementFactory).create(UML.Diagram)
         diagram.package = element
 
         self._window.select_element(diagram)

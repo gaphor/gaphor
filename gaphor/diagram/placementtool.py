@@ -2,7 +2,7 @@
 # vim:sw=4:et
 import gobject
 import diacanvas
-import gaphor.UML as UML
+from gaphor import UML
 from gaphor import resource
 
 class PlacementTool(diacanvas.PlacementTool):

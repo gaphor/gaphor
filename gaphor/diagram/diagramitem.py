@@ -7,7 +7,7 @@ import gobject
 from diacanvas import CanvasItem
 
 from gaphor import resource
-import gaphor.misc.uniqueid as uniqueid
+from gaphor.misc import uniqueid
 from gaphor.UML import Element, Presentation
 from gaphor.UML.properties import association
 

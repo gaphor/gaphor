@@ -3,10 +3,11 @@
 """
 
 import os.path
-import gtk
-import gaphor
-import gaphor.UML as UML
 from xml.sax import handler
+import gtk
+
+from gaphor import resource
+from gaphor import UML
 from gaphor.parser import ParserException
 
 XMLNS='http://gaphor.sourceforge.net/gaphor/stock-icons'
@@ -143,7 +144,7 @@ def load_stock_icons():
     """
     from xml.sax import make_parser
     parser = make_parser()
-    data_dir = gaphor.resource('DataDir')
+    data_dir = resource('DataDir')
     icon_dir = os.path.join(data_dir, 'pixmaps')
     loader = StockIconLoader(icon_dir)
 

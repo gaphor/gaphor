@@ -6,25 +6,27 @@ Commands related to the Diagram (DiaCanvas)
 from __future__ import generators
 
 import diacanvas
-import gaphor
-import gaphor.diagram
-import gaphor.UML as UML
+
+from gaphor import GaphorError, resource
+from gaphor import UML
 from gaphor.undomanager import UndoTransactionAspect, weave_method
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 
-from klass import ClassItem
-from package import PackageItem
-from component import ComponentItem
-from attribute import AttributeItem
-from dependency import DependencyItem
-from operation import OperationItem
-from nameditem import NamedItem
-from interface import InterfaceItem
-from association import AssociationItem, AssociationEnd
+from gaphor.diagram.klass import ClassItem
+from gaphor.diagram.package import PackageItem
+from gaphor.diagram.component import ComponentItem
+from gaphor.diagram.attribute import AttributeItem
+from gaphor.diagram.dependency import DependencyItem
+from gaphor.diagram.operation import OperationItem
+from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.interface import InterfaceItem
+from gaphor.diagram.association import AssociationItem, AssociationEnd
+from gaphor.diagram import ClassifierItem, ImplementationItem, \
+     GeneralizationItem, DependencyItem
 
 
-class NoFocusItemError(gaphor.GaphorError):
+class NoFocusItemError(GaphorError):
     pass
 
 
@@ -143,7 +145,7 @@ class CreateAttributeAction(Action):
         focus_item = get_parent_focus_item(self._window)
         subject = focus_item.subject
         assert isinstance(subject, (UML.Class, UML.Interface))
-        elemfact = gaphor.resource(UML.ElementFactory)
+        elemfact = resource(UML.ElementFactory)
         
         attribute = elemfact.create(UML.Property)
         attribute.parse('new')
@@ -186,7 +188,7 @@ class CreateOperationAction(Action):
         focus_item = get_parent_focus_item(self._window)
         subject = focus_item.subject
         assert isinstance(subject, UML.Classifier)
-        elemfact = gaphor.resource(UML.ElementFactory)
+        elemfact = resource(UML.ElementFactory)
 
         operation = elemfact.create(UML.Operation)
         operation.parse('new()')
@@ -952,18 +954,18 @@ class CreateLinksAction(Action):
         diagram = diagram_tab.get_diagram()
         for view_item in diagram_tab.get_view().selected_items:
             item = view_item.item
-            if isinstance(item, gaphor.diagram.ClassItem):
+            if isinstance(item, ClassItem):
                 self.create_missing_relationships(item, diagram,
-                                            gaphor.diagram.AssociationItem)
+                                                  AssociationItem)
 
-            if isinstance(item, gaphor.diagram.ClassifierItem):
+            if isinstance(item, ClassifierItem):
                 self.create_missing_relationships(item, diagram,
-                                            gaphor.diagram.ImplementationItem)
+                                                  ImplementationItem)
                 self.create_missing_relationships(item, diagram,
-                                            gaphor.diagram.GeneralizationItem)
+                                                  GeneralizationItem)
 
             self.create_missing_relationships(item, diagram,
-                                              gaphor.diagram.DependencyItem)
+                                              DependencyItem)
 
 weave_method(CreateLinksAction.execute, UndoTransactionAspect)
 register_action(CreateLinksAction, 'ItemFocus', 'ItemSelect')

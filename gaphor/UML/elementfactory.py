@@ -2,12 +2,10 @@
 """elementfactory.py
 """
 
-import gaphor
-import gaphor.misc.uniqueid as uniqueid
+from gaphor.misc import uniqueid, odict
 from gaphor.undomanager import get_undo_manager
-from element import Element
-from diagram import Diagram
-import gaphor.misc.odict
+from gaphor.UML.element import Element
+from gaphor.UML.diagram import Diagram
 
 class _UndoCreateAction(object):
 
@@ -55,7 +53,7 @@ class ElementFactory(object):
             (element is None)
     """
     def __init__(self):
-        self._elements = gaphor.misc.odict.odict()
+        self._elements = odict.odict()
         self._observers = list()
 
     def create(self, type):

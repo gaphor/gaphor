@@ -9,11 +9,11 @@ import math
 import gobject
 import pango
 import diacanvas
-import gaphor
-import gaphor.UML as UML
-from gaphor.diagram import initialize_item
 
-from relationship import RelationshipItem
+from gaphor import resource
+from gaphor import UML
+from gaphor.diagram import initialize_item
+from gaphor.diagram.relationship import RelationshipItem
 
 STEREOTYPE_OPEN = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
@@ -104,7 +104,7 @@ class IncludeItem(RelationshipItem):
             s2 = c2.subject
             relation = self.find_relationship(s1, s2)
             if not relation:
-                relation = gaphor.resource(UML.ElementFactory).create(UML.Include)
+                relation = resource(UML.ElementFactory).create(UML.Include)
                 relation.addition = s1
                 relation.includingCase = s2
             self.subject = relation

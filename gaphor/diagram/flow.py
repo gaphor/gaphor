@@ -8,12 +8,12 @@ from __future__ import generators
 import gobject
 import pango
 import diacanvas
-import gaphor
-import gaphor.UML as UML
-from gaphor.diagram import initialize_item
-from diagramitem import DiagramItem
 
-from relationship import RelationshipItem
+from gaphor import resource
+from gaphor import UML
+from gaphor.diagram import initialize_item
+from gaphor.diagram.diagramitem import DiagramItem
+from gaphor.diagram.relationship import RelationshipItem
 
 class FlowItem(RelationshipItem, diacanvas.CanvasGroupable):
 
@@ -64,7 +64,7 @@ class FlowItem(RelationshipItem, diacanvas.CanvasGroupable):
             s2 = c2.subject
             relation = self.find_relationship(s1, s2)
             if not relation:
-                factory = gaphor.resource(UML.ElementFactory)
+                factory = resource(UML.ElementFactory)
                 relation = factory.create(UML.ControlFlow)
                 relation.source = s1
                 relation.target = s2

@@ -5,11 +5,11 @@ Relationship -- Base class for dependencies and associations.
 
 import gobject
 import diacanvas
-import gaphor
-from gaphor import UML
+
+from gaphor import resource, UML
 from gaphor.diagram import initialize_item
 
-from diagramline import DiagramLine
+from gaphor.diagram.diagramline import DiagramLine
 
 class MessageItem(DiagramLine):
     
@@ -45,7 +45,7 @@ class MessageItem(DiagramLine):
         if c1 and c2:
             s1 = c1.subject
             s2 = c2.subject
-            factory = gaphor.resource(UML.ElementFactory)
+            factory = resource(UML.ElementFactory)
             message = factory.create(UML.Message)
             message.messageKind = 'complete'
             head_event = factory.create(UML.EventOccurrence)

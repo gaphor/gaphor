@@ -11,7 +11,7 @@ import gobject
 import pango
 import diacanvas
 
-import gaphor.UML as UML
+from gaphor import UML
 from gaphor.diagram import initialize_item
 from gaphor.i18n import _
 

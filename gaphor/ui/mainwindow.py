@@ -2,18 +2,19 @@
 # vim:sw=4:et
 
 import gtk
-import namespace
-import gaphor
+
+from gaphor import resource
 from gaphor import UML
 from gaphor import undomanager
 from gaphor.i18n import _
-from abstractwindow import AbstractWindow
-from diagramtab import DiagramTab
-from toolbox import Toolbox
-from menufactory import toolbox_to_menu
+from gaphor.ui import namespace
+from gaphor.ui.abstractwindow import AbstractWindow
+from gaphor.ui.diagramtab import DiagramTab
+from gaphor.ui.toolbox import Toolbox
+from gaphor.ui.menufactory import toolbox_to_menu
 
 # Load actions
-import mainactions, diagramactions
+from gaphor.ui import mainactions, diagramactions
 
 class MainWindow(AbstractWindow):
     """The main window for the application.
@@ -213,7 +214,7 @@ class MainWindow(AbstractWindow):
     def construct(self):
         """Create the widgets that make up the main window.
         """
-        model = namespace.NamespaceModel(gaphor.resource(UML.ElementFactory))
+        model = namespace.NamespaceModel(resource(UML.ElementFactory))
         view = namespace.NamespaceView(model)
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -244,7 +245,7 @@ class MainWindow(AbstractWindow):
         self.model = model
         self.view = view
 
-        window_size = gaphor.resource('ui.window-size', (760, 580))
+        window_size = resource('ui.window-size', (760, 580))
         self._construct_window(name='main',
                                title='Gaphor',
                                size=window_size,
@@ -390,11 +391,11 @@ class MainWindow(AbstractWindow):
         self.execute_action('TabChange')
 
     def on_window_size_allocate(self, window, allocation):
-        gaphor.resource.set('ui.window-size', (allocation.width, allocation.height), persistent=True)
+        resource.set('ui.window-size', (allocation.width, allocation.height), persistent=True)
 
 #    def on_toolbox_toggled(self, toolbox, box_name, visible):
 #        print 'Box', box_name, 'is visible:', visible
-#        #gaphor.resource.set('ui.toolbox.%s' % box_name, visible, persistent=True)
+#        #resource.set('ui.toolbox.%s' % box_name, visible, persistent=True)
 
     def on_undo(self, *args):
         self.execute_action('UndoStack')
@@ -409,7 +410,7 @@ class MainWindow(AbstractWindow):
 
     #def __on_element_factory_signal(self, obj, key):
         #print '__on_element_factory_signal', key
-        #factory = gaphor.resource(UML.ElementFactory)
+        #factory = resource(UML.ElementFactory)
         #self.set_capability('model', not factory.is_empty())
 
 gtk.accel_map_add_filter('gaphor')

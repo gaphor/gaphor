@@ -2,14 +2,15 @@
 # vim: sw=4:et
 
 import gtk
-from diagramview import DiagramView
-from abstractwindow import AbstractWindow
-import gaphor.UML
+
+from gaphor import UML
 from gaphor.diagram.itemtool import ItemTool
 from gaphor.diagram import get_diagram_item
 from gaphor.undomanager import get_undo_manager
+from gaphor.ui.diagramview import DiagramView
+from gaphor.ui.abstractwindow import AbstractWindow
 
-import diagramactions
+import gaphor.ui.diagramactions
 import gaphor.diagram.placementactions
 
 class DiagramTab(object):
@@ -147,11 +148,11 @@ class DiagramTab(object):
         #print 'drag_data_received'
         if data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
             #print 'drag_data_received:', data.data, info
-            elemfact = gaphor.resource('ElementFactory')
+            elemfact = resource(UML.ElementFactory)
             element = elemfact.lookup(data.data)
             assert element
             item_class = get_diagram_item(type(element))
-            if isinstance(element, gaphor.UML.Diagram):
+            if isinstance(element, UML.Diagram):
                 self.owning_window.execute_action('OpenModelElement')
             elif item_class:
                 get_undo_manager().begin_transaction()

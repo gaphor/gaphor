@@ -5,8 +5,9 @@ Commands related to the Diagram (DiaCanvas)
 
 import gtk
 import diacanvas
-import gaphor
-import gaphor.UML as UML
+
+from gaphor import resource
+from gaphor import UML
 from gaphor.undomanager import UndoTransactionAspect, weave_method
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
@@ -275,7 +276,7 @@ class CopyAction(Action):
                 copy_items.append(i.item)
                 #i.item.save(save_func)
             if copy_items:
-                gaphor.resource.set('copy-buffer', copy_items)
+                resource.set('copy-buffer', copy_items)
         tab = self._window.get_current_diagram_tab()
 
 register_action(CopyAction, 'ItemFocus')
@@ -305,7 +306,7 @@ class PasteAction(Action):
 
     def update(self):
         diagram_tab = self._window.get_current_diagram_tab()
-        self.sensitive = diagram_tab and gaphor.resource('copy-buffer', [])
+        self.sensitive = diagram_tab and resource('copy-buffer', [])
 
     def _load_element(self, name, value):
         """Copy an element, preferbly from the list of new items,
@@ -343,11 +344,11 @@ class PasteAction(Action):
         if not canvas:
             return
 
-        copy_items = [ c for c in gaphor.resource('copy-buffer', []) if c.canvas ]
+        copy_items = [ c for c in resource('copy-buffer', []) if c.canvas ]
 
         # Mapping original id -> new item
         self._new_items = {}
-        self._factory = gaphor.resource('ElementFactory')
+        self._factory = resource(UML.ElementFactory)
 
         # Create new id's that have to be used to create the items:
         for ci in copy_items:

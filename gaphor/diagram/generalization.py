@@ -5,10 +5,11 @@ Generalization --
 
 import gobject
 import diacanvas
-import gaphor
-import gaphor.UML as UML
+
+from gaphor import resource
+from gaphor import UML
 from gaphor.diagram import initialize_item
-import relationship
+import gaphor.diagram.relationship
 
 class GeneralizationItem(relationship.RelationshipItem):
 
@@ -76,7 +77,7 @@ class GeneralizationItem(relationship.RelationshipItem):
             s2 = c2.subject
             relation = self.find_relationship(s1, s2)
             if not relation:
-                relation = gaphor.resource(UML.ElementFactory).create(UML.Generalization)
+                relation = resource(UML.ElementFactory).create(UML.Generalization)
                 relation.general = s1
                 relation.specific = s2
             self.subject = relation

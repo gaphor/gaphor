@@ -3,11 +3,11 @@ Implementation - - - -|>
 '''
 # vim:sw=4
 
-import gaphor
-import gaphor.UML as UML
+from gaphor import resource
+from gaphor import UML
 from gaphor.diagram import initialize_item
-import gaphor.diagram.interface
-import relationship
+from gaphor.diagram.interface import InterfaceItem
+import gaphor.diagram.relationship
 
 class ImplementationItem(relationship.RelationshipItem):
     default_look = {
@@ -71,7 +71,7 @@ class ImplementationItem(relationship.RelationshipItem):
             relation = self.find_relationship(s1, s2)
             if not relation:
                 #print 'No relationship found'
-                relation = gaphor.resource(UML.ElementFactory).create(UML.Implementation)
+                relation = resource(UML.ElementFactory).create(UML.Implementation)
                 relation.contract = s1
                 relation.implementatingClassifier = s2
             self.subject = relation
@@ -86,8 +86,7 @@ class ImplementationItem(relationship.RelationshipItem):
     def on_update(self, affine):
         # change look into solid line when connected to folded interface
         conn_to = self.handles[0].connected_to
-        if isinstance(conn_to, gaphor.diagram.interface.InterfaceItem) \
-           and conn_to.is_folded():
+        if isinstance(conn_to, InterfaceItem) and conn_to.is_folded():
             self.set(**self.folded_interface_look)
         else:
             self.set(**self.default_look)

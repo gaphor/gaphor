@@ -37,7 +37,7 @@ notify (name)
 __all__ = [ 'Element' ]
 
 import types, mutex
-import gaphor.misc.uniqueid as uniqueid
+from gaphor.misc import uniqueid
 from properties import umlproperty, association
 
 class Element(object):

@@ -2,6 +2,7 @@
 
 import gobject
 import diacanvas
+
 from gaphor.misc.aspects import Aspect, weave_method
 
 

@@ -3,7 +3,7 @@ Commands related to the Editor
 """
 # vim: sw=4:et
 
-import gaphor.UML as UML
+from gaphor import UML
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 import gtk
 import diacanvas

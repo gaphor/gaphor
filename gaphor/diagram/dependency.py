@@ -9,11 +9,11 @@ import math
 import gobject
 import pango
 import diacanvas
-import gaphor
-from gaphor import UML
+
+from gaphor import resource, UML
 from gaphor.diagram import initialize_item
 
-from relationship import RelationshipItem
+from gaphor.diagram.relationship import RelationshipItem
 
 STEREOTYPE_OPEN = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
@@ -179,7 +179,7 @@ class DependencyItem(RelationshipItem):
             s2 = c2.subject
             relation = self.find_relationship(s1, s2)
             if not relation:
-                relation = gaphor.resource(UML.ElementFactory).create(self.dependency_type)
+                relation = resource(UML.ElementFactory).create(self.dependency_type)
                 relation.supplier = s1
                 relation.client = s2
             self.subject = relation

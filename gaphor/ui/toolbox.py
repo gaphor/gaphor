@@ -6,7 +6,7 @@
 import gobject
 import gtk
 
-import gaphor
+from gaphor import resource
 
 # Import this module to ensure actions refered to in the toolbox are loaded
 import gaphor.diagram.placementactions
@@ -40,8 +40,8 @@ class Toolbox(gtk.VBox):
             arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
             self.emit('toggled', button.toggle_id, False)
         # Save the property:
-        gaphor.resource.set('ui.toolbox.%s' % button.toggle_id,
-                            content.get_property('visible'), persistent=True)
+        resource.set('ui.toolbox.%s' % button.toggle_id,
+                     content.get_property('visible'), persistent=True)
 
     def make_wrapbox_decorator(self, title, content):
         """Create a gtk.VBox with in the top compartment a label that can be
@@ -76,7 +76,7 @@ class Toolbox(gtk.VBox):
         vbox.label = label
         vbox.content = content
 
-        expanded = gaphor.resource('ui.toolbox.%s' % button.toggle_id, False)
+        expanded = resource('ui.toolbox.%s' % button.toggle_id, False)
         content.set_property('visible', not expanded)
         self.on_wrapbox_decorator_toggled(button, content)
 

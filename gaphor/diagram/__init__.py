@@ -7,7 +7,7 @@ __date__ = '$date$'
 
 import gobject
 import diacanvas
-import gaphor.misc.uniqueid as uniqueid
+from gaphor.misc import uniqueid
 
 # Map UML elements to their (default) representation.
 _uml_to_item_map = { }

@@ -14,12 +14,12 @@ import pango
 import diacanvas
 import diacanvas.shape
 import diacanvas.geometry
-import gaphor
-import gaphor.UML as UML
-from gaphor.diagram import initialize_item
 
-from diagramitem import DiagramItem
-from relationship import RelationshipItem
+from gaphor import resource
+from gaphor import UML
+from gaphor.diagram import initialize_item
+from gaphor.diagram.diagramitem import DiagramItem
+from gaphor.diagram.relationship import RelationshipItem
 
 class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     """ExtensionItem represents associations. 
@@ -168,7 +168,7 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
             # Find all associations and determine if the properties on the
             # association ends have a type that points to the class.
             Extension = UML.Extension
-            for assoc in gaphor.resource(UML.ElementFactory).itervalues():
+            for assoc in resource(UML.ElementFactory).itervalues():
                 if isinstance(assoc, Extension):
                     #print 'assoc.memberEnd', assoc.memberEnd
                     end1 = assoc.memberEnd[0]
@@ -191,7 +191,7 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
                                 self._tail_end.subject = end1
                             return
             else:
-                element_factory = gaphor.resource(UML.ElementFactory)
+                element_factory = resource(UML.ElementFactory)
                 relation = element_factory.create(UML.Extension)
                 head_end = element_factory.create(UML.Property)
                 tail_end = element_factory.create(UML.ExtensionEnd)

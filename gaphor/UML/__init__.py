@@ -1,12 +1,12 @@
-from collection import collection
-from uml2 import *
-from elementfactory import ElementFactory
+from gaphor.UML.collection import collection
+
+from gaphor.UML.uml2 import *
+from gaphor.UML.elementfactory import ElementFactory
 
 # Make one ElementFactory instance an application-wide resource
-
-import gaphor
-_default_element_factory = gaphor.resource(ElementFactory)
-del gaphor
+from gaphor import resource
+_default_element_factory = resource(ElementFactory)
+del resource
 
 # Make some elements of the default ElementFactory easely accessable
 
@@ -31,9 +31,8 @@ def flush():
 if 0 and __debug__: 
     # Keep track of all model elements that are created
     from gaphor.misc.aspects import ReferenceAspect, LoggerAspect, weave_method
-    import elementfactory
-    import diagram
+    import gaphor.UML import diagram
     from gaphor import refs
-    weave_method(elementfactory.ElementFactory.create_as, ReferenceAspect, refs)
+    weave_method(ElementFactory.create_as, ReferenceAspect, refs)
     weave_method(diagram.Diagram.create, ReferenceAspect, refs)
     #weave_method(Element.notify, LoggerAspect)

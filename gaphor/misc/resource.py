@@ -45,7 +45,8 @@ class Resource(object):
         case of a string the resource will be looked up in the GConf configuration.
 
         example: Get the element factory:
-                factory = gaphor.resource(gaphor.UML.ElementFactory)
+                from gaphor import resource, UML
+                factory = resource(UML.ElementFactory)
 
         Also builtin resources are 'Name', 'Version' and 'DataDir'. In case main()
         is run, 'MainWindow' points to the main window of the application.

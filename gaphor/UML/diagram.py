@@ -9,7 +9,7 @@ __date__ = '$date$'
 
 import gobject
 import diacanvas
-import gaphor.misc.uniqueid as uniqueid
+from gaphor.misc import uniqueid
 from gaphor.undomanager import get_undo_manager
 from uml2 import Namespace, PackageableElement
 

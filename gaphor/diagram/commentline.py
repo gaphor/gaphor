@@ -8,7 +8,7 @@ has been loaded. It works okay when creating new items.
 
 import gobject
 import diacanvas
-import gaphor.UML as UML
+from gaphor import UML
 from gaphor.diagram import initialize_item
 
 from diagramline import DiagramLine

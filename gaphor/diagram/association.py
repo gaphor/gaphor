@@ -9,19 +9,18 @@
 
 from __future__ import generators
 
+from math import atan, pi, sin, cos
+
 import gobject
 import pango
 import diacanvas
 import diacanvas.shape
 import diacanvas.geometry
-import gaphor
-import gaphor.UML as UML
+
+from gaphor import resource, UML
 from gaphor.diagram import initialize_item
-
-from diagramitem import DiagramItem
-from relationship import RelationshipItem
-
-from math import atan, pi, sin, cos
+from gaphor.diagram.diagramitem import DiagramItem
+from gaphor.diagram.relationship import RelationshipItem
 
 class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.CanvasEditable):
     """AssociationItem represents associations. 
@@ -326,7 +325,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         # Find all associations and determine if the properties on the
         # association ends have a type that points to the class.
         Association = UML.Association
-        for assoc in gaphor.resource(UML.ElementFactory).itervalues():
+        for assoc in resource(UML.ElementFactory).itervalues():
             if isinstance(assoc, Association):
                 #print 'assoc.memberEnd', assoc.memberEnd
                 end1 = assoc.memberEnd[0]
@@ -377,7 +376,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             # Find all associations and determine if the properties on the
             # association ends have a type that points to the class.
             Association = UML.Association
-            for assoc in gaphor.resource(UML.ElementFactory).itervalues():
+            for assoc in resource(UML.ElementFactory).itervalues():
                 if isinstance(assoc, Association):
                     #print 'assoc.memberEnd', assoc.memberEnd
                     end1 = assoc.memberEnd[0]
@@ -402,7 +401,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             else:
                 # TODO: How should we handle other types than Class???
 
-                element_factory = gaphor.resource(UML.ElementFactory)
+                element_factory = resource(UML.ElementFactory)
                 relation = element_factory.create(UML.Association)
                 head_end = element_factory.create(UML.Property)
                 head_end.lowerValue = element_factory.create(UML.LiteralSpecification)
