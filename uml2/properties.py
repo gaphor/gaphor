@@ -53,7 +53,7 @@ class umlproperty(object):
             save_func(self.name, self._get(obj))
 
     def unlink(self, obj):
-        if hasattr(obj, '_' + self.name)
+        if hasattr(obj, '_' + self.name):
             self.__delete__(obj)
 
     def notify(self, obj):
@@ -82,6 +82,11 @@ class attribute(umlproperty):
         except AttributeError:
             return self.default
 
+    def load(self, obj, value):
+        if not isinstance(value, self.type):
+            raise AttributeError, 'Value should be of type %s' % self.type.__name__
+        setattr(obj, '_' + self.name, value)
+
     def _set(self, obj, value):
         if not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % self.type.__name__
@@ -108,6 +113,11 @@ class enumeration(umlproperty):
         except AttributeError:
             return self.default
 
+    def load(self, obj, value):
+        if not value in self.values:
+            raise AttributeError, 'Value should be in %s' % str(self.values)
+        setattr(obj, '_' + self.name, value)
+
     def _set(self, obj, value):
         if not value in self.values:
             raise AttributeError, 'Value should be in %s' % str(self.values)
@@ -131,6 +141,14 @@ class association(umlproperty):
         self.upper = upper
         self.opposite = opposite
 
+    def load(self, obj, value):
+        if not isinstance(value, self.type):
+            raise AttributeError, 'Value should be of type %s' % self.type.__name__
+        if self.upper > 1:
+            self._get(obj).items.append(value)
+        else:
+            setattr(obj, '_' + self.name, value)
+
     def __get__(self, obj, clazz=None):
         """Retrieve the value of the association. In case this is called
         directly on the class, return self."""
@@ -148,8 +166,8 @@ class association(umlproperty):
         # Remove old value only for uni-directional associations
         if self.upper == 1:
             old = self._get(obj)
-            if old and self.opposite:
-                getattr(self.type, self.opposite)._del(old, obj)
+            if old:
+                self.__delete__(obj, old)
         # Set opposite side:
         if self.opposite:
             getattr(self.type, self.opposite)._set(value, obj)
@@ -163,7 +181,7 @@ class association(umlproperty):
             raise Exception, 'Can not delete collections'
         if self.opposite:
             getattr(self.type, self.opposite)._del(value or self._get(obj), obj)
-        self._del(obj, value)
+        self._del(obj, value or self._get(obj))
         
     def _get(self, obj):
         #print '_get', self, obj
@@ -187,21 +205,25 @@ class association(umlproperty):
     def __set(self, obj, value):
         """Real setter, avoid doing the assertion check twice."""
         if self.upper > 1:
+            if value in self._get(obj):
+                return
             self._get(obj).items.append(value)
         else:
             setattr(obj, '_' + self.name, value)
+        value.attach(('__unlink__',), self.__on_unlink, obj, value)
         self.notify(obj)
 
-    def _del(self, obj, value=None):
+    def _del(self, obj, value):
         #print '_del', self, obj, value
         if self.upper > 1:
             self._get(obj).items.remove(value)
         else:
             delattr(obj, '_' + self.name)
+        value.detach(self.__on_unlink, obj, value)
         self.notify(obj)
 
     def unlink(self, obj):
-        lst = getattr(obj, '_' + self.name):
+        lst = getattr(obj, '_' + self.name)
         while lst:
             self.__delete__(obj, lst[0])
 
@@ -215,12 +237,20 @@ class association(umlproperty):
         # Also notify derived unions that superset this property
         # This is done by finding derived unions in the class' dict that
         # contain references to this association.
-        # Optimize for speed:
-        _isinstance = isinstance
-        _derivedunion = derivedunion
+        # Optimized for speed:
+        _ii = isinstance
+        _du = derivedunion
         for u in obj.__class__.__dict__.values():
-            if _isinstance(u, _derivedunion) and self in u:
+            if _ii(u, _du) and self in u:
                 u.notify(obj)
+
+    def __on_unlink(self, name, obj, value):
+        """Disconnect when the element on the other end of the association
+        sends the '__unlink__' signal. This is especially important for
+        uni-directional associations.
+        """
+        #print '__on_unlink:', self, name, obj, value
+        self.__delete__(obj, value)
 
 
 class derivedunion(umlproperty):
@@ -233,6 +263,15 @@ class derivedunion(umlproperty):
         self.name = name
         self.subsets = subsets
         self.single = len(subsets) == 1
+
+    def load(self, obj, value):
+        pass
+
+    def save(self, obj, save_func):
+        pass
+
+    def unlink(self, obj):
+        pass
 
     def __contains__(self, obj):
         """Returns if 'obj' is in the subsets list."""
@@ -250,11 +289,9 @@ class derivedunion(umlproperty):
                 if tmp:
                     # append or extend tmp (is it a list or not)
                     try:
-                        iter(tmp)
+                        u.extend(tmp)
                     except TypeError:
                         u.append(tmp)
-                    else:
-                        u.extend(tmp)
             return u
 
     def _set(self, obj, value):
@@ -262,13 +299,4 @@ class derivedunion(umlproperty):
 
     def _del(self, obj, value=None):
         raise AttributeError, 'Can not delete values on a union'
-
-    def load(self, obj, value):
-        pass
-
-    def save(self, obj, save_func):
-        pass
-
-    def unlink(self, obj):
-        pass
 

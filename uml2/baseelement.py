@@ -33,33 +33,30 @@ class BaseElement(object):
 
     def __init__(self):
 	self._observers = dict()
-	self._block_notify = 0
 
     def save(self, save_func):
 	"""Save the state by calling save_func(name, value)."""
-	clazz = self.__class__
-        for prop in dir(clazz):
-            if isinstance(prop, umlproperty):
+        lst = dir(self.__class__)
+        for prop in map(isinstance, lst, [umlproperty] * len(lst)):
                 prop.save(self, save_func)
 
     def load(self, name, value):
 	"""Loads value in name. Make sure that for every load postload()
 	should be called."""
-	self._block_notify = True
-	clazz = self.__class__
 	try:
-            prop = getattr(clazz, name)
+            prop = getattr(self.__class__, name)
         except AttributeError, e:
-            print "'%s' has no property '%s'" % (clazz.__name__, name)
+            raise AttributeError, "'%s' has no property '%s'" % \
+                                        (self.__class__.__name__, name)
         else:
             prop.load(self, value)
 
     def postload(self):
-	self._block_notify = False
+	pass
 
     def unlink(self):
 	self.notify('__unlink__')
-    
+           
     def attach(self, names, callback, *data):
 	"""Attach 'callback' to a list of names. Names may also be a string."""
         if type(names) is types.StringType:
@@ -67,23 +64,29 @@ class BaseElement(object):
         cb = (callback,) + data
         for name in names:
             try:
-                self._observers[name].append(cb)
+                o = self._observers[name]
+                if not cb in o:
+                    o.append(cb)
             except KeyError:
                 # create new entry
                 self._observers[name] = [cb]
 
     def detach(self, callback, *data):
 	"""Detach a callback identified by it's data."""
+        #print 'detach', callback, data
         cb = (callback,) + data
-	for name, values in self._observers.items():
-            if cb in values:
-                values.remove(cb)
+	for values in self._observers.values():
+            # Remove all occurences of 'cb' from values
+            # (if none is found ValueError is raised).
+            try:
+                while True:
+                    values.remove(cb)
+            except ValueError:
+                pass
 
     def notify(self, name):
         """Send notification to attached callbacks that a property
 	has changed."""
-	if self._block_notify:
-	    return
 	cb_list = self._observers.get(name) or ()
         for cb_data in cb_list:
             try:

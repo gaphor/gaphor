@@ -1,5 +1,8 @@
 As always, there is much to do...
 
+- The application crashes every now and then when items are freed. The cause
+  is probably GnomeCanvasItem::canvas, which points to an invalid canvas (the
+  canvas has been freed before the items are freed.
 - attributes and operations visible for classes.
 - deselect doesn't work properly on all elements...
 - fix Class implementation.

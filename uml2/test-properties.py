@@ -2,18 +2,18 @@
 # vim:sw=4:et
 
 from properties import *
+from baseelement import BaseElement
 
 def test_associations():
     #
     # 1:-
     #
-    class A(object): pass
-    class B(object): pass
-    class C(object): pass
+    class A(BaseElement): pass
+    class B(BaseElement): pass
+    class C(BaseElement): pass
 
     A.one = association('one', B, 0, 1, 'two')
     B.two = association('two', A, 0, 1)
-
     a = A()
     b = B()
     a.one = b
@@ -23,9 +23,9 @@ def test_associations():
     #
     # n:-
     #
-    class A(object): pass
-    class B(object): pass
-    class C(object): pass
+    class A(BaseElement): pass
+    class B(BaseElement): pass
+    class C(BaseElement): pass
 
     A.one = association('one', B, 0, infinite, 'two')
     B.two = association('two', A, 0, 1)
@@ -39,9 +39,9 @@ def test_associations():
     #
     # 1:1
     #
-    class A(object): pass
-    class B(object): pass
-    class C(object): pass
+    class A(BaseElement): pass
+    class B(BaseElement): pass
+    class C(BaseElement): pass
 
     A.one = association('one', B, 0, 1, 'two')
     B.two = association('two', A, 0, 1, 'one')
@@ -49,12 +49,18 @@ def test_associations():
     a = A()
     b = B()
     a.one = b
+    a.one = b
 
     assert a.one is b
     assert b.two is a
+    assert len(a._observers.get('__unlink__')) == 1
+    assert len(b._observers.get('__unlink__')) == 1
+
     a.one = B()
     assert a.one is not b
     assert b.two is None
+    assert len(a._observers.get('__unlink__')) == 1
+    assert len(b._observers.get('__unlink__')) == 0
 
     c = C()
     try:
@@ -67,13 +73,15 @@ def test_associations():
     del a.one
     assert a.one is None
     assert b.two is None
+    assert len(a._observers.get('__unlink__')) == 0
+    assert len(b._observers.get('__unlink__')) == 0
 
     #
     # 1:n
     #
-    class A(object): pass
-    class B(object): pass
-    class C(object): pass
+    class A(BaseElement): pass
+    class B(BaseElement): pass
+    class C(BaseElement): pass
 
     A.one = association('one', B, 0, 1, 'two')
     B.two = association('two', A, 0, infinite, 'one')
@@ -84,8 +92,13 @@ def test_associations():
     b2 = B()
 
     b1.two = a1
+    b1.two = a1
+    b1.two = a1
+    assert len(b1.two) == 1, 'len(b1.two) == %d' % len(b1.two)
     assert a1 in b1.two
     assert a1.one is b1
+    assert len(a1._observers.get('__unlink__')) == 1
+    assert len(b1._observers.get('__unlink__')) == 1
 
     b1.two = a2
     assert a1 in b1.two
@@ -112,6 +125,8 @@ def test_associations():
     assert a2 in b1.two
     assert a1.one is None
     assert a2.one is b1
+    assert len(a1._observers.get('__unlink__')) == 0
+    assert len(b1._observers.get('__unlink__')) == 1
 
     a2.one = b2
 
@@ -130,9 +145,9 @@ def test_associations():
     #
     # n:n
     #
-    class A(object): pass
-    class B(object): pass
-    class C(object): pass
+    class A(BaseElement): pass
+    class B(BaseElement): pass
+    class C(BaseElement): pass
 
     A.one = association('one', B, 0, infinite, 'two')
     B.two = association('two', A, 0, infinite, 'one')
@@ -154,6 +169,8 @@ def test_associations():
     assert a1 in b1.two
     assert a1 in b2.two
     assert not a2.one
+    assert len(a1._observers.get('__unlink__')) == 2
+    assert len(b1._observers.get('__unlink__')) == 1
 
     a2.one = b1
     assert len(a1.one) == 2
@@ -178,10 +195,50 @@ def test_associations():
     assert a1 in b2.two
     assert b1 in a2.one
     assert a2 in b1.two
+    assert len(a1._observers.get('__unlink__')) == 1
+    assert len(b1._observers.get('__unlink__')) == 1
+
+    #
+    # unlink
+    #
+    class A(BaseElement): pass
+    class B(BaseElement): pass
+    class C(BaseElement): pass
+
+    A.one = association('one', B, 0, infinite, 'two')
+    B.two = association('two', A, 0, infinite)
+
+    a1 = A()
+    a2 = A()
+    b1 = B()
+    b2 = B()
+
+    a1.one = b1
+    a1.one = b2
+    assert b1 in a1.one
+    assert b2 in a1.one
+    assert a1 in b1.two
+    assert a1 in b2.two
+
+    a2.one = b1
+    assert len(a1._observers.get('__unlink__')) == 2
+    assert len(b1._observers.get('__unlink__')) == 2
+
+    # remove b1 from all elements connected to b1
+    # also the signal should be removed
+    b1.unlink()
+
+    assert len(a1._observers.get('__unlink__')) == 1
+    assert len(b1._observers.get('__unlink__')) == 1
+
+    assert b1 not in a1.one
+    assert b2 in a1.one
+    assert a1 not in b1.two
+    assert a1 in b2.two
 
 def test_attributes():
     import types
-    class A(object): pass
+    class A(BaseElement): pass
 
     A.a = attribute('a', types.StringType, 'default')
 
@@ -200,7 +257,7 @@ def test_attributes():
 
 def test_enumerations():
     import types
-    class A(object): pass
+    class A(BaseElement): pass
 
     A.a = enumeration('a', ('one', 'two', 'three'), 'one')
     a = A()
@@ -220,7 +277,7 @@ def test_enumerations():
 
 def test_notify():
     import types
-    class A(object):
+    class A(BaseElement):
         notified=None
         def notify(self, name):
             self.notified = name
@@ -242,7 +299,7 @@ def test_notify():
     assert a.notified == None
 
 def test_derivedunion():
-    class A(object): pass
+    class A(BaseElement): pass
 
     A.a = association('a', A)
     A.b = association('b', A, 0, 1)
@@ -270,7 +327,7 @@ def test_derivedunion():
     assert c in a.u
     assert d in a.u
 
-    class E(object):
+    class E(BaseElement):
         notified=False
         def notify(self, name):
             if name == 'u':
