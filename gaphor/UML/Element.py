@@ -134,7 +134,8 @@ by the diagram item's implementation to avoid deletion (unlink()ing) of the
 object if references are lehd by the object on the undo stack.
 '''
     _index = 1
-    _attrdef = { 'presentation': ( Sequence, types.ObjectType ),
+    _attrdef = { 'documentation': ( "", types.StringType ),
+		 'presentation': ( Sequence, types.ObjectType ),
     		 'itemsOnUndoStack': (0, types.IntType ) }
 
     def __init__(self):
@@ -150,6 +151,11 @@ object if references are lehd by the object on the undo stack.
 	#print 'Element.unlink():', self
 	# Notify other objects that we want to unlink()
         self.emit("unlink")
+	if self.__dict__.has_key ('__undodata'):
+	    del self.__dict__['__undodata']
+	self.__unlink ()
+
+    def __unlink(self):
 	if elements.has_key(self.__dict__['__id']):
 	    del elements[self.__dict__['__id']]
 	for key in self.__dict__.keys():
@@ -157,7 +163,7 @@ object if references are lehd by the object on the undo stack.
 	    # not yet has been removed.
 	    if self.__dict__.has_key (key) and \
 			key not in ( 'presentation', 'itemsOnUndoStack', \
-				     '__signals', '__id' ):
+				     '__signals', '__id', '__undodata' ):
 		if isinstance (self.__dict__[key], Sequence):
 		    # Remove each item in the sequence, then remove
 		    # the sequence from __dict__.
@@ -168,7 +174,6 @@ object if references are lehd by the object on the undo stack.
 		    del self.__dict__[key]
 		else:
 		    # do a 'del self.key'
-		    #print '\tunlink:', key
 		    self.__delattr__(key)
 	# Note that empty objects may be created in the object due to lookups
 	# from objects with connected signals.
@@ -176,10 +181,12 @@ object if references are lehd by the object on the undo stack.
     
     # Hooks for presentation elements to add themselves:
     def add_presentation (self, presentation):
+        #print 'add_presentation', self, presentation
         if not presentation in self.presentation:
 	    self.presentation = presentation
 
     def remove_presentation (self, presentation):
+        #print 'remove_presentation', self, presentation
         if presentation in self.presentation:
 	    del self.presentation[presentation]
 	    if len (self.presentation) == 0 and self.itemsOnUndoStack == 0:
@@ -187,24 +194,59 @@ object if references are lehd by the object on the undo stack.
 	        self.unlink()
 
     def undo_presentation (self, presentation):
+        #print 'undo_presentation', self.__dict__
         if not presentation in self.presentation:
-	    # Add myself to the 'elements' hash 
 	    if len (self.presentation) == 0:
-	        elements[self.id] = self
+		assert self.__dict__.has_key ('__undodata')
+		# Add myself to the 'elements' hash 
+		elements[self.id] = self
+		# Add elements from __undodata
+		#print self.__dict__
+		undodata = self.__dict__['__undodata']
+		for key in undodata.keys ():
+		    value = undodata[key]
+		    #print 'Undoing value', key
+		    if isinstance (value, types.ListType):
+			for item in value:
+			    setattr (self, key, item)
+		    else:
+			setattr (self, key, value)
+		del self.__dict__['__undodata']
 	    self.presentation = presentation
 	    self.itemsOnUndoStack -= 1
 	    assert self.itemsOnUndoStack >= 0
 
     def remove_presentation_undoable (self, presentation):
+	# presentation may be None
+	#print 'remove_presentation_undoable', self, presentation
         if presentation in self.presentation:
 	    del self.presentation[presentation]
 	    self.itemsOnUndoStack += 1
-	    # Remove yourself from the 'elements' hash
 	    if len (self.presentation) == 0:
-	        if lookup (self.id):
+		# Remove yourself from the 'elements' hash
+		if lookup (self.id):
+		    #print 'Removing element from elements hash.'
 		    del elements[self.id]
+		# Create __undodata, so we can undo the element's state
+		undodata = { }
+		for key in self.__dict__.keys():
+		    if key not in ( 'presentation', 'itemsOnUndoStack', \
+				    '__signals', '__id', '__undodata' ):
+			#print 'Preserving value for', key
+			value = self.__dict__[key]
+			if isinstance (value, Sequence):
+			    undodata[key] = copy.copy (value.list)
+			else:
+			    undodata[key] = value
+		self.__unlink ()
+		self.__dict__['__undodata'] = undodata
+
+    def add_undoability (self):
+	#print 'add_undoability', self
+	self.itemsOnUndoStack += 1
 
     def remove_undoability (self):
+	#print 'remove_undoability', self
 	if not self.__dict__.has_key ('itemsOnUndoStack'):
 	    return
         self.itemsOnUndoStack -= 1

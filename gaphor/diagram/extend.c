@@ -1,52 +1,52 @@
 /*
- * Generalization
+ * Extend
  *
  * This is LGPL'ed code.
  */
 
-#include "generalization.h"
+#include "extend.h"
 #include "common.h"
 #include <diacanvas/dia-shape.h>
 #include <diacanvas/dia-canvas-i18n.h>
 
-static void generalization_class_init (RelationshipClass *klass);
-static void generalization_init (Generalization *item);
-static void generalization_dispose (GObject *object);
-static void generalization_set_property (GObject *object,
+static void extend_class_init (RelationshipClass *klass);
+static void extend_init (Extend *item);
+static void extend_dispose (GObject *object);
+static void extend_set_property (GObject *object,
 					     guint property_id,
 					     const GValue *value,
 					     GParamSpec *pspec);
-static void generalization_get_property (GObject *object,
+static void extend_get_property (GObject *object,
 					     guint property_id,
 					     GValue *value,
 					     GParamSpec *pspec);
-static void generalization_update (DiaCanvasItem *item, gdouble affine[6]);
-static gboolean generalization_connect (DiaCanvasItem *item, DiaHandle *handle);
-static gboolean generalization_disconnect (DiaCanvasItem *item,
+static void extend_update (DiaCanvasItem *item, gdouble affine[6]);
+static gboolean extend_connect (DiaCanvasItem *item, DiaHandle *handle);
+static gboolean extend_disconnect (DiaCanvasItem *item,
 					   DiaHandle *handle);
 
 static RelationshipClass *parent_class = NULL;
 
 GType
-generalization_get_type (void)
+extend_get_type (void)
 {
 	static GType object_type = 0;
 
 	if (!object_type) {
 		static const GTypeInfo object_info = {
-			sizeof (GeneralizationClass),
+			sizeof (ExtendClass),
 			(GBaseInitFunc) NULL,
 			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) generalization_class_init,
+			(GClassInitFunc) extend_class_init,
 			(GClassFinalizeFunc) NULL,
 			(gconstpointer) NULL, /* class_data */
-			sizeof (Generalization),
+			sizeof (Extend),
 			(guint16) 0, /* n_preallocs */
-			(GInstanceInitFunc) generalization_init,
+			(GInstanceInitFunc) extend_init,
 		};
 
 		object_type = g_type_register_static (TYPE_RELATIONSHIP,
-						      "Generalization",
+						      "Extend",
 						      &object_info, 0);
 	}
 
@@ -55,7 +55,7 @@ generalization_get_type (void)
 
 
 static void
-generalization_class_init (RelationshipClass *klass)
+extend_class_init (RelationshipClass *klass)
 {
 	GObjectClass *object_class;
 	DiaCanvasItemClass *item_class;
@@ -65,23 +65,24 @@ generalization_class_init (RelationshipClass *klass)
 	
 	parent_class = g_type_class_peek_parent (klass);
 
-	object_class->dispose = generalization_dispose;
-	object_class->get_property = generalization_get_property;
-	object_class->set_property = generalization_set_property;
+	object_class->dispose = extend_dispose;
+	object_class->get_property = extend_get_property;
+	object_class->set_property = extend_set_property;
 	
-	item_class->update = generalization_update;
+	item_class->update = extend_update;
 
-	klass->subject_class = "Generalization";
-	klass->head_name = "parent";
-	klass->tail_name = "child";
-	klass->head_xname = "specialization";
-	klass->tail_xname = "generalization";
+	klass->subject_class = "Extend";
+	klass->head_name = "base";
+	klass->tail_name = "extension";
+	klass->head_xname = "extender";
+	klass->tail_xname = "extend";
 }
 
 
 static void
-generalization_init (Generalization *item)
+extend_init (Extend *item)
 {
+	gdouble *dash;
 	DiaCanvasLine *line = (DiaCanvasLine*) item;
 
 	line->has_head = TRUE;
@@ -90,11 +91,17 @@ generalization_init (Generalization *item)
 	line->head_c = 10.0;
 	line->head_d = 10.0;
 	line->head_fill_color = 0;
+
+	dash = g_new (gdouble, 2);
+	dash[0] = 7.0;
+	dash[1] = 5.0;
+	DIA_CANVAS_LINE(item)->n_dash = 2;
+	DIA_CANVAS_LINE(item)->dash = dash;
 }
 
 
 static void
-generalization_set_property (GObject *object, guint property_id,
+extend_set_property (GObject *object, guint property_id,
 				 const GValue *value, GParamSpec *pspec)
 {
 	PyObject *pyobj;
@@ -107,7 +114,7 @@ generalization_set_property (GObject *object, guint property_id,
 }
 
 static void
-generalization_get_property (GObject *object, guint property_id,
+extend_get_property (GObject *object, guint property_id,
 				 GValue *value, GParamSpec *pspec)
 {
 	PyObject *pyobj;
@@ -120,14 +127,14 @@ generalization_get_property (GObject *object, guint property_id,
 }
 
 static void
-generalization_dispose (GObject *object)
+extend_dispose (GObject *object)
 {
 	G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 
 static void
-generalization_update (DiaCanvasItem *item, gdouble affine[6])
+extend_update (DiaCanvasItem *item, gdouble affine[6])
 {
 	DIA_CANVAS_ITEM_CLASS (parent_class)->update (item, affine);
 }

@@ -5,6 +5,8 @@
  */
 
 #include "usecase.h"
+#include "include.h"
+#include "extend.h"
 #include "common.h"
 #include <diacanvas/dia-shape.h>
 #include <diacanvas/dia-canvas-i18n.h>
@@ -36,6 +38,10 @@ static void use_case_update (DiaCanvasItem *item, gdouble affine[6]);
 static void use_case_handle_motion (DiaCanvasItem *item, DiaHandle *handle,                                         gdouble *wx, gdouble *wy,
 				    DiaEventMask mask);
 static gboolean use_case_event (DiaCanvasItem *item, DiaEvent *event);
+static gdouble use_case_glue (DiaCanvasItem *item, DiaHandle *handle,
+			      gdouble *wx, gdouble *wy);
+static gboolean use_case_connect (DiaCanvasItem *item, DiaHandle *handle);
+
 static void use_case_element_update (ModelElement *element, const gchar *key);
 
 static void do_auto_resize (DiaCanvasItem *item, DiaShape *shape_text);
@@ -89,6 +95,7 @@ use_case_class_init (UseCaseClass *klass)
 	item_class->update = use_case_update;
 	item_class->handle_motion = use_case_handle_motion;
 	item_class->event = use_case_event;
+	item_class->connect = use_case_connect;
 	model_class->element_update = use_case_element_update;
 
 	g_object_class_install_property (object_class,
@@ -331,6 +338,45 @@ use_case_event (DiaCanvasItem *item, DiaEvent *event)
 	default:
 		break;
 	}
+	return result;
+}
+
+static gdouble
+use_case_glue (DiaCanvasItem *item, DiaHandle *handle, gdouble *wx, gdouble *wy)
+{
+	gdouble result = G_MAXDOUBLE;
+
+	if ((IS_INCLUDE (handle->owner) || IS_EXTEND (handle->owner))
+	    && relationship_handle_glue (RELATIONSHIP (handle->owner),
+		    			 handle, item)) {
+		/* Skip the ModelElement::glue() function, since it will only
+		 * allow comments to be connected. */
+		DiaCanvasElementClass *element_class;
+
+		element_class = g_type_class_ref (DIA_TYPE_CANVAS_ELEMENT);
+		result = DIA_CANVAS_ITEM_CLASS (element_class)->glue (item, handle, wx, wy);
+
+		g_type_class_unref (element_class);
+	} else
+		result = DIA_CANVAS_ITEM_CLASS (parent_class)->glue (item, handle, wx, wy);
+	return result;
+}
+
+static gboolean
+use_case_connect (DiaCanvasItem *item, DiaHandle *handle)
+{
+	gboolean result = FALSE;
+
+	if ((IS_INCLUDE (handle->owner) || IS_EXTEND (handle->owner))
+	    && relationship_handle_connect (RELATIONSHIP (handle->owner),
+					    handle, item)) {
+		DiaCanvasElementClass *element_class;
+		element_class = g_type_class_ref (DIA_TYPE_CANVAS_ELEMENT);
+		result = DIA_CANVAS_ITEM_CLASS (element_class)->connect (item, handle);
+
+		g_type_class_unref (element_class);
+	} else
+		result = DIA_CANVAS_ITEM_CLASS (parent_class)->connect (item, handle);
 	return result;
 }
 

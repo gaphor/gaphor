@@ -18,7 +18,7 @@
  */
 /*
  * Generalization
- * ----------
+ * --------------
  */
 
 #ifndef __GENERALIZATION_H__
@@ -44,7 +44,6 @@ typedef struct _GeneralizationClass GeneralizationClass;
 struct _Generalization
 {
 	Relationship item;
-	
 };
 
 
@@ -55,7 +54,6 @@ struct _GeneralizationClass
 
 GType generalization_get_type (void);
 
-	
 G_END_DECLS
 
 

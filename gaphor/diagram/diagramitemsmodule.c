@@ -26,9 +26,10 @@ initdiagramitems (void)
 	pydiagramitems_register_classes (d);
 
 	UML_module = PyImport_ImportModule("UML");
+	if (UML_module == NULL)
+		Py_FatalError ("could not import UML");
 
-	if (PyErr_Occurred ()) {
+	if (PyErr_Occurred ())
 		Py_FatalError ("can't initialise module diagram");
-	}
 }
 

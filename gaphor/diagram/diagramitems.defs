@@ -28,14 +28,15 @@
   (gtype-id "_TYPE_MODEL_ELEMENT")
   (fields
     '("gboolean" "auto_resize")
+    '("PyObject*" "subject")
   )
 )
 
-(define-method get_subject
-  (of-object "ModelElement")
-  (c-name "model_element_get_subject")
-  (return-type "PyObject*")
-)
+;(define-method get_subject
+;  (of-object "ModelElement")
+;  (c-name "model_element_get_subject")
+;  (return-type "PyObject*")
+;)
 
 (define-method set_subject
   (of-object "ModelElement")
@@ -87,13 +88,16 @@
   (parent "DiaCanvasLine")
   (c-name "Relationship")
   (gtype-id "_TYPE_RELATIONSHIP")
+  (fields
+    '("PyObject*" "subject")
+  )
 )
 
-(define-method get_subject
-  (of-object "Relationship")
-  (c-name "relationship_get_subject")
-  (return-type "PyObject*")
-)
+;(define-method get_subject
+;  (of-object "Relationship")
+;  (c-name "relationship_get_subject")
+;  (return-type "PyObject*")
+;)
 
 (define-method set_subject
   (of-object "Relationship")
@@ -118,3 +122,28 @@
   (c-name "Generalization")
   (gtype-id "_TYPE_GENERALIZATION")
 )
+
+(define-object Dependency
+  (parent "Relationship")
+  (c-name "Dependency")
+  (gtype-id "_TYPE_DEPENDENCY")
+)
+
+(define-object Realization
+  (parent "Relationship")
+  (c-name "Realization")
+  (gtype-id "_TYPE_REALIZATION")
+)
+
+(define-object Include
+  (parent "Relationship")
+  (c-name "Include")
+  (gtype-id "_TYPE_INCLUDE")
+)
+
+(define-object Extend
+  (parent "Relationship")
+  (c-name "Extend")
+  (gtype-id "_TYPE_EXTEND")
+)
+

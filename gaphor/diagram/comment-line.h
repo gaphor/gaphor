@@ -64,7 +64,6 @@ gboolean comment_line_handle_glue (CommentLine *line, DiaHandle *handle,
 				   DiaCanvasItem *gluing_to);
 gboolean comment_line_handle_connect (CommentLine *line, DiaHandle *handle,
 				      DiaCanvasItem *connecting_to);
-//gboolean comment_line_handle_disconnect (CommentLine *line, DiaHandle *handle);
 
 G_END_DECLS
 

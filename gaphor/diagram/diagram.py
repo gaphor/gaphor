@@ -10,7 +10,7 @@ diagram2UML = {
 	diagramitems.Comment: UML.Comment,
 	diagramitems.UseCase: UML.UseCase,
 	diagramitems.CommentLine: None,
-	diagramitems.Generalization: UML.Generalization
+	diagramitems.Generalization: None
 }
 
 class Diagram(UML.Namespace):

@@ -48,6 +48,8 @@ struct _Relationship
 	DiaCanvasLine item;
 	
 	PyObject *subject;
+
+	guint head_disconnect_id, tail_disconnect_id;
 };
 
 
@@ -56,11 +58,25 @@ struct _RelationshipClass
 	DiaCanvasLineClass parent_class;
 
 	void (* element_update) (Relationship *relationship, const gchar *key);
+
+	/* Some fields to identify fields in the subject: */
+	gchar *subject_class;
+	gchar *head_name;
+	gchar *tail_name;
+	gchar *head_xname;
+	gchar *tail_xname;
 };
 
 GType relationship_get_type (void);
 
 void relationship_element_update (Relationship *relationship, const gchar *key);
+
+gboolean relationship_handle_glue (Relationship *rel, DiaHandle *handle,
+				   DiaCanvasItem *gluing_to);
+
+gboolean relationship_handle_connect (Relationship *rel, DiaHandle *handle,
+				      DiaCanvasItem *connecting_to);
+
 
 G_END_DECLS
 

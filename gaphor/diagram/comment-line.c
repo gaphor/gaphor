@@ -87,9 +87,6 @@ comment_line_init (CommentLine *item)
 	DIA_CANVAS_LINE(item)->dash = dash;
 	item->head_disconnect_id = 0;
 	item->head_disconnect_id = 0;
-
-	//g_signal_connect (item, "notify::parent",
-	//		  G_CALLBACK (comment_line_parent_notify), NULL);
 }
 
 
@@ -112,51 +109,6 @@ comment_line_disconnect (DiaCanvasItem *item, DiaHandle *handle)
 	return FALSE;
 }
 
-#if 0
-/**
- * comment_line_parent_notify:
- * @me: 
- *
- * If the parent is changed (which happens when an object is removed from the
- * canvas), we force a 'disconnect' of the first handle in the list. This
- * will ensure that the comment<->modelElement relationship is removed and
- * restored if the comment line is removed and undone...
- **/
-static void
-comment_line_parent_notify (ModelElement *me)
-{
-	PyObject *wrapper;
-
-	if (!me->subject)
-		return;
-
-	wrapper = pygobject_new (G_OBJECT (me));
-	g_assert (wrapper != NULL && wrapper != Py_None);
-
-	if (DIA_CANVAS_ITEM (me)->parent
-	    && DIA_CANVAS_ITEM (me)->canvas->in_undo) {
-		DiaHandle *head_handle;
-
-		head_handle = g_list_first (DIA_CANVAS_ITEM (me)->handles)->data;
-
-		if (head_handle->connected_to)
-			comment_line_handle_connect (COMMENT_LINE (me),
-						     head_handle,
-						     head_handle->connected_to);
-	} else if (!(DIA_CANVAS_ITEM (me)->parent
-		     && DIA_CANVAS_ITEM (me)->canvas->in_undo)) {
-		DiaHandle *head_handle;
-		
-		head_handle = g_list_first (DIA_CANVAS_ITEM (me)->handles)->data;
-
-		if (COMMENT_LINE (me)->head_disconnect_id)
-			comment_line_handle_disconnect (head_handle->connected_to,
-							head_handle,
-							COMMENT_LINE (me));
-	}
-	Py_DECREF (wrapper);
-}
-#endif
 
 static inline DiaHandle*
 find_opposite_handle (DiaCanvasItem *item, DiaHandle *handle)
@@ -171,12 +123,96 @@ find_opposite_handle (DiaCanvasItem *item, DiaHandle *handle)
 	return oppos_handle;
 }
 
+typedef struct {
+	PyObject *comment, *annotated_element;
+	gint count;
+} CommentLineHelper;
+
+/**
+ * find_existing_comment_lines:
+ * @item: 
+ * @data: 
+ *
+ * Check if a comment line connects the elements helper.comment and
+ * helper.annotated_element with each other. We need to do this in order to
+ * figure out if we should delete the relation in the data model or not.
+ *
+ * Return value: 
+ **/
+static gboolean
+find_existing_comment_lines (DiaCanvasItem *item, gpointer data)
+{
+	CommentLineHelper *helper = data;
+
+	if (IS_COMMENT_LINE (item)) {
+		DiaHandle *head, *tail;
+		head = g_list_first (item->handles)->data;
+		tail = g_list_last (item->handles)->data;
+		if (head->connected_to && tail->connected_to) {
+			PyObject *subj1, *subj2;
+			g_object_get (head->connected_to,
+				      "subject", &subj1, NULL);
+			g_object_get (tail->connected_to,
+				      "subject", &subj2, NULL);
+			if ((subj1 == helper->comment && subj2 == helper->annotated_element)
+			    || (subj1 == helper->comment && subj2 == helper->annotated_element))
+				helper->count += 1;
+			Py_DECREF (subj1);
+			Py_DECREF (subj2);
+		}
+	}
+	return FALSE;
+}
+
+/**
+ * count_comment_relations:
+ * @comment: 
+ * @annotated_element: 
+ *
+ * Count the number of CommentLine's that connect @comment with
+ * @annotated_element.
+ *
+ * Return value: 
+ **/
+static gint 
+count_comment_relations (PyObject *comment, PyObject *annotated_element)
+{
+	PyObject *presentation;
+	gint presentation_len;
+	gint i;
+	CommentLineHelper data;
+
+	data.comment = comment;
+	data.annotated_element = annotated_element;
+	data.count = 0;
+
+	presentation = PyObject_GetAttrString (comment, "presentation");
+	presentation_len = PySequence_Length (presentation);
+	for (i = 0; i < presentation_len; i++) {
+		PyObject *item = PySequence_GetItem (presentation, i);
+		DiaCanvasItem *citem;
+		g_assert (item != NULL);
+		
+		citem = DIA_CANVAS_ITEM (((PyGObject*) item)->obj);
+		g_assert (DIA_IS_CANVAS_ITEM (citem));
+		
+		dia_canvas_group_foreach (citem->canvas->root,
+					  find_existing_comment_lines,
+					  &data);
+		Py_DECREF (item);
+	}
+
+	Py_DECREF (presentation);
+	return data.count;
+}
+
 gboolean
 comment_line_handle_glue (CommentLine *line, DiaHandle *handle,
 			  DiaCanvasItem *gluing_to)
 {
 	DiaHandle *oppos_handle;
-
+	CommentLineHelper helper;
+	
 	g_return_val_if_fail (IS_COMMENT_LINE (line), FALSE);
 	g_return_val_if_fail (DIA_IS_HANDLE (handle), FALSE);
 	g_return_val_if_fail (IS_MODEL_ELEMENT (gluing_to)
@@ -216,12 +252,12 @@ comment_line_handle_disconnect (DiaCanvasItem *connected_to, DiaHandle *handle,
 	oppos_handle = find_opposite_handle (DIA_CANVAS_ITEM(line), handle);
 
 	if (handle == g_list_first (DIA_CANVAS_ITEM (line)->handles)->data) {
-		//g_signal_handler_disconnect (connected_to,
-		//			     line->head_disconnect_id);
+		g_signal_handler_disconnect (connected_to,
+					     line->head_disconnect_id);
 		line->head_disconnect_id = 0;
 	} else if (handle == g_list_last (DIA_CANVAS_ITEM (line)->handles)->data) {
-		//g_signal_handler_disconnect (connected_to,
-		//			     line->tail_disconnect_id);
+		g_signal_handler_disconnect (connected_to,
+					     line->tail_disconnect_id);
 		line->tail_disconnect_id = 0;
 	} else {
 		g_warning ("This function is called, but the handle can not be disconnected");
@@ -234,26 +270,32 @@ comment_line_handle_disconnect (DiaCanvasItem *connected_to, DiaHandle *handle,
 	g_assert (handle->connected_to != NULL);
 	g_assert (oppos_handle->connected_to != NULL);
 
+	/* Now we disconnect the relation between the comment and the
+	 * model element. We should only remove the relation if no other
+	 * comment lines exist that connect the same elements to each other.
+	 */
+
 	g_object_get (handle->connected_to, "subject", &subject, NULL);
 	g_object_get (oppos_handle->connected_to, "subject", &oppos_subject, NULL);
-
-	if (IS_COMMENT (handle->connected_to)) {
+		
+	if (IS_COMMENT (handle->connected_to)
+	    && count_comment_relations (subject, oppos_subject) == 1) {
 		annotated_element = PyObject_GetAttrString (subject,
 							    "annotatedElement");
 		g_assert (annotated_element != NULL && annotated_element != Py_None);
 		res = PyObject_DelItem (annotated_element, oppos_subject);
 		if (res != 0) {
-			//PyErr_Print ();
+			PyErr_Print ();
 			PyErr_Clear ();
 			//g_assert_not_reached ();
 		}
-	} else {
+	} else if (count_comment_relations (oppos_subject, subject) == 1) {
 		annotated_element = PyObject_GetAttrString (oppos_subject,
 							    "annotatedElement");
 		g_assert (annotated_element != NULL && annotated_element != Py_None);
 		res = PyObject_DelItem (annotated_element, subject);
 		if (res != 0) {
-			//PyErr_Print ();
+			PyErr_Print ();
 			PyErr_Clear ();
 			//g_assert_not_reached ();
 		}
@@ -261,9 +303,8 @@ comment_line_handle_disconnect (DiaCanvasItem *connected_to, DiaHandle *handle,
 
 	Py_DECREF (subject);
 	Py_DECREF (oppos_subject);
-	Py_DECREF (annotated_element);
-
-	g_message (__FUNCTION__": done");
+	if (annotated_element)
+		Py_DECREF (annotated_element);
 
 	return TRUE;
 }

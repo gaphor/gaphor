@@ -1,0 +1,1 @@
+CLEANFILES = *.pyc *.pyo

@@ -1,6 +1,5 @@
 Makefile
 Makefile.in
-diagramitems.c
 *.pyc
 *.pyo
 *.o

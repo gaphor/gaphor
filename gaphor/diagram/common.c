@@ -9,6 +9,186 @@
 #include <diacanvas/dia-canvas-i18n.h>
 #include <gdk/gdkkeysyms.h>
 
+extern PyObject *UML_module;
+
+
+/*
+ * TYPE_PYOBJECT
+ */
+
+GType
+pyobject_get_type (void)
+{
+	static GType type = 0;
+
+	if (!type) {
+		type = g_type_from_name ("PyObject");
+		g_assert (type != 0);
+	}
+	return type;
+}
+
+void
+subject_add_presentation (PyObject *subject, PyObject *item)
+{
+	PyObject *result;
+
+	g_return_if_fail (subject != NULL);
+	g_return_if_fail (item != NULL);
+	//g_return_if_fail (PyObject_Check (subject));
+	//g_return_if_fail (PyObject_Check (item));
+
+	result = PyObject_CallMethod (subject,
+				      "add_presentation",
+				      "O", item);
+	if (result)
+		Py_DECREF (result);
+	else {
+		PyErr_Print();
+		PyErr_Clear();
+		g_assert_not_reached();
+	}
+}
+
+void
+subject_remove_presentation (PyObject *subject, PyObject *item)
+{
+	PyObject *result;
+	result = PyObject_CallMethod (subject,
+				      "remove_presentation",
+				      "O", item);
+	if (result)
+		Py_DECREF (result);
+	else {
+		PyErr_Print();
+		PyErr_Clear();
+		g_assert_not_reached();
+	}
+}
+
+void
+subject_remove_presentation_undoable (PyObject *subject, PyObject *item)
+{
+	PyObject *result;
+	result = PyObject_CallMethod (subject,
+				      "remove_presentation_undoable",
+				      "O", item);
+	if (result)
+		Py_DECREF (result);
+	else {
+		PyErr_Print();
+		PyErr_Clear();
+		g_assert_not_reached();
+	}
+}
+
+void
+subject_undo_presentation (PyObject *subject, PyObject *item)
+{
+	PyObject *result;
+	result = PyObject_CallMethod (subject,
+				      "undo_presentation",
+				      "O", item);
+	if (result)
+		Py_DECREF (result);
+	else {
+		PyErr_Print();
+		PyErr_Clear();
+		g_assert_not_reached();
+	}
+}
+
+void
+subject_add_undoability (PyObject *subject)
+{
+	PyObject *result;
+	result = PyObject_CallMethod (subject, "add_undoability", NULL, NULL);
+	if (result)
+		Py_DECREF (result);
+	else {
+		PyErr_Print();
+		PyErr_Clear();
+		g_assert_not_reached();
+	}
+}
+
+void
+subject_remove_undoability (PyObject *subject)
+{
+	PyObject *result;
+	result = PyObject_CallMethod (subject,
+				      "remove_undoability",
+				      NULL, NULL);
+	if (result)
+		Py_DECREF (result);
+	else {
+		PyErr_Print();
+		PyErr_Clear();
+		g_assert_not_reached();
+	}
+}
+
+void
+subject_connect_element_update (PyObject *subject, PyObject *item)
+{
+	PyObject *result;
+	PyObject *element_update;
+
+	/* subject.connect(self.element_update) */
+	element_update = PyObject_GetAttrString (item, "element_update");
+	g_assert (element_update != NULL && element_update != Py_None);
+
+	result = PyObject_CallMethod (subject, "connect",
+				      "O", element_update);
+	if (result)
+		Py_DECREF (result);
+	else {
+		PyErr_Print();
+		PyErr_Clear();
+		g_assert_not_reached();
+	}
+	Py_DECREF (element_update);
+}
+void
+subject_disconnect_element_update (PyObject *subject, PyObject *item)
+{
+	PyObject *result;
+	PyObject *element_update;
+
+	/* subject.connect(self.element_update) */
+	element_update = PyObject_GetAttrString (item, "element_update");
+	g_assert (element_update != NULL && element_update != Py_None);
+
+	result = PyObject_CallMethod (subject, "disconnect",
+				      "O", element_update);
+	if (result)
+		Py_DECREF (result);
+	else {
+		PyErr_Print();
+		PyErr_Clear();
+		g_assert_not_reached();
+	}
+	Py_DECREF (element_update);
+}
+
+PyObject*
+create_uml_object (const gchar *name)
+{
+	PyObject *obj;
+	PyObject *d;
+	PyObject *t;
+
+	g_assert (UML_module != NULL);
+
+	d = PyModule_GetDict(UML_module);
+	t = PyDict_GetItemString(d, (char*) name);
+	g_assert (t != NULL && t != Py_None);
+
+	obj = PyObject_CallObject (t, NULL);
+	g_assert (obj != NULL && obj != Py_None);
+
+	return obj;
+}
 
 static gint
 move_cursor_vertical (DiaShape *shape, gint cursor_index, gint direction)
@@ -190,56 +370,33 @@ subject_get_string (PyObject *subject, const gchar* name)
 
 /* _set_subject() and _unset_subject():
  *
- * These function do a bit of evil wizardry... 
- * The diagram item ('item') can not be garbage collected. It will own
- * a reference to the model element though... The model element may only
- * be removed if (all) the diagram item(s) are removed. The diagram items
- * however, should free themselves as soon as the the diagram window
- * gets destroyed. This can not be done if the model elements own references
- * to the diagram items. This 'trick' is somewhat cheaper that using weak-ref
- * objects, but the effect is the same.
  */
 void
 _set_subject (DiaCanvasItem *item, PyObject *subject, PyObject **item_subject)
 {
-	PyObject *wrapper;
-	PyObject *element_update;
-	PyObject *result;
+	PyObject *self;
 
 	g_return_if_fail (DIA_IS_CANVAS_ITEM (item));
 	g_return_if_fail (subject != NULL);
 	g_return_if_fail (*item_subject == NULL);
 
-	wrapper = pygobject_new (G_OBJECT (item));
+	self = pygobject_new (G_OBJECT (item));
 	
 	Py_INCREF (subject);
 	*item_subject = subject;
 
-	result = PyObject_CallMethod (*item_subject,
-				      "add_presentation",
-				      "O", wrapper);
-	if (result)
-		Py_DECREF (result);
-	else {
-		PyErr_Print();
-		PyErr_Clear();
-		g_assert_not_reached();
-	}
+	subject_add_presentation (*item_subject, self);
 
-	/* subject.connect(wrapper.element_update)
-	 * # This increments wrapper's ref */
-	element_update = PyObject_GetAttrString (wrapper, "element_update");
-	result = PyObject_CallMethod (subject, "connect", "O", element_update);
+	/* subject.connect(self.element_update) */
+	subject_connect_element_update (subject, self);
 
-	Py_XDECREF (result);
-	Py_DECREF (element_update);
-	Py_DECREF (wrapper);
+	Py_DECREF (self);
 }
 
 void
 _unset_subject (DiaCanvasItem *item, PyObject **item_subject)
 {
-	PyObject *wrapper;
+	PyObject *self;
 	PyObject *element_update;
 	PyObject *result;
 	PyObject *subject;
@@ -258,29 +415,17 @@ _unset_subject (DiaCanvasItem *item, PyObject **item_subject)
 	subject = *item_subject;
 	*item_subject = NULL;
 
-	wrapper = pygobject_new (G_OBJECT (item));
-	g_assert (wrapper != NULL && wrapper != Py_None);
-	wr_cnt = wrapper->ob_refcnt;
+	self = pygobject_new (G_OBJECT (item));
+	g_assert (self != NULL && self != Py_None);
+	wr_cnt = self->ob_refcnt;
 
-	/* subject.disconnect(wrapper.element_update) */
-	element_update = PyObject_GetAttrString (wrapper, "element_update");
-	result = PyObject_CallMethod (subject, "disconnect", "O",
-				      element_update);
-	Py_XDECREF (result);
-	Py_DECREF (element_update);
+	/* subject.disconnect(self.element_update) */
+	subject_disconnect_element_update (subject, self);
 
-	result = PyObject_CallMethod (subject, "remove_presentation",
-				      "O", wrapper);
-	if (result)
-		Py_DECREF (result);
-	else {
-		PyErr_Print();
-		PyErr_Clear();
-		g_assert_not_reached();
-	}
+	subject_remove_presentation (subject, self);
 
 	Py_DECREF (subject);
-	Py_DECREF (wrapper);
-	//g_assert (wrapper->ob_refcnt == wr_cnt - 2);
-	//g_message (__FUNCTION__": object->ref_count = %d, wrapper->ob_refcnt = %d", G_OBJECT (item)->ref_count, wrapper->ob_refcnt);
+	Py_DECREF (self);
+	//g_assert (self->ob_refcnt == wr_cnt - 2);
+	//g_message (__FUNCTION__": object->ref_count = %d, self->ob_refcnt = %d", G_OBJECT (item)->ref_count, self->ob_refcnt);
 }

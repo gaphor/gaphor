@@ -14,6 +14,10 @@ headers
 
 #include "relationship.h"
 #include "generalization.h"
+#include "dependency.h"
+#include "realization.h"
+#include "include.h"
+#include "extend.h"
 
 %%
 import gobject.GObject as PyGObject_Type
@@ -55,6 +59,20 @@ _wrap_model_element_get_subject(PyGObject *self)
     return subject;
 }
 %%
+override-attr ModelElement.subject
+static PyObject *
+_wrap__model_element__get_subject(PyGObject *self, void *closure)
+{
+    PyObject *subject;
+
+    g_object_get (self->obj, "subject", &subject, NULL);
+    /* Do not increase the refcount since g_object_get has already done that. */
+ 
+    g_message (__FUNCTION__": subject refcnt = %d", subject->ob_refcnt);
+
+    return subject;
+}
+%%
 override relationship_set_subject kwargs
 static PyObject *
 _wrap_relationship_set_subject(PyGObject *self, PyObject *args, PyObject *kwargs)
@@ -76,6 +94,18 @@ _wrap_relationship_set_subject(PyGObject *self, PyObject *args, PyObject *kwargs
 override relationship_get_subject noargs
 static PyObject *
 _wrap_relationship_get_subject(PyGObject *self)
+{
+    PyObject *subject;
+
+    g_object_get (self->obj, "subject", &subject, NULL);
+    /* Do not increase the refcount since g_object_get has already done that. */
+ 
+    return subject;
+}
+%%
+override-attr Relationship.subject
+static PyObject *
+_wrap__relationship__get_subject(PyGObject *self, void *closure)
 {
     PyObject *subject;
 

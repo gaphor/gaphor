@@ -19,6 +19,10 @@ ITEM_ADD_USECASE = 31
 ITEM_ADD_COMMENT = 32
 ITEM_ADD_COMMENT_LINE = 33
 ITEM_ADD_GENERALIZATION = 34
+ITEM_ADD_DEPENDENCY = 35
+ITEM_ADD_REALIZATION = 36
+ITEM_ADD_INCLUDE = 37
+ITEM_ADD_EXTEND = 38
 
 class DiagramView:
 
@@ -163,7 +167,15 @@ class DiagramView:
 	elif action == ITEM_ADD_COMMENT_LINE:
 	    set_placement_tool (diagram.CommentLine, None)
 	elif action == ITEM_ADD_GENERALIZATION:
-	    set_placement_tool (diagram.Generalization, UML.Generalization)
+	    set_placement_tool (diagram.Generalization, None)
+	elif action == ITEM_ADD_REALIZATION:
+	    set_placement_tool (diagram.Realization, None)
+	elif action == ITEM_ADD_DEPENDENCY:
+	    set_placement_tool (diagram.Dependency, None)
+	elif action == ITEM_ADD_INCLUDE:
+	    set_placement_tool (diagram.Include, None)
+	elif action == ITEM_ADD_EXTEND:
+	    set_placement_tool (diagram.Extend, None)
 	else:
 	    print 'This item is not iimplemented yet.'
 
@@ -189,6 +201,10 @@ class DiagramView:
 	( '/New Item/Use Case', None, __menu_item_cb,  ITEM_ADD_USECASE ),
 	( '/New Item/Comment', None, __menu_item_cb,  ITEM_ADD_COMMENT ),
 	( '/New Item/Comment Line', None, __menu_item_cb,  ITEM_ADD_COMMENT_LINE ),
-	( '/New Item/Generalization', None, __menu_item_cb,  ITEM_ADD_GENERALIZATION )
+	( '/New Item/Generalization', None, __menu_item_cb,  ITEM_ADD_GENERALIZATION ),
+	( '/New Item/Dependency', None, __menu_item_cb,  ITEM_ADD_DEPENDENCY ),
+	( '/New Item/Realization', None, __menu_item_cb,  ITEM_ADD_REALIZATION ),
+	( '/New Item/Include', None, __menu_item_cb,  ITEM_ADD_INCLUDE ),
+	( '/New Item/Extend', None, __menu_item_cb,  ITEM_ADD_EXTEND )
     )
 

@@ -6,6 +6,8 @@
 
 #include "classifier.h"
 #include "generalization.h"
+#include "realization.h"
+#include "dependency.h"
 #include "common.h"
 #include <diacanvas/dia-shape.h>
 #include <diacanvas/dia-canvas-i18n.h>
@@ -81,10 +83,10 @@ classifier_class_init (ClassifierClass *klass)
 static void
 classifier_init (Classifier *item)
 {
-	item->old_namespace = NULL;
+	//item->old_namespace = NULL;
 
-	g_signal_connect (G_OBJECT (item), "notify::parent",
-			  G_CALLBACK (classifier_parent_notify), NULL);
+	//g_signal_connect (G_OBJECT (item), "notify::parent",
+	//		  G_CALLBACK (classifier_parent_notify), NULL);
 }
 
 
@@ -118,7 +120,7 @@ static void
 classifier_dispose (GObject *object)
 {
 	Classifier *c = (Classifier*) object;
-
+/*
 	if (c->old_namespace) {
 		PyObject *old_namespace = c->old_namespace;
 		c->old_namespace = NULL;
@@ -134,7 +136,7 @@ classifier_dispose (GObject *object)
 				PyErr_Clear();
 			}
 		}
-	}
+	} */
 
 	G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -145,8 +147,15 @@ classifier_glue (DiaCanvasItem *item, DiaHandle *handle,
 {
 	gdouble result = G_MAXDOUBLE;
 
-	if (IS_GENERALIZATION (handle->owner)) {
+	if ((IS_GENERALIZATION (handle->owner)
+	     || IS_DEPENDENCY (handle->owner)
+	     || IS_REALIZATION (handle->owner))
+	    && relationship_handle_glue (RELATIONSHIP (handle->owner),
+		    			 handle, item)) {
+		/* Skip the ModelElement::glue() function, since it will only
+		 * allow comments to be connected. */
 		DiaCanvasElementClass *element_class;
+
 		element_class = g_type_class_ref (DIA_TYPE_CANVAS_ELEMENT);
 		result = DIA_CANVAS_ITEM_CLASS (element_class)->glue (item, handle, wx, wy);
 
@@ -161,7 +170,11 @@ classifier_connect (DiaCanvasItem *item, DiaHandle *handle)
 {
 	gboolean result = FALSE;
 
-	if (IS_GENERALIZATION (handle->owner)) {
+	if ((IS_GENERALIZATION (handle->owner)
+	     || IS_DEPENDENCY (handle->owner)
+	     || IS_REALIZATION (handle->owner))
+	    && relationship_handle_connect (RELATIONSHIP (handle->owner),
+					    handle, item)) {
 		DiaCanvasElementClass *element_class;
 		element_class = g_type_class_ref (DIA_TYPE_CANVAS_ELEMENT);
 		result = DIA_CANVAS_ITEM_CLASS (element_class)->connect (item, handle);
@@ -175,19 +188,10 @@ classifier_connect (DiaCanvasItem *item, DiaHandle *handle)
 static gboolean
 classifier_disconnect (DiaCanvasItem *item, DiaHandle *handle)
 {
-	gboolean result = FALSE;
-
-	if (IS_GENERALIZATION (handle->owner)) {
-		DiaCanvasElementClass *element_class;
-		element_class = g_type_class_ref (DIA_TYPE_CANVAS_ELEMENT);
-		result = DIA_CANVAS_ITEM_CLASS (element_class)->disconnect (item, handle);
-
-		g_type_class_unref (element_class);
-	} else
-		result = DIA_CANVAS_ITEM_CLASS (parent_class)->disconnect (item, handle);
-	return result;
+	return DIA_CANVAS_ITEM_CLASS (parent_class)->disconnect (item, handle);
 }
 
+#if 0
 /**
  * classifier_parent_notify:
  * @me: 
@@ -216,7 +220,8 @@ classifier_parent_notify (ModelElement *me)
 
 	namespace = PyObject_GetAttrString (me->subject, "namespace");
 
-	if (DIA_CANVAS_ITEM (me)->parent) {
+	if (DIA_CANVAS_ITEM (me)->parent
+	    && DIA_CANVAS_ITEM (me)->canvas->in_undo) {
 		g_message (__FUNCTION__": reseting parent");
 		/* reset the old namespace value... */
 		if (namespace == Py_None &&  CLASSIFIER (me)->old_namespace)
@@ -225,7 +230,8 @@ classifier_parent_notify (ModelElement *me)
 		Py_XDECREF (CLASSIFIER (me)->old_namespace);
 		CLASSIFIER (me)->old_namespace = NULL;
 		g_assert (wrapper->ob_refcnt = refcnt + 1);
-	} else {
+	} else if (!(DIA_CANVAS_ITEM (me)->parent
+		     && DIA_CANVAS_ITEM (me)->canvas->in_undo)) {
 		PyObject *presentation;
 
 		g_message (__FUNCTION__": no more parent");
@@ -242,9 +248,9 @@ classifier_parent_notify (ModelElement *me)
 		Py_DECREF (presentation);
 		g_assert (wrapper->ob_refcnt = refcnt - 1); // pres + ns
 	}
-	Py_DECREF (wrapper);
 	Py_DECREF (namespace);
+	Py_DECREF (wrapper);
 
 	g_message (__FUNCTION__": Parent is set to %p (refcnt = %d)", DIA_CANVAS_ITEM (me)->parent, G_OBJECT (me)->ref_count);
 }
-
+#endif

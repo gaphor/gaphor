@@ -258,13 +258,10 @@ model_element_disconnect (DiaCanvasItem *item, DiaHandle *handle)
 {
 	gboolean res = FALSE;
 
-	//if (IS_COMMENT_LINE (handle->owner)
-	//    && comment_line_handle_disconnect (COMMENT_LINE (handle->owner),
-	//				       handle)) {
-		res = DIA_CANVAS_ITEM_CLASS(parent_class)->disconnect (item,
-								       handle);
-		g_assert (res == TRUE);
-	//}
+	res = DIA_CANVAS_ITEM_CLASS(parent_class)->disconnect (item,
+							       handle);
+	g_assert (res == TRUE);
+
 	return res;
 }
 
@@ -301,27 +298,9 @@ model_element_parent_notify (ModelElement *me)
 	g_assert (wrapper != NULL && wrapper != Py_None);
 
 	if (DIA_CANVAS_ITEM (me)->parent) {
-		result = PyObject_CallMethod (me->subject,
-					      "undo_presentation",
-					      "O", wrapper);
-		if (result)
-			Py_DECREF (result);
-		else {
-			PyErr_Print();
-			PyErr_Clear();
-			g_assert_not_reached();
-		}
+		subject_undo_presentation (me->subject, wrapper);
 	} else {
-		result = PyObject_CallMethod (me->subject,
-					      "remove_presentation_undoable",
-					      "O", wrapper);
-		if (result)
-			Py_DECREF (result);
-		else {
-			PyErr_Print();
-			PyErr_Clear();
-			g_assert_not_reached();
-		}
+		subject_remove_presentation_undoable (me->subject, wrapper);
 	}
 	Py_DECREF (wrapper);
 }

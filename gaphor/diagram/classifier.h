@@ -48,7 +48,7 @@ struct _Classifier
 {
 	ModelElement item;
 	
-	PyObject *old_namespace;
+	/* PyObject *old_namespace; */
 };
 
 

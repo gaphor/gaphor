@@ -31,6 +31,25 @@
 /* Loaded in diagramitemsmodule.c: */
 extern PyObject *UML_module;
 
+#define TYPE_PYOBJECT  (pyobject_get_type ())
+
+GType pyobject_get_type (void);
+
+/*
+ * Methods for model element <-> diagram item connection.
+ */
+
+void subject_add_presentation (PyObject *subject, PyObject *item);
+void subject_remove_presentation (PyObject *subject, PyObject *item);
+void subject_remove_presentation_undoable (PyObject *subject, PyObject *item);
+void subject_undo_presentation (PyObject *subject, PyObject *item);
+void subject_add_undoability (PyObject *subject);
+void subject_remove_undoability (PyObject *subject);
+
+/* Connect and disconnect the element_update callback function. */
+void subject_connect_element_update (PyObject *subject, PyObject *item);
+void subject_disconnect_element_update (PyObject *subject, PyObject *item);
+
 #define APPEND_SHAPE(item, stype) \
 	DIA_CANVAS_ITEM(item)->shapes = g_list_append (DIA_CANVAS_ITEM(item)->shapes, dia_shape_new (stype))
 
@@ -75,5 +94,7 @@ void _set_subject (DiaCanvasItem *item, PyObject *subject,
 		   PyObject **item_subject);
 
 void _unset_subject (DiaCanvasItem *item, PyObject **item_subject);
+
+PyObject *create_uml_object (const gchar *name);
 
 #endif /* __COMMON_H__ */

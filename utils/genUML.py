@@ -148,7 +148,8 @@ class MetaModelParser(XMLParser):
 	dict = {"tag": "associationend",
 		"id": data[NS + "xmi.id"],
 		"name": data[NS + "name"],
-		"type": data[NS + "type"]} 
+		"type": data[NS + "type"],
+		"aggregation": data[NS + "aggregation"] } 
         self.inc_level(dict)
 
     def end_AssociationEnd(self):
@@ -466,11 +467,14 @@ def write_assoc(assend1, assend2):
 		return 1
 	return 0
 
-    if classes[assend1["type"]]["name"] not in custom_elements:
+    if classes[assend1["type"]]["name"] not in custom_elements \
+      and assend2["aggregation"] != "composite":
 	mult = 'None'
 	if assend2["upper"] == -1: # multiplicity = '*'
 	    mult = 'Sequence'
-        if is_referenced(classes[assend2["type"]], assend1["id"]):
+        if (is_referenced(classes[assend2["type"]], assend1["id"]) \
+	    or is_referenced(classes[assend1["type"]], assend2["id"])) \
+	  and assend1["aggregation"] != "composite":
 	    out(classes[assend1["type"]]["name"] + "._attrdef['" + \
 			assend2["name"] + "'] = ( " + mult + ", " + \
 			classes[assend2["type"]]["name"] + ", '" + \

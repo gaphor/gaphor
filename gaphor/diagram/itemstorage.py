@@ -146,8 +146,7 @@ def canvas_line_postload (item, node):
 def model_element_save (item, document, parent):
     node = canvas_element_save (item, document, parent)
     save_attr (item, node, 'auto_resize')
-    subj = item.get_subject ()
-    node.setAttribute ('subject', str (subj.id))
+    node.setAttribute ('subject', str (item.subject.id))
     return node
 
 def model_element_load (item, node):
@@ -166,8 +165,7 @@ def model_element_load (item, node):
 #
 def relationship_save (item, document, parent):
     node = canvas_line_save (item, document, parent)
-    subj = item.get_subject ()
-    node.setAttribute ('subject', str (subj.id))
+    node.setAttribute ('subject', str (item.subject.id))
     canvas_line_save (item, document, node)
     return node
 
@@ -205,5 +203,9 @@ loadsavetable = {
 	diagramitems.Comment: (model_element_save, comment_load ),
 	diagramitems.UseCase: (model_element_save, usecase_load ),
 	diagramitems.CommentLine: ( canvas_line_save, canvas_line_load, canvas_line_postload ),
-	diagramitems.Generalization: ( relationship_save, generalization_load, canvas_line_postload )
+	diagramitems.Generalization: ( relationship_save, generalization_load, canvas_line_postload ),
+	diagramitems.Dependency: ( relationship_save, relationship_load, canvas_line_postload ),
+	diagramitems.Realization: ( relationship_save, relationship_load, canvas_line_postload ),
+	diagramitems.Include: ( relationship_save, relationship_load, canvas_line_postload ),
+	diagramitems.Extend: ( relationship_save, relationship_load, canvas_line_postload )
 }

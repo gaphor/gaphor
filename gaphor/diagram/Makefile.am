@@ -14,7 +14,11 @@ sources = \
 	actor.c		\
 	usecase.c	\
 	relationship.c	\
-	generalization.c
+	generalization.c\
+	dependency.c	\
+	realization.c	\
+	extend.c	\
+	include.c	
 
 headers = \
 	common.h	\
@@ -25,10 +29,15 @@ headers = \
 	actor.h		\
 	usecase.h	\
 	relationship.h	\
-	generalization.c
+	generalization.h\
+	dependency.h	\
+	realization.h	\
+	extend.h	\
+	include.h	
 
 all-local:
-	cp $(srcdir)/.libs/diagramitemsmodule.so $(srcdir)
+	test -f $(srcdir)/diagramitemsmodule.so || $(LN_S) $(srcdir)/.libs/diagramitemsmodule.so $(srcdir)
+	(cd .. && $(PYTHON) -c "import diagram.diagramitems")
 
 diagramitemsdir = $(pythondir)
 diagramitemsexecdir = $(pyexecdir)
@@ -39,7 +48,7 @@ diagramitemsmodule_la_LIBADD = $(DIACANVAS2_LIBS)
 diagramitemsmodule_la_SOURCES = $(sources) diagramitemsmodule.c 
 nodist_diagramitemsmodule_la_SOURCES = diagramitems.c
 
-CLEANFILES = diagramitems.c
+CLEANFILES = diagramitems.c *.pyc *.pyo
 EXTRA_DIST = diagramitems.defs diagramitems.override
 diagramitems.c: diagramitems.defs diagramitems.override
 
@@ -53,4 +62,5 @@ diagramitems.c: diagramitems.defs diagramitems.override
 	    --prefix py$* $*.defs) > gen-$*.c \
 	&& cp gen-$*.c $*.c \
 	&& rm -f gen-$*.c
+
 
