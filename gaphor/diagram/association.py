@@ -876,7 +876,10 @@ def rotate(p1, p2, points, x0 = 0, y0 = 0, dangle = 0):
     try:
         angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0]))
     except ZeroDivisionError:
-        angle = pi * 1.5
+        angle = pi / 2.0
+
+        if p2[1] < p1[1]:
+            angle += pi
         
     angle += dangle
 
