@@ -63,7 +63,8 @@ class Logger(object):
 	self.log(Logger.CRITICAL, message, exc)
 
     def default_logger(self, level, message, exc=None):
-	"""The default logger sends log information to stdout."""
+	"""The default logger sends log information to stdout.
+	"""
 	if level >= self.__log_level:
 	    print '[Gaphor-%s] %s' % (('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL' )[level - 1], message)
 	    if exc:

@@ -6,6 +6,7 @@ Relationship -- Base class for dependencies and associations.
 import gobject
 import diacanvas
 import gaphor.UML as UML
+from gaphor.diagram import initialize_item
 from diagramitem import DiagramItem
 from diagramline import DiagramLine
 
@@ -56,5 +57,4 @@ class RelationshipItem(DiagramLine, DiagramItem):
         return self._on_disconnect_handle(handle, diacanvas.CanvasLine)
 
 
-gobject.type_register(RelationshipItem)
-diacanvas.set_callbacks(RelationshipItem)
+initialize_item(RelationshipItem)

@@ -2,8 +2,8 @@
 """Basic functionality for line-like objects on a diagram.
 """
 
-import gobject
 import diacanvas
+from gaphor.diagram import initialize_item
 
 class DiagramLine(diacanvas.CanvasLine):
     """Gaphor wrapper for lines."""
@@ -110,6 +110,4 @@ class DiagramLine(diacanvas.CanvasLine):
         pass
 
 
-gobject.type_register(DiagramLine)
-diacanvas.set_callbacks(DiagramLine)
-
+initialize_item(DiagramLine)

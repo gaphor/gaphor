@@ -21,6 +21,7 @@ import parser
 import diagram
 import diacanvas
 import gaphor
+from gaphor.i18n import _
 
 __all__ = [ 'load', 'save' ]
 
@@ -124,7 +125,7 @@ def _load(elements, factory):
     Exceptions: IOError, ValueError.
     """
 
-    log.debug('Loading %d elements...' % len(elements.keys()))
+    log.debug(_('Loading %d elements...') % len(elements.keys()))
 
     log.info('0%')
 
@@ -210,7 +211,7 @@ def load (filename, factory=None):
         #gc.collect()
         #print '===================================== pre load succeeded =='
         if not factory:
-            factory = gaphor.get_resource(UML.ElementFactory)
+            factory = gaphor.resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
         _load(elements, factory)

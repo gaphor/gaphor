@@ -4,19 +4,17 @@ in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 """
 
-import gtk
 import gobject
-import types
-import gaphor.UML as UML
-import sys
-import string
+import gtk
 import stock
+
+import gaphor.UML as UML
 
 class NamespaceModel(gtk.GenericTreeModel):
     """The NamespaceModel holds a view on the data model based on namespace
     relationships (such as a Package containing a Class).
 
-    NamedElement.namespace[1] -- Namespace.ownedMember
+    NamedElement.namespace[1] -- Namespace.ownedMember[*]
     """
 
     def __init__(self, factory):
@@ -208,6 +206,10 @@ class NamespaceModel(gtk.GenericTreeModel):
                 self.row_deleted((0,))
             self.root = (None, [])
 
+        # TODO: add create (and remove?) signal so we can add 
+        #elif pspec == 'create':
+        #    self.new_node_from_element(obj, self.root)
+
     # TreeModel methods:
 
     def on_get_flags(self):
@@ -350,7 +352,7 @@ class NamespaceView(gtk.TreeView):
     def _set_name (self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)
         #print 'set_name:', value
-        name = value and string.replace(value.name or '', '\n', ' ') or '<None>'
+        name = value and (value.name or '').replace('\n', ' ') or '<None>'
         cell.set_property('text', name)
 
     def _name_edited (self, cell, path_str, new_text):

@@ -11,6 +11,7 @@ import os.path
 import msgfmt
 
 class build(_build):
+    description = "New build class, which adds the property to add locales."
 
     def initialize_options(self):
         _build.initialize_options(self)

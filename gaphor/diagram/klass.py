@@ -12,6 +12,8 @@ import pango
 import diacanvas
 
 import gaphor.UML as UML
+from gaphor.diagram import initialize_item
+
 from classifier import ClassifierItem
 from feature import FeatureItem
 from attribute import AttributeItem
@@ -292,6 +294,4 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
             #log.debug('on_groupable_iter (oper): %s' % i)
             yield i
 
-
-gobject.type_register(ClassItem)
-diacanvas.set_groupable(ClassItem)
+initialize_item(ClassItem, UML.Class)

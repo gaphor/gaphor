@@ -30,7 +30,7 @@ class Options:
 
 class build_pot(Command):
 
-    description="This a distutils command for generating a .pot file from python source files"
+    description="Generate a .po template file (.pot) from python source files"
 
     user_options = [('msgmerge=', None, 'location of the msgmerge program'),
                     ('extract-all', 'a', ''),
@@ -108,7 +108,7 @@ class build_pot(Command):
 	options.width = int(self.width)
 	if self.exclude_file:
 	    try:
-		fp = open(options.exclude_file)
+		fp = open(self.exclude_file)
 		options.toexclude = fp.readlines()
 		fp.close()
 	    except IOError:
@@ -133,7 +133,8 @@ class build_pot(Command):
 
     def create_pot_file(self):
 	"""Create a new .pot file. This is basically a rework of the
-	main function of pygettext."""
+	main function of pygettext.
+        """
 	import glob
 	import tokenize
 	source_files = []
@@ -161,14 +162,12 @@ class build_pot(Command):
 	# write the output
 	if self.output == '-':
 	    fp = sys.stdout
-	    closep = 0
 	else:
 	    fp = open(self.output, 'w')
-	    closep = 1
 	try:
 	    eater.write(fp)
 	finally:
-	    if closep:
+	    if fp is not sys.stdout:
 		fp.close()
 
     def merge_files(self):

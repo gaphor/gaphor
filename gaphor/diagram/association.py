@@ -16,6 +16,7 @@ import diacanvas.shape
 import diacanvas.geometry
 import gaphor
 import gaphor.UML as UML
+from gaphor.diagram import initialize_item
 
 from diagramitem import DiagramItem
 from relationship import RelationshipItem
@@ -473,7 +474,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
             self.__the_lowerValue = self.subject.lowerValue
             log.debug('Have a lowerValue: %s' % self.subject.lowerValue)
             self.subject.lowerValue.connect('value', self.on_lowerValue_notify__value)
-            self._mult.set_text(self.subject.lowerValue.value)
+            self._mult.set_text(self.subject.lowerValue.value or '')
         else:
             self._mult.set_text('')
         self.request_update()
@@ -558,9 +559,5 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
             if new_text != self.subject.lowerValue.value:
                 self.subject.lowerValue.value = new_text
 
-gobject.type_register(AssociationItem)
-diacanvas.set_groupable(AssociationItem)
-
-gobject.type_register(AssociationEnd)
-diacanvas.set_callbacks(AssociationEnd)
-diacanvas.set_editable(AssociationEnd)
+initialize_item(AssociationItem, UML.Association)
+initialize_item(AssociationEnd)

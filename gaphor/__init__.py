@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # vim:sw=4
-"""This is the main package for Gaphor, a Python based UML editor.
+"""This is Gaphor, a Python based UML editor.
 """
 
 __all__ = [ 'main', 'resource', 'GaphorError' ]

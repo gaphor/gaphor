@@ -5,6 +5,7 @@
 import gobject
 import pango
 import diacanvas
+from gaphor.diagram import initialize_item
 from modelelement import ModelElementItem
 
 class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
@@ -91,6 +92,7 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
             self.subject.name = new_text
         self.request_update()
 
-gobject.type_register(ClassifierItem)
-diacanvas.set_editable(ClassifierItem)
+initialize_item(ClassifierItem)
+#gobject.type_register(ClassifierItem)
+#diacanvas.set_editable(ClassifierItem)
 

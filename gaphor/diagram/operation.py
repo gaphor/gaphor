@@ -4,6 +4,7 @@
 
 import gobject
 import diacanvas
+from gaphor.diagram import initialize_item
 from feature import FeatureItem
 
 class OperationItem(FeatureItem):
@@ -11,5 +12,4 @@ class OperationItem(FeatureItem):
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
 
-gobject.type_register(OperationItem)
-diacanvas.set_callbacks(OperationItem)
+initialize_item(OperationItem)

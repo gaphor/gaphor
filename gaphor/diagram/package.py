@@ -8,7 +8,8 @@ from __future__ import generators
 import gobject
 import pango
 import diacanvas
-
+import gaphor.UML as UML
+from gaphor.diagram import initialize_item
 from classifier import ClassifierItem
 
 class PackageItem(ClassifierItem):
@@ -47,4 +48,4 @@ class PackageItem(ClassifierItem):
         for s in ClassifierItem.on_shape_iter(self):
             yield s
 
-gobject.type_register(PackageItem)
+initialize_item(PackageItem, UML.Package)

@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # vim:sw=4:et
+"""Lexical analizer for attributes and operations.
 
-# Lexical analizer for operations and properties.
+In this module some parse functions are added for attributes and operations.
+The regular expressions are constructed based on a series of
+"sub-patterns". This makes it easy to identify the autonomy of an
+attribute/operation.
+"""
 
-# In this module some parse functions are added for attributes and operations.
-# The regular expressions are constructed based on a series of
-# "sub-patterns". This makes it easy to identify the autonomy of an
-# attribute/operation.
-
-__all__ = [ 'parse_property', 'parse_operation' ]
+__all__ = [ 'parse_attribute', 'parse_operation' ]
 
 import re
 import gaphor
@@ -43,29 +43,46 @@ rest_subpat = r'\s*(,\s*(?P<rest>.*))?'
 # Direction of a parameter (optional, default in) ::= 'in' | 'out' | 'inout'
 dir_subpat = r'\s*(?P<dir>in|out|inout)?'
 
+# Some trailing garbage => no valid syntax...
+garbage_subpat = r'\s*(?P<garbage>.*)'
+
 # Property:
 #   [+-#] [/] name [: type[\[mult\]]] [= default] [{ tagged values }]
-property_pat = re.compile(r'^' + vis_subpat + derived_subpat + name_subpat + type_subpat + default_subpat + tags_subpat)
+property_pat = re.compile(r'^' + vis_subpat + derived_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + garbage_subpat)
 
 # Operation:
 #   [+|-|#] name ([parameters]) [: type[\[mult\]]] [{ tagged values }]
-operation_pat = re.compile(r'^' + vis_subpat + name_subpat + params_subpat + type_subpat + tags_subpat)
+operation_pat = re.compile(r'^' + vis_subpat + name_subpat + params_subpat + type_subpat + tags_subpat + garbage_subpat)
 
 # One parameter supplied with an operation:
 #   [in|out|inout] name [: type[\[mult\]] [{ tagged values }]
 parameter_pat = re.compile(r'^' + dir_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + rest_subpat)
 
 
-def parse_property(self, s):
+def parse_attribute(self, s, element_factory=None):
     """Parse string s in the property. Tagged values, multiplicity and stuff
-    like that is altered to reflect the data in the property string."""
+    like that is altered to reflect the data in the property string.
+    """
     m = property_pat.match(s)
-    if not m:
+    g = m.group
+    if not m or g('garbage'):
         self.name = s
-        # TODO: clean other attributes
+        del self.visibility
+        del self.isDerived
+        if self.typeValue:
+            self.typeValue.value = None
+        if self.lowerValue:
+            self.lowerValue.value = None
+        if self.upperValue:
+            self.upperValue.value = None
+        if self.defaultValue:
+            self.defaultValue.value = None
+        if self.taggedValue:
+            self.taggedValue.value = None
     else:
         from uml2 import LiteralString
-        g = m.group
+        if not element_factory:
+            element_factory = gaphor.resource("ElementFactory")
         vis = g('vis')
         if vis == '+':
             self.visibility = 'public'
@@ -98,17 +115,23 @@ def parse_property(self, s):
         #print g('vis'), g('derived'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('default'), g('tags')
 
 
-def parse_operation(self, s):
+def parse_operation(self, s, element_factory=None):
     """Parse string s in the operation. Tagged values, parameters and
-    visibility is altered to reflect the data in the operation string."""
+    visibility is altered to reflect the data in the operation string.
+    """
     m = operation_pat.match(s)
-    if not m:
+    g = m.group
+    if not m or g('garbage'):
         self.name = s
-        # TODO: clean other attributes
+        del self.visibility
+        if self.returnResult:
+            self.returnResult.unlink()
+        if self.formalParameter:
+            self.formalParameter.unlink()
     else:
         from uml2 import Parameter, LiteralString
-        element_factory = gaphor.resource("ElementFactory")
-        g = m.group
+        if not element_factory:
+            element_factory = gaphor.resource("ElementFactory")
         vis = g('vis')
         if vis == '+':
             self.visibility = 'public'
@@ -121,11 +144,11 @@ def parse_operation(self, s):
                 del self.visibility
             except AttributeError:
                 pass
-        self.direction = 'return'
         self.name = g('name')
         if not self.returnResult:
             self.returnResult = element_factory.create(Parameter)
         p = self.returnResult[0]
+        p.direction = 'return'
         if not p.typeValue:
             p.typeValue = element_factory.create(LiteralString)
         p.typeValue.value = g('type')
@@ -141,19 +164,17 @@ def parse_operation(self, s):
         p.taggedValue.value = g('tags')
         #print g('vis'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('tags')
         
-        # TODO: find a more elegant solution for parameter deletion
-        # Delete all existing parameters:
-        for p in list(self.formalParameter):
-            p.unlink()
-            #del self.formalParameter[p]
-
+        pindex = 0
         params = g('params')
         while params:
             m = parameter_pat.match(params)
             if not m:
                 break
             g = m.group
-            p = element_factory.create(Parameter)
+            try:
+                p = self.formalParameter[pindex]
+            except IndexError:
+                p = element_factory.create(Parameter)
             p.direction = g('dir') or 'in'
             p.name = g('name')
             if not p.typeValue:
@@ -174,5 +195,12 @@ def parse_operation(self, s):
             self.formalParameter = p
 
             #print ' ', g('dir') or 'in', g('name'), g('type'), g('mult_l'), g('mult_u'), g('default'), g('tags')
+
+            # Do the next parameter:
             params = g('rest')
+            pindex += 1
+
+        # Remove remaining parameters:
+        for fp in self.formalParameter[pindex:]:
+            fp.unlink()
 

@@ -8,7 +8,8 @@ from __future__ import generators
 import gobject
 import pango
 import diacanvas
-
+import gaphor.UML as UML
+from gaphor.diagram import initialize_item
 from classifier import ClassifierItem
 
 class UseCaseItem(ClassifierItem):
@@ -43,4 +44,4 @@ class UseCaseItem(ClassifierItem):
             yield s
 
 
-gobject.type_register(UseCaseItem)
+initialize_item(UseCaseItem, UML.UseCase)

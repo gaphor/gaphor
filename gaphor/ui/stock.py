@@ -1,9 +1,11 @@
 # vim:sw=4
+"""Icons that are used by Gaphor.
+"""
 
+import os.path
 import gtk
 import gaphor
 import gaphor.UML as UML
-import os.path as path
 
 STOCK_POINTER = 'gaphor-pointer'
 STOCK_ACTOR = 'gaphor-actor'
@@ -22,31 +24,10 @@ STOCK_PROPERTY = 'gaphor-property'
 STOCK_REALIZATION = 'gaphor-realization'
 STOCK_USECASE = 'gaphor-usecase'
 
-# Definition of stock items to be added, will be deleted at the end
-# of this fils file.
-_default_stock_icons = (
-    # Stock ID		UML class	Icon 1		Icon 2
-    (STOCK_POINTER,	None,		'pointer24.png', 'pointer16.png'),
-    (STOCK_ACTOR,	UML.Actor,	'actor24.png', 'actor16.png'),
-    (STOCK_ASSOCIATION,	UML.Association, 'association24.png', 'association16.png'),
-    (STOCK_CLASS,	UML.Class,	'class24.png', 'class16.png'),
-    (STOCK_DEPENDENCY,	UML.Dependency, 'dependency24.png', 'dependency16.png'),
-    (STOCK_DIAGRAM,	UML.Diagram,	'diagram24.png', 'diagram16.png'),
-#    (STOCK_EXTEND,	UML.Extend,	None),
-    (STOCK_COMMENT,	UML.Comment,	'comment24.png', 'comment16.png'),
-    (STOCK_COMMENT_LINE, None,		'commentline24.png', 'commentline16.png'),
-    (STOCK_GENERALIZATION, UML.Generalization, 'generalization24.png', 'generalization16.png'),
-    (STOCK_INCLUDE,	UML.Include,	None),
-    (STOCK_OPERATION,	UML.Operation,	'pointer24.png', 'pointer16.png'),
-    (STOCK_PACKAGE,	UML.Package,	'package24.png', 'package16.png'),
-    (STOCK_PROPERTY,	UML.Property,	'pointer24.png', 'pointer16.png'),
-    (STOCK_REALIZATION,	None,		None),
-    (STOCK_USECASE,	UML.UseCase,	'usecase24.png', 'usecase16.png')
-)
-
 _icon_factory = gtk.IconFactory()
 _icon_factory.add_default()
-_uml_to_stock_id_map = dict()
+
+_uml_to_stock_id_map = { }
 
 def get_stock_id(element):
     if issubclass(element, UML.Element):
@@ -55,32 +36,35 @@ def get_stock_id(element):
 	except KeyError:
 	    log.warning ('Stock id for %s not found' % element)
 
-def add_stock_icons(stock_icons, icon_dir=''):
+def add_stock_icon(id, icon_dir, icon_files, uml_class=None):
     global _uml_to_stock_id_map
     global _icon_factory
-    iconlist = []
+    set = gtk.IconSet()
+    for icon in icon_files:
+	source = gtk.IconSource()
+	source.set_size(gtk.ICON_SIZE_MENU)
+	source.set_filename(os.path.join(icon_dir, icon))
+	set.add_source(source)
+    _icon_factory.add(id, set)
+    if uml_class:
+	_uml_to_stock_id_map[uml_class] = id
 
-    for si in stock_icons:
-	set = gtk.IconSet()
-	do_add=0
-	for icon in si[2:]:
-	    if icon:
-		source = gtk.IconSource()
-		source.set_size(gtk.ICON_SIZE_MENU)
-		source.set_filename(icon_dir + icon)
-		set.add_source(source)
-		do_add=1
-	if do_add:
-	    _icon_factory.add(si[0], set)
-	if si[1]:
-	    _uml_to_stock_id_map[si[1]] = si[0]
+icon_dir = os.path.join(gaphor.resource('DataDir'), 'pixmaps')
 
-#
-# Initialization:
-#
-# We should do some special initialization for the icon factory:
-#icon_factory.add_default()
-#del icon_factory
+# Initialize stock icons:
+add_stock_icon(STOCK_POINTER,	icon_dir, ('pointer24.png', 'pointer16.png'))
+add_stock_icon(STOCK_ACTOR,	icon_dir, ('actor24.png', 'actor16.png'), UML.Actor)
+add_stock_icon(STOCK_ASSOCIATION, icon_dir, ('association24.png', 'association16.png'), UML.Association)
+add_stock_icon(STOCK_CLASS,	icon_dir, ('class24.png', 'class16.png'), UML.Class)
+add_stock_icon(STOCK_DEPENDENCY, icon_dir, ('dependency24.png', 'dependency16.png'), UML.Dependency)
+add_stock_icon(STOCK_DIAGRAM,	icon_dir, ('diagram24.png', 'diagram16.png'), UML.Diagram)
+add_stock_icon(STOCK_COMMENT,	icon_dir, ('comment24.png', 'comment16.png'), UML.Comment)
+add_stock_icon(STOCK_COMMENT_LINE, icon_dir, ('commentline24.png', 'commentline16.png'))
+add_stock_icon(STOCK_GENERALIZATION, icon_dir, ('generalization24.png', 'generalization16.png'), UML.Generalization)
+add_stock_icon(STOCK_OPERATION,	icon_dir, ('pointer24.png', 'pointer16.png'), UML.Operation)
+add_stock_icon(STOCK_PACKAGE,	icon_dir, ('package24.png', 'package16.png'), UML.Package)
+add_stock_icon(STOCK_PROPERTY,	icon_dir, ('pointer24.png', 'pointer16.png'), UML.Property)
+add_stock_icon(STOCK_USECASE,	icon_dir, ('usecase24.png', 'usecase16.png'), UML.UseCase)
 
-add_stock_icons(_default_stock_icons, gaphor.resource('DataDir') + '/pixmaps/')
+del icon_dir
 

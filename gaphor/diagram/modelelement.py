@@ -7,6 +7,7 @@ Abstract base class for element-like Diagram items.
 
 import gobject
 import diacanvas
+from gaphor.diagram import initialize_item
 from diagramitem import DiagramItem
 
 __revision__ = '$revision$'
@@ -67,5 +68,4 @@ class ModelElementItem (diacanvas.CanvasElement, DiagramItem):
         return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
 
 
-gobject.type_register(ModelElementItem)
-diacanvas.set_callbacks(ModelElementItem)
+initialize_item(ModelElementItem)

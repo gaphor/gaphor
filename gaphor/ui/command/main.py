@@ -245,6 +245,25 @@ CommandInfo (name='OpenEditorWindow', _label='_Editor...', pixname='Editor',
 	     command_class=OpenEditorWindowCommand).register()
 
 
+class OpenConsoleWindowCommand(Command):
+
+    def set_parameters(self, params):
+	self._window = params['window']
+
+    def execute(self):
+	from gaphor.ui.consolewindow import ConsoleWindow
+	
+	ew = ConsoleWindow()
+	ew.construct()
+	self._window.add_transient_window(ew)
+	self._window.set_message('Console launched')
+
+CommandInfo (name='OpenConsoleWindow', _label='_Console...', pixname='Console',
+	     _tip='Open the Gaphor Console',
+	     context='main.menu',
+	     command_class=OpenConsoleWindowCommand).register()
+
+
 class AboutCommand(Command):
 
     def execute(self):
@@ -258,7 +277,7 @@ class AboutCommand(Command):
 			   logo_pixbuf = logo)
 	about.show()
 
-CommandInfo (name='About', _label='_About...', pixname='About',
+CommandInfo (name='About', _label='_About...', pixname='About', pixtype="stock",
 	     _tip='About Gaphor',
 	     context='main.menu',
 	     command_class=AboutCommand).register()

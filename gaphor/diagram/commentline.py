@@ -9,6 +9,8 @@ has been loaded. It works okay when creating new items.
 import gobject
 import diacanvas
 import gaphor.UML as UML
+from gaphor.diagram import initialize_item
+
 from diagramitem import DiagramItem
 from diagramline import DiagramLine
 
@@ -145,6 +147,7 @@ class CommentLineItem(DiagramLine, DiagramItem):
             #else:
                 #raise TypeError, 'One end of the CommentLine should connect to a Comment. How could this connect anyway?'
 
-gobject.type_register(CommentLineItem)
-diacanvas.set_callbacks(CommentLineItem)
+initialize_item(CommentLineItem)
+#gobject.type_register(CommentLineItem)
+#diacanvas.set_callbacks(CommentLineItem)
 

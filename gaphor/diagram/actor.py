@@ -9,6 +9,9 @@ import gobject
 import pango
 import diacanvas
 
+import gaphor.UML as UML
+from gaphor.diagram import initialize_item
+
 from classifier import ClassifierItem
 
 class ActorItem(ClassifierItem):
@@ -105,5 +108,4 @@ class ActorItem(ClassifierItem):
         for s in ClassifierItem.on_shape_iter(self):
             yield s
 
-
-gobject.type_register(ActorItem)
+initialize_item(ActorItem, UML.Actor)

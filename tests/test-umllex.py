@@ -1,12 +1,8 @@
+
+import gaphor
 from gaphor.UML import *
 from gaphor.UML.umllex import *
 from gaphor.UML.umllex import property_pat, operation_pat, parameter_pat
-
-# Add some extra associations that have to be added to the model:
-#Parameter.typeValue = association('typeValue', ValueSpecification, upper=1, composite=True)
-#Parameter.taggedValue = association('taggedValue', ValueSpecification, upper=1, composite=True)
-#Property.typeValue = association('typeValue', ValueSpecification, upper=1, composite=True)
-#Property.taggedValue = association('taggedValue', ValueSpecification, upper=1, composite=True)
 
 def dump_prop(prop):
     m = property_pat.match(prop)
@@ -37,8 +33,57 @@ dump_oper('myfunc(aap:str = "aap", out two): type')
 dump_oper('   myfunc2 ( ): type')
 dump_oper('myfunc(aap:str[1] = "aap" { tag1, tag2 }, out two {tag3}): type')
 
-element_factory = GaphorResource(ElementFactory)
+element_factory = gaphor.resource(ElementFactory)
 log.set_log_level(log.INFO)
+
+print 'testing parse_attribute()...',
+a = element_factory.create(Property)
+assert len(element_factory.values()) == 1
+
+# Very simple:
+
+parse_attribute(a, 'myattr')
+assert a.visibility == 'protected'
+assert a.isDerived == False, a.isDerived
+assert a.name == 'myattr', a.name
+assert a.typeValue.value is None, a.typeValue.value 
+assert a.lowerValue.value is None, a.lowerValue.value 
+assert a.upperValue.value is None, a.upperValue.value 
+assert a.defaultValue.value is None, a.defaultValue.value 
+assert a.taggedValue.value is None, a.taggedValue.value 
+
+# All features:
+a.unlink()
+a = element_factory.create(Property)
+
+parse_attribute(a,'+ / name : str[*] = "aap" { static }')
+assert a.visibility == 'public'
+assert a.isDerived == True, a.isDerived
+assert a.name == 'name', a.name
+assert a.typeValue.value == 'str', a.typeValue.value 
+assert a.lowerValue.value is None, a.lowerValue.value 
+assert a.upperValue.value == '*', a.upperValue.value 
+assert a.defaultValue.value == '"aap"', a.defaultValue.value 
+assert a.taggedValue.value == 'static', a.taggedValue.value 
+
+# Invalid syntax:
+a.unlink()
+a = element_factory.create(Property)
+
+parse_attribute(a, '+ name = str[*] = "aap" { static }')
+assert a.visibility == 'protected'
+assert a.isDerived == False, a.isDerived
+assert a.name == '+ name = str[*] = "aap" { static }', a.name
+assert not a.typeValue or a.typeValue.value is None, a.typeValue.value 
+assert not a.lowerValue or a.lowerValue.value is None, a.lowerValue.value 
+assert not a.upperValue or a.upperValue.value is None, a.upperValue.value 
+assert not a.defaultValue or a.defaultValue.value is None, a.defaultValue.value 
+assert not a.taggedValue or a.taggedValue.value is None, a.taggedValue.value 
+
+# Cleanup
+
+a.unlink()
+assert len(element_factory.values()) == 0
 
 print 'testing parse_operation()...',
 o = element_factory.create(Operation)
@@ -47,7 +92,7 @@ assert len(element_factory.values()) == 1
 # Very simple procedure:
 
 parse_operation(o, 'myfunc()')
-assert o.visibility == 'public'
+assert o.visibility == 'protected'
 assert o.name == 'myfunc', o.name
 assert o.returnResult[0].typeValue.value is None, o.returnResult[0].typeValue.value
 assert not o.formalParameter, o.formalParameter
@@ -56,10 +101,10 @@ assert len(element_factory.values()) == 6, len(element_factory.values())
 
 # Procedure with return value:
 
-parse_operation(o, '# myfunc(): myType')
+parse_operation(o, '+ myfunc(): myType')
 assert o.name == 'myfunc', o.name
 assert o.returnResult[0].typeValue.value == 'myType', o.returnResult[0].typeValue.value
-assert o.visibility == 'protected'
+assert o.visibility == 'public'
 assert not o.formalParameter, o.formalParameter
 assert len(element_factory.values()) == 6, len(element_factory.values())
 
@@ -84,10 +129,10 @@ assert len(element_factory.values()) == 18, len(element_factory.values())
 
 # Change the operation to own one parameter:
 
-parse_operation(o, '# myfunc2 (a: node): myType2')
+parse_operation(o, '- myfunc2 (a: node): myType2')
 assert o.name == 'myfunc2', o.name
 assert o.returnResult[0].typeValue.value == 'myType2', o.returnResult[0].typeValue.value
-assert o.visibility == 'protected'
+assert o.visibility == 'private'
 assert len(o.formalParameter) == 1, o.formalParameter
 assert o.formalParameter[0].name == 'a', o.formalParameter[0].typeValue
 assert o.formalParameter[0].typeValue.value == 'node', o.formalParameter[0].typeValue.value

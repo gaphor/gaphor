@@ -8,9 +8,8 @@ import gaphor.UML as UML
 from abstractwindow import AbstractWindow
 
 class MainWindow(AbstractWindow):
-    """
-    The main window for the application. It contains a Namespace-based tree
-    view and a menu and a statusbar.
+    """The main window for the application.
+    It contains a Namespace-based tree view and a menu and a statusbar.
     """
 
     def __init__(self):
@@ -52,16 +51,20 @@ class MainWindow(AbstractWindow):
 	self.__model = model
 	self.__view = view
 
+	#paned = gtk.HPaned()
+	#paned.pack1(scrolled_window)
+
+	#notebook = gtk.Notebook()
+	#paned.pack2(notebook)
 
 	self._construct_window(name='main',
 			       title='Gaphor v' + gaphor.resource('Version'),
-			       size=(220, 400),
+			       size=(400, 400),
 			       contents=scrolled_window,
 			       params={ 'window': self })
 
     def add_transient_window(self, window):
-	"""
-	Add a window as a sub-window of the main application.
+	"""Add a window as a sub-window of the main application.
 	"""
 	mywin = self.get_window()
 	window_win = window.get_window()
@@ -71,8 +74,7 @@ class MainWindow(AbstractWindow):
 	window.connect(self.__on_transient_window_closed)
 
     def _on_window_destroy (self, window):
-	"""
-	Window is destroyed... Quit the application.
+	"""Window is destroyed... Quit the application.
 	"""
 	AbstractWindow._on_window_destroy(self, window)
 	gaphor.resource(UML.ElementFactory).disconnect(self.__on_element_factory_signal)

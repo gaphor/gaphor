@@ -20,7 +20,8 @@ class CommandInfo(object):
 		 sensitive=None, state=None, subject=None,
 		 pixtype='stock', pixname=None, accel=None,
 		 command_class=None):
-	"""Create a new command info object."""
+	"""Create a new command info object.
+	"""
 	assert name and name != ''
 	#assert not subject or issubclass(subject, UML.ModelElement)
 	assert issubclass(command_class, Command)

@@ -36,8 +36,7 @@ class _CommandExecuter(object):
 
 
 class CommandRegistry(object):
-    """
-    One object can contain a bunch of CommandInfo objects. Normally you
+    """One object can contain a bunch of CommandInfo objects. Normally you
     would access this through the gaphor.resource() function.
     """
 
@@ -58,13 +57,15 @@ class CommandRegistry(object):
 	    #return self.__registry[name]
 	
     def get_command(self, context, name):
-	"""Create a command based on a context and the commands name."""
+	"""Create a command based on a context and the commands name.
+	"""
 	cmd_info = self.lookup(context, name)
 	if cmd_info and cmd_info.command_class:
 	    return cmd_info.command_class()
 
     def get_command_xml(self, context):
-	"""Create a BonoboUI commands XML statement."""
+	"""Create a BonoboUI commands XML statement.
+	"""
 	xml = '<commands>'
 	for ctx, infos in self.__registry.items():
 	    if ctx.startswith(context):
@@ -76,7 +77,8 @@ class CommandRegistry(object):
     def get_capabilities(self, context):
 	"""Get all names of commands within a context and their capabilities
 	in a list of (name, type, capabilities). Type if one of 'state' or
-	'sensitive'."""
+	'sensitive'.
+	"""
 	caps = list()
 	for ctx, infos in self.__registry.items():
 	    if ctx.startswith(context):
@@ -89,7 +91,8 @@ class CommandRegistry(object):
 
     def get_subjects(self, context):
 	"""Get a list of (name, element) tuples for all commands within
-	the context."""
+	the context.
+	"""
 	subjects = list()
 	for ctx, infos in self.__registry.items():
 	    if ctx.startswith(context):
@@ -103,7 +106,8 @@ class CommandRegistry(object):
 	Verbs are used for normal menu items. Listeners for statefull menu
 	items. A dictionary of parameters can be supplied to the command
 	for instantiation.
-	This method is called by AbstractWindow to initialize the menus."""
+	This method is called by AbstractWindow to initialize the menus.
+	"""
 	verbs = list()
 	for ctx, infos in self.__registry.items():
 	    if ctx.startswith(context):
@@ -124,7 +128,8 @@ class CommandRegistry(object):
 	Verbs are used for normal menu items. Listeners for statefull menu
 	items. A dictionary of parameters can be supplied to the command
 	for instantiation.
-	This method is called by AbstractWindow to initialize the menus."""
+	This method is called by AbstractWindow to initialize the menus.
+	"""
 	#verbs = list()
 	listeners = list()
 	for ctx, infos in self.__registry.items():

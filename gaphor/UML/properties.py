@@ -133,8 +133,12 @@ class attribute(umlproperty):
         self.notify(obj)
 
     def _del(self, obj, value=None):
-        delattr(obj, self._name)
-        self.notify(obj)
+        try:
+            delattr(obj, self._name)
+        except AttributeError:
+            pass
+        else:
+            self.notify(obj)
 
 
 class enumeration(umlproperty):
@@ -172,8 +176,12 @@ class enumeration(umlproperty):
             self.notify(obj)
 
     def _del(self, obj, value=None):
-        delattr(obj, self._name)
-        self.notify(obj)
+        try:
+            delattr(obj, self._name)
+        except AttributeError:
+            pass
+        else:
+            self.notify(obj)
 
 
 class association(umlproperty):

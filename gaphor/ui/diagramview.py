@@ -27,7 +27,7 @@ class DiagramView(CanvasView):
 	# Drop
 	self.drag_dest_set (gtk.DEST_DEFAULT_ALL, DiagramView.DND_TARGETS,
 			    gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
-	self.connect('drag_data_received', DiagramView.do_drag_data_received)
+	self.connect('drag_data_received', DiagramView.on_drag_data_received)
 	#self.connect('drag_motion', DiagramView.do_drag_motion)
 	#self.connect('drag_drop', DiagramView.do_drag_drop)
 	
@@ -45,7 +45,7 @@ class DiagramView(CanvasView):
 	print 'drag_motion', x, y
 	return 1
    
-    def do_drag_data_received(self, context, x, y, data, info, time):
+    def on_drag_data_received(self, context, x, y, data, info, time):
 	print 'drag_data_received'
         if data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
 	    from gaphor.diagram import get_diagram_item

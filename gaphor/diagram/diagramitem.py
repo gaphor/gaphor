@@ -52,14 +52,16 @@ class DiagramItem(Presentation):
     It provides an interface similar to UML.Element for connecting and
     disconnecting signals.
 
-    This class is not very useful on its own. It functions as a base class
-    for more concrete subclasses:
-        class ModelElement(diacanvas.CanvasElement, DiagramItem):
+    This class is not very useful on its own. It contains some glue-code for
+    diacanvas.DiaCanvasItem and gaphor.UML.Element.
+
+    Example:
+        class ModelElementItem(diacanvas.CanvasElement, DiagramItem):
             ...
     """
     __gproperties__ = {
         'subject':        (gobject.TYPE_PYOBJECT, 'subject',
-                         'subject held by the model element',
+                         'subject held by the diagram item',
                          gobject.PARAM_READWRITE),
     }
 
@@ -75,10 +77,13 @@ class DiagramItem(Presentation):
     def __init__(self, id=None):
         Presentation.__init__(self)
         self._id = id # or uniqueid.generate_id()
+
         # Mapping to convert handlers to GObject signal ids.
         self.__handler_to_id = { }
+
         # Add the class' on_subject_notify() as handler:
         self.connect('notify::subject', type(self).on_subject_notify)
+
         # __the_subject is a backup that is used to disconnect signals when a
         # new subject is set (or the original one is removed)
         self.__the_subject = None
@@ -137,6 +142,7 @@ class DiagramItem(Presentation):
         log.info('RELINK DiagramItem')
         #self.emit('__unlink__', '__relink__')
 
+    # gaphor.UML.Element like signal interface:
 
     def connect(self, name, handler, *args):
         """Connect a handler to signal name with args.
@@ -218,6 +224,10 @@ class DiagramItem(Presentation):
     # DiaCanvasItem callbacks
 
     def _on_glue(self, handle, wx, wy, parent_class):
+        """This function is used to notify the connecting item
+        about being connected. handle.owner.allow_connect_handle() is
+        called to determine if a connection is allowed.
+        """
         if handle.owner.allow_connect_handle (handle, self):
             #print self.__class__.__name__, 'Glueing allowed.'
             return parent_class.on_glue (self, handle, wx, wy)
@@ -227,6 +237,11 @@ class DiagramItem(Presentation):
         return None
 
     def _on_connect_handle (self, handle, parent_class):
+        """This function is used to notify the connecting item
+        about being connected. handle.owner.allow_connect_handle() is
+        called to determine if a connection is allowed. If the connection
+        succeeded handle.owner.confirm_connect_handle() is called.
+        """
         if handle.owner.allow_connect_handle (handle, self):
             #print self.__class__.__name__, 'Connection allowed.'
             ret = parent_class.on_connect_handle (self, handle)
@@ -238,6 +253,13 @@ class DiagramItem(Presentation):
         return 0
 
     def _on_disconnect_handle (self, handle, parent_class):
+        """Use this function to disconnect handles. It notifies
+        the connected item about being disconnected.
+        handle.owner.allow_disconnect_handle() is
+        called to determine if a connection is allowed to be removed.
+        If the disconnect succeeded handle.owner.confirm_connect_handle()
+        is called.
+        """
         if handle.owner.allow_disconnect_handle (handle):
             #print self.__class__.__name__, 'Disconnecting allowed.'
             ret = parent_class.on_disconnect_handle (self, handle)

@@ -12,7 +12,7 @@ import gaphor.diagram as diagram
 
 CONTEXT='diagram.popup'
 
-class NoFocusItemError(GaphorError):
+class NoFocusItemError(gaphor.GaphorError):
     pass
 
 def get_parent_focus_item(window):

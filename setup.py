@@ -22,6 +22,7 @@ from distutils.command.build_py import build_py
 from distutils.command.install_lib import install_lib
 from distutils.dep_util import newer
 from utils.build_mo import build, build_mo
+from utils.build_pot import build_pot
 from utils.install_mo import install, install_mo
 from utils.dist_mo import Distribution
 
@@ -292,6 +293,7 @@ class run_Gaphor(Command):
             print 'Executing file: %s...' % self.file
             execfile(self.file, {})
         else:
+            print 'Launching Gaphor...'
             gaphor.main()
 
 
@@ -328,6 +330,7 @@ setup(name='gaphor',
                 #'install_schemas': install_schemas,
                 'build': build,
                 'build_mo': build_mo,
+                'build_pot': build_pot,
                 'install': install,
                 'install_lib': install_lib_Gaphor,
                 'install_mo': install_mo,

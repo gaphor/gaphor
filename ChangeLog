@@ -1,38 +1,49 @@
-2002-11-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-11-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/umllex.py: ficed some stuff.
+
+2003-11-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/consolewindow.py: new file. Adds a GtkInterpreterConsole
+	to gaphor.
+	* gaphor/ui/command/mainpy, data/gaphor-main-ui.xml: added entry
+	for console.
+
+2003-11-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/__init__.py: remove class Gaphor, instead just defined some
 	modules. the function resource(r) works also for version, name, etc.
 	* gaphor/diagram/klass.py: fixes and cleanup for attribute/operation
 	add/remove functionality.
 
-2002-09-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-09-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* setup.py: Changed. the datadir is now added to gaphor/version.py.
 	* gaphor/__init__.py: changed to use new data_dir location.
 
-2002-09-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-09-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/association.py: made multiplicity work again.
 	* setup.py: bumped version to 0.3.0
 
-2002-09-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-09-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* doc/UML2.gaphor: UML model is now based on new data model
 	* gaphor/diagram/association.py: make it work
 	* Loads of work to get the conversion done.
 
-2002-08-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-08-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/operation.py, gaphor/diagram/attribute.py: new files
 	* gaphor/diagram/klass.py: works with new data model
 	* gaphor/diagram/association.py: works with new data model (kinda)
 	* Several changes...
 
-2002-06-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-06-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 	
 	* setup.py: first do a pygtk.require() before config_Gaphor.
 
-2002-06-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-06-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	(here, only the most important changes are noted)
 	* gaphor/diagram/classifier.py, diagramline.py: new class
@@ -42,38 +53,38 @@
 	signals (element, param_spec). All other objects are updated to work
 	with it.
 	
-2002-05-30  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-05-30  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* setup.py: added run --testfile option
 	* gaphor/ui/namespace.py: fix ownedMember remove actions
 	* tests/test-ns.py: added tests for NamespaceModel
 	* tests/test-properties.py: fixed tests.
 	
-2002-05-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-05-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/actor.py, modelelement.py, diagramitem.py:
 	make ActorItem kinda work...
 
-2002-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* updated doc/UML2.gaphor to third release of UML 2.0 proposal.
 	* did lots of other updates.
 
-2002-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* all files: Implementing UML2 data model based on the data
 	in doc/UML2.gaphor (use gaphor-0.2.0 to read it).
 
-2002-03-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-03-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* setup.py: check versions of modules.
 
-2002-03-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-03-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/association.py: fixed bug that didn't show
 	aggregation properly when a diagram was loaded.
 
-2002-03-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-03-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* setup.py, setup.cfg: Distutils setup scripts.
 	* utils/build_mo.py, utils/install_mo.py, utils/dist_mo.py,
@@ -84,12 +95,12 @@
 	* run-gaphor.sh: Run Gaphor, replaces gaphor.sh.
 	* gaphor/config.py.in: obsolete and removed.
 
-2002-03-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-03-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/diagramwindow.py, mainwindow.py: create popup menu on
 	event-after event.
 
-2002-02-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-02-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/command/diagrampopup.py: Added popup menu items for
 	Associations (Navigable, aggregation kind).
@@ -99,12 +110,12 @@
 	* gaphor/diagram/association.py: several fixes.
 	* gaphor/ui/commandregistry.py: handle StatefulCommands right.
 
-2002-02-21  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-02-21  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/command/diagrampopup.py: Added commands for segment
 	addition and removal.
 
-2002-02-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-02-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/misc/logger.py: Added all_logger() and remove_logger()
 	* gaphor/ui/abstractwindow.py: on focus in/out add/remove a logger
@@ -112,7 +123,7 @@
 	* gaphor/diagram/association.py: make association end name and
 	multiplicity work.
 
-2002-02-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-02-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* utils/genUML.py: new generation script.
 	* gaphor/UML/element.py: reorganized. Overall more readable.
@@ -120,7 +131,7 @@
 	end name.
 	* *: several updates and fixes.
 
-2002-01-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+2003-01-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/mainwindow.py, gaphor/ui/command/main.py: added
 	capabilities for main window.

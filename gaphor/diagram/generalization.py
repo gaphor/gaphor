@@ -5,7 +5,9 @@ Generalization --
 
 import gobject
 import diacanvas
+import gaphor
 import gaphor.UML as UML
+from gaphor.diagram import initialize_item
 import relationship
 
 class GeneralizationItem(relationship.RelationshipItem):
@@ -80,5 +82,4 @@ class GeneralizationItem(relationship.RelationshipItem):
         if self.subject:
             del self.subject
 
-
-gobject.type_register(GeneralizationItem)
+initialize_item(GeneralizationItem, UML.Generalization)

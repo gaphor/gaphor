@@ -12,6 +12,8 @@ from diacanvas import CanvasItem, CanvasEditable
 from diacanvas.geometry import distance_rectangle_point
 from diagramitem import DiagramItem
 
+from gaphor.diagram import initialize_item
+
 class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
     """FeatureItems are model elements who recide inside a ClassItem, such as
     methods and attributes. Those items can have comments attached, but only on
@@ -124,11 +126,9 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         pass
 
     def on_editable_editing_done(self, shape, new_text):
-        self.preserve_property('name')
+        self.preserve_property('expression')
         if new_text != self.subject.name:
             self.subject.name = new_text
         self.request_update()
 
-gobject.type_register(FeatureItem)
-diacanvas.set_callbacks(FeatureItem)
-diacanvas.set_editable(FeatureItem)
+initialize_item(FeatureItem)

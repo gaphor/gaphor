@@ -3,10 +3,14 @@ CommentItem diagram item
 '''
 # vim:sw=4
 
-from modelelement import ModelElementItem
-import diacanvas
 import gobject
 import pango
+import diacanvas
+
+import gaphor.UML as UML
+from gaphor.diagram import initialize_item
+
+from modelelement import ModelElementItem
 
 class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
     __gproperties__ = {
@@ -96,5 +100,4 @@ class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
         #self._body.set_text(new_text)
         self.request_update()
 
-gobject.type_register(CommentItem)
-diacanvas.set_editable(CommentItem)
+initialize_item(CommentItem, UML.Comment)

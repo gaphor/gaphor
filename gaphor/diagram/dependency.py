@@ -5,7 +5,10 @@ Dependency --
 
 import gobject
 import diacanvas
+import gaphor
 import gaphor.UML as UML
+from gaphor.diagram import initialize_item
+
 import relationship
 
 class DependencyItem(relationship.RelationshipItem):
@@ -61,4 +64,4 @@ class DependencyItem(relationship.RelationshipItem):
         if self.subject:
             del self.subject
 
-gobject.type_register(DependencyItem)
+initialize_item(DependencyItem, UML.Dependency)
