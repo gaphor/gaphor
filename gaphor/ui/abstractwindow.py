@@ -120,11 +120,23 @@ class AbstractWindow(object):
         except Exception, e:
             log.warning(str(e), e)
 
-    def _construct_as_window(self, title, size, contents):
+
+    def _construct_window(self, name, title, size, contents):
+        """Construct a Window.
+        
+        Name is the window's name. Title is the title of the window. Size
+        is a tuple (x, y) which gives a requested size for the window.
+        Contents is a widget that holds the contents of the window. Params
+        is a dictionary of parameter:value pairs which are passed to the
+        commands after creation.
+        """
+        self._check_state(AbstractWindow.STATE_INIT)
+
+        self.name = name
 
         self._set_state(AbstractWindow.STATE_ACTIVE)
 
-        window = gtk.Window()
+        window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         window.set_title(title)
 
         window.set_size_request(size[0], size[1])
@@ -175,58 +187,6 @@ class AbstractWindow(object):
         self.statusbar = statusbar
         self.accel_group = accel_group
 
-    def _construct_as_notebook_page(self, title, size, contents):
-        self._check_state(AbstractWindow.STATE_INIT)
-        #window = bonobo.ui.Window ('gaphor.' + name, title)
-
-        self.window = self.owning_window.window
-        self.statusbar = self.owning_window.statusbar
-
-        hbox = gtk.HBox()
-        hbox.show()
-
-        # Set the contents:
-        hbox.pack_end(contents, expand=True)
-
-        self.menu_factory = MenuFactory(self.action_pool,
-                                        accel_group=self.owning_window.accel_group,
-                                        statusbar=self.statusbar,
-                                        statusbar_context=0)
-
-        #if self.toolbar:
-        #    toolbar = self.menu_factory.create_toolbar(self.toolbar)
-        #    toolbar.set_orientation(gtk.ORIENTATION_VERTICAL)
-        #    hbox.pack_start(toolbar, expand=False)
-        #    toolbar.show()
-
-        self.__destroy_id = hbox.connect('destroy', self._on_window_destroy)
-        # On focus in/out a log handler is added to the logger.
-        #window.connect('focus_in_event', self._on_window_focus_in_event)
-        #window.connect('focus_out_event', self._on_window_focus_out_event)
-        # Set state before commands are created, so the commands can use
-        # the get_* methods.
-        self._set_state(AbstractWindow.STATE_ACTIVE)
-
-        self.notebook_page_number = self.owning_window.new_notebook_tab(self, hbox, title)
-
-
-    def _construct_window(self, name, title, size, contents):
-        """Construct a Window.
-        
-        Name is the window's name. Title is the title of the window. Size
-        is a tuple (x, y) which gives a requested size for the window.
-        Contents is a widget that holds the contents of the window. Params
-        is a dictionary of parameter:value pairs which are passed to the
-        commands after creation.
-        """
-        self._check_state(AbstractWindow.STATE_INIT)
-
-        self.name = name
-
-        if self.sub_window:
-            self._construct_as_window(title, size, contents)
-        else:
-            self._construct_as_notebook_page(title, size, contents)
 
     def _construct_popup_menu(self, menu_def, event):
         """Create a popup menu.

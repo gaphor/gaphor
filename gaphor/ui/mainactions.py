@@ -15,6 +15,11 @@ import gaphor
 
 DEFAULT_EXT='.gaphor'
 
+def main_loop():
+    main = gobject.main_context_default()
+    while main.pending(): main.iteration(False)
+
+
 class NewAction(Action):
     id = 'FileNew'
     label = '_New'
@@ -52,6 +57,17 @@ class OpenAction(Action):
 	self.filename = None
 	self._window = window
 
+    def show_status_window(self, title, message):
+	win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+	win.set_title(title)
+	win.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
+	win.set_parent(self._window.get_window())
+	label = gtk.Label(message)
+	label.set_padding(30,30)
+	win.add(label)
+	win.show_all()
+	return win
+
     def execute(self):
 	filesel = gtk.FileSelection('Open Gaphor file')
 	filesel.hide_fileop_buttons()
@@ -59,13 +75,13 @@ class OpenAction(Action):
 
 	response = filesel.run()
 	filesel.hide()
-	main = gobject.main_context_default()
-	while main.pending():
-	    main.iteration(False)
+	main_loop()
 	if response == gtk.RESPONSE_OK:
 	    filename = filesel.get_filename()
 	    if filename:
 		log.debug('Loading from: %s' % filename)
+		win = self.show_status_window('Loading...', 'Loading model from %s' % filename)
+		main_loop()
 		self.filename = filename
 		gc.collect()
 
@@ -85,14 +101,15 @@ class OpenAction(Action):
 		    import traceback
 		    log.error('Error while loading model from file %s: %s' % (filename, e))
 		    traceback.print_exc()
+		win.destroy()
 	filesel.destroy()
 
 register_action(OpenAction)
 
 
-class SaveAction(Action):
-    id = 'FileSave'
-    stock_id = 'gtk-save'
+class SaveAsAction(Action):
+    id = 'FileSaveAs'
+    stock_id = 'gtk-save-as'
 
     def init(self, window):
 	self._window = window
@@ -103,8 +120,8 @@ class SaveAction(Action):
 	window.connect(self.on_window_closed)
 
     def on_element_factory(self, *args):
-	factory = self.factory
-	if factory.values():
+	#factory = gaphor.resource('ElementFactory')
+	if self.factory.values():
 	    self.sensitive = True
 	else:
 	    self.sensitive = False
@@ -113,75 +130,61 @@ class SaveAction(Action):
 	if self._window.get_state() == self._window.STATE_CLOSED:
 	    self.factory.disconnect(self.on_element_factory)
 
-    def execute(self):
-	filename = self._window.get_filename()
-	if not filename:
-	    filesel = gtk.FileSelection('Save file')
-	    response = filesel.run()
-	    filesel.hide()
-	    main = gobject.main_context_default()
-	    while main.pending():
-		main.iteration(False)
-	    if response == gtk.RESPONSE_OK:
-		filename = filesel.get_filename()
-	    filesel.destroy()
+    def show_status_window(self, title, message):
+	win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+	win.set_title(title)
+	win.set_parent(self._window.get_window())
+	win.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
+	label = gtk.Label(message)
+	label.set_padding(30,30)
+	win.add(label)
+	win.show_all()
+	return win
+
+    def save(self, filename):
 	if filename and len(filename) > 0:
 	    if not filename.endswith(DEFAULT_EXT):
 		filename = filename + DEFAULT_EXT
 	    log.debug('Saving to: %s' % filename)
+	    win = self.show_status_window('Saving...', 'Saving model to %s' % filename)
+	    main_loop()
 	    try:
 		import gaphor.storage as storage
 		storage.save(filename)
 		self._window.set_filename(filename)
-		self._window.set_message('Model saved to %s' % filename)
 	    except Exception, e:
 		log.error('Failed to save to file %s: %s' % (filename, e))
 		traceback.print_exc()
-
-register_action(SaveAction)
-
-
-class SaveAsAction(Action):
-    id = 'FileSaveAs'
-    stock_id = 'gtk-save-as'
-
-    def init(self, window):
-	self._window = window
-	factory = gaphor.resource('ElementFactory')
-	factory.connect(self.on_element_factory)
-	self.on_element_factory(self)
-
-    def on_element_factory(self, *args):
-	factory = gaphor.resource('ElementFactory')
-	if factory.values():
-	    self.sensitive = True
-	else:
-	    self.sensitive = False
+	    win.destroy()
 
     def execute(self):
+	filename = self._window.get_filename()
 	filesel = gtk.FileSelection('Save file as')
+	filesel.set_filename(filename or '')
 	response = filesel.run()
 	filesel.hide()
-	main = gobject.main_context_default()
-	while main.pending():
-	    main.iteration(False)
+	main_loop()
 	filename = None
 	if response == gtk.RESPONSE_OK:
 	    filename = filesel.get_filename()
 	filesel.destroy()
-	if filename and len(filename) > 0:
-	    if not filename.endswith(DEFAULT_EXT):
-		filename = filename + DEFAULT_EXT
-	    log.debug('Saving to: %s' % filename)
-	    try:
-		import gaphor.storage as storage
-		storage.save(filename)
-		self._window.set_filename(filename)
-	    except Exception, e:
-		log.error('Failed to save to file %s: %s' % (filename, e))
-		traceback.print_exc()
+	self.save(filename)
 
 register_action(SaveAsAction)
+
+
+class SaveAction(SaveAsAction):
+    id = 'FileSave'
+    stock_id = 'gtk-save'
+
+    def execute(self):
+	filename = self._window.get_filename()
+	if filename:
+	    self.save(filename)
+	else:
+	    SaveAsAction.execute(self)
+
+register_action(SaveAction)
 
 
 class QuitAction(Action):

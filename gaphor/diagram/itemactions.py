@@ -48,7 +48,7 @@ class ItemRenameAction(Action):
         item = self._window.get_current_diagram_view().focus_item.item
 	item.rename()
 
-register_action(ItemRenameAction, 'ItemSelect')
+register_action(ItemRenameAction, 'ItemFocus')
 
 # NOTE: attributes and operations can now only be created on classes,
 #       actors and uuse-cases are also classifiers, but we can't add 
@@ -80,7 +80,7 @@ class CreateAttributeAction(Action):
         subject.ownedAttribute = attribute
 	# TODO: Select this item for editing
 
-register_action(CreateAttributeAction, 'ShowAttributes')
+register_action(CreateAttributeAction, 'ShowAttributes', 'ItemFocus')
 
 
 class CreateOperationAction(Action):
@@ -109,7 +109,7 @@ class CreateOperationAction(Action):
         subject.ownedOperation = operation
 	# TODO: Select this item for editing
 
-register_action(CreateOperationAction, 'ShowOperations')
+register_action(CreateOperationAction, 'ShowOperations', 'ItemFocus')
 
 
 class EditItemAction(Action):
@@ -125,7 +125,7 @@ class EditItemAction(Action):
         #assert isinstance(subject, (UML.Property, UML.Operation))
         item.edit()
 
-register_action(EditItemAction)
+register_action(EditItemAction, 'ItemFocus')
 
 
 class DeleteFeatureAction(Action):
@@ -144,7 +144,7 @@ class DeleteAttributeAction(DeleteFeatureAction):
     label = 'Delete A_ttribute'
     tooltip='Delete the selected attribute'
 
-register_action(DeleteAttributeAction, 'ShowAttributes', 'CreateAttribute')
+register_action(DeleteAttributeAction, 'ShowAttributes', 'CreateAttribute', 'ItemFocus')
 
 
 class DeleteOperationAction(DeleteFeatureAction):
@@ -152,7 +152,7 @@ class DeleteOperationAction(DeleteFeatureAction):
     label = 'Delete O_peration'
     tooltip = 'Delete the selected operation'
 
-register_action(DeleteOperationAction, 'ShowOperations', 'CreateOperation')
+register_action(DeleteOperationAction, 'ShowOperations', 'CreateOperation', 'ItemFocus')
 
 
 class ShowAttributesAction(CheckAction):
@@ -235,7 +235,7 @@ class AddSegmentAction(SegmentAction):
         if item:
             item.set_property('add_segment', segment)
             
-register_action(AddSegmentAction)
+register_action(AddSegmentAction, 'ItemFocus')
 
 
 class DeleteSegmentAction(SegmentAction):
@@ -303,12 +303,15 @@ class NavigableAction(CheckAction):
         return get_parent_focus_item(self._window).get_property(self.end_name)
 
     def update(self):
-        item = get_parent_focus_item(self._window)
-	from association import AssociationItem
-	if isinstance(item, AssociationItem):
-	    end = item.get_property(self.end_name)
-	    if end.subject:
-		self.active = (end.subject.class_ != None)
+	try:
+	    item = get_parent_focus_item(self._window)
+	    from association import AssociationItem
+	    if isinstance(item, AssociationItem):
+		end = item.get_property(self.end_name)
+		if end.subject:
+		    self.active = (end.subject.class_ != None)
+        except NoFocusItemError:
+	    pass
 
     def execute(self):
         item = self.get_association_end()
@@ -322,7 +325,7 @@ class HeadNavigableAction(NavigableAction):
     label = 'Navigable'
     end_name = 'head'
 
-register_action(HeadNavigableAction)
+register_action(HeadNavigableAction, 'ItemFocus')
 
 
 class TailNavigableAction(NavigableAction):
@@ -330,7 +333,7 @@ class TailNavigableAction(NavigableAction):
     label = 'Navigable'
     end_name = 'tail'
 
-register_action(TailNavigableAction)
+register_action(TailNavigableAction, 'ItemFocus')
 
 
 class AggregationAction(RadioAction):
@@ -339,12 +342,15 @@ class AggregationAction(RadioAction):
         self._window = window
 
     def update(self):
-        item = get_parent_focus_item(self._window)
-	from association import AssociationItem
-	if isinstance(item, AssociationItem):
-	    end = item.get_property(self.end_name)
-	    if end.subject:
-		self.active = (end.subject.aggregation == self.aggregation)
+	try:
+            item = get_parent_focus_item(self._window)
+            from association import AssociationItem
+            if isinstance(item, AssociationItem):
+                end = item.get_property(self.end_name)
+                if end.subject:
+                    self.active = (end.subject.aggregation == self.aggregation)
+        except NoFocusItemError:
+            pass
 
     def execute(self):
         if self.active:
@@ -360,7 +366,7 @@ class HeadNoneAction(AggregationAction):
     end_name = 'head'
     aggregation = 'none'
 
-register_action(HeadNoneAction)
+register_action(HeadNoneAction, 'ItemFocus')
 
 
 class HeadSharedAction(AggregationAction):
@@ -370,7 +376,7 @@ class HeadSharedAction(AggregationAction):
     end_name = 'head'
     aggregation = 'shared'
 
-register_action(HeadSharedAction)
+register_action(HeadSharedAction, 'ItemFocus')
 
 
 class HeadCompositeAction(AggregationAction):
@@ -380,7 +386,7 @@ class HeadCompositeAction(AggregationAction):
     end_name = 'head'
     aggregation = 'composite'
 
-register_action(HeadCompositeAction)
+register_action(HeadCompositeAction, 'ItemFocus')
 
 
 class TailNoneAction(AggregationAction):
@@ -390,7 +396,7 @@ class TailNoneAction(AggregationAction):
     end_name = 'tail'
     aggregation = 'none'
 
-register_action(TailNoneAction)
+register_action(TailNoneAction, 'ItemFocus')
 
 
 class TailSharedAction(AggregationAction):
@@ -400,7 +406,7 @@ class TailSharedAction(AggregationAction):
     end_name = 'tail'
     aggregation = 'shared'
 
-register_action(TailSharedAction)
+register_action(TailSharedAction, 'ItemFocus')
 
 
 class TailCompositeAction(AggregationAction):
@@ -410,4 +416,4 @@ class TailCompositeAction(AggregationAction):
     end_name = 'tail'
     aggregation = 'composite'
 
-register_action(TailCompositeAction)
+register_action(TailCompositeAction, 'ItemFocus')

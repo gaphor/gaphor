@@ -433,4 +433,4 @@ def generate(filename, outfile=None, overridesfile=None):
     writer.close()
 
 if __name__ == '__main__':
-    generate('UML2.gaphor')
+    generate('uml2.gaphor')

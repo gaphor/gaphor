@@ -143,7 +143,7 @@ class MainWindow(AbstractWindow):
 
         self._construct_window(name='main',
                                title='Gaphor v' + gaphor.resource('Version'),
-                               size=(600, 400),
+                               size=(760, 580),
                                contents=paned)
                                #contents=scrolled_window)
         wrapbox = self.menu_factory.create_wrapbox(self.wrapbox)
