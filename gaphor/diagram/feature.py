@@ -19,6 +19,9 @@ class FeatureItem(CanvasText, DiagramItem):
     Note that features can also be used inside objects.
     """
     __gproperties__ = {
+#	'id':		(gobject.TYPE_PYOBJECT, 'id',
+#			 'Identification number of the canvas item',
+#			 gobject.PARAM_READWRITE),
 	'subject':	(gobject.TYPE_PYOBJECT, 'subject',
 			 'subject held by the relationship',
 			 gobject.PARAM_READWRITE),
@@ -28,14 +31,22 @@ class FeatureItem(CanvasText, DiagramItem):
     def __init__(self):
 	self.__gobject_init__()
 	DiagramItem.__init__(self)
-	diacanvas.CanvasText.__init__(self)
+	#diacanvas.CanvasText.__init__(self)
 	font = pango.FontDescription(FeatureItem.FONT)
 	self.set(font=font, width=self.width, alignment=pango.ALIGN_LEFT)
-	w, h = self.__name.get_property('layout').get_pixel_size()
+	self.set_flags(diacanvas.COMPOSITE)
+	w, h = self.get_property('layout').get_pixel_size()
 	self.set(height=h)
 	self.connect('text_changed', self.on_text_changed)
 
+    def _set_subject(self, subject):
+	DiagramItem._set_subject(self, subject)
+	self.set(text=self.subject and self.subject.name or '')
+	self.request_update()
+
     def do_set_property (self, pspec, value):
+#	if pspec.name == 'id':
+#	    self.__id = value
 	if pspec.name == 'subject':
 	    print 'Setting subject:', value
 	    self._set_subject(value)
@@ -43,6 +54,8 @@ class FeatureItem(CanvasText, DiagramItem):
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
     def do_get_property(self, pspec):
+#	if pspec.name == 'id':
+#	    return self.__id
 	if pspec.name == 'subject':
 	    return self.subject
 	else:
@@ -58,7 +71,7 @@ class FeatureItem(CanvasText, DiagramItem):
 	    self.set(text=self.subject.name)
 
     def on_text_changed(self, text_item, text):
-	if text != self.subject.name:
+	if self.subject and text != self.subject.name:
 	    self.subject.name = text
 
 gobject.type_register(FeatureItem)

@@ -13,9 +13,9 @@
 	    <menuitem name="FilePrint" verb="" hidden="1"/>
 	    <menuitem name="FilePrintSetup" verb="" hidden="1"/>
 	    <menuitem name="FilePrintPreview" verb="" hidden="1"/>
+	    -->
 	    <separator/>
 	    <placeholder name="RecentFiles" delimit="top"/>
-	    -->
 	    <separator/>
 	    <menuitem name="FileQuit" verb=""/>
 	</submenu>
@@ -40,22 +40,20 @@
 	<submenu name="Insert" _label="_Insert">
 	    <menuitem name="CreateDiagram" verb=""/>
 	</submenu>
-	    
+    <!--
 	<submenu name="Settings" _label="_Settings">
 	    <menuitem name="BonoboCustomize" verb="" _label="Customi_ze"/>
 	    <separator/>
 	    <menuitem name="SettingsPreferences" verb="" _label="_Preferences"/>
 	</submenu>
-
+    -->
 	<submenu name="Window" _label="_Window">
 	    <placeholder name="OpenWindows"/>
 	    <separator/>
 	    <menuitem name="WindowClose" verb=""/>
 	</submenu>
 
-	<placeholder name="Component"/>
-
-	<submenu name="Help" _label="_Help">
+	<submenu name="Help" _label="_Help" placement="right">
 	    <placeholder name="BuiltMenuItems"/>
 	    <menuitem name="About" verb=""/>
 	    <separator/>

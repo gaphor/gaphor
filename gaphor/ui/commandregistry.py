@@ -13,7 +13,13 @@ class _CommandExecuter(object):
 	self.command = command
 
     def __call__(self, uic, verbname):
-	self.command.execute()
+	try:
+	    self.command.execute()
+	except Exception, e:
+	    # TODO: create a warning dialog or something
+	    log.warning('Command execution failed: %s' % e)
+	    import traceback
+	    traceback.print_exc()
 
 class CommandRegistry(object):
     """

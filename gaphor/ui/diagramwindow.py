@@ -97,7 +97,7 @@ class DiagramWindow(AbstractWindow):
 
 	self.__destroy_id = window.connect('destroy', self.__on_window_destroy)
 	view.connect('notify::tool', self.__on_view_notify_tool)
-	view.connect('event', self.__on_view_event)
+	view.connect_after('event', self.__on_view_event)
 
 	window.show_all()
 	#window.connect ('destroy', self.__destroy_event_cb)
@@ -137,14 +137,8 @@ class DiagramWindow(AbstractWindow):
     def close(self):
 	"""Close the window."""
 	self._check_state(AbstractWindow.STATE_ACTIVE)
-	self.__window.disconnect(self.__destroy_id)
 	self.__window.destroy()
 	self._set_state(AbstractWindow.STATE_CLOSED)
-	self.set_diagram(None)
-	del self.__window
-	del self.__ui_component
-	del self.__view
-	del self.__diagram
 
     def __on_window_destroy(self, window):
 	"""
@@ -152,19 +146,34 @@ class DiagramWindow(AbstractWindow):
 	File->Close was pressed.
 	"""
 	self._check_state(AbstractWindow.STATE_ACTIVE)
-        cmd_reg = GaphorResource('CommandRegistry')
-	cmd = cmd_reg.create_command('FileClose')
-	cmd.set_parameters ({ 'window': self })
-	cmd.execute()
 	self._set_state(AbstractWindow.STATE_CLOSED)
+	self.set_diagram(None)
+	del self.__window
+	del self.__ui_component
+	del self.__view
+	del self.__diagram
 
     def __on_view_notify_tool(self, view, tool):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
 	print self, view, tool
 	if not view.get_property('tool'):
 	    self.set_message('')
 
-    def __on_view_event(self, event):
-	return 0
+    def __on_view_event(self, view, event):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
+	# handle mouse button 3 (popup menu):
+	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
+	    view.canvas.push_undo(None)
+	    cmd_reg = GaphorResource('CommandRegistry')
+	    verbs = cmd_reg.create_verbs(context='diagram.popup',
+					 params={ 'window': self })
+	    self.__ui_component.add_verb_list (verbs, None)
+	    menu = gtk.Menu()
+	    # The window takes care of destroying the old menu, if any...
+	    self.__window.add_popup(menu, '/popups/DiagramView')
+	    menu.popup(None, None, None, event.button, 0)
+	    view.stop_emission('event')
+	    return True
 
     def __on_diagram_undo(self, canvas):
 	#log.debug('Undo: %d, Redo: %d' % (canvas.get_undo_depth(), canvas.get_redo_depth()))

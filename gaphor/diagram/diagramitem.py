@@ -13,15 +13,16 @@ class DiagramItem(object):
 	self.connect ('notify::parent', DiagramItem.on_parent_notify)
 
     def get_subject(self):
+	"""Get the subject that is represented by this diagram item."""
 	return self.__subject
 
     def set_subject(self, subject):
+	"""Set a subject."""
 	self.set_property('subject', subject)
 	#self._set_subject(subject)
 
     def _set_subject(self, subject):
-	"""
-	Real (protected) set_subject method. should be called by
+	"""Real (protected) set_subject method. Should be called by
 	do_set_property(), in the sub-classes.
 	"""
 	if subject is not self.__subject:
@@ -33,12 +34,11 @@ class DiagramItem(object):
 		subject.add_presentation(self)
 		subject.connect(self.on_subject_update)
 
+    # Define subject property:
     subject = property (get_subject, set_subject, None, 'Subject')
 
     def save_property(self, save_func, name):
-	'''
-	Save a property, this is a shorthand method.
-	'''
+	'''Save a property, this is a shorthand method.'''
 	save_func(name, self.get_property(name))
 
     # DiaCanvasItem callbacks
@@ -74,7 +74,6 @@ class DiagramItem(object):
 	return 0
 
     def on_parent_notify (self, parent):
-	#print self
 	if self.__subject:
 	    if self.parent:
 		#print 'Have Parent', self, parent

@@ -45,7 +45,7 @@ class MainWindow(AbstractWindow):
     def construct(self):
 	self._check_state(AbstractWindow.STATE_INIT)
 	window = bonobo.ui.Window ('gaphor', 'Gaphor v' + config.VERSION)
-	window.set_size_request(200, 300)
+	window.set_size_request(220, 400)
 	window.set_resizable(True)
 
 	ui_container = window.get_ui_container ()
@@ -130,24 +130,24 @@ class MainWindow(AbstractWindow):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	# handle mouse button 3:
 	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
-		selection = view.get_selection()
-		model, iter = selection.get_selected()
-		assert model is self.__model
-		if not iter:
-		    return
-		element = model.get_value(iter, 0)
-		path = model.get_path(element)
-		cmd_reg = GaphorResource('CommandRegistry')
-		verbs = cmd_reg.create_verbs(context='main.popup',
-					     params={ 'window': self,
-						      'element': element,
-						      'iterator': iter,
-						      'path': path })
-		self.__ui_component.add_verb_list (verbs, None)
-		menu = gtk.Menu()
-		# The window takes care of destroying the old menu, if any...
-		self.__window.add_popup(menu, '/popups/NamespaceView')
-		menu.popup(None, None, None, event.button, 0)
+	    selection = view.get_selection()
+	    model, iter = selection.get_selected()
+	    assert model is self.__model
+	    if not iter:
+		return
+	    element = model.get_value(iter, 0)
+	    path = model.get_path(element)
+	    cmd_reg = GaphorResource('CommandRegistry')
+	    verbs = cmd_reg.create_verbs(context='main.popup',
+					 params={ 'window': self,
+						  'element': element,
+						  'iterator': iter,
+						  'path': path })
+	    self.__ui_component.add_verb_list (verbs, None)
+	    menu = gtk.Menu()
+	    # The window takes care of destroying the old menu, if any...
+	    self.__window.add_popup(menu, '/popups/NamespaceView')
+	    menu.popup(None, None, None, event.button, 0)
 
     def __on_transient_window_closed(self, window):
 	assert window in self.__transient_window

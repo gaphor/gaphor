@@ -8,9 +8,6 @@ This function can be used to locate application wide resources, such as
 object factories.
 """
 
-import pygtk
-pygtk.require('2.0')
-
 import misc.singleton
 import misc.logger
 import config

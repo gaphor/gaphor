@@ -65,10 +65,7 @@ class Sequence:
         self.owner.sequence_remove(self, key)
 
     def index(self, key):
-	"""
-	Sequence.index takes an object as an argument. That argument should
-	be an element that is in the list. It returns the position of the
-	object in the sequence.
+	"""Given an object, return the position of that object in the sequence.
 	"""
 	for i in range (0, len (self.items)):
 	    if self.items[i] is key:

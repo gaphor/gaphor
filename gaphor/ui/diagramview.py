@@ -57,6 +57,8 @@ class DiagramView(CanvasView):
 		item = self.create (diagram.ActorItem)
 	    elif isinstance(element, UML.UseCase):
 		item = self.create (diagram.UseCaseItem)
+	    elif isinstance(element, UML.Class):
+		item = self.create (diagram.ClassItem)
 	    else:
 		item = None
 	    # Move the item:

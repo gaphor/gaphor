@@ -139,6 +139,7 @@ class DeleteCommand(Command):
 	self._view = params['window'].get_view()
 
     def execute(self):
+	self._view.canvas.push_undo('delete')
 	items = self._view.selected_items
 	for i in items:
 	    i.item.parent.remove(i.item)
@@ -191,6 +192,9 @@ class SnapToGridCommand(Command):
 
     def set_parameters(self, params):
 	self._view = params['window'].get_view()
+
+    #def get_status(self):
+	#return self._view.canvas.get_property ('snap_to_grid')
 
     def execute(self):
 	snap = self._view.canvas.get_property ('snap_to_grid')
