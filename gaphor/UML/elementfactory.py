@@ -21,15 +21,15 @@ class ElementFactory(object):
     flush - model is flushed: all element are removed from the factory
             (element is None)
     """
-    def __init__ (self):
+    def __init__(self):
         self._elements = dict()
         self._observers = list()
 
-    def create (self, type):
+    def create(self, type):
         """Create a new Model element of type type"""
         return self.create_as(type, uniqueid.generate_id())
 
-    def create_as (self, type, id):
+    def create_as(self, type, id):
         """Create a new model element of type 'type' with 'id' as its ID.
         This method should only be used when loading models. If the ID is
         higher that the current id that should be used for the next item, the
@@ -42,7 +42,7 @@ class ElementFactory(object):
         self.notify(obj, 'create')
         return obj
 
-    def lookup (self, id):
+    def lookup(self, id):
         try:
             return self._elements[id]
         except KeyError:
@@ -56,16 +56,16 @@ class ElementFactory(object):
                 l.append(e)
         return l
 
-    def keys (self):
+    def keys(self):
         return self._elements.keys()
 
-    def iterkeys (self):
+    def iterkeys(self):
         return self._elements.iterkeys()
 
-    def values (self):
+    def values(self):
         return self._elements.values()
 
-    def itervalues (self):
+    def itervalues(self):
         return self._elements.itervalues()
 
     def is_empty(self):
@@ -120,7 +120,7 @@ class ElementFactory(object):
     def notify_model(self):
         self.notify(None, 'model')
 
-    def __element_signal (self, element, pspec):
+    def __element_signal(self, element, pspec):
         """Remove an element from the factory """
         #element = weak_element()
         #if not element: return

@@ -302,6 +302,8 @@ class association(umlproperty):
             raise Exception, 'Can not delete collections'
         if not value:
             value = self._get(obj)
+            if value is None:
+                return
         if self.opposite:
             getattr(type(value), self.opposite)._del(value, obj)
         self._del(obj, value)

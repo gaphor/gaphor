@@ -146,7 +146,7 @@ def _load(elements, factory):
         elif isinstance(elem, parser.canvasitem):
             cls = getattr(diagram, elem.type)
             #log.debug('Creating canvas item for %s' % elem)
-            elem.element = cls(id)
+            elem.element = diagram.create_as(cls, id)
         else:
             raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
 

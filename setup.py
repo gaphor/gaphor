@@ -73,10 +73,7 @@ class config_Gaphor(Command):
         self.module_check('gtk', ('gtk_version', (2, 0)),
                                  ('pygtk_version', (1, 99, 16)))
         self.module_check('gnome')
-        self.module_check('gnome.ui')
         self.module_check('gnome.canvas')
-        self.module_check('bonobo')
-        self.module_check('bonobo.ui')
         self.module_check('gconf')
         self.module_check('diacanvas', ('diacanvas_version', (0, 9, 2)))
 

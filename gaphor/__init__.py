@@ -112,9 +112,11 @@ try:
     from misc.aspects import ReferenceAspect, weave_method
     import UML.elementfactory
     import UML.diagram
+    import diagram
     refs = []
-    weave_method(UML.elementfactory.ElementFactory.create, ReferenceAspect, refs)
+    weave_method(UML.elementfactory.ElementFactory.create_as, ReferenceAspect, refs)
     weave_method(UML.diagram.Diagram.create, ReferenceAspect, refs)
+    weave_method(diagram.create_as, ReferenceAspect, refs)
 except ImportError:
     pass
 

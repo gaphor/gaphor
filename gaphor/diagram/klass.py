@@ -64,6 +64,7 @@ class Compartment(list):
 
 
 class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
+#class ClassItem(ClassifierItem):
     """This item visualizes a Class instance.
 
     A ClassItem contains two compartments (Compartment): one for
@@ -288,12 +289,9 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         return 1
 
     def on_groupable_iter(self):
-        #log.debug('on_groupable_iter')
         for i in self._attributes:
-            #log.debug('on_groupable_iter (attr): %s' % i)
             yield i
         for i in self._operations:
-            #log.debug('on_groupable_iter (oper): %s' % i)
             yield i
 
 initialize_item(ClassItem, UML.Class)

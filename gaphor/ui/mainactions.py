@@ -270,7 +270,6 @@ class CreateDiagramAction(Action):
 
     def update(self):
 	element = self._window.get_tree_view().get_selected_element()
-	print 'OpenElementAction', element
 	self.sensitive = isinstance(element, UML.Package)
 
     def execute(self):
@@ -290,7 +289,6 @@ class OpenElementAction(Action):
 
     def update(self):
 	element = self._window.get_tree_view().get_selected_element()
-	print 'OpenElementAction', element
 	self.sensitive = isinstance(element, UML.Diagram)
 
     def execute(self):
@@ -363,7 +361,7 @@ class SelectRowAction(Action):
 	pass
 
     def execute(self):
-	print self.id
+	pass
 
 register_action(SelectRowAction)
 
