@@ -8,9 +8,10 @@ The regular expressions are constructed based on a series of
 attribute/operation.
 """
 
-__all__ = [ 'parse_attribute', 'parse_operation' ]
+__all__ = [ 'parse_attribute', 'parse_operation', 'render_attribute', 'render_operation' ]
 
 import re
+from cStringIO import StringIO
 import gaphor
 
 # Visibility (optional) ::= '+' | '-' | '#'
@@ -59,6 +60,19 @@ operation_pat = re.compile(r'^' + vis_subpat + name_subpat + params_subpat + typ
 parameter_pat = re.compile(r'^' + dir_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + rest_subpat)
 
 
+def _set_visibility(self, vis):
+    if vis == '+':
+        self.visibility = 'public'
+    elif vis == '#':
+        self.visibility = 'protected'
+    elif vis == '-':
+        self.visibility = 'private'
+    else:
+        try:
+            del self.visibility
+        except AttributeError:
+            pass
+
 def parse_attribute(self, s, element_factory=None):
     """Parse string s in the property. Tagged values, multiplicity and stuff
     like that is altered to reflect the data in the property string.
@@ -83,18 +97,7 @@ def parse_attribute(self, s, element_factory=None):
         from uml2 import LiteralString
         if not element_factory:
             element_factory = gaphor.resource("ElementFactory")
-        vis = g('vis')
-        if vis == '+':
-            self.visibility = 'public'
-        elif vis == '#':
-            self.visibility = 'protected'
-        elif vis == '-':
-            self.visibility = 'private'
-        else:
-            try:
-                del self.visibility
-            except AttributeError:
-                pass
+        _set_visibility(self, g('vis'))
         self.isDerived = g('derived') and True or False
         self.name = g('name')
         if not self.typeValue:
@@ -132,18 +135,7 @@ def parse_operation(self, s, element_factory=None):
         from uml2 import Parameter, LiteralString
         if not element_factory:
             element_factory = gaphor.resource("ElementFactory")
-        vis = g('vis')
-        if vis == '+':
-            self.visibility = 'public'
-        elif vis == '#':
-            self.visibility = 'protected'
-        elif vis == '-':
-            self.visibility = 'private'
-        else:
-            try:
-                del self.visibility
-            except AttributeError:
-                pass
+        _set_visibility(self, g('vis'))
         self.name = g('name')
         if not self.returnResult:
             self.returnResult = element_factory.create(Parameter)
@@ -204,3 +196,70 @@ def parse_operation(self, s, element_factory=None):
         for fp in self.formalParameter[pindex:]:
             fp.unlink()
 
+# Do not render if the name still contains a visibility element
+no_render_pat = re.compile(r'^\s*[+#-]')
+vis_map = {
+    'public': '+',
+    'protected': '#',
+    'private': '-'
+}
+
+def render_attribute(self):
+    """Create a OCL representation of the attribute,
+    Returns the attribute as a string.
+    """
+    name = self.name
+    if no_render_pat.match(name):
+        return name
+
+    s = '%s %s%s' % (vis_map[self.visibility], self.isDerived and '/ ' or '', name) 
+    if self.typeValue and self.typeValue.value:
+        s += ': %s' % self.typeValue.value
+    if self.upperValue and self.upperValue.value:  
+        if self.lowerValue and self.lowerValue.value:
+            s += '[%s..%s]' % (self.lowerValue.value, self.upperValue.value)
+        else:
+            s += '[%s]' % self.upperValue.value
+    if self.defaultValue and self.defaultValue.value:
+        s += ' = %s' % self.defaultValue.value
+    if self.taggedValue and self.taggedValue.value:
+        s += ' { %s }' % self.taggedValue.value
+    return s
+
+def render_operation(self):
+    """Create a OCL representation of the operation,
+    Returns the operation as a string.
+    """
+    name = self.name
+    if no_render_pat.match(name):
+        return name
+    s = '%s %s(' % (vis_map[self.visibility], name) 
+    for p in self.formalParameter:
+        #print p # direction, name, type, mult, default, tags
+        s += '%s %s' % (p.direction, p.name) 
+        if p.typeValue and p.typeValue.value:
+            s += ': %s' % p.typeValue.value
+        if p.upperValue and p.upperValue.value:  
+            if p.lowerValue and p.lowerValue.value:
+                s += '[%s..%s]' % (p.lowerValue.value, p.upperValue.value)
+            else:
+                s += '[%s]' % p.upperValue.value
+        if p.defaultValue and p.defaultValue.value:
+            s += ' = %s' % p.defaultValue.value
+        if p.taggedValue and p.taggedValue.value:
+            s += ' { %s }' % p.taggedValue.value
+        if p is not self.formalParameter[-1]:
+            s += ', '
+    s += ')'
+    rr = self.returnResult and self.returnResult[0]
+    if rr:
+        if rr.typeValue and rr.typeValue.value:
+            s += ': %s' % rr.typeValue.value
+        if rr.upperValue and rr.upperValue.value:  
+            if rr.lowerValue and rr.lowerValue.value:
+                s += '[%s..%s]' % (rr.lowerValue.value, rr.upperValue.value)
+            else:
+                s += '[%s]' % rr.upperValue.value
+        if rr.taggedValue and rr.taggedValue.value:
+            s += ' { %s }' % rr.taggedValue.value
+    return s

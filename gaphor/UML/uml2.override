@@ -73,11 +73,21 @@ override Operation.type
 Operation.type = derivedunion('type', 0, 1)
 %%
 override Property.parse
-from umllex import parse_property
-Property.parse = parse_property
-del parse_property
+from umllex import parse_attribute
+Property.parse = parse_attribute
+del parse_attribute
+%%
+override Property.render
+from umllex import render_attribute
+Property.render = render_attribute
+del render_attribute
 %%
 override Operation.parse
 from umllex import parse_operation
 Operation.parse = parse_operation
 del parse_operation
+%%
+override Operation.render
+from umllex import render_operation
+Operation.render = render_operation
+del render_operation

@@ -28,7 +28,7 @@ dictionary returned by parse(). Each canvasitem has a type, which maps to a
 class name in the gaphor.diagram module.
 """
 
-__all__ = [ 'parse' ]
+__all__ = [ 'parse', 'ParserException' ]
 
 from xml.sax import handler
 
@@ -38,6 +38,9 @@ class base(object):
     def __init__(self):
         self.values = { }
         self.references = { }
+
+    def __getattr__(self, key):
+        return self[key]
 
     def __getitem__(self, key):
         try:
@@ -79,6 +82,22 @@ class canvasitem(base):
 
 XMLNS='http://gaphor.sourceforge.net/gaphor'
 
+class ParserException(Exception):
+    pass
+
+# Loader state:
+[ ROOT,         # Expect 'gaphor' element
+  GAPHOR,       # Expect UML classes (tag name is the UML class name)
+  ELEMENT,      # Expect properties of UML object
+  DIAGRAM,      # Expect properties of Diagram object + canvas
+  CANVAS,       # Expect canvas properties + <item> tags
+  ITEM,         # Expect item attributes and nested items
+  ATTR,         # Reading contents of an attribute (such as a <val> or <ref>)
+  VAL,          # Redaing contents of a <val> tag
+  REFLIST,      # In a <reflist>
+  REF           # Reading contents of a <ref> tag
+] = xrange(10)
+
 class GaphorLoader(handler.ContentHandler):
     """Create a list of elements. an element may contain a canvas and a
     canvas may contain canvas items. Each element can have values and
@@ -87,26 +106,39 @@ class GaphorLoader(handler.ContentHandler):
     Data read in non-CDATA text is stripped. If a CDATA section is found all
     non-CDATA text is ignored.
     """
+
     def __init__(self):
         handler.ContentHandler.__init__(self)
         # make sure all variables are initialized:
         self.startDocument()
 
-    def push(self, element):
-        """Add an element to the item stack."""
-        self.__stack.append(element)
+    def push(self, element, state):
+        """Add an element to the item stack.
+        """
+        self.__stack.append((element, state))
 
     def pop(self):
         """Return the last item on the stack. The item is removed from
-        the stack."""
-        return self.__stack.pop()
+        the stack.
+        """
+        return self.__stack.pop()[0]
 
-    def peek(self):
-        """Return the last item on the stack. The item is not removed."""
-        return self.__stack[-1]
+    def peek(self, depth=1):
+        """Return the last item on the stack. The item is not removed.
+        """
+        return self.__stack[-1 * depth][0]
+
+    def state(self):
+        """Return the current state of the parser.
+        """
+        try:
+            return self.__stack[-1][1]
+        except IndexError:
+            return ROOT
 
     def startDocument(self):
-        """Start of document: all our attributes are initialized."""
+        """Start of document: all our attributes are initialized.
+        """
         self.elements = {} # map id: element/canvasitem
         self.__stack = []
         self.value_is_cdata = 0
@@ -118,69 +150,90 @@ class GaphorLoader(handler.ContentHandler):
         self.in_cdata = 0
 
     def endDocument(self):
-        assert len(self.__stack) == 0, 'Invalid XML document.'
+        if len(self.__stack) != 0:
+            raise ParserException, 'Invalid XML document.'
 
     def startElement(self, name, attrs):
-        #print 'name:', name
         self.cdata = ''
         self.in_cdata = 2 # initial, just read text
-        name = name.lower()
+        
+        state = self.state()
 
-        if name == 'element':
+        # Read a element class. The name of the tag is the class name:
+        if state == GAPHOR:
             id = attrs['id']
-            e = element(id, attrs['type'])
+            e = element(id, name)
             self.elements[id] = e
-            self.push(e)
+            self.push(e, name == 'Diagram' and DIAGRAM or ELEMENT)
 
-        elif name == 'canvas':
+        # Special treatment for the <canvas> tag in a Diagram:
+        elif state == DIAGRAM and name == 'canvas':
             c = canvas()
             self.peek().canvas = c
-            self.push(c)
+            self.push(c, CANVAS)
 
-        elif name == 'canvasitem':
+        # Items in a canvas are referenced by the <item> tag:
+        elif state in (CANVAS, ITEM) and name == 'item':
             id = attrs['id']
             c = canvasitem(id, attrs['type'])
             self.elements[id] = c
             self.peek().canvasitems.append(c)
-            self.push(c)
+            self.push(c, ITEM)
 
-        elif name == 'value':
+        # Store the attribute name on the stack, so we can use it later
+        # to store the <ref>, <reflist> or <val> content:
+        elif state in (ELEMENT, DIAGRAM, CANVAS, ITEM):
+            # handle 'normal' attributes
             # Note that Value may contain CDATA
-            v = attrs.get('value')
-            if v:
-                self.value_is_cdata = 0
-                self.peek().values[attrs['name']] = v
-            else:
-                self.value_is_cdata = 1
-                self.push(attrs['name'])
+            self.push(name, ATTR)
 
-        elif name == 'reference':
-            # No data is pushed on the stack for references
-            r = self.peek().references
-            n = attrs['name']
+        # Reference list:
+        elif state == ATTR and name == 'reflist':
+            self.push(self.peek(), REFLIST)
+
+        # Reference with multiplicity 1:
+        elif state  == ATTR and name == 'ref':
+            n = self.peek(1)
+            # Fetch the element instance from the stack
+            r = self.peek(2).references[n] = attrs['refid']
+            self.push(None, REF)
+
+        # Reference with multiplicity *:
+        elif state == REFLIST and name == 'ref':
+            n = self.peek(1)
+            # Fetch the element instance from the stack
+            r = self.peek(3).references
             refid = attrs['refid']
             try:
                 r[n].append(refid)
             except KeyError:
                 r[n] = [refid]
+            self.push(None, REF)
 
-        elif name == 'gaphor':
-            assert attrs['version'] in ('1.1', '2.0')
-            self.push(None)
+        # We need to get the text within the <val> tag:
+        elif state == ATTR and name == 'val':
+            self.value_is_cdata = 1
+            self.push(None, VAL)
+
+        # The <gaphor> tag is the toplevel tag:
+        elif state == ROOT and name == 'gaphor':
+            assert attrs['version'] in ('3.0',)
+            self.push(None, GAPHOR)
+
+        else:
+            raise ParserException, 'Invalid XML: tag <%s> not known (state = %s)' % (name, state)
 
     def endElement(self, name):
-        name = name.lower()
-        if name == 'reference':
-            pass # do nothing, stack should not be pop'ed.
-        elif name == 'value':
+        # Put the text on the value
+        if self.state() == VAL:
             if self.value_is_cdata:
-                n = self.pop()
-                #print '%s: "%s"' % (n, self.cdata)
+                # Two levels up: the attribute name
+                n = self.peek(2)
                 if self.in_cdata == 2:
                     self.cdata = self.cdata.strip()
-                self.peek().values[n] = self.cdata
-        else:
-            self.pop()
+                # Three levels up: the element instance (element or canvasitem)
+                self.peek(3).values[n] = self.cdata
+        self.pop()
 
     def startElementNS(self, name, qname, attrs):
         #print 'name=', name
@@ -221,19 +274,20 @@ class GaphorLoader(handler.ContentHandler):
         self.in_cdata = 0
 
 def parse(filename):
-    """Parse a file and return a dictionary ID:element/canvasitem."""
+    """Parse a file and return a dictionary ID:element/canvasitem.
+    """
     from xml.sax import make_parser
     parser = make_parser()
 
-    ch = GaphorLoader()
+    loader = GaphorLoader()
 
-    parser.setProperty(handler.property_lexical_handler, ch)
+    parser.setProperty(handler.property_lexical_handler, loader)
     parser.setFeature(handler.feature_namespaces, 1)
-    parser.setContentHandler(ch)
+    parser.setContentHandler(loader)
 
     parser.parse(filename)
     #parser.close()
-    return ch.elements
+    return loader.elements
 
 if __name__ == '__main__':
     parse('ns.xml')

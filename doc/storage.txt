@@ -17,34 +17,43 @@ This is handled by the load and save function of the Diagram class.
 All elements inside a canvas have a tag `Item'.
 
 <?xml version="1.0" ?>
-<Gaphor version="1.0">
-  <Element type="Model" id="1">
-    <Reference name="ownedElement" refid="2"/>
-    <Reference name="ownedElement" refid="3"/>
-    <Reference name="ownedElement" refid="4"/>
-  </Element>
-  <Element type="Diagram" id="2">
-    <Reference name="namespace" refid="1"/>
-    <Canvas extents="(9.0, 9.0, 189.0, 247.0)" grid_bg="0xFFFFFFFF"
+<Gaphor version="1.0" gaphor_version="0.3">
+  <Package id="1">
+    <ownedElement>
+      <reflist>
+        <ref refid="2"/>
+        <ref refid="3"/>
+        <ref refid="4"/>
+      </reflist>
+    </ownedElement>
+  </Package>
+  <Diagram id="2">
+    <namespace>
+      <ref refid="1"/>
+    </namespace>
+    <canvas extents="(9.0, 9.0, 189.0, 247.0)" grid_bg="0xFFFFFFFF"
 	    grid_color="0x80ff" grid_int_x="10.0" grid_int_y="10.0"
 	    grid_ofs_x="0.0" grid_ofs_y="0.0" snap_to_grid="0"
-	    static_extents="0">
-      <CanvasItem affine="(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" cid="0x8292114"
-	      type="CanvasGroup">
-        <CanvasItem affine="(1.0, 0.0, 0.0, 1.0, 150.0, 50.0)" cid="0x8293e74"
-		height="78.0" subject="3" type="Actor" width="38.0"/>
-        <CanvasItem affine="(1.0, 0.0, 0.0, 1.0, 10.0, 10.0)" cid="0x82e7d74"
-		height="26.0" subject="5" type="Comment" width="100.0"/>
-      </CanvasItem>
-    </Canvas>
-  </Element>
-  <Element type="Actor" id="3">
-    <Value name="name">
-<![CDATA[Actor]]>    </Value>
-    <Reference name="namespace" refid="1"/>
-  </Element>
-  <Element type="UseCase" id="4">
-    <Reference name="namespace" refid="1"/>
-  </Element>
-  <Element type="Comment" id="5"/>
+	    static_extents="0" affine="(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)"
+	    id="DCE:xxxx">
+      <item affine="(1.0, 0.0, 0.0, 1.0, 150.0, 50.0)" cid="0x8293e74"
+		height="78.0" subject="3" type="ActorItem" width="38.0"/>
+      <item affine="(1.0, 0.0, 0.0, 1.0, 10.0, 10.0)" cid="0x82e7d74"
+		height="26.0" subject="5" type="CommentItem" width="100.0"/>
+    </canvas>
+  </Diagram>
+  <Actor id="3">
+    <name>
+      <val><![CDATA[Actor]]></val>
+    </name>
+    <namespace>
+      <ref refid="1"/>
+    </namespace
+  </Actor>
+  <UseCase id="4">
+    <namespace>
+      <ref refid="1"/>
+    </namespace>
+  </UseCase>
+  <Comment id="5"/>
 </Gaphor>

@@ -32,26 +32,26 @@ Model elements should have their class name as tag name, e.g.:
 Associations are in two flavors: single and multiple.
 
   <Class id="DCE:xxx.xxx...">
-    <association name="package"/>
+    <package>
       <ref refid="DCE:xxx.../>
-    </association>
+    </package>
   </Class>
   <Package id="DCE:xxx...">
-    <association name="ownedClassifier">
+    <ownedClassifier>
        <reflist>
          <ref refid="DCE:xxx.xxx..."/>
 	 ...
        </reflist>
-    </association>
+    </ownedClassifier>
   </Package>
 
 Associations contain primitive data, this can always be displayed as strings
 
   <Class id="DCE:xxx.xxx...">
-    <attribute name="name"/>
+    <name>
       <![CDATA[My name]]>
-    </attribute>
-    <attribute name="intvar">4</attribute>
+    </name>
+    <intvar>4</intvar>
   </Class>
 
 Canvas is the tag in which all canvas related stuff is placed. This is
@@ -59,14 +59,12 @@ the same way it is done now:
 
   <Diagram id="...">
     <canvas>
-      <canvasitem name="AssociationItem">
-        <association name="subject">
+      <item type="AssociationItem">
+        <subject>
 	  <ref refid="DCE:..."/>
-	</association>
-	<attribute name="width">
-	  100.0
-	</attribute>
-      </canvasitem>
+	</subject>
+	<width><val>100.0</val></width>
+      </item>
     </canvas>
   </Diagram>
 
@@ -75,16 +73,4 @@ The data stored there is specific to Gaphor. The model elements however, are
 interesting for other things such as code generators and conversion tools.
 Gaphor has export filters for SVG graphics, so diagrams can be exported in
 a independant way.
-
-
-Implementation
-~~~~~~~~~~~~~~
-
-First of all the old file format should be rewritten using a SAX parser, rather
-than the current DOM implementation. When this is done it should be
-pretty straightforward to add the new file format.
-
-Note that the data model has been upgraded to UML 2.0 meta model by then,
-so some extra measures has to be taken to convert old 0.2.0 files to
-the new data model.
 

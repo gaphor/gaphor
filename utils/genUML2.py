@@ -7,6 +7,9 @@
 # 1. read the model file with the gaphor parser
 # 2. Create a object herarcy by ordering elements based on generalizations
 
+# Recreate the model using some very dynamic class, so we can set all
+# attributes and traverse them to generate the data model.
+
 from gaphor.parser import parse, element, canvas, canvasitem
 import sys, string, operator
 import override
@@ -24,6 +27,20 @@ from properties import association, attribute, enumeration, derivedunion, redefi
 if map(int, sys.version[:3].split('.')) < [2, 3]:
     header = header + "bool = int\n"
 
+class Dynamic(object):
+
+    def __init__(self):
+        self.v = []
+
+    def __getattr__(self, key):
+        attr = self.__dict__.get(key)
+        if attr is None:
+            attr = self.__dict__[key] = Dynamic()
+        return attr.v
+
+    def __setattr__(self, key, value):
+        attr = getattr(self, key)
+        attr.v.append(value)
 
 class DevNull:
     def write(self, s):
@@ -197,7 +214,12 @@ def parse_attribute(attr):
     upper = 1
 
     # First split name and type:
-    name, type = map(string.strip, attr['name'].split(':'))
+    try:
+        name, type = map(string.strip, attr['name'].split(':'))
+    except ValueError:
+        name = attr['name']
+        type = ''
+
     while not name[0].isalpha():
         if name[0] == '/':
             derived = True
@@ -286,7 +308,6 @@ def parse_association_multiplicity(mult):
         redefines = l[0]
 
     return lower, upper, subsets, redefines
-        
 
 def generate(filename, outfile=None, overridesfile=None):
     # parse the file

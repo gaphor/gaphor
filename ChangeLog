@@ -1,6 +1,12 @@
+2003-12-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/storage.py: Store data in new format (see doc/xml-format.txt)
+	* gaphor/parser.py: New data is parsed. utils/genUML2.py and
+	gaphor/UML/element.py should be altered.
+
 2003-11-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
-	* gaphor/UML/umllex.py: ficed some stuff.
+	* gaphor/UML/umllex.py: fixed some stuff.
 
 2003-11-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

@@ -207,7 +207,7 @@ class association(umlproperty):
 
     def load(self, obj, value):
         if not isinstance(value, self.type):
-            raise AttributeError, 'Value for %s should be of type %s' % (self.name, self.type.__name__)
+            raise AttributeError, 'Value for %s should be of type %s (%s)' % (self.name, self.type.__name__, type(value).__name__)
         if self._set2(obj, value) and self.opposite:
             opposite = getattr(type(value), self.opposite)
             if opposite.upper > 1:

@@ -25,7 +25,7 @@ from gaphor.i18n import _
 
 __all__ = [ 'load', 'save' ]
 
-FILE_FORMAT_VERSION = '2.0'
+FILE_FORMAT_VERSION = '3.0'
 
 def save(filename=None, factory=None):
     """Save the current model to @filename. If no filename is given,
@@ -38,27 +38,29 @@ def save(filename=None, factory=None):
         """
         # Save a reference to the object:
         if value.id:
-            buffer.write('<reference name="%s" refid="%s"/>\n' % (name, value.id))
+            buffer.write('<%s><ref refid="%s"/></%s>\n' % (name, value.id, name))
 
     def save_collection(name, value):
         """Save a list of references.
         """
-        #buffer.write('<reflist>')
-        for v in value:
-            save_reference(name, v)
-        #buffer.write('</reflist>')
+        if len(value) > 0:
+            buffer.write('<%s><reflist>' % name)
+            for v in value:
+                #save_reference(name, v)
+                buffer.write('<ref refid="%s"/>' % v.id)
+            buffer.write('</reflist></%s>' % name)
 
     def save_value(name, value):
         """Save a value (attribute).
         If the value is a string, it is saves as a CDATA block.
         """
         if value is not None:
-            buffer.write('<value name="%s">' % name)
+            buffer.write('<%s><val>' % name)
             if isinstance(value, types.StringTypes):
                 buffer.write('<![CDATA[%s]]>' % value.replace(']]>', '] ]>'))
             else:
                 buffer.write(escape(str(value)))
-            buffer.write('</value>\n')
+            buffer.write('</val></%s>\n' % name)
 
     def save_element(name, value):
         """Save attributes and references from items in the gaphor.UML module.
@@ -87,9 +89,9 @@ def save(filename=None, factory=None):
         elif isinstance(value, UML.collection):
             save_collection(name, value)
         elif isinstance(value, diacanvas.CanvasItem):
-            buffer.write('<canvasitem id="%s" type="%s">' % (value.id, value.__class__.__name__))
+            buffer.write('<item id="%s" type="%s">' % (value.id, value.__class__.__name__))
             value.save(save_canvasitem)
-            buffer.write('</canvasitem>')
+            buffer.write('</item>')
         else:
             save_value(name, value)
 
@@ -98,12 +100,13 @@ def save(filename=None, factory=None):
 
     buffer = StringIO()
     buffer.write('<?xml version="1.0"?>\n')
-    buffer.write('<gaphor version="%s">' % FILE_FORMAT_VERSION)
+    buffer.write('<gaphor version="%s" gaphor_version="%s">' % (FILE_FORMAT_VERSION, gaphor.resource('Version')))
 
     for e in factory.values():
-        buffer.write('<element id="%s" type="%s">' % (str(e.id), e.__class__.__name__))
+        clazz = e.__class__.__name__
+        buffer.write('<%s id="%s">' % (clazz, str(e.id)))
         e.save(save_element)
-        buffer.write('</element>')
+        buffer.write('</%s>' % clazz)
 
     buffer.write('</gaphor>')
 
@@ -165,18 +168,31 @@ def _load(elements, factory):
 
         # load attributes and references:
         for name, value in elem.values.items():
-            log.debug('Loading value %s (%s) for element %s' % (name, value, elem.element))
-            elem.element.load(name, value)
+            try:
+                elem.element.load(name, value)
+            except:
+                log.debug('Loading value %s (%s) for element %s failed.' % (name, value, elem.element))
+                raise
+
         for name, refids in elem.references.items():
-            for refid in refids:
+            if type(refids) == type([]):
+                for refid in refids:
+                    try:
+                        ref = elements[refid]
+                    except:
+                        raise ValueError, 'Invalid ID for reference (%s) for element %s.%s' % (refid, elem.type, name)
+                    else:
+                        log.debug('Loading %s.%s with value %s' % (type(elem.element).__name__, name, ref.element.id))
+                        elem.element.load(name, ref.element)
+            else:
                 try:
-                    ref = elements[refid]
+                    ref = elements[refids]
                 except:
-                    raise ValueError, 'Invalid ID for reference (%s)' % refid
+                    raise ValueError, 'Invalid ID for reference (%s)' % refids
                 else:
                     log.debug('Loading %s.%s with value %s' % (type(elem.element).__name__, name, ref.element.id))
                     elem.element.load(name, ref.element)
-        
+                
     log.info('0% ... 33% ... 66%')
 
     # do a postload:
@@ -187,7 +203,7 @@ def _load(elements, factory):
 
     factory.notify_model()
 
-def load (filename, factory=None):
+def load(filename, factory=None):
     '''Load a file and create a model if possible.
     Exceptions: GaphorError.'''
     log.info('Loading file %s' % os.path.basename(filename))

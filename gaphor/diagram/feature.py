@@ -55,16 +55,18 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'expression':
-            self.preserve_property('expression')
-            # TODO:
-            self.subject.name = value
+            if self.subject:
+                self.preserve_property('expression')
+                self.subject.parse(value)
+                self._expression.set_text(self.subject.render())
+                self.request_update()
         else:
             DiagramItem.do_set_property(self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'expression':
             # TODO:
-            return self.subject and self.subject.name or ''
+            return self.subject and self.subject.render() or ''
         else:
             return DiagramItem.do_get_property(self, pspec)
 
@@ -126,9 +128,9 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         pass
 
     def on_editable_editing_done(self, shape, new_text):
-        self.preserve_property('expression')
-        if new_text != self.subject.name:
-            self.subject.name = new_text
-        self.request_update()
+        self.set_property('expression', new_text)
+        #if new_text != self.subject.name:
+        #    self.subject.name = new_text
+        #self.request_update()
 
 initialize_item(FeatureItem)
