@@ -43,13 +43,17 @@ class XMIExport(object):
         xmi.startElement('UML:Package', attrs=attributes)
         xmi.startElement('UML:Namespace.ownedElement', attrs=XMLAttributes())
         classes = [element for element in gaphor.resource('ElementFactory').select()]
-        for klass in classes:
-            if klass.package==node:
+        for item in classes:
+            try:
+                package = item.package==node
+            except AttributeError:
+                continue
+            if package:
                 try:
-                    handler=getattr(self, 'write%s'%klass.__class__.__name__)
+                    handler=getattr(self, 'write%s'%item.__class__.__name__)
                 except AttributeError:
                     continue
-                handler(xmi, klass)
+                handler(xmi, item)
         xmi.endElement('UML:Namespace.ownedElement')
         xmi.endElement('UML:Package')
 
