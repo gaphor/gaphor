@@ -173,13 +173,26 @@ class ActionPool(object):
         """
         return self.actions.values()
 
+    def get_action_states(self):
+        """Store the states (sensitivity) of each action currently in the pool.
+        States can be restored by calling set_action_states().
+        """
+        state = {}
+        for id, action in self.actions.iteritems():
+            state[id] = action.sensitive
+            action.sensitive = False
+        return state
+
+    def set_action_states(self, state):
+        """Restore state previously saved with get_action_states().
+        """
+        for action, sensitive in state.iteritems():
+            self.actions[action].sensitive = sensitive
+
     def insensivate_actions(self):
         """Make all actions insensitive. This can be used to ensure that
         no actions occur during a special big (background) action, such as
         loading or saving a model.
-
-        Actions can be refered to their previous state by calling
-        update_actions().
         """
         for action in self.actions.itervalues():
             action.sensitive = False

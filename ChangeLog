@@ -1,5 +1,8 @@
 2004-05-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
+	* gaphor/ui/mainactions.py: Do loading and saving in a separate
+	thread. This makes the UI react more smoothly (and we can do some
+	progress indicating in the near future).
 	* gaphor/misc/aspects.py: Added TimerAspect (a per function profiler)
 	* gaphor/ui/namespace.py: Now sorting works okay. Implemented faster
 	sorting algorithm.
