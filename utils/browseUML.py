@@ -9,9 +9,9 @@
 
 import sys
 
-sys.path.append("../gaphor")
+sys.path.append("..")
 
-from UML import *
+from gaphor.UML import *
 
 done = [ ]
 def print_vars(cls):

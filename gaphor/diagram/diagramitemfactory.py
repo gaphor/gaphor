@@ -2,8 +2,8 @@
 # vim:sw=4:
 
 import gobject
-import UML
-from misc.singleton import Singleton
+import gaphor.UML as UML
+from gaphor.misc.singleton import Singleton
 
 class DiagramItemFactory(Singleton):
     __diagram2uml = { }

@@ -5,14 +5,9 @@
 #
 # vim:sw=4
 
-import UML
-import ui
-import gtk
-import gnome.ui
+from misc.singleton import Singleton
 
-print "TODO: create main application"
-
-class Gaphor:
+class Gaphor(Singleton):
     NAME='gaphor'
     TITLE='Gaphor v0.1'
 
@@ -22,19 +17,10 @@ class Gaphor:
 	#self.app.add_view(view)
 	pass
 
-    def about(self):
-	about = gnome.ui.About('Gaphor',
-			       '0.1',
-			       'Copyright (c) 2001-2002 Arjan J. Molenaar',
-			       'UML Modeling for GNOME',
-			       ('Arjan J. Molenaar',))
-	about.show()
-	
     def main(self):
-	self.about()
 	gtk.main()
 
 
-app = Gaphor()
-app.main()
+#app = Gaphor()
+#app.main()
 

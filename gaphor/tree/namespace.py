@@ -7,9 +7,10 @@ a result only classifiers are shown here.
 import gtk
 import gobject
 import types
-import UML
+import gaphor.UML as UML
 import sys
 import string
+from gaphor.command.tree import OpenModelElementCommand
 
 class NamespaceModel(gtk.GenericTreeModel):
     """
@@ -224,9 +225,10 @@ class NamespaceView(gtk.TreeView):
 	assert isinstance (model, NamespaceModel)
 	self.__gobject_init__()
 	gtk.TreeView.__init__(self, model)
-
 	self.set_property('headers-visible', 0)
-
+	self.connect('event', NamespaceView._event)
+	selection = self.get_selection()
+	selection.set_mode(gtk.SELECTION_BROWSE)
 	column = gtk.TreeViewColumn ('')
 	# First cell in the column is for an image...
 	cell = gtk.CellRendererText ()
@@ -271,4 +273,14 @@ class NamespaceView(gtk.TreeView):
 	element = model.get_value(iter, 0)
 	element.name = new_text
 
+    def _event(self, event):
+	if event.type == gtk.gdk._2BUTTON_PRESS:
+	    def handle_selection(model, path, iter):
+		print 'Handling:', model, path, iter
+		element = model.get_value(iter, 0)
+		OpenModelElementCommand(element).execute()
+
+	    selection = self.get_selection()
+	    selection.selected_foreach(handle_selection)
+	    
 gobject.type_register(NamespaceView)

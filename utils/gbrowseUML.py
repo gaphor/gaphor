@@ -6,13 +6,13 @@ GTK+. ... but how do I isolate the bug?
 '''
 
 import sys
-sys.path.append("../gaphor")
+sys.path.append("..")
 
 import gtk
 import gobject
 import types
 
-from UML import *
+from gaphor.UML import *
 
 # to create a new GtkTreeModel from python, you must derive from
 # GenericTreeModel.

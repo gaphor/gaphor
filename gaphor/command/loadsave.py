@@ -1,8 +1,10 @@
 # vim: sw=4
 
-from misc.command import Command
-from misc.storage import Storage
-import gtk, UML, diagram
+from gaphor.misc.command import Command
+from gaphor.misc.storage import Storage
+import gtk
+import gaphor.UML as UML
+import gaphor.diagram as diagram
 
 DEFAULT_EXT='.gaphor'
 

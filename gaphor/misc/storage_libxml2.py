@@ -2,8 +2,8 @@
 
 # TODO: use xml.dom.minidom in stead of libxml2 (for compatibility and since libglade uses the python xml stuff too...)
 
-import UML
-import diagram
+import gaphor.UML as UML
+import gaphor.diagram as diagram
 import diacanvas
 import types
 import libxml2 as xml

@@ -5,8 +5,8 @@ includes saving, loading and flushing models. In the future things like
 consistency checking should also be included.'''
 
 #import misc.singleton as Singleton
-from misc.singleton import Singleton
-from misc.signal import Signal
+from gaphor.misc.singleton import Singleton
+from gaphor.misc.signal import Signal
 #from misc.storage import Storage
 #import libxml2 as xml
 from element import Element

@@ -31,7 +31,7 @@ import types, copy
 from enumeration import Enumeration_
 from sequence import Sequence, SequenceError
 #from misc import Signal
-from misc.signal import Signal
+from gaphor.misc.signal import Signal
 
 # Some default types as defined in the MetaModel.
 class Integer(int): pass

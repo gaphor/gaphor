@@ -5,7 +5,7 @@ CommentLine -- A line that connects a comment to another model element.
 
 import gobject
 import diacanvas
-import UML
+import gaphor.UML as UML
 
 class CommentLineItem(diacanvas.CanvasLine):
     __gproperties__ = {

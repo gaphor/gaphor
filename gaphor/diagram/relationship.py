@@ -5,7 +5,7 @@ Relationship -- Base class for dependencies and associations.
 
 import gobject
 import diacanvas
-import UML
+import gaphor.UML as UML
 from diagramitem import DiagramItem
 
 class RelationshipItem(diacanvas.CanvasLine, DiagramItem):

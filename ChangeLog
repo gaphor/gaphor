@@ -5,6 +5,8 @@
 	* gaphor/command: New directory. Here command classes will be stored.
 	Simple and more complex operations should be executed through
 	commands.
+	* *all files*: changed module paths to the project root. So now we
+	should include gaphor.UML in stead of UML.
 
 2002-07-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

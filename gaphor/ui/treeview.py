@@ -3,7 +3,7 @@
 
 import gobject
 import gtk
-import tree.namespace
+import gaphor.tree.namespace as namespace
 
 class TreeView:
     def __init__(self, treemodel):
@@ -17,7 +17,7 @@ class TreeView:
 	win.add (swin)
 
 	#view = gtk.TreeView (treemodel)
-	view = tree.namespace.NamespaceView (treemodel)
+	view = namespace.NamespaceView (treemodel)
 
 #	def cell_renderer1 (column, cell, model, iter, data):
 #	    value = model.get_value(iter, 0)

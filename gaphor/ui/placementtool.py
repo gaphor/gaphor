@@ -1,7 +1,7 @@
 
 # vim:sw=4:
 import diacanvas
-import diagram
+import gaphor.diagram as diagram
 
 class PlacementTool(diacanvas.PlacementTool):
 
