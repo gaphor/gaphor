@@ -1,3 +1,11 @@
+2004-07-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	Intermediate Windows Release 20040702
+
+	* gaphor/ui/mainwindow.py: moved use case toolbox down.
+	* gaphor/diagram/klass.py: fixed bug that prohibited popup menu
+	from popping up.
+
 2004-06-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/mainwindow.py, gaphor/ui/toolbox.py: explicitly import

@@ -79,9 +79,6 @@ class MainWindow(AbstractWindow):
                 'Pointer',
                 'InsertComment',
                 'InsertCommentLine')),
-        ("Use Cases", (
-                'InsertUseCase',
-                'InsertActor')),
         ("Classes", (
                 'InsertClass',
                 'InsertInterface',
@@ -98,6 +95,9 @@ class MainWindow(AbstractWindow):
                 'InsertFlow')),
         ("Components", (
                 'InsertComponent',)),
+        ("Use Cases", (
+                'InsertUseCase',
+                'InsertActor')),
         ("Profiles", (
                 'InsertProfile',
                 'InsertStereotype',
