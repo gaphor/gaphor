@@ -24,8 +24,7 @@ class ImplementationItem(relationship.RelationshipItem):
 
 
     def allow_connect_handle(self, handle, connecting_to):
-        """
-        Implementation can connect head to Interface and
+        """Implementation can connect head to Interface and
         tail to BehavioredClassifier.
         """
         can_connect = False

@@ -13,6 +13,7 @@ import diacanvas
 
 import gaphor.UML as UML
 from gaphor.diagram import initialize_item
+from gaphor.i18n import _
 
 from nameditem import NamedItem
 from feature import FeatureItem
@@ -91,6 +92,8 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
     FONT_STEREOTYPE='sans 10'
     FONT_ABSTRACT='sans bold italic 10'
+    FROM_FONT='sans 8'
+
 
     popup_menu = NamedItem.popup_menu + (
         'Fold',
@@ -119,6 +122,11 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         self._stereotype.set_markup(False)
         self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
 
+        self._from = diacanvas.shape.Text()
+        self._from.set_font_description(pango.FontDescription(ClassItem.FROM_FONT))
+        self._from.set_alignment(pango.ALIGN_CENTER)
+        #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
+        self._from.set_markup(False)
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -180,11 +188,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         # map local element with compartment element
         mapping = dict(zip(local_elements, compartment))
 
-        try:
-            import sets
-            to_add = sets.Set(elements) - sets.Set(local_elements)
-        except ImportError:
-            to_add = [el for el in elements if el not in local_elements]
+        to_add = [el for el in elements if el not in local_elements]
 
         # sync local elements with elements
         del compartment[:]
@@ -195,8 +199,8 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
             else:
                 compartment.append(mapping[el])
 
-        log.debug('elements order in model: %s' % [f.name for f in elements])
-        log.debug('elements order in diagram: %s' % [f.subject.name for f in compartment])
+        #log.debug('elements order in model: %s' % [f.name for f in elements])
+        #log.debug('elements order in diagram: %s' % [f.subject.name for f in compartment])
         assert tuple([f.subject for f in compartment]) == tuple(elements)
 
         self.request_update()
@@ -218,12 +222,13 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
                            self._create_operation)
 
     def on_subject_notify(self, pspec, notifiers=()):
-        log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation', 'isAbstract'))
+        #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
+        NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation', 'namespace', 'isAbstract'))
         # Create already existing attributes and operations:
         if self.subject:
             self.sync_attributes()
             self.sync_operations()
+            self.on_subject_notify__namespace(self.subject)
             self.on_subject_notify__isAbstract(self.subject)
             self.has_stereotype = not isinstance(self.subject, UML.Class)
             if isinstance(self.subject, UML.Stereotype):
@@ -235,7 +240,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
         """Called when the ownedAttribute property of our subject changes.
         """
-        log.debug('on_subject_notify__ownedAttribute')
+        #log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
         self.sync_attributes()
 
@@ -244,6 +249,17 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         """
         #log.debug('on_subject_notify__ownedOperation')
         self.sync_operations()
+
+    def on_subject_notify__namespace(self, subject, pspec=None):
+        """Add a line '(from ...)' to the class item if subject's namespace
+        is not the same as the namespace of this diagram.
+        """
+        if self.subject and self.subject.namespace and self.canvas and \
+           self.canvas.diagram.namespace is not self.subject.namespace:
+            self._from.set_text(_('(from %s)') % self.subject.namespace.name)
+        else:
+            self._from.set_text('')
+        self.request_update()
 
     def on_subject_notify__isAbstract(self, subject, pspec=None):
         subject = self.subject
@@ -296,6 +312,10 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         #    self._name.set_property('width', width)
         self.update_name(x=0, y=name_y, width=width, height=name_height)
 
+        self._from.set_pos((0, name_y + name_height-2))
+        self._from.set_max_width(width)
+        self._from.set_max_height(name_height)
+
         for comp in compartments:
             comp.update(width, affine)
 
@@ -310,6 +330,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
             yield self._stereotype
         for s in NamedItem.on_shape_iter(self):
             yield s
+        yield self._from
         if self._attributes.visible:
             yield self._attributes.separator
         if self._operations.visible:

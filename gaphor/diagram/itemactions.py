@@ -131,7 +131,7 @@ class CreateAttributeAction(Action):
 
     def execute(self):
         subject = get_parent_focus_item(self._window).subject
-        assert isinstance(subject, UML.Class)
+        assert isinstance(subject, (UML.Class, UML.Interface))
         elemfact = gaphor.resource(UML.ElementFactory)
         attribute = elemfact.create(UML.Property)
         attribute.name = 'new'

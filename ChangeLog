@@ -4,6 +4,13 @@
 	work properly.
 	TODO: should write integrety checks for the data model (check if
 	derived unions are propertly subsetted everywhere, typos, etc.)
+	* gaphor/ui/namespace.py: do not allow properties and operations to
+	be dnd'ed from one class to another (will cause problems with
+	properties connected to associations)
+	* gaphor/diagram/klass.py: added a line "(from ...)" to classes that
+	come from another package than the diagrams one.
+	* gaphor/diagram/itemactions.py: make CreateAttributeAction work
+	for interfaces.
 
 2004-06-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

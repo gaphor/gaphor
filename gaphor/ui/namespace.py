@@ -358,12 +358,6 @@ class NamespaceView(gtk.TreeView):
     #                 'drag-data-delete': 'override',
     #                 'drag-data-received': 'override' }
 
-    # namespaces are normally refered to by 'package'
-    namespaces = {
-        UML.Property: 'class_',
-        UML.Operation: 'class_',
-    }
-        
     def __init__(self, model):
         assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
         self.__gobject_init__()
@@ -487,9 +481,9 @@ class NamespaceView(gtk.TreeView):
                 dest_element = model.get_value(parent_iter, 0)
             try:
                 if dest_element:
-                    setattr(element,
-                            self.namespaces.get(type(element), 'package'),
-                            dest_element)
+                    # Set package. This only works for classifiers, packages and
+                    # diagrams. Properties and operations should not be moved.
+                    element.package = dest_element
             except AttributeError:
                 #print dir(context)
                 context.drop_finish(gtk.FALSE, time)
