@@ -32,7 +32,7 @@ class XMIExport(Action):
         """ """    
         attributes=XMLAttributes()
         attributes['xmi.id']=node.id
-        attributes['name']='XMLTool' # TODO
+        attributes['name']=node.name
         attributes['visibility']='public' # TODO
         attributes['isSpecification']='false'
         attributes['isRoot']='false'
@@ -40,12 +40,37 @@ class XMIExport(Action):
         attributes['isAbstract']='false'
         attributes['isActive']='false'
         xmi.startElement('UML:Class', attrs=attributes)
+        
+        # Generate the field type classes
+        xmi.startElement('UML:Namespace.ownedElement', attrs=XMLAttributes())
         for attribute in node.ownedAttribute:
-            print attribute.typeValue
             try:
                 attribute.name
+                attribute.typeValue.value
             except AttributeError:
                 continue
+                
+            attributes=XMLAttributes()
+            attributes['xmi.id']=attribute.typeValue.id
+            attributes['name']=attribute.typeValue.value
+            attributes['visibility']='public'
+            attributes['isSpecification']='false'
+            attributes['isRoot']='false'
+            attributes['isLeaf']='false'
+            attributes['isAbstract']='false'
+            attributes['isActive']='false'
+            xmi.startElement('UML:Class', attrs=attributes)
+            xmi.endElement('UML:Class')
+        xmi.endElement('UML:Namespace.ownedElement')
+
+        # Now generate the XML for the attribute itself
+        for attribute in node.ownedAttribute:
+            try:
+                attribute.name
+                attribute.typeValue.value
+            except AttributeError:
+                continue
+
             xmi.startElement('UML:Classifier.feature', attrs=XMLAttributes())
             attributes=XMLAttributes()
             attributes['xmi.id']=attribute.id
@@ -57,7 +82,7 @@ class XMIExport(Action):
             xmi.startElement('UML:Attribute', attrs=attributes)
             
             xmi.startElement('UML:StructuralFeature.type', XMLAttributes())
-            xmi.startElement('UML:Class', XMLAttributes({'xmi.idref': 'bla'}))
+            xmi.startElement('UML:Class', XMLAttributes({'xmi.idref': attribute.typeValue.id}))
             xmi.endElement('UML:Class')
             xmi.endElement('UML:StructuralFeature.type')
                         
@@ -65,6 +90,10 @@ class XMIExport(Action):
             
             xmi.endElement('UML:Classifier.feature')
         xmi.endElement('UML:Class')
+        #ownedAttribute[1].typeValue
+        
+    def handleLiteralSpecification(self, xmi, node):
+        pass
         
     def handleAssociation(self, xmi, node):
         """
@@ -96,7 +125,7 @@ class XMIExport(Action):
             xmi.startElement('UML:Multiplicity', attrs=attributes)
             xmi.startElement('UML:Multiplicity.range', attrs=XMLAttributes())
             attributes=XMLAttributes()
-            attributes['xmi.id']='bla'
+            attributes['xmi.id']=str(id(attributes))
             values=('lower','upper')
             for value in values:
                 try:
@@ -146,6 +175,7 @@ class XMIExport(Action):
         xmi.endElement('XMI.exporterVersion')
         xmi.endElement('XMI.documentation')
         xmi.endElement('XMI.header')
+        
         
         
         # Now generator the model
