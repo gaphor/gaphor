@@ -1,7 +1,14 @@
+2004-02-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/consolewindow.py: added
+
 2004-02-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/diagramitem.py: added code so you can easely connect
 	to properties like subject.lowerValue.value.
+	* gaphor/diagram/association.py, gaphor/diagram/attribute.py,
+	gaphor/diagram/feature.py, gaphor/diagram/operation.py:
+	makes use of those new features.
 
 2004-01-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

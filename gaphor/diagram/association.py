@@ -453,17 +453,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
                         'name', 'lowerValue.value',
                         'upperValue.value', 'taggedValue.value'))
         #print 'w/ assoc', self.subject and self.subject.association
-        #self.set_text()
-        if self.subject:
-            #self._name.set_text(self.subject.name or '')
-            self.on_subject_notify__lowerValue(self.subject, None)
-#            if self.subject.lowerValue:
-                # Add a callback to lowerValue
-#                self._mult.set_text(self.subject.lowerValue.value or '')
-                #self.subject.lowerValue.connect('value',
-                #                                self.on_lowerValue_value_notify)
-            #else:
-                #self._mult.set_text('')
+        self.set_text()
         self.request_update()
         
     def on_subject_notify__aggregation(self, subject, pspec):
@@ -476,17 +466,17 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         self.set_text()
 
     def on_subject_notify__lowerValue_value(self, lower_value, pspec):
-        log.debug('New value for lowerValue.value: %s' % self.subject.lowerValue.value)
+        log.debug('New value for lowerValue.value: %s' % lower_value and lower_value.value)
         self.set_text()
         self.parent.request_update()
 
     def on_subject_notify__upperValue_value(self, upper_value, pspec):
-        log.debug('New value for upperValue.value: %s' % self.subject.lowerValue.value)
+        log.debug('New value for upperValue.value: %s' %  upper_value and upper_value.value)
         self.set_text()
         self.parent.request_update()
 
     def on_subject_notify__taggedValue_value(self, tagged_value, pspec):
-        log.debug('New value for taggedValue.value: %s' % self.subject.lowerValue.value)
+        log.debug('New value for taggedValue.value: %s' % tagged_value and self.subject.taggedValue.value)
         self.set_text()
         self.parent.request_update()
 
