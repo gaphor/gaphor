@@ -30,9 +30,15 @@
     </submenu>
 
     <submenu name="Insert" _label="_Insert">
-	<menuitem name="InsertActor" _label="Actor" verb="InsertActor"/>
-	<menuitem name="InsertUseCase" _label="UseCase" verb="InsertUseCase"/>
-	<menuitem name="InsertClass" _label="Class" verb="InsertClass"/>
+	<menuitem name="InsertActor" verb=""/>
+	<menuitem name="InsertUseCase" verb=""/>
+	<menuitem name="InsertClass" verb=""/>
+	<menuitem name="InsertPackage" verb=""/>
+	<menuitem name="InsertComment" verb=""/>
+	<menuitem name="InsertCommentLine" verb=""/>
+	<menuitem name="InsertAssociation" verb=""/>
+	<menuitem name="InsertDependency" verb=""/>
+	<menuitem name="InsertGeneralization" verb=""/>
     </submenu>
 </menu>
 

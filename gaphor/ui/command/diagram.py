@@ -17,6 +17,8 @@ class CloseCommand(Command):
 	self._window.close()
 
 CommandInfo (name='FileClose', _label='_Close', pixname='Close',
+	     _tip='Close the diagram window',
+	     accel='*Control*w',
 	     context='diagram.menu',
 	     command_class=CloseCommand).register()
 
@@ -29,6 +31,7 @@ class ClearCommand(Command):
 	self._view.unselect_all()
 
 CommandInfo (name='EditClear', _label='_Clear', pixname='Clear',
+	     _tip='Clear the selection',
 	     context='diagram.menu',
 	     command_class=ClearCommand).register()
 
@@ -42,6 +45,7 @@ class UndoCommand(Command):
 	self._view.canvas.pop_undo()
 
 CommandInfo (name='EditUndo', _label='_Undo', pixname='Undo', accel='*Control*z',
+	     _tip='Undo the most recent changes',
 	     context='diagram.menu',
 	     command_class=UndoCommand).register()
 
@@ -55,6 +59,7 @@ class RedoCommand(Command):
 	self._view.canvas.pop_redo()
 
 CommandInfo (name='EditRedo', _label='_Redo', pixname='Redo', accel='*Control*R',
+	     _tip='Redo the undone changes',
 	     context='diagram.menu',
 	     command_class=RedoCommand).register()
 

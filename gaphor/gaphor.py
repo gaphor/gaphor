@@ -11,7 +11,8 @@ object factories.
 import pygtk
 pygtk.require('2.0')
 
-from misc.singleton import Singleton
+import misc.singleton
+import misc.logger
 import config
 import types
 
@@ -24,7 +25,7 @@ class GaphorError(Exception):
 
 
 
-class Gaphor(Singleton):
+class Gaphor(misc.singleton.Singleton):
     """
     Gaphor main app. This is a Singleton object that is used as a access point
     to unique resources within Gaphor. The method main() is called once to
@@ -58,7 +59,7 @@ class Gaphor(Singleton):
 	gettext.install(config.GETTEXT_PACKAGE, unicode=1)
 
     def main(self):
-	from bonobo import main as _main
+	import bonobo
 	import gnome
 	# Initialize gnome.ui, since we need some definitions from it
 	import gnome.ui
@@ -67,11 +68,12 @@ class Gaphor(Singleton):
 	# should we set a default icon here or something?
 	mainwin = MainWindow()
 	mainwin.construct()
+	# When the state changes to CLOSED, quit the application
+	mainwin.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and bonobo.main_quit())
 	#mainwin = GaphorResource(WindowFactory).create(type=MainWindow)
-							
-	#mainwin.get_window().connect("destroy", self.__destroy_cb)
-	#Gaphor.__resources[MainWindow] = mainwin
-	_main()
+
+	bonobo.main()
+	log.info('Bye!')
 
     def get_resource(resource):
 	"""
@@ -87,7 +89,6 @@ class Gaphor(Singleton):
 		elemfact = GaphorResource(gaphor.UML.ElementFactory)
 	"""
 	if isinstance (resource, types.StringType):
-#	    return Gaphor.__conf.get_value(resource)
 	    hash = Gaphor.__resources
 	    if hash.has_key(resource):
 		return hash[resource]
@@ -96,7 +97,7 @@ class Gaphor(Singleton):
 	    if hash.has_key(resource):
 		return hash[resource]
 	    try:
-		print 'Gaphor: Adding new resource:', resource.__name__
+		log.debug('Adding new resource: %s' % resource.__name__)
 		r = resource()
 		hash[resource] = r
 		hash[resource.__name__] = r
@@ -110,4 +111,5 @@ class Gaphor(Singleton):
 import __builtin__
 __builtin__.__dict__['GaphorError'] = GaphorError
 __builtin__.__dict__['GaphorResource'] = Gaphor.get_resource
+__builtin__.__dict__['log'] = misc.logger.Logger()
 

@@ -2,6 +2,7 @@ __all__ = [ 'command', 'commandregistry', 'namespace', 'stock' ]
 
 import commandregistry
 
+from abstractwindow import AbstractWindow
 from mainwindow import MainWindow
 from diagramwindow import DiagramWindow
 from diagramview import DiagramView

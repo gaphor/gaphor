@@ -51,10 +51,10 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
-	    print self, 'id', value
+	    #print self, 'id', value
 	    self.__id = int(value)
 	elif pspec.name == 'subject':
-	    print 'Setting subject:', value
+	    #print 'Setting subject:', value
 	    self._set_subject(value)
 	elif pspec.name == 'auto-resize':
 	    self.auto_resize = value

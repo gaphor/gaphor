@@ -17,23 +17,20 @@ class OpenModelElementCommand(Command):
 	if isinstance(self.__element, Diagram):
 	    # Import here to avoid cyclic references
 	    from gaphor.ui import DiagramWindow
-	    print 'Opening Diagram', self.__element.name
+	    log.debug('Opening Diagram: %s' % self.__element.name)
 	    #winfact = GaphorResource (WindowFactory)
 	    #winfact.create (DiagramWindow, diagram=self.__element)
 	    newwin = DiagramWindow()
 	    newwin.construct()
 	    # Also listen to the key accelerators of the owner window
-	    main_win = self.__window.get_window()
-	    diag_win = newwin.get_window()
-	    diag_win.add_accel_group(main_win.get_accel_group())
-	    diag_win.set_transient_for (main_win)
+	    self.__window.add_transient_window(newwin)
 	    newwin.set_diagram(self.__element)
-	    def handle_wr(x):
-		print 'diag_win died:', x
-	    import weakref
-	    self.wr = weakref.ref (diag_win, handle_wr)
+	    #def handle_wr(x):
+		#print 'diag_win died:', x
+	    #import weakref
+	    #self.wr = weakref.ref (diag_win, handle_wr)
 	else:
-	    print 'No action defined for element', self.__element.__class__.__name__
+	    log.debug('No action defined for element %s' % self.__element.__class__.__name__)
 
 CommandInfo (name='OpenModelElement', _label='_Open',
 	     context='main.popup',

@@ -10,7 +10,6 @@ import gobject
 import sys
 
 class ActorItem(ModelElementItem):
-    __gsignals__ = { 'need_update': 'override' }
     HEAD=11
     ARM=19
     NECK=10
@@ -63,7 +62,7 @@ class ActorItem(ModelElementItem):
 	#assert sys.getrefcount(self) == 7, sys.getrefcount(self)
 
     def do_set_property (self, pspec, value):
-	print 'Actor: Trying to set property', pspec.name, value
+	#print 'Actor: Trying to set property', pspec.name, value
 	if pspec.name == 'name-width':
 	    self.__name.set_property('width', value)
 	else:
@@ -97,9 +96,6 @@ class ActorItem(ModelElementItem):
 	ModelElementItem.load(self, store)
 	self.set_property('name-width', eval (store.value('name-width')))
 	#self.__name_update()
-
-    def do_need_update(self):
-	self.__name.request_update()
 
     def on_update(self, affine):
 	ModelElementItem.on_update(self, affine)
@@ -152,6 +148,14 @@ class ActorItem(ModelElementItem):
 	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
 	self.__name_update()
 	return retval
+
+    def on_event (self, event):
+	if event.type == diacanvas.EVENT_KEY_PRESS:
+	    self.__name.focus()
+	    self.__name.on_event (event)
+	    return True
+	else:
+	    return ModelElementItem.on_event(self, event)
 
     # Groupable
 

@@ -178,7 +178,7 @@ class Storage(object):
 	self.save_attribute (prop, prop_val)
 
     def save_attribute (self, name, obj):
-	print 'saving', name, obj
+	#print 'saving', name, obj
 	if isinstance (obj, UML.Element):
 	    #node = self.__node.newChild (Storage.NS, Storage.REFERENCE, None)
 	    node = self.__info.doc.createElement(Storage.REFERENCE)
@@ -273,19 +273,19 @@ class Storage(object):
 		#d[value.prop(Storage.NAME)] = value.prop(Storage.PVALUE)
 		#d[value.attributes.get(Storage.NAME).nodeValue] = value.attributes.get(Storage.PVALUE).nodeValue
 		data = value.getAttribute(Storage.PVALUE)
-		print 'Data (1) is', data
+		#print 'Data (1) is', data
 		if not data:
-		    print 'Search for a CDATA section'
+		    #print 'Search for a CDATA section'
 		    data = value.firstChild
 		    while data:
-			print data.nodeType, data.nodeName, data.nodeValue, data.attributes
+			#print data.nodeType, data.nodeName, data.nodeValue, data.attributes
 			if data.nodeType == xml.Node.TEXT_NODE:
 			    data = data.nodeValue
 			    if data is None:
 				data = ''
 			    break
 			data = data.nextSibling
-		print 'Value data:', data
+		#print 'Value data:', data
 		d[value.getAttribute(Storage.NAME)] = data
 	    value = value.nextSibling
 	return d

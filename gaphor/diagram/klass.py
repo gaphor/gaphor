@@ -9,7 +9,6 @@ import gobject
 import pango
 
 class ClassItem(ModelElementItem):
-    __gsignals__ = { 'need_update': 'override' }
     MARGIN_X=60
     MARGIN_Y=30
     FONT='sans bold 10'
@@ -51,9 +50,6 @@ class ClassItem(ModelElementItem):
 	ModelElementItem.load(self, store)
 	self.__name_update()
 
-    def do_need_update(self):
-	self.__name.request_update()
-
     def on_update(self, affine):
 	ModelElementItem.on_update(self, affine)
 	#self.__border.ellipse(center=(self.width / 2, self.height / 2), width=self.width - 0.5, height=self.height - 0.5)
@@ -65,6 +61,14 @@ class ClassItem(ModelElementItem):
 	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
 	self.__name_update()
 	return retval
+
+    def on_event (self, event):
+	if event.type == diacanvas.EVENT_KEY_PRESS:
+	    self.__name.focus()
+	    self.__name.on_event (event)
+	    return True
+	else:
+	    return ModelElementItem.on_event(self, event)
 
     def on_get_shape_iter(self):
 	return self.__border

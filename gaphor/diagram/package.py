@@ -9,7 +9,6 @@ import gobject
 import pango
 
 class PackageItem(ModelElementItem):
-    __gsignals__ = { 'need_update': 'override' }
     TAB_X=50
     TAB_Y=20
     MARGIN_X=60
@@ -53,10 +52,6 @@ class PackageItem(ModelElementItem):
 	ModelElementItem.load(self, store)
 	self.__name_update()
 
-    def do_need_update(self):
-	'''Always request updates for the aggregated items.'''
-	self.__name.request_update()
-
     def on_update(self, affine):
 	ModelElementItem.on_update(self, affine)
 	O = 0.0
@@ -75,6 +70,14 @@ class PackageItem(ModelElementItem):
 	retval = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
 	self.__name_update()
 	return retval
+
+    def on_event (self, event):
+	if event.type == diacanvas.EVENT_KEY_PRESS:
+	    self.__name.focus()
+	    self.__name.on_event (event)
+	    return True
+	else:
+	    return ModelElementItem.on_event(self, event)
 
     def on_get_shape_iter(self):
 	return self.__border

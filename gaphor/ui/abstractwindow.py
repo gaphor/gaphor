@@ -26,9 +26,6 @@ class AbstractWindow(object):
     def get_window(self):
     	raise NotImplementedError, 'get_window() should return the gtk.Window or bonobo.ui.Window associated with this window.'
 
-    def set_owner(self, owner):
-	raise NotImplementedError, 'set_owner() should assign the window as a child window of owner.'
-
     def get_state(self):
 	return self.__state
 
@@ -37,6 +34,12 @@ class AbstractWindow(object):
 
     def close(self):
 	raise NotImplementedError, 'close() should destroy the GUI components.'
+
+    def set_message(self, message):
+	"""
+	Set a message in the window's status bar.
+	"""
+	raise NotImplementedError, 'set_message() set a message in the window\'s status bar'
 
     def connect(self, signal_func, *data):
 	"""
@@ -56,7 +59,7 @@ class AbstractWindow(object):
 	"""
 	if state > self.__state:
 	    self.__state = state
-	    self.__signal.emit()
+	    self.__signal.emit(self)
 
     def _check_state(self, state):
 	assert self.__state == state, 'Method was called with an invalid state. State is %d' % self.__state

@@ -17,6 +17,7 @@ class MainWindow(AbstractWindow):
 
     def __init__(self):
 	AbstractWindow.__init__(self)
+	self.__transient_window = list()
 
     def get_window(self):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
@@ -74,27 +75,37 @@ class MainWindow(AbstractWindow):
 					      params={ 'window': self })
 	ui_component.add_verb_list (verbs, None)
 
+    def set_message(self, message):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
+	self.__ui_component.set_status(message)
+
+    def add_transient_window(self, window):
+	"""
+	Add a window as a sub-window of the main application.
+	"""
+	mywin = self.__window
+	window_win = window.get_window()
+	window_win.add_accel_group(mywin.get_accel_group())
+	window_win.set_transient_for (mywin)
+	self.__transient_window.append(window)
+	window.connect(self.__on_transient_window_closed)
+
     def close(self):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
-	self.__window.disconnect(self.__destroy_id)
 	self.__window.destroy()
+	self._check_state(AbstractWindow.STATE_CLOSED)
+
+    def __on_window_destroy (self, window):
+	"""
+	Window is destroyed... Quit the application.
+	"""
+	self._check_state(AbstractWindow.STATE_ACTIVE)
+	log.debug ('Destroying main window...')
 	self._set_state(AbstractWindow.STATE_CLOSED)
 	del self.__window
 	del self.__ui_component
 	del self.__model
 	del self.__view
-
-    def __on_window_destroy (self, window):
-	"""
-	Window is destroyed... Do the same thing that would be done if
-	File->Quit was pressed.
-	"""
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-        cmd_reg = GaphorResource('CommandRegistry')
-	cmd = cmd_reg.create_command('FileQuit')
-	cmd.set_parameters ({ 'window': self })
-	cmd.execute()
-	self._set_state(AbstractWindow.STATE_CLOSED)
 
     def __on_view_row_activated(self, view, path, column):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
@@ -123,4 +134,12 @@ class MainWindow(AbstractWindow):
 		# The window takes care of destroying the old menu, if any...
 		self.__window.add_popup(menu, '/popups/NamespaceView')
 		menu.popup(None, None, None, event.button, 0)
+
+    def __on_transient_window_closed(self, window):
+	assert window in self.__transient_window
+	log.debug('%s closed.' % window)
+	self.__transient_window.remove(window)
+
+    def __on_transient_window_notify_title(self, window):
+	pass
 

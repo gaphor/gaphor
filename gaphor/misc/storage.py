@@ -18,10 +18,10 @@ except ImportError:
 
 if parser == LIBXML2:
     from storage_libxml2 import *
-    print 'Using libxml2...' 
+    log.debug('Using libxml2...')
 elif parser == MINIDOM:
     from storage_minidom import *
-    print 'Using xml.dom.minidom...'
+    log.debug('Using xml.dom.minidom...')
 else:
     raise ImportError, 'No suitable XML reader found'
 

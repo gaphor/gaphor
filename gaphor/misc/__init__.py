@@ -1,3 +1,3 @@
 
-__all__ = [ 'singleton', 'command', 'signal', 'storage', 'menufactory', 'conf' ]
+__all__ = [ 'singleton', 'command', 'signal', 'storage', 'conf', 'logger' ]
 

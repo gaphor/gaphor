@@ -9,7 +9,6 @@ import gobject
 import pango
 
 class CommentItem(ModelElementItem):
-    __gsignals__ = { 'need_update': 'override' }
     EAR=15
     OFFSET=5
     FONT='sans 10'
@@ -54,18 +53,16 @@ class CommentItem(ModelElementItem):
 	ModelElementItem.load(self, store)
 	self.__body_update()
 
-    def do_need_update(self):
-	self.__body.request_update()
-
     def on_update(self, affine):
 	ModelElementItem.on_update(self, affine)
 	# Width and height, adjusted for line width...
-	w = self.width - 1
-	h = self.height - 1
+	w = self.width
+	h = self.height
 	ear = CommentItem.EAR
-	self.__border.line(((w - ear, 1), (w- ear, ear), (w, ear), (w - ear, 1),
-			    (1, 1), (1, h), (w, h), (w, ear)))
+	self.__border.line(((w - ear, 0), (w- ear, ear), (w, ear), (w - ear, 0),
+			    (0, 0), (0, h), (w, h), (w, ear)))
 	self.__border.request_update()
+	self.expand_bounds(1)
 	self.update_child(self.__body, affine)
 
     def on_get_shape_iter(self):
@@ -85,6 +82,14 @@ class CommentItem(ModelElementItem):
 	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
 	self.__body_update()
 	return retval
+
+    def on_event (self, event):
+	if event.type == diacanvas.EVENT_KEY_PRESS:
+	    self.__body.focus()
+	    self.__body.on_event (event)
+	    return True
+	else:
+	    return ModelElementItem.on_event(self, event)
 
     # Groupable
 

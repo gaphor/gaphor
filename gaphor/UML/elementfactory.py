@@ -18,11 +18,11 @@ class ElementFactory(object):
 	if not element:
 	    return
 	if key == '__unlink__' and self.__elements.has_key(element.id):
-	    print 'Unlinking element', element
+	    log.debug('Unlinking element: %s' % element)
 	    del self.__elements[element.id]
 	    self.__emit_remove (element)
 	elif key == '__relink__' and not self.__elements.has_key(element.id):
-	    print 'Relinking element', element
+	    log.debug('Relinking element: %s' % element)
 	    self.__elements[element.id] = element
 	    self.__emit_create (element)
 
@@ -69,7 +69,7 @@ class ElementFactory(object):
 	#    value._Element__flush()
 
 	for key, value in self.__elements.items():
-	    print 'ElementFactory: unlinking', value
+	    #print 'ElementFactory: unlinking', value
 	    #print 'references:', gc.get_referrers(value)
 	    if isinstance (value, Diagram):
 		value.canvas.clear_undo()
@@ -91,7 +91,7 @@ class ElementFactory(object):
 	self.__signal.emit ('remove', obj)
 
     def __element_destroyed(self, obj):
-	print 'ElementFactory::element_destroyed...'
+	#print 'ElementFactory::element_destroyed...'
 	obj().disconnect_by_data(obj)
 
     def values(self):

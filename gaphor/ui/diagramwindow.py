@@ -14,20 +14,6 @@ class DiagramWindow(AbstractWindow):
 	AbstractWindow.__init__(self)
 	self.__diagram = None
 
-    def set_diagram(self, dia):
-	if self.__diagram:
-	    self.__diagram.disconnect(self.__on_diagram_event)
-	    self.__diagram.canvas.disconnect(self.__undo_id)
-	self.__diagram = dia
-	if self.get_state() == AbstractWindow.STATE_ACTIVE:
-	    self.__window.set_title(dia.name or 'NoName')
-	    self.__view.set_diagram(dia)
-	if dia:
-	    dia.canvas.set_property ("allow_undo", 1)
-	    dia.connect(self.__on_diagram_event)
-	    self.__undo_id = dia.canvas.connect("undo", self.__on_diagram_undo)
-	    self.__on_diagram_undo(dia.canvas)
-
     def get_diagram(self):
 	return self.__diagram
 
@@ -90,6 +76,7 @@ class DiagramWindow(AbstractWindow):
 	window.set_contents(table)
 
 	self.__destroy_id = window.connect('destroy', self.__on_window_destroy)
+	view.connect('notify::tool', self.__on_view_notify_tool)
 
 	window.show_all()
 	#window.connect ('destroy', self.__destroy_event_cb)
@@ -107,6 +94,24 @@ class DiagramWindow(AbstractWindow):
 	verbs = command_registry.create_verbs(context='diagram.menu',
 	                                      params={ 'window': self })
 	ui_component.add_verb_list (verbs, None)
+
+    def set_diagram(self, dia):
+	if self.__diagram:
+	    self.__diagram.disconnect(self.__on_diagram_event)
+	    self.__diagram.canvas.disconnect(self.__undo_id)
+	self.__diagram = dia
+	if self.get_state() == AbstractWindow.STATE_ACTIVE:
+	    self.__window.set_title(dia.name or 'NoName')
+	    self.__view.set_diagram(dia)
+	if dia:
+	    dia.canvas.set_property ("allow_undo", 1)
+	    dia.connect(self.__on_diagram_event)
+	    self.__undo_id = dia.canvas.connect("undo", self.__on_diagram_undo)
+	    self.__on_diagram_undo(dia.canvas)
+
+    def set_message(self, message):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
+	self.__ui_component.set_status(message or ' ')
 
     def close(self):
 	"""Close the window."""
@@ -131,6 +136,11 @@ class DiagramWindow(AbstractWindow):
 	cmd.set_parameters ({ 'window': self })
 	cmd.execute()
 	self._set_state(AbstractWindow.STATE_CLOSED)
+
+    def __on_view_notify_tool(self, view, tool):
+	print self, view, tool
+	if not view.get_property('tool'):
+	    self.set_message('')
 
     def __on_diagram_undo(self, canvas):
 	self.get_ui_component().set_prop ('/commands/EditUndo', 'sensitive', 

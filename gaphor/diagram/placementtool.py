@@ -12,6 +12,8 @@ class PlacementTool(diacanvas.PlacementTool):
 	self.connect ('button_release_event', self.__button_release)
 
     def _create_item(self, view, event):
+	if event.button == 3:
+	    return None
 	elemfact = GaphorResource('ElementFactory')
 	item = view.get_diagram().create(self.type)
 	if self.subject_class:

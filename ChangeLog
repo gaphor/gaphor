@@ -1,3 +1,9 @@
+2002-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/command/diagramitem.py: Added commands for placing
+	diagram items on the canvas.
+	* Lots of improvements everywhere.
+
 2002-10-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* configure.in, acinclude.m4: updated checks to use

@@ -59,11 +59,11 @@ class DiagramItem(object):
 	#print self
 	if self.subject:
 	    if self.parent:
-		print 'Have Parent', self, parent
+		#print 'Have Parent', self, parent
 		self.subject.add_presentation (self)
 	    else:
-		print 'No parent...', self, parent
+		#print 'No parent...', self, parent
 		self.subject.remove_presentation (self)
 
     def on_subject_update (self, name, old_value, new_value):
-	print 'DiagramItem: unhandled signal "%s"' % str(name)
+	log.debug('DiagramItem: unhandled signal "%s"' % str(name))
