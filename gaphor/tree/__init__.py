@@ -1,0 +1,2 @@
+
+from namespace import *

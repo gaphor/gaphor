@@ -16,7 +16,7 @@
 #
 
 
-import types, copy, weakref, gc
+import types, copy
 
 # Some default types as defined in the MetaModel.
 class Integer(int): pass
@@ -105,7 +105,15 @@ class Element:
 attributes and relations are defined by a <class>._attrdef structure.
 A class does not need to define any local variables itself: Element will
 retrieve all information from the _attrdef structure.
-Element._hash is a table containing all assigned objects as weak references.'''
+Element._hash is a table containing all assigned objects as weak references.
+This class has its own __del__() method. This means that it can not be freed
+by the garbage collector. Instead you should call Element::unlink() to
+remove all relationships with the element and then it will remove itself if
+you delete your reference. In the unlink function all relationships are removed
+except presentation, __id and __signals. Presentation items are removed by
+the diagram items that represent them (they are connected to the 'unlink'
+signal). The element will also be removed from the element_hash by unlink().
+'''
     _index = 1
     _attrdef = { 'presentation': ( Sequence, types.ObjectType ) }
     _hash = { }
@@ -113,9 +121,40 @@ Element._hash is a table containing all assigned objects as weak references.'''
     def __init__(self):
 	self.__dict__['__id'] = Element._index
 	self.__dict__['__signals'] = [ ]
-	Element._hash[Element._index] = weakref.ref (self)
+	#Element._hash[Element._index] = weakref.ref (self)
+	Element._hash[Element._index] = self
 	Element._index += 1
 
+    #def __del_(self):
+#	print 'Element.__del__'
+#        self.unlink()
+#	del self.__dict__['__signals']
+#	del self.__dict__['__id']
+#	if self.__dict__.has_key('presentation'):
+#	    del self.__dict__['presentation']
+	
+    def unlink(self):
+	'''Remove all references to the object.'''
+	#print 'Element.unlink()'
+        self.emit("unlink")
+	if Element._hash.has_key(self.__dict__['__id']):
+	    del Element._hash[self.__dict__['__id']]
+	for key in self.__dict__.keys():
+	    # In case of a cyclic reference, we should check if the element
+	    # not yet has been removed.
+	    if self.__dict__.has_key (key) and \
+			key not in ( 'presentation', '__signals', '__id' ):
+		if isinstance (self.__dict__[key], Sequence):
+		    # Remove each item in the sequence, then remove
+		    # the sequence from __dict__.
+		    for s in self.__dict__[key].list:
+		        del self.__dict__[key][s]
+		    del self.__dict__[key]
+		else:
+		    # do a 'del self.key'
+		    self.__delattr__(key)
+    	return self
+    
     def __get_attr_info(self, key, klass):
         '''Find the record for 'key' in the <class>._attrdef map.'''
 	done = [ ]
@@ -177,9 +216,10 @@ Element._hash is a table containing all assigned objects as weak references.'''
 	   b. Set up a new relationship between self-value and value-self.'''
 
 	rec = self.__get_attr_info (key, self.__class__)
-	#print 'Element:__setattr__(' + key + ')'
+	#print 'Element:__setattr__(' + key + ')' + str(rec)
 	if len(rec) == 2: # Attribute or one-way relation
 	    if rec[0] is Sequence:
+		#print '__setattr__', key, value
 	        self.__ensure_seq (key, rec[1]).append(value)
 	    else:
 		self.__dict__[key] = value
@@ -246,6 +286,7 @@ Element._hash is a table containing all assigned objects as weak references.'''
 	for key in self.__dict__.keys():
 	    if self.__dict__[key] is seq:
 	        break
+	#print 'Element.sequence_remove', key
 	rec = self.__get_attr_info (key, self.__class__)
 	if rec[0] is not Sequence:
 	    raise AttributeError, 'Element: This should be called from Sequence'
@@ -255,8 +296,11 @@ Element._hash is a table containing all assigned objects as weak references.'''
 	    if xrec[0] is Sequence:
 		obj.__del_seq_item(obj.__dict__[rec[2]], self)
 	    else:
-	        del obj.__dict__[rec[2]]
-	
+		try:
+		    del obj.__dict__[rec[2]]
+		except Exception, e:
+		    print 'ERROR: (Element.sequence_remove)', e
+
     # Functions used by the signal functions
     def connect (self, signal_func, *data):
 	self.__dict__['__signals'].append ((signal_func,) + data)
@@ -267,22 +311,22 @@ Element._hash is a table containing all assigned objects as weak references.'''
 
     def emit (self, key):
 	if not self.__dict__.has_key ('__signals'):
-	    print 'No __signals attribute', self.__dict__
+	    print 'No __signals attribute in object', self
 	    return
         for signal in self.__dict__['__signals']:
 	    signal_func = signal[0]
 	    data = signal[1:]
 	    signal_func (key, *data)
 
-def update_model():
-    '''Do a garbage collection on the hash table, also removing
-    weak references that do not point to valid objects.'''
-    gc.collect()
-    for k in Element._hash.keys():
-	if Element._hash[k]() is None:
-	    del Element._hash[k]
+#def update_model():
+#    '''Do a garbage collection on the hash table, also removing
+#    weak references that do not point to valid objects.'''
+#    gc.collect()
+#    for k in Element._hash.keys():
+#	if Element._hash[k]() is None:
+#	    del Element._hash[k]
 
-Element_hash_gc = update_model
+#Element_hash_gc = update_model
 
 if __name__ == '__main__':
 
@@ -314,6 +358,11 @@ if __name__ == '__main__':
     assert noot in a.seq
     assert mies not in a.seq
 
+    a.unlink()
+    del a
+
+    assert len (Element._hash) == 0
+
     print '\tOK ==='
 
     print '=== Single:',
@@ -342,6 +391,10 @@ if __name__ == '__main__':
     a.seq.remove(aap)
     assert a.seq.list == [ noot ]
 
+    a.unlink()
+
+    assert len (Element._hash) == 0
+
     print '\tOK ==='
 
     print '=== 1:1:',
@@ -367,6 +420,8 @@ if __name__ == '__main__':
     #print a.ref2
     assert a.ref2 is None
 
+    a.unlink()
+
     a = A()
     b = A()
     
@@ -381,6 +436,11 @@ if __name__ == '__main__':
     assert a.ref2 is a
     assert b.ref1 is None
     assert b.ref2 is None
+
+    a.unlink()
+    b.unlink()
+
+    assert len (Element._hash) == 0
 
     print '\tOK ==='
 
@@ -408,6 +468,7 @@ if __name__ == '__main__':
     assert a.ref is a
     assert a.seq.list == [ a ]
 
+    a.unlink()
     a = A()
     b = A()
 
@@ -446,6 +507,12 @@ if __name__ == '__main__':
     assert a.seq.list == [ ]
     assert b.ref is None
     assert b.seq.list == [ ]
+
+    a.unlink()
+    b.unlink()
+
+    #print Element._hash
+    assert len (Element._hash) == 0
 
     print '\tOK ==='
 
@@ -505,16 +572,10 @@ if __name__ == '__main__':
     assert b.seq1.list == [ a ]
     assert b.seq2.list == [ a ]
 
-    print '\tOK ==='
+    a.unlink()
+    b.unlink()
 
-    print '=== Hashing:',
-
-    # Only the last two instances ('a' and 'b') should be 
-    Element_hash_gc()
-    i = 0
-    for k in Element._hash.keys():
-	    i += 1;
-    assert (i == 2)
+    assert len (Element._hash) == 0
 
     print '\tOK ==='
 
@@ -566,6 +627,39 @@ if __name__ == '__main__':
     assert data[0] == y.callback
     assert data[1] == 'three'
 
+    a.unlink()
+    del a
+    b.unlink()
+    del b
+
+    assert len (Element._hash) == 0
+
     print '\tOK ==='
+
+    print '=== Unlink:',
+
+    class A(Element): _attrdef = { }
+
+    A._attrdef['rel'] = ( Name, A, 'seq' )
+    A._attrdef['seq'] = ( Sequence, A, 'rel' )
+
+    a = A()
+    b = A()
+
+    assert len (Element._hash) == 2
+    
+    a.rel = b
+
+    a.unlink()
+    b.unlink()
+
+    assert len (Element._hash) == 0
+
+    print '\tOK ==='
+
+    import gc
+
+    gc.collect()
+    assert gc.garbage == [ ]
 
     print '\n============== All Element tests passed... ==========\n'

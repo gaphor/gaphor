@@ -1,30 +1,49 @@
+# vim: sw=4
 '''This is the TreeView that is most common (for example: it is used
 in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 '''
-
-import sys
-sys.path.append ('..')
 
 import gtk
 import gobject
 import types
 import UML
 
-# to create a new GtkTreeModel from python, you must derive from
-# GenericTreeModel.
-class TreeModel(gtk.GenericTreeModel):
+class NamespaceModel(gtk.GenericTreeModel):
     ''' The node is defined by a instance. We can reach the parent
-        by <object>.namespace. The children can be found by the
+        by <object>.namespace. The children can be found in the
 	<object>.ownerElement list.'''
+
+    def __unlink_cb(self):
+        print 'Destroying model'
+
+    def __destroy (self):
+        print '__destroy'
 
     def __init__(self, model):
 	if not isinstance (model, UML.Model):
-		raise AttributeError
+	    raise AttributeError
 
 	self.model = model;
 	# Init parent:
 	gtk.GenericTreeModel.__init__(self)
+	#self.connect ('dispose', self.__destroy)
+	# TODO: connect to 'name' and 'unlink' and 'namespace' signal from
+	#	the data objects.
+	#	Removed signals when finalized.
+	#	How can I notify views in a proper way if something changed.
+    def dump(self):
+        '''Dump the static structure of the model to stdout.'''
+	def doit(node, depth):
+	    print '|', '   ' * depth, node.name, node
+	    if self.on_iter_has_child (node):
+		iter = self.on_iter_children (node)
+		while iter != None:
+		    #print 'iter:', iter, depth
+		    doit (iter, depth + 1)
+		    iter = self.on_iter_next (iter)
+
+	doit (self.model, 0)
 
     def class_from_node(self, node):
         klass = self.klass
@@ -68,7 +87,7 @@ class TreeModel(gtk.GenericTreeModel):
 	assert column == 0
 	assert isinstance (node, UML.Namespace)
 	print "on_get_value", node.name
-	return node.name
+	return '<<' + str(node.__class__.__name__) + '>> ' + node.name
 
     def on_iter_next(self, node):
 	'''returns the next node at this level of the tree'''
@@ -82,14 +101,17 @@ class TreeModel(gtk.GenericTreeModel):
 
     def on_iter_has_child(self, node):
 	'''returns true if this node has children'''
+	print 'on_iter_has_child'
 	return len (node.ownedElement) > 0
 
     def on_iter_children(self, node):
 	'''returns the first child of this node'''
+	print 'on_iter_children'
 	return node.ownedElement[0]
 
     def on_iter_n_children(self, node):
 	'''returns the number of children of this node'''
+	print 'on_iter_n_children'
 	return len (node.ownedElement) 
 
     def on_iter_nth_child(self, node, n):
@@ -104,35 +126,6 @@ class TreeModel(gtk.GenericTreeModel):
 
     def on_iter_parent(self, node):
 	'''returns the parent of this node'''
-	#print "on_iter_parent", node
+	print "on_iter_parent", node
 	return node.namespace
 
-def main():
-    sys.path.append('../../tests')
-    import CreateModel
-
-    window = gtk.Window()
-    window.connect('destroy', lambda win: gtk.main_quit())
-    window.set_title('TreeView test')
-    window.set_default_size(250, 400)
-
-    scrolled_window = gtk.ScrolledWindow()
-    scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-    window.add(scrolled_window)
-
-    tree_model = TreeModel(CreateModel.model)
-    tree_view = gtk.TreeView(tree_model)
-    cell = gtk.CellRendererText()
-    # the text in the column comes from column 0
-    column = gtk.TreeViewColumn('', cell, text=0)
-    tree_view.append_column(column)
-
-    scrolled_window.add(tree_view)
-    window.show_all()
-
-    if __name__ == '__main__': gtk.main()
-
-if __name__ == '__main__':
-    main()
-else:
-    del main

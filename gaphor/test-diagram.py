@@ -8,33 +8,13 @@ import gtk
 import diagram
 import diacanvas
 import UML
-import gc
 
 def mainquit(*args):
     for k in UML.Element._hash.keys():
-	print "Element", k, ":", UML.Element._hash[k]().__dict__
+	print "Element", k, ":", UML.Element._hash[k].__dict__
     print "Forcing Garbage collection:"
     gtk.main_quit()
 
-# First some consistency tests
-dia = diagram.Diagram()
-pack = UML.Package()
-
-assert (dia.id == 1)
-assert (pack.id == 2)
-
-pack.ownedElement = dia
-#dia.namespace = pack
-print pack.ownedElement.list
-print dia.namespace
-
-assert (dia in pack.ownedElement.list)
-
-del dia
-del pack
-UML.gc()
-for k in UML.Element._hash.keys():
-    print "Element", k, ":", UML.Element._hash[k]().__dict__
 
 print "diagram creating"
 dia = diagram.Diagram()
@@ -45,36 +25,34 @@ print "diagram created"
 #item.move (150, 50)
 item = dia.create_item (diagram.Actor, (150, 50))
 actor = item.get_subject()
-#actor.name = "Actor"
-item.set(name="Actor")
-
-item.test = "app";
-print item;
+actor.name = "Actor"
 
 item = dia.create_item (diagram.UseCase, (50, 150))
 usecase = item.get_subject()
-dia.create_item (diagram.UseCase, (50, 200), usecase)
-
-item = dia.create_item (diagram.Generalization, (150, 50))
-item = dia.create_item (diagram.CommentLine, (150, 50))
+dia.create_item (diagram.UseCase, (50, 200), subject=usecase)
 
 item = dia.create_item (diagram.Comment, (10,10))
 comment = item.get_subject()
 
 del item
 
+#print "Comment.presentation:", comment.presentation.list
+#print "Actor.presentation:", actor.presentation.list
+print "UseCase.presentation:", usecase.presentation.list
 #view = diacanvas.CanvasView().set_canvas (dia.canvas)
 #display_diagram (dia)
 #display_canvas_view (diacanvas.CanvasView().set_canvas (dia.canvas))
 win = dia.new_view()
 win.connect ('destroy', mainquit)
-del win
 print "diagram displayed"
 
-for k in UML.Element._hash.keys():
-    print "Element", k, ":", UML.Element._hash[k]().__dict__
+#for k in UML.Element._hash.keys():
+#    print "Element", k, ":", UML.Element._hash[k].__dict__
 
+print 'Going into main'
 gtk.main()
+
+del win
 
 #print "Comment.ann.Elem.:", comment.annotatedElement.list
 #print "Actor.comment:", actor.comment.list
@@ -83,19 +61,23 @@ print "Comment.presentation:", comment.presentation.list
 print "Actor.presentation:", actor.presentation.list
 print "UseCase.presentation:", usecase.presentation.list
 print "removing diagram..."
+dia.unlink()
 del dia
-UML.gc()
+#UML.update_model()
 print "Comment.presentation:", comment.presentation.list
 print "Actor.presentation:", actor.presentation.list
 print "UseCase.presentation:", usecase.presentation.list
+actor.unlink()
 del actor
+usecase.unlink()
 del usecase
+comment.unlink()
 del comment
 #del dia
 
 print "Garbage collection after gtk.main() has finished:"
-UML.Element_hash_gc()
+#UML.update_model()
 for k in UML.Element._hash.keys():
-    print "Element", k, ":", UML.Element._hash[k]().__dict__
+    print "Element", k, ":", UML.Element._hash[k].__dict__
 
 print "Program ended normally..."

@@ -85,6 +85,7 @@ AC_CONFIG_FILES(
 	gaphor/Makefile
 	gaphor/UML/Makefile
 	gaphor/diagram/Makefile
+	gaphor/tree/Makefile
 	gaphor/ui/Makefile
 	tests/Makefile
 	doc/Makefile)

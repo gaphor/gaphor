@@ -8,4 +8,10 @@ An new element is added to a diagram:
   * a weak reference is created from the element to the item
   * a notifier is connected to signal changes on the element.
 
+Remove an object:
+- Removing can only be done through the diagram interface.
+- The item is removed from the Element.presentation list
+- If len(element.presentation) == 0:
+   element.unlink()
+   del element
 
