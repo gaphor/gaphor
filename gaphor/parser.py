@@ -296,4 +296,4 @@ def parse(filename):
 if __name__ == '__main__':
     parse('ns.xml')
     #parser.parse('ns2.xml')
-    print len(ch.elements)
+    #print len(ch.elements)

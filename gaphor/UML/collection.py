@@ -1,4 +1,4 @@
-# vim:sw=4
+# vi:sw=4:et
 
 import inspect
 
@@ -129,7 +129,7 @@ class collection(object):
     
     def forAll(self,f):
         if not self.items or not inspect.getargspec(f)[0]:
-            return 1
+            return True
 
         nargs=len(inspect.getargspec(f)[0])
         if inspect.getargspec(f)[3]:
@@ -144,22 +144,23 @@ class collection(object):
             for x in index:
                 args.append(self.items[x])
             if not apply(f,args):
-                return 0
+                return False
             c=len(index)-1
             index[c]=index[c]+1
             while index[c]==nitems:
                 index[c]=0
                 c=c-1
                 if c<0:
-                    return 1
+                    return True
                 else:
                     index[c]=index[c]+1 
                 if index[c]==nitems-1:
                     c=c-1
+	return False
 
     def exist(self,f):
         if not self.items or not inspect.getargspec(f)[0]:
-            return 0
+            return False
 
         nargs=len(inspect.getargspec(f)[0])
         if inspect.getargspec(f)[3]:
@@ -173,15 +174,16 @@ class collection(object):
             for x in index:
                 args.append(self.items[x])
             if apply(f,args):
-                return 1
+                return True
             c=len(index)-1
             index[c]=index[c]+1
             while index[c]==nitems:
                 index[c]=0
                 c=c-1
                 if c<0:
-                    return 0
+                    return False
                 else:
                     index[c]=index[c]+1 
                 if index[c]==nitems-1:
                     c=c-1
+	return False

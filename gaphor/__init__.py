@@ -12,24 +12,22 @@ del pygtk
 
 import misc.singleton
 import misc.logger
-import version
 import types
 
-import gaphor.version
+import version
 
 _resources = {
     'Name': 'gaphor',
-    'Version': gaphor.version.VERSION,
-    'DataDir': gaphor.version.DATA_DIR
+    'Version': version.VERSION,
+    'DataDir': version.DATA_DIR
 }
-
-_main_window = None
 
 class GaphorError(Exception):
     """
     Gaphor specific exception class
     """
     def __init__(self, args=None):
+	    Exception.__init__(self)
             self.args = args
 
 

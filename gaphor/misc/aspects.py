@@ -1,7 +1,5 @@
 # vim:sw=4:et
 
-import sys
-
 class Aspect(object):
     """Aspect defines the aspect interface that should be implemented by
     aspects.

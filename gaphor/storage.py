@@ -262,7 +262,7 @@ def verify (filename):
     probably a valid Gaphor file.
     """
     try:
-        doc = dom.parse (filename)
+        doc = parser.parse (filename)
     except Exception, e:
         log.info('File %s is probably no valid XML.' % filename)
         return False
