@@ -1,10 +1,17 @@
+2004-11-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagramline.py: No longer save properties cap, join
+	and line_width, since they are not changed anyway.
+
 2004-11-13  Jeroen Vloothuis  <jeroen@vloothuis.net>
+
         * gaphor/data/plugins/xmiexport/exportmodel.py: Added support for
         stereotypes.
         * gaphor/data/plugins/xmiexport/exportmodel.py: Added support for
         association names.
 
 2004-11-12  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
 	* gaphor/diagram/association.py: Implemented find_relationship().
 	* gaphor/diagram/itemactions.py: Implemented CreateLinks action. This
 	action is called after a DND action to that canvas and re-creates

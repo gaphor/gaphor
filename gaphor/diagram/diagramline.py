@@ -42,8 +42,7 @@ class DiagramLine(diacanvas.CanvasLine, DiagramItem):
 
     def save (self, save_func):
         DiagramItem.save(self, save_func)
-        for prop in ('affine', 'line_width', 'color', \
-                     'cap', 'join', 'orthogonal', 'horizontal'):
+        for prop in ('affine', 'color', 'orthogonal', 'horizontal'):
             save_func(prop, self.get_property(prop))
         points = [ ]
         for h in self.handles:
