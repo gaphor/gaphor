@@ -6,7 +6,6 @@ TODO: show tooltips in the status bar when a menu item is selected.
 """
 
 import gobject
-import gtk
 
 #from logilab.aspects.weaver import weaver
 
@@ -20,7 +19,9 @@ class ActionError(Exception):
     pass
 
 class Action(gobject.GObject):
-    """An action.
+    """An action. Actions are registed by register_action(). Actions should
+    be part of an ActionPool. Action pools should be used to execute an action
+    and update its state.
     """
     id = ''
     stock_id = ''
@@ -132,10 +133,11 @@ class ActionPool(object):
         try:
             action = self.actions[action_id]
         except KeyError:
+            # No existing action: try to create a new one.
             try:
                 action_class = _registered_actions[action_id]
             except KeyError:
-                raise ActionError, 'No action named %s' % action_id
+                raise ActionError, 'No action registered with name "%s"' % action_id
             else:
                 action = self.actions[action_id] = action_class()
                 if self.action_initializer:
@@ -143,34 +145,51 @@ class ActionPool(object):
                 action.update()
         return action
 
-    def get_actions(self):
-        return self.actions.values()
-
     def execute(self, action_id):
+        """Run an action, identified by its action id. If the action does
+        not yet exists, it is created.
+
+        This is the rigt way to run an action (Action.execute() should not be
+        called directly!)
+        """
         global _dependent_actions
         #print 'ActionPool: executing', action_id
         action = self.get_action(action_id)
         action.execute()
         # Fetch dependent actions and ask them to update themselves.
         for d in _dependent_actions.get(action_id) or ():
-            dep_action = self.get_action(d)
-            #print 'ActionPool: updating', d
-            dep_action.update()
+            try:
+                dep_action = self.actions[d]
+            except KeyError:
+                pass # no such action in the pool
+            else:
+                #print 'ActionPool: updating', d
+                dep_action.update()
 
+    def get_actions(self):
+        """Return the actions currently in this action pool. These are only
+        the actions that have been created through get_action(), not the
+        actions registered by register_action().
+        """
+        return self.actions.values()
 
-def _mod_and_keyval_from_accel(accel):
-    keyval = 0
-    modifier = 0
-    if accel:
-        accel = accel.upper()
-        if accel.find('S-') != -1:
-            modifier |= gtk.gdk.SHIFT_MASK
-        if accel.find('C-') != -1:
-            modifier |= gtk.gdk.CONTROL_MASK
-        if accel.find('M-') != -1:
-            modifier |= gtk.gdk.MOD1_MASK
-	keyval = ord(accel[-1])
-    return modifier, keyval
+    def insensivate_actions(self):
+        """Make all actions insensitive. This can be used to ensure that
+        no actions occur during a special big (background) action, such as
+        loading or saving a model.
+
+        Actions can be refered to their previous state by calling
+        update_actions().
+        """
+        for action in self.actions.itervalues():
+            action.sensitive = False
+
+    def update_actions(self):
+        """Update all actions.
+        """
+        for action in self.actions.itervalues():
+            action.update()
+
 
 def register_action(action, *dependency_ids):
     """Register an action so it can be looked up for on demand menu creation.

@@ -8,10 +8,33 @@ TODO: show tooltips in the status bar when a menu item is selected.
 import gobject
 import gtk
 from gaphor.misc.action import ActionError, Action, CheckAction, RadioAction
-from gaphor.misc.action import _mod_and_keyval_from_accel
 import gaphor.ui.wrapbox
 
 __all__ = [ 'MenuFactory' ]
+
+keyval_map = {
+    '+': 'plus',
+    '-': 'minus'
+}
+
+def _mod_and_keyval_from_accel(accel):
+    keyval = 0
+    modifier = 0
+    if accel:
+        gtk_accel = accel.upper().replace('C-', '<Control>').replace('S-', '<Shift>').replace('M-', '<Alt>')
+        if gtk_accel[-1] in keyval_map.keys():
+            gtk_accel = gtk_accel[:-1] + keyval_map[gtk_accel[-1]]
+        keyval, modifier = gtk.accelerator_parse(gtk_accel)
+
+#        accel = accel.upper()
+#        if accel.find('S-') != -1:
+#            modifier |= gtk.gdk.SHIFT_MASK
+#        if accel.find('C-') != -1:
+#            modifier |= gtk.gdk.CONTROL_MASK
+#        if accel.find('M-') != -1:
+#            modifier |= gtk.gdk.MOD1_MASK
+#	keyval = ord(accel[-1])
+    return modifier, keyval
 
 
 class MenuFactory(object):
@@ -140,13 +163,14 @@ class MenuFactory(object):
             else:
                 if action.stock_id:
                     item = gtk.ImageMenuItem(action.stock_id, self.accel_group)
+                    # stock_info: (id, label, mod, key, translationdomain)
                 else:
                     item = gtk.MenuItem(label)
                 item.connect('activate', self.on_item_activate, action.id)
 
             if action.accel and not (stock_info and stock_info[3]):
-                print 'adding accel', action.accel, 'to', action.id
                 modifier, keyval = _mod_and_keyval_from_accel(action.accel)
+                #print 'adding accel', action.accel, 'to', action.id, gtk.accelerator_name(modifier, keyval)
                 item.add_accelerator("activate", self.accel_group,
                                      keyval, modifier, gtk.ACCEL_VISIBLE);
             # Connect to the event so we can push/pop status messages:
