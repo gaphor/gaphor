@@ -28,6 +28,10 @@ __all__ = [ 'load', 'save' ]
 FILE_FORMAT_VERSION = '3.0'
 
 def save(filename=None, factory=None, status_queue=None):
+    for status in save_coroutine(filename, factory):
+        status_queue(status)
+
+def save_coroutine(filename=None, factory=None):
     """Save the current model to @filename. If no filename is given,
     standard out is used.
     """
@@ -117,8 +121,8 @@ def save(filename=None, factory=None, status_queue=None):
         e.save(save_element)
         buffer.write('</%s>' % clazz)
         n += 1
-        if status_queue and n % 25 == 0:
-            status_queue((n * 100) / size)
+        if n % 25 == 0:
+            yield (n * 100) / size
 
     buffer.write('</gaphor>')
 
@@ -135,7 +139,12 @@ def save(filename=None, factory=None, status_queue=None):
         finally:
             file.close()
 
-def _load(elements, factory, status_queue=None):
+
+def load_elements(elements, factory, status_queue=None):
+    for status in load_elements_coroutine(elements, factory):
+        status_queue(status)
+
+def load_elements_coroutine(elements, factory):
     """Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
@@ -145,17 +154,16 @@ def _load(elements, factory, status_queue=None):
     # The elements are iterated three times:
     size = len(elements) * 3
     def update_status_queue(_n=[0]):
-        if status_queue:
-            n = _n[0] = _n[0] + 1
-            if n % 10 == 0:
-                status_queue((n * 100) / size)
+        n = _n[0] = _n[0] + 1
+        if n % 10 == 0:
+	    return (n * 100) / size
 
     #log.info('0%')
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     for id, elem in elements.items():
-        update_status_queue()
+        yield update_status_queue()
         if isinstance(elem, parser.element):
             try:
                 cls = getattr(UML, elem.type)
@@ -174,7 +182,7 @@ def _load(elements, factory, status_queue=None):
 
     # load attributes and create references:
     for id, elem in elements.items():
-        update_status_queue()
+        yield update_status_queue()
         # Ensure that all elements have their element instance ready...
         assert hasattr(elem, 'element')
 
@@ -222,22 +230,20 @@ def _load(elements, factory, status_queue=None):
                         raise
 
                 
-    #log.info('0% ... 33% ... 66%')
-
     # do a postload:
     for id, elem in elements.items():
-        update_status_queue()
+        yield update_status_queue()
         elem.element.postload()
 
-    #log.info('0% ... 33% ... 66% ... 100%')
-
     factory.notify_model()
+
 
 def load(filename, factory=None, status_queue=None):
     '''Load a file and create a model if possible.
     Optionally, a status queue function can be given, to which the
     progress is written (as status_queue(progress)).
-    Exceptions: GaphorError.'''
+    Exceptions: GaphorError.
+    '''
     log.info('Loading file %s' % os.path.basename(filename))
     try:
         elements = parser.parse(filename) #dom.parse (filename)
@@ -247,58 +253,17 @@ def load(filename, factory=None, status_queue=None):
         print e
         log.error('File could no be parsed')
         raise
-        #raise GaphorError, 'File %s is probably no valid XML.' % filename
 
     try:
-            # For some reason, loading the model in a temp. factory will
-        # cause DiaCanvas2 to keep a idle handler around... This should
-        # be fixed in DiaCanvas2 ASAP.
-        #factory = UML.ElementFactory()
-        #_load(doc, factory)
-        #gc.collect()
-        #factory.flush()
-        #del factory
-        #gc.collect()
-        #print '===================================== pre load succeeded =='
         if not factory:
             factory = gaphor.resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
-        _load(elements, factory, status_queue)
-        # DEBUG code:
-#        print ''
-#        print ''
-#        print ''
-#        for d in factory.select(lambda e: e.isKindOf(UML.Diagram)):
-#            for i in d.canvas.root.children:
-#                print i, i.__dict__
+        load_elements(elements, factory, status_queue)
         gc.collect()
-#        for d in factory.select(lambda e: e.isKindOf(UML.Diagram)):
-#            for i in d.canvas.root.children:
-#                print i, i.__dict__
-#                print '   ', i.get_property('id')
-
     except Exception, e:
         log.info('file %s could not be loaded' % filename)
         import traceback
         traceback.print_exc()
-        raise #GaphorError, 'Could not load file %s (%s)' % (filename, e)
+        raise
     
-def verify (filename):
-    """Try to load the file. If loading succeeded, this file is
-    probably a valid Gaphor file.
-    """
-    try:
-        doc = parser.parse (filename)
-    except Exception, e:
-        log.info('File %s is probably no valid XML.' % filename)
-        return False
-
-    factory = UML.ElementFactory()
-    try:
-        _load(doc, factory)
-    except Exception, e:
-        log.info('File %s could not be loaded' % filename)
-        return False
-
-    return True
