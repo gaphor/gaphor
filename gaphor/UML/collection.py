@@ -2,30 +2,22 @@
 
 import inspect
 
-class SequenceError(Exception):
+class CollectionError(Exception):
     pass
 
-class Sequence:
-    '''A Sequence class has the following properties:
-    - A sequence is an unordered list of unique elements.
-    - Only accepts object of a certain type (or descendants).
-    - Only keep one reference to the object.
-    - A Sequence has an owner. The owners
-      sequence_{add|remove}() functions are called to allow
-      bi-directional relations to be added and deleted.
-      Note that the Sequence itself does not add items to its list, it
-      only invokes the owner object if something needs to be done.'''
+class collection(object):
 
-    def __init__(self, owner, type):
-	self.owner = owner
-	self.required_type = type
+    def __init__(self, property, object, type):
+	self.property = property
+	self.object = object
+	self.type = type
 	self.items = []
 
     def __len__(self):
         return len(self.items)
 
     def __setitem__(self, key, value):
-	raise SequenceError, 'items should not be overwritten.'
+	raise CollectionError, 'items should not be overwritten.'
 
     def __delitem__(self, key):
         self.remove(key)
@@ -37,10 +29,10 @@ class Sequence:
         return self.items.__getslice__(i, j)
 
     def __setslice__(self, i, j, s):
-	raise SequenceError, 'items should not be overwritten.'
+	raise CollectionError, 'items should not be overwritten.'
 
     def __delslice__(self, i, j):
-	raise SequenceError, 'items should not be deleted this way.'
+	raise CollectionError, 'items should not be deleted this way.'
 
     def __contains__(self, obj):
         return self.items.__contains__(obj)
@@ -51,29 +43,29 @@ class Sequence:
     def __str__(self):
 	return str(self.items)
 
+    __repr__ = __str__
+
     def __nonzero__(self):
 	return self.items!=[]
 
-    def append(self, obj):
-	if isinstance(obj, self.required_type):
-	    self.owner.sequence_add(self, obj)
+    def append(self, value):
+	if isinstance(value, self.type):
+	    self.property._set(self.object, value)
 	else:
-	    raise SequenceError, 'append(): Object is not of type ' + \
-	    			str (self.required_type)
+	    raise CollectionError, 'Object is not of type %s' % self.type.__name__
 
-    def remove(self, key):
-        self.owner.sequence_remove(self, key)
+    def remove(self, value):
+	if value in self.items:
+	    self.property.__delete__(self.object, value)
+	else:
+	    raise AttributeError, '%s not in collection' % value
 
     def index(self, key):
-	"""Given an object, return the position of that object in the sequence.
-	"""
-	for i in range (0, len (self.items)):
-	    if self.items[i] is key:
-	        return i
-        raise SequenceError, 'index(): key %s not in items' % str(key)
+	"""Given an object, return the position of that object in the
+	collection."""
+	return self.items.index(key)
     
-    # OCL-like members (from SMW by Ivan Porres
-    # (http://www.abo.fi/~iporres/smw))
+    # OCL members (from SMW by Ivan Porres, http://www.abo.fi/~iporres/smw)
 
     def size(self):
         return len(self.items)

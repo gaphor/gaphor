@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim: sw=4
-export PYTHONPATH="../gaphor:${PYTHONPATH}"
+export PYTHONPATH="../build/lib:${PYTHONPATH}"
 
 EXITCODE=0
 for TEST in "$@"; do

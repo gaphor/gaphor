@@ -7,7 +7,7 @@
 # 1. read the model file with the gaphor parser
 # 2. Create a object herarcy by ordering elements based on generalizations
 
-from parser import parse, element, canvas, canvasitem
+from gaphor.parser import parse, element, canvas, canvasitem
 import sys, string, operator
 
 # The kind of attribute we're dealing with:
@@ -37,7 +37,9 @@ def write_classdef(self, out):
     """Write a class definition (class xx(x): pass).
     First the parent classes are examined. After that its own definition
     is written. It is ensured that class definitions are only written
-    once."""
+    once.
+    
+    For Diagram an exception is made: Diagram is imported from diagram.py"""
     if not self.written:
         s = ''
         for g in self.generalization:
@@ -45,7 +47,10 @@ def write_classdef(self, out):
             if s: s += ', '
             s = s + g['name']
         if not s: s = 'object'
-        out.write('class %s(%s): pass\n' % (self['name'], s))
+        if self['name'] == 'Diagram':
+            out.write('from diagram import Diagram\n')
+        else:
+            out.write('class %s(%s): pass\n' % (self['name'], s))
     self.written = True
 
 def write_derivedunion(d, out):
@@ -116,7 +121,7 @@ def parse_attribute(attr):
     elif type.lower() in ('integer', 'unlimitednatural'):
         type = 'int'
     elif type.lower() == 'string':
-        type = 'str'
+        type = '(str, unicode)'
     elif type.endswith('Kind'):
         kind = ENUMERATION
 
@@ -231,11 +236,14 @@ def write_association(out, head, tail):
     out.write(')\n')
     return True
 
-def generate(filename):
+def generate(filename, outfile=None):
     # parse the file
     all_elements = parse(filename)
 
-    out = sys.stdout
+    if outfile:
+        out = open(outfile, 'w')
+    else:
+        out = sys.stdout
 
     # extract usable elements from all_elements. Some elements are given
     # some extra attributes.
@@ -344,6 +352,9 @@ def generate(filename):
     for r in redefines:
         msg('redefine %s to %s.%s' % (r.redefines, r.class_name, r.name))
         write_redefine(r, out)
+
+    if outfile:
+        out.close()
 
 if __name__ == '__main__':
     generate('UML2.gaphor')

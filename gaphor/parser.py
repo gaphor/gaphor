@@ -93,26 +93,27 @@ class GaphorLoader(handler.ContentHandler):
         #print 'name:', name
         self.cdata = ''
         self.in_cdata = 2 # initial, just read text
+        name = name.lower()
 
-        if name == 'Element':
+        if name == 'element':
             id = attrs['id']
             e = element(id, attrs['type'])
             self.elements[id] = e
             self.push(e)
 
-        elif name == 'Canvas':
+        elif name == 'canvas':
             c = canvas()
             self.peek().canvas = c
             self.push(c)
 
-        elif name == 'CanvasItem':
+        elif name == 'canvasitem':
             id = attrs['id']
             c = canvasitem(id, attrs['type'])
             self.elements[id] = c
             self.peek().canvasitems.append(c)
             self.push(c)
 
-        elif name == 'Value':
+        elif name == 'value':
             # Note that Value may contain CDATA
             v = attrs.get('value')
             if v:
@@ -122,7 +123,7 @@ class GaphorLoader(handler.ContentHandler):
                 self.value_is_cdata = 1
                 self.push(attrs['name'])
 
-        elif name == 'Reference':
+        elif name == 'reference':
             # No data is pushed on the stack for references
             r = self.peek().references
             n = attrs['name']
@@ -132,14 +133,15 @@ class GaphorLoader(handler.ContentHandler):
             except KeyError:
                 r[n] = [refid]
 
-        elif name == 'Gaphor':
-            assert attrs['version'] == '1.1'
+        elif name == 'gaphor':
+            assert attrs['version'] in ('1.1', '2.0')
             self.push(None)
 
     def endElement(self, name):
-        if name == 'Reference':
+        name = name.lower()
+        if name == 'reference':
             pass # do nothing, stack should not be pop'ed.
-        elif name == 'Value':
+        elif name == 'value':
             if self.value_is_cdata:
                 n = self.pop()
                 #print '%s: "%s"' % (n, self.cdata)

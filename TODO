@@ -53,3 +53,4 @@ More specific:
 - How to put things like multiplicity and visibility in a popup menu
 - parsers for attributes, operations
 - lose (not in a comment box) text
+- make generator functions from load() and save()

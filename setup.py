@@ -66,15 +66,15 @@ class config_Gaphor(Command):
 
 	self.module_check('xml.parsers.expat')
 	#self.module_check('gobject', 'glib_version', (2, 0))
-	self.module_check('gtk', 'gtk_version', (2, 0),
-                                 'pygtk_version', (1, 99, 16))
+	self.module_check('gtk', ('gtk_version', (2, 0)),
+                                 ('pygtk_version', (1, 99, 16)))
 	self.module_check('gnome')
 	self.module_check('gnome.ui')
 	self.module_check('gnome.canvas')
 	self.module_check('bonobo')
 	self.module_check('bonobo.ui')
 	self.module_check('gconf')
-	self.module_check('diacanvas', 'diacanvas_version', (0, 9, 2))
+	self.module_check('diacanvas', ('diacanvas_version', (0, 9, 2)))
 
         print ''
 	if self.config_failed:
@@ -108,6 +108,7 @@ class config_Gaphor(Command):
 
         version_checks is a set of ket/version pairs that should be true.
         """
+        import string
 	try:
 	    mod = __import__(module)
 	except ImportError:
@@ -115,52 +116,52 @@ class config_Gaphor(Command):
 	    self.config_failed.append(module)
 	else:
 	    print "Module '%s' found." % module
-            while version_checks:
-                self.version_check(mod, version_checks[0], version_checks[1])
-                version_checks = version_checks[2:]
+            for key, ver in version_checks:
+                s_ver = string.join(map(str, ver), '.')
+                print "  Checking key '%s.%s' >= %s..." % (module, key, s_ver),
+                try:
+                    modver = getattr(mod, key)
+                except:
+                    print "Not found." % key
+                    self.config_failed.append(module)
+                else:
+                    s_modver = string.join(map(str, modver), '.')
+                    if modver >= ver:
+                        print "Okay (%s)." % s_modver
+                    else:
+                        print "Failed (%s)" % s_modver
+                        self.config_failed.append(module)
 
-    def version_check(self, module, key, ver):
-        import string
-        s_ver = string.join(map(str, ver), '.')
-        print "  Checking key '%s.%s' >= %s..." % (module.__name__, key, s_ver),
-        try:
-            modver = getattr(module, key)
-        except:
-            print "Not found." % key
-            self.config_failed.append(module.__name__)
-        else:
-            s_modver = string.join(map(str, modver), '.')
-            if modver >= ver:
-                print "Okay (%s)." % s_modver
-            else:
-                print "Failed (%s)" % s_modver
-                self.config_failed.append(module.__name__)
 
 class build_py_Gaphor(build_py):
 
-    description = "build_py and generate gaphor/UML/modelelements.py."
+    description = "build_py and generate gaphor/UML/uml2.py."
 
     def run(self):
         build_py.run(self)
-        self.generate_modelelements()
+        sys.path.insert(0, self.build_lib)
         self.generate_version()
+        self.generate_uml2()
 
-    def generate_modelelements(self):
-        """Generate gaphor/UML/modelelements.py in the build directory."""
-        import utils.genUML
-        gen = 'utils/genUML.py'
-        xmi = 'doc/UmlMetaModel.xmi'
-        outfile = os.path.join(self.build_lib, 'gaphor/UML/modelelements.py')
+    def generate_uml2(self):
+        """Generate gaphor/UML/uml2.py in the build directory."""
+        import utils.genUML2
+        gen = 'utils/genUML2.py'
+        model = 'doc/UML2.gaphor'
+        py_model = 'gaphor/UML/uml2.py'
+        outfile = os.path.join(self.build_lib, py_model)
         self.mkpath(os.path.dirname(outfile))
-        if self.force or newer(xmi, outfile) or newer(gen, outfile):
-            utils.genUML.generate(xmi, outfile)
+        if self.force or newer(model, outfile) or newer(gen, outfile):
+            print 'generating %s from %s...' % (py_model, model)
+            utils.genUML2.generate(model, outfile)
         else:
-            print 'not generating %s (up-to-date)' % outfile
+            print 'not generating %s (up-to-date)' % py_model
         self.byte_compile([outfile])
 
     def generate_version(self):
         """Create a file gaphor/version.py which contains the current version.
         """
+        print 'generating gaphor/version.py'
         outfile = os.path.join(self.build_lib, 'gaphor/version.py')
         self.mkpath(os.path.dirname(outfile))
         f = open(outfile, 'w')
@@ -206,10 +207,16 @@ class run_Gaphor(Command):
 
     description = 'Launch Gaphor from the local directory'
 
-    user_options = [('build-dir', None, '')]
+    user_options = [
+        ('build-dir=', None, ''),
+        ('command=', 'c', 'execute command'),
+        ('file=', 'f', 'execute file'),
+    ]
 
     def initialize_options(self):
         self.build_lib = None
+        self.command = None
+        self.file = None
 
     def finalize_options(self):
         self.set_undefined_options('build',
@@ -217,12 +224,17 @@ class run_Gaphor(Command):
 
     def run(self):
         print 'Starting gaphor...'
-        import sys, os, os.path
         self.run_command('build')
-        sys.path.insert(0, self.build_lib)
+
+        import os.path
         from gaphor import Gaphor
         os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
-        Gaphor().main()
+        if self.command:
+            exec self.command
+        elif self.file:
+            execfile(self.file)
+        else:
+            Gaphor().main()
 
 
 setup(name='gaphor',

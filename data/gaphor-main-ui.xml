@@ -37,9 +37,11 @@
 	    <menuitem name="EditSelectAll" verb="" _label="_Select All"/>
 	</submenu>
     -->
+    <!--
 	<submenu name="Insert" _label="_Insert">
 	    <menuitem name="CreateDiagram" verb=""/>
 	</submenu>
+    -->
     <!--
 	<submenu name="Settings" _label="_Settings">
 	    <menuitem name="BonoboCustomize" verb="" _label="Customi_ze"/>
@@ -57,7 +59,9 @@
 	</submenu>
 
 	<submenu name="Help" _label="_Help" placement="right">
+	<!--
 	    <placeholder name="BuiltMenuItems"/>
+	-->
 	    <menuitem name="About" verb=""/>
 	    <separator/>
 	    <menuitem name="BonoboUIDump" verb="" _label="Dump"/>

@@ -1,4 +1,4 @@
-# vim: sw=4
+# vim: sw=4:et
 """This is the TreeView that is most common (for example: it is used
 in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
@@ -13,306 +13,370 @@ import string
 import stock
 
 class NamespaceModel(gtk.GenericTreeModel):
-    """
-    The node is defined by a instance. We can reach the parent
-    by <object>.namespace. The children can be found in the
-    <object>.ownerElement list.
+    """The NamespaceModel holds a view on the data model based on namespace
+    relationships (such as a Package containing a Class).
+
+    NamedElement.namespace[1] -- Namespace.ownedMember
     """
 
     def __init__(self, factory):
-	if not isinstance (factory, UML.ElementFactory):
-	    raise AttributeError, 'factory should be a gaphor.UML.ElementFactory'
-	# Init parent:
-	gtk.GenericTreeModel.__init__(self)
-	# We own the references to the iterators.
-	self.set_property ('leak_references', 0)
+        if not isinstance (factory, UML.ElementFactory):
+            raise AttributeError, 'factory should be a %s' % UML.ElementFactory.__name__
+        # Init parent:
+        #self.__gobject_init__()
+        gtk.GenericTreeModel.__init__(self)
 
-	factory.connect (self.__factory_signals, factory)
+        # We own the references to the iterators.
+        self.set_property ('leak_references', 0)
 
-	self.model = factory.get_model()
+        self.factory = factory
 
-	# Set signals to all Namespace objects in the factory:
-	for element in factory.values():
-	    if isinstance (element, UML.Namespace):
-		element.connect (self.__element_signals, element)
- 
-    def __element_signals (self, key, old_value, new_value, obj):
-	if key == 'name':
-	    path = self.get_path (obj)
-	    if path != ():
-		# During loading, the item may be connected, but is not
-		# in the tree path (ie. the namespace is not set).
-		iter = self.get_iter(path)
-		self.row_changed(path, iter)
-	elif key == 'ownedElement' and old_value == 'add':
-	    def recursive_add(element):
-		path = self.get_path(element)
-		#print 'ownedElement ADD', element, element.namespace, path
-		iter = self.get_iter(path)
-		self.row_inserted(path, iter)
-		for child in element.ownedElement:
-		    recursive_add(child)
-	    recursive_add(new_value)
-	elif key == 'ownedElement' and old_value == 'remove':
-	    path = self.get_path(new_value)
-	    log.debug( 'ownedElement remove: %s %s %s' % (old_value, new_value, path))
-	    if path != ():
-		self.row_deleted(path)
-	elif key == '__unlink__':
-	    pass # Stuff is handled in namespace and ownedElement keys...
-	    #print 'Destroying', obj
+        factory.connect(self.on_factory_signals, factory)
 
-    def __factory_signals (self, key, obj, factory):
-        if key == 'create' and isinstance (obj, UML.Namespace):
-	    obj.connect (self.__element_signals, obj)
-	    if isinstance(obj, UML.Model): #obj.id == 1:
-		self.model = obj
-	elif key == 'remove' and isinstance (obj, UML.Namespace):
-	    if obj is self.model:
-		for n in obj.ownedElement:
-		    self.row_deleted((0,))
-	    obj.disconnect (self.__element_signals)
+        self.root = (None, [])
+
+
+    def new_node_from_element(self, element, parent):
+        """Create a new node for an element. Owned members are also created."""
+        node = (element, [])
+        parent[1].append(node)
+        self.sort_node(parent)
+        path = self.path_from_element(element)
+        #print 'new_node_from_element', path
+        self.row_inserted(path, self.get_iter(path))
+        element.connect('name', self.on_name_changed, element)
+
+        if isinstance(element, UML.Namespace):
+            element.connect('ownedMember', self.on_ownedmember_changed, element)
+            for om in element.ownedMember:
+                self.new_node_from_element(om, node)
+        return node
+
+    def detach_notifiers_from_node(self, node):
+        """Detach notifiers for node"""
+        node[0].disconnect('name', self.on_name_changed, node[0])
+        if isinstance(node[0], UML.Namespace):
+            node[0].disconnect('ownedMember', self.on_ownedmember_changed, node[0])
+            for child in node[1]:
+                self.detach_notifiers_from_node(child)
+
+    def node_and_path_from_element(self, element):
+        """Return (node, path) of an element."""
+        #assert isinstance(element, UML.NamedElement)
+        if element:
+            parent_node, parent_path = self.node_and_path_from_element(element.namespace)
+            index = 0
+            for child in parent_node[1]:
+                if child[0] is element:
+                    break;
+                index += 1
+            #print 'parent_path', parent_node[1], parent_path + (index,)
+            return child, parent_path + (index,)
+        else:
+            return self.root, ()
+
+    def node_from_element(self, element):
+        """Get the node for an element."""
+        return self.node_and_path_from_element(element)[0]
+
+    def path_from_element(self, element):
+        """Get the path to an element as a tuple (e.g. (0, 1, 1))."""
+        return self.node_and_path_from_element(element)[1]
+
+    def node_from_path(self, path):
+        """Get the node form a path. None is returned if no node is found."""
+        try:
+            node = self.root
+            for index in path:
+                node = node[1][index]
+            return node
+        except IndexError:
+            return None
+        #    print 'No path to node %s' % path
+
+    def element_from_node(self, node):
+        return node[0]
+
+    def element_from_path(self, path):
+        return self.node_from_path(path)[0]
+
+    def sort_node(self, node):
+        """Sort nodes based on their names."""
+        node[1].sort(lambda a, b: a[0].name == b[0].name and 0 or \
+                                  a[0].name < b[0].name and -1 or 1)
 
     def dump(self):
-        '''Dump the static structure of the model to stdout.'''
-	def doit(node, depth):
-	    print '|' + '   ' * depth + '"' + node.name + '" ' + str(node) + \
-		    str(self.on_get_path(node)) + '  ' + str(sys.getrefcount(node))
-	    if self.on_iter_has_child (node):
-		iter = self.on_iter_children (node)
-		while iter != None:
-		    #print 'iter:', iter, depth
-		    doit (iter, depth + 1)
-		    iter = self.on_iter_next (iter)
+        def doit(node, depth=0):
+            if node[0]:
+                print ' `' * depth, node[0].name, self.path_from_element(node[0])
+            else:
+                print ' `' * depth, '<None>'
+            for child in node[1]:
+                doit(child, depth + 1)
+        doit(self.root)
 
-	doit (self.model, 0)
+    def on_name_changed(self, name, element):
+        """the name of element has changed, update the tree model"""
+        path = self.path_from_element(element)
+        if path:
+            self.row_changed(path, self.get_iter(path))
+            parent_node, parent_path = self.node_and_path_from_element(element.namespace)
+            original = list(parent_node[1])
+            self.sort_node(parent_node)
+            children = parent_node[1]
+            if children != original:
+                new_order = []
+                for o in original:
+                    new_order.append(children.index(o))
+                self.rows_reordered(parent_path, self.get_iter(parent_path), new_order)
 
-    def class_from_node(self, node):
-        klass = self.klass
-        for n in node:
-	    attrdef = klass._attrdef[n]
-	    klass = attrdef[1]
-	return klass
+    def on_ownedmember_changed(self, name, element):
+        """update the tree model when the ownedMember list changes.
+        Element is the object whose ownedMember property has changed."""
+        node = self.node_from_element(element)
+        node_members = map(lambda e: e[0], node[1])
+        owned_members = element.ownedMember
+        if len(node[1]) < len(owned_members):
+            # element added
+            print 'element added'
+            for om in owned_members:
+                if om not in node_members:
+                    # we have found the newly added element
+                    self.new_node_from_element(om, node)
+                    assert len(node[1]) == len(owned_members)
+                    break
+        elif len(node[1]) > len(owned_members):
+            # element removed
+            print 'element removed', element.name, element.namespace, node
+            for child in node[1]:
+                if child[0] not in owned_members:
+                    # we have found the removed element
+                    path = self.path_from_element(child[0])
+                    print 'path=', child[0].name, path
+                    try:
+                        self.detach_notifiers_from_node(child)
+                        node[1].remove(child)
+                        self.row_deleted(path)
+                        assert len(node[1]) == len(owned_members)
+                    except Exception, e:
+                        print 'error:', e
+                        import traceback
+                        traceback.print_exc()
+                    break
+            if len(owned_members) == 0:
+                path = self.path_from_element(element)
+                self.row_has_child_toggled(path, self.get_iter(path))
+        #else:
+        #    print 'model is in sync'
 
-    # the implementations for TreeModel methods are prefixed with on_
+    def on_factory_signals (self, key, obj, factory):
+        if key == 'model':
+            toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
+            #if len(toplevel) != 1:
+            #    log.error('Multiple toplevel namespace elements, can handle only one')
+            for t in toplevel:
+                print 'factory::model toplevel', t
+                self.new_node_from_element(t, self.root)
+            print 'self.root', self.root
+
+        elif key == 'flush':
+            for i in  self.root:
+                self.row_deleted((0,))
+            self.root = (None, [])
+
+    # TreeModel methods:
+
     def on_get_flags(self):
-	'''returns the GtkTreeModelFlags for this particular type of model'''
-	#print '************************************************************'
-	#print ' I\'m called at last!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-	return 0
+        """returns the GtkTreeModelFlags for this particular type of model"""
+        return 0
 
     def on_get_n_columns(self):
-	'''returns the number of columns in the model'''
-	return 1
+        """returns the number of columns in the model"""
+        return 1
 
     def on_get_column_type(self, index):
-	'''returns the type of a column in the model'''
-	#return gobject.TYPE_STRING
-	return gobject.TYPE_PYOBJECT
-
-    def get_path(self, node):
-	'''returns the tree path (a tuple of indices at the various
-	levels) for a particular node. This is done in reverse order, so the
-	root path will become first.'''
-	assert isinstance (node, UML.Element)
-	def to_path (n):
-	    ns = n.namespace
-	    if ns:
-	        return to_path(ns) + (ns.ownedElement.index(n),)
-	    else:
-	        return ()
-	#print "on_get_path", node
-	return to_path (node)
+        """returns the type of a column in the model"""
+        return gobject.TYPE_PYOBJECT
 
     def on_get_path (self, node):
-        return self.get_path (node)
+        """returns the path for a node as a tuple (0, 1, 1)"""
+        #print 'on_get_path', node
+        return self.path_from_element(node[0])
 
     def on_get_iter(self, path):
-        '''returns the node corresponding to the given path. The patch is a
-	   tuple of values, like (0 1 1). We have to figure out a path that is
-	   easy to use by on_get_value() and can also be easely extended by
-	   on_iter_children() and chopped by on_iter_parent()'''
-	#print 'Namespace.on_get_iter():', path
-	node = self.model
-	try:
-	    if node:
-		for n in path:
-		    node = node.ownedElement[n]
-	except IndexError, e:
-	    print 'No path %s to a node' % str(path)
-	    return None
-	#print "on_get_iter", path, node
-	return node
+        """returns the node corresponding to the given path.
+        The path is a tuple of values, like (0 1 1). Returns None if no
+        iterator can be created."""
+        #print 'on_get_iter', path
+        return self.node_from_path(path)
 
     def on_get_value(self, node, column):
-	'''returns the model element that matches 'node'.'''
-	assert column == 0
-	assert isinstance (node, UML.Namespace)
-	#print "on_get_value", node.name
-	#if column == 0:
-	#    return '[' + str(node.__class__.__name__)[0] + ']'
-	#else:
-	#    return node.name
-	#return node.name
-	return node
-	#return ( '[' + str(node.__class__.__name__)[0] + '] ', node.name )
+        """returns the model element that matches 'node'."""
+        assert column == 0, 'column can only be 0'
+        #print 'on_get_value', node, column
+        return node[0]
 
     def on_iter_next(self, node):
-	'''returns the next node at this level of the tree'''
-	#print 'on_iter_next:', node, node.namespace
-	parent = node.namespace
-	if not parent:
-	    return None
-	#print "on_iter_next", index
-	try:
-	    index = parent.ownedElement.index (node)
-	    return parent.ownedElement[index + 1]
-	except IndexError:
-	    return None
-	
+        """Returns the next node at this level of the tree (None if no
+        next element)."""
+        #print 'on_iter_next:', node
+        try:
+            parent = self.node_from_element(node[0].namespace)
+            #print 'on_iter_next: parent', parent
+            index = parent[1].index(node)
+            return parent[1][index + 1]
+        except IndexError, e:
+            #print 'error: on_next_iter', e, parent
+            #import traceback
+            #traceback.print_exc()
+            return None
+        
     def on_iter_has_child(self, node):
-	'''returns true if this node has children'''
-	#print 'on_iter_has_child', node
-	return len (node.ownedElement) > 0
+        """Returns true if this node has children, or None"""
+        #print 'on_iter_has_child', node
+        return len(node[1]) > 0
 
     def on_iter_children(self, node):
-	'''returns the first child of this node'''
-	#print 'on_iter_children'
-	return node.ownedElement[0]
+        """Returns the first child of this node, or None"""
+        #print 'on_iter_children'
+        return node[1][0]
 
     def on_iter_n_children(self, node):
-	'''returns the number of children of this node'''
-	#print 'on_iter_n_children'
-	return len (node.ownedElement) 
+        """Returns the number of children of this node"""
+        #print 'on_iter_n_children'
+        return len (node[1])
 
     def on_iter_nth_child(self, node, n):
-	'''returns the nth child of this node'''
-	#print "on_iter_nth_child", node, n
-	if node is None:
-	    return self.model
-	try:
-	    return node.ownedElement[n]
-	except IndexError:
-	    return None
+        """Returns the nth child of this node"""
+        #print "on_iter_nth_child", node, n
+        try:
+            if node is None:
+                node = self.root
+            return node[1][n]
+        except TypeError, e:
+            #print e, node, n
+            #import traceback
+            #traceback.print_exc()
+            return None
 
     def on_iter_parent(self, node):
-	'''returns the parent of this node'''
-	#print "on_iter_parent", node
-	return node.namespace
-
+        """Returns the parent of this node or None if no parent"""
+        #print "on_iter_parent", node
+        return self.node_from_element(node[0].namespace)
 
 class NamespaceView(gtk.TreeView):
     TARGET_STRING = 0
     TARGET_ELEMENT_ID = 1
     DND_TARGETS = [
-	('STRING', 0, TARGET_STRING),
-	('text/plain', 0, TARGET_STRING),
-	('gaphor/element-id', 0, TARGET_ELEMENT_ID)]
+        ('STRING', 0, TARGET_STRING),
+        ('text/plain', 0, TARGET_STRING),
+        ('gaphor/element-id', 0, TARGET_ELEMENT_ID)]
     # Can not set signals for some reason...
 #    __gsignals__ = { 'drag_begin': 'override',
-#    		     'drag_data_get': 'override',
-#    		     'drag_data_delete': 'override',
-#		     'drag_data_received': 'override' }
+#                         'drag_data_get': 'override',
+#                         'drag_data_delete': 'override',
+#                     'drag_data_received': 'override' }
 
     def __init__(self, model):
-	assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
-	self.__gobject_init__()
-	gtk.TreeView.__init__(self, model)
-	self.set_property('headers-visible', 0)
-	self.set_rules_hint(gtk.TRUE)
-	selection = self.get_selection()
-	selection.set_mode(gtk.SELECTION_BROWSE)
-	column = gtk.TreeViewColumn ('')
-	# First cell in the column is for an image...
-	cell = gtk.CellRendererPixbuf ()
-	column.pack_start (cell, 0)
-	column.set_cell_data_func (cell, self._set_pixbuf, None)
-	
-	# Second cell if for the name of the object...
-	cell = gtk.CellRendererText ()
-	#cell.set_property ('editable', 1)
-	cell.connect('edited', self._name_edited)
-	column.pack_start (cell, 0)
-	column.set_cell_data_func (cell, self._set_name, None)
+        assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
+        self.__gobject_init__()
+        gtk.TreeView.__init__(self, model)
+        self.set_property('headers-visible', 0)
+        self.set_rules_hint(gtk.TRUE)
+        selection = self.get_selection()
+        selection.set_mode(gtk.SELECTION_BROWSE)
+        column = gtk.TreeViewColumn ('')
+        # First cell in the column is for an image...
+        cell = gtk.CellRendererPixbuf ()
+        column.pack_start (cell, 0)
+        column.set_cell_data_func (cell, self._set_pixbuf, None)
+        
+        # Second cell if for the name of the object...
+        cell = gtk.CellRendererText ()
+        #cell.set_property ('editable', 1)
+        cell.connect('edited', self._name_edited)
+        column.pack_start (cell, 0)
+        column.set_cell_data_func (cell, self._set_name, None)
 
-	assert len (column.get_cell_renderers()) == 2
-	self.append_column (column)
+        assert len (column.get_cell_renderers()) == 2
+        self.append_column (column)
 
-	# DND info:
-	# drag
-	self.drag_source_set(gtk.gdk.BUTTON1_MASK | gtk.gdk.BUTTON3_MASK,
-			     NamespaceView.DND_TARGETS,
-			     gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
-	#self.connect('drag_begin', NamespaceView.do_drag_begin)
-	self.connect('drag_data_get', NamespaceView.do_drag_data_get)
-	#self.connect('drag_data_delete', NamespaceView.do_drag_data_delete)
-	# drop
-	#self.drag_dest_set (gtk.DEST_DEFAULT_ALL, NamespaceView.DND_TARGETS[:-1],
-	#		    gtk.gdk.ACTION_COPY)
-	#self.connect('drag_data_received', NamespaceView.do_drag_data_received)
-	#self.connect('drag_motion', NamespaceView.do_drag_motion)
-	#self.connect('drag_drop', NamespaceView.do_drag_drop)
+        # DND info:
+        # drag
+        self.drag_source_set(gtk.gdk.BUTTON1_MASK | gtk.gdk.BUTTON3_MASK,
+                             NamespaceView.DND_TARGETS,
+                             gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+        #self.connect('drag_begin', NamespaceView.do_drag_begin)
+        self.connect('drag_data_get', NamespaceView.do_drag_data_get)
+        #self.connect('drag_data_delete', NamespaceView.do_drag_data_delete)
+        # drop
+        #self.drag_dest_set (gtk.DEST_DEFAULT_ALL, NamespaceView.DND_TARGETS[:-1],
+        #                    gtk.gdk.ACTION_COPY)
+        #self.connect('drag_data_received', NamespaceView.do_drag_data_received)
+        #self.connect('drag_motion', NamespaceView.do_drag_motion)
+        #self.connect('drag_drop', NamespaceView.do_drag_drop)
 
     def _set_pixbuf (self, column, cell, model, iter, data):
-	value = model.get_value(iter, 0)
-	stock_id = stock.get_stock_id(value.__class__)
-	if stock_id:
-	    icon = self.render_icon (stock_id, gtk.ICON_SIZE_MENU, '')
-	    cell.set_property('pixbuf', icon)
+        value = model.get_value(iter, 0)
+        stock_id = stock.get_stock_id(value.__class__)
+        if stock_id:
+            icon = self.render_icon (stock_id, gtk.ICON_SIZE_MENU, '')
+            cell.set_property('pixbuf', icon)
 
     def _set_name (self, column, cell, model, iter, data):
-	value = model.get_value(iter, 0)
-	name = string.replace(value.name, '\n', ' ')
-	cell.set_property('text', name)
+        value = model.get_value(iter, 0)
+        #print 'set_name:', value
+        name = value and string.replace(value.name or '', '\n', ' ') or '<None>'
+        cell.set_property('text', name)
 
     def _name_edited (self, cell, path_str, new_text):
-	"""
-	The text has been edited. This method updates the data object.
-	Note that 'path_str' is a string where the fields are separated by
-	colons ':', like this: '0:1:1'. We first turn them into a tuple.
-	"""
-	try:
-	    model = self.get_property('model')
-	    iter = model.get_iter_from_string(path_str)
-	    element = model.get_value(iter, 0)
-	    element.name = new_text
-	except Exception, e:
-	    log.error('Could not create path from string "%s"' % path_str)
+        """
+        The text has been edited. This method updates the data object.
+        Note that 'path_str' is a string where the fields are separated by
+        colons ':', like this: '0:1:1'. We first turn them into a tuple.
+        """
+        try:
+            model = self.get_property('model')
+            iter = model.get_iter_from_string(path_str)
+            element = model.get_value(iter, 0)
+            element.name = new_text
+        except Exception, e:
+            log.error('Could not create path from string "%s"' % path_str)
 
 #    def do_drag_begin (self, context):
-#	print 'do_drag_begin'
+#        print 'do_drag_begin'
 
     def do_drag_data_get (self, context, selection_data, info, time):
-	print 'do_drag_data_get'
-	selection = self.get_selection()
-	model, iter = selection.get_selected()
-	if iter:
-	    element = model.get_value (iter, 0)
-	    if info == NamespaceView.TARGET_ELEMENT_ID:
-		selection_data.set(selection_data.target, 8, str(element.id))
-	    else:
-		selection_data.set(selection_data.target, 8, element.name)
+        print 'do_drag_data_get'
+        selection = self.get_selection()
+        model, iter = selection.get_selected()
+        if iter:
+            element = model.get_value (iter, 0)
+            if info == NamespaceView.TARGET_ELEMENT_ID:
+                selection_data.set(selection_data.target, 8, str(element.id))
+            else:
+                selection_data.set(selection_data.target, 8, element.name)
 
     def do_drag_data_delete (self, context, data):
-	print 'Delete the data!'
+        print 'Delete the data!'
 
     # Drop
     def do_drag_motion(self, context, x, y, time):
-	print 'drag_motion', x, y
-	return 1
+        print 'drag_motion', x, y
+        return 1
    
     def do_drag_data_received(self, w, context, x, y, data, info, time):
-	print 'drag_data_received'
+        print 'drag_data_received'
         if data and data.format == 8:
-	    print 'drag_data_received:', data.data
-	    context.finish(gtk.TRUE, gtk.FALSE, time)
-	else:
-	    context.finish(gtk.FALSE, gtk.FALSE, time)
-	gobject.emit_stop_by_name('drag_data_received')
+            print 'drag_data_received:', data.data
+            context.finish(gtk.TRUE, gtk.FALSE, time)
+        else:
+            context.finish(gtk.FALSE, gtk.FALSE, time)
+        gobject.emit_stop_by_name('drag_data_received')
 
     def do_drag_drop(self, context, x, y, time):
-	print 'drag_drop'
-	return 1
+        print 'drag_drop'
+        return 1
 
 gobject.type_register(NamespaceModel)
 gobject.type_register(NamespaceView)

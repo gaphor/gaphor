@@ -1,6 +1,9 @@
 # vim:sw=4
 
-class DiagramItem(object):
+from gaphor.UML import Presentation
+from diacanvas import CanvasItem
+
+class DiagramItem(Presentation):
     """
     Basic functionality for all model elements (lines and elements!).
 
@@ -8,9 +11,31 @@ class DiagramItem(object):
     relationships.
     """
 
+    signal_prototype = ('__unlink__',	gobject.SIGNAL_RUN_FIRST,
+    					gobject.TYPE_NONE,
+					(gobject.TYPE_STRING,))
+					
     def __init__(self):
 	self.__subject = None
 	self.connect ('notify::parent', DiagramItem.on_parent_notify)
+
+    def connect(self, name, handler, *args):
+	return CanvasItem.connect(self, name, handler, *args)
+
+    def disconnect(self, handler_or_id, *args):
+	if type(handler_or_id) == type(1):
+	    CanvasItem.disconnect(self, id)
+	else:
+	    Presentation.disconnect(self, handler_or_id, *args)
+
+    def emit(self, name, *args):
+	"""Emit a signal, handle the __unlink__ signals the same way
+	gaphor.UML.Element does (signal name as first argument for callbacks)
+	"""
+	if name == '__unlink__':
+	    CanvasItem.emit('__unlink__', '__unlink__')
+	else:
+	    CanvasItem.emit('__unlink__', *args)
 
     def get_subject(self, x=None, y=None):
 	"""Get the subject that is represented by this diagram item.
@@ -25,7 +50,7 @@ class DiagramItem(object):
 	#self._set_subject(subject)
 
     # Define subject property:
-    subject = property(get_subject, set_subject, None, 'Subject')
+#    subject = property(get_subject, set_subject, None, 'Subject')
 
     def has_capability(self, capability):
         """Returns the availability of an diagram item specific capability.

@@ -18,23 +18,22 @@ class DiagramWindow(AbstractWindow):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	return self.__view;
 
-    def set_diagram(self, dia):
+    def set_diagram(self, diagram):
 	if self.__diagram:
 	    self.__diagram.disconnect(self.__on_diagram_event)
 	    self.__diagram.canvas.disconnect(self.__undo_id)
 	    self.__diagram.canvas.disconnect(self.__snap_to_grid_id)
-	self.__diagram = dia
+	self.__diagram = diagram
 	if self.get_state() == AbstractWindow.STATE_ACTIVE:
-	    self.get_window().set_title(dia.name or 'NoName')
+	    self.get_window().set_title(diagram.name or 'NoName')
 	    self.__view.set_diagram(dia)
-	if dia:
-	    dia.canvas.set_property ('allow_undo', 1)
-	    dia.connect(self.__on_diagram_event)
-	    self.__undo_id = dia.canvas.connect('undo', self.__on_diagram_undo)
-	    # Why doesn't this property react?
-	    self.__snap_to_grid_id = dia.canvas.connect('notify::snap-to-grid', self.__on_diagram_notify_snap_to_grid)
-	    #dia.canvas.set_property('snap_to_grid', 1)
-	    self.__on_diagram_undo(dia.canvas)
+	if diagram:
+	    diagram.canvas.set_property ('allow_undo', 1)
+	    diagram.connect(('name', '__unlink__'), self.__on_diagram_event)
+	    self.__undo_id = diagram.canvas.connect('undo', self.__on_diagram_undo)
+	    self.__snap_to_grid_id = diagram.canvas.connect('notify::snap-to-grid', self.__on_diagram_notify_snap_to_grid)
+	    # Set capabilities:
+	    self.__on_diagram_undo(diagram.canvas)
 
     def construct(self):
 	self._check_state(AbstractWindow.STATE_INIT)

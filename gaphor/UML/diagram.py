@@ -7,8 +7,8 @@ __author__ = 'Arjan Molenaar'
 __version__ = '$revision$'
 __date__ = '$date$'
 
-from modelelements import * #Namespace, Name, VisibilityKind, VK_PUBLIC, Boolean, Dependency, Constraint, Flow, Comment, TemplateParameter, Stereotype, TaggedValue, Generalization, ModelElement
-#import gobject
+from uml2 import Namespace, PackageableElement
+import gobject
 import diacanvas
 import gaphor.misc.uniqueid as uniqueid
 
@@ -48,47 +48,20 @@ class _Canvas(diacanvas.Canvas):
 	self.clear_redo()
 	self.set_property ("allow_undo", 1)
 
-#gobject.type_register(_Canvas)
+gobject.type_register(_Canvas)
 
 
-class Diagram(Namespace):
-    __abstract__ = False
-    __attributes__ = {
-        # from ModelElement:
-	'name': ( '', Name ),
-	'visibility': ( VK_PUBLIC, VisibilityKind ),
-	'isSpecification': ( False, Boolean ),
-	'namespace': ( None, Namespace, 'ownedElement' ),
-	'clientDependency': ( Sequence, Dependency, 'client' ),
-	'constraint': ( Sequence, Constraint, 'constrainedElement' ),
-	'targetFlow': ( Sequence, Flow, 'target' ),
-	'sourceFlow': ( Sequence, Flow, 'source' ),
-	'comment': ( Sequence, Comment, 'annotatedElement' ),
-	'templateParameter': ( Sequence, TemplateParameter, 'template' ),
-	'stereotype': ( Sequence, Stereotype ),
-	'taggedValue': ( Sequence, TaggedValue, 'modelElement' ),
-	# from GeneralizableElement:
-	'isRoot': ( False, Boolean ),
-	'isLeaf': ( False, Boolean ),
-	'isAbstract': ( False, Boolean ),
-	'generalization': ( Sequence, Generalization, 'child' ),
-	# from Namespace:
-	'ownedElement': ( Sequence, ModelElement, 'namespace' ),
-	# from Diagram:
-	'canvas': ( None, diacanvas.Canvas )
-    }
+class Diagram(Namespace, PackageableElement):
 
     def __init__(self, id):
-	Namespace.__init__(self, id)
+	super(Diagram, self).__init__(id)
         self.canvas = _Canvas()
 	self.canvas.set_undo_stack_depth(10)
 	self.canvas.set_property ("allow_undo", 1)
 
     def create(self, type):
-	"""
-	Create a new canvas item on the canvas. It is created with a unique
-	ID and it is attached to the diagram's root item.
-	"""
+	"""Create a new canvas item on the canvas. It is created with
+	a unique ID and it is attached to the diagram's root item."""
 	assert issubclass(type, diacanvas.CanvasItem)
 	obj = type()
 	obj.set_property('id', uniqueid.generate_id())

@@ -17,6 +17,7 @@ class MainWindow(AbstractWindow):
 	AbstractWindow.__init__(self)
 	self.__filename = None
 	self.__transient_windows = list()
+	# Act on changes in the element factory resource
 	factory = GaphorResource(UML.ElementFactory)
 	factory.connect(self.__on_element_factory_signal, factory)
 
@@ -80,11 +81,12 @@ class MainWindow(AbstractWindow):
 
     def __on_view_row_activated(self, view, path, column):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
-	item = self.get_model().on_get_iter(path)
+	node = self.get_model().node_from_path(path)
+	element = self.get_model().element_from_node(node)
 	cmd_reg = GaphorResource('CommandRegistry')
 	cmd = cmd_reg.get_command('main.popup', 'OpenModelElement')
 	cmd.set_parameters({ 'window': self,
-			     'element': item })
+			     'element': element })
 	cmd.execute()
 
     def __on_view_event(self, view, event):
@@ -97,7 +99,7 @@ class MainWindow(AbstractWindow):
 	    if not iter:
 		return
 	    element = model.get_value(iter, 0)
-	    path = model.get_path(element)
+	    path = model.path_from_element(element)
 	    self._construct_popup_menu(popup='NamespaceView',
 				       elements=[element],
 				       event=event,
@@ -115,5 +117,6 @@ class MainWindow(AbstractWindow):
 	pass
 
     def __on_element_factory_signal(self, key, obj, factory):
-	self.set_capability('model', factory.get_model() is not None)
+	print '__on_element_factory_signal', key
+	self.set_capability('model', not factory.is_empty())
 

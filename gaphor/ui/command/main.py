@@ -25,15 +25,17 @@ class NewCommand(Command):
 	self._window = params['window']
 
     def execute(self):
-	fact = GaphorResource(UML.ElementFactory)
-	fact.flush()
+	factory = GaphorResource(UML.ElementFactory)
+	factory.flush()
 	gc.collect()
-	model = fact.create(UML.Model)
-	diagram = fact.create(UML.Diagram)
-	diagram.namespace = model
+	model = factory.create(UML.Package)
+	model.name = 'New model'
+	diagram = factory.create(UML.Diagram)
+	diagram.package = model
 	diagram.name='main'
 	self._window.set_filename(None)
 	self._window.set_message('Created a new model')
+	factory.notify_model()
 
 CommandInfo (name='FileNew', _label='_New', pixname='New',
 	     _tip='Create a new Gaphor project',
@@ -190,20 +192,25 @@ CommandInfo (name='FileQuit', _label='_Quit', pixname='Exit',
 	     command_class=QuitCommand).register()
 
 class CreateDiagramCommand(Command):
+    """Obsolete..."""
 
     def set_parameters(self, params):
-	if params.has_key('element'):
-	    # in a popup menu
-	    self._parent = params['element']
-	else:
-	    self._parent = None
+	self._window = params.get('window')
+	# in a popup menu?
+	self._parent = params.get('element')
 
     def execute(self):
 	elemfact = GaphorResource(UML.ElementFactory)
 	diagram = elemfact.create(UML.Diagram)
-	diagram.namespace = self._parent or elemfact.get_model()
+	if self._parent:
+	    diagram.package = self._parent
 	diagram.name = "New diagram"
-	# TODO: make the self._parent node expand
+	# TODO: select the diagram
+	view = self._window.get_view()
+	model = view.get_model()
+	sel = view.get_selection()
+	path = model.path_from_element(diagram)
+	sel.select_path(path)
 
 CommandInfo (name='CreateDiagram', _label='_New diagram', pixname='gaphor-diagram',
 	     _tip='Create a new diagram at toplevel',

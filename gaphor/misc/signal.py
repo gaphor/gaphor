@@ -18,7 +18,6 @@ class Signal:
     def __init__(self):
 	# Signals are stored in a list as [ (signal_func, (data)), <next sig> ]
         self.__signals = [ ]
-	self.__queue = [ ]
 
 #    def __signal_handler_destroyed(self, ref):
 #	print '__signal_handler_destroyed'
@@ -47,24 +46,6 @@ class Signal:
 				 self.__signals)
 	#print 'Signal::disconnect_by_data', len (self.__signals)
 
-    def queue (self, *keys):
-	"""
-	Queue signals for emision. This is handy in case several parameters
-	have to be set before an object is in a consistent state. Queued signals
-	will be emited as soon as flush() is called.
-	"""
-	self.__queue.append(keys)
-
-    def flush (self):
-	"""
-	Flush the signal queue.
-	"""
-	queue = self.__queue
-	self.__queue = [ ]
-
-	for keys in queue:
-	    apply(self.emit, keys)
-
     def emit (self, *keys):
         """
 	Emit the signal. A set of parameters can be defined that will be
@@ -77,12 +58,8 @@ class Signal:
 	owner of the signal.
 	"""
 	#print 'Signal.emit():', keys
-	if len(self.__queue) > 0:
-	    apply(self.queue, keys)
-	else:
-	    for signal in self.__signals:
-		signal_handler = signal[0]
-		data = keys + signal[1:]
-		#print 'signal:', signal[0], signal_handler
-		apply(signal_handler, data)
+	for signal in self.__signals:
+	    signal_handler = signal[0]
+	    data = keys + signal[1:]
+	    apply(signal_handler, data)
 

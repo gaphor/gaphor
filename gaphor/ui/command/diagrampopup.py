@@ -28,24 +28,24 @@ def get_parent_focus_item(window):
 #       actors and uuse-cases are also classifiers, but we can't add 
 #       attrs and opers via the UI right now.
 
-class CreateAttributeCommand(Command):
+#class CreateAttributeCommand(Command):
+#
+#    def set_parameters(self, params):
+#	self._window = params['window']
+#
+#    def execute(self):
+#	subject = get_parent_focus_item(self._window).subject
+#	assert isinstance(subject, UML.Classifier)
+#	elemfact = GaphorResource(UML.ElementFactory)
+#	attribute = elemfact.create(UML.Attribute)
+#	attribute.name = 'new'
+#	subject.feature = attribute
 
-    def set_parameters(self, params):
-	self._window = params['window']
-
-    def execute(self):
-	subject = get_parent_focus_item(self._window).subject
-	assert isinstance(subject, UML.Classifier)
-	elemfact = GaphorResource(UML.ElementFactory)
-	attribute = elemfact.create(UML.Attribute)
-	attribute.name = 'new'
-	subject.feature = attribute
-
-CommandInfo (name='CreateAttribute', _label='New _Attribute',
-	     _tip='Create a new attribute',
-	     context=CONTEXT, subject=UML.Class,
-	     sensitive=('show-attributes',),
-	     command_class=CreateAttributeCommand).register()
+#CommandInfo (name='CreateAttribute', _label='New _Attribute',
+#	     _tip='Create a new attribute',
+#	     context=CONTEXT, subject=UML.Class,
+#	     sensitive=('show-attributes',),
+#	     command_class=CreateAttributeCommand).register()
 
 class CreateOperationCommand(Command):
 
@@ -78,11 +78,11 @@ class DeleteFeatureCommand(Command):
 	assert isinstance(subject, UML.Feature)
 	subject.undoable_unlink()
 
-CommandInfo (name='DeleteAttribute', _label='Delete A_ttribute',
-	     _tip='Delete the selected attribute',
-	     context=CONTEXT, subject=UML.Attribute,
-	     sensitive=('show-attributes',),
-	     command_class=DeleteFeatureCommand).register()
+#CommandInfo (name='DeleteAttribute', _label='Delete A_ttribute',
+#	     _tip='Delete the selected attribute',
+#	     context=CONTEXT, subject=UML.Attribute,
+#	     sensitive=('show-attributes',),
+#	     command_class=DeleteFeatureCommand).register()
 
 CommandInfo (name='DeleteOperation', _label='Delete O_peration',
 	     _tip='Delete the selected operation',
@@ -260,7 +260,7 @@ class TailAggregationCommand(AggregationCommand):
 
 
 class HeadNoneCommand(HeadAggregationCommand):
-    aggregation = UML.AK_NONE
+    aggregation = 'none'
 
 CommandInfo (name='Head_None', _label='None',
 	     _tip='', subject=UML.Association,
@@ -269,7 +269,7 @@ CommandInfo (name='Head_None', _label='None',
 
 
 class HeadAggregateCommand(HeadAggregationCommand):
-    aggregation = UML.AK_AGGREGATE
+    aggregation = 'aggregate'
 
 CommandInfo (name='Head_Aggregate', _label='Aggregate',
 	     _tip='', subject=UML.Association,
@@ -278,7 +278,7 @@ CommandInfo (name='Head_Aggregate', _label='Aggregate',
 
 
 class HeadCompositeCommand(HeadAggregationCommand):
-    aggregation = UML.AK_COMPOSITE
+    aggregation = 'COMPOSITE'
 
 CommandInfo (name='Head_Composite', _label='Composite',
 	     _tip='', subject=UML.Association,
@@ -287,7 +287,7 @@ CommandInfo (name='Head_Composite', _label='Composite',
 
 
 class TailNoneCommand(TailAggregationCommand):
-    aggregation = UML.AK_NONE
+    aggregation = 'NONE'
 
 CommandInfo (name='Tail_None', _label='None',
 	     _tip='', subject=UML.Association,
@@ -296,7 +296,7 @@ CommandInfo (name='Tail_None', _label='None',
 
 
 class TailAggregateCommand(TailAggregationCommand):
-    aggregation = UML.AK_AGGREGATE
+    aggregation = 'UML.AK_AGGREGATE'
 
 CommandInfo (name='Tail_Aggregate', _label='Aggregate',
 	     _tip='', subject=UML.Association,
@@ -305,7 +305,7 @@ CommandInfo (name='Tail_Aggregate', _label='Aggregate',
 
 
 class TailCompositeCommand(TailAggregationCommand):
-    aggregation = UML.AK_COMPOSITE
+    aggregation = 'UML.AK_COMPOSITE'
 
 CommandInfo (name='Tail_Composite', _label='Composite',
 	     _tip='', subject=UML.Association,

@@ -1,40 +1,27 @@
 # vim: sw=4
-'''elementfactory.py
-'''
+"""elementfactory.py
+"""
 
-#import misc.singleton as Singleton
-from gaphor.misc.signal import Signal as _Signal
 import gaphor.misc.uniqueid as uniqueid
-import weakref, gc
+import weakref
 from element import Element
-from modelelements import Model
 from diagram import Diagram
 
 class ElementFactory(object):
     '''The ElementFactory is used to create elements ans do lookups to
     elements. A model can contain only one Model element, though.
-    '''
-    def __element_signal (self, key, old_value, new_value, obj):
-	element = obj()
-	if not element:
-	    return
-	if key == '__unlink__' and self.__elements.has_key(element.id):
-	    log.debug('Unlinking element: %s' % element)
-	    del self.__elements[element.id]
-	    self.__emit_remove (element)
-	    if isinstance (element, Model):
-		self.__model = None
-	elif key == '__relink__' and not self.__elements.has_key(element.id):
-	    log.debug('Relinking element: %s' % element)
-	    self.__elements[element.id] = element
-	    if isinstance (element, Model):
-		self.__model = element
-	    self.__emit_create (element)
 
+    Notifications are send with as arguments (name, element, *user_data).
+    The following names are used:
+    create - a new model element is created (element is newly created element)
+    remove - a model element is removed (element is to be removed element)
+    model - a new model has been loaded (element is None)
+    flush - model is flushed: all element are removed from the factory
+            (element is None)
+    '''
     def __init__ (self):
-	self.__elements = { }
-	self.__signal = _Signal()
-	self.__model = None
+	self._elements = dict()
+	self._observers = list()
 
     def create (self, type):
 	'''Create a new Model element of type type'''
@@ -46,68 +33,95 @@ class ElementFactory(object):
 	higher that the current id that should be used for the next item, the
 	ID for the next item is set to id + 1.'''
 	assert issubclass(type, Element)
-	if type is Model and self.__model:
-	    raise ValueError, 'Trying to create a Model element, while there already is a model'
         obj = type(id)
-	self.__elements[id] = obj
-	obj.connect (self.__element_signal, weakref.ref(obj))
-	if type is Model:
-	    self.__model = obj
-	self.__emit_create (obj)
+	self._elements[id] = obj
+	obj.connect('__unlink__', self.__element_signal, weakref.ref(obj))
+	self.notify('create', obj)
 	return obj
 
     def lookup (self, id):
 	try:
-	    return self.__elements[id]
+	    return self._elements[id]
 	except KeyError:
 	    return None
 
-    def get_model(self):
-	return self.__model
-
     def select(self, expression):
+	"""Create a list of elements that comply with expression."""
 	l = []
-	for e in self.__elements.values():
+	for e in self._elements.values():
 	    if expression(e):
 		l.append(e)
 	return l
 
     def keys (self):
-        return self.__elements.keys()
+        return self._elements.keys()
 
     def values (self):
-        return self.__elements.values()
+        return self._elements.values()
+
+    def is_empty(self):
+	"""Returns True if the factory holds no elements."""
+	if self._elements:
+	    return False
+	else:
+	    return True
 
     def flush(self):
-	'''Flush all elements in the UML.elements table.'''
-	#for key, value in self.__elements.items():
-	#    value._Element__flush()
-
-	for key, value in self.__elements.items():
+	'''Flush all elements (remove them from the factory).'''
+	self.notify_flush()
+	for key, value in self._elements.items():
 	    #print 'ElementFactory: unlinking', value
 	    #print 'references:', gc.get_referrers(value)
 	    if isinstance (value, Diagram):
 		value.canvas.clear_undo()
 		value.canvas.clear_redo()
 	    value.unlink()
-	assert len(self.__elements) == 0, 'Still items in the factory: %s' % str(self.__elements.values())
-	#self.__index = 1
+	assert len(self._elements) == 0, 'Still items in the factory: %s' % str(self._elements.values())
 
-    def connect (self, signal_func, *data):
-	self.__signal.connect (signal_func, *data)
+    def connect(self, callback, *data):
+	"""Attach 'callback'."""
+	self._observers.append((callback,) + data)
 
-    def disconnect (self, signal_func):
-	self.__signal.disconnect (signal_func)
+    def disconnect(self, callback, *data):
+	"""Detach a callback identified by it's data."""
+        #print 'disconnect', callback, data
+        cb = (callback,) + data
+	# Remove all occurences of 'cb' from values
+	# (if none is found ValueError is raised).
+	try:
+	    while True:
+		self._observers.remove(cb)
+	except ValueError:
+	    pass
 
-    def __emit_create (self, obj):
-	self.__signal.emit ('create', obj)
+    def notify(self, name, element):
+        """Send notification to attached callbacks that a property
+	has changed. This is usually only called by the properties."""
+        for cb_data in self._observers:
+            try:
+                apply(cb_data[0], (name, element) + cb_data[1:])
+            except:
+                pass
 
-    def __emit_remove (self, obj):
-	self.__signal.emit ('remove', obj)
+    def notify_model(self):
+	self.notify('model', None)
 
-    def __element_destroyed(self, obj):
-	#print 'ElementFactory::element_destroyed...'
-	obj().disconnect_by_data(obj)
+    def notify_flush(self):
+	self.notify('flush', None)
 
+    def __element_signal (self, name, weak_element):
+	"""Remove an element from the factory """
+	element = weak_element()
+	if not element: return
 
+	if name == '__unlink__' and self._elements.has_key(element.id):
+	    log.debug('Unlinking element: %s' % element)
+	    del self._elements[element.id]
+	    self.notify ('remove', element)
+	elif name == '__relink__' and not self._elements.has_key(element.id):
+	    log.debug('Relinking element: %s' % element)
+	    self._elements[element.id] = element
+	    self.notify('create', element)
+
+# Make one ElementFactory instance an application-wide resource
 GaphorResource(ElementFactory)

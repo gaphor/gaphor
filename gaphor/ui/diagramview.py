@@ -54,7 +54,7 @@ class DiagramView(CanvasView):
 	    assert element
 	    item_class = get_diagram_item(element.__class__)
 	    if item_class:
-		item = self.create (item_class)
+		item = self.create(item_class)
 		assert item
 		wx, wy = self.window_to_world(x + self.get_hadjustment().value,
 					      y + self.get_vadjustment().value)
