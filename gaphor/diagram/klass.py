@@ -109,19 +109,20 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     )
 
     def __init__(self, id=None):
-        self.has_stereotype = False
         NamedItem.__init__(self, id)
         self.set(height=50, width=100)
         self._attributes = Compartment('attributes', self)
         self._operations = Compartment('operations', self)
         self._border = diacanvas.shape.Path()
         self._border.set_line_width(2.0)
+
+        self.has_stereotype = False
         self._stereotype = diacanvas.shape.Text()
         self._stereotype.set_font_description(pango.FontDescription(self.FONT_STEREOTYPE))
         self._stereotype.set_alignment(pango.ALIGN_CENTER)
         #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
         self._stereotype.set_markup(False)
-        self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
+        #self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
 
         self._from = diacanvas.shape.Text()
         self._from.set_font_description(pango.FontDescription(ClassItem.FROM_FONT))
@@ -377,10 +378,10 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
     def on_shape_iter(self):
         yield self._border
-        if self.has_stereotype:
-            yield self._stereotype
         for s in NamedItem.on_shape_iter(self):
             yield s
+        if self.has_stereotype:
+            yield self._stereotype
         yield self._from
         if self._attributes.visible:
             yield self._attributes.separator
