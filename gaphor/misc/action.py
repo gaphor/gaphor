@@ -183,7 +183,10 @@ def register_action(action, *dependency_ids):
         if not stock_info and action.label:
             modifier, keyval = _mod_and_keyval_from_accel(action.accel)
             #print (((action.stock_id, action.label, modifier, keyval, 'gaphor'),))
-            gtk.stock_add(((action.stock_id, action.label, modifier, keyval, 'gaphor'),))
+            #gtk.stock_add(((action.stock_id, action.label, modifier, keyval, 'gaphor'),))
+            gtk.stock_add(((action.stock_id, action.label, modifier, keyval, None),))
+            print '            ', (action.stock_id, action.label, modifier, keyval, None)
+	    print 'stock_lookup', gtk.stock_lookup(action.stock_id)
         #elif stock_info and action.accel:
             # update accelerator for this (registered) stock item
             #modifier, keyval = _mod_and_keyval_from_accel(action.accel)

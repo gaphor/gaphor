@@ -86,6 +86,7 @@ register_action(UndoStackAction)
 class UndoAction(Action):
     id = 'EditUndo'
     stock_id = 'gtk-undo'
+    label = '_Undo'
     tooltip = 'Undo the most recent changes'
     accel = 'C-u'
 
@@ -109,6 +110,7 @@ class RedoAction(Action):
     id = 'EditRedo'
     stock_id = 'gtk-redo'
     tooltip = 'Redo the undone changes'
+    accel = 'C-r'
 
     def init(self, window):
 	self._window = window
@@ -179,6 +181,7 @@ register_action(SelectAllAction)
 class DeselectAllAction(Action):
     id = 'EditDeselectAll'
     label = 'Des_elect all'
+    accel = 'C-S-a'
 
     def init(self, window):
 	self._window = window
@@ -239,6 +242,7 @@ register_action(ZoomInAction)
 class ZoomOutAction(Action):
     id = 'ViewZoomOut'
     label = 'Zoom _Out'
+    #accel = 'C-\-'
     stock_id = 'gtk-zoom-out'
 
     def init(self, window):

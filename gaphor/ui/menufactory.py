@@ -8,7 +8,7 @@ TODO: show tooltips in the status bar when a menu item is selected.
 import gobject
 import gtk
 from gaphor.misc.action import ActionError, Action, CheckAction, RadioAction
-#import gaphor.misc.wrapbox
+from gaphor.misc.action import _mod_and_keyval_from_accel
 import gaphor.ui.wrapbox
 
 __all__ = [ 'MenuFactory' ]
@@ -107,9 +107,10 @@ class MenuFactory(object):
             item.show()
             return item
         else:
+            stock_info = None
             if action.stock_id:
                 stock_info = gtk.stock_lookup(action.stock_id)
-                #print stock_info # (id, label, mod, key, translationdomain)
+                # stock_info : (id, label, mod, key, translationdomain)
                 try:
                     label = stock_info[1]
                 except TypeError:
@@ -139,10 +140,21 @@ class MenuFactory(object):
             else:
                 if action.stock_id:
                     item = gtk.ImageMenuItem(action.stock_id, self.accel_group)
+                    gtk.accel_map_change_entry('<main>/' + action.stock_id, stock_info[2], stock_info[3], 1)
+                    item.set_accel_path('<main>/'+action.stock_id)
+                    # stock_info: (id, label, mod, key, translationdomain)
+                    #print item.get_children()[0].get_property('accel_widget')#, item)
+                    #item.add_accelerator('activate', self.accel_group, stock_info[2], stock_info[3], gtk.ACCEL_VISIBLE)
+
                 else:
                     item = gtk.MenuItem(label)
                 item.connect('activate', self.on_item_activate, action.id)
 
+            if action.accel and not (stock_info and stock_info[3]):
+                print 'adding accel', action.accel, 'to', action.id
+                modifier, keyval = _mod_and_keyval_from_accel(action.accel)
+                item.add_accelerator("activate", self.accel_group,
+                                     keyval, modifier, gtk.ACCEL_VISIBLE);
             # Connect to the event so we can push/pop status messages:
             item.show()
             item.connect('event', self.on_item_event, action.id)
