@@ -2,7 +2,7 @@
 # vim: sw=4
 
 import types, gtk, UML, diacanvas
-from diagram import *
+import diagram
 from misc.storage import Storage
 
 [
@@ -97,7 +97,7 @@ class DiagramView:
 	    view.unselect_all()
 	    return 0
 
-	def post_button_press (tool, view, event, diagram, uml_type):
+	def post_button_press (tool, view, event, diag, uml_type):
 	    print 'Unset_tool:', tool, view, event
 	    view.set_tool (None)
 	    if uml_type is not None:
@@ -114,7 +114,7 @@ class DiagramView:
 	    tool = diacanvas.PlacementTool (diagram_type)
 	    view.set_tool (tool)
 	    tool.connect ('button_press_event', pre_button_press)
-	    tool.connect_after ('button_press_event', post_button_press,
+	    tool.connect ('button_release_event', post_button_press,
 	    			dia, uml_type)
 
 	print 'Action:', action, gtk.item_factory_path_from_widget(widget), view
@@ -178,13 +178,13 @@ class DiagramView:
 	    view.canvas.set_property ('snap_to_grid', not snap)
 
 	elif action == ITEM_ADD_ACTOR:
-	    set_placement_tool (diagramitem.ActorItem, UML.Actor)
+	    set_placement_tool (diagram.ActorItem, UML.Actor)
 	elif action == ITEM_ADD_USECASE:
-	    set_placement_tool (diagramitem.UseCaseItem, UML.UseCase)
+	    set_placement_tool (diagram.UseCaseItem, UML.UseCase)
 	elif action == ITEM_ADD_COMMENT:
-	    set_placement_tool (diagramitem.CommentItem, UML.Comment)
+	    set_placement_tool (diagram.CommentItem, UML.Comment)
 	elif action == ITEM_ADD_COMMENT_LINE:
-	    set_placement_tool (diagramitem.CommentLineItem, None)
+	    set_placement_tool (diagram.CommentLineItem, None)
 	#elif action == ITEM_ADD_GENERALIZATION:
 	#    set_placement_tool (diagram.Generalization, None)
 	#elif action == ITEM_ADD_REALIZATION:

@@ -105,7 +105,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def on_get_n_columns(self):
 	'''returns the number of columns in the model'''
-	return 1
+	return 2
 
     def on_get_column_type(self, index):
 	'''returns the type of a column in the model'''
@@ -147,10 +147,14 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def on_get_value(self, node, column):
 	'''returns the value stored in a particular column for the node'''
-	assert column == 0
+	assert column == 0 or column == 1
 	assert isinstance (node, UML.Namespace)
 	#print "on_get_value", node.name
-	return '[' + str(node.__class__.__name__)[0] + '] ' + node.name
+	if column == 0:
+	    return '[' + str(node.__class__.__name__)[0] + ']'
+	else:
+	    return node.name
+	#return ( '[' + str(node.__class__.__name__)[0] + '] ', node.name )
 
     def on_iter_next(self, node):
 	'''returns the next node at this level of the tree'''

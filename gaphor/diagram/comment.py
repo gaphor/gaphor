@@ -25,9 +25,8 @@ class CommentItem(ModelElementItem):
 	font = pango.FontDescription(CommentItem.FONT)
 	self.__name.set(font=font, width=self.width - (CommentItem.OFFSET * 2),
 			alignment=pango.ALIGN_LEFT)
-	# Center the text:
 	w, h = self.__name.get_property('layout').get_pixel_size()
-	print 'CommentItem:',w,h
+	#print 'CommentItem:',w,h
 	self.__name.move(CommentItem.OFFSET, CommentItem.OFFSET)
 	self.__name_update()
 	#self.__name.set(height=h, width=self.width)
