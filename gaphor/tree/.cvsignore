@@ -2,3 +2,9 @@ Makefile
 Makefile.in
 *.pyc
 *.pyo
+*.lo
+*.o
+*.la
+.libs
+.deps
+pytreemodel.c
