@@ -15,9 +15,6 @@ uc = getattr (UML, 'UseCase')
 print 'getattr (UML, "UseCase") ->', uc
 
 def mainquit(*args):
-    for k in UML.elements.keys():
-	print "Element", k, ":", UML.elements[k].__dict__
-    print "Forcing Garbage collection:"
     gtk.main_quit()
 
 

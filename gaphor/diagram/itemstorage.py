@@ -1,6 +1,6 @@
 # vim: sw=4
 
-import UML, diacanvas, diagramitems
+import UML, diacanvas, diagramitems, types
 
 
 # Forward declaration
@@ -27,10 +27,10 @@ def save (item, parent, ns):
     rec = loadsavetable[item.__class__]
     return rec[0] (item, parent, ns)
 
-def load (item, node):
+def load (item, factory, node):
     global loadsavetable
     rec = loadsavetable[item.__class__]
-    rec[1] (item, node)
+    rec[1] (item, factory, node)
 
 def postload (item, node):
     global loadsavetable
@@ -39,16 +39,30 @@ def postload (item, node):
 	rec[2] (item, node)
 
 
-def save_attr (item, node, attr):
-    node.setProp (attr, repr (item.get_property (attr)))
+#def save_attr (item, node, attr):
+    #node.setProp (attr, repr (item.get_property (attr)))
+#    child = node.newChild (ns, 'Value', repr (item.get_property (attr)))
+#    child.setProp ('name', attr)
 
-def load_attr (item, node, a):
-    attr = node.prop (a)
-    if attr:
-	item.set_property (a, eval (attr))
+def save_value (node, ns, name, val):
+    if not isinstance (val, types.StringType):
+        val = repr (val)
+    child = node.newChild (ns, 'Value', None)
+    child.setProp ('name', name)
+    child.setProp ('value', val)
+
+def load_value (node, name):
+    child = node.children
+    while child:
+        #print child
+        if child.name == 'Value' and child.prop('name') == name:
+	    return child.prop ('value')
+	child = child.next
+    raise ValueError, 'No value found with name %s' % name
 
 def cid (item):
-    return str (item)[-10:-1]
+    '''Create a unique ID for the canvas item based on it's memory address.'''
+    return str (item)[-9:-1]
 
 #
 # CanvasItem
@@ -58,27 +72,28 @@ def canvas_item_save (item, parent, ns):
     node.setProp ('type', item.__class__.__name__)
     # The 'cid' (canvas id) is the memory address of the item
     node.setProp ('cid', cid (item))
-    save_attr (item, node, 'affine')
+    save_value (node, ns, 'affine', item.get_property ('affine'))
     return node
 
-def canvas_item_load (item, node):
+def canvas_item_load (item, factory, node):
     cid = node.prop ('cid')
     _transtable[cid] = item
-    load_attr (item, node, 'affine')
+    #load_attr (item, node, 'affine')
+    item.set_property ('affine', eval (load_value (node, 'affine')))
 
 #
 # CanvasElement
 #
 def canvas_element_save (item, parent, ns):
     node = canvas_item_save (item, parent, ns)
-    save_attr (item, node, 'width')
-    save_attr (item, node, 'height')
+    save_value (node, ns, 'width', item.get_property ('width'))
+    save_value (node, ns, 'height', item.get_property ('height'))
     return node
 
-def canvas_element_load (item, node):
-    canvas_item_load (item, node)
-    load_attr (item, node, 'width')
-    load_attr (item, node, 'height')
+def canvas_element_load (item, factory, node):
+    canvas_item_load (item, factory, node)
+    item.set_property ('width', eval (load_value (node, 'width')))
+    item.set_property ('height', eval (load_value (node, 'height')))
 
 #
 # CanvasLine
@@ -88,22 +103,22 @@ def canvas_line_save (item, parent, ns):
     points = [ ]
     for h in item.handles:
 	pos = h.get_property ('pos_i')
-	print 'pos:', pos
+	#print 'pos:', pos
 	points.append (pos)
-    node.setProp ('points', repr (points))
+    save_value (node, ns, 'points', points)
     c = item.handles[0].connected_to
     if c:
-	node.setProp ('head_connection', cid (c))
+	save_value (node, ns, 'head_connection', cid (c))
     c = item.handles[-1].connected_to
     if c:
-	node.setProp ('tail_connection', cid (c))
+	save_value (node, ns, 'tail_connection', cid (c))
     return node
 
-def canvas_line_load (item, node):
-    canvas_item_load (item, node)
+def canvas_line_load (item, factory, node):
+    canvas_item_load (item, factory, node)
     #childnode = node.firstChild
     #points = [ ]
-    attr = node.prop ('points')
+    attr = load_value (node, 'points')
     if attr:
         points = eval(attr)
 	if len (points) > 0:
@@ -114,11 +129,11 @@ def canvas_line_load (item, node):
 		item.set_property ('add_point', p)
 
 def canvas_line_postload (item, node):
-    attr = node.prop ('head_connection')
+    attr = load_value (node, 'head_connection')
     if attr:
 	the_item = _transtable[attr]
 	the_item.handle_connect (item.handles[0])
-    attr = node.prop ('tail_connection')
+    attr = load_value (node, 'tail_connection')
     if attr:
 	the_item = _transtable[attr]
 	the_item.handle_connect (item.handles[-1])
@@ -128,15 +143,16 @@ def canvas_line_postload (item, node):
 #
 def model_element_save (item, parent, ns):
     node = canvas_element_save (item, parent, ns)
-    save_attr (item, node, 'auto_resize')
-    node.setProp ('subject', str (item.subject.id))
+    save_value (node, ns, 'auto_resize', item.get_property ('auto_resize'))
+    save_value (node, ns, 'subject', item.subject.id)
     return node
 
-def model_element_load (item, node):
-    canvas_element_load (item, node)
-    attr = node.prop ('subject')
+def model_element_load (item, factory, node):
+    canvas_element_load (item, factory, node)
+    attr = load_value (node, 'subject')
     if attr:
-	subject = UML.lookup (eval (attr))
+	factory = UML.ElementFactory ()
+	subject = factory.lookup (eval (attr))
 	if subject:
 	    item.set_subject (subject)
 	else:
@@ -146,24 +162,25 @@ def model_element_load (item, node):
     item.set_property ('auto_resize', 0)
 
 def model_element_postload (item, node):
-    load_attr (item, node, 'auto_resize')
+    item.set_property ('auto_resize', eval(load_value (node, 'auto_resize')))
     
 #
 # Relationship
 #
 def relationship_save (item, parent, ns):
     node = canvas_line_save (item, parent, ns)
-    node.setProp ('subject', str (item.subject.id))
+    save_value (node, ns, 'subject', item.subject.id)
     return node
 
-def relationship_load (item, node):
-    canvas_line_load (item, node)
-    attr = node.getAttribute ('subject')
+def relationship_load (item, factory, node):
+    canvas_line_load (item, factory, node)
+    attr = load_value (node, 'subject')
     if attr:
-	print item, 'Have a subject'
-	subject = UML.lookup (eval (attr))
+	#print item, 'Have a subject'
+	factory = UML.ElementFactory ()
+	subject = factory.lookup (eval (attr))
 	if subject:
-	    print item, 'Set a subject', subject
+	    #print item, 'Set a subject', subject
 	    item.set_subject (subject)
 	else:
 	    raise ValueError, 'Item has subject, but no such object found'
@@ -171,20 +188,20 @@ def relationship_load (item, node):
 #
 # Update items through specific load functions
 #
-def actor_load (item, node):
-    model_element_load (item, node)
+def actor_load (item, factory, node):
+    model_element_load (item, factory, node)
     item.element_update ('name')
 
-def comment_load (item, node):
-    model_element_load (item, node)
+def comment_load (item, factory, node):
+    model_element_load (item, factory, node)
     item.element_update ('body')
 
-def usecase_load (item, node):
-    model_element_load (item, node)
+def usecase_load (item, factory, node):
+    model_element_load (item, factory, node)
     item.element_update ('name')
 
-def generalization_load (item, node):
-    relationship_load (item, node)
+def generalization_load (item, factory, node):
+    relationship_load (item, factory, node)
 
 loadsavetable = {
 	diacanvas.CanvasGroup: (canvas_item_save, canvas_item_load ),

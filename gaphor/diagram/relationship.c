@@ -250,6 +250,15 @@ relationship_get_property (GObject *object, guint property_id,
 	Relationship *rel = (Relationship*) object;
 
 	switch (property_id) {
+	case PROP_SUBJECT:
+		if (rel->subject) {
+			Py_INCREF (rel->subject);
+			g_value_set_pointer (value, rel->subject);
+		} else {
+			Py_INCREF (Py_None);
+			g_value_set_pointer (value, Py_None);
+		}
+		break;
 	case PROP_INTERNAL_SUBJECT:
 		if (rel->subject) {
 			/* Prevent the subject from setting an extra
@@ -260,14 +269,6 @@ relationship_get_property (GObject *object, guint property_id,
 			g_value_set_boxed (value, NULL);
 		}
 		break;
-	case PROP_SUBJECT:
-		if (rel->subject) {
-			Py_INCREF (rel->subject);
-			g_value_set_pointer (value, rel->subject);
-		} else {
-			Py_INCREF (Py_None);
-			g_value_set_pointer (value, Py_None);
-		}
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 		break;

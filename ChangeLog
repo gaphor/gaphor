@@ -1,3 +1,19 @@
+2002-03-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* */Makefile.am: fized path for make install
+	* gaphor/UML/*.py: made all files lower case.
+	* gaphor/UML/elementfactory.py: New file. Factory for creating model
+	elements.
+	* gaphor/misc/: New directory. Added Makefile.am, singleton.py and
+	command.py.
+	* gaphor/UML/element.py: put Enumeration_ and Sequence in separate
+	files.
+	* configure.in: Added dependency for libxml2.
+	* doc/gaphor.dtd: New file. DTD for gaphor files.
+	* gaphor/UML/elementfactory.py, gaphor/UML/element.py,
+	gaphor/diagram/diagram.py, gaphor/diagram/itemstorage.py:
+	Use libxml2 calls rather than xmllib (which is depricated anyway).
+
 2002-03-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/relationship.c: (relationship_handle_connect)

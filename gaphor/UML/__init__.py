@@ -1,12 +1,13 @@
 #
-# GModeler specific extensions for the UML Metamodel.
+# Gaphor specific extensions for the UML Metamodel.
 #
-from Element import *
-from ModelElements import *
-from management import *
+from element import *
+from modelelements import *
+from elementfactory import *
 
 #
-# A few associations need to be modified to keep the bi-directional aspects true
+# A few associations need to be modified to keep the bi-directional aspects
+# true (these associations are not well defined in the UML meta model).
 #
 ClassifierRole._attrdef['message'] = ( Sequence, Message )
 #Message._attrdef['receiver'] = ( None, ClassifierRole, 'message' )

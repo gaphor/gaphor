@@ -346,7 +346,7 @@ static void
 actor_element_update (ModelElement *element, const gchar *key)
 {
 	if (g_str_equal (key, "name")) {
-		g_message (__FUNCTION__": name = '%s'", subject_get_string (element->subject, "name"));
+		//g_message (__FUNCTION__": name = '%s'", subject_get_string (element->subject, "name"));
 		dia_shape_text_set_text (SHAPE_TEXT (element),
 					 subject_get_string (element->subject,
 							     "name"));

@@ -1,9 +1,10 @@
 
-python_files = \
+treedir = $(pythondir)/$(subdir)
+
+tree_PYTHON = \
 	__init__.py	\
 	namespace.py
 
-EXTRA_DIST = $(python_files)
 
 CLEANFILES = *.pyc *.pyo
 

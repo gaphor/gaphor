@@ -23,21 +23,22 @@ class Diagram(UML.Namespace):
 	UML.Namespace.__init__(self, id)
         self.canvas = diacanvas.Canvas()
 	self.canvas.set_property ("allow_undo", 1)
-	#Diagram._diagrams.append (weakref.ref (self))
 
     def create (self, type, pos=(0, 0), subject=None):
+        '''TODO: this function should be removed from the diagram and put
+	in its own ElementFactory'''
 	item = self.canvas.root.add(type)
 	if not subject:
 	    uml_type = diagram2UML[type]
 	    if uml_type is not None:
-		print 'Setting new subject of type', uml_type
+		#print 'Setting new subject of type', uml_type
 		factory = UML.ElementFactory ()
 		subject = factory.create (uml_type)
 		if issubclass (uml_type, UML.Namespace):
 		    subject.namespace = self.namespace
 		item.set_subject(subject)
 	else:
-	    print 'Setting existing subject', subject
+	    #print 'Setting existing subject', subject
 	    item.set_subject(subject)
 	item.move(pos[0], pos[1])
 	return item
@@ -49,7 +50,9 @@ class Diagram(UML.Namespace):
 	for a in [ 'extents', 'static_extents', 'snap_to_grid',
 		   'grid_int_x', 'grid_int_y', 'grid_ofs_x',
 		   'grid_ofs_y', 'snap_to_grid', 'grid_color', 'grid_bg' ]:
-	    canvas.setProp (a, repr (self.canvas.get_property (a)))
+	    node = canvas.newChild (ns, 'Value', None)
+	    node.setProp ('name', a)
+	    node.setProp ('value', repr (self.canvas.get_property (a)))
 
 	def save_item (item, parent, ns):
 	    node = itemstorage.save (item, parent, ns)
@@ -64,10 +67,10 @@ class Diagram(UML.Namespace):
 	save_item (self.canvas.root, canvas, ns)
 	return node
 
-    def load (self, node):
-	print 'Doing Namespace'
-        UML.Namespace.load (self, node)
-	print 'Namespace done'
+    def load (self, factory, node):
+	#print 'Doing Namespace'
+        UML.Namespace.load (self, factory, node)
+	#print 'Namespace done'
 	self.transtable = { } # table to translate 'cid' to object
 
 	# First create all objects:
@@ -79,13 +82,19 @@ class Diagram(UML.Namespace):
 	self.canvas.set_property ("allow_undo", 0)
 
 	# Load canvas properties:
-	for a in [ 'extents', 'static_extents', 'snap_to_grid',
-		   'grid_int_x', 'grid_int_y', 'grid_ofs_x',
-		   'grid_ofs_y', 'snap_to_grid', 'grid_color', 'grid_bg' ]:
-	    attr = canvasnode.prop (a)
-	    if attr:
-		self.canvas.set_property (a, eval (attr))
-	    
+	#for a in [ 'extents', 'static_extents', 'snap_to_grid',
+	#	   'grid_int_x', 'grid_int_y', 'grid_ofs_x',
+	#	   'grid_ofs_y', 'snap_to_grid', 'grid_color', 'grid_bg' ]:
+	#    attr = canvasnode.prop (a)
+	#    if attr:
+	#	self.canvas.set_property (a, eval (attr))
+	value = canvasnode.children
+	while value:
+	    if value.name == 'Value':
+	        name = value.prop ('name')
+		self.canvas.set_property (name, eval (value.prop ('value')))
+	    value = value.next
+
 	rootnode = canvasnode.children
 	while rootnode.name != 'CanvasItem':
 	    next = rootnode.next
@@ -97,10 +106,10 @@ class Diagram(UML.Namespace):
 	    raise ValueError, 'The Canvas tag should contain a CanvasItem with type CanvasGroup, but none was found.'
 	    
 	def load_item (item, node):
-	    itemstorage.load (item, node)
+	    itemstorage.load (item, factory, node)
 
 	    # Create child items in case of a canvas group...
-	    #if isinstance (item, diacanvas.CanvasGroupable):
+	    # if isinstance (item, diacanvas.CanvasGroupable):
 	    childnode = node.children
 	    while childnode:
 		if childnode.name == 'CanvasItem':
@@ -116,7 +125,8 @@ class Diagram(UML.Namespace):
 		    childnode.freeNode ()
 		    childnode = next
 		else:
-		    raise ValueError, 'Invalid node type %s, should be CanvasItem' % childnode
+		    childnode = childnode.next
+		#    raise ValueError, 'Invalid node type %s, should be CanvasItem' % childnode
 	
 	load_item (self.canvas.root, rootnode)
 	self.transtable = itemstorage.get_transtable ()

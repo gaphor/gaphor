@@ -117,15 +117,15 @@ class DiagramView:
 	view.canvas.push_undo(None)
 
 	if action == FILE_LOAD:
+	    factory = UML.ElementFactory ()
 	    print 'unset_canvas'
 	    view.unset_canvas ()
 	    print 'UML.flush'
 	    del self.diagram
-	    UML.flush ()
+	    factory.flush ()
 	    print 'UML.load'
-	    UML.load ('a.xml')
+	    factory.load ('a.xml')
 	    print 'UML.lookup'
-	    factory = UML.ElementFactory ()
 	    self.diagram = factory.lookup (2)
 	    print 'view.set_canvas'
 	    view.set_canvas (self.diagram.canvas)

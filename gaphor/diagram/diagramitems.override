@@ -68,7 +68,7 @@ _wrap__model_element__get_subject(PyGObject *self, void *closure)
     g_object_get (self->obj, "subject", &subject, NULL);
     /* Do not increase the refcount since g_object_get has already done that. */
  
-    g_message (__FUNCTION__": subject refcnt = %d", subject->ob_refcnt);
+    //g_message (__FUNCTION__": subject refcnt = %d", subject->ob_refcnt);
 
     return subject;
 }

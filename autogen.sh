@@ -31,6 +31,7 @@ else
 	run "${ACLOCAL} ${ACLOCAL_FLAGS}"
 fi
 run "${LIBTOOLIZE}" -c -f
+test -f './py-compile' && rm ./py-compile
 run "${AUTOMAKE}" -c -a
 run "${AUTOCONF}"
 

@@ -30,6 +30,7 @@
 
 /* Loaded in diagramitemsmodule.c: */
 extern PyObject *UML_module;
+extern PyObject *UML_factory;
 
 #define TYPE_PYOBJECT  (pyobject_get_type ())
 

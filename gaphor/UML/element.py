@@ -25,8 +25,8 @@ a tupple as value.  A tupple contains two or three fields:
 
 
 import types, copy
-from Enumeration import Enumeration_
-from Sequence import Sequence
+from enumeration import Enumeration_
+from sequence import Sequence
 
 # Some default types as defined in the MetaModel.
 class Integer(int): pass
@@ -151,10 +151,10 @@ object if references are lehd by the object on the undo stack.
 	    self.itemsOnUndoStack += 1
 	    if len (self.presentation) == 0:
 		# Remove yourself from the 'elements' hash
-		if lookup (self.id):
+		#if lookup (self.id):
 		    #print 'Removing element from elements hash.'
 		    #del elements[self.id]
-		    self.emit ('remove_from_factory')
+		self.emit ('remove_from_factory')
 		# Create __undodata, so we can undo the element's state
 		undodata = { }
 		for key in self.__dict__.keys():
@@ -358,7 +358,7 @@ object if references are lehd by the object on the undo stack.
 		#subnode = document.createElement (key)
 		subnode = node.newChild (ns, 'Reference', None)
 		subnode.setProp ('name', key)
-		subnode.setProp ('refid', str(obj.__dict__['__id']))
+		subnode.setProp ('refid', 'a' + str(obj.__dict__['__id']))
 	    else:
 		data = None
 		if isinstance (obj, types.IntType) or \
@@ -369,13 +369,14 @@ object if references are lehd by the object on the undo stack.
 		    data = str(obj)
 		if data:
 		    subnode = node.newChild (ns, 'Value', None)
-		    cdata = subnode.doc.newCDataBlock (data, len(data))
-		    subnode.addChild (cdata)
+		    #cdata = subnode.doc.newCDataBlock (data, len(data))
+		    #subnode.addChild (cdata)
 		    subnode.setProp ('name', key)
+		    subnode.setProp ('value', data)
 
         node = parent.newChild (ns, 'Element', None)
 	node.setProp ('type', self.__class__.__name__)
-	node.setProp ('id', str (self.__dict__['__id']))
+	node.setProp ('id', 'a' + str (self.__dict__['__id']))
 	for key in self.__dict__.keys():
 	    if key not in ( 'presentation', 'itemsOnUndoStack', \
 	    		    '__signals', '__id', 'canvas' ):
@@ -387,13 +388,13 @@ object if references are lehd by the object on the undo stack.
 		    save_children (obj)
 	return node
 
-    def load(self, node):
+    def load(self, factory, node):
 	child = node.children
 	while child:
 	    if child.name == 'Reference':
 		name = child.prop ('name')
-	        refid = int (child.prop ('refid'))
-		refelement = lookup (refid)
+	        refid = int (child.prop ('refid')[1:])
+		refelement = factory.lookup (refid)
 		attr_info = self.__get_attr_info (name, self.__class__)
 		if not isinstance (refelement, attr_info[1]):
 		    raise ValueError, 'Referenced item is of the wrong type'
@@ -407,17 +408,21 @@ object if references are lehd by the object on the undo stack.
 		    self.emit (name)
 	    elif child.name == 'Value':
 		name = child.prop ('name')
+		value = child.prop ('value')
 		#subchild = child.children
 		attr_info = self.__get_attr_info (name, self.__class__)
 		if issubclass (attr_info[1], types.IntType) or \
 		   issubclass (attr_info[1], types.LongType):
-		    self.__dict__[name] = int (child.content)
+		    #self.__dict__[name] = int (child.content)
+		    self.__dict__[name] = int (value)
 		elif issubclass (attr_info[1], types.FloatType):
-		    self.__dict__[name] = float (child.content)
+		    #self.__dict__[name] = float (child.content)
+		    self.__dict__[name] = float (value)
 		else:
-		    if child.content and child.content != '':
-			self.__dict__[name] = child.content
-		print 'content = "%s"' % child.content
+		    if value and value != '':
+			#self.__dict__[name] = child.content
+			self.__dict__[name] = value
+		#print 'content = "%s"' % child.content
 		self.emit (name)
 	    child = child.next
 

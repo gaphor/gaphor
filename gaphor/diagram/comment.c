@@ -193,7 +193,7 @@ do_auto_resize (DiaCanvasItem *item, DiaShape *shape_text)
 	if (!MODEL_ELEMENT (item)->auto_resize)
 		return;
 
-	g_message (__FUNCTION__);
+	//g_message (__FUNCTION__);
 	layout = dia_shape_text_to_pango_layout (shape_text,
 						 TRUE);
 

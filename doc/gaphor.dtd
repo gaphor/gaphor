@@ -1,0 +1,26 @@
+<!ELEMENT Gaphor (Element)* >
+<!ATTLIST Gaphor
+    version	CDATA	#REQUIRED >
+
+<!ELEMENT Element ((Reference | Value)* | Canvas)* >
+<!ATTLIST Element
+    type	CDATA	#REQUIRED
+    id		ID	#REQUIRED >
+
+<!ELEMENT Reference EMPTY >
+<!ATTLIST Reference
+    name	CDATA	#REQUIRED
+    refid	IDREF	#REQUIRED >
+
+<!ELEMENT Value EMPTY >
+<!ATTLIST Value
+    name 	CDATA	#REQUIRED
+    value	CDATA	#REQUIRED >
+
+<!ELEMENT Canvas ((Value)*, (CanvasItem)+) >
+
+<!ELEMENT CanvasItem ((Value)*, (CanvasItem)*) >
+<!ATTLIST CanvasItem
+    type	CDATA	#REQUIRED
+    cid		ID	#REQUIRED >
+    

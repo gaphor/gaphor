@@ -1,8 +1,9 @@
 
-python_files = \
+uidir = $(pythondir)/$(subdir)
+
+ui_PYTHON = \
 	__init__.py	\
 	diagramview.py
 
-EXTRA_DIST = $(python_files)
-
 CLEANFILES = *.pyc *.pyo
+

@@ -377,7 +377,7 @@ out("# MetaModel definition.\n")
 out("# This file is generated, do not edit.\n")
 out("\n")
 out("import types\n")
-out("from Element import *\n")
+out("from element import *\n")
 out("\n# Enumeration types:\n")
 
 cnt = 0

@@ -41,11 +41,12 @@ class Sequence:
 
     def append(self, obj):
 	if isinstance (obj, self.requested_type):
-	    if self.list.count(obj) == 0:
-		self.list.append(obj)
+	    if self.list.count (obj) == 0:
+		self.list.append (obj)
+		self.list.sort ()
 	else:
 	    raise ValueError, 'Sequence._add(obj): Object is not of type ' + \
-	    			str(self.requested_type)
+	    			str (self.requested_type)
 
     def remove(self, key):
         self.__delitem__(key)

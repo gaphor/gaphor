@@ -40,6 +40,8 @@ AM_CHECK_PYTHON_HEADERS
 
 AM_CHECK_PYMOD(types, , , AC_MSG_ERROR(This Python module is required))
 AM_CHECK_PYMOD(sys, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(libxml2, , , AC_MSG_ERROR(This Python module is required))
+dnl xmllib is still used by utils/genUML.py
 AM_CHECK_PYMOD(xmllib, , , AC_MSG_ERROR(This Python module is required))
 AM_CHECK_PYMOD(copy, , , AC_MSG_ERROR(This Python module is required))
 AM_CHECK_PYMOD(gobject, , , AC_MSG_ERROR(This Python module is required))
@@ -93,6 +95,7 @@ AC_CONFIG_FILES(
 	gaphor/diagram/Makefile
 	gaphor/tree/Makefile
 	gaphor/ui/Makefile
+	gaphor/misc/Makefile
 	tests/Makefile
 	doc/Makefile)
 AC_OUTPUT

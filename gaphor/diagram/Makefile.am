@@ -4,7 +4,9 @@ INCLUDES = $(DIACANVAS2_CFLAGS) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS)
 
 PYGTK_DEFSDIR = @PYGTK_DEFSDIR@
 
-python_files = \
+diagramdir = $(pythondir)/$(subdir)
+
+diagram_PYTHON = \
 	__init__.py	\
 	diagram.py	\
 	itemstorage.py
@@ -43,8 +45,8 @@ all-local:
 	test -f $(srcdir)/diagramitemsmodule.so || $(LN_S) $(srcdir)/.libs/diagramitemsmodule.so $(srcdir)
 	(cd .. && $(PYTHON) -c "import diagram.diagramitems")
 
-diagramitemsdir = $(pythondir)
-diagramitemsexecdir = $(pyexecdir)
+diagramitemsdir = $(diagramdir)
+diagramitemsexecdir = $(pyexecdir)/$(subdir)
 
 diagramitemsexec_LTLIBRARIES = diagramitemsmodule.la
 diagramitemsmodule_la_LDFLAGS = -module -avoid-version -export-symbols-regex initdiagramitems
@@ -53,7 +55,7 @@ diagramitemsmodule_la_SOURCES = $(sources) diagramitemsmodule.c
 nodist_diagramitemsmodule_la_SOURCES = diagramitems.c
 
 CLEANFILES = diagramitems.c *.pyc *.pyo
-EXTRA_DIST = $(headers) diagramitems.defs diagramitems.override $(python_files)
+EXTRA_DIST = $(headers) diagramitems.defs diagramitems.override
 
 diagramitems.c: diagramitems.defs diagramitems.override
 

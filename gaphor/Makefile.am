@@ -1,4 +1,9 @@
 
-SUBDIRS=UML diagram tree ui
+SUBDIRS = UML diagram tree ui misc
 
-EXTRA_DIST=test-diagram.py test-load.py gaphor.py
+gaphordir = $(pythondir)/$(subdir)
+
+gaphor_PYTHON = gaphor.py
+
+EXTRA_DIST = test-diagram.py test-load.py
+

@@ -4,7 +4,7 @@ This module contains some functions for managing UML models. This
 includes saving, loading and flushing models. In the future things like
 consistency checking should also be included.'''
 
-import ModelElements
+import modelelements
 import diagram
 import libxml2 as xml
 from misc import Singleton
@@ -61,14 +61,14 @@ class ElementFactory(Singleton):
 	rootnode = doc.newChild (ns, 'Gaphor', None)
 	rootnode.setProp ('version', '1.0')
 	for e in self.__elements.values():
-	    print 'Saving object', e
+	    #print 'Saving object', e
 	    e.save(rootnode, ns)
 
 	if not filename:
 	    filename = '-'
 
 	#doc.saveFormatFile (filename, 2)
-	doc.saveFile (filename)
+	doc.saveFormatFileEnc (filename, 'UTF-8', 1)
 	doc.freeDoc ()
 
     def load (self, filename):
@@ -78,7 +78,7 @@ class ElementFactory(Singleton):
 	doc = xml.parseFile (filename)
 	#doc.debugDumpDocument (sys.stdout)
 	# Now iterate over the tree and create every element in the
-	# ModelElements.elements table.
+	# self.elements table.
 	rootnode = doc.children
 	if rootnode.name != 'Gaphor':
 	    raise ValueError, 'File %s is not a Gaphor file.' % filename
@@ -88,33 +88,36 @@ class ElementFactory(Singleton):
 	    #if node.name != 'Element' or node.type != 'text':
 	    #    raise ValueError, 'No Element tag (%s).' % node.name
 	     
+	    #print node.__dict__
 	    if node.name == 'Element':
 		type = node.prop('type')
-		print 'New node: ' + type
+		#print 'New node: ' + type
 		try:
 		    if type == 'Diagram':
 			cls = getattr (diagram, type)
 		    else:
-			cls = getattr (ModelElements, type)
+			cls = getattr (modelelements, type)
 		except:
 		    raise ValueError, 'Could not find class %s.' % type
 		# Create the Model element
-		id = int (node.prop('id'))
-		print 'node id =', id
-		cls(id)
+		id = int (node.prop('id')[1:])
+		#print 'node id =', id
+		old_index = self.__index
+		self.__index = id
+		self.create (cls)
 
 		if old_index > id:
 		    self.__index = id
 
 		node = node.next
-		if node: print 'Next node:', node.name
+		#if node: print 'Next node:', node.name
 	    # Remove text nodes (libxml2 seems to like adding text nodes)
 	    elif node.name == 'text':
 		next = node.next
 		node.unlinkNode ()
 		node.freeNode ()
 		node = next
-		if node: print 'Next node:', node.name
+		#if node: print 'Next node:', node.name
 	    else:
 		raise ValueError, 'No Element tag (%s).' % node.name
 
@@ -125,14 +128,14 @@ class ElementFactory(Singleton):
 	while node:
 	    assert node.name == 'Element'
 
-	    print 'ID:' + node.prop('id')
-	    id = int (node.prop('id'))
-	    element = ModelElements.lookup (id)
+	    #print 'ID:' + node.prop('id')
+	    id = int (node.prop('id')[1:])
+	    element = self.lookup (id)
 	    print element
 	    if not element:
 		raise ValueError, 'Element with id %d was created but can not be found anymore.' % id
 
-	    element.load (node)
+	    element.load (self, node)
 	    
 	    node = node.next
 
@@ -142,8 +145,8 @@ class ElementFactory(Singleton):
 	print "Now calling postload() for every model element"
 	node = rootnode.children
 	while node:
-	    id = int (node.prop('id'))
-	    element = ModelElements.lookup (id)
+	    id = int (node.prop('id')[1:])
+	    element = self.lookup (id)
 	    print element
 	    assert element != None
 	    element.postload (node)

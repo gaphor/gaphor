@@ -19,4 +19,7 @@ More specific:
   moved from the DiagramItems to the data elements.
 - A more pattern driven design (using Factories, Singletons etc.)
 - Notifiers that should tell the tree model to update.
-- 
+- Commands for
+	. adding Model elements to the diagram
+	. Undo/Redo
+	. Load, save, quit

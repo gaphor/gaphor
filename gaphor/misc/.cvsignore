@@ -2,4 +2,10 @@ Makefile
 Makefile.in
 *.pyc
 *.pyo
-modelelements.py
+*.o
+*.lo
+*.so
+*.la
+.libs
+.deps
+

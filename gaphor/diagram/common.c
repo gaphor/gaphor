@@ -177,15 +177,28 @@ create_uml_object (const gchar *name)
 	PyObject *obj;
 	PyObject *d;
 	PyObject *t;
+	PyObject *factory;
 
 	g_assert (UML_module != NULL);
 
 	d = PyModule_GetDict(UML_module);
+	t = PyDict_GetItemString(d, "ElementFactory");
+	g_assert (t != NULL && t != Py_None);
+	factory = PyObject_CallObject (t, NULL);
+
 	t = PyDict_GetItemString(d, (char*) name);
 	g_assert (t != NULL && t != Py_None);
 
-	obj = PyObject_CallObject (t, NULL);
-	g_assert (obj != NULL && obj != Py_None);
+	//obj = PyObject_CallObject (t, NULL);
+	obj = PyObject_CallMethod (factory, "create", "O", t);
+	Py_DECREF (factory);
+	if (obj)
+		return obj;
+	else {
+		PyErr_Print();
+		PyErr_Clear();
+		g_assert_not_reached();
+	}
 
 	return obj;
 }
