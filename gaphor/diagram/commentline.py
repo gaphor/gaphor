@@ -17,7 +17,7 @@ class CommentLineItem(DiagramLine):
 
     def __init__(self, id=None):
         #diacanvas.CanvasLine.__init__(self)
-        DiagramLine.__init__(self)
+        DiagramLine.__init__(self, id)
         self.set_property('dash', (7.0, 5.0))
         self.__notify_id = None
 

@@ -105,6 +105,7 @@ def save(filename=None, factory=None):
 
     for e in factory.values():
         clazz = e.__class__.__name__
+        assert e.id
         buffer.write('<%s id="%s">' % (clazz, str(e.id)))
         e.save(save_element)
         buffer.write('</%s>' % clazz)
