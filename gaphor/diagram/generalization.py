@@ -26,10 +26,10 @@ class GeneralizationItem(relationship.RelationshipItem):
                                        ('general', None),
                                        ('specific', 'generalization'))
 
-	if self.subject and \
-	   self.subject.general is head_subject and \
-	   self.subject.specific is tail_subject:
-	    return self.subject
+        if self.subject and \
+           self.subject.general is head_subject and \
+           self.subject.specific is tail_subject:
+            return self.subject
 
         for gen in tail_subject.generalization:
             if gen.general is head_subject:
@@ -55,10 +55,10 @@ class GeneralizationItem(relationship.RelationshipItem):
             if not c1 and not c2:
                 return True
             if self.handles[0] is handle:
-		h = self.handles[-1].connected_to
+                h = self.handles[-1].connected_to
                 return (h and h.subject is not connecting_to.subject)
             elif self.handles[-1] is handle:
-		h = self.handles[0].connected_to
+                h = self.handles[0].connected_to
                 return (h and h.subject is not connecting_to.subject)
             assert 0, 'Should never be reached...'
         except AttributeError, e:
@@ -85,6 +85,6 @@ class GeneralizationItem(relationship.RelationshipItem):
         """See RelationshipItem.confirm_disconnect_handle().
         """
         #print 'confirm_disconnect_handle', handle
-	self.set_subject(None)
+        self.set_subject(None)
 
 initialize_item(GeneralizationItem, UML.Generalization)

@@ -158,7 +158,7 @@ class collection(object):
                     index[c]=index[c]+1 
                 if index[c]==nitems-1:
                     c=c-1
-	return False
+        return False
 
     def exist(self,f):
         if not self.items or not inspect.getargspec(f)[0]:
@@ -188,7 +188,7 @@ class collection(object):
                     index[c]=index[c]+1 
                 if index[c]==nitems-1:
                     c=c-1
-	return False
+        return False
 
 
     def moveUp(self, value):

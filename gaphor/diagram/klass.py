@@ -50,6 +50,8 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         'separator',
         'ShowAttributes',
         'ShowOperations',
+        'separator',
+        'CreateLinks',
         '<ClassPopupSlot>'
     )
 

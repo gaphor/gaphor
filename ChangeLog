@@ -4,6 +4,14 @@
 	* data/plugins/xmiexport/exportmodel.py: Added timestamp, use
 	XMLWriter.
 	* FAQ: new file.
+	* gaphor/ui/diagramview.py: Focus item that is DND'd to the canvas.
+	* gaphor/*/*: replaced tabs by spaces.
+	* gaphor/diagram/placementactions.py: renamed actions.py to
+	placementactions.py to avoid ambiguity with action.py (used for
+	state diagrams)
+	* gaphor/ui/diagramtab.py: moved DND code from diagramview.py to
+	DiagramTab. This will make it easy to run actions when an item is
+	DND'd.
 
 2004-11-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

@@ -192,10 +192,10 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         y = p1[1] <= p2[1] and h or 0
         y = (p1[1] + p2[1]) / 2.0 - y
 
-	self._label.set_pos((x, y))
+        self._label.set_pos((x, y))
         #log.debug('label pos = (%d, %d)' % (x, y))
-	#return x, y, max(x + 10, x + w), max(y + 10, y + h)
-	return x, y, x + w, y + h
+        #return x, y, max(x + 10, x + w), max(y + 10, y + h)
+        return x, y, x + w, y + h
 
     def update_dir(self, p1, p2):
         """Create a small arrow near the middle of the association line and
@@ -232,7 +232,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         self._dir.line((r(-6, 0), r(6, -5), r(6, 5)))
         self._dir.set_cyclic(True)
 
-	return x, y, x + 12, y + 10
+        return x, y, x + 12, y + 10
 
     def on_update (self, affine):
         """Update the shapes and sub-items of the association."""

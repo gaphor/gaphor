@@ -80,14 +80,14 @@ class ImplementationItem(relationship.RelationshipItem):
     def confirm_disconnect_handle (self, handle, was_connected_to):
         """See RelationshipItem.confirm_disconnect_handle().
         """
-	self.set_subject(None)
+        self.set_subject(None)
 
 
     def on_update(self, affine):
         # change look into solid line when connected to folded interface
-	conn_to = self.handles[0].connected_to
+        conn_to = self.handles[0].connected_to
         if isinstance(conn_to, gaphor.diagram.interface.InterfaceItem) \
-	   and conn_to.is_folded():
+           and conn_to.is_folded():
             self.set(**self.folded_interface_look)
         else:
             self.set(**self.default_look)

@@ -562,7 +562,7 @@ class UndoStackAction(Action):
     id = 'UndoStack'
     
     def init(self, window):
-	pass
+        pass
 
 register_action(UndoStackAction)
 
@@ -576,15 +576,15 @@ class UndoAction(Action):
     # TODO: check if the diagram can undo.
 
     def init(self, window):
-	self._window = window
+        self._window = window
 
     def update(self):
-	self.sensitive = undomanager.get_undo_manager().can_undo()
+        self.sensitive = undomanager.get_undo_manager().can_undo()
 
     def execute(self):
-	undomanager.get_undo_manager().undo_transaction()
-	#self.update()
-	self._window.execute_action('UndoStack')
+        undomanager.get_undo_manager().undo_transaction()
+        #self.update()
+        self._window.execute_action('UndoStack')
 
 register_action(UndoAction, 'UndoStack')
 
@@ -596,16 +596,16 @@ class RedoAction(Action):
     accel = 'C-r'
 
     def init(self, window):
-	self._window = window
+        self._window = window
 
     def update(self):
-	self.sensitive = undomanager.get_undo_manager().can_redo()
+        self.sensitive = undomanager.get_undo_manager().can_redo()
 
     def execute(self):
         print 'RedoAction'
-	undomanager.get_undo_manager().redo_transaction()
-	#self.update()
-	self._window.execute_action('UndoStack')
+        undomanager.get_undo_manager().redo_transaction()
+        #self.update()
+        self._window.execute_action('UndoStack')
 
 register_action(RedoAction, 'UndoStack')
 

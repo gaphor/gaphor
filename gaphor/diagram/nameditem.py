@@ -60,9 +60,9 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
         return self._name.to_pango_layout(True).get_pixel_size()
 
     def update_name(self, x, y, width, height):
-	self._name.set_pos((x, y))
-	self._name.set_max_width(width)
-	self._name.set_max_height(height)
+        self._name.set_pos((x, y))
+        self._name.set_max_width(width)
+        self._name.set_max_height(height)
 
     def on_subject_notify(self, pspec, notifiers=()):
         """See DiagramItem.on_subject_notify().

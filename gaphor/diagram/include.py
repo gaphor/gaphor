@@ -37,7 +37,7 @@ class IncludeItem(RelationshipItem):
         self.set(dash=(7.0, 5.0), has_head=1)
 
     def save(self, save_func):
-	RelationshipItem.save(self, save_func)
+        RelationshipItem.save(self, save_func)
 
     def load(self, name, value):
         RelationshipItem.load(self, name, value)
@@ -50,9 +50,9 @@ class IncludeItem(RelationshipItem):
         y = p1[1] <= p2[1] and h or 0
         y = (p1[1] + p2[1]) / 2.0 - y
 
-	self._stereotype.set_pos((x, y))
+        self._stereotype.set_pos((x, y))
 
-	return x, y, w, h
+        return x, y, w, h
 
     def on_update (self, affine):
         RelationshipItem.on_update(self, affine)
@@ -66,9 +66,9 @@ class IncludeItem(RelationshipItem):
                          max(b1[2] + b1[0], b2[2]), max(b1[3] + b1[1], b2[3])))
 
     def on_shape_iter(self):
-	for s in RelationshipItem.on_shape_iter(self):
-	    yield s
-	yield self._stereotype
+        for s in RelationshipItem.on_shape_iter(self):
+            yield s
+        yield self._stereotype
 
     # Gaphor Connection Protocol
 

@@ -6,7 +6,7 @@
 import gtk
 
 # Import this module to ensure actions refered to in the toolbox are loaded
-import gaphor.diagram.actions
+import gaphor.diagram.placementactions
 
 def on_wrapbox_decorator_toggled(button, content):
     """This function is called when the Wrapbox decorator is clicked. It

@@ -47,29 +47,29 @@ _uml_to_stock_id_map = { }
 
 def get_stock_id(element):
     if issubclass(element, UML.Element):
-	try:
-	    return _uml_to_stock_id_map[element]
-	except KeyError:
-	    log.warning ('Stock id for %s not found' % element)
-	    return STOCK_POINTER
+        try:
+            return _uml_to_stock_id_map[element]
+        except KeyError:
+            log.warning ('Stock id for %s not found' % element)
+            return STOCK_POINTER
 
 def add_stock_icon(id, icon_dir, icon_files, uml_class=None):
     global _uml_to_stock_id_map
     global _icon_factory
     set = gtk.IconSet()
     for icon in icon_files:
-	source = gtk.IconSource()
-	if icon.find('16') != -1:
-	    source.set_size(gtk.ICON_SIZE_MENU)
-	elif icon.find('24') != -1:
-	    source.set_size(gtk.ICON_SIZE_SMALL_TOOLBAR)
-	elif icon.find('48') != -1:
-	    source.set_size(gtk.ICON_SIZE_LARGE_TOOLBAR)
-	source.set_filename(os.path.join(icon_dir, icon))
-	set.add_source(source)
+        source = gtk.IconSource()
+        if icon.find('16') != -1:
+            source.set_size(gtk.ICON_SIZE_MENU)
+        elif icon.find('24') != -1:
+            source.set_size(gtk.ICON_SIZE_SMALL_TOOLBAR)
+        elif icon.find('48') != -1:
+            source.set_size(gtk.ICON_SIZE_LARGE_TOOLBAR)
+        source.set_filename(os.path.join(icon_dir, icon))
+        set.add_source(source)
     _icon_factory.add(id, set)
     if uml_class:
-	_uml_to_stock_id_map[uml_class] = id
+        _uml_to_stock_id_map[uml_class] = id
 
 
 class StockIconLoader(handler.ContentHandler):
@@ -78,7 +78,7 @@ class StockIconLoader(handler.ContentHandler):
 
     def __init__(self, icon_dir):
         handler.ContentHandler.__init__(self)
-	self.icon_dir = icon_dir
+        self.icon_dir = icon_dir
 
     def endDTD(self):
         pass
@@ -86,42 +86,42 @@ class StockIconLoader(handler.ContentHandler):
     def startDocument(self):
         """Start of document: all our attributes are initialized.
         """
-	self.id = ''
+        self.id = ''
         self.files = []
         self.data = ''
-	self.element = None
+        self.element = None
 
     def endDocument(self):
-	pass
+        pass
 
     def startElement(self, name, attrs):
         self.data = ''
 
-	# A new icon is found
+        # A new icon is found
         if name == 'icon':
             self.id = attrs['id']
-	    self.files = []
-	    self.element = None
+            self.files = []
+            self.element = None
 
-	elif name in ('element', 'file', 'stock-icons'):
-	    pass
+        elif name in ('element', 'file', 'stock-icons'):
+            pass
         else:
             raise ParserException, 'Invalid XML: tag <%s> not known' % name
 
     def endElement(self, name):
         if name == 'icon':
             assert self.id
-	    assert self.files
-	    add_stock_icon(self.id, self.icon_dir, self.files, self.element)
-	elif name == 'element':
-	    try:
-		self.element = getattr(UML, self.data)
-	    except:
-		raise ParserException, 'No element found with name %s' % self.data
-	elif name == 'file':
-	    self.files.append(self.data)
-	elif name == 'stock-icons':
-	    pass
+            assert self.files
+            add_stock_icon(self.id, self.icon_dir, self.files, self.element)
+        elif name == 'element':
+            try:
+                self.element = getattr(UML, self.data)
+            except:
+                raise ParserException, 'No element found with name %s' % self.data
+        elif name == 'file':
+            self.files.append(self.data)
+        elif name == 'stock-icons':
+            pass
 
     def startElementNS(self, name, qname, attrs):
         if not name[0] or name[0] == XMLNS:
@@ -136,7 +136,7 @@ class StockIconLoader(handler.ContentHandler):
 
     def characters(self, content):
         """Read characters."""
-	self.data = self.data + content
+        self.data = self.data + content
 
 def load_stock_icons():
     """

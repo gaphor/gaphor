@@ -24,18 +24,18 @@ from misc.resource import Resource
 # If the resource doesn't already exist, it is created, otherwise the existing
 # resource is returned.
 resource = Resource(initial_resources = {
-			'Name': 'gaphor',
-			'Version': version.VERSION,
-			'DataDir': version.DATA_DIR,
-			'UserDataDir': version.USER_DATA_DIR
-		    })
+                        'Name': 'gaphor',
+                        'Version': version.VERSION,
+                        'DataDir': version.DATA_DIR,
+                        'UserDataDir': version.USER_DATA_DIR
+                    })
 
 class GaphorError(Exception):
     """
     Gaphor specific exception class
     """
     def __init__(self, args=None):
-	    Exception.__init__(self)
+            Exception.__init__(self)
             self.args = args
 
 def main(gaphor_file=None):
@@ -62,10 +62,10 @@ def main(gaphor_file=None):
     #gtk.threads_enter()
     log.debug('Loading model %s' % gaphor_file)
     if gaphor_file:
-	main_window.set_filename(gaphor_file)
-	main_window.execute_action('FileRevert')
+        main_window.set_filename(gaphor_file)
+        main_window.execute_action('FileRevert')
     else:
-	main_window.execute_action('FileNew')
+        main_window.execute_action('FileNew')
     gtk.main()
     #gtk.threads_leave()
     log.info('Bye!')

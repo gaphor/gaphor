@@ -43,17 +43,17 @@ class DependencyItem(RelationshipItem):
     FONT = 'sans 10'
 
     dependency_popup_menu = (
-	'separator',
-	'Dependency type', (
+        'separator',
+        'Dependency type', (
             'AutoDependency',
             'separator',
-	    'DependencyTypeDependency',
-	    'DependencyTypeUsage',
-	    'DependencyTypeRealization')
+            'DependencyTypeDependency',
+            'DependencyTypeUsage',
+            'DependencyTypeRealization')
     )
 
     def __init__(self, id=None):
-	self.dependency_type = UML.Dependency
+        self.dependency_type = UML.Dependency
         self.auto_dependency = True
 
         RelationshipItem.__init__(self, id)
@@ -68,17 +68,17 @@ class DependencyItem(RelationshipItem):
         self._set_line_style()
 
     def save(self, save_func):
-	RelationshipItem.save(self, save_func)
-	save_func('dependency_type', self.dependency_type.__name__)
+        RelationshipItem.save(self, save_func)
+        save_func('dependency_type', self.dependency_type.__name__)
         save_func('auto_dependency', self.auto_dependency)
 
     def load(self, name, value):
-	if name == 'dependency_type':
-	    self.set_dependency_type(getattr(UML, value))
+        if name == 'dependency_type':
+            self.set_dependency_type(getattr(UML, value))
         elif name == 'auto_dependency':
             self.auto_dependency = eval(value)
-	else:
-	    RelationshipItem.load(self, name, value)
+        else:
+            RelationshipItem.load(self, name, value)
 
     def get_popup_menu(self):
         if self.subject:
@@ -87,10 +87,10 @@ class DependencyItem(RelationshipItem):
             return self.popup_menu + self.dependency_popup_menu
 
     def get_dependency_type(self):
-	return self.dependency_type
+        return self.dependency_type
 
     def set_dependency_type(self, dependency_type):
-	self.dependency_type = dependency_type
+        self.dependency_type = dependency_type
         self._set_line_style()
 
     def _set_line_style(self, c1=None):
@@ -123,9 +123,9 @@ class DependencyItem(RelationshipItem):
         y = p1[1] <= p2[1] and h or 0
         y = (p1[1] + p2[1]) / 2.0 - y
 
-	self._stereotype.set_pos((x, y))
+        self._stereotype.set_pos((x, y))
 
-	return x, y, x + w, y + h
+        return x, y, x + w, y + h
 
     def on_update (self, affine):
         self._set_line_style();
@@ -140,9 +140,9 @@ class DependencyItem(RelationshipItem):
                          max(b1[2] + b1[0], b2[2]), max(b1[3] + b1[1], b2[3])))
 
     def on_shape_iter(self):
-	for s in RelationshipItem.on_shape_iter(self):
-	    yield s
-	yield self._stereotype
+        for s in RelationshipItem.on_shape_iter(self):
+            yield s
+        yield self._stereotype
 
     # Gaphor Connection Protocol
 

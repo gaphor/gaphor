@@ -162,7 +162,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     def update_status_queue(_n=[0]):
         n = _n[0] = _n[0] + 1
         if n % 10 == 0:
-	    return (n * 100) / size
+            return (n * 100) / size
 
     #log.info('0%')
 

@@ -180,13 +180,17 @@ class Engineer(object):
             # Now create the diagram item:
             association = self.diagram.create(diagram.AssociationItem)
 
-            # First connect one handle:j
+            # First connect one handle:
             head_type_item.connect_handle(association.handles[0])
-
+            
+            # Now the subject
             association.subject = relation
             association.set_property('head-subject', head_end)
             association.set_property('tail-subject', tail_end)
 
+            # Connecting the other handle last will avoid a lookup for
+            # an Association. in stead the association applied as subject
+            # is used.
             tail_type_item.connect_handle(association.handles[-1])
 
         else:

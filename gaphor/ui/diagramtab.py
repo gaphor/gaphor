@@ -5,9 +5,11 @@ import gtk
 from diagramview import DiagramView
 from abstractwindow import AbstractWindow
 from gaphor.diagram.itemtool import ItemTool
+from gaphor.diagram import get_diagram_item
+from gaphor.undomanager import get_undo_manager
 
 import diagramactions
-import gaphor.diagram.actions
+import gaphor.diagram.placementactions
 
 class DiagramTab(object):
     
@@ -69,11 +71,12 @@ class DiagramTab(object):
         view.connect('focus-item', self.__on_view_focus_item)
         view.connect('select-item', self.__on_view_select_item)
         view.connect('unselect-item', self.__on_view_select_item)
-	view.connect_after('key-press-event', self.__on_key_press_event)
+        view.connect_after('key-press-event', self.__on_key_press_event)
+        view.connect('drag_data_received', self.__on_drag_data_received)
         self.view = view
 
-	item_tool = ItemTool(self.owning_window.get_action_pool())
-	view.get_default_tool().set_item_tool(item_tool)
+        item_tool = ItemTool(self.owning_window.get_action_pool())
+        view.get_default_tool().set_item_tool(item_tool)
 
         table.show_all()
 
@@ -87,7 +90,7 @@ class DiagramTab(object):
         self.owning_window.remove_tab(self)
         self.set_diagram(None)
         # We need this to get the view deleted properly:
-        del self.view.diagram
+        #del self.view.diagram
         del self.view
         del self.diagram
 
@@ -96,9 +99,9 @@ class DiagramTab(object):
         GTK's accelerators) since otherwise this key will confuse the text
         edit stuff.
         """
-	if view.is_focus():
-	    if event.keyval == 0xFFFF and event.state == 0: # Delete
-		self.owning_window.execute_action('EditDelete')
+        if view.is_focus():
+            if event.keyval == 0xFFFF and event.state == 0: # Delete
+                self.owning_window.execute_action('EditDelete')
 
 
     def __on_view_event_after(self, view, event):
@@ -138,4 +141,34 @@ class DiagramTab(object):
             print 'Trying to set name to', element.name
             self.owning_window.set_tab_label(self, element.name)
             #self.get_window().set_title(self.diagram.name or '<None>')
+
+    def __on_drag_data_received(self, view, context, x, y, data, info, time):
+        #print 'drag_data_received'
+        if data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
+            #print 'drag_data_received:', data.data, info
+            elemfact = gaphor.resource('ElementFactory')
+            element = elemfact.lookup(data.data)
+            assert element
+            item_class = get_diagram_item(type(element))
+            if item_class:
+                get_undo_manager().begin_transaction()
+                item = self.diagram.create(item_class)
+                assert item
+                wx, wy = view.window_to_world(x + view.get_hadjustment().value,
+                                              y + view.get_vadjustment().value)
+
+                ix, iy = item.affine_point_w2i(max(0, wx), max(0, wy))
+                item.move(ix, iy)
+                item.set_property ('subject', element)
+                get_undo_manager().commit_transaction()
+                view.unselect_all()
+                view.focus(view.find_view_item(item))
+
+                self.owning_window.execute_action('ItemDiagramDrop')
+
+            else:
+                log.warning ('No graphical representation for UML element %s' % type(element).__name__)
+            context.finish(gtk.TRUE, gtk.FALSE, time)
+        else:
+            context.finish(gtk.FALSE, gtk.FALSE, time)
 

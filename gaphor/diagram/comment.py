@@ -43,7 +43,7 @@ class CommentItem(ElementItem, diacanvas.CanvasEditable):
         self._body.set_text(self.subject.body or '')
 
     def edit(self):
-	self.start_editing(self._body)
+        self.start_editing(self._body)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'body':
@@ -62,13 +62,13 @@ class CommentItem(ElementItem, diacanvas.CanvasEditable):
         """See DiagramItem.on_subject_notify()."""
         ElementItem.on_subject_notify(self, pspec, ('body',))
 
-	if self.subject:
-	    self.on_subject_notify__body(self.subject, None)
+        if self.subject:
+            self.on_subject_notify__body(self.subject, None)
 
     def on_subject_notify__body(self, subject, pspec):
         #print 'on_subject_notify__body: %s' % self.subject.body
         self._body.set_text(self.subject.body or '')
-	self.request_update()
+        self.request_update()
 
     # DiaCanvasItem callbacks:
 

@@ -25,7 +25,7 @@ class DiagramCanvas(diacanvas.Canvas):
     def __init__(self, diagram):
         self.__gobject_init__()
         self._diagram = diagram
-	self.set_undo_manager(get_undo_manager())
+        self.set_undo_manager(get_undo_manager())
 
     diagram = property(lambda d: d._diagram)
 
@@ -40,7 +40,7 @@ class DiagramCanvas(diacanvas.Canvas):
     def postload(self):
         self.set_property ("allow_undo", False)
         self.update_now()
-	self.resolve_now()
+        self.resolve_now()
         self.update_now()
 
         # setting allow-undo to 1 here will cause update info from later
@@ -50,21 +50,21 @@ class DiagramCanvas(diacanvas.Canvas):
         self.set_property ("allow_undo", True)
 
     def _select(self, item_list, expression=None):
-	l = []
-	if expression is None:
-	    expression = lambda e: 1
-	CanvasGroupable = diacanvas.CanvasGroupable
-	for item in item_list:
-	    if expression(item):
-		l.append(item)
-	    if isinstance(item, CanvasGroupable):
-		l.extend(self._select(item.groupable_iter(), expression))
-	return l
+        l = []
+        if expression is None:
+            expression = lambda e: 1
+        CanvasGroupable = diacanvas.CanvasGroupable
+        for item in item_list:
+            if expression(item):
+                l.append(item)
+            if isinstance(item, CanvasGroupable):
+                l.extend(self._select(item.groupable_iter(), expression))
+        return l
 
     def select(self, expression=None):
-	"""Return a list of all canvas items that match expression.
-	"""
-	return self._select(self.root.children, expression)
+        """Return a list of all canvas items that match expression.
+        """
+        return self._select(self.root.children, expression)
 
 gobject.type_register(DiagramCanvas)
 
@@ -85,12 +85,12 @@ class Diagram(Namespace, PackageableElement):
 
     def postload(self):
         super(Diagram, self).postload()
-	self.canvas.postload()
+        self.canvas.postload()
 
     def create(self, type):
         """Create a new canvas item on the canvas. It is created with
         a unique ID and it is attached to the diagram's root item.
-	"""
+        """
         assert issubclass(type, diacanvas.CanvasItem)
         obj = type(uniqueid.generate_id())
         #obj.set_property('parent', self.canvas.root)
@@ -98,19 +98,19 @@ class Diagram(Namespace, PackageableElement):
         return obj
 
     def substitute_item(self, item, new_item_type):
-	"""Create a new item and replace item with the new item.
-	"""
+        """Create a new item and replace item with the new item.
+        """
 
     def unlink(self):
-	self.canvas.set_property('allow_undo', False)
-	# Make sure all canvas items are unlinked
-	for item in self.canvas.select():
-	    try:
-		item.unlink()
-	    except:
-		pass
+        self.canvas.set_property('allow_undo', False)
+        # Make sure all canvas items are unlinked
+        for item in self.canvas.select():
+            try:
+                item.unlink()
+            except:
+                pass
 
-	#self.canvas.clear_undo()
-	#self.canvas.clear_redo()
+        #self.canvas.clear_undo()
+        #self.canvas.clear_redo()
 
-	Namespace.unlink(self)
+        Namespace.unlink(self)

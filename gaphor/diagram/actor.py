@@ -30,15 +30,15 @@ class ActorItem(ClassifierItem):
 
     DEFAULT_SIZE= {
         'height': (HEAD + NECK + BODY + ARM),
-	'width': (ARM * 2),
-	'min_height': (HEAD + NECK + BODY + ARM),
-	'min_width': (ARM * 2)
+        'width': (ARM * 2),
+        'min_height': (HEAD + NECK + BODY + ARM),
+        'min_width': (ARM * 2)
     }
 
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
 
-	self.drawing_style = self.DRAW_ICON
+        self.drawing_style = self.DRAW_ICON
 
         self.set(**self.DEFAULT_SIZE)
 
@@ -63,27 +63,27 @@ class ActorItem(ClassifierItem):
         #print 'Actor: Trying to set property', pspec.name, value
         if pspec.name == 'name-width':
             #self._name.set_property('width', value)
-	    pass
+            pass
         else:
             ClassifierItem.do_set_property (self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'name-width':
             #w, h = self.get_name_size()
-	    return 0.0
+            return 0.0
         else:
             return ClassifierItem.do_get_property (self, pspec)
 
     def set_drawing_style(self, style):
-	ClassifierItem.set_drawing_style(self, style)
-	if self.drawing_style == self.DRAW_ICON:
-	    self.set(**self.DEFAULT_SIZE)
+        ClassifierItem.set_drawing_style(self, style)
+        if self.drawing_style == self.DRAW_ICON:
+            self.set(**self.DEFAULT_SIZE)
 
     # DiaCanvasItem callbacks:
 
     def update_icon(self, affine):
-	"""Actors use Icon style, so update it.
-	"""
+        """Actors use Icon style, so update it.
+        """
         # Center the text (from ClassifierItem):
         w, h = self.get_name_size()
         if w < self.width:
@@ -118,23 +118,23 @@ class ActorItem(ClassifierItem):
         #self.set_bounds ((ulx, uly-1, lrx+1, lry + h))
 
     def on_update(self, affine):
-	ClassifierItem.on_update(self, affine)
+        ClassifierItem.on_update(self, affine)
 
         # update the bounding box:
-	if self.drawing_style == self.DRAW_ICON:
-	    w, h = self.get_name_size()
-	    ulx, uly, lrx, lry = self.bounds
-	    if w > self.width:
-		ulx = (self.width / 2) - (w / 2)
-		lrx = (self.width / 2) + (w / 2)
-	    self.set_bounds ((ulx, uly-1, lrx+1, lry + h))
+        if self.drawing_style == self.DRAW_ICON:
+            w, h = self.get_name_size()
+            ulx, uly, lrx, lry = self.bounds
+            if w > self.width:
+                ulx = (self.width / 2) - (w / 2)
+                lrx = (self.width / 2) + (w / 2)
+            self.set_bounds ((ulx, uly-1, lrx+1, lry + h))
 
     def on_shape_iter(self):
-	if self.drawing_style == self.DRAW_ICON:
-	    yield self._head
-	    yield self._body
-	    yield self._arms
-	    yield self._legs
+        if self.drawing_style == self.DRAW_ICON:
+            yield self._head
+            yield self._body
+            yield self._arms
+            yield self._legs
         for s in ClassifierItem.on_shape_iter(self):
             yield s
 

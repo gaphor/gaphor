@@ -23,7 +23,7 @@ class RelationshipItem(DiagramLine):
         DiagramLine.save(self, save_func)
 
     def load (self, name, value):
-	DiagramLine.load(self, name, value)
+        DiagramLine.load(self, name, value)
 
     def postload(self):
         DiagramLine.postload(self)
@@ -37,10 +37,10 @@ class RelationshipItem(DiagramLine):
         edge_tail_name = tail_relation[0]
         node_tail_name = tail_relation[1]
 
-	if self.subject and \
-	   getattr(self.subject, edge_head_name) is head_subject and \
-	   getattr(self.subject, edge_tail_name) is tail_subject:
-	    return self.subject
+        if self.subject and \
+           getattr(self.subject, edge_head_name) is head_subject and \
+           getattr(self.subject, edge_tail_name) is tail_subject:
+            return self.subject
 
         # This is the type of the relationship we're looking for
         required_type = getattr(type(tail_subject), node_tail_name).type

@@ -15,10 +15,10 @@ class RunAction(Action):
     stock_id = 'gtk-execute'
 
     def init(self, window):
-	self._window = window
+        self._window = window
 
     def execute(self):
-	self._window.run()
+        self._window.run()
 
 register_action(RunAction)
 
@@ -29,9 +29,9 @@ class ClearAction(Action):
     stock_id = 'gtk-clear'
 
     def init(self, window):
-	self._window = window
+        self._window = window
 
     def execute(self):
-	self._window.clear_results()
+        self._window.clear_results()
 
 register_action(ClearAction)

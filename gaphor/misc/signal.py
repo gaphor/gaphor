@@ -16,47 +16,47 @@ class Signal:
     """
 
     def __init__(self):
-	# Signals are stored in a list as [ (signal_func, (data)), <next sig> ]
+        # Signals are stored in a list as [ (signal_func, (data)), <next sig> ]
         self.__signals = [ ]
 
 #    def __signal_handler_destroyed(self, ref):
-#	print '__signal_handler_destroyed'
-#	self.__signals = filter (lambda o: o[0] != ref,
-#				 self.__signals)
-	
+#        print '__signal_handler_destroyed'
+#        self.__signals = filter (lambda o: o[0] != ref,
+#                                 self.__signals)
+        
     def connect (self, signal_handler, *data):
-	"""Connect to the object. You should provide a signal handler and a
-	bunch of parameters that should be passed to the signal handler.
-	"""
-	#print 'Signal.connect():', data
-	self.__signals.append ((signal_handler,) + data)
-	#self.__signals.append ((weakref.ref(signal_handler, self.__signal_handler_destroyed),) + data)
+        """Connect to the object. You should provide a signal handler and a
+        bunch of parameters that should be passed to the signal handler.
+        """
+        #print 'Signal.connect():', data
+        self.__signals.append ((signal_handler,) + data)
+        #self.__signals.append ((weakref.ref(signal_handler, self.__signal_handler_destroyed),) + data)
 
     def disconnect (self, signal_handler):
         """Disconnect the signal_handler (observer).
-	"""
-	self.__signals = filter (lambda o: o[0] != signal_handler,
-				 self.__signals)
+        """
+        self.__signals = filter (lambda o: o[0] != signal_handler,
+                                 self.__signals)
 
     def disconnect_by_data (self, *data):
-	#print 'Signal::disconnect_by_data', len (self.__signals)
-	self.__signals = filter (lambda o: o[1:] != data,
-				 self.__signals)
-	#print 'Signal::disconnect_by_data', len (self.__signals)
+        #print 'Signal::disconnect_by_data', len (self.__signals)
+        self.__signals = filter (lambda o: o[1:] != data,
+                                 self.__signals)
+        #print 'Signal::disconnect_by_data', len (self.__signals)
 
     def emit (self, *keys):
         """Emit the signal. A set of parameters can be defined that will be
-	passed to the signal handler. Those parameters will be set before
-	the parameters provided through the connect() method.
-	In case there are queued emisions, this function will queue the
-	signal emision too.
+        passed to the signal handler. Those parameters will be set before
+        the parameters provided through the connect() method.
+        In case there are queued emisions, this function will queue the
+        signal emision too.
 
-	Note that you should define how many parameters are provided by the
-	owner of the signal.
-	"""
-	#print 'Signal.emit():', keys
-	for signal in self.__signals:
-	    signal_handler = signal[0]
-	    data = keys + signal[1:]
-	    apply(signal_handler, data)
+        Note that you should define how many parameters are provided by the
+        owner of the signal.
+        """
+        #print 'Signal.emit():', keys
+        for signal in self.__signals:
+            signal_handler = signal[0]
+            data = keys + signal[1:]
+            apply(signal_handler, data)
 

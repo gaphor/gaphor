@@ -177,14 +177,14 @@ class FlowGuard(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
         return self._name
 
     def on_editable_start_editing(self, shape):
-	pass
+        pass
         #self.preserve_property('name')
 
     def on_editable_editing_done(self, shape, new_text):
-	if self.subject:
-	    self.subject.value = new_text
-	#self.set_text()
-	#log.info('editing done')
+        if self.subject:
+            self.subject.value = new_text
+        #self.set_text()
+        #log.info('editing done')
 
 initialize_item(FlowItem, UML.ControlFlow)
 initialize_item(FlowGuard)

@@ -37,20 +37,20 @@ def initialize_item(item_class, *default_uml_classes):
     gobject.type_register(item_class)
     bases = item_class.__bases__
     if (diacanvas.CanvasItem in bases) or \
-	(diacanvas.CanvasGroup in bases) or \
-	(diacanvas.CanvasLine in bases) or \
-	(diacanvas.CanvasElement in bases) or \
-	(diacanvas.CanvasBox in bases) or \
-	(diacanvas.CanvasText in bases) or \
-	(diacanvas.CanvasImage in bases):
-	diacanvas.set_callbacks (item_class)
+        (diacanvas.CanvasGroup in bases) or \
+        (diacanvas.CanvasLine in bases) or \
+        (diacanvas.CanvasElement in bases) or \
+        (diacanvas.CanvasBox in bases) or \
+        (diacanvas.CanvasText in bases) or \
+        (diacanvas.CanvasImage in bases):
+        diacanvas.set_callbacks (item_class)
     if (diacanvas.CanvasGroupable in bases):
-	diacanvas.set_groupable (item_class)
+        diacanvas.set_groupable (item_class)
     if (diacanvas.CanvasEditable in bases):
-	diacanvas.set_editable (item_class)
+        diacanvas.set_editable (item_class)
 
     for default_uml_class in default_uml_classes:
-	_uml_to_item_map[default_uml_class] = item_class
+        _uml_to_item_map[default_uml_class] = item_class
 
 from placementtool import PlacementTool
 from classifier import ClassifierItem
@@ -75,8 +75,8 @@ from flow import FlowItem
 from component import ComponentItem
 import itemactions
 
-if __debug__: 
-    # Keep track of all model elements that are created
-    from gaphor.misc.aspects import ReferenceAspect, weave_method
-    from gaphor import refs
-    weave_method(create_as, ReferenceAspect, refs)
+#if __debug__: 
+#    # Keep track of all model elements that are created
+#    from gaphor.misc.aspects import ReferenceAspect, weave_method
+#    from gaphor import refs
+#    weave_method(create_as, ReferenceAspect, refs)

@@ -35,7 +35,7 @@ def _mod_and_keyval_from_accel(accel):
 #            modifier |= gtk.gdk.CONTROL_MASK
 #        if accel.find('M-') != -1:
 #            modifier |= gtk.gdk.MOD1_MASK
-#	keyval = ord(accel[-1])
+#        keyval = ord(accel[-1])
     return modifier, keyval
 
 

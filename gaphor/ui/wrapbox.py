@@ -9,7 +9,7 @@ import gtk
 class Wrapbox(gtk.Table):
 
     def __init__(self):
-	self.__gobject_init__()
+        self.__gobject_init__()
         self.resize_idle_id = 0
         self.rows = 1
         self.cols = 0
@@ -52,10 +52,10 @@ class Wrapbox(gtk.Table):
                 y += 1
 
     def _idle_handler(self):
-	try:
-	    self.set_new_size()
-	finally:
-	    self.resize_idle_id = 0
+        try:
+            self.set_new_size()
+        finally:
+            self.resize_idle_id = 0
 
     def on_size_allocate(self, table, allocation):
         rows, cols = self.calculate_size(allocation)

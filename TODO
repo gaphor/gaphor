@@ -9,18 +9,7 @@ As always, there is much to do...
 
 - write really good test cases for undo functionality. Have some already.
 
-#- confirmation window when creating a new model.
-
 - An option that shows the selected item (in the namespace view) in a diagram.
-
-#- Copy/Paste for diagramitems
-  - in order to make copy/paste work, the load/save functions should be
-    generatlised to allow a subset to be saved/loaded (which is needed
-    anyway for exporting/importing stereotype Profiles).
-  - How many data should be saved? (e.g. we copy a diagram item, remove it
-    (the underlaying UML element is removed) and the paste the copied item.
-    The diagram should act as if we have placed a copy of the removed item
-    on the canvas and make the uml element visible again.
 
 - Stereotype export and import function. Allow to export packages and import
   them into other models.
@@ -32,15 +21,29 @@ As always, there is much to do...
 
 - How to figure out if a module exists without loading it?
 
+- Exporting diagrams to UML XMI (work in progress),
+  code, images (SVG/png), etc. - make a plugin!
+
 - fix accelarators (HOW?), partially done, accelerators on items in popup menus
   does not work.
   Accelerators should be activated by the (Abstract)Window, should not depend
   on menu items
 
-#- Undo/redo functionality
+- In some cases (like when editing attributes) Enter should be used to
+  complete the edit action.
 
-- Exporting diagrams to UML XMI (work in progress),
-  code, images (SVG/png), etc. - make a plugin!
+#- confirmation window when creating a new model.
+
+#- Copy/Paste for diagramitems
+  - in order to make copy/paste work, the load/save functions should be
+    generatlised to allow a subset to be saved/loaded (which is needed
+    anyway for exporting/importing stereotype Profiles).
+  - How many data should be saved? (e.g. we copy a diagram item, remove it
+    (the underlaying UML element is removed) and the paste the copied item.
+    The diagram should act as if we have placed a copy of the removed item
+    on the canvas and make the uml element visible again.
+
+#- Undo/redo functionality
 
 #- Make text selected when starting to edit it: fixed in DiaCanvas2
 

@@ -65,11 +65,11 @@ def __generateID__():
         theRNG = random.Random(time.time())
         # Get the ethernet address
         try:
-	    if sys.platform.find('linux') >= 0:
-		#
-		# RedHat Linux, Debian GNU/Linux, SunOS 2.6
-		#
-		f = os.popen("/sbin/ifconfig -a")
+            if sys.platform.find('linux') >= 0:
+                #
+                # RedHat Linux, Debian GNU/Linux, SunOS 2.6
+                #
+                f = os.popen("/sbin/ifconfig -a")
                 while 1:
                     s = f.readline()
                     if not s:
@@ -78,49 +78,49 @@ def __generateID__():
                     i = s.find("HWaddr")
                     if i != -1:
                         ethernet = string.join(s[i:].split()[1].split(":"), "")
-			f.close()
-			break;
-	    elif sys.platform.find('sun') >= 0:
-		#
-		# SunOS
-		#
-		f = os.popen("/sbin/ifconfig -a")
+                        f.close()
+                        break;
+            elif sys.platform.find('sun') >= 0:
+                #
+                # SunOS
+                #
+                f = os.popen("/sbin/ifconfig -a")
                 while 1:
                     s = f.readline()
                     if not s:
                         raise Exception
-		    i = s.find("ether")
-		    if i != -1:
-			e = s[i:].split()[1].split(":")
-			for i in range(len(e)):
-			    if len(e[i]) == 1:
-				e[i] = "0" + e[i]
-			ethernet = string.join(e, "")
-			f.close()
-			break
-	    elif sys.platform.find('win') >= 0:
-		#
-		# Windows 2000 (perhaps also NT and XP)
-		#
-                f = os.popen("ipconfig /all")
-		while 1:
-		    s = f.readline()
-		    if not s:
-			raise Exception
-                    
-		    i = s.find("Physical Address")
-		    if i != -1:
-			i = s.find(":")
-			if i != -1:
-			    ethernet = string.join(s[i:].split()[1].split("-"), "")
+                    i = s.find("ether")
+                    if i != -1:
+                        e = s[i:].split()[1].split(":")
+                        for i in range(len(e)):
+                            if len(e[i]) == 1:
+                                e[i] = "0" + e[i]
+                        ethernet = string.join(e, "")
                         f.close()
                         break
-	except:
-	    # BUG: We randomize
-	    e = []
-	    for eth_i in range(12):
-		e.append(string.hexdigits[theRNG.randrange(16)])
-	    ethernet = string.join(e, "")
+            elif sys.platform.find('win') >= 0:
+                #
+                # Windows 2000 (perhaps also NT and XP)
+                #
+                f = os.popen("ipconfig /all")
+                while 1:
+                    s = f.readline()
+                    if not s:
+                        raise Exception
+                    
+                    i = s.find("Physical Address")
+                    if i != -1:
+                        i = s.find(":")
+                        if i != -1:
+                            ethernet = string.join(s[i:].split()[1].split("-"), "")
+                        f.close()
+                        break
+        except:
+            # BUG: We randomize
+            e = []
+            for eth_i in range(12):
+                e.append(string.hexdigits[theRNG.randrange(16)])
+            ethernet = string.join(e, "")
 
         # Initialize clock sequence. 14 bits
         clocksequence = theRNG.randrange(16384)

@@ -19,17 +19,18 @@ def register_action(action, *args):
 def tool_changed(action, window):
     view = window.get_current_diagram_view()
     if not view:
-	action.sensitive = False
-	return
+        action.sensitive = False
+        return
     else:
-	action.sensitive = True
+        action.sensitive = True
     tool = view.get_property('tool')
     if tool:
-	id = tool.action_id
+        id = tool.action_id
     else:
-	id = 'Pointer'
+        id = 'Pointer'
     if id == action.id:
-	action.active = True
+        action.active = True
+
 
 class ResetToolAfterCreateAction(CheckAction):
     id = 'ResetToolAfterCreate'
@@ -37,7 +38,7 @@ class ResetToolAfterCreateAction(CheckAction):
     tooltip = 'Reset the tool to the pointer tool after creation of an item'
 
     def init(self, window):
-	self._window = window
+        self._window = window
         self.active = resource('reset-tool-after-create', True)
 
     def execute(self):
@@ -55,15 +56,14 @@ class PointerAction(RadioAction):
     tooltip = 'Pointer'
 
     def init(self, window):
-	self._window = window
-	#self._window.get_current_diagram_view().connect('notify::tool', tool_changed, window)
+        self._window = window
 
     def update(self):
-	tool_changed(self, self._window)
+        tool_changed(self, self._window)
 
     def execute(self):
-	self._window.get_current_diagram_view().set_tool(None)
-	self._window.set_message('')
+        self._window.get_current_diagram_view().set_tool(None)
+        self._window.set_message('')
 
 register_action(PointerAction)
 
@@ -77,43 +77,43 @@ class PlacementAction(RadioAction):
     group = 'placementtools'
 
     def init(self, window):
-	self._window = window
+        self._window = window
 
     def update(self):
-	tool_changed(self, self._window)
+        tool_changed(self, self._window)
 
     def item_factory(self):
-	"""Create a new instance of the item and return it."""
+        """Create a new instance of the item and return it."""
         item = self._window.get_current_diagram().create(self.type)
-	if self.subject_type:
-	    subject = gaphor.resource('ElementFactory').create(self.subject_type)
-	    try:
-		#print 'set subject'
-		#item.set_property('subject', subject)
-		item.subject = subject
-		#print 'set subject done'
-	    except Exception, e:
-		print 'ERROR:', e
-	return item
+        if self.subject_type:
+            subject = gaphor.resource('ElementFactory').create(self.subject_type)
+            try:
+                #print 'set subject'
+                #item.set_property('subject', subject)
+                item.subject = subject
+                #print 'set subject done'
+            except Exception, e:
+                print 'ERROR:', e
+        return item
 
     def execute(self):
-	assert self.type != None
-	tool = diagram.PlacementTool(self.item_factory, self.id)
-	self._window.get_current_diagram_view().set_tool(tool)
-	self._window.set_message('Create new %s' % self.name)
+        assert self.type != None
+        tool = diagram.PlacementTool(self.item_factory, self.id)
+        self._window.get_current_diagram_view().set_tool(tool)
+        self._window.set_message('Create new %s' % self.name)
 
 
 class NamespacePlacementAction(PlacementAction):
     __index = 1
 
     def item_factory(self):
-	"""Create a new instance of the item and return it."""
+        """Create a new instance of the item and return it."""
         item = PlacementAction.item_factory(self)
-	log.debug('Setting namespace for new item %s: %s' % (item, self._window.get_current_diagram().namespace))
-	item.subject.package = self._window.get_current_diagram().namespace
-	item.subject.name = '%s%d' % (self.name, self.__index)
-	self.__index += 1
-	return item
+        log.debug('Setting namespace for new item %s: %s' % (item, self._window.get_current_diagram().namespace))
+        item.subject.package = self._window.get_current_diagram().namespace
+        item.subject.name = '%s%d' % (self.name, self.__index)
+        self.__index += 1
+        return item
 
 
 class ActorPlacementAction(NamespacePlacementAction):
@@ -186,52 +186,52 @@ class InterfacePlacementTool(diacanvas.PlacementTool):
     """
 
     def __init__(self, window, action_id):
-	diacanvas.PlacementTool.__init__(self, None)
-	self._window = window
+        diacanvas.PlacementTool.__init__(self, None)
+        self._window = window
         self.action_id = action_id
-	self.handle_tool = diacanvas.view.HandleTool()
+        self.handle_tool = diacanvas.view.HandleTool()
 
     def do_button_press_event(self, view, event):
-	factory = gaphor.resource('ElementFactory')
-	diag = self._window.get_current_diagram()
-	iface = factory.create(UML.Interface)
-	iface.package = diag.namespace
+        factory = gaphor.resource('ElementFactory')
+        diag = self._window.get_current_diagram()
+        iface = factory.create(UML.Interface)
+        iface.package = diag.namespace
         iface_item = diag.create(diagram.InterfaceItem)
-	iface_item.set_property('parent', view.canvas.root)
-	iface_item.subject = iface
-	impl_item = diag.create(diagram.DependencyItem)
-	impl_item.set_dependency_type(UML.Implementation)
-	impl_item.set_property('parent', view.canvas.root)
+        iface_item.set_property('parent', view.canvas.root)
+        iface_item.subject = iface
+        impl_item = diag.create(diagram.DependencyItem)
+        impl_item.set_dependency_type(UML.Implementation)
+        impl_item.set_property('parent', view.canvas.root)
 
-	wx, wy = view.window_to_world(event.x, event.y)
-	ix, iy = iface_item.affine_point_w2i(wx, wy)
-	iface_item.move(ix, iy)
-	
-	ix += iface_item.RADIUS * 2
-	iy += iface_item.RADIUS
-	impl_item.move(ix, iy)
-	
-	# Select the new items:
-	view.unselect_all()
-	view.select(view.find_view_item(iface_item))
-	view.focus(view.find_view_item(impl_item))
+        wx, wy = view.window_to_world(event.x, event.y)
+        ix, iy = iface_item.affine_point_w2i(wx, wy)
+        iface_item.move(ix, iy)
+        
+        ix += iface_item.RADIUS * 2
+        iy += iface_item.RADIUS
+        impl_item.move(ix, iy)
+        
+        # Select the new items:
+        view.unselect_all()
+        view.select(view.find_view_item(iface_item))
+        view.focus(view.find_view_item(impl_item))
 
-	# Attach the head handle to the interface item:
-	first = impl_item.handles[0]
-	iface_item.connect_handle(first)
+        # Attach the head handle to the interface item:
+        first = impl_item.handles[0]
+        iface_item.connect_handle(first)
 
-	# Grab the last handle with the mouse cursor
-	last = impl_item.handles[-1]
-	last.set_pos_i(20,0)
-	self.handle_tool.set_grabbed_handle(last)
-	return True
+        # Grab the last handle with the mouse cursor
+        last = impl_item.handles[-1]
+        last.set_pos_i(20,0)
+        self.handle_tool.set_grabbed_handle(last)
+        return True
 
     def do_button_release_event(self, view, event):
         view.set_tool(None)
-	return self.handle_tool.button_release(view, event)
+        return self.handle_tool.button_release(view, event)
 
     def do_motion_notify_event(self, view, event):
-	return self.handle_tool.motion_notify(view, event)
+        return self.handle_tool.motion_notify(view, event)
 
 import gobject
 gobject.type_register(InterfacePlacementTool)
@@ -246,9 +246,9 @@ class InterfacePlacementAction(NamespacePlacementAction):
     subject_type = UML.Interface
 
     def _execute(self):
-	tool = InterfacePlacementTool(self._window, self.id)
-	self._window.get_current_diagram_view().set_tool(tool)
-	self._window.set_message('Create new %s' % self.name)
+        tool = InterfacePlacementTool(self._window, self.id)
+        self._window.get_current_diagram_view().set_tool(tool)
+        self._window.set_message('Create new %s' % self.name)
 
 register_action(InterfacePlacementAction)
 

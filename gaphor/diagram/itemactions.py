@@ -3,6 +3,8 @@
 Commands related to the Diagram (DiaCanvas)
 """
 
+from __future__ import generators
+
 import diacanvas
 import gaphor
 import gaphor.diagram
@@ -877,4 +879,48 @@ class ApplyStereotypeAction(CheckAction, ObjectAction):
             del item.subject.appliedStereotype[self.stereotype]
 
 weave_method(ApplyStereotypeAction.execute, UndoTransactionAspect)
+
+
+class CreateLinksAction(Action):
+    """Create links (associations, generalizations, dependencies) from
+    the selected diagram items to other items on the same diagram. Those
+    links have to exist in the data layer of course.
+    """
+    id = 'CreateLinks'
+    label = '_Create Links'
+    tooltip = 'Make existing relationships between diagram items visible'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        diagram_tab = self._window.get_current_diagram_tab()
+        self.sensitive = diagram_tab and len(diagram_tab.get_view().selected_items) > 0
+
+    def find_items_on_this_canvas(self, items, canvas):
+        for item in items:
+            for pres in item.presentation:
+                if pres.canvas is canvas:
+                    yield item
+
+    def execute(self):
+        diagram_tab = self._window.get_current_diagram_tab()
+        for view_item in diagram_tab.get_view().selected_items:
+            item = view_item.item
+            if isinstance(item, gaphor.diagram.ClassifierItem):
+                for dep in item.subject.supplierDependency:
+                    # TODO: check if a dependency already has a presentation
+                    # on this canvas
+                    for opposite in self.find_items_on_this_canvas(dep.client, item.canvas):
+                        new_item = diagram_tab.get_diagram().create(gaphor.diagram.DependencyItem)
+                        item.connect_handle(new_item.handles[0])
+                        new_item.subject = dep
+                        opposite.connect_handle(new_item.handles[-1])
+
+            # If Class: iterate associations, dependency, inheritance,
+            # implementation ...
+            # If Actor...
+
+weave_method(CreateLinksAction.execute, UndoTransactionAspect)
+register_action(CreateLinksAction, 'ItemFocus', 'ItemSelect')
 

@@ -42,7 +42,7 @@ class ElementItem(diacanvas.CanvasElement, DiagramItem):
         DiagramItem.save(self, save_func)
 
     def load(self, name, value):
-	DiagramItem.load(self, name, value)
+        DiagramItem.load(self, name, value)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'auto-resize':
@@ -60,8 +60,8 @@ class ElementItem(diacanvas.CanvasElement, DiagramItem):
     # DiaCanvasItem callbacks:
 
     def on_glue(self, handle, wx, wy):
-	#import sys
-	#print self, handle, '=>', sys.getrefcount(self), sys.getrefcount(handle)
+        #import sys
+        #print self, handle, '=>', sys.getrefcount(self), sys.getrefcount(handle)
         return self._on_glue(handle, wx, wy, diacanvas.CanvasElement)
 
     def on_connect_handle(self, handle):
