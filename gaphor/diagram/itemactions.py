@@ -46,7 +46,7 @@ class ItemRenameAction(Action):
 
     def execute(self):
         item = self._window.get_current_diagram_view().focus_item.item
-	item.rename()
+	item.edit()
 
 register_action(ItemRenameAction, 'ItemFocus')
 

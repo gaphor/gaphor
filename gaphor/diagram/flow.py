@@ -1,7 +1,7 @@
 '''
 ControlFlow and ObjectFlow -- 
 '''
-# vim:sw=4
+# vim:sw=4:et:ai
 
 import gobject
 import diacanvas
@@ -90,21 +90,20 @@ class FlowGuard(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
     def postload(self):
         DiagramItem.postload(self)
 
+    #def on_point(self, x, y):
+    #    pass
+
     # Editable
 
     def on_editable_start_editing(self, shape):
-        if shape == self._name:
-            log.info('editing name')
-        elif shape == self._mult:
-            log.info('editing mult')
+	pass
         #self.preserve_property('name')
 
     def on_editable_editing_done(self, shape, new_text):
-        if shape in (self._name, self._mult):
-            if self.subject and (shape == self._name or new_text != ''):
-                self.subject.parse(new_text)
-            self.set_text()
-            log.info('editing done')
+	if self.subject and (shape == self._name or new_text != ''):
+	    self.subject.parse(new_text)
+	self.set_text()
+	#log.info('editing done')
 
 initialize_item(FlowItem, UML.ControlFlow)
 initialize_item(FlowGuard)

@@ -366,6 +366,22 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
             log.warning('AssociationEnd.set_navigable: %s missing' % \
                         (subject and 'subject' or 'opposite Property'))
 
+    def point_name(self, x, y):
+        p = (x, y)
+        drp = diacanvas.geometry.distance_rectangle_point
+        return drp(self._name_bounds, p)
+
+    def point_mult(self, x, y):
+        p = (x, y)
+        drp = diacanvas.geometry.distance_rectangle_point
+        return drp(self._mult_bounds, p)
+
+    def edit_name(self):
+        self.start_editing(self._name)
+
+    def edit_mult(self):
+        self.start_editing(self._mult)
+
     def update_labels(self, p1, p2):
         """Update label placement for association's name and
         multiplicity label. p1 is the line end and p2 is the last
@@ -496,6 +512,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         drp = diacanvas.geometry.distance_rectangle_point
         d1 = drp(self._name_bounds, p)
         d2 = drp(self._mult_bounds, p)
+        print 'AssociationEnd:', d1, d2
         return min(d1, d2)
 
     def on_event(self, event):
@@ -505,11 +522,11 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
             nb = self._name_bounds
             mb = self._mult_bounds
             if nb[0] < x < nb[2] and nb[1] < y < nb[3]:
-                log.info('Edit Association ends name')
-                self.start_editing(self._name)
+                #log.info('Edit Association ends name')
+                self.edit_name()
             elif mb[0] < x < mb[2] and mb[1] < y < mb[3]:
-                log.info('Edit Association ends mult')
-                self.start_editing(self._mult)
+                #log.info('Edit Association ends mult')
+                self.edit_mult()
             else:
                 log.info('Edit Association ends nothing %d, %d, %s, %s' % (x, y, nb, mb))
             return True
@@ -532,10 +549,11 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     # Editable
 
     def on_editable_start_editing(self, shape):
-        if shape == self._name:
-            log.info('editing name')
-        elif shape == self._mult:
-            log.info('editing mult')
+        pass
+#        if shape == self._name:
+#            log.info('editing name')
+#        elif shape == self._mult:
+#            log.info('editing mult')
         #self.preserve_property('name')
 
     def on_editable_editing_done(self, shape, new_text):
@@ -543,7 +561,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
             if self.subject and (shape == self._name or new_text != ''):
                 self.subject.parse(new_text)
             self.set_text()
-            log.info('editing done')
+            #log.info('editing done')
 
 initialize_item(AssociationItem, UML.Association)
 initialize_item(AssociationEnd)

@@ -1,3 +1,9 @@
+2004-04-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/placementtool.py: use new PlacementTool from
+	diacanvas (CVS)
+	* gaphor/diagram/itemtool.py: New file. Handles items the *new* way.
+
 2004-04-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/flow.py: New file, ControlFlow item.

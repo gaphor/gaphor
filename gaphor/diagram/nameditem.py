@@ -36,7 +36,7 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
         # notifications.
         self._name.set_text(self.subject.name or '')
 
-    def rename(self):
+    def edit(self):
         self.start_editing(self._name)
 
     def do_set_property(self, pspec, value):
