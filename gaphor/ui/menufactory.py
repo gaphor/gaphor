@@ -8,7 +8,8 @@ TODO: show tooltips in the status bar when a menu item is selected.
 import gobject
 import gtk
 from gaphor.misc.action import ActionError, Action, CheckAction, RadioAction
-from gaphor.misc.action import get_actions_for_slot
+from gaphor.misc.action import SlotMenu
+#from gaphor.misc.action import get_actions_for_slot
 import gaphor.ui.wrapbox
 
 __all__ = [ 'MenuFactory' ]
@@ -62,6 +63,7 @@ class MenuFactory(object):
         self.accel_group = accel_group
         self.statusbar = statusbar
         self.statusbar_context = statusbar_context
+        #self._slot_to_menu_item = {}
 
     def get_action(self, action_id):
         """Find the action, create a new one if not found.
@@ -83,11 +85,14 @@ class MenuFactory(object):
                 submenu = gtk.Menu()
                 self._create_menu_items(id, groups, submenu)
                 item.set_submenu(submenu)
+                # Connect to 'activate' to see when a submenu expands
+                item.connect('activate', self.on_submenu_activate)
                 submenu.show()
             elif id.startswith('<') and id.endswith('>'):
                 # We're dealing with a placeholder here, strip the <>
-                slot_def = get_actions_for_slot(id[1:-1])
-                self._create_menu_items(slot_def, groups, menu, item)
+                #slot_def = get_actions_for_slot(id[1:-1])
+                #self._create_menu_items(slot_def, groups, menu, item)
+                self.create_slot(id[1:-1], menu)
             else:
                 item = self.create_menu_item(id, groups)
                 menu.add(item)
@@ -199,6 +204,19 @@ class MenuFactory(object):
                                         self.on_menu_item_notify_action)
         return item
 
+    def create_slot(self, slot_id, menu):
+        slot_menu = self.action_pool.get_slot(slot_id)
+        # Create a menu item that acts as a placeholder:
+        item = gtk.MenuItem()
+        item.slot_size = 0
+        menu.add(item)
+        #self._slot_to_menu_item[slot_menu] = item
+        #self._connect_item_to_action('rebuild')
+        handler = slot_menu.connect('rebuild', self.on_slot_menu_rebuild, item)
+        item.connect('destroy', self.on_slot_menu_destroy, slot_menu, handler)
+
+        self.on_slot_menu_rebuild(slot_menu, item)
+
     def create_toolbar(self, menu_def):
         """Create a Toolbar. items in menu_def should not be nested as
         they are when creating a normal menu.
@@ -223,6 +241,7 @@ class MenuFactory(object):
                         group = groups[action.group]
                     except KeyError:
                         group = None
+                    # TODO: replace with toolbar.insert(item, index (-1=append))
                     item = toolbar.append_element(gtk.TOOLBAR_CHILD_RADIOBUTTON,
                                     None, label, action.tooltip, '', icon,
                                     callback=self.on_radio_item_activate,
@@ -255,8 +274,7 @@ class MenuFactory(object):
                 item.set_property('sensitive', action.sensitive)
                 self._connect_item_to_action('notify::visible', action, item,
                                              self.on_menu_item_notify_action)
-                self._connect_item_to_action('notify::sensitive', action, item,
-                                             self.on_menu_item_notify_action)
+                self._connect_item_to_action('notify::sensitive', action, item, self.on_menu_item_notify_action)
         return toolbar
 
     def create_button(self, id, groups=None, tooltips=None):
@@ -351,6 +369,38 @@ class MenuFactory(object):
     def on_item_activate(self, menu_item, action_id):
         self.action_pool.execute(action_id)
 
+    def on_submenu_activate(self, menu_item):
+        pass
+        #print 'Submenu activated:', menu_item
+        # Update dynamic menu's (slots)
+
+    def on_slot_menu_rebuild(self, slot_menu, slot_item):
+        #slot_item = self._slot_to_menu_item[slot_menu]
+        menu = slot_item.get_parent()
+        children = menu.get_children()
+        slot_index = children.index(slot_item) + 1
+
+        # Remove the old menu items:
+        if slot_item.slot_size > 0:
+            for i in xrange(slot_index, slot_index + slot_item.slot_size):
+                children[i].destroy()
+
+        slot_item.slot_size = 0
+
+        # Now create the new items. First create them in a list, then insert
+        # them into the menu at the right place.
+        groups = {}
+        menu_list = FakeMenu()
+        self._create_menu_items(slot_menu.get_menu(), groups, menu_list)
+
+        # Add them to the menu
+        for item in menu_list:
+            #item = self.create_menu_item(action_id, groups)
+            #item.unparent()
+            menu.insert(item, slot_index)
+            slot_index += 1
+            slot_item.slot_size += 1
+
     def on_menu_item_notify_action(self, menu_item, pspec, action_id):
         """Helper callback, copies state from the action to the menu item.
         """
@@ -401,6 +451,10 @@ class MenuFactory(object):
         action = self.get_action(action_id)
         action.disconnect(handler)
 
+    def on_slot_menu_destroy(self, menu_item, slot_menu, handler):
+        slot_menu.disconnect(handler)
+        #del self._slot_to_menu_item[slot_menu]
+
     def _connect_item_to_action(self, signal_name, action, item, handler):
         """Connect the items signal handler to the action. The handler is
         destroyed when the item is destroyed.
@@ -438,3 +492,15 @@ def toolbox_to_menu(toolbox):
             for item in box[1]:
                 l.append(item)
     return l
+
+
+class FakeMenu(object):
+
+    def __init__(self):
+        self.l = []
+
+    def add(self, item):
+        self.l.append(item)
+
+    def __iter__(self):
+        return self.l.__iter__()

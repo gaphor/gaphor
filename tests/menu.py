@@ -52,7 +52,7 @@ class FileCheckAction(CheckAction):
     def execute(self):
         print 'Check', self.active
         action_pool.get_action('FileTest').visible = self.active
-
+        
 register_action(FileCheckAction)
 
 class FileTestAction(Action):
@@ -153,8 +153,25 @@ class ObjectAction(Action):
     def execute(self):
         print 'ObjectAction', self.id
 
+class RenewObjectsAction(Action):
+    id = 'RenewObjects'
+    label = 'Renew Objects'
+
+    def init(self):
+        self.val = 5
+
+    def execute(self):
+        slot = action_pool.get_slot('ObjectsSlot')
+        print 'Registring new ObjectAction %s' % self.val
+        register_action_for_slot(ObjectAction(str(self.val)), '<ObjectsSlot>')
+        self.val += 1
+        slot.rebuild()
+
+register_action(RenewObjectsAction)
+
 for x in xrange(5):
     register_action_for_slot(ObjectAction(str(x)), '<ObjectsSlot>/_' + str(x))
+    #register_action_for_slot(ObjectAction(str(x)), '<ObjectsSlot>')
 
 print get_actions_for_slot('<ObjectsSlot>')
 window = gtk.Window()
@@ -194,7 +211,9 @@ menubar = menu_factory.create_menu(
             'tearoff',
             'One',
             'Two'),
+        'RenewObjects',
         'Objects', ('<ObjectsSlot>',),
+        '<ObjectsSlot>',
         'FileCheck'
         )
     ))
@@ -234,8 +253,8 @@ event_box.connect('event', on_event_box_event)
 vbox.pack_start(event_box, expand=gtk.TRUE)
 
 wrap_box = menu_factory.create_wrapbox(('FileNew', 'FileCheck', 'separator', 'Green', 'Yellow', 'Blue'))
-vbox.pack_start(wrap_box.table, expand=gtk.TRUE)
-wrap_box.table.show()
+vbox.pack_start(wrap_box, expand=gtk.TRUE)
+wrap_box.show()
 
 vbox.pack_end(statusbar, expand=gtk.FALSE)
 vbox.show()

@@ -4,6 +4,7 @@
 import gtk
 
 from gaphor import UML
+from gaphor import resource
 from gaphor.diagram.itemtool import ItemTool
 from gaphor.diagram import get_diagram_item
 from gaphor.undomanager import get_undo_manager

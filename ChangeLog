@@ -2,11 +2,20 @@
 
 	* gaphor/UML/uml2.gaphor: added parse() and render operations to
 	Lifeline.
+	* gaphor/misc/action.py: added better support for Slots. Now a
+	slot can be represented by a class. A slot can be rebuild (so the
+	menu is rebuild).
+	* gaphor/ui/menufactory.py: extented for use of slots.
+	* tests/menu.py: added test for slots.
 
 2005-01-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/pluginmanager.py: raise exceptions when a wrong xml-tag is
 	found in the plugin.xml file.
+
+2004-12-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/message.py: added message text.
 
 2004-12-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
