@@ -34,12 +34,14 @@ class CreateAttributeCommand(Command):
         self._window = params['window']
 
     def execute(self):
+	print 'creating attribute'
         subject = get_parent_focus_item(self._window).subject
-        assert isinstance(subject, UML.Classifier)
+        assert isinstance(subject, UML.Class)
         elemfact = GaphorResource(UML.ElementFactory)
         attribute = elemfact.create(UML.Property)
         attribute.name = 'new'
         subject.ownedAttribute = attribute
+	print 'done'
 
 CommandInfo (name='CreateAttribute', _label='New _Attribute',
              _tip='Create a new attribute',

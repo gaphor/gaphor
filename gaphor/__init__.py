@@ -89,7 +89,7 @@ class Gaphor(object):
             return os.environ['GAPHOR_DATADIR']
         return self.get_conf('datadir')
 
-    def get_resource(resource):
+    def get_resource(resource): # as staticmethod:
         """*Static method*
         Locate a resource. Resource should be the class of the resource to
         look for or a string. In case of a string the resource will be looked

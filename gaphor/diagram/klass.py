@@ -43,7 +43,7 @@ class Compartment(object):
         self.owner.remove(feature)
         self.owner.request_update()
 
-    def update(self, width, height, affine):
+    def pre_update(self, width, height, affine):
         if self.visible:
             self.sep_y = height
             height += ClassItem.COMP_MARGIN_Y
@@ -55,7 +55,6 @@ class Compartment(object):
                     a = f.get_property('affine')
                     a = (a[0], a[1], a[2], a[3], ClassItem.COMP_MARGIN_X, height)
                     f.set(affine=a, height=h, width=w, visible=True)
-                    self.owner.update_child(f, affine)
                 height += h
                 width = max(width, w + 2 * ClassItem.COMP_MARGIN_X)
             height += ClassItem.COMP_MARGIN_Y
@@ -64,8 +63,10 @@ class Compartment(object):
                 f.set_property('visible', False)
         return width, height
 
-    def update_separator(self, width):
+    def update(self, width, affine):
         if self.visible:
+            for f in self.items:
+                self.owner.update_child(f, affine)
             self.separator.line(((0, self.sep_y), (width, self.sep_y)))
 
 
@@ -161,9 +162,14 @@ class ClassItem(ClassifierItem):
         log.debug('on_subject_notify__ownedOperation')
         self.compare_owned_features(subject.ownedOperation, self._operations)
 
+    def __check_ops(self):
+        for i in self._operations.items:
+            log.debug('need update after update: %s' % str(i.flags & diacanvas.NEED_UPDATE))
+
     def on_update(self, affine):
         """Overrides update callback. If affine is None, it is called just for
         updating the item width and height."""
+
         width = 0
         height = ClassItem.HEAD_MARGIN_Y
 
@@ -182,7 +188,7 @@ class ClassItem(ClassifierItem):
         width = w + ClassItem.HEAD_MARGIN_X
 
         for comp in (self._attributes, self._operations):
-            width, height = comp.update(width, height, affine)
+            width, height = comp.pre_update(width, height, affine)
 
         self.set(min_width=width, min_height=height)
 
@@ -191,10 +197,11 @@ class ClassItem(ClassifierItem):
             height = max(height, self.height)
 
             # We know the width of all text components and set it:
+            # Note: here the upadte flag is set for all sub-items (again)!
             self._name.set_property('width', width)
 
             for comp in (self._attributes, self._operations):
-                comp.update_separator(width)
+                comp.update(width, affine)
 
             ClassifierItem.on_update(self, affine)
 
@@ -238,11 +245,14 @@ class ClassItem(ClassifierItem):
         return 1
 
     def on_groupable_iter(self):
+        #log.debug('on_groupable_iter')
         for i in ClassifierItem.on_groupable_iter(self):
             yield i
         for i in self._attributes.items:
+            #log.debug('on_groupable_iter (attr): %s' % i)
             yield i
         for i in self._operations.items:
+            #log.debug('on_groupable_iter (oper): %s' % i)
             yield i
 
     def on_groupable_length(self):
@@ -259,7 +269,7 @@ class ClassItem(ClassifierItem):
         else:
             return -1
 
-    def on_subject_update(self, name, old_value, new_value):
+    def __on_subject_update(self, name, old_value, new_value):
         """Update self when the subject changes."""
         if name == '__unlink__':
             for f in self.__features:

@@ -3,6 +3,8 @@ AssociationItem -- Graphical representation of an association.
 '''
 # vim:sw=4
 
+from __future__ import generators
+
 import gobject
 import diacanvas
 import pango
@@ -299,6 +301,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     def find_relationship(self, head_subject, tail_subject):
         # Head and tail subjects are connected to an Association by 
         # AssociationEnds. 'end' is an association end
+	# 
         for head_end in head_subject.association: # is AssociationEnd
             assoc = head_end.association
             if assoc:
@@ -385,20 +388,8 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
         ##return 0
         return 1
 
-    def on_groupable_get_iter(self):
-        return self.__head_name
-
-    def on_groupable_next(self, iter):
-        if iter is self.__head_name:
-            return self.__head_mult
-        elif iter is self.__head_mult:
-            return self.__tail_name
-        elif iter is self.__tail_name:
-            return self.__tail_mult
-        return None
-
-    def on_groupable_value(self, iter):
-        return iter
+    def on_groupable_iter(self):
+        return iter([self.__head_name, self.__head_mult, self.__tail_name, self.__tail_mult])
 
     def on_groupable_length(self):
         return 4
@@ -446,20 +437,10 @@ class AssociationLabel(CanvasText):
             log.info('Edit Association ends %s' % self.name)
         return CanvasText.on_event(self, event)
 
-    def on_get_shape_iter(self):
-        return self.__border
-
-    def on_shape_next(self, iter):
-        if iter is self.__border:
-            return CanvasText.on_get_shape_iter(self)
-        else:
-            return CanvasText.on_shape_next(self, iter)
-
-    def on_shape_value(self, iter):
-        if iter is self.__border:
-            return iter
-        else:
-            return CanvasText.on_shape_value(self, iter)
+    def on_shape_iter(self):
+	for i in CanvasText.on_shape_iter(self):
+	    yield i
+        yield self.__border
 
 gobject.type_register(AssociationItem)
 diacanvas.set_groupable(AssociationItem)

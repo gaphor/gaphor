@@ -32,7 +32,7 @@ class FeatureItem(CanvasText, DiagramItem):
         self.set_flags(diacanvas.COMPOSITE)
         w, h = self.get_property('layout').get_pixel_size()
         self.set(height=h)
-        self.connect('text_changed', self.on_text_changed)
+        self.connect('notify::text', FeatureItem.on_text_notify)
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
@@ -45,15 +45,19 @@ class FeatureItem(CanvasText, DiagramItem):
     def on_subject_notify__name(self, subject, pspec):
         self.set(text=self.subject.name)
 
-    def on_text_changed(self, text_item, text):
-        if self.subject and text != self.subject.name:
-            self.subject.name = text
+    def on_text_notify(self, pspec):
+        if self.subject and self.text != self.subject.name:
+            self.subject.name = self.text
+            #self.parent.request_update()
 
-#    def on_event(self, event):
-#        log.debug('event %s' % self.parent)
-#        #print self in self.parent.groupable_iter()
-#        return CanvasText.on_event(self, event)
+    def on_event(self, event):
+        # TODO: handle focus in/out events
+        if event.type == diacanvas.EVENT_KEY_PRESS:
+            CanvasText.on_event(self, event)
+            return True
+        else:
+            return CanvasText.on_event(self, event)
 
 gobject.type_register(FeatureItem)
-#diacanvas.set_callbacks(FeatureItem)
+diacanvas.set_callbacks(FeatureItem)
 

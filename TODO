@@ -14,6 +14,8 @@ As always, there is much to do...
 - Add some sort of ordering in the NamespaceView.
 - Items visible/hidden doesn't work properly when opening a diagram.
 
+- reordering of model elements doesn't work properly.
+
 - Diagram items should be created for lots of model elements
   (we currently have Actor, UseCase, Comment and the fancy line that connects
    a comment with another model element). Also a buch of relationships are

@@ -47,7 +47,7 @@ class ClassifierItem(ModelElementItem):
 
     def on_event (self, event):
         if event.type == diacanvas.EVENT_KEY_PRESS:
-            log.info('EVENT_KEY_PRESS on ClassifierItem')
+            log.debug('EVENT_KEY_PRESS on ClassifierItem')
             self._name.focus()
             self._name.on_event (event)
             return True
