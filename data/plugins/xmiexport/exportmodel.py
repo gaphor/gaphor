@@ -90,7 +90,6 @@ class XMIExport(Action):
             
             xmi.endElement('UML:Classifier.feature')
         xmi.endElement('UML:Class')
-        #ownedAttribute[1].typeValue
         
     def handleLiteralSpecification(self, xmi, node):
         pass
@@ -108,31 +107,36 @@ class XMIExport(Action):
         attributes['isAbstract']='false'
         xmi.startElement('UML:Association', attrs=attributes)
         xmi.startElement('UML:Association.connection', attrs=XMLAttributes())
-        for end in node.memberEnd:
+        for i in (0,1): # Need an index for class lookup
+            end=node.memberEnd[i]
             attributes=XMLAttributes()
             attributes['xmi.id']=end.id
             attributes['visibility']='public'
             attributes['isSpecification']='false'
-            attributes['isNavigable']='true'
+            attributes['isNavigable']=end.class_ and 'true' or 'false'
             attributes['ordering']='unordered'
-            attributes['aggregation']=end.aggregation # TODO: Handle None?
+            attributes['aggregation']=end.aggregation # TODO: Handle None?, why does ArchGenXML thinks its reversed
             attributes['targetScope']='instance' 
             attributes['changeability']='changeable'
             xmi.startElement('UML:AssociationEnd', attrs=attributes)
             xmi.startElement('UML:AssociationEnd.multiplicity', attrs=XMLAttributes())
             attributes=XMLAttributes()
-            attributes['xmi.id']='sm$f14318:ff442f5793:-7f6d'
+            attributes['xmi.id']=end.id
             xmi.startElement('UML:Multiplicity', attrs=attributes)
             xmi.startElement('UML:Multiplicity.range', attrs=XMLAttributes())
             attributes=XMLAttributes()
-            attributes['xmi.id']=str(id(attributes))
+            attributes['xmi.id']=str(id(attributes)) # No id in Gaphor for this
             values=('lower','upper')
             for value in values:
                 try:
                     data=getattr(end, '%sValue'%value).value
                 except AttributeError:
                     data='1' # FIXME!
-                if data is None:
+                if str(data)=='*':
+                    attributes['lower']='0'
+                    attributes['upper']='-1'
+                    break
+                elif data is None:
                     data='1'
                 attributes[value]=data
                 
@@ -144,7 +148,7 @@ class XMIExport(Action):
             xmi.endElement('UML:AssociationEnd.multiplicity')
             xmi.startElement('UML:AssociationEnd.participant', attrs=XMLAttributes())
             attributes=XMLAttributes()
-            attributes['xmi.idref']=end.type.id
+            attributes['xmi.idref']=end.class_.id
             xmi.startElement('UML:Class', attrs=attributes)
             xmi.endElement('UML:Class')
             xmi.endElement('UML:AssociationEnd.participant')
@@ -153,7 +157,7 @@ class XMIExport(Action):
         xmi.endElement('UML:Association')
             
             
-    def exportModel(self):
+    def export(self):
         out=open('/Users/vloothuis/test.xmi','w')
         xmi=XMLGenerator(out)
         
@@ -164,6 +168,17 @@ class XMIExport(Action):
         attributes['timestamp']='Tue Sep 28 10:48:06 CEST 2004' # TODO!
         xmi.startElement('XMI', attrs=attributes)
         
+        self.writeHeader(xmi)
+        
+        # TODO: Add diagram stuff here
+        
+        self.writeModel(xmi, attributes)
+        
+        xmi.endElement('XMI')
+        
+        handlers={}
+
+    def writeHeader(self, xmi):
         # Writer XMI header section
         xmi.startElement('XMI.header', attrs=XMLAttributes())
         xmi.startElement('XMI.documentation', attrs=XMLAttributes())
@@ -175,12 +190,10 @@ class XMIExport(Action):
         xmi.endElement('XMI.exporterVersion')
         xmi.endElement('XMI.documentation')
         xmi.endElement('XMI.header')
-        
-        
-        
-        # Now generator the model
+
+    def writeModel(self, xmi, attributes):
+        # Generator the model
         xmi.startElement('XMI.content', attrs=XMLAttributes())
-        # TODO: Add diagram stuff here
         # Now write out the model
         attributes=XMLAttributes()
         attributes['xmi.id']='sm$f14318:ff442f5793:-7f6e'
@@ -192,7 +205,7 @@ class XMIExport(Action):
         xmi.startElement('UML:Model', attrs=attributes)
         xmi.startElement('UML:Namespace.ownedElement', attrs=XMLAttributes())
         for element in gaphor.resource('ElementFactory').select():
-            print element.__class__.__name__
+            #print element.__class__.__name__
             try:
                 handler=getattr(self, 'handle%s'%element.__class__.__name__)
             except AttributeError:
@@ -201,11 +214,7 @@ class XMIExport(Action):
         xmi.endElement('UML:Namespace.ownedElement')    
         xmi.endElement('UML:Model')
         xmi.endElement('XMI.content')
-        
-        xmi.endElement('XMI')
-        
-        handlers={}
 
     def execute(self):
-        self.exportModel()
+        self.export()
     
