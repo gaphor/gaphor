@@ -35,11 +35,14 @@ class WorkerThread(Thread):
         """The thread is launched, however, as long as the thread is active
         the main loop is ran.
         """
-        Thread.start(self)
-        main = gobject.main_context_default()
-        # Run main iterations as long as this thread exists.
-        while self.isAlive():
-            main.iteration(False)
+        if hasattr(sys, 'winver'):
+            self.run()
+        else:
+            Thread.start(self)
+            main = gobject.main_context_default()
+            # Run main iterations as long as this thread exists.
+            while self.isAlive():
+                main.iteration(False)
 
     def run(self):
         try:
