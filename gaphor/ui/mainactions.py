@@ -16,6 +16,7 @@ from threading import Thread
 import gaphor
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
+from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.i18n import _
 
 DEFAULT_EXT='.gaphor'
@@ -205,13 +206,16 @@ class SaveAsAction(Action):
             queue = Queue()
             log.debug('Saving to: %s' % filename)
             win = show_status_window('Saving...', 'Saving model to %s' % filename, self._window.get_window(), queue)
-            worker = GIdleThread(storage.save_generator(filename), queue)
+            out = open(filename, 'w')
+
+            worker = GIdleThread(storage.save_generator(XMLWriter(out)), queue)
             action_states = self._window.action_pool.get_action_states()
             self._window.action_pool.insensivate_actions()
             worker.start()
             worker.wait()
             if worker.error:
                 log.error('Error while saving model to file %s: %s' % (filename, worker.error))
+            out.close()
 
             self._window.set_filename(filename)
 

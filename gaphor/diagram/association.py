@@ -169,7 +169,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         self.on_subject_notify__name(self.subject, pspec)
 
     def on_subject_notify__name(self, subject, pspec):
-        log.debug('Association name = %s' % (subject and subject.name))
+        #log.debug('Association name = %s' % (subject and subject.name))
         if subject:
             self._label.set_text(subject.name or '')
         else:

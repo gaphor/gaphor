@@ -25,19 +25,21 @@ import diagram
 import diacanvas
 import gaphor
 from gaphor.i18n import _
+#from gaphor.misc.xmlwriter import XMLWriter
 
 __all__ = [ 'load', 'save' ]
 
 FILE_FORMAT_VERSION = '3.0'
 
-def save(filename=None, factory=None, status_queue=None):
-    for status in save_generator(filename, factory):
+def save(writer=None, factory=None, status_queue=None):
+    for status in save_generator(writer, factory):
         if status_queue:
             status_queue(status)
 
-def save_generator(filename=None, factory=None):
-    """Save the current model to @filename. If no filename is given,
-    standard out is used.
+def save_generator(writer=None, factory=None):
+    """Save the current model using @writer, which is a
+    gaphor.misc.xmlwriter.XMLWriter instance (or at least a SAX serializer
+    with CDATA support).
     """
     # Make bool work for Python 2.2
     bool_ = type(bool(0))
@@ -48,33 +50,43 @@ def save_generator(filename=None, factory=None):
         """
         # Save a reference to the object:
         if value.id: #, 'Referenced element %s has no id' % value
-            buffer.write('<%s><ref refid="%s"/></%s>\n' % (name, value.id, name))
+            writer.startElement(name, {})
+            writer.startElement('ref', { 'refid': value.id })
+            writer.endElement('ref')
+            writer.endElement(name)
 
     def save_collection(name, value):
         """Save a list of references.
         """
         if len(value) > 0:
-            buffer.write('<%s><reflist>' % name)
+            writer.startElement(name, {})
+            writer.startElement('reflist', {})
             for v in value:
                 #save_reference(name, v)
                 if v.id: #, 'Referenced element %s has no id' % v
-                    buffer.write('<ref refid="%s"/>' % v.id)
-            buffer.write('</reflist></%s>' % name)
+                    writer.startElement('ref', { 'refid': v.id })
+                    writer.endElement('ref')
+            writer.endElement('reflist')
+            writer.endElement(name)
 
     def save_value(name, value):
         """Save a value (attribute).
         If the value is a string, it is saves as a CDATA block.
         """
         if value is not None:
-            buffer.write('<%s><val>' % name)
+            writer.startElement(name, {})
+            writer.startElement('val', {})
             if isinstance(value, types.StringTypes):
-                buffer.write('<![CDATA[%s]]>' % value.replace(']]>', '] ]>'))
+                writer.startCDATA()
+                writer.characters(value)
+                writer.endCDATA()
             elif isinstance(value, bool_):
                 # Write booleans as 0/1.
-                buffer.write(str(int(value)))
+                writer.characters(str(int(value)))
             else:
-                buffer.write(escape(str(value)))
-            buffer.write('</val></%s>\n' % name)
+                writer.characters(str(value))
+            writer.endElement('val')
+            writer.endElement(name)
 
     def save_element(name, value):
         """Save attributes and references from items in the gaphor.UML module.
@@ -87,9 +99,9 @@ def save_generator(filename=None, factory=None):
         elif isinstance(value, UML.collection):
             save_collection(name, value)
         elif isinstance(value, diacanvas.Canvas):
-            buffer.write('<canvas>')
+            writer.startElement('canvas', {})
             value.save(save_canvasitem)
-            buffer.write('</canvas>')
+            writer.endElement('canvas')
         else:
             save_value(name, value)
 
@@ -103,45 +115,34 @@ def save_generator(filename=None, factory=None):
         elif isinstance(value, UML.collection):
             save_collection(name, value)
         elif isinstance(value, diacanvas.CanvasItem):
-            buffer.write('<item id="%s" type="%s">' % (value.id, value.__class__.__name__))
+            writer.startElement('item', { 'id': value.id,
+                                          'type': value.__class__.__name__ })
             value.save(save_canvasitem)
-            buffer.write('</item>')
+            writer.endElement('item')
         else:
             save_value(name, value)
 
     if not factory:
         factory = gaphor.resource(UML.ElementFactory)
 
-    buffer = StringIO()
-    buffer.write('<?xml version="1.0" encoding="%s"?>\n' % sys.getdefaultencoding())
-    buffer.write('<gaphor version="%s" gaphor-version="%s">' % (FILE_FORMAT_VERSION, gaphor.resource('Version')))
+    writer.startDocument()
+    writer.startElement('gaphor', { 'version': FILE_FORMAT_VERSION,
+                                    'gaphor-version': gaphor.resource('Version') })
 
     size = factory.size()
     n = 0
     for e in factory.values():
         clazz = e.__class__.__name__
         assert e.id
-        buffer.write('<%s id="%s">' % (clazz, str(e.id)))
+        writer.startElement(clazz, { 'id': str(e.id) })
         e.save(save_element)
-        buffer.write('</%s>' % clazz)
+        writer.endElement(clazz)
         n += 1
         if n % 25 == 0:
             yield (n * 100) / size
 
-    buffer.write('</gaphor>')
-
-    buffer.reset()
-
-    if not filename:
-        print str(buffer.read())
-    else:
-        file = open (filename, 'w')
-        if not file:
-            raise IOError, 'Could not open file `%s\'' % (filename)
-        try:
-            file.write(buffer.read())
-        finally:
-            file.close()
+    writer.endElement('gaphor')
+    writer.endDocument()
 
 
 def load_elements(elements, factory, status_queue=None):

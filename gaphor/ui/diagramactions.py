@@ -5,7 +5,9 @@ Commands related to the Diagram (DiaCanvas)
 
 import gtk
 import diacanvas
+import gaphor
 import gaphor.UML as UML
+from gaphor.undomanager import UndoTransactionAspect, weave_method
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
@@ -265,6 +267,10 @@ register_action(DeleteAction, 'ItemSelect')
 
 class CopyAction(Action):
     """Copy/Cut/Paste functionality required a lot of thinking:
+
+    Store a list of DiagramItems that have to be copied in resource
+    'copy-buffer'.
+
       - in order to make copy/paste work, the load/save functions should be
         generatlised to allow a subset to be saved/loaded (which is needed
 	anyway for exporting/importing stereotype Profiles).
@@ -276,11 +282,10 @@ class CopyAction(Action):
     id = 'EditCopy'
     label = '_Copy'
     accel = 'C-x'
-    stock_id = 'gtk-cut'
+    stock_id = 'gtk-copy'
 
     def init(self, window):
 	self._window = window
-	self._stack = []
 
     def update(self):
 	diagram_tab = self._window.get_current_diagram_tab()
@@ -290,11 +295,79 @@ class CopyAction(Action):
 	view = self._window.get_current_diagram_view()
 	if view.is_focus():
 	    items = view.selected_items
+	    copy_items = []
 	    for i in items:
-		i.item.save(save_func)
+		copy_items.append(i.item)
+		#i.item.save(save_func)
+	    if copy_items:
+		gaphor.resource.set('copy-buffer', copy_items)
 	tab = self._window.get_current_diagram_tab()
 
 register_action(CopyAction)
+
+class PasteAction(Action):
+    """Copy/Cut/Paste functionality required a lot of thinking:
+
+    Create a copy of DiagramItems that have to be copied in resource
+    'copy-buffer'.
+
+      - in order to make copy/paste work, the load/save functions should be
+        generatlised to allow a subset to be saved/loaded (which is needed
+	anyway for exporting/importing stereotype Profiles).
+      - How many data should be saved? (e.g. we copy a diagram item, remove it
+	(the underlaying UML element is removed) and the paste the copied item.
+	The diagram should act as if we have placed a copy of the removed item
+	on the canvas and make the uml element visible again.
+    """
+    id = 'EditPaste'
+    label = '_Paste'
+    accel = 'C-v'
+    stock_id = 'gtk-paste'
+
+    def init(self, window):
+	self._window = window
+
+    def update(self):
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = diagram_tab and gaphor.resource('copy-buffer', [])
+
+    def execute(self):
+	from gaphor.misc.uniqueid import generate_id
+	import gaphor.diagram as diagram
+
+	view = self._window.get_current_diagram_view()
+	if not view:
+	    return
+
+	canvas = view.canvas
+	if not canvas:
+	    return
+
+	copy_items = gaphor.resource('copy-buffer', [])
+
+	# Mapping original id -> new item
+	new_items = {}
+
+	# Create new id's that have to be used to create the items:
+	for ci in copy_items:
+	    new_items[ci.id] = diagram.create(type(ci))
+
+	# Copy attributes and references. References should be
+	#  1. in the ElementFactory (hence they are model elements)
+	#  2. refered to in new_items
+	#  3. canvas property is overridden
+	if view.is_focus():
+	    items = view.selected_items
+	    copy_items = []
+	    for i in items:
+		copy_items.append(i.item)
+		#i.item.save(save_func)
+	    if copy_items:
+		gaphor.resource.set('copy-buffer', copy_items)
+	tab = self._window.get_current_diagram_tab()
+
+weave_method(PasteAction.execute, UndoTransactionAspect)
+register_action(PasteAction)
 
 
 class ZoomInAction(Action):

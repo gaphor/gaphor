@@ -1,3 +1,16 @@
+2004-11-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/diagramactions.py: Made a start if simple copy/paste
+	functionality.
+
+2004-11-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/xmlwriter.py: new file. XMLGenerator with CDATA handling
+	following the SAX standard.
+	* gaphor/storage.py: (save_generator) use XMLWriter for saving, no
+	longer produces XML statement itself. NOTE: also accepts the writer
+	as argument, no more filename!
+
 2004-11-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/association.py: added direction arrow.

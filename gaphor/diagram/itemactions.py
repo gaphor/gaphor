@@ -7,7 +7,6 @@ import diacanvas
 import gaphor
 import gaphor.diagram
 import gaphor.UML as UML
-#from gaphor.undomanager import get_undo_manager
 from gaphor.undomanager import UndoTransactionAspect, weave_method
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
