@@ -1,3 +1,11 @@
+2004-05-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/aspects.py: Added TimerAspect (a per function profiler)
+	* gaphor/ui/namespace.py: Now sorting works okay. Implemented faster
+	sorting algorithm.
+	* gaphor/diagram/dependency.py: Added load/save instructions for
+	dependency_type.
+
 2004-05-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/menufactory.py: fixed a few bugs

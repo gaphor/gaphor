@@ -10,6 +10,8 @@ import stock
 
 import gaphor.UML as UML
 
+import operator
+
 # The following items will not be shown in the treeview, although they
 # are UML.Namespace elements.
 _default_exclude_list = ( UML.Parameter, UML.Association )
@@ -39,16 +41,18 @@ class NamespaceModel(gtk.GenericTreeModel):
 
         self.exclude = _default_exclude_list
 
-    def new_node_from_element(self, element, parent):
+    def new_node_from_element(self, element, parent_node):
         """Create a new node for an element. Owned members are also created."""
         if isinstance(element, self.exclude):
             return
         node = (element, [])
-        parent[1].append(node)
+        parent_node[1].append(node)
+	# Sort the nodes, so we can tell the views exactly where the element
+	# is inserted.
+        self.sort_node(parent_node)
         path = self.path_from_element(element)
         #print 'new_node_from_element', path, element, element.name
         self.row_inserted(path, self.get_iter(path))
-        #self.sort_node(parent)
         element.connect('name', self.on_name_changed)
 
         if isinstance(element, UML.Namespace):
@@ -58,7 +62,8 @@ class NamespaceModel(gtk.GenericTreeModel):
         return node
 
     def detach_notifiers_from_node(self, node):
-        """Detach notifiers for node"""
+        """Detach notifiers for node
+	"""
         node[0].disconnect(self.on_name_changed)
         if isinstance(node[0], UML.Namespace):
             node[0].disconnect(self.on_ownedmember_changed)
@@ -66,7 +71,8 @@ class NamespaceModel(gtk.GenericTreeModel):
                 self.detach_notifiers_from_node(child)
 
     def node_and_path_from_element(self, element):
-        """Return (node, path) of an element."""
+        """Return (node, path) of an element.
+	"""
         #assert isinstance(element, UML.NamedElement)
         if element:
             parent_node, parent_path = self.node_and_path_from_element(element.namespace)
@@ -83,15 +89,18 @@ class NamespaceModel(gtk.GenericTreeModel):
             return self.root, ()
 
     def node_from_element(self, element):
-        """Get the node for an element."""
+        """Get the node for an element.
+	"""
         return self.node_and_path_from_element(element)[0]
 
     def path_from_element(self, element):
-        """Get the path to an element as a tuple (e.g. (0, 1, 1))."""
+        """Get the path to an element as a tuple (e.g. (0, 1, 1)).
+	"""
         return self.node_and_path_from_element(element)[1]
 
     def node_from_path(self, path):
-        """Get the node form a path. None is returned if no node is found."""
+        """Get the node form a path. None is returned if no node is found.
+	"""
         try:
             node = self.root
             for index in path:
@@ -123,9 +132,26 @@ class NamespaceModel(gtk.GenericTreeModel):
             return 1
 
     def sort_node(self, node):
-        """Sort nodes based on their names."""
-        node[1].sort(lambda a, b: a[0].name == b[0].name and 0 or \
-                                  a[0].name < b[0].name and -1 or 1)
+        """Sort nodes based on their names.
+        If path is set, the rows are "reordered".
+        """
+        # Do something like this (only a bit faster):
+        #    node[1].sort(lambda a, b: a[0].name == b[0].name and 0 or \
+        #                              a[0].name < b[0].name and -1 or 1)
+        # Uses Python cookbook recipe 2.6
+        children = node[1]
+        length = len(children)
+        getitem = operator.getitem
+        # Create a list of tuples (name, current index, node)
+        intermed = map(None,
+                       map(getattr, 
+                           map(getitem, children, (0,) * length),
+                           ('name',) * length), # name
+                       xrange(length), # index
+                       children) # node
+        intermed.sort()
+        # Replace the current node list with the new sorted list.
+        node[1][:] = map(getitem, intermed, (-1,) * length)
 
     def dump(self):
         def doit(node, depth=0):
@@ -138,7 +164,8 @@ class NamespaceModel(gtk.GenericTreeModel):
         doit(self.root)
 
     def on_name_changed(self, element, pspec):
-        """the name of element has changed, update the tree model"""
+        """the name of element has changed, update the tree model
+	"""
         path = self.path_from_element(element)
         if path:
             self.row_changed(path, self.get_iter(path))
@@ -221,38 +248,45 @@ class NamespaceModel(gtk.GenericTreeModel):
     # TreeModel methods:
 
     def on_get_flags(self):
-        """returns the GtkTreeModelFlags for this particular type of model"""
+        """returns the GtkTreeModelFlags for this particular type of model
+	"""
         return 0
 
     def on_get_n_columns(self):
-        """returns the number of columns in the model"""
+        """returns the number of columns in the model
+	"""
         return 1
 
     def on_get_column_type(self, index):
-        """returns the type of a column in the model"""
+        """returns the type of a column in the model
+	"""
         return gobject.TYPE_PYOBJECT
 
     def on_get_path (self, node):
-        """returns the path for a node as a tuple (0, 1, 1)"""
+        """returns the path for a node as a tuple (0, 1, 1)
+	"""
         #print 'on_get_path', node
         return self.path_from_element(node[0])
 
     def on_get_iter(self, path):
         """returns the node corresponding to the given path.
         The path is a tuple of values, like (0 1 1). Returns None if no
-        iterator can be created."""
+        iterator can be created.
+	"""
         #print 'on_get_iter', path
         return self.node_from_path(path)
 
     def on_get_value(self, node, column):
-        """returns the model element that matches 'node'."""
+        """returns the model element that matches 'node'.
+	"""
         assert column == 0, 'column can only be 0'
         #print 'on_get_value', node, column
         return node[0]
 
     def on_iter_next(self, node):
         """Returns the next node at this level of the tree (None if no
-        next element)."""
+        next element).
+	"""
         #print 'on_iter_next:', node
         try:
             parent = self.node_from_element(node[0].namespace)
@@ -266,22 +300,26 @@ class NamespaceModel(gtk.GenericTreeModel):
             return None
         
     def on_iter_has_child(self, node):
-        """Returns true if this node has children, or None"""
+        """Returns true if this node has children, or None.
+	"""
         #print 'on_iter_has_child', node
         return len(node[1]) > 0
 
     def on_iter_children(self, node):
-        """Returns the first child of this node, or None"""
+        """Returns the first child of this node, or None.
+	"""
         #print 'on_iter_children'
         return node[1][0]
 
     def on_iter_n_children(self, node):
-        """Returns the number of children of this node"""
+        """Returns the number of children of this node.
+	"""
         #print 'on_iter_n_children'
         return len (node[1])
 
     def on_iter_nth_child(self, node, n):
-        """Returns the nth child of this node"""
+        """Returns the nth child of this node.
+	"""
         #print "on_iter_nth_child", node, n
         try:
             if node is None:
@@ -395,7 +433,7 @@ class NamespaceView(gtk.TreeView):
 #        print 'do_drag_begin'
 
     def do_drag_data_get (self, context, selection_data, info, time):
-        print 'do_drag_data_get'
+        log.debug('do_drag_data_get')
         selection = self.get_selection()
         model, iter = selection.get_selected()
         if iter:
@@ -428,3 +466,7 @@ class NamespaceView(gtk.TreeView):
 
 gobject.type_register(NamespaceModel)
 gobject.type_register(NamespaceView)
+
+#if __debug__:
+#    from gaphor.misc.aspects import weave_method, TimerAspect
+#    NamespaceModel.sort_node = weave_method(NamespaceModel.sort_node, TimerAspect)

@@ -578,3 +578,12 @@ class DependencyTypeRealizationAction(DependencyTypeAction):
 
 register_action(DependencyTypeRealizationAction, 'ItemFocus')
 
+
+class DependencyTypeImplementationAction(DependencyTypeAction):
+    id = 'DependencyTypeImplementation'
+    label = 'Implementation'
+    group = 'dependency_type'
+    dependency_type = UML.Implementation
+
+register_action(DependencyTypeImplementationAction, 'ItemFocus')
+

@@ -121,6 +121,7 @@ class MainWindow(AbstractWindow):
                 'InsertCommentLine')),
         ("Classes", (
                 'InsertClass',
+                'InsertInterface',
                 'InsertPackage',
                 'InsertAssociation',
                 'InsertDependency',

@@ -59,6 +59,7 @@ from comment import CommentItem
 from commentline import CommentLineItem
 from usecase import UseCaseItem
 from package import PackageItem
+from interface import InterfaceItem
 from relationship import RelationshipItem
 from dependency import DependencyItem
 from generalization import GeneralizationItem

@@ -126,11 +126,23 @@ class ClassPlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new Class item'
     stock_id = 'gaphor-class'
     name = 'Class'
-    accel = 'C-c'
     type = diagram.ClassItem
     subject_type = UML.Class
 
 register_action(ClassPlacementAction)
+
+
+class InterfacePlacementAction(NamespacePlacementAction):
+    id = 'InsertInterface'
+    label = '_Interface'
+    tooltip = 'Create a new Interface item'
+    stock_id = 'gaphor-interface'
+    name = 'interface'
+    type = diagram.InterfaceItem
+    subject_type = UML.Interface
+
+register_action(InterfacePlacementAction)
+
 
 class StereotypePlacementAction(NamespacePlacementAction):
     id = 'InsertStereotype'

@@ -38,13 +38,17 @@ class PlacementTool(diacanvas.PlacementTool):
     def _grab_handle(self, view, event, item):
         if not self.is_released:
             if isinstance(item, diacanvas.CanvasElement):
+                self.handle_tool = diacanvas.view.HandleTool()
                 #print 'PlacementTool: setting handle of Element'
-                handle = item.handles[diacanvas.HANDLE_SE]
-                if not handle.get_property('movable'):
+                handle = item.handles[-1] #[diacanvas.HANDLE_SE]
+                if handle.get_property('movable'):
+                   self.handle_tool.set_grabbed_handle(handle)
+                else:                
                     view_item = view.find_view_item(item)
                     view.focus(view_item)
                     return
-            diacanvas.PlacementTool._grab_handle(self, view, event, item)
+            else:
+                diacanvas.PlacementTool._grab_handle(self, view, event, item)
 
     def do_button_press_event(self, view, event):
         view.unselect_all()

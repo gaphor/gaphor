@@ -64,6 +64,7 @@ class LoggerAspect(Aspect):
         else:
             print 'with return value', retval
 
+
 class ReferenceAspect(Aspect):
     """This reference keeps track of objects created by a method.
     A weak reference to those objects is created and appended to reflist.
@@ -77,6 +78,27 @@ class ReferenceAspect(Aspect):
         import weakref
         if retval:
             self.reflist.append(weakref.ref(retval))
+
+
+class TimerAspect(Aspect):
+    """This aspect tracks the execution time of a function/method, a bit like
+    a profiler.
+    The time spend in a function/method is printed to stdout.
+    """
+
+    def __init__(self, method):
+        import time
+        self.timer = time.time
+        self.method = method
+        self.total_time_spend = 0.0
+
+    def before(self):
+        self.current_time = self.timer()
+
+    def after(self, retval, exc):
+        elapsed = self.timer() - self.current_time
+        self.total_time_spend += elapsed
+        print 'Time spend in %s: %f (total: %f)' % (self.method.__name__, elapsed, self.total_time_spend)
 
 
 if __name__ == '__main__':

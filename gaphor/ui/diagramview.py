@@ -53,7 +53,7 @@ class DiagramView(CanvasView):
 	    elemfact = gaphor.resource('ElementFactory')
 	    element = elemfact.lookup(data.data)
 	    assert element
-	    item_class = get_diagram_item(element.__class__)
+	    item_class = get_diagram_item(type(element))
 	    if item_class:
 		item = self.create(item_class)
 		assert item
@@ -63,7 +63,7 @@ class DiagramView(CanvasView):
 		item.move(ix, iy)
 		item.set_property ('subject', element)
 	    else:
-		log.warning ('No graphical representation for UML element %s', element.__class__.__name__)
+		log.warning ('No graphical representation for UML element %s' % type(element).__name__)
 	    context.finish(gtk.TRUE, gtk.FALSE, time)
 	else:
 	    context.finish(gtk.FALSE, gtk.FALSE, time)

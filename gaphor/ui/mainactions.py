@@ -350,7 +350,7 @@ class OpenElementAction(Action):
 	    #self._window.add_transient_window(diagram_window)
 	    #self._window.new_notebook_tab(diagram_window, element.name)
 	else:
-	    log.debug('No action defined for element %s' % element.__class__.__name__)
+	    log.debug('No action defined for element %s' % type(element).__name__)
 
 register_action(OpenElementAction, 'SelectRow')
 
