@@ -31,7 +31,7 @@ def flush():
 if 0 and __debug__: 
     # Keep track of all model elements that are created
     from gaphor.misc.aspects import ReferenceAspect, LoggerAspect, weave_method
-    import gaphor.UML import diagram
+    from gaphor.UML import diagram
     from gaphor import refs
     weave_method(ElementFactory.create_as, ReferenceAspect, refs)
     weave_method(diagram.Diagram.create, ReferenceAspect, refs)
