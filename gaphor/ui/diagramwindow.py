@@ -97,6 +97,7 @@ class DiagramWindow(AbstractWindow):
 
 	self.__destroy_id = window.connect('destroy', self.__on_window_destroy)
 	view.connect('notify::tool', self.__on_view_notify_tool)
+	view.connect('event', self.__on_view_event)
 
 	window.show_all()
 	#window.connect ('destroy', self.__destroy_event_cb)
@@ -161,6 +162,9 @@ class DiagramWindow(AbstractWindow):
 	print self, view, tool
 	if not view.get_property('tool'):
 	    self.set_message('')
+
+    def __on_view_event(self, event):
+	return 0
 
     def __on_diagram_undo(self, canvas):
 	#log.debug('Undo: %d, Redo: %d' % (canvas.get_undo_depth(), canvas.get_redo_depth()))

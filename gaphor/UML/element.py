@@ -437,7 +437,7 @@ The signals protocol is:
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
-    def oclIsKindOf(self,c):
+    def isKindOf(self,c):
         """Returns true if the object is an instance of c"""
         return isinstance(self,c)
 

@@ -16,7 +16,7 @@ class FeatureItem(CanvasText, DiagramItem):
     FeatureItems are model elements who recide inside a ClassItem, such as
     methods and attributes. Those items can have comments attached, but only on
     the left and right side.
-    Note that classmembers can also be used inside objects.
+    Note that features can also be used inside objects.
     """
     __gproperties__ = {
 	'subject':	(gobject.TYPE_PYOBJECT, 'subject',
@@ -29,9 +29,8 @@ class FeatureItem(CanvasText, DiagramItem):
 	self.__gobject_init__()
 	DiagramItem.__init__(self)
 	diacanvas.CanvasText.__init__(self)
-	font = pango.FontDescription(ClassMember.FONT)
-	self.set(font=font, width=self.width,
-			alignment=pango.ALIGN_LEFT)
+	font = pango.FontDescription(FeatureItem.FONT)
+	self.set(font=font, width=self.width, alignment=pango.ALIGN_LEFT)
 	w, h = self.__name.get_property('layout').get_pixel_size()
 	self.set(height=h)
 	self.connect('text_changed', self.on_text_changed)

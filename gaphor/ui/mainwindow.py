@@ -59,8 +59,11 @@ class MainWindow(AbstractWindow):
 	
 	model = namespace.NamespaceModel(GaphorResource(UML.ElementFactory))
 	view = namespace.NamespaceView(model)
-
-	window.set_contents(view)
+	scrolled_window = gtk.ScrolledWindow()
+	scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+	scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+	scrolled_window.add(view)
+	window.set_contents(scrolled_window)
 	
 	window.show_all()
 

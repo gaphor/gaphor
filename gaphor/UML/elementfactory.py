@@ -65,6 +65,13 @@ class ElementFactory(object):
     def get_model(self):
 	return self.__model
 
+    def select(self, expression):
+	l = []
+	for e in self.__elements.values():
+	    if expression(e):
+		l.append(e)
+	return l
+
     def keys (self):
         return self.__elements.keys()
 
@@ -102,7 +109,5 @@ class ElementFactory(object):
 	#print 'ElementFactory::element_destroyed...'
 	obj().disconnect_by_data(obj)
 
-    def values(self):
-	return self.__elements.values()
 
 GaphorResource(ElementFactory)

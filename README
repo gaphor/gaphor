@@ -4,21 +4,13 @@
 Gaphor is rapidly becoming the first really usable CASE tool for GNOME (and
 Linux in general).
 
-Gaphor is written in Python, which makes it very easy to use and
-very easy to extend.
+Gaphor is written in Python, which makes it very easy to use (and
+very easy to extend (and to write ;-).
 
 To get started do the following things:
-- Get orbit-python, pygtk and gnome-python.
-- Patch the orbit-python sources with 'orbit-python-fix.patch'
-- Compile and install orbit-python, pygtk and gnome-python.
+- Get pyorbit, pygtk and gnome-python (the latest versions)
+- Compile and install pyorbit, pygtk and gnome-python.
 - do './configure; make' in the Gaphor source directory.
 - Launch gaphor using the 'gaphor.sh' shell script.
-
-NOTE:	Gaphor is using Bonobo. For now the Python bindings for Bonobo
-	rely on Orbit-Python. You would like to patch orbit-python with
-	'orbit-python-fix.patch'. This will prevent gaphor from crashing when
-	you close a window. I hop this patch will disappear as soon as the
-	new Orbit bindings for Python are mature enough.
-	If in doubt, please mail me.
 
 	- Arjan Molenaar <arjanmolenaar@hetnet.nl>
