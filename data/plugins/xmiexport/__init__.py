@@ -14,7 +14,7 @@ class XMIExportAction(Action):
         else:
             filename = 'model.xmi'
 
-        if gtk.gtk_version < (2, 4, 0):
+        if gtk.pygtk_version < (2, 4, 0):
             filesel = gtk.FileSelection('Export model to XMI file')
             filesel.set_filename(filename)
         else:

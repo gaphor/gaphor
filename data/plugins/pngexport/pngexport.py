@@ -12,7 +12,7 @@ class PNGExport(Action):
         self.sensitive = tab and True or False
 
     def execute(self):
-        if gtk.gtk_version < (2, 4, 0):
+        if gtk.pygtk_version < (2, 4, 0):
             filesel = gtk.FileSelection('Export diagram to PNG file')
         else:
             filesel = gtk.FileChooserDialog(title='Export diagram to PNG file',

@@ -334,10 +334,11 @@ class PasteAction(Action):
 
     def execute(self):
         view = self._window.get_current_diagram_view()
+        diagram = self._window.get_current_diagram()
         if not view:
             return
 
-        diagram = view.get_diagram()
+        #diagram = view.get_diagram()
         canvas = diagram.canvas
         if not canvas:
             return

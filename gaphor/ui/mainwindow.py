@@ -257,6 +257,7 @@ class MainWindow(AbstractWindow):
         self._toolbox = toolbox
 
         # We want to store the window size, so it can be reloaded on startup
+        self.window.set_property('allow-shrink', True)
         self.window.connect('size-allocate', self.on_window_size_allocate)
 
         # Set some handles for the undo manager

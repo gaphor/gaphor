@@ -13,7 +13,7 @@ class SVGExportAction(Action):
 
     def execute(self):
         filename = (self.get_window().get_current_diagram().name or 'export') + '.svg'
-        if gtk.gtk_version < (2, 4, 0):
+        if gtk.pygtk_version < (2, 4, 0):
             filesel = gtk.FileSelection('Export diagram to SVG file')
             filesel.set_filename(filename)
         else:
