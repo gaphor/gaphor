@@ -1,5 +1,5 @@
 '''
-CommentLine -- A line that connects a comment to another model element.
+Relationship -- Base class for dependencies and associations.
 '''
 # vim:sw=4
 
@@ -26,7 +26,7 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	self.__id = -1
 
     def save (self, store):
-	for prop in CommentLineItem.__savable_properties:
+	for prop in RelationshipItem.__savable_properties:
 	    store.save_property(prop)
 	points = [ ]
 	for h in self.handles:
@@ -40,10 +40,11 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	c = self.handles[-1].connected_to
 	if c:
 	    store.save_attribute ('tail_connection', c)
-	store.save_attribute('subject', self.subject)
+	if self.subject:
+	    store.save_attribute('subject', self.subject)
 
     def load (self, store):
-	for prop in CommentLineItem.__savable_properties:
+	for prop in RelationshipItem.__savable_properties:
 	    self.set_property(prop, eval (store.value(prop)))
 	points = eval(store.value('points'))
 	assert len(points) >= 2
@@ -101,16 +102,22 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	return self._on_disconnect_handle(handle, diacanvas.CanvasLine)
 
     # Gaphor Connection Protocol
+    #
+    # The item a handle is connecting to is in charge of the connection
+    # cyclus. However it informs the item it is connecting to by means of
+    # the four methods defined below. The items that are trying to connect
+    # (mostly Relationship objects or CommentLines) know what kind of item
+    # they are allowed to connect to.
 
     def allow_connect_handle(self, handle, connecting_to):
 	"""
 	This method is called by a canvas item if the user tries to connect
 	this object's handle. allow_connect_handle() checks if the line is
 	allowed to be connected. In this case that means that one end of the
-	line should be connected to a Comment.
+	line should be connected to a Relationship.
 	Returns: TRUE if connection is allowed, FALSE otherwise.
 	"""
-	return 1
+	return 0
 
     def confirm_connect_handle (self, handle):
 	"""
@@ -120,9 +127,18 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	pass
 
     def allow_disconnect_handle (self, handle):
+	"""
+	If a handle wants to disconnect, this method is called first. This
+	method is here mainly for the sake of completeness, since it is
+	quite unlikely that a handle is not allowed to disconnect.
+	"""
 	return 1
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
+	"""
+	This method is called to do some cleanup after 'self' has been
+	disconnected from 'was_connected_to'.
+	"""
 	pass
 
 

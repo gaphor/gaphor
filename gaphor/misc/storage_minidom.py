@@ -310,13 +310,16 @@ class Storage(object):
 		elif refid[0] == 'a':
 		    key = int(refid[1:])
 		    refelem = self.__info.factory.lookup(key)
+		elif refid == 'None':
+		    pass
 		else:
 		    raise ValueError, 'Invalid ID for reference (%s)' % refid
 
-		if d.has_key(name):
-		    d[name].append (refelem)
-		else:
-		    d[name] = [ refelem ]
+		if refelem:
+		    if d.has_key(name):
+			d[name].append (refelem)
+		    else:
+			d[name] = [ refelem ]
 	    #ref = ref.next
 	    ref = ref.nextSibling
 	return d

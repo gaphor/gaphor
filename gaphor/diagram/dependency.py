@@ -11,7 +11,7 @@ import relationship
 class DependencyItem(relationship.RelationshipItem):
 
     def __init__(self):
-	relationship.RelationshipItem(self)
+	relationship.RelationshipItem.__init__(self)
 	self.set(dash=(7.0, 5.0), has_head=1, head_fill_color=0,
 		 head_a=0.5, head_b=15.0, head_c=10.0, head_d=10.0)
 	
@@ -31,8 +31,10 @@ class DependencyItem(relationship.RelationshipItem):
 	Returns: TRUE if connection is allowed, FALSE otherwise.
 	"""
 	try:
-	    return isinstance(handle.owner.subject, UML.ModelElement)
+	    print 'Is it a ModelElement:', isinstance(connecting_to.subject, UML.ModelElement)
+	    return isinstance(connecting_to.subject, UML.ModelElement)
 	except AttributeError:
+	    print 'Dependency: AttributeError'
 	    return 0
 
     def confirm_connect_handle (self, handle):

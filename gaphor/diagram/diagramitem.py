@@ -22,24 +22,33 @@ class DiagramItem(object):
     # DiaCanvasItem callbacks
     def _on_glue(self, handle, wx, wy, parent):
 	if handle.owner.allow_connect_handle (handle, self):
+	    #print self.__class__.__name__, 'Glueing allowed.'
 	    return parent.on_glue (self, handle, wx, wy)
+	#else:
+	    #print self.__class__.__name__, 'Glueing NOT allowed.'
 	# Dummy value with large distance value
 	return None
 
     def _on_connect_handle (self, handle, parent):
 	if handle.owner.allow_connect_handle (handle, self):
+	    #print self.__class__.__name__, 'Connection allowed.'
 	    ret = parent.on_connect_handle (self, handle)
 	    if ret != 0:
 		handle.owner.confirm_connect_handle(handle)
 		return ret
+	#else:
+	    #print self.__class__.__name__, 'Connection NOT allowed.'
 	return 0
 
     def _on_disconnect_handle (self, handle, parent):
 	if handle.owner.allow_disconnect_handle (handle):
+	    #print self.__class__.__name__, 'Disconnecting allowed.'
 	    ret = parent.on_disconnect_handle (self, handle)
 	    if ret != 0:
 		handle.owner.confirm_disconnect_handle(handle, self)
 		return ret
+	#else:
+	    #print self.__class__.__name__, 'Disconnecting NOT allowed.'
 	return 0
 
     def on_parent_notify (self, parent):

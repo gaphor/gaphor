@@ -171,8 +171,8 @@ class DiagramView:
 	#    set_placement_tool (diagram.Generalization, None)
 	#elif action == ITEM_ADD_REALIZATION:
 	#    set_placement_tool (diagram.Realization, None)
-	#elif action == ITEM_ADD_DEPENDENCY:
-	#    set_placement_tool (diagram.Dependency, None)
+	elif action == ITEM_ADD_DEPENDENCY:
+	    set_placement_tool (diagram.DependencyItem, None)
 	#elif action == ITEM_ADD_INCLUDE:
 	#    set_placement_tool (diagram.Include, None)
 	#elif action == ITEM_ADD_EXTEND:
