@@ -31,8 +31,8 @@ def base__getitem__(self, key):
 base.__getitem__ = base__getitem__
 
 # redefine 'bool' for Python version < 2.3
-#if map(int, sys.version[:3].split('.')) < [2, 3]:
-#    header = header + "bool = int\n"
+if map(int, sys.version[:3].split('.')) < [2, 3]:
+    header = header + "bool = int\n"
 
 def msg(s):
     sys.stderr.write('  ')
