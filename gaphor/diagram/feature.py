@@ -107,7 +107,11 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         return distance_rectangle_point(self.get_bounds(), (x, y))
 
     def on_shape_iter(self):
-        return iter([self._expression])
+        from classifier import ClassifierItem
+        if self.parent and self.parent.drawing_style != ClassifierItem.DRAW_ICON:
+            return iter([self._expression])
+        else:
+            return iter([])
 
     # Editable
 
