@@ -96,9 +96,7 @@ class DependencyItem(RelationshipItem):
         c1 = c1 or self.handles[0].connected_to
         if c1 and self.dependency_type is UML.Implementation and isinstance(c1.subject, UML.Interface):
             if self.get_property('has_head'):
-                print 'settinh'
                 self.set(dash=None, has_head=0)
-                print 'done;'
                 self._stereotype.set_text('')
         else:
             if not self.get_property('has_head'):

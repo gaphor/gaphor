@@ -58,6 +58,10 @@
     <file>initialnode24.png</file>
     <element>InitialNode</element>
   </icon>
+  <icon id="gaphor-interface">
+    <file>interface24.png</file>
+    <element>Interface</element>
+  </icon>
   <icon id="gaphor-operation">
     <file>pointer24.png</file>
     <element>Operation</element>

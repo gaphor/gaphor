@@ -9,6 +9,7 @@
 	* gaphor/diagram/actions.py: added placement tool and action for
 	interfaces (creates both an interface and an Implementation
 	dependency.
+	* data/pixmaps/interface24.png: added icon for Interface.
 
 2004-05-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
