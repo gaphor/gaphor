@@ -1,3 +1,13 @@
+2002-02-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/command/diagrampopup.py: Added popup menu items for
+	Associations (Navigable, aggregation kind).
+	* gaphor/ui/diagramwindow.py: look for item specific popup menu
+	* data/gaphor-diagram-ui.xml: Added menu for Association.
+	* gaphor/misc/command.py: Added StatefulCommand.
+	* gaphor/diagram/association.py: several fixes.
+	* gaphor/ui/commandregistry.py: handle StatefulCommands right.
+
 2002-02-21  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/command/diagrampopup.py: Added commands for segment

@@ -87,6 +87,17 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
+    def has_capability(self, capability):
+	#log.debug('Relationship: checking capability %s' % capability)
+	if capability == 'orthogonal':
+	    return self.get_property('orthogonal')
+	elif capability == 'del_segment':
+	    if self.get_property('orthogonal'):
+		return len(self.handles) > 3
+	    else:
+		return len(self.handles) > 2
+	return DiagramItem.has_capability(self, capability)
+
     def on_glue(self, handle, wx, wy):
 	return self._on_glue(handle, wx, wy, diacanvas.CanvasLine)
 

@@ -5,6 +5,8 @@ These commands are registered to the CommandRegistry from which they can be
 instantiated and added as commands for the specific menu items.
 """
 
+from gaphor.misc.command import StatefulCommand
+
 class _CommandExecuter(object):
     """
     Wrapper class for executing commands from (Bonobo) menus.
@@ -13,12 +15,15 @@ class _CommandExecuter(object):
 	self.command = command
 	self.executing = 0
 
-    def __call__(self, *args):
-	#print 'CommandExecuter.__call__:', args
+    def __call__(self, ui_component, name, type=-1, state=0):
+	print 'CommandExecuter.__call__:', ui_component, name, type, state
 	if not self.executing:
 	    self.executing = 1
 	    try:
-		self.command.execute()
+		if isinstance(self.command, StatefulCommand):
+		    self.command.execute(int(state))
+		else:
+		    self.command.execute()
 	    except Exception, e:
 		# TODO: create a warning dialog or something
 		log.warning('Command execution failed: %s' % e)

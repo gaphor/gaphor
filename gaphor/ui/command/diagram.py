@@ -3,7 +3,7 @@ Commands related to the Diagram (DiaCanvas)
 """
 # vim: sw=4
 
-from gaphor.misc.command import Command
+from gaphor.misc.command import Command, StatefulCommand
 from commandinfo import CommandInfo
 import gaphor.UML as UML
 import gtk
@@ -204,14 +204,14 @@ CommandInfo (name='ViewZoom100', _label='_Zoom 100%', pixname='gtk-zoom-100',
 	     command_class=Zoom100Command).register()
 
 
-class SnapToGridCommand(Command):
+class SnapToGridCommand(StatefulCommand):
 
     def set_parameters(self, params):
 	self._view = params['window'].get_view()
 
-    def execute(self):
-	snap = self._view.canvas.get_property ('snap_to_grid')
-	self._view.canvas.set_property ('snap_to_grid', not snap)
+    def execute(self, snap):
+	#snap = self._view.canvas.get_property ('snap_to_grid')
+	self._view.canvas.set_property ('snap_to_grid', snap)
 	log.debug('Snap to grid set to %d' % self._view.canvas.get_property('snap_to_grid'))
 
 CommandInfo (name='SnapToGrid', _label='_Snap to grid',

@@ -74,6 +74,26 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	    #print 'Association.__dict__ =', self.__dict__
 	    return RelationshipItem.do_get_property(self, pspec)
 
+    def has_capability(self, capability):
+	if capability == 'head_is_navigable':
+	    return self.head_end and self.head_end.isNavigable or False
+	elif capability == 'tail_is_navigable':
+	    return self.tail_end and self.tail_end.isNavigable or False
+	elif capability == 'head_ak_none':
+	    return self.head_end and (self.head_end.aggregation is UML.AK_NONE) or False
+	elif capability == 'head_ak_aggregate':
+	    return self.head_end and (self.head_end.aggregation is UML.AK_AGGREGATE) or False
+	elif capability == 'head_ak_composite':
+	    return self.head_end and (self.head_end.aggregation is UML.AK_COMPOSITE) or False
+	elif capability == 'tail_ak_none':
+	    return self.tail_end and (self.tail_end.aggregation is UML.AK_NONE) or False
+	elif capability == 'tail_ak_aggregate':
+	    return self.tail_end and (self.tail_end.aggregation is UML.AK_AGGREGATE) or False
+	elif capability == 'tail_ak_composite':
+	    return self.tail_end and (self.tail_end.aggregation is UML.AK_COMPOSITE) or False
+	else:
+	    return RelationshipItem.has_capability(self, capability)
+
     def _set_head_end(self, head_end):
 	if head_end is not self.head_end:
 	    if self.head_end:
@@ -83,6 +103,8 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	    if head_end:
 		head_end.add_presentation(self)
 		self.head_end.connect(self.on_association_end_update, head_end)
+		self.__head_name.set_property('text', head_end.name)
+		self.__head_mult.set_property('text', head_end.multiplicity)
 
     def _set_tail_end(self, tail_end):
 	if tail_end is not self.tail_end:
@@ -93,6 +115,8 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	    if tail_end:
 		tail_end.add_presentation(self)
 		self.tail_end.connect(self.on_association_end_update, tail_end)
+		self.__tail_name.set_property('text', tail_end.name)
+		self.__tail_mult.set_property('text', tail_end.multiplicity)
 
     def __update_labels(self, name_label, mult_label, p1, p2):
 	"""Update label placement for association's name and
@@ -197,7 +221,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 		    self.set(has_head=0)
 	    else:
 		self.set(has_head=1, head_a=20, head_b=10, head_c=6, head_d=6)
-		if self.head_end.aggregation == UML.AK_COMPOSITE:
+		if self.tail_end.aggregation == UML.AK_COMPOSITE:
 		    self.set(head_fill_color=diacanvas.color(0,0,0,255))
 		else:         
 		    self.set(head_fill_color=diacanvas.color(0,0,0,0))
@@ -339,6 +363,11 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 		relation.connection = tail_end
 		head_end.participant = s1
 		tail_end.participant = s2
+		# copy text from ends to AssociationEnds:
+		head_end.name = self.__head_name.get_property('text')
+		head_end.multiplicity = self.__head_mult.get_property('text')
+		tail_end.name = self.__tail_name.get_property('text')
+		tail_end.multiplicity = self.__tail_mult.get_property('text')
 	    self._set_subject(relation)
 	    self._set_head_end(head_end)
 	    self._set_tail_end(tail_end)

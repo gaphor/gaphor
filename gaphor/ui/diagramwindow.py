@@ -102,14 +102,25 @@ class DiagramWindow(AbstractWindow):
 	    view.canvas.push_undo(None)
 	    elements = list()
 	    vitem = view.focus_item
+	    ui_component = self.get_ui_component()
+	    popup='DiagramView'
 	    while vitem and vitem.has_focus():
 		if hasattr(vitem.item, 'subject'):
 		    elements.append(vitem.item.subject)
 		# Also add the canvas item, since some menu items depend on it
 		elements.append(vitem.item)
+		# If there is a popup menu with the name of the element's
+		# subject, use that
+		try:
+		    path=vitem.item.subject.__class__.__name__
+		except AttributeError:
+		    pass
+		else:
+		    if ui_component.path_exists('/popups/' + path):
+			popup=path
 		vitem = vitem.get_property('parent')
 
-	    self._construct_popup_menu(name='DiagramView',
+	    self._construct_popup_menu(popup=popup,
 				       elements=elements,
 				       event=event,
 				       params={ 'window': self,

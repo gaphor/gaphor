@@ -27,6 +27,7 @@
 	    <menuitem name="ViewZoom100" verb=""/>
 	    <separator/>
 	    <menuitem name="SnapToGrid" verb="" type="toggle"/>
+	    <menuitem name="BonoboUIDump" _label="Dump"/>
 	</submenu>
 
 	<submenu name="Insert" _label="_Insert">
@@ -57,15 +58,48 @@
     </dockitem>
 
     <popups>
+	<!-- Generic popup menu: -->
 	<popup name="DiagramView">
 	    <menuitem name="EditDelete" verb=""/>
 	    <separator/>
 	    <!-- For classes: -->
 	    <menuitem name="CreateAttribute" verb=""/>
 	    <menuitem name="CreateOperation" verb=""/>
+	    <menuitem name="ShowAttributes" verb="" type="toggle"/>
+	    <menuitem name="ShowOperations" verb="" type="toggle"/>
 	    <!-- For line like items: -->
 	    <menuitem name="AddSegment" verb=""/>
 	    <menuitem name="DeleteSegment" verb=""/>
+	    <menuitem name="Orthogonal" verb="" type="toggle"/>
+	    <separator/>
+	    <menuitem name="SnapToGrid" verb="" type="toggle"/>
+	</popup>
+
+	<!-- Specific popup menus: they have the name of the
+	     item they are meny to be used for. -->
+	<popup name="Association">
+	    <menuitem name="EditDelete" verb=""/>
+	    <separator/>
+	    <menuitem name="AddSegment" verb=""/>
+	    <menuitem name="DeleteSegment" verb=""/>
+	    <menuitem name="Orthogonal" verb="" type="toggle"/>
+	    <separator/>
+	    <submenu _label="Side A">
+		<menuitem name="Tail_isNavigable" verb="" type="toggle"/>
+		<separator/>
+		<menuitem name="Tail_None" verb="" type="radio" group="ak_tail"/>
+		<menuitem name="Tail_Aggregate" verb="" type="radio" group="ak_tail"/>
+		<menuitem name="Tail_Composite" verb="" type="radio" group="ak_tail"/>
+	    </submenu>
+	    <submenu _label="Side B">
+		<menuitem name="Head_isNavigable" verb="" type="toggle"/>
+		<separator/>
+		<menuitem name="Head_None" verb="" type="radio" group="ak_head"/>
+		<menuitem name="Head_Aggregate" verb="" type="radio" group="ak_head"/>
+		<menuitem name="Head_Composite" verb="" type="radio" group="ak_head"/>
+	    </submenu>
+	    <separator/>
+	    <menuitem name="SnapToGrid" verb="" type="toggle"/>
 	</popup>
     </popups>
 

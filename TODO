@@ -1,5 +1,9 @@
 As always, there is much to do...
 
+- attributes and operations visible for classes
+- deselect doesn't work properly on all elements...
+- fix Class implementation
+
 ---
 It seems like PyObject's do not live as long as GObject objects. Once a PyObject
 object has no references to itself, it can be destroyed (or at least it's
@@ -22,9 +26,6 @@ get/set_data to store its id.
 
 - Set up a plugin architecture. Since the internals of gaphor are pretty
   modular, plugins should not be that hard.
-
-- Text near lines (associations, dependencies, etc.). Not having this is a
-  show-stopper...
 
 - Some nice icons.
 

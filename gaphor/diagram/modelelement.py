@@ -37,14 +37,14 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
     def set_id(self, value):
 	self.__id = value
 
-    def save (self, save_func):
+    def save(self, save_func):
 	self.save_property(save_func, 'affine')
 	self.save_property(save_func, 'width')
 	self.save_property(save_func, 'height')
 	save_func('subject', self.subject)
 	self.save_property(save_func, 'auto-resize')
 
-    def load (self, name, value):
+    def load(self, name, value):
 	#if name in ( 'affine', 'width', 'height', 'auto-resize' ):
 	#if name == 'subject':
 	#self.set_property('subject', store.reference('subject')[0])
@@ -57,7 +57,7 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
     def postload(self):
 	pass
 
-    def do_set_property (self, pspec, value):
+    def do_set_property(self, pspec, value):
 	if pspec.name == 'id':
 	    self.__id = value
 	elif pspec.name == 'subject':
@@ -82,13 +82,13 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
     def on_glue(self, handle, wx, wy):
 	return self._on_glue(handle, wx, wy, diacanvas.CanvasElement)
 
-    def on_connect_handle (self, handle):
+    def on_connect_handle(self, handle):
 	return self._on_connect_handle(handle, diacanvas.CanvasElement)
 
-    def on_disconnect_handle (self, handle):
+    def on_disconnect_handle(self, handle):
 	return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
 
-    def on_subject_update (self, name, old_value, new_value):
+    def on_subject_update(self, name, old_value, new_value):
 	if name == '__unlink__':
 	    #self.set_property('subject', None)
 	    if self.parent:

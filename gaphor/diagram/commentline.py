@@ -86,6 +86,17 @@ class CommentLineItem(diacanvas.CanvasLine):
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
+    def has_capability(self, capability):
+	#log.debug('Relationship: checking capability %s' % capability)
+	if capability == 'orthogonal':
+	    return self.get_property('orthogonal')
+	elif capability == 'del_segment':
+	    if self.get_property('orthogonal'):
+		return len(self.handles) > 3
+	    else:
+		return len(self.handles) > 2
+	return False
+
     def on_glue(self, handle, wx, wy):
 	"No connections are allowed on a CommentLine."
 	return None

@@ -27,6 +27,7 @@ class AbstractWindow(object):
 	self.__name = None
 	self.__state = AbstractWindow.STATE_INIT
 	self.__signal = Signal()
+	self.__popups = dict()
 	self.__capabilities = list()
 	self.__update_id = gobject.idle_add(self._on_capability_update)
 
@@ -136,7 +137,7 @@ class AbstractWindow(object):
 	# the get_* methods.
 	self._set_state(AbstractWindow.STATE_ACTIVE)
 
-	# Set commands:
+	# Set commands, for menu and (possible) popup menus:
 	command_registry = GaphorResource(CommandRegistry)
 
 	ui_component.set_translate ('/', command_registry.get_command_xml(context=name + '.'))
@@ -154,34 +155,81 @@ class AbstractWindow(object):
 	self.__window = window
 	self.__ui_component = ui_component
 
-    def _construct_popup_menu(self, name, elements, event, params):
+    def _construct_popup_menu(self, popup, elements, event, params):
 	"""Create a popup menu.
 	
-	Name is the name of the popup menu in the Bonobo UI xml file.
-	Element is a list of objects for which menu items should be created
+	Popup is the name of the popup menu in the Bonobo UI xml file.
+	Elements is a list of objects for which menu items should be created
 	(as defined in the 'subject' attribute of CommandInfo).
 	Event is the event that causes the popup menu (such as a button press)
 	Params is a dictionary of parameter:value pairs which are passed to the
-	commands after creation."""
+	commands after creation.
+	If some items in the elements list contain the has_capability() method,
+	capabilities of these items are compared to capabilities required
+	for an item to be sensitive/have a state."""
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	context = self.__name + '.popup'
+	capable_elements = list()
 	command_registry = GaphorResource(CommandRegistry)
+
+	# Create commands with the right parameters set:
+	ui_component = self.__ui_component
 	verbs = command_registry.get_verbs(context, params)
-	self.__ui_component.add_verb_list (verbs, None)
-	for cmd, klass in command_registry.get_subjects(context):
+	ui_component.add_verb_list (verbs, None)
+
+	# Listeners should be added for toggle and radio buttons:
+	# First move existing listeners, fo commands are not executed
+	# by accident.
+	listeners = command_registry.get_listeners(context, params)
+	for n, c in listeners:
+	    ui_component.remove_listener(n)
+
+	for name, klass in command_registry.get_subjects(context):
 	    hidden = '1'
 	    for e in elements:
 		if isinstance(e, klass):
 		    hidden = '0'
+		    if hasattr(e, 'has_capability'):
+			capable_elements.append(e)
 		    break
+	    if not name.startswith('/'):
+		name = '/commands/' + name
+	    self.__ui_component.set_prop(name, 'hidden', hidden)
 
-	    self.__ui_component.set_prop('/commands/' + cmd,
-					 'hidden', hidden)
+	# Creating a brand new menu every time does something wierd with
+	# callbacks.
+	if self.__popups.has_key(popup):
+	    menu = self.__popups[popup]
+	else:
+	    menu = gtk.Menu()
+	    self.__window.add_popup(menu, '/popups/' + popup)
+	    self.__popups[popup] = menu
 
-	self.menu = gtk.Menu()
-	# The window takes care of destroying the old menu, if any...
-	self.__window.add_popup(self.menu, '/popups/' + name)
-	self.menu.popup(None, None, None, event.button, 0)
+	# Set items possible visible:
+	if capable_elements:
+	    for name, type, caps in command_registry.get_capabilities(context):
+		#log.debug('Checking caps for %s %s' % (name, caps))
+		for e in capable_elements:
+		    is_disabled = False
+		    for c in caps:
+			if not e.has_capability(c):
+			    # disable the command:
+			    self.__ui_component.set_prop('/commands/' + name,
+							 type, '0')
+			    is_disabled = True
+			    break
+		    else:
+			# all capabilities are available:
+			self.__ui_component.set_prop('/commands/' + name,
+						     type, '1')
+		    if is_disabled:
+			break
+	
+	# Add listeners again, now we can serve the user:
+	for n, c in listeners:
+	    ui_component.add_listener(n, c)
+
+	menu.popup(None, None, None, event.button, 0)
 
     def _on_window_focus_in_event(self, window, event):
 	log.add_logger(self._set_log_message)
@@ -203,7 +251,7 @@ class AbstractWindow(object):
 	if self.__state == AbstractWindow.STATE_ACTIVE:
 	    command_registry = GaphorResource(CommandRegistry)
 	    _caps = self.__capabilities
-	    for name, type, caps in command_registry.get_capabilities(self.__name + '.'):
+	    for name, type, caps in command_registry.get_capabilities(self.__name + '.menu'):
 		#log.debug('Checking caps for %s %s' % (name, caps))
 		for c in caps:
 		    if c not in _caps:

@@ -11,9 +11,26 @@ import gobject
 import pango
 #from text import Text
 
+
+class Compartment(object):
+    """Specify a compartment in a class item."""
+
+    def __init__(self, func):
+	self.func = func
+	self.visible = True
+
+
 class ClassItem(ModelElementItem):
-    HEAD_MARGIN_X=60
-    HEAD_MARGIN_Y=30
+    __gproperties__ = {
+	'show-attributes': (gobject.TYPE_BOOLEAN, 'show attributes',
+			    '',
+			    1, gobject.PARAM_READWRITE),
+	'show-operations': (gobject.TYPE_BOOLEAN, 'show operations',
+			    '',
+			    1, gobject.PARAM_READWRITE),
+    }
+    HEAD_MARGIN_X=30
+    HEAD_MARGIN_Y=10
     NAME_FONT='sans bold 10'
     COMP_MARGIN_X=5
     COMP_MARGIN_Y=5
@@ -41,10 +58,45 @@ class ClassItem(ModelElementItem):
 
 	# list of features, both attributes and operations:
 	self.__features = list()
+
 	# For now, we have two defined compartments, one for attributes and
 	# one for operations.
-	self.__compartments = (lambda e: e.subject.isKindOf(UML.Attribute),
-			       lambda e: e.subject.isKindOf(UML.Operation))
+	self.__compartments = [
+	    Compartment(lambda e: e.subject.isKindOf(UML.Attribute)),
+	    Compartment(lambda e: e.subject.isKindOf(UML.Operation))
+	]
+
+    def save(self, save_func):
+	ModelElementItem.save(self, save_func)
+	self.save_property(save_func, 'show-attributes')
+	self.save_property(save_func, 'show-operations')
+
+    def do_set_property(self, pspec, value):
+	if pspec.name == 'show-attributes':
+	    self.preserve_property('show-attributes')
+	    self.__compartments[0].visible = value
+	    self.request_update()
+	elif pspec.name == 'show-operations':
+	    self.preserve_property('show-operations')
+	    self.__compartments[1].visible = value
+	    self.request_update()
+	else:
+	    ModelElementItem.do_set_property(self, pspec, value)
+
+    def do_get_property(self, pspec):
+	if pspec.name == 'show-attributes':
+	    return self.__compartments[0].visible
+	elif pspec.name == 'show-operations':
+	    return self.__compartments[1].visible
+	return ModelElementItem.do_get_property(self, pspec)
+
+    def has_capability(self, capability):
+	log.debug('has_capability: %s' % capability)
+	if capability == 'show-attributes':
+	    return self.__compartments[0].visible
+	elif capability == 'show-operations':
+	    return self.__compartments[1].visible
+	return ModelElementItem.has_capability(self, capability)
 
     def _set_subject(self, subject):
 	ModelElementItem._set_subject(self, subject)
@@ -68,6 +120,7 @@ class ClassItem(ModelElementItem):
 	item = FeatureItem()
 	item.set_property('subject', feature)
 	self.add(item)
+	self._update_features()
 	item.focus()
 
     def _remove_feature(self, feature):
@@ -79,59 +132,77 @@ class ClassItem(ModelElementItem):
 	for f in self.__features:
 	    if f.subject is feature:
 		self.remove(f)
+		self._update_features()
 		return True
 	
-    def __update_features(self, features, y):
+    def _update_features(self):
 	"""Update a list of features (attributes or operations) and return
 	the max width and the new y coordinate."""
-	pass
+	self.on_update(None)
 
     def on_update(self, affine):
-	"""Overrides update callback."""
-	width=0 #self.width
-	height=ClassItem.HEAD_MARGIN_Y
+	"""Overrides update callback. If affine is None, it is called just for
+	updating the item width and height."""
+	width = 0
+	height = ClassItem.HEAD_MARGIN_Y
 	sep_y = list()
+
+	# TODO: update stereotype
 
 	# Update class name
 	layout = self.__name.get_property('layout')
 	w, h = layout.get_pixel_size()
-	a = self.__name.get_property('affine')
 	height += h
-	a = (a[0], a[1], a[2], a[3], a[4], height / 2)
-	self.__name.set(affine=a, height=h)
+	if affine:
+	    a = self.__name.get_property('affine')
+	    a = (a[0], a[1], a[2], a[3], a[4], height / 2)
+	    self.__name.set(affine=a, height=h)
 	
+	height += ClassItem.HEAD_MARGIN_Y
 	width = w + ClassItem.HEAD_MARGIN_X
 
 	# Update feature list
-	for comp_func in self.__compartments:
-	    sep_y.append(height)
-	    height += ClassItem.COMP_MARGIN_Y
-	    for f in filter(comp_func, self.__features):
-		layout = f.get_property('layout')
-		w, h = layout.get_pixel_size()
-		a = f.get_property('affine')
-		a = (a[0], a[1], a[2], a[3], ClassItem.COMP_MARGIN_X, height)
-		height += h
-		f.set(affine=a, height=h, width=w)
-		width = max(width, w + 2 * ClassItem.COMP_MARGIN_X)
+	for comp in self.__compartments:
+	    if comp.visible:
+		sep_y.append(height)
+		height += ClassItem.COMP_MARGIN_Y
+		for f in filter(comp.func, self.__features):
+		    layout = f.get_property('layout')
+		    w, h = layout.get_pixel_size()
+		    if affine:
+			a = f.get_property('affine')
+			a = (a[0], a[1], a[2], a[3], ClassItem.COMP_MARGIN_X, height)
+			f.set(affine=a, height=h, width=w, visible=1)
+		    height += h
+		    width = max(width, w + 2 * ClassItem.COMP_MARGIN_X)
 
-	height += ClassItem.COMP_MARGIN_Y
+		height += ClassItem.COMP_MARGIN_Y
+	    else:
+		for f in filter(comp.func, self.__features):
+		    f.set(visible=0)
 
 	self.set(min_width=width, min_height=height)
 
-	width = max(width, self.width)
-	height = max(height, self.height)
+	if affine:
+	    width = max(width, self.width)
+	    height = max(height, self.height)
 
-	# We know the width of all text components and set it:
-	self.__name.set(width=width)
-	self.update_child(self.__name, affine)
-	for f in self.__features:
-	    self.update_child(f, affine)
-	ModelElementItem.on_update(self, affine)
-	self.__attr_sep.line(((0, sep_y[0]), (width, sep_y[0])))
-	self.__oper_sep.line(((0, sep_y[1]), (width, sep_y[1])))
-	self.__border.rectangle((0,0),(width, height))
-	self.expand_bounds(1.0)
+	    # We know the width of all text components and set it:
+	    self.__name.set(width=width)
+	    self.update_child(self.__name, affine)
+	    for f in self.__features:
+		self.update_child(f, affine)
+	    ModelElementItem.on_update(self, affine)
+
+	    i = 0
+	    if self.__compartments[0].visible:
+		self.__attr_sep.line(((0, sep_y[i]), (width, sep_y[i])))
+		i += 1
+	    if self.__compartments[1].visible:
+		self.__oper_sep.line(((0, sep_y[i]), (width, sep_y[i])))
+
+	    self.__border.rectangle((0,0),(width, height))
+	    self.expand_bounds(1.0)
 
     def on_event (self, event):
 	if event.type == diacanvas.EVENT_KEY_PRESS:
@@ -146,9 +217,12 @@ class ClassItem(ModelElementItem):
 
     def on_shape_next(self, iter):
 	if iter is self.__border:
-	    return self.__attr_sep
+	    if self.__compartments[0].visible:
+		return self.__attr_sep
+	    iter = self.__attr_sep # Fall through
 	if iter is self.__attr_sep:
-	    return self.__oper_sep
+	    if self.__compartments[1].visible:
+		return self.__oper_sep
 	return None
 
     def on_shape_value(self, iter):
@@ -227,6 +301,7 @@ class ClassItem(ModelElementItem):
     def on_text_changed(self, text_item, text):
 	if text != self.subject.name:
 	    self.subject.name = text
+	self._update_features()
 
 gobject.type_register(ClassItem)
 
