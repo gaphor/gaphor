@@ -59,10 +59,13 @@
     <popups>
 	<popup name="DiagramView">
 	    <menuitem name="EditDelete" verb=""/>
-	    <menuitem name="SnapToGrid" verb="" type="toggle"/>
 	    <separator/>
+	    <!-- For classes: -->
 	    <menuitem name="CreateAttribute" verb=""/>
 	    <menuitem name="CreateOperation" verb=""/>
+	    <!-- For line like items: -->
+	    <menuitem name="AddSegment" verb=""/>
+	    <menuitem name="DeleteSegment" verb=""/>
 	</popup>
     </popups>
 

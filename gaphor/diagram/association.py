@@ -24,16 +24,22 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	self.head_end = None
 	self.tail_end = None
 
-	self.__head_name = AssociationLabel(self)
-	self.__head_mult = AssociationLabel(self)
-	self.__tail_name = AssociationLabel(self)
-	self.__tail_mult = AssociationLabel(self)
-
-	# debugging
-	#self.__head_name.set_property('text', 'headname')
-	#self.__head_mult.set_property('text', 'headmult')
-	#self.__tail_name.set_property('text', 'tailname')
-	#self.__tail_mult.set_property('text', 'tailmult')
+	self.__head_name = AssociationLabel('name')
+	self.add_construction(self.__head_name)
+	self.__head_name.connect('text-changed',
+				 self.on_association_end_text_changed)
+	self.__head_mult = AssociationLabel('multiplicity')
+	self.add_construction(self.__head_mult)
+	self.__head_mult.connect('text-changed',
+				 self.on_association_end_text_changed)
+	self.__tail_name = AssociationLabel('name')
+	self.add_construction(self.__tail_name)
+	self.__tail_name.connect('text-changed',
+				 self.on_association_end_text_changed)
+	self.__tail_mult = AssociationLabel('multiplicity')
+	self.add_construction(self.__tail_mult)
+	self.__tail_mult.connect('text-changed',
+				 self.on_association_end_text_changed)
 
     def save (self, save_func):
 	RelationshipItem.save(self, save_func)
@@ -76,7 +82,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	    self.head_end = head_end
 	    if head_end:
 		head_end.add_presentation(self)
-		self.head_end.connect(self.on_association_end_update)
+		self.head_end.connect(self.on_association_end_update, head_end)
 
     def _set_tail_end(self, tail_end):
 	if tail_end is not self.tail_end:
@@ -86,7 +92,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	    self.tail_end = tail_end
 	    if tail_end:
 		tail_end.add_presentation(self)
-		self.tail_end.connect(self.on_association_end_update)
+		self.tail_end.connect(self.on_association_end_update, tail_end)
 
     def __update_labels(self, name_label, mult_label, p1, p2):
 	"""Update label placement for association's name and
@@ -237,24 +243,36 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	    else:
 		self.tail_end.remove_presentation (self)
     
-    def on_association_end_update(self, name, old_value, new_value):
+    def on_association_end_update(self, name, old_value, new_value, end):
 	if name in ('aggregation', 'isNavigable'):
 	    self.request_update()
 	elif name == 'name':
-	    pass
+	    if end is self.head_end:
+		self.__head_name.set_property('text', new_value)
+	    elif end is self.tail_end:
+		self.__tail_name.set_property('text', new_value)
+	elif name == 'multiplicity':
+	    if end is self.head_end:
+		self.__head_mult.set_property('text', new_value)
+	    elif end is self.tail_end:
+		self.__tail_mult.set_property('text', new_value)
 
-    def on_text_changed(self, label, text):
+    def on_association_end_text_changed(self, label, text):
 	# Do not try to set text, if there's no association.
 	if not self.subject:
 	    return
 	if label is self.__head_name:
-	    self.head_end.name = text
+	    if self.head_end.name != text:
+		self.head_end.name = text
 	elif label is self.__head_mult:
-	    self.head_end.multiplicity.name = text
+	    if self.head_end.multiplicity != text:
+		self.head_end.multiplicity = text
 	elif label is self.__tail_name:
-	    self.tail_end.name = text
+	    if self.tail_end.name != text:
+		self.tail_end.name = text
 	elif label is self.__tail_mult:
-	    self.tail_end.multiplicity.name = text
+	    if self.tail_end.multiplicity != text:
+		self.tail_end.multiplicity = text
 
     # Gaphor Connection Protocol
 
@@ -287,6 +305,8 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 	    if not isinstance(connecting_to.subject, UML.Classifier):
 		return 0
 
+	    return 1
+	    # Also allow connections to the same class...
 	    c1 = self.handles[0].connected_to
 	    c2 = self.handles[-1].connected_to
 	    if not c1 and not c2:
@@ -376,12 +396,12 @@ class AssociationLabel(CanvasText):
     """
     LABEL_FONT='sans 10'
 
-    def __init__(self, owner):
+    def __init__(self, name):
 	self.__gobject_init__()
-	# don't call CanvasText.__init__(self), since it will screw up the callbacks...
+	# don't call CanvasText.__init__(self), it will screw up the callbacks
+	self.name = name
 	font = pango.FontDescription(AssociationLabel.LABEL_FONT)
 	self.set(font=font, multiline=False)
-	owner.add_construction(self)
 	self.__border = diacanvas.shape.Path()
 	self.__border.set_color(diacanvas.color(128,128,128))
 	self.__border.set_line_width(1.0)
@@ -395,6 +415,11 @@ class AssociationLabel(CanvasText):
 	CanvasText.on_update(self, affine)
 	x1, y1, x2, y2 = self.get_bounds()
 	self.__border.rectangle((x1 + 0.5, y1 + 0.5), (x2 - 0.5, y2 - 0.5))
+
+    def on_event(self, event):
+	if event.type == diacanvas.EVENT_BUTTON_PRESS:
+	    log.info('Edit Association ends %s' % self.name)
+	return CanvasText.on_event(self, event)
 
     def on_get_shape_iter(self):
 	return self.__border

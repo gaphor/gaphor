@@ -31,6 +31,9 @@ from gaphor.misc.signal import Signal as _Signal
 class AbstractClassError(Exception):
     pass
 
+# Custom classes:
+Multiplicity = str
+
 class Element(object):
     """Element is the base class for *all* UML MetaModel classes.
     The attributes and relations are defined by a <class>.__attributes__

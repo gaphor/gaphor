@@ -36,7 +36,9 @@ primitives = {
 # For those classes no class definition is generated:
 custom_elements = [
     'Element',
-    'PresentationElement' # ModelElement.presentation is set to not navigable
+    'PresentationElement', # ModelElement.presentation is set to not navigable
+    'Multiplicity',
+    'MultiplicityRange'
 ]
 
 default_values = {
@@ -61,7 +63,7 @@ default_values = {
     'ObjectSetExpression': 'None',
     'ProcedureExpression': 'None',
     'ArgListsExpression': 'None',
-    'Multiplicity': '1', # Defaults to Int
+    'Multiplicity': '\'\'', # Defaults to String
     'Integer': '1', # Defaults to Int
     'UnlimitedInteger': '1', # Defaults to Long
     'String': '\'\'', # Defaults to String

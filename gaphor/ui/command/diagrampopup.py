@@ -60,3 +60,51 @@ CommandInfo (name='CreateOperation', _label='New _Operation',
 	     sensitive=('focus',), subject=UML.Class,
 	     command_class=CreateOperationCommand).register()
 
+
+class SegmentCommand(Command):
+    """Base class for add and delete line segment."""
+
+    def set_parameters(self, params):
+	self._window = params['window']
+	self._coords = params['coords']
+
+    def get_item_and_segment(self):
+	view = self._window.get_view()
+	fi = view.focus_item
+	if fi:
+	    fi = fi.item
+	    while (fi.flags & diacanvas.COMPOSITE) != 0:
+		fi = fi.parent
+	    assert isinstance(fi, diacanvas.CanvasLine)
+	    wx, wy = view.window_to_world(self._coords[0], self._coords[1])
+	    x, y = fi.affine_point_w2i(wx, wy)
+	    segment = fi.get_closest_segment(x, y)
+	    return (fi, segment)
+	return (None, 0)
+
+class AddSegmentCommand(SegmentCommand):
+
+    def execute(self):
+	item, segment = self.get_item_and_segment()
+	if item:
+	    item.set_property('add_segment', segment)
+	    
+CommandInfo (name='AddSegment', _label='Add _Segment',
+	     _tip='Add a segment to the line',
+	     context='diagram.popup',
+	     sensitive=('focus',), subject=diacanvas.CanvasLine,
+	     command_class=AddSegmentCommand).register()
+
+class DeleteSegmentCommand(SegmentCommand):
+
+    def execute(self):
+	item, segment = self.get_item_and_segment()
+	if item:
+	    item.set_property('del_segment', segment)
+	    
+CommandInfo (name='DeleteSegment', _label='Delete _Segment',
+	     _tip='Delete the segment from the line',
+	     context='diagram.popup',
+	     sensitive=('focus',), subject=diacanvas.CanvasLine,
+	     command_class=DeleteSegmentCommand).register()
+

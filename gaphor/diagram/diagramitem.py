@@ -21,6 +21,28 @@ class DiagramItem(object):
 	self.set_property('subject', subject)
 	#self._set_subject(subject)
 
+    # Define subject property:
+    subject = property(get_subject, set_subject, None, 'Subject')
+
+    def has_capability(self, capability):
+        """Returns the availability of an diagram item specific capability.
+	This kinda works the same way as capabilities on windows."""
+	return False
+
+    def save_property(self, save_func, name):
+	'''Save a property, this is a shorthand method.'''
+	save_func(name, self.get_property(name))
+
+    def on_parent_notify (self, parent):
+	if self.__subject:
+	    if self.parent:
+		self.__subject.add_presentation (self)
+	    else:
+		self.__subject.remove_presentation (self)
+
+    def on_subject_update (self, name, old_value, new_value):
+	pass
+
     def _set_subject(self, subject):
 	"""Real (protected) set_subject method. Should be called by
 	do_set_property(), in the sub-classes.
@@ -33,13 +55,6 @@ class DiagramItem(object):
 	    if subject:
 		subject.add_presentation(self)
 		subject.connect(self.on_subject_update)
-
-    # Define subject property:
-    subject = property (get_subject, set_subject, None, 'Subject')
-
-    def save_property(self, save_func, name):
-	'''Save a property, this is a shorthand method.'''
-	save_func(name, self.get_property(name))
 
     # DiaCanvasItem callbacks
     def _on_glue(self, handle, wx, wy, parent):
@@ -73,15 +88,3 @@ class DiagramItem(object):
 	    #print self.__class__.__name__, 'Disconnecting NOT allowed.'
 	return 0
 
-    def on_parent_notify (self, parent):
-	if self.__subject:
-	    if self.parent:
-		#print 'Have Parent', self, parent
-		self.__subject.add_presentation (self)
-	    else:
-		#print 'No parent...', self, parent
-		self.__subject.remove_presentation (self)
-
-    def on_subject_update (self, name, old_value, new_value):
-	pass
-	#log.debug('DiagramItem: unhandled signal "%s"' % str(name))

@@ -52,7 +52,7 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	    self.set_property('head_pos', points[0])
 	    self.set_property('tail_pos', points[1])
 	    for p in points[2:]:
-		item.set_property ('add_point', p)
+		self.set_property ('add_point', p)
 	elif name == 'head_connection':
 	    self._load_head_connection = value
 	elif name == 'tail_connection':

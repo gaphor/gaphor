@@ -17,6 +17,7 @@ import UML
 #import gaphor.diagram as diagram
 import diagram
 import diacanvas
+import os.path
 import types
 import xml.dom.minidom as dom
 import string
@@ -197,7 +198,7 @@ def _load (doc, factory):
 
     version = rootnode.getAttribute('version')
 
-    print '0'
+    log.info('0%')
     # Create Element's
     for node in rootnode.childNodes:
 	if node.nodeName != ELEMENT:
@@ -215,13 +216,13 @@ def _load (doc, factory):
 		    assert isinstance (element, UML.Diagram)
 		    load_canvas_items(child, element.canvas.root)
 
-    print '.... 33'
+    log.info('0% ... 33%')
     # Let the elements load their variables
     for node in rootnode.childNodes:
 	element = factory.lookup (node.getAttribute(ID))
 	load_node(node, element)
 
-    print '.... 67'
+    log.info('0% ... 33% ... 66%')
     # Postprocess the element, give them a chance to clean up etc.
     diagrams = []
     for node in rootnode.childNodes:
@@ -233,14 +234,16 @@ def _load (doc, factory):
     for node, element in diagrams:
 	postload_node(node, element)
 
-    print '.... 100'
+    log.info('0% ... 33% ... 66% ... 100%')
 
 def load (filename):
     '''Load a file and create a model if possible.
     Exceptions: GaphorError.'''
+    log.info('Loading file %s' % os.path.basename(filename))
     try:
 	doc = dom.parse (filename)
     except Exception, e:
+	log.error('File could no be parsed')
 	raise GaphorError, 'File %s is probably no valid XML.' % filename
 
     try:

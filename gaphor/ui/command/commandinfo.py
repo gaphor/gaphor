@@ -21,7 +21,7 @@ class CommandInfo(object):
 		 command_class=None):
 	"""Create a new command info object."""
 	assert name and name != ''
-	assert not subject or issubclass(subject, UML.ModelElement)
+	#assert not subject or issubclass(subject, UML.ModelElement)
 	assert issubclass(command_class, Command)
 
 	self.name = name

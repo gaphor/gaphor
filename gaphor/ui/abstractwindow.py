@@ -1,6 +1,7 @@
 # vim:sw=4
 
 from gaphor.misc.signal import Signal
+from gaphor.misc.logger import Logger
 from commandregistry import CommandRegistry
 import gobject, gtk, bonobo.ui
 import gaphor.config as config
@@ -90,6 +91,18 @@ class AbstractWindow(object):
 	assert self.__state == state, 'Method was called with an invalid state. State is %d' % self.__state
 	return True
 
+    def _set_log_message(self, level, message, exc=None):
+	"""Set log messages with level INFO or higher in the status bar."""
+	if level > Logger.DEBUG:
+	    self.set_message(message)
+	    main = gobject.main_context_default()
+	    # If an exception is provided, also send the message to stdout
+	    if exc:
+		log.default_logger(level, message, exc)
+	    while main.pending():
+	    	main.iteration(False)
+	    return True
+
     def _construct_window(self, name, title, size, contents, params):
 	"""Construct a BonoboWindow.
 	
@@ -115,8 +128,10 @@ class AbstractWindow(object):
 			       'gaphor-' + name + '-ui.xml',
 			       config.PACKAGE_NAME)
 	window.set_contents(contents)
-
 	self.__destroy_id = window.connect('destroy', self._on_window_destroy)
+	# On focus in/out a log handler is added to the logger.
+	window.connect('focus_in_event', self._on_window_focus_in_event)
+	window.connect('focus_out_event', self._on_window_focus_out_event)
 	# Set state before commands are created, so the commands can use
 	# the get_* methods.
 	self._set_state(AbstractWindow.STATE_ACTIVE)
@@ -154,28 +169,31 @@ class AbstractWindow(object):
 	verbs = command_registry.get_verbs(context, params)
 	self.__ui_component.add_verb_list (verbs, None)
 	for cmd, klass in command_registry.get_subjects(context):
-	    #log.debug ('%s: %s' % (cmd, klass))
 	    hidden = '1'
 	    for e in elements:
 		if isinstance(e, klass):
 		    hidden = '0'
 		    break
+
 	    self.__ui_component.set_prop('/commands/' + cmd,
 					 'hidden', hidden)
-					 #filter (lambda e: isinstance (e, klass), elements) and '0' or '1')
-					 #isinstance (element, klass) and '0' or '1')
-	#log.debug ('done')
-	menu = gtk.Menu()
+
+	self.menu = gtk.Menu()
 	# The window takes care of destroying the old menu, if any...
-	self.__window.add_popup(menu, '/popups/' + name)
-	menu.popup(None, None, None, event.button, 0)
+	self.__window.add_popup(self.menu, '/popups/' + name)
+	self.menu.popup(None, None, None, event.button, 0)
+
+    def _on_window_focus_in_event(self, window, event):
+	log.add_logger(self._set_log_message)
+
+    def _on_window_focus_out_event(self, window, event):
+	log.remove_logger(self._set_log_message)
 
     def _on_window_destroy(self, window):
-	"""
-	Window is destroyed. Do the same thing that would be done if
-	File->Close was pressed.
-	"""
+	"""Window is destroyed. Do the same thing that would be done if
+	File->Close was pressed."""
 	self._check_state(AbstractWindow.STATE_ACTIVE)
+	log.remove_logger(self._set_log_message)
 	self._set_state(AbstractWindow.STATE_CLOSED)
 	del self.__window
 	del self.__ui_component
@@ -184,20 +202,17 @@ class AbstractWindow(object):
 	"""Activate or deactivate commands with capabilities."""
 	if self.__state == AbstractWindow.STATE_ACTIVE:
 	    command_registry = GaphorResource(CommandRegistry)
-	    self_caps = self.__capabilities
-	    #log.debug('Capabilities are %s' % self_caps)
+	    _caps = self.__capabilities
 	    for name, type, caps in command_registry.get_capabilities(self.__name + '.'):
 		#log.debug('Checking caps for %s %s' % (name, caps))
 		for c in caps:
-		    if c not in self_caps:
+		    if c not in _caps:
 			# disable the command:
-			#log.debug('disable command %s (%s)' % (name, type))
 			self.__ui_component.set_prop('/commands/' + name,
 						     type, '0')
 			break
 		else:
 		    # all capabilities are available:
-		    #log.debug('enable command %s (%s)' % (name, type))
 		    self.__ui_component.set_prop('/commands/' + name,
 						 type, '1')
 	# Returning False will cause the method not to be called again

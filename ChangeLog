@@ -1,3 +1,16 @@
+2002-02-21  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/command/diagrampopup.py: Added commands for segment
+	addition and removal.
+
+2002-02-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/logger.py: Added all_logger() and remove_logger()
+	* gaphor/ui/abstractwindow.py: on focus in/out add/remove a logger
+	that writes messages to the active window's status bar.
+	* gaphor/diagram/association.py: make association end name and
+	multiplicity work.
+
 2002-02-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* utils/genUML.py: new generation script.

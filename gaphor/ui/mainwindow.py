@@ -2,8 +2,6 @@
 # vim:sw=4
 
 import gtk
-import bonobo
-import bonobo.ui
 import namespace
 import gaphor.UML as UML
 import gaphor.config as config

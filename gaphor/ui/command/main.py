@@ -10,6 +10,7 @@ QuitCommand
 
 from commandinfo import Command, CommandInfo
 import sys
+import gobject
 import gtk
 import gaphor.UML as UML
 import gaphor.diagram as diagram
@@ -56,6 +57,9 @@ class OpenCommand(Command):
 
 	response = filesel.run()
 	filesel.hide()
+	main = gobject.main_context_default()
+	while main.pending():
+	    main.iteration(False)
 	if response == gtk.RESPONSE_OK:
 	    filename = filesel.get_filename()
 	    if filename and len(filename) > 0:
@@ -67,7 +71,7 @@ class OpenCommand(Command):
 		    import gaphor.storage as storage
 		    storage.load(filename)
 		    self._window.set_filename(filename)
-		    self._window.set_message('File %s loaded successfully' % filename)
+		    self._window.set_message('Model loaded successfully')
 		except Exception, e:
 		    import traceback
 		    log.error('Error while loading model from file %s: %s' % (filename, e))
@@ -91,6 +95,9 @@ class SaveCommand(Command):
 	    filesel = gtk.FileSelection('Save file')
 	    response = filesel.run()
 	    filesel.hide()
+	    main = gobject.main_context_default()
+	    while main.pending():
+		main.iteration(False)
 	    if response == gtk.RESPONSE_OK:
 		filename = filesel.get_filename()
 	    filesel.destroy()
@@ -123,6 +130,9 @@ class SaveAsCommand(Command):
 	filesel = gtk.FileSelection('Save file as')
 	response = filesel.run()
 	filesel.hide()
+	main = gobject.main_context_default()
+	while main.pending():
+	    main.iteration(False)
 	if response == gtk.RESPONSE_OK:
 	    filename = filesel.get_filename()
 	filesel.destroy()
@@ -168,7 +178,6 @@ class QuitCommand(Command):
 	self._window = params['window']
 
     def execute(self):
-	import gc
 	log.debug('Quiting gaphor...')
 	self._window.close()
 	del self._window
@@ -213,6 +222,7 @@ class OpenEditorWindowCommand(Command):
 	ew = EditorWindow()
 	ew.construct()
 	self._window.add_transient_window(ew)
+	self._window.set_message('Editor launched')
 
 CommandInfo (name='OpenEditorWindow', _label='_Editor...', pixname='Editor',
 	     _tip='Open the Gaphor Editor',

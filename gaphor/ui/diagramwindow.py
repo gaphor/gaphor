@@ -2,13 +2,11 @@
 # vim: sw=4
 
 import gtk
-import bonobo.ui
 from diagramview import DiagramView
 import gaphor.config as config
 from abstractwindow import AbstractWindow
 
 class DiagramWindow(AbstractWindow):
-    serial = 1
     
     def __init__(self):
 	AbstractWindow.__init__(self)
@@ -41,12 +39,7 @@ class DiagramWindow(AbstractWindow):
 
     def construct(self):
 	self._check_state(AbstractWindow.STATE_INIT)
-	#if self.__diagram:
 	title = self.__diagram and self.__diagram.name or 'NoName'
-	#else:
-	#    title = 'NoName'
-
-	DiagramWindow.serial += 1
 
 	table = gtk.Table(2,2, gtk.FALSE)
 	table.set_row_spacings (4)
@@ -105,28 +98,30 @@ class DiagramWindow(AbstractWindow):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	# handle mouse button 3 (popup menu):
 	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
+	    # First push the undo stack...
 	    view.canvas.push_undo(None)
 	    elements = list()
 	    vitem = view.focus_item
-	    while vitem.has_focus():
+	    while vitem and vitem.has_focus():
 		if hasattr(vitem.item, 'subject'):
 		    elements.append(vitem.item.subject)
+		# Also add the canvas item, since some menu items depend on it
+		elements.append(vitem.item)
 		vitem = vitem.get_property('parent')
+
 	    self._construct_popup_menu(name='DiagramView',
-				       #element=view.focus_item and view.focus_item.item.subject or None,
 				       elements=elements,
 				       event=event,
-				       params={ 'window': self })
+				       params={ 'window': self,
+				       		'coords': (event.x, event.y) })
 	    view.stop_emission('event')
 	    return True
 	return False
 
     def __on_view_focus_item(self, view, focus_item):
-	#log.debug('focus_item %s %s'% (view, focus_item))
 	self.set_capability('focus', focus_item is not None)
 
     def __on_view_select_item(self, view, select_item):
-	#log.debug('select_item %s %s %d' % (view, select_item, len(view.selected_items)))
 	self.set_capability('select', len (view.selected_items) > 0)
 
     def __on_diagram_undo(self, canvas):
@@ -134,8 +129,7 @@ class DiagramWindow(AbstractWindow):
 	self.set_capability('redo', canvas.get_redo_depth() > 0)
 
     def __on_diagram_notify_snap_to_grid(self, canvas, pspec):
-	#log.debug('notify:snap_to_grid = %d' % canvas.get_property('snap_to_grid'))
-	
+	log.debug('snap_to_grid: %s' % canvas.get_property('snap_to_grid'))
 	self.set_capability('snap_to_grid', canvas.get_property('snap_to_grid'))
 
     def __on_diagram_event(self, name, old, new):
@@ -143,3 +137,4 @@ class DiagramWindow(AbstractWindow):
 	    self.get_window().set_title(new)
 	elif name == '__unlink__':
 	    self.close()
+

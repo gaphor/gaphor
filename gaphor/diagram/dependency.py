@@ -13,7 +13,7 @@ class DependencyItem(relationship.RelationshipItem):
     def __init__(self):
 	relationship.RelationshipItem.__init__(self)
 	self.set(dash=(7.0, 5.0), has_head=1, head_fill_color=0,
-		 head_a=0.5, head_b=15.0, head_c=10.0, head_d=10.0)
+		 head_a=0.0, head_b=15.0, head_c=6.0, head_d=6.0)
 	
     # Gaphor Connection Protocol
 
