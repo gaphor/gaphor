@@ -5,6 +5,13 @@ As always, there is much to do...
   Problem: the existing <Placeholder> stuff works only on constrcution time.
     For this we need a menu that can change during the life of the application.
 
+- Store application state:
+  - last opened files
+  - open/closed status of diagram toolbox
+  - ...
+
+- When Stereotype has no submenu items, grey it out. Same goes for "Export" menu.
+
 - disable actions when editing.
 
 - write really good test cases for undo functionality. Have some already.
