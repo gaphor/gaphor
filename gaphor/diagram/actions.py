@@ -136,7 +136,7 @@ class StereotypePlacementAction(NamespacePlacementAction):
     id = 'InsertStereotype'
     label = '_Stereotype'
     tooltip = 'Create a new Stereotype item'
-    stock_id = 'gaphor-class'
+    stock_id = 'gaphor-stereotype'
     name = 'Stereotype'
     accel = 'C-c'
     type = diagram.ClassItem
