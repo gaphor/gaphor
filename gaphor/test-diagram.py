@@ -28,6 +28,7 @@ model = factory.create (UML.Model)
 dia = factory.create (diagram.Diagram)
 print 'diagram created:', dia
 dia.namespace = model
+dia.name = "Diagram1"
 print dia.namespace
 print model.ownedElement.list
 print "diagram created"
@@ -45,10 +46,8 @@ dia.canvas.root.add (item)
 item = dia.create(diagram.UseCase)
 usecase = item.subject
 dia.create (diagram.UseCase, (50, 200), subject=usecase)
-print item.get_property('subject')
-print item.get_property('subject')
-print item.get_property('subject')
-print item.get_property('subject')
+#usecase.name = 'UC1'
+#item.subject.name = 'UC1'
 
 diagram_view = ui.DiagramView (dia)
 diagram_view.window.connect ('destroy', mainquit)
@@ -61,6 +60,8 @@ ui.TreeView (treemodel)
 #    print "Element", k, ":", UML.Element._hash[k].__dict__
 
 treemodel.dump()
+
+#usecase.name = 'aap'
 
 print 'Going into main'
 gtk.main()

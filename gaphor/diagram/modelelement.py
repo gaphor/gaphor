@@ -3,7 +3,7 @@ ModelElement
 
 Abstract base class for element-like Diagram items.
 '''
-# vim: sw=4
+# vim:sw=4
 
 if __name__ == '__main__':
     import sys
@@ -41,12 +41,17 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
     def do_set_property (self, pspec, value):
 	if pspec.name == 'subject':
 	    print 'Setting subject:', value
-	    # TODO: store original subject value
-	    self.subject = value
+	    self.preserve_property('subject')
+	    if value != self.subject:
+		if self.subject:
+		    self.subject.disconnect(self.on_subject_update)
+		value.connect(self.on_subject_update)
+		self.subject = value
+
 	elif pspec.name == 'auto_resize':
 	    self.auto_resize = value
 	else:
-	    raise AttributeError, 'unknown property %s' % pspec.name
+	    raise AttributeError, 'Unknown property %s' % pspec.name
 
     def do_get_property(self, pspec):
 	if pspec.name == 'subject':
@@ -54,7 +59,7 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	elif pspec.name == 'auto_resize':
 	    return self.auto_resize
 	else:
-	    raise AttributeError, 'unknown property %s' % pspec.name
+	    raise AttributeError, 'Unknown property %s' % pspec.name
 
     # DiaCanvasItem callbacks
     def on_glue(self, handle, wx, wy):
@@ -66,13 +71,6 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
     def on_disconnect_handle (self, handle):
 	return dia.CanvasElement.on_disconnect_handle (self, handle)
 
-    def on_element_update (self, key):
-        '''This method is called by the data object to signal for an internal
-	state change.'''
-	if key == '__unlink__':
-	    self.subject.remove_presentation(self)
-	    self.subject = None
-
     def on_parent_notify (self):
         if self.parent:
 	    print 'Have Parent'
@@ -81,11 +79,16 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	    print 'No parent...'
 	    self.subject.remove_presentation_undoable (self)
 
-gobject.type_register (ModelElement)
-dia.set_callbacks (ModelElement)
-dia.set_groupable (ModelElement)
+    def on_subject_update (self, name):
+	if name == '__unlink__':
+	    self.set_property ('subject', None)
+	    self.set_property ('parent', None)
+	else:
+	    print 'ModelElement: unhandled signal "%s"' % str(name)
 
-print 'ModelElement done'
+gobject.type_register(ModelElement)
+dia.set_callbacks(ModelElement)
+dia.set_groupable(ModelElement)
 
 if __name__ == '__main__':
     me = ModelElement()
