@@ -17,7 +17,6 @@ class Diagram(Namespace):
     _attrdef = { 'canvas': ( None, diacanvas.Canvas ) }
     # Diagram item to UML model element mapping:
     diagram2UML = { }
-
     _savable_canvas_properties = [ 'extents', 'static_extents',
 	    'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
 	    'grid_ofs_y', 'snap_to_grid', 'grid_color', 'grid_bg' ]
@@ -97,8 +96,11 @@ class Diagram(Namespace):
 	    type = item_store.type()
 	    item = type()
 	    self.canvas.root.add(item)
-	    item.set_property ('id', item_store.cid())
+	    item_store.add_cid_to_item_mapping (id, item)
+	    item.set_property ('id', id)
 	    item.load(item_store)
+
+	self.canvas.update_now ()
 
     def postload (self, store): 
         '''We use postload() to connect objects to each other. This can not
@@ -108,6 +110,13 @@ class Diagram(Namespace):
 	and their CID. '''
 
 	# All objects are loaded and the fields are properly set.
+	item_dict = store.canvas().canvas_items()
+	
+	for id, item_store in item_dict.items():
+	    print 'Postprocessing item ' + str(item_store.type()) + ' with id ' + str(id)
+	    item = store.lookup_item(id)
+	    item.postload(item_store)
+
 	self.canvas.update_now ()
 
 	self.canvas.set_property ("allow_undo", 1)

@@ -1,5 +1,7 @@
 # vim: sw=4
 
+# TODO: use xml.dom.minidom in stead of libxml2 (for compatibility and since libglade uses the python xml stuff too...)
+
 import UML
 import diagram
 import diacanvas
@@ -20,13 +22,14 @@ class Storage(object):
     CID='cid'
     REFID='refid'
     PVALUE='value'
+    __cid_to_item_mapping = { }
 
     def __init__(self, factory, node=None, obj=None):
 	object.__init__(self)
 	self.__factory = factory
 	self.__node = node
 	self.__obj = obj
-
+	
     def save (self, filename=None):
 	'''Save the current model to @filename. If no filename is given,
 	standard out is used.'''
@@ -48,6 +51,8 @@ class Storage(object):
     def load (self, filename):
 	'''Load a file and create a model if possible.
 	Exceptions: IOError, ValueError.'''
+
+	Storage.__cid_to_item_mapping = { }
 
 	doc = xml.parseFile (filename)
 	#doc.debugDumpDocument (sys.stdout)
@@ -105,6 +110,15 @@ class Storage(object):
 
 	doc.freeDoc ()
 
+    def add_cid_to_item_mapping(self, cid, item):
+	if not Storage.__cid_to_item_mapping.has_key(cid):
+	    Storage.__cid_to_item_mapping[cid] = item
+	else:
+	    raise TypeError, 'CID %d is stored multiple times' % cid
+
+    def lookup_item(self, cid):
+	return Storage.__cid_to_item_mapping[cid]
+
     #
     # Stuff for saving
     #
@@ -120,7 +134,6 @@ class Storage(object):
 	    node = self.__node.newChild (Storage.NS, Storage.CANVAS_ITEM, None)
 	    node.setProp (Storage.TYPE, obj.__class__.__name__)
 	    node.setProp (Storage.CID, 'c' + str(obj.get_property('id')))
-	    #node.setProp (Storage.CID, 'c' + str(obj.id))
 	return Storage (self.__factory, node, obj)
 
     def save_property (self, prop):
@@ -133,7 +146,7 @@ class Storage(object):
 	    node = self.__node.newChild (Storage.NS, Storage.REFERENCE, None)
 	    node.setProp (self.NAME, name)
 	    node.setProp (self.REFID, 'a' + str(obj.id))
-	if isinstance (obj, diacanvas.CanvasItem):
+	elif isinstance (obj, diacanvas.CanvasItem):
 	    node = self.__node.newChild (Storage.NS, Storage.REFERENCE, None)
 	    node.setProp (self.NAME, name)
 	    node.setProp (self.REFID, 'c' + str(obj.get_property('id')))
@@ -200,20 +213,24 @@ class Storage(object):
 	return d
 
     def references (self):
-	'''Return a list of references for each item.'''
+	'''Return a dictionary of references for each item.
+	A list is created for every reference name.'''
 	ref = self.__node.children
 	d = { }
 	while ref:
 	    if ref.name == Storage.REFERENCE:
+		refelem = None
 		name = ref.prop(Storage.NAME)
 		refid = ref.prop(Storage.REFID)
 		if refid[0] == 'c':
-		    return int(refid[1:])
-
-		if not refid[0] == 'a':
+		    key = int(refid[1:])
+		    refelem = Storage.__cid_to_item_mapping[key]
+		elif refid[0] == 'a':
+		    key = int(refid[1:])
+		    refelem = self.__factory.lookup(key)
+		else:
 		    raise ValueError, 'Invalid ID for reference (%s)' % refid
-		refid = int(refid[1:])
-		refelem = self.__factory.lookup(refid)
+
 		if d.has_key(name):
 		    d[name].append (refelem)
 		else:
@@ -236,8 +253,8 @@ class Storage(object):
 	d = { }
 	while item:
 	    if item.name == Storage.CANVAS_ITEM:
-		d[int(item.prop(Storage.CID)[1:])] = Storage (self.__factory, \
-							      item)
+		s = Storage (self.__factory, item)
+		d[s.cid()] = s
 	    item = item.next
 	return d
 

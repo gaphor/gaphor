@@ -25,21 +25,37 @@ class CommentLineItem(diacanvas.CanvasLine):
 	    store.save_property(prop)
 	points = [ ]
 	for h in self.handles:
-	    pos = h.get_property ('pos_i')
-	    #print 'pos:', pos
+	    pos = h.get_pos_i ()
+	    print 'pos:', pos, h.get_property('pos_i')
 	    points.append (pos)
 	store.save_attribute ('points', points)
 	c = self.handles[0].connected_to
 	if c:
-	    store.save_attribute ('head_connection', c.get_property('id'))
+	    store.save_attribute ('head_connection', c)
 	c = self.handles[-1].connected_to
 	if c:
-	    store.save_attribute ('tail_connection', c.get_property('id'))
+	    store.save_attribute ('tail_connection', c)
 
     def load (self, store):
 	for prop in CommentLineItem.__savable_properties:
 	    self.set_property(prop, eval (store.value(prop)))
+	points = eval(store.value('points'))
+	assert len(points) >= 2
+	self.set_property('head_pos', points[0])
+	self.set_property('tail_pos', points[1])
+	for p in points[2:]:
+	    item.set_property ('add_point', p)
 
+    def postload(self, store):
+	for name, refs in store.references().items():
+	    if name == 'head_connection':
+		assert len(refs) == 1
+		refs[0].connect_handle (self.handles[0])
+	    elif name == 'tail_connection':
+		assert len(refs) == 1
+		refs[0].connect_handle (self.handles[-1])
+	    else:
+		raise AttributeError, 'Only head_connection and tail_connection are premitted as references, not %s' % name
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':

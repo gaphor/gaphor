@@ -26,6 +26,8 @@ class NamespaceModel(gtk.GenericTreeModel):
 		iter = self.get_iter (path)
 		self.row_changed (path,  iter)
         elif key == 'namespace' and obj.namespace:
+	    # FixMe: How should we handle elements that are being moved? The
+	    # Namespace changes, but this happens before the tree is notified.
 	    path = self.get_path(obj)
 	    print 'Namespace path =', path, type(path)
 	    iter = self.get_iter(path)
@@ -218,11 +220,10 @@ class NamespaceView(gtk.TreeView):
 	# Second cell if for the name of the object...
 	cell = gtk.CellRendererText ()
 	cell.set_property ('editable', 1)
-	gobject.signal_list_names(cell)
 	cell.connect('edited', self._name_edited, None)
 	column.pack_start (cell, 0)
 	column.set_cell_data_func (cell, self._set_name, None)
-	# TODO: Add handler to set text if editing is done.
+
 	assert len (column.get_cell_renderers()) == 2
 	self.append_column (column)
 
@@ -240,9 +241,12 @@ class NamespaceView(gtk.TreeView):
 	cell.set_property('text', name)
 
     def _name_edited (self, cell, path_str, new_text, data):
-	#print 'Editing done:', self, cell, path, new_text, data
+	"""
+	The text has been edited. This method updates the data object.
+	Note that 'path_str' is a string where the fields are separated by
+	colons ':', like this: '0:1:1'. We first turn them into a tuple.
+	"""
 	path_list = path_str.split(':')
-	#print 'splitted:', p
 	path = ()
 	for p in path_list:
 	    path = path + (int(p),)

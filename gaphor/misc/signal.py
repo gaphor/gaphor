@@ -4,17 +4,16 @@ import types
 
 __version__ = "$Revision$"
 __author__ = "Arjan Molenaar"
-__date__ = "2002-03-19"
+__date__ = "2002-08-28"
 
 class Signal:
     """
-    The signal class can be used to send signals to whatever function or
-    method connected to the signal object. Signals are handy for notifying
-    a large amount of objects that a property has changed.
-    Those signal objects are owned by some other object. That object should
-    provide an interface for connecting and disconnecting signal handlers
-    as well as define how many parameters are provided by the owner provides
-    when the signal is emited.
+    The signal class is an implementation of the Observer pattern. It can be
+    used to send signals to every function or method that connected to the
+    signal object, with a variable amount of parameters. Note that the owner
+    of the Signal instance should define a protocol for notifying the observers.
+    The subject should provide methods for connecting and disconnecting
+    observers (preferably 'connect()' and 'disconnect()'.
     """
     def __init__(self):
 	# Signals are stored in a list as [ (signal_func, (data)), <next sig> ]
@@ -30,16 +29,17 @@ class Signal:
 
     def disconnect (self, signal_handler):
         """
-	Disconnect all calls to the signal_handler.
+	Disconnect the signal_handler (observer).
 	"""
 	self.__signals = filter (lambda o: o[0] != signal_handler,
 				 self.__signals)
 
     def emit (self, *keys):
         """
-	Emit the signal. a set of parameters can be defined that will be
+	Emit the signal. A set of parameters can be defined that will be
 	passed to the signal handler. Those parameters will be set before
 	the parameters provided through the connect() method.
+
 	Note that you should define how many parameters are provided by the
 	owner of the signal.
 	"""

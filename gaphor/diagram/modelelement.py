@@ -1,9 +1,9 @@
+# vim:sw=4
 '''
 ModelElementItem
 
 Abstract base class for element-like Diagram items.
 '''
-# vim:sw=4
 
 if __name__ == '__main__':
     import sys
@@ -50,6 +50,8 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
 	    self.set_property(prop, eval (store.value(prop)))
 	self.set_property('subject', store.reference('subject')[0])
 
+    def postload(self, store):
+	pass
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
 	    print self, 'id', value
