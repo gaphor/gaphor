@@ -169,7 +169,7 @@ def _mod_and_keyval_from_accel(accel):
             modifier |= gtk.gdk.CONTROL_MASK
         if accel.find('M-') != -1:
             modifier |= gtk.gdk.MOD1_MASK
-        keyval = ord(accel.split('-')[-1])
+	keyval = ord(accel[-1])
     return modifier, keyval
 
 def register_action(action, *dependency_ids):
@@ -178,19 +178,6 @@ def register_action(action, *dependency_ids):
     global _registered_actions
     _registered_actions[action.id] = action
 
-    if action.stock_id:
-        stock_info = gtk.stock_lookup(action.stock_id)
-        if not stock_info and action.label:
-            modifier, keyval = _mod_and_keyval_from_accel(action.accel)
-            #print (((action.stock_id, action.label, modifier, keyval, 'gaphor'),))
-            #gtk.stock_add(((action.stock_id, action.label, modifier, keyval, 'gaphor'),))
-            gtk.stock_add(((action.stock_id, action.label, modifier, keyval, None),))
-            print '            ', (action.stock_id, action.label, modifier, keyval, None)
-	    print 'stock_lookup', gtk.stock_lookup(action.stock_id)
-        #elif stock_info and action.accel:
-            # update accelerator for this (registered) stock item
-            #modifier, keyval = _mod_and_keyval_from_accel(action.accel)
-            #gtk.stock_add(((stock_info[0], stock_info[1], modifier, keyval, stock_info[4]),))
     if dependency_ids:
         action_dependencies(action, *dependency_ids)
 

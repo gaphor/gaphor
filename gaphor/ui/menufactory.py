@@ -140,12 +140,6 @@ class MenuFactory(object):
             else:
                 if action.stock_id:
                     item = gtk.ImageMenuItem(action.stock_id, self.accel_group)
-                    gtk.accel_map_change_entry('<main>/' + action.stock_id, stock_info[2], stock_info[3], 1)
-                    item.set_accel_path('<main>/'+action.stock_id)
-                    # stock_info: (id, label, mod, key, translationdomain)
-                    #print item.get_children()[0].get_property('accel_widget')#, item)
-                    #item.add_accelerator('activate', self.accel_group, stock_info[2], stock_info[3], gtk.ACCEL_VISIBLE)
-
                 else:
                     item = gtk.MenuItem(label)
                 item.connect('activate', self.on_item_activate, action.id)

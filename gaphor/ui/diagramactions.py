@@ -88,7 +88,7 @@ class UndoAction(Action):
     stock_id = 'gtk-undo'
     label = '_Undo'
     tooltip = 'Undo the most recent changes'
-    accel = 'C-u'
+    accel = 'C-z'
 
     # TODO: check if the diagram can undo.
 
@@ -242,7 +242,7 @@ register_action(ZoomInAction)
 class ZoomOutAction(Action):
     id = 'ViewZoomOut'
     label = 'Zoom _Out'
-    #accel = 'C-\-'
+    accel = 'C--'
     stock_id = 'gtk-zoom-out'
 
     def init(self, window):

@@ -297,7 +297,6 @@ class CreateDiagramAction(Action):
     id = 'CreateDiagram'
     label = '_New diagram'
     stock_id = 'gaphor-diagram'
-    accel = 'C-d'
 
     def init(self, window):
 	self._window = window

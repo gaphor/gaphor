@@ -1,3 +1,8 @@
+2004-05-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/action.py: no longer register actions as stock items.
+	* gaphor/ui/menufactory.py: make accelerators work for menu items.
+
 2004-05-13  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* data/pixmaps/extension24.png initalnode24.png,
