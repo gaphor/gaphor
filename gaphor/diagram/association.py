@@ -21,12 +21,17 @@ from gaphor.diagram import initialize_item
 from diagramitem import DiagramItem
 from relationship import RelationshipItem
 
+from math import atan, pi, sin, cos
+
 class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.CanvasEditable):
     """AssociationItem represents associations. 
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
     """
     __gproperties__ = {
+        'show-direction': (gobject.TYPE_BOOLEAN, 'show direction',
+                            '',
+                            1, gobject.PARAM_READWRITE),
         'head':         (gobject.TYPE_OBJECT, 'head',
                          'AssociationEnd held by the head end of the association',
                          gobject.PARAM_READABLE),
@@ -80,6 +85,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         #self._label.set_max_height(100)
 
         # Direction depends on the ends that hold the ownedEnd attributes.
+        self._show_direction = False
         self._dir = diacanvas.shape.Path()
         self._dir.set_line_width(2.0)
         self._dir.line(((10, 0), (10, 10), (0, 5)))
@@ -89,17 +95,18 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 
     def save (self, save_func):
         RelationshipItem.save(self, save_func)
+        self.save_property(save_func, 'show-direction')
         if self._head_end.subject:
-            save_func('head_subject', self._head_end.subject)
+            save_func('head-subject', self._head_end.subject)
         if self._tail_end.subject:
-            save_func('tail_subject', self._tail_end.subject)
+            save_func('tail-subject', self._tail_end.subject)
 
     def load (self, name, value):
         # end_head and end_tail were used in an older Gaphor version
-        if name in ( 'head_end', 'head_subject' ):
+        if name in ( 'head_end', 'head_subject', 'head-subject' ):
             #type(self._head_end).subject.load(self._head_end, value)
             self._head_end.load('subject', value)
-        elif name in ( 'tail_end', 'tail_subject' ):
+        elif name in ( 'tail_end', 'tail_subject', 'tail-subject' ):
             #type(self._tail_end).subject.load(self._tail_end, value)
             self._tail_end.load('subject', value)
         else:
@@ -115,6 +122,10 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             self._head_end.subject = value
         elif pspec.name == 'tail-subject':
             self._tail_end.subject = value
+        elif pspec.name == 'show-direction':
+            self.preserve_property('show-direction')
+            self._show_direction = value
+            self.request_update()
         else:
             RelationshipItem.do_set_property(self, pspec, value)
 
@@ -127,6 +138,8 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             return self._head_end.subject
         elif pspec.name == 'tail-subject':
             return self._tail_end.subject
+        elif pspec.name == 'show-direction':
+            return self._show_direction
         else:
             return RelationshipItem.do_get_property(self, pspec)
 
@@ -140,14 +153,25 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         else:
             return self.popup_menu
 
+    def invert_direction(self):
+        """Invert the direction of the association, this is done by
+        swapping the head and tail-ends subjects.
+        """
+        if not self.subject:
+            return
+
+        self.subject.memberEnd.moveDown(self.subject.memberEnd[0])
+
     def on_subject_notify(self, pspec, notifiers=()):
         RelationshipItem.on_subject_notify(self, pspec,
-                                           notifiers + ('name', 'ownedEnd',))
+                                           notifiers + ('name', 'ownedEnd', 'memberEnd'))
+
+        self.on_subject_notify__name(self.subject, pspec)
 
     def on_subject_notify__name(self, subject, pspec):
-        log.debug('Association name = %s' % (self.subject and self.subject.name))
-        if self.subject:
-            self._label.set_text(self.subject.name or '')
+        log.debug('Association name = %s' % (subject and subject.name))
+        if subject:
+            self._label.set_text(subject.name or '')
         else:
             self._label.set_text('')
         self.request_update()
@@ -155,7 +179,12 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
     def on_subject_notify__ownedEnd(self, subject, pspec):
         self.request_update()
 
+    def on_subject_notify__memberEnd(self, subject, pspec):
+        self.request_update()
+
     def update_label(self, p1, p2):
+        """Update the name label near the middle of the association.
+        """
         w, h = self._label.to_pango_layout(True).get_pixel_size()
 
         x = p1[0] > p2[0] and w + 2 or -2
@@ -164,49 +193,46 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         y = (p1[1] + p2[1]) / 2.0 - y
 
 	self._label.set_pos((x, y))
-        log.debug('label pos = (%d, %d)' % (x, y))
+        #log.debug('label pos = (%d, %d)' % (x, y))
 	#return x, y, max(x + 10, x + w), max(y + 10, y + h)
 	return x, y, x + w, y + h
 
     def update_dir(self, p1, p2):
-        #self._dir.line(((10, 0), (10, 10), (0, 5)))
-        w, h = 12, 10
-
-        x = p1[0] < p2[0] and w + 2 or -2
-        #x = 12
-        x = (p1[0] + p2[0]) / 2.0 - x
-        y = p1[1] >= p2[1] and h or 0
-        #y = 12
-        y = (p1[1] + p2[1]) / 2.0 - y
-        from math import atan, pi, sin, cos
+        """Create a small arrow near the middle of the association line and
+        let it point in the direction of self.subject.memberEnd[0].
+        Keep in mind that self.subject.memberEnd[0].class_ points to the class
+        *not* pointed to by the arrow.
+        """
+        x = p1[0] < p2[0] and -8 or 8
+        y = p1[1] >= p2[1] and -8 or 8
+        x = (p1[0] + p2[0]) / 2.0 + x
+        y = (p1[1] + p2[1]) / 2.0 + y
         
         try:
             angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0])) #/ pi * 180.0
         except ZeroDivisionError:
-            angle = pi + pi/2
+            angle = pi * 1.5
+
+        # Invert angle if member ends are inverted
+        if self.subject.memberEnd[0] is self._tail_end.subject:
+            angle += pi
 
         if p1[0] < p2[0]: angle += pi
-        if p1[1] < p2[1]: angle += pi * 2
-        log.debug('rotation angle is %s' % (angle/pi * 180.0))
+        #if p1[1] < p2[1]: angle += pi * 2
+        #log.debug('rotation angle is %s' % (angle/pi * 180.0))
 
         sin_angle = sin(angle)
         cos_angle = cos(angle)
 
         def r(a, b):
-            # TODO: Check libart for rotation algorithm.
-            #return (cos_angle * a + x, \
-            #        sin_angle * b + y)
             return (cos_angle * a - sin_angle * b + x, \
                     sin_angle * a + cos_angle * b + y)
 
-	#self._dir.set_pos((x, y))
-        #log.debug('label pos = (%d, %d)' % (x, y))
-	#return x, y, max(x + 10, x + w), max(y + 10, y + h)
-        #self._dir.line(((10 + x, 0 + y), (10 + x, 10 + y), (0 + x, 5 + y)))
-        self._dir.line((r(w, 0), r(w, h), r(0, h/2)))
+        # Create an arrow around (0, 0), so it can be easely rotated:
+        self._dir.line((r(-6, 0), r(6, -5), r(6, 5)))
         self._dir.set_cyclic(True)
 
-	return x, y, x + w, y + h
+	return x, y, x + 12, y + 10
 
     def on_update (self, affine):
         """Update the shapes and sub-items of the association."""
@@ -258,8 +284,12 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         middle = len(handles)/2
         self._label_bounds = self.update_label(handles[middle-1].get_pos_i(),
                                                handles[middle].get_pos_i())
-        b0 = self.update_dir(handles[middle-1].get_pos_i(),
-                             handles[middle].get_pos_i())
+
+        if self._show_direction and self.subject and self.subject.memberEnd:
+            b0 = self.update_dir(handles[middle-1].get_pos_i(),
+                                 handles[middle].get_pos_i())
+        else:
+            b0 = self.bounds
 
         # bounds calculation
         b1 = self.bounds
@@ -272,7 +302,8 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         for s in RelationshipItem.on_shape_iter(self):
             yield s
         yield self._label
-        yield self._dir
+        if self._show_direction:
+            yield self._dir
 
     # Gaphor Connection Protocol
 

@@ -192,8 +192,7 @@ class collection(object):
 
 
     def moveUp(self, value):
-        """
-        Move element up. Owner is notified about the change.
+        """Move element up. Owner is notified about the change.
         """
         i1 = self.items.index(value)
         i2 = i1 - 1
@@ -205,8 +204,7 @@ class collection(object):
 
 
     def moveDown(self, value):
-        """
-        Move element down. Owner is notified about the change.
+        """Move element down. Owner is notified about the change.
         """
         i1 = self.items.index(value)
         i2 = i1 + 1

@@ -1,6 +1,9 @@
 2004-11-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/association.py: added direction arrow.
+	* gaphor/diagram/itemactions.py: added two new actions:
+	AssociationShowDirection: show/hide direction arrow (default = hide)
+	AssociationInvertDirection: invert the association direction.
 
 2004-11-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

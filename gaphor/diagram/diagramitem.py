@@ -95,15 +95,16 @@ class DiagramItem(Presentation):
         """Send the unlink signal and remove itself from the canvas.
         """
         # Check to prevent accidental deletion of a model item
-        try:
-            views = self.subject.presentation
-        except AttributeError: # Only works for certain objects
-            views=[]
-        if len(views)==1:
-            # Fix this stuff
-            import gtk
-            dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_INFO, gtk.BUTTONS_OK, 'This will remove the selected item from the model.')
-            dialog.show()
+        # Do this in the DeleteAction, not in a diagram item!
+        #try:
+        #    views = self.subject.presentation
+        #except AttributeError: # Only works for certain objects
+        #    views=[]
+        #if len(views)==1:
+        #    # Fix this stuff
+        #    import gtk
+        #    dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,gtk.MESSAGE_INFO, gtk.BUTTONS_OK, 'This will remove the selected item from the model.')
+        #    dialog.show()
 
         #log.debug('DiagramItem.unlink(%s)' % self)
         # emit the __unlink__ signal the way UML.Element would have done:

@@ -19,7 +19,8 @@ from dependency import DependencyItem
 from operation import OperationItem
 from nameditem import NamedItem
 from interface import InterfaceItem
-from association import AssociationEnd
+from association import AssociationItem, AssociationEnd
+
 
 class NoFocusItemError(gaphor.GaphorError):
     pass
@@ -418,6 +419,49 @@ register_action(OrthogonalAlignmentAction, 'ItemFocus', 'Orthogonal')
 # Association submenu
 #
 
+class AssociationShowDirectionAction(CheckAction):
+    id = 'AssociationShowDirection'
+    label = 'Show Direction'
+    tooltip='show direction arrow'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+            if isinstance(item, AssociationItem):
+                self.active = item.get_property('show-direction')
+        except NoFocusItemError:
+            pass
+
+    def execute(self):
+        fi = get_parent_focus_item(self._window)
+        assert isinstance(fi, AssociationItem)
+        #get_undo_manager().begin_transaction()
+        fi.set_property('show-direction', self.active)
+
+weave_method(AssociationShowDirectionAction.execute, UndoTransactionAspect)
+register_action(AssociationShowDirectionAction, 'ItemFocus')
+
+
+class AssociationInvertDirectionAction(Action):
+    id = 'AssociationInvertDirection'
+    label = 'Invert Direction'
+    tooltip='Invert direction arrow'
+
+    def init(self, window):
+        self._window = window
+
+    def execute(self):
+        fi = get_parent_focus_item(self._window)
+        assert isinstance(fi, AssociationItem)
+        fi.invert_direction()
+
+weave_method(AssociationInvertDirectionAction.execute, UndoTransactionAspect)
+register_action(AssociationInvertDirectionAction, 'ItemFocus')
+
+
 class NavigableAction(CheckAction):
     end_name=''
     def init(self, window):
@@ -429,7 +473,6 @@ class NavigableAction(CheckAction):
     def update(self):
         try:
             item = get_parent_focus_item(self._window)
-            from association import AssociationItem
             if isinstance(item, AssociationItem):
                 end = item.get_property(self.end_name)
                 if end.subject:
@@ -472,7 +515,6 @@ class AggregationAction(RadioAction):
     def update(self):
         try:
             item = get_parent_focus_item(self._window)
-            from association import AssociationItem
             if isinstance(item, AssociationItem):
                 end = item.get_property(self.end_name)
                 if end.subject:
