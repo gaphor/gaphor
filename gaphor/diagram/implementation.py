@@ -3,8 +3,6 @@ Implementation - - - -|>
 '''
 # vim:sw=4
 
-import gobject
-import diacanvas
 import gaphor
 import gaphor.UML as UML
 from gaphor.diagram import initialize_item
@@ -15,13 +13,11 @@ class ImplementationItem(relationship.RelationshipItem):
     def __init__(self, id = None):
         relationship.RelationshipItem.__init__(self, id)
         self.set(dash = (7.0, 5.0), has_head = 1, head_fill_color = 0,
-                 head_a = 15.0, head_b = 15.0, head_c = 10.0, head_d = 10.0)
+            head_a = 15.0, head_b = 15.0, head_c = 10.0, head_d = 10.0)
         
     # Gaphor Connection Protocol
 
     def find_relationship(self, head_subject, tail_subject):
-        """See RelationshipItem.find_relationship().
-        """
         return self._find_relationship(head_subject, tail_subject,
            ('contract', None),
            ('implementatingClassifier', 'implementation'))
@@ -52,10 +48,8 @@ class ImplementationItem(relationship.RelationshipItem):
 
         return can_connect
 
+
     def confirm_connect_handle (self, handle):
-        """See RelationshipItem.confirm_connect_handle().
-        """
-        #print 'confirm_connect_handle', handle
         c1 = self.handles[0].connected_to
         c2 = self.handles[-1].connected_to
         if c1 and c2:
@@ -64,16 +58,15 @@ class ImplementationItem(relationship.RelationshipItem):
             relation = self.find_relationship(s1, s2)
             if not relation:
                 relation = gaphor.resource(UML.ElementFactory).create(UML.Implementation)
-                relation.general = s1
-                relation.specific = s2
+                relation.contract = s1
+                relation.implementatingClassifier = s2
             self.subject = relation
+
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
         """See RelationshipItem.confirm_disconnect_handle().
         """
-        #print 'confirm_disconnect_handle', handle
         if self.subject:
             del self.subject
 
 initialize_item(ImplementationItem, UML.Implementation)
-
