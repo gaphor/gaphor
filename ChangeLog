@@ -1,3 +1,15 @@
+2002-01-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/Element.py: Added signals
+	* gaphor/diagram/classifier.[ch],
+	  gaphor/diagram/relationship.[ch],
+	  gaphor/diagram/generalization.[ch]: New files.
+
+2002-01-12  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/comment-line.[ch]: New file: a line that connects a
+	  model element with a comment.
+
 2002-01-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/*: implemented Comment class (and actor class

@@ -10,5 +10,5 @@ testlist = [
 ]
 EOF
 
-PYTHONPATH=../gaphor python model-consistency.py
+python model-consistency.py
 

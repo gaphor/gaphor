@@ -42,6 +42,6 @@ for c in testlist:
 	    testvar(var1, i2)
 	    testvar(var2, i1)
 	    print " (Okay!)"
-print "=================="
-print " All tests passed"
-print "=================="
+#print "=================="
+#print " All tests passed"
+#print "=================="

@@ -8,7 +8,7 @@
 # Since a lot of objects have di-directional relations with other objects we
 # have to create those maps.
 # A record consists of two or three fields:
-# 1. The default value of the attribute (e.g. "NoName") or a reference to the
+# 1. The default value of the attribute (e.g. 'NoName') or a reference to the
 #    Sequence class in case of a 0..* relationship.
 # 2. Type of object that way be added.
 # 3. In case of bi-directional relationships the third argument is the name
@@ -62,7 +62,7 @@ class Sequence:
         return self.list.__len__()
 
     def __setitem__(self, key, value):
-	raise Exception, "Sequence: items should not be overwritten."
+	raise Exception, 'Sequence: items should not be overwritten.'
 
     def __delitem__(self, key):
 	if self.owner:
@@ -77,10 +77,10 @@ class Sequence:
         return self.list.__getslice__(i, j)
 
     def __setslice__(self, i, j, s):
-	raise IndexError, "Sequence: items should not be overwritten."
+	raise IndexError, 'Sequence: items should not be overwritten.'
 
     def __delslice__(self, i, j):
-	raise IndexError, "Sequence: items should not be deleted this way."
+	raise IndexError, 'Sequence: items should not be deleted this way.'
 
     def __contains__(self, obj):
         return self.list.__contains__(obj)
@@ -88,13 +88,9 @@ class Sequence:
     def append(self, obj):
 	if isinstance (obj, self.requested_type):
 	    if self.list.count(obj) == 0:
-		#print "seq.list:", self.list
 		self.list.append(obj)
-		#print "seq.list:", self.list
-	    #else:
-	        #print "Sequence.append: Item already in sequence (" + str(obj) + ")"
 	else:
-	    raise ValueError, "Sequence._add(obj): Object is not of type " + \
+	    raise ValueError, 'Sequence._add(obj): Object is not of type ' + \
 	    			str(self.requested_type)
 
     def remove(self, key):
@@ -111,11 +107,12 @@ A class does not need to define any local variables itself: Element will
 retrieve all information from the _attrdef structure.
 Element._hash is a table containing all assigned objects as weak references.'''
     _index = 1
-    _attrdef = { }
+    _attrdef = { 'presentation': ( Sequence, types.ObjectType ) }
     _hash = { }
 
     def __init__(self):
-	self.__dict__["_Element__id"] = Element._index
+	self.__dict__['__id'] = Element._index
+	self.__dict__['__signals'] = [ ]
 	Element._hash[Element._index] = weakref.ref (self)
 	Element._index += 1
 
@@ -127,7 +124,7 @@ Element._hash is a table containing all assigned objects as weak references.'''
 	        return None
 	    done.append(klass)
 	    dict = klass._attrdef
-	    #print "Checking " + klass.__name__
+	    #print 'Checking ' + klass.__name__
 	    if dict.has_key(key):
 		return dict[key]
 	    else:
@@ -137,8 +134,8 @@ Element._hash is a table containing all assigned objects as weak references.'''
 			return rec
 	rec = real_get_attr_info(key, klass)
 	if rec is None:
-	    raise AttributeError, "Attribute " + key + \
-		      " is not in class " + self.__class__.__name__
+	    raise AttributeError, 'Attribute ' + key + \
+		      ' is not in class ' + self.__class__.__name__
 	else:
 	    return rec
 
@@ -155,8 +152,9 @@ Element._hash is a table containing all assigned objects as weak references.'''
 	    pass
 
     def __getattr__(self, key):
-	if key == "id":
-	    return self.__dict__["_Element__id"]
+	#print 'Element.__getattr__(' + key + ')'
+	if key == 'id':
+	    return self.__dict__['__id']
 	elif self.__dict__.has_key(key):
 	    # Key is already in the object
 	    return self.__dict__[key]
@@ -179,52 +177,55 @@ Element._hash is a table containing all assigned objects as weak references.'''
 	   b. Set up a new relationship between self-value and value-self.'''
 
 	rec = self.__get_attr_info (key, self.__class__)
-	#print "Element:__setattr__(" + key + ")"
+	#print 'Element:__setattr__(' + key + ')'
 	if len(rec) == 2: # Attribute or one-way relation
 	    if rec[0] is Sequence:
 	        self.__ensure_seq (key, rec[1]).append(value)
 	    else:
 		self.__dict__[key] = value
+	    self.emit (key)
 	else:
 	    xrec = value.__get_attr_info (rec[2], value.__class__)
-	    #print "__setattr__x", xrec
+	    #print '__setattr__x', xrec
 	    if len(xrec) > 2:
 	        assert xrec[2] == key
 	    if self.__dict__.has_key(key):
-		#print "del old..."
+		#print 'del old...'
 	        xself = self.__dict__[key]
 		# Keep the relationship if we have a n:m relationship
 		if rec[0] is not Sequence or xrec[0] is not Sequence:
 		    if rec[0] is Sequence:
-			#print "del-seq-item rec"
+			#print 'del-seq-item rec'
 			self.__del_seq_item(self.__dict__[key], xself)
 		    elif self.__dict__.has_key(key):
-			    #print "del-item rec"
+			    #print 'del-item rec'
 			    del self.__dict__[key]
 		    if xrec[0] is Sequence:
-			#print "del-seq-item xrec"
+			#print 'del-seq-item xrec'
 			xself.__del_seq_item(xself.__dict__[rec[2]], self)
 		    elif xself.__dict__.has_key(rec[2]):
-			    #print "del-item xrec"
+			    #print 'del-item xrec'
 			    del xself.__dict__[rec[2]]
 	    # Establish the relationship
 	    if rec[0] is Sequence:
-	    	#print "add to seq"
+	    	#print 'add to seq'
 		self.__ensure_seq(key, rec[1]).append (value)
 	    else:
-		#print "add to item"
+		#print 'add to item'
 		self.__dict__[key] = value
 	    if xrec[0] is Sequence:
-		#print "add to xseq"
+		#print 'add to xseq'
 		value.__ensure_seq(rec[2], xrec[1]).append (self)
 	    else:
-		#print "add to xitem"
+		#print 'add to xitem'
 		value.__dict__[rec[2]] = self
+	    self.emit (key)
+	    value.emit (rec[2])
 	    
     def __delattr__(self, key):
 	rec = self.__get_attr_info (key, self.__class__)
 	if rec[0] is Sequence:
-	    raise AttributeError, "Element: you can not remove a sequence"
+	    raise AttributeError, 'Element: you can not remove a sequence'
 	if not self.__dict__.has_key(key):
 	    return
 	xval = self.__dict__[key]
@@ -235,6 +236,8 @@ Element._hash is a table containing all assigned objects as weak references.'''
 		xval.__del_seq_item(xval.__dict__[rec[2]], self)
 	    else:
 	        del xval.__dict__[rec[2]]
+	    xval.emit(rec[2])
+	self.emit (key)
 
     def sequence_remove(self, seq, obj):
         '''Remove an entry. Should only be called by Sequence's implementation.
@@ -245,7 +248,7 @@ Element._hash is a table containing all assigned objects as weak references.'''
 	        break
 	rec = self.__get_attr_info (key, self.__class__)
 	if rec[0] is not Sequence:
-	    raise AttributeError, "Element: This should be called from Sequence"
+	    raise AttributeError, 'Element: This should be called from Sequence'
 	seq.list.remove(obj)
 	if len(rec) > 2: # Bi-directional relationship
 	    xrec = obj.__get_attr_info (rec[2], rec[1])
@@ -254,6 +257,23 @@ Element._hash is a table containing all assigned objects as weak references.'''
 	    else:
 	        del obj.__dict__[rec[2]]
 	
+    # Functions used by the signal functions
+    def connect (self, signal_func, *data):
+	self.__dict__['__signals'].append ((signal_func,) + data)
+
+    def disconnect (self, signal_func):
+	self.__dict__['__signals'] = filter (lambda o: o[0] != signal_func,
+					     self.__dict__['__signals'])
+
+    def emit (self, key):
+	if not self.__dict__.has_key ('__signals'):
+	    print 'No __signals attribute', self.__dict__
+	    return
+        for signal in self.__dict__['__signals']:
+	    signal_func = signal[0]
+	    data = signal[1:]
+	    signal_func (key, *data)
+
 def Element_hash_gc():
     '''Do a garbage collection on the hash table, also removing
     weak references that do not point to valid objects.'''
@@ -264,20 +284,20 @@ def Element_hash_gc():
 
 if __name__ == '__main__':
 
-    print "\n============== Starting Element tests... ============\n"
+    print '\n============== Starting Element tests... ============\n'
 
-    print "=== Sequence: ",
+    print '=== Sequence: ',
 
     class A(Element): _attrdef = { }
 
-    A._attrdef["seq"] = ( Sequence, types.StringType )
+    A._attrdef['seq'] = ( Sequence, types.StringType )
 
     a = A()
     assert a.seq.list == [ ]
 
-    aap = "aap"
-    noot = "noot"
-    mies = "mies"
+    aap = 'aap'
+    noot = 'noot'
+    mies = 'mies'
 
     a.seq = aap
     assert a.seq.list == [ aap ]
@@ -292,22 +312,22 @@ if __name__ == '__main__':
     assert noot in a.seq
     assert mies not in a.seq
 
-    print "\tOK ==="
+    print '\tOK ==='
 
-    print "=== Single:",
+    print '=== Single:',
 
     class A(Element): _attrdef = { }
 
-    A._attrdef["str"] = ( "one", types.StringType )
-    A._attrdef["seq"] = ( Sequence, types.StringType )
+    A._attrdef['str'] = ( 'one', types.StringType )
+    A._attrdef['seq'] = ( Sequence, types.StringType )
 
     a = A()
 
     assert a.str == 'one'
     assert a.seq.list == [ ]
 
-    aap = "aap"
-    noot = "noot"
+    aap = 'aap'
+    noot = 'noot'
     a.str = aap
     assert a.str is aap
 
@@ -320,9 +340,9 @@ if __name__ == '__main__':
     a.seq.remove(aap)
     assert a.seq.list == [ noot ]
 
-    print "\tOK ==="
+    print '\tOK ==='
 
-    print "=== 1:1:",
+    print '=== 1:1:',
 
     class A(Element): _attrdef = { }
 
@@ -360,9 +380,9 @@ if __name__ == '__main__':
     assert b.ref1 is None
     assert b.ref2 is None
 
-    print "\tOK ==="
+    print '\tOK ==='
 
-    print "=== 1:n",
+    print '=== 1:n',
 
     class A(Element): _attrdef = { }
 
@@ -425,9 +445,9 @@ if __name__ == '__main__':
     assert b.ref is None
     assert b.seq.list == [ ]
 
-    print "\tOK ==="
+    print '\tOK ==='
 
-    print "=== n:m:",
+    print '=== n:m:',
 
     class A(Element): _attrdef = { }
 
@@ -483,9 +503,9 @@ if __name__ == '__main__':
     assert b.seq1.list == [ a ]
     assert b.seq2.list == [ a ]
 
-    print "\tOK ==="
+    print '\tOK ==='
 
-    print "=== Hashing:",
+    print '=== Hashing:',
 
     # Only the last two instances ('a' and 'b') should be 
     Element_hash_gc()
@@ -494,6 +514,56 @@ if __name__ == '__main__':
 	    i += 1;
     assert (i == 2)
 
-    print "\tOK ==="
+    print '\tOK ==='
 
-    print "\n============== All Element tests passed... ============\n"
+    print '=== Signals:',
+
+    class A(Element): _attrdef = { }
+
+    A._attrdef['rel'] = ( Name, A, 'seq' )
+    A._attrdef['seq'] = ( Sequence, A, 'rel' )
+
+    class Z:
+	def callback (self, *data):
+	    self.cb_data = data
+
+    a = A()
+    b = A()
+    z = Z()
+    y = Z()
+    x = Z()
+    a.connect (z.callback, 'one', 'two')
+    data = a.__dict__['__signals'][0]
+    assert data[0] == z.callback
+    assert data[1] == 'one'
+    assert data[2] == 'two'
+
+    a.connect (y.callback, 'three')
+    data = a.__dict__['__signals'][0]
+    assert data[0] == z.callback
+    assert data[1] == 'one'
+    assert data[2] == 'two'
+    data = a.__dict__['__signals'][1]
+    assert data[0] == y.callback
+    assert data[1] == 'three'
+
+    a.connect (x.callback)
+    data = a.__dict__['__signals'][2]
+    assert data[0] == x.callback
+    
+    a.rel = b
+    assert z.cb_data[0] == 'rel'
+    assert z.cb_data[1] == 'one'
+    assert z.cb_data[2] == 'two'
+    assert y.cb_data[0] == 'rel'
+    assert y.cb_data[1] == 'three'
+    
+    a.disconnect (z.callback)
+    data = a.__dict__['__signals'][0]
+    assert len (a.__dict__['__signals']) == 2
+    assert data[0] == y.callback
+    assert data[1] == 'three'
+
+    print '\tOK ==='
+
+    print '\n============== All Element tests passed... ==========\n'
