@@ -32,6 +32,8 @@ __all__ = [ 'parse', 'ParserException' ]
 
 from xml.sax import handler
 
+import gaphor.misc.odict
+
 class base(object):
     """Simple base class for element, canvas and canvasitem.
     """
@@ -143,7 +145,7 @@ class GaphorLoader(handler.ContentHandler):
     def startDocument(self):
         """Start of document: all our attributes are initialized.
         """
-        self.elements = {} # map id: element/canvasitem
+        self.elements = gaphor.misc.odict.odict() # map id: element/canvasitem
         self.__stack = []
         self.value_is_cdata = 0
         self.cdata = ''

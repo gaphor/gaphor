@@ -90,4 +90,8 @@
     <file>usecase24.png</file>
     <element>UseCase</element>
   </icon>
+  <icon id="gaphor-component">
+    <file>component24.png</file>
+    <element>Component</element>
+  </icon>
 </stock-icons>

@@ -59,6 +59,9 @@ def save(filename=None, factory=None, status_queue=None):
             buffer.write('<%s><val>' % name)
             if isinstance(value, types.StringTypes):
                 buffer.write('<![CDATA[%s]]>' % value.replace(']]>', '] ]>'))
+            elif isinstance(value, bool):
+                # Write booleans as 0/1.
+                buffer.write(str(int(value)))
             else:
                 buffer.write(escape(str(value)))
             buffer.write('</val></%s>\n' % name)

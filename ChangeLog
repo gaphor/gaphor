@@ -1,5 +1,15 @@
 2004-05-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
+	Applied patches from wrobell@pld-linux.org
+	* gaphor/misc/odict.py: new file. Ordered dictionary
+	* gaphor/diagram/component.py, data/pixmaps/component24.png: new
+	item: Component.
+	* several small changes in itemactions, actions.py and mainwindow.py.
+
+2004-05-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	RELEASE 0.4.0
+
         * gaphor/storage.py: Be more verbose wrt load status.
 	* gaphor/UML/elementfactory.py: Added method size().
 	* gaphor/UML/uml2.gaphor: change in Interfaces diagram

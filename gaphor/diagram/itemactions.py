@@ -9,6 +9,7 @@ import gaphor.UML as UML
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 
 from klass import ClassItem
+from component import ComponentItem
 from nameditem import NamedItem
 from association import AssociationEnd
 
@@ -586,4 +587,28 @@ class DependencyTypeImplementationAction(DependencyTypeAction):
     dependency_type = UML.Implementation
 
 register_action(DependencyTypeImplementationAction, 'ItemFocus')
+
+
+class IndirectlyInstantiatedComponentAction(CheckAction):
+    id = 'IndirectlyInstantiated'
+    label = 'Indirectly Instantiated'
+    tooltip = 'Indirectly Instantiated Component'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, ComponentItem):
+                self.active = item.subject and item.subject.isIndirectlyInstantiated
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        item.subject.isIndirectlyInstantiated = self.active
+
+register_action(IndirectlyInstantiatedComponentAction, 'ItemFocus')
 

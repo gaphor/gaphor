@@ -8,6 +8,7 @@ import gaphor.misc.uniqueid as uniqueid
 from element import Element
 from diagram import Diagram
 #from gaphor.misc.weakmethod import WeakMethod
+import gaphor.misc.odict
 
 class ElementFactory(object):
     """The ElementFactory is used to create elements ans do lookups to
@@ -22,7 +23,7 @@ class ElementFactory(object):
             (element is None)
     """
     def __init__(self):
-        self._elements = dict()
+        self._elements = gaphor.misc.odict.odict()
         self._observers = list()
 
     def create(self, type):

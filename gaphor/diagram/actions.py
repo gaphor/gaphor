@@ -354,3 +354,13 @@ class FlowPlacementAction(PlacementAction):
 
 register_action(FlowPlacementAction)
 
+class ComponentPlacementAction(NamespacePlacementAction):
+    id = 'InsertComponent'
+    label = '_Component'
+    tooltip = 'Create a new Component item'
+    stock_id = 'gaphor-component'
+    name = 'Component'
+    type = diagram.ComponentItem
+    subject_type = UML.Component
+
+register_action(ComponentPlacementAction)

@@ -135,6 +135,7 @@ class MainWindow(AbstractWindow):
 #        ("Stereotypes", (
 #                'InsertStereotype',
 #                'InsertExtension'))
+        ("Components", ('InsertComponent', )),
     ]
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',

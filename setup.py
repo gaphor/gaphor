@@ -76,7 +76,7 @@ class config_Gaphor(Command):
         self.module_check('gnome')
         self.module_check('gnome.canvas')
         #self.module_check('gconf')
-        self.module_check('diacanvas', ('diacanvas_version', (0, 12, 0)))
+        self.module_check('diacanvas', ('diacanvas_version', (0, 13, 0)))
 
         print ''
         if self.config_failed:

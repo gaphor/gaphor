@@ -55,7 +55,7 @@ def show_status_window(title, message, parent=None, queue=None):
     win.set_transient_for(parent)
     win.set_modal(True)
     win.set_resizable(False)
-    win.set_decorated(False)
+    win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
     win.set_skip_taskbar_hint(True)
     win.set_skip_pager_hint(True)
     win.set_border_width(24)
@@ -66,8 +66,6 @@ def show_status_window(title, message, parent=None, queue=None):
     vbox.pack_start(label)
     progress_bar = gtk.ProgressBar()
     vbox.pack_start(progress_bar, expand=False, fill=False, padding=0)
-    #progress_bar.set_size_request(100, 15)
-    #progress_bar.set_padding(100, 20)
 
     def progress_idle_handler(progress_bar, queue):
 	#print '.',

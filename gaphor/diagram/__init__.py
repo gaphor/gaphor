@@ -68,6 +68,7 @@ from extension import ExtensionItem
 from node import InitialNodeItem, ActivityFinalNodeItem, DecisionNodeItem
 from action import ActionItem
 from flow import FlowItem
+from component import ComponentItem
 import itemactions
 
 if __debug__: 
