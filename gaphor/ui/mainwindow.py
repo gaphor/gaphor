@@ -8,7 +8,8 @@ import gaphor.UML as UML
 from abstractwindow import AbstractWindow
 
 def on_toggled(button, content):
-    arrow = button.get_children()[0]
+    #arrow = button.get_children()[0]
+    arrow = button.get_children()[0].get_children()[0]
     if button.get_property('active'):
         content.show()
         arrow.set(gtk.ARROW_DOWN, gtk.SHADOW_IN)
@@ -17,26 +18,29 @@ def on_toggled(button, content):
         arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
 
 def make_wrapbox_decorator(title, content, expanded=False):
-    hbox = gtk.HBox()
     vbox = gtk.VBox()
 
-    vbox.add(hbox)
+    #vbox.add(hbox)
 
     button = gtk.ToggleButton()
+    button.set_relief(gtk.RELIEF_NONE)
+
+    hbox = gtk.HBox()
+    button.add(hbox)
 
     arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
-    button.add(arrow)
-    hbox.pack_start(button, False, False, 0)
-    #button.add(hbox)
-    #hbox.pack_start(arrow, False, False, 0)
+    #button.add(arrow)
+    #hbox.pack_start(button, False, False, 0)
+    hbox.pack_start(arrow, False, False, 0)
 
     label = gtk.Label(title)
     hbox.pack_start(label, expand=False, fill=False)
 
     sep = gtk.HSeparator()
-    hbox.pack_start(sep, expand=False, fill=True)
+    hbox.pack_start(sep, expand=True, fill=True)
+    hbox.set_spacing(3)
 
-    #vbox.pack_start(button, False, False, 1)
+    vbox.pack_start(button, False, False, 1)
 
     vbox.show_all()
 
