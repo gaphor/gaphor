@@ -183,7 +183,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         try:
             angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0])) #/ pi * 180.0
         except ZeroDivisionError:
-            angle = 0
+            angle = pi + pi/2
 
         if p1[0] < p2[0]: angle += pi
         if p1[1] < p2[1]: angle += pi * 2
