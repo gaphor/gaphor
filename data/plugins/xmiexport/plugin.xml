@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<plugin name="XMI Export"
+        version="0.1"
+        author="Jeroen Vloothuis">
+  <description>
+        This plugin extends Gaphor with XMI export functionality.
+  </description>
+
+  <require>
+    <!--
+      Define modules and plugins that are needed for this plugin to function
+      properly.
+    - ->
+    <module name="xml.sax.saxutils.XMLGenerator"/>
+    -->
+  </require>
+
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+    <action id="XMIExport"
+            label="XMI Export"
+            tooltip="Export the model to XMI"
+            class="XMIExport" slot="FileExportSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      - ->
+      <depends action=""/>
+      -->
+    </action>
+  </provide>
+</plugin>
