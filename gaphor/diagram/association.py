@@ -129,10 +129,10 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
         if head_subject and tail_subject:
             # Update line ends using the aggregation and isNavigable values:
 
-            if head_subject.aggregation == intern('composite'):
+            if tail_subject.aggregation == intern('composite'):
                 self.set(has_head=1, head_a=20, head_b=10, head_c=6, head_d=6,
                          head_fill_color=diacanvas.color(0,0,0,255))
-            elif head_subject.aggregation == intern('shared'):
+            elif tail_subject.aggregation == intern('shared'):
                 self.set(has_head=1, head_a=20, head_b=10, head_c=6, head_d=6,
                          head_fill_color=diacanvas.color(255,255,255,255))
             elif not head_subject.owningAssociation:
@@ -141,10 +141,10 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
             else:
                 self.set(has_head=0)
 
-            if tail_subject.aggregation == intern('composite'):
+            if head_subject.aggregation == intern('composite'):
                 self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
                          tail_fill_color=diacanvas.color(0,0,0,255))
-            elif tail_subject.aggregation == intern('shared'):
+            elif head_subject.aggregation == intern('shared'):
                 self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
                          tail_fill_color=diacanvas.color(255,255,255,255))
             elif not tail_subject.owningAssociation:
