@@ -4,23 +4,44 @@
 
 import diacanvas
 from gaphor.diagram import initialize_item
+from diagramitem import DiagramItem
 
-class DiagramLine(diacanvas.CanvasLine):
-    """Gaphor wrapper for lines."""
+class DiagramLine(diacanvas.CanvasLine, DiagramItem):
+    """Gaphor lines. This line is serializable and has a popup
+    menu."""
+
+    __gproperties__ = DiagramItem.__gproperties__
+
+    __gsignals__ = DiagramItem.__gsignals__
 
     popup_menu = (
         'AddSegment',
         'DeleteSegment',
         'Orthogonal',
+        'OrthogonalAlignment',
         'separator',
         'EditDelete'
     )
 
-    def __init__(self):
-        #diacanvas.CanvasLine.__init__(self)
+    def __init__(self, id=None):
+        #print '#diacanvas.CanvasLine.__init__(self)'
         self.__gobject_init__()
+        DiagramItem.__init__(self, id)
+        self.set_property('horizontal', False)
+
+    # Ensure we call the right connect functions:
+    connect = DiagramItem.connect
+    disconnect = DiagramItem.disconnect
+    notify = DiagramItem.notify
+
+    def do_set_property (self, pspec, value):
+        pass
+
+    def do_get_property(self, pspec):
+        pass
 
     def save (self, save_func):
+        DiagramItem.save(self, save_func)
         for prop in ('affine', 'line_width', 'color', \
                      'cap', 'join', 'orthogonal', 'horizontal'):
             save_func(prop, self.get_property(prop))
@@ -34,7 +55,7 @@ class DiagramLine(diacanvas.CanvasLine):
             save_func('head_connection', c, reference=True)
         c = self.handles[-1].connected_to
         if c:
-            save_func ('tail_connection', c, reference=True)
+            save_func('tail_connection', c, reference=True)
 
     def load (self, name, value):
         if name == 'points':
@@ -48,10 +69,7 @@ class DiagramLine(diacanvas.CanvasLine):
         elif name == 'tail_connection':
             self._load_tail_connection = value
         else:
-            try:
-                self.set_property(name, eval(value))
-            except:
-                log.warning('%s has no property named %s (value %s)' % (self, name, value))
+            DiagramItem.load(self, name, value)
 
     def postload(self):
         if hasattr(self, '_load_head_connection'):
@@ -60,17 +78,8 @@ class DiagramLine(diacanvas.CanvasLine):
         if hasattr(self, '_load_tail_connection'):
             self._load_tail_connection.connect_handle(self.handles[-1])
             del self._load_tail_connection
+        DiagramItem.postload(self)
 
-    def has_capability(self, capability):
-        #log.debug('Relationship: checking capability %s' % capability)
-        if capability == 'orthogonal':
-            return self.get_property('orthogonal')
-        elif capability == 'del_segment':
-            if self.get_property('orthogonal'):
-                return len(self.handles) > 3
-            else:
-                return len(self.handles) > 2
-        return False
 
     # Gaphor Connection Protocol
     #
@@ -117,5 +126,14 @@ class DiagramLine(diacanvas.CanvasLine):
         """
         pass
 
+    # DiaCanvasItem callbacks
+    def on_glue(self, handle, wx, wy):
+        return self._on_glue(handle, wx, wy, diacanvas.CanvasLine)
+
+    def on_connect_handle (self, handle):
+        return self._on_connect_handle(handle, diacanvas.CanvasLine)
+
+    def on_disconnect_handle (self, handle):
+        return self._on_disconnect_handle(handle, diacanvas.CanvasLine)
 
 initialize_item(DiagramLine)

@@ -293,11 +293,12 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     - add on_point() and let it return min(distance(_name), distance(_mult)) or
       the first 20-30 units of the line, for association end popup menu.
     """
+#    __gproperties__ = {
+#        'name': (gobject.TYPE_STRING, 'name', '', '', gobject.PARAM_READWRITE),
+#        'mult': (gobject.TYPE_STRING, 'mult', '', '', gobject.PARAM_READWRITE)
+#    }
+#    __gproperties__.update(DiagramItem.__gproperties__)
     __gproperties__ = DiagramItem.__gproperties__
-    ___gproperties__ = {
-        'name': (gobject.TYPE_STRING, 'name', '', '', gobject.PARAM_READWRITE),
-        'mult': (gobject.TYPE_STRING, 'mult', '', '', gobject.PARAM_READWRITE)
-    }
 
     __gsignals__ = DiagramItem.__gsignals__
 
@@ -515,11 +516,12 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         return min(d1, d2)
 
     def on_shape_iter(self):
-        yield self._name
-        yield self._mult
-        if self.is_selected() and self.subject:
-            yield self._name_border
-            yield self._mult_border
+        if self.subject:
+            yield self._name
+            yield self._mult
+            if self.is_selected():
+                yield self._name_border
+                yield self._mult_border
 
     def on_connect(self, handle):
         return False
@@ -536,7 +538,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         if shape in (self._name, self._mult):
             if self.subject and (shape == self._name or new_text != ''):
                 self.subject.parse(new_text)
-            self.set_text()
+            #self.set_text()
             #log.info('editing done')
 
 initialize_item(AssociationItem, UML.Association)

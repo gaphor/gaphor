@@ -11,41 +11,26 @@ import diacanvas
 import gaphor.UML as UML
 from gaphor.diagram import initialize_item
 
-from diagramitem import DiagramItem
 from diagramline import DiagramLine
 
-class CommentLineItem(DiagramLine, DiagramItem):
-    __gproperties__ = DiagramItem.__gproperties__
-
-    __gsignals__ = DiagramItem.__gsignals__
+class CommentLineItem(DiagramLine):
 
     def __init__(self, id=None):
         #diacanvas.CanvasLine.__init__(self)
         DiagramLine.__init__(self)
-        DiagramItem.__init__(self, id)
         self.set_property('dash', (7.0, 5.0))
         self.__notify_id = None
 
     #id = property(lambda self: self._id, doc='Id')
 
     def save (self, save_func):
-        DiagramItem.save(self, save_func)
         DiagramLine.save(self, save_func)
     
     def load (self, name, value):
-        if name == 'subject':
-	    DiagramItem.load(self, name, value)
-        else:
-	    DiagramLine.load(self, name, value)
+        DiagramLine.load(self, name, value)
 
     def postload(self):
-        DiagramItem.postload(self)
         DiagramLine.postload(self)
-
-    # Ensure we call the right connect functions:
-    connect = DiagramItem.connect
-    disconnect = DiagramItem.disconnect
-    notify = DiagramItem.notify
 
     def on_notify_comment_parent(self, comment, pspec):
         if not comment.parent and self.parent:
@@ -149,6 +134,4 @@ class CommentLineItem(DiagramLine, DiagramItem):
                 #raise TypeError, 'One end of the CommentLine should connect to a Comment. How could this connect anyway?'
 
 initialize_item(CommentLineItem)
-#gobject.type_register(CommentLineItem)
-#diacanvas.set_callbacks(CommentLineItem)
 

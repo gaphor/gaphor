@@ -314,17 +314,37 @@ class OrthogonalAction(CheckAction):
 
     def execute(self):
         fi = get_parent_focus_item(self._window)
-        view = self._window.get_current_diagram_view()
         assert isinstance(fi, diacanvas.CanvasLine)
-        #orthogonal = not fi.get_property('orthogonal')
-        #log.debug('Setting orthogonal for %s: %d' % (fi, orthogonal))
         if self.active and len(fi.handles) < 3:
             fi.set_property('add_segment', 0)
         fi.set_property('orthogonal', self.active)
-        #import traceback
-        #traceback.print_stack()
 
 register_action(OrthogonalAction, 'ItemFocus', 'AddSegment', 'DeleteSegment')
+
+
+class OrthogonalAlignmentAction(CheckAction):
+    id = 'OrthogonalAlignment'
+    label = 'Switched alignment'
+    tooltip = 'Set the line to orthogonal'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+	try:
+	    fi = get_parent_focus_item(self._window)
+	    if fi and isinstance(fi, diacanvas.CanvasLine):
+		self.sensitive = fi.get_property('orthogonal')
+		self.active = fi.get_property('horizontal')
+	except NoFocusItemError:
+	    pass
+
+    def execute(self):
+        fi = get_parent_focus_item(self._window)
+        assert isinstance(fi, diacanvas.CanvasLine)
+        fi.set_property('horizontal', self.active)
+
+register_action(OrthogonalAlignmentAction, 'ItemFocus', 'Orthogonal')
 
 
 #
@@ -466,6 +486,7 @@ class AssociationEndRenameNameAction(Action):
 
     def update(self):
 	view = self._window.get_current_diagram_view()
+	if not view: return
 	fi = view.focus_item
 	if not fi:
 	    self.sensitive = False
@@ -491,6 +512,7 @@ class AssociationEndRenameMultAction(Action):
 
     def update(self):
 	view = self._window.get_current_diagram_view()
+	if not view: return
 	fi = view.focus_item
 	if not fi:
 	    self.sensitive = False

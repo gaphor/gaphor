@@ -63,6 +63,8 @@ class ItemTool(diacanvas.view.Tool):
             # TODO: invoke Actions here
             if isinstance(item, NamedItem):
                 self.execute_action('ItemRename')
+            elif hasattr(item, 'edit'):
+                self.execute_action('EditItem')
             elif isinstance(item, AssociationEnd):
                 x, y = view_item.w2i(event.x, event.y)
                 if item.point_name(x, y) < item.point_mult(x, y):

@@ -246,12 +246,12 @@ class GTKInterpreterConsole(gtk.ScrolledWindow):
       if self.current_history > 0:
         self.current_history = 0
       return self.show_history()
-    elif event.keyval == gtk.gdk.keyval_from_name( 'Home'):
+    elif event.keyval == gtk.gdk.keyval_from_name('Home'):
       l = self.text.get_buffer().get_line_count() - 1
       start = self.text.get_buffer().get_iter_at_line_offset(l,4)
       self.text.get_buffer().place_cursor(start)
       return gtk.TRUE
-    elif event.keyval == gtk.gdk.keyval_from_name( 'space') and event.state & gtk.gdk.CONTROL_MASK:
+    elif event.keyval == gtk.gdk.keyval_from_name('space') and event.state & gtk.gdk.CONTROL_MASK:
       return self.complete_line()
     return gtk.FALSE
 
@@ -334,7 +334,7 @@ def main():
       gtk.mainquit()
   
   def key_event(widget,event):
-      if gtk.gdk.keyval_name( event.keyval) == 'd' and event.state & gtk.gdk.CONTROL_MASK:
+      if gtk.gdk.keyval_name(event.keyval) == 'd' and event.state & gtk.gdk.CONTROL_MASK:
           destroy()
       return gtk.FALSE
 
