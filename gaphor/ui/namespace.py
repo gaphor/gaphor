@@ -160,8 +160,9 @@ class NamespaceModel(gtk.GenericTreeModel):
 	#print 'Namespace.on_get_iter():', path
 	node = self.model
 	try:
-	    for n in path:
-		node = node.ownedElement[n]
+	    if node:
+		for n in path:
+		    node = node.ownedElement[n]
 	except IndexError, e:
 	    print 'No path %s to a node' % str(path)
 	    return None

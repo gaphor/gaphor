@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # vim: sw=4
 
-import types, gtk, diacanvas, gnome.ui
+import gtk, gnome.ui
+from diagramview import DiagramView
 import gaphor.UML as UML
 import gaphor.diagram as diagram
 from gaphor import Gaphor
-from gaphor.misc.menufactory import MenuFactory, MenuItem, MenuStockItem, MenuSeparator
+from gaphor.misc.menufactory import MenuFactory, Menu, MenuItem, MenuStockItem, MenuSeparator
 import stock
 import command.file, command.diagram
 
@@ -21,7 +22,7 @@ class DiagramWindow:
 	win.set_title (title)
 	win.set_default_size (300, 300)
 	
-	view = diacanvas.CanvasView (canvas=dia.canvas)
+	view = DiagramView (canvas=dia.canvas)
 	statusbar=gnome.ui.AppBar(has_progress=0, has_status=1,
 				  interactivity=gnome.ui.PREFERENCES_USER)
 
@@ -41,7 +42,7 @@ class DiagramWindow:
 						command=command.diagram.PlacementCommand(view, dia, item[1]),
 	    					comment='Create new ' + item[2] + ' item'),)
 
-	menu =  MenuItem(submenu=(
+	menu =  Menu(
 		    MenuItem(name='_File', submenu=(
 			MenuStockItem(stock_id=gtk.STOCK_CLOSE,
 				comment='Close current window',
@@ -56,7 +57,7 @@ class DiagramWindow:
 				command=command.diagram.RedoCommand(view))
 			,)),
 		    MenuItem(name='_Insert', submenu=insert_menu)
-		    ,))
+		    )
 
 	vbox = gtk.VBox(homogeneous=gtk.FALSE)
 	win.add (vbox)

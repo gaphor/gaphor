@@ -3,12 +3,25 @@
 import gtk
 
 
+class Menu:
+
+    def __init__(self, *menu):
+	self._menu = menu
+
+    def get_menu(self):
+	return self._menu
+
+
 class BaseMenuItem:
 
-    def __init__(self, comment=None, command=None, submenu=None):
+    def __init__(self, right=0, comment=None, command=None, submenu=None):
+	self.__right = right
 	self.__comment = comment
 	self.__command = command
 	self.__submenu = submenu
+
+    def is_right(self):
+	return self.__right
 
     def get_comment(self):
 	return self.__comment
@@ -24,9 +37,9 @@ class BaseMenuItem:
 
 class MenuItem(BaseMenuItem):
 
-    def __init__(self, name=None, comment=None, accel=None,
+    def __init__(self, name=None, right=0, comment=None, accel=None,
 		 command=None, submenu=None):
-	BaseMenuItem.__init__(self, comment, command, submenu)
+	BaseMenuItem.__init__(self, right, comment, command, submenu)
 	self.__name = name
 	self.__accel = accel
 
@@ -39,8 +52,8 @@ class MenuItem(BaseMenuItem):
 
 class MenuStockItem(BaseMenuItem):
 
-    def __init__(self, stock_id, comment=None, command=None, submenu=None):
-	BaseMenuItem.__init__(self, comment, command, submenu)
+    def __init__(self, stock_id, right=0, comment=None, command=None, submenu=None):
+	BaseMenuItem.__init__(self, right, comment, command, submenu)
 	self.__stock_id = stock_id
 
     def get_stock_id(self):
@@ -50,7 +63,7 @@ class MenuStockItem(BaseMenuItem):
 class MenuPlaceholder(BaseMenuItem):
 
     def __init__(self, comment=None, is_numbered=0):
-	BaseMenuItem.__init__(self, comment)
+	BaseMenuItem.__init__(self, comment=comment)
 	self.__is_numbered = is_numbered
 	self.__placeholder = None
 	self.__entries = []
@@ -107,6 +120,7 @@ class MenuFactory:
     def create_menu(self):
 
 	command_cb = self.__handle_command_cb
+	sensitive_cb = self.__handle_sensitive_cb
 	set_comment_cb = self.__handle_set_comment_cb
 	unset_comment_cb = self.__handle_unset_comment_cb
 
@@ -128,6 +142,9 @@ class MenuFactory:
 	    menu.add(menuitem)
 
 	    if isinstance (item, BaseMenuItem):
+		if item.is_right():
+		    menuitem.set_right_justified(1)
+
 		# Set the command, if any
 		command = item.get_command()
 		if command:
@@ -147,12 +164,11 @@ class MenuFactory:
 		    for subitem in item.get_submenu():
 			create_menu(submenu, subitem)
 		    menuitem.set_submenu(submenu)
-		    print 'Children:', submenu.get_children()
 
 	    menuitem.show()
 
 	menubar = gtk.MenuBar()
-	for item in self.__menu.get_submenu():
+	for item in self.__menu.get_menu():
 	    create_menu(menubar, item)
 	menubar.show()
 	return menubar
@@ -168,6 +184,9 @@ class MenuFactory:
 	if sb and sb.flags() & gtk.REALIZED:
 	    sb.pop()
 	    sb.push(str(msg or ''))
+
+    def __handle_sensitive_cb (self, item, sensitive):
+	item.set_property("sensitive", sensitive)
 
     def __handle_set_comment_cb (self, item, comment):
 	sb = self.__statusbar

@@ -5,9 +5,10 @@ import gtk
 import gnome.ui
 import namespace
 import command.file
+import command.about
 import gaphor.UML as UML
 import gaphor.config
-from gaphor.misc.menufactory import MenuFactory, MenuItem, MenuSeparator, MenuPlaceholder, MenuStockItem
+from gaphor.misc.menufactory import MenuFactory, Menu, MenuItem, MenuSeparator, MenuPlaceholder, MenuStockItem
 import stock
 
 print '\n\n\n*** ' + __file__
@@ -23,7 +24,7 @@ class MainWindow:
 	open_windows = MenuPlaceholder()
 	# Menu items have the following structure:
 	# ( Name, Comment, (ctrl) + Modifier, Command or Submenu )
-	menu =  MenuItem(submenu=(
+	menu =  Menu(
 		    MenuItem(name=_('_File'), submenu=(
 			MenuStockItem(stock_id=gtk.STOCK_NEW,
 				 comment=_('Create a new model'),
@@ -54,8 +55,13 @@ class MainWindow:
 			MenuItem(name='_Close all',
 				comment='Close all open windows',
 				command=None)
-		        ,))
-		    ,))
+		        ,)),
+		    MenuItem(name='_Help', right=1, submenu=(
+		    	MenuItem(name='_About',
+				comment='About Gaphor',
+				command=command.about.AboutCommand())
+			,))
+		    )
 	app = gnome.ui.App (name, title)
 	app.set_default_size (200, 300)
 	accelgroup = gtk.AccelGroup()

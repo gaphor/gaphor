@@ -12,14 +12,11 @@ As always, there is much to do...
 
 - Exporting diagrams to UML XMI, code, images (SVG/png), etc.
 
+- Set up a plugin architecture.
+
 More specific:
 - Popup menu's: they should be created through an ItemFactory, but what is
   the most easy interface for adding those items (esp. for plugins)
 - Some logic about what classes can be connected to each other should be
   moved from the DiagramItems to the data elements.
 - A more pattern driven design (using Factories, Singletons etc.)
-- Notifiers that should tell the tree model to update.
-- Commands for
-	. adding Model elements to the diagram
-	. Undo/Redo
-	. Load, save, quit
