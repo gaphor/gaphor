@@ -12,43 +12,6 @@ from gaphor.UML import Element, Presentation
 from gaphor.UML.properties import association
 
 
-class diagramassociation(association):
-    """Specialized association for use in diagram items.
-    It has the same interface as the association property defined in
-    gaphor/UML/properties.py, but delegates everything to the GObject property
-    handlers.
-    """
-
-    # TODO: Maybe we should not break our side of the association...
-    #       Since signals are still connected as the diagram item is unlinked.
-    # TODO: Add undo/redo statements.
-
-    def unlink(self, obj):
-        #print 'diagramassociation.unlink', obj, value
-        obj.preserve_property(self.name)
-        association.unlink(self, obj)
-
-    def _set2(self, obj, value):
-        #print 'diagramassociation._set2', obj, value
-        obj.preserve_property(self.name)
-        #if obj.canvas and obj.canvas.in_undo and len(value.presentation) == 0:
-#        if obj.canvas and len(value.presentation) == 0:
-#            print 'diagramassociation._set2(): relinking!'
-#            value.relink()
-        return association._set2(self, obj, value)
-
-    def _del(self, obj, value):
-        #print 'diagramassociation._del', obj, value, value.id
-        obj.preserve_property(self.name)
-        # TODO: Add some extra notification here to tell the diagram
-        # item that the reference is about to be removed.
-        association._del(self, obj, value)
-#        if len(value.presentation) == 0 or \
-#           len(value.presentation) == 1 and obj in value.presentation:
-#            #log.debug('diagramassociation._del: No more presentations: unlinking')
-#            value.unlink()
-        
-
 class DiagramItem(Presentation):
     """Basic functionality for all model elements (lines and elements!).
 
@@ -77,10 +40,6 @@ class DiagramItem(Presentation):
                        gobject.TYPE_NONE, (gobject.TYPE_STRING,))
     }
 
-    # Override the original subject as defined in UML.Presentation:
-    # Note that subject calls GObject.notify to emit changes
-    subject = diagramassociation('subject', Element, upper=1, opposite='presentation')
-
     popup_menu = ()
 
     def __init__(self, id=None):
@@ -101,12 +60,7 @@ class DiagramItem(Presentation):
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'subject':
-            #print 'set subject:', value
-            # TODO: make property undo-able
-            if value:
-                self.subject = value
-            elif self.subject:
-                del self.subject
+            self.set_subject(value)
         else:
             raise AttributeError, 'Unknown property %s' % pspec.name
 
@@ -144,15 +98,8 @@ class DiagramItem(Presentation):
         # emit the __unlink__ signal the way UML.Element would have done:
         self.emit('__unlink__', '__unlink__')
 
-        subject = self.subject
+        self.set_subject(None)
 
-        # remove the subject if we have one
-        if self.subject:
-            del self.subject
-
-        if subject and len(subject.presentation) == 0:
-            #log.debug('diagramitem.unlink: No more presentations: unlinking')
-            value.unlink()
         self.set_property('parent', None)
 
 #    def relink(self):
@@ -215,6 +162,22 @@ class DiagramItem(Presentation):
         """
         for name in names:
             self.save_property(save_func, name)
+
+    def set_subject(self, subject=None):
+        """Set the subject. In addition, if there are no more presentations
+        on the subject, the subject is unlink()'ed.
+        """
+        old = self.subject
+
+        # remove the subject if we have one
+        if self.subject:
+            del self.subject
+
+        if old and len(old.presentation) == 0:
+            #log.debug('diagramitem.unlink: No more presentations: unlinking')
+            old.unlink()
+         
+        self.subject = subject
 
     def get_popup_menu(self):
         return self.popup_menu

@@ -6,6 +6,7 @@ import gtk
 from diacanvas import CanvasView
 import gaphor
 from gaphor.diagram import get_diagram_item
+from gaphor.undomanager import get_undo_manager
 
 class DiagramView(CanvasView):
     TARGET_STRING = 0
@@ -55,6 +56,7 @@ class DiagramView(CanvasView):
 	    assert element
 	    item_class = get_diagram_item(type(element))
 	    if item_class:
+		get_undo_manager().begin_transaction()
 		item = self.create(item_class)
 		assert item
 		wx, wy = self.window_to_world(x + self.get_hadjustment().value,
@@ -63,6 +65,7 @@ class DiagramView(CanvasView):
 		ix, iy = item.affine_point_w2i(max(0, wx), max(0, wy))
 		item.move(ix, iy)
 		item.set_property ('subject', element)
+		get_undo_manager().commit_transaction()
 	    else:
 		log.warning ('No graphical representation for UML element %s' % type(element).__name__)
 	    context.finish(gtk.TRUE, gtk.FALSE, time)

@@ -140,11 +140,11 @@ class InterfaceItem(NamedItem):
             lrx = r + w/2
         self.set_bounds((ulx, uly-1, lrx+1, lry+h))
 
-    def on_handle_motion(self, handle, wx, wy, mask):
-        # Make sure the element works with diacanavs2 <= 0.12.0.
-        if handle not in self.handles[:7]:
-            return wx, wy
-        return NamedItem.on_handle_motion(self, handle, wx, wy, mask)
+#    def on_handle_motion(self, handle, wx, wy, mask):
+#        # Make sure the element works with diacanavs2 <= 0.12.0.
+#        if handle not in self.handles[:7]:
+#            return wx, wy
+#        return NamedItem.on_handle_motion(self, handle, wx, wy, mask)
 
     def on_shape_iter(self):
         look_type = self.look_type

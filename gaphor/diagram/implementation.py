@@ -80,8 +80,7 @@ class ImplementationItem(relationship.RelationshipItem):
     def confirm_disconnect_handle (self, handle, was_connected_to):
         """See RelationshipItem.confirm_disconnect_handle().
         """
-        if self.subject:
-            del self.subject
+	self.set_subject(None)
 
 
     def on_update(self, affine):

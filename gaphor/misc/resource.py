@@ -47,6 +47,7 @@ class Resource(object):
 	    # TODO: It might be a GConf resource string
 
 	    if default is not _no_default:
+		_resources[r] = default
 		return default
 	    raise KeyError, 'No resource with name "%s"' % r
 	# Instantiate the resource and return it

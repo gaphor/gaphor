@@ -1,5 +1,10 @@
 #!python
 
+import sys
 import gaphor
 
-gaphor.main()
+model = None
+if len(sys.argv) > 1:
+    model = sys.argv[1]
+
+gaphor.main(model)

@@ -195,7 +195,6 @@ class DependencyItem(RelationshipItem):
         """
         #print 'confirm_disconnect_handle', handle
         self._set_line_style()
-        if self.subject:
-            del self.subject
+        self.set_subject(None)
 
 initialize_item(DependencyItem, UML.Dependency)

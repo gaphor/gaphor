@@ -266,9 +266,9 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
         if self.subject:
             # First delete the Property's at the ends, otherwise they will
             # be interpreted as attributes.
-            del self._head_end.subject
-            del self._tail_end.subject
-            del self.subject
+            self._head_end.set_subject(None)
+            self._tail_end.set_subject(None)
+            self.set_subject(None)
 
     # Groupable
 

@@ -1,3 +1,12 @@
+2004-10-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/properties/py: refactored association code. made
+	undo/redo really work.
+	* gaphor/diagram/itemactions.py: made lots of actions undo-aware.
+	* As of here, Gaphor has one application wide undo manager (no longer
+	one per diagram).
+	* setup.py: bumped version to 0.6.1.
+	
 2004-10-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/diagramitem.py: do no longer automatically unlink

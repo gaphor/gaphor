@@ -12,7 +12,6 @@ del pygtk
 
 import misc.singleton
 import misc.logger
-import types
 
 import version
 
@@ -39,7 +38,7 @@ class GaphorError(Exception):
 	    Exception.__init__(self)
             self.args = args
 
-def main():
+def main(gaphor_file=None):
     """Start the interactive application.
 
     This involves importing plugins and creating the main window.
@@ -61,8 +60,12 @@ def main():
     # Make the mainwindow accessable as a resource
     #gtk.threads_init()
     #gtk.threads_enter()
-    # Start with a clean nice new model
-    main_window.execute_action('FileNew')
+    log.debug('Loading model %s' % gaphor_file)
+    if gaphor_file:
+	main_window.set_filename(gaphor_file)
+	main_window.execute_action('FileRevert')
+    else:
+	main_window.execute_action('FileNew')
     gtk.main()
     #gtk.threads_leave()
     log.info('Bye!')

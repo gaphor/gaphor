@@ -233,14 +233,18 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
         to_add = [el for el in elements if el not in local_elements]
 
-        print 'sync_elems:', local_elements, to_add
+        #print 'sync_elems:', elements, local_elements, to_add
+
+        # Remove no longer present elements:
+        for el in [el for el in local_elements if el not in elements]:
+            self.remove(mapping[el])
 
         # sync local elements with elements
         del compartment[:]
 
         for el in elements:
             if el in to_add:
-                print 'sync_elems: creating', el
+                #print 'sync_elems: creating', el
                 creator(el)
             else:
                 compartment.append(mapping[el])
@@ -314,7 +318,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
         """Called when the ownedAttribute property of our subject changes.
         """
-        log.debug('on_subject_notify__ownedAttribute')
+        #log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
         self.sync_attributes()
 
@@ -430,8 +434,9 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         #if isinstance(item.subject, UML.Property):
         if isinstance(item, AttributeItem):
             # TODO: check if property not already in attribute list
+            #log.debug('Adding attribute %s' % item)
             if not self._attributes.has_item(item):
-                log.debug('Adding attribute %s' % item)
+                #log.debug('Adding attribute really %s' % item)
                 self._attributes.append(item)
                 item.set_child_of(self)
         #elif isinstance(item.subject, UML.Operation):

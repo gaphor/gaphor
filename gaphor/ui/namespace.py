@@ -184,7 +184,6 @@ class NamespaceModel(gtk.GenericTreeModel):
         """update the tree model when the ownedMember list changes.
         Element is the object whose ownedMember property has changed.
         """
-        #print 'on_ownedmember_changed', element
         node = self.node_from_element(element)
         # The elements currently known by the tree model
         node_members = map(lambda e: e[0], node[1])
@@ -499,9 +498,9 @@ class NamespaceView(gtk.TreeView):
 
                 # Set package. This only works for classifiers, packages and
                 # diagrams. Properties and operations should not be moved.
-                #get_undo_manager().begin_transaction()
+                get_undo_manager().begin_transaction()
                 element.package = dest_element
-                #get_undo_manager().commit_transaction()
+                get_undo_manager().commit_transaction()
 
             except AttributeError:
                 #print dir(context)

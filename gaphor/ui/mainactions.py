@@ -28,8 +28,8 @@ def show_status_window(title, message, parent=None, queue=None):
     win.set_modal(True)
     win.set_resizable(False)
     win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
-    win.set_skip_taskbar_hint(True)
-    win.set_skip_pager_hint(True)
+    #win.set_skip_taskbar_hint(True)
+    #win.set_skip_pager_hint(True)
     win.set_border_width(24)
     vbox = gtk.VBox(spacing=24)
     win.add(vbox)
@@ -93,17 +93,59 @@ class NewAction(Action):
 
 register_action(NewAction)
 
+class RevertAction(Action):
+    id = 'FileRevert'
+    label = '_Revert...'
+    stock_id='gtk-revert'
+    tooltip = 'Reload the loaded Gaphor project from file'
 
-class OpenAction(Action):
+    def init(self, window):
+        self.filename = None
+        self._window = window
+
+    def execute(self):
+        filename = self._window.get_filename()
+
+        action_states = self._window.action_pool.get_action_states()
+        try:
+            import gaphor.storage as storage
+            log.debug('Loading from: %s' % filename)
+            queue = Queue()
+            win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, self._window.get_window(), queue)
+            self.filename = filename
+            gc.collect()
+            worker = GIdleThread(storage.load_generator(filename), queue)
+            self._window.action_pool.insensivate_actions()
+            undomanager.get_undo_manager().clear_undo_stack()
+            undomanager.get_undo_manager().clear_redo_stack()
+            worker.start()
+            worker.wait()
+            if worker.error:
+                log.error('Error while loading model from file %s: %s' % (filename, worker.error))
+
+            self._window.set_message('Model loaded successfully')
+            model = self._window.get_model()
+            view = self._window.get_tree_view()
+
+            # Expand all root elements:
+            for node in model.root[1]:
+                view.expand_row(model.path_from_element(node[0]), False)
+
+            # Restore states of actions
+            win.destroy()
+        finally:
+            self._window.action_pool.set_action_states(action_states)
+            self._window.action_pool.update_actions()
+
+register_action(RevertAction)
+
+
+class OpenAction(RevertAction):
 
     id = 'FileOpen'
     label = '_Open...'
     stock_id='gtk-open'
     tooltip = 'Load a Gaphor project from a file'
-
-    def init(self, window):
-        self.filename = None
-        self._window = window
 
     def execute(self):
         filesel = gtk.FileSelection('Open Gaphor file')
@@ -114,35 +156,8 @@ class OpenAction(Action):
         filename = filesel.get_filename()
         filesel.destroy()
         if filename and response == gtk.RESPONSE_OK:
-            action_states = self._window.action_pool.get_action_states()
-            try:
-                import gaphor.storage as storage
-                log.debug('Loading from: %s' % filename)
-                queue = Queue()
-                win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, self._window.get_window(), queue)
-                self.filename = filename
-                gc.collect()
-                worker = GIdleThread(storage.load_generator(filename), queue)
-                self._window.action_pool.insensivate_actions()
-                worker.start()
-                worker.wait()
-                if worker.error:
-                    log.error('Error while loading model from file %s: %s' % (filename, worker.error))
-
-                self._window.set_filename(filename)
-                self._window.set_message('Model loaded successfully')
-                model = self._window.get_model()
-                view = self._window.get_tree_view()
-
-                # Expand all root elements:
-                for node in model.root[1]:
-                    view.expand_row(model.path_from_element(node[0]), False)
-
-                # Restore states of actions
-                win.destroy()
-            finally:
-                self._window.action_pool.set_action_states(action_states)
-                self._window.action_pool.update_actions()
+            self._window.set_filename(filename)
+            RevertAction.execute(self)
 
 register_action(OpenAction)
 
@@ -154,10 +169,10 @@ class SaveAsAction(Action):
     def init(self, window):
         self._window = window
         self.factory = gaphor.resource('ElementFactory')
-        self.factory.connect(self.on_element_factory)
-        self.on_element_factory(self)
+        #self.factory.connect(self.on_element_factory)
+        #self.on_element_factory(self)
         # Disconnect when the window is closed:
-        window.connect(self.on_window_closed)
+        #window.connect(self.on_window_closed)
 
     def on_element_factory(self, *args):
         #factory = gaphor.resource('ElementFactory')
@@ -289,6 +304,25 @@ class OpenConsoleWindowAction(Action):
 
 register_action(OpenConsoleWindowAction)
 
+class ManualAction(Action):
+    id = 'Manual'
+    label = '_Manual'
+    stock_id = 'gtk-about'
+    tooltip='Manual for Gaphor'
+
+    def init(self, window):
+        self._window = window
+
+    def execute(self):
+        dialog = gtk.MessageDialog(self._window.get_window(),
+            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+            gtk.MESSAGE_INFO, gtk.BUTTONS_OK,
+            "For the manual, have a look at:\nhttp://gaphor.sourceforge.net/manual")
+        dialog.run()
+        dialog.destroy()
+
+
+register_action(ManualAction)
 
 class AboutAction(Action):
     id = 'About'

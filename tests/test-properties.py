@@ -140,7 +140,7 @@ def test_associations():
     assert a2.one is b2
 
     try:
-        b1.two.remove(a1)
+        del b1.two[a1]
     except AttributeError:
         pass #ok
     else:

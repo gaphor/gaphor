@@ -34,6 +34,7 @@ class AttributeItem(FeatureItem):
                                                     + notifiers)
 
     def on_subject_notify__name(self, subject, pspec):
+        #log.debug('setting text %s' % self.subject.render() or '')
         self._expression.set_text(self.subject.render() or '')
         self.request_update()
 

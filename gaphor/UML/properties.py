@@ -18,7 +18,6 @@ Each property type (association, attribute and enumeration) has three specific
 methods:
     _get():           return the value
     _set(value):      set the value or add it to a list
-    (_set2(value):    used by association, used to set bi-directional ass.)
     _del(value=None): delete the value. 'value' is used to tell which value
                       is to be removed (in case of associations with
                       multiplicity > 1).
@@ -35,7 +34,7 @@ from gaphor.undomanager import get_undo_manager
 
 #infinite = 100000
 
-class attributeundoaction(object):
+class undoaction(object):
     """This undo action contains one undo action for an attribute
     property.
     """
@@ -44,108 +43,8 @@ class attributeundoaction(object):
         self.prop = prop
         self.obj = obj
         self.value = value
+        #print 'adding new property', prop.name, obj, value
         get_undo_manager().add_undo_action(self)
-
-    def undo(self):
-        self.redo_value = self.prop._get(self.obj)
-        setattr(self.obj, self.prop._name, self.value)
-        self.prop.notify(self.obj)
-
-    def redo(self):
-        setattr(self.obj, self.prop._name, self.redo_value)
-        self.prop.notify(self.obj)
-
-class associationundoaction(object):
-    """The state of an association can be reverted with this action.
-    """
-
-    def __init__(self, prop, obj, value):
-        self.prop = prop
-        self.obj = obj
-        self.value = value
-        #print 'adding undo action', prop, obj, value
-        get_undo_manager().add_undo_action(self)
-
-    def undo(self):
-        """Undo an event. This is very hard to read.
-        TODO: cleanup and structure association code!!!!!
-        TODO: self.value returns to [] on undo
-        """
-        prop = self.prop
-        obj = self.obj
-        log.debug('undo association %s' % prop.name)
-        if prop.upper > 1:
-            l = prop._get(obj)
-            self.redo_value = list(l)
-            #print 'redo_value =', self.redo_value, self.value
-            for item in l:
-                if item not in self.value:
-                    if prop.opposite:
-                        getattr(type(item), prop.opposite)._del(item, obj)
-                    prop._del(obj, item)
-            l = prop._get(obj)
-            for item in self.value:
-                if item not in l:
-                    if prop._set2(obj, item):
-                        # Set opposite side.
-                        # Use type(value) since the property may be overridden:
-                        if prop.opposite:
-                            getattr(type(item), prop.opposite)._set(item, obj)
-            #print 'redo_value =', self.redo_value, self.value
-            prop.notify(obj)
-        else:
-            value = self.redo_value = prop._get(obj)
-            if self.value is None:
-                # _del does a notify().
-                if value is None:
-                    return
-                if prop.opposite:
-                    getattr(type(value), prop.opposite)._del(value, obj)
-                prop._del(obj, prop._get(obj))
-            else:
-                if prop._set2(obj, self.value):
-                    if prop.opposite:
-                        getattr(type(value), prop.opposite)._set(value, obj)
-                prop.notify(obj)
-
-    def redo(self):
-        prop = self.prop
-        obj = self.obj
-        log.debug('redo association %s' % prop.name)
-        if prop.upper > 1:
-            #print 'setting... on', prop, obj, self.redo_value
-            l = prop._get(obj)
-            for item in l:
-                if item not in self.redo_value:
-                    if prop.opposite:
-                        getattr(type(item), prop.opposite)._del(item, obj)
-                    prop._del(obj, item)
-            l = prop._get(obj)
-            for item in self.redo_value:
-                if item not in l:
-                    if prop._set2(obj, item):
-                        # Set opposite side.
-                        # Use type(value) since the property may be overridden:
-                        if prop.opposite:
-                            getattr(type(item), prop.opposite)._set(item, obj)
-            #print prop._get(obj), self.redo_value
-            prop.notify(obj)
-        else:
-            #self.redo_value = prop._get(obj)
-            #print self.redo_value
-            if self.redo_value is None:
-                # _del does a notify().
-                value = prop._get(obj) 
-                if value is None:
-                    return
-                if prop.opposite:
-                    getattr(type(value), prop.opposite)._del(value, obj)
-                prop._del(obj, prop._get(obj))
-            else:
-                if prop._set2(obj, self.redo_value):
-                    if prop.opposite:
-                        getattr(type(self.redo_value), prop.opposite)._set(self.redo_value, obj)
-                prop.notify(obj)
 
 
 class umlproperty(object):
@@ -214,6 +113,21 @@ class umlproperty(object):
                         log.error(e, e)
 
 
+class undoattributeaction(undoaction):
+    """This undo action contains one undo action for an attribute
+    property.
+    """
+
+    def undo(self):
+        self.redo_value = self.prop._get(self.obj)
+        setattr(self.obj, self.prop._name, self.value)
+        self.prop.notify(self.obj)
+
+    def redo(self):
+        setattr(self.obj, self.prop._name, self.redo_value)
+        self.prop.notify(self.obj)
+
+
 class attribute(umlproperty):
     """Attribute.
     Element.attr = attribute('attr', types.StringType, '')"""
@@ -250,7 +164,10 @@ class attribute(umlproperty):
         if value is not None and not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type
 
-        attributeundoaction(self, obj, self._get(obj))
+        if value == self._get(obj):
+            return
+
+        undoattributeaction(self, obj, self._get(obj))
 
         if value == self.default and hasattr(obj, self._name):
             delattr(obj, self._name)
@@ -261,7 +178,7 @@ class attribute(umlproperty):
     def _del(self, obj, value=None):
         #self.old = self._get(obj)
         try:
-            attributeundoaction(self, obj, self._get(obj))
+            undoattributeaction(self, obj, self._get(obj))
             delattr(obj, self._name)
         except AttributeError:
             pass
@@ -297,7 +214,7 @@ class enumeration(umlproperty):
         if not value in self.values:
             raise AttributeError, 'Value should be one of %s' % str(self.values)
         if value != self._get(obj):
-            attributeundoaction(self, obj, self._get(obj))
+            undoattributeaction(self, obj, self._get(obj))
             if value == self.default:
                 delattr(obj, self._name)
             else:
@@ -306,12 +223,38 @@ class enumeration(umlproperty):
 
     def _del(self, obj, value=None):
         try:
-            attributeundoaction(self, obj, self._get(obj))
+            undoattributeaction(self, obj, self._get(obj))
             delattr(obj, self._name)
         except AttributeError:
             pass
         else:
             self.notify(obj)
+
+
+class undosetassociationaction(undoaction):
+    """Undo a 'set' action in an association.
+    """
+
+    def undo(self):
+        #log.debug('undosetassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
+        self.prop._del(self.obj, self.value)
+
+    def redo(self):
+        #log.debug('undosetassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
+        self.prop._set(self.obj, self.value)
+
+
+class undodelassociationaction(undoaction):
+    """Undo a 'del' action in an association.
+    """
+
+    def undo(self):
+        #log.debug('undodelassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
+        self.prop._set(self.obj, self.value)
+
+    def redo(self):
+        #log.debug('undodelassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
+        self.prop._del(self.obj, self.value)
 
 
 class association(umlproperty):
@@ -338,16 +281,8 @@ class association(umlproperty):
     def load(self, obj, value):
         if not isinstance(value, self.type):
             raise AttributeError, 'Value for %s should be of type %s (%s)' % (self.name, self.type.__name__, type(value).__name__)
-        if self._set2(obj, value) and self.opposite:
-            opposite = getattr(type(value), self.opposite)
-            if opposite.upper > 1:
-                if not obj in opposite._get(value):
-                    #print 'Setting opposite*:', self.name, str(opposite), obj, value
-                    opposite._set2(value, obj)
-            else:
-                if not obj is opposite._get(value):
-                    #print 'Setting opposite1:', self.name, obj, value
-                    opposite._set2(value, obj)
+        # TODO: avoid sending notifications:
+        self._set(obj, value, do_notify=False)
 
     def postload(self, obj):
         """In the postload step, ensure that bi-directional associations
@@ -371,67 +306,6 @@ class association(umlproperty):
             s += ' %s-> %s' % (self.composite and '<>' or '', self.opposite)
         return s + '>'
 
-    def __get__(self, obj, class_=None):
-        """Retrieve the value of the association. In case this is called
-        directly on the class, return self."""
-        #print '__get__', self, obj, class_
-        if not obj:
-            return self
-        return self._get(obj)
-
-    def __set__(self, obj, value):
-        """Set a new value for our attribute. If this is a collection, append
-        to the existing collection."""
-        #print '__set__', self, obj, value
-        if not (isinstance(value, self.type) or \
-                (value is None and self.upper == 1)):
-            raise AttributeError, 'Value should be of type %s' % self.type.__name__
-        # Remove old value only for uni-directional associations
-        if self.upper == 1:
-            old = self._get(obj)
-            # do nothing if we are assigned our current value:
-            if value is old:
-                return
-            associationundoaction(self, obj, old)
-            if old:
-                self.__delete__(obj, old)
-            if value is None:
-                #self.notify(obj)
-                return
-        else:
-            associationundoaction(self, obj, list(self._get(obj)))
-
-        # if we needed to set our own side, set the opposite
-        # Call _set2() so we can make sure the opposite side is set before
-        # a signal is emited.
-        if self._set2(obj, value):
-            # Set opposite side.
-            # Use type(value) since the property may be overridden:
-            if self.opposite:
-                getattr(type(value), self.opposite)._set(value, obj)
-            self.notify(obj)
-
-    def __delete__(self, obj, value=None):
-        """Delete is used for element deletion and for removal of
-        elements from a list.
-        """
-        #print '__delete__', self, obj, value
-        if self.upper > 1 and not value:
-            raise Exception, 'Can not delete collections'
-        if not value:
-            value = self._get(obj)
-            if value is None:
-                return
-        # Save undo info
-        if self.upper > 1:
-            associationundoaction(self, obj, list(self._get(obj)))
-        else:
-            associationundoaction(self, obj, self._get(obj))
-
-        if self.opposite:
-            getattr(type(value), self.opposite)._del(value, obj)
-        self._del(obj, value)
-        
     def _get(self, obj):
         #print '_get', self, obj
         # TODO: Handle lower and add items if lower > 0
@@ -443,45 +317,86 @@ class association(umlproperty):
                 # add 
                 #c = collection(self, obj, self.type)
                 #setattr(obj, self._name, c)
-                return []
+                c = collection(self, obj, self.type)
+                setattr(obj, self._name, c)
+                return c
             else:
                 return None
 
-    def _set(self, obj, value):
-        #print '_set', self, obj, value
-        if not isinstance(value, self.type):
-            raise AttributeError, 'Value should be of type %s' % self.type.__name__
-        if self._set2(obj, value):
-            self.notify(obj)
+    def _set(self, obj, value, from_opposite=False, do_notify=True):
+        """Set a new value for our attribute. If this is a collection, append
+        to the existing collection.
 
-    def _set2(self, obj, value):
-        """Real setter, avoid doing the assertion check twice.
-        Return True if notification should be send, False otherwise."""
-        if self.upper > 1:
+        This method is called from the opposite association property.
+        """
+        #print '__set__', self, obj, value
+        if not (isinstance(value, self.type) or \
+                (value is None and self.upper == 1)):
+            raise AttributeError, 'Value should be of type %s' % self.type.__name__
+        # Remove old value only for uni-directional associations
+        if self.upper == 1:
+            old = self._get(obj)
+            # do nothing if we are assigned our current value:
+            if value is old:
+                return
+
+            # is done is _del(): undoassociationaction(self, obj, old)
+            if old:
+                self._del(obj, old)
+            if value is None:
+                return
+            if value is self._get(obj):
+                #log.debug('association: value already in obj: %s' % value)
+                return
+
+            if not from_opposite:
+                undosetassociationaction(self, obj, value)
+            setattr(obj, self._name, value)
+        else:
+            # Set the actual value
             c = self._get(obj)
             if not c:
                 c = collection(self, obj, self.type)
                 setattr(obj, self._name, c)
             elif value in c:
                 #log.debug('association: value already in obj: %s' % value)
-                return False
+                return
+
+            if not from_opposite:
+                undosetassociationaction(self, obj, value)
             c.items.append(value)
-        else:
-            if value is self._get(obj):
-                #log.debug('association: value already in obj: %s' % value)
-                return False
-            setattr(obj, self._name, value)
 
         # Callbacks are only connected if a new relationship has
         # been established.
         value.connect('__unlink__', self.__on_unlink, obj)
         if self.composite:
             obj.connect('__unlink__', self.__on_composite_unlink, value)
-        return True
+        
+        if not from_opposite and self.opposite:
+            getattr(type(value), self.opposite)._set(value, obj, from_opposite=True, do_notify=do_notify)
 
-    def _del(self, obj, value):
-        """Delete value from the association."""
-        #print '_del', self, obj, value
+        if do_notify:
+            self.notify(obj)
+
+    def _del(self, obj, value, from_opposite=False):
+        # TODO: move code to _del
+        """Delete is used for element deletion and for removal of
+        elements from a list.
+        """
+        #print '__delete__', self, obj, value
+        if not value:
+            if self.upper > 1:
+                raise Exception, 'Can not delete collections'
+            value = self._get(obj)
+            if value is None:
+                return
+
+        if not from_opposite:
+            undodelassociationaction(self, obj, value)
+
+        if not from_opposite and self.opposite:
+            getattr(type(value), self.opposite)._del(value, obj, from_opposite=True)
+
         if self.upper > 1:
             c = self._get(obj)
             if c:
@@ -498,6 +413,7 @@ class association(umlproperty):
             except:
                 pass
                 #print 'association._del: delattr failed for %s' % self.name
+
         value.disconnect(self.__on_unlink, obj)
         if self.composite:
             obj.disconnect(self.__on_composite_unlink, value)
@@ -521,9 +437,6 @@ class association(umlproperty):
             self.__delete__(obj, value)
             # re-establish unlink handler:
             value.connect('__unlink__', self.__on_unlink, obj)
-        #else:
-        #    print 'RELINK'
-        #    self.__set__(obj, value)
 
     def __on_composite_unlink(self, obj, pspec, value):
         """Unlink value if we have a part-whole (composite) relationship
@@ -634,27 +547,31 @@ class redefine(umlproperty):
     def __str__(self):
         return '<redefine %s: %s = %s>' % (self.name, self.type.__name__, str(self.original))
 
-    def _get(self, obj):
-        return self.original._get(obj)
-
-    def _set(self, obj, value):
-        return self.original._set(obj, value)
-
-    def _set2(self, obj, value):
-        return self.original._set2(obj, value)
-
     def __get__(self, obj, class_=None):
+        # No longer needed
         if not obj:
             return self
         return self.original.__get__(obj, class_)
 
     def __set__(self, obj, value):
+        # No longer needed
         if not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % self.type.__name__
         self.original.__set__(obj, value)
 
     def __delete__(self, obj, value=None):
+        # No longer needed
         self.original.__delete__(obj, value)
+
+    def _get(self, obj):
+        return self.original._get(obj)
+
+    def _set(self, obj, value, from_opposite=False):
+        return self.original._set(obj, value, from_opposite)
+
+    def _del(self, obj, value, from_opposite=False):
+        return self.original._del(obj, value, from_opposite)
+
 
 try:
     import psyco

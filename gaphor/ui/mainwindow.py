@@ -107,6 +107,7 @@ class MainWindow(AbstractWindow):
                 'OpenConsoleWindow',
                 '<WindowSlot>'),
             _('_Help'), (
+                'Manual',
                 'About',
                 '<HelpSlot>')
             )

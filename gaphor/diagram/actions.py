@@ -38,7 +38,7 @@ class ResetToolAfterCreateAction(CheckAction):
 
     def init(self, window):
 	self._window = window
-        self.active = resource('reset-tool-after-create', False)
+        self.active = resource('reset-tool-after-create', True)
 
     def execute(self):
         resource.set('reset-tool-after-create', self.active)
@@ -109,6 +109,7 @@ class NamespacePlacementAction(PlacementAction):
     def item_factory(self):
 	"""Create a new instance of the item and return it."""
         item = PlacementAction.item_factory(self)
+	log.debug('Setting namespace for new item %s: %s' % (item, self._window.get_current_diagram().namespace))
 	item.subject.package = self._window.get_current_diagram().namespace
 	item.subject.name = '%s%d' % (self.name, self.__index)
 	self.__index += 1

@@ -35,11 +35,11 @@ class _UndoRemoveAction(object):
 
     def undo(self):
 	self.factory._elements[self.element.id] = self.element
-        self.factory.notify(obj, 'create')
+        self.factory.notify(self.element, 'create')
 
     def redo(self):
 	del self.factory._elements[self.element.id]
-        self.factory.notify(obj, 'remove')
+        self.factory.notify(self.element, 'remove')
 
 
 class ElementFactory(object):

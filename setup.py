@@ -8,7 +8,7 @@
 
 MAJOR_VERSION = 0
 MINOR_VERSION = 6
-MICRO_VERSION = 0
+MICRO_VERSION = 1
 
 VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 
@@ -270,6 +270,7 @@ class run_Gaphor(Command):
         ('command=', 'c', 'execute command'),
         ('file=', 'f', 'execute file'),
         ('testfile=', 't', 'execute unittest file'),
+        ('model=', 'm', 'load a model file'),
     ]
 
     def initialize_options(self):
@@ -277,6 +278,7 @@ class run_Gaphor(Command):
         self.command = None
         self.file = None
         self.testfile = None
+        self.model = None
         self.verbosity = 2
 
     def finalize_options(self):
@@ -285,6 +287,7 @@ class run_Gaphor(Command):
 
     def run(self):
         print 'Starting gaphor...'
+        print 'Starting with model file', self.model
         self.run_command('build')
 
         import os.path
@@ -312,7 +315,7 @@ class run_Gaphor(Command):
             execfile(self.file, {})
         else:
             print 'Launching Gaphor...'
-            gaphor.main()
+            gaphor.main(self.model)
 
 #try:
 #    from dsextras import TemplateExtension, BuildExt, GLOBAL_INC

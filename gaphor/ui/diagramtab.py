@@ -31,7 +31,7 @@ class DiagramTab(object):
             #self.diagram.canvas.disconnect(self.__snap_to_grid_id)
         self.diagram = diagram
         if diagram:
-            log.info('set diagram')
+            #log.info('set diagram')
             diagram.canvas.set_property ('allow_undo', 1)
             diagram.connect(('name', '__unlink__'), self.__on_diagram_event)
             #self.__undo_id = diagram.canvas.undo_manager.connect('begin_transaction', self.__on_diagram_undo)

@@ -137,7 +137,7 @@ class CreateAttributeAction(Action):
         
         get_undo_manager().begin_transaction()
         attribute = elemfact.create(UML.Property)
-        attribute.name = 'new'
+        attribute.parse('new')
         subject.ownedAttribute = attribute
 
         # Select this item for editing
@@ -181,7 +181,7 @@ class CreateOperationAction(Action):
 
         get_undo_manager().begin_transaction()
         operation = elemfact.create(UML.Operation)
-        operation.name = 'new'
+        operation.parse('new()')
         subject.ownedOperation = operation
         # Select this item for editing
         presentation = operation.presentation
@@ -210,6 +210,7 @@ class DeleteFeatureAction(Action):
         get_undo_manager().begin_transaction()
         item.subject.unlink()
         get_undo_manager().commit_transaction()
+
 
 class DeleteAttributeAction(DeleteFeatureAction):
     id = 'DeleteAttribute'
@@ -789,6 +790,8 @@ class Fold(Action):
 
         get_undo_manager().begin_transaction()
 
+        # TODO: store handle positions, store a special UndoFoldAction.
+
         # create interface diagram element and assign model element to
         # diagram element
         diag = self._window.get_current_diagram()
@@ -803,17 +806,18 @@ class Fold(Action):
 
         # Create a dummy presentation, since we should keep tract of the items subject
         dummy = DummyItem()
+        #dummy.canvas = item.canvas
         # Some extra dummy presentations for association ends
         dummy_head_end = DummyItem()
         dummy_tail_end = DummyItem()
 
         # Find all elements that are connected to our item
         # (Should become (added 10-6-2004 to diacanvas2))
-        #for connected_handle in item.connected_handles:
-        for connected_item in item.canvas.select(lambda i: i.handles and \
-                                                 (i.handles[0].connected_to is item or \
-                                                  i.handles[-1].connected_to is item)):
-            #connected_item = connected_handle.owner
+        for connected_handle in item.connected_handles:
+        #for connected_item in item.canvas.select(lambda i: i.handles and \
+        #                                         (i.handles[0].connected_to is item or \
+        #                                          i.handles[-1].connected_to is item)):
+            connected_item = connected_handle.owner
 
             #print 'connected item', connected_item
             # Store the subject, in case of an association also store the
@@ -873,7 +877,6 @@ class FoldAction(Fold):
 
     def newElement(self, diag):
         return diag.create(gaphor.diagram.InterfaceItem)
-
 
 register_action(FoldAction, 'ItemFocus')
 

@@ -5,7 +5,7 @@ As always, there is much to do...
   Problem: the existing <Placeholder> stuff works only on constrcution time.
     For this we need a menu that can change during the life of the application.
 
-- write really good test cases for undo functionality.
+- write really good test cases for undo functionality. Have some already.
 
 - confirmation window when creating a new model.
 
@@ -20,9 +20,10 @@ As always, there is much to do...
   Accelerators should be activated by the (Abstract)Window, should not depend
   on menu items
 
-- Undo/redo functionality doesn't work as espected
+#- Undo/redo functionality doesn't work as espected
   ==> Create our own UndoManager, this should also register connect/disconnect
   actions on gaphor.UML classes.
+  AJM: Looks like it really works now.
 
 - Exporting diagrams to UML XMI, code, images (SVG/png), etc. - make a plugin!
 

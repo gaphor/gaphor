@@ -93,6 +93,7 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
 
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec, notifiers)
+        #log.debug('setting text %s' % self.subject.render() or '')
         self._expression.set_text(self.subject and self.subject.render() or '')
 
     # CanvasItem callbacks:
