@@ -48,9 +48,10 @@ class WrapBox(object):
                 y += 1
 
     def _idle_handler(self):
-        #rows, cols = self.calculate_size(allocation)
-        self.set_new_size()
-        self.resize_idle_id = 0
+	try:
+	    self.set_new_size()
+	finally:
+	    self.resize_idle_id = 0
 
     def on_size_allocate(self, table, allocation):
         rows, cols = self.calculate_size(allocation)

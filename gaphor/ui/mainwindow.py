@@ -7,10 +7,10 @@ import gaphor
 import gaphor.UML as UML
 from abstractwindow import AbstractWindow
 
-def on_toggled(button, content):
-    #arrow = button.get_children()[0]
+def on_wrapbox_decorator_toggled(button, content):
+    # Fetch the arrow item:
     arrow = button.get_children()[0].get_children()[0]
-    if button.get_property('active'):
+    if not content.get_property('visible'):
         content.show()
         arrow.set(gtk.ARROW_DOWN, gtk.SHADOW_IN)
     else:
@@ -18,19 +18,18 @@ def on_toggled(button, content):
         arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
 
 def make_wrapbox_decorator(title, content, expanded=False):
+    """Create a gtk.VBox with in the top compartment a label that can be
+    clicked to show/hide the lower compartment.
+    """
     vbox = gtk.VBox()
 
-    #vbox.add(hbox)
-
-    button = gtk.ToggleButton()
+    button = gtk.Button()
     button.set_relief(gtk.RELIEF_NONE)
 
     hbox = gtk.HBox()
     button.add(hbox)
 
     arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
-    #button.add(arrow)
-    #hbox.pack_start(button, False, False, 0)
     hbox.pack_start(arrow, False, False, 0)
 
     label = gtk.Label(title)
@@ -44,15 +43,16 @@ def make_wrapbox_decorator(title, content, expanded=False):
 
     vbox.show_all()
 
-    button.connect('toggled', on_toggled, content)
+    button.connect('clicked', on_wrapbox_decorator_toggled, content)
 
     vbox.pack_start(content, True, True)
     
     vbox.label = label
     vbox.content = content
 
-    button.set_property('active', expanded)
-    on_toggled(button, content)
+    content.set_property('visible', not expanded)
+    on_wrapbox_decorator_toggled(button, content)
+
     return vbox
 
 def make_wrapbox(title, action_ids, menu_factory):
@@ -223,9 +223,8 @@ class MainWindow(AbstractWindow):
 
         wrapbox_groups = { }
         wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_default, groups=wrapbox_groups)
-        #wrapbox.set_size_request(160, 120)
-        #wrapbox.set_aspect_ratio(256)
-        #wrapbox_dec = make_wrapbox_decorator(wrapbox_classes)
+        #wrapbox_dec = make_wrapbox_decorator('Generic', wrapbox.table, expanded=True)
+        #vbox.pack_start(wrapbox_dec, expand=False)
         vbox.pack_start(wrapbox.table, expand=False)
         wrapbox.table.show()
 
