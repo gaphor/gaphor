@@ -60,23 +60,11 @@ class ItemTool(diacanvas.view.Tool):
                 item.request_update()
 
         elif event.type == _2BUTTON_PRESS:
-            if diacanvas.diacanvas_version < (0, 14, 0):
-                if isinstance(item, NamedItem):
-                    self.execute_action('RenameItem')
-                elif hasattr(item, 'edit'):
-                    self.execute_action('EditItem')
-                elif isinstance(item, AssociationEnd):
-                    x, y = view_item.w2i(event.x, event.y)
-                    if item.point_name(x, y) < item.point_mult(x, y):
-                        self.execute_action('AssociationEndRenameName')
-                    else:
-                        self.execute_action('AssociationEndRenameMult')
-            else:
-                view.canvas.undo_manager.begin_transaction()
-                if isinstance(item, NamedItem):
-                    self.execute_action('RenameItem')
-                elif hasattr(item, 'is_editable') and item.is_editable():
-                    self.execute_action('EditItem')
+            #view.canvas.undo_manager.begin_transaction()
+            if isinstance(item, NamedItem):
+                self.execute_action('RenameItem')
+            elif hasattr(item, 'is_editable') and item.is_editable():
+                self.execute_action('EditItem')
         return True
 
     def do_button_release_event(self, view, event):

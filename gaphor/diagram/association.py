@@ -45,6 +45,9 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 
     association_popup_menu = (
         'separator',
+        'AssociationShowDirection',
+        'AssociationInvertDirection',
+        'separator',
         'Side _A', (
             'Head_isNavigable',
             'separator',
@@ -165,6 +168,46 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 	#return x, y, max(x + 10, x + w), max(y + 10, y + h)
 	return x, y, x + w, y + h
 
+    def update_dir(self, p1, p2):
+        #self._dir.line(((10, 0), (10, 10), (0, 5)))
+        w, h = 10, 10
+
+        x = p1[0] < p2[0] and w + 2 or -2
+        #x = 12
+        x = (p1[0] + p2[0]) / 2.0 - x
+        y = p1[1] >= p2[1] and h or 0
+        #y = 12
+        y = (p1[1] + p2[1]) / 2.0 - y
+        from math import atan, pi, sin, cos
+        
+        try:
+            angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0])) #/ pi * 180.0
+        except ZeroDivisionError:
+            angle = 0
+
+        if p1[0] < p2[0]: angle += pi
+        if p1[1] < p2[1]: angle += pi * 2
+        log.debug('rotation angle is %s' % (angle/pi * 180.0))
+
+        sin_angle = sin(angle)
+        cos_angle = cos(angle)
+
+        def r(a, b):
+            # TODO: Check libart for rotation algorithm.
+            #return (cos_angle * a + x, \
+            #        sin_angle * b + y)
+            return (cos_angle * a - sin_angle * b + x, \
+                    sin_angle * a + cos_angle * b + y)
+
+	#self._dir.set_pos((x, y))
+        #log.debug('label pos = (%d, %d)' % (x, y))
+	#return x, y, max(x + 10, x + w), max(y + 10, y + h)
+        #self._dir.line(((10 + x, 0 + y), (10 + x, 10 + y), (0 + x, 5 + y)))
+        self._dir.line((r(10, 0), r(10, 10), r(0, 5)))
+        self._dir.set_cyclic(True)
+
+	return x, y, x + w, y + h
+
     def on_update (self, affine):
         """Update the shapes and sub-items of the association."""
         # Update line endings:
@@ -214,19 +257,22 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         # update name label:
         middle = len(handles)/2
         self._label_bounds = self.update_label(handles[middle-1].get_pos_i(),
-                               handles[middle].get_pos_i())
+                                               handles[middle].get_pos_i())
+        b0 = self.update_dir(handles[middle-1].get_pos_i(),
+                             handles[middle].get_pos_i())
+
         # bounds calculation
         b1 = self.bounds
         b2 = self._head_end.get_bounds(self._head_end.affine)
         b3 = self._tail_end.get_bounds(self._tail_end.affine)
-        bv = zip(self._label_bounds, b1, b2, b3)
+        bv = zip(self._label_bounds, b0, b1, b2, b3)
         self.set_bounds((min(bv[0]), min(bv[1]), max(bv[2]), max(bv[3])))
                     
     def on_shape_iter(self):
         for s in RelationshipItem.on_shape_iter(self):
             yield s
         yield self._label
-        #yield self._dir
+        yield self._dir
 
     # Gaphor Connection Protocol
 
