@@ -623,20 +623,8 @@ class MoveUpAction(Action):
     def _get_item(self):
         return self._window.get_current_diagram_view().focus_item.item
 
-
     def init(self, window):
         self._window = window
-
-
-    def update(self):
-        try:
-            item = get_parent_focus_item(self._window)
-        except NoFocusItemError:
-            pass
-        else:
-            if isinstance(item, (AttributeItem, OperationItem)):
-                self.active = item.subject 
-
 
     def execute(self):
         feature = self._get_item()
