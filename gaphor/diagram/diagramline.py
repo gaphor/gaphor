@@ -70,41 +70,41 @@ class DiagramLine(diacanvas.CanvasLine):
     # they are allowed to connect to.
 
     def find_relationship(self, head_subject, tail_subject):
-	"""Find an already existing relationship between head_subject and
-	tail_subject. The following things should be taken into account:
-	- The returned relationship object will be used for this item.
-	- The relationship should not already exist in the canvas.
-	"""
+        """Find an already existing relationship between head_subject and
+        tail_subject. The following things should be taken into account:
+        - The returned relationship object will be used for this item.
+        - The relationship should not already exist in the canvas.
+        """
         return None
 
     def allow_connect_handle(self, handle, connecting_to):
-	"""This method is called by a canvas item if the user tries to
-	connect this object's handle. allow_connect_handle() checks if
-	the line is allowed to be connected. In this case that means
-	that one end of the line should be connected to a Relationship.
-	Returns: True if connection is allowed, False otherwise.
-	"""
-	return False
+        """This method is called by a canvas item if the user tries to
+        connect this object's handle. allow_connect_handle() checks if
+        the line is allowed to be connected. In this case that means
+        that one end of the line should be connected to a Relationship.
+        Returns: True if connection is allowed, False otherwise.
+        """
+        return False
 
     def confirm_connect_handle (self, handle):
-	"""This method is called after a connection is established.
-	This method sets the internal state of the line and updates
-	the data model. Returns nothing
-	"""
-	pass
+        """This method is called after a connection is established.
+        This method sets the internal state of the line and updates
+        the data model. Returns nothing
+        """
+        pass
 
     def allow_disconnect_handle (self, handle):
-	""" If a handle wants to disconnect, this method is called first.
-	This method is here mainly for the sake of completeness, since it
-	is quite unlikely that a handle is not allowed to disconnect.
-	"""
-	return 1
+        """ If a handle wants to disconnect, this method is called first.
+        This method is here mainly for the sake of completeness, since it
+        is quite unlikely that a handle is not allowed to disconnect.
+        """
+        return 1
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
-	"""This method is called to do some cleanup after 'self' has been
-	disconnected from 'was_connected_to'.
-	"""
-	pass
+        """This method is called to do some cleanup after 'self' has been
+        disconnected from 'was_connected_to'.
+        """
+        pass
 
 
 gobject.type_register(DiagramLine)

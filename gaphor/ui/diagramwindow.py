@@ -101,7 +101,7 @@ class DiagramWindow(AbstractWindow):
 	    vitem = view.focus_item
 	    ui_component = self.get_ui_component()
 	    popup='DiagramView'
-	    while vitem and vitem.has_focus():
+	    while vitem and vitem.is_focused():
 		if hasattr(vitem.item, 'subject'):
 		    elements.append(vitem.item.subject)
 		# Also add the canvas item, since some menu items depend on it

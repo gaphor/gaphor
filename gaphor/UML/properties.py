@@ -24,7 +24,7 @@ methods:
                       multiplicity > 1).
     load(value):      load 'value' as the current value for this property
     save(save_func):  send the value of the property to save_func(name, value)
-    unlink():         remove references to other elements.
+    #unlink():         remove references to other elements.
 """
 
 __all__ = [ 'attribute', 'enumeration', 'association', 'derivedunion', 'redefine' ]
@@ -65,9 +65,9 @@ class umlproperty(object):
         if hasattr(obj, '_' + self.name):
             save_func(self.name, self._get(obj))
 
-    def unlink(self, obj):
-        if hasattr(obj, '_' + self.name):
-            self.__delete__(obj)
+#    def unlink(self, obj):
+#        if hasattr(obj, '_' + self.name):
+#            self.__delete__(obj)
 
     def notify(self, obj):
         """Notify obj that the property's value has been changed.
@@ -272,6 +272,7 @@ class association(umlproperty):
         Return True if notification should be send, False otherwise."""
         if self.upper > 1:
             if value in self._get(obj):
+                log.debug('association: value already in obj: %s' % value)
                 return False
             self._get(obj).items.append(value)
         else:
@@ -303,11 +304,13 @@ class association(umlproperty):
             obj.disconnect(self.__on_composite_unlink, value)
         self.notify(obj)
 
-    def unlink(self, obj):
-        #print 'unlink', self, obj
-        lst = getattr(obj, '_' + self.name)
-        while lst:
-            self.__delete__(obj, lst[0])
+#    def unlink(self, obj):
+#        #print 'unlink', self, obj
+#        lst = getattr(obj, '_' + self.name)
+#        while lst:
+#            self.__delete__(obj, lst[0])
+#            # re-establish unlink handler:
+#            value.connect('__unlink__', self.__on_unlink, obj)
 
     def __on_unlink(self, value, pspec, obj):
         """Disconnect when the element on the other end of the association
@@ -361,8 +364,8 @@ class derivedunion(umlproperty):
     def save(self, obj, save_func):
         pass
 
-    def unlink(self, obj):
-        pass
+#    def unlink(self, obj):
+#        pass
 
     def __str__(self):
         return '<derivedunion %s: %s>' % (self.name, str(map(str, self.subsets))[1:-1])
@@ -422,8 +425,8 @@ class redefine(umlproperty):
         if self.original.name == self.name:
             self.original.save(obj, save_func)
 
-    def unlink(self, obj):
-        self.original.unlink(obj)
+#    def unlink(self, obj):
+#        self.original.unlink(obj)
 
     def __str__(self):
         return '<redefine %s: %s = %s>' % (self.name, self.type.__name__, str(self.original))

@@ -16,7 +16,9 @@ STOCK_DIAGRAM = 'gaphor-diagram'
 STOCK_EXTEND = 'gaphor-extend'
 STOCK_GENERALIZATION = 'gaphor-generalization'
 STOCK_INCLUDE = 'gaphor-include'
+STOCK_OPERATION = 'gaphor-operation'
 STOCK_PACKAGE = 'gaphor-package'
+STOCK_PROPERTY = 'gaphor-property'
 STOCK_REALIZATION = 'gaphor-realization'
 STOCK_USECASE = 'gaphor-usecase'
 
@@ -35,7 +37,9 @@ _default_stock_icons = (
     (STOCK_COMMENT_LINE, None,		'commentline24.png', 'commentline16.png'),
     (STOCK_GENERALIZATION, UML.Generalization, 'generalization24.png', 'generalization16.png'),
     (STOCK_INCLUDE,	UML.Include,	None),
+    (STOCK_OPERATION,	UML.Operation,	'pointer24.png', 'pointer16.png'),
     (STOCK_PACKAGE,	UML.Package,	'package24.png', 'package16.png'),
+    (STOCK_PROPERTY,	UML.Property,	'pointer24.png', 'pointer16.png'),
     (STOCK_REALIZATION,	None,		None),
     (STOCK_USECASE,	UML.UseCase,	'usecase24.png', 'usecase16.png')
 )

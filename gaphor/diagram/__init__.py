@@ -32,6 +32,6 @@ del UML
 def get_diagram_item(element):
     global _uml_to_item_map
     try:
-	return _uml_to_item_map[element]
+        return _uml_to_item_map[element]
     except:
-	return None
+        return None

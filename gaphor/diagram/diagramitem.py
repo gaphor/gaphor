@@ -53,13 +53,13 @@ class DiagramItem(Presentation):
             ...
     """
     __gproperties__ = {
-	'subject':	(gobject.TYPE_PYOBJECT, 'subject',
-			 'subject held by the model element',
-			 gobject.PARAM_READWRITE),
+        'subject':        (gobject.TYPE_PYOBJECT, 'subject',
+                         'subject held by the model element',
+                         gobject.PARAM_READWRITE),
     }
 
     __gsignals__ = {
-	'__unlink__': (gobject.SIGNAL_RUN_FIRST,
+        '__unlink__': (gobject.SIGNAL_RUN_FIRST,
                        gobject.TYPE_NONE, (gobject.TYPE_STRING,))
     }
 
@@ -70,27 +70,30 @@ class DiagramItem(Presentation):
     def __init__(self, id=None):
         Presentation.__init__(self)
         self._id = id
-        self.handler_to_id = { }
+        self.__handler_to_id = { }
+        # Add the class' on_subject_notify() as handler:
+        self.connect('notify::subject', type(self).on_subject_notify)
+        self.__subject_notifier_ids = (None,)
         #self.connect('notify::parent', DiagramItem.on_parent_notify)
         #self.connect('__unlink__', self.on_unlink)
 
     id = property(lambda self: self._id, doc='Id')
 
     def do_set_property(self, pspec, value):
-	if pspec.name == 'subject':
+        if pspec.name == 'subject':
             #print 'set subject:', value
             if value:
                 self.subject = value
             elif self.subject:
                 del self.subject
-	else:
-	    raise AttributeError, 'Unknown property %s' % pspec.name
+        else:
+            raise AttributeError, 'Unknown property %s' % pspec.name
 
     def do_get_property(self, pspec):
-	if pspec.name == 'subject':
-	    return self.subject
-	else:
-	    raise AttributeError, 'Unknown property %s' % pspec.name
+        if pspec.name == 'subject':
+            return self.subject
+        else:
+            raise AttributeError, 'Unknown property %s' % pspec.name
 
     # UML.Element interface used by properties:
 
@@ -124,44 +127,42 @@ class DiagramItem(Presentation):
 
 
     def connect(self, name, handler, *args):
-        """Let UML.Element specific signals be handled by the Element and
-        other signals by CanvasItem.
+        """Connect a handler to signal name with args.
         Note that in order to connect to the subject property, you have
         to use "notify::subject".
+        A signal handler id is returned.
         """
         id = CanvasItem.connect(self, name, handler, *args)
         key = (handler,) + args
-        ids = self.handler_to_id.get(key)
-        if not ids:
-            self.handler_to_id[key] = (id,)
-        else:
-            self.handler_to_id[key] = ids + (id,)
+        try:
+            self.__handler_to_id[key].append(id)
+        except:
+            # it's a new entry:
+            self.__handler_to_id[key] = [id]
         return id
 
     def disconnect(self, handler_or_id, *args):
-        """Call GObject.disconnect() or UML.Element.disconnect() depending
-        on if handler_or_id is an id or a method.
+        """Disconnect a signal handler. If handler_or_id is an integer (int)
+        it is expected to be the signal handler id. Otherwise
+        handler_or_id + *args are the same arguments passed to the connect()
+        method (except the signal name). The latter form is used by
+        gaphor.UML.Element.
         """
         if isinstance(handler_or_id, int):
             CanvasItem.disconnect(self, handler_or_id)
+            for v in self.__handler_to_id.values():
+                if handler_or_id in v:
+                    v.remove(handler_or_id)
+                    break
         else:
             try:
-                ids = self.handler_to_id[(handler_or_id,) + args]
+                ids = self.__handler_to_id[(handler_or_id,) + args]
             except KeyError, e:
                 print e
             else:
                 for id in ids:
                     CanvasItem.disconnect(self, id)
-                del self.handler_to_id[(handler_or_id,) + args]
-
-#    def notify(self, name):
-#        """Emit a signal with as first argument the signal's name.
-#        """
-#        # Use GObject.notify() for the subject property
-#        if name == 'subject':
-#            DiaCanvasItem.notify(self, name)
-#        else:
-#            self.emit(name, name)
+                del self.__handler_to_id[(handler_or_id,) + args]
 
     def get_subject(self, x=None, y=None):
         """Get the subject that is represented by this diagram item.
@@ -181,6 +182,27 @@ class DiagramItem(Presentation):
         """Save a property, this is a shorthand method.
         """
         save_func(name, self.get_property(name))
+
+    def on_subject_notify(self, pspec, notifiers=()):
+        """A new subject is set on this model element.
+        notifiers is an optional tuple of elements that also need a
+        callback function. Callbacks have the signature
+        on_subject_notify__<notifier>(self, subject, pspec).
+        """
+        log.info('DiagramItem.on_subject_notify: %s' % str(notifiers))
+        old_subject = self.__subject_notifier_ids[0]
+        for id in self.__subject_notifier_ids[1:]:
+            old_subject.disconnect(id)
+        self.__subject_notifier_ids = (None,)
+
+        if self.subject:
+            self.__subject_notifier_ids = [self.subject]
+            for signal in notifiers:
+                log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
+                self.__subject_notifier_ids.append(self.subject.connect(signal,
+                             getattr(self, 'on_subject_notify__%s' % signal)))
+
+        self.request_update()
 
     # DiaCanvasItem callbacks
 

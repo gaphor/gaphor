@@ -82,16 +82,19 @@ class Element(object):
 
     def unlink(self):
         """Unlink the element."""
+        log.debug('Element.unlink(%s)' % self)
         self.__unlink('__unlink__')
 
     def relink(self):
         """Undo the unlink operation."""
+        log.debug('Element.relink(%s)' % self)
         self.__unlink('__relink__')
 
     def connect(self, names, callback, *data):
         """Attach 'callback' to a list of names. Names may also be a string.
         A name is the name od a property of the object or '__unlink__'.
         """
+        #log.debug('Element.connect(%s, %s, %s)' % (names, callback, data))
         if type(names) is types.StringType:
             names = (names,)
         cb = (callback,) + data
@@ -120,14 +123,13 @@ class Element(object):
         """Send notification to attached callbacks that a property
         has changed. the __relink__ signal uses the callbacks for __unlink__.
         """
-        if not cb_name:
-            cb_name = name
-        cb_list = self._observers.get(name) or ()
+        cb_list = self._observers.get(cb_name or name, ())
+        #log.debug('Element.notify: %s' % cb_list)
         try:
             pspec = getattr(self.__class__, name)
         except AttributeError:
             pspec = name
-            
+        
         # Use a copy of the list to ensure all items are notified
         for cb_data in list(cb_list):
             try:

@@ -45,10 +45,10 @@ def save(filename=None, factory=None):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
             # Save a list of references:
-	    #buffer.write('<reflist>')
+            #buffer.write('<reflist>')
             for v in value:
                 save_reference(name, v)
-	    #buffer.write('</reflist>')
+            #buffer.write('</reflist>')
         elif isinstance(value, diacanvas.Canvas):
             buffer.write('<canvas>')
             value.save(save_canvasitem)
@@ -61,10 +61,10 @@ def save(filename=None, factory=None):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
             # Save a list of references:
-	    #buffer.write('<reflist>')
+            #buffer.write('<reflist>')
             for v in value:
                 save_reference(name, v)
-	    #buffer.write('</reflist>')
+            #buffer.write('</reflist>')
         elif isinstance(value, diacanvas.CanvasItem):
             buffer.write('<canvasitem id="%s" type="%s">' % (value.id, value.__class__.__name__))
             value.save(save_element)
@@ -179,7 +179,7 @@ def load (filename, factory=None):
             factory = GaphorResource(UML.ElementFactory)
         factory.flush()
         gc.collect()
-	_load(elements, factory)
+        _load(elements, factory)
         # DEBUG code:
 #        print ''
 #        print ''
