@@ -33,10 +33,10 @@
 
 (define-function gtk_hwrap_box_new
   (c-name "gtk_hwrap_box_new")
-  (is-constructor-of "GtkHwrapBox")
+  (is-constructor-of "GtkHWrapBox")
   (return-type "GtkWidget*")
   (parameters
-    '("gboolean" "homogeneous")
+    '("gboolean" "homogeneous" (default "FALSE"))
   )
 )
 
@@ -51,10 +51,10 @@
 
 (define-function gtk_vwrap_box_new
   (c-name "gtk_vwrap_box_new")
-  (is-constructor-of "GtkVwrapBox")
+  (is-constructor-of "GtkVWrapBox")
   (return-type "GtkWidget*")
   (parameters
-    '("gboolean" "homogeneous")
+    '("gboolean" "homogeneous" (default "FALSE"))
   )
 )
 
@@ -72,7 +72,7 @@
   (c-name "gtk_wrap_box_set_homogeneous")
   (return-type "none")
   (parameters
-    '("gboolean" "homogeneous" (default "FALSE"))
+    '("gboolean" "homogeneous")
   )
 )
 
@@ -140,11 +140,11 @@
   (return-type "none")
   (parameters
     '("GtkWidget*" "child")
-    '("gboolean" "hexpand")
-    '("gboolean" "hfill")
-    '("gboolean" "vexpand")
-    '("gboolean" "vfill")
-    '("gboolean" "wrapped")
+    '("gboolean" "hexpand" (default "TRUE"))
+    '("gboolean" "hfill" (default "TRUE"))
+    '("gboolean" "vexpand" (default "TRUE"))
+    '("gboolean" "vfill" (default "TRUE"))
+    '("gboolean" "wrapped" (default "TRUE"))
   )
 )
 
@@ -178,11 +178,11 @@
   (return-type "none")
   (parameters
     '("GtkWidget*" "child")
-    '("gboolean" "hexpand")
-    '("gboolean" "hfill")
-    '("gboolean" "vexpand")
-    '("gboolean" "vfill")
-    '("gboolean" "wrapped")
+    '("gboolean" "hexpand" (default "TRUE"))
+    '("gboolean" "hfill" (default "TRUE"))
+    '("gboolean" "vexpand" (default "TRUE"))
+    '("gboolean" "vfill" (default "TRUE"))
+    '("gboolean" "wrapped" (default "TRUE"))
   )
 )
 

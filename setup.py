@@ -296,8 +296,12 @@ class run_Gaphor(Command):
             print 'Launching Gaphor...'
             gaphor.main()
 
-
-from dsextras import TemplateExtension, BuildExt, GLOBAL_INC
+try:
+    from dsextras import TemplateExtension, BuildExt, GLOBAL_INC
+except ImportError:
+    import pygtk
+    pygtk.require('2.0')
+    from gtk.dsextras import TemplateExtension, BuildExt, GLOBAL_INC
 
 pygtkincludedir = getoutput('pkg-config --variable pygtkincludedir pygtk-2.0')
 codegendir = getoutput('pkg-config --variable codegendir pygtk-2.0')
@@ -317,6 +321,7 @@ gtkwrapbox = TemplateExtension(name='wrapbox',
                                defs='src/wrapbox.defs',
                                sources=['src/gtkwrapbox.c',
                                         'src/gtkhwrapbox.c',
+                                        'src/gtkvwrapbox.c',
                                         'src/wrapbox.c',
                                         'src/wrapboxmodule.c'],
                                register=GTKDEFS,
