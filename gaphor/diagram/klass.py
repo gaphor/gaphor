@@ -161,7 +161,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         Note: This method is also called from ExtensionItem.confirm_connect_handle
         """
         subject = self.subject
-        applied_stereotype = subject.appliedStereotype
+        #applied_stereotype = subject.appliedStereotype
         if not ClassifierItem.update_stereotype(self):
             if isinstance(subject, UML.Stereotype):
                 self.set_stereotype('stereotype')

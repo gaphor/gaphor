@@ -13,7 +13,7 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
         'name': (gobject.TYPE_STRING, 'name', '', '', gobject.PARAM_READWRITE)
     }
 
-    FONT='sans bold 10'
+    FONT = 'sans bold 10'
 
     popup_menu = (
         'RenameItem',
@@ -25,7 +25,7 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
         ElementItem.__init__(self, id)
 
         self._name = diacanvas.shape.Text()
-        self._name.set_font_description(pango.FontDescription(NamedItem.FONT))
+        self._name.set_font_description(pango.FontDescription(self.FONT))
         self._name.set_alignment(pango.ALIGN_CENTER)
         #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
         self._name.set_markup(False)

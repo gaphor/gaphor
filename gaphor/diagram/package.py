@@ -23,33 +23,93 @@ class PackageItem(NamedItem):
 
     FONT_STEREOTYPE='sans 10'
 
+    stereotype_list = []
+    popup_menu = NamedItem.popup_menu + (
+        'separator',
+        'Stereotype', stereotype_list
+    )
+
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
         self.set(height=50, width=100)
         self._border = diacanvas.shape.Path()
         self._border.set_line_width(2.0)
 
-        self.has_stereotype = False
+        self._has_stereotype = False
         self._stereotype = diacanvas.shape.Text()
         self._stereotype.set_font_description(pango.FontDescription(self.FONT_STEREOTYPE))
         self._stereotype.set_alignment(pango.ALIGN_CENTER)
         #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
         self._stereotype.set_markup(False)
 
-    def update_stereotype(self):
-        if isinstance(self.subject, UML.Profile):
-            self._stereotype.set_text(STEREOTYPE_OPEN + 'profile' + STEREOTYPE_CLOSE)
-            self.has_stereotype = True
+    def get_popup_menu(self):
+        """In the popup menu a submenu is created with Stereotypes than can be
+        applied to this classifier (Class, Interface).
+        If the class itself is a metaclass, an option is added to check if the class
+        exists.
+        """
+        subject = self.subject
+        stereotype_list = self.stereotype_list
+        stereotype_list[:] = []
+
+        from itemactions import ApplyStereotypeAction, register_action
+        NamedElement = UML.NamedElement
+        Class = UML.Class
+
+        # Find classes that are superclasses of our subject
+        mro = filter(lambda e:issubclass(e, NamedElement), type(self.subject).__mro__)
+        # Find out their names
+        names = map(getattr, mro, ['__name__'] * len(mro))
+        # Find stereotypes that extend out metaclass
+        classes = self._subject._factory.select(lambda e: e.isKindOf(Class) and e.name in names)
+
+        for class_ in classes:
+            for extension in class_.extension:
+                stereotype = extension.ownedEnd.type
+                stereotype_action = ApplyStereotypeAction(stereotype)
+                register_action(stereotype_action, 'ItemFocus')
+                stereotype_list.append(stereotype_action.id)
+        return NamedItem.get_popup_menu(self)
+
+    def set_stereotype(self, text=None):
+        """Set the stereotype text for the diagram item.
+        The text, not a Stereotype object.
+        @text: text to set.
+        """
+        if text:
+            self._stereotype.set_text(STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE)
+            self._has_stereotype = True
         else:
-            self.has_stereotype = False
+            self._has_stereotype = False
+        self.request_update()
+
+    def update_stereotype(self):
+        subject = self.subject
+        applied_stereotype = subject.appliedStereotype
+        if applied_stereotype:
+            # Return a nice name to display as stereotype:
+            # make first character lowercase unless the second character is uppercase.
+            s = ', '.join([s and len(s) > 1 and s[1].isupper() and s \
+                           or s and s[0].lower() + s[1:] \
+                           or str(s) for s in map(getattr, applied_stereotype, ['name'] * len(applied_stereotype))])
+            # Phew!
+            self.set_stereotype(s)
+        elif isinstance(subject, UML.Profile):
+            self.set_stereotype('profile')
+        else:
+            self.set_stereotype(None)
         self.request_update()
 
     def on_subject_notify(self, pspec, notifiers=()):
-        NamedItem.on_subject_notify(self, pspec, notifiers)
+        NamedItem.on_subject_notify(self, pspec, ('appliedStereotype',) + notifiers)
         self.update_stereotype()
 
+    def on_subject_notify__appliedStereotype(self, subject, pspec=None):
+        if self.subject:
+            self.update_stereotype()
+
     def on_update(self, affine):
-        has_stereotype = self.has_stereotype
+        has_stereotype = self._has_stereotype
 
         st_width = st_height = 0
         if has_stereotype:
@@ -88,7 +148,7 @@ class PackageItem(NamedItem):
         yield self._border
         for s in NamedItem.on_shape_iter(self):
             yield s
-        if self.has_stereotype:
+        if self._has_stereotype:
             yield self._stereotype
 
 initialize_item(PackageItem, UML.Package)

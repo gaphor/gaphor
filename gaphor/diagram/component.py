@@ -12,17 +12,6 @@ import gaphor.UML as UML
 from gaphor.diagram import initialize_item
 from classifier import ClassifierItem
 
-#class ComponentIcon(diacanvas.CanvasElement):
-#    def __init__(self):
-#        self._ci = diacanvas.shape.Path()
-#        self._ci.rectangle((self.width - 30, 0), (self.width - 10, 15))
-#
-#    def on_shape_iter(self):
-#        for s in diacanvas.CanvasElement.on_shape_iter(self):
-#            yield s
-#        yield self._ci
-
-
 class ComponentItem(ClassifierItem):
     BAR_WIDTH     = 10
     BAR_HEIGHT    =  5

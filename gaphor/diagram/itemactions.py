@@ -14,6 +14,7 @@ from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 
 from klass import ClassItem
+from package import PackageItem
 from component import ComponentItem
 from attribute import AttributeItem
 from dependency import DependencyItem
@@ -274,7 +275,6 @@ class ShowOperationsAction(CheckAction):
         except NoFocusItemError:
             pass
         else:
-            from klass import ClassItem
             if isinstance(item, ClassItem):
                 self.active = item.get_property('show-operations')
 
@@ -865,7 +865,7 @@ class ApplyStereotypeAction(CheckAction, ObjectAction):
         except NoFocusItemError:
             pass
         else:
-            self.sensitive = isinstance(item, ClassItem)
+            self.sensitive = isinstance(item, (ClassItem, PackageItem))
             if self.sensitive and item.subject:
                 self.active = self.stereotype in item.subject.appliedStereotype
             else:

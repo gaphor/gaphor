@@ -69,10 +69,12 @@ from generalization import GeneralizationItem
 from implementation import ImplementationItem
 from association import AssociationItem
 from extension import ExtensionItem
-from node import InitialNodeItem, ActivityFinalNodeItem, DecisionNodeItem
+from activitynodes import InitialNodeItem, ActivityFinalNodeItem, DecisionNodeItem
 from action import ActionItem
 from flow import FlowItem
 from component import ComponentItem
+from artifact import ArtifactItem
+from node import NodeItem
 import itemactions
 
 #if __debug__: 

@@ -1,3 +1,18 @@
+2004-11-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/activitynodes.py: Renamed node.py to this file.
+	* gaphor/diagram/artifact.py: Implemented Artifact item.
+	* gaphor/diagram/node.py: Implemented Node item.
+	* data/pixmaps/node24.png, artifact24.png: new icons.
+
+2004-11-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/namespace.py: added DND support when renaming in tree view.
+
+2004-11-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/package.py: Packages now support stereotypes.
+
 2004-11-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* setup.py: bumped version to 0.7.0.

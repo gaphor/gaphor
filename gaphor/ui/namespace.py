@@ -439,7 +439,9 @@ class NamespaceView(gtk.TreeView):
             model = self.get_property('model')
             iter = model.get_iter_from_string(path_str)
             element = model.get_value(iter, 0)
+            get_undo_manager().begin_transaction()
             element.name = new_text
+            get_undo_manager().commit_transaction()
         except Exception, e:
             log.error('Could not create path from string "%s"' % path_str)
 

@@ -109,7 +109,7 @@ class NamespacePlacementAction(PlacementAction):
     def item_factory(self):
         """Create a new instance of the item and return it."""
         item = PlacementAction.item_factory(self)
-        log.debug('Setting namespace for new item %s: %s' % (item, self._window.get_current_diagram().namespace))
+        #log.debug('Setting namespace for new item %s: %s' % (item, self._window.get_current_diagram().namespace))
         item.subject.package = self._window.get_current_diagram().namespace
         item.subject.name = '%s%d' % (self.name, self.__index)
         self.__index += 1
@@ -441,3 +441,26 @@ class ComponentPlacementAction(NamespacePlacementAction):
     subject_type = UML.Component
 
 register_action(ComponentPlacementAction)
+
+class ArtifactPlacementAction(NamespacePlacementAction):
+    id = 'InsertArtifact'
+    label = '_Artifact'
+    tooltip = 'Create a new Artifact item'
+    stock_id = 'gaphor-artifact'
+    name = 'Artifact'
+    type = diagram.ArtifactItem
+    subject_type = UML.Artifact
+
+register_action(ArtifactPlacementAction)
+
+class NodePlacementAction(NamespacePlacementAction):
+    id = 'InsertNode'
+    label = '_Node'
+    tooltip = 'Create a new Node item'
+    stock_id = 'gaphor-node'
+    name = 'Node'
+    type = diagram.NodeItem
+    subject_type = UML.Node
+
+register_action(NodePlacementAction)
+

@@ -32,7 +32,7 @@ As always, there is much to do...
 
 - Create a good algorithm for placement of lines and maybe nodes too.
 
-- Make associations look nice with usecases:
+#- Make associations look nice with usecases:
    . No arrows at the end
    . Disable popup menu for navigability and composition
 
@@ -62,6 +62,20 @@ As always, there is much to do...
    modular, plugins should not be that hard. I'm very happy with the new one
    it is easy to program, yet powerful (due to the XML description file, which
    allows gaphor to check several dependencies upfront.
+
+Diagram Items
+=============
+Gaphor does not need to support *all* diagram types, but at least some
+functinality should be provided for those.
+
+- Deployment diagram:
+  . Node
+  . Artifact
+  . some relations
+- Sequence diagram:
+  . Life line
+  . different message types
+  . Interaction
 
 UI
 --

@@ -40,7 +40,9 @@ class MainWindow(AbstractWindow):
                 'InsertDecisionNode',
                 'InsertFlow')),
         (_('Components'), (
-                'InsertComponent',)),
+                'InsertComponent',
+                'InsertNode',
+                'InsertArtifact')),
         (_('Use Cases'), (
                 'InsertUseCase',
                 'InsertActor',

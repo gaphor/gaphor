@@ -257,6 +257,7 @@ class ClassifierItem(NamedItem):
             return True
         else:
             self.set_stereotype(None)
+        self.request_update()
 
     def on_subject_notify(self, pspec, notifiers=()):
         #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))

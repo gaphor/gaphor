@@ -19,6 +19,10 @@
     <file>association24.png</file>
     <element>Association</element>
   </icon>
+  <icon id="gaphor-artifact">
+    <file>artifact24.png</file>
+    <element>Artifact</element>
+  </icon>
   <icon id="gaphor-class">
     <file>class24.png</file>
     <element>Class</element>
@@ -77,6 +81,10 @@
   <icon id="gaphor-interface">
     <file>interface24.png</file>
     <element>Interface</element>
+  </icon>
+  <icon id="gaphor-node">
+    <file>node24.png</file>
+    <element>Node</element>
   </icon>
   <icon id="gaphor-operation">
     <file>operation24.png</file>

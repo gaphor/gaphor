@@ -1,89 +1,58 @@
-"""InitialNode and ActivityFinalNode.
-"""
+'''
+NodeItem diagram item
+'''
 # vim:sw=4:et
+
+from __future__ import generators
 
 import gobject
 import pango
 import diacanvas
 import gaphor.UML as UML
 from gaphor.diagram import initialize_item
-from elementitem import ElementItem
+from classifier import ClassifierItem
 
-class NodeItem(ElementItem):
-    
-    popup_menu = (
-        'EditDelete',
-    )
+class NodeItem(ClassifierItem):
+    DEPTH = 10
 
-    def __init__(self, id=None):
-        ElementItem.__init__(self, id)
-        # Do not allow resizing of the node
-        for h in self.handles:
-            h.set_property('movable', 0)
-
-
-class InitialNodeItem(NodeItem):
-    RADIUS = 10
+#    popup_menu = ClassifierItem.popup_menu \
+#        + ('separator', 'IndirectlyInstantiated')
 
     def __init__(self, id=None):
-        NodeItem.__init__(self, id)
-        r = self.RADIUS
-        d = r * 2
-        self._circle = diacanvas.shape.Ellipse()
-        self._circle.ellipse((r, r), d, d)
-        self._circle.set_line_width(0.01)
-        self._circle.set_fill(diacanvas.shape.FILL_SOLID)
-        self._circle.set_fill_color(diacanvas.color(0, 0, 0, 255))
-        self.set(width=d, height=d)
+        ClassifierItem.__init__(self, id)
+        self.set(height=50, width=120)
+        # Set drawing style to compartment w// small icon
+        #self.drawing_style = self.DRAW_COMPARTMENT_ICON
+
+        for attr in ('_back', '_diag_line'):
+            shape = diacanvas.shape.Path()
+            shape.set_line_width(2.0)
+            #shape.set_fill(False)
+            #shape.set_fill_color(diacanvas.color(255, 255, 255))
+            setattr(self, attr, shape)
+
+    def update_compartment_common(self, affine, w, h):
+
+        w, h = ClassifierItem.update_compartment_common(self, affine, w, h)
+
+        d = self.DEPTH
+
+        self._back.line(((0, 0), (d, -d), (w + d, -d), (w + d, h - d), (w, h)))
+        self._diag_line.line(((w, 0), (w + d, -d)))
+
+        return w, h
+
+    def on_update(self, affine):
+        ClassifierItem.on_update(self, affine)
+
+        d = self.DEPTH
+        x0, y0, x1, y1 = self.bounds
+        self.set_bounds((x0, y0 - d, x1 + d, y1))
 
     def on_shape_iter(self):
-        return iter([self._circle])
+        for s in ClassifierItem.on_shape_iter(self):
+            yield s
+        yield self._back
+        yield self._diag_line
 
-
-class ActivityFinalNodeItem(NodeItem):
-    RADIUS_1 = 10
-    RADIUS_2 = 15
-
-    def __init__(self, id=None):
-        NodeItem.__init__(self, id)
-        r = self.RADIUS_2
-        d = self.RADIUS_1 * 2
-        self._inner = diacanvas.shape.Ellipse()
-        self._inner.ellipse((r + 1, r + 1), d, d)
-        self._inner.set_line_width(0.01)
-        self._inner.set_fill(diacanvas.shape.FILL_SOLID)
-        self._inner.set_fill_color(diacanvas.color(0, 0, 0, 255))
-
-        d = r * 2
-        self._outer = diacanvas.shape.Ellipse()
-        self._outer.ellipse((r + 1, r + 1), d, d)
-        self._outer.set_line_width(2)
-        self._outer.set_color(diacanvas.color(0, 0, 0, 255))
-
-        self.set(width=d+2, height=d+2)
-
-    def on_shape_iter(self):
-        return iter([self._outer, self._inner])
-
-
-class DecisionNodeItem(NodeItem):
-    RADIUS = 15
-
-    def __init__(self, id=None):
-        NodeItem.__init__(self, id)
-        r = self.RADIUS
-        r2 = r * 2/3
-        self._diamond = diacanvas.shape.Path()
-        self._diamond.line(((r2,0), (r2*2, r), (r2, r*2), (0, r)))
-        self._diamond.set_cyclic(True)
-        self._diamond.set_line_width(2.0)
-        self.set(width=r2*2, height=r*2)
-
-    def on_shape_iter(self):
-        return iter([self._diamond])
-
-
-initialize_item(NodeItem)
-initialize_item(InitialNodeItem, UML.InitialNode)
-initialize_item(ActivityFinalNodeItem, UML.ActivityFinalNode)
-initialize_item(DecisionNodeItem, UML.DecisionNode)
+initialize_item(NodeItem, UML.Component)
