@@ -1,6 +1,7 @@
 2002-08-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* Makefile.am: Now require Automake 1.6
+	* gaphor/ui/mainwindow.py: Created main window
 
 2002-08-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
