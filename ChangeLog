@@ -2,6 +2,7 @@
 
 	* gaphor/diagram/attribute.py: added listener for 'association', so
 	undo can work properly.
+        * data/plugins/alignment: Make only sensitive if items are selected.
 
 2004-11-07  Jeroen Vloothuis  <jeroen@vloothuis.net>
         * data/plugins/alignment: Added a plugin for adjusting the
