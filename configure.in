@@ -17,6 +17,7 @@ FILES_FILES="gaphor/Files \
 	gaphor/diagram/Files \
 	gaphor/ui/Files \
 	gaphor/ui/command/Files \
+	gaphor/ui/icons/Files \
 	gaphor/misc/Files"
 
 AC_SUBST(FILES_FILES)
@@ -30,7 +31,10 @@ GETTEXT_PACKAGE=gaphor
 AC_SUBST(GETTEXT_PACKAGE)
 ALL_LINGUAS="nl"
 
-AM_GLIB_GNU_GETTEXT
+dnl AM_GLIB_GNU_GETTEXT
+
+LOCALEDIR='${prefix}/${DATADIRNAME}/locale'
+AC_SUBST(LOCALEDIR)
 
 #########
 # Python
@@ -126,9 +130,9 @@ done
 AC_SUBST(DIRS)
 AC_SUBST(FILES)
 
+AC_CONFIG_FILES([bin/gaphor], [chmod +x bin/gaphor])
 AC_CONFIG_FILES(
 	Makefile
-	gaphor.sh
 	utils/Makefile
 	gaphor/config.py
 	po/Makefile.in

@@ -3,3 +3,6 @@ diagramview.py
 namespace.py
 placementtool.py
 treeview.py
+mainwindow.py
+diagramwindow.py
+stock.py

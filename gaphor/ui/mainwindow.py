@@ -24,9 +24,9 @@ class MainWindow:
 	# Menu items have the following structure:
 	# ( Name, Comment, (ctrl) + Modifier, Command or Submenu )
 	menu =  MenuItem(submenu=(
-		    MenuItem(name='_File', submenu=(
+		    MenuItem(name=_('_File'), submenu=(
 			MenuStockItem(stock_id=gtk.STOCK_NEW,
-				 comment='Create a new model',
+				 comment=_('Create a new model'),
 				 command=command.file.NewCommand()),
 	 		MenuStockItem(stock_id=gtk.STOCK_OPEN,
 				 comment='Open an existing model',

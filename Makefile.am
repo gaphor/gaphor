@@ -1,17 +1,26 @@
 # Require automake-1.6
 AUTOMAKE_OPTIONS = 1.6
 
-SUBDIRS = utils doc tests
+# The definition of 'DIRS' and 'FILES' is defined by 'configure'...
+# DIRS: The subdirectories that should be added to the distribution.
+# FILES: The files named 'Files' that contain (Python) files that should be
+#	 added to the distribution.
 
-bin_PROGRAMS = gaphor.sh
+SUBDIRS = utils po doc tests
 
-EXTRA_DIST = $(FILES) $(FILES_FILES) gaphor.sh.in gaphor/config.py.in
+bin_SCRIPTS = bin/gaphor
+
+EXTRA_DIST = $(FILES) $(FILES_FILES) bin/gaphor.in gaphor/config.py.in
 
 INSTALL_DIRS = $(DIRS)
 INSTALL_FILES = $(FILES) gaphor/config.py gaphor/UML/modelelements.py
 
 GEN_UML = $(top_srcdir)/utils/genUML.py
 METAMODEL_XMI = $(top_srcdir)/doc/UmlMetaModel.xmi
+
+# Makefile depends on the 'Files' files, so we should add them as a dependency
+# to reconfigure...
+CONFIG_STATUS_DEPENDENCIES = $(FILES_FILES)
 
 all-local: gaphor/UML/modelelements.py
 
@@ -39,9 +48,9 @@ install-exec-local:
 uninstall-local:
 	for D in $(INSTALL_DIRS); do \
 		test -d "$(INSTALLDIR)$$D" && rm -rf "$(INSTALLDIR)$$D"; \
-	done
+	done; true
 
-.PHONY: release snapshot
+.PHONY: release snapshot files-check potfiles.in
 
 release:
 	$(MAKE) dist
@@ -50,4 +59,14 @@ release:
 
 snapshot:
 	$(MAKE) dist distdir=$(PACKAGE)`date +"%y%m%d"`
+
+files-check:
+	@for F in `find gaphor -name '*.py' -o -name '*.png'`; do \
+		{ echo "$(FILES)" | grep -q "\<$$F\>"; } || echo "Missing file: $$F"; \
+	done
+
+potfiles.in:
+	for L in $(FILES); do \
+		echo "$$L"; \
+	done | grep '\.py$$' > $(srcdir)/po/POTFILES.in
 

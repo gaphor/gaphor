@@ -1,11 +1,2 @@
-Makefile
-Makefile.in
 *.pyc
 *.pyo
-*.o
-*.lo
-*.so
-*.la
-.libs
-.deps
-

@@ -7,13 +7,18 @@
 
 from misc.singleton import Singleton
 import config
+import gettext
 
 class Gaphor(Singleton):
+    """
+    Gaphor main app.
+    """
     NAME='gaphor'
-    from config import VERSION #VERSION=config.GAPHOR_VERSION
+    VERSION=config.VERSION
     TITLE='Gaphor v' + VERSION
 
     def init(self):
+	gettext.install(config.GETTEXT_PACKAGE)
 	self.__main_window = None
 	pass
 

@@ -35,7 +35,3 @@ run "${AUTOMAKE}" -a
 run "${AUTOCONF}"
 
 run ./configure --enable-maintainer-mode $*
-
-echo
-echo "Now enter 'make' to compile"
-echo

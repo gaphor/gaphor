@@ -1,0 +1,661 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: Mon Sep  2 15:54:59 2002\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.4\n"
+
+#: ../gaphor/UML/diagram.py:2
+msgid ""
+"diagram.py\n"
+"This module contains a model elements (!) Diagram which is the abstract\n"
+"representation of a UML diagram. Diagrams can be visualized and edited."
+msgstr ""
+
+#: ../gaphor/UML/diagram.py:84
+msgid ""
+"We use postload() to connect objects to each other. This can not\n"
+"\tbe done in the load() method, since objects can change their size and\n"
+"\tcontents after we have connected to them (since they are not yet\n"
+"\tinitialized). We use a transformation table here to retrieve the objects\n"
+"\tand their CID. "
+msgstr ""
+
+#: ../gaphor/UML/element.py:2
+msgid ""
+" Element.py -- Base class for all UML model objects\n"
+"\n"
+"All model elements (including diagrams) are inherited from Element. Element\n"
+"keeps track of relations between objects.\n"
+"If a relationship is bi-directional, the element will add itself to the\n"
+"specified object on the opposite end.\n"
+"\n"
+"If an element attribute is a list of items (multiplicity `*') the Sequence\n"
+"class is used to represent a list. You can simply add items to the sequence\n"
+"by defining\n"
+"\tobject.sequence_attribute = some_other_object\n"
+"If you want to remove the reference use:\n"
+"\tdel object.sequence_attribute[some_other_object]\n"
+"\n"
+"All information the Element needs in retrieved from the Element._attrdef\n"
+"structure. This is a dictionary with the possible attribute names as keys "
+"and\n"
+"a tupple as value.  A tupple contains two or three fields:\n"
+"1. The default value of the attribute (e.g. 'NoName') or a reference to the\n"
+"   Sequence class in case of a 0..* relationship.\n"
+"2. Type of object that way be added.\n"
+"3. In case of bi-directional relationships the third argument is the name\n"
+"   by which the object is known on the other side.\n"
+msgstr ""
+
+#: ../gaphor/UML/element.py:51
+msgid ""
+"Element is the base class for *all* UML MetaModel classes. The\n"
+"attributes and relations are defined by a <class>._attrdef structure.\n"
+"A class does not need to define any local variables itself: Element will\n"
+"retrieve all information from the _attrdef structure.\n"
+"You should call Element::unlink() to remove all relationships with the "
+"element.\n"
+"\n"
+"An element can send signals. All normal signals have the name of the "
+"attribute\n"
+"that's altered. There are two special (system) signals:\n"
+"__unlink__ and __relink__. __unlink__ is emited if the object is "
+"'destroyed',\n"
+"__relink__ is used if the object is active again due to a undo action in\n"
+"one of the diagrams.\n"
+"The signals protocol is:\n"
+"\tFor single relationships:\n"
+"\t\t(signal_name, value_before, value_after) \n"
+"\tfor sequences:\n"
+"\t\t(signal_name, 'add'/'remove', value_to_add_or_remove)\n"
+"\tfor 'system' signals:\n"
+"\t\t(__signal_name__, None, None)\n"
+msgstr ""
+
+#: ../gaphor/UML/element.py:105
+msgid "Remove all references to the object."
+msgstr ""
+
+#: ../gaphor/UML/element.py:114
+msgid ""
+"A presentation element is linked to the Element. If the element was\n"
+"\tfirst __unlink__'ed, it is __relink__'ed again."
+msgstr ""
+
+#: ../gaphor/UML/element.py:125
+msgid ""
+"Remove a presentation element from the list. If no more presentation\n"
+"\telements are active, the object s unlinked."
+msgstr ""
+
+#: ../gaphor/UML/element.py:170
+msgid "Find the record for 'key' in the <class>._attrdef map."
+msgstr ""
+
+#: ../gaphor/UML/element.py:219
+msgid "Remove an attribute."
+msgstr ""
+
+#: ../gaphor/UML/element.py:251
+msgid ""
+"Before we set a value, several things happen:\n"
+"\t1. If the relation is uni-directional, just set the value or, in case\n"
+"\t   of a Sequence, append the value to a list.\n"
+"\t2. In case of a bi-directional relationship:\n"
+"\t   a. First remove a possible already existing relationship (not that\n"
+"\t      both sides can have a multiplicity of '1'.\n"
+"\t   b. Set up a new relationship between self-value and value-self."
+msgstr ""
+
+#: ../gaphor/UML/element.py:320
+msgid ""
+"Add an entry. Should only be called by Sequence instances.\n"
+"\tThis function adds an object to the sequence."
+msgstr ""
+
+#: ../gaphor/UML/element.py:329
+msgid ""
+"Remove an entry. Should only be called by Sequence's implementation.\n"
+"\tThis function is used to trap the 'del' function."
+msgstr ""
+
+#: ../gaphor/UML/element.py:406
+msgid ""
+"Do some things after the items are initialized... This is basically\n"
+"\tused for Diagrams."
+msgstr ""
+
+#: ../gaphor/UML/elementfactory.py:2
+msgid ""
+"management.py\n"
+"This module contains some functions for managing UML models. This\n"
+"includes saving, loading and flushing models. In the future things like\n"
+"consistency checking should also be included."
+msgstr ""
+
+#: ../gaphor/UML/elementfactory.py:44
+msgid ""
+"Create a new model element of type 'type' with 'id' as its ID.\n"
+"\tThis method should only be used when loading models. If the ID is\n"
+"\thigher that the current id that should be used for the next item, the\n"
+"\tID for the next item is set to id + 1."
+msgstr ""
+
+#: ../gaphor/UML/elementfactory.py:67
+msgid "Flush all elements in the UML.elements table."
+msgstr ""
+
+#: ../gaphor/UML/sequence.py:9
+msgid ""
+"A Sequence class has the following properties:\n"
+"    - A sequence is an unordered list of unique elements.\n"
+"    - Only accepts object of a certain type (or descendants).\n"
+"    - Only keep one reference to the object.\n"
+"    - A Sequence has an owner. The owners\n"
+"      sequence_{add|remove}() functions are called to allow\n"
+"      bi-directional relations to be added and deleted.\n"
+"      Note that the Sequence itself does not add items to its list, it\n"
+"      only invokes the owning object if something needs to be done."
+msgstr ""
+
+#: ../gaphor/UML/sequence.py:59
+msgid ""
+"\n"
+"\tSequence.index takes an object as an argument. That argument should\n"
+"\tbe an element that is in the list. It returns the position of the\n"
+"\tobject in the sequence.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/actor.py:1
+msgid ""
+"\n"
+"ActorItem diagram item\n"
+msgstr ""
+
+#: ../gaphor/diagram/actor.py:79
+msgid "Center the name text under the actor."
+msgstr ""
+
+#: ../gaphor/diagram/actor.py:162 ../gaphor/diagram/package.py:93
+#: ../gaphor/diagram/usecase.py:82
+msgid "Do not allow the name to be removed."
+msgstr ""
+
+#: ../gaphor/diagram/association.py:1 ../gaphor/diagram/commentline.py:1
+#: ../gaphor/diagram/dependency.py:1 ../gaphor/diagram/generalization.py:1
+msgid ""
+"\n"
+"CommentLine -- A line that connects a comment to another model element.\n"
+msgstr ""
+
+#: ../gaphor/diagram/association.py:112 ../gaphor/diagram/commentline.py:88
+#: ../gaphor/diagram/dependency.py:26 ../gaphor/diagram/generalization.py:40
+msgid ""
+"\n"
+"\tThis method is called by a canvas item if the user tries to connect\n"
+"\tthis object's handle. allow_connect_handle() checks if the line is\n"
+"\tallowed to be connected. In this case that means that one end of the\n"
+"\tline should be connected to a Comment.\n"
+"\tReturns: TRUE if connection is allowed, FALSE otherwise.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/association.py:136 ../gaphor/diagram/commentline.py:122
+#: ../gaphor/diagram/dependency.py:39 ../gaphor/diagram/generalization.py:64
+#: ../gaphor/diagram/relationship.py:121
+msgid ""
+"\n"
+"\tThis method is called after a connection is established. This method\n"
+"\tsets the internal state of the line and updates the data model.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/comment.py:1
+msgid ""
+"\n"
+"CommentItem diagram item\n"
+msgstr ""
+
+#: ../gaphor/diagram/comment.py:42
+msgid "Center the body text in the usecase."
+msgstr ""
+
+#: ../gaphor/diagram/comment.py:94
+msgid "Do not allow the body to be removed."
+msgstr ""
+
+#: ../gaphor/diagram/commentline.py:74
+msgid "No connections are allowed on a CommentLine."
+msgstr ""
+
+#: ../gaphor/diagram/commentline.py:78 ../gaphor/diagram/commentline.py:82
+msgid "No connections are allows to the CommentLine."
+msgstr ""
+
+#: ../gaphor/diagram/diagramitemfactory.py:9
+msgid ""
+"\n"
+"    Factory class for creating diagram items.\n"
+"    "
+msgstr ""
+
+#: ../gaphor/diagram/diagramitemfactory.py:18
+msgid ""
+"\n"
+"\tCreate a new diagram item. Items should not be created directly, but\n"
+"\talways through a factory.\n"
+"\tdiagram is the diagram the item should be drawn on.\n"
+"\ttype is the class of diagram item that is to be created\n"
+"\tsubject is an objectal UML object that is to be connected to the\n"
+"\tnew diagram item.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/diagramitemfactory.py:44
+msgid ""
+"\n"
+"\tset_next_id() sets the id to use for the next canvas item that will\n"
+"\tbe created. This functionality should only be used when loading\n"
+"\tmodels from disk.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/diagramitemfactory.py:53
+msgid ""
+"\n"
+"\tReset the factory's state\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/diagramitemfactory.py:59
+msgid ""
+"\n"
+"\tMatch a diagram item with a UML class. If a new item is to be created\n"
+"\tand no UML object is provided a new UML object will be created. This\n"
+"\tis typically used for ModelElement like elements. Relationships can\n"
+"\texist without being bound to a UML object.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/generalization.py:21
+msgid ""
+"\n"
+"\tFind an existing relationship by iterating the 'specialization's\n"
+"\tof @head_subject and check if the @tail_subject is the child.\n"
+"\tThis does not check if such a relationship is already on the canvas,\n"
+"\tin which case a new relationship should be created.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/modelelement.py:2
+msgid ""
+"\n"
+"ModelElementItem\n"
+"\n"
+"Abstract base class for element-like Diagram items.\n"
+msgstr ""
+
+#: ../gaphor/diagram/package.py:1
+msgid ""
+"\n"
+"PackageItem diagram item\n"
+msgstr ""
+
+#: ../gaphor/diagram/package.py:42
+msgid "Center the name text in the package body."
+msgstr ""
+
+#: ../gaphor/diagram/package.py:56
+msgid "Always request updates for the aggregated items."
+msgstr ""
+
+#: ../gaphor/diagram/relationship.py:1
+msgid ""
+"\n"
+"Relationship -- Base class for dependencies and associations.\n"
+msgstr ""
+
+#: ../gaphor/diagram/relationship.py:111
+msgid ""
+"\n"
+"\tThis method is called by a canvas item if the user tries to connect\n"
+"\tthis object's handle. allow_connect_handle() checks if the line is\n"
+"\tallowed to be connected. In this case that means that one end of the\n"
+"\tline should be connected to a Relationship.\n"
+"\tReturns: TRUE if connection is allowed, FALSE otherwise.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/relationship.py:128
+msgid ""
+"\n"
+"\tIf a handle wants to disconnect, this method is called first. This\n"
+"\tmethod is here mainly for the sake of completeness, since it is\n"
+"\tquite unlikely that a handle is not allowed to disconnect.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/relationship.py:136
+msgid ""
+"\n"
+"\tThis method is called to do some cleanup after 'self' has been\n"
+"\tdisconnected from 'was_connected_to'.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/diagram/usecase.py:1
+msgid ""
+"\n"
+"UseCaseItem diagram item\n"
+msgstr ""
+
+#: ../gaphor/diagram/usecase.py:41
+msgid "Center the name text in the usecase."
+msgstr ""
+
+#: ../gaphor/gaphor.py:12
+msgid ""
+"\n"
+"    Gaphor main app.\n"
+"    "
+msgstr ""
+
+#: ../gaphor/misc/GConf.py:49
+msgid "returns the value of key `key' "
+msgstr ""
+
+#: ../gaphor/misc/GConf.py:65
+msgid "sets the value of key `key' to `value' "
+msgstr ""
+
+#: ../gaphor/misc/command.py:2
+msgid ""
+"Command\n"
+"A command is an object that executes a certain task.\n"
+"One should inherit from Command and override the execute() method.\n"
+msgstr ""
+
+#: ../gaphor/misc/command.py:20
+msgid ""
+"\n"
+"\tTells us if a command is reasy to be executed.\n"
+"\tIn menu's this method is called when a menu is opened. Non-valid\n"
+"\tcommands will be grayed out when the menu appears.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/misc/menufactory.py:84
+msgid ""
+"\n"
+"    Menu Item for a separator (vertical bar) in the menu.\n"
+"    "
+msgstr ""
+
+#: ../gaphor/misc/signal.py:10
+msgid ""
+"\n"
+"    The signal class is an implementation of the Observer pattern. It can "
+"be\n"
+"    used to send signals to every function or method that connected to the\n"
+"    signal object, with a variable amount of parameters. Note that the "
+"owner\n"
+"    of the Signal instance should define a protocol for notifying the "
+"observers.\n"
+"    The subject should provide methods for connecting and disconnecting\n"
+"    observers (preferably 'connect()' and 'disconnect()'.\n"
+"    "
+msgstr ""
+
+#: ../gaphor/misc/signal.py:29
+msgid ""
+"\n"
+"\tConnect to the object. You should provide a signal handler and a\n"
+"\tbunch of parameters that should be passed to the signal handler.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/misc/signal.py:38
+msgid ""
+"\n"
+"\tDisconnect the signal_handler (observer).\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/misc/signal.py:51
+msgid ""
+"\n"
+"\tQueue signals for emision. This is handy in case several parameters\n"
+"\thave to be set before an object is in a consistent state. Queued signals\n"
+"\twill be emited as soon as flush() is called.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/misc/signal.py:59
+msgid ""
+"\n"
+"\tFlush the signal queue.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/misc/signal.py:69
+msgid ""
+"\n"
+"\tEmit the signal. A set of parameters can be defined that will be\n"
+"\tpassed to the signal handler. Those parameters will be set before\n"
+"\tthe parameters provided through the connect() method.\n"
+"\tIn case there are queued emisions, this function will queue the\n"
+"\tsignal emision too.\n"
+"\n"
+"\tNote that you should define how many parameters are provided by the\n"
+"\towner of the signal.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/misc/singleton.py:8
+msgid ""
+"\n"
+"    Base class for singleton classes.\n"
+"    Any class derived from this one is a singleton. You can call its\n"
+"    constructor multiple times, you'll get only one instance.\n"
+"    Note that __init__ must not be defined. Use init instead.\n"
+"\n"
+"    @since 1.0\n"
+"    "
+msgstr ""
+
+#: ../gaphor/misc/singleton.py:17
+msgid ""
+"\n"
+"        New operator of a singleton class.\n"
+"        Will return the only instance, or create it if needed.\n"
+"\n"
+"        @since 1.0\n"
+"        @author Laurent Burgbacher <lb@alawa.ch>\n"
+"        "
+msgstr ""
+
+#: ../gaphor/misc/singleton.py:31
+msgid ""
+"\n"
+"        Constructor of a singleton class.\n"
+"\n"
+"        @since 1.0\n"
+"        @author Laurent Burgbacher <lb@alawa.ch>\n"
+"        "
+msgstr ""
+
+#: ../gaphor/misc/storage_libxml2.py:39 ../gaphor/misc/storage_minidom.py:42
+msgid ""
+"Save the current model to @filename. If no filename is given,\n"
+"\tstandard out is used."
+msgstr ""
+
+#: ../gaphor/misc/storage_libxml2.py:59 ../gaphor/misc/storage_minidom.py:72
+msgid ""
+"Load a file and create a model if possible.\n"
+"\tExceptions: IOError, ValueError."
+msgstr ""
+
+#: ../gaphor/misc/storage_libxml2.py:178 ../gaphor/misc/storage_minidom.py:215
+msgid "Return the next node that is not a Value or a Reference."
+msgstr ""
+
+#: ../gaphor/misc/storage_libxml2.py:188 ../gaphor/misc/storage_minidom.py:227
+msgid "Return a child node that is not a Value or a Reference."
+msgstr ""
+
+#: ../gaphor/misc/storage_libxml2.py:237 ../gaphor/misc/storage_minidom.py:294
+msgid ""
+"Return a dictionary of references for each item.\n"
+"\tA list is created for every reference name."
+msgstr ""
+
+#: ../gaphor/misc/storage_libxml2.py:277 ../gaphor/misc/storage_minidom.py:342
+msgid ""
+"From the code, return a dictionary of id: Storage items.\n"
+"\t"
+msgstr ""
+
+#: ../gaphor/ui/command/__init__.py:1
+msgid ""
+"\n"
+"Command module.\n"
+"\n"
+"In the command module commands are stored that can be executed via menus or\n"
+"scripts. Commands make up for a primary piece of functionality (such as\n"
+"loading a file).\n"
+msgstr ""
+
+#: ../gaphor/ui/command/diagram.py:1
+msgid ""
+"\n"
+"Commands related to the Diagram (DiaCanvas)\n"
+msgstr ""
+
+#: ../gaphor/ui/command/file.py:2
+msgid ""
+"\n"
+"File menu related commands.\n"
+"NewCommand\n"
+"OpenCommand\n"
+"SaveCommand\n"
+"SaveAsCommand\n"
+"QuitCommand\n"
+msgstr ""
+
+#: ../gaphor/ui/command/tree.py:1
+msgid ""
+"\n"
+"Commands related to the TreeModel/View\n"
+msgstr ""
+
+#: ../gaphor/ui/mainwindow.py:16
+msgid ""
+"\n"
+"    The main window for the application. It contains a Namespace-based tree\n"
+"    view and a menu and a statusbar.\n"
+"    "
+msgstr ""
+
+#: ../gaphor/ui/mainwindow.py:27
+msgid "_File"
+msgstr ""
+
+#: ../gaphor/ui/mainwindow.py:29
+msgid "Create a new model"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:2
+msgid ""
+"This is the TreeView that is most common (for example: it is used\n"
+"in Rational Rose). This is a tree based on namespace relationships. As\n"
+"a result only classifiers are shown here.\n"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:17
+msgid ""
+"\n"
+"    The node is defined by a instance. We can reach the parent\n"
+"    by <object>.namespace. The children can be found in the\n"
+"    <object>.ownerElement list.\n"
+"    "
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:102
+msgid "Dump the static structure of the model to stdout."
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:124
+msgid "returns the GtkTreeModelFlags for this particular type of model"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:130
+msgid "returns the number of columns in the model"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:134
+msgid "returns the type of a column in the model"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:139
+msgid ""
+"returns the tree path (a tuple of indices at the various\n"
+"\tlevels) for a particular node. This is done in reverse order, so the\n"
+"\troot path will become first."
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:156
+msgid ""
+"returns the node corresponding to the given path. The patch is a\n"
+"\t   tuple of values, like (0 1 1). We have to figure out a path that is\n"
+"\t   easy to use by on_get_value() and can also be easely extended by\n"
+"\t   on_iter_children() and chopped by on_iter_parent()"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:172
+msgid "returns the model element that matches 'node'."
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:185
+msgid "returns the next node at this level of the tree"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:198
+msgid "returns true if this node has children"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:203
+msgid "returns the first child of this node"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:208
+msgid "returns the number of children of this node"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:213
+msgid "returns the nth child of this node"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:223
+msgid "returns the parent of this node"
+msgstr ""
+
+#: ../gaphor/ui/namespace.py:273
+msgid ""
+"\n"
+"\tThe text has been edited. This method updates the data object.\n"
+"\tNote that 'path_str' is a string where the fields are separated by\n"
+"\tcolons ':', like this: '0:1:1'. We first turn them into a tuple.\n"
+"\t"
+msgstr ""

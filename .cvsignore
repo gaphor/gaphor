@@ -36,4 +36,4 @@ mkChangeLog
 py-compile
 stamp-h1
 depcomp
-
+gaphor-*.tar.gz

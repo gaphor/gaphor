@@ -1,4 +1,5 @@
 __init__.py
 about.py
+diagram.py
 file.py
 tree.py
