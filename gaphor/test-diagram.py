@@ -35,9 +35,6 @@ print "diagram created"
 
 treemodel = tree.NamespaceModel(factory)
 
-item = diagram.UseCase()
-dia.canvas.root.add (item)
-
 #item = canvas.root.add (diagram.Comment)
 #item.move (30, 50)
 #item = canvas.root.add (diagram.Actor)
@@ -46,7 +43,7 @@ dia.canvas.root.add (item)
 item = dia.create(diagram.UseCase)
 usecase = item.subject
 dia.create (diagram.UseCase, (50, 200), subject=usecase)
-#usecase.name = 'UC1'
+usecase.name = 'UC1'
 #item.subject.name = 'UC1'
 
 diagram_view = ui.DiagramView (dia)

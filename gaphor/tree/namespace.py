@@ -34,6 +34,13 @@ class NamespaceModel(gtk.GenericTreeModel):
         if key == 'create' and isinstance (obj, UML.Namespace):
 	    print 'Object added'
 	    obj.connect (self.__element_signals, obj)
+	    try:
+		if obj.namespace:
+		     path = self.get_path(obj)
+		     iter = self.get_iter(path)
+		     self.row_inserted (path, iter)
+	    except AttributeError:
+		pass
 	elif key == 'remove' and isinstance (obj, UML.Namespace):
 	    print 'object removed'
 	    self.row_deleted (self.get_path (obj))

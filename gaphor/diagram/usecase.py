@@ -74,6 +74,11 @@ class UseCase(ModelElement):
 	    return 1
 	return 0
 
+    def on_groupable_remove(self, item):
+	'''Do not allow the name to be removed.'''
+	self.emit_stop_by_name('remove')
+	return 0
+
     def on_groupable_get_iter(self):
 	return self.__name
 

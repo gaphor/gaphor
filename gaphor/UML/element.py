@@ -54,44 +54,36 @@ attributes and relations are defined by a <class>._attrdef structure.
 A class does not need to define any local variables itself: Element will
 retrieve all information from the _attrdef structure.
 You should call Element::unlink() to remove all relationships with the element.
-In the unlink function all relationships are removed except presentation,
+In the unlink function all relationships are removed except __presentation,
 __id and __signals. Presentation items are removed by the diagram items that
 represent them (they are connected to the 'unlink' signal). The element will
 also be removed from the element_hash by unlink().
 
-A special attribute is added: itemsOnUndoStack. This is a counter that is used
-by the diagram item's implementation to avoid deletion (unlink()ing) of the 
-object if references are lehd by the object on the undo stack.
-
 An element can send signals. All normal signals have the name of the attribute
 that's altered. There are three special (system) signals:
-__show__, __hide__ and __unlink__. Those signals are used when the element is
-added to a factory, removed from the element factory or before deletion of
-the object (you should remove all connections to the element on an __unlink__
-signal).
+__unlink__ and __relink__. __unlink__ is emited if the object is 'destroyed',
+__relink__ is used if the object is active again due to a undo action in
+one of the diagrams.
 '''
-    #_index = 1
-    _attrdef = { 'documentation': ( "", types.StringType ),
-		 'presentation': ( Sequence, types.ObjectType ),
-    		 'itemsOnUndoStack': (0, types.IntType ) }
+
+    _attrdef = { 'documentation': ( "", types.StringType ) }
 
     def __init__(self, id):
 	#print "New object of type", self.__class__
 	self.__dict__['__id'] = id
 	self.__dict__['__signal'] = Signal()
-	#elements[Element._index] = self
-	#Element._index += 1
+	self.__dict__['__presentation'] = [ ]
 
     def __unlink(self):
 	#if elements.has_key(self.__dict__['__id']):
 	#    del elements[self.__dict__['__id']]
 	#print 'Element.__unlink()', self
+        self.__emit("__unlink__")
 	for key in self.__dict__.keys():
 	    # In case of a cyclic reference, we should check if the element
 	    # not yet has been removed.
-	    if self.__dict__.has_key (key) and \
-			key not in ( 'presentation', 'itemsOnUndoStack', \
-				     '__signal', '__id', '__undodata' ):
+	    if self.__dict__.has_key (key) and not key.startswith('__'):
+		#print 'deleting key:', key
 		if isinstance (self.__dict__[key], Sequence):
 		    # Remove each item in the sequence, then remove
 		    # the sequence from __dict__.
@@ -105,92 +97,69 @@ signal).
 		    self.__delattr__(key)
 	# Note that empty objects may be created in the object due to lookups
 	# from objects with connected signals.
-    	return self
+    	#print self.__dict__
     
     def unlink(self):
-	'''Remove all references to the object. This will also remove the
-	element from the `elements' table.'''
+	'''Remove all references to the object.'''
 	#print 'Element.unlink():', self
 	# Notify other objects that we want to unlink()
-        self.__emit("__unlink__")
 	if self.__dict__.has_key ('__undodata'):
 	    del self.__dict__['__undodata']
 	self.__unlink ()
 
     # Hooks for presentation elements to add themselves:
     def add_presentation (self, presentation):
-        #print 'add_presentation', self, presentation
-        if not presentation in self.presentation:
-	    self.presentation = presentation
+	'''A presentation element is linked to the Element. If the element was
+	first __unlink__'ed, it is __relink__'ed again.'''
+	pres = self.__dict__['__presentation']
+        if not presentation in pres:
+	    pres.append (presentation)
+	    if (len(pres) == 1) and \
+	    		self.__dict__.has_key('__undodata'):
+		self.__load_undo_data()
+		self.__emit('__relink__')
 
     def remove_presentation (self, presentation):
+	'''Remove a presentation element from the list. If no more presentation
+	elements are active, the object s unlinked.'''
         #print 'remove_presentation', self, presentation
-        if presentation in self.presentation:
-	    del self.presentation[presentation]
-	    if len (self.presentation) == 0 and self.itemsOnUndoStack == 0:
+	pres = self.__dict__['__presentation']
+        if presentation in pres:
+	    pres.remove(presentation)
+	    if len (pres) == 0:
 		print self, 'No more presentations: unlinking...'
-	        self.unlink()
+		self.__save_undo_data()
+		# unlink, but do not destroy __undo_data
+	        self.__unlink()
 
-    def undo_presentation (self, presentation):
+    def __load_undo_data (self):
         #print 'undo_presentation', self.__dict__
-        if not presentation in self.presentation:
-	    if len (self.presentation) == 0:
-		assert self.__dict__.has_key ('__undodata')
-		# Add myself to the 'elements' hash 
-		#elements[self.id] = self
-		self.__emit ('__show__')
-		# Add elements from __undodata
-		#print self.__dict__
-		undodata = self.__dict__['__undodata']
-		for key in undodata.keys ():
-		    value = undodata[key]
-		    #print 'Undoing value', key
-		    if isinstance (value, types.ListType):
-			for item in value:
-			    setattr (self, key, item)
+	assert self.__dict__.has_key ('__undodata')
+	undodata = self.__dict__['__undodata']
+	for key in undodata.keys ():
+	    #print 'setting key:', key
+	    value = undodata[key]
+	    #print 'Undoing value', key
+	    if isinstance (value, types.ListType):
+		for item in value:
+		    setattr (self, key, item)
+	    else:
+		setattr (self, key, value)
+	del self.__dict__['__undodata']
+
+    def __save_undo_data (self):
+	if len (self.__dict__['__presentation']) == 0:
+	    # Create __undodata, so we can undo the element's state
+	    undodata = { }
+	    for key in self.__dict__.keys():
+		if not key.startswith('__'):
+		    #print 'Preserving value for', key
+		    value = self.__dict__[key]
+		    if isinstance (value, Sequence):
+			undodata[key] = copy.copy (value.list)
 		    else:
-			setattr (self, key, value)
-		del self.__dict__['__undodata']
-	    self.presentation = presentation
-	    self.itemsOnUndoStack -= 1
-	    assert self.itemsOnUndoStack >= 0
-
-    def remove_presentation_undoable (self, presentation):
-	# presentation may be None
-	#print 'remove_presentation_undoable', self, presentation
-        if presentation in self.presentation:
-	    del self.presentation[presentation]
-	    self.itemsOnUndoStack += 1
-	    if len (self.presentation) == 0:
-		# Remove yourself from the 'elements' hash
-		self.__emit ('__hide__')
-		# Create __undodata, so we can undo the element's state
-		undodata = { }
-		for key in self.__dict__.keys():
-		    if key not in ( 'presentation', 'itemsOnUndoStack', \
-				    '__signal', '__id', '__undodata' ):
-			#print 'Preserving value for', key
-			value = self.__dict__[key]
-			if isinstance (value, Sequence):
-			    undodata[key] = copy.copy (value.list)
-			else:
-			    undodata[key] = value
-		self.__unlink ()
-		self.__dict__['__undodata'] = undodata
-
-    def add_undoability (self):
-	#print 'add_undoability', self
-	self.itemsOnUndoStack += 1
-
-    def remove_undoability (self):
-	#print 'remove_undoability', self
-	if not self.__dict__.has_key ('itemsOnUndoStack'):
-	    return
-        self.itemsOnUndoStack -= 1
-	assert self.itemsOnUndoStack >= 0
-	if len (self.presentation) == 0 and self.itemsOnUndoStack == 0:
-	    print self, ' No more presentations: unlinking...'
-	    self.unlink()
+			undodata[key] = value
+	    self.__dict__['__undodata'] = undodata
 
     def __get_attr_info(self, key, klass):
         '''Find the record for 'key' in the <class>._attrdef map.'''

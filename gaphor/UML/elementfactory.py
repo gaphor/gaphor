@@ -12,12 +12,13 @@ from misc import Singleton, Signal
 
 class ElementFactory(Singleton):
 
-    def __unlink_signal (self, key, obj):
-	if (key == '__unlink__' or key == '__hide__') \
-		and self.__elements.has_key(obj.id):
+    def __element_signal (self, key, obj):
+	if key == '__unlink__' and self.__elements.has_key(obj.id):
+	    print 'Unlinking element', obj
 	    del self.__elements[obj.id]
 	    self.__emit_remove (obj)
-	elif key == '__show__' and not self.__elements.has_key(obj.id):
+	elif key == '__relink__' and not self.__elements.has_key(obj.id):
+	    print 'Relinking element', obj
 	    self.__elements[obj.id] = obj
 	    self.__emit_create (obj)
 
@@ -30,7 +31,7 @@ class ElementFactory(Singleton):
         obj = type(self.__index)
 	self.__elements[self.__index] = obj
 	self.__index += 1
-	obj.connect (self.__unlink_signal, obj)
+	obj.connect (self.__element_signal, obj)
 	self.__emit_create (obj)
 	return obj
 

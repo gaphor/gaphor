@@ -20,7 +20,6 @@ __author__ = 'Arjan J. Molenaar'
 __date__ = '$date$'
 
 
-
 class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 #    __metaclass__ = MetaItem
     __gproperties__ = {
@@ -36,7 +35,7 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	self.__gobject_init__()
 	self.subject = None
 	self.auto_resize = 0
-	self.connect ('notify::parent', self.on_parent_notify)
+	self.connect ('notify::parent', ModelElement.on_parent_notify)
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'subject':
@@ -44,9 +43,13 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	    self.preserve_property('subject')
 	    if value != self.subject:
 		if self.subject:
+		    self.subject.remove_presentation(self)
 		    self.subject.disconnect(self.on_subject_update)
-		value.connect(self.on_subject_update)
 		self.subject = value
+		if value:
+		    value.connect(self.on_subject_update)
+		    print 'do_set_property', self
+		    value.add_presentation(self)
 
 	elif pspec.name == 'auto_resize':
 	    self.auto_resize = value
@@ -71,18 +74,21 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
     def on_disconnect_handle (self, handle):
 	return dia.CanvasElement.on_disconnect_handle (self, handle)
 
-    def on_parent_notify (self):
-        if self.parent:
-	    print 'Have Parent'
-	    self.subject.undo_presentation (self)
-	else:
-	    print 'No parent...'
-	    self.subject.remove_presentation_undoable (self)
+    def on_parent_notify (self, parent):
+	print self
+	if self.subject:
+	    if self.parent:
+		print 'Have Parent', self, parent
+		self.subject.add_presentation (self)
+	    else:
+		print 'No parent...', self, parent
+		self.subject.remove_presentation (self)
 
     def on_subject_update (self, name):
 	if name == '__unlink__':
-	    self.set_property ('subject', None)
-	    self.set_property ('parent', None)
+	    #self.set_property('subject', None)
+	    if self.parent:
+		    self.parent.remove(self)
 	else:
 	    print 'ModelElement: unhandled signal "%s"' % str(name)
 
