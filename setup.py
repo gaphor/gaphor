@@ -8,7 +8,7 @@
 
 MAJOR_VERSION = 0
 MINOR_VERSION = 3
-MICRO_VERSION = 0
+MICRO_VERSION = 1
 
 VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 
@@ -348,11 +348,7 @@ setup(name='gaphor',
       ],
       ext_modules=ext_modules,
       # data files are relative to <prefix>/share/gaphor (see setup.cfg)
-      data_files=[('', ['data/gaphor-main-ui.xml',
-                        'data/gaphor-diagram-ui.xml',
-                        'data/gaphor-editor-ui.xml',
-                        'data/gaphor.dtd']),
-                  ('pixmaps', glob('data/pixmaps/*.png'))
+      data_files=[('pixmaps', glob('data/pixmaps/*.png'),)
       ],
       scripts=['bin/gaphor'],
 
