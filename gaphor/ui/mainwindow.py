@@ -213,7 +213,7 @@ class MainWindow(AbstractWindow):
         self.view = view
 
         self._construct_window(name='main',
-                               title='Gaphor v' + gaphor.resource('Version'),
+                               title='Gaphor',
                                size=(760, 580),
                                contents=paned)
                                #contents=scrolled_window)
