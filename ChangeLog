@@ -1,3 +1,13 @@
+2004-09-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/itemtool.py, itemactions.py, nameditem.py:
+	Added compatibility layer for Diacanvas 0.13.0.
+
+2004-09-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/plugins/pynsource: created nice Dialog for loading files
+	* data/plugins/liveobjectbrowser: Use AbstractWindow as mediator
+
 2004-09-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* data/plugins/diagramlayout: new plugin, layout elements in a diagram
