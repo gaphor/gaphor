@@ -22,6 +22,7 @@ import xml.dom.minidom as dom
 import string
 import gtk
 import gc
+import copy
 
 NS=None
 ELEMENT='Element'
@@ -118,6 +119,7 @@ def _load (doc, factory):
 	id = node.getAttribute(ID)
 	# Fallback for old gaphor models:
 	if not id and version == '1.0':
+	    #log.debug ('Fall back to 1.0 cid property...')
 	    id = node.getAttribute('cid')
 	return id
 
@@ -128,7 +130,8 @@ def _load (doc, factory):
 		id = get_id(child) #child.getAttribute(ID)
 		cls = getattr(diagram, type)
 		child_item = cls()
-		child_item.set_property('id', id)
+		child_item.set_property('id', copy.copy(id))
+		print 'Setting property __id for', child_item, child_item.get_property('id')
 		id2element[id] = child_item
 		child_item.set_property('parent', item)
 		load_canvas_items(child, child_item)
@@ -225,6 +228,15 @@ def _load (doc, factory):
 
     for node, element in diagrams:
 	postload_node(node, element)
+
+    gc.collect()
+    for id, item in id2element.items():
+	if isinstance(item, UML.Element):
+	    if item.id != id:
+	    	log.error('Invalid id for element %s (%s)' % (item, id))
+	elif isinstance(item, diacanvas.CanvasItem):
+	    if item.get_property('id') != id:
+	    	log.error('Invalid id for item %s (%s)' % (item, id))
 
 def load (filename):
     '''Load a file and create a model if possible.

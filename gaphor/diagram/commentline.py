@@ -1,5 +1,8 @@
 '''
 CommentLine -- A line that connects a comment to another model element.
+
+TODO: Why do we lose the __id property when we do a get_property after a model
+has been loaded. It works okay when creating new items.
 '''
 # vim:sw=4
 
@@ -17,7 +20,7 @@ class CommentLineItem(diacanvas.CanvasLine):
 			'color', 'cap', 'join', 'orthogonal', 'horizontal' ]
     def __init__(self):
 	self.__gobject_init__()
-	self.__id = -1
+	self.__id = None
 	self.set_property('dash', (7.0, 5.0))
 
     def save (self, save_func):
@@ -59,13 +62,18 @@ class CommentLineItem(diacanvas.CanvasLine):
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
-	    #print self, 'id', value
 	    self.__id = value
+	    #print self, '__id', self.__dict__
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
     def do_get_property(self, pspec):
 	if pspec.name == 'id':
+	    #print self, 'get_property(id)', self.__dict__
+	    if not hasattr(self, '_CommentLineItem__id'):
+		log.warning('No ID found, generating a new one...')
+		import gaphor.misc.uniqueid as uniqueid
+		self.__id = uniqueid.generate_id()
 	    return self.__id
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name

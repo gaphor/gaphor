@@ -49,6 +49,8 @@ class AbstractWindow(object):
 	self.__ui_component.set_status(message or ' ')
 
     def set_capability(self, capability, active):
+	"""Set a capabiliti active or inactive. This will cause menu items
+	to become (in)sensitive."""
 	if active and capability not in self.__capabilities:
 	    #log.debug('set capability %s' % capability)
 	    self.__capabilities.append(capability)
@@ -71,6 +73,7 @@ class AbstractWindow(object):
 	self.__signal.connect(signal_func, *data)
 
     def disconnect(self, signal_func):
+	"""Disconnect a previously connected signal handler."""
 	self.__signal.disconnect(signal_func)
 
 
@@ -88,7 +91,13 @@ class AbstractWindow(object):
 	return True
 
     def _construct_window(self, name, title, size, contents, params):
-	"""Construct a BonoboWindow."""
+	"""Construct a BonoboWindow.
+	
+	Name is the window's name. Title is the title of the window. Size
+	is a tuple (x, y) which gives a requested size for the window.
+	Contents is a widget that holds the contents of the window. Params
+	is a dictionary of parameter:value pairs which are passed to the
+	commands after creation."""
 	self._check_state(AbstractWindow.STATE_INIT)
 	self.__name = name
 	window = bonobo.ui.Window ('gaphor.' + name, title)
@@ -130,19 +139,32 @@ class AbstractWindow(object):
 	self.__window = window
 	self.__ui_component = ui_component
 
-    def _construct_popup_menu(self, name, element, event, params):
+    def _construct_popup_menu(self, name, elements, event, params):
+	"""Create a popup menu.
+	
+	Name is the name of the popup menu in the Bonobo UI xml file.
+	Element is a list of objects for which menu items should be created
+	(as defined in the 'subject' attribute of CommandInfo).
+	Event is the event that causes the popup menu (such as a button press)
+	Params is a dictionary of parameter:value pairs which are passed to the
+	commands after creation."""
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	context = self.__name + '.popup'
 	command_registry = GaphorResource(CommandRegistry)
 	verbs = command_registry.get_verbs(context, params)
 	self.__ui_component.add_verb_list (verbs, None)
-	
 	for cmd, klass in command_registry.get_subjects(context):
-	    log.debug ('%s: %s' % (cmd, klass))
+	    #log.debug ('%s: %s' % (cmd, klass))
+	    hidden = '1'
+	    for e in elements:
+		if isinstance(e, klass):
+		    hidden = '0'
+		    break
 	    self.__ui_component.set_prop('/commands/' + cmd,
-					 'hidden',
-					 isinstance (element, klass) and '0' or '1')
-	log.debug ('done')
+					 'hidden', hidden)
+					 #filter (lambda e: isinstance (e, klass), elements) and '0' or '1')
+					 #isinstance (element, klass) and '0' or '1')
+	#log.debug ('done')
 	menu = gtk.Menu()
 	# The window takes care of destroying the old menu, if any...
 	self.__window.add_popup(menu, '/popups/' + name)
@@ -163,7 +185,7 @@ class AbstractWindow(object):
 	if self.__state == AbstractWindow.STATE_ACTIVE:
 	    command_registry = GaphorResource(CommandRegistry)
 	    self_caps = self.__capabilities
-	    log.debug('Capabilities are %s' % self_caps)
+	    #log.debug('Capabilities are %s' % self_caps)
 	    for name, type, caps in command_registry.get_capabilities(self.__name + '.'):
 		#log.debug('Checking caps for %s %s' % (name, caps))
 		for c in caps:

@@ -195,7 +195,6 @@ class SnapToGridCommand(Command):
 	self._view = params['window'].get_view()
 
     def execute(self):
-	#log.debug('Snap to grid set to %d' % self._view.canvas.get_property('snap_to_grid'))
 	snap = self._view.canvas.get_property ('snap_to_grid')
 	self._view.canvas.set_property ('snap_to_grid', not snap)
 	#log.debug('Snap to grid set to %d' % self._view.canvas.get_property('snap_to_grid'))

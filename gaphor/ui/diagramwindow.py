@@ -105,8 +105,15 @@ class DiagramWindow(AbstractWindow):
 	# handle mouse button 3 (popup menu):
 	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
 	    view.canvas.push_undo(None)
+	    elements = list()
+	    vitem = view.focus_item
+	    while vitem.has_focus():
+		if hasattr(vitem.item, 'subject'):
+		    elements.append(vitem.item.subject)
+		vitem = vitem.get_property('parent')
 	    self._construct_popup_menu(name='DiagramView',
-				       element=view.focus_item and view.focus_item.item.subject or None,
+				       #element=view.focus_item and view.focus_item.item.subject or None,
+				       elements=elements,
 				       event=event,
 				       params={ 'window': self })
 	    view.stop_emission('event')
@@ -126,7 +133,7 @@ class DiagramWindow(AbstractWindow):
 	self.set_capability('redo', canvas.get_redo_depth() > 0)
 
     def __on_diagram_notify_snap_to_grid(self, canvas, pspec):
-	log.debug('notify:snap_to_grid = %d' % canvas.get_property('snap_to_grid'))
+	#log.debug('notify:snap_to_grid = %d' % canvas.get_property('snap_to_grid'))
 	
 	self.set_capability('snap_to_grid', canvas.get_property('snap_to_grid'))
 

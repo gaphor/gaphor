@@ -49,7 +49,7 @@ class FeatureItem(CanvasText, DiagramItem):
 #	if pspec.name == 'id':
 #	    self.__id = value
 	if pspec.name == 'subject':
-	    print 'Setting subject:', value
+	    #print 'Setting subject:', value
 	    self._set_subject(value)
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name

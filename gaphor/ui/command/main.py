@@ -32,6 +32,7 @@ class NewCommand(Command):
 	diagram.namespace = model
 	diagram.name='main'
 	self._window.set_filename(None)
+	self._window.set_message('Created a new model')
 
 CommandInfo (name='FileNew', _label='_New', pixname='New',
 	     _tip='Create a new Gaphor project',
@@ -63,6 +64,7 @@ class OpenCommand(Command):
 		    import gaphor.storage as storage
 		    storage.load(filename)
 		    self._window.set_filename(filename)
+		    self._window.set_message('File %s loaded successfully' % filename)
 		except Exception, e:
 		    import traceback
 		    log.error('Error while loading model from file %s: %s' % (filename, e))
@@ -97,6 +99,7 @@ class SaveCommand(Command):
 		import gaphor.storage as storage
 		storage.save(filename)
 		self._window.set_filename(filename)
+		self._window.set_message('Model saved to %s' % filename)
 	    except Exception, e:
 		log.error('Failed to save to file %s: %s' % (filename, e))
 		traceback.print_exc()

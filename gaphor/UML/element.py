@@ -216,6 +216,9 @@ The signals protocol is:
     def __set(self, key, obj):
 	old_value = None
 	if self.__dict__.has_key(key):
+	    # quit if the object is already set:
+	    if self.__dict__[key] is obj:
+		return
 	    old_value = self.__dict__[key]
 	self.__dict__[key] = obj
 	self.__queue(key, old_value, obj)
@@ -232,6 +235,9 @@ The signals protocol is:
 	if not self.__dict__.has_key(key):
 	    info = self.__get_attr_info(key, self.__class__)
 	    self.__dict__[key] = Sequence(self, info[1])
+	elif obj in self.__dict__[key]:
+	    # Return if the object is already in the sequence:
+	    return
 	seq = self.__dict__[key]
 	self.__real_sequence_add(key, seq, obj)
 

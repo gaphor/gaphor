@@ -1,5 +1,5 @@
 '''
-CommentLine -- A line that connects a comment to another model element.
+Generalization -- 
 '''
 # vim:sw=4
 

@@ -95,7 +95,7 @@ class MainWindow(AbstractWindow):
 	    element = model.get_value(iter, 0)
 	    path = model.get_path(element)
 	    self._construct_popup_menu(name='NamespaceView',
-				       element=element,
+				       elements=[element],
 				       event=event,
 				       params={ 'window': self,
 					        'element': element,

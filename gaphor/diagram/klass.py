@@ -40,9 +40,12 @@ class ClassItem(ModelElementItem):
 	self.__name.set(height=h)
 	self.__name.connect('text_changed', self.on_text_changed)
 
-	# list of features:
-	self.__attributes = list()
-	self.__operations = list()
+	# list of features, both attributes and operations:
+	self.__features = list()
+	# For now, we have two defined compartments, one for attributes and
+	# one for operations.
+	self.__compartments = (lambda e: e.subject.isKindOf(UML.Attribute),
+			       lambda e: e.subject.isKindOf(UML.Operation))
 
     def _set_subject(self, subject):
 	ModelElementItem._set_subject(self, subject)
@@ -54,85 +57,80 @@ class ClassItem(ModelElementItem):
     def _add_feature(self, feature):
 	"""Add a feature. The feature may be of class Attribute or
 	Operation."""
+	try:
+	    log.debug('Adding feature for class %s: %s' % (self.subject.name, feature.name))
+	except:
+	    pass
+	# We have to ensure an item has not yet been added for the feature,
+	# somehow featureItems doubled when loaded from a file...
+	for f in self.__features:
+	    if f.subject is feature:
+		return
 	item = FeatureItem()
 	item.set_property('subject', feature)
-	item.set_property('parent', self)
+	self.add(item)
 	item.focus()
-	log.debug('Feature added: %s' % item)
 
     def _remove_feature(self, feature):
 	"""Remove a feature (Attribute or Operation)."""
-	log.debug('Feature removing: %s' % item)
-	for a in self.__attributes:
-	    if a.subject is feature:
-		self.remove(a)
-		return True
-	for o in self.__operations:
-	    if o.subject is feature:
-		self.remove(o)
+	try:
+	    log.debug('Removing feature for class %s: %s' % (self.subject.name, feature.name))
+	except:
+	    pass
+	for f in self.__features:
+	    if f.subject is feature:
+		self.remove(f)
 		return True
 	
+    def __update_features(self, features, y):
+	"""Update a list of features (attributes or operations) and return
+	the max width and the new y coordinate."""
+	pass
+
     def on_update(self, affine):
 	"""Overrides update callback."""
 	width=0 #self.width
 	height=ClassItem.HEAD_MARGIN_Y
-	
+	sep_y = list()
+
 	# Update class name
 	layout = self.__name.get_property('layout')
-	#layout.set_width(-1)
 	w, h = layout.get_pixel_size()
 	a = self.__name.get_property('affine')
 	height += h
-	aa = (a[0], a[1], a[2], a[3], a[4], height / 2)
-	# aa = a[0:4] + (height /2,) seems to crash...
-	self.__name.set(affine=aa, height=h)
+	a = (a[0], a[1], a[2], a[3], a[4], height / 2)
+	self.__name.set(affine=a, height=h)
 	
-	width = max(width, w + ClassItem.HEAD_MARGIN_X)
-	attr_sep_y = height
-	height += ClassItem.COMP_MARGIN_Y
+	width = w + ClassItem.HEAD_MARGIN_X
 
-	# handle attributes:
-	for attr in self.__attributes:
-	    layout = attr.get_property('layout')
-	    layout.set_width(-1)
-	    w, h = layout.get_pixel_size()
-	    a = attr.get_property('affine')
-	    aa = (a[0], a[1], a[2], a[3], ClassItem.COMP_MARGIN_X, height)
-	    height += h
-	    #aa = a[0:4] + (height,)
-	    attr.set(affine=aa, height=h, width=w)
-	    width = max(width, w + 2 * ClassItem.COMP_MARGIN_X)
-
-	height += ClassItem.COMP_MARGIN_Y
-	oper_sep_y = height
-	height += ClassItem.COMP_MARGIN_Y
-
-	# handle operations:
-	for oper in self.__operations:
-	    layout = oper.get_property('layout')
-	    layout.set_width(-1)
-	    w, h = layout.get_pixel_size()
-	    a = oper.get_property('affine')
-	    aa = (a[0], a[1], a[2], a[3], ClassItem.COMP_MARGIN_X, height)
-	    height += h
-#	    aa = a[0:4] + (height,)
-	    oper.set(affine=aa, height=h, width=w)
-	    width = max(width, w + 2 * ClassItem.COMP_MARGIN_X)
+	# Update feature list
+	for comp_func in self.__compartments:
+	    sep_y.append(height)
+	    height += ClassItem.COMP_MARGIN_Y
+	    for f in filter(comp_func, self.__features):
+		layout = f.get_property('layout')
+		w, h = layout.get_pixel_size()
+		a = f.get_property('affine')
+		a = (a[0], a[1], a[2], a[3], ClassItem.COMP_MARGIN_X, height)
+		height += h
+		f.set(affine=a, height=h, width=w)
+		width = max(width, w + 2 * ClassItem.COMP_MARGIN_X)
 
 	height += ClassItem.COMP_MARGIN_Y
+
+	self.set(min_width=width, min_height=height)
+
 	width = max(width, self.width)
+	height = max(height, self.height)
 
 	# We know the width of all text components and set it:
 	self.__name.set(width=width)
-	self.set(min_width=width, min_height=height)
 	self.update_child(self.__name, affine)
-	for attr in self.__attributes:
-	    self.update_child(attr, affine)
-	for oper in self.__operations:
-	    self.update_child(oper, affine)
+	for f in self.__features:
+	    self.update_child(f, affine)
 	ModelElementItem.on_update(self, affine)
-	self.__attr_sep.line(((0, attr_sep_y), (width, attr_sep_y)))
-	self.__oper_sep.line(((0, oper_sep_y), (width, oper_sep_y)))
+	self.__attr_sep.line(((0, sep_y[0]), (width, sep_y[0])))
+	self.__oper_sep.line(((0, sep_y[1]), (width, sep_y[1])))
 	self.__border.rectangle((0,0),(width, height))
 	self.expand_bounds(1.0)
 
@@ -161,26 +159,22 @@ class ClassItem(ModelElementItem):
 
     def on_groupable_add(self, item):
 	"""Add an attribute or operation."""
-	if isinstance(item.subject, UML.Attribute):
-	    self.__attributes.append(item)
-	    item.focus()
+	if isinstance(item.subject, UML.Feature):
+	    log.debug('Adding feature %s' % item)
+	    self.__features.append(item)
 	    return 1
-	elif isinstance(item.subject, UML.Operation):
-	    self.__operations.append(item)
-	    item.focus()
-	    return 1
+	else:
+	    log.warning('feature %s is not a Feature' % item)
 	return 0
 
     def on_groupable_remove(self, item):
 	"""Remove a feature subitem."""
-	if item in self.__attributes:
-	    self.__attributes.remove(item)
-	    log.debug('Attribute removed: %s' % item)
+	if item in self.__features:
+	    self.__features.remove(item)
+	    log.debug('Feature removed: %s' % item)
 	    return 1
-	elif item in self.__operations:
-	    self.__operations.remove(item)
-	    log.debug('Operation removed: %s' % item)
-	    return 1
+	else:
+	    log.warning('feature %s not found in feature list' % item)
 	return 0
 
     def on_groupable_get_iter(self):
@@ -189,16 +183,12 @@ class ClassItem(ModelElementItem):
     def on_groupable_next(self, iter):
 	"""Iterate over the class' name, its attributes and the operations."""
 	if iter is self.__name:
-	    if self.__attributes:
-		return self.__attributes[0]
-	    elif self.__operations:
-		return self.__operations[0]
-	elif iter in self.__attributes and not iter is self.__attributes[-1]:
-	    return self.__attributes[self.__attributes.index(iter) + 1]
-	elif iter is self.__attributes[-1] and self.__operations:
-	    return self.__operations[0]
-	elif iter in self.__operations and not iter is self.__operations[-1]:
-	    return self.__operations[self.__operations.index(iter) + 1]
+	    if self.__features:
+		return self.__features[0]
+	    else:
+		return None
+	elif iter in self.__features and not iter is self.__features[-1]:
+	    return self.__features[self.__features.index(iter) + 1]
 	else:
 	    return None
 
@@ -206,32 +196,28 @@ class ClassItem(ModelElementItem):
 	return iter
 
     def on_groupable_length(self):
-	return 1 + len(self.__attributes) + len(self.__operations)
+	return 1 + len(self.__features)
 
     def on_groupable_pos(self, item):
 	if item == self.__name:
 	    return 0
-	elif item in self.__attributes:
-	    return self.__attributes.index(item) + 1
-	elif item in self.__operations:
-	    return self.__operations.index(item) + len(self.__attributes) + 1
+	elif item in self.__features:
+	    return 1 + self.__features.index(item)
 	else:
 	    return -1
 
     def on_subject_update(self, name, old_value, new_value):
 	"""Update self when the subject changes."""
 	if name == '__unlink__':
-	    for a in self.__attributes + self.__operations:
-		self.remove(a)
-		#a.set_property('subject', None)
-	    assert len(self.__attributes) == 0
-	    assert len(self.__operations) == 0
+	    for f in self.__features:
+		f.set_subject(None)
+	    #assert len(self.__features) == 0, '%d features still exist' % len(self.__features)
 	    ModelElementItem.on_subject_update(self, name, old_value, new_value)
 	elif name == 'name':
 	    self.__name.set(text=self.subject.name)
 	elif name == 'feature' and (self.canvas and not self.canvas.in_undo):
 	    # Only hande the feature if we're part of a diagram
-	    log.debug('New feature: %s' % str(new_value))
+	    log.debug('on_subject_update(%s, %s)' % (old_value, new_value))
 	    if old_value == 'add':
 		self._add_feature(new_value)
 	    elif old_value == 'remove':

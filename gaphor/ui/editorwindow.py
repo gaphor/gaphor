@@ -37,7 +37,8 @@ class EditorWindow(AbstractWindow):
 	    'ui': gaphor.ui,
 	    'misc': gaphor.misc,
 	    'diagram': gaphor.diagram,
-	    'element_factory': GaphorResource('ElementFactory')
+	    'element_factory': GaphorResource('ElementFactory'),
+	    'clear': self.clear_results
 	}
 
     def get_source_text_view(self):

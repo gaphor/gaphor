@@ -20,10 +20,10 @@ class Signal:
         self.__signals = [ ]
 	self.__queue = [ ]
 
-    def __signal_handler_destroyed(self, ref):
-	print '__signal_handler_destroyed'
-	self.__signals = filter (lambda o: o[0] != ref,
-				 self.__signals)
+#    def __signal_handler_destroyed(self, ref):
+#	print '__signal_handler_destroyed'
+#	self.__signals = filter (lambda o: o[0] != ref,
+#				 self.__signals)
 	
     def connect (self, signal_handler, *data):
 	"""
