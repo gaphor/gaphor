@@ -9,14 +9,14 @@ import gaphor.UML as UML
 import diacanvas
 import gobject
 import pango
-from text import Text
+#from text import Text
 
 class ClassItem(ModelElementItem):
     HEAD_MARGIN_X=60
     HEAD_MARGIN_Y=30
     NAME_FONT='sans bold 10'
-    COMP_MARGIN_X=10
-    COMP_MARGIN_Y=10
+    COMP_MARGIN_X=5
+    COMP_MARGIN_Y=5
 
     def __init__(self):
 	ModelElementItem.__init__(self)
@@ -27,8 +27,8 @@ class ClassItem(ModelElementItem):
 	self.__oper_sep.set_line_width(2.0)
 	self.__border = diacanvas.shape.Path()
 	self.__border.set_line_width(2.0)
-	#self.__name = diacanvas.CanvasText()
-	self.__name = Text()
+	self.__name = diacanvas.CanvasText()
+	#self.__name = Text()
 	self.add_construction(self.__name)
 	assert self.__name != None
 	font = pango.FontDescription(ClassItem.NAME_FONT)

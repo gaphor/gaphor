@@ -49,6 +49,8 @@
     -->
 	<submenu name="Window" _label="_Window">
 	    <menuitem name="OpenEditorWindow" verb=""/>
+	    <separator/>
+	    <menuitem name="BonoboCustomize" verb="" _label="Customi_ze"/>
 	    <placeholder name="OpenWindows"/>
 	    <separator/>
 	    <menuitem name="WindowClose" verb=""/>

@@ -11,15 +11,23 @@ class _CommandExecuter(object):
     """
     def __init__(self, command):
 	self.command = command
+	self.executing = 0
 
-    def __call__(self, uic, verbname):
-	try:
-	    self.command.execute()
-	except Exception, e:
-	    # TODO: create a warning dialog or something
-	    log.warning('Command execution failed: %s' % e)
-	    import traceback
-	    traceback.print_exc()
+    def __call__(self, *args):
+	print 'CommandExecuter.__call__:', args
+	if not self.executing:
+	    self.executing = 1
+	    try:
+		self.command.execute()
+	    except Exception, e:
+		# TODO: create a warning dialog or something
+		log.warning('Command execution failed: %s' % e)
+		import traceback
+		traceback.print_exc()
+	    self.executing = 0
+	else:
+	    log.warning('Cyclic command execution for %s' % self.command)
+
 
 class CommandRegistry(object):
     """
@@ -31,46 +39,72 @@ class CommandRegistry(object):
 	self.__registry = dict()
 
     def register(self, command_info):
-	self.__registry[command_info.context + '.' + command_info.name] = command_info
+	if self.__registry.has_key(command_info.context):
+	    self.__registry[command_info.context].append(command_info)
+	else:
+	    self.__registry[command_info.context] = [ command_info ]
 
-    def lookup(self, name):
-	if self.__registry.has_key(name):
-	    return self.__registry[name]
+    def lookup(self, context, name):
+	if self.__registry.has_key(context):
+	    for ci in self.__registry[context]:
+		if ci.name == name:
+		    return ci
+	    #return self.__registry[name]
 	
-    def values(self):
-	return self.__registry.values()
-
-    def create_command(self, name):
-	cmd_info = self.lookup(name)
+    def get_command(self, context, name):
+	"""Create a command based on a context and the commands name."""
+	cmd_info = self.lookup(context, name)
 	if cmd_info and cmd_info.command_class:
 	    return cmd_info.command_class()
 
-    def create_command_xml(self, context):
+    def get_command_xml(self, context):
+	"""Create a BonoboUI commands XML statement."""
 	xml = '<commands>'
-	for info in self.values():
-	    if info.context.startswith(context):
-		xml += info.create_cmd_xml()
+	for ctx, infos in self.__registry.items():
+	    if ctx.startswith(context):
+		for info in infos:
+		    xml += info.create_cmd_xml()
 	xml += '</commands>'
 	return xml
 
-    def create_verbs(self, context, params):
-	"""
-	Create a list of verbs. params is a dictionary of parameters that is
-	be supplied to the command in order to instantiate it.
-	"""
+    def get_capabilities(self, context):
+	"""Get all names of commands within a context and their capabilities
+	in a list of (name, type, capabilities). Type if one of 'state' or
+	'sensitive'."""
+	names = list()
+	for ctx, infos in self.__registry.items():
+	    if ctx.startswith(context):
+		for info in infos:
+		    if info.sensitive:
+			names.append((info.name, 'sensitive', info.sensitive))
+		    if info.state:
+			names.append((info.name, 'state', info.state))
+	return names
+
+    def get_verbs(self, context, params):
+	"""Create a list of verbs and a list of listeners.
+	Verbs are used for normal menu items. Listeners for statefull menu
+	items. A dictionary of parameters can be supplied to the command
+	for instantiation.
+	This method is called by AbstractWindow to initialize the menus."""
 	verbs = list()
-	for info in self.values():
-	    if info.context.startswith(context):
-		try:
-		    cmd = info.command_class()
-		    # TODO: Add some sort of capability structure. Based on the
-		    # capabilities the parameters set is extended by things
-		    # like GaphorResources.
-		    cmd.set_parameters(params)
-		    verbs.append((info.name, _CommandExecuter(cmd)))
-		except Exception, e:
-		    print 'No verb created for ' + info.name + ':', e
-	return verbs
+	#listeners = list()
+	for ctx, infos in self.__registry.items():
+	    if ctx.startswith(context):
+		for info in infos:
+		    try:
+			cmd = info.command_class()
+			cmd.set_parameters(params)
+			verbs.append((info.name, _CommandExecuter(cmd)))
+			#if info.state:
+			#    listeners.append(v)
+			#else:
+			#    verbs.append(v)
+		    except Exception, e:
+			print 'No verb created for ' + info.name + ':', e
+			import traceback
+			traceback.print_exc()
+	return verbs # , listeners
 
 # Register the registry as application wide resource.
 GaphorResource(CommandRegistry)

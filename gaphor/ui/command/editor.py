@@ -33,7 +33,21 @@ class RunCommand(Command):
 	self._window.run()
 
 CommandInfo (name='EditorRun', _label='_Run', pixname='gtk-execute',
+	     accel='*Control*e',
 	     _tip='Execute the code',
 	     context='editor.menu',
 	     command_class=RunCommand).register()
+
+class ClearCommand(Command):
+
+    def set_parameters(self, params):
+	self._window = params['window']
+
+    def execute(self):
+	self._window.clear_results()
+
+CommandInfo (name='EditorClear', _label='_Clear', pixname='gtk-clear',
+	     _tip='Clear the lower text box',
+	     context='editor.menu',
+	     command_class=ClearCommand).register()
 

@@ -90,7 +90,7 @@ class UndoCommand(Command):
 
 CommandInfo (name='EditUndo', _label='_Undo', pixname='Undo', accel='*Control*z',
 	     _tip='Undo the most recent changes',
-	     context='diagram.menu',
+	     context='diagram.menu', sensitive=('undo',),
 	     command_class=UndoCommand).register()
 
 
@@ -104,7 +104,7 @@ class RedoCommand(Command):
 
 CommandInfo (name='EditRedo', _label='_Redo', pixname='Redo', accel='*Control*R',
 	     _tip='Redo the undone changes',
-	     context='diagram.menu',
+	     context='diagram.menu', sensitive=('redo',),
 	     command_class=RedoCommand).register()
 
 
@@ -129,7 +129,7 @@ class UnselectAllCommand(Command):
 	self._view.unselect_all()
 
 CommandInfo (name='EditUnselectAll', _label='_Clear Selection',
-	     context='diagram.menu',
+	     context='diagram.menu', sensitive=('select',),
 	     command_class=UnselectAllCommand).register()
 
 
@@ -146,6 +146,7 @@ class DeleteCommand(Command):
 
 CommandInfo (name='EditDelete', _label='_Delete', pixname='gtk-delete',
 	     context='diagram.menu', accel='*Control*d',
+	     sensitive=('select',),
 	     command_class=DeleteCommand).register()
 
 
@@ -193,14 +194,13 @@ class SnapToGridCommand(Command):
     def set_parameters(self, params):
 	self._view = params['window'].get_view()
 
-    #def get_status(self):
-	#return self._view.canvas.get_property ('snap_to_grid')
-
     def execute(self):
+	#log.debug('Snap to grid set to %d' % self._view.canvas.get_property('snap_to_grid'))
 	snap = self._view.canvas.get_property ('snap_to_grid')
 	self._view.canvas.set_property ('snap_to_grid', not snap)
+	#log.debug('Snap to grid set to %d' % self._view.canvas.get_property('snap_to_grid'))
 
 CommandInfo (name='SnapToGrid', _label='_Snap to grid',
-	     context='diagram.menu',
+	     context='diagram.menu', state=('snap_to_grid',),
 	     command_class=SnapToGridCommand).register()
 

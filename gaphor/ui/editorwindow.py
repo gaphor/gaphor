@@ -3,22 +3,42 @@
 
 import sys
 import gtk
-import bonobo.ui
-import gaphor.config as config
 from abstractwindow import AbstractWindow
+
+_WELCOME_TEXT = """Welcome in Gaphor's Editor!
+
+Here you can create small scripts.
+The following modules are already
+imported:
+gaphor - Gaphor package
+UML - UML data model (gaphor.UML)
+ui - User interface stuff (gaphor.ui)
+diagram - Diagram items (gaphor.diagram)
+misc - utility package (gaphor.misc)
+
+For convenience, the ElementFactory resource
+has been added as 'element_factory'.
+---
+"""
 
 class EditorWindow(AbstractWindow):
     
     def __init__(self):
 	AbstractWindow.__init__(self)
-
-    def get_window(self):
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-	return self.__window
-
-    def get_ui_component(self):
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-	return self.__ui_component
+	# Set up local variables for execution
+	import gaphor
+	import gaphor.UML
+	import gaphor.ui
+	import gaphor.misc
+	import gaphor.diagram
+	self.__locals = {
+	    'gaphor': gaphor,
+	    'UML': gaphor.UML,
+	    'ui': gaphor.ui,
+	    'misc': gaphor.misc,
+	    'diagram': gaphor.diagram,
+	    'element_factory': GaphorResource('ElementFactory')
+	}
 
     def get_source_text_view(self):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
@@ -29,73 +49,36 @@ class EditorWindow(AbstractWindow):
 	return self.__result
 
     def construct(self):
-	self._check_state(AbstractWindow.STATE_INIT)
-	window = bonobo.ui.Window ('gaphor.editor',
-				   'Gaphor Editor')
-
-	window.set_size_request(400, 400)
-	window.set_resizable(True)
-
-	ui_container = window.get_ui_container ()
-	ui_engine = window.get_ui_engine ()
-	ui_engine.config_set_path (config.CONFIG_PATH + '/editor')
-	ui_component = bonobo.ui.Component ('editor')
-	ui_component.set_container (ui_container.corba_objref ())
-
-	bonobo.ui.util_set_ui (ui_component, config.DATADIR,
-			       'gaphor-editor-ui.xml', config.PACKAGE_NAME)
-
-	table = gtk.Table(3,1, gtk.FALSE)
-	table.set_row_spacings (4)
-	table.set_col_spacings (4)
-
+	paned = gtk.VPaned()
+	
 	source = gtk.TextView()
 	scrolled_window = gtk.ScrolledWindow()
 	scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 	scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
 	scrolled_window.add(source)
-
-	table.attach (scrolled_window, 0, 1, 0, 1,
-		      gtk.EXPAND | gtk.FILL | gtk.SHRINK,
-		      gtk.EXPAND | gtk.FILL | gtk.SHRINK)
-
-	sep = gtk.HSeparator()
-	table.attach (source, 0, 1, 1, 2,
-		      gtk.FILL | gtk.SHRINK,
-		      gtk.FILL | gtk.SHRINK)
+	paned.pack1(scrolled_window, resize=True)
 
 	result = gtk.TextView()
+	result.set_editable(0)
+	result.set_wrap_mode(gtk.WRAP_CHAR)
 	scrolled_window = gtk.ScrolledWindow()
 	scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 	scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
 	scrolled_window.add(result)
-	table.attach (scrolled_window, 0, 1, 2, 3,
-		      gtk.EXPAND | gtk.FILL | gtk.SHRINK,
-		      gtk.EXPAND | gtk.FILL | gtk.SHRINK)
-
-	window.set_contents(table)
-
-	self.__destroy_id = window.connect('destroy', self.__on_window_destroy)
-
-	window.show_all()
-	#window.connect ('destroy', self.__destroy_event_cb)
-
+	paned.pack2(scrolled_window, resize=True)
+	tb = result.get_buffer()
+	tb.insert(tb.get_end_iter(), _WELCOME_TEXT)
+	
 	self.__source = source
 	self.__result = result
-	self.__window = window
-	self.__ui_component = ui_component
 
-	self._set_state(AbstractWindow.STATE_ACTIVE)
-
-	# Set commands:
-	command_registry = GaphorResource('CommandRegistry')
-
-	ui_component.set_translate ('/', command_registry.create_command_xml(context='editor.'))
-	verbs = command_registry.create_verbs(context='editor.menu',
-	                                      params={ 'window': self,
-					      	       'source': source,
-						       'result': result })
-	ui_component.add_verb_list (verbs, None)
+	self._construct_window(name='editor',
+			       title='Gaphor Editor',
+			       size=(400, 400),
+			       contents=paned,
+			       params={ 'window': self,
+			       		'source': source,
+					'result': result })
 
     def run(self):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
@@ -111,37 +94,26 @@ class EditorWindow(AbstractWindow):
 
 	    code = None
 	    try:
-		code = compile(text, '<input>', 'exec')
+		code = compile(text + '\n', '<input>', 'exec')
 	    except (SyntaxError, OverflowError, ValueError):
 	        print 'Error'
 	    if code:
-		exec code
+		exec code in self.__locals
 	except Exception, e:
 	    import traceback
 	    print 'ERROR: ',
 	    traceback.print_exc()
-	sys.stdout = orig_stdout
-	sys.stderr = orig_stderr
+	sys.stdout = sys.__stdout__
+	sys.stderr = sys.__stderr__
 
-    def set_message(self, message):
+    def clear_results(self):
+	"""Clear the results text buffer."""
 	self._check_state(AbstractWindow.STATE_ACTIVE)
-	self.__ui_component.set_status(message or ' ')
+	tb = self.__result.get_buffer()
+	tb.delete(tb.get_start_iter(), tb.get_end_iter())
 
-    def close(self):
-	"""Close the window."""
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-	self.__window.destroy()
-	self._set_state(AbstractWindow.STATE_CLOSED)
-
-    def __on_window_destroy(self, window):
-	"""
-	Window is destroyed. Do the same thing that would be done if
-	File->Close was pressed.
-	"""
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-	self._set_state(AbstractWindow.STATE_CLOSED)
-	del self.__window
-	del self.__ui_component
+    def _on_window_destroy(self, window):
+	AbstractWindow._on_window_destroy(self, window)
 	del self.__source
 	del self.__result
 

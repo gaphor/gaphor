@@ -1,3 +1,12 @@
+2002-12-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/abstractwindow.py: added capabilities. moved common parts
+	of diagramwindow and mainwindow here.
+	* gaphor/ui/editorwindow.py: new.
+	* gaphor/diagram/*.py: several changes. Updated code to latest
+	DiaCanvas2 code.
+	* data/gaphor-ui.xml: renamed to data/gaphor-main-ui.xml.
+
 2002-11-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/misc/uniqueid.py: use sys.platform to determine OS.

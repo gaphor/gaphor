@@ -44,7 +44,7 @@ class ActorItem(ModelElementItem):
 	self.add_construction(self.__name)
 	assert self.__name != None
 	font = pango.FontDescription(ActorItem.FONT)
-	self.__name.set(font=font,
+	self.__name.set(font=font, multiline=0,
 			alignment=pango.ALIGN_CENTER)
 	self.__name.connect('text_changed', self.on_text_changed)
 

@@ -68,6 +68,7 @@ class Diagram(Namespace):
 	Create a new canvas item on the canvas. It is created with a unique
 	ID and it is attached to the diagram's root item.
 	"""
+	assert issubclass(type, diacanvas.CanvasItem)
 	obj = type()
 	obj.set_property('id', uniqueid.generate_id())
 	obj.set_property('parent', self.canvas.root)

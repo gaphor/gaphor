@@ -21,35 +21,32 @@ class DiagramWindow(AbstractWindow):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	return self.__view;
 
-    def get_window(self):
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-	return self.__window
-
-    def get_ui_component(self):
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-	return self.__ui_component
+    def set_diagram(self, dia):
+	if self.__diagram:
+	    self.__diagram.disconnect(self.__on_diagram_event)
+	    self.__diagram.canvas.disconnect(self.__undo_id)
+	    self.__diagram.canvas.disconnect(self.__snap_to_grid_id)
+	self.__diagram = dia
+	if self.get_state() == AbstractWindow.STATE_ACTIVE:
+	    self.get_window().set_title(dia.name or 'NoName')
+	    self.__view.set_diagram(dia)
+	if dia:
+	    dia.canvas.set_property ('allow_undo', 1)
+	    dia.connect(self.__on_diagram_event)
+	    self.__undo_id = dia.canvas.connect('undo', self.__on_diagram_undo)
+	    # Why doesn't this property react?
+	    self.__snap_to_grid_id = dia.canvas.connect('notify::snap_to_grid', self.__on_diagram_notify_snap_to_grid)
+	    #dia.canvas.set_property('snap_to_grid', 1)
+	    self.__on_diagram_undo(dia.canvas)
 
     def construct(self):
 	self._check_state(AbstractWindow.STATE_INIT)
-	if self.__diagram:
-	    title = self.__diagram.name or 'NoName'
-	else:
-	    title = 'NoName'
-	window = bonobo.ui.Window ('gaphor.diagram' + str(DiagramWindow.serial),
-				   title)
+	#if self.__diagram:
+	title = self.__diagram and self.__diagram.name or 'NoName'
+	#else:
+	#    title = 'NoName'
+
 	DiagramWindow.serial += 1
-
-	window.set_size_request(400, 400)
-	window.set_resizable(True)
-
-	ui_container = window.get_ui_container ()
-	ui_engine = window.get_ui_engine ()
-	ui_engine.config_set_path (config.CONFIG_PATH + '/diagram')
-	ui_component = bonobo.ui.Component ('diagram')
-	ui_component.set_container (ui_container.corba_objref ())
-
-	bonobo.ui.util_set_ui (ui_component, config.DATADIR,
-			       'gaphor-diagram-ui.xml', config.PACKAGE_NAME)
 
 	table = gtk.Table(2,2, gtk.FALSE)
 	table.set_row_spacings (4)
@@ -63,27 +60,8 @@ class DiagramWindow(AbstractWindow):
 
 	view = DiagramView (diagram=self.__diagram)
 	view.set_scroll_region(0, 0, 600, 450)
-	# TEST
-	label = gtk.Label('Drop Here!\n')
-	#label.drag_dest_set(gtk.DEST_DEFAULT_ALL, DiagramView.DND_TARGETS,
-	view.drag_dest_set(gtk.DEST_DEFAULT_ALL, DiagramView.DND_TARGETS,
-			    gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_MOVE)
-
-	def label_drag_data_received(w, context, x, y, data, info, time):
-	    try:
-		if data and data.format == 8:
-		    print 'Received "%s" in label' % data.data
-		    context.finish(gtk.TRUE, gtk.FALSE, time)
-		else:
-		    print 'Received something in label'
-		    context.finish(gtk.FALSE, gtk.FALSE, time)
-	    except:
-	    	pass
-	#label.connect('drag_data_received', label_drag_data_received)
-	#view.connect('drag_data_received', label_drag_data_received)
 
 	frame.add (view)
-	#frame.add(label)
 	
 	sbar = gtk.VScrollbar (view.get_vadjustment())
 	table.attach (sbar, 1, 2, 0, 1, gtk.FILL,
@@ -93,69 +71,32 @@ class DiagramWindow(AbstractWindow):
 	table.attach (sbar, 0, 1, 1, 2, gtk.EXPAND | gtk.FILL | gtk.SHRINK,
 		      gtk.FILL)
 
-	window.set_contents(table)
-
-	self.__destroy_id = window.connect('destroy', self.__on_window_destroy)
 	view.connect('notify::tool', self.__on_view_notify_tool)
 	view.connect_after('event', self.__on_view_event)
-
-	window.show_all()
-	#window.connect ('destroy', self.__destroy_event_cb)
-
+	view.connect('focus_item', self.__on_view_focus_item)
+	view.connect('select_item', self.__on_view_select_item)
+	view.connect('unselect_item', self.__on_view_select_item)
 	self.__view = view
-	self.__window = window
-	self.__ui_component = ui_component
 
-	self._set_state(AbstractWindow.STATE_ACTIVE)
+	self._construct_window(name='diagram',
+			       title=title,
+			       size=(400, 400),
+			       contents=table,
+			       params={ 'window': self })
 
-	# Set commands:
-	command_registry = GaphorResource('CommandRegistry')
-
-	ui_component.set_translate ('/', command_registry.create_command_xml(context='diagram.'))
-	verbs = command_registry.create_verbs(context='diagram.menu',
-	                                      params={ 'window': self })
-	ui_component.add_verb_list (verbs, None)
-
-    def set_diagram(self, dia):
-	if self.__diagram:
-	    self.__diagram.disconnect(self.__on_diagram_event)
-	    self.__diagram.canvas.disconnect(self.__undo_id)
-	self.__diagram = dia
-	if self.get_state() == AbstractWindow.STATE_ACTIVE:
-	    self.__window.set_title(dia.name or 'NoName')
-	    self.__view.set_diagram(dia)
-	if dia:
-	    dia.canvas.set_property ("allow_undo", 1)
-	    dia.connect(self.__on_diagram_event)
-	    self.__undo_id = dia.canvas.connect("undo", self.__on_diagram_undo)
-	    self.__on_diagram_undo(dia.canvas)
-
-    def set_message(self, message):
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-	self.__ui_component.set_status(message or ' ')
-
-    def close(self):
-	"""Close the window."""
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-	self.__window.destroy()
-	self._set_state(AbstractWindow.STATE_CLOSED)
-
-    def __on_window_destroy(self, window):
+    def _on_window_destroy(self, window):
 	"""
 	Window is destroyed. Do the same thing that would be done if
 	File->Close was pressed.
 	"""
-	self._check_state(AbstractWindow.STATE_ACTIVE)
-	self._set_state(AbstractWindow.STATE_CLOSED)
+	AbstractWindow._on_window_destroy(self, window)
 	self.set_diagram(None)
-	del self.__window
-	del self.__ui_component
 	del self.__view
 	del self.__diagram
 
     def __on_view_notify_tool(self, view, tool):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
-	print self, view, tool
+	#print self, view, tool
 	if not view.get_property('tool'):
 	    self.set_message('')
 
@@ -165,23 +106,33 @@ class DiagramWindow(AbstractWindow):
 	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
 	    view.canvas.push_undo(None)
 	    cmd_reg = GaphorResource('CommandRegistry')
-	    verbs = cmd_reg.create_verbs(context='diagram.popup',
-					 params={ 'window': self })
-	    self.__ui_component.add_verb_list (verbs, None)
+	    verbs = cmd_reg.get_verbs(context='diagram.popup',
+				      params={ 'window': self })
+	    self.get_ui_component().add_verb_list (verbs, None)
 	    menu = gtk.Menu()
 	    # The window takes care of destroying the old menu, if any...
-	    self.__window.add_popup(menu, '/popups/DiagramView')
+	    self.get_window().add_popup(menu, '/popups/DiagramView')
 	    menu.popup(None, None, None, event.button, 0)
 	    view.stop_emission('event')
 	    return True
 	return False
 
+    def __on_view_focus_item(self, view, focus_item):
+	#log.debug('focus_item %s %s'% (view, focus_item))
+	self.set_capability('focus', focus_item is not None)
+
+    def __on_view_select_item(self, view, select_item):
+	#log.debug('select_item %s %s %d' % (view, select_item, len(view.selected_items)))
+	self.set_capability('select', len (view.selected_items) > 0)
+
     def __on_diagram_undo(self, canvas):
-	#log.debug('Undo: %d, Redo: %d' % (canvas.get_undo_depth(), canvas.get_redo_depth()))
-	self.get_ui_component().set_prop ('/commands/EditUndo', 'sensitive', 
-				((canvas.get_undo_depth() > 0) and '1' or '0'))
-	self.get_ui_component().set_prop ('/commands/EditRedo', 'sensitive', 
-				((canvas.get_redo_depth() > 0) and '1' or '0'))
+	self.set_capability('undo', canvas.get_undo_depth() > 0)
+	self.set_capability('redo', canvas.get_redo_depth() > 0)
+
+    def __on_diagram_notify_snap_to_grid(self, canvas):
+	log.debug('notify:snap_to_grid = %d' % canvas.get_property('snap_to_grid'))
+	
+	self.set_capability('snap_to_grid', canvas.get_property('snap_to_grid'))
 
     def __on_diagram_event(self, name, old, new):
 	if name == 'name':

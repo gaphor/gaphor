@@ -2,12 +2,14 @@
 
     <menu>
 	<submenu name="File" _label="_File">
-	    <menuitem name="FileExportSVG" verb=""/>
+	    <menuitem name="EditorRun" verb=""/>
 	    <separator/>
 	    <menuitem name="FileClose" verb=""/>
 	</submenu>
 
 	<submenu name="Edit" _label="_Edit">
+	    <menuitem name="EditorClear" verb=""/>
+    <!--
 	    <menuitem name="EditUndo" verb=""/>
 	    <menuitem name="EditRedo" verb=""/>
 	    <separator/>
@@ -19,40 +21,16 @@
 	    <placeholder name="EditOps"/>
 	    <separator/>
 	    <menuitem name="EditProperties" verb="" _label="_Properties..."/>
-	</submenu>
-
-	<submenu name="View" _label="_View">
-	    <menuitem name="ViewZoomIn" verb=""/>
-	    <menuitem name="ViewZoomOut" verb=""/>
-	    <menuitem name="ViewZoom100" verb=""/>
-	    <separator/>
-	    <menuitem name="SnapToGrid" verb="" type="toggle"/>
-	</submenu>
-
-	<submenu name="Insert" _label="_Insert">
-	    <menuitem name="InsertActor" verb=""/>
-	    <menuitem name="InsertUseCase" verb=""/>
-	    <menuitem name="InsertClass" verb=""/>
-	    <menuitem name="InsertPackage" verb=""/>
-	    <menuitem name="InsertComment" verb=""/>
-	    <menuitem name="InsertCommentLine" verb=""/>
-	    <menuitem name="InsertAssociation" verb=""/>
-	    <menuitem name="InsertDependency" verb=""/>
-	    <menuitem name="InsertGeneralization" verb=""/>
+    -->
 	</submenu>
     </menu>
 
-<!--
     <dockitem name="Toolbar" _tip="Main toolbar" behavior="detachable,exclusive">
-	<toolitem name="FileNew" verb=""/>
-	<toolitem name="FileOpen" verb=""/>
-	<toolitem name="FileSave" verb=""/>
-	<toolitem name="FileSaveAs" verb=""/>
-
+	<toolitem name="EditorRun" verb="" _label="Run"/>
 	<separator/>
+	<toolitem name="EditorClear" verb=""/>
 
     </dockitem>
--->
 
     <popups>
 	<popup name="DiagramView">

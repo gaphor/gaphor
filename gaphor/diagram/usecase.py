@@ -22,7 +22,7 @@ class UseCaseItem(ModelElementItem):
 	self.add_construction(self.__name)
 	assert self.__name != None
 	font = pango.FontDescription(UseCaseItem.FONT)
-	self.__name.set(font=font, width=self.width,
+	self.__name.set(font=font, width=self.width, multiline=0,
 			alignment=pango.ALIGN_CENTER)
 	self.__name.connect('text_changed', self.on_text_changed)
 
@@ -39,7 +39,7 @@ class UseCaseItem(ModelElementItem):
 	self.set(min_width=w + UseCaseItem.MARGIN_X,
 		 min_height=h + UseCaseItem.MARGIN_Y)
 	a = self.__name.get_property('affine')
-	aa = (a[0], a[1], a[2], a[3], a[4], (self.height - h) / 2)
+	aa = (a[0], a[1], a[2], a[3], 0.0, (self.height - h) / 2)
 	self.__name.set(affine=aa, width=self.width, height=h)
 
 	self.update_child(self.__name, affine)

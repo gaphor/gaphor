@@ -1,5 +1,15 @@
 # vim: sw=4
-
+"""
+Load and save Gaphor models to Gaphors own XML format.
+Three functions are exported:
+load(filename)
+    load a model from a file
+save(filename)
+    store the current model in a file
+verify(filename)
+    check the validity of the file (this does not tell us
+    we have a valid model, just a valid file).
+"""
 # TODO: use xml.dom.minidom in stead of libxml2 (for compatibility and since libglade uses the python xml stuff too...)
 
 #import gaphor.UML as UML

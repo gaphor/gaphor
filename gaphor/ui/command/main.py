@@ -8,8 +8,7 @@ SaveAsCommand
 QuitCommand
 """
 
-from gaphor.misc.command import Command
-from commandinfo import CommandInfo
+from commandinfo import Command, CommandInfo
 import sys
 import gtk
 import gaphor.UML as UML
@@ -191,18 +190,16 @@ CommandInfo (name='CreateDiagram', _label='_New diagram', pixname='gaphor-diagra
 
 
 class OpenEditorWindowCommand(Command):
-    editor_window = None
 
     def set_parameters(self, params):
-	self.__window = params['window']
+	self._window = params['window']
 
     def execute(self):
 	from gaphor.ui import EditorWindow
 	
-	if not OpenEditorWindowCommand.editor_window:
-	    ew = OpenEditorWindowCommand.editor_window = EditorWindow()
-	    ew.construct()
-	    self.__window.add_transient_window(ew)
+	ew = EditorWindow()
+	ew.construct()
+	self._window.add_transient_window(ew)
 
 CommandInfo (name='OpenEditorWindow', _label='_Editor...', pixname='Editor',
 	     _tip='Open the Gaphor Editor',

@@ -29,7 +29,7 @@ class CreateAttributeCommand(Command):
 CommandInfo (name='CreateAttribute', _label='New _Attribute',
 	     _tip='Create a new attribute',
 	     context='diagram.popup',
-	     #features=('focus', 'Classifier'),
+	     sensitive=('focus',), popup=UML.Classifier,
 	     command_class=CreateAttributeCommand).register()
 
 class CreateOperationCommand(Command):
@@ -41,7 +41,7 @@ class CreateOperationCommand(Command):
 	fi = self._window.get_view().focus_item
 	if fi:
 	    fi = fi.item
-	    while fi.flags() & diacanvas.COMPOSITE:
+	    while (fi.flags & diacanvas.COMPOSITE) != 0:
 		fi = fi.parent
 	    subject = fi.subject
 	    assert isinstance(subject, UML.Classifier)
@@ -53,6 +53,6 @@ class CreateOperationCommand(Command):
 CommandInfo (name='CreateOperation', _label='New _Operation',
 	     _tip='Create a new operation',
 	     context='diagram.popup',
-	     #features=('focus', 'Classifier'),
+	     sensitive=('focus',), popup=UML.Classifier,
 	     command_class=CreateOperationCommand).register()
 
