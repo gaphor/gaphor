@@ -68,7 +68,11 @@ class XMIExport(Action):
                 
             attributes=XMLAttributes()
             attributes['xmi.id']=attribute.typeValue.id
-            attributes['name']=attribute.typeValue.value
+            typeName = attribute.typeValue.value
+            if not typeName:
+                print "Warning, no type name given for attribute (so no export for this one)"
+                continue
+            attributes['name']=typeName
             attributes['visibility']='public'
             attributes['isSpecification']='false'
             attributes['isRoot']='false'
@@ -152,19 +156,26 @@ class XMIExport(Action):
             attributes['isSpecification']='false'
             attributes['isNavigable']=end.class_ and 'true' or 'false'
             attributes['ordering']='unordered'
-            attributes['aggregation']=end.aggregation # TODO: Handle None?, why does ArchGenXML thinks its reversed
+            attributes['aggregation']=end.aggregation # TODO: Handle None?
             attributes['targetScope']='instance' 
             attributes['changeability']='changeable'
+            
+            name = end.name
+            if name:
+                attributes['name']=name 
+
             xmi.startElement('UML:AssociationEnd', attrs=attributes)
             xmi.startElement('UML:AssociationEnd.multiplicity', attrs=XMLAttributes())
             attributes=XMLAttributes()
-            attributes['xmi.id']=end.id
+            attributes['xmi.id']=end.id+':%s'%i # Fabricate and id
             xmi.startElement('UML:Multiplicity', attrs=attributes)
             xmi.startElement('UML:Multiplicity.range', attrs=XMLAttributes())
             attributes=XMLAttributes()
             attributes['xmi.id']=str(id(attributes)) # No id in Gaphor for this
             values=('lower','upper')
+-:1: parser error : Start tag expected, '<' not found
             for value in values:
+            ^
                 try:
                     data=getattr(end, '%sValue'%value).value
                 except AttributeError:
@@ -177,7 +188,6 @@ class XMIExport(Action):
                     data='1'
                 attributes[value]=data
                 
-            
             xmi.startElement('UML:MultiplicityRange', attrs=attributes)
             xmi.endElement('UML:MultiplicityRange')
             xmi.endElement('UML:Multiplicity.range')
