@@ -27,6 +27,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 	self.model = model;
 	# Init parent:
 	gtk.GenericTreeModel.__init__(self)
+	self.set_property ('leak_references', gtk.FALSE);
 	#self.connect ('dispose', self.__destroy)
 	# TODO: connect to 'name' and 'unlink' and 'namespace' signal from
 	#	the data objects.
@@ -35,7 +36,7 @@ class NamespaceModel(gtk.GenericTreeModel):
     def dump(self):
         '''Dump the static structure of the model to stdout.'''
 	def doit(node, depth):
-	    print '|', '   ' * depth, node.name, node
+	    print '|' + '   ' * depth + '"' + node.name + '" ' + str(node)
 	    if self.on_iter_has_child (node):
 		iter = self.on_iter_children (node)
 		while iter != None:
@@ -55,6 +56,8 @@ class NamespaceModel(gtk.GenericTreeModel):
     # the implementations for TreeModel methods are prefixed with on_
     def on_get_flags(self):
 	'''returns the GtkTreeModelFlags for this particular type of model'''
+	print '************************************************************'
+	print ' I\'m called at last!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 	return 0
 
     def on_get_n_columns(self):
@@ -79,21 +82,21 @@ class NamespaceModel(gtk.GenericTreeModel):
 	node = self.model
 	for n in path:
 	    node = node.ownedElement[n]
-	print "on_get_iter", path, node
+	#print "on_get_iter", path, node
 	return node
 
     def on_get_value(self, node, column):
 	'''returns the value stored in a particular column for the node'''
 	assert column == 0
 	assert isinstance (node, UML.Namespace)
-	print "on_get_value", node.name
+	#print "on_get_value", node.name
 	return '<<' + str(node.__class__.__name__) + '>> ' + node.name
 
     def on_iter_next(self, node):
 	'''returns the next node at this level of the tree'''
 	parent = node.namespace
 	index = parent.ownedElement.list.index (node)
-	print "on_iter_next", index
+	#print "on_iter_next", index
 	try:
 		return parent.ownedElement[index + 1]
 	except IndexError:
@@ -101,22 +104,22 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def on_iter_has_child(self, node):
 	'''returns true if this node has children'''
-	print 'on_iter_has_child'
+	#print 'on_iter_has_child', node
 	return len (node.ownedElement) > 0
 
     def on_iter_children(self, node):
 	'''returns the first child of this node'''
-	print 'on_iter_children'
+	#print 'on_iter_children'
 	return node.ownedElement[0]
 
     def on_iter_n_children(self, node):
 	'''returns the number of children of this node'''
-	print 'on_iter_n_children'
+	#print 'on_iter_n_children'
 	return len (node.ownedElement) 
 
     def on_iter_nth_child(self, node, n):
 	'''returns the nth child of this node'''
-	print "on_iter_nth_child", node, n
+	#print "on_iter_nth_child", node, n
 	if node is None:
 	    return self.model
 	try:
@@ -126,6 +129,6 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def on_iter_parent(self, node):
 	'''returns the parent of this node'''
-	print "on_iter_parent", node
+	#print "on_iter_parent", node
 	return node.namespace
 

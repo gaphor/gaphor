@@ -1,3 +1,14 @@
+2002-02-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/Element.py: Added functions add_presentation,
+	remove_presentation, remove_presentation_undo, remove_undoability
+	and undo_presentation: simple interface for adding and removing diagram
+	items from model elements.
+	* gaphor/diagram/classifier.c: Now the `namespace' attribute is removed
+	from classifiers if they have no items in the subject.presentation list.
+	* gaphor/diagram/common.c: works well with classifier stuff, implemented
+	changes in UML.Element interface.
+
 2002-01-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/Element.py: Added unlink() method. This should be called

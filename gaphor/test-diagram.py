@@ -8,6 +8,7 @@ import gtk
 import diagram
 import diacanvas
 import UML
+import tree
 
 def mainquit(*args):
     for k in UML.Element._hash.keys():
@@ -16,9 +17,15 @@ def mainquit(*args):
     gtk.main_quit()
 
 
+model = UML.Model()
+
 print "diagram creating"
 dia = diagram.Diagram()
+dia.namespace = model
 print "diagram created"
+
+treemodel = tree.NamespaceModel(model)
+
 #item = canvas.root.add (diagram.Comment)
 #item.move (30, 50)
 #item = canvas.root.add (diagram.Actor)
@@ -49,10 +56,14 @@ print "diagram displayed"
 #for k in UML.Element._hash.keys():
 #    print "Element", k, ":", UML.Element._hash[k].__dict__
 
+treemodel.dump()
+
 print 'Going into main'
 gtk.main()
 
 del win
+
+treemodel.dump()
 
 #print "Comment.ann.Elem.:", comment.annotatedElement.list
 #print "Actor.comment:", actor.comment.list

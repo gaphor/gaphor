@@ -113,26 +113,23 @@ you delete your reference. In the unlink function all relationships are removed
 except presentation, __id and __signals. Presentation items are removed by
 the diagram items that represent them (they are connected to the 'unlink'
 signal). The element will also be removed from the element_hash by unlink().
+A special attribute is added: itemsOnUndoStack. This is a counter that is used
+by the diagram item's implementation to avoid deletion (unlink()ing) of the 
+object if references are lehd by the object on the undo stack.
 '''
     _index = 1
-    _attrdef = { 'presentation': ( Sequence, types.ObjectType ) }
+    _attrdef = { 'presentation': ( Sequence, types.ObjectType ),
+    		 'itemsOnUndoStack': (0, types.IntType ) }
     _hash = { }
 
     def __init__(self):
+	print "New object of type", self.__class__
 	self.__dict__['__id'] = Element._index
 	self.__dict__['__signals'] = [ ]
 	#Element._hash[Element._index] = weakref.ref (self)
 	Element._hash[Element._index] = self
 	Element._index += 1
 
-    #def __del_(self):
-#	print 'Element.__del__'
-#        self.unlink()
-#	del self.__dict__['__signals']
-#	del self.__dict__['__id']
-#	if self.__dict__.has_key('presentation'):
-#	    del self.__dict__['presentation']
-	
     def unlink(self):
 	'''Remove all references to the object.'''
 	#print 'Element.unlink()'
@@ -152,9 +149,40 @@ signal). The element will also be removed from the element_hash by unlink().
 		    del self.__dict__[key]
 		else:
 		    # do a 'del self.key'
-		    self.__delattr__(key)
+		    if isinstance (self.__dict__[key], Element):
+			self.__delattr__(key)
     	return self
     
+    # Hooks for presentation elements to add themselves:
+    def add_presentation (self, presentation):
+        if not presentation in self.presentation:
+	    self.presentation = presentation
+
+    def remove_presentation (self, presentation):
+        if presentation in self.presentation:
+	    del self.presentation[presentation]
+	    if len (self.presentation) == 0 and self.itemsOnUndoStack == 0:
+		print self, 'No more presentations: unlinking...'
+	        self.unlink()
+
+    def undo_presentation (self, presentation):
+        if not presentation in self.presentation:
+	    self.presentation = presentation
+	    self.itemsOnUndoStack -= 1
+	    assert self.itemsOnUndoStack >= 0
+
+    def remove_presentation_undoable (self, presentation):
+        if presentation in self.presentation:
+	    del self.presentation[presentation]
+	    self.itemsOnUndoStack += 1
+
+    def remove_undoability (self):
+        self.itemsOnUndoStack -= 1
+	assert self.itemsOnUndoStack >= 0
+	if len (self.presentation) == 0 and self.itemsOnUndoStack == 0:
+	    print self, ' No more presentations: unlinking...'
+	    self.unlink()
+
     def __get_attr_info(self, key, klass):
         '''Find the record for 'key' in the <class>._attrdef map.'''
 	done = [ ]

@@ -131,19 +131,22 @@ class TreeModel(gtk.GenericTreeModel):
 	    return len(items) - 1
 	else:
 	    #print "on_iter_n_children (None)"
-	    return None
+	    return 0
 
     def on_iter_nth_child(self, node, n):
 	'''returns the nth child of this node'''
 	#print "on_iter_nth_child"
         if node == None:
+	    #print 'result =', n, self.klass._attrdef.items()[0][0]
             return (self.klass._attrdef.items()[0][0],)
         klass = self.class_from_node(node)
 	if klass.__dict__.has_key("_attrdef") and len(node) >= n:
 	    item = klass._attrdef.items()[n][0]
 	    #print "on_iter_nth_child", node, klass.__name__, item
+	    #print 'result =', n, node, item
 	    return node + (item,)
 	else:
+	    #print 'result =', n, None
 	    return None
 
     def on_iter_parent(self, node):
