@@ -151,6 +151,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         If the class itself is a metaclass, an option is added to check if the class
         exists.
         """
+        subject = self.subject
         stereotype_list = self.stereotype_list
         stereotype_list[:] = []
         if isinstance(subject, UML.Class) and subject.extension:
