@@ -71,6 +71,6 @@ class Signal:
 	    for signal in self.__signals:
 		signal_handler = signal[0]
 		data = keys + signal[1:]
-		#print 'signal:', signal_handler, data
+		print 'signal:', signal_handler
 		apply(signal_handler, data)
 

@@ -3,7 +3,7 @@
 
 import gobject
 import gtk
-import gaphor.tree.namespace as namespace
+import namespace
 
 class TreeView:
     def __init__(self, treemodel):

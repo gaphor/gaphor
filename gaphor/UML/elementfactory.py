@@ -62,6 +62,9 @@ class ElementFactory(Singleton):
 
     def flush(self):
 	'''Flush all elements in the UML.elements table.'''
+	#for key, value in self.__elements.items():
+	#    value._Element__flush()
+
 	for key, value in self.__elements.items():
 	    print 'ElementFactory: unlinking', value
 	    value.unlink()

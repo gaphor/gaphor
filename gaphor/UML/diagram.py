@@ -88,6 +88,7 @@ class Diagram(Namespace):
 	initialized). We use a transformation table here to retrieve the objects
 	and their CID. '''
 
+	Namespace.postload(self, store)
 	# All objects are loaded and the fields are properly set.
 	item_dict = store.canvas().canvas_items()
 	
@@ -99,4 +100,3 @@ class Diagram(Namespace):
 	self.canvas.update_now ()
 
 	self.canvas.set_property ("allow_undo", 1)
-

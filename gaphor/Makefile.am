@@ -1,4 +1,4 @@
-SUBDIRS = UML diagram tree command ui misc
+SUBDIRS = UML diagram tree ui misc
 
 gaphordir = $(pythondir)/$(subdir)
 

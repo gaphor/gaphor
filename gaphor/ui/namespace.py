@@ -10,6 +10,7 @@ import types
 import gaphor.UML as UML
 import sys
 import string
+from command.tree import OpenModelElementCommand
 
 class NamespaceModel(gtk.GenericTreeModel):
     """
@@ -35,10 +36,14 @@ class NamespaceModel(gtk.GenericTreeModel):
 #	    #print 'Namespace set for', obj, path
 #	    self.row_inserted(path, iter)
 	elif key == 'ownedElement' and old_value == 'add':
-	    path = self.get_path(new_value)
-	    print 'ownedElement ADD', old_value, new_value, new_value.namespace, path
-	    iter = self.get_iter(path)
-	    self.row_inserted(path, iter)
+	    def recursive_add(element):
+		path = self.get_path(element)
+		print 'ownedElement ADD', element, element.namespace, path
+		iter = self.get_iter(path)
+		self.row_inserted(path, iter)
+		for child in element.ownedElement:
+		    recursive_add(child)
+	    recursive_add(new_value)
 	elif key == 'ownedElement' and old_value == 'remove':
 	    path = self.get_path(new_value)
 	    print 'ownedElement remove', old_value, new_value, path
@@ -218,16 +223,16 @@ class NamespaceModel(gtk.GenericTreeModel):
 	#print "on_iter_parent", node
 	return node.namespace
 
-from gaphor.ui.command.tree import OpenModelElementCommand
 
 class NamespaceView(gtk.TreeView):
 
     def __init__(self, model):
-	assert isinstance (model, NamespaceModel)
+	assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
 	self.__gobject_init__()
 	gtk.TreeView.__init__(self, model)
 	self.set_property('headers-visible', 0)
 	self.connect('row_activated', NamespaceView.on_row_activated)
+	self.set_rules_hint(gtk.TRUE)
 	#self.connect('event', NamespaceView._event)
 	selection = self.get_selection()
 	selection.set_mode(gtk.SELECTION_BROWSE)
@@ -289,4 +294,5 @@ class NamespaceView(gtk.TreeView):
 	    selection = self.get_selection()
 	    selection.selected_foreach(handle_selection)
 	    
+gobject.type_register(NamespaceModel)
 gobject.type_register(NamespaceView)

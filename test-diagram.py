@@ -4,14 +4,12 @@
 #
 
 import sys
-sys.path.insert(0, '..')
-
 import gtk
-import diagram
+import gaphor.diagram as diagram
 import diacanvas
-import UML
-import tree.namespace as namespace
-import ui
+import gaphor.UML as UML
+import gaphor.ui.namespace as namespace
+import gaphor.ui as ui
 
 uc = getattr (UML, 'UseCase')
 print 'getattr (UML, "UseCase") ->', uc

@@ -6,8 +6,8 @@ import gaphor.UML as UML
 import gaphor.diagram as diagram
 from gaphor.misc.storage import Storage
 from placementtool import PlacementTool
-import gaphor.command.loadsave
-import gaphor.command.about
+import command.loadsave
+import command.about
 
 [
     FILE_LOAD,
@@ -93,8 +93,8 @@ class DiagramView:
 	self.window = win
 	self.canvasview = view
 	self.diagram = dia
-	self.save_command = gaphor.command.loadsave.SaveCommand()
-	self.load_command = gaphor.command.loadsave.LoadCommand()
+	self.save_command = command.loadsave.SaveCommand()
+	self.load_command = command.loadsave.LoadCommand()
 	
     def __menu_item_cb (self, action, widget):
 	view = self.canvasview
@@ -133,7 +133,7 @@ class DiagramView:
 	    factory = UML.ElementFactory ()
 	    factory.flush ()
 	elif action == FILE_ABOUT:
-	    gaphor.command.about.AboutCommand().execute()
+	    command.about.AboutCommand().execute()
 	elif action == FILE_QUIT:
 	    gtk.Widget.destroy (self.window)
 	    gtk.main_quit()

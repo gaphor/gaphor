@@ -1,4 +1,6 @@
 
+SUBDIRS = command
+
 uidir = $(pythondir)/$(subdir)
 
 ui_PYTHON = \
