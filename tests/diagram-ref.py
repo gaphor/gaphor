@@ -11,7 +11,7 @@ cnt=0
 def print_hash():
     global cnt
     cnt = 0
-    UML.Element_hash_gc()
+    UML.gc()
     for k in UML.Element._hash.keys():
 	#print "Element", k, ":", UML.Element._hash[k]().__dict__
         cnt += 1
@@ -46,7 +46,7 @@ assert (cnt == 2)
 
 print "Deleting created items:"
 del dia
-del item
+del item # Unreffing this one will cause a core dump
 print_hash()
 assert (cnt == 0)
 

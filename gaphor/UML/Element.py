@@ -274,13 +274,15 @@ Element._hash is a table containing all assigned objects as weak references.'''
 	    data = signal[1:]
 	    signal_func (key, *data)
 
-def Element_hash_gc():
+def update_model():
     '''Do a garbage collection on the hash table, also removing
     weak references that do not point to valid objects.'''
     gc.collect()
     for k in Element._hash.keys():
 	if Element._hash[k]() is None:
-		del Element._hash[k]
+	    del Element._hash[k]
+
+Element_hash_gc = update_model
 
 if __name__ == '__main__':
 

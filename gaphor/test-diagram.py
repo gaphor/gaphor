@@ -32,7 +32,7 @@ assert (dia in pack.ownedElement.list)
 
 del dia
 del pack
-UML.Element_hash_gc()
+UML.gc()
 for k in UML.Element._hash.keys():
     print "Element", k, ":", UML.Element._hash[k]().__dict__
 
@@ -47,6 +47,9 @@ item = dia.create_item (diagram.Actor, (150, 50))
 actor = item.get_subject()
 #actor.name = "Actor"
 item.set(name="Actor")
+
+item.test = "app";
+print item;
 
 item = dia.create_item (diagram.UseCase, (50, 150))
 usecase = item.get_subject()
@@ -81,8 +84,7 @@ print "Actor.presentation:", actor.presentation.list
 print "UseCase.presentation:", usecase.presentation.list
 print "removing diagram..."
 del dia
-gc.collect()
-UML.Element_hash_gc()
+UML.gc()
 print "Comment.presentation:", comment.presentation.list
 print "Actor.presentation:", actor.presentation.list
 print "UseCase.presentation:", usecase.presentation.list
