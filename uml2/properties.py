@@ -5,12 +5,12 @@
 The logic for creating and destroying connections between UML objects is
 implemented in Python property classes. These classes are simply instantiated
 like this:
-    class Element(BaseElement): pass
-    class Comment(BaseElement): pass
-    Element.ownedComment = association('ownedComment', Comment,
-                                       0, infinite, 'annotatedElement')
-    Element.annotatedElement = association('annotatedElement', Element,
-                                           0, infinite, 'ownedComment')
+    class Class(Element): pass
+    class Comment(Element): pass
+    Class.ownedComment = association('ownedComment', Comment,
+                                     0, '*', 'annotatedElement')
+    Comment.annotatedElement = association('annotatedElement', Element,
+                                           0, '*', 'ownedComment')
 
 Same for attributes and enumerations.
 
@@ -90,7 +90,10 @@ class attribute(umlproperty):
     def _set(self, obj, value):
         if not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % self.type.__name__
-        setattr(obj, '_' + self.name, value)
+        if value == self.default:
+            delattr(obj, '_' + self.name)
+        else:
+            setattr(obj, '_' + self.name, value)
         self.notify(obj)
 
     def _del(self, obj, value=None):
@@ -122,7 +125,10 @@ class enumeration(umlproperty):
         if not value in self.values:
             raise AttributeError, 'Value should be in %s' % str(self.values)
         if value != self._get(obj):
-            setattr(obj, '_' + self.name, value)
+            if value == self.default:
+                delattr(obj, '_' + self.name)
+            else:
+                setattr(obj, '_' + self.name, value)
             self.notify(obj)
 
     def _del(self, obj, value=None):
@@ -134,7 +140,7 @@ class association(umlproperty):
     """Association, both uni- and bi-directional.
     Element.assoc = association('assoc', Element, opposite='other')"""
 
-    def __init__(self, name, type, lower=0, upper=infinite, opposite=None):
+    def __init__(self, name, type, lower=0, upper='*', opposite=None):
         self.name = name
         self.type = type
         self.lower = lower
@@ -148,6 +154,14 @@ class association(umlproperty):
             self._get(obj).items.append(value)
         else:
             setattr(obj, '_' + self.name, value)
+
+    def __str__(self):
+        if self.lower == self.upper:
+            return '<association %s: %s[%s]>' % (self.name, self.type.__name__, self.lower)
+        else:
+            return '<association %s: %s[%s..%s]>' % (self.name, self.type.__name__, self.lower, self.upper)
+
+    __repr__ = __str__
 
     def __get__(self, obj, clazz=None):
         """Retrieve the value of the association. In case this is called
@@ -216,7 +230,10 @@ class association(umlproperty):
     def _del(self, obj, value):
         #print '_del', self, obj, value
         if self.upper > 1:
-            self._get(obj).items.remove(value)
+            items = self._get(obj).items
+            items.remove(value)
+            if not items:
+                delattr(obj, '_' + self.name)
         else:
             delattr(obj, '_' + self.name)
         value.detach(self.__on_unlink, obj, value)

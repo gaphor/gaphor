@@ -2,15 +2,15 @@
 # vim:sw=4:et
 
 from properties import *
-from baseelement import BaseElement
+from element import Element
 
 def test_associations():
     #
     # 1:-
     #
-    class A(BaseElement): pass
-    class B(BaseElement): pass
-    class C(BaseElement): pass
+    class A(Element): pass
+    class B(Element): pass
+    class C(Element): pass
 
     A.one = association('one', B, 0, 1, 'two')
     B.two = association('two', A, 0, 1)
@@ -23,9 +23,9 @@ def test_associations():
     #
     # n:-
     #
-    class A(BaseElement): pass
-    class B(BaseElement): pass
-    class C(BaseElement): pass
+    class A(Element): pass
+    class B(Element): pass
+    class C(Element): pass
 
     A.one = association('one', B, 0, infinite, 'two')
     B.two = association('two', A, 0, 1)
@@ -39,9 +39,9 @@ def test_associations():
     #
     # 1:1
     #
-    class A(BaseElement): pass
-    class B(BaseElement): pass
-    class C(BaseElement): pass
+    class A(Element): pass
+    class B(Element): pass
+    class C(Element): pass
 
     A.one = association('one', B, 0, 1, 'two')
     B.two = association('two', A, 0, 1, 'one')
@@ -79,9 +79,9 @@ def test_associations():
     #
     # 1:n
     #
-    class A(BaseElement): pass
-    class B(BaseElement): pass
-    class C(BaseElement): pass
+    class A(Element): pass
+    class B(Element): pass
+    class C(Element): pass
 
     A.one = association('one', B, 0, 1, 'two')
     B.two = association('two', A, 0, infinite, 'one')
@@ -145,9 +145,9 @@ def test_associations():
     #
     # n:n
     #
-    class A(BaseElement): pass
-    class B(BaseElement): pass
-    class C(BaseElement): pass
+    class A(Element): pass
+    class B(Element): pass
+    class C(Element): pass
 
     A.one = association('one', B, 0, infinite, 'two')
     B.two = association('two', A, 0, infinite, 'one')
@@ -201,9 +201,9 @@ def test_associations():
     #
     # unlink
     #
-    class A(BaseElement): pass
-    class B(BaseElement): pass
-    class C(BaseElement): pass
+    class A(Element): pass
+    class B(Element): pass
+    class C(Element): pass
 
     A.one = association('one', B, 0, infinite, 'two')
     B.two = association('two', A, 0, infinite)
@@ -238,7 +238,7 @@ def test_associations():
 
 def test_attributes():
     import types
-    class A(BaseElement): pass
+    class A(Element): pass
 
     A.a = attribute('a', types.StringType, 'default')
 
@@ -257,7 +257,7 @@ def test_attributes():
 
 def test_enumerations():
     import types
-    class A(BaseElement): pass
+    class A(Element): pass
 
     A.a = enumeration('a', ('one', 'two', 'three'), 'one')
     a = A()
@@ -277,7 +277,7 @@ def test_enumerations():
 
 def test_notify():
     import types
-    class A(BaseElement):
+    class A(Element):
         notified=None
         def notify(self, name):
             self.notified = name
@@ -295,11 +295,11 @@ def test_notify():
     a.enum = 'two'
     assert a.notified == 'enum'
     a.notified = None
-    a.enum = 'two' # should not notify
+    a.enum = 'two' # should not notify since value hasn't changed.
     assert a.notified == None
 
 def test_derivedunion():
-    class A(BaseElement): pass
+    class A(Element): pass
 
     A.a = association('a', A)
     A.b = association('b', A, 0, 1)
@@ -327,7 +327,7 @@ def test_derivedunion():
     assert c in a.u
     assert d in a.u
 
-    class E(BaseElement):
+    class E(Element):
         notified=False
         def notify(self, name):
             if name == 'u':
