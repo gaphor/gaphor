@@ -25,7 +25,7 @@ class Signal:
 	Connect to the object. You should provide a signal handler and a
 	bunch of parameters that should be passed to the signal handler.
 	"""
-	print 'Signal.connect():', data
+	#print 'Signal.connect():', data
 	self.__signals.append ((signal_handler,) + data)
 
     def disconnect (self, signal_handler):

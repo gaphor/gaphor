@@ -4,5 +4,5 @@
 
 import UML
 
-UML.load ('../gaphor/x.xml')
+UML.load ('../gaphor/a.xml')
 UML.save ('aa.xml')

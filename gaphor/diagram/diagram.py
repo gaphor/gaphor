@@ -31,6 +31,7 @@ class Diagram(UML.Namespace):
     def __init__(self, id):
 	UML.Namespace.__init__(self, id)
         self.canvas = diacanvas.Canvas()
+	print 'Diagram:', self.canvas
 	self.canvas.set_property ("allow_undo", 1)
 
     def create (self, type, pos=(0, 0), subject=None):
