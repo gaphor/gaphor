@@ -51,7 +51,7 @@
     <element>Diagram</element>
   </icon>
   <icon id="gaphor-extend">
-    <file>dependency24.png</file>
+    <file>extend24.png</file>
     <element>Extend</element>
   </icon>
   <icon id="gaphor-extension">
@@ -67,7 +67,7 @@
     <element>Implementation</element>
   </icon>
   <icon id="gaphor-include">
-    <file>dependency24.png</file>
+    <file>include24.png</file>
     <element>Include</element>
   </icon>
   <icon id="gaphor-initial-node">
@@ -79,7 +79,7 @@
     <element>Interface</element>
   </icon>
   <icon id="gaphor-operation">
-    <file>pointer24.png</file>
+    <file>operation24.png</file>
     <element>Operation</element>
   </icon>
   <icon id="gaphor-package">
@@ -95,7 +95,7 @@
     <element>Profile</element>
   </icon>
   <icon id="gaphor-property">
-    <file>pointer24.png</file>
+    <file>attribute24.png</file>
     <element>Property</element>
   </icon>
   <icon id="gaphor-stereotype">

@@ -17,6 +17,7 @@ import gaphor
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.misc.errorhandler import error_handler, ErrorHandlerAspect, weave_method
 from gaphor.i18n import _
 
 DEFAULT_EXT='.gaphor'
@@ -103,6 +104,7 @@ class NewAction(Action):
         self._window.select_element(diagram)
         self._window.execute_action('OpenModelElement')
 
+weave_method(NewAction.execute, ErrorHandlerAspect, message='Could not create a new model.')
 register_action(NewAction)
 
 class RevertAction(Action):
@@ -134,6 +136,7 @@ class RevertAction(Action):
             worker.wait()
             if worker.error:
                 log.error('Error while loading model from file %s: %s' % (filename, worker.error))
+                error_handler(message='Error while loading model from file %s' % filename, exc_info=worker.exc_info)
 
             self._window.set_message('Model loaded successfully')
             model = self._window.get_model()
@@ -143,12 +146,15 @@ class RevertAction(Action):
             for node in model.root[1]:
                 view.expand_row(model.path_from_element(node[0]), False)
 
-            # Restore states of actions
-            win.destroy()
         finally:
             self._window.action_pool.set_action_states(action_states)
             self._window.action_pool.update_actions()
+            try:
+                win.destroy()
+            except:
+                pass
 
+weave_method(RevertAction.execute, ErrorHandlerAspect, message='Could not load model file.')
 register_action(RevertAction)
 
 
@@ -222,22 +228,25 @@ class SaveAsAction(Action):
             queue = Queue()
             log.debug('Saving to: %s' % filename)
             win = show_status_window('Saving...', 'Saving model to %s' % filename, self._window.get_window(), queue)
-            out = open(filename, 'w')
+            try:
+                out = open(filename, 'w')
 
-            worker = GIdleThread(storage.save_generator(XMLWriter(out)), queue)
-            action_states = self._window.action_pool.get_action_states()
-            self._window.action_pool.insensivate_actions()
-            worker.start()
-            worker.wait()
-            if worker.error:
-                log.error('Error while saving model to file %s: %s' % (filename, worker.error))
-            out.close()
+                worker = GIdleThread(storage.save_generator(XMLWriter(out)), queue)
+                action_states = self._window.action_pool.get_action_states()
+                self._window.action_pool.insensivate_actions()
+                worker.start()
+                worker.wait()
+                if worker.error:
+                    log.error('Error while saving model to file %s: %s' % (filename, worker.error))
+                    error_handler(message='Error while saving model to file %s' % filename, exc_info=worker.exc_info)
+                out.close()
 
-            self._window.set_filename(filename)
+                self._window.set_filename(filename)
 
-            # Restore states of actions
-            self._window.action_pool.set_action_states(action_states)
-            win.destroy()
+                # Restore states of actions
+                self._window.action_pool.set_action_states(action_states)
+            finally:
+                win.destroy()
 
     def execute(self):
         filename = self._window.get_filename()
@@ -255,6 +264,7 @@ class SaveAsAction(Action):
         filesel.destroy()
         self.save(filename)
 
+weave_method(SaveAsAction.save, ErrorHandlerAspect, message='Could not save model to file.')
 register_action(SaveAsAction)
 
 

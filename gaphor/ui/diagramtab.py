@@ -4,6 +4,7 @@
 import gtk
 from diagramview import DiagramView
 from abstractwindow import AbstractWindow
+import gaphor.UML
 from gaphor.diagram.itemtool import ItemTool
 from gaphor.diagram import get_diagram_item
 from gaphor.undomanager import get_undo_manager
@@ -150,7 +151,9 @@ class DiagramTab(object):
             element = elemfact.lookup(data.data)
             assert element
             item_class = get_diagram_item(type(element))
-            if item_class:
+            if isinstance(element, gaphor.UML.Diagram):
+                self.owning_window.execute_action('OpenModelElement')
+            elif item_class:
                 get_undo_manager().begin_transaction()
                 item = self.diagram.create(item_class)
                 assert item

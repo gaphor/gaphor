@@ -14,9 +14,6 @@ As always, there is much to do...
 - Stereotype export and import function. Allow to export packages and import
   them into other models.
 
-- Automatically draw relations when an item is DND-ed from the tree-view
-  to the diagram.
-
 - Create distinctive icons for Include and Extend relationships (use cases).
 
 - How to figure out if a module exists without loading it?
@@ -27,10 +24,20 @@ As always, there is much to do...
 - fix accelarators (HOW?), partially done, accelerators on items in popup menus
   does not work.
   Accelerators should be activated by the (Abstract)Window, should not depend
-  on menu items
+  on menu items. Intercept Window::key_pressed_event and let it handle
+  popup menu actions.
 
 - In some cases (like when editing attributes) Enter should be used to
   complete the edit action.
+
+- Create a good algorithm for placement of lines and maybe nodes too.
+
+- Make associations look nice with usecases:
+   . No arrows at the end
+   . Disable popup menu for navigability and composition
+
+#- Automatically draw relations when an item is DND-ed from the tree-view
+  to the diagram.
 
 #- confirmation window when creating a new model.
 

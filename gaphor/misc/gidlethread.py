@@ -14,6 +14,7 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
 
 from __future__ import generators
 
+import sys
 import gobject
 import time
 import traceback
@@ -30,7 +31,9 @@ class GIdleThread(object):
     generator is finished, or timeout seconds.
     
     If an exception is raised from within the generator, it is stored in
-    the error property. Execution of the generator is finished.
+    the exc_info property. Execution of the generator is finished. The
+    exc_info property contains a tuple (exc_type, exc_value, exc_traceback),
+    see sys.exc_info() for details.
 
     Note that this routine runs in the current thread, so there is no need
     for nasty locking schemes.
@@ -49,6 +52,7 @@ class GIdleThread(object):
         self._queue = queue
         self._idle_id = 0
         self._error = None
+        self._exc_info = (None, None, None)
 
     def start(self, priority=gobject.PRIORITY_LOW):
         """Start the generator. Default priority is low, so screen updates
@@ -83,9 +87,13 @@ class GIdleThread(object):
         """
         return self._idle_id != 0
 
-    error = property(lambda self: self._error,
+    error = property(lambda self: self._exc_info[0],
                      doc="Return a possible exception that had occured "\
                          "during execution of the generator")
+
+    exc_info = property(lambda self: self._exc_info,
+                     doc="Return a exception information as provided by "\
+                         "sys.exc_info()")
 
     def __generator_executer(self):
         try:
@@ -101,9 +109,9 @@ class GIdleThread(object):
         except StopIteration:
             self._idle_id = 0
             return False
-        except Exception, e:
-            self._error = e
-            traceback.print_exc()
+        except:
+            self._exc_info = sys.exc_info()
+            #traceback.print_exc()
             self._idle_id = 0
             return False
 

@@ -1,5 +1,14 @@
+2004-11-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: do no longer draw arrows if the
+	association is drawn between an Actor and a UseCase.
+
 2004-11-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
+	* gaphor/misc/errorhandler.py: Error handler (+ aspect) for Gaphor.
+	Shows a dialog when an exception occured and allows for debuging.
+	* gaphor/ui/mainactions.py: implemented error handler for file
+	open/save actions.
 	* gaphor/diagram/diagramline.py: No longer save properties cap, join
 	and line_width, since they are not changed anyway.
 
@@ -16,6 +25,8 @@
 	* gaphor/diagram/itemactions.py: Implemented CreateLinks action. This
 	action is called after a DND action to that canvas and re-creates
 	existing relationships.
+	* gaphor/ui/diagramtab.py: DND a diagram to the diagram notebook opens
+	the diagram (may be: create shortcut from one diagram to another).
 
 2004-11-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

@@ -897,14 +897,25 @@ class CreateLinksAction(Action):
         diagram_tab = self._window.get_current_diagram_tab()
         self.sensitive = diagram_tab and len(diagram_tab.get_view().selected_items) > 0
 
-    def find_items_on_this_canvas(self, items, canvas):
-        for item in items:
-            for pres in item.presentation:
-                if pres.canvas is canvas:
-                    yield pres
+    def connect_relationship(self, rel, head_item, tail_item):
+        """Connect the lines, the the Item's connect handler figure out
+        which model element should be used as subject.
+        """
+        def find_center(item):
+            """Find the center point of the item, in world coordinates
+            """
+            x = item.width / 2.0
+            y = item.height / 2.0
+            return item.affine_point_i2w(x, y)
 
-    def find_relationship(self, new_rel, head_subject, tail_subject):
-        pass
+        center0 = find_center(head_item)
+        center1 = find_center(tail_item)
+        center = (center0[0] + center1[0]) / 2.0, (center0[1] + center1[1]) / 2.0
+        rel.handles[0].set_pos_w(*center)
+        rel.handles[-1].set_pos_w(*center)
+
+        head_item.connect_handle(rel.handles[0])
+        tail_item.connect_handle(rel.handles[-1])
 
     def create_missing_relationships(self, item, diagram, item_type):
         new_rel = diagram.create(item_type)
@@ -914,8 +925,9 @@ class CreateLinksAction(Action):
 
             try:
                 while new_rel.find_relationship(item.subject, other_item.subject):
-                    item.connect_handle(new_rel.handles[0])
-                    other_item.connect_handle(new_rel.handles[-1])
+                    self.connect_relationship(new_rel, item, other_item)
+                    #item.connect_handle(new_rel.handles[0])
+                    #other_item.connect_handle(new_rel.handles[-1])
                     # Create a new item we want to connect
                     new_rel = diagram.create(item_type)
             except AttributeError:
@@ -924,8 +936,9 @@ class CreateLinksAction(Action):
             # Try the other way too:
             try:
                 while new_rel.find_relationship(other_item.subject, item.subject):
-                    other_item.connect_handle(new_rel.handles[0])
-                    item.connect_handle(new_rel.handles[-1])
+                    self.connect_relationship(new_rel, other_item, item)
+                    #other_item.connect_handle(new_rel.handles[0])
+                    #item.connect_handle(new_rel.handles[-1])
                     # Create a new item we want to connect
                     new_rel = diagram.create(item_type)
             except AttributeError:
