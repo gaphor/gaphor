@@ -13,7 +13,7 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
         'name': (gobject.TYPE_STRING, 'name', '', '', gobject.PARAM_READWRITE)
     }
 
-    FONT='helvetica bold 10'
+    FONT='sans bold 10'
 
     popup_menu = (
         'RenameItem',
