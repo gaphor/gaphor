@@ -1,3 +1,19 @@
+2002-03-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py, setup.cfg: Distutils setup scripts.
+	* utils/build_mo.py, utils/install_mo.py, utils/dist_mo.py,
+	utils/build_pot.py:
+	Distutils commands for supporting gettext files (.pot/po, .mo)
+	* autogen.sh, configure.in, */Files */Makefile.am:
+	These files are obsolete now.
+	* run-gaphor.sh: Run Gaphor, replaces gaphor.sh.
+	* gaphor/config.py.in: obsolete and removed.
+
+2002-03-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/diagramwindow.py, mainwindow.py: create popup menu on
+	event-after event.
+
 2002-02-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/command/diagrampopup.py: Added popup menu items for

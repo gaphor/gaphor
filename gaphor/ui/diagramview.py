@@ -58,7 +58,7 @@ class DiagramView(CanvasView):
 		assert item
 		wx, wy = self.window_to_world(x + self.get_hadjustment().value,
 					      y + self.get_vadjustment().value)
-		ix, iy = item.affine_point_w2i(wx, wy)
+		ix, iy = item.affine_point_w2i(max(0, wx), max(0, wy))
 		item.move(ix, iy)
 		item.set_property ('subject', element)
 	    else:

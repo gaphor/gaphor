@@ -1,8 +1,11 @@
 As always, there is much to do...
 
-- attributes and operations visible for classes
+- attributes and operations visible for classes.
 - deselect doesn't work properly on all elements...
-- fix Class implementation
+- fix Class implementation.
+- add commands for attribute/operation removal.
+- Add some sort of ordering in the NamespaceView.
+- Items visible/hidden doesn't work properly when opening a diagram.
 
 ---
 It seems like PyObject's do not live as long as GObject objects. Once a PyObject
@@ -28,6 +31,10 @@ get/set_data to store its id.
   modular, plugins should not be that hard.
 
 - Some nice icons.
+
+- Rewrite storage stuff: load procedures should use a SAX parser, instead
+  of the minidom DOM model. Loading of a model takes way to long... (saving
+  is very fast, though).
 
 More specific:
 - Some logic about what classes can be connected to each other should be

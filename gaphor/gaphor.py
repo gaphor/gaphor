@@ -10,7 +10,8 @@ object factories.
 
 import misc.singleton
 import misc.logger
-import config
+import misc.conf
+import version
 import types
 
 class GaphorError(Exception):
@@ -22,9 +23,9 @@ class GaphorError(Exception):
 
 
 
-class Gaphor(misc.singleton.Singleton):
-    """
-    Gaphor main app. This is a Singleton object that is used as a access point
+class Gaphor(object):
+    """Gaphor main app.
+    This is a Singleton object that is used as a access point
     to unique resources within Gaphor. The method main() is called once to
     start an interactive instance of Gaphor. If an application wants to use
     Gaphor's functionallity, but not the GUI, that application should not call
@@ -38,22 +39,23 @@ class Gaphor(misc.singleton.Singleton):
     In case of a string resource, a lookup will be done in the GConf
     configuration tree. This is currently not implemented though...
     """
+    __metaclass__ = misc.singleton.Singleton
 
     NAME='gaphor'
-    VERSION=config.VERSION
+    VERSION=version.VERSION
     TITLE='Gaphor v' + VERSION
 
     __resources = { }
-#    __conf = Conf(NAME)
 
-    def init(self, install=1):
+    def __init__(self, install=1):
 	self.__main_window = None
+	self.__conf = None
 	if install:
 	    self.install_gettext()
 
     def install_gettext(self):
 	import gettext
-	gettext.install(config.GETTEXT_PACKAGE, unicode=1)
+	gettext.install(self.NAME, unicode=1)
 
     def main(self):
 	import bonobo
@@ -74,6 +76,18 @@ class Gaphor(misc.singleton.Singleton):
 
     def get_main_window(self):
 	return self.__main_window
+
+    def get_conf(self, key):
+	if not self.__conf:
+	    from gaphor.misc.conf import Conf
+	    self.__conf = Conf(self.NAME)
+	return self.__conf[key]
+
+    def get_datadir(self):
+	import os
+	if os.environ.has_key('GAPHOR_DATADIR'):
+	    return os.environ['GAPHOR_DATADIR']
+	return self.get_conf('datadir')
 
     def get_resource(resource):
 	"""

@@ -4,7 +4,7 @@ from gaphor.misc.signal import Signal
 from gaphor.misc.logger import Logger
 from commandregistry import CommandRegistry
 import gobject, gtk, bonobo.ui
-import gaphor.config as config
+from gaphor import Gaphor
 
 class AbstractWindow(object):
     """
@@ -121,13 +121,14 @@ class AbstractWindow(object):
 
 	ui_container = window.get_ui_container ()
 	ui_engine = window.get_ui_engine ()
-	ui_engine.config_set_path (config.CONFIG_PATH + '/bonoboengine')
+	ui_engine.config_set_path ('/apps/gaphor/UIConfig/kvps/bonoboengine')
 	ui_component = bonobo.ui.Component (name)
 	ui_component.set_container (ui_container.corba_objref ())
 
-	bonobo.ui.util_set_ui (ui_component, config.DATADIR,
+	gaphor = Gaphor()
+	bonobo.ui.util_set_ui (ui_component, gaphor.get_datadir(),
 			       'gaphor-' + name + '-ui.xml',
-			       config.PACKAGE_NAME)
+			       gaphor.NAME)
 	window.set_contents(contents)
 	self.__destroy_id = window.connect('destroy', self._on_window_destroy)
 	# On focus in/out a log handler is added to the logger.

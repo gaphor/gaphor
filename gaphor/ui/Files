@@ -1,9 +1,0 @@
-__init__.py
-abstractwindow.py
-commandregistry.py
-diagramview.py
-diagramwindow.py
-editorwindow.py
-mainwindow.py
-namespace.py
-stock.py

@@ -155,7 +155,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 		mult_dy = ofs
 	    else:
 		name_dx = -ofs - name_w
-		name_dy = -ofs - mult_h # - height
+		name_dy = -ofs - name_h # - height
 		mult_dx = -ofs - mult_w
 		mult_dy = ofs
 	elif abs_rc >= 0 and abs_rc <= 0.2:

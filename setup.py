@@ -19,8 +19,11 @@ from glob import glob
 from commands import getoutput, getstatusoutput
 from distutils.core import setup, Command
 from distutils.command.build_py import build_py
-from distutils.command.install import install
+#from distutils.command.install import install
 from distutils.dep_util import newer
+from utils.build_mo import build, build_mo
+from utils.install_mo import install, install_mo
+from utils.dist_mo import Distribution
 
 str_version = sys.version[:3]
 version = map(int, str_version.split('.'))
@@ -51,14 +54,15 @@ class config_Gaphor(Command):
 	print 'Found pkg-config version %s' % output
 
     def run(self):
-	self.pkg_config_check('gobject-2.0', '2.0.0')
-	self.pkg_config_check('gtk+-2.0', '2.0.0')
-	self.pkg_config_check('pygtk-2.0', '1.99.15')
-	self.pkg_config_check('gconf-2.0', '2.0.0')
-	self.pkg_config_check('libbonobo-2.0', '2.0.0')
-	self.pkg_config_check('libbonoboui-2.0', '2.0.0')
-	self.pkg_config_check('diacanvas2', '0.9.1')
+	#self.pkg_config_check('gobject-2.0', '2.0.0')
+	#self.pkg_config_check('gtk+-2.0', '2.0.0')
+	#self.pkg_config_check('pygtk-2.0', '1.99.15')
+	#self.pkg_config_check('gconf-2.0', '2.0.0')
+	#self.pkg_config_check('libbonobo-2.0', '2.0.0')
+	#self.pkg_config_check('libbonoboui-2.0', '2.0.0')
+	#self.pkg_config_check('diacanvas2', '0.9.1')
 
+	self.module_check('xml.parsers.expat')
 	self.module_check('gobject')
 	self.module_check('gnome')
 	self.module_check('gnome.ui')
@@ -83,19 +87,19 @@ class config_Gaphor(Command):
 	pkg_version = map(int, pkg_version_str.split('.'))
 	req_version = map(int, version.split('.'))
 	if pkg_version >= req_version:
-	    print 'Found %s, version %s' % (package, pkg_version_str)
+	    print "Found '%s', version %s." % (package, pkg_version_str)
 	else:
-	    print '!!! Package %s has version %s, should have at least version %s' % ( package, pkg_version_str, version )
+	    print "!!! Package '%s' has version %s, should have at least version %s." % ( package, pkg_version_str, version )
 	    self.config_failed = True
 
     def module_check(self, module):
 	try:
 	    __import__(module)
 	except ImportError:
-	    print '!!! Required module %s not found.' % module
+	    print "!!! Required module '%s' not found." % module
 	    self.config_failed = True
 	else:
-	    print 'Module %s found' % module
+	    print "Module '%s' found." % module
 
 
 class build_py_Gaphor(build_py):
@@ -108,6 +112,7 @@ class build_py_Gaphor(build_py):
         self.generate_version()
 
     def generate_modelelements(self):
+        """Generate gaphor/UML/modelelements.py in the build directory."""
         import utils.genUML
         gen = 'utils/genUML.py'
         xmi = 'doc/UmlMetaModel.xmi'
@@ -120,6 +125,8 @@ class build_py_Gaphor(build_py):
         self.byte_compile([outfile])
 
     def generate_version(self):
+        """Create a file gaphor/version.py which contains the current version.
+        """
         outfile = os.path.join(self.build_lib, 'gaphor/version.py')
         self.mkpath(os.path.dirname(outfile))
         f = open(outfile, 'w')
@@ -142,7 +149,6 @@ class install_config(Command):
     def initialize_options(self):
 	self.install_data = None
 	self.force = None
-	self.gconf_client = None
 
     def finalize_options(self):
 	self.set_undefined_options('install',
@@ -155,25 +161,48 @@ class install_config(Command):
 	self._set_value('datadir', self.install_data, 'string')
 
     def _set_value(self, key, value, type):
-	if self.force or not apply(getattr(self.gconf_client, 'get_' + type), (GCONF_DOMAIN + key,)):
-            print 'setting gconf value "%s" to "%s"' % (key, value)
-	    apply(getattr(self.gconf_client, 'set_' + type), (GCONF_DOMAIN + key, value))
+        print "setting gconf value '%s' to '%s'" % (key, value)
+        apply(getattr(self.gconf_client, 'set_' + type),
+              (GCONF_DOMAIN + key, value))
 
 install.sub_commands.append(('install_config', None))
 
+
 class run_Gaphor(Command):
 
-    description = 'Execute Gaphor from the local directory'
+    description = 'Launch Gaphor from the local directory'
+
+    user_options = [('build-dir', None, '')]
+
+    def initialize_options(self):
+        self.build_lib = None
+
+    def finalize_options(self):
+        self.set_undefined_options('build',
+                                   ('build_lib', 'build_lib'))
 
     def run(self):
-        print 'Run gaphor'
+        print 'Starting gaphor...'
+        import sys, os, os.path
+        self.run_command('build')
+        sys.path.insert(0, self.build_lib)
+        from gaphor import Gaphor
+        os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
+        Gaphor().main()
 
 
 setup(name='gaphor',
       version=VERSION,
+      description="Gaphor is a UML modeling tool",
       url='http://gaphor.sourceforge.net',
       author='Arjan J. Molenaar',
       author_email='arjanmol@users.sourceforge.net',
+      license="GNU General Public License (GPL, see COPYING)",
+      long_description="""
+      Gaphor is a UML modeling tool written in Python. It uses the GNOME2
+      environment for user interaction.""",
+      platforms=['GNOME2'],
+      all_linguas=['nl'],
       packages=['gaphor',
 		'gaphor.UML',
 		'gaphor.diagram',
@@ -181,17 +210,23 @@ setup(name='gaphor',
 		'gaphor.ui.command',
 		'gaphor.misc'
       ],
-      data_files=[('gaphor', ['data/gaphor-main-ui.xml',
+      # data files are relative to <prefix>/share/gaphor (see setup.cfg)
+      data_files=[('', ['data/gaphor-main-ui.xml',
 			      'data/gaphor-diagram-ui.xml',
 			      'data/gaphor-editor-ui.xml',
 			      'data/gaphor.dtd']),
-		  ('gaphor/pixmaps', glob('data/pixmaps/*.png'))
+		  ('pixmaps', glob('data/pixmaps/*.png'))
       ],
-      scripts=['bin/gaphor'
-      ],
+      scripts=['bin/gaphor'],
+
+      distclass=Distribution,
       cmdclass={'config': config_Gaphor,
                 'build_py': build_py_Gaphor,
                 'install_config': install_config,
+                'build': build,
+                'build_mo': build_mo,
+                'install': install,
+                'install_mo': install_mo,
                 'run': run_Gaphor
       }
 )

@@ -4,7 +4,7 @@
 import gtk
 import namespace
 import gaphor.UML as UML
-import gaphor.config as config
+import gaphor.version as version
 from abstractwindow import AbstractWindow
 
 class MainWindow(AbstractWindow):
@@ -53,7 +53,7 @@ class MainWindow(AbstractWindow):
 
 
 	self._construct_window(name='main',
-			       title='Gaphor v' + config.VERSION,
+			       title='Gaphor v' + version.VERSION,
 			       size=(220, 400),
 			       contents=scrolled_window,
 			       params={ 'window': self })

@@ -234,10 +234,10 @@ class AboutCommand(Command):
 
     def execute(self):
 	import gnome.ui
-	import gaphor.config as config
-	logo = gtk.gdk.pixbuf_new_from_file (config.DATADIR + '/pixmaps/logo.png')
+	import gaphor.Gaphor as Gaphor
+	logo = gtk.gdk.pixbuf_new_from_file (Gaphor.get_datadir() + '/pixmaps/logo.png')
 	about = gnome.ui.About(name = 'Gaphor',
-			   version = config.VERSION,
+			   version = Gaphor.VERSION,
 			   copyright = 'Copyright (c) 2001-2003 Arjan J. Molenaar',
 			   comments = 'UML Modeling for GNOME',
 			   authors = ('Arjan J. Molenaar <arjanmolenaar@hetnet.nl>',),

@@ -10,7 +10,11 @@ very easy to extend (and to write ;-).
 To get started do the following things:
 - Get pyorbit, pygtk and gnome-python (the latest versions)
 - Compile and install pyorbit, pygtk and gnome-python.
-- do './configure; make' in the Gaphor source directory.
-- Launch gaphor using the 'gaphor.sh' shell script.
+- Get DiaCanvas2 and install it. If PyGTK is installed properly, it should
+  be automatically detected by DiaCanvas2's configure script.
+- do 'python setup.py config' to check if every thing is okay.
+- Launch gaphor using the 'run-gaphor.sh' shell script.
 
-	- Arjan Molenaar <arjanmolenaar@hetnet.nl>
+Have fun,
+
+Arjan Molenaar <arjanmolenaar@hetnet.nl>

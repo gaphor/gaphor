@@ -3,7 +3,6 @@
 
 import gtk
 from diagramview import DiagramView
-import gaphor.config as config
 from abstractwindow import AbstractWindow
 
 class DiagramWindow(AbstractWindow):

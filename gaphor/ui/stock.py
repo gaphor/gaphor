@@ -1,7 +1,7 @@
 # vim:sw=4
 
 import gtk
-from gaphor.config import GETTEXT_PACKAGE, DATADIR
+from gaphor import Gaphor
 import gaphor.UML as UML
 import os.path as path
 
@@ -80,5 +80,5 @@ def add_stock_icons(stock_icons, icon_dir=''):
 #icon_factory.add_default()
 #del icon_factory
 
-add_stock_icons(_default_stock_icons, DATADIR + '/pixmaps/')
+add_stock_icons(_default_stock_icons, Gaphor().get_datadir() + '/pixmaps/')
 
