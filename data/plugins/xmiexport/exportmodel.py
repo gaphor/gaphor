@@ -140,6 +140,8 @@ class XMIExport(object):
         if len(ends)!=2:
             return
         
+        """
+        No longer in use as Gaphor is updated
         # Temp fix for line direction
         end_sequence = [0,1]
         if ends[1].aggregation=='composite':
@@ -148,6 +150,8 @@ class XMIExport(object):
             end_sequence = [1,0]
         if ends[1].class_:
             end_sequence.reverse()
+        """
+        end_sequence = [0,1]
 
         attributes=XMLAttributes()
         attributes['xmi.id']=node.id
@@ -155,6 +159,9 @@ class XMIExport(object):
         attributes['isRoot']='false'
         attributes['isLeaf']='false'
         attributes['isAbstract']='false'
+        name = node.name
+        if name:
+            attributes['name']=name
         xmi.startElement('UML:Association', attrs=attributes)
         xmi.startElement('UML:Association.connection', attrs=XMLAttributes())
 
