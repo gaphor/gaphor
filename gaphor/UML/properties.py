@@ -201,7 +201,7 @@ class association(umlproperty):
         else:
             s = '<association %s: %s[%s..%s]' % (self.name, self.type.__name__, self.lower, self.upper)
         if self.opposite:
-            s += ' -> %s' % self.opposite
+            s += ' %s-> %s' % (self.composite and '<>' or '', self.opposite)
         return s + '>'
 
     def __get__(self, obj, clazz=None):
@@ -221,23 +221,31 @@ class association(umlproperty):
         # Remove old value only for uni-directional associations
         if self.upper == 1:
             old = self._get(obj)
+            # do nothing if we are assigned our existing value:
+            if value is old:
+                return
             if old:
                 self.__delete__(obj, old)
-        self._set2(obj, value)
-        # Set opposite side:
-        if self.opposite:
-            getattr(self.type, self.opposite)._set(value, obj)
-        self.notify(obj)
+        # if we needed to set our own side, set the opposite
+        if self._set2(obj, value):
+            # Set opposite side.
+            # Use value.__class__ since the property may be overridden:
+            if self.opposite:
+                getattr(value.__class__, self.opposite)._set(value, obj)
+            self.notify(obj)
 
     def __delete__(self, obj, value=None):
-        """Delete is used for element deletion and for removal of elements from
-        a list."""
+        """Delete is used for element deletion and for removal of
+        elements from a list.
+        """
         #print '__delete__', self, obj, value
         if self.upper > 1 and not value:
             raise Exception, 'Can not delete collections'
+        if not value:
+            value = self._get(obj)
         if self.opposite:
-            getattr(self.type, self.opposite)._del(value or self._get(obj), obj)
-        self._del(obj, value or self._get(obj))
+            getattr(value.__class__, self.opposite)._del(value, obj)
+        self._del(obj, value)
         
     def _get(self, obj):
         #print '_get', self, obj
@@ -256,57 +264,78 @@ class association(umlproperty):
         #print '_set', self, obj, value
         if not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % self.type.__name__
-        self._set2(obj, value)
-        self.notify(obj)
+        if self._set2(obj, value):
+            self.notify(obj)
 
     def _set2(self, obj, value):
-        """Real setter, avoid doing the assertion check twice."""
+        """Real setter, avoid doing the assertion check twice.
+        Return True if notification should be send, False otherwise."""
         if self.upper > 1:
             if value in self._get(obj):
-                return
+                return False
             self._get(obj).items.append(value)
         else:
             setattr(obj, '_' + self.name, value)
-        value.connect('__unlink__', self.__on_unlink, obj, value)
+        value.connect('__unlink__', self.__on_unlink, obj)
         if self.composite:
             obj.connect('__unlink__', self.__on_composite_unlink, value)
+        return True
 
     def _del(self, obj, value):
         """Delete value from the association."""
         #print '_del', self, obj, value
         if self.upper > 1:
             items = self._get(obj).items
-            items.remove(value)
+            try:
+                items.remove(value)
+            except:
+                pass
             if not items:
                 delattr(obj, '_' + self.name)
         else:
-            delattr(obj, '_' + self.name)
-        value.disconnect(self.__on_unlink, obj, value)
+            try:
+                delattr(obj, '_' + self.name)
+            except:
+                pass
+                #print 'association._del: delattr failed for %s' % self.name
+        value.disconnect(self.__on_unlink, obj)
         if self.composite:
             obj.disconnect(self.__on_composite_unlink, value)
         self.notify(obj)
 
     def unlink(self, obj):
+        #print 'unlink', self, obj
         lst = getattr(obj, '_' + self.name)
         while lst:
             self.__delete__(obj, lst[0])
 
-    def __on_unlink(self, name, obj, value):
+    def __on_unlink(self, value, pspec, obj):
         """Disconnect when the element on the other end of the association
         (value) sends the '__unlink__' signal. This is especially important
         for uni-directional associations.
         """
-        #print '__on_unlink:', self, name, obj, value
-        self.__delete__(obj, value)
+        #print '__on_unlink', name, obj, value
+        if pspec == '__unlink__':
+            self.__delete__(obj, value)
+            # re-establish unlink handler:
+            value.connect('__unlink__', self.__on_unlink, obj)
+        else:
+            print 'RELINK'
+            self.__set__(obj, value)
 
-    def __on_composite_unlink(self, name, value):
+    def __on_composite_unlink(self, obj, pspec, value):
         """Unlink value if we have a part-whole (composite) relationship
         (value is a composite of obj).
         The implementation of value.unlink() should ensure that no deadlocks
         occur.
         """
         #print '__on_composite_unlink:', self, name, value
-        value.unlink()
+        if pspec == '__unlink__':
+            value.unlink()
+            obj.connect('__unlink__', self.__on_composite_unlink, value)
+        else:
+            print 'RELINK'
+            value.relink()
 
 
 class derivedunion(umlproperty):

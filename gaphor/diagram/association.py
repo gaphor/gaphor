@@ -306,7 +306,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 		    if tail_end.participant is tail_subject and head_end is not tail_end:
 			# check if this entry is not yet in the diagram
 			# Return if the association is not (yet) on the canvas
-			for item in assoc.presentations():
+			for item in assoc.presentation:
 			    if item.canvas is self.canvas and item is not self:
 				break
 			else:

@@ -12,6 +12,8 @@ unlink()
      Remove all references to the element. This is done by emiting the
      '__unlink__' signal to all attached signals. unlink() can not be called
      recursively.
+relink()
+    Inverse operation of unlink(). Used by diagram items during undo operations.
 
 connect ('name', callback, *data) or
 connect (('name', 'other_property'), callback, *data)
@@ -25,6 +27,9 @@ disconnect (callback, *data)
 
 notify (name)
     Notify all listeners the property 'name' has changed.
+    The notifier calls callbacks registered by connect() by sending
+    callback(self, pspec, *data)
+    where self is the data object (Element) and pspec is the property spec.
 """
 
 __all__ = [ 'Element' ]
@@ -51,7 +56,8 @@ class Element(object):
 
     def load(self, name, value):
         """Loads value in name. Make sure that for every load postload()
-        should be called."""
+        should be called.
+        """
         try:
             prop = getattr(self.__class__, name)
         except AttributeError, e:
@@ -63,18 +69,29 @@ class Element(object):
     def postload(self):
         pass
 
-    def unlink(self):
-        """Unlink the element."""
+    def __unlink(self, signal):
+        """Unlink the element. For both the __unlink__ and __relink__ signal
+        the __unlink__ callback list is used.
+        """
         # Uses a mutex to make sure it is not called recursively
         if self.__in_unlink.testandset():
             try:
-                self.notify('__unlink__')
+                self.notify(signal, '__unlink__')
             finally:
                 self.__in_unlink.unlock()
 
+    def unlink(self):
+        """Unlink the element."""
+        self.__unlink('__unlink__')
+
+    def relink(self):
+        """Undo the unlink operation."""
+        self.__unlink('__relink__')
+
     def connect(self, names, callback, *data):
         """Attach 'callback' to a list of names. Names may also be a string.
-        A name is the name od a property of the object or '__unlink__'."""
+        A name is the name od a property of the object or '__unlink__'.
+        """
         if type(names) is types.StringType:
             names = (names,)
         cb = (callback,) + data
@@ -89,7 +106,6 @@ class Element(object):
 
     def disconnect(self, callback, *data):
         """Detach a callback identified by it's data."""
-        #print 'disconnect', callback, data
         cb = (callback,) + data
         for values in self._observers.values():
             # Remove all occurences of 'cb' from values
@@ -100,16 +116,25 @@ class Element(object):
             except ValueError:
                 pass
 
-    def notify(self, name):
+    def notify(self, name, cb_name=None):
         """Send notification to attached callbacks that a property
-        has changed."""
+        has changed. the __relink__ signal uses the callbacks for __unlink__.
+        """
+        if not cb_name:
+            cb_name = name
         cb_list = self._observers.get(name) or ()
+        try:
+            pspec = getattr(self.__class__, name)
+        except AttributeError:
+            pspec = name
+            
         # Use a copy of the list to ensure all items are notified
         for cb_data in list(cb_list):
             try:
-                apply(cb_data[0], (name,) + cb_data[1:])
+                apply(cb_data[0], (self, pspec) + cb_data[1:])
             except:
-                pass
+                import traceback
+                traceback.print_exc()
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 

@@ -14,7 +14,7 @@ verify(filename)
 import UML
 import parser
 import diagram
-#import diacanvas
+import diacanvas
 import os.path
 import types
 #import xml.dom.minidom as dom
@@ -27,40 +27,56 @@ def save(filename=None, factory=None):
     standard out is used.'''
     from cStringIO import StringIO
     from xml.sax.saxutils import escape
-    #from gaphor.UML import collection
-    #from element import Element
+
+    def save_reference(name, value):
+        # Save a reference to the object:
+        buffer.write('<reference name="%s" refid="%s"/>\n' % (name, value.id))
+
+    def save_value(name, value):
+        buffer.write('<value name="%s">' % name)
+        if isinstance(value, types.StringTypes):
+            buffer.write('<![CDATA[%s]]>' % value.replace(']]>', '] ]>'))
+        else:
+            buffer.write(escape(str(value)))
+        buffer.write('</value>\n')
 
     def save_element(name, value):
-        if isinstance (value, UML.Element):
-            # Save a reference to the object:
-            buffer.write('<reference name="%s" refid="%s"/>\n' % (name, value.id))
+        if isinstance (value, (UML.Element, diacanvas.CanvasItem)):
+            save_reference(name, value)
         elif isinstance(value, UML.collection):
             # Save a list of references:
 	    #buffer.write('<reflist>')
             for v in value:
-                save_element(name, v)
+                save_reference(name, v)
 	    #buffer.write('</reflist>')
         elif isinstance(value, diacanvas.Canvas):
             buffer.write('<canvas>')
-            value.save(save_element)
+            value.save(save_canvasitem)
             buffer.write('</canvas>')
+        else:
+            save_value(name, value)
+
+    def save_canvasitem(name, value):
+        if isinstance (value, UML.Element):
+            save_reference(name, value)
+        elif isinstance(value, UML.collection):
+            # Save a list of references:
+	    #buffer.write('<reflist>')
+            for v in value:
+                save_reference(name, v)
+	    #buffer.write('</reflist>')
         elif isinstance(value, diacanvas.CanvasItem):
-            buffer.write('<canvasitem>')
+            buffer.write('<canvasitem id="%s" type="%s">' % (value.id, value.__class__.__name__))
             value.save(save_element)
             buffer.write('</canvasitem>')
         else:
-            buffer.write('<value name="%s">' % name)
-            if isinstance(value, types.StringTypes):
-                buffer.write('<![CDATA[%s]]>' % value.replace(']]>', '] ]>'))
-            else:
-                buffer.write(escape(str(value)))
-            buffer.write('</value>\n')
+            save_value(name, value)
 
     if not factory:
         factory = GaphorResource(UML.ElementFactory)
 
     buffer = StringIO()
-    buffer.write('<?xml version="1.0" encoding="utf-8"?>\n')
+    buffer.write('<?xml version="1.0"?>\n')
     buffer.write('<gaphor version="%s">' % FILE_FORMAT_VERSION)
 
     for e in factory.values():
@@ -96,8 +112,8 @@ def _load (elements, factory):
             elem.element = factory.create_as (type, id)
         elif isinstance(elem, parser.canvasitem):
             cls = getattr(diagram, elem.type)
-            elem.element = cls()
-            elem.element.set_property('id', id)
+            elem.element = cls(id)
+            #elem.element.id = idset_property('id', id)
             # Add a canvas property so we can be lasy and do not check...
             elem.canvas = None
 
@@ -108,7 +124,7 @@ def _load (elements, factory):
         # establish parent/child relations on canvas items:
         if elem.canvas:
             for item in elem.canvas.canvasitems:
-                print 'item:', item.element
+                #print 'item:', item.element
                 item.element.set_property('parent', elem.element.canvas.root)
         if isinstance(elem, parser.canvasitem):
             for item in elem.canvasitems:
@@ -145,7 +161,8 @@ def load (filename, factory=None):
     except Exception, e:
         print e
         log.error('File could no be parsed')
-        raise GaphorError, 'File %s is probably no valid XML.' % filename
+        raise
+        #raise GaphorError, 'File %s is probably no valid XML.' % filename
 
     try:
             # For some reason, loading the model in a temp. factory will

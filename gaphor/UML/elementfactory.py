@@ -36,8 +36,8 @@ class ElementFactory(object):
         obj = type(id)
         self._elements[id] = obj
         #obj.connect('__unlink__', self.__element_signal, weakref.ref(obj))
-        obj.connect('__unlink__', self.__element_signal, obj)
-        self.notify('create', obj)
+        obj.connect('__unlink__', self.__element_signal)
+        self.notify(obj, 'create')
         return obj
 
     def lookup (self, id):
@@ -69,7 +69,7 @@ class ElementFactory(object):
 
     def flush(self):
         """Flush all elements (remove them from the factory)."""
-        self.notify_flush()
+        self.notify(None, 'flush')
         for key, value in self._elements.items():
             #print 'ElementFactory: unlinking', value
             #print 'references:', gc.get_referrers(value)
@@ -95,34 +95,31 @@ class ElementFactory(object):
         except ValueError:
             pass
 
-    def notify(self, name, element):
+    def notify(self, element, name):
         """Send notification to attached callbacks that a property
         has changed. This is usually only called by the properties."""
         for cb_data in self._observers:
             try:
-                apply(cb_data[0], (name, element) + cb_data[1:])
+                apply(cb_data[0], (element, name) + cb_data[1:])
             except:
                 pass
 
     def notify_model(self):
-        self.notify('model', None)
+        self.notify(None, 'model')
 
-    def notify_flush(self):
-        self.notify('flush', None)
-
-    def __element_signal (self, name, element):
+    def __element_signal (self, element, pspec):
         """Remove an element from the factory """
         #element = weak_element()
         #if not element: return
-
-        if name == '__unlink__' and self._elements.has_key(element.id):
+	#log.debug('element %s send signal %s' % (element, name))
+        if pspec == '__unlink__' and self._elements.has_key(element.id):
             log.debug('Unlinking element: %s' % element)
             del self._elements[element.id]
-            self.notify ('remove', element)
-        elif name == '__relink__' and not self._elements.has_key(element.id):
+            self.notify(element, 'remove')
+        elif pspec == '__relink__' and not self._elements.has_key(element.id):
             log.debug('Relinking element: %s' % element)
             self._elements[element.id] = element
-            self.notify('create', element)
+            self.notify(element, 'create')
 
 # Make one ElementFactory instance an application-wide resource
 GaphorResource(ElementFactory)

@@ -28,7 +28,7 @@ _default_stock_icons = (
     (STOCK_ACTOR,	UML.Actor,	'actor24.png', 'actor16.png'),
     (STOCK_ASSOCIATION,	UML.Association, 'association24.png', 'association16.png'),
     (STOCK_CLASS,	UML.Class,	'class24.png', 'class16.png'),
-#    (STOCK_DEPENDENCY,	UML.Dependency, 'dependency24.png', 'dependency16.png'),
+    (STOCK_DEPENDENCY,	UML.Dependency, 'dependency24.png', 'dependency16.png'),
     (STOCK_DIAGRAM,	UML.Diagram,	'diagram24.png', 'diagram16.png'),
 #    (STOCK_EXTEND,	UML.Extend,	None),
     (STOCK_COMMENT,	UML.Comment,	'comment24.png', 'comment16.png'),

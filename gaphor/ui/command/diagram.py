@@ -157,7 +157,7 @@ class DeleteCommand(Command):
 	self._view.canvas.push_undo('delete')
 	items = self._view.selected_items
 	for i in items:
-	    i.item.parent.remove(i.item)
+	    i.item.unlink()
 
 CommandInfo (name='EditDelete', _label='_Delete', pixname='gtk-delete',
 	     context='diagram.menu', accel='*Control*d',

@@ -1,5 +1,9 @@
 As always, there is much to do...
 
+- Make sure than, when a model is loaded and saved again, both save files do
+  not differ.
+- port AssociationItem and ClassItem
+
 - The application crashes every now and then when items are freed. The cause
   is probably GnomeCanvasItem::canvas, which points to an invalid canvas (the
   canvas has been freed before the items are freed.

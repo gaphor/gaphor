@@ -3,18 +3,18 @@ ActorItem diagram item
 '''
 # vim:sw=4
 
-from modelelement import ModelElementItem
-import diacanvas
-import pango
-import gobject
 import sys
+import gobject
+import pango
+import diacanvas
 
-class ActorItem(ModelElementItem):
+from classifier import ClassifierItem
+
+class ActorItem(ClassifierItem):
     HEAD=11
     ARM=19
     NECK=10
     BODY=20
-    FONT='sans bold 10'
 
     __gproperties__ = {
 	'name-width':	(gobject.TYPE_DOUBLE, 'name width',
@@ -22,171 +22,81 @@ class ActorItem(ModelElementItem):
 			 1, gobject.PARAM_READWRITE),
     }
     def __init__(self, id=None):
-	ModelElementItem.__init__(self, id)
+	ClassifierItem.__init__(self, id)
 	self.set(height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
 		 width=(ActorItem.ARM * 2),
 		 min_height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
 		 min_width=(ActorItem.ARM * 2))
 	# Head
-	self.__head = diacanvas.shape.Ellipse()
-	self.__head.set_line_width(2.0)
+	self._head = diacanvas.shape.Ellipse()
+	self._head.set_line_width(2.0)
 	# Body
-	self.__body = diacanvas.shape.Path()
-	self.__body.set_line_width(2.0)
+	self._body = diacanvas.shape.Path()
+	self._body.set_line_width(2.0)
 	# Arm
-	self.__arms = diacanvas.shape.Path()
-	self.__arms.set_line_width(2.0)
+	self._arms = diacanvas.shape.Path()
+	self._arms.set_line_width(2.0)
 	# Legs
-	self.__legs = diacanvas.shape.Path()
-	self.__legs.set_line_width(2.0)
-	# Name
-	self.__name = diacanvas.CanvasText()
-	self.add_construction(self.__name)
-	assert self.__name != None
-	font = pango.FontDescription(ActorItem.FONT)
-	self.__name.set(font=font, multiline=0,
-			alignment=pango.ALIGN_CENTER)
-	self.__name.connect('text_changed', self.on_text_changed)
-	self.connect('notify::subject', ActorItem.on_subject_notify)
-	self.subject_name_changed_id = 0
+	self._legs = diacanvas.shape.Path()
+	self._legs.set_line_width(2.0)
 
     def save (self, save_func):
-	ModelElementItem.save(self, save_func)
+	ClassifierItem.save(self, save_func)
 	self.save_property(save_func, 'name-width')
 
     def do_set_property (self, pspec, value):
 	#print 'Actor: Trying to set property', pspec.name, value
 	if pspec.name == 'name-width':
-	    self.__name.set_property('width', value)
+	    self._name.set_property('width', value)
 	else:
-	    ModelElementItem.do_set_property (self, pspec, value)
+	    ClassifierItem.do_set_property (self, pspec, value)
 
     def do_get_property(self, pspec):
 	if pspec.name == 'name-width':
-	    return self.__name.get_property('width')
+	    return self._name.get_property('width')
 	else:
-	    return ModelElementItem.do_get_property (self, pspec)
-
-    def on_subject_notify(self, subject):
-	"""See DiagramItem.on_subject_changed().
-	"""
-	if self.subject_name_changed_id:
-	    self.disconnect(self.subject_name_changed_id)
-	if self.subject:
-	    self.subject_name_changed_id = self.subject.connect('name', self.on_subject_name_changed)
-	self.__name.set(text=self.subject and self.subject.name or '')
-	self.request_update()
-
-    def on_subject_name_changed(self, name):
-	self.__name.set(text=self.subject.name)
-
-    def on_text_changed(self, text_item, text):
-	if text != self.subject.name:
-	    self.subject.name = text
+	    return ClassifierItem.do_get_property (self, pspec)
 
     # DiaCanvasItem callbacks:
 
     def on_update(self, affine):
 	# Center the text:
-	layout = self.__name.get_property('layout')
-	#layout.set_width(-1)
+	layout = self._name.get_property('layout')
 	w, h = layout.get_pixel_size()
-	a = self.__name.get_property('affine')
+	a = self._name.get_property('affine')
 	if w < self.width:
 	    w = self.width
 	aa = (a[0], a[1], a[2], a[3], (self.width - w) / 2, self.height)
-	self.__name.set(affine=aa, width=w, height=h)
+	self._name.set(affine=aa, width=w, height=h)
 
-	self.update_child(self.__name, affine)
-	ModelElementItem.on_update(self, affine)
+	ClassifierItem.on_update(self, affine)
 
 	# scaling factors (also compenate the line width):
 	fx = self.width / (ActorItem.ARM * 2 + 2);
 	fy = self.height / (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM + 2);
-	self.__head.ellipse((ActorItem.ARM * fx, (ActorItem.HEAD / 2) * fy),
+	self._head.ellipse((ActorItem.ARM * fx, (ActorItem.HEAD / 2) * fy),
 			    ActorItem.HEAD * fx, ActorItem.HEAD * fy)
-	self.__body.line(((ActorItem.ARM * fx, ActorItem.HEAD * fy),
+	self._body.line(((ActorItem.ARM * fx, ActorItem.HEAD * fy),
 			 (ActorItem.ARM * fx, (ActorItem.HEAD
 			  + ActorItem.NECK + ActorItem.BODY) * fy)))
-	self.__arms.line(((0, (ActorItem.HEAD + ActorItem.NECK) * fy),
+	self._arms.line(((0, (ActorItem.HEAD + ActorItem.NECK) * fy),
 			 (ActorItem.ARM * 2 * fx,
 			  (ActorItem.HEAD + ActorItem.NECK) * fy)))
-	self.__legs.line(((0, (ActorItem.HEAD + ActorItem.NECK
+	self._legs.line(((0, (ActorItem.HEAD + ActorItem.NECK
 			       + ActorItem.BODY + ActorItem.ARM) * fy),
 			  (ActorItem.ARM * fx,
 			   (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY) * fy),
 			  (ActorItem.ARM * 2 * fx, (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM) * fy)))
 	# update the bounding box:
 	ulx, uly, lrx, lry = self.bounds
-	w, h = self.__name.get_property('layout').get_pixel_size()
+	w, h = self._name.get_property('layout').get_pixel_size()
 	if w > self.width:
 	    ulx = (self.width / 2) - (w / 2)
 	    lrx = (self.width / 2) + (w / 2)
 	self.set_bounds ((ulx, uly-1, lrx+1, lry + h))
 
-#    def on_move(self, x, y):
-#	self.__name.request_update()
-#	ModelElementItem.on_move(self, x, y)
-
-#    def on_handle_motion (self, handle, wx, wy, mask):
-#	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
-#	#self.__name_update()
-#	return retval
-
-    def on_event (self, event):
-	if event.type == diacanvas.EVENT_KEY_PRESS:
-	    self.__name.focus()
-	    self.__name.on_event (event)
-	    return True
-	else:
-	    return ModelElementItem.on_event(self, event)
-
-    def on_get_shape_iter(self):
-	return self.__head
-
-    def on_shape_next(self, iter):
-	if iter is self.__head:
-	    return self.__body
-	elif iter is self.__body:
-	    return self.__arms
-	elif iter is self.__arms:
-	    return self.__legs
-	return None
-
-    def on_shape_value(self, iter):
-	return iter
-
-    # Groupable
-
-    def on_groupable_add(self, item):
-	return 0
-
-    def on_groupable_remove(self, item):
-	'''Do not allow the name to be removed.'''
-	#self.emit_stop_by_name('remove')
-	##return 0
-	return 1
-
-    def on_groupable_get_iter(self):
-	try:
-	    return self.__name
-	except AttributeError:
-	    return None
-
-    def on_groupable_next(self, iter):
-	return None
-
-    def on_groupable_value(self, iter):
-	return iter
-
-    def on_groupable_length(self):
-	return 1
-
-    def on_groupable_pos(self, item):
-	if item == self.__name:
-	    return 0
-	else:
-	    return -1
+    def on_shape_iter(self):
+	return iter([self._head, self._body, self._arms, self._legs])
 
 
 gobject.type_register(ActorItem)

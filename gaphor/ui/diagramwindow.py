@@ -76,9 +76,8 @@ class DiagramWindow(AbstractWindow):
 			       params={ 'window': self })
 
     def _on_window_destroy(self, window):
-	"""
-	Window is destroyed. Do the same thing that would be done if
-	File->Close was pressed.
+	"""Window is destroyed. Do the same thing that would
+	be done if File->Close was pressed.
 	"""
 	AbstractWindow._on_window_destroy(self, window)
 	# Set diagram to None, so all refrences to the diagram are destroyed.
@@ -141,9 +140,12 @@ class DiagramWindow(AbstractWindow):
 	log.debug('snap_to_grid: %s' % canvas.get_property('snap_to_grid'))
 	self.set_capability('snap_to_grid', canvas.get_property('snap_to_grid'))
 
-    def __on_diagram_event(self, name, old, new):
-	if name == 'name':
-	    self.get_window().set_title(new)
-	elif name == '__unlink__':
+    def __on_diagram_event(self, element, pspec):
+	if pspec == '__unlink__':
 	    self.close()
-
+	else:
+	    try:
+		if pspec.name == 'name':
+		    self.get_window().set_title(self.__diagram.name or '<None>')
+	    except:
+		pass

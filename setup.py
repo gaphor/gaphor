@@ -212,12 +212,15 @@ class run_Gaphor(Command):
         ('build-dir=', None, ''),
         ('command=', 'c', 'execute command'),
         ('file=', 'f', 'execute file'),
+        ('testfile=', 't', 'execute unittest file'),
     ]
 
     def initialize_options(self):
         self.build_lib = None
         self.command = None
         self.file = None
+        self.testfile = None
+        self.verbosity = 2
 
     def finalize_options(self):
         self.set_undefined_options('build',
@@ -233,8 +236,19 @@ class run_Gaphor(Command):
         if self.command:
             print 'Executing command: %s...' % self.command
             exec self.command
+        elif self.testfile:
+            # Running a unit test is done by opening the unit test file
+            # as a module and running the tests within that module.
+            print 'Running test cases in unittest file: %s...' % self.testfile
+            import imp, unittest
+            fp = open(self.testfile)
+            test_module = imp.load_source('gaphor_test', self.testfile, fp)
+            test_suite = unittest.TestLoader().loadTestsFromModule(test_module)
+            test_runner = unittest.TextTestRunner(verbosity=self.verbosity)
+            result = test_runner.run(test_suite)
+            sys.exit(not result.wasSuccessful())
         elif self.file:
-            print 'Starting execution of file: %s...' % self.file
+            print 'Executing file: %s...' % self.file
             execfile(self.file, {})
         else:
             Gaphor().main()

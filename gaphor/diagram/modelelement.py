@@ -15,73 +15,49 @@ __date__ = '$date$'
 
 
 class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, DiagramItem):
+    # Properties, also add the DiagramItem properties here.
     __gproperties__ = {
-	'subject':	(gobject.TYPE_PYOBJECT, 'subject',
-			 'subject held by the model element',
-			 gobject.PARAM_READWRITE),
 	'auto-resize':	(gobject.TYPE_BOOLEAN, 'auto resize',
 			 'Set auto-resize for the diagram item',
-			 1, gobject.PARAM_READWRITE),
+			 1, gobject.PARAM_READWRITE)
     }
+    __gproperties__.update(DiagramItem.__gproperties__)
 
-    __gsignals__ = { '__unlink__': DiagramItem.signal_prototype,
-		     '__relink__': DiagramItem.signal_prototype
-    }
+    __gsignals__ = DiagramItem.__gsignals__
 
     def __init__(self, id=None):
 	self.__gobject_init__()
 	#diacanvas.CanvasElement.__init__(self)
 	DiagramItem.__init__(self, id)
 	self.auto_resize = 0
-	self._subject = None
 
     def save(self, save_func):
-	self.save_property(save_func, 'affine')
-	self.save_property(save_func, 'width')
-	self.save_property(save_func, 'height')
-	save_func('subject', self.subject)
-	self.save_property(save_func, 'auto-resize')
+	for prop in ('affine', 'width', 'height', 'auto-resize'):
+	    self.save_property(save_func, prop)
+	DiagramItem.save(self, save_func)
 
     def load(self, name, value):
 	#if name in ( 'affine', 'width', 'height', 'auto-resize' ):
 	#if name == 'subject':
 	#self.set_property('subject', store.reference('subject')[0])
 	if name == 'subject':
-	    self._subject = value
+	    self.subject = value
 	else:
 	    #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
 	    self.set_property(name, eval(value))
 
-    def postload(self):
-	pass
-
     def do_set_property(self, pspec, value):
-	if pspec.name == 'subject':
-	    #print 'Setting subject:', value
-	    # property is preserved by self.subject's property
-	    if value is not self._subject:
-		self.preserve_property('subject')
-		if self._subject:
-		    self._subject.disconnect('__unlink__', self.__on_unlink, obj, value)
-		s = self._subject
-		self._subject = value
-		if len(s.presentation) == 0:
-		    s.unlink()
-		if value:
-		    value.connect('__unlink__', self.__on_unlink, obj, value)
-	elif pspec.name == 'auto-resize':
+	if pspec.name == 'auto-resize':
 	    self.preserve_property('auto-resize')
 	    self.auto_resize = value
 	else:
-	    raise AttributeError, 'Unknown property %s' % pspec.name
+	    DiagramItem.do_set_property(self, pspec, value)
 
     def do_get_property(self, pspec):
-	if pspec.name == 'subject':
-	    return self._subject
-	elif pspec.name == 'auto-resize':
+	if pspec.name == 'auto-resize':
 	    return self.auto_resize
 	else:
-	    raise AttributeError, 'Unknown property %s' % pspec.name
+	    return DiagramItem.do_get_property(self, pspec)
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect

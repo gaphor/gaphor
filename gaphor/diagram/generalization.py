@@ -10,60 +10,50 @@ import relationship
 
 class GeneralizationItem(relationship.RelationshipItem):
 
-    def __init__(self):
-	relationship.RelationshipItem.__init__(self)
+    def __init__(self, id=None):
+	relationship.RelationshipItem.__init__(self, id)
 	self.set(has_head=1, head_fill_color=0,
 		 head_a=15.0, head_b=15.0, head_c=10.0, head_d=10.0)
 	
     # Gaphor Connection Protocol
 
     def find_relationship(self, head_subject, tail_subject):
+	"""See RelationshipItem.find_relationship().
 	"""
-	Find an existing relationship by iterating the 'specialization's
-	of @head_subject and check if the @tail_subject is the child.
-	This does not check if such a relationship is already on the canvas,
-	in which case a new relationship should be created.
-	"""
-	for rel in head_subject.specialization:
-	    if rel.child is tail_subject:
+	for spec in head_subject.generalization:
+	    if spec.general is tail_subject:
 		# check for this entry on self.canvas
-		for item in rel.presentations():
+		for item in spec.subject.presentation:
 		    # Allow self to be returned. Avoids strange
 		    # behaviour during loading
 		    if item.canvas is self.canvas and item is not self:
 			break
 		else:
-		    return rel
+		    return spec
 	return None
 
     def allow_connect_handle(self, handle, connecting_to):
-	"""
-	This method is called by a canvas item if the user tries to connect
-	this object's handle. allow_connect_handle() checks if the line is
-	allowed to be connected. In this case that means that one end of the
-	line should be connected to a Comment.
-	Returns: TRUE if connection is allowed, FALSE otherwise.
+	"""See RelationshipItem.allow_connect_handle().
 	"""
 	try:
-	    if not isinstance(connecting_to.subject, UML.GeneralizableElement):
-		return 0
+	    if not isinstance(connecting_to.subject, UML.Classifier):
+		return False
 
 	    c1 = self.handles[0].connected_to
 	    c2 = self.handles[-1].connected_to
 	    if not c1 and not c2:
-		return 1
+		return True
 	    if self.handles[0] is handle:
 		return (self.handles[-1].connected_to.subject is not connecting_to.subject)
 	    elif self.handles[-1] is handle:
 		return (self.handles[0].connected_to.subject is not connecting_to.subject)
 	    assert 1, 'Should never be reached...'
-	except AttributeError:
-	    return 0
+	except AttributeError, e:
+	    log.debug('Generalization.allow_connect_handle: %s' % e)
+	    return False
 
     def confirm_connect_handle (self, handle):
-	"""
-	This method is called after a connection is established. This method
-	sets the internal state of the line and updates the data model.
+	"""See RelationshipItem.confirm_connect_handle().
 	"""
 	#print 'confirm_connect_handle', handle
 	c1 = self.handles[0].connected_to
@@ -74,13 +64,16 @@ class GeneralizationItem(relationship.RelationshipItem):
 	    relation = self.find_relationship(s1, s2)
 	    if not relation:
 		relation = GaphorResource(UML.ElementFactory).create(UML.Generalization)
-		relation.parent = s1
-		relation.child = s2
-	    self._set_subject(relation)
+		relation.general = s1
+		relation.specific = s2
+	    self.subject = relation
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
+	"""See RelationshipItem.confirm_disconnect_handle().
+	"""
 	#print 'confirm_disconnect_handle', handle
 	if self.subject:
-	    self._set_subject(None)
+	    del self.subject
+
 
 gobject.type_register(GeneralizationItem)

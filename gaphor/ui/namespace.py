@@ -1,4 +1,4 @@
-# vim: sw=4:et
+# vim: sw=4:et:ai
 """This is the TreeView that is most common (for example: it is used
 in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
@@ -31,7 +31,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 
         self.factory = factory
 
-        factory.connect(self.on_factory_signals, factory)
+        factory.connect(self.on_factory_signals)
 
         self.root = (None, [])
 
@@ -44,19 +44,19 @@ class NamespaceModel(gtk.GenericTreeModel):
         path = self.path_from_element(element)
         #print 'new_node_from_element', path
         self.row_inserted(path, self.get_iter(path))
-        element.connect('name', self.on_name_changed, element)
+        element.connect('name', self.on_name_changed)
 
         if isinstance(element, UML.Namespace):
-            element.connect('ownedMember', self.on_ownedmember_changed, element)
+            element.connect('ownedMember', self.on_ownedmember_changed)
             for om in element.ownedMember:
                 self.new_node_from_element(om, node)
         return node
 
     def detach_notifiers_from_node(self, node):
         """Detach notifiers for node"""
-        node[0].disconnect('name', self.on_name_changed, node[0])
+        node[0].disconnect(self.on_name_changed)
         if isinstance(node[0], UML.Namespace):
-            node[0].disconnect('ownedMember', self.on_ownedmember_changed, node[0])
+            node[0].disconnect(self.on_ownedmember_changed)
             for child in node[1]:
                 self.detach_notifiers_from_node(child)
 
@@ -70,6 +70,8 @@ class NamespaceModel(gtk.GenericTreeModel):
                 if child[0] is element:
                     break;
                 index += 1
+            else:
+                raise AttributeError, 'Element %s is not part of the NamespaceModel' % element
             #print 'parent_path', parent_node[1], parent_path + (index,)
             return child, parent_path + (index,)
         else:
@@ -115,7 +117,7 @@ class NamespaceModel(gtk.GenericTreeModel):
                 doit(child, depth + 1)
         doit(self.root)
 
-    def on_name_changed(self, name, element):
+    def on_name_changed(self, element, pspec):
         """the name of element has changed, update the tree model"""
         path = self.path_from_element(element)
         if path:
@@ -128,30 +130,37 @@ class NamespaceModel(gtk.GenericTreeModel):
                 new_order = []
                 for o in original:
                     new_order.append(children.index(o))
-                self.rows_reordered(parent_path, self.get_iter(parent_path), new_order)
+#TODO:                self.rows_reordered(parent_path, self.get_iter(parent_path), new_order)
 
-    def on_ownedmember_changed(self, name, element):
+    def on_ownedmember_changed(self, element, pspec):
         """update the tree model when the ownedMember list changes.
-        Element is the object whose ownedMember property has changed."""
+        Element is the object whose ownedMember property has changed.
+        """
+        print 'on_ownedmember_changed', element
         node = self.node_from_element(element)
+        # The elements currently known by the tree model
         node_members = map(lambda e: e[0], node[1])
+        # The elements that are now children of the element
         owned_members = element.ownedMember
-        if len(node[1]) < len(owned_members):
+        if len(node_members) < len(owned_members):
             # element added
-            print 'element added'
+            print 'NamespaceModel: element added'
             for om in owned_members:
                 if om not in node_members:
                     # we have found the newly added element
                     self.new_node_from_element(om, node)
                     assert len(node[1]) == len(owned_members)
                     break
-        elif len(node[1]) > len(owned_members):
+        elif len(node_members) > len(owned_members):
             # element removed
             print 'element removed', element.name, element.namespace, node
+            index = 0
             for child in node[1]:
                 if child[0] not in owned_members:
                     # we have found the removed element
-                    path = self.path_from_element(child[0])
+                    #path = self.path_from_element(child[0])
+                    path = self.path_from_element(element) + (index,)
+                    log.debug('NS: removing node "%s" from "%s" (path=%s)' % (child[0].name, element.name, path))
                     print 'path=', child[0].name, path
                     try:
                         self.detach_notifiers_from_node(child)
@@ -163,24 +172,26 @@ class NamespaceModel(gtk.GenericTreeModel):
                         import traceback
                         traceback.print_exc()
                     break
+                index += 1
             if len(owned_members) == 0:
                 path = self.path_from_element(element)
                 self.row_has_child_toggled(path, self.get_iter(path))
-        #else:
-        #    print 'model is in sync'
+        else:
+            print 'model is in sync for "%s"' % element.name
 
-    def on_factory_signals (self, key, obj, factory):
-        if key == 'model':
+    def on_factory_signals (self, obj, pspec):
+        if pspec == 'model':
             toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
-            #if len(toplevel) != 1:
-            #    log.error('Multiple toplevel namespace elements, can handle only one')
-            for t in toplevel:
-                print 'factory::model toplevel', t
-                self.new_node_from_element(t, self.root)
-            print 'self.root', self.root
 
-        elif key == 'flush':
-            for i in  self.root:
+            for t in toplevel:
+                #print 'factory::model toplevel', t, t.name
+                self.new_node_from_element(t, self.root)
+            #print 'self.root', self.root
+
+        elif pspec == 'flush':
+            for i in self.root[1]:
+                self.detach_notifiers_from_node(i)
+                # remove the node, it is now the first in the list:
                 self.row_deleted((0,))
             self.root = (None, [])
 

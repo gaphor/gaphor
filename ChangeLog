@@ -1,3 +1,20 @@
+2002-06-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	(here, only the most important changes are noted)
+	* gaphor/diagram/classifier.py, diagramline.py: new class
+	* gaphor/diagram/*.py: updated Actor, Package, Dependency, Comment,
+	CommentLine, Generalization, UseCase: now work with the new datamodel
+	* gaphor/UML/element.py: Notify signals are send using GTK+ like
+	signals (element, param_spec). All other objects are updated to work
+	with it.
+	
+2002-05-30  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: added run --testfile option
+	* gaphor/ui/namespace.py: fix ownedMember remove actions
+	* tests/test-ns.py: added tests for NamespaceModel
+	* tests/test-properties.py: fixed tests.
+	
 2002-05-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/actor.py, modelelement.py, diagramitem.py:

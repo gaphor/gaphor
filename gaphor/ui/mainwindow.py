@@ -19,7 +19,7 @@ class MainWindow(AbstractWindow):
 	self.__transient_windows = list()
 	# Act on changes in the element factory resource
 	factory = GaphorResource(UML.ElementFactory)
-	factory.connect(self.__on_element_factory_signal, factory)
+	factory.connect(self.__on_element_factory_signal)
 
     def get_model(self):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
@@ -116,7 +116,8 @@ class MainWindow(AbstractWindow):
     def __on_transient_window_notify_title(self, window):
 	pass
 
-    def __on_element_factory_signal(self, key, obj, factory):
-	print '__on_element_factory_signal', key
+    def __on_element_factory_signal(self, obj, key):
+	#print '__on_element_factory_signal', key
+	factory = GaphorResource(UML.ElementFactory)
 	self.set_capability('model', not factory.is_empty())
 

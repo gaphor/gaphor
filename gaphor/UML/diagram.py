@@ -12,7 +12,7 @@ import gobject
 import diacanvas
 import gaphor.misc.uniqueid as uniqueid
 
-class _Canvas(diacanvas.Canvas):
+class DiagramCanvas(diacanvas.Canvas):
     '''
     Some additions to diacanvas.Canvas class, esp. load and save functionallity.
     '''
@@ -21,7 +21,7 @@ class _Canvas(diacanvas.Canvas):
 	    'grid_ofs_y', 'grid_color', 'grid_bg' ]
 
     def save(self, save_func):
-	for prop in _Canvas._savable_canvas_properties:
+	for prop in DiagramCanvas._savable_canvas_properties:
 	    save_func(prop, self.get_property(prop))
 	save_func('root_affine', self.root.get_property('affine'))
 	# Save child items:
@@ -48,16 +48,20 @@ class _Canvas(diacanvas.Canvas):
 	self.clear_redo()
 	self.set_property ("allow_undo", 1)
 
-gobject.type_register(_Canvas)
+gobject.type_register(DiagramCanvas)
 
 
 class Diagram(Namespace, PackageableElement):
 
     def __init__(self, id):
 	super(Diagram, self).__init__(id)
-        self.canvas = _Canvas()
+        self.canvas = DiagramCanvas()
 	self.canvas.set_undo_stack_depth(10)
 	self.canvas.set_property ("allow_undo", 1)
+
+    def save(self, save_func):
+	super(Diagram, self).save(save_func)
+	save_func('canvas', self.canvas)
 
     def create(self, type):
 	"""Create a new canvas item on the canvas. It is created with

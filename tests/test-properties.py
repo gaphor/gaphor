@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# vim:sw=4:et
+# vim:sw=4:et:ai
 
 from gaphor.UML.properties import *
 from gaphor.UML.element import Element
@@ -83,8 +83,8 @@ def test_associations():
     class B(Element): pass
     class C(Element): pass
 
-    A.one = association('one', B, 0, 1, opposite='two')
-    B.two = association('two', A, 0, '*', opposite='one')
+    A.one = association('one', B, lower=0, upper=1, opposite='two')
+    B.two = association('two', A, lower=0, upper='*', opposite='one')
 
     a1 = A()
     a2 = A()
@@ -92,11 +92,14 @@ def test_associations():
     b2 = B()
 
     b1.two = a1
+    assert len(b1.two) == 1, 'len(b1.two) == %d' % len(b1.two)
+    assert a1 in b1.two
+    assert a1.one is b1, '%s/%s' % (a1.one, b1)
     b1.two = a1
     b1.two = a1
     assert len(b1.two) == 1, 'len(b1.two) == %d' % len(b1.two)
     assert a1 in b1.two
-    assert a1.one is b1
+    assert a1.one is b1, '%s/%s' % (a1.one, b1)
     assert len(a1._observers.get('__unlink__')) == 1
     assert len(b1._observers.get('__unlink__')) == 1
 
@@ -228,8 +231,8 @@ def test_associations():
     # also the signal should be removed
     b1.unlink()
 
-    assert len(a1._observers.get('__unlink__')) == 1
-    assert len(b1._observers.get('__unlink__')) == 1
+    assert len(a1._observers.get('__unlink__')) == 1, a1._observers.get('__unlink__')
+    #assert len(b1._observers.get('__unlink__')) == 0, b1._observers.get('__unlink__')
 
     assert b1 not in a1.one
     assert b2 in a1.one
@@ -303,7 +306,7 @@ def test_derivedunion():
 
     A.a = association('a', A)
     A.b = association('b', A, 0, 1)
-    A.u = derivedunion('u', A.a, A.b)
+    A.u = derivedunion('u', 0, '*', A.a, A.b)
 
     a = A()
     assert len(a.a) == 0, 'a.a = %s' % a.a
@@ -334,17 +337,39 @@ def test_derivedunion():
                 self.notified = True
 
     E.a = association('a', A)
-    E.u = derivedunion('u', E.a)
+    E.u = derivedunion('u', 0, '*', E.a)
 
     e = E()
     assert e.notified == False
     e.a = a
     assert e.notified == True
 
-if __name__ == '__main__':
-    test_associations()
-    test_attributes()
-    test_enumerations()
-    test_notify()
-    test_derivedunion()
-    print 'All tests passed.'
+def test_composite():
+    class A(Element):
+        is_unlinked = False
+        def unlink(self):
+            self.is_unlinked = True
+            Element.unlink(self)
+
+    A.comp = association('comp', A, composite=True, opposite='other')
+    A.other = association('other', A, composite=False, opposite='comp')
+
+    a = A()
+    a.name = 'a'
+    b = A()
+    b.name = 'b'
+    a.comp = b
+    assert b in a.comp
+    assert a in b.other
+
+    a.unlink()
+    assert a.is_unlinked
+    assert b.is_unlinked
+
+test_associations()
+test_attributes()
+test_enumerations()
+test_notify()
+test_derivedunion()
+test_composite()
+print 'All tests passed.'
