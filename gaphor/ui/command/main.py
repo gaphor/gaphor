@@ -228,7 +228,7 @@ class AboutCommand(Command):
 	logo = gtk.gdk.pixbuf_new_from_file (config.DATADIR + '/pixmaps/logo.png')
 	about = gnome.ui.About(name = 'Gaphor',
 			   version = config.VERSION,
-			   copyright = 'Copyright (c) 2001-2002 Arjan J. Molenaar',
+			   copyright = 'Copyright (c) 2001-2003 Arjan J. Molenaar',
 			   comments = 'UML Modeling for GNOME',
 			   authors = ('Arjan J. Molenaar <arjanmolenaar@hetnet.nl>',),
 			   logo_pixbuf = logo)

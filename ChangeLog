@@ -1,3 +1,8 @@
+2002-01-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainwindow.py, gaphor/ui/command/main.py: added
+	capabilities for main window.
+
 2002-12-30  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/abstractwindow.py: hide not-relevant items in popup menus.

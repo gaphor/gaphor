@@ -76,6 +76,7 @@
 	<popup name="NamespaceView">
 	    <menuitem name="OpenModelElement" verb=""/>
 	    <menuitem name="RenameModelElement" verb=""/>
+	    <menuitem name="DeleteElement" verb=""/>
 	    <separator/>
 	    <menuitem name="CreateDiagram" verb=""/>
 	</popup>

@@ -22,7 +22,7 @@ class UseCaseItem(ModelElementItem):
 	self.add_construction(self.__name)
 	assert self.__name != None
 	font = pango.FontDescription(UseCaseItem.FONT)
-	self.__name.set(font=font, width=self.width, multiline=0,
+	self.__name.set(font=font, width=self.width, #multiline=0,
 			alignment=pango.ALIGN_CENTER)
 	self.__name.connect('text_changed', self.on_text_changed)
 

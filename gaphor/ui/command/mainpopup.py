@@ -50,6 +50,24 @@ CommandInfo (name='RenameModelElement', _label='_Rename',
 	     context='main.popup',
 	     command_class=RenameCommand).register()
 
+
+class DeleteCommand(Command):
+    """Delete a model element through the tree view. This is only applicable
+    to Diagram's and is not undoable."""
+
+    def set_parameters(self, params):
+	self._window = params['window']
+	self._element = params['element']
+
+    def execute(self):
+	if isinstance(self._element, UML.Diagram):
+	    self._element.unlink()
+
+CommandInfo (name='DeleteElement', _label='_Delete',
+	     context='main.popup',
+	     subject=UML.Diagram,
+	     command_class=DeleteCommand).register()
+
 from main import CreateDiagramCommand
 
 CommandInfo (name='CreateDiagram', _label='_New diagram', pixname='gaphor-diagram',
