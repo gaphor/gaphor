@@ -1,14 +1,14 @@
 '''
-Actor diagram item
+ActorItem diagram item
 '''
 # vim:sw=4
 
 import UML
-from modelelement import ModelElement
+from modelelement import ModelElementItem
 import diacanvas
 import pango
 
-class Actor(ModelElement):
+class ActorItem(ModelElementItem):
     HEAD=11
     ARM=19
     NECK=10
@@ -16,11 +16,11 @@ class Actor(ModelElement):
     FONT='sans bold 10'
 
     def __init__(self):
-	ModelElement.__init__(self)
-	self.set(height=(Actor.HEAD + Actor.NECK + Actor.BODY + Actor.ARM),
-		 width=(Actor.ARM * 2))
-	self.set(min_height=(Actor.HEAD + Actor.NECK + Actor.BODY + Actor.ARM),
-		 min_width=(Actor.ARM * 2))
+	ModelElementItem.__init__(self)
+	self.set(height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
+		 width=(ActorItem.ARM * 2))
+	self.set(min_height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
+		 min_width=(ActorItem.ARM * 2))
 	# Head
 	self.__head = diacanvas.shape.Ellipse()
 	self.__head.set_line_width(2.0)
@@ -36,48 +36,48 @@ class Actor(ModelElement):
 	# Name
 	self.add(diacanvas.CanvasText())
 	assert self.__name != None
-	font = pango.FontDescription(Actor.FONT)
+	font = pango.FontDescription(ActorItem.FONT)
 	self.__name.set(font=font, width=self.width,
 			alignment=pango.ALIGN_CENTER)
 	#self.__name_update()
 	# Center the text:
 	w, h = self.__name.get_property('layout').get_pixel_size()
-	#print 'Actor:',w,h
+	#print 'ActorItem:',w,h
 	#self.__name.move(0, self.height)
 	self.__name.set(height=h, width=w)
-	self.__name.connect_object('text_changed', Actor.on_text_changed, self)
+	self.__name.connect_object('text_changed', ActorItem.on_text_changed, self)
 
     def __name_update (self):
 	'''Center the name text under the actor.'''
 	w, h = self.__name.get_property('layout').get_pixel_size()
-	#print 'Actor:',w,h
+	#print 'ActorItem:',w,h
 	#self.set(min_width=w + UseCase.MARGIN_X,
 	#	 min_height=h + UseCase.MARGIN_Y)
 	a = self.__name.get_property('affine')
-	aa = (a[0], a[1], a[2], a[3], w / -2 + Actor.ARM, self.height)
+	aa = (a[0], a[1], a[2], a[3], w / -2 + ActorItem.ARM, self.height)
 	#self.__name.set(affine=aa, width=self.width, height=h)
 	if w < self.width:
 	    w = self.width
 	self.__name.set(affine=aa, width=w, height=h)
 	
     def on_update(self, affine):
-	ModelElement.on_update(self, affine)
+	ModelElementItem.on_update(self, affine)
 
 	# scaling factors (also compenate the line width):
-	fx = self.width / (Actor.ARM * 2 - 2);
-	fy = self.height / (Actor.HEAD + Actor.NECK + Actor.BODY + Actor.ARM - 2);
-	self.__head.ellipse((Actor.ARM * fx, (Actor.HEAD / 2) * fy),
-			    Actor.HEAD * fx, Actor.HEAD * fy)
+	fx = self.width / (ActorItem.ARM * 2 - 2);
+	fy = self.height / (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM - 2);
+	self.__head.ellipse((ActorItem.ARM * fx, (ActorItem.HEAD / 2) * fy),
+			    ActorItem.HEAD * fx, ActorItem.HEAD * fy)
 	self.__head.request_update()
-	self.__body.line(((Actor.ARM * fx, Actor.HEAD * fy),
-			 (Actor.ARM * fx, (Actor.HEAD + Actor.NECK + Actor.BODY) * fy)))
+	self.__body.line(((ActorItem.ARM * fx, ActorItem.HEAD * fy),
+			 (ActorItem.ARM * fx, (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY) * fy)))
 	self.__body.request_update()
-	self.__arms.line(((0, (Actor.HEAD + Actor.NECK) * fy),
-			 (Actor.ARM * 2 * fx, (Actor.HEAD + Actor.NECK) * fy)))
+	self.__arms.line(((0, (ActorItem.HEAD + ActorItem.NECK) * fy),
+			 (ActorItem.ARM * 2 * fx, (ActorItem.HEAD + ActorItem.NECK) * fy)))
 	self.__arms.request_update()
-	self.__legs.line(((0, (Actor.HEAD + Actor.NECK + Actor.BODY + Actor.ARM) * fy),
-			  (Actor.ARM * fx, (Actor.HEAD + Actor.NECK + Actor.BODY) * fy),
-			  (Actor.ARM * 2 * fx, (Actor.HEAD + Actor.NECK + Actor.BODY + Actor.ARM) * fy)))
+	self.__legs.line(((0, (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM) * fy),
+			  (ActorItem.ARM * fx, (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY) * fy),
+			  (ActorItem.ARM * 2 * fx, (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM) * fy)))
 	self.__legs.request_update()
 	self.__name.update_now()
 	# Update the bounding box:
@@ -105,10 +105,10 @@ class Actor(ModelElement):
 
     def on_move(self, x, y):
 	self.__name.request_update()
-	ModelElement.on_move(self, x, y)
+	ModelElementItem.on_move(self, x, y)
 
     def on_handle_motion (self, handle, wx, wy, mask):
-	retval  = ModelElement.on_handle_motion(self, handle, wx, wy, mask)
+	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
 	self.__name_update()
 	return retval
 
@@ -151,7 +151,7 @@ class Actor(ModelElement):
 	    self.__name.set(text=self.subject.name)
 	    self.__name_update()
 	else:
-	    ModelElement.on_subject_update(self, name)
+	    ModelElementItem.on_subject_update(self, name)
 
     def on_text_changed(self, text):
 	if text != self.subject.name:
@@ -159,4 +159,4 @@ class Actor(ModelElement):
 	    self.__name_update()
 
 import gobject
-gobject.type_register(Actor)
+gobject.type_register(ActorItem)

@@ -1,5 +1,5 @@
 '''
-ModelElement
+ModelElementItem
 
 Abstract base class for element-like Diagram items.
 '''
@@ -20,7 +20,7 @@ __author__ = 'Arjan J. Molenaar'
 __date__ = '$date$'
 
 
-class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
+class ModelElementItem (dia.CanvasElement, dia.CanvasAbstractGroup):
 #    __metaclass__ = MetaItem
     __gproperties__ = {
 	'id':		(gobject.TYPE_PYOBJECT, 'id',
@@ -39,7 +39,7 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	self.subject = None
 	self.auto_resize = 0
 	self.__id = -1
-	self.connect ('notify::parent', ModelElement.on_parent_notify)
+	self.connect ('notify::parent', ModelElementItem.on_parent_notify)
 
     def save (self, store):
 	store.save_property('affine')
@@ -109,12 +109,12 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	    if self.parent:
 		    self.parent.remove(self)
 	else:
-	    print 'ModelElement: unhandled signal "%s"' % str(name)
+	    print 'ModelElementItem: unhandled signal "%s"' % str(name)
 
-gobject.type_register(ModelElement)
-dia.set_callbacks(ModelElement)
-dia.set_groupable(ModelElement)
+gobject.type_register(ModelElementItem)
+dia.set_callbacks(ModelElementItem)
+dia.set_groupable(ModelElementItem)
 
 if __name__ == '__main__':
-    me = ModelElement()
+    me = ModelElementItem()
     print me, me.__gtype__

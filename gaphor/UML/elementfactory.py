@@ -4,7 +4,9 @@ This module contains some functions for managing UML models. This
 includes saving, loading and flushing models. In the future things like
 consistency checking should also be included.'''
 
-from misc import Singleton, Signal, Storage
+import misc.singleton as Singleton
+import misc.signal as Signal
+import misc.storage as Storage
 import libxml2 as xml
 from element import Element
 

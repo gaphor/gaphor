@@ -30,8 +30,8 @@ if __name__ == '__main__':
 import types, copy
 from enumeration import Enumeration_
 from sequence import Sequence
-from misc import Signal
-
+#from misc import Signal
+import misc.signal as Signal
 # Some default types as defined in the MetaModel.
 class Integer(int): pass
 class UnlimitedInteger(long): pass

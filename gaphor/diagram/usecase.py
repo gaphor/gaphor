@@ -1,46 +1,46 @@
 '''
-UseCase diagram item
+UseCaseItem diagram item
 '''
 # vim:sw=4
 
 import UML
-from modelelement import ModelElement
+from modelelement import ModelElementItem
 import diacanvas
 import pango
 
-class UseCase(ModelElement):
+class UseCaseItem(ModelElementItem):
     MARGIN_X=60
     MARGIN_Y=30
     FONT='sans bold 10'
 
     def __init__(self):
-	ModelElement.__init__(self)
+	ModelElementItem.__init__(self)
 	self.set(height=50, width=100)
 	self.__border = diacanvas.shape.Ellipse()
 	self.__border.set_line_width(2.0)
 	self.add(diacanvas.CanvasText())
 	assert self.__name != None
-	font = pango.FontDescription(UseCase.FONT)
+	font = pango.FontDescription(UseCaseItem.FONT)
 	self.__name.set(font=font, width=self.width,
 			alignment=pango.ALIGN_CENTER)
 	# Center the text:
 	w, h = self.__name.get_property('layout').get_pixel_size()
-	print 'UseCase:',w,h
+	print 'UseCaseItem:',w,h
 	self.__name.move(0, (self.height - h) / 2)
 	self.__name.set(height=h)
-	self.__name.connect_object('text_changed', UseCase.on_text_changed, self)
+	self.__name.connect_object('text_changed', UseCaseItem.on_text_changed, self)
 
     def __name_update (self):
 	'''Center the name text in the usecase.'''
 	w, h = self.__name.get_property('layout').get_pixel_size()
-	self.set(min_width=w + UseCase.MARGIN_X,
-		 min_height=h + UseCase.MARGIN_Y)
+	self.set(min_width=w + UseCaseItem.MARGIN_X,
+		 min_height=h + UseCaseItem.MARGIN_Y)
 	a = self.__name.get_property('affine')
 	aa = (a[0], a[1], a[2], a[3], a[4], (self.height - h) / 2)
 	self.__name.set(affine=aa, width=self.width, height=h)
 
     def on_update(self, affine):
-	ModelElement.on_update(self, affine)
+	ModelElementItem.on_update(self, affine)
 	self.__border.ellipse(center=(self.width / 2, self.height / 2), width=self.width - 0.5, height=self.height - 0.5)
 	self.__border.request_update()
 	self.__name.update_now()
@@ -56,10 +56,10 @@ class UseCase(ModelElement):
 
     def on_move(self, x, y):
 	self.__name.request_update()
-	ModelElement.on_move(self, x, y)
+	ModelElementItem.on_move(self, x, y)
 
     def on_handle_motion (self, handle, wx, wy, mask):
-	retval  = ModelElement.on_handle_motion(self, handle, wx, wy, mask)
+	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
 	self.__name_update()
 	return retval
 
@@ -102,11 +102,11 @@ class UseCase(ModelElement):
 	    self.__name.set(text=self.subject.name)
 	    self.__name_update()
 	else:
-	    ModelElement.on_subject_update(self, name)
+	    ModelElementItem.on_subject_update(self, name)
 
     def on_text_changed(self, text):
 	if text != self.subject.name:
 	    self.subject.name = text
 
 import gobject
-gobject.type_register(UseCase)
+gobject.type_register(UseCaseItem)

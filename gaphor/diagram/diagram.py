@@ -4,8 +4,9 @@ This module contains a model elements (!) Diagram which is the abstract
 repreesentation of a UML diagram.'''
 
 import UML, diacanvas, types
-from usecase import UseCase
-from actor import Actor
+from diagram import *
+#from usecase import UseCaseItem
+#from actor import ActorItem
 
 # We should get rid of the CID, since it changes a lot of values each save
 # so it is not really useful for archiving in CVS. Each item should create
@@ -13,13 +14,13 @@ from actor import Actor
 # be created on a diagram basis (this makes the diagram the
 # CanvasItemFactory).
 
-diagram2UML = {
-	Actor: UML.Actor,
+#_diagram2UML = {
+#	ActorItem: UML.Actor,
 #	Comment: UML.Comment,
-	UseCase: UML.UseCase
+#	UseCaseItem: UML.UseCase
 #	CommentLine: None,
 #	Generalization: None
-}
+#}
 
 class Diagram(UML.Namespace):
     _attrdef = { 'canvas': ( None, diacanvas.Canvas ) }
@@ -39,7 +40,7 @@ class Diagram(UML.Namespace):
 	item = type()
 	self.canvas.root.add(item)
 	if not subject:
-	    uml_type = diagram2UML[type]
+	    uml_type = None#_diagram2UML[type]
 	    if uml_type is not None:
 		#print 'Setting new subject of type', uml_type
 		factory = UML.ElementFactory ()
