@@ -11,17 +11,18 @@ from gaphor import Gaphor
 class DiagramWindow(object):
     serial = 1
 
-    def __init__(self, diagram=None):
+    def __init__(self):
 	self.__diagram = None
-	if diagram:
-	    self.set_diagram(diagram)
 
     def set_diagram(self, dia):
 	if self.__diagram:
 	    self.__diagram.disconnect(self.__unlink)
 	self.__diagram = dia
-	self.__window.set_title(dia.name or 'NoName')
-	self.__view.set_diagram(dia)
+	try:
+	    self.__window.set_title(dia.name or 'NoName')
+	    self.__view.set_diagram(dia)
+	except:
+	    pass
 	if dia:
 	    dia.connect(self.__unlink)
 
@@ -52,7 +53,7 @@ class DiagramWindow(object):
 	ui_container = window.get_ui_container ()
 	ui_engine = window.get_ui_engine ()
 	ui_engine.config_set_path (config.CONFIG_PATH + '/diagram')
-	ui_component = bonobo.ui.Component (title)
+	ui_component = bonobo.ui.Component ('diagram')
 	ui_component.set_container (ui_container.corba_objref ())
 
 	bonobo.ui.util_set_ui (ui_component, config.DATADIR,
@@ -111,6 +112,10 @@ class DiagramWindow(object):
     def close(self):
 	"""Close the window."""
 	self.__window.destroy()
+	del self.__window
+	del self.__ui_component
+	del self.__view
+	del self.__diagram
 
     def __unlink(self, name, dummy1, dummy2):
 	if name == '__unlink__':

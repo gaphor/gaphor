@@ -149,10 +149,16 @@ class RevertCommand(Command):
 
 class QuitCommand(Command):
 
+    def set_parameters(self, params):
+	self._window = params['window']
+
     def execute(self):
-	import bonobo
+	import bonobo, gc
 	print 'Exiting gaphor...',
+	self._window.close()
 	bonobo.main_quit()
+	del self._window
+	gc.collect()
 	print 'bye!'
 
 CommandInfo (name='FileQuit', _label='_Quit', pixname='Exit',

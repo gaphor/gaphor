@@ -16,7 +16,6 @@ class MainWindow(object):
     """
 
     def __init__(self):
-	self.__menu = None
 	pass
 
     def get_window(self):
@@ -39,7 +38,7 @@ class MainWindow(object):
 	ui_container = window.get_ui_container ()
 	ui_engine = window.get_ui_engine ()
 	ui_engine.config_set_path (config.CONFIG_PATH)
-	ui_component = bonobo.ui.Component ('gaphor')
+	ui_component = bonobo.ui.Component ('tree')
 	ui_component.set_container (ui_container.corba_objref ())
 
 	bonobo.ui.util_set_ui (ui_component, config.DATADIR,
@@ -67,6 +66,13 @@ class MainWindow(object):
 	verbs = command_registry.create_verbs(context='main.menu',
 					      params={ 'window': self })
 	ui_component.add_verb_list (verbs, None)
+
+    def close(self):
+	self.__window.destroy()
+	del self.__window
+	del self.__ui_component
+	del self.__model
+	del self.__view
 
     def __destroy_event_cb (self, window):
         cmd_reg = GaphorResource('CommandRegistry')
