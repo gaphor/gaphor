@@ -2,11 +2,7 @@
 
 <menu>
     <submenu name="File" _label="_File">
-	<placeholder name="Print" delimit="top" hidden="1">
-	    <menuitem name="FilePrint" verb="" _label="_Print"/>
-	    <menuitem name="FilePrintSetup" verb="" _label="Print S_etup..."/>
-	    <menuitem name="FilePrintPreview" verb="" _label="Print Pre_view"/>
-	</placeholder>
+	<menuitem name="FileExportSVG" verb=""/>
 	<separator/>
         <menuitem name="FileClose" verb=""/>
     </submenu>

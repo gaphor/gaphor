@@ -224,6 +224,16 @@ class NamespaceModel(gtk.GenericTreeModel):
 
 
 class NamespaceView(gtk.TreeView):
+    TARGET_STRING = 0
+    TARGET_ROOTWIN = 1
+    DND_TARGETS = [
+	('STRING', 0, TARGET_STRING),
+	('text/plain', 0, TARGET_STRING),
+	('application/x-rootwin-drop', 0, TARGET_ROOTWIN)]
+    __gsignals__ = { 'drag_begin': 'override',
+    		     'drag_data_get': 'override',
+    		     'drag_data_delete': 'override',
+		     'drag_data_received': 'override' }
 
     def __init__(self, model):
 	assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
@@ -248,6 +258,20 @@ class NamespaceView(gtk.TreeView):
 
 	assert len (column.get_cell_renderers()) == 2
 	self.append_column (column)
+
+	# DND info:
+	# drag
+	self.drag_source_set(gtk.gdk.BUTTON1_MASK | gtk.gdk.BUTTON3_MASK,
+			     NamespaceView.DND_TARGETS, gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+	#self.connect('drag_begin', NamespaceView.do_drag_begin)
+	#self.connect('drag_data_get', NamespaceView.do_drag_data_get)
+	#self.connect('drag_data_delete', NamespaceView.do_drag_data_delete)
+	# drop
+	self.drag_dest_set (gtk.DEST_DEFAULT_ALL, NamespaceView.DND_TARGETS[:-1],
+			    gtk.gdk.ACTION_COPY)
+	#self.connect('drag_data_received', NamespaceView.do_drag_data_received)
+	self.connect('drag_motion', NamespaceView.do_drag_motion)
+	self.connect('drag_drop', NamespaceView.do_drag_drop)
 
     def _set_pixbuf (self, column, cell, model, iter, data):
 	value = model.get_value(iter, 0)
@@ -275,6 +299,34 @@ class NamespaceView(gtk.TreeView):
 	iter = model.get_iter(path)
 	element = model.get_value(iter, 0)
 	element.name = new_text
+
+    def do_drag_begin (self, context):
+	print 'do_drag_begin'
+
+    def do_drag_data_get (self, context, selection_data, info, time):
+	print 'do_drag_data_get'
+	selection_data.set(selection_data.target, 8, "I'm Data!")
+
+    def do_drag_data_delete (self, context, data):
+	print 'Delete the data!'
+
+    # Drop
+    def do_drag_motion(self, context, x, y, time):
+	print 'drag_motion', x, y
+	return 1
+   
+    def do_drag_data_received(self, w, context, x, y, data, info, time):
+	print 'drag_data_received'
+        if data and data.format == 8:
+	    print 'drag_data_received:', data.data
+	    context.finish(gtk.TRUE, gtk.FALSE, time)
+	else:
+	    context.finish(gtk.FALSE, gtk.FALSE, time)
+	gobject.emit_stop_by_name('drag_data_received')
+
+    def do_drag_drop(self, context, x, y, time):
+	print 'drag_drop'
+	return 1
 
 gobject.type_register(NamespaceModel)
 gobject.type_register(NamespaceView)

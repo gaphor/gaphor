@@ -47,7 +47,8 @@ class UseCaseItem(ModelElementItem):
 
     def on_update(self, affine):
 	ModelElementItem.on_update(self, affine)
-	self.__border.ellipse(center=(self.width / 2, self.height / 2), width=self.width - 0.5, height=self.height - 0.5)
+	self.__border.ellipse(center=(self.width / 2, self.height / 2), width=self.width, height=self.height)
+	self.expand_bounds(1.0)
 	self.__border.request_update()
 	self.update_child(self.__name, affine)
 

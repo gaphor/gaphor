@@ -6,7 +6,8 @@ Commands related to the Diagram (DiaCanvas)
 from gaphor.misc.command import Command
 from commandinfo import CommandInfo
 import gaphor.UML as UML
-
+import gtk
+import diacanvas
 
 class CloseCommand(Command):
 
@@ -21,6 +22,48 @@ CommandInfo (name='FileClose', _label='_Close', pixname='Close',
 	     accel='*Control*w',
 	     context='diagram.menu',
 	     command_class=CloseCommand).register()
+
+
+class ExportSVGCommand(Command):
+
+    def __init__(self):
+	Command.__init__(self)
+
+    def set_parameters(self, params):
+	self._window = params['window']
+
+    def execute(self):
+	filesel = gtk.FileSelection('Export diagram to SVG file')
+	filesel.set_modal(True)
+	filesel.set_filename(self._window.get_diagram().name + '.svg' or 'export.svg')
+
+	filesel.ok_button.connect('clicked', self.on_ok_button_pressed, filesel)
+	filesel.cancel_button.connect('clicked',
+				      self.on_cancel_button_pressed, filesel)
+	
+	filesel.show()
+
+    def on_ok_button_pressed(self, button, filesel):
+	filename = filesel.get_filename()
+	filesel.destroy()
+	if filename and len(filename) > 0:
+	    log.debug('Exporting SVG image to: %s' % filename)
+	    canvas = self._window.get_diagram().canvas
+	    export = diacanvas.ExportSVG()
+	    try:
+		export.render (canvas)
+		export.save(filename)
+	    except Exception, e:
+		log.error('Error while saving model to file %s: %s' % (filename, e))
+
+    def on_cancel_button_pressed(self, button, filesel):
+	filesel.destroy()
+
+CommandInfo (name='FileExportSVG', _label='_Export SVG...', pixname='Export',
+	     _tip='Save the current diagram to a SVG file',
+	     context='diagram.menu',
+	     command_class=ExportSVGCommand).register()
+
 
 class ClearCommand(Command):
 

@@ -44,6 +44,7 @@ class OpenCommand(Command):
 
     def execute(self):
 	filesel = gtk.FileSelection('Open Gaphor file')
+	filesel.set_modal(True)
 	filesel.hide_fileop_buttons()
 	
 	if self.filename:
@@ -54,7 +55,6 @@ class OpenCommand(Command):
 				      self.on_cancel_button_pressed, filesel)
 	
 	filesel.show()
-	gtk.main()
 
     def on_ok_button_pressed(self, button, filesel):
 	filename = filesel.get_filename()
@@ -74,11 +74,9 @@ class OpenCommand(Command):
 		import traceback
 		log.error('Error while loading model from file %s: %s' % (filename, e))
 		traceback.print_exc()
-	gtk.main_quit()
 
     def on_cancel_button_pressed(self, button, filesel):
 	filesel.destroy()
-        gtk.main_quit()
 
 CommandInfo (name='FileOpen', _label='_Open...', pixname='Open', accel='F3',
 	     _tip='Load a Gaphor project from a file',
@@ -94,6 +92,7 @@ class SaveCommand(Command):
 
     def execute(self):
 	filesel = gtk.FileSelection('Save file')
+	filesel.set_modal(True)
 	if self.filename:
 	    filesel.set_filename(self.filename)
 
@@ -102,7 +101,6 @@ class SaveCommand(Command):
 				      self.on_cancel_button_pressed, filesel)
 	
 	filesel.show()
-	gtk.main()
 
     def on_ok_button_pressed(self, button, filesel):
 	filename = filesel.get_filename()
@@ -117,11 +115,9 @@ class SaveCommand(Command):
 		store.save(filename)
 	    except Exception, e:
 		log.error('Error while saving model to file %s: %s' % (filename, e))
-	gtk.main_quit()
 
     def on_cancel_button_pressed(self, button, filesel):
 	filesel.destroy()
-        gtk.main_quit()
 
 CommandInfo (name='FileSave', _label='_Save', pixname='Save',
 	     accel='*Control*s',
