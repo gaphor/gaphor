@@ -24,7 +24,7 @@
     <action id="PythonExp"
             label="Generate Python Code"
             tooltip="Generate Python Code"
-            class="PythonExportAction" slot="WindowSlot">
+            class="PythonExportAction" slot="FileExportSlot">
       <!--
         Add optional dependencies to this action. The action is then updated
         when actions defined in the depends tag are executed.
@@ -36,7 +36,7 @@
     <action id="PythonImp"
             label="Import Python Code"
             tooltip="Import Python Code"
-            class="PythonImportAction" slot="WindowSlot">
+            class="PythonImportAction" slot="FileImportSlot">
       <!--
         Add optional dependencies to this action. The action is then updated
         when actions defined in the depends tag are executed.

@@ -226,7 +226,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         """Remove a feature subitem.
         """
         if item in self._attributes:
-            print 'remove attr:', item
+            #print 'remove attr:', item
             self._attributes.remove(item)
             item.set_child_of(None)
         elif item in self._operations:

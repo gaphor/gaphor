@@ -12,13 +12,25 @@ from gaphor import resource
 import gaphor.diagram.placementactions
 
 class Toolbox(gtk.VBox):
-    
+    """A toolbox is a widget that contains a set of buttons (a Wrapbox widget)
+    with a name above it. When the user clicks on the name the box's content
+    shows/hides.
+
+    The 'toggled' signal is emited everytime a box shows/hides.
+
+    The toolbox is generated based on a definition with the form:
+    ('name', ('boxAction1', 'boxAction2',...), 'name2', ('BoxActionN',...))
+    """
+
     __gsignals__ = {
         'toggled': (gobject.SIGNAL_RUN_FIRST,
                     gobject.TYPE_NONE, (gobject.TYPE_STRING, gobject.TYPE_INT))
     }
 
     def __init__(self, menu_factory, toolboxdef):
+        """Create a new Toolbox instance. Wrapbox objects are generated
+        using the menu_factory and based on the toolboxdef definition.
+        """
         self.__gobject_init__()
         self.menu_factory = menu_factory
         self.toolboxdef = toolboxdef

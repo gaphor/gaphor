@@ -52,15 +52,16 @@ class MenuFactory(object):
     instance has been created.
 
     NOTE: When you use GtkWidget.show_all() to show your window, also
-    invisible menu items will be shown. 
+    invisible menu items will be shown (this is not desirable). 
     """
 
-    def __init__(self, action_pool, accel_group=None,
+    def __init__(self, window_class, action_pool, accel_group=None,
                  statusbar=None, statusbar_context=0):
         self.action_pool = action_pool
         self.in_activation = False
         
         self.accel_group = accel_group
+        self.accel_class = window_class + 'Action'
         self.statusbar = statusbar
         self.statusbar_context = statusbar_context
         #self._slot_to_menu_item = {}
@@ -83,10 +84,11 @@ class MenuFactory(object):
             if type(id) in (tuple, list):
                 # Create and populate a new submenu
                 submenu = gtk.Menu()
+                submenu.set_accel_group(self.accel_group)
                 self._create_menu_items(id, groups, submenu)
                 item.set_submenu(submenu)
-                # Connect to 'activate' to see when a submenu expands
-                item.connect('activate', self.on_submenu_activate)
+                submenu.owning_menu_item = item
+                self._set_submenu_sensitivity(submenu)
                 submenu.show()
             elif id.startswith('<') and id.endswith('>'):
                 # We're dealing with a placeholder here, strip the <>
@@ -96,6 +98,7 @@ class MenuFactory(object):
             else:
                 item = self.create_menu_item(id, groups)
                 menu.add(item)
+                self.set_accelerator(id, item)
 
     def create_menu(self, menu_def):
         """Create a menu bar.
@@ -166,7 +169,6 @@ class MenuFactory(object):
                 item.connect('activate', self.on_radio_item_activate, action.id)
                 self._connect_item_to_action('notify::active', action, item,
                                             self.on_radio_menu_item_notify_active)
-
             elif isinstance(action, CheckAction):
                 item = gtk.CheckMenuItem(label)
                 item.set_active(action.active)
@@ -175,7 +177,7 @@ class MenuFactory(object):
                                             self.on_menu_item_notify_action)
             else:
                 if action.stock_id:
-                    item = gtk.ImageMenuItem(action.stock_id, self.accel_group)
+                    item = gtk.ImageMenuItem(action.stock_id)
                     # stock_info: (id, label, mod, key, translationdomain)
                     # Set the label right
                     item.get_children()[0].set_text_with_mnemonic(label)
@@ -183,20 +185,10 @@ class MenuFactory(object):
                     item = gtk.MenuItem(label)
                 item.connect('activate', self.on_item_activate, action.id)
 
-            # If possible, set a accelarator (and the accelerator is not yet
-            # set by the stock id):
-            if action.accel and not (stock_info and stock_info[3]):
-                modifier, keyval = _mod_and_keyval_from_accel(action.accel)
-                #print 'adding accel', action.accel, 'to', action.id, gtk.accelerator_name(modifier, keyval)
-                item.add_accelerator("activate", self.accel_group,
-                                     keyval, modifier, gtk.ACCEL_VISIBLE);
-
             # Connect to the event so we can push/pop status messages:
             item.show()
             item.connect('event', self.on_item_event, action.id)
             item.set_property('visible', action.visible)
-            #if not action.visible: item.hide()
-            #print 'menu item: visible =', item.get_property('visible')
             item.set_property('sensitive', action.sensitive)
             self._connect_item_to_action('notify::visible', action, item,
                                         self.on_menu_item_notify_action)
@@ -204,7 +196,45 @@ class MenuFactory(object):
                                         self.on_menu_item_notify_action)
         return item
 
+    def set_accelerator(self, id, item):
+        """When available, set an accelerator in the action. This
+        is done by creating an accel_path on the item (<window-class>/action.id)
+        and defining the accelerator in the global gtk.AccelMap.
+        """
+        action = self.get_action(id)
+        if not action:
+            return
+
+        keyval = None
+        modifier = None
+
+        #  Fetch accelerator from the stock id.
+        if action.stock_id:
+            stock_info = gtk.stock_lookup(action.stock_id)
+            # stock_info : (id, label, mod, key, translationdomain)
+            try:
+                keyval = stock_info[3]
+                modifier = stock_info[2]
+            except TypeError:
+                pass
+
+        # Use an accelerator defined in the action class.
+        if not keyval and action.accel:
+            modifier, keyval = _mod_and_keyval_from_accel(action.accel)
+
+        # No accelerator at all.
+        if not keyval:
+            return
+
+        accel_path = '<' + self.accel_class + '>/' + id
+        item.set_accel_path(accel_path)
+        gtk.accel_map_add_entry(accel_path, keyval, modifier)
+            
     def create_slot(self, slot_id, menu):
+        """Create a slot. A slot can change it's content during the lifetime
+        of the application. A handler is connected to the slot's 'rebuild'
+        signal, so the menu is rebuild when the content has changed.
+        """
         slot_menu = self.action_pool.get_slot(slot_id)
         # Create a menu item that acts as a placeholder:
         item = gtk.MenuItem()
@@ -325,6 +355,7 @@ class MenuFactory(object):
                     #item.set_property('use-stock', True)
                 #else:
                 item = gtk.Button()
+
             if action.stock_id:
                 #item.set_property('stock-id', action.stock_id)
                 item.add(icon)
@@ -367,14 +398,16 @@ class MenuFactory(object):
         return wrapbox
 
     def on_item_activate(self, menu_item, action_id):
+        """Call the action that is associated with the menu item.
+        """
         self.action_pool.execute(action_id)
 
-    def on_submenu_activate(self, menu_item):
-        pass
-        #print 'Submenu activated:', menu_item
-        # Update dynamic menu's (slots)
-
     def on_slot_menu_rebuild(self, slot_menu, slot_item):
+        """Rebuild the content of a slot menu in a menu. This is done
+        by finding a specific placeholder in the menu and removing all
+        contained elements. After that the elements are created again
+        based on the action id's obtained from DynamicMenu.get_menu().
+        """
         #log.debug('Rebuilding slot %s (%s)' % (slot_menu.slot_id, type(slot_menu)))
         #slot_item = self._slot_to_menu_item[slot_menu]
         menu = slot_item.get_parent()
@@ -396,11 +429,10 @@ class MenuFactory(object):
 
         # Add them to the menu
         for item in menu_list:
-            #item = self.create_menu_item(action_id, groups)
-            #item.unparent()
             menu.insert(item, slot_index)
             slot_index += 1
             slot_item.slot_size += 1
+        self._set_submenu_sensitivity(menu)
 
     def on_menu_item_notify_action(self, menu_item, pspec, action_id):
         """Helper callback, copies state from the action to the menu item.
@@ -454,7 +486,6 @@ class MenuFactory(object):
 
     def on_slot_menu_destroy(self, menu_item, slot_menu, handler):
         slot_menu.disconnect(handler)
-        #del self._slot_to_menu_item[slot_menu]
 
     def _connect_item_to_action(self, signal_name, action, item, handler):
         """Connect the items signal handler to the action. The handler is
@@ -478,6 +509,19 @@ class MenuFactory(object):
             label = action.label.replace('_', '')
             icon = None
         return icon, label
+
+    def _set_submenu_sensitivity(self, menu):
+        """Determine if a menu entry containing a submenu should
+        be sensitive. If the entry contains no (visible) menu items,
+        the menu item is made insensitive.
+        """
+        if not hasattr(menu, 'owning_menu_item'):
+            return
+
+        if [ c for c in menu.get_children() if c.get_property('visible')]:
+            menu.owning_menu_item.set_property('sensitive', True)
+        else:
+            menu.owning_menu_item.set_property('sensitive', False)
 
 
 def toolbox_to_menu(toolbox):

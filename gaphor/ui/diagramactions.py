@@ -279,7 +279,7 @@ class CopyAction(Action):
                 resource.set('copy-buffer', copy_items)
         tab = self._window.get_current_diagram_tab()
 
-register_action(CopyAction, 'ItemFocus')
+register_action(CopyAction, 'ItemFocus', 'ItemSelect', 'ItemSelectAll', 'EditDelete')
 
 
 class PasteAction(Action):
@@ -324,7 +324,7 @@ class PasteAction(Action):
     def copy_func(self, name, value, reference=False):
         if reference or isinstance(value, UML.Element):
             self._load_element(name, value)
-        elif isinstance(value, gaphor.UML.collection):
+        elif isinstance(value, UML.collection):
             for item in value:
                 self._load_element(name, item)
         elif isinstance(value, diacanvas.CanvasItem):

@@ -79,8 +79,8 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
 
     # CanvasItem callbacks:
 
-    def on_update(self, affine):
-        ElementItem.on_update(self, affine)
+    #def on_update(self, affine):
+    #    ElementItem.on_update(self, affine)
 
     def on_event (self, event):
         if event.type == diacanvas.EVENT_2BUTTON_PRESS:

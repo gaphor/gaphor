@@ -165,7 +165,7 @@ class RevertAction(Action):
                 pass
 
 weave_method(RevertAction.execute, ErrorHandlerAspect, message='Could not load model file.')
-register_action(RevertAction)
+register_action(RevertAction, 'FileNew', 'FileOpen', 'FileSave', 'FileSaveAs')
 
 
 class OpenAction(RevertAction):
@@ -653,6 +653,8 @@ register_action(RedoAction, 'UndoStack')
 
 
 class RecentFileAction(ObjectAction):
+    """Objects created by the RecentFilesSlot are of this kind.
+    """
 
     def init(self, window, filename):
         self._window = window
@@ -667,6 +669,9 @@ class RecentFileAction(ObjectAction):
 
 
 class RecentFilesSlot(DynamicMenu):
+    """This is the dynamic menu that contains a list of recently opened
+    model files.
+    """
 
     def __init__(self, slot_id):
         DynamicMenu.__init__(self, slot_id)

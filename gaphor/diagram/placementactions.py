@@ -489,7 +489,7 @@ class LifelinePlacementAction(PlacementAction):
         """Create a new instance of the item and return it."""
         item = PlacementAction.item_factory(self)
         #log.debug('Setting namespace for new item %s: %s' % (item, self._window.get_current_diagram().namespace))
-        item.subject.interaction = self._window.get_current_diagram().namespace
+        #item.subject.interaction = self._window.get_current_diagram().namespace
         item.subject.name = '%s%d' % (self.name, self.__index)
         self.__index += 1
         return item

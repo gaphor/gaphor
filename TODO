@@ -2,30 +2,16 @@ As always, there is much to do...
 
 - Check association removal when connected to a class.
 
-- Storing last open files or having a quick-list of most important
-  directories or so would be great 
-  Problem: the existing <Placeholder> stuff works only on construction time.
-    For this we need a menu that can change during the life of the application.
+- Fix namespace relations between Lifeline and Interaction and Message and
+  Interaction
 
-- Use GTK+ 2.4 UIManager and ActionGroups (?):
-  . We have to keep the gaphor.misc.action module intact.
-  . As far as I can see, cross action updates, are not supported.
-  . Properties can be mapped in a straightforward way.
-  . Should actions be split up: one for the main window, one group per
-    diagram and one group per item type?
-  . GtkUIManager looks useful, some structures in Gaphor may have to be
-    reconsidered. What to do with AccelMaps for example. (I really have
-    to read the tutorial some day ;-).
-  . The current structure is simple and quite Pythonic. It should be this way.
-  . Stuff like a recent-file box will be easier to create (I guess).
-
-- Store application state:
-  - last opened files
+#- Store application state:
+  #- last opened files
   #- open/closed status of diagram toolbox
   #- window size
   #- reset tool option
 
-- When Stereotype has no submenu items, grey it out. Same goes for "Export"
+#- When Stereotype has no submenu items, grey it out. Same goes for "Export"
   menu. This will be handled by the UIManager in the near future.
 
 - disable actions when editing.
@@ -54,6 +40,24 @@ As always, there is much to do...
   complete the edit action.
 
 - Create a good algorithm for placement of lines and maybe nodes too.
+
+#- Use GTK+ 2.4 UIManager and ActionGroups (?):
+  . We have to keep the gaphor.misc.action module intact.
+  . As far as I can see, cross action updates, are not supported.
+  . Properties can be mapped in a straightforward way.
+  . Should actions be split up: one for the main window, one group per
+    diagram and one group per item type?
+  . GtkUIManager looks useful, some structures in Gaphor may have to be
+    reconsidered. What to do with AccelMaps for example. (I really have
+    to read the tutorial some day ;-).
+  . The current structure is simple and quite Pythonic. It should be this way.
+  . Stuff like a recent-file box will be easier to create (I guess).
+  Conclusion: keep using the gaphor.misc.action code
+
+#- Storing last open files or having a quick-list of most important
+  directories or so would be great 
+  Problem: the existing <Placeholder> stuff works only on construction time.
+    For this we need a menu that can change during the life of the application.
 
 #- Make associations look nice with usecases:
    . No arrows at the end

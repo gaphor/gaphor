@@ -78,9 +78,21 @@
     <file>initialnode24.png</file>
     <element>InitialNode</element>
   </icon>
+  <icon id="gaphor-interaction">
+    <file>interaction24.png</file>
+    <element>Interaction</element>
+  </icon>
   <icon id="gaphor-interface">
     <file>interface24.png</file>
     <element>Interface</element>
+  </icon>
+  <icon id="gaphor-lifeline">
+    <file>lifeline24.png</file>
+    <element>Lifeline</element>
+  </icon>
+  <icon id="gaphor-message">
+    <file>message24.png</file>
+    <element>Message</element>
   </icon>
   <icon id="gaphor-node">
     <file>node24.png</file>

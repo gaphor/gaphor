@@ -49,28 +49,36 @@ def main(gaphor_file=None):
     import diagram
     # Load plugin definitions:
     import pluginmanager
+    import ui
     from ui.mainwindow import MainWindow
 
     resource('PluginManager').bootstrap()
+
+    ui.load_accel_map()
 
     # should we set a default icon here or something?
     main_window = resource(MainWindow)
     main_window.construct()
     # When the state changes to CLOSED, quit the application
     main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and gtk.main_quit())
-    # Make the mainwindow accessable as a resource
+
     #gtk.threads_init()
     #gtk.threads_enter()
-    log.debug('Loading model %s' % gaphor_file)
     if gaphor_file:
         main_window.set_filename(gaphor_file)
         main_window.execute_action('FileRevert')
     else:
         main_window.execute_action('FileNew')
+
     gtk.main()
     #gtk.threads_leave()
+
     resource.save()
+
+    ui.save_accel_map()
+
     log.info('Bye!')
+
 
 # TODO: Remove this
 import __builtin__

@@ -6,6 +6,13 @@
 
 	* gaphor/UML/uml2.gaphor: added InternalStructures diagrams
 
+2005-01-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/menufactory.py: Use gtk.AccelMap to store accelerator
+	keys. Now accelerators can be configured at runtime.
+	* gaphor/__init__.py, gaphor/ui/__init__.py: load/save accelmap at
+	start/end of application.
+
 2005-01-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/mainactions.py: fixed small bug, now recent-files also

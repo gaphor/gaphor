@@ -160,7 +160,8 @@ class AbstractWindow(object):
         # Set the contents:
         vbox.pack_end(contents, expand=True)
 
-        self.menu_factory = MenuFactory(self.action_pool,
+        self.menu_factory = MenuFactory(type(self).__name__,
+                                        self.action_pool,
                                         accel_group=accel_group,
                                         statusbar=statusbar,
                                         statusbar_context=0)

@@ -1,3 +1,1 @@
-
-__all__ = [ 'singleton', 'command', 'signal', 'conf', 'logger' ]
-
+# module gaphor.misc

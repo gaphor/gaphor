@@ -33,7 +33,14 @@ class PlacementTool(diacanvas.PlacementTool):
                         item.set_property(k, v)
                 except TypeError, e:
                     log.error('PlacementTool: could not set property %s' % k, e)
-                
+
+            item_at_mouse = view.get_item_at(event.x, event.y)
+            log.debug('item at (%f %f)= %s' % (event.x, event.y, item_at_mouse))
+            if item_at_mouse and item_at_mouse.item and hasattr(item_at_mouse.item, 'can_contain'):
+                if item.get_property('parent'):
+                    item.set_property('parent', None)
+                log.debug('adding')
+                item_at_mouse.item.add(item)
         return item
 
     def _move_item(self, view, event, item):

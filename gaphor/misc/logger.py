@@ -38,15 +38,14 @@ class Logger(object):
 
     def log(self, level, message, exc=None):
         assert level >= Logger.DEBUG and level <= Logger.CRITICAL
-        handled = False
         for logger in self.__loggers:
             try:
-                handled = handled or logger(level, message, exc)
+                if logger(level, message, exc):
+		    return
             except Exception, e:
                 self.default_logger(Logger.ERROR,
                             'Could not write to logger %s: %s' % (logger, e))
-        if not handled:
-            self.default_logger(level, message, exc)
+	self.default_logger(level, message, exc)
 
     def debug(self, message, exc=None):
         self.log(Logger.DEBUG, message, exc)

@@ -102,7 +102,8 @@ class PackageItem(NamedItem):
 
     def on_subject_notify(self, pspec, notifiers=()):
         NamedItem.on_subject_notify(self, pspec, ('appliedStereotype',) + notifiers)
-        self.update_stereotype()
+        if self.subject:
+            self.update_stereotype()
 
     def on_subject_notify__appliedStereotype(self, subject, pspec=None):
         if self.subject:

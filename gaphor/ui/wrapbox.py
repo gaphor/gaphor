@@ -1,4 +1,4 @@
-#vim:sw=4:et
+# vim:sw=4:et
 
 import pygtk
 pygtk.require('2.0')
@@ -7,6 +7,13 @@ import gtk
 
 
 class Wrapbox(gtk.Table):
+    """A Wrapbox contains a set of items. A wrap box tries to optimize it's
+    content by moving elements to a second row if the do not fit on the first.
+    And a third and a fourth, depending on the given space.
+
+    The width is given, the height is changed in order to fit all contained
+    objects.
+    """
 
     def __init__(self):
         self.__gobject_init__()

@@ -96,7 +96,8 @@ class Resource(object):
 
 
 class FileBackend(object):
-    """Resource backend that stores data to a resource file.
+    """Resource backend that stores data to a resource file
+    ($HOME/.gaphor/resource).
     """
     RESOURCE_FILE='resources'
    

@@ -46,6 +46,7 @@ class LifelineItem(NamedItem):
 #            self.update_stereotype()
 
     def on_update(self, affine):
+        #print 'lifeline update', affine
         # Center the text
         name_width, name_height = self.get_name_size()
 
@@ -59,6 +60,13 @@ class LifelineItem(NamedItem):
                          width=self.width, height=name_height)
 
         NamedItem.on_update(self, affine)
+        
+        # Force handles to update themselves.
+        # FixMe: where should this code be placed? normally all handles should
+        # be updated when the parent object moves.
+        for h in self.handles:
+            h.set_pos_i(*h.get_pos_i())
+            h.get_pos_w()
 
         self._border.rectangle((0,0),(width, height))
         self.expand_bounds(1.0)

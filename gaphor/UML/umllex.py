@@ -441,3 +441,8 @@ def render_operation(self, visibility=False, type=False, multiplicity=False,
             s.write(' { %s }' % rr.taggedValue.value)
     s.reset()
     return s.read()
+
+def render_lifeline(self):
+    """
+    """
+    return self.name
