@@ -1,3 +1,7 @@
+
+
+There are a few compatibility issues when Gaphor is ran on python 2.2 and 2.3.
+
 check Classifier.substitution, InstanceSpecification.slot.
 
 As always, there is much to do...

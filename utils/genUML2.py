@@ -87,7 +87,9 @@ class Writer:
         params = { }
         type = a.typeValue and a.typeValue.get('value')
         if type.lower() == 'boolean':
-            type = 'bool'
+            # FixMe: Should this be a boolean or an integer?
+            # Integer is save and compattable with python2.2.
+            type = 'int'
         elif type.lower() in ('integer', 'unlimitednatural'):
             type = 'int'
         elif type.lower() == 'string':
