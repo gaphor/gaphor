@@ -23,10 +23,8 @@ class Diagram(Namespace):
     def __init__(self, id):
 	Namespace.__init__(self, id)
         self.canvas = diacanvas.Canvas()
-	print 'Diagram:', self.canvas
 	self.canvas.set_undo_stack_depth(10)
-	self.canvas.set_property ("allow_undo", 1) # was 1
-	print 'Diagram: allow undo =', self.canvas.get_property('allow_undo')
+	self.canvas.set_property ("allow_undo", 1)
 
     def save(self, store):
 	# Save the diagram attributes, but not the canvas
@@ -90,10 +88,14 @@ class Diagram(Namespace):
 	item_dict = store.canvas().canvas_items()
 	
 	for id, item_store in item_dict.items():
-	    print 'Postprocessing item ' + str(item_store.type()) + ' with id ' + str(id)
+	    #print 'Postprocessing item ' + str(item_store.type()) + ' with id ' + str(id)
 	    item = store.lookup_item(id)
 	    item.postload(item_store)
 
 	self.canvas.update_now ()
 
-	self.canvas.set_property ("allow_undo", 1) # was 1
+	# setting allow-undo to 1 here will cause update info from later
+	# created elements to be put on the undo stack.
+	#self.canvas.set_property ("allow_undo", 1)
+	self.canvas.clear_undo()
+	self.canvas.clear_redo()

@@ -12,17 +12,21 @@
     </submenu>
 
     <submenu name="Edit" _label="_Edit">
-        <menuitem name="EditCut" verb="" _label="C_ut"/>
-        <menuitem name="EditCopy" verb="" _label="_Copy"/>
-        <menuitem name="EditPaste" verb="" _label="_Paste"/>
+        <menuitem name="EditUndo" verb=""/>
+        <menuitem name="EditRedo" verb=""/>
 	<separator/>
-        <menuitem name="EditClear" verb="" _label="C_lear"/>
-        <menuitem name="EditUndo" verb="" _label="_Undo"/>
-        <menuitem name="EditRedo" verb="" _label="_Redo"/>
+        <menuitem name="EditSelectAll" verb=""/>
+        <menuitem name="EditUnselectAll" verb=""/>
+	<separator/>
 	<placeholder name="EditOps"/>
 	<separator/>
         <menuitem name="EditProperties" verb="" _label="_Properties..."/>
-	<menuitem name="EditSelectAll" verb="" _label="_Select All"/>
+    </submenu>
+
+    <submenu name="View" _label="_View">
+	<menuitem name="ViewZoomIn" verb=""/>
+	<menuitem name="ViewZoomOut" verb=""/>
+	<menuitem name="ViewZoom100" verb=""/>
     </submenu>
 
     <submenu name="Insert" _label="_Insert">

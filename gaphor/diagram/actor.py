@@ -127,7 +127,7 @@ class ActorItem(ModelElementItem):
 	if w > self.width:
 	    ulx = (self.width / 2) - (w / 2)
 	    lrx = (self.width / 2) + (w / 2)
-	self.set_bounds ((ulx, uly, lrx+1, lry + h))
+	self.set_bounds ((ulx, uly-1, lrx+1, lry + h))
 
     def on_get_shape_iter(self):
 	return self.__head

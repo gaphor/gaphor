@@ -7,30 +7,35 @@ import bonobo.ui
 import namespace
 import gaphor.UML as UML
 import gaphor.config as config
-from menufactory import MenuFactory
+from abstractwindow import AbstractWindow
 
-class MainWindow(object):
+class MainWindow(AbstractWindow):
     """
     The main window for the application. It contains a Namespace-based tree
     view and a menu and a statusbar.
     """
 
     def __init__(self):
-	pass
+	AbstractWindow.__init__(self)
 
     def get_window(self):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
 	return self.__window
 
     def get_model(self):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
 	return self.__model
 
     def get_view(self):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
 	return self.__view
 
     def get_ui_component(self):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
 	return self.__ui_component
 
     def construct(self):
+	self._check_state(AbstractWindow.STATE_INIT)
 	window = bonobo.ui.Window ('gaphor', 'Gaphor v' + config.VERSION)
 	window.set_size_request(200, 300)
 	window.set_resizable(True)
@@ -51,14 +56,16 @@ class MainWindow(object):
 	
 	window.show_all()
 
-	window.connect ('destroy', self.__destroy_event_cb)
-	view.connect_after ('event', self.__view_event_cb)
-	view.connect ('row_activated', self.__view_row_activated_cb)
+	self.__destroy_id = window.connect ('destroy', self.__on_window_destroy)
+	view.connect_after ('event', self.__on_view_event)
+	view.connect ('row_activated', self.__on_view_row_activated)
 
 	self.__window = window
 	self.__ui_component = ui_component
 	self.__model = model
 	self.__view = view
+
+	self._set_state(AbstractWindow.STATE_ACTIVE)
 
 	# Set commands:
 	command_registry = GaphorResource('CommandRegistry')
@@ -68,18 +75,29 @@ class MainWindow(object):
 	ui_component.add_verb_list (verbs, None)
 
     def close(self):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
+	self.__window.disconnect(self.__destroy_id)
 	self.__window.destroy()
-	#del self.__ui_component
-	#del self.__model
-	#del self.__view
+	self._set_state(AbstractWindow.STATE_CLOSED)
+	del self.__window
+	del self.__ui_component
+	del self.__model
+	del self.__view
 
-    def __destroy_event_cb (self, window):
+    def __on_window_destroy (self, window):
+	"""
+	Window is destroyed... Do the same thing that would be done if
+	File->Quit was pressed.
+	"""
+	self._check_state(AbstractWindow.STATE_ACTIVE)
         cmd_reg = GaphorResource('CommandRegistry')
 	cmd = cmd_reg.create_command('FileQuit')
 	cmd.set_parameters ({ 'window': self })
 	cmd.execute()
+	self._set_state(AbstractWindow.STATE_CLOSED)
 
-    def __view_row_activated_cb(self, view, path, column):
+    def __on_view_row_activated(self, view, path, column):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
 	item = self.get_model().on_get_iter(path)
 	cmd_reg = GaphorResource('CommandRegistry')
 	cmd = cmd_reg.create_command('OpenModelElement')
@@ -87,12 +105,11 @@ class MainWindow(object):
 			     'element': item })
 	cmd.execute()
 
-    def __view_event_cb(self, view, event):
+    def __on_view_event(self, view, event):
+	self._check_state(AbstractWindow.STATE_ACTIVE)
 	# handle mouse button 3:
 	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
-		print 'Pressed button Three, popup now!'
 		selection = view.get_selection()
-		print 'Selected:', selection.get_selected()
 		model, iter = selection.get_selected()
 		if not iter:
 		    return

@@ -190,7 +190,7 @@ class AboutCommand(Command):
 			   version = config.VERSION,
 			   copyright = 'Copyright (c) 2001-2002 Arjan J. Molenaar',
 			   comments = 'UML Modeling for GNOME',
-			   authors = ('Arjan J. Molenaar <arjanmolenaar at hetnet dot nl>',),
+			   authors = ('Arjan J. Molenaar <arjanmolenaar@hetnet.nl>',),
 			   logo_pixbuf = logo)
 	about.show()
 

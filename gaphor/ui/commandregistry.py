@@ -63,7 +63,7 @@ class CommandRegistry(object):
 		    cmd.set_parameters(params)
 		    verbs.append((info.name, _CommandExecuter(cmd)))
 		except Exception, e:
-		    print 'No verb created for ' + info.name + ': ' + str(e)
+		    print 'No verb created for ' + info.name + ':', e
 	return verbs
 
 # Register the registry as application wide resource.
