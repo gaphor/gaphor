@@ -552,6 +552,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     # Editable
 
     def on_editable_get_editable_shape(self, x, y):
+        log.debug('association end edit on (%d,%d)' % (x, y))
         if self.point_name(x, y) < 1.0:
             return self._name 
         elif self.point_mult(x,y) < 1.0:

@@ -99,6 +99,7 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
     # CanvasItem callbacks:
 
     def on_update(self, affine):
+        self._expression.set_text(self.subject and self.subject.render() or '')
         CanvasItem.on_update(self, affine)
         #log.debug('FeatureItem.on_update: %f, %f' % self.get_size(True))
 
