@@ -1,27 +1,28 @@
 /* -*- Mode: C; c-basic-offset: 4 -*- */
 #include <gtk/gtk.h>
 
-#define PYGTK_TYPE_GENERIC_TREE_MODEL (pygtk_generic_tree_model_get_type())
-#define PYGTK_GENERIC_TREE_MODEL(object) (G_TYPE_CHECK_INSTANCE_CAST((object), PYGTK_TYPE_GENERIC_TREE_MODEL, PyGtkGenericTreeModel))
-#define PYGTK_GENERIC_TREE_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), PYGTK_TYPE_GENERIC_TREE_MODEL, PyGtkGenericTreeModelClass))
-#define PYGTK_IS_GENERIC_TREE_MODEL(object) (G_TYPE_CHECK_INSTANCE_TYPE((object), PYGTK_TYPE_GENERIC_TREE_MODEL))
-#define PYGTK_IS_GENERIC_TREE_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), PYGTK_TYPE_GENERIC_TREE_MODEL))
-#define PYGTK_GENERIC_TREE_MODEL_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS((obj), PYGTK_TYPE_GENERIC_TREE_MODEL, PyGtkGenericTreeModelClass))
+#define TYPE_TREE_MODEL (tree_model_get_type())
+#define TREE_MODEL(object) (G_TYPE_CHECK_INSTANCE_CAST((object), TYPE_TREE_MODEL, TreeModel))
+#define TREE_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), TYPE_TREE_MODEL, TreeModelClass))
+#define IS_TREE_MODEL(object) (G_TYPE_CHECK_INSTANCE_TYPE((object), TYPE_TREE_MODEL))
+#define IS_TREE_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), TYPE_TREE_MODEL))
+#define TREE_MODEL_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS((obj), TYPE_TREE_MODEL, TreeModelClass))
 
-typedef struct _PyGtkGenericTreeModel PyGtkGenericTreeModel;
-typedef struct _PyGtkGenericTreeModelClass PyGtkGenericTreeModelClass;
+#define _TYPE_TREE_MODEL	TYPE_TREE_MODEL
+#define _TREE_MODEL		TREE_MODEL
 
-struct _PyGtkGenericTreeModel {
+typedef struct _TreeModel TreeModel;
+typedef struct _TreeModelClass TreeModelClass;
+
+struct _TreeModel {
     GObject parent_instance;
-
-    gboolean leak_references;
 };
 
-struct _PyGtkGenericTreeModelClass {
+struct _TreeModelClass {
     GObjectClass parent_class;
 
 };
 
-GType pygtk_generic_tree_model_get_type(void);
+GType tree_model_get_type(void);
 
-PyGtkGenericTreeModel *pygtk_generic_tree_model_new(void);
+TreeModel *tree_model_new(void);

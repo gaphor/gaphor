@@ -1,0 +1,7 @@
+%%
+headers
+#include <gtk/gtk.h>
+#include "treemodel.h"
+%%
+import gobject.GObject as PyGObject_Type
+%%
