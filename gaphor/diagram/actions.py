@@ -195,8 +195,10 @@ class InterfacePlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new Interface item'
     stock_id = 'gaphor-interface'
     name = 'Interface'
+    type = diagram.ClassItem
+    subject_type = UML.Interface
 
-    def execute(self):
+    def _execute(self):
 	tool = InterfacePlacementTool(self._window, self.id)
 	self._window.get_current_diagram_view().set_tool(tool)
 	self._window.set_message('Create new %s' % self.name)
@@ -210,7 +212,6 @@ class StereotypePlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new Stereotype item'
     stock_id = 'gaphor-stereotype'
     name = 'Stereotype'
-    accel = 'C-c'
     type = diagram.ClassItem
     subject_type = UML.Stereotype
 

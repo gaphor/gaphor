@@ -13,6 +13,7 @@ import gaphor.UML as UML
 from gaphor.diagram import initialize_item
 
 from relationship import RelationshipItem
+from interface import InterfaceItem
 
 STEREOTYPE_OPEN = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
@@ -76,6 +77,7 @@ class DependencyItem(RelationshipItem):
 
     def set_dependency_type(self, dependency_type):
 	self.dependency_type = dependency_type
+        self._set_stereotype_text()
         self._set_line_style()
 
     def _set_stereotype_text(self):
@@ -94,7 +96,7 @@ class DependencyItem(RelationshipItem):
         """Display a depenency as a dashed arrow, with optional stereotype.
         """
         c1 = c1 or self.handles[0].connected_to
-        if c1 and self.dependency_type is UML.Implementation and isinstance(c1.subject, UML.Interface):
+        if c1 and self.dependency_type is UML.Implementation and isinstance(c1, InterfaceItem):
             if self.get_property('has_head'):
                 self.set(dash=None, has_head=0)
                 self._stereotype.set_text('')

@@ -148,7 +148,7 @@ def _load(elements, factory, status_queue=None):
             if n % 10 == 0:
                 status_queue((n * 100) / size)
 
-    log.info('0%')
+    #log.info('0%')
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
@@ -168,7 +168,7 @@ def _load(elements, factory, status_queue=None):
         else:
             raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
 
-    log.info('0% ... 33%')
+    #log.info('0% ... 33%')
 
     # load attributes and create references:
     for id, elem in elements.items():
@@ -220,14 +220,14 @@ def _load(elements, factory, status_queue=None):
                         raise
 
                 
-    log.info('0% ... 33% ... 66%')
+    #log.info('0% ... 33% ... 66%')
 
     # do a postload:
     for id, elem in elements.items():
         update_status_queue()
         elem.element.postload()
 
-    log.info('0% ... 33% ... 66% ... 100%')
+    #log.info('0% ... 33% ... 66% ... 100%')
 
     factory.notify_model()
 

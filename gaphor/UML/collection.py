@@ -60,6 +60,16 @@ class collection(object):
         else:
             raise AttributeError, '%s not in collection' % value
 
+    def moveUp(self, value):
+        items = self.items
+        i = items.index(value)
+        i = i - 1
+        if i >= 0:
+            items.remove(value)
+            items.insert(i, value)
+        # Send a notification that this list has changed
+        self.property.notify(value)
+
     def index(self, key):
         """Given an object, return the position of that object in the
         collection."""

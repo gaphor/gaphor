@@ -42,7 +42,7 @@ class ComponentItem(NamedItem):
 
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
-        self.set(height=100, width=200)
+        self.set(height=50, width=120)
         self._border = diacanvas.shape.Path()
         self._border.set_line_width(2.0)
 

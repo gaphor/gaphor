@@ -1,6 +1,6 @@
 # from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/107747
 class odict(dict):
-    def __init__(self, dict = None):
+    def __init__(self, dict=None):
         self._keys = []
         dict.__init__(self, dict)
 
@@ -38,7 +38,7 @@ class odict(dict):
 
         return (key, val)
 
-    def setdefault(self, key, failobj = None):
+    def setdefault(self, key, failobj=None):
         dict.setdefault(self, key, failobj)
         if key not in self._keys: self._keys.append(key)
 

@@ -211,6 +211,8 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
             self.has_stereotype = not isinstance(self.subject, UML.Class)
             if isinstance(self.subject, UML.Stereotype):
                 self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
+            if isinstance(self.subject, UML.Interface):
+                self._stereotype.set_text(STEREOTYPE_OPEN + 'interface' + STEREOTYPE_CLOSE)
         self.request_update()
 
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
