@@ -27,6 +27,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 		self.row_changed (path,  iter)
         elif key == 'namespace' and obj.namespace:
 	    path = self.get_path(obj)
+	    print 'Namespace path =', path, type(path)
 	    iter = self.get_iter(path)
 	    print 'Namespace set for', obj, path
 	    self.row_inserted (path, iter)
@@ -115,14 +116,12 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def get_path(self, node):
 	'''returns the tree path (a tuple of indices at the various
-	levels) for a particular node.'''
+	levels) for a particular node. This is done in reverse order, so the
+	root path will become first.'''
 	def to_path (n):
-	    #print 'Fetching', n
-	    if n.namespace:
-	        #print '...from', n.namespace.ownedElement.list
-		
-	        return (n.namespace.ownedElement.index(n),) + \
-			to_path (n.namespace)
+	    ns = n.namespace
+	    if ns:
+	        return to_path(ns) + (ns.ownedElement.index(n),)
 	    else:
 	        return ()
 	#print "on_get_path", node
@@ -219,6 +218,8 @@ class NamespaceView(gtk.TreeView):
 	# Second cell if for the name of the object...
 	cell = gtk.CellRendererText ()
 	cell.set_property ('editable', 1)
+	gobject.signal_list_names(cell)
+	cell.connect('edited', self._name_edited, None)
 	column.pack_start (cell, 0)
 	column.set_cell_data_func (cell, self._set_name, None)
 	# TODO: Add handler to set text if editing is done.
@@ -237,5 +238,17 @@ class NamespaceView(gtk.TreeView):
 	value = model.get_value(iter, 0)
 	name = value.name
 	cell.set_property('text', name)
+
+    def _name_edited (self, cell, path_str, new_text, data):
+	#print 'Editing done:', self, cell, path, new_text, data
+	path_list = path_str.split(':')
+	#print 'splitted:', p
+	path = ()
+	for p in path_list:
+	    path = path + (int(p),)
+	model = self.get_property('model')
+	iter = model.get_iter(path)
+	element = model.get_value(iter, 0)
+	element.name = new_text
 
 gobject.type_register(NamespaceView)

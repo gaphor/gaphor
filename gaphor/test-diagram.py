@@ -44,12 +44,19 @@ diafact = diagram.DiagramItemFactory()
 item = diafact.create(dia, diagram.CommentItem)
 item.move (30, 50)
 item = diafact.create(dia, diagram.ActorItem)
+#item.subject.namespace = dia
 item.move (150, 50)
 item.subject.name = "Jaap"
 #item = dia.canvas.root.create_item (diagram.UseCase)
-item = diafact.create(dia, diagram.UseCaseItem)
-usecase = item.subject
+package = factory.create(UML.Package)
+package.namespace = model
+usecase = factory.create(UML.UseCase)
+usecase.namespace = package
+item = diafact.create(dia, diagram.UseCaseItem, subject=usecase)
+#usecase = item.subject
 item = diafact.create (dia, diagram.UseCaseItem, subject=usecase)
+#item.subject
+item.subject.namespace = dia
 item.move (200, 100)
 usecase.name = 'UC1'
 #item.subject.name = 'UC1'
