@@ -217,8 +217,10 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         if self.subject.memberEnd[0] is self._tail_end.subject:
             angle += pi
 
-        if p1[0] < p2[0]: angle += pi
-        #if p1[1] < p2[1]: angle += pi * 2
+        if p1[0] < p2[0]:
+            angle += pi
+        elif p1[0] == p2[0] and p1[1] > p2[1]:
+            angle += pi
         #log.debug('rotation angle is %s' % (angle/pi * 180.0))
 
         sin_angle = sin(angle)
