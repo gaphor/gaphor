@@ -70,8 +70,8 @@ class config_Gaphor(Command):
 
         self.module_check('xml.parsers.expat')
         #self.module_check('gobject', 'glib_version', (2, 0))
-        self.module_check('gtk', ('gtk_version', (2, 0)),
-                                 ('pygtk_version', (2, 0)))
+        self.module_check('gtk', ('gtk_version', (2, 3)),
+                                 ('pygtk_version', (2, 3)))
         self.module_check('gnome')
         self.module_check('gnome.canvas')
         #self.module_check('gconf')
