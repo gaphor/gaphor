@@ -215,6 +215,11 @@ class DeleteAction(Action):
 
     def execute(self):
 	view = self._window.get_current_diagram_view()
+        # Confirm deletion of last views to model objects
+        # They will be deleted along with their last view
+        if not self.mayRemoveFromModal(view):
+            return
+
 	if view.is_focus():
 	    view.canvas.undo_manager.begin_transaction()
 	    try:
@@ -223,6 +228,36 @@ class DeleteAction(Action):
 		    i.item.unlink()
 	    finally:
 		view.canvas.undo_manager.commit_transaction()
+    
+    def mayRemoveFromModal(self, view):
+        ''' Check if there are items which will be deleted from the model (when their last views are deleted). If so request user confirmation before deletion. '''
+        items = view.selected_items
+        for i in items:
+            if self.isLastView(i):
+                return self.requestConfirmation()
+        return True
+
+    def isLastView(self, item):
+        ''' Check if the current view is the last view to its object '''
+        if len(item.item.subject.presentation)==1:
+            return True
+        return False
+
+    def requestConfirmation(self):
+        ''' Request user confirmation on deleting the item from the model '''
+        dialog = gtk.MessageDialog(
+                None,
+                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                gtk.MESSAGE_WARNING,
+                gtk.BUTTONS_YES_NO,
+                'This will remove the selected items from the model. Are you sure?'
+                )
+        value = dialog.run()
+        dialog.destroy()
+        if value==gtk.RESPONSE_YES:
+            return True
+        return False
+
 
 register_action(DeleteAction, 'ItemSelect')
 
