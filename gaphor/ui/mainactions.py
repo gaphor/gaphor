@@ -451,8 +451,11 @@ class CreateDiagramAction(Action):
         diagram = resource(UML.ElementFactory).create(UML.Diagram)
         diagram.package = element
 
+        diagram.name = '%s diagram' % element.name
+
         self._window.select_element(diagram)
         self._window.execute_action('OpenModelElement')
+        self._window.execute_action('RenameModelElement')
 
 register_action(CreateDiagramAction, 'SelectRow')
 

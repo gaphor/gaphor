@@ -1,3 +1,7 @@
+2004-06-20  wrobell <wrobell@pld-linux.org>
+	* gaphor/ui/mainactions.py: set default name for created diagram and
+	allow user to edit it immediately
+
 2005-01-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/uml2.gaphor: added parse() and render operations to
