@@ -239,7 +239,7 @@ The signals protocol is:
 	items = seq.items
 	if items.count(obj) == 0:
 	    items.append(obj)
-	    items.sort()
+	    items.sort(lambda a, b: a.id > b.id and 1 or -1)
 	    self.__queue(key, 'add', obj)
 
     def __sequence_remove(self, key, obj):

@@ -1,0 +1,36 @@
+Gaphor capabilities
+~~~~~~~~~~~~~~~~~~~
+
+One nice feature of user interfaces is the ability to disable options that
+don't do anything useful in a specific context. For example: it's useles to
+enable a 'undo' button when there's no information to undo.
+
+To solve this two possible solutions can be provided:
+  1. special listeners are installed to intercept state changes and act
+  2. declarative: a (limited) set of 'capabilities' is provided. Each command
+     supports one or more capabilities.
+
+
+Standard capabilities:
+  All UML metamodel classes can act as capability. Commands can only be
+  useful for a limited set of data elements (for example for Namespace like
+  elements). These capabilities can be assigned by giving the name of the
+  elements(s) that can be affected using a command as a string ('Namespace').
+  This option is most useful for popup menus.
+  
+Main window capabilities:
+  Some actions are quite useless to do, like saving a model, while there is
+  no model.
+  For a start we will distinguish the following caps.:
+  - 'element': there are model elements defined in the main element factory.
+
+Diagram window capabilities:
+  - 'focus': there is an item selected in a diagram and it has the focus.
+  - 'select': one ot more items in the diagram are selected.
+  - 'undo': there is undo information present in the diagram.
+  - 'redo': there is redo information present in the diagram.
+  
+  DiagramItems can not be used as capability. The reason is that the UML
+  model has a stable design, while the implementation of diagrams and diagram
+  items is likely to change much often.
+

@@ -1,20 +1,25 @@
 
 # vim:sw=4:
 import diacanvas
-import gaphor.diagram as diagram
-from gaphor.misc.command import Command
+import gaphor.UML as UML
 
 class PlacementTool(diacanvas.PlacementTool):
 
-    def __init__(self, diagram, type, **properties):
+    def __init__(self, type, subject_class, **properties):
 	diacanvas.PlacementTool.__init__(self, type, **properties)
-	self.diagram = diagram
+	self.subject_class = subject_class
 	self.connect ('button_press_event', self.__button_press)
 	self.connect ('button_release_event', self.__button_release)
 
-    def _create_item(self):
-	f = GaphorResource(diagram.DiagramItemFactory)
-	item = f.create(self.diagram, self.type)
+    def _create_item(self, view, event):
+	elemfact = GaphorResource('ElementFactory')
+	item = view.get_diagram().create(self.type)
+	if self.subject_class:
+	    subject = elemfact.create(self.subject_class)
+	    item.set_property ('subject', subject)
+	    if isinstance(subject, UML.Namespace):
+		subject.namespace = view.get_diagram().namespace
+
 	if self.properties and len(self.properties) > 0:
             try:
                 for (k,v) in self.properties.items():
@@ -30,14 +35,4 @@ class PlacementTool(diacanvas.PlacementTool):
     def __button_release (self, tool, view, event):
 	view.set_tool (None)
 	return 0
-
-
-class PlacementCommand(Command):
-
-    def set_parameters(self, params):
-	self._view = params['window'].get_view()
-
-    def execute(self):
-	tool = PlacementTool (self._diagram, self._klass)
-	self._view.set_tool(tool)
 

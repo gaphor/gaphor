@@ -12,6 +12,8 @@ import diacanvas
 
 
 class Diagram(Namespace):
+    __index = 1
+
     _attrdef = { 'canvas': ( None, diacanvas.Canvas ) }
     # Diagram item to UML model element mapping:
     diagram2UML = { }
@@ -25,6 +27,17 @@ class Diagram(Namespace):
         self.canvas = diacanvas.Canvas()
 	self.canvas.set_undo_stack_depth(10)
 	self.canvas.set_property ("allow_undo", 1)
+
+    def create(self, type):
+	"""
+	Create a new canvas item on the canvas. It is created with a unique
+	ID and it is attached to the diagram's root item.
+	"""
+	obj = type()
+	obj.set_property('id', Diagram.__index)
+	obj.set_property('parent', self.canvas.root)
+	Diagram.__index += 1
+	return obj
 
     def save(self, store):
 	# Save the diagram attributes, but not the canvas
@@ -69,6 +82,9 @@ class Diagram(Namespace):
 	    print 'Creating item ' + str(item_store.type()) + ' with id ' + str(id)
 	    type = item_store.type()
 	    item = type()
+	    if id > Diagram.__index:
+		Diagram.__index = id + 1
+
 	    self.canvas.root.add(item)
 	    item_store.add_cid_to_item_mapping (id, item)
 	    item.set_property ('id', id)

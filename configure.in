@@ -62,15 +62,28 @@ dnl AM_CHECK_PYMOD(libxml2, , , AC_MSG_ERROR(not_found_msg))
 dnl xmllib is still used by utils/genUML.py
 AM_CHECK_PYMOD(xmllib, , , AC_MSG_ERROR(not_found_msg))
 AM_CHECK_PYMOD(copy, , , AC_MSG_ERROR(not_found_msg))
-AM_CHECK_PYMOD(gobject, , , AC_MSG_ERROR(not_found_msg))
-AM_CHECK_PYMOD(gtk, , , AC_MSG_ERROR(not_found_msg))
-AM_CHECK_PYMOD(gnome, , , AC_MSG_ERROR(not_found_msg))
-dnl AM_CHECK_PYMOD(gnome.ui, , , AC_MSG_ERROR(not_found_msg))
-AM_CHECK_PYMOD(gnome.canvas, , , AC_MSG_ERROR(not_found_msg))
-AM_CHECK_PYMOD(diacanvas, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD(pygtk, , , AC_MSG_ERROR(not_found_msg))
+
+AC_MSG_CHECKING(for PyGTK >= 1.99.13)
+prog="
+import pygtk
+pygtk.require('2.0')
+import sys, gtk
+minver = (1,99,13)
+print gtk.pygtk_version,
+if gtk.pygtk_version < minver:
+	sys.exit(1)
+sys.exit(0)"
+if $PYTHON -c "$prog" 1>&AC_FD_CC 2>&AC_FD_CC; then
+	AC_MSG_RESULT(okay)
+else
+	AC_MSG_ERROR(too old)
+fi
 
 AC_MSG_CHECKING(for GTK+ >= 2.0.0)
 prog="
+import pygtk
+pygtk.require('2.0')
 import sys, gtk
 minver = (2,0,0)
 if gtk.gtk_version < minver:
@@ -82,24 +95,18 @@ else
 	AC_MSG_ERROR(too old)
 fi
 
-AC_MSG_CHECKING(for PyGTK >= 1.99.12)
-prog="
-import sys, gtk
-minver = (1,99,12)
-print gtk.pygtk_version,
-if gtk.pygtk_version < minver:
-	sys.exit(1)
-sys.exit(0)"
-if $PYTHON -c "$prog" 1>&AC_FD_CC 2>&AC_FD_CC; then
-	AC_MSG_RESULT(okay)
-else
-	AC_MSG_ERROR(too old)
-fi
+AM_CHECK_PYMOD_2_0(gobject, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD_2_0(gnome, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD_2_0(gnome.ui, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD_2_0(gnome.canvas, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD_2_0(bonobo, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD_2_0(bonobo.ui, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD_2_0(diacanvas, , , AC_MSG_ERROR(not_found_msg))
 
-AC_MSG_CHECKING(for DiaCanvas2 >= 0.8.0)
+AC_MSG_CHECKING(for DiaCanvas2 >= 0.9.0 from CVS)
 prog="
 import sys, diacanvas
-minver = (0,8,0)
+minver = (0,9,0)
 print diacanvas.diacanvas_version,
 if diacanvas.diacanvas_version < minver:
 	sys.exit(1)

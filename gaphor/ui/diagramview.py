@@ -15,6 +15,9 @@ class DiagramView(CanvasView):
 	CanvasView.__init__(self, canvas)
 	self.diagram = diagram
 	
+    def create(self, type):
+	return self.diagram.create(type)
+
     def set_diagram(self, diagram):
 	self.set_canvas (diagram.canvas)
 	self.diagram = diagram

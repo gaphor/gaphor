@@ -1,3 +1,16 @@
+2002-10-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* configure.in, acinclude.m4: updated checks to use
+	pygtk.require('2.0').
+	* gaphor/diagram/diagramitemfactory.py: removed items can be
+	created through gaphor.UML.Diagram.create().
+	* gaphor/ui/command/diagramitem.py: new file. commands for creating
+	canvas items is stored here.
+	* gaphor/diagram/placementtool.py: Use 0.9.0 (CVS) version of
+	DiaCanvas2.
+	* gaphor/UML/diagram.py: added create() for creating nice model
+	elements.
+
 2002-10-08  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/placementtool.py: moved to gaphor/diagram.

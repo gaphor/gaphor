@@ -12,7 +12,7 @@ import string
 class StorageInfo:
     def __init__(self):
 	self.factory = GaphorResource(UML.ElementFactory)
-	self.itemfactory = GaphorResource(diagram.DiagramItemFactory)
+	#self.itemfactory = GaphorResource(diagram.DiagramItemFactory)
 	self.cid2item = { }
 	self.doc=None
 
@@ -138,7 +138,7 @@ class Storage(object):
 
     def add_cid_to_item_mapping(self, cid, item):
 	if not self.__info.cid2item.has_key(cid):
-	    self.__info.itemfactory.set_next_id(cid + 1)
+	    #self.__info.itemfactory.set_next_id(cid + 1)
 	    self.__info.cid2item[cid] = item
 	else:
 	    raise TypeError, 'CID %d is stored multiple times' % cid

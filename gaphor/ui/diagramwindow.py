@@ -94,16 +94,6 @@ class DiagramWindow(AbstractWindow):
 	window.show_all()
 	#window.connect ('destroy', self.__destroy_event_cb)
 
-	# Now set some extra menu items:
-	ui_component.set_translate ('/menu/Insert',
-	    """
-	    <placeholder name=\"InsertElement\">
-	      <menuitem name="InsertActor" _label="Actor" verb="InsertActor"/>
-	      <menuitem name="InsertUseCase" _label="UseCase" verb="InsertUseCase"/>
-	      <menuitem name="InsertClass" _label="Class" verb="InsertClass"/>
-	    </placeholder>
-	    """)
-
 	self.__view = view
 	self.__window = window
 	self.__ui_component = ui_component
@@ -116,7 +106,6 @@ class DiagramWindow(AbstractWindow):
 	ui_component.set_translate ('/', command_registry.create_command_xml(context='diagram.'))
 	verbs = command_registry.create_verbs(context='diagram.menu',
 	                                      params={ 'window': self })
-	print str(verbs)
 	ui_component.add_verb_list (verbs, None)
 
     def close(self):

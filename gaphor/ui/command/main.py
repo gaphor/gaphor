@@ -64,7 +64,7 @@ class OpenCommand(Command):
 	    print 'Loading from:', filename
 	    print 'Flushing old data...'
 	    GaphorResource(UML.ElementFactory).flush()
-	    GaphorResource(diagram.DiagramItemFactory).flush()
+	    #GaphorResource(diagram.DiagramItemFactory).flush()
 
 	    gc.collect()
 

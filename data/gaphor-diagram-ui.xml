@@ -30,7 +30,9 @@
     </submenu>
 
     <submenu name="Insert" _label="_Insert">
-        <placeholder name="InsertElement"/>
+	<menuitem name="InsertActor" _label="Actor" verb="InsertActor"/>
+	<menuitem name="InsertUseCase" _label="UseCase" verb="InsertUseCase"/>
+	<menuitem name="InsertClass" _label="Class" verb="InsertClass"/>
     </submenu>
 </menu>
 
