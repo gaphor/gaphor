@@ -16,6 +16,9 @@ from management import *
 Namespace._attrdef['ownedElement'] = ( Sequence, ModelElement, 'namespace' )
 ModelElement._attrdef['namespace'] = ( None, Namespace, 'ownedElement' )
 
+Association._attrdef['connection'] = ( Sequence, AssociationEnd, 'association' )
+AssociationEnd._attrdef['association'] = ( None, Association, 'connection' )
+
 ClassifierRole._attrdef['message'] = ( Sequence, Message )
 #Message._attrdef['receiver'] = ( None, ClassifierRole )
 #Message._attrdef['sender'] = ( None, ClassifierRole )

@@ -1,9 +1,15 @@
 	Gaphor - A UML CASE tool.
 
 
-This is to become a CASE tool what uses GNOME (GTK-2.0) for visualiization.
+This is to become a CASE tool what uses GNOME (GTK-2.0) for visualization.
 
 Gaphor is mainly written in Python, which makes it very easy to use and
 very easy to extend.
+
+NOTE:	If you compile Gaphor yourself, you might want to patch your sources
+	of PyGTK too. This will avoid reference leak (resulting in memory
+	leaks) from objects referenced by a gtk.GenericTreeModel object.
+	I know it is not a nice solution, but it makes things work as long
+	as PyGTK itself does not solve the problem...
 
 	- Arjan Molenaar <arjanmolenaar@hetnet.nl>

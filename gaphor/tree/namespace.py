@@ -8,9 +8,8 @@ import gtk
 import gobject
 import types
 import UML
-import tree.treemodel
 
-class NamespaceModel(tree.TreeModel):
+class NamespaceModel(gtk.GenericTreeModel):
     ''' The node is defined by a instance. We can reach the parent
         by <object>.namespace. The children can be found in the
 	<object>.ownerElement list.'''
@@ -28,12 +27,13 @@ class NamespaceModel(tree.TreeModel):
 	self.model = model;
 	# Init parent:
 	gtk.GenericTreeModel.__init__(self)
-	self.set_property ('leak_references', gtk.FALSE);
+	self.set_property ('leak_references', 0)
 	#self.connect ('dispose', self.__destroy)
 	# TODO: connect to 'name' and 'unlink' and 'namespace' signal from
 	#	the data objects.
 	#	Removed signals when finalized.
 	#	How can I notify views in a proper way if something changed.
+
     def dump(self):
         '''Dump the static structure of the model to stdout.'''
 	def doit(node, depth):
@@ -90,7 +90,7 @@ class NamespaceModel(tree.TreeModel):
 	'''returns the value stored in a particular column for the node'''
 	assert column == 0
 	assert isinstance (node, UML.Namespace)
-	#print "on_get_value", node.name
+	print "on_get_value", node.name
 	return '<<' + str(node.__class__.__name__) + '>> ' + node.name
 
     def on_iter_next(self, node):
