@@ -24,7 +24,7 @@
     <action id="XMIExport"
             label="XMI Export"
             tooltip="Export the model to XMI"
-            class="XMIExport" slot="FileExportSlot">
+            class="XMIExportAction" slot="FileExportSlot">
       <!--
         Add optional dependencies to this action. The action is then updated
         when actions defined in the depends tag are executed.

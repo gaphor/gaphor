@@ -28,9 +28,8 @@
       <!--
         Add optional dependencies to this action. The action is then updated
         when actions defined in the depends tag are executed.
-      - ->
-      <depends action=""/>
       -->
+      <depends action="TabChange"/>
     </action>
   </provide>
 </plugin>

@@ -1,14 +1,11 @@
 # vim:sw=4:et
 
-from xml.sax.saxutils import XMLGenerator
+#from xml.sax.saxutils import XMLGenerator
+import time
 import gaphor
 from gaphor import UML
-from gaphor.plugin import Action
+from gaphor.misc.xmlwriter import XMLWriter
 
-try:
-    dict()
-except:
-    from UserDict import UserDict as dict
 class XMLAttributes(dict):
     def getLength(self):
         """ Return the number of attributes. """
@@ -26,7 +23,8 @@ class XMLAttributes(dict):
         """ Return the value of attribute name. """ 
         return self[name]
 
-class XMIExport(Action):
+
+class XMIExport(object):
 
     def handleClass(self, xmi, node):
         """ """    
@@ -214,15 +212,17 @@ class XMIExport(Action):
         xmi.endElement('UML:Association')
             
             
-    def export(self):
-        out=open('/Users/vloothuis/test.xmi','w')
-        xmi=XMLGenerator(out)
+    def export(self, filename):
+        #out=open('/Users/vloothuis/test.xmi','w')
+        out=open(filename,'w')
+
+        xmi=XMLWriter(out)
         
         # Start XML generation
         attributes=XMLAttributes()
         attributes['xmi.version']='1.2'
         attributes['xmlns:UML']='org.omg.xmi.namespace.UML'
-        attributes['timestamp']='Tue Sep 28 10:48:06 CEST 2004' # TODO!
+        attributes['timestamp'] = time.strftime('%a %b %d %H:%M:%S %Z %Y')
         xmi.startElement('XMI', attrs=attributes)
         
         self.writeHeader(xmi)
@@ -273,6 +273,3 @@ class XMIExport(Action):
         xmi.endElement('UML:Model')
         xmi.endElement('XMI.content')
 
-    def execute(self):
-        self.export()
-    

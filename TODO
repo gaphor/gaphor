@@ -13,7 +13,7 @@ As always, there is much to do...
 
 - An option that shows the selected item (in the namespace view) in a diagram.
 
-- Copy/Paste for diagramitems
+#- Copy/Paste for diagramitems
   - in order to make copy/paste work, the load/save functions should be
     generatlised to allow a subset to be saved/loaded (which is needed
     anyway for exporting/importing stereotype Profiles).
@@ -37,10 +37,7 @@ As always, there is much to do...
   Accelerators should be activated by the (Abstract)Window, should not depend
   on menu items
 
-#- Undo/redo functionality doesn't work as espected
-  ==> Create our own UndoManager, this should also register connect/disconnect
-  actions on gaphor.UML classes.
-  AJM: Looks like it really works now.
+#- Undo/redo functionality
 
 - Exporting diagrams to UML XMI (work in progress),
   code, images (SVG/png), etc. - make a plugin!

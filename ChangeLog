@@ -1,10 +1,24 @@
+2004-11-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/plugins/xmiexport/__init__.py: Added action with save dialog.
+	* data/plugins/xmiexport/exportmodel.py: Added timestamp, use
+	XMLWriter.
+	* FAQ: new file.
+
 2004-11-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/attribute.py: added listener for 'association', so
 	undo can work properly.
         * data/plugins/alignment: Make only sensitive if items are selected.
+	* data/plugins/svgexport: New plugin.
+	* gaphor/ui/diagramactions.py: Moved SVG export code to svgexport
+	plugin.
+	* gaphor/diagram/association.py: Moved the Side A/B submenu's in
+	separate sub menu's that can be activated when the mouse pointer is
+	at the end of the association.
 
 2004-11-07  Jeroen Vloothuis  <jeroen@vloothuis.net>
+
         * data/plugins/alignment: Added a plugin for adjusting the
         alignment of diagram items. Currentyl does horizontal and
         vertical alignment.

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<plugin name="SVG Export"
+        version="0.1"
+        author="Arjan Molenaar">
+  <description>
+    Export the open diagram to an SVG (Scalable Vector Graphics) file.
+  </description>
+
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+    <action id="SVGExport"
+            label="SVG Export"
+            tooltip="Export the diagram to SVG"
+            class="SVGExportAction" slot="FileExportSlot">
+      <depends action="TabChange"/>
+    </action>
+  </provide>
+</plugin>

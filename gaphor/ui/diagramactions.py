@@ -34,46 +34,6 @@ class CloseTabAction(Action):
 register_action(CloseTabAction)
 
 
-class ExportSVGAction(Action):
-    id = 'FileExportSVG'
-    label = '_Export SVG'
-    tooltip = 'Write the contents of this diagram to a SVG file'
-
-    def init(self, window):
-	self.filename = None
-	self._window = window
-
-    def update(self):
-	tab = self._window.get_current_diagram_tab()
-	self.sensitive = tab and True or False
-
-    def execute(self):
-	filesel = gtk.FileSelection('Export diagram to SVG file')
-	filesel.set_modal(True)
-	filesel.set_filename(self.filename or self._window.get_current_diagram().name + '.svg' or 'export.svg')
-
-	#filesel.ok_button.connect('clicked', self.on_ok_button_pressed, filesel)
-	#filesel.cancel_button.connect('clicked',
-	#			      self.on_cancel_button_pressed, filesel)
-	
-	#filesel.show()
-	response = filesel.run()
-	filesel.hide()
-	if response == gtk.RESPONSE_OK:
-	    filename = filesel.get_filename()
-	    if filename and len(filename) > 0:
-		self.filename = filename
-		log.debug('Exporting SVG image to: %s' % filename)
-		canvas = self._window.get_current_diagram_tab().get_canvas()
-		export = diacanvas.ExportSVG()
-		try:
-		    export.render (canvas)
-		    export.save(filename)
-		except Exception, e:
-		    log.error('Error while saving model to file %s: %s' % (filename, e))
-
-register_action(ExportSVGAction)
-
 class UndoStackAction(Action):
     """Dummy action that triggers the undo and redo actions to update
     themselves.

@@ -68,8 +68,7 @@ class MainWindow(AbstractWindow):
                 _('_Import'), (
                     '<FileImportSlot>',),
                 _('_Export'), (
-                    'FileExportSVG',
-                    '<FileExportSlot>'),
+                    '<FileExportSlot>',),
                 'separator',
                 'FileCloseTab',
                 '<FileSlot>',

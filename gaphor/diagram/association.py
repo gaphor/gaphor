@@ -53,18 +53,18 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         'AssociationShowDirection',
         'AssociationInvertDirection',
         'separator',
-        'Side _A', (
-            'Head_isNavigable',
-            'separator',
-            'Head_AggregationNone',
-            'Head_AggregationShared',
-            'Head_AggregationComposite'),
-        'Side _B', (
-            'Tail_isNavigable',
-            'separator',
-            'Tail_AggregationNone',
-            'Tail_AggregationShared',
-            'Tail_AggregationComposite')
+#        'Side _A', (
+#            'Head_isNavigable',
+#            'separator',
+#            'Head_AggregationNone',
+#            'Head_AggregationShared',
+#            'Head_AggregationComposite'),
+#        'Side _B', (
+#            'Tail_isNavigable',
+#            'separator',
+#            'Tail_AggregationNone',
+#            'Tail_AggregationShared',
+#            'Tail_AggregationComposite')
     )
 
     def __init__(self, id=None):
@@ -72,9 +72,9 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.
-        self._head_end = AssociationEnd()
+        self._head_end = AssociationEnd(end="head")
         self._head_end.set_child_of(self)
-        self._tail_end = AssociationEnd()
+        self._tail_end = AssociationEnd(end="tail")
         self._tail_end.set_child_of(self)
 
         self._label = diacanvas.shape.Text()
@@ -453,9 +453,26 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 
     FONT='sans 10'
 
-    def __init__(self, id=None):
+    head_popup_menu = (
+        'Head_isNavigable',
+        'separator',
+        'Head_AggregationNone',
+        'Head_AggregationShared',
+        'Head_AggregationComposite'
+    )
+
+    tail_popup_menu = (
+        'Tail_isNavigable',
+        'separator',
+        'Tail_AggregationNone',
+        'Tail_AggregationShared',
+        'Tail_AggregationComposite'
+    )
+
+    def __init__(self, id=None, end=None):
         self.__gobject_init__()
         DiagramItem.__init__(self, id)
+        self._end = end
         self.set_flags(diacanvas.COMPOSITE)
         
         font = pango.FontDescription(AssociationEnd.FONT)
@@ -476,6 +493,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         self._mult_border.set_line_width(1.0)
 
         self._name_bounds = self._mult_bounds = (0, 0, 0, 0)
+        self._point1 = self._point2 = (0, 0)
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
@@ -485,6 +503,15 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     def postload(self):
         DiagramItem.postload(self)
         #self.set_text()
+
+    def get_popup_menu(self):
+        if self.subject:
+            if self._end == 'head':
+                return self.head_popup_menu
+            else:
+                return self.tail_popup_menu
+        elif self.parent:
+            return self.parent.get_popup_menu()
 
     def set_text(self):
         """Set the text on the association end.
@@ -629,6 +656,9 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
                              p1[1] + mult_dy + mult_h)
         self._mult.set_pos((p1[0] + mult_dx, p1[1] + mult_dy))
 
+        self._point1 = p1
+        self._point2 = p2
+
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec,
                         notifiers + ('aggregation', 'visibility',
@@ -680,7 +710,15 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         drp = diacanvas.geometry.distance_rectangle_point
         d1 = drp(self._name_bounds, p)
         d2 = drp(self._mult_bounds, p)
-        return min(d1, d2)
+        try:
+            d3 = diacanvas.geometry.distance_point_point(self._point1, p)
+            d4, dummy = diacanvas.geometry.distance_line_point(self._point1, self._point2, p, 1.0, diacanvas.shape.CAP_ROUND)
+            if d3 < 15 and d4 < 5:
+                d3 = 0.0
+        except Exception, e:
+            log.error("Could not determine distance", e)
+            d3 = 1000.0
+        return min(d1, d2, d3)
 
     def on_shape_iter(self):
         if self.subject:
