@@ -227,6 +227,7 @@ class OpenEditorWindowAction(Action):
 
 register_action(OpenEditorWindowAction)
 
+
 class OpenConsoleWindowAction(Action):
     id = 'OpenConsoleWindow'
     label = '_Console'
@@ -244,6 +245,26 @@ class OpenConsoleWindowAction(Action):
 	self._window.set_message('Console launched')
 
 register_action(OpenConsoleWindowAction)
+
+
+class OpenStereotypeWindowAction(Action):
+    id = 'OpenStereotypeWindow'
+    label = 'S_tereotypes'
+    tooltip = 'Open the Gaphor Stereotypes'
+
+    def init(self, window):
+	self._window = window
+
+    def execute(self):
+	from gaphor.ui.stereotypewindow import StereotypeWindow
+	
+	ew = StereotypeWindow()
+	#ew.construct(self._window.get_window())
+	ew.run(self._window.get_window())
+	#self._window.add_transient_window(ew)
+	#self._window.set_message('Stereortypes launched')
+
+register_action(OpenStereotypeWindowAction)
 
 
 class AboutAction(Action):

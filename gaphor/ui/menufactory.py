@@ -8,7 +8,8 @@ TODO: show tooltips in the status bar when a menu item is selected.
 import gobject
 import gtk
 from gaphor.misc.action import ActionError, Action, CheckAction, RadioAction
-import gaphor.misc.wrapbox
+#import gaphor.misc.wrapbox
+import gaphor.ui.wrapbox
 
 __all__ = [ 'MenuFactory' ]
 
@@ -281,16 +282,18 @@ class MenuFactory(object):
             item.show()
             return item
 
-    def create_wrapbox(self, menu_def):
+    def create_wrapbox(self, menu_def, groups=None):
         """Create a Wrapbox. items in menu_def should not be nested as
         they are when creating a normal menu.
         """
-        wrapbox = gaphor.misc.wrapbox.HWrapBox()
+        wrapbox = gaphor.ui.wrapbox.WrapBox()
         tooltips = gtk.Tooltips()
-        groups = { }
+        if groups is None:
+            groups = { }
         for id in menu_def:
                 item = self.create_button(id, groups, tooltips)
-                wrapbox.pack(item, False, False, False, False)
+                #wrapbox.pack(item, False, False, False, False)
+                wrapbox.add(item)
         tooltips.enable()
         wrapbox.tooltips = tooltips
         return wrapbox

@@ -7,6 +7,60 @@ import gaphor
 import gaphor.UML as UML
 from abstractwindow import AbstractWindow
 
+def on_toggled(button, content):
+    arrow = button.get_children()[0]
+    if button.get_property('active'):
+        content.show()
+        arrow.set(gtk.ARROW_DOWN, gtk.SHADOW_IN)
+    else:
+        content.hide()
+        arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
+
+def make_wrapbox_decorator(title, content, expanded=False):
+    hbox = gtk.HBox()
+    vbox = gtk.VBox()
+
+    vbox.add(hbox)
+
+    button = gtk.ToggleButton()
+
+    arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
+    button.add(arrow)
+    hbox.pack_start(button, False, False, 0)
+    #button.add(hbox)
+    #hbox.pack_start(arrow, False, False, 0)
+
+    label = gtk.Label(title)
+    hbox.pack_start(label, expand=False, fill=False)
+
+    sep = gtk.HSeparator()
+    hbox.pack_start(sep, expand=False, fill=True)
+
+    #vbox.pack_start(button, False, False, 1)
+
+    vbox.show_all()
+
+    button.connect('toggled', on_toggled, content)
+
+    vbox.pack_start(content, True, True)
+    
+    vbox.label = label
+    vbox.content = content
+
+    button.set_property('active', expanded)
+    on_toggled(button, content)
+    return vbox
+
+def make_wrapbox(title, action_ids, menu_factory):
+    for action in action_ids:
+        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_default, groups=wrapbox_groups)
+        #wrapbox.set_size_request(160, 120)
+        #wrapbox.set_aspect_ratio(256)
+        #wrapbox_dec = make_wrapbox_decorator(wrapbox_classes)
+        vbox.pack_start(wrapbox.table, expand=False)
+        wrapbox.table.show()
+
+
 class MainWindow(AbstractWindow):
     """The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
@@ -32,7 +86,9 @@ class MainWindow(AbstractWindow):
                 'EditDelete',
                 'separator',
                 'EditSelectAll',
-                'EditDeselectAll'),
+                'EditDeselectAll',
+                'separator',
+                'OpenStereotypeWindow'),
             '_Diagram', (
                 'ViewZoomIn',
                 'ViewZoomOut',
@@ -61,14 +117,17 @@ class MainWindow(AbstractWindow):
                 'ViewZoomOut',
                 'ViewZoom100')
 
-    wrapbox =  ('Pointer',
+    wrapbox_default =  (
+                'Pointer',
+                'InsertComment',
+                'InsertCommentLine')
+    wrapbox_classes = (
                 'InsertClass',
                 'InsertPackage',
                 'InsertAssociation',
                 'InsertDependency',
-                'InsertGeneralization',
-                'InsertComment',
-                'InsertCommentLine',
+                'InsertGeneralization')
+    wrapbox_actions = (
                 'InsertAction',
                 'InsertInitialNode',
                 'InsertActivityFinalNode',
@@ -155,11 +214,30 @@ class MainWindow(AbstractWindow):
                                size=(760, 580),
                                contents=paned)
                                #contents=scrolled_window)
-        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox)
-        wrapbox.set_size_request(160, 120)
-        #wrapbox.set_aspect_ratio(1/256)
-        vbox.pack_start(wrapbox, expand=False)
-        wrapbox.show()
+
+        vbox.set_border_width(3)
+
+        wrapbox_groups = { }
+        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_default, groups=wrapbox_groups)
+        #wrapbox.set_size_request(160, 120)
+        #wrapbox.set_aspect_ratio(256)
+        #wrapbox_dec = make_wrapbox_decorator(wrapbox_classes)
+        vbox.pack_start(wrapbox.table, expand=False)
+        wrapbox.table.show()
+
+        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_classes, groups=wrapbox_groups)
+        #wrapbox.set_size_request(160, 120)
+        #wrapbox.set_aspect_ratio(256)
+        wrapbox_dec = make_wrapbox_decorator('Classes', wrapbox.table)
+        vbox.pack_start(wrapbox_dec, expand=False)
+
+        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_actions, groups=wrapbox_groups)
+        #wrapbox.set_size_request(160, 120)
+        #wrapbox.set_aspect_ratio(256)
+        wrapbox_dec = make_wrapbox_decorator('Actions', wrapbox.table)
+        vbox.pack_start(wrapbox_dec, expand=False)
+
+        #wrapbox.show()
         #vbox.set_resize_mode(gtk.RESIZE_QUEUE)
         #wrapbox.set_resize_mode(gtk.RESIZE_QUEUE)
         #scrolled_window = gtk.ScrolledWindow()

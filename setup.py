@@ -293,41 +293,41 @@ class run_Gaphor(Command):
             print 'Launching Gaphor...'
             gaphor.main()
 
-try:
-    from dsextras import TemplateExtension, BuildExt, GLOBAL_INC
-except ImportError:
-    import pygtk
-    pygtk.require('2.0')
-    from gtk.dsextras import TemplateExtension, BuildExt, GLOBAL_INC
+#try:
+#    from dsextras import TemplateExtension, BuildExt, GLOBAL_INC
+#except ImportError:
+#    import pygtk
+#    pygtk.require('2.0')
+#    from gtk.dsextras import TemplateExtension, BuildExt, GLOBAL_INC
 
-pygtkincludedir = getoutput('pkg-config --variable pygtkincludedir pygtk-2.0')
-codegendir = getoutput('pkg-config --variable codegendir pygtk-2.0')
-defsdir = getoutput('pkg-config --variable defsdir pygtk-2.0')
+#pygtkincludedir = getoutput('pkg-config --variable pygtkincludedir pygtk-2.0')
+#codegendir = getoutput('pkg-config --variable codegendir pygtk-2.0')
+#defsdir = getoutput('pkg-config --variable defsdir pygtk-2.0')
 
-sys.path.append(codegendir)
+#sys.path.append(codegendir)
 
-GLOBAL_INC.append(pygtkincludedir)
-GLOBAL_INC.append('.')
-GTKDEFS = [os.path.join(defsdir, 'gtk-types.defs')]
+#GLOBAL_INC.append(pygtkincludedir)
+#GLOBAL_INC.append('.')
+#GTKDEFS = [os.path.join(defsdir, 'gtk-types.defs')]
 
-ext_modules = []
-gtkwrapbox = TemplateExtension(name='wrapbox',
-                               pkc_name='gtk+-2.0',
-                               pkc_version='2.0.0',
-                               output='gaphor.misc.wrapbox',
-                               defs='src/wrapbox.defs',
-                               sources=['src/gtkwrapbox.c',
-                                        'src/gtkhwrapbox.c',
-                                        'src/gtkvwrapbox.c',
-                                        'src/wrapbox.c',
-                                        'src/wrapboxmodule.c'],
-                               register=GTKDEFS,
-                               override='src/wrapbox.override')
+#ext_modules = []
+#gtkwrapbox = TemplateExtension(name='wrapbox',
+#                               pkc_name='gtk+-2.0',
+#                               pkc_version='2.0.0',
+#                               output='gaphor.misc.wrapbox',
+#                               defs='src/wrapbox.defs',
+#                               sources=['src/gtkwrapbox.c',
+#                                        'src/gtkhwrapbox.c',
+#                                        'src/gtkvwrapbox.c',
+#                                        'src/wrapbox.c',
+#                                        'src/wrapboxmodule.c'],
+#                               register=GTKDEFS,
+#                               override='src/wrapbox.override')
 
-if gtkwrapbox.can_build():
-    ext_modules.append(gtkwrapbox)
-else:
-    pass
+#if gtkwrapbox.can_build():
+#    ext_modules.append(gtkwrapbox)
+#else:
+#    pass
 
 setup(name='gaphor',
       version=VERSION,
@@ -346,7 +346,7 @@ setup(name='gaphor',
                 'gaphor.ui',
                 'gaphor.misc'
       ],
-      ext_modules=ext_modules,
+#      ext_modules=ext_modules,
       # data files are relative to <prefix>/share/gaphor (see setup.cfg)
       data_files=[('pixmaps', glob('data/pixmaps/*.png'),)
       ],
