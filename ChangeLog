@@ -3,6 +3,9 @@
 	* data/pixmaps/extension24.png initalnode24.png,
 	activityfinalnode24.png, activityfinalnode.xcf: added
 	* gaphor/ui/stock.py: added the new icons as stock icons.
+	* data/pixmaps/: removed unused (old) icons. Added icons for Actions,
+	stereotype, extension, etc.
+	
 
 2004-05-12  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
