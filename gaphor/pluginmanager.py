@@ -96,8 +96,10 @@ class Plugin(object):
         if mod:
             self.status = 'Imported'
 
+        log.debug('Trying to import %d actions' % len(self.provided_actions))
         for action in self.provided_actions:
             try:
+                log.debug('Trying to import action %s' % action.id)
                 action.import_action(self)
             except Exception, e:
                 self.status += '\nFailed to import action %s (%s)' % (action.id or action.class_, e)
@@ -165,7 +167,6 @@ class PluginLoader(handler.ContentHandler):
         pass
 
     def startElement(self, name, attrs):
-
         mode = self.mode
         if mode == self.TOPLEVEL:
             if name == 'plugin':
@@ -174,10 +175,12 @@ class PluginLoader(handler.ContentHandler):
                 self.plugin.author = attrs['author']
             elif name == 'description':
                 self.mode = self.DESCRIPTION
-            if name == 'require':
+            elif name == 'require':
                 self.mode = self.REQUIRE
             elif name == 'provide':
                 self.mode = self.PROVIDE
+            else:
+                raise ParserException, 'Invalid XML: expecting <plugin>, <description>, <require> or <provide>. Got <%s>.' % name
 
         elif mode == self.REQUIRE:
             if name == 'module':
@@ -186,8 +189,11 @@ class PluginLoader(handler.ContentHandler):
                 self.plugin.required_actions.append(attrs['name'])
             elif name == 'plugin':
                 self.plugin.required_plugins.append(attrs['name'])
+            else:
+                raise ParserException, 'Invalid XML: expecting <module>, <action> or <plugin>. Got <%s>.' % name
 
         elif mode == self.PROVIDE:
+            log.debug('Have action %s' % attrs['class'])
             if name == 'action':
                 action = PluginAction(attrs['class'].encode(),
                                           attrs['slot'].encode())
@@ -199,10 +205,14 @@ class PluginLoader(handler.ContentHandler):
                 action.accel = attrs.get('accel', '').encode()
                 self.plugin.provided_actions.append(action)
                 self.mode = self.ACTION
+            else:
+                raise ParserException, 'Invalid XML: expecting <action>. Got <%s>.' % name
 
         elif mode == self.ACTION:
             if name == 'depends':
                 self.plugin.provided_actions[-1].depends.append(attrs['action'].encode())
+            else:
+                raise ParserException, 'Invalid XML: expecting <depends>. Got <%s>.' % name
 
         else:
             raise ParserException, 'Invalid XML: tag <%s> not known' % name
