@@ -6,12 +6,13 @@ import gaphor.UML as UML
 
 class PlacementTool(diacanvas.PlacementTool):
 
-    def __init__(self, item_factory, **properties):
+    def __init__(self, item_factory, action_id, **properties):
         """item_factory is a callable. It is used to create a CanvasItem
         that is displayed on the diagram.
         """
         diacanvas.PlacementTool.__init__(self, None, **properties)
         self.item_factory = item_factory
+        self.action_id = action_id
         self.is_released = False
 
     def _create_item(self, view, event):

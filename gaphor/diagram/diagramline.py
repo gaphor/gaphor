@@ -8,6 +8,14 @@ from gaphor.diagram import initialize_item
 class DiagramLine(diacanvas.CanvasLine):
     """Gaphor wrapper for lines."""
 
+    popup_menu = (
+        'AddSegment',
+        'DeleteSegment',
+        'Orthogonal',
+        'separator',
+        'EditDelete'
+    )
+
     def __init__(self):
         #diacanvas.CanvasLine.__init__(self)
         self.__gobject_init__()

@@ -39,22 +39,23 @@ def main():
     global _resources
     # Import stuff here, since the user might not need all the GUI stuff
     import gtk
-    import bonobo
-    import gnome
+    #import bonobo
+    #import gnome
     # Initialize gnome.ui, since we need some definitions from it
-    import gnome.ui
+    #import gnome.ui
     from ui import MainWindow
-    gnome.init('gaphor', gaphor.version.VERSION)
+    #gnome.init('gaphor', gaphor.version.VERSION)
     # should we set a default icon here or something?
     main_window = MainWindow()
     main_window.construct()
     # When the state changes to CLOSED, quit the application
-    main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and bonobo.main_quit())
+    #main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and bonobo.main_quit())
+    main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and gtk.main_quit())
     #mainwin = GaphorResource(WindowFactory).create(type=MainWindow)
     _resources['MainWindow'] = main_window
     #gtk.threads_init()
     #gtk.threads_enter()
-    bonobo.main()
+    gtk.main()
     #gtk.threads_leave()
     log.info('Bye!')
 

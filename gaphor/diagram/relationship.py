@@ -44,9 +44,6 @@ class RelationshipItem(DiagramLine, DiagramItem):
     disconnect = DiagramItem.disconnect
     notify = DiagramItem.notify
 
-    def has_capability(self, capability):
-        return super(RelationshipItem, self).has_capability(capability)
-
     # DiaCanvasItem callbacks
     def on_glue(self, handle, wx, wy):
         return self._on_glue(handle, wx, wy, diacanvas.CanvasLine)

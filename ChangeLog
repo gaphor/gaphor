@@ -1,3 +1,15 @@
+2004-03-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* Removed GNOME dependencies from (almost) all of Gaphor
+	* gaphor/diagram/actions.py, gaphor/diagram/itemactions.py,
+	gaphor/misc/action.py, gaphor/ui/diagramactions.py,
+	gaphor/ui/editoractions.py, gaphor/ui/mainactions.py,
+	gaphor/ui/menufactory.py, tests/menu.py:
+	Introduced new Action structure for menus, toolbars and popups
+	* tests/test-association.py, tests/test-diagram.py,
+	tests/test-modelelement.py: Added some tests
+	* Lots of changes in the ui and diagram department
+
 2004-02-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/consolewindow.py: added

@@ -85,6 +85,15 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     COMP_MARGIN_X=5
     COMP_MARGIN_Y=5
 
+    popup_menu = ClassifierItem.popup_menu + (
+        'separator',
+        'CreateAttribute',
+        'CreateOperation',
+        'separator',
+        'ShowAttributes',
+        'ShowOperations'
+    )
+
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
         self.set(height=50, width=100)
@@ -123,14 +132,6 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         elif pspec.name == 'show-operations':
             return self._operations.visible
         return ClassifierItem.do_get_property(self, pspec)
-
-    def has_capability(self, capability):
-        #log.debug('has_capability: %s' % capability)
-        if capability == 'show-attributes':
-            return self._attributes.visible
-        elif capability == 'show-operations':
-            return self._operations.visible
-        return ClassifierItem.has_capability(self, capability)
 
     def _create_attribute(self, attribute):
         """Create a new attribute item.

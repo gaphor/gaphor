@@ -342,6 +342,13 @@ class NamespaceView(gtk.TreeView):
         #self.connect('drag_motion', NamespaceView.do_drag_motion)
         #self.connect('drag_drop', NamespaceView.do_drag_drop)
 
+    def get_selected_element(self):
+        selection = self.get_selection()
+        model, iter = selection.get_selected()
+        if not iter:
+            return
+        return model.get_value(iter, 0)
+
     def _set_pixbuf (self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)
         stock_id = stock.get_stock_id(value.__class__)
@@ -355,9 +362,8 @@ class NamespaceView(gtk.TreeView):
         name = value and (value.name or '').replace('\n', ' ') or '<None>'
         cell.set_property('text', name)
 
-    def _name_edited (self, cell, path_str, new_text):
-        """
-        The text has been edited. This method updates the data object.
+    def _name_edited(self, cell, path_str, new_text):
+        """The text has been edited. This method updates the data object.
         Note that 'path_str' is a string where the fields are separated by
         colons ':', like this: '0:1:1'. We first turn them into a tuple.
         """

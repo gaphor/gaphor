@@ -57,4 +57,5 @@ from relationship import RelationshipItem
 from dependency import DependencyItem
 from generalization import GeneralizationItem
 from association import AssociationItem
-
+#import diagramitemactions
+import itemactions

@@ -1,14 +1,14 @@
 """This module contains user interface related code, such as the
 main screen and diagram windows.
 """
-__all__ = [ 'command', 'commandregistry', 'namespace', 'stock' ]
+__all__ = [ 'namespace', 'stock' ]
 
 # Make sure we have GTK+ >= 2.0:
 import pygtk
 pygtk.require('2.0')
 del pygtk
 
-import commandregistry
+#import commandregistry
 
 from abstractwindow import AbstractWindow
 from mainwindow import MainWindow
@@ -21,5 +21,5 @@ import stock
 del stock
 
 # Make sure build in commands are registered:
-import command
-del command, commandregistry
+#import command
+#del command, commandregistry

@@ -59,6 +59,13 @@
 	<separator/>
 	<toolitem name="InsertComment" verb=""/>
 	<toolitem name="InsertCommentLine" verb=""/>
+	<toolitem name="SnapToGrid" verb="" type="toggle"/>
+
+	<toolitem name="InsertClass" verb="" type="radio" group="insert"/>
+	<toolitem name="InsertPackage" verb="" type="radio" group="insert"/>
+	<toolitem name="InsertAssociation" verb="" type="radio" group="insert"/>
+	<toolitem name="InsertDependency" verb="" type="radio" group="insert"/>
+	<toolitem name="InsertGeneralization" verb="" type="radio" group="insert"/>
     </dockitem>
 
     <popups>

@@ -78,6 +78,8 @@ class DiagramItem(Presentation):
     # Note that subject calls GObject.notify to emit changes
     subject = diagramassociation('subject', Element, upper=1, opposite='presentation')
 
+    popup_menu = ()
+
     def __init__(self, id=None):
         Presentation.__init__(self)
         self._id = id # or uniqueid.generate_id()
@@ -192,12 +194,6 @@ class DiagramItem(Presentation):
     def notify(self, name, pspec=None):
         CanvasItem.notify(self, name)
 
-    def has_capability(self, capability):
-        """Returns the availability of an diagram item specific capability.
-        This kinda works the same way as capabilities on windows.
-        """
-        return False
-
     def save_property(self, save_func, name):
         """Save a property, this is a shorthand method.
         """
@@ -208,6 +204,9 @@ class DiagramItem(Presentation):
         """
         for name in names:
             self.save_property(save_func, name)
+
+    def get_popup_menu(self):
+        return self.popup_menu
 
     def _subject_connect_helper(self, element, callback_prefix, prop_list):
         """Connect a signal notifier. The notifier can be just the name of

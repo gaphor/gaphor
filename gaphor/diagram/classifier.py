@@ -15,6 +15,12 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
 
     FONT='sans bold 10'
 
+    popup_menu = (
+        'RenameItem',
+        'separator',
+        'EditDelete',
+    )
+
     def __init__(self, id=None):
         ModelElementItem.__init__(self, id)
 

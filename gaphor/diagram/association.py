@@ -41,6 +41,22 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
                          gobject.PARAM_READWRITE),
     }
 
+    association_popup_menu = (
+        'separator',
+        'Side _A', (
+            'Head_isNavigable',
+            'separator',
+            'Head_AggregationNone',
+            'Head_AggregationShared',
+            'Head_AggregationComposite'),
+        'Side _B', (
+            'Tail_isNavigable',
+            'separator',
+            'Tail_AggregationNone',
+            'Tail_AggregationShared',
+            'Tail_AggregationComposite')
+    )
+
     def __init__(self, id=None):
         RelationshipItem.__init__(self, id)
 
@@ -93,30 +109,6 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
             return self._tail_end.subject
         else:
             return RelationshipItem.do_get_property(self, pspec)
-
-    def has_capability(self, capability):
-        if capability.startswith('head_'):
-            subject = self._head_end.subject
-        elif capability.startswith('tail_'):
-            subject = self._tail_end.subject
-        else:
-            subject = None
-
-        if subject:
-            cap = capability[5:]
-            if cap == 'is_navigable':
-                # The side is navigable if the property is owned by the
-                # class, if it is owned by the association, the side is
-                # not navigable.
-                return not subject.owningAssociation
-            elif cap == 'ak_none':
-                return (subject.aggregation == intern('none'))
-            elif cap == 'ak_shared':
-                return (subject.aggregation == intern('shared'))
-            elif cap == 'ak_composite':
-                return (subject.aggregation == intern('composite'))
-        # in all other cases:
-        return RelationshipItem.has_capability(self, capability)
 
     head_end = property(lambda self: self._head_end)
 
@@ -281,6 +273,12 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 
     def on_groupable_iter(self):
         return iter([self._head_end, self._tail_end])
+
+    def get_popup_menu(self):
+        if self.subject:
+            return self.popup_menu + self.association_popup_menu
+        else:
+            return self.popup_menu
 
 
 class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
