@@ -44,7 +44,13 @@ class Diagram(UML.Namespace):
 	return item
 
     def save(self, parent, ns):
-        node = UML.Namespace.save (self, parent, ns)
+	# Save the diagram attributes, but not the canvas
+	self_canvas = self.canvas
+	del self.__dict__['canvas']
+	node = UML.Namespace.save (self, parent, ns)
+	self.__dict__['canvas'] = self_canvas
+	del self_canvas
+
 	canvas = node.newChild (ns, 'Canvas', None)
 	# Save attributes of the canvas:
 	for a in [ 'extents', 'static_extents', 'snap_to_grid',

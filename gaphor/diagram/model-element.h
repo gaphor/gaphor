@@ -52,6 +52,10 @@ struct _ModelElement
 	PyObject *subject;
 
 	gboolean auto_resize;
+	/* should be: */
+	gboolean auto_grow;
+	gboolean auto_shrink;
+
 	gboolean need_resize;
 };
 

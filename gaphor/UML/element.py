@@ -23,10 +23,14 @@ a tupple as value.  A tupple contains two or three fields:
    by which the object is known on the other side.
 '''
 
+if __name__ == '__main__':
+    import sys
+    sys.path.append('..')
 
 import types, copy
 from enumeration import Enumeration_
 from sequence import Sequence
+from misc import Signal
 
 # Some default types as defined in the MetaModel.
 class Integer(int): pass
@@ -67,7 +71,7 @@ object if references are lehd by the object on the undo stack.
     def __init__(self, id):
 	#print "New object of type", self.__class__
 	self.__dict__['__id'] = id
-	self.__dict__['__signals'] = [ ]
+	self.__dict__['__signal'] = Signal()
 	#elements[Element._index] = self
 	#Element._index += 1
 
@@ -76,7 +80,7 @@ object if references are lehd by the object on the undo stack.
 	element from the `elements' table.'''
 	#print 'Element.unlink():', self
 	# Notify other objects that we want to unlink()
-        self.emit("unlink")
+        self.__emit("unlink")
 	if self.__dict__.has_key ('__undodata'):
 	    del self.__dict__['__undodata']
 	self.__unlink ()
@@ -89,7 +93,7 @@ object if references are lehd by the object on the undo stack.
 	    # not yet has been removed.
 	    if self.__dict__.has_key (key) and \
 			key not in ( 'presentation', 'itemsOnUndoStack', \
-				     '__signals', '__id', '__undodata' ):
+				     '__signal', '__id', '__undodata' ):
 		if isinstance (self.__dict__[key], Sequence):
 		    # Remove each item in the sequence, then remove
 		    # the sequence from __dict__.
@@ -126,7 +130,7 @@ object if references are lehd by the object on the undo stack.
 		assert self.__dict__.has_key ('__undodata')
 		# Add myself to the 'elements' hash 
 		#elements[self.id] = self
-		self.emit ('add_to_factory')
+		self.__emit ('add_to_factory')
 		# Add elements from __undodata
 		#print self.__dict__
 		undodata = self.__dict__['__undodata']
@@ -154,12 +158,12 @@ object if references are lehd by the object on the undo stack.
 		#if lookup (self.id):
 		    #print 'Removing element from elements hash.'
 		    #del elements[self.id]
-		self.emit ('remove_from_factory')
+		self.__emit ('remove_from_factory')
 		# Create __undodata, so we can undo the element's state
 		undodata = { }
 		for key in self.__dict__.keys():
 		    if key not in ( 'presentation', 'itemsOnUndoStack', \
-				    '__signals', '__id', '__undodata' ):
+				    '__signal', '__id', '__undodata' ):
 			#print 'Preserving value for', key
 			value = self.__dict__[key]
 			if isinstance (value, Sequence):
@@ -245,7 +249,7 @@ object if references are lehd by the object on the undo stack.
 	        self.__ensure_seq (key, rec[1]).append(value)
 	    else:
 		self.__dict__[key] = value
-	    self.emit (key)
+	    self.__emit (key)
 	else:
 	    xrec = value.__get_attr_info (rec[2], value.__class__)
 	    #print '__setattr__x', xrec
@@ -284,8 +288,8 @@ object if references are lehd by the object on the undo stack.
 	    else:
 		#print 'add to xitem'
 		value.__dict__[rec[2]] = self
-	    self.emit (key)
-	    value.emit (rec[2])
+	    self.__emit (key)
+	    value.__emit (rec[2])
 	    
     def __delattr__(self, key):
 	rec = self.__get_attr_info (key, self.__class__)
@@ -304,11 +308,11 @@ object if references are lehd by the object on the undo stack.
 	    else:
 	        del xval.__dict__[rec[2]]
 		del self.__dict__[key]
-		self.emit (key)
-		xval.emit(rec[2])
+		self.__emit (key)
+		xval.__emit(rec[2])
 	else:
 	    del self.__dict__[key]
-	    self.emit (key)
+	    self.__emit (key)
 
     def sequence_remove(self, seq, obj):
         '''Remove an entry. Should only be called by Sequence's implementation.
@@ -329,28 +333,19 @@ object if references are lehd by the object on the undo stack.
 		obj.__dict__[rec[2]].list.remove (self)
 	    else:
 		del obj.__dict__[rec[2]]
-	    obj.emit (rec[2])
-	self.emit (key)
+	    obj.__emit (rec[2])
+	self.__emit (key)
 	#assert len (seq) == seq_len - 1
 
     # Functions used by the signal functions
     def connect (self, signal_func, *data):
-	self.__dict__['__signals'].append ((signal_func,) + data)
+	self.__dict__['__signal'].connect (signal_func, *data)
 
     def disconnect (self, signal_func):
-	self.__dict__['__signals'] = filter (lambda o: o[0] != signal_func,
-					     self.__dict__['__signals'])
+	self.__dict__['__signal'].disconnect (signal_func)
 
-    def emit (self, key):
-	#print 'emit', self, key
-	#if not self.__dict__.has_key ('__signals'):
-	#    print 'No __signals attribute in object', self
-	#    return
-        for signal in self.__dict__['__signals']:
-	    signal_func = signal[0]
-	    data = signal[1:]
-	    #print 'signal:', signal_func, 'data:', data
-	    signal_func (key, *data)
+    def __emit (self, key):
+	self.__dict__['__signal'].emit (key)
 
     def save(self, parent, ns):
 	def save_children (obj):
@@ -379,7 +374,7 @@ object if references are lehd by the object on the undo stack.
 	node.setProp ('id', 'a' + str (self.__dict__['__id']))
 	for key in self.__dict__.keys():
 	    if key not in ( 'presentation', 'itemsOnUndoStack', \
-	    		    '__signals', '__id', 'canvas' ):
+	    		    '__signals', '__id' ):
 		obj = self.__dict__[key]
 		if isinstance (obj, Sequence):
 		    for item in obj.list:
@@ -402,10 +397,10 @@ object if references are lehd by the object on the undo stack.
 		    self.__ensure_seq (name, attr_info[1])
 		    if refelement not in self.__dict__[name]:
 			self.__dict__[name].list.append (refelement)
-			self.emit (name)
+			self.__emit (name)
 		else:
 		    self.__dict__[name] = refelement
-		    self.emit (name)
+		    self.__emit (name)
 	    elif child.name == 'Value':
 		name = child.prop ('name')
 		value = child.prop ('value')
@@ -423,7 +418,7 @@ object if references are lehd by the object on the undo stack.
 			#self.__dict__[name] = child.content
 			self.__dict__[name] = value
 		#print 'content = "%s"' % child.content
-		self.emit (name)
+		self.__emit (name)
 	    child = child.next
 
     def postload (self, node):
@@ -443,7 +438,7 @@ if __name__ == '__main__':
 
     A._attrdef['seq'] = ( Sequence, types.StringType )
 
-    a = A()
+    a = A(1)
     assert a.seq.list == [ ]
 
     aap = 'aap'
@@ -477,7 +472,7 @@ if __name__ == '__main__':
     A._attrdef['str'] = ( 'one', types.StringType )
     A._attrdef['seq'] = ( Sequence, types.StringType )
 
-    a = A()
+    a = A(2)
 
     assert a.str == 'one'
     assert a.seq.list == [ ]
@@ -509,7 +504,7 @@ if __name__ == '__main__':
     A._attrdef['ref1'] = ( None, A, 'ref2' )
     A._attrdef['ref2'] = ( None, A, 'ref1' )
 
-    a = A()
+    a = A(3)
 
     assert a.ref1 is None
     assert a.ref2 is None
@@ -527,8 +522,8 @@ if __name__ == '__main__':
 
     a.unlink()
 
-    a = A()
-    b = A()
+    a = A(4)
+    b = A(5)
     
     a.ref1 = b
     assert a.ref1 is b
@@ -556,7 +551,7 @@ if __name__ == '__main__':
     A._attrdef['ref'] = ( None, A, 'seq' )
     A._attrdef['seq'] = ( Sequence, A, 'ref' )
 
-    a = A()
+    a = A(6)
 
     assert a.ref is None
     assert a.seq.list == [ ]
@@ -573,7 +568,7 @@ if __name__ == '__main__':
     assert a.ref is a
     assert a.seq.list == [ a ]
 
-    b = A()
+    b = A(7)
     a.seq = b
     assert b.ref is a
     assert a.seq.list == [ a, b ]
@@ -586,8 +581,8 @@ if __name__ == '__main__':
 
     b.unlink()
     a.unlink()
-    a = A()
-    b = A()
+    a = A(8)
+    b = A(9)
 
     a.ref = a
     assert a.ref is a
@@ -640,11 +635,11 @@ if __name__ == '__main__':
     A._attrdef['seq1'] = ( Sequence, A, 'seq2' )
     A._attrdef['seq2'] = ( Sequence, A, 'seq1' )
 
-    a = A()
+    a = A(10)
     assert a.seq1.list == [ ]
     assert a.seq2.list == [ ]
 
-    b = A()
+    b = A(11)
     assert b.seq1.list == [ ]
     assert b.seq2.list == [ ]
 
@@ -707,29 +702,29 @@ if __name__ == '__main__':
 	def callback (self, *data):
 	    self.cb_data = data
 
-    a = A()
-    b = A()
+    a = A(12)
+    b = A(13)
     z = Z()
     y = Z()
     x = Z()
     a.connect (z.callback, 'one', 'two')
-    data = a.__dict__['__signals'][0]
-    assert data[0] == z.callback
-    assert data[1] == 'one'
-    assert data[2] == 'two'
+    #data = a.__dict__['__signals'][0]
+    #assert data[0] == z.callback
+    #assert data[1] == 'one'
+    #assert data[2] == 'two'
 
     a.connect (y.callback, 'three')
-    data = a.__dict__['__signals'][0]
-    assert data[0] == z.callback
-    assert data[1] == 'one'
-    assert data[2] == 'two'
-    data = a.__dict__['__signals'][1]
-    assert data[0] == y.callback
-    assert data[1] == 'three'
+    #data = a.__dict__['__signals'][0]
+    #assert data[0] == z.callback
+    #assert data[1] == 'one'
+    #assert data[2] == 'two'
+    #data = a.__dict__['__signals'][1]
+    #assert data[0] == y.callback
+    #assert data[1] == 'three'
 
     a.connect (x.callback)
-    data = a.__dict__['__signals'][2]
-    assert data[0] == x.callback
+    #data = a.__dict__['__signals'][2]
+    #assert data[0] == x.callback
     
     a.rel = b
     assert z.cb_data[0] == 'rel'
@@ -739,10 +734,10 @@ if __name__ == '__main__':
     assert y.cb_data[1] == 'three'
     
     a.disconnect (z.callback)
-    data = a.__dict__['__signals'][0]
-    assert len (a.__dict__['__signals']) == 2
-    assert data[0] == y.callback
-    assert data[1] == 'three'
+    #data = a.__dict__['__signals'][0]
+    #assert len (a.__dict__['__signals']) == 2
+    #assert data[0] == y.callback
+    #assert data[1] == 'three'
 
     a.unlink()
     del a
@@ -760,8 +755,8 @@ if __name__ == '__main__':
     A._attrdef['rel'] = ( Name, A, 'seq' )
     A._attrdef['seq'] = ( Sequence, A, 'rel' )
 
-    a = A()
-    b = A()
+    a = A(17)
+    b = A(18)
 
     #assert len (elements) == 2
     

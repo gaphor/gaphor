@@ -7,8 +7,7 @@ consistency checking should also be included.'''
 import modelelements
 import diagram
 import libxml2 as xml
-from misc import Singleton
-
+from misc import Singleton, Signal
 #import sys
 
 class ElementFactory(Singleton):
@@ -17,12 +16,15 @@ class ElementFactory(Singleton):
 	if (key == 'unlink' or key == 'remove_from_factory') \
 		and self.__elements.has_key(obj.id):
 	    del self.__elements[obj.id]
+	    self.__emit_remove (obj)
 	elif key == 'add_to_factory' and not self.__elements.has_key(obj.id):
 	    self.__elements[obj.id] = obj
+	    self.__emit_create (obj)
 
     def init (self, *args, **kwargs):
 	self.__elements = { }
 	self.__index = 1
+	self.__signal = Signal()
 
     def create (self, type):
         obj = type(self.__index)
@@ -52,6 +54,18 @@ class ElementFactory(Singleton):
 		break;
 	    value.unlink()
 	    self.__elements.clear()
+
+    def connect (self, signal_func, *data):
+	self.__signal.connect (signal_func, *data)
+
+    def disconnect (self, signal_func):
+	self.__signal.disconnect (signal_func)
+
+    def __emit_create (self, obj):
+	self.__signal.emit ('create', key)
+
+    def __emit_remove (self, obj):
+	self.__signal.emit ('remove', key)
 
     def save (self, filename=None):
 	'''Save the current model to @filename. If no filename is given,
