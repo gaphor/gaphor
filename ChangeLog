@@ -1,3 +1,8 @@
+2004-11-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/attribute.py: added listener for 'association', so
+	undo can work properly.
+
 2004-11-07  Jeroen Vloothuis  <jeroen@vloothuis.net>
         * data/plugins/alignment: Added a plugin for adjusting the
         alignment of diagram items. Currentyl does horizontal and

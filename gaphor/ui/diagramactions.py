@@ -241,7 +241,7 @@ class DeleteAction(Action):
 
     def isLastView(self, item):
         ''' Check if the current view is the last view to its object '''
-        if len(item.item.subject.presentation)==1:
+        if item.item.subject and len(item.item.subject.presentation)==1:
             return True
         return False
 
@@ -281,7 +281,7 @@ class CopyAction(Action):
     """
     id = 'EditCopy'
     label = '_Copy'
-    accel = 'C-x'
+    accel = 'C-c'
     stock_id = 'gtk-copy'
 
     def init(self, window):
@@ -303,7 +303,8 @@ class CopyAction(Action):
 		gaphor.resource.set('copy-buffer', copy_items)
 	tab = self._window.get_current_diagram_tab()
 
-register_action(CopyAction)
+register_action(CopyAction, 'ItemFocus')
+
 
 class PasteAction(Action):
     """Copy/Cut/Paste functionality required a lot of thinking:
@@ -331,43 +332,73 @@ class PasteAction(Action):
 	diagram_tab = self._window.get_current_diagram_tab()
 	self.sensitive = diagram_tab and gaphor.resource('copy-buffer', [])
 
-    def execute(self):
-	from gaphor.misc.uniqueid import generate_id
-	import gaphor.diagram as diagram
+    def _load_element(self, name, value):
+	"""Copy an element, preferbly from the list of new items,
+	otherwise from the elementFactory.
+	If it does not exist there, do not copy it!
+	"""
+	item = self._new_items.get(value.id)
+	if item:
+	    self._item.load(name, item)
+	else:
+	    item = self._factory.lookup(value.id)
+	    if item:
+		self._item.load(name, item)
 
+    def copy_func(self, name, value, reference=False):
+	if reference or isinstance(value, UML.Element):
+	    self._load_element(name, value)
+	elif isinstance(value, gaphor.UML.collection):
+	    for item in value:
+		self._load_element(name, item)
+	elif isinstance(value, diacanvas.CanvasItem):
+	    self._load_element(name, value)
+	else:
+	    # Plain attribute
+	    self._item.load(name, str(value))
+
+    def execute(self):
 	view = self._window.get_current_diagram_view()
 	if not view:
 	    return
 
-	canvas = view.canvas
+	diagram = view.get_diagram()
+	canvas = diagram.canvas
 	if not canvas:
 	    return
 
-	copy_items = gaphor.resource('copy-buffer', [])
+	copy_items = [ c for c in gaphor.resource('copy-buffer', []) if c.canvas ]
 
 	# Mapping original id -> new item
-	new_items = {}
+	self._new_items = {}
+	self._factory = gaphor.resource('ElementFactory')
 
 	# Create new id's that have to be used to create the items:
 	for ci in copy_items:
-	    new_items[ci.id] = diagram.create(type(ci))
+	    self._new_items[ci.id] = diagram.create(type(ci))
+	    #self._new_items[ci.id].set_property('canvas', canvas)
 
 	# Copy attributes and references. References should be
 	#  1. in the ElementFactory (hence they are model elements)
 	#  2. refered to in new_items
 	#  3. canvas property is overridden
-	if view.is_focus():
-	    items = view.selected_items
-	    copy_items = []
-	    for i in items:
-		copy_items.append(i.item)
-		#i.item.save(save_func)
-	    if copy_items:
-		gaphor.resource.set('copy-buffer', copy_items)
-	tab = self._window.get_current_diagram_tab()
+	for ci in copy_items:
+	    self._item = self._new_items[ci.id]
+	    ci.save(self.copy_func)
+
+	for item in self._new_items.values():
+	    item.move(10, 10)
+
+	for item in self._new_items.values():
+	    item.postload()
+
+	view.unselect_all()
+
+	for item in self._new_items.values():
+	    view.select(view.find_view_item(item))
 
 weave_method(PasteAction.execute, UndoTransactionAspect)
-register_action(PasteAction)
+register_action(PasteAction, 'EditCopy')
 
 
 class ZoomInAction(Action):

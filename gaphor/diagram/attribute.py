@@ -30,7 +30,8 @@ class AttributeItem(FeatureItem):
                                                     'upperValue.value',
                                                     'defaultValue.value',
                                                     'typeValue.value',
-                                                    'taggedValue.value')
+                                                    'taggedValue.value',
+                                                    'association')
                                                     + notifiers)
         #self._expression.set_text(self.subject.render() or '')
         #self.request_update()
@@ -48,5 +49,12 @@ class AttributeItem(FeatureItem):
     on_subject_notify__typeValue_value = on_subject_notify__name
     on_subject_notify__taggedValue_value = on_subject_notify__name
 
+    def on_subject_notify__association(self, subject, pspec):
+        """Make sure we update the attribute compartment (in case
+        the class_ property was defined before it is connected to
+        an association.
+        """
+        if self.parent:
+            self.parent.sync_attributes()
 
 initialize_item(AttributeItem)

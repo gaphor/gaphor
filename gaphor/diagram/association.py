@@ -490,10 +490,16 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         """Set the text on the association end.
         """
         if self.subject:
-            n, m = self.subject.render()
-            self._name.set_text(n)
-            self._mult.set_text(m)
-            self.request_update()
+            try:
+                n, m = self.subject.render()
+            except ValueError:
+                # need more than 0 values to unpack: property was rendered as
+                # attribute while in a UNDO action for example.
+                pass
+            else:
+                self._name.set_text(n)
+                self._mult.set_text(m)
+                self.request_update()
 
     def set_navigable(self, navigable):
         """Change the AsociationEnd's navigability.
