@@ -60,23 +60,13 @@ class collection(object):
         else:
             raise AttributeError, '%s not in collection' % value
 
-    def moveUp(self, value):
-        items = self.items
-        i = items.index(value)
-        i = i - 1
-        if i >= 0:
-            items.remove(value)
-            items.insert(i, value)
-        # Send a notification that this list has changed
-        print self.property, value
-        self.property.notify(self.object)
-        #self.owner.notify(self.property.name, pspec=self.property)
 
     def index(self, key):
         """Given an object, return the position of that object in the
         collection."""
         return self.items.index(key)
-    
+
+
     # OCL members (from SMW by Ivan Porres, http://www.abo.fi/~iporres/smw)
 
     def size(self):
@@ -199,3 +189,29 @@ class collection(object):
                 if index[c]==nitems-1:
                     c=c-1
 	return False
+
+
+    def moveUp(self, value):
+        """
+        Move element up. Owner is notified about the change.
+        """
+        i1 = self.items.index(value)
+        i2 = i1 - 1
+        if i2 >= 0:
+            self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
+            self.property.notify(self.object) # send a notification that this list has changed
+        else:
+            log.warning('Cannot move up first element')
+
+
+    def moveDown(self, value):
+        """
+        Move element down. Owner is notified about the change.
+        """
+        i1 = self.items.index(value)
+        i2 = i1 + 1
+        if i2 < len(self.items):
+            self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
+            self.property.notify(self.object) # send a notification that this list has changed
+        else:
+            log.warning('Cannot move down last element')

@@ -40,24 +40,6 @@ class Compartment(list):
         for item in self:
             save_func(None, item)
 
-    def reorder(self, features):
-        """Reorder the items in this compartment so they have the same
-        order as the items in the features list.
-        """
-        items = list(self)
-        tmp = [(item.subject, item) for item in self]
-        newlist = []
-        for f in features:
-            for t in tmp:
-                if t[0] is f:
-                    newlist.append(t[1])
-                    tmp.remove(t)
-                    break
-        if newlist != items:
-            print self[:]
-            print 'new list', newlist
-            self[:] = newlist
-            self.owner.request_update()
 
     def pre_update(self, width, height, affine):
         """Calculate the size of the feates in this compartment.
@@ -136,6 +118,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         self._stereotype.set_markup(False)
         self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
 
+
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
         # otherwise the classes will unintentionally grow due to "visible"
@@ -183,46 +166,58 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         new.subject = operation
         self.add(new)
         
-    def sync_features(self, features, compartment, creator=None):
+    def sync_uml_elements(self, elements, compartment, creator=None):
         """Common function for on_subject_notify__ownedAttribute() and
         on_subject_notify__ownedOperation().
-        - features: the list of attributes or operations in the model
+        - elements: the list of attributes or operations in the model
         - compartment: our local representation
         - creator: factory method for creating new attr. or oper.'s
         """
-        # Extract the UML elements from the compartment
-        my_features = map(getattr, compartment,
-                      ['subject'] * len(compartment))
+        # extract the UML elements from the compartment
+        local_elements = [f.subject for f in compartment]
 
-        for a in [f for f in features if f not in my_features]:
-            creator(a)
+        # map local element with compartment element
+        mapping = dict(zip(local_elements, compartment))
 
-        tmp = [f for f in my_features if f not in features]
-        if tmp:
-            # Create a feature->item mapping
-            mapping = dict(zip(my_features, compartment))
-            for a in tmp:
-                self.remove(mapping[a])
+        try:
+            import sets
+            to_add = sets.Set(elements) - sets.Set(local_elements)
+        except ImportError:
+            to_add = [el for el in elements if el not in local_elements]
 
-        compartment.reorder(features)
+        # sync local elements with elements
+        del compartment[:]
+
+        for el in elements:
+            if el in to_add:
+                creator(el)
+            else:
+                compartment.append(mapping[el])
+
+        log.debug('elements order in model: %s' % [f.name for f in elements])
+        log.debug('elements order in diagram: %s' % [f.subject.name for f in compartment])
+        assert tuple([f.subject for f in compartment]) == tuple(elements)
+
+        self.request_update()
+            
 
     def sync_attributes(self):
         """Sync the contents of the attributes compartment with the data
         in self.subject.
         """
         owned_attributes = [a for a in self.subject.ownedAttribute if not a.association]
-        self.sync_features(owned_attributes, self._attributes,
+        self.sync_uml_elements(owned_attributes, self._attributes,
                            self._create_attribute)
 
     def sync_operations(self):
         """Sync the contents of the operations compartment with the data
         in self.subject.
         """
-        self.sync_features(self.subject.ownedOperation, self._operations,
+        self.sync_uml_elements(self.subject.ownedOperation, self._operations,
                            self._create_operation)
 
     def on_subject_notify(self, pspec, notifiers=()):
-        #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
+        log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
         NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation', 'isAbstract'))
         # Create already existing attributes and operations:
         if self.subject:
@@ -239,7 +234,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
         """Called when the ownedAttribute property of our subject changes.
         """
-        #log.debug('on_subject_notify__ownedAttribute')
+        log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
         self.sync_attributes()
 

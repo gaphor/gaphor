@@ -14,8 +14,9 @@ class AttributeItem(FeatureItem):
         'EditItem',
         'DeleteAttribute',
         'MoveUp',
+        'MoveDown',
         'separator',
-        'CreateAttribute'
+        'CreateAttribute',
     )
 
     def __init__(self, id=None):
@@ -43,5 +44,6 @@ class AttributeItem(FeatureItem):
     on_subject_notify__defaultValue_value = on_subject_notify__name
     on_subject_notify__typeValue_value = on_subject_notify__name
     on_subject_notify__taggedValue_value = on_subject_notify__name
+
 
 initialize_item(AttributeItem)

@@ -15,6 +15,7 @@ class OperationItem(FeatureItem):
         'EditItem',
         'DeleteOperation',
         'MoveUp',
+        'MoveDown',
         'separator',
         'CreateOperation'
     )

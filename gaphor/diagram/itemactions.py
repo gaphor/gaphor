@@ -615,23 +615,77 @@ class IndirectlyInstantiatedComponentAction(CheckAction):
 register_action(IndirectlyInstantiatedComponentAction, 'ItemFocus')
 
 
-class MoveUpAction(Action):
-    id = 'MoveUp'
-    label = 'Move Up'
-    tooltip = 'Move Up'
+class MoveAction(Action):
+    """
+    Move attribute/operation down or up on the list.
+    """
+    def _getItem(self):
+        return self._window.get_current_diagram_view() \
+            .focus_item.item
 
-    def _get_item(self):
-        return self._window.get_current_diagram_view().focus_item.item
+
+    def _getParent(self):
+        return get_parent_focus_item(self._window)
+
+
+    def _getElements(self, cls, item):
+        if isinstance(item, AttributeItem):
+            collection = cls.ownedAttribute
+        elif isinstance(item, OperationItem):
+            collection = cls.ownedOperation
+        return collection
+
 
     def init(self, window):
         self._window = window
 
+
+    def update(self):
+        try:
+            cls_item = self._getParent()
+            item = self._getItem()
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, (AttributeItem, OperationItem)):
+                self.active = item.subject 
+                self.sensitive = self._isSensitive(cls_item.subject, item)
+
+
     def execute(self):
-        feature = self._get_item()
-        subject = get_parent_focus_item(self._window).subject
-	if isinstance(feature, AttributeItem):
-	    subject.ownedAttribute.moveUp(feature.subject)
-	elif isinstance(feature, OperationItem):
-	    subject.ownedOperation.moveUp(feature.subject)
+        cls = self._getParent().subject
+        item = self._getItem()
+
+        log.debug('%s: %s.%s (%s)' \
+            % (self.move_action, cls.name, item.subject.name, item.subject.__class__))
+
+        # get method to move the element: moveUp or moveDown
+        move = getattr(self._getElements(cls, item), self.move_action)
+        move(item.subject)
+        self._window.execute_action('ItemFocus')
+
+
+class MoveUpAction(MoveAction):
+    id = 'MoveUp'
+    label = 'Move Up'
+    tooltip = 'Move Up'
+    move_action = 'moveUp' # name of method to move the element
+
+    def _isSensitive(self, cls, item):
+        collection = self._getElements(cls, item)
+        return len(collection) > 0 and collection[0] != item.subject
 
 register_action(MoveUpAction, 'ItemFocus')
+            
+
+class MoveDownAction(MoveAction):
+    id = 'MoveDown'
+    label = 'Move Down'
+    tooltip = 'Move Down'
+    move_action = 'moveDown' # name of method to move the element
+
+    def _isSensitive(self, cls, item):
+        collection = self._getElements(cls, item)
+        return len(collection) > 0 and collection[-1] != item.subject
+
+register_action(MoveDownAction, 'ItemFocus')
