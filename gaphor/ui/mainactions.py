@@ -167,6 +167,17 @@ class OpenAction(RevertAction):
             filesel = gtk.FileChooserDialog(title='Open Gaphor model',
                                             action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                             buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
+
+            filter = gtk.FileFilter()
+            filter.set_name("Gaphor models")
+            filter.add_pattern("*.gaphor")
+            filesel.add_filter(filter)
+
+            filter = gtk.FileFilter()
+            filter.set_name("All files")
+            filter.add_pattern("*")
+            filesel.add_filter(filter)
+
         filesel.set_filename(self.filename or '')
 
         response = filesel.run()
