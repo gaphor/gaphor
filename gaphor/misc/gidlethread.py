@@ -83,7 +83,9 @@ class GIdleThread(object):
         """
         return self._idle_id != 0
 
-    error = property(lambda self: self._error, doc="Return a possible exception that had occured during execution of the generator")
+    error = property(lambda self: self._error,
+                     doc="Return a possible exception that had occured "\
+                         "during execution of the generator")
 
     def __generator_executer(self):
         try:
