@@ -10,7 +10,7 @@ SUBDIRS = utils po doc tests
 
 bin_SCRIPTS = bin/gaphor
 
-EXTRA_DIST = $(FILES) $(FILES_FILES) bin/gaphor.in gaphor/config.py.in
+EXTRA_DIST = $(FILES) $(FILES_FILES) gaphor.sh bin/gaphor.in gaphor/config.py.in
 
 INSTALL_DIRS = $(DIRS)
 INSTALL_FILES = $(FILES) gaphor/config.py gaphor/UML/modelelements.py

@@ -12,7 +12,7 @@ class PlacementTool(diacanvas.PlacementTool):
 	self.connect ('button_release_event', self.__button_release)
 
     def _create_item(self):
-	f = gaphorResource(diagram.DiagramItemFactory)
+	f = GaphorResource(diagram.DiagramItemFactory)
 	item = f.create(self.diagram, self.type)
 	if self.properties and len(self.properties) > 0:
             try:

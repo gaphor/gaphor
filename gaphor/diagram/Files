@@ -1,12 +1,14 @@
 __init__.py
 actor.py
 association.py
+classmember.py
 comment.py
 commentline.py
 dependency.py
 diagramitem.py
 diagramitemfactory.py
 generalization.py
+klass.py
 metaitem.py
 modelelement.py
 package.py

@@ -65,7 +65,7 @@ def get_stock_id(element):
 	    pass
 
 def add_stock_items(stock_items, icon_dir=''):
-    icon_factory = gaphorResource(gtk.IconFactory)
+    icon_factory = GaphorResource(gtk.IconFactory)
 
     stocklist = []
     iconlist = []
@@ -93,7 +93,7 @@ def add_stock_items(stock_items, icon_dir=''):
 # Initialization:
 #
 # We should do some special initialization for the icon factory:
-icon_factory = gaphorResource(gtk.IconFactory)
+icon_factory = GaphorResource(gtk.IconFactory)
 icon_factory.add_default()
 del icon_factory
 

@@ -20,7 +20,7 @@ DEFAULT_EXT='.gaphor'
 class NewCommand(Command):
 
     def execute(self):
-	fact = gaphorResource(UML.ElementFactory)
+	fact = GaphorResource(UML.ElementFactory)
 	fact.flush()
 	gc.collect()
 	model = fact.create(UML.Model)
@@ -55,8 +55,8 @@ class OpenCommand(Command):
 	    self.filename = filename
 	    print 'Loading from:', filename
 	    print 'Flushing old data...'
-	    gaphorResource(UML.ElementFactory).flush()
-	    gaphorResource(diagram.DiagramItemFactory).flush()
+	    GaphorResource(UML.ElementFactory).flush()
+	    GaphorResource(diagram.DiagramItemFactory).flush()
 
 	    gc.collect()
 
@@ -81,7 +81,7 @@ class SaveCommand(Command):
 	self.filename = None
 
     def is_valid(self):
-	if gaphorResource(UML.ElementFactory).lookup(1):
+	if GaphorResource(UML.ElementFactory).lookup(1):
 	    return 1
 	return 0
 
@@ -129,7 +129,9 @@ class SaveAsCommand(Command):
 class QuitCommand(Command):
 
     def execute(self):
+	print 'Exiting gaphor...',
 	gtk.main_quit()
+	print 'bye!'
 
 
 class CloseCommand(Command):

@@ -5,14 +5,13 @@ includes saving, loading and flushing models. In the future things like
 consistency checking should also be included.'''
 
 #import misc.singleton as Singleton
-from gaphor.misc.singleton import Singleton as _Singleton
 from gaphor.misc.signal import Signal as _Signal
 #from misc.storage import Storage
 import weakref, gc
 from element import Element
 from diagram import Diagram
 
-class ElementFactory(_Singleton):
+class ElementFactory(object):
 
     def __element_signal (self, key, old_value, new_value, obj):
 	element = obj()
@@ -27,7 +26,7 @@ class ElementFactory(_Singleton):
 	    self.__elements[element.id] = element
 	    self.__emit_create (element)
 
-    def init (self, *args, **kwargs):
+    def __init__ (self):
 	self.__elements = { }
 	self.__index = 1
 	self.__signal = _Signal()

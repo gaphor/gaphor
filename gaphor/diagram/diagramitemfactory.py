@@ -3,11 +3,12 @@
 
 import gobject
 import gaphor.UML as UML
-from gaphor.misc.singleton import Singleton
 
-class DiagramItemFactory(Singleton):
+class DiagramItemFactory(object):
     """
     Factory class for creating diagram items.
+    Normally one would access this class through by calling
+    GaphorResource(gaphor.diagram.DiagramItemFactory)
     """
     __diagram2uml = { }
 
@@ -33,7 +34,7 @@ class DiagramItemFactory(Singleton):
 	elif DiagramItemFactory.__diagram2uml.has_key(type):
 	    uml_type = DiagramItemFactory.__diagram2uml[type]
 	    if uml_type:
-		factory = gaphorResource(UML.ElementFactory)
+		factory = GaphorResource(UML.ElementFactory)
 		subject = factory.create (uml_type)
 		if issubclass (uml_type, UML.Namespace):
 		    subject.namespace = diagram.namespace

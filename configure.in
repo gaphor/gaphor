@@ -148,4 +148,6 @@ Gaphor is configured:
 
 NOTE:	You do not need to install Gaphor, just execute './gaphor.sh'
 	in the current directory.
+
+	Now type 'make' to build gaphor.
 "

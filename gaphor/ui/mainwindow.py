@@ -5,6 +5,7 @@ import gtk
 import gnome.ui
 import namespace
 import command.file
+import command.diagram
 import command.about
 import gaphor.UML as UML
 import gaphor.config
@@ -46,7 +47,8 @@ class MainWindow:
 			,)),
 		    MenuItem(name='_Insert', submenu=(
 			MenuStockItem(stock_id=stock.STOCK_DIAGRAM,
-				comment='Create a new diagram')
+				comment='Create a new diagram',
+				command=command.diagram.CreateDiagramCommand())
 			,)),
 		    MenuItem(name='_Windows', submenu=(
 			open_windows,
@@ -68,7 +70,7 @@ class MainWindow:
 	app_bar = gnome.ui.AppBar (has_progress=0, has_status=1,
 				   interactivity=gnome.ui.PREFERENCES_USER)
 	app.set_statusbar(app_bar)
-	model = namespace.NamespaceModel(gaphorResource(UML.ElementFactory))
+	model = namespace.NamespaceModel(GaphorResource(UML.ElementFactory))
 	view = namespace.NamespaceView(model)
 
 	menu_factory = MenuFactory(menu=menu, accelgroup=accelgroup,
@@ -86,6 +88,9 @@ class MainWindow:
 	self.__open_windows = open_windows
 	app.show_all()
 	
+    def get_window(self):
+	return self.__app
+
     def add_window(self, window, name, command=None):
 	self.__open_windows.add(key=window, name=name, command=command)
 

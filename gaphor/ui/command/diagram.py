@@ -6,6 +6,14 @@ Commands related to the Diagram (DiaCanvas)
 from gaphor.misc.command import Command
 import gaphor.UML as UML
 
+class CreateDiagramCommand(Command):
+
+    def execute(self):
+	elemfact = GaphorResource(UML.ElementFactory)
+	model = elemfact.lookup(1) # model
+	diagram = elemfact.create(UML.Diagram)
+	diagram.namespace = model
+	diagram.name = "New diagram"
 
 class _CanvasViewCommand(Command):
 

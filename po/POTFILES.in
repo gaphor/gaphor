@@ -36,7 +36,6 @@ gaphor/ui/command/tree.py
 gaphor/misc/__init__.py
 gaphor/misc/GConf.py
 gaphor/misc/command.py
-gaphor/misc/gaphorerror.py
 gaphor/misc/menufactory.py
 gaphor/misc/signal.py
 gaphor/misc/singleton.py

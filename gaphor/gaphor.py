@@ -3,12 +3,13 @@
 """
 This is the main package for Gaphor, a Python based UML editor.
 
-An extra function is installed in the builtin namespace: gaphorResource().
+An extra function is installed in the builtin namespace: GaphorResource().
 This function can be used to locate application wide resources, such as
 object factories.
 """
 
 from misc.singleton import Singleton
+from misc.conf import Conf
 import config
 import types
 
@@ -43,6 +44,7 @@ class Gaphor(Singleton):
     TITLE='Gaphor v' + VERSION
 
     __resources = { }
+    __conf = Conf(NAME)
 
     def init(self, install=1):
 	self.__main_window = None
@@ -59,14 +61,24 @@ class Gaphor(Singleton):
 	from ui import MainWindow
 	program_init(Gaphor.NAME, Gaphor.VERSION)
 	# should we set a default icon here or something?
-	self.__main_window = MainWindow(Gaphor.NAME, Gaphor.TITLE)
+	mainwin = MainWindow(Gaphor.NAME, Gaphor.TITLE)
+	mainwin.get_window().connect("destroy", self.__destroy_cb)
+	Gaphor.__resources[MainWindow] = mainwin
 	_main()
+
+    def __destroy_cb(self, win):
+	from ui.command.file import QuitCommand
+	QuitCommand().execute()
 
     def get_main_window(self):
 	"""Return the main window, if any."""
-        return self.__main_window
+	from ui import MainWindow
+	try:
+	    return Gaphor.__resources[MainWindow]
+	except KeyError:
+	    pass
 
-    def getResource(resource):
+    def get_resource(resource):
 	"""
 	*Static method*
 	Locate a resource. Resource should be the class of the resource to
@@ -77,10 +89,10 @@ class Gaphor(Singleton):
 		elemfact = Gaphor.get(gaphor.UML.ElementFactory)
 
 	or (with Gaphor installed in the builtin namespace):
-		elemfact = gaphorResource(gaphor.UML.ElementFactory)
+		elemfact = GaphorResource(gaphor.UML.ElementFactory)
 	"""
 	if isinstance (resource, types.StringType):
-	    assert 0, 'Gaphor::get() No string resources are implemented'
+	    return Gaphor.__conf.get_value(resource)
 	else:
 	    hash = Gaphor.__resources
 	    if hash.has_key(resource):
@@ -92,10 +104,10 @@ class Gaphor(Singleton):
 	    except Exception, e:
 		raise GaphorError, 'Could not create resource %s (%s)' % (str(resource), str(e))
 
-    getResource = staticmethod(getResource)
+    get_resource = staticmethod(get_resource)
 
 
 import __builtin__
 __builtin__.__dict__['GaphorError'] = GaphorError
-__builtin__.__dict__['gaphorResource'] = Gaphor.getResource
+__builtin__.__dict__['GaphorResource'] = Gaphor.get_resource
 

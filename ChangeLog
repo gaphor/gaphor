@@ -1,3 +1,11 @@
+2002-09-06  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/conf.py: New file. wrapper for GConf.
+	* gaphor/gaphor.py (get_resource): added gconf support.
+	Renamed gaphorResource to GaphorResource.
+	* gaphor/UML/elementfactory.py, gaphor/diagram/diagramitemfactory.py:
+	No longer singleton. should be called through GaphorResource
+	
 2002-09-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/gaphor.py: Added GaphorError here. Added a generic resource
