@@ -18,6 +18,7 @@ Each property type (association, attribute and enumeration) has three specific
 methods:
     _get():           return the value
     _set(value):      set the value or add it to a list
+    (_set2(value):    used by association, used to set bi-directional ass.)
     _del(value=None): delete the value. 'value' is used to tell which value
                       is to be removed (in case of associations with
                       multiplicity > 1).
@@ -192,7 +193,7 @@ class association(umlproperty):
     def load(self, obj, value):
         if not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % self.type.__name__
-        self.__set(obj, value)
+        self._set2(obj, value)
 
     def __str__(self):
         if self.lower == self.upper:
@@ -222,7 +223,7 @@ class association(umlproperty):
             old = self._get(obj)
             if old:
                 self.__delete__(obj, old)
-        self.__set(obj, value)
+        self._set2(obj, value)
         # Set opposite side:
         if self.opposite:
             getattr(self.type, self.opposite)._set(value, obj)
@@ -255,10 +256,10 @@ class association(umlproperty):
         #print '_set', self, obj, value
         if not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % self.type.__name__
-        self.__set(obj, value)
+        self._set2(obj, value)
         self.notify(obj)
 
-    def __set(self, obj, value):
+    def _set2(self, obj, value):
         """Real setter, avoid doing the assertion check twice."""
         if self.upper > 1:
             if value in self._get(obj):

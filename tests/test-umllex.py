@@ -3,10 +3,10 @@ from gaphor.UML.umllex import *
 from gaphor.UML.umllex import property_pat, operation_pat, parameter_pat
 
 # Add some extra associations that have to be added to the model:
-Parameter.typeValue = association('typeValue', ValueSpecification, upper=1, composite=True)
-Parameter.taggedValue = association('taggedValue', ValueSpecification, upper=1, composite=True)
-Property.typeValue = association('typeValue', ValueSpecification, upper=1, composite=True)
-Property.taggedValue = association('taggedValue', ValueSpecification, upper=1, composite=True)
+#Parameter.typeValue = association('typeValue', ValueSpecification, upper=1, composite=True)
+#Parameter.taggedValue = association('taggedValue', ValueSpecification, upper=1, composite=True)
+#Property.typeValue = association('typeValue', ValueSpecification, upper=1, composite=True)
+#Property.taggedValue = association('taggedValue', ValueSpecification, upper=1, composite=True)
 
 def dump_prop(prop):
     m = property_pat.match(prop)

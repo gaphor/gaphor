@@ -21,8 +21,8 @@ class ActorItem(ModelElementItem):
 			 '', 0.0, 10000.0,
 			 1, gobject.PARAM_READWRITE),
     }
-    def __init__(self):
-	ModelElementItem.__init__(self)
+    def __init__(self, id=None):
+	ModelElementItem.__init__(self, id)
 	self.set(height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
 		 width=(ActorItem.ARM * 2),
 		 min_height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
@@ -47,6 +47,12 @@ class ActorItem(ModelElementItem):
 	self.__name.set(font=font, multiline=0,
 			alignment=pango.ALIGN_CENTER)
 	self.__name.connect('text_changed', self.on_text_changed)
+	self.connect('notify::subject', ActorItem.on_subject_notify)
+	self.subject_name_changed_id = 0
+
+    def save (self, save_func):
+	ModelElementItem.save(self, save_func)
+	self.save_property(save_func, 'name-width')
 
     def do_set_property (self, pspec, value):
 	#print 'Actor: Trying to set property', pspec.name, value
@@ -61,22 +67,24 @@ class ActorItem(ModelElementItem):
 	else:
 	    return ModelElementItem.do_get_property (self, pspec)
 
-    def _set_subject(self, subject):
-	ModelElementItem._set_subject(self, subject)
+    def on_subject_notify(self, subject):
+	"""See DiagramItem.on_subject_changed().
+	"""
+	if self.subject_name_changed_id:
+	    self.disconnect(self.subject_name_changed_id)
+	if self.subject:
+	    self.subject_name_changed_id = self.subject.connect('name', self.on_subject_name_changed)
 	self.__name.set(text=self.subject and self.subject.name or '')
 	self.request_update()
 
-#    def save (self, store):
-#	ModelElementItem.save(self, store)
-#	store.save_property('name-width')
+    def on_subject_name_changed(self, name):
+	self.__name.set(text=self.subject.name)
 
-    def save (self, save_func):
-	ModelElementItem.save(self, save_func)
-	self.save_property(save_func, 'name-width')
+    def on_text_changed(self, text_item, text):
+	if text != self.subject.name:
+	    self.subject.name = text
 
-#    def load(self, name, value):
-#	ModelElementItem.load(self, store)
-#	self.set_property('name-width', eval (store.value('name-width')))
+    # DiaCanvasItem callbacks:
 
     def on_update(self, affine):
 	# Center the text:
@@ -108,7 +116,7 @@ class ActorItem(ModelElementItem):
 			  (ActorItem.ARM * fx,
 			   (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY) * fy),
 			  (ActorItem.ARM * 2 * fx, (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM) * fy)))
-	# Update the bounding box:
+	# update the bounding box:
 	ulx, uly, lrx, lry = self.bounds
 	w, h = self.__name.get_property('layout').get_pixel_size()
 	if w > self.width:
@@ -180,14 +188,5 @@ class ActorItem(ModelElementItem):
 	else:
 	    return -1
 
-    def on_subject_update(self, name, old_value, new_value):
-	if name == 'name':
-	    self.__name.set(text=self.subject.name)
-	else:
-	    ModelElementItem.on_subject_update(self, name, old_value, new_value)
-
-    def on_text_changed(self, text_item, text):
-	if text != self.subject.name:
-	    self.subject.name = text
 
 gobject.type_register(ActorItem)

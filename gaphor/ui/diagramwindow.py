@@ -26,7 +26,7 @@ class DiagramWindow(AbstractWindow):
 	self.__diagram = diagram
 	if self.get_state() == AbstractWindow.STATE_ACTIVE:
 	    self.get_window().set_title(diagram.name or 'NoName')
-	    self.__view.set_diagram(dia)
+	    self.__view.set_diagram(diagram)
 	if diagram:
 	    diagram.canvas.set_property ('allow_undo', 1)
 	    diagram.connect(('name', '__unlink__'), self.__on_diagram_event)

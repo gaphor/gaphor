@@ -16,9 +16,6 @@ __date__ = '$date$'
 
 class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, DiagramItem):
     __gproperties__ = {
-	'id':		(gobject.TYPE_PYOBJECT, 'id',
-			 'Identification number of the canvas item',
-			 gobject.PARAM_READWRITE),
 	'subject':	(gobject.TYPE_PYOBJECT, 'subject',
 			 'subject held by the model element',
 			 gobject.PARAM_READWRITE),
@@ -27,15 +24,16 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
 			 1, gobject.PARAM_READWRITE),
     }
 
-    def __init__(self):
+    __gsignals__ = { '__unlink__': DiagramItem.signal_prototype,
+		     '__relink__': DiagramItem.signal_prototype
+    }
+
+    def __init__(self, id=None):
 	self.__gobject_init__()
 	#diacanvas.CanvasElement.__init__(self)
-	DiagramItem.__init__(self)
+	DiagramItem.__init__(self, id)
 	self.auto_resize = 0
-	self.__id = -1
-
-    def set_id(self, value):
-	self.__id = value
+	self._subject = None
 
     def save(self, save_func):
 	self.save_property(save_func, 'affine')
@@ -49,7 +47,7 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
 	#if name == 'subject':
 	#self.set_property('subject', store.reference('subject')[0])
 	if name == 'subject':
-	    self.set_property(name, value)
+	    self._subject = value
 	else:
 	    #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
 	    self.set_property(name, eval(value))
@@ -58,25 +56,36 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
 	pass
 
     def do_set_property(self, pspec, value):
-	if pspec.name == 'id':
-	    self.__id = value
-	elif pspec.name == 'subject':
+	if pspec.name == 'subject':
 	    #print 'Setting subject:', value
-	    self._set_subject(value)
+	    # property is preserved by self.subject's property
+	    if value is not self._subject:
+		self.preserve_property('subject')
+		if self._subject:
+		    self._subject.disconnect('__unlink__', self.__on_unlink, obj, value)
+		s = self._subject
+		self._subject = value
+		if len(s.presentation) == 0:
+		    s.unlink()
+		if value:
+		    value.connect('__unlink__', self.__on_unlink, obj, value)
 	elif pspec.name == 'auto-resize':
+	    self.preserve_property('auto-resize')
 	    self.auto_resize = value
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
     def do_get_property(self, pspec):
-	if pspec.name == 'id':
-	    return self.__id
-	elif pspec.name == 'subject':
-	    return self.subject
+	if pspec.name == 'subject':
+	    return self._subject
 	elif pspec.name == 'auto-resize':
 	    return self.auto_resize
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
+
+    # Ensure we call the right connect functions:
+    connect = DiagramItem.connect
+    disconnect = DiagramItem.disconnect
 
     # DiaCanvasItem callbacks
     def on_glue(self, handle, wx, wy):
@@ -88,18 +97,7 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
     def on_disconnect_handle(self, handle):
 	return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
 
-    def on_subject_update(self, name, old_value, new_value):
-	if name == '__unlink__':
-	    #self.set_property('subject', None)
-	    if self.parent:
-		    self.parent.remove(self)
-	else:
-	    DiagramItem.on_subject_update(self, name, old_value, new_value)
 
 gobject.type_register(ModelElementItem)
 diacanvas.set_callbacks(ModelElementItem)
 diacanvas.set_groupable(ModelElementItem)
-
-if __name__ == '__main__':
-    me = ModelElementItem()
-    print me, me.__gtype__

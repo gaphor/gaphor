@@ -122,7 +122,7 @@ class AssociationPlacementCommand(PlacementCommand):
     def __init__(self):
 	PlacementCommand.__init__(self)
 	self._name = 'Association'
-	self._class = diagram.AssociationItem
+	#self._class = diagram.AssociationItem
 
 CommandInfo(name='InsertAssociation', _label='_Association', context='diagram.menu',
 	    _tip='Create a new Association', pixname='gaphor-association',

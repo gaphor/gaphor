@@ -1,3 +1,13 @@
+2002-05-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/actor.py, modelelement.py, diagramitem.py:
+	make ActorItem kinda work...
+
+2002-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* updated doc/UML2.gaphor to third release of UML 2.0 proposal.
+	* did lots of other updates.
+
 2002-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* all files: Implementing UML2 data model based on the data

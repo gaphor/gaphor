@@ -20,7 +20,7 @@ class PlacementTool(diacanvas.PlacementTool):
 	    subject = elemfact.create(self.subject_class)
 	    item.set_property ('subject', subject)
 	    if isinstance(subject, UML.Namespace):
-		subject.namespace = view.get_diagram().namespace
+		subject.package = view.get_diagram().namespace
 
 	if self.properties and len(self.properties) > 0:
             try:
