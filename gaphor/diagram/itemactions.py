@@ -36,6 +36,12 @@ def get_parent_focus_item(window):
             return item
     raise NoFocusItemError, 'No item has focus.'
 
+def get_pointer(view):
+    x, y = view.get_pointer()
+    x = x + view.get_hadjustment().value
+    y = y + view.get_vadjustment().value
+    return x, y
+
 class ItemNewSubjectAction(Action):
     id = 'ItemNewSubject'
 
@@ -58,7 +64,8 @@ class EditItemAction(Action):
     def execute(self):
         # Stay backwards compatible:
         view = self._window.get_current_diagram_view()
-        wx, wy = view.window_to_world(*view.get_pointer())
+        wx, wy = view.window_to_world(*get_pointer(view))
+        #log.debug('focus item %s on point (%d, %d) -> (%d, %d)' % (view.focus_item.item, x, y, wx, wy))
         view.start_editing(view.focus_item, wx, wy)
 
 register_action(EditItemAction, 'ItemFocus')
@@ -144,7 +151,7 @@ class CreateAttributeAction(Action):
         presentation = attribute.presentation
         focus_item.update_now()
 
-        wx, wy = view.window_to_world(*view.get_pointer())
+        wx, wy = view.window_to_world(*get_pointer(view))
         for f in focus_item.groupable_iter():
             if f in presentation:
                 vf = view.find_view_item(f)
@@ -187,7 +194,7 @@ class CreateOperationAction(Action):
         presentation = operation.presentation
         focus_item.update_now()
 
-        wx, wy = view.window_to_world(*view.get_pointer())
+        wx, wy = view.window_to_world(*get_pointer(view))
         for f in focus_item.groupable_iter():
             if f in presentation:
                 vf = view.find_view_item(f)
@@ -296,7 +303,7 @@ class SegmentAction(Action):
         assert isinstance(fi, diacanvas.CanvasLine)
         #x = view.event()
         #print 'event =', event
-        wx, wy = view.window_to_world(*view.get_pointer())
+        wx, wy = view.window_to_world(*get_pointer(view))
         x, y = fi.affine_point_w2i(wx, wy)
         segment = fi.get_closest_segment(x, y)
         return fi, segment
