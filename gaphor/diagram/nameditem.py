@@ -1,4 +1,4 @@
-"""ClassifierItem diagram item
+"""NamedItem diagram item
 """
 # vim:sw=4:et
 
@@ -6,9 +6,9 @@ import gobject
 import pango
 import diacanvas
 from gaphor.diagram import initialize_item
-from modelelement import ModelElementItem
+from elementitem import ElementItem
 
-class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
+class NamedItem(ElementItem, diacanvas.CanvasEditable):
     __gproperties__ = {
         'name': (gobject.TYPE_STRING, 'name', '', '', gobject.PARAM_READWRITE)
     }
@@ -22,16 +22,16 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
     )
 
     def __init__(self, id=None):
-        ModelElementItem.__init__(self, id)
+        ElementItem.__init__(self, id)
 
         self._name = diacanvas.shape.Text()
-        self._name.set_font_description(pango.FontDescription(ClassifierItem.FONT))
+        self._name.set_font_description(pango.FontDescription(NamedItem.FONT))
         self._name.set_alignment(pango.ALIGN_CENTER)
         #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
         self._name.set_markup(False)
 
     def postload(self):
-        ModelElementItem.postload(self)
+        ElementItem.postload(self)
         # Set values in postload, since the load function doesn't send
         # notifications.
         self._name.set_text(self.subject.name or '')
@@ -44,13 +44,13 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
             self.preserve_property('name')
             self.subject.name = value
         else:
-            ModelElementItem.do_set_property(self, pspec, value)
+            ElementItem.do_set_property(self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'name':
             return self.subject.name
         else:
-            return ModelElementItem.do_get_property(self, pspec)
+            return ElementItem.do_get_property(self, pspec)
 
     def get_name_size(self):
         """Return the width and height of the name shape.
@@ -65,8 +65,8 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
     def on_subject_notify(self, pspec, notifiers=()):
         """See DiagramItem.on_subject_notify().
         """
-        #log.info('ClassifierItem.on_subject_notify: %s' % str(notifiers))
-        ModelElementItem.on_subject_notify(self, pspec, ('name',) + notifiers)
+        #log.info('NamedItem.on_subject_notify: %s' % str(notifiers))
+        ElementItem.on_subject_notify(self, pspec, ('name',) + notifiers)
         self._name.set_text(self.subject and self.subject.name or '')
 
     def on_subject_notify__name(self, subject, pspec):
@@ -78,14 +78,14 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
     # CanvasItem callbacks:
 
     def on_update(self, affine):
-        ModelElementItem.on_update(self, affine)
+        ElementItem.on_update(self, affine)
 
     def on_event (self, event):
         if event.type == diacanvas.EVENT_2BUTTON_PRESS:
             self.rename()
             return True
         else:
-            return ModelElementItem.on_event(self, event)
+            return ElementItem.on_event(self, event)
 
     def on_shape_iter(self):
         return iter([self._name])
@@ -101,7 +101,5 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
             self.subject.name = new_text
         self.request_update()
 
-initialize_item(ClassifierItem)
-#gobject.type_register(ClassifierItem)
-#diacanvas.set_editable(ClassifierItem)
+initialize_item(NamedItem)
 

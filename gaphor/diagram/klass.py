@@ -14,7 +14,7 @@ import diacanvas
 import gaphor.UML as UML
 from gaphor.diagram import initialize_item
 
-from classifier import ClassifierItem
+from nameditem import NamedItem
 from feature import FeatureItem
 from attribute import AttributeItem
 from operation import OperationItem
@@ -63,8 +63,8 @@ class Compartment(list):
             self.separator.line(((0, self.sep_y), (width, self.sep_y)))
 
 
-class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
-#class ClassItem(ClassifierItem):
+class ClassItem(NamedItem, diacanvas.CanvasGroupable):
+#class ClassItem(NamedItem):
     """This item visualizes a Class instance.
 
     A ClassItem contains two compartments (Compartment): one for
@@ -86,7 +86,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     COMP_MARGIN_X=5
     COMP_MARGIN_Y=5
 
-    popup_menu = ClassifierItem.popup_menu + (
+    popup_menu = NamedItem.popup_menu + (
         'separator',
         'CreateAttribute',
         'CreateOperation',
@@ -96,7 +96,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     )
 
     def __init__(self, id=None):
-        ClassifierItem.__init__(self, id)
+        NamedItem.__init__(self, id)
         self.set(height=50, width=100)
         self._attributes = Compartment('attributes', self)
         self._operations = Compartment('operations', self)
@@ -109,10 +109,10 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         # attributes or operations.
         self.save_property(save_func, 'show-attributes')
         self.save_property(save_func, 'show-operations')
-        ClassifierItem.save(self, save_func)
+        NamedItem.save(self, save_func)
 
     def postload(self):
-        ClassifierItem.postload(self)
+        NamedItem.postload(self)
         self.sync_compartments()
 
     def do_set_property(self, pspec, value):
@@ -125,14 +125,14 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
             self._operations.visible = value
             self.request_update()
         else:
-            ClassifierItem.do_set_property(self, pspec, value)
+            NamedItem.do_set_property(self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'show-attributes':
             return self._attributes.visible
         elif pspec.name == 'show-operations':
             return self._operations.visible
-        return ClassifierItem.do_get_property(self, pspec)
+        return NamedItem.do_get_property(self, pspec)
 
     def _create_attribute(self, attribute):
         """Create a new attribute item.
@@ -180,7 +180,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
 
     def on_subject_notify(self, pspec, notifiers=()):
         #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        ClassifierItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation'))
+        NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation'))
         # Create already existing attributes and operations:
         if self.subject:
             self.sync_compartments()
@@ -237,14 +237,14 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         for comp in compartments:
             comp.update(width, affine)
 
-        ClassifierItem.on_update(self, affine)
+        NamedItem.on_update(self, affine)
 
         self._border.rectangle((0,0),(width, height))
         self.expand_bounds(1.0)
 
     def on_shape_iter(self):
         yield self._border
-        for s in ClassifierItem.on_shape_iter(self):
+        for s in NamedItem.on_shape_iter(self):
             yield s
         if self._attributes.visible:
             yield self._attributes.separator

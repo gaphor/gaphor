@@ -409,7 +409,7 @@ def generate(filename, outfile=None, overridesfile=None):
                 if e1.redefines:
                     redefines.append(e1)
                 else:
-                    assert not derivedunions.get(e1.name)
+                    assert not derivedunions.get(e1.name), "%s.%s is already in derived union set in class %s" % (e1.class_name, e1.name, derivedunions.get(e1.name).class_name)
                     derivedunions[e1.name] = e1
                     e1.union = [ ]
                     e1.written = False

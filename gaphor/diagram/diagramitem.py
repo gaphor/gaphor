@@ -58,7 +58,7 @@ class DiagramItem(Presentation):
     diacanvas.DiaCanvasItem and gaphor.UML.Element.
 
     Example:
-        class ModelElementItem(diacanvas.CanvasElement, DiagramItem):
+        class ElementItem(diacanvas.CanvasElement, DiagramItem):
             connect = DiagramItem.connect
             disconnect = DiagramItem.disconnect
             ...

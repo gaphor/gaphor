@@ -10,9 +10,9 @@ import diacanvas
 import gaphor.UML as UML
 from gaphor.diagram import initialize_item
 
-from modelelement import ModelElementItem
+from elementitem import ElementItem
 
-class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
+class CommentItem(ElementItem, diacanvas.CanvasEditable):
     __gproperties__ = {
         'body': (gobject.TYPE_STRING, 'body', '', '', gobject.PARAM_READWRITE)
     }
@@ -28,7 +28,7 @@ class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
     )
 
     def __init__(self, id=None):
-        ModelElementItem.__init__(self, id)
+        ElementItem.__init__(self, id)
         self.set(min_width=CommentItem.EAR + 2 * CommentItem.OFFSET,
                  height=50, width=100)
         self._border = diacanvas.shape.Path()
@@ -50,17 +50,17 @@ class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
             self.preserve_property('body')
             self.subject.body = value
         else:
-            ModelElementItem.do_set_property(self, pspec, value)
+            ElementItem.do_set_property(self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'body':
             return self.subject.body
         else:
-            return ModelElementItem.do_get_property(self, pspec)
+            return ElementItem.do_get_property(self, pspec)
 
     def on_subject_notify(self, pspec):
         """See DiagramItem.on_subject_notify()."""
-        ModelElementItem.on_subject_notify(self, pspec, ('body',))
+        ElementItem.on_subject_notify(self, pspec, ('body',))
 
 	if self.subject:
 	    self.on_subject_notify__body(self.subject, None)
@@ -79,7 +79,7 @@ class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
         self.set(min_height=h + CommentItem.OFFSET * 2)
         #self._body.set_property('height', self.height - CommentItem.OFFSET * 2)
         #self.update_child(self._body, affine)
-        ModelElementItem.on_update(self, affine)
+        ElementItem.on_update(self, affine)
 
         # Width and height, adjusted for line width...
         w = self.width
@@ -94,7 +94,7 @@ class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
             self.edit()
             return True
         else:
-            return ModelElementItem.on_event(self, event)
+            return ElementItem.on_event(self, event)
 
     def on_shape_iter(self):
         return iter([self._border, self._body])

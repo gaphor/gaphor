@@ -1,6 +1,6 @@
 # vim:sw=4
 '''
-ModelElementItem
+ElementItem
 
 Abstract base class for element-like Diagram items.
 '''
@@ -15,7 +15,7 @@ __author__ = 'Arjan J. Molenaar'
 __date__ = '$date$'
 
 
-class ModelElementItem(diacanvas.CanvasElement, DiagramItem):
+class ElementItem(diacanvas.CanvasElement, DiagramItem):
     # Properties, also add the DiagramItem properties here.
     __gproperties__ = {
         'auto-resize':  (gobject.TYPE_BOOLEAN, 'auto resize',
@@ -71,4 +71,4 @@ class ModelElementItem(diacanvas.CanvasElement, DiagramItem):
         return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
 
 
-initialize_item(ModelElementItem)
+initialize_item(ElementItem)

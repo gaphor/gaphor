@@ -9,7 +9,7 @@ import gaphor.UML as UML
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 
 from klass import ClassItem
-from classifier import ClassifierItem
+from nameditem import NamedItem
 
 class NoFocusItemError(gaphor.GaphorError):
     pass
@@ -41,7 +41,7 @@ class ItemRenameAction(Action):
 	except NoFocusItemError:
 	    self.sensitive = False
 	else:
-	    if isinstance(item, ClassifierItem):
+	    if isinstance(item, NamedItem):
 		self.sensitive = True
 
     def execute(self):

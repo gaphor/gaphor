@@ -145,15 +145,40 @@ class PackagePlacementAction(NamespacePlacementAction):
 register_action(PackagePlacementAction)
 
 
-#class StatePlacementAction(PlacementAction):
-#    id = 'InsertState'
-#    label = 'State'
-#    tooltip = 'Create a new State node'
-#    stock_id = 'gaphor-comment-line'
-#    name = 'State'
-#    type = diagram.StateItem
-#
-#register_action(StatePlacementAction)
+class InitialNodePlacementAction(PlacementAction):
+    id = 'InsertInitialNode'
+    label = 'Initial node'
+    tooltip = 'Create a new Initial action node'
+    stock_id = 'gaphor-pointer'
+    name = 'InitialNode'
+    type = diagram.InitialNodeItem
+    subject_type = UML.InitialNode
+
+register_action(InitialNodePlacementAction)
+
+
+class ActivityFinalNodePlacementAction(PlacementAction):
+    id = 'InsertActivityFinalNode'
+    label = 'Final activity node'
+    tooltip = 'Create a new Final activity node'
+    stock_id = 'gaphor-pointer'
+    name = 'ActivityFinalNode'
+    type = diagram.ActivityFinalNodeItem
+    subject_type = UML.ActivityFinalNode
+
+register_action(ActivityFinalNodePlacementAction)
+
+
+class ActionPlacementAction(PlacementAction):
+    id = 'InsertAction'
+    label = 'Action node'
+    tooltip = 'Create a new Action node'
+    stock_id = 'gaphor-pointer'
+    name = 'Action'
+    type = diagram.ActionItem
+    subject_type = UML.Action
+
+register_action(ActionPlacementAction)
 
 
 class CommentPlacementAction(PlacementAction):

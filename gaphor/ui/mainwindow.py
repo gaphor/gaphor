@@ -71,7 +71,10 @@ class MainWindow(AbstractWindow):
                 'InsertGeneralization',
                 'separator',
                 'InsertComment',
-                'InsertCommentLine')
+                'InsertCommentLine',
+                'InsertAction',
+                'InsertInitialNode',
+                'InsertActivityFinalNode')
 
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',

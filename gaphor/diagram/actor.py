@@ -12,9 +12,9 @@ import diacanvas
 import gaphor.UML as UML
 from gaphor.diagram import initialize_item
 
-from classifier import ClassifierItem
+from nameditem import NamedItem
 
-class ActorItem(ClassifierItem):
+class ActorItem(NamedItem):
     HEAD=11
     ARM=19
     NECK=10
@@ -27,7 +27,7 @@ class ActorItem(ClassifierItem):
     }
 
     def __init__(self, id=None):
-        ClassifierItem.__init__(self, id)
+        NamedItem.__init__(self, id)
         self.set(height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
                  width=(ActorItem.ARM * 2),
                  min_height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
@@ -46,7 +46,7 @@ class ActorItem(ClassifierItem):
         self._legs.set_line_width(2.0)
 
     def save (self, save_func):
-        ClassifierItem.save(self, save_func)
+        NamedItem.save(self, save_func)
         #self.save_property(save_func, 'name-width')
 
     def do_set_property (self, pspec, value):
@@ -55,26 +55,26 @@ class ActorItem(ClassifierItem):
             #self._name.set_property('width', value)
 	    pass
         else:
-            ClassifierItem.do_set_property (self, pspec, value)
+            NamedItem.do_set_property (self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'name-width':
             #w, h = self.get_name_size()
 	    return 0.0
         else:
-            return ClassifierItem.do_get_property (self, pspec)
+            return NamedItem.do_get_property (self, pspec)
 
     # DiaCanvasItem callbacks:
 
     def on_update(self, affine):
-        # Center the text (from ClassifierItem):
+        # Center the text (from NamedItem):
         w, h = self.get_name_size()
         if w < self.width:
             w = self.width
         self.update_name(x=(self.width - w) / 2, y=self.height,
                          width=w, height=h)
 
-        ClassifierItem.on_update(self, affine)
+        NamedItem.on_update(self, affine)
 
         # scaling factors (also compenate the line width):
         fx = self.width / (ActorItem.ARM * 2 + 2);
@@ -105,7 +105,7 @@ class ActorItem(ClassifierItem):
 	yield self._body
 	yield self._arms
 	yield self._legs
-        for s in ClassifierItem.on_shape_iter(self):
+        for s in NamedItem.on_shape_iter(self):
             yield s
 
 initialize_item(ActorItem, UML.Actor)

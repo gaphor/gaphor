@@ -23,7 +23,7 @@ class install(_install):
     def finalize_options(self):
         _install.finalize_options(self)
         #if not self.install_locales:
-        self.install_locales = os.path.join(change_root(self.root, self.install_base), 'share', 'locale')
+        self.install_locales = os.path.join(change_root(self.root or '', self.install_base), 'share', 'locale')
 
 install.sub_commands.append(('install_mo', None))
 

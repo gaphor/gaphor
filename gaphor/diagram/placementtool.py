@@ -24,7 +24,7 @@ class PlacementTool(diacanvas.PlacementTool):
         try:
             item = self.item_factory()
         except Exception, e:
-            log.error('Error while creating item: %s' % e)
+            log.error('Error while creating item: %s' % e, e)
         else:
             if self.properties and len(self.properties) > 0:
                 try:
@@ -37,6 +37,13 @@ class PlacementTool(diacanvas.PlacementTool):
 
     def _grab_handle(self, view, event, item):
         if not self.is_released:
+            if isinstance(item, diacanvas.CanvasElement):
+                #print 'PlacementTool: setting handle of Element'
+                handle = item.handles[diacanvas.HANDLE_SE]
+                if not handle.get_property('movable'):
+                    view_item = view.find_view_item(item)
+                    view.focus(view_item)
+                    return
             diacanvas.PlacementTool._grab_handle(self, view, event, item)
 
     def do_button_press_event(self, view, event):

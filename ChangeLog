@@ -1,3 +1,15 @@
+2004-04-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/elementitem.py: renamed modelelement.py to this file,
+	  changed dependent files.
+	* gaphor/diagram/nameditem.py: renamed classifier.py to this file,
+	  changed dependent files.
+	* gaphor/diagram/actions.py: added create actions for InitialNode,
+	  ActivityFinalNode and Action.
+	* gaphor/diagram/action.py: New file, representing an Action.
+	* gaphor/diagram/node.py: New file, containing initial and final nodes.
+	* gaphor/ui/mainwindow.py: added items for new node types.
+
 2004-04-13  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	RELEASE 0.3.0

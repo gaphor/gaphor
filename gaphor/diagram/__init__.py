@@ -63,8 +63,8 @@ from relationship import RelationshipItem
 from dependency import DependencyItem
 from generalization import GeneralizationItem
 from association import AssociationItem
-#from state import StateItem
-#import diagramitemactions
+from node import InitialNodeItem, ActivityFinalNodeItem
+from action import ActionItem
 import itemactions
 
 if __debug__: 
