@@ -1,13 +1,14 @@
+# vim: sw=4:et
 """
 Commands related to the Diagram (DiaCanvas)
 """
-# vim: sw=4
 
 import diacanvas
 import gaphor
 import gaphor.diagram
 import gaphor.UML as UML
-from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
+from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
+from gaphor.misc.action import register_action
 
 from klass import ClassItem
 from component import ComponentItem
@@ -25,22 +26,22 @@ def get_parent_focus_item(window):
     """Get the outer most focus item (the obe that's not a composite)."""
     view = window.get_current_diagram_view()
     if view:
-	fi = view.focus_item
-	if fi:
-	    item = fi.item
-	    while (item.flags & diacanvas.COMPOSITE) != 0:
-		item = item.parent
-	    return item
+        fi = view.focus_item
+        if fi:
+            item = fi.item
+            while (item.flags & diacanvas.COMPOSITE) != 0:
+                item = item.parent
+            return item
     raise NoFocusItemError, 'No item has focus.'
 
 class ItemNewSubjectAction(Action):
     id = 'ItemNewSubject'
 
     def init(self, window):
-	self._window = window
+        self._window = window
 
     def execute(self):
-	self._window.execute_action('ItemFocus')
+        self._window.execute_action('ItemFocus')
 
 register_action(ItemNewSubjectAction)
 
@@ -53,17 +54,17 @@ class ItemRenameAction(Action):
         self._window = window
 
     def update(self):
-	try:
-	    item = get_parent_focus_item(self._window)
-	except NoFocusItemError:
-	    self.sensitive = False
-	else:
-	    if isinstance(item, NamedItem):
-		self.sensitive = True
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            self.sensitive = False
+        else:
+            if isinstance(item, NamedItem):
+                self.sensitive = True
 
     def execute(self):
         item = self._window.get_current_diagram_view().focus_item.item
-	item.edit()
+        item.edit()
 
 register_action(ItemRenameAction, 'ItemFocus')
 
@@ -93,13 +94,13 @@ class AbstractClassAction(CheckAction):
         self._window = window
 
     def update(self):
-	try:
-	    item = get_parent_focus_item(self._window)
-	except NoFocusItemError:
-	    pass
-	else:
-	    if isinstance(item, ClassItem):
-		self.active = item.subject and item.subject.isAbstract
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, ClassItem):
+                self.active = item.subject and item.subject.isAbstract
 
     def execute(self):
         item = get_parent_focus_item(self._window)
@@ -121,13 +122,13 @@ class CreateAttributeAction(Action):
         self._window = window
 
     def update(self):
-	try:
-	    item = get_parent_focus_item(self._window)
-	except NoFocusItemError:
-	    pass
-	else:
-	    if isinstance(item, ClassItem):
-		self.sensitive = item.get_property('show-attributes')
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, ClassItem):
+                self.sensitive = item.get_property('show-attributes')
 
     def execute(self):
         subject = get_parent_focus_item(self._window).subject
@@ -136,7 +137,7 @@ class CreateAttributeAction(Action):
         attribute = elemfact.create(UML.Property)
         attribute.name = 'new'
         subject.ownedAttribute = attribute
-	# TODO: Select this item for editing
+        # TODO: Select this item for editing
 
 register_action(CreateAttributeAction, 'ShowAttributes', 'ItemFocus')
 
@@ -150,13 +151,13 @@ class CreateOperationAction(Action):
         self._window = window
 
     def update(self):
-	try:
-	    item = get_parent_focus_item(self._window)
-	except NoFocusItemError:
-	    pass
-	else:
-	    if isinstance(item, ClassItem):
-		self.sensitive = item.get_property('show-operations')
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, ClassItem):
+                self.sensitive = item.get_property('show-operations')
 
     def execute(self):
         subject = get_parent_focus_item(self._window).subject
@@ -165,7 +166,7 @@ class CreateOperationAction(Action):
         operation = elemfact.create(UML.Operation)
         operation.name = 'new'
         subject.ownedOperation = operation
-	# TODO: Select this item for editing
+        # TODO: Select this item for editing
 
 register_action(CreateOperationAction, 'ShowOperations', 'ItemFocus')
 
@@ -206,13 +207,13 @@ class ShowAttributesAction(CheckAction):
         self._window = window
 
     def update(self):
-	try:
-	    item = get_parent_focus_item(self._window)
-	except NoFocusItemError:
-	    pass
-	else:
-	    if isinstance(item, ClassItem):
-		self.active = item.get_property('show-attributes')
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, ClassItem):
+                self.active = item.get_property('show-attributes')
 
     def execute(self):
         item = get_parent_focus_item(self._window)
@@ -230,14 +231,14 @@ class ShowOperationsAction(CheckAction):
         self._window = window
 
     def update(self):
-	try:
-	    item = get_parent_focus_item(self._window)
-	except NoFocusItemError:
-	    pass
-	else:
-	    from klass import ClassItem
-	    if isinstance(item, ClassItem):
-		self.active = item.get_property('show-operations')
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            from klass import ClassItem
+            if isinstance(item, ClassItem):
+                self.active = item.get_property('show-operations')
 
     def execute(self):
         item = get_parent_focus_item(self._window)
@@ -253,14 +254,14 @@ class SegmentAction(Action):
     """Base class for add and delete line segment."""
 
     def init(self, window):
-	self._window = window
+        self._window = window
 
     def get_item_and_segment(self):
         fi = get_parent_focus_item(self._window)
         view = self._window.get_current_diagram_view()
         assert isinstance(fi, diacanvas.CanvasLine)
-	#x = view.event()
-	#print 'event =', event
+        #x = view.event()
+        #print 'event =', event
         wx, wy = view.window_to_world(*view.get_pointer())
         x, y = fi.affine_point_w2i(wx, wy)
         segment = fi.get_closest_segment(x, y)
@@ -286,12 +287,12 @@ class DeleteSegmentAction(SegmentAction):
     tooltip = 'Delete the segment from the line'
 
     def update(self):
-	try:
-	    fi = get_parent_focus_item(self._window)
-	    if fi and isinstance(fi, diacanvas.CanvasLine):
-		self.sensitive = len(fi.handles) > 2
-	except NoFocusItemError:
-	    pass
+        try:
+            fi = get_parent_focus_item(self._window)
+            if fi and isinstance(fi, diacanvas.CanvasLine):
+                self.sensitive = len(fi.handles) > 2
+        except NoFocusItemError:
+            pass
 
     def execute(self):
         item, segment = self.get_item_and_segment()
@@ -310,12 +311,12 @@ class OrthogonalAction(CheckAction):
         self._window = window
 
     def update(self):
-	try:
-	    fi = get_parent_focus_item(self._window)
-	    if fi and isinstance(fi, diacanvas.CanvasLine):
-		self.active = fi.get_property('orthogonal')
-	except NoFocusItemError:
-	    pass
+        try:
+            fi = get_parent_focus_item(self._window)
+            if fi and isinstance(fi, diacanvas.CanvasLine):
+                self.active = fi.get_property('orthogonal')
+        except NoFocusItemError:
+            pass
 
     def execute(self):
         fi = get_parent_focus_item(self._window)
@@ -336,13 +337,13 @@ class OrthogonalAlignmentAction(CheckAction):
         self._window = window
 
     def update(self):
-	try:
-	    fi = get_parent_focus_item(self._window)
-	    if fi and isinstance(fi, diacanvas.CanvasLine):
-		self.sensitive = fi.get_property('orthogonal')
-		self.active = fi.get_property('horizontal')
-	except NoFocusItemError:
-	    pass
+        try:
+            fi = get_parent_focus_item(self._window)
+            if fi and isinstance(fi, diacanvas.CanvasLine):
+                self.sensitive = fi.get_property('orthogonal')
+                self.active = fi.get_property('horizontal')
+        except NoFocusItemError:
+            pass
 
     def execute(self):
         fi = get_parent_focus_item(self._window)
@@ -365,21 +366,21 @@ class NavigableAction(CheckAction):
         return get_parent_focus_item(self._window).get_property(self.end_name)
 
     def update(self):
-	try:
-	    item = get_parent_focus_item(self._window)
-	    from association import AssociationItem
-	    if isinstance(item, AssociationItem):
-		end = item.get_property(self.end_name)
-		if end.subject:
-		    self.active = (end.subject.class_ != None)
+        try:
+            item = get_parent_focus_item(self._window)
+            from association import AssociationItem
+            if isinstance(item, AssociationItem):
+                end = item.get_property(self.end_name)
+                if end.subject:
+                    self.active = (end.subject.class_ != None)
         except NoFocusItemError:
-	    pass
+            pass
 
     def execute(self):
         item = self.get_association_end()
         assert item.subject
-	assert isinstance(item.subject, UML.Property)
-	item.set_navigable(self.active)
+        assert isinstance(item.subject, UML.Property)
+        item.set_navigable(self.active)
 
 
 class HeadNavigableAction(NavigableAction):
@@ -404,7 +405,7 @@ class AggregationAction(RadioAction):
         self._window = window
 
     def update(self):
-	try:
+        try:
             item = get_parent_focus_item(self._window)
             from association import AssociationItem
             if isinstance(item, AssociationItem):
@@ -416,7 +417,7 @@ class AggregationAction(RadioAction):
 
     def execute(self):
         if self.active:
-	    subject = get_parent_focus_item(self._window).get_property(self.end_name).subject
+            subject = get_parent_focus_item(self._window).get_property(self.end_name).subject
             assert isinstance(subject, UML.Property)
             subject.aggregation = self.aggregation
 
@@ -490,19 +491,19 @@ class AssociationEndRenameNameAction(Action):
         self._window = window
 
     def update(self):
-	view = self._window.get_current_diagram_view()
-	if not view: return
-	fi = view.focus_item
-	if not fi:
-	    self.sensitive = False
-	else:
-	    if isinstance(fi.item, AssociationEnd):
-		self.sensitive = True
+        view = self._window.get_current_diagram_view()
+        if not view: return
+        fi = view.focus_item
+        if not fi:
+            self.sensitive = False
+        else:
+            if isinstance(fi.item, AssociationEnd):
+                self.sensitive = True
 
     def execute(self):
         item = self._window.get_current_diagram_view().focus_item.item
-	if item.subject:
-	    item.edit_name()
+        if item.subject:
+            item.edit_name()
 
 register_action(AssociationEndRenameNameAction, 'ItemFocus')
 
@@ -516,19 +517,19 @@ class AssociationEndRenameMultAction(Action):
         self._window = window
 
     def update(self):
-	view = self._window.get_current_diagram_view()
-	if not view: return
-	fi = view.focus_item
-	if not fi:
-	    self.sensitive = False
-	else:
-	    if isinstance(fi.item, AssociationEnd):
-		self.sensitive = True
+        view = self._window.get_current_diagram_view()
+        if not view: return
+        fi = view.focus_item
+        if not fi:
+            self.sensitive = False
+        else:
+            if isinstance(fi.item, AssociationEnd):
+                self.sensitive = True
 
     def execute(self):
         item = self._window.get_current_diagram_view().focus_item.item
-	if item.subject:
-	    item.edit_mult()
+        if item.subject:
+            item.edit_mult()
 
 register_action(AssociationEndRenameMultAction, 'ItemFocus')
 
@@ -543,17 +544,17 @@ class DependencyTypeAction(RadioAction):
         self._window = window
 
     def update(self):
-	try:
+        try:
             item = get_parent_focus_item(self._window)
             from dependency import DependencyItem
             if isinstance(item, DependencyItem):
-		self.active = (item.get_dependency_type() == self.dependency_type)
+                self.active = (item.get_dependency_type() == self.dependency_type)
         except NoFocusItemError:
             pass
 
     def execute(self):
         if self.active:
-	    item = get_parent_focus_item(self._window)
+            item = get_parent_focus_item(self._window)
             item.set_dependency_type(self.dependency_type)
 
 
@@ -727,47 +728,48 @@ class Fold(Action):
         new_item.move(x + (item.width - new_item.width) / 2.0,
                     y + (item.height - new_item.height) / 2.0)
 
-	# Create a dummy presentation, since we should keep tract of the items subject
-	dummy = DummyItem()
-	# Some extra dummy presentations for association ends
-	dummy_head_end = DummyItem()
-	dummy_tail_end = DummyItem()
+        # Create a dummy presentation, since we should keep tract of the items subject
+        dummy = DummyItem()
+        # Some extra dummy presentations for association ends
+        dummy_head_end = DummyItem()
+        dummy_tail_end = DummyItem()
 
-	# Find all elements that are connected to our item
-	# (Should become (added 10-6-2004 to diacanvas2))
-	#for connected_handle in item.connected_handles:
-	for connected_item in item.canvas.select(lambda i: i.handles and \
-	                                         (i.handles[0].connected_to is item or \
-					          i.handles[-1].connected_to is item)):
-	    connected_item = connected_handle.owner
-	    #print 'connected item', connected_item
-	    # Store the subject, in case of an association also store the
-	    # head and tail ends subjects
-	    if connected_item.subject:
-		dummy.subject = connected_item.subject
-		if isinstance(dummy.subject, UML.Association):
-		    dummy_head_end.subject = connected_item.get_property('head_subject')
-		    dummy_tail_end.subject = connected_item.get_property('tail_subject')
+        # Find all elements that are connected to our item
+        # (Should become (added 10-6-2004 to diacanvas2))
+        #for connected_handle in item.connected_handles:
+        for connected_item in item.canvas.select(lambda i: i.handles and \
+                                                 (i.handles[0].connected_to is item or \
+                                                  i.handles[-1].connected_to is item)):
+            #connected_item = connected_handle.owner
 
-	    # This is the main part. First disconnect, then restore the subject (like if we are
-	    # loading the model) and at last connect to the new item.
-	    if connected_item.handles[0].connected_to is item:
-		item.disconnect_handle(connected_item.handles[0])
-		connected_item.subject = dummy.subject
-		new_item.connect_handle(connected_item.handles[0])
-	    if connected_item.handles[-1].connected_to is item:
-		item.disconnect_handle(connected_item.handles[-1])
-		connected_item.subject = dummy.subject
-		new_item.connect_handle(connected_item.handles[-1])
+            #print 'connected item', connected_item
+            # Store the subject, in case of an association also store the
+            # head and tail ends subjects
+            if connected_item.subject:
+                dummy.subject = connected_item.subject
+                if isinstance(dummy.subject, UML.Association):
+                    dummy_head_end.subject = connected_item.get_property('head_subject')
+                    dummy_tail_end.subject = connected_item.get_property('tail_subject')
 
-	    assert connected_item.subject is dummy.subject
+            # This is the main part. First disconnect, then restore the subject (like if we are
+            # loading the model) and at last connect to the new item.
+            if connected_item.handles[0].connected_to is item:
+                item.disconnect_handle(connected_item.handles[0])
+                connected_item.subject = dummy.subject
+                new_item.connect_handle(connected_item.handles[0])
+            if connected_item.handles[-1].connected_to is item:
+                item.disconnect_handle(connected_item.handles[-1])
+                connected_item.subject = dummy.subject
+                new_item.connect_handle(connected_item.handles[-1])
 
-	    # Remove our connected dummy items
-	    if isinstance(dummy.subject, UML.Association):
-		connected_item.set_property('head-subject', dummy_head_end.subject)
-		connected_item.set_property('tail-subject', dummy_tail_end.subject)
-		del dummy_head_end.subject, dummy_tail_end.subject
-	    del dummy.subject
+            assert connected_item.subject is dummy.subject
+
+            # Remove our connected dummy items
+            if isinstance(dummy.subject, UML.Association):
+                connected_item.set_property('head-subject', dummy_head_end.subject)
+                connected_item.set_property('tail-subject', dummy_tail_end.subject)
+                del dummy_head_end.subject, dummy_tail_end.subject
+            del dummy.subject
 
         # remove old diagram element
         item.unlink()
@@ -800,3 +802,33 @@ class FoldAction(Fold):
 
 
 register_action(FoldAction, 'ItemFocus')
+
+
+class ApplyStereotypeAction(CheckAction, ObjectAction):
+
+    def __init__(self, stereotype):
+        Action.__init__(self)
+        ObjectAction.__init__(self, id='ApplyStereotype' + str(stereotype.name),
+                             label=str(stereotype.name))
+        self.stereotype = stereotype
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            self.sensitive = isinstance(item, ClassItem)
+            if self.sensitive:
+                self.active = self.stereotype in item.subject.appliedStereotype
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        if self.active:
+            item.subject.appliedStereotype = self.stereotype
+        else:
+            del item.subject.appliedStereotype[self.stereotype]
+

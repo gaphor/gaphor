@@ -8,6 +8,7 @@ TODO: show tooltips in the status bar when a menu item is selected.
 import gobject
 import gtk
 from gaphor.misc.action import ActionError, Action, CheckAction, RadioAction
+from gaphor.misc.action import get_actions_for_slot
 import gaphor.ui.wrapbox
 
 __all__ = [ 'MenuFactory' ]
@@ -71,27 +72,32 @@ class MenuFactory(object):
         except ActionError:
             return None
 
-    def create_menu(self, menu_def, popup=False, groups=None):
-        """Create a menu bar.
-           create_menu(menu_def) -> gtk.Menubar object
+    def _create_menu_items(self, menu_def, groups, menu, item=None):
+        """Create the items that have to be added to the menu and their
+        submenus.
         """
-        if not popup:
-            menu = gtk.MenuBar()
-        else:
-            menu = gtk.Menu()
-        if groups is None:
-            groups = { }
-        item = None
-
         for id in menu_def:
             if type(id) in (tuple, list):
-                #print 'creating submenu for', name
-                submenu = self.create_menu(id, True, groups)
+                # Create and populate a new submenu
+                submenu = gtk.Menu()
+                self._create_menu_items(id, groups, submenu)
                 item.set_submenu(submenu)
                 submenu.show()
+            elif id.startswith('<') and id.endswith('>'):
+                # We're dealing with a placeholder here
+                slot_def = get_actions_for_slot(id)
+                self._create_menu_items(slot_def, groups, menu, item)
             else:
                 item = self.create_menu_item(id, groups)
                 menu.add(item)
+
+    def create_menu(self, menu_def):
+        """Create a menu bar.
+           create_menu(menu_def) -> gtk.Menubar object
+        """
+        menu = gtk.MenuBar()
+        self._create_menu_items(menu_def, { }, menu)
+
         return menu
 
     def create_popup(self, menu_def, fire_and_forget=False):
@@ -102,7 +108,8 @@ class MenuFactory(object):
         If fire_and_forget == True, the popup menu is destroyed after an
         item was selected.
         """
-        menu = self.create_menu(menu_def, popup=True)
+        menu = gtk.Menu()
+        self._create_menu_items(menu_def, { }, menu)
         if fire_and_forget:
             # Make sure the menu is destroyed after it is closed.
             def idle_destroy_menu(data):

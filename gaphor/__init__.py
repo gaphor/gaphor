@@ -16,11 +16,19 @@ import types
 
 import version
 
-_resources = {
-    'Name': 'gaphor',
-    'Version': version.VERSION,
-    'DataDir': version.DATA_DIR
-}
+from misc.resource import Resource
+
+# Application wide resources can be stored in the 'resource' like this
+#
+# >>> resource('myResource', some_value)
+#
+# If the resource doesn't already exist, it is created, otherwise the existing
+# resource is returned.
+resource = Resource(initial_resources = {
+			'Name': 'gaphor',
+			'Version': version.VERSION,
+			'DataDir': version.DATA_DIR
+		    })
 
 class GaphorError(Exception):
     """
@@ -34,7 +42,6 @@ class GaphorError(Exception):
 def main():
     """Start the interactive application.
     """
-    global _resources
     # Import stuff here, since the user might not need all the GUI stuff
     import gtk
     from ui import MainWindow
@@ -43,7 +50,8 @@ def main():
     main_window.construct()
     # When the state changes to CLOSED, quit the application
     main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and gtk.main_quit())
-    _resources['MainWindow'] = main_window
+    # Make the mainwindow accessable as a resource
+    resource('MainWindow', main_window)
     #gtk.threads_init()
     #gtk.threads_enter()
     # Start with a clean nice new model
@@ -52,51 +60,7 @@ def main():
     #gtk.threads_leave()
     log.info('Bye!')
 
-
-def get_conf(self, key):
-    if not self.__conf:
-	from gaphor.misc.conf import Conf
-	self.__conf = Conf(self.NAME)
-    return self.__conf[key]
-
-
-_no_default = []
-
-def resource(r, default=_no_default):
-    """Locate a resource.
-
-    Resource should be the class of the resource to look for or a string. In
-    case of a string the resource will be looked up in the GConf configuration.
-
-    example: Get the element factory:
-	    factory = gaphor.resource(gaphor.UML.ElementFactory)
-
-    Also builtin resources are 'Name', 'Version' and 'DataDir'. In case main()
-    is run, 'MainWindow' points to the main window of the application.
-
-    If a class name is given as a resource, the resource is created if not
-    yet available. If the resource is a string, KeyError is issued if the
-    resource could not be localed, unless a default value was set.
-    """
-    global _resources
-    try:
-	return _resources[r]
-    except KeyError:
-	pass
-    # Handle string-like resources 
-    if isinstance (r, types.StringType):
-	# TODO: It might be a GConf resource string
-
-	if default is not _no_default:
-	    return default
-	raise KeyError, 'No resource with name "%s"' % r
-    # Instantiate the resource and return it
-    i = r()
-    _resources[r] = i
-    _resources[r.__name__] = i
-    return i
-
-
+# TODO: Remove this
 import __builtin__
 __builtin__.__dict__['log'] = misc.logger.Logger()
 

@@ -218,6 +218,18 @@ class StereotypePlacementAction(NamespacePlacementAction):
 register_action(StereotypePlacementAction)
 
 
+class ProfilePlacementAction(NamespacePlacementAction):
+    id = 'InsertProfile'
+    label = '_Profile'
+    tooltip = 'Create a new Profile'
+    stock_id = 'gaphor-profile'
+    name = 'Profile'
+    type = diagram.PackageItem
+    subject_type = UML.Profile
+
+register_action(ProfilePlacementAction)
+
+
 class PackagePlacementAction(NamespacePlacementAction):
     id = 'InsertPackage'
     label = '_Package'

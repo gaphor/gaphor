@@ -53,17 +53,26 @@ del _get, _set, _del
 %%
 override Class.extension
 def class_extension(self):
-    return []
+    extension = []
+    for e in self._factory.select(lambda e: e.isKindOf(Extension) and self in e.endType):
 
-Class.extension = class_extension
-del class_extension
+        extension.append(e)
+    return extension
+
+Class.extension = property(class_extension, doc=\
+    """References the Extensions that specify additional properties of the
+    metaclass. The property is derived from the extensions whose memberEnds
+    are typed by the Class.""")
 %%
 override Extension.metaclass
 def extension_metaclass(self):
     ownedEnd = self.ownedEnd
-    return [c for c in self.memberEnd if c not in ownedEnd]
+    return [c for c in self.memberEnd if c not in ownedEnd][0].type
 
-Extension.metaclass = extension_metaclass
+Extension.metaclass = property(extension_metaclass, doc=\
+    """References the Class that is extended through an Extension. The
+    property is derived from the type of the memberEnd that is not the
+    ownedEnd.""")
 del extension_metaclass
 %%
 override Classifier.inheritedMember
@@ -98,6 +107,7 @@ def property_opposite(self):
 Property.opposite = property(property_opposite, doc=property_opposite.__doc__)
 
 del property_opposite
+
 %%
 override Property.isComposite
 Property.isComposite = property(lambda self: self.aggregation == intern('composite'))
@@ -106,7 +116,11 @@ override Constraint.context
 Constraint.context = derivedunion('context', 0, 1)
 %%
 override Association.endType
-Association.endType = derivedunion('endType', 1, '*')
+
+Association.endType = property(lambda self: [end.type for end in self.memberEnd if end], doc=\
+    """References the classifiers that are used as types of the ends of the
+    association.""")
+
 %%
 override Operation.type
 Operation.type = derivedunion('type', 0, 1)
@@ -130,3 +144,19 @@ override Operation.render
 from umllex import render_operation
 Operation.render = render_operation
 del render_operation
+%%
+override Extenstion.metaclass
+
+def extension_metaclass(self):
+    """References the Class that is extended through an Extension. The
+    property is derived from the type of the memberEnd that is not the
+    ownedEnd.
+    """
+    for m in self.memberEnd:
+        if m not in self.ownedEnd:
+            return m
+    return None
+
+Extenstion.metaclass = property(extension_metaclass, doc=extension_metaclass.__doc__)
+del extension_metaclass
+

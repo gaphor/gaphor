@@ -129,6 +129,13 @@ class Writer:
                 attribute = "attribute('%s', %s)" % (a.name, type)
             self.write_property("%s.%s" % (a.class_name, a.name), attribute)
 
+    def write_operation(self, o):
+        full_name = "%s.%s" % (o.class_name, o.name)
+        if self.overrides.has_override(full_name):
+            self.overrides.write_override(self, full_name)
+        else:
+            msg("No override for operation %s" % full_name)
+
     def write_association(self, head, tail):
         """Write an association for head. False is returned if the association
         is derived.
@@ -332,6 +339,7 @@ def generate(filename, outfile=None, overridesfile=None):
     generalizations = { }
     associations = { }
     properties = { }
+    operations = { }
     for key, val in all_elements.items():
         # Find classes, *Kind (enumerations) are given special treatment
         if isinstance(val, element):
@@ -355,6 +363,8 @@ def generate(filename, outfile=None, overridesfile=None):
                 unref(val, 'lowerValue')
                 unref(val, 'upperValue')
                 unref(val, 'taggedValue')
+            elif val.type == 'Operation':
+                operations[key] = val
 
     # find inheritance relationships
     for g in generalizations.values():
@@ -382,11 +392,10 @@ def generate(filename, outfile=None, overridesfile=None):
     for c in classes.values():
         for p in c.get('ownedAttribute') or []:
             a = properties.get(p)
-            if a:
-                # set class_name, since write_attribute depends on it
-                a.class_name = c['name']
-                if not a.get('association'):
-                    writer.write_attribute(a, enumerations)
+            # set class_name, since write_attribute depends on it
+            a.class_name = c['name']
+            if not a.get('association'):
+                writer.write_attribute(a, enumerations)
 
     # create associations, derivedunions are held back
     derivedunions = { } # indexed by name in stead of id
@@ -431,6 +440,13 @@ def generate(filename, outfile=None, overridesfile=None):
     for r in redefines or ():
         msg('redefining %s -> %s.%s' % (r.redefines, r.class_name, r.name))
         writer.write_redefine(r)
+
+    # create operations
+    for c in classes.values():
+        for p in c.get('ownedOperation') or []:
+            o = operations.get(p)
+            o.class_name = c['name']
+            writer.write_operation(o)
 
     writer.close()
 

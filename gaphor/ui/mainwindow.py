@@ -119,7 +119,9 @@ class MainWindow(AbstractWindow):
                 'Pointer',
                 'InsertComment',
                 'InsertCommentLine')),
-        ("Use Cases", ('InsertUseCase', 'InsertActor')),
+        ("Use Cases", (
+                'InsertUseCase',
+                'InsertActor')),
         ("Classes", (
                 'InsertClass',
                 'InsertInterface',
@@ -134,10 +136,12 @@ class MainWindow(AbstractWindow):
                 'InsertActivityFinalNode',
                 'InsertDecisionNode',
                 'InsertFlow')),
-#        ("Stereotypes", (
-#                'InsertStereotype',
-#                'InsertExtension'))
-        ("Components", ('InsertComponent', )),
+        ("Components", (
+                'InsertComponent', )),
+        ("Profiles", (
+                'InsertProfile',
+                'InsertStereotype',
+                'InsertExtension')),
     ]
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',

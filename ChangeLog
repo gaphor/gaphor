@@ -1,3 +1,18 @@
+2004-06-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/klass.py: Made stereotypes work. Added a menu entry
+	that allows the user to apply a stereotype to a class.
+	* data/pixmaps/profile24.png: new icon for Profile.
+
+2004-06-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/action.py: Added register_action_for_slot() and
+	get_actions_for_slot().
+	* gaphor/diagram/klass.py: added support for stereotypes.
+	* gaphor/ui/mainwindow.py: added stereotype box
+	* gaphor/UML/uml2.gaphor: added association appliedStereotype to
+	Class, Package and Interface.
+	
 2004-06-12  wrobell
 
 	* gaphor/ui/mainwindow.py: - use cases enabled, since associations work now

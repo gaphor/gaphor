@@ -6,12 +6,12 @@ TODO: show tooltips in the status bar when a menu item is selected.
 """
 
 import gobject
-
-#from logilab.aspects.weaver import weaver
+from odict import odict
 
 __all__ = [ 'Action', 'CheckAction', 'RadioAction', 'ActionPool', 'register_action', 'action_dependencies' ]
 
 _registered_actions = { }
+_registered_slots = { }
 
 _dependent_actions = { }
 
@@ -27,7 +27,7 @@ class Action(gobject.GObject):
     stock_id = ''
     tooltip = ''
     label = ''
-    accel = None
+    accel = ''
 
     __gproperties__ = {
         'visible':      (gobject.TYPE_BOOLEAN, 'visible',
@@ -116,6 +116,26 @@ class RadioAction(CheckAction):
     
 
 gobject.type_register(RadioAction)
+
+
+class ObjectAction(object):
+    """An ActionObject allows you to create objects in stead of the classes
+    and register them. This way you can easely create actions for
+    dynamically build popup menus.
+    """
+
+    def __init__(self, id, stock_id='', tooltip='', label='', accel=''):
+        self.id = id
+        self.stock_id = stock_id
+        self.tooltip = tooltip
+        self.label = label
+        self.accel = accel
+
+    def __call__(self):
+        """Return self when the object is "instantiated."
+        """
+        return self
+
 
 
 class ActionPool(object):
@@ -234,3 +254,26 @@ def action_dependencies(action, *dependency_ids):
             if action_id not in dependencies:
                 dependencies.append(action_id)
 
+
+# Slots
+
+def register_action_for_slot(action, slot, *dependency_ids):
+    global _registered_slots
+    register_action(action, *dependency_ids)
+    path = slot.split('/')
+    slot = _registered_slots
+    for p in path:
+        slot = slot.setdefault(p, {})
+    slot[action.id] = None
+    print _registered_slots
+
+def get_actions_for_slot(slot):
+    global _registered_slots
+    def get_actions_tuple(d):
+        l = []
+        for key, val in d.iteritems():
+            l.append(key)
+            if val:
+                l.append(get_actions_tuple(val))
+        return tuple(l)
+    return get_actions_tuple(_registered_slots.get(slot) or {})

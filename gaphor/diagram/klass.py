@@ -67,7 +67,7 @@ class Compartment(list):
                 self.owner.update_child(f, affine)
             self.separator.line(((0, self.sep_y), (width, self.sep_y)))
 
-
+        
 class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     """This item visualizes a Class instance.
 
@@ -94,11 +94,12 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     FONT_ABSTRACT='sans bold italic 10'
     FROM_FONT='sans 8'
 
-
+    stereotype_list = []
     popup_menu = NamedItem.popup_menu + (
         'Fold',
         'separator',
         'AbstractClass',
+        'Stereotype', stereotype_list,
         'separator',
         'CreateAttribute',
         'CreateOperation',
@@ -141,6 +142,27 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         self.sync_attributes()
         self.sync_operations()
         self.on_subject_notify__isAbstract(self.subject)
+
+    def get_popup_menu(self):
+        from itemactions import ApplyStereotypeAction, register_action
+        # TODO: We should find the Stereotypes who have an Extension relationship
+        #       with a Class who's name is the name of this class or one of its
+        #       supertypes.
+        NamedElement = UML.NamedElement
+        Class = UML.Class
+
+        stereotype_list = self.stereotype_list
+        stereotype_list[:] = []
+        _mro = filter(lambda e:issubclass(e, NamedElement), type(self.subject).__mro__)
+        names = map(getattr, _mro, ['__name__'] * len(_mro))
+        classes = self._subject._factory.select(lambda e: e.isKindOf(Class) and e.name in names)
+        for class_ in classes:
+            for extension in class_.extension:
+                stereotype = extension.ownedEnd.type
+                stereotype_action = ApplyStereotypeAction(stereotype)
+                register_action(stereotype_action, 'ItemFocus')
+                stereotype_list.append(stereotype_action.id)
+        return NamedItem.get_popup_menu(self)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'show-attributes':
@@ -221,20 +243,45 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         self.sync_uml_elements(self.subject.ownedOperation, self._operations,
                            self._create_operation)
 
+    def update_stereotype(self):
+        """Update the stereotype definitions on this class.
+
+        Note: This method is also called from ExtensionItem.confirm_connect_handle
+        """
+        subject = self.subject
+        applied_stereotype = self.subject.appliedStereotype
+        if applied_stereotype:
+            # Return a nice name to display as stereotype:
+            # make first character lowercase unless the second character is uppercase.
+            s = ', '.join([s and len(s) > 1 and s[1].isupper() and s \
+                           or s and s[0].lower() + s[1:] \
+                           or str(s) for s in map(getattr, applied_stereotype, ['name'] * len(applied_stereotype))])
+            # Phew!
+            self._stereotype.set_text(STEREOTYPE_OPEN + s + STEREOTYPE_CLOSE)
+            self.has_stereotype = True
+        elif isinstance(subject, UML.Class) and subject.extension:
+            self._stereotype.set_text(STEREOTYPE_OPEN + 'metaclass' + STEREOTYPE_CLOSE)
+            self.has_stereotype = True
+        elif isinstance(subject, UML.Stereotype):
+            self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
+            self.has_stereotype = True
+        elif isinstance(subject, UML.Interface):
+            self._stereotype.set_text(STEREOTYPE_OPEN + 'interface' + STEREOTYPE_CLOSE)
+            self.has_stereotype = True
+        else:
+            self.has_stereotype = False
+        self.request_update()
+
     def on_subject_notify(self, pspec, notifiers=()):
         #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation', 'namespace', 'isAbstract'))
+        NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation', 'namespace', 'isAbstract', 'appliedStereotype'))
         # Create already existing attributes and operations:
         if self.subject:
             self.sync_attributes()
             self.sync_operations()
             self.on_subject_notify__namespace(self.subject)
             self.on_subject_notify__isAbstract(self.subject)
-            self.has_stereotype = not isinstance(self.subject, UML.Class)
-            if isinstance(self.subject, UML.Stereotype):
-                self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
-            if isinstance(self.subject, UML.Interface):
-                self._stereotype.set_text(STEREOTYPE_OPEN + 'interface' + STEREOTYPE_CLOSE)
+            self.update_stereotype()
         self.request_update()
 
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
@@ -268,6 +315,10 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         else:
             self._name.set_font_description(pango.FontDescription(self.FONT))
         self.request_update()
+
+    def on_subject_notify__appliedStereotype(self, subject, pspec=None):
+        if self.subject:
+            self.update_stereotype()
 
     def on_update(self, affine):
         """Overrides update callback.

@@ -207,6 +207,9 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
                 self.subject = relation
                 self._head_end.subject = head_end
                 self._tail_end.subject = tail_end
+            # Update the stereotype definition of the class. This is needed because
+            # It's extension property is derived and can not send notifications.
+            c1.update_stereotype()
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
         #log.debug('ExtensionItem.confirm_disconnect_handle')

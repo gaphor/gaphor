@@ -5,7 +5,9 @@
 
 import gtk
 
-from gaphor.misc.action import Action, CheckAction, RadioAction, ActionPool, register_action
+from gaphor.misc.action import Action, CheckAction, RadioAction, ActionPool
+from gaphor.misc.action import register_action, register_action_for_slot
+from gaphor.misc.action import get_actions_for_slot
 from gaphor.ui.menufactory import MenuFactory
 
 import weakref
@@ -138,6 +140,23 @@ class StartAction(NewRadioAction):
     def execute(self):
         print 'StartAction', self.active
 
+
+class ObjectAction(Action):
+
+    def __init__(self, id):
+        self.id = self.label = str(id)
+        Action.__init__(self)
+
+    def __call__(self):
+        return self
+
+    def execute(self):
+        print 'ObjectAction', self.id
+
+for x in xrange(5):
+    register_action_for_slot(ObjectAction(str(x)), '<ObjectsSlot>/_' + str(x))
+
+print get_actions_for_slot('<ObjectsSlot>')
 window = gtk.Window()
 window.connect('destroy', lambda win: gtk.main_quit())
 window.set_title('Menus')
@@ -175,6 +194,7 @@ menubar = menu_factory.create_menu(
             'tearoff',
             'One',
             'Two'),
+        'Objects', ('<ObjectsSlot>',),
         'FileCheck'
         )
     ))
@@ -214,8 +234,8 @@ event_box.connect('event', on_event_box_event)
 vbox.pack_start(event_box, expand=gtk.TRUE)
 
 wrap_box = menu_factory.create_wrapbox(('FileNew', 'FileCheck', 'separator', 'Green', 'Yellow', 'Blue'))
-vbox.pack_start(wrap_box, expand=gtk.TRUE)
-wrap_box.show()
+vbox.pack_start(wrap_box.table, expand=gtk.TRUE)
+wrap_box.table.show()
 
 vbox.pack_end(statusbar, expand=gtk.FALSE)
 vbox.show()
