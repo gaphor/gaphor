@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(gaphor, 0.0.1)
+AC_INIT(gaphor, 0.1.0)
 
 AC_CONFIG_SRCDIR([gaphor/gaphor.py])
 
@@ -11,6 +11,15 @@ dnl put the ACLOCAL flags in the makefile
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
 AM_MAINTAINER_MODE
+
+FILES_FILES="gaphor/Files \
+	gaphor/UML/Files \
+	gaphor/diagram/Files \
+	gaphor/ui/Files \
+	gaphor/ui/command/Files \
+	gaphor/misc/Files"
+
+AC_SUBST(FILES_FILES)
 
 
 #########
@@ -33,17 +42,19 @@ fi
 
 AM_CHECK_PYTHON_HEADERS
 
-AM_CHECK_PYMOD(types, , , AC_MSG_ERROR(This Python module is required))
-AM_CHECK_PYMOD(sys, , , AC_MSG_ERROR(This Python module is required))
-AM_CHECK_PYMOD(libxml2, , , AC_MSG_ERROR(This Python module is required))
+m4_define(not_found_msg, This Python module is required)
+AM_CHECK_PYMOD(types, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD(sys, , , AC_MSG_ERROR(not_found_msg))
+dnl AM_CHECK_PYMOD(libxml2, , , AC_MSG_ERROR(not_found_msg))
 dnl xmllib is still used by utils/genUML.py
-AM_CHECK_PYMOD(xmllib, , , AC_MSG_ERROR(This Python module is required))
-AM_CHECK_PYMOD(copy, , , AC_MSG_ERROR(This Python module is required))
-AM_CHECK_PYMOD(gobject, , , AC_MSG_ERROR(This Python module is required))
-AM_CHECK_PYMOD(gtk, , , AC_MSG_ERROR(This Python module is required))
-AM_CHECK_PYMOD(gnome, , , AC_MSG_ERROR(This Python module is required))
-AM_CHECK_PYMOD(gnome.canvas, , , AC_MSG_ERROR(This Python module is required))
-AM_CHECK_PYMOD(diacanvas, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(xmllib, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD(copy, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD(gobject, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD(gtk, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD(gnome, , , AC_MSG_ERROR(not_found_msg))
+dnl AM_CHECK_PYMOD(gnome.ui, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD(gnome.canvas, , , AC_MSG_ERROR(not_found_msg))
+AM_CHECK_PYMOD(diacanvas, , , AC_MSG_ERROR(not_found_msg))
 
 AC_MSG_CHECKING(for GTK+ >= 2.0.0)
 prog="
@@ -89,15 +100,26 @@ fi
 #########
 # Output
 
+DIRS=""
+FILES=""
+for FILE in $FILES_FILES
+do
+	AC_MSG_NOTICE([Generating file list from file $FILE])
+	DIR=`dirname "$FILE"`
+	DIRS="$DIRS $DIR"
+	for ENTRY in `cat "$FILE" | sed 's/^#.*//g'`
+	do
+		FILES="$FILES $DIR/$ENTRY"
+	done
+done
+
+AC_SUBST(DIRS)
+AC_SUBST(FILES)
+
 AC_CONFIG_FILES(
 	Makefile
 	utils/Makefile
-	gaphor/Makefile
-	gaphor/UML/Makefile
-	gaphor/diagram/Makefile
-	gaphor/tree/Makefile
-	gaphor/ui/Makefile
-	gaphor/misc/Makefile
+	gaphor/config.py
 	tests/Makefile
 	doc/Makefile)
 AC_OUTPUT

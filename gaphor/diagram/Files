@@ -1,0 +1,14 @@
+__init__.py
+actor.py
+association.py
+comment.py
+commentline.py
+dependency.py
+diagramitem.py
+diagramitemfactory.py
+generalization.py
+metaitem.py
+modelelement.py
+package.py
+relationship.py
+usecase.py

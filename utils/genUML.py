@@ -229,7 +229,7 @@ class MetaModelParser(XMLParser):
 		"name": data[NS +"name"] }
 	packages[dict['id']] = dict
         self.inc_level(dict)
-	msg("Parsing package: " + dict['name'] + " ")
+	msg("Parsing package: " + dict['name'] + "\n ")
 
     def end_Package(self):
 	self.dec_level()

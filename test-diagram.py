@@ -77,6 +77,8 @@ treemodel.dump()
 
 #usecase.name = 'aap'
 
+ui.MainWindow();
+
 print 'Going into main'
 gtk.main()
 
