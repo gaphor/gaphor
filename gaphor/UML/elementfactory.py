@@ -7,7 +7,7 @@ import gaphor
 import gaphor.misc.uniqueid as uniqueid
 #import weakref
 from element import Element
-from gaphor.misc.weakmethod import WeakMethod
+#from gaphor.misc.weakmethod import WeakMethod
 
 class ElementFactory(object):
     """The ElementFactory is used to create elements ans do lookups to
