@@ -1,2 +1,1 @@
-
-from namespace import *
+__all__ = [ 'namespace' ]

@@ -4,13 +4,14 @@
 #
 
 import UML
-import diagram as dia
+from diagram import *
 import gc
 
-model = UML.Model()
+factory = UML.ElementFactory()
+model = factory.create(UML.Model)
 model.name = "MyModel"
 
-package = UML.Package()
+package = factory.create(UML.Package)
 package.name = "Package"
 
 model.ownedElement = package
@@ -18,29 +19,30 @@ assert len(model.ownedElement.list) == 1
 assert model.ownedElement.list[0] is package
 assert package.namespace is model
 
-actor = UML.Actor()
+actor = factory.create(UML.Actor)
 actor.namespace = package
 assert len(package.ownedElement.list) == 1
 assert package.ownedElement.list[0] is actor
 assert actor.namespace is package
 
-usecase = UML.UseCase()
+usecase = factory.create (UML.UseCase)
 usecase.namespace = package
 assert len(package.ownedElement.list) == 2
 assert package.ownedElement.list[0] is actor
 assert package.ownedElement.list[1] is usecase
 assert usecase.namespace is package
 
-diagram = dia.Diagram()
-diagram.namespace = package
+dia = factory.create(diagram.Diagram)
+print dia
+dia.namespace = package
 assert len(package.ownedElement.list) == 3
 assert package.ownedElement.list[0] is actor
 assert package.ownedElement.list[1] is usecase
-assert package.ownedElement.list[2] is diagram
-assert diagram.namespace is package
+assert package.ownedElement.list[2] is dia
+assert dia.namespace is package
 
-diagram.create_item (dia.Actor, pos=(0, 0), subject=actor)
-diagram.create_item (dia.UseCase, pos=(100, 100), subject=usecase)
+dia.create(diagramitem.ActorItem, pos=(0, 0), subject=actor)
+dia.create(diagramitem.UseCaseItem, pos=(100, 100), subject=usecase)
 
 #dia.destroy_diagrams()
 
@@ -52,8 +54,8 @@ actor.unlink()
 del actor
 package.unlink()
 del package
-diagram.unlink()
-del diagram
+dia.unlink()
+del dia
 
 gc.collect()
 gc.set_debug (gc.DEBUG_LEAK)

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # vim: sw=4
 
-import types, gtk, UML, diacanvas, diagram
+import types, gtk, UML, diacanvas
+from diagram import *
+from misc.storage import Storage
 
 [
     FILE_LOAD,
@@ -97,13 +99,13 @@ class DiagramView:
 
 	def post_button_press (tool, view, event, diagram, uml_type):
 	    print 'Unset_tool:', tool, view, event
+	    view.set_tool (None)
 	    if uml_type is not None:
 		factory = UML.ElementFactory()
 		subject = factory.create (uml_type)
 		if issubclass (uml_type, UML.Namespace):
 		    subject.namespace = dia.namespace
-		tool.new_object.set_subject(subject)
-	    view.set_tool (None)
+		tool.new_object.set_property('subject', subject)
 	    print 'Tool unset'
 	    return 0
 
@@ -112,7 +114,7 @@ class DiagramView:
 	    tool = diacanvas.PlacementTool (diagram_type)
 	    view.set_tool (tool)
 	    tool.connect ('button_press_event', pre_button_press)
-	    tool.connect ('button_release_event', post_button_press,
+	    tool.connect_after ('button_press_event', post_button_press,
 	    			dia, uml_type)
 
 	print 'Action:', action, gtk.item_factory_path_from_widget(widget), view
@@ -125,10 +127,10 @@ class DiagramView:
 	    print 'UML.flush'
 	    del self.diagram
 	    factory.flush ()
-	    factory.save('c.xml')
+	    store = Storage(factory)
+	    store.save('c.xml')
 	    print 'UML.load'
-	    factory.load ('a.xml')
-	    factory.save('b.xml')
+	    store.load ('a.xml')
 	    print 'UML.lookup'
 	    self.diagram = factory.lookup (2)
 
@@ -136,7 +138,8 @@ class DiagramView:
 	    view.set_canvas (self.diagram.canvas)
 	elif action == FILE_SAVE:
 	    factory = UML.ElementFactory ()
-	    factory.save ('a.xml')
+	    store = Storage(factory)
+	    store.save ('a.xml')
 	elif action == FILE_DUMP:
 	    factory = UML.ElementFactory ()
 	    for val in factory.values():
@@ -175,24 +178,23 @@ class DiagramView:
 	    view.canvas.set_property ('snap_to_grid', not snap)
 
 	elif action == ITEM_ADD_ACTOR:
-	    set_placement_tool (diagram.Actor, UML.Actor)
-
+	    set_placement_tool (diagramitem.ActorItem, UML.Actor)
 	elif action == ITEM_ADD_USECASE:
-	    set_placement_tool (diagram.UseCase, UML.UseCase)
+	    set_placement_tool (diagramitem.UseCaseItem, UML.UseCase)
 	elif action == ITEM_ADD_COMMENT:
-	    set_placement_tool (diagram.Comment, UML.Comment)
+	    set_placement_tool (diagramitem.CommentItem, UML.Comment)
 	elif action == ITEM_ADD_COMMENT_LINE:
-	    set_placement_tool (diagram.CommentLine, None)
-	elif action == ITEM_ADD_GENERALIZATION:
-	    set_placement_tool (diagram.Generalization, None)
-	elif action == ITEM_ADD_REALIZATION:
-	    set_placement_tool (diagram.Realization, None)
-	elif action == ITEM_ADD_DEPENDENCY:
-	    set_placement_tool (diagram.Dependency, None)
-	elif action == ITEM_ADD_INCLUDE:
-	    set_placement_tool (diagram.Include, None)
-	elif action == ITEM_ADD_EXTEND:
-	    set_placement_tool (diagram.Extend, None)
+	    set_placement_tool (diagramitem.CommentLineItem, None)
+	#elif action == ITEM_ADD_GENERALIZATION:
+	#    set_placement_tool (diagram.Generalization, None)
+	#elif action == ITEM_ADD_REALIZATION:
+	#    set_placement_tool (diagram.Realization, None)
+	#elif action == ITEM_ADD_DEPENDENCY:
+	#    set_placement_tool (diagram.Dependency, None)
+	#elif action == ITEM_ADD_INCLUDE:
+	#    set_placement_tool (diagram.Include, None)
+	#elif action == ITEM_ADD_EXTEND:
+	#    set_placement_tool (diagram.Extend, None)
 	else:
 	    print 'This item is not iimplemented yet.'
 

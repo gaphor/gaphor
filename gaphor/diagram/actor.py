@@ -3,10 +3,12 @@ ActorItem diagram item
 '''
 # vim:sw=4
 
-import UML
+from UML import Actor
+import registrar
 from modelelement import ModelElementItem
 import diacanvas
 import pango
+import gobject
 
 class ActorItem(ModelElementItem):
     HEAD=11
@@ -15,6 +17,11 @@ class ActorItem(ModelElementItem):
     BODY=20
     FONT='sans bold 10'
 
+    __gproperties__ = {
+	'name-width':	(gobject.TYPE_DOUBLE, 'name width',
+			 '', 0.0, 10000.0,
+			 1, gobject.PARAM_READWRITE),
+    }
     def __init__(self):
 	ModelElementItem.__init__(self)
 	self.set(height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
@@ -37,35 +44,53 @@ class ActorItem(ModelElementItem):
 	self.add(diacanvas.CanvasText())
 	assert self.__name != None
 	font = pango.FontDescription(ActorItem.FONT)
-	self.__name.set(font=font, width=self.width,
+	self.__name.set(font=font,
 			alignment=pango.ALIGN_CENTER)
-	#self.__name_update()
-	# Center the text:
-	w, h = self.__name.get_property('layout').get_pixel_size()
-	#print 'ActorItem:',w,h
-	#self.__name.move(0, self.height)
-	self.__name.set(height=h, width=w)
+	self.__name_update()
 	self.__name.connect_object('text_changed', ActorItem.on_text_changed, self)
+
+    def do_set_property (self, pspec, value):
+	print 'Actor: Trying to set property', pspec.name, value
+	if pspec.name == 'name-width':
+	    self.__name.set_property('width', value)
+	else:
+	    ModelElementItem.do_set_property (self, pspec, value)
+
+    def do_get_property(self, pspec):
+	if pspec.name == 'name-width':
+	    return self.__name.get_property('width')
+	else:
+	    return ModelElementItem.do_get_property (self, pspec)
 
     def __name_update (self):
 	'''Center the name text under the actor.'''
 	w, h = self.__name.get_property('layout').get_pixel_size()
-	#print 'ActorItem:',w,h
+	#print 'ActorItem:',w,h, self.__name.get_property('text')
 	#self.set(min_width=w + UseCase.MARGIN_X,
 	#	 min_height=h + UseCase.MARGIN_Y)
 	a = self.__name.get_property('affine')
-	aa = (a[0], a[1], a[2], a[3], w / -2 + ActorItem.ARM, self.height)
-	#self.__name.set(affine=aa, width=self.width, height=h)
 	if w < self.width:
 	    w = self.width
+	aa = (a[0], a[1], a[2], a[3], (self.width - w) / 2, self.height)
+	#self.__name.set(affine=aa, width=self.width, height=h)
 	self.__name.set(affine=aa, width=w, height=h)
-	
+	#print 'Actor:', w, h, self.width, self.height, aa[4], aa[5]
+
+    def save (self, store):
+	ModelElementItem.save(self, store)
+	store.save_property('name-width')
+
+    def load(self, store):
+	ModelElementItem.load(self, store)
+	self.set_property('name-width', eval (store.value('name-width')))
+	#self.__name_update()
+
     def on_update(self, affine):
 	ModelElementItem.on_update(self, affine)
 
 	# scaling factors (also compenate the line width):
-	fx = self.width / (ActorItem.ARM * 2 - 2);
-	fy = self.height / (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM - 2);
+	fx = self.width / (ActorItem.ARM * 2 + 2);
+	fy = self.height / (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM + 2);
 	self.__head.ellipse((ActorItem.ARM * fx, (ActorItem.HEAD / 2) * fy),
 			    ActorItem.HEAD * fx, ActorItem.HEAD * fy)
 	self.__head.request_update()
@@ -86,7 +111,7 @@ class ActorItem(ModelElementItem):
 	if w > self.width:
 	    ulx = (self.width / 2) - (w / 2)
 	    lrx = (self.width / 2) + (w / 2)
-	self.set_bounds ((ulx, uly, lrx, lry + h))
+	self.set_bounds ((ulx, uly, lrx+1, lry + h))
 
     def on_get_shape_iter(self):
 	return self.__head
@@ -158,5 +183,4 @@ class ActorItem(ModelElementItem):
 	    self.subject.name = text
 	    self.__name_update()
 
-import gobject
-gobject.type_register(ActorItem)
+registrar.register(ActorItem, Actor)

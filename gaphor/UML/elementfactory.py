@@ -4,14 +4,14 @@ This module contains some functions for managing UML models. This
 includes saving, loading and flushing models. In the future things like
 consistency checking should also be included.'''
 
-import misc.singleton as Singleton
-import misc.signal as Signal
-import misc.storage as Storage
-import libxml2 as xml
+#import misc.singleton as Singleton
+from misc.singleton import Singleton
+from misc.signal import Signal
+#from misc.storage import Storage
+#import libxml2 as xml
 from element import Element
 
 class ElementFactory(Singleton):
-    NS = None
 
     def __element_signal (self, key, obj):
 	if key == '__unlink__' and self.__elements.has_key(obj.id):
@@ -36,6 +36,18 @@ class ElementFactory(Singleton):
 	self.__emit_create (obj)
 	print 'ElementFactory:', str(self.__index), 'elements in the factory'
 	return obj
+
+    def create_as (self, type, id):
+	'''Create a new model element of type 'type' with 'id' as its ID.
+	This method should only be used when loading models. If the ID is
+	higher that the current id that should be used for the next item, the
+	ID for the next item is set to id + 1.'''
+	old_index = self.__index
+	self.__index = id
+	self.create (type)
+	if old_index > self.__index:
+	    self.__index = old_index
+
 
     def lookup (self, id):
 	try:
@@ -75,88 +87,6 @@ class ElementFactory(Singleton):
     def __emit_remove (self, obj):
 	self.__signal.emit ('remove', obj)
 
-    def save (self, filename=None):
-	'''Save the current model to @filename. If no filename is given,
-	standard out is used.'''
-	doc = xml.newDoc ('1.0')
-	ns = None
-	rootnode = doc.newChild (ns, 'Gaphor', None)
-	rootnode.setProp ('version', '1.0')
-	store = Storage(self, ElementFactory.NS, rootnode)
-	for e in self.__elements.values():
-	    #print 'Saving object', e
-	    e.save(store.new(e))
-
-	if not filename:
-	    filename = '-'
-
-	#doc.saveFormatFile (filename, 2)
-	doc.saveFormatFileEnc (filename, 'UTF-8', 1)
-	doc.freeDoc ()
-
-    def load (self, filename):
-	'''Load a file and create a model if possible.
-	Exceptions: IOError, ValueError.'''
-
-	doc = xml.parseFile (filename)
-	#doc.debugDumpDocument (sys.stdout)
-	# Now iterate over the tree and create every element in the
-	# self.elements table.
-	rootnode = doc.children
-	if rootnode.name != 'Gaphor':
-	    raise ValueError, 'File %s is not a Gaphor file.' % filename
-
-	# Set store to the first child element of rootnode.
-	first_store = Storage(self, ElementFactory.NS, rootnode)
-	print 'first_store =', first_store.__dict__
-	first_store = first_store.child()
-	# Create plain elements in the factory
-	print 'first_store =', first_store.__dict__
-	store = first_store
-	while store:
-	    print 'Creating object of type', store.type()
-	    type = store.type()
-	    if not issubclass(type, Element):
-		raise ValueError, 'Not an UML.Element'
-
-	    id = store.id()
-	    old_index = self.__index
-	    self.__index = id
-	    self.create (type)
-
-	    if old_index > id:
-		self.__index = id
-
-	    store = store.next()
-
-	# Second step: call Element.load() for every object in the element hash.
-	# We also provide the XML node, so it can recreate it's state
-	print "Now calling load() for every model element"
-	store = first_store
-	while store:
-	    element = self.lookup (store.id())
-	    print element
-	    if not element:
-		raise ValueError, 'Element with id %d was created but can not be found anymore.' % id
-
-	    element.load (store)
-	    
-	    store = store.next()
-
-	# Do some things after the loading of the objects is done...
-	print self.__elements
-	#save ('b.xml')
-	print "Now calling postload() for every model element"
-	store = first_store
-	while store:
-	    element = self.lookup (store.id())
-	    print element
-	    if not element:
-		raise ValueError, 'Element with id %d was created but can not be found anymore.' % id
-
-	    element.postload (store)
-	    
-	    store = store.next()
-
-	doc.freeDoc ()
+    def values(self):
+	return self.__elements.values()
 

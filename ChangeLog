@@ -1,3 +1,9 @@
+2002-03-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagram.py: moved to the UML module.
+	* gaphor/misc/storage.py: now contains the load and save methods of
+	ElementFactory.
+
 2002-03-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* */Makefile.am: fized path for make install

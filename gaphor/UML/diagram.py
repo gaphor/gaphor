@@ -1,29 +1,23 @@
 # vim: sw=4
 '''diagram.py
 This module contains a model elements (!) Diagram which is the abstract
-repreesentation of a UML diagram.'''
+representation of a UML diagram. Diagrams can be visualized and edited.'''
 
-import UML, diacanvas, types
-from diagram import *
-#from usecase import UseCaseItem
-#from actor import ActorItem
+__author__ = 'Arjan Molenaar'
+__version__ = '$revision$'
+__date__ = '$date$'
 
-# We should get rid of the CID, since it changes a lot of values each save
-# so it is not really useful for archiving in CVS. Each item should create
-# a unique ID and keep it throughout the lifetime of the item. ID's could
-# be created on a diagram basis (this makes the diagram the
-# CanvasItemFactory).
+from modelelements import Namespace
+from elementfactory import ElementFactory
 
-#_diagram2UML = {
-#	ActorItem: UML.Actor,
-#	Comment: UML.Comment,
-#	UseCaseItem: UML.UseCase
-#	CommentLine: None,
-#	Generalization: None
-#}
+import diacanvas
 
-class Diagram(UML.Namespace):
+
+class Diagram(Namespace):
     _attrdef = { 'canvas': ( None, diacanvas.Canvas ) }
+    # Diagram item to UML model element mapping:
+    diagram2UML = { }
+
     _savable_canvas_properties = [ 'extents', 'static_extents',
 	    'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
 	    'grid_ofs_y', 'snap_to_grid', 'grid_color', 'grid_bg' ]
@@ -31,24 +25,28 @@ class Diagram(UML.Namespace):
     __index = 0
 
     def __init__(self, id):
-	UML.Namespace.__init__(self, id)
+	Namespace.__init__(self, id)
         self.canvas = diacanvas.Canvas()
 	print 'Diagram:', self.canvas
 	self.canvas.set_property ("allow_undo", 1)
 
     def create (self, type, pos=(0, 0), subject=None):
+	'''Add a new item to the diagram. This method should be used as a
+	Factory for creating diagram items.'''
 	item = type()
 	self.canvas.root.add(item)
 	if not subject:
-	    uml_type = None#_diagram2UML[type]
+	    uml_type = None
+	    if Diagram.diagram2UML.has_key(type):
+		uml_type = Diagram.diagram2UML[type]
 	    if uml_type is not None:
 		#print 'Setting new subject of type', uml_type
-		factory = UML.ElementFactory ()
+		factory = ElementFactory ()
 		subject = factory.create (uml_type)
-		if issubclass (uml_type, UML.Namespace):
-		    print 'Diagram.create:', self.namespace
+		if issubclass (uml_type, Namespace):
+		    #print 'Diagram.create:', self.namespace
 		    subject.namespace = self.namespace
-		    print '...', subject.namespace
+		    #print '...', subject.namespace
 		item.set_property ('subject', subject)
 	else:
 	    #print 'Setting existing subject', subject
@@ -62,7 +60,7 @@ class Diagram(UML.Namespace):
 	# Save the diagram attributes, but not the canvas
 	self_canvas = self.canvas
 	del self.__dict__['canvas']
-	node = UML.Namespace.save (self, store)
+	node = Namespace.save (self, store)
 	self.__dict__['canvas'] = self_canvas
 	del self_canvas
 
@@ -71,7 +69,7 @@ class Diagram(UML.Namespace):
 	for prop in Diagram._savable_canvas_properties:
 	    canvas_store.save_property(prop)
 
-	canvas_store.save ('root_affine', self.canvas.root.get_property('affine'))
+	canvas_store.save_attribute ('root_affine', self.canvas.root.get_property('affine'))
 
 	# Save child items:
 	for item in self.canvas.root.children:
@@ -79,7 +77,7 @@ class Diagram(UML.Namespace):
 
     def load (self, store):
 	#print 'Doing Namespace'
-        UML.Namespace.load (self, store)
+        Namespace.load (self, store)
 	#print 'Namespace done'
 
 	self.canvas.set_property ("allow_undo", 0)
@@ -113,3 +111,4 @@ class Diagram(UML.Namespace):
 	self.canvas.update_now ()
 
 	self.canvas.set_property ("allow_undo", 1)
+

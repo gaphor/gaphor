@@ -8,7 +8,7 @@ import gtk
 import diagram
 import diacanvas
 import UML
-import tree
+import tree.namespace as namespace
 import ui
 
 uc = getattr (UML, 'UseCase')
@@ -29,25 +29,25 @@ factory.connect(test_factory_signals)
 
 model = factory.create (UML.Model)
 
-dia = factory.create (diagram.Diagram)
+dia = factory.create (UML.Diagram)
 print 'diagram created:', dia
 dia.namespace = model
 dia.name = "Diagram1"
 print dia.namespace
 print model.ownedElement.list
 print "diagram created"
+#dia.canvas.root.add (diacanvas.CanvasLine(head_pos=(0,0), tail_pos=(50,50)))
+treemodel = namespace.NamespaceModel(factory)
 
-treemodel = tree.NamespaceModel(factory)
-
-#item = canvas.root.add (diagram.Comment)
-#item.move (30, 50)
-item = dia.create(diagram.Actor)
+item = dia.create(diagram.CommentItem)
+item.move (30, 50)
+item = dia.create(diagram.ActorItem)
 item.move (150, 50)
 item.subject.name = "Jaap"
 #item = dia.canvas.root.create_item (diagram.UseCase)
-item = dia.create(diagram.UseCase)
+item = dia.create(diagram.UseCaseItem)
 usecase = item.subject
-dia.create (diagram.UseCase, (50, 200), subject=usecase)
+dia.create (diagram.UseCaseItem, (50, 200), subject=usecase)
 usecase.name = 'UC1'
 #item.subject.name = 'UC1'
 

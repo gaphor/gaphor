@@ -11,7 +11,7 @@ if __name__ == '__main__':
     del sys
 
 import gobject
-import diacanvas as dia
+import diacanvas
 #from metaitem import MetaItem
 #from UML import Element
 
@@ -20,7 +20,7 @@ __author__ = 'Arjan J. Molenaar'
 __date__ = '$date$'
 
 
-class ModelElementItem (dia.CanvasElement, dia.CanvasAbstractGroup):
+class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
 #    __metaclass__ = MetaItem
     __gproperties__ = {
 	'id':		(gobject.TYPE_PYOBJECT, 'id',
@@ -45,7 +45,7 @@ class ModelElementItem (dia.CanvasElement, dia.CanvasAbstractGroup):
 	store.save_property('affine')
 	store.save_property('width')
 	store.save_property('height')
-	store.save('subject', self.subject)
+	store.save_attribute('subject', self.subject)
 	store.save_property('auto-resize')
 
     def load (self, store):
@@ -55,6 +55,7 @@ class ModelElementItem (dia.CanvasElement, dia.CanvasAbstractGroup):
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
+	    print self, 'id', value
 	    self.__id = int(value)
 	elif pspec.name == 'subject':
 	    print 'Setting subject:', value
@@ -85,13 +86,13 @@ class ModelElementItem (dia.CanvasElement, dia.CanvasAbstractGroup):
 
     # DiaCanvasItem callbacks
     def on_glue(self, handle, wx, wy):
-	return dia.CanvasElement.on_glue (self, handle, wx, wy)
+	return diacanvas.CanvasElement.on_glue (self, handle, wx, wy)
 
     def on_connect_handle (self, handle):
-	return dia.CanvasElement.on_connect_handle (self, handle)
+	return diacanvas.CanvasElement.on_connect_handle (self, handle)
 
     def on_disconnect_handle (self, handle):
-	return dia.CanvasElement.on_disconnect_handle (self, handle)
+	return diacanvas.CanvasElement.on_disconnect_handle (self, handle)
 
     def on_parent_notify (self, parent):
 	print self
@@ -112,8 +113,8 @@ class ModelElementItem (dia.CanvasElement, dia.CanvasAbstractGroup):
 	    print 'ModelElementItem: unhandled signal "%s"' % str(name)
 
 gobject.type_register(ModelElementItem)
-dia.set_callbacks(ModelElementItem)
-dia.set_groupable(ModelElementItem)
+diacanvas.set_callbacks(ModelElementItem)
+diacanvas.set_groupable(ModelElementItem)
 
 if __name__ == '__main__':
     me = ModelElementItem()

@@ -31,7 +31,8 @@ import types, copy
 from enumeration import Enumeration_
 from sequence import Sequence
 #from misc import Signal
-import misc.signal as Signal
+from misc.signal import Signal
+
 # Some default types as defined in the MetaModel.
 class Integer(int): pass
 class UnlimitedInteger(long): pass
@@ -327,9 +328,9 @@ one of the diagrams.
 		obj = self.__dict__[key]
 		if isinstance (obj, Sequence):
 		    for item in obj.list:
-			store.save (key, item)
+			store.save_attribute (key, item)
 		else:
-		    store.save (key, obj)
+		    store.save_attribute (key, obj)
 	return None
 
     def load(self, store):

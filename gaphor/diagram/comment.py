@@ -1,44 +1,48 @@
 '''
-UseCaseItem diagram item
+CommentItem diagram item
 '''
 # vim:sw=4
 
-from UML import UseCase
+from UML import Comment
 import registrar
 from modelelement import ModelElementItem
 import diacanvas
 import pango
 
-class UseCaseItem(ModelElementItem):
-    MARGIN_X=60
-    MARGIN_Y=30
-    FONT='sans bold 10'
+class CommentItem(ModelElementItem):
+    EAR=15
+    OFFSET=5
+    FONT='sans 10'
 
     def __init__(self):
 	ModelElementItem.__init__(self)
-	self.set(height=50, width=100)
-	self.__border = diacanvas.shape.Ellipse()
+	self.set(min_width=CommentItem.EAR + 2 * CommentItem.OFFSET,
+		 height=50, width=100)
+	self.__border = diacanvas.shape.Path()
 	self.__border.set_line_width(2.0)
 	self.add(diacanvas.CanvasText())
 	assert self.__name != None
-	font = pango.FontDescription(UseCaseItem.FONT)
-	self.__name.set(font=font, width=self.width,
-			alignment=pango.ALIGN_CENTER)
+	font = pango.FontDescription(CommentItem.FONT)
+	self.__name.set(font=font, width=self.width - (CommentItem.OFFSET * 2),
+			alignment=pango.ALIGN_LEFT)
 	# Center the text:
 	w, h = self.__name.get_property('layout').get_pixel_size()
-	print 'UseCaseItem:',w,h
-	self.__name.move(0, (self.height - h) / 2)
-	self.__name.set(height=h)
-	self.__name.connect_object('text_changed', UseCaseItem.on_text_changed, self)
+	print 'CommentItem:',w,h
+	self.__name.move(CommentItem.OFFSET, CommentItem.OFFSET)
+	self.__name_update()
+	#self.__name.set(height=h, width=self.width)
+	self.__name.connect_object('text_changed', CommentItem.on_text_changed, self)
 
     def __name_update (self):
 	'''Center the name text in the usecase.'''
 	w, h = self.__name.get_property('layout').get_pixel_size()
-	self.set(min_width=w + UseCaseItem.MARGIN_X,
-		 min_height=h + UseCaseItem.MARGIN_Y)
-	a = self.__name.get_property('affine')
-	aa = (a[0], a[1], a[2], a[3], a[4], (self.height - h) / 2)
-	self.__name.set(affine=aa, width=self.width, height=h)
+	self.set(min_height=h + CommentItem.OFFSET * 2)
+	#a = self.__name.get_property('affine')
+	#aa = (a[0], a[1], a[2], a[3], a[4], (self.height - h) / 2)
+	#self.__name.set(affine=aa, width=self.width, height=h)
+	self.__name.set(width=self.width - CommentItem.EAR - CommentItem.OFFSET,
+			height=self.height - CommentItem.OFFSET * 2)
+	print 'Comment:', w, h, self.width, self.height
 
     def load(self, store):
 	ModelElementItem.load(self, store)
@@ -46,7 +50,12 @@ class UseCaseItem(ModelElementItem):
 
     def on_update(self, affine):
 	ModelElementItem.on_update(self, affine)
-	self.__border.ellipse(center=(self.width / 2, self.height / 2), width=self.width - 0.5, height=self.height - 0.5)
+	# Width and height, adjusted for line width...
+	w = self.width - 1
+	h = self.height - 1
+	ear = CommentItem.EAR
+	self.__border.line(((w - ear, 1), (w- ear, ear), (w, ear), (w - ear, 1),
+			    (1, 1), (1, h), (w, h), (w, ear)))
 	self.__border.request_update()
 	self.__name.update_now()
 
@@ -110,7 +119,8 @@ class UseCaseItem(ModelElementItem):
 	    ModelElementItem.on_subject_update(self, name)
 
     def on_text_changed(self, text):
+	self.__name_update()
 	if text != self.subject.name:
 	    self.subject.name = text
 
-registrar.register(UseCaseItem, UseCase)
+registrar.register(CommentItem, Comment)

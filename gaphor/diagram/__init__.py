@@ -1,5 +1,5 @@
-# Initiator for the 'diagram' module.
-
-from diagram import *
-from usecase import *
+# All model items...
 from actor import *
+from comment import *
+from commentline import *
+from usecase import *
