@@ -29,6 +29,12 @@ class UseCaseItem(ModelElementItem):
 	print 'UseCaseItem:',w,h
 	self.__name.move(0, (self.height - h) / 2)
 	self.__name.set(height=h)
+	# Hack since self.<method> is not GC'ed
+	def on_text_changed(text_item, text, actor):
+	    if text != actor.subject.name:
+		actor.subject.name = text
+		actor.__name_update()
+	self.__name.connect('text_changed', on_text_changed, self)
 	#self.__name.connect('text_changed', self.on_text_changed)
 
     def __name_update (self):

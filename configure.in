@@ -58,7 +58,7 @@ else
 	AC_MSG_ERROR(too old)
 fi
 
-AC_MSG_CHECKING(for PyGTK >= 1.99.10)
+AC_MSG_CHECKING(for PyGTK >= 1.99.11)
 prog="
 import sys, gtk
 minver = (1,99,10)
@@ -72,7 +72,7 @@ else
 	AC_MSG_ERROR(too old)
 fi
 
-AC_MSG_CHECKING(for diacanvas >= 0.6.1)
+AC_MSG_CHECKING(for diacanvas >= 0.7.0)
 prog="
 import sys, diacanvas
 minver = (0,6,1)

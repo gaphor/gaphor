@@ -51,6 +51,7 @@ class ActorItem(ModelElementItem):
 			alignment=pango.ALIGN_CENTER)
 	self.__name_update()
 	#assert sys.getrefcount(self) == 6, sys.getrefcount(self)
+	# Hack since self.<method> is not GC'ed
 	def on_text_changed(text_item, text, actor):
 	    if text != actor.subject.name:
 		actor.subject.name = text
@@ -159,11 +160,15 @@ class ActorItem(ModelElementItem):
 
     def on_groupable_remove(self, item):
 	'''Do not allow the name to be removed.'''
-	self.emit_stop_by_name('remove')
-	return 0
+	#self.emit_stop_by_name('remove')
+	##return 0
+	pass
 
     def on_groupable_get_iter(self):
-	return self.__name
+	try:
+	    return self.__name
+	except AttributeError:
+	    return None
 
     def on_groupable_next(self, iter):
 	return None

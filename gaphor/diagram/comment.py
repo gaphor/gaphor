@@ -30,6 +30,12 @@ class CommentItem(ModelElementItem):
 	self.__body.move(CommentItem.OFFSET, CommentItem.OFFSET)
 	self.__body_update()
 	#self.__body.set(height=h, width=self.width)
+	# Hack since self.<method> is not GC'ed
+	def on_text_changed(text_item, text, actor):
+	    if text != actor.subject.body:
+		actor.subject.body = text
+		actor.__body_update()
+	self.__body.connect('text_changed', on_text_changed, self)
 	#self.__body.connect('text_changed', self.on_text_changed)
 
     def __body_update (self):
