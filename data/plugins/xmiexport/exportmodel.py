@@ -169,18 +169,9 @@ class XMIExport(object):
             xmi.startElement('UML:Operation', attrs=attributes)
             
             xmi.startElement('UML:BehavioralFeature.parameters', XMLAttributes())
-            for parameter in operation.returnResult:
-                attributes=XMLAttributes()
-                attributes['xmi.id']=operation.id
-                attributes['name']=operation.name or ''
-                attributes['kind']='return'
-                attributes['isSpecification']='false'
-                xmi.startElement('UML:Parameter', attrs=attributes)
-                xmi.startElement('UML:Parameter.type', attrs=XMLAttributes())
-                xmi.startElement('UML:DataType', XMLAttributes({'xmi.idref': parameter.typeValue.id}))
-                xmi.endElement('UML:DataType')
-                xmi.endElement('UML:Parameter.type')
-                xmi.endElement('UML:Parameter')
+            #self.writeParameters(operation.returnResult, operation, xmi, kind='return')
+            self.writeParameters(operation.formalParameter, operation, xmi, kind='in')
+
             xmi.endElement('UML:BehavioralFeature.parameters')
 
             xmi.endElement('UML:Operation')
@@ -188,6 +179,20 @@ class XMIExport(object):
         
         xmi.endElement('UML:Classifier.feature')
         xmi.endElement('UML:Class')
+
+    def writeParameters(self, parameters, operation, xmi, kind='in'):
+        for parameter in parameters:
+            attributes=XMLAttributes()
+            attributes['xmi.id']=parameter.id
+            attributes['name']=parameter.name or ''
+            attributes['kind']=kind
+            attributes['isSpecification']='false'
+            xmi.startElement('UML:Parameter', attrs=attributes)
+            xmi.startElement('UML:Parameter.type', attrs=XMLAttributes())
+            xmi.startElement('UML:DataType', XMLAttributes({'xmi.idref': parameter.typeValue.id}))
+            xmi.endElement('UML:DataType')
+            xmi.endElement('UML:Parameter.type')
+            xmi.endElement('UML:Parameter')
 
 
     def handleGeneralization(self, xmi, node):
