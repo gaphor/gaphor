@@ -1,19 +1,27 @@
 # vim: sw=4
-#
-# Base class for all UML model objects
-#
-# A word on the <class>._attrdef structure:
-# The <class>._attrdef structures are dictionaries decribing the
-# attributes that may be added to an object of that class.
-# Since a lot of objects have di-directional relations with other objects we
-# have to create those maps.
-# A record consists of two or three fields:
-# 1. The default value of the attribute (e.g. 'NoName') or a reference to the
-#    Sequence class in case of a 0..* relationship.
-# 2. Type of object that way be added.
-# 3. In case of bi-directional relationships the third argument is the name
-#    by which the object is known on the other side.
-#
+''' Element.py -- Base class for all UML model objects
+
+All model elements (including diagrams) are inherited from Element. Element
+keeps track of relations between objects.
+If a relationship is bi-directional, the element will add itself to the
+specified object on the opposite end.
+
+If an element attribute is a list of items (multiplicity `*') the Sequence
+class is used to represent a list. You can simply add items to the sequence
+by defining
+	object.sequence_attribute = some_other_object
+If you want to remove the reference use:
+	del object.sequence_attribute[some_other_object]
+
+All information the Element needs in retrieved from the Element._attrdef
+structure. This is a dictionary with the possible attribute names as keys and
+a tupple as value.  A tupple contains two or three fields:
+1. The default value of the attribute (e.g. 'NoName') or a reference to the
+   Sequence class in case of a 0..* relationship.
+2. Type of object that way be added.
+3. In case of bi-directional relationships the third argument is the name
+   by which the object is known on the other side.
+'''
 
 
 import types, copy
@@ -32,12 +40,14 @@ Geometry = types.ListType
 FALSE = 0
 TRUE = not FALSE
 
+# A hash table contaiing all elements that are created. the key is the objects
+# ID.
 elements = { }
 
 def lookup (id):
-    if elements.has_key(id):
+    try:
         return elements[id]
-    else:
+    except KeyError:
         return None
 
 class Enumeration_:
@@ -113,14 +123,12 @@ class Element:
 attributes and relations are defined by a <class>._attrdef structure.
 A class does not need to define any local variables itself: Element will
 retrieve all information from the _attrdef structure.
-elements is a table containing all assigned objects as weak references.
-This class has its own __del__() method. This means that it can not be freed
-by the garbage collector. Instead you should call Element::unlink() to
-remove all relationships with the element and then it will remove itself if
-you delete your reference. In the unlink function all relationships are removed
-except presentation, __id and __signals. Presentation items are removed by
-the diagram items that represent them (they are connected to the 'unlink'
-signal). The element will also be removed from the element_hash by unlink().
+You should call Element::unlink() to remove all relationships with the element.
+In the unlink function all relationships are removed except presentation,
+__id and __signals. Presentation items are removed by the diagram items that
+represent them (they are connected to the 'unlink' signal). The element will
+also be removed from the element_hash by unlink().
+
 A special attribute is added: itemsOnUndoStack. This is a counter that is used
 by the diagram item's implementation to avoid deletion (unlink()ing) of the 
 object if references are lehd by the object on the undo stack.
@@ -133,13 +141,14 @@ object if references are lehd by the object on the undo stack.
 	#print "New object of type", self.__class__
 	self.__dict__['__id'] = Element._index
 	self.__dict__['__signals'] = [ ]
-	#Element._hash[Element._index] = weakref.ref (self)
 	elements[Element._index] = self
 	Element._index += 1
 
     def unlink(self):
-	'''Remove all references to the object.'''
+	'''Remove all references to the object. This will also remove the
+	element from the `elements' table.'''
 	#print 'Element.unlink():', self
+	# Notify other objects that we want to unlink()
         self.emit("unlink")
 	if elements.has_key(self.__dict__['__id']):
 	    del elements[self.__dict__['__id']]
@@ -155,12 +164,14 @@ object if references are lehd by the object on the undo stack.
 		    list = self.__dict__[key].list
 		    while len (list) > 0:
 		        del self.__dict__[key][list[0]]
+		    assert len (self.__dict__[key].list) == 0
 		    del self.__dict__[key]
 		else:
 		    # do a 'del self.key'
-		    #if isinstance (self.__dict__[key], Element):
 		    #print '\tunlink:', key
 		    self.__delattr__(key)
+	# Note that empty objects may be created in the object due to lookups
+	# from objects with connected signals.
     	return self
     
     # Hooks for presentation elements to add themselves:
@@ -229,14 +240,6 @@ object if references are lehd by the object on the undo stack.
 	if not self.__dict__.has_key(key):
 	    self.__dict__[key] = Sequence(self, type)
 	return self.__dict__[key]
-
-    #def __del_seq_item(self, seq, val):
-	#try:
-	    #index = seq.list.index(val)
-	    #del seq.list[index]
-	#    seq.list.remove (val)
-	#except ValueError:
-	#    pass
 
     def __getattr__(self, key):
 	if key == 'id':
@@ -333,6 +336,9 @@ object if references are lehd by the object on the undo stack.
 		del self.__dict__[key]
 		self.emit (key)
 		xval.emit(rec[2])
+	else:
+	    del self.__dict__[key]
+	    self.emit (key)
 
     def sequence_remove(self, seq, obj):
         '''Remove an entry. Should only be called by Sequence's implementation.
@@ -342,7 +348,7 @@ object if references are lehd by the object on the undo stack.
 	    if self.__dict__[key] is seq:
 	        break
 	#print 'Element.sequence_remove', key
-	seq_len = len (seq)
+	#seq_len = len (seq)
 	rec = self.__get_attr_info (key, self.__class__)
 	if rec[0] is not Sequence:
 	    raise AttributeError, 'Element: This should be called from Sequence'
@@ -350,16 +356,13 @@ object if references are lehd by the object on the undo stack.
 	if len(rec) > 2: # Bi-directional relationship
 	    xrec = obj.__get_attr_info (rec[2], obj.__class__) #rec[1])
 	    if xrec[0] is Sequence:
-		#obj.__del_seq_item(obj.__dict__[rec[2]], self)
-		#print 'sequence_remove: Sequence'
 		obj.__dict__[rec[2]].list.remove (self)
 	    else:
-		#try:
-		#print 'sequence_remove: item'
 		del obj.__dict__[rec[2]]
-		#except Exception, e:
-		#    print 'ERROR: (Element.sequence_remove)', e
-	assert len (seq) == seq_len - 1
+	    obj.emit (rec[2])
+	self.emit (key)
+	#assert len (seq) == seq_len - 1
+
     # Functions used by the signal functions
     def connect (self, signal_func, *data):
 	self.__dict__['__signals'].append ((signal_func,) + data)
@@ -369,7 +372,7 @@ object if references are lehd by the object on the undo stack.
 					     self.__dict__['__signals'])
 
     def emit (self, key):
-	print 'emit', self, key
+	#print 'emit', self, key
 	#if not self.__dict__.has_key ('__signals'):
 	#    print 'No __signals attribute in object', self
 	#    return

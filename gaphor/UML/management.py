@@ -1,6 +1,11 @@
 # vim: sw=4
-import UML, diagram
+'''management.py
+This module contains some functions for managing UML models. This
+includes saving, loading and flushing models. In the future things like
+consistency checking should also be included.'''
 
+import ModelElements as UML
+import diagram
 from xmllib import XMLParser
 from xml.dom.minidom import Document
 
