@@ -1,3 +1,7 @@
+2004-06-12  wrobell
+
+	* gaphor/ui/mainwindow.py: - use cases enabled, since associations work now
+
 2004-06-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/__init__.py: do the resource initialization of the
@@ -9,6 +13,14 @@
 	* gaphor/UML/uml2.gaphor: fixed typo: implementingClassifier ->
 	implementatingClassifier.
 	
+2004-06-05  wrobell
+	* gaphor/diagram/: interface.py, itemactions.py, klass.py: - first
+	steps to add folding/unfolding of interfaces
+	* data/icons.xml, data/pixmaps/implementation24.png,
+	gaphor/diagram/__init__.py, gaphor/diagram/actions.py,
+	gaphor/diagram/implementation.py, gaphor/ui/mainwindow.py,
+	gaphor/ui/stock.py: - added implementation element
+
 2004-06-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/uml2.gaphor: changed Interfaces diagram, so namespaces
@@ -26,6 +38,14 @@
 2004-06-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/namespace.py: Added DND for elements within the tree view.
+
+2004-06-03  wrobell
+
+	* gaphor/: UML/collection.py, diagram/attribute.py,
+	diagram/itemactions.py, diagram/klass.py, diagram/operation.py: -
+	added support for moving up/down operations and attributes
+	* gaphor/UML/uml2.gaphor: - UML 2.0 (03-08-02), page 137, component
+	attribute   isIndirectlyInstantiated is set to true by default
 
 2004-06-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
