@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# TODO: check Automake >= 1.5
 
 run () {
 	echo "Doing '$*'..."
@@ -12,16 +14,14 @@ run () {
 }
 
 ACLOCAL=`type aclocal | awk '{ print $3 }'`
-LIBTOOLIZE=`type libtoolize | awk '{ print $3 }'`
 AUTOMAKE=`type automake | awk '{ print $3 }'`
 AUTOCONF=`type autoconf | awk '{ print $3 }'`
 
 if test ! -x "${ACLOCAL}" \
-|| test ! -x "${LIBTOOLIZE}" \
 || test ! -x "${AUTOMAKE}" \
 || test ! -x "${AUTOCONF}"
 then
-	echo "You should have installed automake and libtool packages!"
+	echo "You should have installed the automake packages!"
 	exit 1
 fi
 
@@ -30,9 +30,8 @@ if test -z "${ACLOCAL_FLAGS}"; then
 else
 	run "${ACLOCAL} ${ACLOCAL_FLAGS}"
 fi
-run "${LIBTOOLIZE}" -c -f
-test -f './py-compile' && rm ./py-compile
-run "${AUTOMAKE}" -c -a
+#test -f './py-compile' && rm ./py-compile
+run "${AUTOMAKE}" -a
 run "${AUTOCONF}"
 
 run ./configure --enable-maintainer-mode $*

@@ -92,6 +92,7 @@ class DiagramView:
 
 	def pre_button_press (tool, view, event):
 	    view.unselect_all()
+	    return 0
 
 	def post_button_press (tool, view, event, diagram, uml_type):
 	    print 'Unset_tool:', tool, view, event
@@ -103,14 +104,14 @@ class DiagramView:
 		tool.new_object.set_subject(subject)
 	    view.set_tool (None)
 	    print 'Tool unset'
-	    return 1
+	    return 0
 
 	def set_placement_tool (diagram_type, uml_type):
 	    #diagram = view.get_data ('diagram')
 	    tool = diacanvas.PlacementTool (diagram_type)
 	    view.set_tool (tool)
 	    tool.connect ('button_press_event', pre_button_press)
-	    tool.connect_after ('button_press_event', post_button_press,
+	    tool.connect ('button_release_event', post_button_press,
 	    			dia, uml_type)
 
 	print 'Action:', action, gtk.item_factory_path_from_widget(widget), view

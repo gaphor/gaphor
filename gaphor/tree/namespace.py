@@ -1,8 +1,8 @@
 # vim: sw=4
-'''This is the TreeView that is most common (for example: it is used
+"""This is the TreeView that is most common (for example: it is used
 in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
-'''
+"""
 
 import gtk
 import gobject
@@ -10,34 +10,60 @@ import types
 import UML
 
 class NamespaceModel(gtk.GenericTreeModel):
-    ''' The node is defined by a instance. We can reach the parent
-        by <object>.namespace. The children can be found in the
-	<object>.ownerElement list.'''
+    """
+    The node is defined by a instance. We can reach the parent
+    by <object>.namespace. The children can be found in the
+    <object>.ownerElement list.
+    """
 
-    def __unlink_cb(self):
-        print 'Destroying model'
+    def __element_signals (self, key, obj):
+	if key == 'name':
+	    path = self.get_path (obj)
+	    iter = self.get_iter (*path)
+	    self.row_changed (path,  iter)
+        elif key == 'namespace' and obj.namespace:
+	    path = self.get_path(obj)
+	    iter = self.get_iter(*path)
+	    print 'Namespace set for', obj, path
+	    self.row_inserted (path, iter)
+	elif key == '__unlink__':
+	    print 'Destroying', obj
+	    
 
-    def __destroy (self):
-        print '__destroy'
+    def __factory_signals (self, key, obj, factory):
+        if key == 'create' and isinstance (obj, UML.Namespace):
+	    print 'Object added'
+	    obj.connect (self.__element_signals, obj)
+	elif key == 'remove' and isinstance (obj, UML.Namespace):
+	    print 'object removed'
+	    self.row_deleted (self.get_path (obj))
+	    obj.disconnect (self.__element_signals)
 
-    def __init__(self, model):
-	if not isinstance (model, UML.Model):
+    def __init__(self, factory):
+	if not isinstance (factory, UML.ElementFactory):
 	    raise AttributeError
 
-	self.model = model;
+	self.model = factory.lookup(1);
+	#print "self.model =", self.model
 	# Init parent:
 	gtk.GenericTreeModel.__init__(self)
+	# We own the references to the iterators.
 	self.set_property ('leak_references', 0)
-	#self.connect ('dispose', self.__destroy)
-	# TODO: connect to 'name' and 'unlink' and 'namespace' signal from
-	#	the data objects.
-	#	Removed signals when finalized.
-	#	How can I notify views in a proper way if something changed.
 
+	#self.factory == UML.ElementFactory()
+	factory.connect (self.__factory_signals, factory)
+	#del self.factory
+
+	# Set signals to all Namespace objects in the factory:
+	for element in factory.values():
+	    if isinstance (element, UML.Namespace):
+		element.connect (self.__element_signals, element)
+ 
     def dump(self):
         '''Dump the static structure of the model to stdout.'''
 	def doit(node, depth):
-	    print '|' + '   ' * depth + '"' + node.name + '" ' + str(node)
+	    print '|' + '   ' * depth + '"' + node.name + '" ' + str(node) + \
+		    str(self.on_get_path(node))
 	    if self.on_iter_has_child (node):
 		iter = self.on_iter_children (node)
 		while iter != None:
@@ -57,8 +83,8 @@ class NamespaceModel(gtk.GenericTreeModel):
     # the implementations for TreeModel methods are prefixed with on_
     def on_get_flags(self):
 	'''returns the GtkTreeModelFlags for this particular type of model'''
-	print '************************************************************'
-	print ' I\'m called at last!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+	#print '************************************************************'
+	#print ' I\'m called at last!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 	return 0
 
     def on_get_n_columns(self):
@@ -69,11 +95,23 @@ class NamespaceModel(gtk.GenericTreeModel):
 	'''returns the type of a column in the model'''
 	return gobject.TYPE_STRING
 
-    def on_get_path(self, node):
+    def get_path(self, node):
 	'''returns the tree path (a tuple of indices at the various
 	levels) for a particular node.'''
-	print "on_get_path", node
-	return node
+	def to_path (n):
+	    #print 'Fetching', n
+	    if n.namespace:
+	        #print '...from', n.namespace.ownedElement.list
+		
+	        return (n.namespace.ownedElement.index(n),) + \
+			to_path (n.namespace)
+	    else:
+	        return ()
+	#print "on_get_path", node
+	return to_path (node)
+
+    def on_get_path (self, node):
+        return self.get_path (node)
 
     def on_get_iter(self, path):
         '''returns the node corresponding to the given path. The patch is a
@@ -90,8 +128,8 @@ class NamespaceModel(gtk.GenericTreeModel):
 	'''returns the value stored in a particular column for the node'''
 	assert column == 0
 	assert isinstance (node, UML.Namespace)
-	print "on_get_value", node.name
-	return '<<' + str(node.__class__.__name__) + '>> ' + node.name
+	#print "on_get_value", node.name
+	return '[' + str(node.__class__.__name__)[0] + '] ' + node.name
 
     def on_iter_next(self, node):
 	'''returns the next node at this level of the tree'''

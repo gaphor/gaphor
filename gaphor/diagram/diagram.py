@@ -3,14 +3,14 @@
 This module contains a model elements (!) Diagram which is the abstract
 repreesentation of a UML diagram.'''
 
-import UML, diacanvas, diagramitems, types, itemstorage
+import UML, diacanvas, types
 
 diagram2UML = {
-	diagramitems.Actor: UML.Actor,
-	diagramitems.Comment: UML.Comment,
-	diagramitems.UseCase: UML.UseCase,
-	diagramitems.CommentLine: None,
-	diagramitems.Generalization: None
+	Actor: UML.Actor,
+	Comment: UML.Comment,
+	UseCase: UML.UseCase,
+	CommentLine: None,
+	Generalization: None
 }
 
 class Diagram(UML.Namespace):
@@ -26,8 +26,9 @@ class Diagram(UML.Namespace):
 
     def create (self, type, pos=(0, 0), subject=None):
         '''TODO: this function should be removed from the diagram and put
-	in its own ElementFactory'''
-	item = self.canvas.root.add(type)
+	in its own ElementFactory, or should it?'''
+	item = diacanvas.item_new (type)
+	self.canvas.root.add(item)
 	if not subject:
 	    uml_type = diagram2UML[type]
 	    if uml_type is not None:
@@ -35,7 +36,9 @@ class Diagram(UML.Namespace):
 		factory = UML.ElementFactory ()
 		subject = factory.create (uml_type)
 		if issubclass (uml_type, UML.Namespace):
+		    print 'Diagram.create:', self.namespace
 		    subject.namespace = self.namespace
+		    print '...', subject.namespace
 		item.set_subject(subject)
 	else:
 	    #print 'Setting existing subject', subject

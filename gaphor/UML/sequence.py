@@ -52,5 +52,8 @@ class Sequence:
         self.__delitem__(key)
 
     def index(self, key):
-        return self.list.index(key)
+	for i in range (0, len (self.list)):
+	    if self.list[i] is key:
+	        return i
+        raise ValueError, 'sequence.index(key): key not in list'
     

@@ -13,11 +13,11 @@ from misc import Singleton, Signal
 class ElementFactory(Singleton):
 
     def __unlink_signal (self, key, obj):
-	if (key == 'unlink' or key == 'remove_from_factory') \
+	if (key == '__unlink__' or key == '__hide__') \
 		and self.__elements.has_key(obj.id):
 	    del self.__elements[obj.id]
 	    self.__emit_remove (obj)
-	elif key == 'add_to_factory' and not self.__elements.has_key(obj.id):
+	elif key == '__show__' and not self.__elements.has_key(obj.id):
 	    self.__elements[obj.id] = obj
 	    self.__emit_create (obj)
 
@@ -31,6 +31,7 @@ class ElementFactory(Singleton):
 	self.__elements[self.__index] = obj
 	self.__index += 1
 	obj.connect (self.__unlink_signal, obj)
+	self.__emit_create (obj)
 	return obj
 
     def lookup (self, id):
@@ -62,10 +63,10 @@ class ElementFactory(Singleton):
 	self.__signal.disconnect (signal_func)
 
     def __emit_create (self, obj):
-	self.__signal.emit ('create', key)
+	self.__signal.emit ('create', obj)
 
     def __emit_remove (self, obj):
-	self.__signal.emit ('remove', key)
+	self.__signal.emit ('remove', obj)
 
     def save (self, filename=None):
 	'''Save the current model to @filename. If no filename is given,

@@ -32,7 +32,7 @@ print dia.namespace
 print model.ownedElement.list
 print "diagram created"
 
-treemodel = tree.NamespaceModel(model)
+treemodel = tree.NamespaceModel(factory)
 
 #item = canvas.root.add (diagram.Comment)
 #item.move (30, 50)
@@ -72,10 +72,12 @@ diagram_view.window.connect ('destroy', mainquit)
 print "diagram displayed"
 del dia, diagram_view
 
+ui.TreeView (treemodel)
+
 #for k in UML.Element._hash.keys():
 #    print "Element", k, ":", UML.Element._hash[k].__dict__
 
-#treemodel.dump()
+treemodel.dump()
 
 print 'Going into main'
 gtk.main()
@@ -84,7 +86,7 @@ gtk.main()
 
 factory.save('x.xml')
 
-#treemodel.dump()
+treemodel.dump()
 
 factory.flush()
 

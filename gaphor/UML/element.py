@@ -62,6 +62,13 @@ also be removed from the element_hash by unlink().
 A special attribute is added: itemsOnUndoStack. This is a counter that is used
 by the diagram item's implementation to avoid deletion (unlink()ing) of the 
 object if references are lehd by the object on the undo stack.
+
+An element can send signals. All normal signals have the name of the attribute
+that's altered. There are three special (system) signals:
+__show__, __hide__ and __unlink__. Those signals are used when the element is
+added to a factory, removed from the element factory or before deletion of
+the object (you should remove all connections to the element on an __unlink__
+signal).
 '''
     #_index = 1
     _attrdef = { 'documentation': ( "", types.StringType ),
@@ -75,19 +82,10 @@ object if references are lehd by the object on the undo stack.
 	#elements[Element._index] = self
 	#Element._index += 1
 
-    def unlink(self):
-	'''Remove all references to the object. This will also remove the
-	element from the `elements' table.'''
-	#print 'Element.unlink():', self
-	# Notify other objects that we want to unlink()
-        self.__emit("unlink")
-	if self.__dict__.has_key ('__undodata'):
-	    del self.__dict__['__undodata']
-	self.__unlink ()
-
     def __unlink(self):
 	#if elements.has_key(self.__dict__['__id']):
 	#    del elements[self.__dict__['__id']]
+	#print 'Element.__unlink()', self
 	for key in self.__dict__.keys():
 	    # In case of a cyclic reference, we should check if the element
 	    # not yet has been removed.
@@ -109,6 +107,16 @@ object if references are lehd by the object on the undo stack.
 	# from objects with connected signals.
     	return self
     
+    def unlink(self):
+	'''Remove all references to the object. This will also remove the
+	element from the `elements' table.'''
+	#print 'Element.unlink():', self
+	# Notify other objects that we want to unlink()
+        self.__emit("__unlink__")
+	if self.__dict__.has_key ('__undodata'):
+	    del self.__dict__['__undodata']
+	self.__unlink ()
+
     # Hooks for presentation elements to add themselves:
     def add_presentation (self, presentation):
         #print 'add_presentation', self, presentation
@@ -130,7 +138,7 @@ object if references are lehd by the object on the undo stack.
 		assert self.__dict__.has_key ('__undodata')
 		# Add myself to the 'elements' hash 
 		#elements[self.id] = self
-		self.__emit ('add_to_factory')
+		self.__emit ('__show__')
 		# Add elements from __undodata
 		#print self.__dict__
 		undodata = self.__dict__['__undodata']
@@ -155,10 +163,7 @@ object if references are lehd by the object on the undo stack.
 	    self.itemsOnUndoStack += 1
 	    if len (self.presentation) == 0:
 		# Remove yourself from the 'elements' hash
-		#if lookup (self.id):
-		    #print 'Removing element from elements hash.'
-		    #del elements[self.id]
-		self.__emit ('remove_from_factory')
+		self.__emit ('__hide__')
 		# Create __undodata, so we can undo the element's state
 		undodata = { }
 		for key in self.__dict__.keys():
@@ -188,7 +193,7 @@ object if references are lehd by the object on the undo stack.
 	    self.unlink()
 
     def __get_attr_info(self, key, klass):
-        '''Find the record for 'key' in the <klass>._attrdef map.'''
+        '''Find the record for 'key' in the <class>._attrdef map.'''
 	done = [ ]
 	def real_get_attr_info(key, klass):
 	    if klass in done:

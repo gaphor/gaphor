@@ -1,5 +1,7 @@
+# Require automake-1.5
+AUTOMAKE_OPTIONS = 1.5
 
-SUBDIRS=gaphor utils doc tests
+SUBDIRS = gaphor utils doc tests
 
 .PHONY: release snapshot
 

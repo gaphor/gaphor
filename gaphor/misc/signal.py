@@ -1,5 +1,7 @@
 # vim: sw=4
 
+import types
+
 __version__ = "$Revision$"
 __author__ = "Arjan Molenaar"
 __date__ = "2002-03-19"
@@ -23,6 +25,7 @@ class Signal:
 	Connect to the object. You should provide a signal handler and a
 	bunch of parameters that should be passed to the signal handler.
 	"""
+	print 'Signal.connect():', data
 	self.__signals.append ((signal_handler,) + data)
 
     def disconnect (self, signal_handler):
@@ -40,6 +43,7 @@ class Signal:
 	Note that you should define how many parameters are provided by the
 	owner of the signal.
 	"""
+	#print 'Signal.emit():', self.__signals
         for signal in self.__signals:
 	    signal_handler = signal[0]
 	    data = keys + signal[1:]
