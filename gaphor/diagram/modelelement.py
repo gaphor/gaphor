@@ -33,7 +33,6 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
 
     def __init__(self):
 	self.__gobject_init__()
-	DiagramItem.__init__(self)
 	self.subject = None
 	self.auto_resize = 0
 	self.__id = -1

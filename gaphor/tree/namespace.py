@@ -8,6 +8,7 @@ import gtk
 import gobject
 import types
 import UML
+import sys
 
 class NamespaceModel(gtk.GenericTreeModel):
     """
@@ -79,7 +80,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         '''Dump the static structure of the model to stdout.'''
 	def doit(node, depth):
 	    print '|' + '   ' * depth + '"' + node.name + '" ' + str(node) + \
-		    str(self.on_get_path(node))
+		    str(self.on_get_path(node)) + '  ' + str(sys.getrefcount(node))
 	    if self.on_iter_has_child (node):
 		iter = self.on_iter_children (node)
 		while iter != None:
@@ -109,8 +110,8 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def on_get_column_type(self, index):
 	'''returns the type of a column in the model'''
-	return gobject.TYPE_STRING
-	#return gobject.TYPE_PYOBJECT
+	#return gobject.TYPE_STRING
+	return gobject.TYPE_PYOBJECT
 
     def get_path(self, node):
 	'''returns the tree path (a tuple of indices at the various
@@ -147,15 +148,16 @@ class NamespaceModel(gtk.GenericTreeModel):
 	return node
 
     def on_get_value(self, node, column):
-	'''returns the value stored in a particular column for the node'''
-	assert column == 0 or column == 1
+	'''returns the model element that matches 'node'.'''
+	assert column == 0
 	assert isinstance (node, UML.Namespace)
 	#print "on_get_value", node.name
 	#if column == 0:
 	#    return '[' + str(node.__class__.__name__)[0] + ']'
 	#else:
 	#    return node.name
-	return node.name
+	#return node.name
+	return node
 	#return ( '[' + str(node.__class__.__name__)[0] + '] ', node.name )
 
     def on_iter_next(self, node):
@@ -201,3 +203,39 @@ class NamespaceModel(gtk.GenericTreeModel):
 	#print "on_iter_parent", node
 	return node.namespace
 
+class NamespaceView(gtk.TreeView):
+
+    def __init__(self, model):
+	assert isinstance (model, NamespaceModel)
+	self.__gobject_init__()
+	gtk.TreeView.__init__(self, model)
+
+	column = gtk.TreeViewColumn ('')
+	# First cell in the column is for an image...
+	cell = gtk.CellRendererText ()
+	column.pack_start (cell, 0)
+	column.set_cell_data_func (cell, self._set_pixbuf, None)
+	
+	# Second cell if for the name of the object...
+	cell = gtk.CellRendererText ()
+	cell.set_property ('editable', 1)
+	column.pack_start (cell, 0)
+	column.set_cell_data_func (cell, self._set_name, None)
+	# TODO: Add handler to set text if editing is done.
+	assert len (column.get_cell_renderers()) == 2
+	self.append_column (column)
+
+    def _set_pixbuf (self, column, cell, model, iter, data):
+	value = model.get_value(iter, 0)
+	name = value.__class__.__name__
+	if len(name) > 0:
+	    cell.set_property('markup', '[<b>' + name[0] + '</b>]')
+	else:
+	    cell.set_property('markup', '[<b>?</b>]')
+
+    def _set_name (self, column, cell, model, iter, data):
+	value = model.get_value(iter, 0)
+	name = value.name
+	cell.set_property('text', name)
+
+gobject.type_register(NamespaceView)

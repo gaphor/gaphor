@@ -71,6 +71,8 @@ treemodel.dump()
 print 'Going into main'
 gtk.main()
 
+treemodel.dump()
+
 #diagram_view.destroy()
 
 #print "Comment.presentation:", comment.presentation.list
