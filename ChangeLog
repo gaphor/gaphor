@@ -1,3 +1,10 @@
+2004-10-29  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/feature.py: fixed bug that didn't render attributes
+	when they have to.
+	* gaphor/diagram/__init__.py: make register_item accept more default
+	classes. (fixes DND of Stereotype item).
+
 2004-10-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/classifier.py: new class. Generic subclass for
