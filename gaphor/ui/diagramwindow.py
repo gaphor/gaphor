@@ -81,9 +81,10 @@ class DiagramWindow(AbstractWindow):
             self.get_window().set_title(diagram.name or 'NoName')
             self.view.set_diagram(diagram)
         if diagram:
+            log.info('setting diagram')
             diagram.canvas.set_property ('allow_undo', 1)
             diagram.connect(('name', '__unlink__'), self.__on_diagram_event)
-            self.__undo_id = diagram.canvas.connect('undo', self.__on_diagram_undo)
+            self.__undo_id = diagram.canvas.undo_manager.connect('begin_transaction', self.__on_diagram_undo)
             #self.__snap_to_grid_id = diagram.canvas.connect('notify::snap-to-grid', self.__on_diagram_notify_snap_to_grid)
             # Set capabilities:
             self.__on_diagram_undo(diagram.canvas)
@@ -151,7 +152,8 @@ class DiagramWindow(AbstractWindow):
         # handle mouse button 3 (popup menu):
         if event.type == gtk.gdk.BUTTON_PRESS:
             # First push the undo stack...
-            view.canvas.push_undo(None)
+            #view.canvas.push_undo(None)
+            pass
 
         if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
             vitem = view.focus_item
@@ -171,6 +173,7 @@ class DiagramWindow(AbstractWindow):
         #self.set_capability('select', len (view.selected_items) > 0)
 
     def __on_diagram_undo(self, canvas):
+        log.info ('diagram undo')
         self.execute_action('EditUndoStack')
 #        self.set_capability('undo', canvas.get_undo_depth() > 0)
 #        self.set_capability('redo', canvas.get_redo_depth() > 0)

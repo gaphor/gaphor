@@ -31,11 +31,12 @@ class DiagramTab(object):
             #self.diagram.canvas.disconnect(self.__snap_to_grid_id)
         self.diagram = diagram
         if diagram:
+            log.info('set diagram')
             diagram.canvas.set_property ('allow_undo', 1)
             diagram.connect(('name', '__unlink__'), self.__on_diagram_event)
-            self.__undo_id = diagram.canvas.connect('undo', self.__on_diagram_undo)
+            self.__undo_id = diagram.canvas.undo_manager.connect('begin_transaction', self.__on_diagram_undo)
             # Set capabilities:
-            self.__on_diagram_undo(diagram.canvas)
+            self.__on_diagram_undo(diagram.canvas.undo_manager)
 
     def construct(self):
         title = self.diagram and self.diagram.name or '<None>'
@@ -93,8 +94,8 @@ class DiagramTab(object):
         # handle mouse button 3 (popup menu):
         if event.type == gtk.gdk.BUTTON_PRESS:
             # First push the undo stack...
-            view.canvas.push_undo(None)
-
+            #view.canvas.push_undo(None)
+            pass
         if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
             vitem = view.focus_item
             if vitem:
@@ -115,7 +116,8 @@ class DiagramTab(object):
     def __on_view_notify_tool(self, view, pspec):
         self.owning_window.execute_action('ToolChange')
 
-    def __on_diagram_undo(self, canvas):
+    def __on_diagram_undo(self, undo_manager):
+        log.info('set undo stack %s' % (undo_manager))
         self.owning_window.execute_action('EditUndoStack')
 
     def __on_diagram_event(self, element, pspec):

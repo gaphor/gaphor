@@ -21,6 +21,7 @@ class diagramassociation(association):
 
     # TODO: Maybe we should not break our side of the association...
     #       Since signals are still connected as the diagram item is unlinked.
+    # TODO: Add undo/redo statements.
 
     def unlink(self, obj):
         #print 'diagramassociation.unlink', obj, value
@@ -30,9 +31,10 @@ class diagramassociation(association):
     def _set2(self, obj, value):
         #print 'diagramassociation._set2', obj, value
         obj.preserve_property(self.name)
-        if obj.canvas and obj.canvas.in_undo and len(value.presentation) == 0:
-            print 'diagramassociation._set2(): relinking!'
-            value.relink()
+        #if obj.canvas and obj.canvas.in_undo and len(value.presentation) == 0:
+#        if obj.canvas and len(value.presentation) == 0:
+#            print 'diagramassociation._set2(): relinking!'
+#            value.relink()
         return association._set2(self, obj, value)
 
     def _del(self, obj, value):
@@ -100,6 +102,7 @@ class DiagramItem(Presentation):
     def do_set_property(self, pspec, value):
         if pspec.name == 'subject':
             #print 'set subject:', value
+            # TODO: make property undo-able
             if value:
                 self.subject = value
             elif self.subject:

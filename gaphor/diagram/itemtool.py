@@ -54,6 +54,7 @@ class ItemTool(diacanvas.view.Tool):
         if event.type == BUTTON_PRESS:
             # If Button1 is pressed, we're going to move the item.
             if event.button == 1:
+                view.canvas.undo_manager.begin_transaction()
                 self.grabbed_item = view_item
                 self.old_pos = (event.x, event.y)
                 item.request_update()
@@ -71,6 +72,7 @@ class ItemTool(diacanvas.view.Tool):
                     else:
                         self.execute_action('AssociationEndRenameMult')
             else:
+                view.canvas.undo_manager.begin_transaction()
                 if isinstance(item, NamedItem):
                     self.execute_action('RenameItem')
                 elif hasattr(item, 'is_editable') and item.is_editable():
@@ -78,6 +80,7 @@ class ItemTool(diacanvas.view.Tool):
         return True
 
     def do_button_release_event(self, view, event):
+        view.canvas.undo_manager.commit_transaction()
         if self.grabbed_item:
             self.grabbed_item = None
             return True

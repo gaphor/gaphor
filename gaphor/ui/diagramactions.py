@@ -97,11 +97,12 @@ class UndoAction(Action):
 
     def update(self):
 	diagram_tab = self._window.get_current_diagram_tab()
-	self.sensitive = diagram_tab and diagram_tab.get_canvas().get_undo_depth() > 0
+	self.sensitive = diagram_tab and diagram_tab.get_canvas().undo_manager.can_undo()
 
     def execute(self):
-	self._window.get_current_diagram_view().canvas.pop_undo()
+	self._window.get_current_diagram_view().canvas.undo_manager.undo_transaction()
 	self.update()
+	self._window.execute_action('EditUndoStack')
 
 register_action(UndoAction, 'EditUndoStack')
 
@@ -117,11 +118,12 @@ class RedoAction(Action):
 
     def update(self):
 	diagram_tab = self._window.get_current_diagram_tab()
-	self.sensitive = diagram_tab and diagram_tab.get_canvas().get_redo_depth() > 0
+	self.sensitive = diagram_tab and diagram_tab.get_canvas().undo_manager.can_redo()
 
     def execute(self):
-	self._window.get_current_diagram_view().canvas.pop_redo()
+	self._window.get_current_diagram_view().canvas.undo_manager.redo_transaction()
 	self.update()
+	self._window.execute_action('EditUndoStack')
 
 register_action(RedoAction, 'EditUndoStack')
 
@@ -211,10 +213,13 @@ class DeleteAction(Action):
 
     def execute(self):
 	view = self._window.get_current_diagram_view()
-	view.canvas.push_undo('delete')
-	items = view.selected_items
-	for i in items:
-	    i.item.unlink()
+	view.canvas.undo_manager.begin_transaction()
+	try:
+	    items = view.selected_items
+	    for i in items:
+		i.item.unlink()
+	finally:
+	    view.canvas.undo_manager.commit_transaction()
 
 register_action(DeleteAction, 'ItemSelect')
 

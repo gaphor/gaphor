@@ -74,7 +74,7 @@ class Diagram(Namespace, PackageableElement):
     def __init__(self, id=None, factory=None):
         super(Diagram, self).__init__(id, factory)
         self.canvas = DiagramCanvas(self)
-        self.canvas.set_undo_stack_depth(10)
+        #self.canvas.set_undo_stack_depth(10)
         self.canvas.set_property ("allow_undo", 1)
 
     def save(self, save_func):

@@ -5,6 +5,9 @@ As always, there is much to do...
   Problem: the existing <Placeholder> stuff works only on constrcution time.
     For this we need a menu that can change during the life of the application.
 
+- confirmation window when creating a new model.
+
+- An option that shows the selected item (in the namespace view) in a diagram.
 
 - How to figure out if a module exists without loading it?
 
