@@ -5,6 +5,7 @@
 	sorting algorithm.
 	* gaphor/diagram/dependency.py: Added load/save instructions for
 	dependency_type.
+	* gaphor/diagram/interface.py: new file, representing an Interface.
 
 2004-05-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
