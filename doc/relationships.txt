@@ -41,3 +41,13 @@ We should be able to determine:
 - If an assocaition between classes is already drawn on the diagram (in which
   case we should look for another existing assocaition or create a new one)
 - 
+
+Note:
+
+Some kinds of relations are repreesented by a line in a diagram, but have no
+direct mapping to some model element (e.g. a comment line which connects a
+comment to a model element). How do we determine if such a relation needs
+to be removed or can stay? For comment lines we could check all representations
+of the comment and see if one of the annotedElement's is in a diagram. If the
+count is 2 or more, the relationship should remain intact.
+

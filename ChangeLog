@@ -1,3 +1,29 @@
+2002-02-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* utils/genUML.py: Changed to make use of the aggregation attribute.
+	* gaphor/UML/Element.py: Backup the internal dictionary if no
+	presentations are attached to the item.
+	* gaphor/UML/__init__.py: Added changes for new genUML.py script.
+	* gaphor/diagram/diagramitems.defs: 
+	* gaphor/ui/diagramview.py:
+	Added items for Dependency, Include, Extend and Realization.
+	* gaphor/diagram/diagramitems.override: 
+	* gaphor/diagram/generalization.[ch]: Rely on Relationship.
+	* gaphor/diagram/model-element.c: Added rules for Dependency and
+	Realization.
+	* gaphor/diagram/relationship.[ch]: made it work.
+	* gaphor/diagram/usecase.c: Added rules for Include and Extend.
+	* gaphor/diagram/extend.c: 
+	* gaphor/diagram/extend.h: 
+	* gaphor/diagram/include.c: 
+	* gaphor/diagram/include.h: 
+	* gaphor/diagram/realization.c: 
+	* gaphor/diagram/realization.h: 
+	* gaphor/diagram/dependency.c: 
+	* gaphor/diagram/dependency.h:
+	New files.
+	* gaphor/diagram/itemstorage.py: Storage rules for new elements.
+
 2002-02-14  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/diagramview.py: Added file/load.
