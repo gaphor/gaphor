@@ -26,7 +26,7 @@ class DependencyItem(RelationshipItem):
     the dependency is not connected to two items.
 
     In the special case of an Implementation dependency, where one end is
-    connected to an InterfaceItem, the line is drawn as a solid line without
+    connected to an InterfaceItem: the line is drawn as a solid line without
     arrowhead.
     """
 
@@ -53,7 +53,7 @@ class DependencyItem(RelationshipItem):
         self._stereotype.set_markup(False)
 
         self.set(head_fill_color=0, head_a=0.0, head_b=15.0, head_c=6.0, head_d=6.0)
-        self._set_dashed()
+        self._set_line_style()
 
     def save(self, save_func):
 	RelationshipItem.save(self, save_func)
@@ -76,6 +76,10 @@ class DependencyItem(RelationshipItem):
 
     def set_dependency_type(self, dependency_type):
 	self.dependency_type = dependency_type
+        self._set_line_style()
+
+    def _set_stereotype_text(self):
+        dependency_type = self.dependency_type
 
 	if dependency_type is UML.Usage:
 	    self._stereotype.set_text(STEREOTYPE_OPEN + 'use' + STEREOTYPE_CLOSE)
@@ -86,20 +90,20 @@ class DependencyItem(RelationshipItem):
 	else:
 	    self._stereotype.set_text('')
 
-    def _set_dashed(self):
+    def _set_line_style(self, c1=None):
         """Display a depenency as a dashed arrow, with optional stereotype.
         """
-        if not self.get_property('has_head'):
-            self.set(dash=(7.0, 5.0), has_head=1)
-            self.set_dependency_type(self.dependency_type)
-
-    def _set_solid(self):
-        """Make a solid line, as used when a dependency is connected to an
-        Interface.
-        """
-        if self.get_property('has_head'):
-            self.set(dash=None, has_head=0)
-            self._stereotype.set_text('')
+        c1 = c1 or self.handles[0].connected_to
+        if c1 and self.dependency_type is UML.Implementation and isinstance(c1.subject, UML.Interface):
+            if self.get_property('has_head'):
+                print 'settinh'
+                self.set(dash=None, has_head=0)
+                print 'done;'
+                self._stereotype.set_text('')
+        else:
+            if not self.get_property('has_head'):
+                self.set(dash=(7.0, 5.0), has_head=1)
+                self._set_stereotype_text()
 
     def update_label(self, p1, p2):
         w, h = self._stereotype.to_pango_layout(True).get_pixel_size()
@@ -165,8 +169,9 @@ class DependencyItem(RelationshipItem):
         TODO: Should Class also inherit from BehavioredClassifier?
         """
         #print 'confirm_connect_handle', handle, self.subject
-
         c1 = self.handles[0].connected_to
+        self._set_line_style(c1)
+
         c2 = self.handles[-1].connected_to
         if c1 and c2:
             s1 = c1.subject
@@ -182,6 +187,7 @@ class DependencyItem(RelationshipItem):
         """See RelationshipItem.confirm_disconnect_handle().
         """
         #print 'confirm_disconnect_handle', handle
+        self._set_line_style()
         if self.subject:
             del self.subject
 
