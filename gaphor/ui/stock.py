@@ -53,7 +53,7 @@ default_stock_items = (
 )
 
 #default_icon_dir = path.dirname(path.abspath(__file__)) + '/icons/'
-default_icon_dir = DATADIR + '/'
+default_icon_dir = DATADIR + '/pixmaps/'
 
 print 'default_icon_dir:', default_icon_dir
 

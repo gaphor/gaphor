@@ -1,0 +1,230 @@
+<Root>
+
+<commands>
+        <cmd name="FileNew" _label="New"
+	_tip="Start a new document" pixtype="stock" pixname="New"/>
+        
+        <cmd name="FileOpen" _label="Open"
+	_tip="Open a file" pixtype="stock" pixname="Open" accel="F3"/>
+	
+        <cmd name="FileSave" _label="Save"
+	_tip="Save the current file" pixtype="stock" pixname="Save"
+	accel="*Control*s"/>
+	
+        <cmd name="FileSaveAs" _label="Save As"
+          _tip="Save the current file with a different name"
+	  pixtype="stock" pixname="Save As"/>
+
+        <cmd name="FileRevert" _label="Revert"
+          _tip="Revert to a saved version of the file"
+          pixtype="stock" pixname="Revert"/>
+	
+        <cmd name="FilePrint" _label="Print" sensitive="0"
+	_tip="Print the current file" pixtype="stock" pixname="Print"/>
+	
+        <cmd name="FilePrintSetup" _label="Print Setup" sensitive="0"
+          _tip="Setup the page settings for your current printer"
+	  pixtype="stock" pixname="Print"/>
+
+	<cmd name="FilePrintPreview" _label="Print Preview" sensitive="0"
+	_tip="Print preview"/>
+	
+        <cmd name="FileClose" _label="Close"
+	_tip="Close the current file" pixtype="stock" pixname="Close"
+	accel="*Control*w"/>
+	
+        <cmd name="FileExit" _label="Exit" _tip="Exit the program"
+           pixtype="stock" pixname="Exit" accel="*Control*q"/>
+
+	<cmd name="InsertDiagram" _label="_Diagram" _tip="Create a new diagram"
+	   pixtype="stock" pixname="gaphor-diagram"/>
+
+	<cmd name="InsertToggle" _label="toggle"/>
+
+        <cmd name="EditCut" _label="Cut" _tip="Cut the selection"
+          pixtype="stock" pixname="Cut" accel="*Control*x"/>
+	
+        <cmd name="EditCopy" _label="Copy"
+	_tip="Copy the selection" pixtype="stock" pixname="Copy"
+	accel="*Control*c"/>
+	
+        <cmd name="EditPaste" _label="Paste"
+	_tip="Paste the clipboard" pixtype="stock" pixname="Paste"
+	accel="*Control*v"/>
+	
+        <cmd name="EditClear" _label="Clear"
+	_tip="Clear the selection"/>
+	
+        <cmd name="EditUndo" _label="Undo" _tip="Undo the last action"
+          pixtype="stock" pixname="Undo" accel="*Control*z"/>
+	
+        <cmd name="EditRedo" _label="Redo" _tip="Redo the undone action"
+          pixtype="stock" pixname="Redo" accel="*Control*r"/>
+	
+<!--
+        <cmd name="EditFind" _label="Find" _tip="Search for a string"
+          pixtype="stock" pixname="Search" accel="F6"/>
+	
+        <cmd name="EditFindAgain" _label="Find Again" _tip="Search again for the same string"
+          pixtype="stock" pixname="Search" accel="*Shift*F6"/>
+	
+        <cmd name="EditReplace" _label="Replace" _tip="Replace a string"
+          pixtype="stock" pixname="Search/Replace" accel="F7"/>
+
+        <cmd name="EditProperties" _label="Properties" _tip="Modify the file&apos;s properties"
+	  pixtype="stock" pixname="Properties"/>
+
+	<cmd name="EditSelectAll" _label="Select All" _tip="Select everything"/>
+
+        <cmd name="SettingsPreferences" _label="Preferences" _tip="Configure the application"
+	  pixtype="stock" pixname="Preferences"/>
+
+
+	<cmd name="GoPrevious" _label="Previous" _tip="Go to the previous item"
+	pixtype="stock" pixname="Back"/>
+
+	<cmd name="GoNext" _label="Next" _tip="Go to the next item"
+	pixtype="stock" pixname="Forward"/>
+
+
+        <cmd name="WindowCreateNew" _label="Create New Window"
+	_tip="Create a new window"/>
+-->
+        <cmd name="WindowClose" _label="Close This Window"
+	_tip="Close the current window"/>
+
+	<cmd name="BonoboCustomize" _label="Customize" _tip="Customize toolbars"
+	pixtype="stock" pixname="Preferences"/>
+
+        <cmd name="About" _label="About..." _tip="About this application"
+	 pixtype="stock" pixname="About"/>
+
+	<cmd name="DebugDumpXml" _label="Dump XML" _tip="Dump the UI Xml description" hidden="0"/>
+
+</commands>
+
+<menu>
+
+<submenu name="File" _label="_File">
+        
+        <menuitem name="FileNew" verb="" _label="_New"/>
+        
+        <menuitem name="FileOpen" verb="" _label="_Open..."/>
+	
+        <menuitem name="FileSave" verb=""  _label="_Save"/>
+	
+        <menuitem name="FileSaveAs" verb="" _label="Save _As..."/>
+
+        <menuitem name="FileRevert" verb="" _label="_Revert"/>
+	
+	<placeholder name="Print" delimit="top" hidden="1">
+
+	        <menuitem name="FilePrint" verb="" _label="_Print"/>
+	
+	        <menuitem name="FilePrintSetup" verb="" _label="Print S_etup..."/>
+
+		<menuitem name="FilePrintPreview" verb="" _label="Print Pre_view"/>
+
+	</placeholder>
+	
+	<placeholder name="RecentFiles" delimit="top"/>
+
+	<separator/>
+<!--
+        <menuitem name="FileClose" verb="" _label="_Close"/>
+-->
+        <menuitem name="FileExit" verb="" _label="E_xit"/>
+
+</submenu>
+<!--
+<submenu name="Edit" _label="_Edit">
+
+        <menuitem name="EditCut" verb="" _label="C_ut"/>
+	
+        <menuitem name="EditCopy" verb="" _label="_Copy"/>
+	
+        <menuitem name="EditPaste" verb="" _label="_Paste"/>
+	
+	<separator/>
+
+        <menuitem name="EditClear" verb="" _label="C_lear"/>
+	
+        <menuitem name="EditUndo" verb="" _label="_Undo"/>
+	
+        <menuitem name="EditRedo" verb="" _label="_Redo"/>
+	
+        <menuitem name="EditFind" verb="" _label="_Find..."/>
+	
+        <menuitem name="EditFindAgain" verb="" _label="Find _Again"/>
+	
+        <menuitem name="EditReplace" verb="" _label="_Replace..."/>
+	
+	<placeholder name="EditOps"/>
+
+	<separator/>
+
+        <menuitem name="EditProperties" verb="" _label="_Properties..."/>
+
+	<menuitem name="EditSelectAll" verb="" _label="_Select All"/>
+
+</submenu>
+-->
+<submenu name="Insert" _label="_Insert">
+
+        <menuitem name="InsertDiagram" verb=""/>
+        <menuitem name="InsertToggle" verb=""/>
+
+</submenu>
+	
+<submenu name="Settings" _label="_Settings">
+
+	<menuitem name="BonoboCustomize" verb="" _label="Customi_ze"/>
+
+	<separator/>
+        <menuitem name="SettingsPreferences" verb="" _label="_Preferences"/>
+
+</submenu>
+
+<submenu name="Window" _label="_Window">
+<!--
+        <menuitem name="WindowCreateNew" verb="" _label="Create New _Window"/>
+-->
+	<placeholder name="OpenWindows"/>
+
+        <menuitem name="WindowClose" verb="" _label="_Close This Window"/>
+
+</submenu>
+
+<placeholder name="Component"/>
+
+<submenu name="Help" _label="_Help">
+	
+	<placeholder name="BuiltMenuItems"/>
+
+        <menuitem name="About" verb=""/>
+
+</submenu>
+
+<submenu name="Debug" _label="_Debug" hidden="0">
+
+	<menuitem name="DebugDumpXml" verb=""/>
+
+</submenu>
+
+</menu>
+
+<dockitem name="Toolbar" _tip="Main toolbar" behavior="detachable,exclusive">
+	<toolitem name="FileNew" verb=""/>
+	<toolitem name="FileOpen" verb=""/>
+	<toolitem name="FileSave" verb=""/>
+	<toolitem name="FileSaveAs" verb=""/>
+
+	<separator/>
+
+</dockitem>
+
+<status>
+	<item name="main"/>
+</status>
+
+</Root>

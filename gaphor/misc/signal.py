@@ -42,10 +42,10 @@ class Signal:
 				 self.__signals)
 
     def disconnect_by_data (self, *data):
-	print 'Signal::disconnect_by_data', len (self.__signals)
+	#print 'Signal::disconnect_by_data', len (self.__signals)
 	self.__signals = filter (lambda o: o[1:] != data,
 				 self.__signals)
-	print 'Signal::disconnect_by_data', len (self.__signals)
+	#print 'Signal::disconnect_by_data', len (self.__signals)
 
     def queue (self, *keys):
 	"""

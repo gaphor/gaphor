@@ -8,7 +8,7 @@ import gaphor.config as config
 class AboutCommand(Command):
 
     def execute(self):
-	logo = gtk.gdk.pixbuf_new_from_file (config.DATADIR + '/logo.png')
+	logo = gtk.gdk.pixbuf_new_from_file (config.DATADIR + '/pixmaps/logo.png')
 	about = gnome.ui.About(name = 'Gaphor',
 			   version = config.VERSION,
 			   copyright = 'Copyright (c) 2001-2002 Arjan J. Molenaar',

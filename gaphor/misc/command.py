@@ -13,10 +13,7 @@ __date__ = "2002-03-19"
 
 class Command(object):
 
-    def __init__(self):
-        pass
-
-    def execute (self):
+    def execute (self, **args):
 	"""
 	This method is called to execute the command. The called should check
 	if the command may be executed at all by checking is_valid() first.
@@ -24,10 +21,3 @@ class Command(object):
 	"""
 	pass
 
-    def is_valid (self):
-        """
-	Tells us if a command is ready to be executed.
-	In menu's this method is called when a menu is opened. Non-valid
-	commands will be grayed out when the menu appears.
-	"""
-	return 1

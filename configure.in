@@ -129,6 +129,14 @@ done
 AC_SUBST(DIRS)
 AC_SUBST(FILES)
 
+
+# Set up some default paths
+GAPHOR_DATADIR=`eval echo "$datadir/$PACKAGE"`
+GAPHOR_LOCALEDIR=`eval echo "$LOCALEDIR"`
+
+AC_SUBST(GAPHOR_DATADIR)
+AC_SUBST(GAPHOR_LOCALEDIR)
+
 AC_CONFIG_FILES([bin/gaphor], [chmod +x bin/gaphor])
 AC_CONFIG_FILES(
 	Makefile

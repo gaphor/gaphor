@@ -2,6 +2,7 @@
 # vim:sw=4
 
 import gtk
+import bonobo.ui
 import gnome.ui
 import namespace
 import command.file
@@ -19,7 +20,10 @@ class MainWindow:
     view and a menu and a statusbar.
     """
 
-    def __init__(self, name, title):
+    def __init__(self):
+	pass
+
+    def __obsoleted_code(self):
 	recent_files = MenuPlaceholder()
 	open_windows = MenuPlaceholder()
 	# Menu items have the following structure:
@@ -88,8 +92,28 @@ class MainWindow:
 	self.__open_windows = open_windows
 	app.show_all()
 	
+    def get_title(self):
+	return 'Gaphor v0.1.0'
+
+    def get_name(self):
+	return 'gaphor.main'
+
+    def create_contents(self):
+	model = namespace.NamespaceModel(GaphorResource(UML.ElementFactory))
+	view = namespace.NamespaceView(model)
+	self.__model = model
+	self.__view = view
+
+	return view
+
+    def get_ui_xml_file(self):
+	return 'gaphor-ui.xml'
+
     def get_window(self):
 	return self.__app
+
+    def get_default_size(self):
+	return (200, 300)
 
     def add_window(self, window, name, command=None):
 	self.__open_windows.add(key=window, name=name, command=command)

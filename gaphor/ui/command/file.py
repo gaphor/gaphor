@@ -10,6 +10,7 @@ QuitCommand
 
 from gaphor.misc.command import Command
 from gaphor.misc.storage import Storage
+import sys
 import gtk
 import gaphor.UML as UML
 import gaphor.diagram as diagram
@@ -126,11 +127,17 @@ class SaveAsCommand(Command):
 	SaveCommand().execute()
 
 
+class RevertCommand(Command):
+
+    def execute(self):
+	pass
+
 class QuitCommand(Command):
 
     def execute(self):
 	print 'Exiting gaphor...',
-	gtk.main_quit()
+	#gtk.main_quit()
+	sys.exit(0)
 	print 'bye!'
 
 

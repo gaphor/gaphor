@@ -59,14 +59,16 @@ class Gaphor(Singleton):
 	gettext.install(config.GETTEXT_PACKAGE, unicode=1)
 
     def main(self):
-	from gtk import main as _main
+	from bonobo import main as _main
 	import gnome
-	from ui import MainWindow
+	from ui import MainWindow, WindowFactory
 	gnome.init(Gaphor.NAME, Gaphor.VERSION)
 	# should we set a default icon here or something?
-	mainwin = MainWindow(Gaphor.NAME, Gaphor.TITLE)
-	mainwin.get_window().connect("destroy", self.__destroy_cb)
-	Gaphor.__resources[MainWindow] = mainwin
+	#mainwin = MainWindow(Gaphor.NAME, Gaphor.TITLE)
+	mainwin = GaphorResource(WindowFactory).create(type=MainWindow)
+							
+	#mainwin.get_window().connect("destroy", self.__destroy_cb)
+	#Gaphor.__resources[MainWindow] = mainwin
 	_main()
 
     def __destroy_cb(self, win):
