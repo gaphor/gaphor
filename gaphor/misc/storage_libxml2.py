@@ -245,7 +245,10 @@ class Storage(object):
 		refid = ref.prop(Storage.REFID)
 		if refid[0] == 'c':
 		    key = int(refid[1:])
-		    refelem = self.__info.cid2item[key]
+		    # We have the possibility that a canvas item is not yet
+		    # created, so we should be cautious with assigning refelems
+		    if self.__info.cid2item.has_key(key):
+			refelem = self.__info.cid2item[key]
 		elif refid[0] == 'a':
 		    key = int(refid[1:])
 		    refelem = self.__info.factory.lookup(key)

@@ -52,7 +52,13 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	self.set_property('tail_pos', points[1])
 	for p in points[2:]:
 	    item.set_property ('add_point', p)
-	self.set_property('subject', store.reference('subject')[0])
+	# Subject may have been omited.
+	try:
+	    subject = store.reference('subject')
+	    assert len(subject) == 1
+	    self._set_subject(subject[0])
+	except ValueError:
+	    pass
 
     def postload(self, store):
 	for name, refs in store.references().items():

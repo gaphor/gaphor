@@ -5,6 +5,7 @@ from commentline import *
 from usecase import *
 from relationship import *
 from dependency import *
+from generalization import *
 
 from diagramitemfactory import *
 

@@ -167,8 +167,8 @@ class DiagramView:
 	    set_placement_tool (diagram.CommentItem, UML.Comment)
 	elif action == ITEM_ADD_COMMENT_LINE:
 	    set_placement_tool (diagram.CommentLineItem, None)
-	#elif action == ITEM_ADD_GENERALIZATION:
-	#    set_placement_tool (diagram.Generalization, None)
+	elif action == ITEM_ADD_GENERALIZATION:
+	    set_placement_tool (diagram.GeneralizationItem, None)
 	#elif action == ITEM_ADD_REALIZATION:
 	#    set_placement_tool (diagram.Realization, None)
 	elif action == ITEM_ADD_DEPENDENCY:
@@ -205,8 +205,8 @@ class DiagramView:
 	( '/New Item/Comment Line', None, __menu_item_cb,  ITEM_ADD_COMMENT_LINE ),
 	( '/New Item/Generalization', None, __menu_item_cb,  ITEM_ADD_GENERALIZATION ),
 	( '/New Item/Dependency', None, __menu_item_cb,  ITEM_ADD_DEPENDENCY ),
-	( '/New Item/Realization', None, __menu_item_cb,  ITEM_ADD_REALIZATION ),
-	( '/New Item/Include', None, __menu_item_cb,  ITEM_ADD_INCLUDE ),
-	( '/New Item/Extend', None, __menu_item_cb,  ITEM_ADD_EXTEND )
+#	( '/New Item/Realization', None, __menu_item_cb,  ITEM_ADD_REALIZATION ),
+#	( '/New Item/Include', None, __menu_item_cb,  ITEM_ADD_INCLUDE ),
+#	( '/New Item/Extend', None, __menu_item_cb,  ITEM_ADD_EXTEND )
     )
 

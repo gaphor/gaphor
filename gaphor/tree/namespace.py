@@ -9,6 +9,7 @@ import gobject
 import types
 import UML
 import sys
+import string
 
 class NamespaceModel(gtk.GenericTreeModel):
     """
@@ -243,7 +244,7 @@ class NamespaceView(gtk.TreeView):
 
     def _set_name (self, column, cell, model, iter, data):
 	value = model.get_value(iter, 0)
-	name = value.name
+	name = string.replace(value.name, '\n', ' ')
 	cell.set_property('text', name)
 
     def _name_edited (self, cell, path_str, new_text, data):
