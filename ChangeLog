@@ -2,6 +2,8 @@
 
 	* gaphor/diagram/klass.py: save width/height when
 	subject.ownedAttribute and subject.ownedOperation change.
+	* gaphor/ui/mainactions.py: Use new-style file chooser if possible
+	(else fall back to the old-and-less-usable version)
 
 2004-11-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
