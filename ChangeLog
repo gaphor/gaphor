@@ -1,3 +1,8 @@
+2005-01-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: added parse() and render operations to
+	Lifeline.
+
 2005-01-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/pluginmanager.py: raise exceptions when a wrong xml-tag is

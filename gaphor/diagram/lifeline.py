@@ -14,7 +14,11 @@ from nameditem import NamedItem
 
 # TODO: Maybe use a separate canvasItem for the line, since it creates
 # some difficulty with the connect_handle() code of diacanvas.CanvasElement.
-
+#
+# Lifeline semantics:
+#  lifeline_name[: class_name]
+#  lifeline_name: str
+#  class_name: name of referenced ConnectableElement
 class LifelineItem(NamedItem):
     MARGIN_X = 30
     MARGIN_Y = 10

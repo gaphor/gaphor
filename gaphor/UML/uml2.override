@@ -63,6 +63,7 @@ Class.extension = property(class_extension, doc=\
     """References the Extensions that specify additional properties of the
     metaclass. The property is derived from the extensions whose memberEnds
     are typed by the Class.""")
+del class_extension
 %%
 override Extension.metaclass
 def extension_metaclass(self):
@@ -129,9 +130,6 @@ Association.endType = property(lambda self: [end.type for end in self.memberEnd 
     association.""")
 
 %%
-override Operation.type
-Operation.type = derivedunion('type', 0, 1)
-%%
 override Property.parse
 from umllex import parse_property
 Property.parse = parse_property
@@ -142,6 +140,9 @@ from umllex import render_property
 Property.render = render_property
 del render_property
 %%
+override Operation.type
+Operation.type = derivedunion('type', 0, 1)
+%%
 override Operation.parse
 from umllex import parse_operation
 Operation.parse = parse_operation
@@ -151,6 +152,11 @@ override Operation.render
 from umllex import render_operation
 Operation.render = render_operation
 del render_operation
+%%
+override Lifeline.parse
+from umllex import parse_lifeline
+Lifeline.parse = parse_lifeline
+del parse_lifeline
 %%
 override Extenstion.metaclass
 

@@ -12,6 +12,7 @@ __all__ = [ 'Action', 'CheckAction', 'RadioAction', 'ActionPool', 'register_acti
 
 _registered_actions = { }
 _registered_slots = { }
+_registered_slot_actions = { }
 
 _dependent_actions = { }
 
@@ -137,6 +138,52 @@ class ObjectAction(object):
         return self
 
 
+class DynamicMenu(gobject.GObject):
+    """An DynamicMenu is a dynamic menu (or part of a menu) that can be
+    generated and changed during the lifetime of the application. A good
+    example is the Placeholder.
+    """
+
+    __gsignals__ = {
+        'rebuild': (gobject.SIGNAL_RUN_FIRST,
+                    gobject.TYPE_NONE, ())
+    }
+
+    def __init__(self, slot_id):
+        self.__gobject_init__()
+        self._slot_id = slot_id
+
+    def rebuild(self):
+        """Emit the rebuild signal.
+        """
+        self.emit('rebuild')
+
+    def get_menu(self):
+        """Return a tuple or list containing the menu actions.
+        """
+        return ()
+
+gobject.type_register(DynamicMenu)
+
+
+class SlotMenu(DynamicMenu):
+
+    def __init__(self, slot_id):
+        DynamicMenu.__init__(self, slot_id)
+        self._menu = ()
+
+    def rebuild(self):
+        self._menu = ()
+        DynamicMenu.rebuild(self)
+
+    def get_menu(self):
+        if not self._menu:
+            self._menu = get_actions_for_slot(self._slot_id)
+        print 'menu = ', self._menu
+        return self._menu
+
+gobject.type_register(SlotMenu)
+
 
 _no_default = object()
 
@@ -147,6 +194,7 @@ class ActionPool(object):
     def __init__(self, action_initializer):
         self.action_initializer = action_initializer
         self.actions = {}
+        self.slots = {}
 
     def get_action(self, action_id):
         """Find the action, create a new one if not found.
@@ -166,6 +214,16 @@ class ActionPool(object):
                     self.action_initializer(action)
                 action.update()
         return action
+
+    def get_slot(self, slot_id):
+        global _registered_slots
+        try:
+            slot = self.slots[slot_id]
+        except KeyError:
+            slot_class = _registered_actions.get(slot_id) or SlotMenu
+            slot = slot_class(slot_id)
+            self.slots[slot_id] = slot
+        return slot
 
     def execute(self, action_id, active=_no_default):
         """Run an action, identified by its action id. If the action does
@@ -261,19 +319,40 @@ def action_dependencies(action, *dependency_ids):
 
 # Slots
 
+def register_slot(slot_id, slot_class=SlotMenu):
+    """Register a slot. If no slot_class is provided, the SlotMenu is used.
+    """
+    global _registered_slots
+    _registered_slots[slot_id] = slot_class
+
+
 def register_action_for_slot(action, slot, *dependency_ids):
     """Register an action class for a specific slot.
     """
-    global _registered_slots
+    global _registered_slot_actions
+    print 'Register action %s for slot %s' % (action.id, slot)
     register_action(action, *dependency_ids)
     path = slot.split('/')
-    slot = _registered_slots
+    slot = _registered_slot_actions
     if path[0].startswith('<') and path[0].endswith('>'):
         path[0] = path[0][1:-1]
     for p in path:
         slot = slot.setdefault(p, {})
     slot[action.id] = None
-    #print _registered_slots
+    import pprint
+    pprint.pprint(_registered_slot_actions)
+
+
+def unregister_action_for_slot(action, slot):
+    global _registered_slot_actions
+    path = slot.split('/')
+    slot = _registered_slot_actions
+    if path[0].startswith('<') and path[0].endswith('>'):
+        path[0] = path[0][1:-1]
+    for p in path:
+        slot = _registered_slot_actions.setdefault(p, {})
+    del slot[action.id]
+
 
 def get_actions_for_slot(slot):
     """Return a the action ids for a specific slot as a tuple-menu.
@@ -282,7 +361,7 @@ def get_actions_for_slot(slot):
        'submenu', (
            'DummySubAction,))
     """
-    global _registered_slots
+    global _registered_slot_actions
     def get_actions_tuple(d):
         l = []
         for key, val in d.iteritems():
@@ -290,4 +369,5 @@ def get_actions_for_slot(slot):
             if val:
                 l.append(get_actions_tuple(val))
         return tuple(l)
-    return get_actions_tuple(_registered_slots.get(slot) or {})
+    return get_actions_tuple(_registered_slot_actions.get(slot) or {})
+

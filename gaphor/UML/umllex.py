@@ -71,6 +71,9 @@ operation_pat = compile(r'^' + vis_subpat + name_subpat + params_subpat + type_s
 #   [in|out|inout] name [: type[\[mult\]] [{ tagged values }]
 parameter_pat = compile(r'^' + dir_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + rest_subpat)
 
+# Lifeline:
+#  [name] [: type]
+lifeline_pat = compile('^' + name_subpat + type_subpat + garbage_subpat)
 
 def _set_visibility(self, vis):
     if vis == '+':
@@ -259,6 +262,25 @@ def parse_operation(self, s):
         # Remove remaining parameters:
         for fp in self.formalParameter[pindex:]:
             fp.unlink()
+
+def parse_lifeline(self, s):
+    """Parse string s in a lifeline. If a class is defined and can be found
+    in the datamodel, then a class is connected to the lifelines 'represents'
+    property."""
+    m = lifeline_pat.match(s)
+    g = m.group
+    if not m or g('garbage'):
+        self.name = s
+        if hasattr(self, 'represents'):
+            del self.represents
+    else:
+        from uml2 import LiteralSpecification
+        self.name = g('name') + ": "
+        t = g('type')
+        if t:
+            self.name += ': ' + t
+        # In the near future the data model should be extended with 
+        # Lifeline.represents: ConnectableElement
 
 # Do not render if the name still contains a visibility element
 no_render_pat = compile(r'^\s*[+#-]')
