@@ -125,33 +125,55 @@ class MainWindow(AbstractWindow):
     def __init__(self):
         AbstractWindow.__init__(self)
         self.__filename = None
-        self.__transient_windows = []
+        #self.__transient_windows = []
         self.notebook_map = {}
 
     def get_model(self):
+        """Return the gtk.TreeModel associated with the main window
+        (shown on the left side in a TreeView).
+        """
         self._check_state(AbstractWindow.STATE_ACTIVE)
         return self.model
 
     def get_tree_view(self):
+        """Get the gtk.TreeView widget that visualized the TreeModel.
+        See also get_model().
+        """
         return self.view
 
     def set_filename(self, filename):
+        """Set the file name of the currently opened model.
+        """
         self.__filename = filename
 
     def get_filename(self):
+        """Return the file name of the currently opened model.
+        """
         return self.__filename
 
-    def get_transient_windows(self):
-        return self.__transient_windows
+#    def get_transient_windows(self):
+#        """Get the windows that act as child windows of the main window.
+#        """
+#        return self.__transient_windows
 
     def get_current_diagram_tab(self):
+        """Get the currently opened and viewed DiagramTab, shown on the right
+        side of the main window.
+        See also: get_current_diagram(), get_current_diagram_view().
+        """
         return self.get_current_tab()
 
     def get_current_diagram(self):
+        """Return the Diagram associated with the viewed DiagramTab.
+        See also: get_current_diagram_tab(), get_current_diagram_view().
+        """
         tab = self.get_current_diagram_tab()
         return tab and tab.get_diagram()
 
     def get_current_diagram_view(self):
+        """Return the DiagramView associated with the viewed DiagramTab.
+        See also: get_current_diagram_tab(), get_current_diagram().
+        """
         tab = self.get_current_diagram_tab()
         return tab and tab.get_view()
 
@@ -171,6 +193,8 @@ class MainWindow(AbstractWindow):
         return tab
 
     def construct(self):
+        """Create the widgets that make up the main window.
+        """
         model = namespace.NamespaceModel(gaphor.resource(UML.ElementFactory))
         view = namespace.NamespaceView(model)
         scrolled_window = gtk.ScrolledWindow()
@@ -181,18 +205,12 @@ class MainWindow(AbstractWindow):
         view.connect_after('event-after', self.on_view_event)
         view.connect('row-activated', self.on_view_row_activated)
         view.connect_after('cursor-changed', self.on_view_cursor_changed)
-        #view.set_size_request(200, 200)
 
-        #scrolled_window.show_all()
-        #ns_paned = gtk.VPaned()
-        #ns_paned.pack1(scrolled_window)#, expand=True)
         vbox = gtk.VBox()
         vbox.pack_start(scrolled_window, expand=True)
 
         paned = gtk.HPaned()
         paned.set_property('position', 160)
-        #paned.pack1(scrolled_window)
-        #paned.pack1(ns_paned)
         paned.pack1(vbox)
         notebook = gtk.Notebook()
         #notebook.popup_enable()
@@ -212,7 +230,6 @@ class MainWindow(AbstractWindow):
                                title='Gaphor',
                                size=(760, 580),
                                contents=paned)
-                               #contents=scrolled_window)
 
         vbox.set_border_width(3)
 
@@ -222,7 +239,6 @@ class MainWindow(AbstractWindow):
         toolbox.show()
 
         self._toolbox = toolbox
-
 
     def add_transient_window(self, window):
         """Add a window as a sub-window of the main application.
@@ -235,6 +251,9 @@ class MainWindow(AbstractWindow):
     # Notebook methods:
 
     def new_tab(self, window, contents, label):
+        """Create a new tab on the notebook with window as its contents.
+        Returns: The page number of the tab.
+        """
         #contents = tab.get_contents()
         l = gtk.Label(label)
         #img = gtk.Image()
@@ -255,11 +274,16 @@ class MainWindow(AbstractWindow):
         return page_num
 
     def get_current_tab(self):
+        """Return the window (DiagramTab) that is currently visible on the
+        notebook.
+        """
         current = self.notebook.get_current_page()
         content = self.notebook.get_nth_page(current)
         return self.notebook_map.get(content)
 
     def set_current_page(self, tab):
+        """Force a specific tab (DiagramTab) to the foreground.
+        """
         for p, t in self.notebook_map.iteritems():
             if tab is t:
                 num = self.notebook.page_num(p)
@@ -276,14 +300,31 @@ class MainWindow(AbstractWindow):
     def get_tabs(self):
         return self.notebook_map.values()
 
-    def remove_tab(self, window):
-        for c, w in self.notebook_map.iteritems():
-            if window is w:
-                num = self.notebook.page_num(c)
+    def remove_tab(self, tab):
+        """Remove the tab from the notebook. Tab is such a thing as
+        a DiagramTab.
+        """
+        for p, t in self.notebook_map.iteritems():
+            if tab is t:
+                num = self.notebook.page_num(p)
                 self.notebook.remove_page(num)
-                del self.notebook_map[c]
+                del self.notebook_map[p]
                 self.execute_action('TabChange')
                 return
+
+    def select_element(self, element):
+        """Select an element from the Namespace view.
+        The element is selected. After this an action may be executed,
+        such as OpenModelElement, which will try to open the element (if it's
+        a Diagram).
+        """
+        path = self.get_model().path_from_element(element)
+        # Expand the first row:
+        self.get_tree_view().expand_row(path[:-1], False)
+        # Select the diagram, so it can be opened by the OpenModelElement action
+        selection = self.get_tree_view().get_selection()
+        selection.select_path(path)
+        self.execute_action('SelectRow')
 
     # Signal callbacks:
 
@@ -295,27 +336,29 @@ class MainWindow(AbstractWindow):
         del self.view
 
     def on_view_event(self, view, event):
+        """Show a popup menu if button3 was pressed on the TreeView.
+        """
         self._check_state(AbstractWindow.STATE_ACTIVE)
+
         # handle mouse button 3:
         if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
-            #selection = view.get_selection()
-            #model, iter = selection.get_selected()
-            #assert model is self.model
-            #if not iter:
-                #return
-            #element = model.get_value(iter, 0)
-            #path = model.path_from_element(element)
             self._construct_popup_menu(menu_def=self.ns_popup, event=event)
 
     def on_view_row_activated(self, view, path, column):
+        """Double click on an element in the tree view.
+        """
         self._check_state(AbstractWindow.STATE_ACTIVE)
         self.execute_action('OpenModelElement')
 
     def on_view_cursor_changed(self, view):
+        """Another row is selected, execute a dummy action.
+        """
         self.execute_action('SelectRow')
 
     def on_notebook_switch_page(self, notebook, tab, page_num):
-        #print notebook, tab, page_num
+        """Another page (tab) is put on the front of the diagram notebook.
+        A dummy action is executed.
+        """
         self.execute_action('TabChange')
 
 #    def on_transient_window_closed(self, window):

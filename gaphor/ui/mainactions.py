@@ -87,12 +87,7 @@ class NewAction(Action):
         self._window.set_message(_('Created a new model'))
         factory.notify_model()
 
-        path = self._window.get_model().path_from_element(diagram)
-        # Expand the first row:
-        self._window.get_tree_view().expand_row(path[:-1], False)
-        # Select the diagram, so it can be opened by the OpenModelElement action
-        selection = self._window.get_tree_view().get_selection()
-        selection.select_path(path)
+        self._window.select_element(diagram)
         self._window.execute_action('OpenModelElement')
 
 register_action(NewAction)
@@ -378,12 +373,7 @@ class CreateDiagramAction(Action):
         diagram = gaphor.resource('ElementFactory').create(UML.Diagram)
         diagram.package = element
 
-        path = self._window.get_model().path_from_element(diagram)
-        # Expand the row:
-        self._window.get_tree_view().expand_row(path[:-1], False)
-        # Select the diagram, so it can be opened by the OpenModelElement action
-        selection = self._window.get_tree_view().get_selection()
-        selection.select_path(path)
+        self._window.select_element(diagram)
         self._window.execute_action('OpenModelElement')
 
 register_action(CreateDiagramAction, 'SelectRow')

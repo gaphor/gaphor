@@ -34,7 +34,6 @@ class DiagramTab(object):
             diagram.canvas.set_property ('allow_undo', 1)
             diagram.connect(('name', '__unlink__'), self.__on_diagram_event)
             self.__undo_id = diagram.canvas.connect('undo', self.__on_diagram_undo)
-            #self.__snap_to_grid_id = diagram.canvas.connect('notify::snap-to-grid', self.__on_diagram_notify_snap_to_grid)
             # Set capabilities:
             self.__on_diagram_undo(diagram.canvas)
 
@@ -77,21 +76,6 @@ class DiagramTab(object):
         table.show_all()
 
         self.owning_window.new_tab(self, table, title)
-
-        #vbox = gtk.HBox()
-
-
-        #vbox.pack_start(table, expand=True)
-        #vbox.pack_start(handle_box, expand=False)
-        #handle_box.show()
-        #toolbar.show()
-        #vbox.show_all()
-        #self.table = table
-        #self._construct_window(name='diagram',
-        #                       title=title,
-        #                       size=(550, 550),
-        #                       contents=table)
-        #self.owning_window.new_tab(self, table, title)
 
     def close(self):
         """Tab is destroyed. Do the same thing that would
