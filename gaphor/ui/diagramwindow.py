@@ -65,7 +65,7 @@ class DiagramWindow(AbstractWindow):
 		      gtk.FILL)
 
 	view.connect('notify::tool', self.__on_view_notify_tool)
-	view.connect_after('event', self.__on_view_event)
+	view.connect_after('event-after', self.__on_view_event)
 	view.connect('focus_item', self.__on_view_focus_item)
 	view.connect('select_item', self.__on_view_select_item)
 	view.connect('unselect_item', self.__on_view_select_item)
@@ -125,7 +125,7 @@ class DiagramWindow(AbstractWindow):
 				       event=event,
 				       params={ 'window': self,
 				       		'coords': (event.x, event.y) })
-	    view.stop_emission('event')
+	    #view.stop_emission('event-after')
 	    return True
 	return False
 

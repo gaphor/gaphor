@@ -19,9 +19,6 @@ class FeatureItem(CanvasText, DiagramItem):
     Note that features can also be used inside objects.
     """
     __gproperties__ = {
-#	'id':		(gobject.TYPE_PYOBJECT, 'id',
-#			 'Identification number of the canvas item',
-#			 gobject.PARAM_READWRITE),
 	'subject':	(gobject.TYPE_PYOBJECT, 'subject',
 			 'subject held by the relationship',
 			 gobject.PARAM_READWRITE),
@@ -46,8 +43,6 @@ class FeatureItem(CanvasText, DiagramItem):
 	self.request_update()
 
     def do_set_property (self, pspec, value):
-#	if pspec.name == 'id':
-#	    self.__id = value
 	if pspec.name == 'subject':
 	    #print 'Setting subject:', value
 	    self._set_subject(value)
@@ -55,17 +50,13 @@ class FeatureItem(CanvasText, DiagramItem):
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
     def do_get_property(self, pspec):
-#	if pspec.name == 'id':
-#	    return self.__id
 	if pspec.name == 'subject':
 	    return self.subject
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
-
 #    def on_update(self, affine):
-#	#ModelElementItem.on_update(self, affine)
-#	pass
+#	CanvasText.on_update(self, affine)
 
     def on_subject_update(self, name, old_value, new_value):
 	if name == 'name':

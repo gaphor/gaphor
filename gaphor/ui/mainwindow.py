@@ -45,7 +45,7 @@ class MainWindow(AbstractWindow):
 	scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
 	scrolled_window.add(view)
 	
-	view.connect_after ('event', self.__on_view_event)
+	view.connect_after ('event-after', self.__on_view_event)
 	view.connect ('row_activated', self.__on_view_row_activated)
 
 	self.__model = model
