@@ -16,6 +16,8 @@ from gaphor import diagram
 from gaphor import undomanager
 #from gaphor.undomanager import UndoTransactionAspect, weave_method
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
+from gaphor.misc.action import DynamicMenu, ObjectAction, register_slot
+from gaphor.misc.action import ActionError
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.misc.errorhandler import error_handler, ErrorHandlerAspect, weave_method
@@ -114,12 +116,18 @@ class RevertAction(Action):
     tooltip = 'Reload the loaded Gaphor project from file'
 
     def init(self, window):
+        # The filename of the last file loaded
         self.filename = None
         self._window = window
 
+    def update(self):
+        self.sensitive = bool(self._window.get_filename())
+
     def execute(self):
         filename = self._window.get_filename()
+        self.load(filename)
 
+    def load(self, filename):
         action_states = self._window.action_pool.get_action_states()
         try:
             from gaphor import storage
@@ -141,6 +149,8 @@ class RevertAction(Action):
             self._window.set_message('Model loaded successfully')
             model = self._window.get_model()
             view = self._window.get_tree_view()
+
+            self._window.set_filename(filename)
 
             # Expand all root elements:
             for node in model.root[1]:
@@ -165,6 +175,9 @@ class OpenAction(RevertAction):
     stock_id='gtk-open'
     tooltip = 'Load a Gaphor project from a file'
 
+    def update(self):
+        pass
+
     def execute(self):
         filesel = gtk.FileChooserDialog(title='Open Gaphor model',
                                         action=gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -187,8 +200,7 @@ class OpenAction(RevertAction):
         filename = filesel.get_filename()
         filesel.destroy()
         if filename and response == gtk.RESPONSE_OK:
-            self._window.set_filename(filename)
-            RevertAction.execute(self)
+            RevertAction.load(self, filename)
 
 register_action(OpenAction)
 
@@ -633,11 +645,51 @@ class RedoAction(Action):
         self.sensitive = undomanager.get_undo_manager().can_redo()
 
     def execute(self):
-        print 'RedoAction'
         undomanager.get_undo_manager().redo_transaction()
         #self.update()
         self._window.execute_action('UndoStack')
 
 register_action(RedoAction, 'UndoStack')
 
+
+class RecentFileAction(ObjectAction):
+
+    def init(self, window, filename):
+        self._window = window
+        self._filename = filename
+
+    def update(self):
+        pass
+
+    def execute(self):
+        revert_action = self._window.get_action_pool().get_action('FileRevert')
+        revert_action.load(self._filename)
+
+
+class RecentFilesSlot(DynamicMenu):
+
+    def __init__(self, slot_id):
+        DynamicMenu.__init__(self, slot_id)
+
+    def get_menu(self):
+        recent_files = resource('recent-files', ())
+        window = resource('MainWindow')
+        file_list = []
+        for f, i in zip(recent_files, xrange(len(recent_files))):
+            id = 'RecentFile_%d' % i
+            try:
+                action = window.get_action_pool().get_action(id)
+                action._label='_%d. %s' % (i+1, f)
+                action._tooltip='Load %s.' % f
+            except ActionError:
+                # Create a new one if the is none registered
+                action = RecentFileAction(id,
+                                          label='_%d. %s' % (i+1, f),
+                                          tooltip='Load %s.' % f)
+                window.get_action_pool().set_action(action)
+            action.init(window, f)
+            file_list.append(id)
+        return file_list
+
+register_slot('RecentFiles', RecentFilesSlot)
 

@@ -119,18 +119,25 @@ class RadioAction(CheckAction):
 gobject.type_register(RadioAction)
 
 
-class ObjectAction(object):
+class ObjectAction(Action):
     """An ActionObject allows you to create objects in stead of the classes
     and register them. This way you can easely create actions for
     dynamically build popup menus.
     """
 
     def __init__(self, id, stock_id='', tooltip='', label='', accel=''):
-        self.id = id
-        self.stock_id = stock_id
-        self.tooltip = tooltip
-        self.label = label
-        self.accel = accel
+        Action.__init__(self)
+        self._id = id
+        self._stock_id = stock_id
+        self._tooltip = tooltip
+        self._label = label
+        self._accel = accel
+
+    id = property(lambda self: self._id)
+    stock_id = property(lambda self: self._stock_id)
+    tooltip = property(lambda self: self._tooltip)
+    label = property(lambda self: self._label)
+    accel = property(lambda self: self._accel)
 
     def __call__(self):
         """Return self when the object is "instantiated."
@@ -152,6 +159,8 @@ class DynamicMenu(gobject.GObject):
     def __init__(self, slot_id):
         self.__gobject_init__()
         self._slot_id = slot_id
+
+    slot_id = property(lambda self: self._slot_id)
 
     def rebuild(self):
         """Emit the rebuild signal.
@@ -178,8 +187,8 @@ class SlotMenu(DynamicMenu):
 
     def get_menu(self):
         if not self._menu:
-            self._menu = get_actions_for_slot(self._slot_id)
-        print 'menu = ', self._menu
+            self._menu = get_actions_for_slot(self.slot_id)
+        #print 'menu = ', self._menu
         return self._menu
 
 gobject.type_register(SlotMenu)
@@ -220,10 +229,16 @@ class ActionPool(object):
         try:
             slot = self.slots[slot_id]
         except KeyError:
-            slot_class = _registered_actions.get(slot_id) or SlotMenu
+            slot_class = _registered_slots.get(slot_id) or SlotMenu
             slot = slot_class(slot_id)
             self.slots[slot_id] = slot
         return slot
+
+    def set_action(self, action):
+        """Force an action class into the action pool. This is mainly used
+        by Actions, which are instantiated from Slots.
+        """
+        self.actions[action.id] = action
 
     def execute(self, action_id, active=_no_default):
         """Run an action, identified by its action id. If the action does
@@ -330,7 +345,7 @@ def register_action_for_slot(action, slot, *dependency_ids):
     """Register an action class for a specific slot.
     """
     global _registered_slot_actions
-    print 'Register action %s for slot %s' % (action.id, slot)
+    #print 'Register action %s for slot %s' % (action.id, slot)
     register_action(action, *dependency_ids)
     path = slot.split('/')
     slot = _registered_slot_actions
@@ -339,8 +354,8 @@ def register_action_for_slot(action, slot, *dependency_ids):
     for p in path:
         slot = slot.setdefault(p, {})
     slot[action.id] = None
-    import pprint
-    pprint.pprint(_registered_slot_actions)
+    #import pprint
+    #pprint.pprint(_registered_slot_actions)
 
 
 def unregister_action_for_slot(action, slot):

@@ -64,9 +64,9 @@ class MainWindow(AbstractWindow):
     menu = (_('_File'), (
                 'FileNew',
                 'FileOpen',
-                _('Recent files'), (
-                    _('To be implemented'),),
-                '<FileOpenSlot>',
+                'FileRevert',
+                _('Recent files'),
+                    ('<RecentFiles>',),
                 'separator',
                 'FileSave',
                 'FileSaveAs',
@@ -164,6 +164,14 @@ class MainWindow(AbstractWindow):
         """Set the file name of the currently opened model.
         """
         self.__filename = filename
+
+        # Add to recent files list
+        if filename:
+            recent_files = resource('recent-files', [])
+            if filename not in recent_files:
+                recent_files = [filename] + recent_files[:8]
+                resource.set('recent-files', recent_files, persistent=True)
+                self.get_action_pool().get_slot('RecentFiles').rebuild()
 
     def get_filename(self):
         """Return the file name of the currently opened model.

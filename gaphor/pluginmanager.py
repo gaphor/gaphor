@@ -96,10 +96,10 @@ class Plugin(object):
         if mod:
             self.status = 'Imported'
 
-        log.debug('Trying to import %d actions' % len(self.provided_actions))
+        #log.debug('Trying to import %d actions' % len(self.provided_actions))
         for action in self.provided_actions:
             try:
-                log.debug('Trying to import action %s' % action.id)
+                #log.debug('Trying to import action %s' % action.id)
                 action.import_action(self)
             except Exception, e:
                 self.status += '\nFailed to import action %s (%s)' % (action.id or action.class_, e)
@@ -193,7 +193,6 @@ class PluginLoader(handler.ContentHandler):
                 raise ParserException, 'Invalid XML: expecting <module>, <action> or <plugin>. Got <%s>.' % name
 
         elif mode == self.PROVIDE:
-            log.debug('Have action %s' % attrs['class'])
             if name == 'action':
                 action = PluginAction(attrs['class'].encode(),
                                           attrs['slot'].encode())
@@ -205,7 +204,6 @@ class PluginLoader(handler.ContentHandler):
                 action.accel = attrs.get('accel', '').encode()
                 self.plugin.provided_actions.append(action)
                 self.mode = self.ACTION
-                log.debug('Added action %s (#%d)' % (action.id, len(self.plugin.provided_actions)))
             else:
                 raise ParserException, 'Invalid XML: expecting <action>. Got <%s>.' % name
 

@@ -375,6 +375,7 @@ class MenuFactory(object):
         # Update dynamic menu's (slots)
 
     def on_slot_menu_rebuild(self, slot_menu, slot_item):
+        #log.debug('Rebuilding slot %s (%s)' % (slot_menu.slot_id, type(slot_menu)))
         #slot_item = self._slot_to_menu_item[slot_menu]
         menu = slot_item.get_parent()
         children = menu.get_children()
