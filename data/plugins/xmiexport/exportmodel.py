@@ -108,7 +108,7 @@ class XMIExport(Action):
         xmi.startElement('UML:Association', attrs=attributes)
         xmi.startElement('UML:Association.connection', attrs=XMLAttributes())
         for i in (0,1): # Need an index for class lookup
-            end=node.memberEnd[i]
+            end=ends[i]
             attributes=XMLAttributes()
             attributes['xmi.id']=end.id
             attributes['visibility']='public'
@@ -148,7 +148,7 @@ class XMIExport(Action):
             xmi.endElement('UML:AssociationEnd.multiplicity')
             xmi.startElement('UML:AssociationEnd.participant', attrs=XMLAttributes())
             attributes=XMLAttributes()
-            attributes['xmi.idref']=end.class_.id
+            attributes['xmi.idref']=ends[1-i].type.id # Take the type opposite type as this is the easest way to get the owner
             xmi.startElement('UML:Class', attrs=attributes)
             xmi.endElement('UML:Class')
             xmi.endElement('UML:AssociationEnd.participant')
