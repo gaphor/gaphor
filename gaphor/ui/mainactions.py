@@ -38,14 +38,18 @@ class NewAction(Action):
 	diagram = factory.create(UML.Diagram)
 	diagram.package = model
 	diagram.name='main'
+	stereotypes = factory.create(UML.Profile)
+	stereotypes.name = 'Stereotypes'
 	self._window.set_filename(None)
 	self._window.set_message('Created a new model')
 	factory.notify_model()
+
+	path = self._window.get_model().path_from_element(diagram)
 	# Expand the first row:
-	self._window.get_tree_view().expand_row(self._window.get_model().path_from_element(model), False)
+	self._window.get_tree_view().expand_row(path[:-1], False)
 	# Select the diagram, so it can be opened by the OpenModelElement action
 	selection = self._window.get_tree_view().get_selection()
-	selection.select_path((0,0))
+	selection.select_path(path)
 	self._window.execute_action('OpenModelElement')
 
 register_action(NewAction)
@@ -305,6 +309,14 @@ class CreateDiagramAction(Action):
 	element = self._window.get_tree_view().get_selected_element()
 	diagram = gaphor.resource('ElementFactory').create(UML.Diagram)
 	diagram.package = element
+
+	path = self._window.get_model().path_from_element(diagram)
+	# Expand the row:
+	self._window.get_tree_view().expand_row(path[:-1], False)
+	# Select the diagram, so it can be opened by the OpenModelElement action
+	selection = self._window.get_tree_view().get_selection()
+	selection.select_path(path)
+	self._window.execute_action('OpenModelElement')
 
 register_action(CreateDiagramAction, 'SelectRow')
 

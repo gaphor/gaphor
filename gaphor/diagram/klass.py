@@ -19,6 +19,11 @@ from feature import FeatureItem
 from attribute import AttributeItem
 from operation import OperationItem
 
+STEREOTYPE_OPEN = '\xc2\xab' # '<<'
+STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
+#STEREOTYPE_OPEN = '«'
+#STEREOTYPE_CLOSE = '»'
+
 class Compartment(list):
     """Specify a compartment in a class item.
     A compartment has a line on top and a list of FeatureItems.
@@ -85,6 +90,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     COMP_MARGIN_X=5
     COMP_MARGIN_Y=5
 
+    FONT_STEREOTYPE='sans 10'
     FONT_ABSTRACT='sans bold italic 10'
 
     popup_menu = NamedItem.popup_menu + (
@@ -99,12 +105,19 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     )
 
     def __init__(self, id=None):
+        self.is_stereotype = False
         NamedItem.__init__(self, id)
         self.set(height=50, width=100)
         self._attributes = Compartment('attributes', self)
         self._operations = Compartment('operations', self)
         self._border = diacanvas.shape.Path()
         self._border.set_line_width(2.0)
+        self._stereotype = diacanvas.shape.Text()
+        self._stereotype.set_font_description(pango.FontDescription(self.FONT_STEREOTYPE))
+        self._stereotype.set_alignment(pango.ALIGN_CENTER)
+        #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
+        self._stereotype.set_markup(False)
+        self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -189,6 +202,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         if self.subject:
             self.sync_compartments()
             self.on_subject_notify__isAbstract(self.subject)
+            self.is_stereotype = isinstance(self.subject, UML.Stereotype)
         self.request_update()
 
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
@@ -217,30 +231,40 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     def on_update(self, affine):
         """Overrides update callback.
         """
+        is_stereotype = self.is_stereotype
 
         width = 0
         height = ClassItem.HEAD_MARGIN_Y
 
         compartments = (self._attributes, self._operations)
 
-        # TODO: update stereotype
+        if is_stereotype:
+            st_width, st_height = self._stereotype.to_pango_layout(True).get_pixel_size()
+            width = st_width + ClassItem.HEAD_MARGIN_X/2
+            st_y = height = height / 2
+            height += st_height
 
         # Update class name
-        w, name_height = self.get_name_size()
+        name_width, name_height = self.get_name_size()
+        name_y = height
         height += name_height
-        name_y = height / 2
         
         height += ClassItem.HEAD_MARGIN_Y
-        width = w + ClassItem.HEAD_MARGIN_X
+        width = max(width, name_width + ClassItem.HEAD_MARGIN_X)
 
-        for comp in compartments:
-            width, height = comp.pre_update(width, height, affine)
+        for comp in compartments: width, height = comp.pre_update(width, height, affine)
 
         self.set(min_width=width, min_height=height)
 
         #if affine:
         width = max(width, self.width)
         height = max(height, self.height)
+
+        # TODO: update stereotype
+        if is_stereotype:
+            self._stereotype.set_pos((0, st_y))
+            self._stereotype.set_max_width(width)
+            self._stereotype.set_max_height(st_height)
 
         # We know the width of all text components and set it:
         # Note: here the upadte flag is set for all sub-items (again)!
@@ -257,6 +281,8 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
     def on_shape_iter(self):
         yield self._border
+        if self.is_stereotype:
+            yield self._stereotype
         for s in NamedItem.on_shape_iter(self):
             yield s
         if self._attributes.visible:

@@ -45,10 +45,10 @@ class NamespaceModel(gtk.GenericTreeModel):
             return
         node = (element, [])
         parent[1].append(node)
-        #self.sort_node(parent)
         path = self.path_from_element(element)
         #print 'new_node_from_element', path, element, element.name
         self.row_inserted(path, self.get_iter(path))
+        self.sort_node(parent)
         element.connect('name', self.on_name_changed)
 
         if isinstance(element, UML.Namespace):
@@ -315,6 +315,8 @@ class NamespaceView(gtk.TreeView):
         assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
         self.__gobject_init__()
         gtk.TreeView.__init__(self, model)
+        self.icon_cache = {}
+
         self.set_property('headers-visible', 0)
         self.set_rules_hint(gtk.TRUE)
         selection = self.get_selection()
@@ -359,10 +361,16 @@ class NamespaceView(gtk.TreeView):
 
     def _set_pixbuf (self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)
-        stock_id = stock.get_stock_id(value.__class__)
-        if stock_id:
-            icon = self.render_icon (stock_id, gtk.ICON_SIZE_MENU, '')
-            cell.set_property('pixbuf', icon)
+        try:
+            icon = self.icon_cache[type(value)]
+        except KeyError:
+            stock_id = stock.get_stock_id(type(value))
+            if stock_id:
+                icon = self.render_icon (stock_id, gtk.ICON_SIZE_MENU, '')
+            else:
+                icon = None
+            self.icon_cache[type(value)] = icon
+        cell.set_property('pixbuf', icon)
 
     def _set_name (self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)

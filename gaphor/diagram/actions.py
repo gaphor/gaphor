@@ -132,6 +132,18 @@ class ClassPlacementAction(NamespacePlacementAction):
 
 register_action(ClassPlacementAction)
 
+class StereotypePlacementAction(NamespacePlacementAction):
+    id = 'InsertStereotype'
+    label = '_Stereotype'
+    tooltip = 'Create a new Stereotype item'
+    stock_id = 'gaphor-class'
+    name = 'Stereotype'
+    accel = 'C-c'
+    type = diagram.ClassItem
+    subject_type = UML.Stereotype
+
+register_action(StereotypePlacementAction)
+
 
 class PackagePlacementAction(NamespacePlacementAction):
     id = 'InsertPackage'
@@ -224,10 +236,18 @@ class AssociationPlacementAction(PlacementAction):
     name = 'Association'
     type = diagram.AssociationItem
 
-    def __init__(self):
-	PlacementAction.__init__(self)
-
 register_action(AssociationPlacementAction)
+
+
+class ExtensionPlacementAction(PlacementAction):
+    id = 'InsertExtension'
+    label = '_Extension'
+    tooltip = 'Create a new Extension line'
+    stock_id = 'gaphor-association'
+    name = 'Extension'
+    type = diagram.ExtensionItem
+
+register_action(ExtensionPlacementAction)
 
 
 class DependencyPlacementAction(PlacementAction):

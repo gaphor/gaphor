@@ -51,6 +51,21 @@ def _del(self):
 MultiplicityElement.upper = property(_get, _set, _del)
 del _get, _set, _del
 %%
+override Class.extension
+def class_extension(self):
+    return []
+
+Class.extension = class_extension
+del class_extension
+%%
+override Extension.metaclass
+def extension_metaclass(self):
+    ownedEnd = self.ownedEnd
+    return [c for c in self.memberEnd if c not in ownedEnd]
+
+Extension.metaclass = extension_metaclass
+del extension_metaclass
+%%
 override Classifier.inheritedMember
 Classifier.inheritedMember = derivedunion('inheritedMember', 0, '*')
 %%

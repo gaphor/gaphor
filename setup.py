@@ -7,8 +7,8 @@
 """
 
 MAJOR_VERSION = 0
-MINOR_VERSION = 3
-MICRO_VERSION = 1
+MINOR_VERSION = 4
+MICRO_VERSION = 0
 
 VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 
@@ -71,7 +71,8 @@ class config_Gaphor(Command):
         self.module_check('xml.parsers.expat')
         #self.module_check('gobject', 'glib_version', (2, 0))
         self.module_check('gtk', ('gtk_version', (2, 0)),
-                                 ('pygtk_version', (1, 99, 16)))
+                                 ('pygtk_version', (2, 0)))
+        self.module_check('gtk.glade')
         self.module_check('gnome')
         self.module_check('gnome.canvas')
         #self.module_check('gconf')
@@ -164,16 +165,17 @@ class build_py_Gaphor(build_py, version_py):
     def generate_uml2(self):
         """Generate gaphor/UML/uml2.py in the build directory."""
         import utils.genUML2
-        gen = 'utils/genUML2.py'
-        overrides = 'gaphor/UML/uml2.override'
-        model = 'gaphor/UML/uml2.gaphor'
-        py_model = 'gaphor/UML/uml2.py'
+        gen = os.path.join('utils', 'genUML2.py')
+        overrides = os.path.join('gaphor', 'UML', 'uml2.override')
+        model = os.path.join('gaphor', 'UML', 'uml2.gaphor')
+        py_model = os.path.join('gaphor', 'UML', 'uml2.py')
         outfile = os.path.join(self.build_lib, py_model)
         self.mkpath(os.path.dirname(outfile))
         if self.force or newer(model, outfile) \
                       or newer(overrides, outfile) \
                       or newer(gen, outfile):
             print 'generating %s from %s...' % (py_model, model)
+            print '  (warnings can be ignored)'
             utils.genUML2.generate(model, outfile, overrides)
         else:
             print 'not generating %s (up-to-date)' % py_model

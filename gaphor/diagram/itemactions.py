@@ -526,3 +526,55 @@ class AssociationEndRenameMultAction(Action):
 	    item.edit_mult()
 
 register_action(AssociationEndRenameMultAction, 'ItemFocus')
+
+
+class DependencyTypeAction(RadioAction):
+    id = 'DependencyType'
+    label = 'Automatic'
+    group = 'dependency_type'
+    dependency_type = None
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+	try:
+            item = get_parent_focus_item(self._window)
+            from dependency import DependencyItem
+            if isinstance(item, DependencyItem):
+		self.active = (item.get_dependency_type() == self.dependency_type)
+        except NoFocusItemError:
+            pass
+
+    def execute(self):
+        if self.active:
+	    item = get_parent_focus_item(self._window)
+            item.set_dependency_type(self.dependency_type)
+
+
+class DependencyTypeDependencyAction(DependencyTypeAction):
+    id = 'DependencyTypeDependency'
+    label = 'Dependency'
+    group = 'dependency_type'
+    dependency_type = UML.Dependency
+
+register_action(DependencyTypeDependencyAction, 'ItemFocus')
+
+
+class DependencyTypeUsageAction(DependencyTypeAction):
+    id = 'DependencyTypeUsage'
+    label = 'Usage'
+    group = 'dependency_type'
+    dependency_type = UML.Usage
+
+register_action(DependencyTypeUsageAction, 'ItemFocus')
+
+
+class DependencyTypeRealizationAction(DependencyTypeAction):
+    id = 'DependencyTypeRealization'
+    label = 'Realization'
+    group = 'dependency_type'
+    dependency_type = UML.Realization
+
+register_action(DependencyTypeRealizationAction, 'ItemFocus')
+

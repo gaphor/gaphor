@@ -116,23 +116,28 @@ class MainWindow(AbstractWindow):
                 'ViewZoomOut',
                 'ViewZoom100')
 
-    wrapbox_default =  (
+    wrapboxes = {
+        "": (
                 'Pointer',
                 'InsertComment',
-                'InsertCommentLine')
-    wrapbox_classes = (
+                'InsertCommentLine'),
+        "Classes": (
                 'InsertClass',
                 'InsertPackage',
                 'InsertAssociation',
                 'InsertDependency',
-                'InsertGeneralization')
-    wrapbox_actions = (
+                'InsertGeneralization'),
+        "Actions": (
                 'InsertAction',
                 'InsertInitialNode',
                 'InsertActivityFinalNode',
                 'InsertDecisionNode',
-                'InsertFlow')
-
+                'InsertFlow'),
+        "Stereotypes": (
+                'InsertStereotype',
+                'InsertExtension')
+                
+    }
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',
                 'separator',
@@ -191,6 +196,7 @@ class MainWindow(AbstractWindow):
         vbox.pack_start(scrolled_window, expand=True)
 
         paned = gtk.HPaned()
+        paned.set_property('position', 160)
         #paned.pack1(scrolled_window)
         #paned.pack1(ns_paned)
         paned.pack1(vbox)
@@ -218,19 +224,16 @@ class MainWindow(AbstractWindow):
 
 	# Create icon boxes in the lower left corner of the window.
         wrapbox_groups = { }
-        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_default, groups=wrapbox_groups)
-        #wrapbox_dec = make_wrapbox_decorator('Generic', wrapbox.table, expanded=True)
-        #vbox.pack_start(wrapbox_dec, expand=False)
-        vbox.pack_start(wrapbox.table, expand=False)
-        wrapbox.table.show()
+        for title, items in self.wrapboxes.items():
+            wrapbox = self.menu_factory.create_wrapbox(items,
+                                                       groups=wrapbox_groups)
+            if title:
+                wrapbox_dec = make_wrapbox_decorator(title, wrapbox.table)
+                vbox.pack_start(wrapbox_dec, expand=False)
+            else:
+                vbox.pack_start(wrapbox.table, expand=False)
+                wrapbox.table.show()
 
-        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_classes, groups=wrapbox_groups)
-        wrapbox_dec = make_wrapbox_decorator('Classes', wrapbox.table)
-        vbox.pack_start(wrapbox_dec, expand=False)
-
-        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox_actions, groups=wrapbox_groups)
-        wrapbox_dec = make_wrapbox_decorator('Actions', wrapbox.table)
-        vbox.pack_start(wrapbox_dec, expand=False)
 
     def add_transient_window(self, window):
         """Add a window as a sub-window of the main application.
