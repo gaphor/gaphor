@@ -48,6 +48,7 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
 	if name == 'subject':
 	    self.set_property(name, value)
 	else:
+	    #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
 	    self.set_property(name, eval(value))
 
     def postload(self):

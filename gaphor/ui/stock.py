@@ -1,6 +1,5 @@
 # vim:sw=4
 
-
 import gtk
 from gaphor.config import GETTEXT_PACKAGE, DATADIR
 import gaphor.UML as UML
@@ -23,57 +22,45 @@ STOCK_USECASE = 'gaphor-usecase'
 
 # Definition of stock items to be added, will be deleted at the end
 # of this fils file.
-default_stock_icons = (
-    (STOCK_POINTER,	'pointer24.png',	'pointer16.png'),
-    (STOCK_ACTOR,	'actor24.png',		'actor16.png'),
-    (STOCK_ASSOCIATION,	'association24.png',	'association16.png'),
-    (STOCK_CLASS,	'class24.png',		'class16.png'),
-    (STOCK_DEPENDENCY,	'dependency24.png',	'dependency16.png'),
-    (STOCK_DIAGRAM,	'diagram24.png',	'diagram16.png'),
-    (STOCK_EXTEND,	None,			None),
-    (STOCK_COMMENT,	'comment24.png',	'comment16.png'),
-    (STOCK_COMMENT_LINE, None,			None),
-    (STOCK_GENERALIZATION, 'generalization24.png', 'generalization16.png'),
-    (STOCK_INCLUDE,	None,			None),
-    (STOCK_PACKAGE,	'package24.png',	'package16.png'),
-    (STOCK_REALIZATION,	None,			None),
-    (STOCK_USECASE,	'usecase24.png',	'usecase16.png')
+_default_stock_icons = (
+    # Stock ID		UML class	Icon 1		Icon 2
+    (STOCK_POINTER,	None,		'pointer24.png', 'pointer16.png'),
+    (STOCK_ACTOR,	UML.Actor,	'actor24.png', 'actor16.png'),
+    (STOCK_ASSOCIATION,	UML.Association, 'association24.png', 'association16.png'),
+    (STOCK_CLASS,	UML.Class,	'class24.png', 'class16.png'),
+    (STOCK_DEPENDENCY,	UML.Dependency, 'dependency24.png', 'dependency16.png'),
+    (STOCK_DIAGRAM,	UML.Diagram,	'diagram24.png', 'diagram16.png'),
+    (STOCK_EXTEND,	UML.Extend,	None),
+    (STOCK_COMMENT,	UML.Comment,	'comment24.png', 'comment16.png'),
+    (STOCK_COMMENT_LINE, None,		None),
+    (STOCK_GENERALIZATION, UML.Generalization, 'generalization24.png', 'generalization16.png'),
+    (STOCK_INCLUDE,	UML.Include,	None),
+    (STOCK_PACKAGE,	UML.Package,	'package24.png', 'package16.png'),
+    (STOCK_REALIZATION,	None,		None),
+    (STOCK_USECASE,	UML.UseCase,	'usecase24.png', 'usecase16.png')
 )
 
-uml_to_stock_id_map = {
-    UML.Actor: STOCK_ACTOR,
-    UML.Association: STOCK_ASSOCIATION,
-    UML.Class: STOCK_CLASS,
-    UML.Comment: STOCK_COMMENT,
-    UML.Dependency: STOCK_DEPENDENCY,
-    UML.Diagram: STOCK_DIAGRAM,
-    UML.Extend: STOCK_EXTEND,
-    UML.Generalization: STOCK_GENERALIZATION,
-    UML.Include: STOCK_INCLUDE,
-    UML.Package: STOCK_PACKAGE,
-    UML.UseCase: STOCK_USECASE
-}
+_icon_factory = gtk.IconFactory()
+_icon_factory.add_default()
+_uml_to_stock_id_map = dict()
 
 def get_stock_id(element):
     if issubclass(element, UML.Element):
 	try:
-	    return uml_to_stock_id_map[element]
+	    return _uml_to_stock_id_map[element]
 	except KeyError:
-	    print element, 'not found'
-	    pass
+	    log.warning ('Stock id for %s not found' % element)
 
 def add_stock_icons(stock_icons, icon_dir=''):
-    icon_factory = GaphorResource(gtk.IconFactory)
-
-    #stocklist = []
+    global _uml_to_stock_id_map
+    global _icon_factory
+    #icon_factory = GaphorResource(gtk.IconFactory)
     iconlist = []
 
     for si in stock_icons:
-	#stocklist.append((si[0], si[1], 0, 0, GETTEXT_PACKAGE))
-	#stocklist.append((si[0], si[0], 0, 0, GETTEXT_PACKAGE))
 	set = gtk.IconSet()
 	do_add=0
-	for icon in si[1:]:
+	for icon in si[2:]:
 	    if icon:
 		source = gtk.IconSource()
 		source.set_size(gtk.ICON_SIZE_MENU)
@@ -81,27 +68,17 @@ def add_stock_icons(stock_icons, icon_dir=''):
 		set.add_source(source)
 		do_add=1
 	if do_add:
-	    icon_factory.add(si[0], set)
-	    #iconlist.append((si[0], set))
-	    
-    #gtk.stock_add(stocklist)
-
-    #for id, set in iconlist:
-	#icon_factory.add(id, set)
+	    _icon_factory.add(si[0], set)
+	if si[1]:
+	    _uml_to_stock_id_map[si[1]] = si[0]
 
 #
 # Initialization:
 #
 # We should do some special initialization for the icon factory:
-icon_factory = GaphorResource(gtk.IconFactory)
-icon_factory.add_default()
-del icon_factory
+#icon_factory = gtk.IconFactory() #GaphorResource(gtk.IconFactory)
+#icon_factory.add_default()
+#del icon_factory
 
-add_stock_icons(default_stock_icons, DATADIR + '/pixmaps/')
-
-#assert gtk.stock_lookup(STOCK_ACTOR)
-
-# Remove stock item definitions, GTK+ knows about them, so we don't
-# need them anymore...
-#del default_stock_icons, default_icon_dir
+add_stock_icons(_default_stock_icons, DATADIR + '/pixmaps/')
 

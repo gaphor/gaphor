@@ -271,14 +271,13 @@ class NamespaceView(gtk.TreeView):
 	Note that 'path_str' is a string where the fields are separated by
 	colons ':', like this: '0:1:1'. We first turn them into a tuple.
 	"""
-	path_list = path_str.split(':')
-	path = ()
-	for p in path_list:
-	    path = path + (int(p),)
-	model = self.get_property('model')
-	iter = model.get_iter(path)
-	element = model.get_value(iter, 0)
-	element.name = new_text
+	try:
+	    model = self.get_property('model')
+	    iter = model.get_iter_from_string(path_str)
+	    element = model.get_value(iter, 0)
+	    element.name = new_text
+	except Exception, e:
+	    log.error('Could not create path from string "%s"' % path_str)
 
 #    def do_drag_begin (self, context):
 #	print 'do_drag_begin'

@@ -47,28 +47,22 @@ class DiagramView(CanvasView):
     def do_drag_data_received(self, context, x, y, data, info, time):
 	print 'drag_data_received'
         if data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
-	    import gaphor.UML as UML
-	    import gaphor.diagram as diagram
+	    from gaphor.diagram import get_diagram_item
 	    print 'drag_data_received:', data.data, info
 	    elemfact = GaphorResource('ElementFactory')
 	    element = elemfact.lookup(data.data)
 	    assert element
-	    if isinstance(element, UML.Actor):
-		item = self.create (diagram.ActorItem)
-	    elif isinstance(element, UML.UseCase):
-		item = self.create (diagram.UseCaseItem)
-	    elif isinstance(element, UML.Class):
-		item = self.create (diagram.ClassItem)
-	    else:
-		item = None
-	    # Move the item:
-	    if item:
+	    item_class = get_diagram_item(element.__class__)
+	    if item_class:
+		item = self.create (item_class)
+		assert item
 		wx, wy = self.window_to_world(x + self.get_hadjustment().value,
 					      y + self.get_vadjustment().value)
 		ix, iy = item.affine_point_w2i(wx, wy)
 		item.move(ix, iy)
 		item.set_property ('subject', element)
-		print 'item.subject;', item.subject
+	    else:
+		log.warning ('No graphical representation for UML element %s', element.__class__.__name__)
 	    context.finish(gtk.TRUE, gtk.FALSE, time)
 	else:
 	    context.finish(gtk.FALSE, gtk.FALSE, time)

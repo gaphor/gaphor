@@ -31,7 +31,7 @@ class CommandRegistry(object):
 	self.__registry = dict()
 
     def register(self, command_info):
-	self.__registry[command_info.name] = command_info
+	self.__registry[command_info.context + '.' + command_info.name] = command_info
 
     def lookup(self, name):
 	if self.__registry.has_key(name):

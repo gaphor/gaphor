@@ -34,7 +34,7 @@ class UseCaseItem(ModelElementItem):
     def on_update(self, affine):
 	# Center the text
 	layout = self.__name.get_property('layout')
-	layout.set_width(-1)
+	#layout.set_width(-1)
 	w, h = layout.get_pixel_size()
 	self.set(min_width=w + UseCaseItem.MARGIN_X,
 		 min_height=h + UseCaseItem.MARGIN_Y)

@@ -174,6 +174,7 @@ class DiagramWindow(AbstractWindow):
 	    menu.popup(None, None, None, event.button, 0)
 	    view.stop_emission('event')
 	    return True
+	return False
 
     def __on_diagram_undo(self, canvas):
 	#log.debug('Undo: %d, Redo: %d' % (canvas.get_undo_depth(), canvas.get_redo_depth()))

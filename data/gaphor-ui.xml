@@ -48,6 +48,7 @@
 	</submenu>
     -->
 	<submenu name="Window" _label="_Window">
+	    <menuitem name="OpenEditorWindow" verb=""/>
 	    <placeholder name="OpenWindows"/>
 	    <separator/>
 	    <menuitem name="WindowClose" verb=""/>

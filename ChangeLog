@@ -1,3 +1,8 @@
+2002-11-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/uniqueid.py: use sys.platform to determine OS.
+	* gaphor/diagram/klass.py: Added attributes and operations.
+
 2002-10-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* orbit-python-fix.patch: added patch to fix refcounting problem

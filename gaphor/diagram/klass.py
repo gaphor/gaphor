@@ -9,6 +9,7 @@ import gaphor.UML as UML
 import diacanvas
 import gobject
 import pango
+from text import Text
 
 class ClassItem(ModelElementItem):
     HEAD_MARGIN_X=60
@@ -26,11 +27,12 @@ class ClassItem(ModelElementItem):
 	self.__oper_sep.set_line_width(2.0)
 	self.__border = diacanvas.shape.Path()
 	self.__border.set_line_width(2.0)
-	self.__name = diacanvas.CanvasText()
+	#self.__name = diacanvas.CanvasText()
+	self.__name = Text()
 	self.add_construction(self.__name)
 	assert self.__name != None
 	font = pango.FontDescription(ClassItem.NAME_FONT)
-	self.__name.set(font=font, width=self.width,
+	self.__name.set(font=font, width=self.width, multiline=False,
 			alignment=pango.ALIGN_CENTER)
 	# Center the text:
 	w, h = self.__name.get_property('layout').get_pixel_size()
@@ -53,9 +55,7 @@ class ClassItem(ModelElementItem):
 	"""Add a feature. The feature may be of class Attribute or
 	Operation."""
 	item = FeatureItem()
-	#item.set_property('id', uniqueid.generate_id())
 	item.set_property('subject', feature)
-	#self.add(item)
 	item.set_property('parent', self)
 	item.focus()
 	log.debug('Feature added: %s' % item)
@@ -66,11 +66,12 @@ class ClassItem(ModelElementItem):
 	for a in self.__attributes:
 	    if a.subject is feature:
 		self.remove(a)
-		return
+		return True
 	for o in self.__operations:
 	    if o.subject is feature:
 		self.remove(o)
-
+		return True
+	
     def on_update(self, affine):
 	"""Overrides update callback."""
 	width=0 #self.width
@@ -78,7 +79,7 @@ class ClassItem(ModelElementItem):
 	
 	# Update class name
 	layout = self.__name.get_property('layout')
-	layout.set_width(-1)
+	#layout.set_width(-1)
 	w, h = layout.get_pixel_size()
 	a = self.__name.get_property('affine')
 	height += h

@@ -1,5 +1,5 @@
 # All model items...
-
+# vim:sw=4
 from placementtool import *
 from actor import *
 from klass import *
@@ -12,19 +12,26 @@ from dependency import *
 from generalization import *
 from association import *
 
-#from diagramitemfactory import *
+# Map UML elements to their (default) representation.
 
-# Register diagram items with the diagram item factory
+import gaphor.UML as UML
 
-#import gaphor.UML as UML
+_uml_to_item_map = {
+    UML.Actor: ActorItem,
+    UML.Association: AssociationItem,
+    UML.Class: ClassItem,
+    UML.Comment: CommentItem,
+    UML.Dependency: DependencyItem,
+    UML.Generalization: GeneralizationItem,
+    UML.Package: PackageItem,
+    UML.UseCase: UseCaseItem,
+}
 
-#f = GaphorResource(DiagramItemFactory)
-#f.register (ActorItem, UML.Actor)
-#f.register (ClassItem, UML.Class)
-#f.register (CommentItem, UML.Comment)
-#f.register (UseCaseItem, UML.UseCase)
-#f.register (PackageItem, UML.Package)
+del UML
 
-#del f
-#del UML
-
+def get_diagram_item(element):
+    global _uml_to_item_map
+    try:
+	return _uml_to_item_map[element]
+    except:
+	return None

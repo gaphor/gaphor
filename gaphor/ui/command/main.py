@@ -9,7 +9,6 @@ QuitCommand
 """
 
 from gaphor.misc.command import Command
-import gaphor.misc.storage as storage
 from commandinfo import CommandInfo
 import sys
 import gtk
@@ -62,6 +61,7 @@ class OpenCommand(Command):
 		gc.collect()
 
 		try:
+		    import gaphor.storage as storage
 		    storage.load(filename)
 		    self._window.set_filename(filename)
 		except Exception, e:
@@ -95,6 +95,7 @@ class SaveCommand(Command):
 		filename = filename + DEFAULT_EXT
 	    log.debug('Saving to: %s' % filename)
 	    try:
+		import gaphor.storage as storage
 		storage.save(filename)
 		self._window.set_filename(filename)
 	    except Exception, e:
@@ -125,6 +126,7 @@ class SaveAsCommand(Command):
 		filename = filename + DEFAULT_EXT
 	    log.debug('Saving to: %s' % filename)
 	    try:
+		import gaphor.storage as storage
 		storage.save(filename)
 		self._window.set_filename(filename)
 	    except Exception, e:
@@ -148,6 +150,7 @@ class RevertCommand(Command):
 	    #GaphorResource(UML.ElementFactory).flush()
 
 	    try:
+		import gaphor.storage as storage
 		storage.load(filename)
 	    except Exception, e:
 		import traceback
@@ -185,6 +188,26 @@ CommandInfo (name='CreateDiagram', _label='_New diagram', pixname='gaphor-diagra
 	     _tip='Create a new diagram at toplevel',
 	     context='main.menu',
 	     command_class=CreateDiagramCommand).register()
+
+
+class OpenEditorWindowCommand(Command):
+    editor_window = None
+
+    def set_parameters(self, params):
+	self.__window = params['window']
+
+    def execute(self):
+	from gaphor.ui import EditorWindow
+	
+	if not OpenEditorWindowCommand.editor_window:
+	    ew = OpenEditorWindowCommand.editor_window = EditorWindow()
+	    ew.construct()
+	    self.__window.add_transient_window(ew)
+
+CommandInfo (name='OpenEditorWindow', _label='_Editor...', pixname='Editor',
+	     _tip='Open the Gaphor Editor',
+	     context='main.menu',
+	     command_class=OpenEditorWindowCommand).register()
 
 
 class AboutCommand(Command):

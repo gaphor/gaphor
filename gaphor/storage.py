@@ -2,8 +2,10 @@
 
 # TODO: use xml.dom.minidom in stead of libxml2 (for compatibility and since libglade uses the python xml stuff too...)
 
-import gaphor.UML as UML
-import gaphor.diagram as diagram
+#import gaphor.UML as UML
+import UML
+#import gaphor.diagram as diagram
+import diagram
 import diacanvas
 import types
 import xml.dom.minidom as dom
@@ -239,6 +241,8 @@ def load (filename):
 	gc.collect()
     except Exception, e:
 	log.info('file %s could not be loaded' % filename)
+	import traceback
+	traceback.print_exc()
 	raise GaphorError, 'Could not load file %s (%s)' % (filename, e)
 
 def verify (filename):

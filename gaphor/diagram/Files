@@ -9,7 +9,6 @@ diagramitem.py
 feature.py
 generalization.py
 klass.py
-metaitem.py
 modelelement.py
 package.py
 relationship.py

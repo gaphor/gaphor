@@ -22,13 +22,9 @@ class OpenCommand(Command):
 	    #winfact.create (DiagramWindow, diagram=self.__element)
 	    newwin = DiagramWindow()
 	    newwin.construct()
-	    # Also listen to the key accelerators of the owner window
+	    print 'Also listen to the key accelerators of the owner window', self.__element
 	    self.__window.add_transient_window(newwin)
 	    newwin.set_diagram(self.__element)
-	    #def handle_wr(x):
-		#print 'diag_win died:', x
-	    #import weakref
-	    #self.wr = weakref.ref (diag_win, handle_wr)
 	else:
 	    log.debug('No action defined for element %s' % self.__element.__class__.__name__)
 

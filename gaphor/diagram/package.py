@@ -24,7 +24,7 @@ class PackageItem(ModelElementItem):
 	self.add_construction(self.__name)
 	assert self.__name != None
 	font = pango.FontDescription(PackageItem.FONT)
-	self.__name.set(font=font, width=self.width,
+	self.__name.set(font=font, width=self.width, multiline=0,
 			alignment=pango.ALIGN_CENTER)
 	# Center the text:
 	w, h = self.__name.get_property('layout').get_pixel_size()
@@ -43,7 +43,7 @@ class PackageItem(ModelElementItem):
     def on_update(self, affine):
 	# Center the text
 	layout = self.__name.get_property('layout')
-	layout.set_width(-1)
+	#layout.set_width(-1)
 	w, h = layout.get_pixel_size()
 	self.set(min_width=w + PackageItem.MARGIN_X,
 		 min_height=h + PackageItem.MARGIN_Y)
@@ -55,12 +55,12 @@ class PackageItem(ModelElementItem):
 	self.update_child(self.__name, affine)
 	ModelElementItem.on_update(self, affine)
 
-	O = 0.0
-	H = self.height
-	W = self.width
-	X = PackageItem.TAB_X
-	Y = PackageItem.TAB_Y
-	line = ((X, Y), (X, O), (O, O), (O, H), (W, H), (W, Y), (O, Y))
+	o = 0.0
+	h = self.height
+	w = self.width
+	x = PackageItem.TAB_X
+	y = PackageItem.TAB_Y
+	line = ((x, y), (x, o), (o, o), (o, h), (w, h), (w, y), (o, y))
 	self.__border.line(line)
 	self.expand_bounds(1.0)
 

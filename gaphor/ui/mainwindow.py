@@ -121,7 +121,7 @@ class MainWindow(AbstractWindow):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	item = self.get_model().on_get_iter(path)
 	cmd_reg = GaphorResource('CommandRegistry')
-	cmd = cmd_reg.create_command('OpenModelElement')
+	cmd = cmd_reg.create_command('main.popup.OpenModelElement')
 	cmd.set_parameters({ 'window': self,
 			     'element': item })
 	cmd.execute()

@@ -33,7 +33,8 @@ class FeatureItem(CanvasText, DiagramItem):
 	DiagramItem.__init__(self)
 	#diacanvas.CanvasText.__init__(self)
 	font = pango.FontDescription(FeatureItem.FONT)
-	self.set(font=font, width=self.width, alignment=pango.ALIGN_LEFT)
+	self.set(font=font, width=self.width, multiline=False,
+		 alignment=pango.ALIGN_LEFT)
 	self.set_flags(diacanvas.COMPOSITE)
 	w, h = self.get_property('layout').get_pixel_size()
 	self.set(height=h)
