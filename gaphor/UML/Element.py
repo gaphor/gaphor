@@ -429,9 +429,13 @@ object if references are lehd by the object on the undo stack.
 		if not isinstance (refelement, attr_info[1]):
 		    raise ValueError, 'Referenced item is of the wrong type'
 		if attr_info[0] is Sequence:
-		    self.__ensure_seq (name, attr_info[1]).list.append (refelement)
+		    self.__ensure_seq (name, attr_info[1])
+		    if refelement not in self.__dict__[name]:
+			self.__dict__[name].list.append (refelement)
+			self.emit (name)
 		else:
 		    self.__dict__[name] = refelement
+		    self.emit (name)
 	    elif child.tagName == 'Value':
 		name = child.getAttribute ('name')
 		subchild = child.firstChild
@@ -443,7 +447,12 @@ object if references are lehd by the object on the undo stack.
 		    self.__dict__[name] = float (subchild.data)
 		else:
 		    self.__dict__[name] = subchild.data
+		self.emit (name)
 
+    def postload (self, node):
+	'''Do some things after the items are initialized... This is basically
+	used for Diagrams.'''
+        pass
 
 ###################################
 # Testing

@@ -121,6 +121,13 @@ def load (filename):
 	assert element != None
 	element.load (node)
 
+    # Do some things after the loadingof the objects is done...
+    for node in rootnode.childNodes:
+	id = int (node.getAttribute('id'))
+	element = UML.lookup (id)
+	assert element != None
+	element.postload (node)
+
 
 def flush():
     '''Flush all elements in the UML.elements'''

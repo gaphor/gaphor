@@ -53,6 +53,14 @@ del item, actor, usecase, comment
 #print "Actor.presentation:", actor.presentation.list
 #print "UseCase.presentation:", usecase.presentation.list
 
+del dia
+
+UML.flush()
+
+UML.load ('x.xml')
+
+dia = UML.lookup (2)
+
 diagram_view = ui.DiagramView (dia)
 diagram_view.window.connect ('destroy', mainquit)
 print "diagram displayed"

@@ -1,3 +1,21 @@
+2002-02-14  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/diagramview.py: Added file/load.
+	* gaphor/diagram/itemstorage.py: New file. Storage functions for
+	the diagram items. Storage format changed: points of lines is now an
+	attribute in the item, in stead of a bunch of tags.
+
+2002-02-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* doc/storage.txt: Draft about how Relationships should behave... I
+	doubt this is the way... but anyway...
+	* gaphor/UML/Element.py: Added postload method, will be called after
+	load()
+	* gaphor/UML/management.py: implemented postload method
+	* gaphor/diagram/diagram.py: implemented postload method. Diagrams are
+	loaded perfectly!!!
+	* gaphor/test-diagram.py: now a diagram is loaded from the file x.xml
+
 2002-02-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/Element.py: Added functions add_presentation,

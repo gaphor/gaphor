@@ -3,9 +3,10 @@
 
 import types, gtk, UML, diacanvas, diagram
 
-FILE_SAVE = 0
-FILE_DUMP = 1
-FILE_QUIT = 2
+FILE_LOAD = 0
+FILE_SAVE = 1
+FILE_DUMP = 2
+FILE_QUIT = 3
 EDIT_UNDO = 10
 EDIT_REDO = 11
 EDIT_DEL_FOCUSED = 12
@@ -108,7 +109,19 @@ class DiagramView:
 	print 'Action:', action, gtk.item_factory_path_from_widget(widget), view
 	view.canvas.push_undo(None)
 
-	if action == FILE_SAVE:
+	if action == FILE_LOAD:
+	    print 'unset_canvas'
+	    view.unset_canvas ()
+	    print 'UML.flush'
+	    del self.diagram
+	    UML.flush ()
+	    print 'UML.load'
+	    UML.load ('a.xml')
+	    print 'UML.lookup'
+	    self.diagram = UML.lookup (2)
+	    print 'view.set_canvas'
+	    view.set_canvas (self.diagram.canvas)
+	elif action == FILE_SAVE:
 	    UML.save ('a.xml')
 	elif action == FILE_DUMP:
 	    for val in UML.elements.values():
@@ -156,7 +169,8 @@ class DiagramView:
 
     __menu_items = (
 	( '/_File', None, None, 0, '<Branch>' ),
-	( '/File/_Save', '<control>S', __menu_item_cb, FILE_SAVE, ''),
+	( '/File/_Load from a.xml', '<control>L', __menu_item_cb, FILE_LOAD, ''),
+	( '/File/_Save to a.xml', '<control>S', __menu_item_cb, FILE_SAVE, ''),
 	( '/File/_Dump', '<control>D', __menu_item_cb, FILE_DUMP, ''),
 	( '/File/sep1', None, None, 0, '<Separator>' ),
 	( '/File/_Quit', '<control>Q', __menu_item_cb, FILE_QUIT, ''),
