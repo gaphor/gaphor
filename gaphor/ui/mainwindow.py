@@ -167,7 +167,7 @@ class MainWindow(AbstractWindow):
 
         # Add to recent files list
         if filename:
-            recent_files = resource('recent-files', [])
+            recent_files = resource('recent-files', []) 
             if filename not in recent_files:
                 recent_files = [filename] + recent_files[:8]
                 resource.set('recent-files', recent_files, persistent=True)

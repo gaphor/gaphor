@@ -1,3 +1,7 @@
+2005-01-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: fixed bug in Lifeline diagram.
+
 2005-01-11  wrobell <wrobell@pld-linux.org>
 
 	* gaphor/UML/uml2.gaphor: added InternalStructures diagrams
