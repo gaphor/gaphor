@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # vim:sw=4:et:
 """Report differences in two Gaphor models.
 
@@ -11,10 +12,10 @@ __all__ = ['Compare']
 
 from __future__ import generators
 
-#try:
-#    import env
-#except ImportError:
-#    pass
+try:
+    import env
+except ImportError:
+    pass
 
 import gaphor.parser
 import gaphor.storage

@@ -36,6 +36,7 @@ class NewCommand(Command):
 	self._window.set_filename(None)
 	self._window.set_message('Created a new model')
 	factory.notify_model()
+	self._window.get_view().expand_row(self._window.get_model().path_from_element(model), False)
 
 CommandInfo (name='FileNew', _label='_New', pixname='New',
 	     _tip='Create a new Gaphor project',
@@ -64,7 +65,7 @@ class OpenCommand(Command):
 	    main.iteration(False)
 	if response == gtk.RESPONSE_OK:
 	    filename = filesel.get_filename()
-	    if filename and len(filename) > 0:
+	    if filename:
 		log.debug('Loading from: %s' % filename)
 		self.filename = filename
 		gc.collect()
@@ -74,6 +75,13 @@ class OpenCommand(Command):
 		    storage.load(filename)
 		    self._window.set_filename(filename)
 		    self._window.set_message('Model loaded successfully')
+		    model = self._window.get_model()
+		    view = self._window.get_view()
+
+		    # Expand all root elements:
+		    for node in model.root[1]:
+			view.expand_row(model.path_from_element(node[0]), False)
+
 		except Exception, e:
 		    import traceback
 		    log.error('Error while loading model from file %s: %s' % (filename, e))

@@ -9,19 +9,43 @@ has been loaded. It works okay when creating new items.
 import gobject
 import diacanvas
 import gaphor.UML as UML
-
+from diagramitem import DiagramItem
 from diagramline import DiagramLine
 
-class CommentLineItem(DiagramLine):
+class CommentLineItem(DiagramLine, DiagramItem):
+    __gproperties__ = DiagramItem.__gproperties__
+
+    __gsignals__ = DiagramItem.__gsignals__
 
     def __init__(self, id=None):
         #diacanvas.CanvasLine.__init__(self)
         DiagramLine.__init__(self)
-        self._id = id
+        DiagramItem.__init__(self, id)
         self.set_property('dash', (7.0, 5.0))
+        self.__notify_id = None
 
-    id = property(lambda self: self._id, doc='Id')
+    #id = property(lambda self: self._id, doc='Id')
 
+    def save (self, save_func):
+        DiagramItem.save(self, save_func)
+        DiagramLine.save(self, save_func)
+    
+    def load (self, name, value):
+	DiagramItem.load(self, name, value)
+	DiagramLine.load(self, name, value)
+
+    def postload(self):
+        DiagramItem.postload(self)
+        DiagramLine.postload(self)
+
+    # Ensure we call the right connect functions:
+    connect = DiagramItem.connect
+    disconnect = DiagramItem.disconnect
+
+    def on_notify_comment_parent(self, comment, pspec):
+        if not comment.parent and self.parent:
+            self.parent.remove(self)
+            
     def on_glue(self, handle, wx, wy):
         "No connections are allowed on a CommentLine."
         return None
@@ -56,14 +80,14 @@ class CommentLineItem(DiagramLine):
         # We should not connect if both ends will become a Comment
         if isinstance(c1.subject, UML.Comment) and \
                 isinstance(c2.subject, UML.Comment):
-            return 0
+            return False
         # Also do not connect if both ends are non-Comments
         if not isinstance(c1.subject, UML.Comment) and \
                 not isinstance(c2.subject, UML.Comment):
-            return 0
+            return False
 
         # Allow connection
-        return 1
+        return True
 
     def confirm_connect_handle (self, handle):
         """See DiagramLine.confirm_connect_handle().
@@ -76,15 +100,21 @@ class CommentLineItem(DiagramLine):
             s2 = c2.subject
             if isinstance (s1, UML.Comment):
                 s1.annotatedElement = s2
+                if not self.__notify_id:
+                    self.__notify_id = c1.connect('notify::parent',
+                                                  self.on_notify_comment_parent)
             elif isinstance (s2, UML.Comment):
                 s2.annotatedElement = s1
+                if not self.__notify_id:
+                    self.__notify_id = c2.connect('notify::parent',
+                                                  self.on_notify_comment_parent)
             else:
                 raise TypeError, 'One end of the CommentLine should connect to a Comment'
 
     def allow_disconnect_handle (self, handle):
         """See DiagramLine.allow_disconnect_handle().
         """
-        return 1
+        return True
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
         """See DiagramLine.confirm_disconnect_handle().
@@ -103,11 +133,15 @@ class CommentLineItem(DiagramLine):
             s1 = c1.subject
             s2 = c2.subject
             if isinstance (s1, UML.Comment):
+                c1.disconnect(self.__notify_id)
+                self.__notify_id = None
                 del s1.annotatedElement[s2]
             elif isinstance (s2, UML.Comment):
+                c2.disconnect(self.__notify_id)
+                self.__notify_id = None
                 del s2.annotatedElement[s1]
-            else:
-                raise TypeError, 'One end of the CommentLine should connect to a Comment. How could this connect anyway?'
+            #else:
+                #raise TypeError, 'One end of the CommentLine should connect to a Comment. How could this connect anyway?'
 
 gobject.type_register(CommentLineItem)
 diacanvas.set_callbacks(CommentLineItem)

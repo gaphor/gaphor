@@ -3,6 +3,8 @@ ActorItem diagram item
 '''
 # vim:sw=4
 
+from __future__ import generators
+
 import gobject
 import pango
 import diacanvas
@@ -20,6 +22,7 @@ class ActorItem(ClassifierItem):
                          '', 0.0, 10000.0,
                          1, gobject.PARAM_READWRITE),
     }
+
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
         self.set(height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
@@ -41,18 +44,20 @@ class ActorItem(ClassifierItem):
 
     def save (self, save_func):
         ClassifierItem.save(self, save_func)
-        self.save_property(save_func, 'name-width')
+        #self.save_property(save_func, 'name-width')
 
     def do_set_property (self, pspec, value):
         #print 'Actor: Trying to set property', pspec.name, value
         if pspec.name == 'name-width':
-            self._name.set_property('width', value)
+            #self._name.set_property('width', value)
+	    pass
         else:
             ClassifierItem.do_set_property (self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'name-width':
-            return self._name.get_property('width')
+            #w, h = self.get_name_size()
+	    return 0.0
         else:
             return ClassifierItem.do_get_property (self, pspec)
 
@@ -60,13 +65,11 @@ class ActorItem(ClassifierItem):
 
     def on_update(self, affine):
         # Center the text (from ClassifierItem):
-        layout = self._name.get_property('layout')
-        w, h = layout.get_pixel_size()
-        a = self._name.get_property('affine')
+        w, h = self.get_name_size()
         if w < self.width:
             w = self.width
-        aa = (a[0], a[1], a[2], a[3], (self.width - w) / 2, self.height)
-        self._name.set(affine=aa, width=w, height=h)
+        self.update_name(x=(self.width - w) / 2, y=self.height,
+                         width=w, height=h)
 
         ClassifierItem.on_update(self, affine)
 
@@ -88,14 +91,19 @@ class ActorItem(ClassifierItem):
                           (ActorItem.ARM * 2 * fx, (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM) * fy)))
         # update the bounding box:
         ulx, uly, lrx, lry = self.bounds
-        w, h = self._name.get_property('layout').get_pixel_size()
+        #w, h = self._name.get_property('layout').get_pixel_size()
         if w > self.width:
             ulx = (self.width / 2) - (w / 2)
             lrx = (self.width / 2) + (w / 2)
         self.set_bounds ((ulx, uly-1, lrx+1, lry + h))
 
     def on_shape_iter(self):
-        return iter([self._head, self._body, self._arms, self._legs])
+        yield self._head
+	yield self._body
+	yield self._arms
+	yield self._legs
+        for s in ClassifierItem.on_shape_iter(self):
+            yield s
 
 
 gobject.type_register(ActorItem)

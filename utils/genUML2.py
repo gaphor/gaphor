@@ -94,8 +94,8 @@ class Writer:
                                 "enumeration('%s', %s, '%s')" % (name, e.enumerates, default or e.enumerates[0]))
 
     def write_association(self, head, tail):
-        """Write an association. False is returned if the association is
-        derived.
+        """Write an association for head. False is returned if the association
+        is derived.
         The head association end is enriched with the following attributes:
             derived - association is a derived union or not
             name - name of the association end (name of head is found on tail)
@@ -109,28 +109,29 @@ class Writer:
         the association should be handled by write_derivedunion() or
         write_redefine().
         """
-        navigable = tail.get('isNavigable')
-        if navigable and not int(navigable):
+        navigable = head.get('class_')
+        if not navigable:
             # from this side, the association is not navigable
             return True
         try:
-            derived, name = parse_association_name(tail['name'])
+            derived, name = parse_association_name(head['name'])
         except KeyError:
             msg('ERROR! no name, but navigable: %s (%s.%s)' %
-                (tail.id, tail.class_name, tail.name))
+                (head.id, head.class_name, head.name))
             return True
 
-        lower, upper, subsets, redefines = parse_association_multiplicity(tail['multiplicity'])
+        lower, upper, subsets, redefines = parse_association_multiplicity(head.lowerValue)
         # Add the values found. These are used later to generate derived unions.
         head.derived = derived
         head.name = name
-        head.class_name = head.participant['name']
-        head.opposite_class_name = tail.participant['name']
+        head.class_name = head.class_['name']
+        head.opposite_class_name = head.type['name']
         head.lower = lower
         head.upper = upper
         head.subsets = subsets
         head.redefines = redefines
 
+        # Derived unions and redefines are handled separately
         if derived or redefines:
             return False
 
@@ -139,20 +140,20 @@ class Writer:
             a += ', lower=%s' % lower
         if upper != '*':
             a += ', upper=%s' % upper
-        if head.get('aggregation') == 'ak_composite':
+        if tail.get('aggregation') == 'composite':
             a += ', composite=True'
 
         # Add the opposite property if the head itself is navigable:
-        navigable = head.get('isNavigable')
-        if not navigable or int(navigable):
+        navigable = tail.get('class_')
+        if navigable:
             try:
-                h_derived, h_name = parse_association_name(head['name'])
+                o_derived, o_name = parse_association_name(tail['name'])
             except KeyError:
                 msg('ERROR! no name, but navigable: %s (%s.%s)' %
-                    (head.id, head.class_name, head.name))
+                    (tail.id, tail.class_name, tail.name))
             else:
-                assert not h_derived, 'One end if derived, the other end not ???'
-                a += ", opposite='%s'" % h_name
+                assert not o_derived, 'One end if derived, the other end not ???'
+                a += ", opposite='%s'" % o_name
 
         self.write_property("%s.%s" % (head.class_name, name), a + ')')
         return True
@@ -242,7 +243,8 @@ def parse_association_name(name):
     # First remove spaces
     name = name.replace(' ','')
     derived = False
-    while not name[0].isalpha():
+    # Check if this is a derived union
+    while name and not name[0].isalpha():
         if name[0] == '/':
             derived = True
         name = name[1:]
@@ -298,8 +300,7 @@ def generate(filename, outfile=None, overridesfile=None):
     enumerations = { }
     generalizations = { }
     associations = { }
-    associationends = { }
-    attributes = { }
+    properties = { }
     for key, val in all_elements.items():
         # Find classes, *Kind (enumerations) are given special treatment
         if isinstance(val, element):
@@ -316,29 +317,22 @@ def generate(filename, outfile=None, overridesfile=None):
                 generalizations[key] = val
             elif val.type == 'Association':
                 associations[key] = val
-            elif val.type == 'AssociationEnd':
-                associationends[key] = val
-            elif val.type == 'Attribute':
-                attributes[key] = val
+            elif val.type == 'Property':
+                properties[key] = val
 
     # find inheritance relationships
-    for n in classes.values():
-        for id in n.get('specialization') or ():
-            # traverse the generalization object:
-            refids = generalizations[id]['child']
-            assert len(refids) == 1
-            n.specialization.append(classes[refids[0]])
-        for id in n.get('generalization') or ():
-            # traverse the generalization object:
-            refids = generalizations[id]['parent']
-            assert len(refids) == 1
-            n.generalization.append(classes[refids[0]])
+    for g in generalizations.values():
+        #assert g.specific and g.general
+        specific = g['specific'][0]
+        general = g['general'][0]
+        classes[specific].generalization.append(classes[general])
+        classes[general].specialization.append(classes[specific])
 
     # add values to enumerations:
     for e in enumerations.values():
         values = []
-        for key in e['feature']:
-            values.append(str(attributes[key]['name']))
+        for key in e['ownedAttribute']:
+            values.append(str(properties[key]['name']))
         e.enumerates = tuple(values)
 
     # create file header
@@ -350,24 +344,33 @@ def generate(filename, outfile=None, overridesfile=None):
 
     # create attributes and enumerations
     for c in classes.values():
-        for f in c.get('feature') or ():
-            a = attributes.get(f)
+        for p in c.get('ownedAttribute') or []:
+            a = properties.get(p)
             if a:
                 # set class_name, since write_attribute depends on it
                 a.class_name = c['name']
-                writer.write_attribute(a, enumerations)
+                if not a.get('association'):
+                    writer.write_attribute(a, enumerations)
 
     # create associations, derivedunions are held back
     derivedunions = { } # indexed by name in stead of id
     redefines = [ ]
     for a in associations.values():
-        end1, end2 = a['connection']
-        end1 = associationends[end1]
-        end2 = associationends[end2]
-        end1.participant = classes[end1['participant'][0]]
-        end2.participant = classes[end2['participant'][0]]
-        for e1, e2 in ((end1, end2), (end2, end1)):
+        ends = []
+        for end in a['memberEnd']:
+            end = properties[end]
+            end.type = classes[end['type'][0]]
+            end.class_ = end.get('class_') and classes[end['class_'][0]] or None
+            #assert end.type is not end.class_
+            if end.get('lowerValue'):
+                end.lowerValue = all_elements[end['lowerValue'][0]]['value']
+            else:
+                end.lowerValue = ''
+            ends.append(end)
+
+        for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
             if not writer.write_association(e1, e2):
+                # At this point the association is parsed, but not written.
                 # assure that derived unions do not get overwritten
                 if e1.redefines:
                     redefines.append(e1)
@@ -377,8 +380,9 @@ def generate(filename, outfile=None, overridesfile=None):
                     e1.union = [ ]
                     e1.written = False
 
+
     # create derived unions, first link the association ends to the d
-    for a in filter(lambda e: hasattr(e, 'subsets'), associationends.values()):
+    for a in filter(lambda e: hasattr(e, 'subsets'), properties.values()):
         for s in a.subsets:
             try:
                 derivedunions[s].union.append(a)

@@ -23,12 +23,12 @@ class diagramassociation(association):
 
     def unlink(self, obj):
         #print 'diagramassociation.unlink', obj, value
-        obj.preserve_property('subject')
+        obj.preserve_property(self.name)
         association.unlink(self, obj)
 
     def _set2(self, obj, value):
         #print 'diagramassociation._set2', obj, value
-        obj.preserve_property('subject')
+        obj.preserve_property(self.name)
         if obj.canvas and obj.canvas.in_undo and len(value.presentation) == 0:
             print 'diagramassociation._set2(): relinking!'
             value.relink()
@@ -36,7 +36,7 @@ class diagramassociation(association):
 
     def _del(self, obj, value):
         print 'diagramassociation._del', obj, value, value.id
-        obj.preserve_property('subject')
+        obj.preserve_property(self.name)
         association._del(self, obj, value)
         if len(value.presentation) == 0 or \
            len(value.presentation) == 1 and obj in value.presentation:
@@ -75,12 +75,13 @@ class DiagramItem(Presentation):
     def __init__(self, id=None):
         Presentation.__init__(self)
         self._id = id # or uniqueid.generate_id()
+        # Mapping to convert handlers to GObject signal ids.
         self.__handler_to_id = { }
         # Add the class' on_subject_notify() as handler:
         self.connect('notify::subject', type(self).on_subject_notify)
-        self.__subject_notifier_ids = (None,)
-        #self.connect('notify::parent', DiagramItem.on_parent_notify)
-        #self.connect('__unlink__', self.on_unlink)
+        # The_subject is a backup that is used to disconnect signals when a
+        # new subject is set (or the original one is removed)
+        self.__the_subject = None
 
     id = property(lambda self: self._id, doc='Id')
 
@@ -111,7 +112,10 @@ class DiagramItem(Presentation):
             self.subject = value
         else:
             #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
-            self.set_property(name, eval(value))
+            try:
+                self.set_property(name, eval(value))
+            except:
+                log.warning('%s has no property names %s (value %s)' % (self, name, value))
 
     def postload(self):
         pass
@@ -198,18 +202,16 @@ class DiagramItem(Presentation):
         callback function. Callbacks have the signature
         on_subject_notify__<notifier>(self, subject, pspec).
         """
-        #log.info('DiagramItem.on_subject_notify: %s' % str(notifiers))
-        old_subject = self.__subject_notifier_ids[0]
-        for id in self.__subject_notifier_ids[1:]:
-            old_subject.disconnect(id)
-        self.__subject_notifier_ids = (None,)
+        #log.info('DiagramItem.on_subject_notify: %s' % self.__subject_notifier_ids)
+        if self.__the_subject:
+            for signal in notifiers:
+                self.__the_subject.disconnect(getattr(self, 'on_subject_notify__%s' % signal))
 
         if self.subject:
-            self.__subject_notifier_ids = [self.subject]
+            self.__the_subject = self.subject
             for signal in notifiers:
                 #log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
-                self.__subject_notifier_ids.append(self.subject.connect(signal,
-                             getattr(self, 'on_subject_notify__%s' % signal)))
+                self.subject.connect(signal, getattr(self, 'on_subject_notify__%s' % signal))
 
         self.request_update()
 

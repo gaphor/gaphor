@@ -56,8 +56,7 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
     def get_name_size(self):
         """Return the width and height of the name shape.
         """
-        layout = self._name.to_pango_layout(True)
-        return layout.get_pixel_size()
+        return self._name.to_pango_layout(True).get_pixel_size()
 
     def update_name(self, x, y, width, height):
 	self._name.set_pos((x, y))
@@ -65,7 +64,7 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
 	self._name.set_max_height(height)
 
     def postload(self):
-        self._name.set_text(self.subject.name) #.set_property('text', self.subject.name)
+        self._name.set_text(self.subject.name or '') #.set_property('text', self.subject.name)
 
     def on_subject_notify(self, pspec, notifiers=()):
         """See DiagramItem.on_subject_notify().
@@ -78,23 +77,15 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
     def on_subject_notify__name(self, subject, pspec):
         assert self.subject is subject
         #print 'on_subject_notify__name: %s' % self.subject.name
-        #import traceback
-        #traceback.print_stack()
-        #self._name.set(text=self.subject.name)
         self._name.set_text(self.subject.name)
-        #self._name = self.subject.name
-
-#    def on_text_changed(self, text_item, text):
-#        log.debug('on_text_changed: %s' % text)
-#        if self.subject and text != self.subject.name:
-#            self.subject.name = text
+        self.request_update()
 
     # DiaCanvasItem callbacks:
 
-    def on_update(self, affine):
+    #def on_update(self, affine):
         #self.update_child(self._name, affine)
         #self._name.set_text(self._name or '')
-        ModelElementItem.on_update(self, affine)
+        #ModelElementItem.on_update(self, affine)
 
     def on_event (self, event):
         if event.type == diacanvas.EVENT_2BUTTON_PRESS:
@@ -117,29 +108,8 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
         if new_text != self.subject.name:
             self.subject.name = new_text
             #self._name = new_text
-        self._name.set_text(new_text)
+        #self._name.set_text(new_text)
         self.request_update()
-
-    # Groupable
-
-    def on_groupable_add(self, item):
-        return 0
-
-    def on_groupable_remove(self, item):
-        return 0
-
-    def on_groupable_iter(self):
-        #return iter([self._name])
-        return iter([])
-
-    def on_groupable_length(self):
-        return 0
-
-    def on_groupable_pos(self, item):
-        #if item == self._name:
-        return 0
-        #else:
-        #    return -1
 
 gobject.type_register(ClassifierItem)
 diacanvas.set_editable(ClassifierItem)

@@ -49,7 +49,7 @@ class Element(object):
     def save(self, save_func):
         """Save the state by calling save_func(name, value)."""
         umlprop = umlproperty
-        clazz = self.__class__
+        clazz = type(self)
         for propname in dir(clazz):
             prop = getattr(clazz, propname)
             if isinstance(prop, umlprop):
@@ -60,10 +60,10 @@ class Element(object):
         should be called.
         """
         try:
-            prop = getattr(self.__class__, name)
+            prop = getattr(type(self), name)
         except AttributeError, e:
             raise AttributeError, "'%s' has no property '%s'" % \
-                                        (self.__class__.__name__, name)
+                                        (type(self).__name__, name)
         else:
             prop.load(self, value)
 
@@ -72,10 +72,10 @@ class Element(object):
         """
         for name in dir(type(self)):
             try:
-                prop = getattr(self.__class__, name)
+                prop = getattr(type(self), name)
             except AttributeError, e:
                 raise AttributeError, "'%s' has no property '%s'" % \
-                                            (self.__class__.__name__, name)
+                                            (type(self).__name__, name)
             else:
                 if isinstance(prop, umlproperty):
                     prop.postload(self)
@@ -137,7 +137,7 @@ class Element(object):
         cb_list = self._observers.get(cb_name or name, ())
         #log.debug('Element.notify: %s' % cb_list)
         try:
-            pspec = getattr(self.__class__, name)
+            pspec = getattr(type(self), name)
         except AttributeError:
             pspec = name
         

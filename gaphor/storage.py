@@ -1,6 +1,6 @@
 # vim: sw=4:et
-"""
-Load and save Gaphor models to Gaphors own XML format.
+"""Load and save Gaphor models to Gaphors own XML format.
+
 Three functions are exported:
 load(filename)
     load a model from a file
@@ -11,22 +11,24 @@ verify(filename)
     we have a valid model, just a valid file).
 """
 
+from cStringIO import StringIO
+from xml.sax.saxutils import escape
+import types
+import os.path
+import gc
 import UML
 import parser
 import diagram
 import diacanvas
-import os.path
-import types
-#import xml.dom.minidom as dom
-import gc
+
+__all__ = [ 'load', 'save' ]
 
 FILE_FORMAT_VERSION = '2.0'
 
 def save(filename=None, factory=None):
-    '''Save the current model to @filename. If no filename is given,
-    standard out is used.'''
-    from cStringIO import StringIO
-    from xml.sax.saxutils import escape
+    """Save the current model to @filename. If no filename is given,
+    standard out is used.
+    """
 
     def save_reference(name, value):
         """Save a value as a reference to another element in the model.
@@ -36,16 +38,25 @@ def save(filename=None, factory=None):
         if value.id:
             buffer.write('<reference name="%s" refid="%s"/>\n' % (name, value.id))
 
+    def save_collection(name, value):
+        """Save a list of references.
+        """
+        #buffer.write('<reflist>')
+        for v in value:
+            save_reference(name, v)
+        #buffer.write('</reflist>')
+
     def save_value(name, value):
         """Save a value (attribute).
         If the value is a string, it is saves as a CDATA block.
         """
-        buffer.write('<value name="%s">' % name)
-        if isinstance(value, types.StringTypes):
-            buffer.write('<![CDATA[%s]]>' % value.replace(']]>', '] ]>'))
-        else:
-            buffer.write(escape(str(value)))
-        buffer.write('</value>\n')
+        if value is not None:
+            buffer.write('<value name="%s">' % name)
+            if isinstance(value, types.StringTypes):
+                buffer.write('<![CDATA[%s]]>' % value.replace(']]>', '] ]>'))
+            else:
+                buffer.write(escape(str(value)))
+            buffer.write('</value>\n')
 
     def save_element(name, value):
         """Save attributes and references from items in the gaphor.UML module.
@@ -56,11 +67,7 @@ def save(filename=None, factory=None):
         if isinstance (value, (UML.Element, diacanvas.CanvasItem)):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
-            # Save a list of references:
-            #buffer.write('<reflist>')
-            for v in value:
-                save_reference(name, v)
-            #buffer.write('</reflist>')
+            save_collection(name, value)
         elif isinstance(value, diacanvas.Canvas):
             buffer.write('<canvas>')
             value.save(save_canvasitem)
@@ -76,11 +83,7 @@ def save(filename=None, factory=None):
         if reference or isinstance(value, UML.Element):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
-            # Save a list of references:
-            #buffer.write('<reflist>')
-            for v in value:
-                save_reference(name, v)
-            #buffer.write('</reflist>')
+            save_collection(name, value)
         elif isinstance(value, diacanvas.CanvasItem):
             buffer.write('<canvasitem id="%s" type="%s">' % (value.id, value.__class__.__name__))
             value.save(save_canvasitem)
@@ -116,9 +119,9 @@ def save(filename=None, factory=None):
             file.close()
 
 def _load(elements, factory):
-    '''Load a file and create a model if possible.
+    """Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
-    '''
+    """
 
     log.debug('Loading %d elements...' % len(elements.keys()))
 
@@ -160,7 +163,7 @@ def _load(elements, factory):
 
         # load attributes and references:
         for name, value in elem.values.items():
-            #log.debug('Loading value %s (%s) for element %s' % (name, value, elem.element))
+            log.debug('Loading value %s (%s) for element %s' % (name, value, elem.element))
             elem.element.load(name, value)
         for name, refids in elem.references.items():
             for refid in refids:
@@ -169,7 +172,7 @@ def _load(elements, factory):
                 except:
                     raise ValueError, 'Invalid ID for reference (%s)' % refid
                 else:
-                    #log.debug('Loading %s.%s with value %s' % (type(elem.element).__name__, name, ref.element.id))
+                    log.debug('Loading %s.%s with value %s' % (type(elem.element).__name__, name, ref.element.id))
                     elem.element.load(name, ref.element)
         
     log.info('0% ... 33% ... 66%')
@@ -231,9 +234,8 @@ def load (filename, factory=None):
         raise GaphorError, 'Could not load file %s (%s)' % (filename, e)
 
 def verify (filename):
-    """
-    Try to load the file. If loading succeeded, this file is probably a valid
-    Gaphor file.
+    """Try to load the file. If loading succeeded, this file is
+    probably a valid Gaphor file.
     """
     try:
         doc = dom.parse (filename)

@@ -102,6 +102,21 @@ class NamespaceModel(gtk.GenericTreeModel):
     def element_from_path(self, path):
         return self.node_from_path(path)[0]
 
+    def __sort_node(a, b):
+        m = a[0]
+        n = b[0]
+        if type(m) is type(n):
+            if m.name == n.name:
+                return 0
+            elif m.name < n.name:
+                return -1
+            else:
+                return 1
+        if isinstance(m, UML.Diagram):
+            return -1
+        elif isinstance(n, UML.Diagram):
+            return 1
+
     def sort_node(self, node):
         """Sort nodes based on their names."""
         node[1].sort(lambda a, b: a[0].name == b[0].name and 0 or \

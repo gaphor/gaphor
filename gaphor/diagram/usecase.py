@@ -3,6 +3,8 @@ eseCaseItempango diagram item
 '''
 # vim:sw=4
 
+from __future__ import generators
+
 import gobject
 import pango
 import diacanvas
@@ -23,14 +25,11 @@ class UseCaseItem(ClassifierItem):
 
     def on_update(self, affine):
         # Center the text
-        layout = self._name.get_property('layout')
-        #layout.set_width(-1)
-        w, h = layout.get_pixel_size()
+        w, h = self.get_name_size()
         self.set(min_width=w + UseCaseItem.MARGIN_X,
                  min_height=h + UseCaseItem.MARGIN_Y)
-        a = self._name.get_property('affine')
-        aa = (a[0], a[1], a[2], a[3], 0.0, (self.height - h) / 2)
-        self._name.set(affine=aa, width=self.width, height=h)
+        self.update_name(x=0, y=(self.height - h) / 2,
+                         width=self.width, height=h)
 
         ClassifierItem.on_update(self, affine)
 
@@ -39,7 +38,9 @@ class UseCaseItem(ClassifierItem):
         self.expand_bounds(1.0)
 
     def on_shape_iter(self):
-        return iter([self._border])
+        yield self._border
+        for s in ClassifierItem.on_shape_iter(self):
+            yield s
 
 
 gobject.type_register(UseCaseItem)

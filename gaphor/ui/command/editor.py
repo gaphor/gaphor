@@ -50,4 +50,3 @@ CommandInfo (name='EditorClear', _label='_Clear', pixname='gtk-clear',
 	     _tip='Clear the lower text box',
 	     context='editor.menu',
 	     command_class=ClearCommand).register()
-

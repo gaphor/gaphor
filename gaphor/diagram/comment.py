@@ -8,7 +8,11 @@ import diacanvas
 import gobject
 import pango
 
-class CommentItem(ModelElementItem):
+class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
+    __gproperties__ = {
+        'body': (gobject.TYPE_STRING, 'body', '', '', gobject.PARAM_READWRITE)
+    }
+
     EAR=15
     OFFSET=5
     FONT='sans 10'
@@ -19,40 +23,48 @@ class CommentItem(ModelElementItem):
                  height=50, width=100)
         self._border = diacanvas.shape.Path()
         self._border.set_line_width(2.0)
-        self._body = diacanvas.CanvasText()
-        self.add_construction(self._body)
-        font = pango.FontDescription(CommentItem.FONT)
-        self._body.set(font=font, width=self.width - (CommentItem.OFFSET * 2),
-                        alignment=pango.ALIGN_LEFT)
-        self._body.move(CommentItem.OFFSET, CommentItem.OFFSET)
-        self._body.connect('text_changed', self.on_text_changed)
+        self._body = diacanvas.shape.Text()
+        self._body.set_font_description(pango.FontDescription(CommentItem.FONT))
+        #self._body.set_text_width(self.width - (CommentItem.OFFSET * 2))
+        self._body.set_pos((CommentItem.OFFSET, CommentItem.OFFSET))
 
     def postload(self):
-        self._body.set(text=self.subject.body)
+        self._body.set_text(self.subject.body or '')
+
+    def do_set_property(self, pspec, value):
+        if pspec.name == 'body':
+            self.preserve_property('body')
+            self.subject.body = value
+        else:
+            ModelElementItem.do_set_property(self, pspec, value)
+
+    def do_get_property(self, pspec):
+        if pspec.name == 'body':
+            return self.subject.body
+        else:
+            return ModelElementItem.do_get_property(self, pspec)
 
     def on_subject_notify(self, pspec):
         """See DiagramItem.on_subject_notify()."""
         ModelElementItem.on_subject_notify(self, pspec, ('body',))
 
-        self._body.set(text=self.subject and self.subject.body or '')
+	if self.subject:
+	    self.on_subject_notify__body(self.subject, None)
 
     def on_subject_notify__body(self, subject, pspec):
-        self._body.set(text=self.subject.body)
-
-    def on_text_changed(self, text_item, text):
-        if self.subject and text != self.subject.body:
-            self.subject.body = text
+        #print 'on_subject_notify__body: %s' % self.subject.body
+        self._body.set_text(self.subject.body or '')
+	self.request_update()
 
     # DiaCanvasItem callbacks:
 
     def on_update(self, affine):
         # Outline the text, first tell the text how width it may become:
-        self._body.set_property('width',
-                        self.width - CommentItem.EAR - CommentItem.OFFSET)
-        w, h = self._body.get_property('layout').get_pixel_size()
+        self._body.set_text_width(self.width - CommentItem.EAR - CommentItem.OFFSET)
+        w, h = self._body.to_pango_layout(True).get_pixel_size()
         self.set(min_height=h + CommentItem.OFFSET * 2)
-        self._body.set_property('height', self.height - CommentItem.OFFSET * 2)
-        self.update_child(self._body, affine)
+        #self._body.set_property('height', self.height - CommentItem.OFFSET * 2)
+        #self.update_child(self._body, affine)
         ModelElementItem.on_update(self, affine)
 
         # Width and height, adjusted for line width...
@@ -64,37 +76,25 @@ class CommentItem(ModelElementItem):
         self.expand_bounds(1)
 
     def on_event (self, event):
-        if event.type == diacanvas.EVENT_KEY_PRESS:
-            self._body.focus()
-            self._body.on_event(event)
+        if event.type == diacanvas.EVENT_2BUTTON_PRESS:
+            self.start_editing(self._body)
             return True
         else:
             return ModelElementItem.on_event(self, event)
 
     def on_shape_iter(self):
-        return iter([self._border])
+        return iter([self._border, self._body])
 
-    # Groupable
+    # Editable
 
-    def on_groupable_add(self, item):
-        return 0
+    def on_editable_start_editing(self, shape):
+        self.preserve_property('body')
 
-    def on_groupable_remove(self, item):
-        '''Do not allow the body to be removed.'''
-        #self.emit_stop_by_name('remove')
-        return 1
-
-    def on_groupable_iter(self):
-        return iter([self._body])
-
-    def on_groupable_length(self):
-        return 1
-
-    def on_groupable_pos(self, item):
-        if item == self._body:
-            return 0
-        else:
-            return -1
-
+    def on_editable_editing_done(self, shape, new_text):
+        if new_text != self.subject.body:
+            self.subject.body = new_text
+        #self._body.set_text(new_text)
+        self.request_update()
 
 gobject.type_register(CommentItem)
+diacanvas.set_editable(CommentItem)

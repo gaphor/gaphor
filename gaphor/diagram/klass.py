@@ -95,7 +95,7 @@ class Compartment(object):
             self.separator.line(((0, self.sep_y), (width, self.sep_y)))
 
 
-class ClassItem(ClassifierItem):
+class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     __gproperties__ = {
         'show-attributes': (gobject.TYPE_BOOLEAN, 'show attributes',
                             '',
@@ -297,8 +297,6 @@ class ClassItem(ClassifierItem):
 
     def on_groupable_iter(self):
         #log.debug('on_groupable_iter')
-        for i in ClassifierItem.on_groupable_iter(self):
-            yield i
         for i in self._attributes.items:
             #log.debug('on_groupable_iter (attr): %s' % i)
             yield i
@@ -307,8 +305,7 @@ class ClassItem(ClassifierItem):
             yield i
 
     def on_groupable_length(self):
-        return ClassifierItem.on_groupable_length(self) \
-               + len(self._attributes.items) + len(self._operations.items)
+        return len(self._attributes.items) + len(self._operations.items)
 
     def on_groupable_pos(self, item):
         #if item == self._name:
@@ -339,3 +336,4 @@ class ClassItem(ClassifierItem):
 
 
 gobject.type_register(ClassItem)
+diacanvas.set_groupable(ClassItem)

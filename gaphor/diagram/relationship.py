@@ -24,12 +24,13 @@ class RelationshipItem(DiagramLine, DiagramItem):
 
     def load (self, name, value):
         if name == 'subject':
-            self.subject = value
+	    DiagramItem.load(self, name, value)
         else:
-            super(RelationshipItem, self).load(name, value)
+	    DiagramLine.load(self, name, value)
 
     def postload(self):
-        super(RelationshipItem, self).postload()
+        DiagramItem.postload(self)
+        DiagramLine.postload(self)
 
 #    def do_set_property (self, pspec, value):
 #        DiagramItem.do_set_property(self, pspec, value)

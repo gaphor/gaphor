@@ -58,6 +58,8 @@ gobject.type_register(DiagramCanvas)
 
 
 class Diagram(Namespace, PackageableElement):
+    """Diagrams may contain model elements and can be owned by a Package.
+    """
 
     def __init__(self, id):
 	super(Diagram, self).__init__(id)

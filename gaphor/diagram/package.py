@@ -25,16 +25,9 @@ class PackageItem(ClassifierItem):
 
     def on_update(self, affine):
         # Center the text
-        #layout = self._name.get_property('layout')
-        #self._name_shape.set_text(self._name or '')
-        #layout = self._name_shape.to_pango_layout(True) #get_property('layout')
         w, h = self.get_name_size()
         self.set(min_width=w + PackageItem.MARGIN_X,
                  min_height=h + PackageItem.MARGIN_Y)
-        #a = self._name.get_property('affine')
-        #aa = (a[0], a[1], a[2], a[3], a[4], \
-        #        (self.height - h + PackageItem.TAB_Y) / 2)
-        #self._name.set(affine=aa, width=self.width, height=h)
         self.update_name(x=0, y=(self.height - h + PackageItem.TAB_Y) / 2,
                          width=self.width, height=h)
 
