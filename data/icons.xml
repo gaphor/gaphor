@@ -30,6 +30,10 @@
   <icon id="gaphor-comment-line">
     <file>commentline24.png</file>
   </icon>
+  <icon id="gaphor-component">
+    <file>component24.png</file>
+    <element>Component</element>
+  </icon>
   <icon id="gaphor-control-flow">
     <file>controlflow24.png</file>
     <element>ControlFlow</element>
@@ -46,6 +50,10 @@
     <file>diagram16.png</file>
     <element>Diagram</element>
   </icon>
+  <icon id="gaphor-extend">
+    <file>dependency24.png</file>
+    <element>Extend</element>
+  </icon>
   <icon id="gaphor-extension">
     <file>extension24.png</file>
     <element>Extension</element>
@@ -57,6 +65,10 @@
   <icon id="gaphor-implementation">
     <file>implementation24.png</file>
     <element>Implementation</element>
+  </icon>
+  <icon id="gaphor-include">
+    <file>dependency24.png</file>
+    <element>Include</element>
   </icon>
   <icon id="gaphor-initial-node">
     <file>initialnode24.png</file>
@@ -93,9 +105,5 @@
   <icon id="gaphor-usecase">
     <file>usecase24.png</file>
     <element>UseCase</element>
-  </icon>
-  <icon id="gaphor-component">
-    <file>component24.png</file>
-    <element>Component</element>
   </icon>
 </stock-icons>

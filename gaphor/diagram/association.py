@@ -21,7 +21,7 @@ from gaphor.diagram import initialize_item
 from diagramitem import DiagramItem
 from relationship import RelationshipItem
 
-class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
+class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.CanvasEditable):
     """AssociationItem represents associations. 
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
@@ -40,6 +40,8 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
                          'subject held by the tail end of the association',
                          gobject.PARAM_READWRITE),
     }
+
+    FONT='sans bold 10'
 
     association_popup_menu = (
         'separator',
@@ -66,6 +68,21 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
         self._head_end.set_child_of(self)
         self._tail_end = AssociationEnd()
         self._tail_end.set_child_of(self)
+
+        self._label = diacanvas.shape.Text()
+        self._label.set_font_description(pango.FontDescription(AssociationItem.FONT))
+        #self._label.set_alignment(pango.ALIGN_CENTER)
+        self._label.set_markup(False)
+        #self._label.set_max_width(100)
+        #self._label.set_max_height(100)
+
+        # Direction depends on the ends that hold the ownedEnd attributes.
+        self._dir = diacanvas.shape.Path()
+        self._dir.set_line_width(2.0)
+        self._dir.line(((10, 0), (10, 10), (0, 5)))
+        self._dir.set_fill_color(diacanvas.color(0,0,0))
+        self._dir.set_fill(diacanvas.shape.FILL_SOLID)
+        self._dir.set_cyclic(True)
 
     def save (self, save_func):
         RelationshipItem.save(self, save_func)
@@ -114,12 +131,39 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
 
     tail_end = property(lambda self: self._tail_end)
 
+    def get_popup_menu(self):
+        if self.subject:
+            return self.popup_menu + self.association_popup_menu
+        else:
+            return self.popup_menu
+
     def on_subject_notify(self, pspec, notifiers=()):
         RelationshipItem.on_subject_notify(self, pspec,
-                                           notifiers + ('ownedEnd',))
+                                           notifiers + ('name', 'ownedEnd',))
+
+    def on_subject_notify__name(self, subject, pspec):
+        log.debug('Association name = %s' % (self.subject and self.subject.name))
+        if self.subject:
+            self._label.set_text(self.subject.name or '')
+        else:
+            self._label.set_text('')
+        self.request_update()
 
     def on_subject_notify__ownedEnd(self, subject, pspec):
         self.request_update()
+
+    def update_label(self, p1, p2):
+        w, h = self._label.to_pango_layout(True).get_pixel_size()
+
+        x = p1[0] > p2[0] and w + 2 or -2
+        x = (p1[0] + p2[0]) / 2.0 - x
+        y = p1[1] <= p2[1] and h or 0
+        y = (p1[1] + p2[1]) / 2.0 - y
+
+	self._label.set_pos((x, y))
+        log.debug('label pos = (%d, %d)' % (x, y))
+	#return x, y, max(x + 10, x + w), max(y + 10, y + h)
+	return x, y, x + w, y + h
 
     def on_update (self, affine):
         """Update the shapes and sub-items of the association."""
@@ -167,13 +211,23 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
         self.update_child(self._head_end, affine)
         self.update_child(self._tail_end, affine)
 
+        # update name label:
+        middle = len(handles)/2
+        self._label_bounds = self.update_label(handles[middle-1].get_pos_i(),
+                               handles[middle].get_pos_i())
         # bounds calculation
         b1 = self.bounds
         b2 = self._head_end.get_bounds(self._head_end.affine)
         b3 = self._tail_end.get_bounds(self._tail_end.affine)
-        self.set_bounds((min(b1[0], b2[0], b3[0]), min(b1[1], b2[1], b3[1]),
-                         max(b1[2], b2[2], b3[2]), max(b1[3], b2[3], b3[3])))
+        bv = zip(self._label_bounds, b1, b2, b3)
+        self.set_bounds((min(bv[0]), min(bv[1]), max(bv[2]), max(bv[3])))
                     
+    def on_shape_iter(self):
+        for s in RelationshipItem.on_shape_iter(self):
+            yield s
+        yield self._label
+        #yield self._dir
+
     # Gaphor Connection Protocol
 
     def allow_connect_handle(self, handle, connecting_to):
@@ -282,11 +336,21 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
     def on_groupable_iter(self):
         return iter([self._head_end, self._tail_end])
 
-    def get_popup_menu(self):
-        if self.subject:
-            return self.popup_menu + self.association_popup_menu
-        else:
-            return self.popup_menu
+    # Editable
+
+    def on_editable_get_editable_shape(self, x, y):
+        log.debug('association edit on (%d,%d)' % (x, y))
+        #p = (x, y)
+        #drp = diacanvas.geometry.distance_rectangle_point
+        #if drp(self._label_bounds, p) < 1.0:
+        return self._label
+
+    def on_editable_start_editing(self, shape):
+        pass
+
+    def on_editable_editing_done(self, shape, new_text):
+        if self.subject and self.subject.name != new_text:
+            self.subject.name = new_text
 
 
 class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):

@@ -125,7 +125,7 @@ class DependencyItem(RelationshipItem):
 
 	self._stereotype.set_pos((x, y))
 
-	return x, y, w, h
+	return x, y, x + w, y + h
 
     def on_update (self, affine):
         self._set_line_style();

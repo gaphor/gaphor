@@ -165,6 +165,9 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     #log.info('0%')
 
+    # Fix version inconsistencies
+    version_0_6_2(elements, factory, gaphor_version)
+
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     for id, elem in elements.items():
@@ -184,9 +187,6 @@ def load_elements_generator(elements, factory, gaphor_version=None):
             raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
 
     #log.info('0% ... 33%')
-
-    # Fix version inconsistencies
-    version_0_6_1(elements, factory, gaphor_version)
 
     # load attributes and create references:
     for id, elem in elements.items():
@@ -302,11 +302,11 @@ def load_generator(filename, factory=None):
 
 # Version inconsistencies can be fixed:
 
-def version_0_6_1(elements, factory, gaphor_version):
-    """Before 0.6.1 an Interface could be represented by a ClassItem and
+def version_0_6_2(elements, factory, gaphor_version):
+    """Before 0.6.2 an Interface could be represented by a ClassItem and
     a InterfaceItem. Now only InterfaceItems are used.
     """
-    if tuple(gaphor_version.split('.')) < (0, 6, 1):
+    if tuple(map(int, gaphor_version.split('.'))) < (0, 6, 2):
         for elem in elements.values():
             try:
                 if type(elem) is parser.element and elem.type == 'Interface':
@@ -314,6 +314,9 @@ def version_0_6_1(elements, factory, gaphor_version):
                         p = elements[p_id]
                         if p.type == 'ClassItem':
                             p.type = 'InterfaceItem'
+                            p.values['drawing-style'] = '0'
+                        elif p.type == 'InterfaceItem':
+                            p.values['drawing-style'] = '2'
             except Exception, e:
                 log.error('Error while updating InterfaceItems', e)
 
@@ -322,7 +325,7 @@ def version_0_5_2(elements, factory, gaphor_version):
     """Before version 0.5.2, the wrong memberEnd of the association was
     holding the aggregation information.
     """
-    if tuple(gaphor_version.split('.')) < (0, 5, 2):
+    if tuple(map(int, gaphor_version.split('.'))) < (0, 5, 2):
         log.info('Fix composition on Associations (file version: %s)' % gaphor_version)
         for elem in elements.values():
             try:

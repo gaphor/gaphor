@@ -9,11 +9,26 @@ As always, there is much to do...
 
 - write really good test cases for undo functionality. Have some already.
 
-- confirmation window when creating a new model.
+#- confirmation window when creating a new model.
 
 - An option that shows the selected item (in the namespace view) in a diagram.
 
 - Copy/Paste for diagramitems
+  - in order to make copy/paste work, the load/save functions should be
+    generatlised to allow a subset to be saved/loaded (which is needed
+    anyway for exporting/importing stereotype Profiles).
+  - How many data should be saved? (e.g. we copy a diagram item, remove it
+    (the underlaying UML element is removed) and the paste the copied item.
+    The diagram should act as if we have placed a copy of the removed item
+    on the canvas and make the uml element visible again.
+
+- Stereotype export and import function. Allow to export packages and import
+  them into other models.
+
+- Automatically draw relations when an item is DND-ed from the tree-view
+  to the diagram.
+
+- Create distinctive icons for Include and Extend relationships (use cases).
 
 - How to figure out if a module exists without loading it?
 
@@ -27,7 +42,8 @@ As always, there is much to do...
   actions on gaphor.UML classes.
   AJM: Looks like it really works now.
 
-- Exporting diagrams to UML XMI (work in progress), code, images (SVG/png), etc. - make a plugin!
+- Exporting diagrams to UML XMI (work in progress),
+  code, images (SVG/png), etc. - make a plugin!
 
 #- Make text selected when starting to edit it: fixed in DiaCanvas2
 

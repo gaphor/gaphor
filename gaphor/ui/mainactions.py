@@ -75,6 +75,17 @@ class NewAction(Action):
 
     def execute(self):
         factory = gaphor.resource(UML.ElementFactory)
+        if factory.size():
+            dialog = gtk.MessageDialog(self._window.get_window(),
+                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
+                _("Opening a new model will flush the currently loaded model.\nAny changes made will not be saved. Do you want to continue?"))
+            answer = dialog.run()
+            dialog.destroy()
+            if answer != gtk.RESPONSE_YES:
+                return
+
+        factory = gaphor.resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
         model = factory.create(UML.Package)

@@ -1,23 +1,23 @@
-# vim:sw=4
+# vi:sw=4:et
 
 import inspect
 
 class CollectionError(Exception):
     pass
 
-class Collection(object):
+class collection(object):
 
     def __init__(self, property, object, type):
-	self.property = property
-	self.object = object
-	self.type = type
-	self.items = []
+        self.property = property
+        self.object = object
+        self.type = type
+        self.items = []
 
     def __len__(self):
         return len(self.items)
 
     def __setitem__(self, key, value):
-	raise CollectionError, 'items should not be overwritten.'
+        raise CollectionError, 'items should not be overwritten.'
 
     def __delitem__(self, key):
         self.remove(key)
@@ -29,40 +29,44 @@ class Collection(object):
         return self.items.__getslice__(i, j)
 
     def __setslice__(self, i, j, s):
-	raise CollectionError, 'items should not be overwritten.'
+        raise CollectionError, 'items should not be overwritten.'
 
     def __delslice__(self, i, j):
-	raise CollectionError, 'items should not be deleted this way.'
+        raise CollectionError, 'items should not be deleted this way.'
 
     def __contains__(self, obj):
         return self.items.__contains__(obj)
 
     def __iter__(self):
-	return iter(self.items)
+        return iter(self.items)
 
     def __str__(self):
-	return str(self.items)
+        return str(self.items)
+
+    __repr__ = __str__
 
     def __nonzero__(self):
-	return self.items!=[]
+        return self.items!=[]
 
     def append(self, value):
-	if isinstance(value, self.type):
-	    self.property._set(self.object, value)
-	else:
-	    raise CollectionError, 'Object is not of type %s' % self.type.__name__
+        if isinstance(value, self.type):
+            self.property._set(self.object, value)
+        else:
+            raise CollectionError, 'Object is not of type %s' % self.type.__name__
 
     def remove(self, value):
-	if value in self.items:
-	    self.property.__delete__(self.object, value)
-	else:
-	    raise AttributeError, '%s not in collection' % value
+        if value in self.items:
+            self.property.__delete__(self.object, value)
+        else:
+            raise AttributeError, '%s not in collection' % value
+
 
     def index(self, key):
-	"""Given an object, return the position of that object in the
-	collection."""
-	return self.items.index(key)
-    
+        """Given an object, return the position of that object in the
+        collection."""
+        return self.items.index(key)
+
+
     # OCL members (from SMW by Ivan Porres, http://www.abo.fi/~iporres/smw)
 
     def size(self):
@@ -127,7 +131,7 @@ class Collection(object):
     
     def forAll(self,f):
         if not self.items or not inspect.getargspec(f)[0]:
-            return 1
+            return True
 
         nargs=len(inspect.getargspec(f)[0])
         if inspect.getargspec(f)[3]:
@@ -142,22 +146,23 @@ class Collection(object):
             for x in index:
                 args.append(self.items[x])
             if not apply(f,args):
-                return 0
+                return False
             c=len(index)-1
             index[c]=index[c]+1
             while index[c]==nitems:
                 index[c]=0
                 c=c-1
                 if c<0:
-                    return 1
+                    return True
                 else:
                     index[c]=index[c]+1 
                 if index[c]==nitems-1:
                     c=c-1
+	return False
 
     def exist(self,f):
         if not self.items or not inspect.getargspec(f)[0]:
-            return 0
+            return False
 
         nargs=len(inspect.getargspec(f)[0])
         if inspect.getargspec(f)[3]:
@@ -171,15 +176,42 @@ class Collection(object):
             for x in index:
                 args.append(self.items[x])
             if apply(f,args):
-                return 1
+                return True
             c=len(index)-1
             index[c]=index[c]+1
             while index[c]==nitems:
                 index[c]=0
                 c=c-1
                 if c<0:
-                    return 0
+                    return False
                 else:
                     index[c]=index[c]+1 
                 if index[c]==nitems-1:
                     c=c-1
+	return False
+
+
+    def moveUp(self, value):
+        """
+        Move element up. Owner is notified about the change.
+        """
+        i1 = self.items.index(value)
+        i2 = i1 - 1
+        if i2 >= 0:
+            self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
+            self.property.notify(self.object) # send a notification that this list has changed
+        else:
+            log.warning('Cannot move up first element')
+
+
+    def moveDown(self, value):
+        """
+        Move element down. Owner is notified about the change.
+        """
+        i1 = self.items.index(value)
+        i2 = i1 + 1
+        if i2 < len(self.items):
+            self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
+            self.property.notify(self.object) # send a notification that this list has changed
+        else:
+            log.warning('Cannot move down last element')

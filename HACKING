@@ -11,6 +11,9 @@ The UML module contains the UML 2.0 data model. This part is
 quite stable and it is unlikely that code has to be changed
 here.
 
+  NOTE:	The code is generated from a Gaphor model: uml2.gaphor. This
+	file can be loaded in gaphor.
+
 diagram
 -------
 The diagram module contains items that can be placed in diagrams.
@@ -19,8 +22,9 @@ as bases for your class.
 
 ui
 --
-The user interface. This is where most of the work is.
+The user interface. This is where most of the work is to be done.
 
 misc
 ----
 Some utility stuff, such as Actions and aspects are put in here.
+

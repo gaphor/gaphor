@@ -173,9 +173,7 @@ class XMIExport(Action):
             attributes=XMLAttributes()
             attributes['xmi.id']=str(id(attributes)) # No id in Gaphor for this
             values=('lower','upper')
--:1: parser error : Start tag expected, '<' not found
             for value in values:
-            ^
                 try:
                     data=getattr(end, '%sValue'%value).value
                 except AttributeError:

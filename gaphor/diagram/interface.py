@@ -84,6 +84,7 @@ class InterfaceItem(ClassItem):
         make non-movable if the icon (folded) style is used.
         """
         ClassItem.set_drawing_style(self, style)
+        # TODO: adjust offsets so the center point is the same
         if self.drawing_style == self.DRAW_ICON:
             r2 = self.RADIUS * 2
             self.set(height=r2, width=r2)

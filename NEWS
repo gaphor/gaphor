@@ -1,7 +1,11 @@
+0.6.0
+-----
+- Enhanced Plugin support
+- Interfaces
+- Support for Stereotypes
 
 0.5.0
 -----
-- Support for Stereotypes
 - Support for UseCases
 - Plugins
 - Packages can be reordered

@@ -144,7 +144,7 @@ class IncludePlacementAction(PlacementAction):
     id = 'InsertInclude'
     label = '_Include'
     tooltip = 'Create a new Include'
-    stock_id = 'gaphor-dependency'
+    stock_id = 'gaphor-include'
     name = 'Include'
     type = diagram.IncludeItem
 
@@ -155,7 +155,7 @@ class ExtendPlacementAction(PlacementAction):
     id = 'InsertExtend'
     label = '_Extend'
     tooltip = 'Create a new Extend'
-    stock_id = 'gaphor-dependency'
+    stock_id = 'gaphor-extend'
     name = 'Extend'
     type = diagram.ExtendItem
 

@@ -227,6 +227,40 @@ class DeleteAction(Action):
 register_action(DeleteAction, 'ItemSelect')
 
 
+class CopyAction(Action):
+    """Copy/Cut/Paste functionality required a lot of thinking:
+      - in order to make copy/paste work, the load/save functions should be
+        generatlised to allow a subset to be saved/loaded (which is needed
+	anyway for exporting/importing stereotype Profiles).
+      - How many data should be saved? (e.g. we copy a diagram item, remove it
+	(the underlaying UML element is removed) and the paste the copied item.
+	The diagram should act as if we have placed a copy of the removed item
+	on the canvas and make the uml element visible again.
+    """
+    id = 'EditCopy'
+    label = '_Copy'
+    accel = 'C-x'
+    stock_id = 'gtk-cut'
+
+    def init(self, window):
+	self._window = window
+	self._stack = []
+
+    def update(self):
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = diagram_tab and len(diagram_tab.get_view().selected_items) > 0
+
+    def execute(self):
+	view = self._window.get_current_diagram_view()
+	if view.is_focus():
+	    items = view.selected_items
+	    for i in items:
+		i.item.save(save_func)
+	tab = self._window.get_current_diagram_tab()
+
+register_action(CopyAction)
+
+
 class ZoomInAction(Action):
     id = 'ViewZoomIn'
     label = 'Zoom _In'
