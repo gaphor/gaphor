@@ -455,6 +455,22 @@ class RenameElementAction(Action):
 register_action(RenameElementAction)
 
 
+class RefreshNamespaceModelAction(Action):
+
+    """Delete a model element through the tree view. This is only applicable
+    to Diagram's and is not undoable."""
+    id = 'RefreshNamespaceModel'
+    label = '_Refresh'
+
+    def init(self, window):
+        self._window = window
+
+    def execute(self):
+        self._window.get_model().refresh()
+
+register_action(RefreshNamespaceModelAction)
+
+
 class DeleteCommand(Action):
     """Delete a model element through the tree view. This is only applicable
     to Diagram's and is not undoable."""

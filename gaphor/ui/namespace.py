@@ -225,21 +225,30 @@ class NamespaceModel(gtk.GenericTreeModel):
         #else:
             #log.debug('model is in sync for "%s"' % element.name)
 
+    def flush(self):
+        for i in self.root[1]:
+            self.detach_notifiers_from_node(i)
+            # remove the node, it is now the first in the list:
+            self.row_deleted((0,))
+        self.root = (None, [])
+
+    def _build_model(self):
+        toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
+
+        for t in toplevel:
+            #print 'factory::model toplevel', t, t.name
+            self.new_node_from_element(t, self.root)
+        #print 'self.root', self.root
+
+    def refresh(self):
+        self.flush()
+        self._build_model()
+
     def on_factory_signals (self, obj, pspec):
         if pspec == 'model':
-            toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
-
-            for t in toplevel:
-                #print 'factory::model toplevel', t, t.name
-                self.new_node_from_element(t, self.root)
-            #print 'self.root', self.root
-
+            self._build_model()
         elif pspec == 'flush':
-            for i in self.root[1]:
-                self.detach_notifiers_from_node(i)
-                # remove the node, it is now the first in the list:
-                self.row_deleted((0,))
-            self.root = (None, [])
+            self.flush()
 
         # TODO: add create (and remove?) signal so we can add 
         #elif pspec == 'create':

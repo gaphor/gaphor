@@ -118,8 +118,8 @@ class ElementFactory(object):
         for cb_data in self._observers:
             try:
                 apply(cb_data[0], (element, name) + cb_data[1:])
-            except:
-                pass
+            except Exception, e:
+                log.error('Notification of %s failed.' % cb_data[0], e)
 
     def notify_model(self):
         self.notify(None, 'model')

@@ -140,7 +140,9 @@ class MainWindow(AbstractWindow):
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',
                 'separator',
-                'CreateDiagram')
+                'CreateDiagram',
+                'separator',
+                'RefreshNamespaceModel')
 
     def __init__(self):
         AbstractWindow.__init__(self)

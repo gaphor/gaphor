@@ -1,3 +1,10 @@
+2004-06-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: changed Interfaces diagram, so namespaces
+	work properly.
+	TODO: should write integrety checks for the data model (check if
+	derived unions are propertly subsetted everywhere, typos, etc.)
+
 2004-06-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/namespace.py: Added DND for elements within the tree view.

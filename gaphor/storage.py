@@ -31,6 +31,8 @@ def save(filename=None, factory=None, status_queue=None):
     """Save the current model to @filename. If no filename is given,
     standard out is used.
     """
+    # Make bool work for Python 2.2
+    bool_ = type(bool(0))
 
     def save_reference(name, value):
         """Save a value as a reference to another element in the model.
@@ -59,7 +61,7 @@ def save(filename=None, factory=None, status_queue=None):
             buffer.write('<%s><val>' % name)
             if isinstance(value, types.StringTypes):
                 buffer.write('<![CDATA[%s]]>' % value.replace(']]>', '] ]>'))
-            elif isinstance(value, bool):
+            elif isinstance(value, bool_):
                 # Write booleans as 0/1.
                 buffer.write(str(int(value)))
             else:
