@@ -14,7 +14,7 @@ class _CommandExecuter(object):
 	self.executing = 0
 
     def __call__(self, *args):
-	print 'CommandExecuter.__call__:', args
+	#print 'CommandExecuter.__call__:', args
 	if not self.executing:
 	    self.executing = 1
 	    try:
@@ -71,16 +71,27 @@ class CommandRegistry(object):
 	"""Get all names of commands within a context and their capabilities
 	in a list of (name, type, capabilities). Type if one of 'state' or
 	'sensitive'."""
-	names = list()
+	caps = list()
 	for ctx, infos in self.__registry.items():
 	    if ctx.startswith(context):
 		for info in infos:
 		    if info.sensitive:
-			names.append((info.name, 'sensitive', info.sensitive))
+			caps.append((info.name, 'sensitive', info.sensitive))
 		    if info.state:
-			names.append((info.name, 'state', info.state))
-	return names
+			caps.append((info.name, 'state', info.state))
+	return caps
 
+    def get_subjects(self, context):
+	"""Get a list of (name, element) tuples for all commands within
+	the context."""
+	subjects = list()
+	for ctx, infos in self.__registry.items():
+	    if ctx.startswith(context):
+		for info in infos:
+		    if info.subject:
+			subjects.append((info.name, info.subject))
+	return subjects
+	
     def get_verbs(self, context, params):
 	"""Create a list of verbs and a list of listeners.
 	Verbs are used for normal menu items. Listeners for statefull menu
@@ -88,23 +99,41 @@ class CommandRegistry(object):
 	for instantiation.
 	This method is called by AbstractWindow to initialize the menus."""
 	verbs = list()
-	#listeners = list()
 	for ctx, infos in self.__registry.items():
 	    if ctx.startswith(context):
 		for info in infos:
 		    try:
 			cmd = info.command_class()
 			cmd.set_parameters(params)
-			verbs.append((info.name, _CommandExecuter(cmd)))
-			#if info.state:
-			#    listeners.append(v)
-			#else:
-			#    verbs.append(v)
+			if not info.state:
+			    verbs.append((info.name, _CommandExecuter(cmd)))
 		    except Exception, e:
 			print 'No verb created for ' + info.name + ':', e
 			import traceback
 			traceback.print_exc()
-	return verbs # , listeners
+	return verbs
+
+    def get_listeners(self, context, params):
+	"""Create a list of verbs and a list of listeners.
+	Verbs are used for normal menu items. Listeners for statefull menu
+	items. A dictionary of parameters can be supplied to the command
+	for instantiation.
+	This method is called by AbstractWindow to initialize the menus."""
+	#verbs = list()
+	listeners = list()
+	for ctx, infos in self.__registry.items():
+	    if ctx.startswith(context):
+		for info in infos:
+		    try:
+			cmd = info.command_class()
+			cmd.set_parameters(params)
+			if info.state:
+			    listeners.append((info.name, _CommandExecuter(cmd)))
+		    except Exception, e:
+			print 'No verb created for ' + info.name + ':', e
+			import traceback
+			traceback.print_exc()
+	return listeners
 
 # Register the registry as application wide resource.
 GaphorResource(CommandRegistry)

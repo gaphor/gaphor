@@ -64,12 +64,12 @@ AM_CHECK_PYMOD(xmllib, , , AC_MSG_ERROR(not_found_msg))
 AM_CHECK_PYMOD(copy, , , AC_MSG_ERROR(not_found_msg))
 AM_CHECK_PYMOD(pygtk, , , AC_MSG_ERROR(not_found_msg))
 
-AC_MSG_CHECKING(for PyGTK >= 1.99.13)
+AC_MSG_CHECKING(for PyGTK >= 1.99.14)
 prog="
 import pygtk
 pygtk.require('2.0')
 import sys, gtk
-minver = (1,99,13)
+minver = (1,99,14)
 print gtk.pygtk_version,
 if gtk.pygtk_version < minver:
 	sys.exit(1)

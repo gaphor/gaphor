@@ -26,7 +26,7 @@ class OpenCommand(Command):
 
 CommandInfo (name='OpenModelElement', _label='_Open',
 	     context='main.popup',
-	     popup=UML.Diagram,
+	     subject=UML.Diagram,
 	     command_class=OpenCommand).register()
 
 
@@ -49,5 +49,12 @@ class RenameCommand(Command):
 CommandInfo (name='RenameModelElement', _label='_Rename',
 	     context='main.popup',
 	     command_class=RenameCommand).register()
+
+from main import CreateDiagramCommand
+
+CommandInfo (name='CreateDiagram', _label='_New diagram', pixname='gaphor-diagram',
+	     _tip='Create a new diagram at toplevel',
+	     context='main.popup',
+	     command_class=CreateDiagramCommand).register()
 
 

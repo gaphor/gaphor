@@ -1,7 +1,9 @@
 SUBDIRS = pixmaps
 
 pkgdata_DATA = \
-	gaphor-ui.xml \
-	gaphor-diagram-ui.xml
+	gaphor-main-ui.xml \
+	gaphor-diagram-ui.xml \
+	gaphor-editor-ui.xml \
+	gaphor.dtd
 
 EXTRA_DIST = $(pkgdata_DATA)

@@ -33,6 +33,7 @@ We'll name the contexts:
   4. diagram.popup	window (gaphor.ui.DiagramWindow),
   			item (gaphor.diagram.DiagramItem, focused item),
 			item_list (list of selected DiagramItems)
+  etc.
 
 A command should tell in it's info which context should be provided.
 

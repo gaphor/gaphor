@@ -4,3 +4,4 @@ command.py
 logger.py
 signal.py
 singleton.py
+uniqueid.py

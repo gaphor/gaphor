@@ -176,12 +176,19 @@ CommandInfo (name='FileQuit', _label='_Quit', pixname='Exit',
 
 class CreateDiagramCommand(Command):
 
+    def set_parameters(self, params):
+	if params.has_key('element'):
+	    # in a popup menu
+	    self._parent = params['element']
+	else:
+	    self._parent = None
+
     def execute(self):
 	elemfact = GaphorResource(UML.ElementFactory)
-	model = elemfact.lookup(1) # model
 	diagram = elemfact.create(UML.Diagram)
-	diagram.namespace = model
+	diagram.namespace = self._parent or elemfact.get_model()
 	diagram.name = "New diagram"
+	# TODO: make the self._parent node expand
 
 CommandInfo (name='CreateDiagram', _label='_New diagram', pixname='gaphor-diagram',
 	     _tip='Create a new diagram at toplevel',

@@ -42,22 +42,24 @@
 	</submenu>
     </menu>
 
-<!--
-    <dockitem name="Toolbar" _tip="Main toolbar" behavior="detachable,exclusive">
-	<toolitem name="FileNew" verb=""/>
-	<toolitem name="FileOpen" verb=""/>
-	<toolitem name="FileSave" verb=""/>
-	<toolitem name="FileSaveAs" verb=""/>
-
+    <dockitem name="Toolbar" _tip="Diagram toolbar" behavior="detachable,exclusive">
+	<toolitem name="InsertActor" verb=""/>
+	<toolitem name="InsertUseCase" verb=""/>
 	<separator/>
-
+	<toolitem name="InsertClass" verb=""/>
+	<toolitem name="InsertPackage" verb=""/>
+	<toolitem name="InsertAssociation" verb=""/>
+	<toolitem name="InsertDependency" verb=""/>
+	<toolitem name="InsertGeneralization" verb=""/>
+	<separator/>
+	<toolitem name="InsertComment" verb=""/>
+	<toolitem name="InsertCommentLine" verb=""/>
     </dockitem>
--->
 
     <popups>
 	<popup name="DiagramView">
 	    <menuitem name="EditDelete" verb=""/>
-	    <menuitem name="SnapToGrid" verb=""/>
+	    <menuitem name="SnapToGrid" verb="" type="toggle"/>
 	    <separator/>
 	    <menuitem name="CreateAttribute" verb=""/>
 	    <menuitem name="CreateOperation" verb=""/>

@@ -1,7 +1,7 @@
 Gaphor
 ~~~~~~
 
-GModeler is a UML CASE tool aiming for symplicity. It is written in Python and
+Gaphor is a UML CASE tool aiming for symplicity. It is written in Python and
 C. The goal is to write as much as possible in Python (easy scriptable for
 code generators) and only some elementary parts are written in C (this involves
 mainly the graphical items).

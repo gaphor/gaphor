@@ -34,3 +34,13 @@ Diagram window capabilities:
   model has a stable design, while the implementation of diagrams and diagram
   items is likely to change much often.
 
+Implementation
+~~~~~~~~~~~~~~
+All windows are inherited from AbstractWindow. This class has a set_capability()
+method. this method can be used to activate and deactivate capabilities. If
+capabilities are (de)activated, all commands within a specific context (such
+as 'main' or 'diagram') are verified. If their capabilities are not met, the
+command in made insensitive (grayed out). Capabilities are desctibed as simple
+text strings, such as 'undo' and 'snap_to_grid'. The capabilities themselves are
+set by signal handlers which are attached during the window's construction.
+

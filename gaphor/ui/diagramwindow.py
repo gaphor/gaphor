@@ -35,7 +35,7 @@ class DiagramWindow(AbstractWindow):
 	    dia.connect(self.__on_diagram_event)
 	    self.__undo_id = dia.canvas.connect('undo', self.__on_diagram_undo)
 	    # Why doesn't this property react?
-	    self.__snap_to_grid_id = dia.canvas.connect('notify::snap_to_grid', self.__on_diagram_notify_snap_to_grid)
+	    self.__snap_to_grid_id = dia.canvas.connect('notify::snap-to-grid', self.__on_diagram_notify_snap_to_grid)
 	    #dia.canvas.set_property('snap_to_grid', 1)
 	    self.__on_diagram_undo(dia.canvas)
 
@@ -105,14 +105,10 @@ class DiagramWindow(AbstractWindow):
 	# handle mouse button 3 (popup menu):
 	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
 	    view.canvas.push_undo(None)
-	    cmd_reg = GaphorResource('CommandRegistry')
-	    verbs = cmd_reg.get_verbs(context='diagram.popup',
-				      params={ 'window': self })
-	    self.get_ui_component().add_verb_list (verbs, None)
-	    menu = gtk.Menu()
-	    # The window takes care of destroying the old menu, if any...
-	    self.get_window().add_popup(menu, '/popups/DiagramView')
-	    menu.popup(None, None, None, event.button, 0)
+	    self._construct_popup_menu(name='DiagramView',
+				       element=view.focus_item and view.focus_item.item.subject or None,
+				       event=event,
+				       params={ 'window': self })
 	    view.stop_emission('event')
 	    return True
 	return False
@@ -129,7 +125,7 @@ class DiagramWindow(AbstractWindow):
 	self.set_capability('undo', canvas.get_undo_depth() > 0)
 	self.set_capability('redo', canvas.get_redo_depth() > 0)
 
-    def __on_diagram_notify_snap_to_grid(self, canvas):
+    def __on_diagram_notify_snap_to_grid(self, canvas, pspec):
 	log.debug('notify:snap_to_grid = %d' % canvas.get_property('snap_to_grid'))
 	
 	self.set_capability('snap_to_grid', canvas.get_property('snap_to_grid'))

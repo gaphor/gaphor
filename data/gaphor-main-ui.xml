@@ -70,13 +70,14 @@
 	<toolitem name="FileOpen" verb=""/>
 	<toolitem name="FileSave" verb=""/>
 	<toolitem name="FileSaveAs" verb=""/>
-	<separator/>
     </dockitem>
 
     <popups>
 	<popup name="NamespaceView">
 	    <menuitem name="OpenModelElement" verb=""/>
 	    <menuitem name="RenameModelElement" verb=""/>
+	    <separator/>
+	    <menuitem name="CreateDiagram" verb=""/>
 	</popup>
     </popups>
 

@@ -2,9 +2,8 @@
 
 from gaphor.misc.signal import Signal
 from commandregistry import CommandRegistry
-import bonobo.ui
+import gobject, gtk, bonobo.ui
 import gaphor.config as config
-import gobject
 
 class AbstractWindow(object):
     """
@@ -117,20 +116,33 @@ class AbstractWindow(object):
 	command_registry = GaphorResource(CommandRegistry)
 
 	ui_component.set_translate ('/', command_registry.get_command_xml(context=name + '.'))
-	verbs = command_registry.get_verbs(context=name + '.menu', params=params)
+	verbs = command_registry.get_verbs(context=name + '.menu',
+					   params=params)
 	ui_component.add_verb_list (verbs, None)
+
+	listeners = command_registry.get_listeners(context=name + '.menu',
+						   params=params)
+	for n, c in listeners:
+	    ui_component.add_listener(n, c)
 
 	window.show_all()
 
 	self.__window = window
 	self.__ui_component = ui_component
 
-    def _construct_popup_menu(self, name, event, params):
+    def _construct_popup_menu(self, name, element, event, params):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
+	context = self.__name + '.popup'
 	command_registry = GaphorResource(CommandRegistry)
-	verbs = command_registry.get_verbs(name=self.__name + '.popup',
-					   params=params)
+	verbs = command_registry.get_verbs(context, params)
 	self.__ui_component.add_verb_list (verbs, None)
+	
+	for cmd, klass in command_registry.get_subjects(context):
+	    log.debug ('%s: %s' % (cmd, klass))
+	    self.__ui_component.set_prop('/commands/' + cmd,
+					 'hidden',
+					 isinstance (element, klass) and '0' or '1')
+	log.debug ('done')
 	menu = gtk.Menu()
 	# The window takes care of destroying the old menu, if any...
 	self.__window.add_popup(menu, '/popups/' + name)
@@ -149,11 +161,11 @@ class AbstractWindow(object):
     def _on_capability_update(self):
 	"""Activate or deactivate commands with capabilities."""
 	if self.__state == AbstractWindow.STATE_ACTIVE:
-	    com_reg = GaphorResource(CommandRegistry)
+	    command_registry = GaphorResource(CommandRegistry)
 	    self_caps = self.__capabilities
 	    log.debug('Capabilities are %s' % self_caps)
-	    for name, type, caps in com_reg.get_capabilities(self.__name + '.'):
-		log.debug('Checking caps for %s %s' % (name, caps))
+	    for name, type, caps in command_registry.get_capabilities(self.__name + '.'):
+		#log.debug('Checking caps for %s %s' % (name, caps))
 		for c in caps:
 		    if c not in self_caps:
 			# disable the command:

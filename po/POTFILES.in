@@ -2,6 +2,7 @@ gaphor/__init__.py
 gaphor/gaphor.py
 gaphor/config.py
 gaphor/plugin.py
+gaphor/storage.py
 gaphor/UML/__init__.py
 gaphor/UML/enumeration.py
 gaphor/UML/sequence.py
@@ -29,6 +30,7 @@ gaphor/ui/abstractwindow.py
 gaphor/ui/commandregistry.py
 gaphor/ui/diagramview.py
 gaphor/ui/diagramwindow.py
+gaphor/ui/editorwindow.py
 gaphor/ui/mainwindow.py
 gaphor/ui/namespace.py
 gaphor/ui/stock.py
@@ -36,15 +38,13 @@ gaphor/ui/command/__init__.py
 gaphor/ui/command/commandinfo.py
 gaphor/ui/command/diagram.py
 gaphor/ui/command/diagramitem.py
+gaphor/ui/command/diagrampopup.py
+gaphor/ui/command/editor.py
 gaphor/ui/command/main.py
 gaphor/ui/command/mainpopup.py
 gaphor/misc/__init__.py
 gaphor/misc/conf.py
 gaphor/misc/command.py
 gaphor/misc/logger.py
-gaphor/misc/menufactory.py
 gaphor/misc/signal.py
 gaphor/misc/singleton.py
-gaphor/misc/storage.py
-gaphor/misc/storage_libxml2.py
-gaphor/misc/storage_minidom.py

@@ -12,16 +12,16 @@ class CommandInfo(object):
     """CommandInfo contains meta information about a command. The following
     """
     __slots__ = ( 'name', '_label', 'context', '_tip',
-		  'sensitive', 'state', 'popup', 'pixtype', 'pixname',
+		  'sensitive', 'state', 'subject', 'pixtype', 'pixname',
 		  'accel', 'command_class', 'extra_args' )
 
     def __init__(self, name, _label, context, _tip=None,
-		 sensitive=None, state=None, popup=None,
+		 sensitive=None, state=None, subject=None,
 		 pixtype='stock', pixname=None, accel=None,
 		 command_class=None):
 	"""Create a new command info object."""
 	assert name and name != ''
-	assert not popup or issubclass(popup, UML.ModelElement)
+	assert not subject or issubclass(subject, UML.ModelElement)
 	assert issubclass(command_class, Command)
 
 	self.name = name
@@ -36,9 +36,7 @@ class CommandInfo(object):
 	    self.state = (state,)
 	else:
 	    self.state = state
-	#self.sensitive = sensitive
-	#self.state = state
-	self.popup = popup
+	self.subject = subject
 	self.pixtype = pixtype
 	self.pixname = pixname
 	self.accel = accel

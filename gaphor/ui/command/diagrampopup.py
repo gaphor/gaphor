@@ -8,6 +8,10 @@ from commandinfo import CommandInfo
 import gaphor.UML as UML
 import diacanvas
 
+# NOTE: attributes and operations can now only be created on classes,
+#       actors and uuse-cases are also classifiers, but we can't add 
+#       attrs and opers via the UI right now.
+
 class CreateAttributeCommand(Command):
 
     def set_parameters(self, params):
@@ -29,7 +33,7 @@ class CreateAttributeCommand(Command):
 CommandInfo (name='CreateAttribute', _label='New _Attribute',
 	     _tip='Create a new attribute',
 	     context='diagram.popup',
-	     sensitive=('focus',), popup=UML.Classifier,
+	     sensitive=('focus',), subject=UML.Class,
 	     command_class=CreateAttributeCommand).register()
 
 class CreateOperationCommand(Command):
@@ -53,6 +57,6 @@ class CreateOperationCommand(Command):
 CommandInfo (name='CreateOperation', _label='New _Operation',
 	     _tip='Create a new operation',
 	     context='diagram.popup',
-	     sensitive=('focus',), popup=UML.Classifier,
+	     sensitive=('focus',), subject=UML.Class,
 	     command_class=CreateOperationCommand).register()
 
