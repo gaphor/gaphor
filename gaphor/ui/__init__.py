@@ -1,4 +1,4 @@
-__all__ = [ 'command', 'namespace' ]
+__all__ = [ 'command', 'namespace', 'stock' ]
 from mainwindow import *
 from diagramwindow import *
 from diagramview import *

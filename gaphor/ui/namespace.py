@@ -11,6 +11,7 @@ import gaphor.UML as UML
 import sys
 import string
 from command.tree import OpenModelElementCommand
+import stock
 
 class NamespaceModel(gtk.GenericTreeModel):
     """
@@ -238,7 +239,7 @@ class NamespaceView(gtk.TreeView):
 	selection.set_mode(gtk.SELECTION_BROWSE)
 	column = gtk.TreeViewColumn ('')
 	# First cell in the column is for an image...
-	cell = gtk.CellRendererText ()
+	cell = gtk.CellRendererPixbuf ()
 	column.pack_start (cell, 0)
 	column.set_cell_data_func (cell, self._set_pixbuf, None)
 	
@@ -254,11 +255,14 @@ class NamespaceView(gtk.TreeView):
 
     def _set_pixbuf (self, column, cell, model, iter, data):
 	value = model.get_value(iter, 0)
-	name = value.__class__.__name__
-	if len(name) > 0:
-	    cell.set_property('markup', '[<b>' + name[0] + '</b>]')
-	else:
-	    cell.set_property('markup', '[<b>?</b>]')
+	stock_id = stock.get_stock_id(value.__class__)
+	if stock_id:
+	    cell.set_property('stock-id', stock.get_stock_id(value.__class__))
+	#name = value.__class__.__name__
+	#if len(name) > 0:
+	#    cell.set_property('markup', '[<b>' + name[0] + '</b>]')
+	#else:
+	#    cell.set_property('markup', '[<b>?</b>]')
 
     def _set_name (self, column, cell, model, iter, data):
 	value = model.get_value(iter, 0)

@@ -67,8 +67,8 @@ class PackageItem(ModelElementItem):
 	self.__border.line(line)
 	self.__border.request_update()
 	self.update_child(self.__name, affine)
-	b1, b2, b3, b4 = self.get_extents()
-	self.set_extents(b1 - 1, b2 - 1, b3 + 1, b4 + 1)
+	b1, b2, b3, b4 = self.bounds
+	self.set_bounds((b1 - 1, b2 - 1, b3 + 1, b4 + 1))
 
     def on_handle_motion (self, handle, wx, wy, mask):
 	retval = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)

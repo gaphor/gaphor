@@ -1,120 +1,15 @@
 #!/usr/bin/env python
 # vim: sw=4
 
-import types, gtk, diacanvas
+import types, gtk, diacanvas, gnome.ui
 import gaphor.UML as UML
 import gaphor.diagram as diagram
-from gaphor.misc.storage import Storage
-from placementtool import PlacementTool
-import command.file
-import command.about
-from gaphor.gaphor import Gaphor
-
-[
-    EDIT_UNDO,
-    EDIT_REDO,
-    EDIT_DEL_FOCUSED,
-    VIEW_ZOOM_IN,
-    VIEW_ZOOM_OUT,
-    VIEW_ZOOM_100,
-    VIEW_SNAP_TO_GRID,
-    ITEM_ADD_ACTOR,
-    ITEM_ADD_USECASE,
-    ITEM_ADD_PACKAGE,
-    ITEM_ADD_COMMENT,
-    ITEM_ADD_COMMENT_LINE,
-    ITEM_ADD_GENERALIZATION,
-    ITEM_ADD_ASSOCIATION,
-    ITEM_ADD_DEPENDENCY,
-    ITEM_ADD_REALIZATION,
-    ITEM_ADD_INCLUDE,
-    ITEM_ADD_EXTEND
-] = range(18)
+from gaphor import Gaphor
+from gaphor.misc.menufactory import MenuFactory, MenuItem, MenuStockItem, MenuSeparator
+import stock
+import command.file, command.diagram
 
 class DiagramWindow:
-
-    def __menu_item_cb (self, action, widget):
-	view = self.canvasview
-	dia = self.diagram
-
-	def set_placement_tool (diagram_type, uml_type):
-	    #diagram = view.get_data ('diagram')
-	    tool = PlacementTool (dia, diagram_type)
-	    view.set_tool (tool)
-
-	print 'Action:', action, gtk.item_factory_path_from_widget(widget), view
-	view.canvas.push_undo(None)
-
-	if action == EDIT_UNDO:
-	    view.canvas.pop_undo()
-	elif action == EDIT_REDO:
-	    view.canvas.pop_redo()
-	elif action == EDIT_DEL_FOCUSED:
-	    # If the item is a composite, remove the parent...
-	    item = view.focus_item.item
-	    while item and item.flags & diacanvas.COMPOSITE:
-	    	item = item.parent
-	    if item and item.parent:
-		item.parent.remove (item)
-	elif action == VIEW_ZOOM_IN:
-	    view.set_zoom (view.get_zoom() + 0.1)
-	elif action == VIEW_ZOOM_OUT:
-	    view.set_zoom (view.get_zoom() - 0.1)
-	elif action == VIEW_ZOOM_100:
-	    view.set_zoom (1.0)
-	elif action == VIEW_SNAP_TO_GRID:
-	    snap = view.canvas.get_property ('snap_to_grid')
-	    view.canvas.set_property ('snap_to_grid', not snap)
-
-	elif action == ITEM_ADD_ACTOR:
-	    set_placement_tool (diagram.ActorItem, UML.Actor)
-	elif action == ITEM_ADD_USECASE:
-	    set_placement_tool (diagram.UseCaseItem, UML.UseCase)
-	elif action == ITEM_ADD_PACKAGE:
-	    set_placement_tool (diagram.PackageItem, UML.Package)
-	elif action == ITEM_ADD_COMMENT:
-	    set_placement_tool (diagram.CommentItem, UML.Comment)
-	elif action == ITEM_ADD_COMMENT_LINE:
-	    set_placement_tool (diagram.CommentLineItem, None)
-	elif action == ITEM_ADD_GENERALIZATION:
-	    set_placement_tool (diagram.GeneralizationItem, None)
-	elif action == ITEM_ADD_ASSOCIATION:
-	    set_placement_tool (diagram.AssociationItem, None)
-	#elif action == ITEM_ADD_REALIZATION:
-	#    set_placement_tool (diagram.Realization, None)
-	elif action == ITEM_ADD_DEPENDENCY:
-	    set_placement_tool (diagram.DependencyItem, None)
-	#elif action == ITEM_ADD_INCLUDE:
-	#    set_placement_tool (diagram.Include, None)
-	#elif action == ITEM_ADD_EXTEND:
-	#    set_placement_tool (diagram.Extend, None)
-	else:
-	    print 'This item is not iimplemented yet.'
-
-    __menu_items = (
-	( '/_Edit', None, None, 0, '<Branch>' ),
-	( '/Edit/_Undo', '<control>Z', __menu_item_cb, EDIT_UNDO ),
-	( '/Edit/_Redo', '<control>R', __menu_item_cb, EDIT_REDO ),
-	( '/Edit/Delete f_Ocused', None, __menu_item_cb, EDIT_DEL_FOCUSED ),
-	( '/_View', None, None, 0, '<Branch>' ),
-	( '/View/Zoom _In', None, __menu_item_cb, VIEW_ZOOM_IN ),
-	( '/View/Zoom _Out', None, __menu_item_cb, VIEW_ZOOM_OUT ),
-	( '/View/_Zoom 100%', None, __menu_item_cb, VIEW_ZOOM_100 ),
-	( '/View/sep1', None, None, 0, '<Separator>' ),
-	( '/View/_Snap to grid', None, __menu_item_cb, VIEW_SNAP_TO_GRID, '<ToggleItem>' ),
-	( '/New _Item', None, None, 0, '<Branch>' ),
-	( '/New Item/Actor', None, __menu_item_cb, ITEM_ADD_ACTOR ),
-	( '/New Item/Use Case', None, __menu_item_cb,  ITEM_ADD_USECASE ),
-	( '/New Item/Package', None, __menu_item_cb,  ITEM_ADD_PACKAGE ),
-	( '/New Item/Comment', None, __menu_item_cb,  ITEM_ADD_COMMENT ),
-	( '/New Item/Comment Line', None, __menu_item_cb,  ITEM_ADD_COMMENT_LINE ),
-	( '/New Item/Generalization', None, __menu_item_cb,  ITEM_ADD_GENERALIZATION ),
-	( '/New Item/Association', None, __menu_item_cb,  ITEM_ADD_ASSOCIATION ),
-	( '/New Item/Dependency', None, __menu_item_cb,  ITEM_ADD_DEPENDENCY )
-#	( '/New Item/Realization', None, __menu_item_cb,  ITEM_ADD_REALIZATION ),
-#	( '/New Item/Include', None, __menu_item_cb,  ITEM_ADD_INCLUDE ),
-#	( '/New Item/Extend', None, __menu_item_cb,  ITEM_ADD_EXTEND )
-    )
 
     def __init__(self, dia):
 	win = gtk.Window()
@@ -127,6 +22,41 @@ class DiagramWindow:
 	win.set_default_size (300, 300)
 	
 	view = diacanvas.CanvasView (canvas=dia.canvas)
+	statusbar=gnome.ui.AppBar(has_progress=0, has_status=1,
+				  interactivity=gnome.ui.PREFERENCES_USER)
+
+	insert_menu = ()
+
+	items=((stock.STOCK_ACTOR, diagram.ActorItem, 'Actor'),
+		(stock.STOCK_USECASE, diagram.UseCaseItem, 'UseCase'),
+		(stock.STOCK_PACKAGE, diagram.PackageItem, 'Package'),
+		(stock.STOCK_COMMENT, diagram.CommentItem, 'Comment'),
+		(stock.STOCK_COMMENT_LINE, diagram.CommentLineItem, 'Comment line'),
+		(stock.STOCK_ASSOCIATION, diagram.AssociationItem, 'Association'),
+		(stock.STOCK_GENERALIZATION, diagram.GeneralizationItem, 'Generalization'),
+		(stock.STOCK_DEPENDENCY, diagram.DependencyItem, 'Dependency'))
+
+	for item in items:
+	    insert_menu = insert_menu + (MenuStockItem (stock_id=item[0],
+						command=command.diagram.PlacementCommand(view, dia, item[1]),
+	    					comment='Create new ' + item[2] + ' item'),)
+
+	menu =  MenuItem(submenu=(
+		    MenuItem(name='_File', submenu=(
+			MenuStockItem(stock_id=gtk.STOCK_CLOSE,
+				comment='Close current window',
+				command=command.file.CloseCommand(win))
+			,)),
+		    MenuItem(name='_Edit', submenu=(
+			MenuStockItem(stock_id=gtk.STOCK_UNDO,
+				comment='Undo last change',
+				command=command.diagram.UndoCommand(view)),
+			MenuStockItem(stock_id=gtk.STOCK_REDO,
+				comment='Reapply last undone changes',
+				command=command.diagram.RedoCommand(view))
+			,)),
+		    MenuItem(name='_Insert', submenu=insert_menu)
+		    ,))
 
 	vbox = gtk.VBox(homogeneous=gtk.FALSE)
 	win.add (vbox)
@@ -134,14 +64,14 @@ class DiagramWindow:
 	accelgroup = gtk.AccelGroup()
 	win.add_accel_group(accelgroup)
 
-	item_factory = gtk.ItemFactory(gtk.MenuBar, '<main>', accelgroup)
+	menu_factory = MenuFactory(menu=menu, accelgroup=accelgroup,
+				   statusbar=statusbar)
 	
-	item_factory.create_items(DiagramWindow.__menu_items, self)
-	print 'item_factory:', item_factory.get_item('/File'), len(DiagramWindow.__menu_items)
+	menubar = menu_factory.create_menu()
 
-	menubar = item_factory.get_widget('<main>')
-	print 'item_factory:', menubar
 	vbox.pack_start(menubar, gtk.FALSE, gtk.FALSE, 0)
+
+	vbox.pack_end(statusbar, gtk.FALSE, gtk.FALSE, 0)
 
 	table = gtk.Table(2,2, gtk.FALSE)
 	table.set_row_spacings (4)
@@ -170,11 +100,15 @@ class DiagramWindow:
 	self.window = win
 	self.canvasview = view
 	self.diagram = dia
-	self.item_factory = item_factory
 
 	Gaphor().get_main_window().add_window(self, title)
 
 	win.connect("destroy", self.__remove)
+	dia.connect(self.__unlink)
 
     def __remove(self, win):
 	Gaphor().get_main_window().remove_window(self)
+
+    def __unlink(self, name, dummy1, dummy2):
+	if name == '__unlink__':
+	    self.window.destroy()

@@ -142,6 +142,6 @@ Gaphor is configured:
 	Source code location:	$srcdir
 	Python interpreter:	$PYTHON
 
-NOTE:	You do not need to install Gaphor, just execute 'test-diagram.py'
+NOTE:	You do not need to install Gaphor, just execute './gaphor.sh'
 	in the current directory.
 "

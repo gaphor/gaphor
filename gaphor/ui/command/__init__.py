@@ -6,4 +6,4 @@ scripts. Commands make up for a primary piece of functionality (such as
 loading a file).
 """
 
-__all__ = [ 'file', 'tree' ]
+__all__ = [ 'file', 'tree', 'diagram' ]

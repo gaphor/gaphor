@@ -1,0 +1,4 @@
+PYTHON="@PYTHON@"
+
+$PYTHON -c "from gaphor import Gaphor
+Gaphor().main()"

@@ -17,13 +17,13 @@ class _CanvasViewCommand(Command):
 class UndoCommand(_CanvasViewCommand):
 
     def execute(self):
-	self._view.pop_undo()
+	self._view.canvas.pop_undo()
 
 
 class RedoCommand(_CanvasViewCommand):
 
     def execute(self):
-	self._view.pop_redo()
+	self._view.canvas.pop_redo()
 
 
 class DeleteCommand(_CanvasViewCommand):
@@ -56,4 +56,17 @@ class SnapToGridCommand(_CanvasViewCommand):
     def execute(self):
 	snap = self._view.canvas.get_property ('snap_to_grid')
 	view.canvas.set_property ('snap_to_grid', not snap)
+
+
+class PlacementCommand(_CanvasViewCommand):
+
+    def __init__(self, view, diagram, klass):
+	_CanvasViewCommand.__init__(self, view)
+	self._diagram = diagram
+	self._klass = klass
+
+    def execute(self):
+	from gaphor.ui.placementtool import PlacementTool
+	tool = PlacementTool (self._diagram, self._klass)
+	self._view.set_tool(tool)
 

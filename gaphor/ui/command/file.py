@@ -18,7 +18,15 @@ import gc
 DEFAULT_EXT='.gaphor'
 
 class NewCommand(Command):
-    pass
+
+    def execute(self):
+	fact = UML.ElementFactory()
+	fact.flush()
+	gc.collect()
+	model = fact.create(UML.Model)
+	diagram = fact.create(UML.Diagram)
+	diagram.namespace = model
+	diagram.name='main'
 
 class OpenCommand(Command):
 
@@ -103,11 +111,24 @@ class SaveCommand(Command):
 	filesel.destroy()
         gtk.main_quit()
 
+
 class SaveAsCommand(Command):
+
     def execute(self):
 	SaveCommand().execute()
 
+
 class QuitCommand(Command):
+
     def execute(self):
 	gtk.main_quit()
+
+
+class CloseCommand(Command):
+
+    def __init__(self, window):
+	self._window = window
+
+    def execute(self):
+	self._window.destroy()
 

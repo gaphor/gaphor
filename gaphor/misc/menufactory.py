@@ -141,6 +141,9 @@ class MenuFactory:
 
 		if len(item.get_submenu()) > 0:
 		    submenu = gtk.Menu()
+		    subitem = gtk.TearoffMenuItem()
+		    subitem.show()
+		    submenu.add(subitem)
 		    for subitem in item.get_submenu():
 			create_menu(submenu, subitem)
 		    menuitem.set_submenu(submenu)
@@ -160,11 +163,11 @@ class MenuFactory:
 	    if command.is_valid():
 		msg = command.execute()
 	except Exception, e:
-	    msg = 'Operation failed'
+	    msg = 'Operation failed: ' + str(e)
 	sb = self.__statusbar
-	if sb:
+	if sb and sb.flags() & gtk.REALIZED:
 	    sb.pop()
-	    sb.push(str(msg))
+	    sb.push(str(msg or ''))
 
     def __handle_set_comment_cb (self, item, comment):
 	sb = self.__statusbar

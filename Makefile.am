@@ -3,7 +3,9 @@ AUTOMAKE_OPTIONS = 1.6
 
 SUBDIRS = utils doc tests
 
-EXTRA_DIST = $(FILES) $(FILES_FILES) gaphor/config.py.in test-diagram.py
+bin_PROGRAMS = gaphor.sh
+
+EXTRA_DIST = $(FILES) $(FILES_FILES) gaphor.sh.in gaphor/config.py.in
 
 INSTALL_DIRS = $(DIRS)
 INSTALL_FILES = $(FILES) gaphor/config.py gaphor/UML/modelelements.py

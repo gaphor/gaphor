@@ -8,7 +8,7 @@ import command.file
 import gaphor.UML as UML
 import gaphor.config
 from gaphor.misc.menufactory import MenuFactory, MenuItem, MenuSeparator, MenuPlaceholder, MenuStockItem
-
+import stock
 
 print '\n\n\n*** ' + __file__
 
@@ -34,6 +34,9 @@ class MainWindow:
 			MenuStockItem(stock_id=gtk.STOCK_SAVE,
 				 comment='Save current model',
 				 command=command.file.SaveCommand()),
+			MenuStockItem(stock_id=gtk.STOCK_SAVE_AS,
+				 comment='Save current model as...',
+				 command=command.file.SaveAsCommand()),
 			MenuSeparator(),
 			recent_files,
 			MenuSeparator(),
@@ -42,7 +45,7 @@ class MainWindow:
 				 command=command.file.QuitCommand())
 			,)),
 		    MenuItem(name='_Insert', submenu=(
-			MenuItem(name='_Diagram',
+			MenuStockItem(stock_id=stock.STOCK_DIAGRAM,
 				comment='Create a new diagram')
 			,)),
 		    MenuItem(name='_Windows', submenu=(
