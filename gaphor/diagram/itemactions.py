@@ -131,13 +131,20 @@ class CreateAttributeAction(Action):
                 self.sensitive = item.get_property('show-attributes')
 
     def execute(self):
-        subject = get_parent_focus_item(self._window).subject
+        focus_item = get_parent_focus_item(self._window)
+        subject = focus_item.subject
         assert isinstance(subject, (UML.Class, UML.Interface))
         elemfact = gaphor.resource(UML.ElementFactory)
         attribute = elemfact.create(UML.Property)
         attribute.name = 'new'
         subject.ownedAttribute = attribute
-        # TODO: Select this item for editing
+        # Select this item for editing
+        presentation = attribute.presentation
+        focus_item.update_now()
+        for f in focus_item.groupable_iter():
+            if f in presentation:
+                f.edit()
+                break
 
 register_action(CreateAttributeAction, 'ShowAttributes', 'ItemFocus')
 
@@ -160,13 +167,20 @@ class CreateOperationAction(Action):
                 self.sensitive = item.get_property('show-operations')
 
     def execute(self):
-        subject = get_parent_focus_item(self._window).subject
+        focus_item = get_parent_focus_item(self._window)
+        subject = focus_item.subject
         assert isinstance(subject, UML.Classifier)
         elemfact = gaphor.resource(UML.ElementFactory)
         operation = elemfact.create(UML.Operation)
         operation.name = 'new'
         subject.ownedOperation = operation
-        # TODO: Select this item for editing
+        # Select this item for editing
+        presentation = operation.presentation
+        focus_item.update_now()
+        for f in focus_item.groupable_iter():
+            if f in presentation:
+                f.edit()
+                break
 
 register_action(CreateOperationAction, 'ShowOperations', 'ItemFocus')
 

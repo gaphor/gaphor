@@ -58,7 +58,7 @@ class ImplementationItem(relationship.RelationshipItem):
             or head.connected_to and tail.connected_to \
                 and head.connected_to.subject != tail.connected_to.subject
 
-        print 'Implementation.allow_connect_handle:', can_connect
+        #print 'Implementation.allow_connect_handle:', can_connect
         return can_connect
 
 
@@ -70,7 +70,7 @@ class ImplementationItem(relationship.RelationshipItem):
             s2 = c2.subject
             relation = self.find_relationship(s1, s2)
             if not relation:
-                print 'No relationship found'
+                #print 'No relationship found'
                 relation = gaphor.resource(UML.ElementFactory).create(UML.Implementation)
                 relation.contract = s1
                 relation.implementatingClassifier = s2

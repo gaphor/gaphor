@@ -5,6 +5,7 @@ Dependency --
 
 from __future__ import generators
 
+import math
 import gobject
 import pango
 import diacanvas
@@ -13,7 +14,6 @@ import gaphor.UML as UML
 from gaphor.diagram import initialize_item
 
 from relationship import RelationshipItem
-from interface import InterfaceItem
 
 STEREOTYPE_OPEN = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
@@ -26,9 +26,18 @@ class DependencyItem(RelationshipItem):
     dependency we're dealing with. The dependency kind can only be changed if
     the dependency is not connected to two items.
 
-    In the special case of an Implementation dependency, where one end is
+    In the special case of an Usage dependency, where one end is
     connected to an InterfaceItem: the line is drawn as a solid line without
-    arrowhead.
+    arrowhead.  The Interface will draw a half a circle on the side where the
+    Usage dep. is connected.
+
+    Although it is possible to add multiple Implementation and Usage
+    dependencies to an interface, it will probably not be very explaining
+    (esp. Usage dependencies).
+
+    TODO (see also InterfaceItem): When a Usage dependency is drawn and is
+          connected to an InterfaceItem, draw a solid line, but stop drawing
+          the line 'x' points before the last handle.
     """
 
     FONT = 'sans 10'
@@ -38,8 +47,8 @@ class DependencyItem(RelationshipItem):
 	'Dependency type', (
 	    'DependencyTypeDependency',
 	    'DependencyTypeUsage',
-	    'DependencyTypeRealization',
-	    'DependencyTypeImplementation')
+	    'DependencyTypeRealization')
+	    #'DependencyTypeImplementation')
     )
 
     def __init__(self, id=None):
@@ -95,8 +104,9 @@ class DependencyItem(RelationshipItem):
     def _set_line_style(self, c1=None):
         """Display a depenency as a dashed arrow, with optional stereotype.
         """
+        from interface import InterfaceItem
         c1 = c1 or self.handles[0].connected_to
-        if c1 and self.dependency_type is UML.Implementation and isinstance(c1, InterfaceItem):
+        if c1 and self.dependency_type is UML.Usage and isinstance(c1, InterfaceItem):
             if self.get_property('has_head'):
                 self.set(dash=None, has_head=0)
                 self._stereotype.set_text('')

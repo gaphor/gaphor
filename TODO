@@ -1,9 +1,5 @@
 As always, there is much to do...
 
-- Actors do not go well with assocaitions: a ownedAttribute is created on the
-  actor. Maybe a special usecaseAssociationItem should be created.
-  AssociationItem should be aware of Actors.
-
 - Storing last open files or having a quick-list of most important
   directories or so would be great 
 
@@ -16,7 +12,7 @@ As always, there is much to do...
 
 - Undo/redo functionality doesn;t work as espected
 
-- Make text selected when starting to edit it
+#- Make text selected when starting to edit it: fixed in DiaCanvas2
 
 #- Stereotypes: check documentation page 581 (597 absolute). Fixed. An extra
    association has been created between Stereotype and Class, Interface and

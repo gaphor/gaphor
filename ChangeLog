@@ -1,3 +1,14 @@
+2004-07-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/interface.py: Fixed to use Usage and Implementation
+	dependencies. Now a half-a circle is shown on for required Interfaces
+	(using the Usage dependency).
+
+2004-07-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/itemactions.py: Newly created attributes and
+	operations will be directly editable.
+
 2004-07-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/uml2.gaphor: Added association UseCase <-> Property and
