@@ -1,7 +1,18 @@
+2004-10-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagramitem.py: do no longer automatically unlink
+	in diagramassociation. unlink in DiagramItem.unlink() instead.
+
 2004-10-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/association.py: arrow heads were drawn in the wrong
 	direction. corrected
+	* gaphor/*: got complete rid of the __relink__ signal.
+	* gaphor/diagram/itemactions.py: added undo transactions to actions.
+	* gaphor/UML/properties/py: implemented undo awareness for attributes,
+	enumerations and associations.
+	* gaphor/diagram/association.py, nameditem.py, feature.py: added
+	undo awareness to on_editing_done() methods.
 
 2004-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
@@ -12,6 +23,8 @@
 	* gaphor/diagram/actions.py: classes, packages, etc. are assigned a
 	unique name on creation.
 	* gaphor/ui/mainwindow.py: added toolbox items to the menu.
+	* gaphor/ui/diagramtab.py: 'Delete' has the same meaning as Ctrl-d
+	from now on.
 
 2004-10-07  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

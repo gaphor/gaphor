@@ -43,10 +43,10 @@ class diagramassociation(association):
         # TODO: Add some extra notification here to tell the diagram
         # item that the reference is about to be removed.
         association._del(self, obj, value)
-        if len(value.presentation) == 0 or \
-           len(value.presentation) == 1 and obj in value.presentation:
-            #log.debug('diagramassociation._del: No more presentations: unlinking')
-            value.unlink()
+#        if len(value.presentation) == 0 or \
+#           len(value.presentation) == 1 and obj in value.presentation:
+#            #log.debug('diagramassociation._del: No more presentations: unlinking')
+#            value.unlink()
         
 
 class DiagramItem(Presentation):
@@ -143,16 +143,23 @@ class DiagramItem(Presentation):
         #log.debug('DiagramItem.unlink(%s)' % self)
         # emit the __unlink__ signal the way UML.Element would have done:
         self.emit('__unlink__', '__unlink__')
+
+        subject = self.subject
+
         # remove the subject if we have one
         if self.subject:
             del self.subject
+
+        if subject and len(subject.presentation) == 0:
+            #log.debug('diagramitem.unlink: No more presentations: unlinking')
+            value.unlink()
         self.set_property('parent', None)
 
-    def relink(self):
-        """Relinking is done by popping the undo stack...
-        """
-        log.info('RELINK DiagramItem')
-        #self.emit('__unlink__', '__relink__')
+#    def relink(self):
+#        """Relinking is done by popping the undo stack...
+#        """
+#        log.info('RELINK DiagramItem')
+#        #self.emit('__unlink__', '__relink__')
 
     # gaphor.UML.Element like signal interface:
 

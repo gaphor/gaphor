@@ -74,7 +74,7 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
     def on_subject_notify__name(self, subject, pspec):
         assert self.subject is subject
         #print 'on_subject_notify__name: %s' % self.subject.name
-        self._name.set_text(self.subject.name)
+        self._name.set_text(self.subject.name or '')
         self.request_update()
 
     # CanvasItem callbacks:
@@ -104,7 +104,10 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
     def on_editable_editing_done(self, shape, new_text):
         self.preserve_property('name')
         if new_text != self.subject.name:
+            self.canvas.get_undo_manager().begin_transaction()
             self.subject.name = new_text
+            self.canvas.get_undo_manager().commit_transaction()
+
         self.request_update()
 
 initialize_item(NamedItem)

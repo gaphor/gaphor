@@ -34,7 +34,7 @@ class AttributeItem(FeatureItem):
                                                     + notifiers)
 
     def on_subject_notify__name(self, subject, pspec):
-        self._expression.set_text(self.subject.render())
+        self._expression.set_text(self.subject.render() or '')
         self.request_update()
 
     on_subject_notify__isDerived = on_subject_notify__name

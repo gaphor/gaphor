@@ -29,7 +29,7 @@ class OperationItem(FeatureItem):
         # TODO: Handle subject.returnResult[*] and subject.formalParameter[*]
 
     def on_subject_notify__name(self, subject, pspec):
-        self._expression.set_text(self.subject.render())
+        self._expression.set_text(self.subject.render() or '')
         self.request_update()
 
     on_subject_notify__visibility = on_subject_notify__name

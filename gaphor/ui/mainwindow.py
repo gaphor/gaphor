@@ -5,6 +5,7 @@ import gtk
 import namespace
 import gaphor
 import gaphor.UML as UML
+import gaphor.undomanager as undomanager
 from gaphor.i18n import _
 from abstractwindow import AbstractWindow
 from diagramtab import DiagramTab
@@ -75,8 +76,8 @@ class MainWindow(AbstractWindow):
                 'separator',
                 'FileQuit'),
             _('_Edit'), (
-                'EditUndo',
-                'EditRedo',
+                'Undo',
+                'Redo',
                 'separator',
                 'EditDelete',
                 'separator',
@@ -115,8 +116,8 @@ class MainWindow(AbstractWindow):
                 'FileSave',
                 'FileSaveAs',
                 'separator',
-                'EditUndo',
-                'EditRedo',
+                'Undo',
+                'Redo',
                 'separator',
                 'ViewZoomIn',
                 'ViewZoomOut',
@@ -248,6 +249,10 @@ class MainWindow(AbstractWindow):
 
         self._toolbox = toolbox
 
+        # Set some handles for the undo manager
+        undomanager.get_undo_manager().connect('begin_transaction', self.on_undo)
+        undomanager.get_undo_manager().connect('add_undo_action', self.on_undo)
+
     def add_transient_window(self, window):
         """Add a window as a sub-window of the main application.
         """
@@ -369,6 +374,9 @@ class MainWindow(AbstractWindow):
         """
         self.execute_action('TabChange')
 
+    def on_undo(self, *args):
+        self.execute_action('UndoStack')
+
 #    def on_transient_window_closed(self, window):
 #        assert window in self.__transient_windows
 #        log.debug('%s closed.' % window)
@@ -383,4 +391,3 @@ class MainWindow(AbstractWindow):
         #self.set_capability('model', not factory.is_empty())
 
 gtk.accel_map_add_filter('gaphor')
-print toolbox_to_menu(MainWindow.toolbox)

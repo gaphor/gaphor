@@ -41,6 +41,13 @@ class Compartment(list):
         for item in self:
             save_func(None, item)
 
+    def has_item(self, item):
+        """Check if the compartment already contains an item with the
+        same subject as item.
+        """
+        s = item.subject
+        local_elements = [f.subject for f in self]
+        return s and s in local_elements
 
     def pre_update(self, width, height, affine):
         """Calculate the size of the feates in this compartment.
@@ -226,11 +233,14 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
         to_add = [el for el in elements if el not in local_elements]
 
+        print 'sync_elems:', local_elements, to_add
+
         # sync local elements with elements
         del compartment[:]
 
         for el in elements:
             if el in to_add:
+                print 'sync_elems: creating', el
                 creator(el)
             else:
                 compartment.append(mapping[el])
@@ -304,7 +314,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
         """Called when the ownedAttribute property of our subject changes.
         """
-        #log.debug('on_subject_notify__ownedAttribute')
+        log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
         self.sync_attributes()
 
@@ -349,6 +359,9 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
         width = 0
         height = ClassItem.HEAD_MARGIN_Y
+
+        #self.sync_attributes()
+        #self.sync_operations()
 
         compartments = (self._attributes, self._operations)
 
@@ -416,14 +429,17 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         """
         #if isinstance(item.subject, UML.Property):
         if isinstance(item, AttributeItem):
-            #log.debug('Adding attribute %s' % item)
-            self._attributes.append(item)
-            item.set_child_of(self)
+            # TODO: check if property not already in attribute list
+            if not self._attributes.has_item(item):
+                log.debug('Adding attribute %s' % item)
+                self._attributes.append(item)
+                item.set_child_of(self)
         #elif isinstance(item.subject, UML.Operation):
         elif isinstance(item, OperationItem):
             #log.debug('Adding operation %s' % item)
-            self._operations.append(item)
-            item.set_child_of(self)
+            if not self._operations.has_item(item):
+                self._operations.append(item)
+                item.set_child_of(self)
         else:
             log.warning('feature %s is not a Feature' % item)
             return 0
@@ -434,6 +450,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         """Remove a feature subitem.
         """
         if item in self._attributes:
+            print 'remove attr:', item
             self._attributes.remove(item)
             item.set_child_of(None)
         elif item in self._operations:

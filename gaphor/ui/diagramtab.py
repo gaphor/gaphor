@@ -27,16 +27,16 @@ class DiagramTab(object):
     def set_diagram(self, diagram):
         if self.diagram:
             self.diagram.disconnect(self.__on_diagram_event)
-            self.diagram.canvas.disconnect(self.__undo_id)
+            #self.diagram.canvas.disconnect(self.__undo_id)
             #self.diagram.canvas.disconnect(self.__snap_to_grid_id)
         self.diagram = diagram
         if diagram:
             log.info('set diagram')
             diagram.canvas.set_property ('allow_undo', 1)
             diagram.connect(('name', '__unlink__'), self.__on_diagram_event)
-            self.__undo_id = diagram.canvas.undo_manager.connect('begin_transaction', self.__on_diagram_undo)
+            #self.__undo_id = diagram.canvas.undo_manager.connect('begin_transaction', self.__on_diagram_undo)
             # Set capabilities:
-            self.__on_diagram_undo(diagram.canvas.undo_manager)
+            #self.__on_diagram_undo(diagram.canvas.undo_manager)
 
     def construct(self):
         title = self.diagram and self.diagram.name or '<None>'
@@ -66,9 +66,10 @@ class DiagramTab(object):
 
         view.connect('notify::tool', self.__on_view_notify_tool)
         view.connect_after('event-after', self.__on_view_event_after)
-        view.connect('focus_item', self.__on_view_focus_item)
-        view.connect('select_item', self.__on_view_select_item)
-        view.connect('unselect_item', self.__on_view_select_item)
+        view.connect('focus-item', self.__on_view_focus_item)
+        view.connect('select-item', self.__on_view_select_item)
+        view.connect('unselect-item', self.__on_view_select_item)
+	view.connect_after('key-press-event', self.__on_key_press_event)
         self.view = view
 
 	item_tool = ItemTool(self.owning_window.get_action_pool())
@@ -89,6 +90,16 @@ class DiagramTab(object):
         del self.view.diagram
         del self.view
         del self.diagram
+
+    def __on_key_press_event(self, view, event):
+        """Handle the 'Delete' key. This can not be handled directly (through
+        GTK's accelerators) since otherwise this key will confuse the text
+        edit stuff.
+        """
+	if view.is_focus():
+	    if event.keyval == 0xFFFF and event.state == 0: # Delete
+		self.owning_window.execute_action('EditDelete')
+
 
     def __on_view_event_after(self, view, event):
         # handle mouse button 3 (popup menu):
@@ -116,9 +127,9 @@ class DiagramTab(object):
     def __on_view_notify_tool(self, view, pspec):
         self.owning_window.execute_action('ToolChange')
 
-    def __on_diagram_undo(self, undo_manager):
-        log.info('set undo stack %s' % (undo_manager))
-        self.owning_window.execute_action('EditUndoStack')
+#    def __on_diagram_undo(self, undo_manager):
+#        #log.info('set undo stack %s' % (undo_manager))
+#        self.owning_window.execute_action('editundostack')
 
     def __on_diagram_event(self, element, pspec):
         if pspec == '__unlink__':

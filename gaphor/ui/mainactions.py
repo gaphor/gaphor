@@ -8,6 +8,7 @@ import gobject
 import gtk
 import gaphor.UML as UML
 import gaphor.diagram as diagram
+import gaphor.undomanager as undomanager
 import gc
 import traceback
 from threading import Thread
@@ -504,3 +505,59 @@ class TabChangeAction(Action):
         pass
 
 register_action(TabChangeAction)
+
+class UndoStackAction(Action):
+    """Dummy action that triggers the undo and redo actions to update
+    themselves.
+    """
+    id = 'UndoStack'
+    
+    def init(self, window):
+	pass
+
+register_action(UndoStackAction)
+
+class UndoAction(Action):
+    id = 'Undo'
+    stock_id = 'gtk-undo'
+    label = '_Undo'
+    tooltip = 'Undo the most recent changes'
+    accel = 'C-z'
+
+    # TODO: check if the diagram can undo.
+
+    def init(self, window):
+	self._window = window
+
+    def update(self):
+	self.sensitive = undomanager.get_undo_manager().can_undo()
+
+    def execute(self):
+	undomanager.get_undo_manager().undo_transaction()
+	#self.update()
+	self._window.execute_action('UndoStack')
+
+register_action(UndoAction, 'UndoStack')
+
+
+class RedoAction(Action):
+    id = 'Redo'
+    stock_id = 'gtk-redo'
+    tooltip = 'Redo the undone changes'
+    accel = 'C-r'
+
+    def init(self, window):
+	self._window = window
+
+    def update(self):
+	self.sensitive = undomanager.get_undo_manager().can_redo()
+
+    def execute(self):
+        print 'RedoAction'
+	undomanager.get_undo_manager().redo_transaction()
+	#self.update()
+	self._window.execute_action('UndoStack')
+
+register_action(RedoAction, 'UndoStack')
+
+

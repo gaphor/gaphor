@@ -25,6 +25,9 @@ def select(expression=None):
     """
     return _default_element_factory.select(expression)
 
+def flush():
+    _default_element_factory.flush()
+
 if 0 and __debug__: 
     # Keep track of all model elements that are created
     from gaphor.misc.aspects import ReferenceAspect, LoggerAspect, weave_method

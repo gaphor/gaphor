@@ -10,6 +10,7 @@ import stock
 
 import gaphor.UML as UML
 from gaphor import resource
+from gaphor.undomanager import get_undo_manager
 import operator
 
 # The following items will not be shown in the treeview, although they
@@ -498,7 +499,9 @@ class NamespaceView(gtk.TreeView):
 
                 # Set package. This only works for classifiers, packages and
                 # diagrams. Properties and operations should not be moved.
+                #get_undo_manager().begin_transaction()
                 element.package = dest_element
+                #get_undo_manager().commit_transaction()
 
             except AttributeError:
                 #print dir(context)

@@ -54,15 +54,18 @@ class PlacementTool(diacanvas.PlacementTool):
                 diacanvas.PlacementTool._grab_handle(self, view, event, item)
 
     def do_button_press_event(self, view, event):
+        self.is_released = False
         view.unselect_all()
         #print 'Gaphor: on_button_press_event: %s' % self.__dict__
+        view.canvas.get_undo_manager().begin_transaction()
         return diacanvas.PlacementTool.do_button_press_event(self, view, event)
 
     def do_button_release_event(self, view, event):
         self.is_released = True
         if resource('reset-tool-after-create', False):
             view.set_tool(None)
-        #print 'Gaphor: do_button_release_event: %s' % self.__dict__
+        view.canvas.get_undo_manager().commit_transaction()
+        print 'Gaphor: do_button_release_event: %s' % self.__dict__
         return diacanvas.PlacementTool.do_button_release_event(self, view, event)
 
 gobject.type_register(PlacementTool)

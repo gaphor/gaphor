@@ -14,8 +14,8 @@ unlink()
      Remove all references to the element. This is done by emiting the
      '__unlink__' signal to all attached signals. unlink() can not be called
      recursively.
-relink()
-    Inverse operation of unlink(). Used by diagram items during undo operations.
+#relink()
+#    Inverse operation of unlink(). Used by diagram items during undo operations.
 
 connect ('name', callback, *data) or
 connect (('name', 'other_property'), callback, *data)
@@ -103,10 +103,10 @@ class Element(object):
         #log.debug('Element.unlink(%s)' % self)
         self.__unlink('__unlink__')
 
-    def relink(self):
-        """Undo the unlink operation."""
-        log.debug('Element.relink(%s)' % self)
-        self.__unlink('__relink__')
+#    def relink(self):
+#        """Undo the unlink operation."""
+#        log.debug('Element.relink(%s)' % self)
+#        self.__unlink('__relink__')
 
     def connect(self, names, callback, *data):
         """Attach 'callback' to a list of names. Names may also be a string.

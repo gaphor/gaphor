@@ -31,8 +31,122 @@ __all__ = [ 'attribute', 'enumeration', 'association', 'derivedunion', 'redefine
 
 from collection import collection
 import operator
+from gaphor.undomanager import get_undo_manager
 
 #infinite = 100000
+
+class attributeundoaction(object):
+    """This undo action contains one undo action for an attribute
+    property.
+    """
+
+    def __init__(self, prop, obj, value):
+        self.prop = prop
+        self.obj = obj
+        self.value = value
+        get_undo_manager().add_undo_action(self)
+
+    def undo(self):
+        self.redo_value = self.prop._get(self.obj)
+        setattr(self.obj, self.prop._name, self.value)
+        self.prop.notify(self.obj)
+
+    def redo(self):
+        setattr(self.obj, self.prop._name, self.redo_value)
+        self.prop.notify(self.obj)
+
+class associationundoaction(object):
+    """The state of an association can be reverted with this action.
+    """
+
+    def __init__(self, prop, obj, value):
+        self.prop = prop
+        self.obj = obj
+        self.value = value
+        #print 'adding undo action', prop, obj, value
+        get_undo_manager().add_undo_action(self)
+
+    def undo(self):
+        """Undo an event. This is very hard to read.
+        TODO: cleanup and structure association code!!!!!
+        TODO: self.value returns to [] on undo
+        """
+        prop = self.prop
+        obj = self.obj
+        log.debug('undo association %s' % prop.name)
+        if prop.upper > 1:
+            l = prop._get(obj)
+            self.redo_value = list(l)
+            #print 'redo_value =', self.redo_value, self.value
+            for item in l:
+                if item not in self.value:
+                    if prop.opposite:
+                        getattr(type(item), prop.opposite)._del(item, obj)
+                    prop._del(obj, item)
+            l = prop._get(obj)
+            for item in self.value:
+                if item not in l:
+                    if prop._set2(obj, item):
+                        # Set opposite side.
+                        # Use type(value) since the property may be overridden:
+                        if prop.opposite:
+                            getattr(type(item), prop.opposite)._set(item, obj)
+            #print 'redo_value =', self.redo_value, self.value
+            prop.notify(obj)
+        else:
+            value = self.redo_value = prop._get(obj)
+            if self.value is None:
+                # _del does a notify().
+                if value is None:
+                    return
+                if prop.opposite:
+                    getattr(type(value), prop.opposite)._del(value, obj)
+                prop._del(obj, prop._get(obj))
+            else:
+                if prop._set2(obj, self.value):
+                    if prop.opposite:
+                        getattr(type(value), prop.opposite)._set(value, obj)
+                prop.notify(obj)
+
+    def redo(self):
+        prop = self.prop
+        obj = self.obj
+        log.debug('redo association %s' % prop.name)
+        if prop.upper > 1:
+            #print 'setting... on', prop, obj, self.redo_value
+            l = prop._get(obj)
+            for item in l:
+                if item not in self.redo_value:
+                    if prop.opposite:
+                        getattr(type(item), prop.opposite)._del(item, obj)
+                    prop._del(obj, item)
+            l = prop._get(obj)
+            for item in self.redo_value:
+                if item not in l:
+                    if prop._set2(obj, item):
+                        # Set opposite side.
+                        # Use type(value) since the property may be overridden:
+                        if prop.opposite:
+                            getattr(type(item), prop.opposite)._set(item, obj)
+            #print prop._get(obj), self.redo_value
+            prop.notify(obj)
+        else:
+            #self.redo_value = prop._get(obj)
+            #print self.redo_value
+            if self.redo_value is None:
+                # _del does a notify().
+                value = prop._get(obj) 
+                if value is None:
+                    return
+                if prop.opposite:
+                    getattr(type(value), prop.opposite)._del(value, obj)
+                prop._del(obj, prop._get(obj))
+            else:
+                if prop._set2(obj, self.redo_value):
+                    if prop.opposite:
+                        getattr(type(self.redo_value), prop.opposite)._set(self.redo_value, obj)
+                prop.notify(obj)
+
 
 class umlproperty(object):
     """Superclass for attribute, enumeration and association.
@@ -118,10 +232,6 @@ class attribute(umlproperty):
         #print 'attribute.load:', self.name, self.type, value,
         if self.type is not object:
             value = self.type(value)
-        #if not isinstance(value, self.type):
-        #    if type(self.type) is not type(()):
-        #    else:
-        #        raise AttributeError, 'Value should be of type %s (is %s)' % (self.type.__name__, type(value))
         setattr(obj, self._name, value)
 
     def __str__(self):
@@ -139,7 +249,9 @@ class attribute(umlproperty):
     def _set(self, obj, value):
         if value is not None and not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type
-        #self.old = self._get(obj)
+
+        attributeundoaction(self, obj, self._get(obj))
+
         if value == self.default and hasattr(obj, self._name):
             delattr(obj, self._name)
         else:
@@ -149,6 +261,7 @@ class attribute(umlproperty):
     def _del(self, obj, value=None):
         #self.old = self._get(obj)
         try:
+            attributeundoaction(self, obj, self._get(obj))
             delattr(obj, self._name)
         except AttributeError:
             pass
@@ -184,6 +297,7 @@ class enumeration(umlproperty):
         if not value in self.values:
             raise AttributeError, 'Value should be one of %s' % str(self.values)
         if value != self._get(obj):
+            attributeundoaction(self, obj, self._get(obj))
             if value == self.default:
                 delattr(obj, self._name)
             else:
@@ -192,6 +306,7 @@ class enumeration(umlproperty):
 
     def _del(self, obj, value=None):
         try:
+            attributeundoaction(self, obj, self._get(obj))
             delattr(obj, self._name)
         except AttributeError:
             pass
@@ -277,11 +392,14 @@ class association(umlproperty):
             # do nothing if we are assigned our current value:
             if value is old:
                 return
+            associationundoaction(self, obj, old)
             if old:
                 self.__delete__(obj, old)
             if value is None:
                 #self.notify(obj)
                 return
+        else:
+            associationundoaction(self, obj, list(self._get(obj)))
 
         # if we needed to set our own side, set the opposite
         # Call _set2() so we can make sure the opposite side is set before
@@ -304,6 +422,12 @@ class association(umlproperty):
             value = self._get(obj)
             if value is None:
                 return
+        # Save undo info
+        if self.upper > 1:
+            associationundoaction(self, obj, list(self._get(obj)))
+        else:
+            associationundoaction(self, obj, self._get(obj))
+
         if self.opposite:
             getattr(type(value), self.opposite)._del(value, obj)
         self._del(obj, value)
@@ -397,9 +521,9 @@ class association(umlproperty):
             self.__delete__(obj, value)
             # re-establish unlink handler:
             value.connect('__unlink__', self.__on_unlink, obj)
-        else:
-            print 'RELINK'
-            self.__set__(obj, value)
+        #else:
+        #    print 'RELINK'
+        #    self.__set__(obj, value)
 
     def __on_composite_unlink(self, obj, pspec, value):
         """Unlink value if we have a part-whole (composite) relationship
@@ -411,9 +535,9 @@ class association(umlproperty):
         if pspec == '__unlink__':
             value.unlink()
             obj.connect('__unlink__', self.__on_composite_unlink, value)
-        else:
-            print 'RELINK'
-            value.relink()
+        #else:
+            #print 'RELINK'
+            #value.relink()
 
 
 class derivedunion(umlproperty):

@@ -199,6 +199,8 @@ register_action(DeselectAllAction, 'ItemSelect', 'EditDelete')
 
 
 class DeleteAction(Action):
+    """Delete each selected canvas item.
+    """
     id = 'EditDelete'
     label = '_Delete'
     accel = 'C-d'
@@ -213,13 +215,14 @@ class DeleteAction(Action):
 
     def execute(self):
 	view = self._window.get_current_diagram_view()
-	view.canvas.undo_manager.begin_transaction()
-	try:
-	    items = view.selected_items
-	    for i in items:
-		i.item.unlink()
-	finally:
-	    view.canvas.undo_manager.commit_transaction()
+	if view.is_focus():
+	    view.canvas.undo_manager.begin_transaction()
+	    try:
+		items = view.selected_items
+		for i in items:
+		    i.item.unlink()
+	    finally:
+		view.canvas.undo_manager.commit_transaction()
 
 register_action(DeleteAction, 'ItemSelect')
 

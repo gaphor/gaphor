@@ -4,9 +4,43 @@
 
 import gaphor
 import gaphor.misc.uniqueid as uniqueid
+from gaphor.undomanager import get_undo_manager
 from element import Element
 from diagram import Diagram
 import gaphor.misc.odict
+
+class _UndoCreateAction(object):
+
+    def __init__(self, factory, element):
+	self.factory = factory
+	self.element = element
+
+    def undo(self):
+	try:
+	    del self.factory._elements[self.element.id]
+	except KeyError:
+	    pass # Key was probably already removed in an unlink call
+        self.factory.notify(self.element, 'remove')
+
+    def redo(self):
+	self.factory._elements[self.element.id] = self.element
+        self.factory.notify(self.element, 'create')
+
+
+class _UndoRemoveAction(object):
+
+    def __init__(self, factory, element):
+	self.factory = factory
+	self.element = element
+
+    def undo(self):
+	self.factory._elements[self.element.id] = self.element
+        self.factory.notify(obj, 'create')
+
+    def redo(self):
+	del self.factory._elements[self.element.id]
+        self.factory.notify(obj, 'remove')
+
 
 class ElementFactory(object):
     """The ElementFactory is used to create elements and do lookups to
@@ -36,6 +70,7 @@ class ElementFactory(object):
         assert issubclass(type, Element)
         obj = type(id, self)
         self._elements[id] = obj
+	get_undo_manager().add_undo_action(_UndoCreateAction(self, obj))
         obj.connect('__unlink__', self.__element_signal)
         self.notify(obj, 'create')
         return obj
@@ -138,10 +173,12 @@ class ElementFactory(object):
 	#log.debug('element %s send signal %s' % (element, name))
         if pspec == '__unlink__' and self._elements.has_key(element.id):
             #log.debug('Unlinking element: %s' % element)
+	    # TODO: make undo action
             del self._elements[element.id]
+	    get_undo_manager().add_undo_action(_UndoRemoveAction(self, element))
             self.notify(element, 'remove')
-        elif pspec == '__relink__' and not self._elements.has_key(element.id):
-            log.debug('Relinking element: %s' % element)
-            self._elements[element.id] = element
-            self.notify(element, 'create')
+#        elif pspec == '__relink__' and not self._elements.has_key(element.id):
+#            log.debug('Relinking element: %s' % element)
+#            self._elements[element.id] = element
+#            self.notify(element, 'create')
 

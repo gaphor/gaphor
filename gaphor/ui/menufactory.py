@@ -22,10 +22,11 @@ def _mod_and_keyval_from_accel(accel):
     keyval = 0
     modifier = 0
     if accel:
-        gtk_accel = accel.upper().replace('C-', '<Control>').replace('S-', '<Shift>').replace('M-', '<Alt>')
+        gtk_accel = accel.replace('C-', '<Control>').replace('S-', '<Shift>').replace('M-', '<Alt>')
         if gtk_accel[-1] in keyval_map.keys():
             gtk_accel = gtk_accel[:-1] + keyval_map[gtk_accel[-1]]
         keyval, modifier = gtk.accelerator_parse(gtk_accel)
+        #log.debug('Translated %s to %d' % (gtk_accel, keyval))
 
 #        accel = accel.upper()
 #        if accel.find('S-') != -1:

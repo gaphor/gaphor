@@ -16,6 +16,7 @@ from __future__ import generators
 from cStringIO import StringIO
 from xml.sax.saxutils import escape
 import types
+import sys
 import os.path
 import gc
 import UML
@@ -112,8 +113,8 @@ def save_generator(filename=None, factory=None):
         factory = gaphor.resource(UML.ElementFactory)
 
     buffer = StringIO()
-    buffer.write('<?xml version="1.0"?>\n')
-    buffer.write('<gaphor version="%s" gaphor_version="%s">' % (FILE_FORMAT_VERSION, gaphor.resource('Version')))
+    buffer.write('<?xml version="1.0" encoding="%s"?>\n' % sys.getdefaultencoding())
+    buffer.write('<gaphor version="%s" gaphor-version="%s">' % (FILE_FORMAT_VERSION, gaphor.resource('Version')))
 
     size = factory.size()
     n = 0

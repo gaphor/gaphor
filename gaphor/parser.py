@@ -233,7 +233,9 @@ class GaphorLoader(handler.ContentHandler):
         elif state == ROOT and name == 'gaphor':
             assert attrs['version'] in ('3.0',)
             self.version = attrs['version']
-            self.gaphor_version = attrs.get('gaphor_version')
+            self.gaphor_version = attrs.get('gaphor-version')
+            if not self.gaphor_version:
+                self.gaphor_version = attrs.get('gaphor_version')
             self.push(None, GAPHOR)
 
         else:

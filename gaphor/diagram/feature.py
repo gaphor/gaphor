@@ -58,8 +58,11 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
     def do_set_property(self, pspec, value):
         if pspec.name == 'expression':
             if self.subject:
-                self.preserve_property('expression')
+                #self.preserve_property('expression')
+                self.canvas.get_undo_manager().begin_transaction()
                 self.subject.parse(value)
+                self.canvas.get_undo_manager().commit_transaction()
+
                 self._expression.set_text(self.subject.render())
                 self.request_update()
         else:
