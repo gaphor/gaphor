@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<plugin name="Python generator"
+<gaphor-plugin name="Python generator"
         version="0.1"
         author="Nicolas Chauvat">
   <description>
@@ -50,4 +50,4 @@
             tooltip="Import Python Code"
             class="PythonReloadAction" slot="WindowSlot"/>
   </provide>
-</plugin>
+</gaphor-plugin>

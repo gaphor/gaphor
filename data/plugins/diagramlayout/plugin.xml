@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- vim:sw=2:et:
 -->
-<plugin name="Diagram Layout"
+<gaphor-plugin name="Diagram Layout"
         version="0.1"
         author="Arjan Molenaar">
   <description>
@@ -25,4 +25,4 @@
       <depends action="TabChange"/>
     </action>
   </provide>
-</plugin>
+</gaphor-plugin>

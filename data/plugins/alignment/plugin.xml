@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- vim:sw=2:et:
 -->
-<plugin name="Alignment"
+<gaphor-plugin name="Alignment"
         version="0.1"
         author="Jeroen Vloothuis">
   <description>
@@ -34,4 +34,4 @@
       <depends action="ItemSelect"/>
     </action>
   </provide>
-</plugin>
+</gaphor-plugin>

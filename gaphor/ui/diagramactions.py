@@ -474,3 +474,26 @@ class ShowGridAction(CheckAction):
 
 register_action(ShowGridAction)
 
+class ShowElementInTreeViewAction(Action):
+    id = 'ShowElementInTreeView'
+    label = 'S_how element in tree view'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        diagram_tab = self._window.get_current_diagram_tab()
+        self.sensitive = diagram_tab and diagram_tab.get_view().focus_item and \
+			 diagram_tab.get_view().focus_item.item and \
+			 diagram_tab.get_view().focus_item.item.subject
+
+    def execute(self):
+        tab = self._window.get_current_diagram_tab()
+        if tab:
+            view = tab.get_view()
+	    fi = view.focus_item
+	    assert fi
+	    self._window.select_element(fi.item.subject)
+
+register_action(ShowElementInTreeViewAction)
+

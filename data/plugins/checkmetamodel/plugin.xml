@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- vim:sw=2:et:
 -->
-<plugin name="UML metamodel sanity check"
+<gaphor-plugin name="UML metamodel sanity check"
         version="0.1"
         author="Arjan Molenaar">
   <description>
@@ -39,4 +39,4 @@
     </action>
 
   </provide>
-</plugin>
+</gaphor-plugin>

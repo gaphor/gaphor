@@ -7,6 +7,18 @@
 	* gaphor/diagram/itemactions.py gaphor/diagram/association.py: UML 2.0
 	navigability support
 
+2005-01-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/pluginmanager.py: use modutils in favor of imp.
+	Now actions can be nested in packages!
+	Load plugins under namespace gaphor.plugins.
+
+2005-01-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/plugins/*/plugin.xml: changed toplevel plugin tag to
+	'gaphor-plugin'
+	* gaphor/pluginmanager.py: changed xml parser to load new tag.
+
 2005-01-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/uml2.gaphor: fixed bug in Lifeline diagram.

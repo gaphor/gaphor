@@ -2,8 +2,8 @@
 
 from gaphor import resource
 from gaphor import storage
-import gaphor.UML as UML
-import os.path as path
+from gaphor import UML
+from os import path
 
 def report(element, message):
     print '%s: %s' % (type(element).__name__, message)

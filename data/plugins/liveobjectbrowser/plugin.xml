@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- vim:sw=2:et:
 -->
-<plugin name="Live Object Browser"
+<gaphor-plugin name="Live Object Browser"
         version="0.1"
         author="Arjan Molenaar">
   <description>
@@ -36,4 +36,4 @@
       -->
     </action>
   </provide>
-</plugin>
+</gaphor-plugin>

@@ -2,6 +2,7 @@
 """This module provides everything needed to create a plugin.
 
 resource - Get/set application wide resources
+import_plugin - The save way to import other plugins into your plugin.
 
 Classes to construct Actions:
     Action
@@ -14,6 +15,7 @@ Each action is initialized. The window containing the action can be accessed
 by the 'window' property.
 """
 
+import sys
 from gaphor import resource
 
 from gaphor.misc.action import Action as _Action
@@ -21,6 +23,14 @@ from gaphor.misc.action import CheckAction as _CheckAction
 from gaphor.misc.action import RadioAction as _RadioAction
 from gaphor.misc.action import ObjectAction
 
+
+def import_plugin(name):
+    """A normal 'import gaphor._plugins.<name>' doesn't work.
+    Use this function instead.
+    """
+    from gaphor.pluginmanager import MODULENS
+    mod = sys.modules[MODULENS + name]
+    return mod
 
 class _ActionMixIn(object):
     """Handle initialization of actions in a way that the main window

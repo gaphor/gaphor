@@ -6,12 +6,13 @@ a result only classifiers are shown here.
 
 import gobject
 import gtk
+import operator
 import stock
 
 from gaphor import UML
 from gaphor import resource
 from gaphor.undomanager import get_undo_manager
-import operator
+
 
 # The following items will not be shown in the treeview, although they
 # are UML.Namespace elements.
@@ -345,6 +346,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         #print "on_iter_parent", node
         return self.node_from_element(node[0].namespace)
 
+
 class NamespaceView(gtk.TreeView):
 
     TARGET_STRING = 0
@@ -378,9 +380,9 @@ class NamespaceView(gtk.TreeView):
         # Second cell if for the name of the object...
         cell = gtk.CellRendererText ()
         #cell.set_property ('editable', 1)
-        cell.connect('edited', self._name_edited)
+        cell.connect('edited', self._text_edited)
         column.pack_start (cell, 0)
-        column.set_cell_data_func (cell, self._set_name, None)
+        column.set_cell_data_func (cell, self._set_text, None)
 
         assert len (column.get_cell_renderers()) == 2
         self.append_column (column)
@@ -424,13 +426,13 @@ class NamespaceView(gtk.TreeView):
             self.icon_cache[type(value)] = icon
         cell.set_property('pixbuf', icon)
 
-    def _set_name (self, column, cell, model, iter, data):
+    def _set_text (self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)
         #print 'set_name:', value
-        name = value and (value.name or '').replace('\n', ' ') or '<None>'
-        cell.set_property('text', name)
+        text = value and (value.name or '').replace('\n', ' ') or '<None>'
+        cell.set_property('text', text)
 
-    def _name_edited(self, cell, path_str, new_text):
+    def _text_edited(self, cell, path_str, new_text):
         """The text has been edited. This method updates the data object.
         Note that 'path_str' is a string where the fields are separated by
         colons ':', like this: '0:1:1'. We first turn them into a tuple.
@@ -529,3 +531,40 @@ gobject.type_register(NamespaceView)
 #if __debug__:
 #    from gaphor.misc.aspects import weave_method, TimerAspect
 #    NamespaceModel.sort_node = weave_method(NamespaceModel.sort_node, TimerAspect)
+
+
+#class NamespaceViewRow(object):
+#
+#    def __init__(self, context):
+#        self.context = context
+#
+#    def get_icon_id(self):
+#        """Return the icon that matches the row."""
+#        return stock.get_stock_id(type(self.context))
+#
+#    def get_text(self):
+#        """Return the text to be set on the row."""
+#        return self.context and (self.context.name or '').replace('\n', ' ') or '<None>'
+#
+#    def set_text(self, new_text):
+#        """Set a new text that was entered while editing the row line."""
+#        self.context.name = new_text
+#
+#registerAdapterFactory(UML.Namespace, NamespaceViewRow, NamespaceViewRow)
+
+
+#class PropertyViewRow(NamespaceViewRow):
+#
+#    def get_text(self):
+#        context = self.context
+#        if context:
+#            name = context.name
+#            type = context.typeValue and context.typeValue.value or ''
+#            if type:
+#                return name + ': ' + type
+#            else:
+#                return name
+#        else:
+#            return '<None>'
+#
+#registerAdapterFactory(UML.Property, NamespaceViewRow, PropertyViewRow)

@@ -12,35 +12,6 @@ from gaphor.parser import ParserException
 
 XMLNS='http://gaphor.sourceforge.net/gaphor/stock-icons'
 
-# These are not used:
-STOCK_POINTER = 'gaphor-pointer'
-STOCK_ACTIVITY_FINAL_NODE = 'gaphor-activity-final-node'
-STOCK_ACTION = 'gaphor-action'
-STOCK_ACTOR = 'gaphor-actor'
-STOCK_ASSOCIATION = 'gaphor-association'
-STOCK_CLASS = 'gaphor-class'
-STOCK_COMMENT = 'gaphor-comment'
-STOCK_COMMENT_LINE = 'gaphor-comment-line'
-STOCK_DECISION_NODE = 'gaphor-decision-node'
-STOCK_DEPENDENCY = 'gaphor-dependency'
-STOCK_DIAGRAM = 'gaphor-diagram'
-STOCK_EXTEND = 'gaphor-extend'
-STOCK_EXTENSION = 'gaphor-extension'
-STOCK_CONTROL_FLOW = 'gaphor-control-flow'
-STOCK_COMPONENT = 'gaphor-component'
-STOCK_GENERALIZATION = 'gaphor-generalization'
-STOCK_IMPLEMENTATION = 'gaphor-implementation'
-STOCK_INCLUDE = 'gaphor-include'
-STOCK_INITIAL_NODE = 'gaphor-initial-node'
-STOCK_OPERATION = 'gaphor-operation'
-STOCK_PACKAGE = 'gaphor-package'
-STOCK_PROFILE = 'gaphor-profile'
-STOCK_PARAMETER = 'gaphor-parameter'
-STOCK_PROPERTY = 'gaphor-property'
-STOCK_REALIZATION = 'gaphor-realization'
-STOCK_STEREOTYPE = 'gaphor-stereotype'
-STOCK_USECASE = 'gaphor-usecase'
-
 _icon_factory = gtk.IconFactory()
 _icon_factory.add_default()
 

@@ -10,9 +10,9 @@ The layout is done like this:
 """
 
 import gaphor.plugin
-import toposort
-import gaphor.diagram as diagram
 import random
+from gaphor import diagram
+import toposort
 
 class DiagramLayoutAction(gaphor.plugin.Action):
 

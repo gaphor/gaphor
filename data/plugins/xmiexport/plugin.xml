@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- vim:sw=2:et:
 -->
-<plugin name="XMI Export"
+<gaphor-plugin name="XMI Export"
         version="0.1"
         author="Jeroen Vloothuis">
   <description>
@@ -33,4 +33,4 @@
       -->
     </action>
   </provide>
-</plugin>
+</gaphor-plugin>

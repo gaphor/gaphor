@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- vim:sw=2:et:
 -->
-<plugin name="SVG Export"
+<gaphor-plugin name="SVG Export"
         version="0.1"
         author="Arjan Molenaar">
   <description>
@@ -19,4 +19,4 @@
       <depends action="TabChange"/>
     </action>
   </provide>
-</plugin>
+</gaphor-plugin>

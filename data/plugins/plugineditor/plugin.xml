@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- vim:sw=2:et:
 -->
-<plugin name="Plugin Editor"
+<gaphor-plugin name="Plugin Editor"
         version="0.1"
         author="Arjan Molenaar">
   <description>
@@ -34,4 +34,4 @@
       -->
     </action>
   </provide>
-</plugin>
+</gaphor-plugin>

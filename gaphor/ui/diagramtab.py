@@ -152,6 +152,9 @@ class DiagramTab(object):
             elemfact = resource(UML.ElementFactory)
             element = elemfact.lookup(data.data)
             assert element
+
+            # TODO: use adapters to execute code below
+
             item_class = get_diagram_item(type(element))
             if isinstance(element, UML.Diagram):
                 self.owning_window.execute_action('OpenModelElement')

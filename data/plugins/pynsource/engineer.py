@@ -3,8 +3,9 @@
 """The code reverse engineer.
 """
 
-import gaphor.UML as UML
-import gaphor.diagram as diagram
+from gaphor import UML
+from gaphor import diagram
+from gaphor.plugin import import_plugin
 
 from pynsource import PySourceAsText
 
@@ -62,8 +63,9 @@ class Engineer(object):
         for name, clazz in p.classlist.items():
             self._create_methods(clazz)
 
+        layout_diagram = None
         try:
-            from diagramlayout import layout_diagram
+            layout_diagram = import_plugin('diagramlayout').layout_diagram
         except ImportError, e:
             log.error('Could not import diagramlayout module', e)
         else:

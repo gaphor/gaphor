@@ -19,6 +19,7 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
         'RenameItem',
         'separator',
         'EditDelete',
+        'ShowElementInTreeView'
     )
 
     def __init__(self, id=None):

@@ -1,4 +1,4 @@
-# vim:sw=4
+# vim:sw=4:et
 """Plugin Manager.
 
 The plugin manager is used to manage (register/unregister) plugins.
@@ -28,11 +28,13 @@ import glob
 import sys
 from xml.sax import handler, make_parser
 from gaphor import resource
+
 from gaphor.parser import ParserException
 from gaphor.misc.action import register_action_for_slot
 from gaphor.misc.odict import odict
 
 XMLNS='http://gaphor.sourceforge.net/gaphor/plugin'
+MODULENS='gaphor._plugins.'
 
 # Directories to look for plugins. These sirectories are added to the
 # search path. User provided plugins overrule system plugins.
@@ -90,7 +92,7 @@ class Plugin(object):
         #mod = __import__(self.path.split(os.sep)[-1], globals(), locals(), [])
         name = os.path.split(self.path)[1]
         f, n, d = imp.find_module(name, DEFAULT_PLUGIN_DIRS)
-        mod = imp.load_module(name, f, n, d)
+        mod = imp.load_module(MODULENS + name, f, n, d)
         self.module = mod
         self.initialized = True
         if mod:
@@ -145,11 +147,38 @@ class PluginAction(object):
 class PluginLoader(handler.ContentHandler):
     """Load a Plugin definition file (plugin.xml).
     """
+
+    # A typical plugin.xml file might look like this:
+    # <?xml version="1.0"?>                            ## mode => TOPLEVEL
+    # <gaphor-plugin name="UML metamodel sanity check" ## mode => PLUGIN
+    #         version="0.1"
+    #         author="Arjan Molenaar">
+    #   <description>                                  ## mode => DESCRIPTION
+    #     ...
+    #   </description>                                 ## mode <= PLUGIN
+    #
+    #   <require>                                      ## mode => REQUIRE
+    #     <module name="os.path"/>
+    #     <plugin name="Test plugin"/>
+    #   </require>                                     ## mode <= PLUGIN
+    #
+    #   <provide>                                      ## mode => PROVIDE
+    #     <action id="CheckMetamodel"                  ## mode => ACTION
+    #             label="Check UML metamodel"
+    #             tooltip="Check the UML meta model for errors"
+    #             class="CheckMetamodelAction" slot="WindowSlot">
+    #       <depends action=""/>
+    #     </action>                                    ## mode <= PROVIDE
+    #
+    #   </provide>                                     ## mode <= PLUGIN
+    # </gaphor-plugin>                                 ## mode <= TOPLEVEL
+
     TOPLEVEL = 0
-    REQUIRE = 1
-    PROVIDE = 2
-    ACTION = 3
-    DESCRIPTION = 4
+    PLUGIN = 1
+    REQUIRE = 2
+    PROVIDE = 3
+    ACTION = 4
+    DESCRIPTION = 5
 
     def __init__(self):
         handler.ContentHandler.__init__(self)
@@ -164,23 +193,28 @@ class PluginLoader(handler.ContentHandler):
         self.mode = self.TOPLEVEL
 
     def endDocument(self):
-        pass
+        assert self.mode == self.TOPLEVEL
 
     def startElement(self, name, attrs):
         mode = self.mode
         if mode == self.TOPLEVEL:
-            if name == 'plugin':
+            if name == 'gaphor-plugin':
                 self.plugin.name = attrs['name']
                 self.plugin.version = attrs['version']
                 self.plugin.author = attrs['author']
-            elif name == 'description':
+                self.mode = self.PLUGIN
+            else:
+                raise ParserException, 'Invalid XML: expecting <gaphor-plugin>. Got <%s>.' % name
+
+        elif mode == self.PLUGIN:
+            if name == 'description':
                 self.mode = self.DESCRIPTION
             elif name == 'require':
                 self.mode = self.REQUIRE
             elif name == 'provide':
                 self.mode = self.PROVIDE
             else:
-                raise ParserException, 'Invalid XML: expecting <plugin>, <description>, <require> or <provide>. Got <%s>.' % name
+                raise ParserException, 'Invalid XML: expecting <description>, <require> or <provide>. Got <%s>.' % name
 
         elif mode == self.REQUIRE:
             if name == 'module':
@@ -219,9 +253,11 @@ class PluginLoader(handler.ContentHandler):
     def endElement(self, name):
         if self.mode in (self.REQUIRE, self.PROVIDE, self.DESCRIPTION) and \
            name in ('description', 'require', 'provide'):
-            self.mode = self.TOPLEVEL
+            self.mode = self.PLUGIN
         elif self.mode == self.ACTION and name == 'action':
             self.mode = self.PROVIDE
+        elif self.mode == self.PLUGIN and name == 'gaphor-plugin':
+            self.mode = self.TOPLEVEL
         elif name in ('plugin', 'module', 'depends'):
             pass
         else:
