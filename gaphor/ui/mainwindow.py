@@ -69,7 +69,10 @@ class MainWindow(object):
 	ui_component.add_verb_list (verbs, None)
 
     def __destroy_event_cb (self, window):
-	bonobo.main_quit()
+        cmd_reg = GaphorResource('CommandRegistry')
+	cmd = cmd_reg.create_command('FileQuit')
+	cmd.set_parameters ({ 'window': self })
+	cmd.execute()
 
     def __view_row_activated_cb(self, view, path, column):
 	item = self.get_model().on_get_iter(path)

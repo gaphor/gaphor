@@ -60,6 +60,8 @@ class Gaphor(Singleton):
     def main(self):
 	from bonobo import main as _main
 	import gnome
+	# Initialize gnome.ui, since we need some definitions from it
+	import gnome.ui
 	from ui import MainWindow
 	gnome.init(Gaphor.NAME, Gaphor.VERSION)
 	# should we set a default icon here or something?
@@ -70,18 +72,6 @@ class Gaphor(Singleton):
 	#mainwin.get_window().connect("destroy", self.__destroy_cb)
 	#Gaphor.__resources[MainWindow] = mainwin
 	_main()
-
-    def __destroy_cb(self, win):
-	from ui.command.file import QuitCommand
-	QuitCommand().execute()
-
-    def get_main_window(self):
-	"""Return the main window, if any."""
-	from ui import MainWindow
-	try:
-	    return Gaphor.__resources[MainWindow]
-	except KeyError:
-	    pass
 
     def get_resource(resource):
 	"""
