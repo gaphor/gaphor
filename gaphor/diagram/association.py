@@ -264,9 +264,11 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     def confirm_disconnect_handle (self, handle, was_connected_to):
         #log.debug('AssociationItem.confirm_disconnect_handle')
         if self.subject:
-            del self.subject
+            # First delete the Property's at the ends, otherwise they will
+            # be interpreted as attributes.
             del self._head_end.subject
             del self._tail_end.subject
+            del self.subject
 
     # Groupable
 
@@ -326,10 +328,6 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         self._mult_border.set_line_width(1.0)
 
         self._name_bounds = self._mult_bounds = (0, 0, 0, 0)
-
-        # __the_lowerValue is a backup that is used to disconnect
-        # signals when a new subject is set (or the original one is removed)
-        self.__the_lowerValue = None
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
@@ -451,7 +449,9 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec,
-                        notifiers + ('aggregation', 'name', 'lowerValue'))
+                        notifiers + ('aggregation', 'visibility',
+                        'name', 'lowerValue.value',
+                        'upperValue.value', 'taggedValue.value'))
         #print 'w/ assoc', self.subject and self.subject.association
         #self.set_text()
         if self.subject:
@@ -471,28 +471,22 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 
     def on_subject_notify__name(self, subject, pspec):
         self.set_text()
-        #if subject:
-            #self._name.set_text(subject.name)
 
-    def on_subject_notify__lowerValue(self, subject, pspec):
-        #print 'lowerValue', subject, subject.lowerValue
-        if self.__the_lowerValue:
-            self.__the_lowerValue.disconnect(self.on_lowerValue_notify__value)
-
-        if self.subject and self.subject.lowerValue:
-            self.__the_lowerValue = self.subject.lowerValue
-            #log.debug('Have a lowerValue: %s' % self.subject.lowerValue)
-            self.subject.lowerValue.connect('value', self.on_lowerValue_notify__value)
-            #self._mult.set_text(self.subject.lowerValue.value or '')
-        #else:
-            #self._mult.set_text('')
+    def on_subject_notify__visibility(self, subject, pspec):
         self.set_text()
-        self.request_update()
 
-    def on_lowerValue_notify__value(self, lower_value, pspec):
+    def on_subject_notify__lowerValue_value(self, lower_value, pspec):
         log.debug('New value for lowerValue.value: %s' % self.subject.lowerValue.value)
-        #if self.subject:
-            #self._mult.set_text(self.subject.lowerValue.value)
+        self.set_text()
+        self.parent.request_update()
+
+    def on_subject_notify__upperValue_value(self, upper_value, pspec):
+        log.debug('New value for upperValue.value: %s' % self.subject.lowerValue.value)
+        self.set_text()
+        self.parent.request_update()
+
+    def on_subject_notify__taggedValue_value(self, tagged_value, pspec):
+        log.debug('New value for taggedValue.value: %s' % self.subject.lowerValue.value)
         self.set_text()
         self.parent.request_update()
 

@@ -282,7 +282,7 @@ def test_notify():
     import types
     class A(Element):
         notified=None
-        def notify(self, name):
+        def notify(self, name, pspec):
             self.notified = name
 
     A.assoc = association('assoc', A)
@@ -292,11 +292,11 @@ def test_notify():
     a = A()
     assert a.notified == None
     a.assoc = A()
-    assert a.notified == 'assoc'
+    assert a.notified == 'assoc', a.notified
     a.attr = 'newval'
-    assert a.notified == 'attr'
+    assert a.notified == 'attr', a.notified
     a.enum = 'two'
-    assert a.notified == 'enum'
+    assert a.notified == 'enum', a.notified
     a.notified = None
     a.enum = 'two' # should not notify since value hasn't changed.
     assert a.notified == None
@@ -332,7 +332,7 @@ def test_derivedunion():
 
     class E(Element):
         notified=False
-        def notify(self, name):
+        def notify(self, name, pspec):
             if name == 'u':
                 self.notified = True
 

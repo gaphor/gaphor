@@ -190,14 +190,6 @@ class DiagramItem(Presentation):
     def notify(self, name, pspec=None):
         CanvasItem.notify(self, name)
 
-    def get_subject(self, x=None, y=None):
-        """Get the subject that is represented by this diagram item.
-        A (x,y) coordinate can be given (relative to the item) so a
-        diagram item can return another subject that the default when the
-        mouse pointer is on a specific place over the item.
-        """
-        return self.subject
-
     def has_capability(self, capability):
         """Returns the availability of an diagram item specific capability.
         This kinda works the same way as capabilities on windows.
@@ -209,22 +201,84 @@ class DiagramItem(Presentation):
         """
         save_func(name, self.get_property(name))
 
+    def _subject_connect(self, subject, prop):
+        """Connect a signal notifier. The notifier can be just the name of
+        one of the subjects properties.
+        See: DiagramItem.on_subject_notify()
+        """
+        if len(prop) == 1:
+            prop = prop[0]
+            subject.connect(prop, getattr(self, 'on_subject_notify__%s' % prop))
+        elif len(prop) == 2:
+            prop1, prop2 = prop
+            subject.connect(prop1, self._on_subject_notify_2, prop1, prop2, getattr(subject, prop1))
+            p = getattr(subject, prop1)
+            if p:
+                p.connect(prop2, getattr(self, 'on_subject_notify__%s_%s' % (prop1, prop2)))
+        else:
+            raise AttributeError, 'Property nesting to deep: %s' % prop
+            
+    def _subject_disconnect(self, subject, prop):
+        """Disconnect a previously connected signal handler.
+
+        See: DiagramItem.on_subject_notify()
+        """
+        if len(prop) == 1:
+            prop = prop[0]
+            subject.disconnect(getattr(self, 'on_subject_notify__%s' % prop))
+        elif len(prop) == 2:
+            prop1, prop2 = prop
+            subject.disconnect(self._on_subject_notify_2, prop1, prop2, getattr(subject, prop1))
+            p = getattr(subject, prop1)
+            if p:
+                p.disconnect(getattr(self, 'on_subject_notify__%s_%s' % (prop1, prop2)))
+        else:
+            raise AttributeError, 'Property nesting to deep: %s' % prop
+
+    def _on_subject_notify_2(self, subject, pspec, name, subname, old):
+        """This signal handler handles signals that are not direct properties
+        of self.subject (e.g. 'subject.lowerValue.value').
+
+        NOTE: This only works for properties with multiplicity [0..1] or [1].
+
+        See: DiagramItem.on_subject_notify()
+        """
+        prop = getattr(subject, name)
+        if prop is not old:
+            # Attach a new signal handler with the new 'old' value:
+            subject.disconnect(self._on_subject_notify_2, name, subname, old)
+            subject.connect(name, self._on_subject_notify_2, name, subname, prop)
+            
+            handler = getattr(self, 'on_subject_notify__%s_%s' % (name, subname))
+            if old:
+                old.disconnect(handler)
+            if prop:
+                prop.connect(subname, handler)
+                # Call the handler, so stuff will be updated:
+                handler(prop, getattr(type(subject), name))
+
     def on_subject_notify(self, pspec, notifiers=()):
         """A new subject is set on this model element.
         notifiers is an optional tuple of elements that also need a
         callback function. Callbacks have the signature
         on_subject_notify__<notifier>(self, subject, pspec).
+
+        A notifier can be a property of subject (e.g. 'name') or a property
+        of a property of subject (e.g. 'lowerValue.value').
         """
         #log.info('DiagramItem.on_subject_notify: %s' % self.__subject_notifier_ids)
+        # First, split all notifiers on '.'
+        notifiers = map(str.split, notifiers, ['.'] * len(notifiers))
+
         if self.__the_subject:
-            for signal in notifiers:
-                self.__the_subject.disconnect(getattr(self, 'on_subject_notify__%s' % signal))
+            for n in notifiers:
+                self._subject_disconnect(self.__the_subject, n)
 
         if self.subject:
             self.__the_subject = self.subject
-            for signal in notifiers:
+            for n in notifiers:
                 #log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
-                self.subject.connect(signal, getattr(self, 'on_subject_notify__%s' % signal))
+                self._subject_connect(self.subject, n)
 
         self.request_update()
 

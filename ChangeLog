@@ -1,3 +1,8 @@
+2004-02-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagramitem.py: added code so you can easely connect
+	to properties like subject.lowerValue.value.
+
 2004-01-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* moved model definitions from doc/UML2.gaphor to
