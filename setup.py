@@ -7,7 +7,7 @@
 """
 
 MAJOR_VERSION = 0
-MINOR_VERSION = 2
+MINOR_VERSION = 3
 MICRO_VERSION = 0
 
 VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
@@ -16,10 +16,10 @@ GCONF_DOMAIN='/apps/gaphor/' # don't forget trailing slash
 
 import sys, os
 from glob import glob
-from commands import getoutput, getstatusoutput
+from commands import getoutput, getstatus, getstatusoutput
 from distutils.core import setup, Command
 from distutils.command.build_py import build_py
-#from distutils.command.install import install
+from distutils.command.install_lib import install_lib
 from distutils.dep_util import newer
 from utils.build_mo import build, build_mo
 from utils.install_mo import install, install_mo
@@ -136,14 +136,31 @@ class config_Gaphor(Command):
                         self.config_failed.append(module)
 
 
-class build_py_Gaphor(build_py):
+class version_py:
+
+    def generate_version(self, dir, data_dir):
+        """Create a file gaphor/version.py which contains the current version.
+        """
+        outfile = os.path.join(dir, 'gaphor', 'version.py')
+        print 'generating %s' % outfile
+        self.mkpath(os.path.dirname(outfile))
+        f = open(outfile, 'w')
+        f.write('VERSION=\'%s\'\n' % VERSION)
+        f.write('DATA_DIR=\'%s\'\n' % data_dir)
+        f.close()
+        self.byte_compile([outfile])
+
+
+class build_py_Gaphor(build_py, version_py):
 
     description = "build_py and generate gaphor/UML/uml2.py."
 
     def run(self):
         build_py.run(self)
         sys.path.insert(0, self.build_lib)
-        self.generate_version()
+        # All data is stored in the local data directory
+        data_dir = os.path.join(os.getcwd(), 'data')
+        self.generate_version(self.build_lib, data_dir)
         self.generate_uml2()
 
     def generate_uml2(self):
@@ -164,24 +181,39 @@ class build_py_Gaphor(build_py):
             print 'not generating %s (up-to-date)' % py_model
         self.byte_compile([outfile])
 
-    def generate_version(self):
-        """Create a file gaphor/version.py which contains the current version.
-        """
-        print 'generating gaphor/version.py'
-        outfile = os.path.join(self.build_lib, 'gaphor/version.py')
-        self.mkpath(os.path.dirname(outfile))
-        f = open(outfile, 'w')
-        f.write('VERSION=\'%s\'' % VERSION)
-        f.close()
-        self.byte_compile([outfile])
+
+class install_lib_Gaphor(install_lib, version_py):
+
+    def initialize_options(self):
+        install_lib.initialize_options(self)
+        self.install_data= None
+
+    def finalize_options(self):
+        install_lib.finalize_options(self)
+        self.set_undefined_options('install_data',
+                                   ('install_dir', 'install_data'))
+
+    def run(self):
+        install_lib.run(self)
+        # Install a new version.py with install_data as data_dir:
+        self.generate_version(self.install_dir, self.install_data)
 
 
-class install_config(Command):
+class install_schemas(Command):
+    """Do something like this:
+
+        GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` \
+            gconftool --makefile-install-rule data/gaphor.schemas
+
+    in a pythonic way.
+    """
 
     description = "Install a configuration (using GConf)."
 
     user_options = [
         ('install-data=', None, 'installation directory for data files'),
+        ('gconftool', None, 'The gconftool to use for installation'),
+        ('gconf-config-source', None, 'Overrule the GConf config source'),
         ('force', 'f', 'force installation (overwrite existing keys)')
     ]
 
@@ -189,7 +221,10 @@ class install_config(Command):
 
     def initialize_options(self):
         self.install_data = None
+        self.gconftool = 'gconftool-2'
+        self.gconf_config_source = ''
         self.force = None
+        self.schemas_file = 'data/gaphor.schemas'
 
     def finalize_options(self):
         self.set_undefined_options('install',
@@ -197,16 +232,17 @@ class install_config(Command):
                                    ('install_data', 'install_data'))
 
     def run(self):
-        import gconf
-        self.gconf_client = gconf.client_get_default()
-        self._set_value('datadir', self.install_data, 'string')
+        getstatus('GCONF_CONFIG_SOURCE="%s" %s --makefile-install-rule %s' % (self.gconf_config_source, self.gconftool, self.schemas_file))
+
+        self._set_value('/schemas/apps/gaphor/data_dir', self.install_data, 'string')
 
     def _set_value(self, key, value, type):
         print "setting gconf value '%s' to '%s'" % (key, value)
-        apply(getattr(self.gconf_client, 'set_' + type),
-              (GCONF_DOMAIN + key, value))
+        #apply(getattr(self.gconf_client, 'set_' + type),
+        #      (GCONF_DOMAIN + key, value))
+        getstatus('%s --type=%s --set %s %s' % (self.gconftool, type, key, value))
 
-install.sub_commands.append(('install_config', None))
+#install.sub_commands.append(('install_schemas', None))
 
 
 class run_Gaphor(Command):
@@ -237,7 +273,7 @@ class run_Gaphor(Command):
 
         import os.path
         from gaphor import Gaphor
-        os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
+        #os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
         if self.command:
             print 'Executing command: %s...' % self.command
             exec self.command
@@ -266,9 +302,8 @@ setup(name='gaphor',
       author='Arjan J. Molenaar',
       author_email='arjanmol@users.sourceforge.net',
       license="GNU General Public License (GPL, see COPYING)",
-      long_description="""
-      Gaphor is a UML modeling tool written in Python. It uses the GNOME2
-      environment for user interaction.""",
+      long_description="Gaphor is a UML modeling tool written in Python. "
+      "It uses the GNOME2 environment for user interaction.",
       platforms=['GNOME2'],
       all_linguas=['nl'],
       packages=['gaphor',
@@ -290,10 +325,11 @@ setup(name='gaphor',
       distclass=Distribution,
       cmdclass={'config': config_Gaphor,
                 'build_py': build_py_Gaphor,
-                'install_config': install_config,
+                #'install_schemas': install_schemas,
                 'build': build,
                 'build_mo': build_mo,
                 'install': install,
+                'install_lib': install_lib_Gaphor,
                 'install_mo': install_mo,
                 'run': run_Gaphor
       }

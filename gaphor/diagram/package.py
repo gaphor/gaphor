@@ -43,7 +43,6 @@ class PackageItem(ClassifierItem):
         self.expand_bounds(1.0)
 
     def on_shape_iter(self):
-        #return iter([self._border])
         yield self._border
         for s in ClassifierItem.on_shape_iter(self):
             yield s

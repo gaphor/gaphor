@@ -66,7 +66,7 @@ class MainWindow(AbstractWindow):
 	mywin = self.get_window()
 	window_win = window.get_window()
 	window_win.add_accel_group(mywin.get_accel_group())
-	window_win.set_transient_for (mywin)
+	#window_win.set_transient_for (mywin)
 	self.__transient_windows.append(window)
 	window.connect(self.__on_transient_window_closed)
 

@@ -79,7 +79,7 @@ class DiagramItem(Presentation):
         self.__handler_to_id = { }
         # Add the class' on_subject_notify() as handler:
         self.connect('notify::subject', type(self).on_subject_notify)
-        # The_subject is a backup that is used to disconnect signals when a
+        # __the_subject is a backup that is used to disconnect signals when a
         # new subject is set (or the original one is removed)
         self.__the_subject = None
 

@@ -51,9 +51,9 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 
     def save (self, save_func):
         RelationshipItem.save(self, save_func)
-        if self.head_end:
+        if self._head_end.subject:
             save_func('head_subject', self._head_end.subject)
-        if self.tail_end:
+        if self._tail_end.subject:
             save_func('tail_subject', self._tail_end.subject)
 
     def load (self, name, value):
@@ -272,8 +272,6 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
 
     def on_groupable_remove(self, item):
         '''Do not allow the name to be removed.'''
-        #self.emit_stop_by_name('remove')
-        ##return 0
         return 1
 
     def on_groupable_iter(self):
@@ -323,17 +321,23 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         font = pango.FontDescription(AssociationEnd.FONT)
         self._name = diacanvas.shape.Text()
         self._name.set_font_description(font)
+        self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
         self._name_border = diacanvas.shape.Path()
         self._name_border.set_color(diacanvas.color(128,128,128))
         self._name_border.set_line_width(1.0)
 
         self._mult = diacanvas.shape.Text()
         self._mult.set_font_description(font)
+        self._mult.set_wrap_mode(diacanvas.shape.WRAP_NONE)
         self._mult_border = diacanvas.shape.Path()
         self._mult_border.set_color(diacanvas.color(128,128,128))
         self._mult_border.set_line_width(1.0)
 
         self._name_bounds = self._mult_bounds = (0, 0, 0, 0)
+
+        # __the_lowerValue is a backup that is used to disconnect
+        # signals when a new subject is set (or the original one is removed)
+        self.__the_lowerValue = None
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
@@ -446,25 +450,13 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
                              p1[1] + mult_dy + mult_h)
         self._mult.set_pos((p1[0] + mult_dx, p1[1] + mult_dy))
 
-#    def on_name_notify(self, label, pspec):
-#        assert label is self._name
-#        text = self._name.get_property('text')
-#        if self.subject.name != text:
-#            self.subject.name = text
-
-#    def on_mult_notify(self, label, pspec):
-#        assert label is self._mult
-#        text = self._mult.get_property('text')
-#        if not self.subject.lowerValue:
-#            self.subject.lowerValue = GaphorResource('ElementFactory').create(UML.LiteralSpecification)
-#        self.subject.lowerValue.value = text
-
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec,
                         notifiers + ('aggregation', 'name', 'lowerValue'))
         # Set name:
         if self.subject:
             self._name.set_text(self.subject.name or '')
+            self.on_subject_notify__lowerValue(self.subject, None)
             if self.subject.lowerValue:
                 # Add a callback to lowerValue
                 self._mult.set_text(self.subject.lowerValue.value or '')
@@ -483,11 +475,23 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 
     def on_subject_notify__lowerValue(self, subject, pspec):
         print 'lowerValue', subject, subject.lowerValue
-        #import pdb
-        #pdb.set_trace()
+        if self.__the_lowerValue:
+            self.__the_lowerValue.disconnect(self.on_lowerValue_notify__value)
+
         if self.subject and self.subject.lowerValue:
+            self.__the_lowerValue = self.subject.lowerValue
+            log.debug('Have a lowerValue: %s' % self.subject.lowerValue)
+            self.subject.lowerValue.connect('value', self.on_lowerValue_notify__value)
             self._mult.set_text(self.subject.lowerValue.value)
-        # Add a callback to lowerValue
+        else:
+            self._mult.set_text('')
+        self.request_update()
+
+    def on_lowerValue_notify__value(self, lower_value, pspec):
+        log.debug('New value for lowerValue.value: %s' % self.subject.lowerValue.value)
+        if self.subject:
+            self._mult.set_text(self.subject.lowerValue.value)
+        self.request_update()
 
     def on_update(self, affine):
         diacanvas.CanvasItem.on_update(self, affine)
@@ -556,9 +560,11 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
                 self.subject.name = new_text
             log.info('editing name done')
         elif shape == self._mult:
-            log.info('editing mult done')
+            log.info('editing mult done: %s' % new_text)
             if not self.subject.lowerValue:
+                log.debug('creating new lowerValue')
                 self.subject.lowerValue = GaphorResource('ElementFactory').create(UML.LiteralSpecification)
+                log.debug('created: %s' % self.subject.lowerValue)
             if new_text != self.subject.lowerValue.value:
                 self.subject.lowerValue.value = new_text
 

@@ -73,13 +73,10 @@ class Compartment(object):
             self.sep_y = height
             height += ClassItem.COMP_MARGIN_Y
             for f in self.items:
-                #log.debug(f)
-                layout = f.get_property('layout')
-                w, h = layout.get_pixel_size()
-                if affine:
-                    a = f.get_property('affine')
-                    a = (a[0], a[1], a[2], a[3], ClassItem.COMP_MARGIN_X, height)
-                    f.set(affine=a, height=h, width=w, visible=True)
+                w, h = f.get_size(update=True)
+                log.debug('feature: %f, %f' % (w, h))
+                f.set_pos(ClassItem.COMP_MARGIN_X, height)
+                f.set_property('visible', True)
                 height += h
                 width = max(width, w + 2 * ClassItem.COMP_MARGIN_X)
             height += ClassItem.COMP_MARGIN_Y
@@ -272,10 +269,12 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         if isinstance(item, AttributeItem):
             #log.debug('Adding attribute %s' % item)
             self._attributes.append(item)
+            item.set_child_of(self)
         #elif isinstance(item.subject, UML.Operation):
         elif isinstance(item, OperationItem):
             #log.debug('Adding operation %s' % item)
             self._operations.append(item)
+            item.set_child_of(self)
         else:
             log.warning('feature %s is not a Feature' % item)
             return 0
@@ -286,8 +285,10 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         """Remove a feature subitem."""
         if item in self._attributes.items:
             self._attributes.items.remove(item)
+            self.set_child_of(None)
         elif item in self._operations.items:
             self._operations.items.remove(item)
+            self.set_child_of(None)
         else:
             log.warning('feature %s not found in feature list' % item)
             return 0
@@ -308,8 +309,6 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         return len(self._attributes.items) + len(self._operations.items)
 
     def on_groupable_pos(self, item):
-        #if item == self._name:
-        #    return 0
         if item in self._attributes.items:
             return self._attributes.items.index(item)
         elif item in self._operations.items:

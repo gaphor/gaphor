@@ -45,6 +45,7 @@ class Gaphor(object):
     In case of a string resource, a lookup will be done in the GConf
     configuration tree. This is currently not implemented though...
     """
+
     __metaclass__ = misc.singleton.Singleton
 
     NAME='gaphor'
@@ -88,10 +89,11 @@ class Gaphor(object):
         return self.__conf[key]
 
     def get_datadir(self):
-        import os
-        if os.environ.has_key('GAPHOR_DATADIR'):
-            return os.environ['GAPHOR_DATADIR']
-        return self.get_conf('datadir')
+        import gaphor.version
+        return gaphor.version.DATA_DIR
+
+    def get_version(self):
+	return VERSION
 
     def get_resource(resource): # as staticmethod:
         """*Static method*

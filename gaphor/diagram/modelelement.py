@@ -17,7 +17,7 @@ __date__ = '$date$'
 class ModelElementItem (diacanvas.CanvasElement, DiagramItem):
     # Properties, also add the DiagramItem properties here.
     __gproperties__ = {
-        'auto-resize':        (gobject.TYPE_BOOLEAN, 'auto resize',
+        'auto-resize':  (gobject.TYPE_BOOLEAN, 'auto resize',
                          'Set auto-resize for the diagram item',
                          1, gobject.PARAM_READWRITE)
     }
@@ -27,9 +27,12 @@ class ModelElementItem (diacanvas.CanvasElement, DiagramItem):
 
     def __init__(self, id=None):
         self.__gobject_init__()
-        #diacanvas.CanvasElement.__init__(self)
         DiagramItem.__init__(self, id)
         self.auto_resize = 0
+
+    # Ensure we call the right connect functions:
+    connect = DiagramItem.connect
+    disconnect = DiagramItem.disconnect
 
     def save(self, save_func):
         for prop in ('affine', 'width', 'height', 'auto-resize'):
@@ -56,11 +59,8 @@ class ModelElementItem (diacanvas.CanvasElement, DiagramItem):
         else:
             return DiagramItem.do_get_property(self, pspec)
 
-    # Ensure we call the right connect functions:
-    connect = DiagramItem.connect
-    disconnect = DiagramItem.disconnect
+    # DiaCanvasItem callbacks:
 
-    # DiaCanvasItem callbacks
     def on_glue(self, handle, wx, wy):
         return self._on_glue(handle, wx, wy, diacanvas.CanvasElement)
 
