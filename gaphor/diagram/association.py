@@ -83,6 +83,7 @@ class AssociationItem(relationship.RelationshipItem):
 		tail_end.add_presentation(self)
 
     def on_update (self, affine):
+	self.__solver.resolve()
 	self.__super.on_update(affine)
 
 	#self.set(has_head=1, head_fill_color=0,

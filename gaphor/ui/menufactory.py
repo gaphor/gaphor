@@ -7,10 +7,16 @@ register themselves in the factory. A menu or toolbar is generated based on
 a XML file.
 '''
 from gaphor.misc.observer import Subject
+import copy
 
 class MenuEntry(Subject):
 
     def __init__(self, name, command_class=None, extra_args=None):
+	"""name: name of the command (verb name)
+	command_class: class to instantiate for the menu
+	extra_args: a dictionaty of name-value pairs to be used as extra
+		    arguments for command creation.
+	"""
 	if not name: raise ValueError, 'name may not be None'
 	self._name = name
 	self._command_class = command_class
@@ -24,9 +30,16 @@ class MenuEntry(Subject):
 
     def create_command(self, **args):
 	print self._command_class
-	ea = self._extra_args
-	return self._command_class(**args)
-	
+	cmd = None
+	if self._extra_args:
+	    ea = copy.copy(args)
+	    for n, v in self._extra_args.items():
+	    	ea[n] = v
+	    cmd = self._command_class(**ea)
+	else:
+	    cmd = self._command_class(**args)
+	return cmd
+
     # read only properties:
     name = property (get_name, None, None, 'Name of the menu entry')
     command_class = property (get_command_class, None, None, 'Command to be executed')
@@ -69,9 +82,11 @@ class MenuFactory(object):
 	"""
 	verbs = list()
 	for name, value in self.__entries.items():
-	    cmd = value.create_command(**args)
-	    if cmd:
-		verbs.append((name, MenuCommandExecuter(cmd)))
-
+	    try:
+		cmd = value.create_command(**args)
+		if cmd:
+		    verbs.append((name, MenuCommandExecuter(cmd)))
+	    except Exception, e:
+		print 'No verb created for', name
 	return verbs
 

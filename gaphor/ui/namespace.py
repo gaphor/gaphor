@@ -10,7 +10,6 @@ import types
 import gaphor.UML as UML
 import sys
 import string
-from command.tree import OpenModelElementCommand
 import stock
 
 class NamespaceModel(gtk.GenericTreeModel):
@@ -280,9 +279,12 @@ class NamespaceView(gtk.TreeView):
 	element.name = new_text
 
     def on_row_activated(self, path, column):
-	print self, path, column
 	item = self.get_model().on_get_iter(path)
-	OpenModelElementCommand(item).execute()
+	cmd_reg = GaphorResource('CommandRegistry')
+	cmd = cmd_reg.create_command('OpenModelElement')
+	cmd.set_parameters({ 'window': self.get_toplevel(),
+			     'element': item })
+	cmd.execute()
 
 #    def _event(self, event):
 #	if event.type == gtk.gdk._2BUTTON_PRESS:

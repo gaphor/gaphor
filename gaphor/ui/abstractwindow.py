@@ -7,18 +7,6 @@ class AbstractWindow(object):
     here should be overriden in window shell implementations
     """
 
-    def get_name(self):
-    	return 'New window'
-
-    def get_title(self):
-	return '***'
-
-    def get_default_size(self):
-	return (50, 50)
-
-    def create_contents(self):
-	return None
-
-    def get_ui_xml_file(self):
-	return None
+    def get_context(self):
+    	raise NotImplementedError, 'get_context() should contain a context such as main.menu'
 

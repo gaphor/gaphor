@@ -1,3 +1,16 @@
+2002-10-08  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/placementtool.py: moved to gaphor/diagram.
+	* gaphor/ui/treeview.py, gaphor/ui/windowfactory.py: removed.
+	* gaphor/ui/command/file.py: renamed to main.py, commands for the main
+	window.
+	* gaphor/ui/command/about.py: removed, command is moved to main.py.
+	* gaphor/ui/command/tree.py: renamed to mainpopup.py.
+	* gaphor/plugin.py: New file. framework for plugins.
+	* gaphor/ui/command/commandinfo.py: New file. meta-info for commands.
+	* gaphor/ui/commandregistry.py: Registry for commands. UI menus are
+	created here.
+
 2002-09-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/abstractwindow.py: superclass for all window shells.

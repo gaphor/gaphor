@@ -13,6 +13,13 @@ class DiagramView(CanvasView):
 	else:
 	    canvas = None
 	CanvasView.__init__(self, canvas)
+	self.diagram = diagram
+	
+    def set_diagram(self, diagram):
+	self.set_canvas (diagram.canvas)
+	self.diagram = diagram
 
+    def get_diagram(self):
+	return self.diagram
 
 gobject.type_register(DiagramView)

@@ -65,6 +65,15 @@ def get_stock_id(element):
 	    print element, 'not found'
 	    pass
 
+#def get_diagram_insert_submenu():
+#    xml = '<placeholder name="InsertElement">'
+#
+#    for stock_id, label, icons in default_stock_items:
+#	xml += '<menuitem name="%s" _label="%s" verb="%s" pixtype="stock" pixname="%s"/>' % (stock_id, label, stock_id, stock_id)
+#
+#    xml += '</placeholder>'
+#    return xml
+
 def add_stock_items(stock_items, icon_dir=''):
     icon_factory = GaphorResource(gtk.IconFactory)
 
@@ -83,12 +92,13 @@ def add_stock_items(stock_items, icon_dir=''):
 		set.add_source(source)
 		do_add=1
 	if do_add:
-	    iconlist.append((si[0], set))
+	    icon_factory.add(si[0], set)
+	    #iconlist.append((si[0], set))
 	    
     gtk.stock_add(stocklist)
 
-    for id, set in iconlist:
-	icon_factory.add(id, set)
+    #for id, set in iconlist:
+	#icon_factory.add(id, set)
 
 #
 # Initialization:
@@ -100,7 +110,9 @@ del icon_factory
 
 add_stock_items(default_stock_items, default_icon_dir)
 
+#assert gtk.stock_lookup(STOCK_ACTOR)
+
 # Remove stock item definitions, GTK+ knows about them, so we don't
 # need them anymore...
-del default_stock_items, default_icon_dir
+#del default_stock_items, default_icon_dir
 

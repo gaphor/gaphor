@@ -1,103 +1,37 @@
 <Root>
 
-<commands>
-        <cmd name="FilePrint" _label="Print" sensitive="0"
-	_tip="Print the current file" pixtype="stock" pixname="Print"/>
-	
-        <cmd name="FilePrintSetup" _label="Print Setup" sensitive="0"
-          _tip="Setup the page settings for your current printer"
-	  pixtype="stock" pixname="Print"/>
-
-	<cmd name="FilePrintPreview" _label="Print Preview" sensitive="0"
-	_tip="Print preview"/>
-	
-        <cmd name="FileClose" _label="Close"
-	_tip="Close the current file" pixtype="stock" pixname="Close"
-	accel="*Control*w"/>
-	
-        <cmd name="EditCut" _label="Cut" _tip="Cut the selection"
-          pixtype="stock" pixname="Cut" accel="*Control*x"/>
-	
-        <cmd name="EditCopy" _label="Copy"
-	_tip="Copy the selection" pixtype="stock" pixname="Copy"
-	accel="*Control*c"/>
-	
-        <cmd name="EditPaste" _label="Paste"
-	_tip="Paste the clipboard" pixtype="stock" pixname="Paste"
-	accel="*Control*v"/>
-	
-        <cmd name="EditClear" _label="Clear"
-	_tip="Clear the selection"/>
-	
-        <cmd name="EditUndo" _label="Undo" _tip="Undo the last action"
-          pixtype="stock" pixname="Undo" accel="*Control*z"/>
-	
-        <cmd name="EditRedo" _label="Redo" _tip="Redo the undone action"
-          pixtype="stock" pixname="Redo" accel="*Control*r"/>
-	
-	<cmd name="EditSelectAll" _label="Select All" _tip="Select everything"/>
-
-        <cmd name="WindowClose" _label="Close This Window"
-	_tip="Close the current window"/>
-
-</commands>
-
 <menu>
-
-<submenu name="File" _label="_File">
-        
+    <submenu name="File" _label="_File">
 	<placeholder name="Print" delimit="top" hidden="1">
-
-	        <menuitem name="FilePrint" verb="" _label="_Print"/>
-	
-	        <menuitem name="FilePrintSetup" verb="" _label="Print S_etup..."/>
-
-		<menuitem name="FilePrintPreview" verb="" _label="Print Pre_view"/>
-
+	    <menuitem name="FilePrint" verb="" _label="_Print"/>
+	    <menuitem name="FilePrintSetup" verb="" _label="Print S_etup..."/>
+	    <menuitem name="FilePrintPreview" verb="" _label="Print Pre_view"/>
 	</placeholder>
-	
 	<separator/>
+        <menuitem name="FileClose" verb=""/>
+    </submenu>
 
-        <menuitem name="FileClose" verb="" _label="_Close"/>
-
-</submenu>
-
-<submenu name="Edit" _label="_Edit">
-
+    <submenu name="Edit" _label="_Edit">
         <menuitem name="EditCut" verb="" _label="C_ut"/>
-	
         <menuitem name="EditCopy" verb="" _label="_Copy"/>
-	
         <menuitem name="EditPaste" verb="" _label="_Paste"/>
-	
 	<separator/>
-
         <menuitem name="EditClear" verb="" _label="C_lear"/>
-	
         <menuitem name="EditUndo" verb="" _label="_Undo"/>
-	
         <menuitem name="EditRedo" verb="" _label="_Redo"/>
-	
 	<placeholder name="EditOps"/>
-
 	<separator/>
-
         <menuitem name="EditProperties" verb="" _label="_Properties..."/>
-
 	<menuitem name="EditSelectAll" verb="" _label="_Select All"/>
+    </submenu>
 
-</submenu>
-
-<submenu name="Insert" _label="_Insert">
-
-        <menuitem name="InsertDiagram" verb=""/>
-
-</submenu>
-	
+    <submenu name="Insert" _label="_Insert">
+        <placeholder name="InsertElement"/>
+    </submenu>
 </menu>
 
 <!--
-<dockitem name="Toolbar" _tip="Main toolbar" behavior="detachable,exclusive">
+    <dockitem name="Toolbar" _tip="Main toolbar" behavior="detachable,exclusive">
 	<toolitem name="FileNew" verb=""/>
 	<toolitem name="FileOpen" verb=""/>
 	<toolitem name="FileSave" verb=""/>
@@ -105,11 +39,11 @@
 
 	<separator/>
 
-</dockitem>
+    </dockitem>
 -->
 
-<status>
+    <status>
 	<item name="main"/>
-</status>
+    </status>
 
 </Root>

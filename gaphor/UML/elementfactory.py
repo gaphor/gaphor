@@ -97,3 +97,4 @@ class ElementFactory(object):
     def values(self):
 	return self.__elements.values()
 
+GaphorResource(ElementFactory)

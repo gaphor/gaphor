@@ -8,11 +8,10 @@ This function can be used to locate application wide resources, such as
 object factories.
 """
 
-#import pygtk
-#pygtk.require('2.0')
+import pygtk
+pygtk.require('2.0')
 
 from misc.singleton import Singleton
-#from misc.conf import Conf
 import config
 import types
 
@@ -61,11 +60,12 @@ class Gaphor(Singleton):
     def main(self):
 	from bonobo import main as _main
 	import gnome
-	from ui import MainWindow, WindowFactory
+	from ui import MainWindow
 	gnome.init(Gaphor.NAME, Gaphor.VERSION)
 	# should we set a default icon here or something?
-	#mainwin = MainWindow(Gaphor.NAME, Gaphor.TITLE)
-	mainwin = GaphorResource(WindowFactory).create(type=MainWindow)
+	mainwin = MainWindow()
+	mainwin.construct()
+	#mainwin = GaphorResource(WindowFactory).create(type=MainWindow)
 							
 	#mainwin.get_window().connect("destroy", self.__destroy_cb)
 	#Gaphor.__resources[MainWindow] = mainwin
@@ -98,14 +98,18 @@ class Gaphor(Singleton):
 	"""
 	if isinstance (resource, types.StringType):
 #	    return Gaphor.__conf.get_value(resource)
-	    pass
+	    hash = Gaphor.__resources
+	    if hash.has_key(resource):
+		return hash[resource]
 	else:
 	    hash = Gaphor.__resources
 	    if hash.has_key(resource):
 		return hash[resource]
 	    try:
+		print 'Gaphor: Adding new resource:', resource.__name__
 		r = resource()
 		hash[resource] = r
+		hash[resource.__name__] = r
 		return r
 	    except Exception, e:
 		raise GaphorError, 'Could not create resource %s (%s)' % (str(resource), str(e))

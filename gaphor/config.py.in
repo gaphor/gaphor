@@ -6,3 +6,5 @@ DATADIR='@GAPHOR_DATADIR@'
 import os
 if os.environ.has_key('GAPHOR_DATADIR'):
     DATADIR = os.environ['GAPHOR_DATADIR']
+
+CONFIG_PATH='/apps/gaphor/UIConfig/kvps'

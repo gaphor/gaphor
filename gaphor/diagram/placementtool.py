@@ -2,6 +2,7 @@
 # vim:sw=4:
 import diacanvas
 import gaphor.diagram as diagram
+from gaphor.misc.command import Command
 
 class PlacementTool(diacanvas.PlacementTool):
 
@@ -29,4 +30,14 @@ class PlacementTool(diacanvas.PlacementTool):
     def __button_release (self, tool, view, event):
 	view.set_tool (None)
 	return 0
+
+
+class PlacementCommand(Command):
+
+    def set_parameters(self, params):
+	self._view = params['window'].get_view()
+
+    def execute(self):
+	tool = PlacementTool (self._diagram, self._klass)
+	self._view.set_tool(tool)
 

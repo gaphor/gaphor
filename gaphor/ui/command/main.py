@@ -10,9 +10,9 @@ QuitCommand
 
 from gaphor.misc.command import Command
 from gaphor.misc.storage import Storage
+from commandinfo import CommandInfo
 import sys
 import gtk
-import bonobo
 import gaphor.UML as UML
 import gaphor.diagram as diagram
 import gc
@@ -30,10 +30,16 @@ class NewCommand(Command):
 	diagram.namespace = model
 	diagram.name='main'
 
+CommandInfo (name='FileNew', _label='_New', pixname='New',
+	     _tip='Mijn eigen tooltip',
+	     context='main.menu',
+	     command_class=NewCommand).register()
+
+
 class OpenCommand(Command):
 
-    def __init__(self, **args):
-	Command.__init__(self, **args)
+    def __init__(self):
+	Command.__init__(self)
 	self.filename = None
 
     def execute(self):
@@ -75,17 +81,16 @@ class OpenCommand(Command):
 	filesel.destroy()
         gtk.main_quit()
 
+CommandInfo (name='FileOpen', _label='_Open...', pixname='Open', accel='F3',
+	     context='main.menu',
+	     command_class=OpenCommand).register()
+
 
 class SaveCommand(Command):
 
-    def __init__(self, **args):
-	Command.__init__(self, **args)
+    def __init__(self):
+	Command.__init__(self)
 	self.filename = None
-
-    def is_valid(self):
-	if GaphorResource(UML.ElementFactory).lookup(1):
-	    return 1
-	return 0
 
     def execute(self):
 	filesel = gtk.FileSelection('Save file')
@@ -118,6 +123,11 @@ class SaveCommand(Command):
 	filesel.destroy()
         gtk.main_quit()
 
+CommandInfo (name='FileSave', _label='_Save...', pixname='Save',
+	     accel='*Control*s',
+	     context='main.menu',
+	     command_class=SaveCommand).register()
+
 
 class SaveAsCommand(Command):
 
@@ -126,6 +136,10 @@ class SaveAsCommand(Command):
 
     def execute(self):
 	SaveCommand().execute()
+
+CommandInfo (name='FileSaveAs', _label='_Save as...', pixname='Save As',
+	     context='main.menu',
+	     command_class=SaveAsCommand).register()
 
 
 class RevertCommand(Command):
@@ -136,16 +150,45 @@ class RevertCommand(Command):
 class QuitCommand(Command):
 
     def execute(self):
+	import bonobo
 	print 'Exiting gaphor...',
 	bonobo.main_quit()
 	print 'bye!'
 
+CommandInfo (name='FileQuit', _label='_Quit', pixname='Exit',
+	     accel='*Control*q',
+	     context='main.menu',
+	     command_class=QuitCommand).register()
 
-class CloseCommand(Command):
-
-    def __init__(self, window, **args):
-	self._window = window
+class CreateDiagramCommand(Command):
 
     def execute(self):
-	self._window.destroy()
+	elemfact = GaphorResource(UML.ElementFactory)
+	model = elemfact.lookup(1) # model
+	diagram = elemfact.create(UML.Diagram)
+	diagram.namespace = model
+	diagram.name = "New diagram"
+
+CommandInfo (name='CreateDiagram', _label='_New diagram', pixname='gaphor-diagram',
+	     context='main.menu',
+	     command_class=CreateDiagramCommand).register()
+
+
+class AboutCommand(Command):
+
+    def execute(self):
+	import gnome.ui
+	import gaphor.config as config
+	logo = gtk.gdk.pixbuf_new_from_file (config.DATADIR + '/pixmaps/logo.png')
+	about = gnome.ui.About(name = 'Gaphor',
+			   version = config.VERSION,
+			   copyright = 'Copyright (c) 2001-2002 Arjan J. Molenaar',
+			   comments = 'UML Modeling for GNOME',
+			   authors = ('Arjan J. Molenaar <arjanmolenaar at hetnet dot nl>',),
+			   logo_pixbuf = logo)
+	about.show()
+
+CommandInfo (name='About', _label='_About', pixname='About',
+	     context='main.menu',
+	     command_class=AboutCommand).register()
 
