@@ -6,6 +6,7 @@ headers
 #include "pygobject.h"
 #include <src/gtkwrapbox.h>
 #include <src/gtkhwrapbox.h>
+#include <src/gtkvwrapbox.h>
 %%
 modulename gaphor.misc.wrapbox
 %%

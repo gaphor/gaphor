@@ -1,9 +1,9 @@
 /* vim:sw=4
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+//#ifdef HAVE_CONFIG_H
+//#include "config.h"
+//#endif
 
 /* include this first, before NO_IMPORT_PYGOBJECT is defined */
 #include <pygobject.h>
