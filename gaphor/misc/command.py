@@ -15,3 +15,11 @@ class Command:
 
     def execute (self):
 	pass
+
+    def is_valid (self):
+        """
+	Tells us if a command is reasy to be executed.
+	In menu's this method is called when a menu is opened. Non-valid
+	commands will be grayed out when the menu appears.
+	"""
+	return 1

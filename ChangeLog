@@ -1,3 +1,7 @@
+2002-08-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* Makefile.am: Now require Automake 1.6
+
 2002-08-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/**/Makefile*: removed. Now only define the files needed in

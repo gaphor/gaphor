@@ -2,25 +2,47 @@
 # vim:sw=4
 
 import gtk
+import gnome.ui
 import namespace
+import command.file
 import gaphor.UML as UML
-from abstractwindow import AbstractWindow
+import gaphor.config
+from gaphor.misc.menufactory import MenuFactory, MenuItem, MenuSeparator
 
-class MainWindow(AbstractWindow):
+class MainWindow:
     """
     The main window for the application. It contains a Namespace-based tree
-    view and a menu and a statusbar. The statusbar can be populated by messages
-    with different levels of sevirity, from 0 (debug) to 9 (error).
-    Stuff like that should be defined in a AbstractWindow class.
+    view and a menu and a statusbar.
     """
 
-    def __init__(self):
+    def __2init__(self):
+	# Menu items have the following structure:
+	# ( Name, Comment, (ctrl) + Modifier, Command or Submenu )
+	menu =  MenuItem(submenu=(
+		    MenuItem(name='_File', submenu=(
+			MenuItem(stock=gtk.STOCK_NEW,
+				 comment='Create a new model',
+				 command=command.file.NewCommand()),
+	 		MenuItem(stock=gtk.STOCK_OPEN,
+				 comment='Open an existing model',
+				 command=command.file.OpenCommand()),
+			MenuItem(stock=gtk.STOCK_SAVE,
+				 comment='Save current model',
+				 command=command.file.SaveCommand()),
+			MenuSeparator(),
+			MenuItem(stock=gtk.STOCK_QUIT,
+				 comment='Exit Gaphor',
+				 command=command.file.QuitCommand())
+			,))
+		    ,))
 	win = gtk.Window ()
 	accelgroup = gtk.AccelGroup()
 	statusbar = gtk.Statusbar()
 	model = namespace.NamespaceModel(UML.ElementFactory())
 	view = namespace.NamespaceView(model)
-	menubar = gtk.MenuBar()
+
+	menu_factory = MenuFactory(menu=menu, accelgroup=accelgroup, statusbar=statusbar)
+	menubar = menu_factory.create_menu()
 
 	vbox = gtk.VBox(homogeneous=gtk.FALSE)
 	win.add (vbox)
@@ -39,15 +61,52 @@ class MainWindow(AbstractWindow):
 
 	win.show_all()
 	
-	self.statusbar.push (0, 'Welcome...')
+	statusbar.push (0, 'Gaphor v%s' % gaphor.config.GAPHOR_VERSION)
 
-    def push(self, message):
-	self.statusbar.push (0, message)
-	# TODO: create timeout
+    def __init__(self, name, title):
+	# Menu items have the following structure:
+	# ( Name, Comment, (ctrl) + Modifier, Command or Submenu )
+	menu =  MenuItem(submenu=(
+		    MenuItem(name='_File', submenu=(
+			MenuItem(stock=gtk.STOCK_NEW,
+				 comment='Create a new model',
+				 command=command.file.NewCommand()),
+	 		MenuItem(stock=gtk.STOCK_OPEN,
+				 comment='Open an existing model',
+				 command=command.file.OpenCommand()),
+			MenuItem(stock=gtk.STOCK_SAVE,
+				 comment='Save current model',
+				 command=command.file.SaveCommand()),
+			MenuSeparator(),
+			MenuItem(stock=gtk.STOCK_QUIT,
+				 comment='Exit Gaphor',
+				 command=command.file.QuitCommand())
+			,))
+		    ,))
+	app = gnome.ui.App (name, title)
+	app.set_default_size (200, 300)
+	accelgroup = gtk.AccelGroup()
+	app.add_accel_group (accelgroup)
+	app_bar = gnome.ui.AppBar (has_progress=0, has_status=1,
+				   interactivity=gnome.ui.PREFERENCES_USER)
+	app.set_statusbar(app_bar)
+	model = namespace.NamespaceModel(UML.ElementFactory())
+	view = namespace.NamespaceView(model)
 
-    def __execute_command(self, menu_item, command):
-	try:
-	    command.execute()
-	except Exception, e:
-	    self.push('Operation failed: ' + e)
+	menu_factory = MenuFactory(menu=menu, accelgroup=accelgroup,
+				   statusbar=app_bar)
+	menubar = menu_factory.create_menu()
+
+	app.set_menus(menubar)
+	app.set_contents(view)
+
+	self.__app = app
+	self.__model = model
+	self.__view = view
+	self.__menubar = menubar
+	self.__windows = []
+	app.show_all()
+	
+    def add_window(self, window):
+	self.__windows.append(window)
 

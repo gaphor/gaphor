@@ -10,10 +10,16 @@ class OpenModelElementCommand(Command):
 
     def __init__(self, element):
 	Command.__init__(self)
-	self.element = element
+	self.__element = element
 
     def execute(self):
-	if isinstance(self.element, UML.Diagram):
-	    print 'Opening Diagram', self.element.name
+	if isinstance(self.__element, UML.Diagram):
+	    # Import here to avoid cyclic references
+	    from gaphor.ui import DiagramWindow
+	    from gaphor.gaphor import Gaphor
+	    print 'Opening Diagram', self.__element.name
+	    new_diagram = DiagramWindow(self.__element)
+	    gaphor = Gaphor()
+	    gaphor.get_mainwindow().add_window(new_diagram)
 	else:
-	    print 'No action defined for element', self.element.__class__.__name__
+	    print 'No action defined for element', self.__element.__class__.__name__

@@ -5,6 +5,7 @@
 
 import sys
 import gtk
+from gaphor.gaphor import Gaphor
 import gaphor.diagram as diagram
 import diacanvas
 import gaphor.UML as UML
@@ -77,7 +78,8 @@ treemodel.dump()
 
 #usecase.name = 'aap'
 
-ui.MainWindow();
+#ui.MainWindow();
+gaphorMain = Gaphor()
 
 print 'Going into main'
 gtk.main()

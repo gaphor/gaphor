@@ -1,5 +1,5 @@
-# Require automake-1.5
-AUTOMAKE_OPTIONS = 1.5
+# Require automake-1.6
+AUTOMAKE_OPTIONS = 1.6
 
 SUBDIRS = utils doc tests
 

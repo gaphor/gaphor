@@ -36,7 +36,7 @@ import command.about
     ITEM_ADD_EXTEND
 ] = range(24)
 
-class DiagramView:
+class DiagramWindow:
 
     def __menu_item_cb (self, action, widget):
 	view = self.canvasview
@@ -177,8 +177,8 @@ class DiagramView:
 
 	item_factory = gtk.ItemFactory(gtk.MenuBar, '<main>', accelgroup)
 	
-	item_factory.create_items(DiagramView.__menu_items, self)
-	print 'item_factory:', item_factory.get_item('/File'), len(DiagramView.__menu_items)
+	item_factory.create_items(DiagramWindow.__menu_items, self)
+	print 'item_factory:', item_factory.get_item('/File'), len(DiagramWindow.__menu_items)
 
 	menubar = item_factory.get_widget('<main>')
 	print 'item_factory:', menubar

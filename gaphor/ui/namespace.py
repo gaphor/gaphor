@@ -285,15 +285,15 @@ class NamespaceView(gtk.TreeView):
 	item = self.get_model().on_get_iter(path)
 	OpenModelElementCommand(item).execute()
 
-    def _event(self, event):
-	if event.type == gtk.gdk._2BUTTON_PRESS:
-	    def handle_selection(model, path, iter):
-		print 'Handling:', model, path, iter
-		element = model.get_value(iter, 0)
-		OpenModelElementCommand(element).execute()
-
-	    selection = self.get_selection()
-	    selection.selected_foreach(handle_selection)
+#    def _event(self, event):
+#	if event.type == gtk.gdk._2BUTTON_PRESS:
+#	    def handle_selection(model, path, iter):
+#		print 'Handling:', model, path, iter
+#		element = model.get_value(iter, 0)
+#		OpenModelElementCommand(element).execute()
+#
+#	    selection = self.get_selection()
+#	    selection.selected_foreach(handle_selection)
 	    
 gobject.type_register(NamespaceModel)
 gobject.type_register(NamespaceView)
