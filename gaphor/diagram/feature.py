@@ -85,6 +85,9 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         a = (a[0], a[1], a[2], a[3], x, y)
         self.set(affine=a)
 
+    def edit(self):
+        self.start_editing(self._expression)
+
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec, notifiers)
         self._expression.set_text(self.subject and self.subject.render() or '')
@@ -97,12 +100,12 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
 
     def on_event(self, event):
         if event.type == diacanvas.EVENT_BUTTON_PRESS:
-            log.debug('FeatureItem.on_event: button_press')
+            #log.debug('FeatureItem.on_event: button_press')
             return True
         if event.type == diacanvas.EVENT_2BUTTON_PRESS:
-            log.debug('FeatureItem.on_event: 2button_press')
+            #log.debug('FeatureItem.on_event: 2button_press')
             # First make sure the complete string is parsed!
-            self.start_editing(self._expression)
+            self.edit()
             return True
         else:
             return CanvasItem.on_event(self, event)

@@ -1,3 +1,7 @@
+2004-03-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/attribute.py, operation.py: Added popup menu.
+
 2004-03-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/diagramtab.py: New File. A tab containing a diagram

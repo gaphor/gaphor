@@ -16,7 +16,7 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
     FONT='sans bold 10'
 
     popup_menu = (
-        'RenameItem',
+        'ItemRename',
         'separator',
         'EditDelete',
     )
@@ -36,6 +36,8 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
         # notifications.
         self._name.set_text(self.subject.name or '')
 
+    def rename(self):
+        self.start_editing(self._name)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'name':
@@ -80,7 +82,7 @@ class ClassifierItem(ModelElementItem, diacanvas.CanvasEditable):
 
     def on_event (self, event):
         if event.type == diacanvas.EVENT_2BUTTON_PRESS:
-            self.start_editing(self._name)
+            self.rename()
             return True
         else:
             return ModelElementItem.on_event(self, event)

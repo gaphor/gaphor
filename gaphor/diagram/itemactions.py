@@ -9,6 +9,7 @@ import gaphor.UML as UML
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 
 from klass import ClassItem
+from classifier import ClassifierItem
 
 class NoFocusItemError(gaphor.GaphorError):
     pass
@@ -25,6 +26,29 @@ def get_parent_focus_item(window):
 		item = item.parent
 	    return item
     raise NoFocusItemError, 'No item has focus.'
+
+class ItemRenameAction(Action):
+    id = 'ItemRename'
+    label = '_Rename'
+    tooltip = 'Rename selected item'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+	try:
+	    item = get_parent_focus_item(self._window)
+	except NoFocusItemError:
+	    self.sensitive = False
+	else:
+	    if isinstance(item, ClassifierItem):
+		self.sensitive = True
+
+    def execute(self):
+        item = self._window.get_current_diagram_view().focus_item.item
+	item.rename()
+
+register_action(ItemRenameAction, 'ItemSelect')
 
 # NOTE: attributes and operations can now only be created on classes,
 #       actors and uuse-cases are also classifiers, but we can't add 
@@ -54,7 +78,7 @@ class CreateAttributeAction(Action):
         attribute = elemfact.create(UML.Property)
         attribute.name = 'new'
         subject.ownedAttribute = attribute
-	print 'done'
+	# TODO: Select this item for editing
 
 register_action(CreateAttributeAction, 'ShowAttributes')
 
@@ -83,8 +107,25 @@ class CreateOperationAction(Action):
         operation = elemfact.create(UML.Operation)
         operation.name = 'new'
         subject.ownedOperation = operation
+	# TODO: Select this item for editing
 
 register_action(CreateOperationAction, 'ShowOperations')
+
+
+class EditFeatureAction(Action):
+    id = 'EditFeature'
+    label = 'Edit'
+    tooltip='Edit'
+
+    def init(self, window):
+        self._window = window
+
+    def execute(self):
+        item = self._window.get_current_diagram_view().focus_item.item
+        #assert isinstance(subject, (UML.Property, UML.Operation))
+        item.edit()
+
+register_action(EditFeatureAction, 'EditFeature')
 
 
 class DeleteFeatureAction(Action):

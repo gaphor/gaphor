@@ -11,6 +11,12 @@ from feature import FeatureItem
 
 class OperationItem(FeatureItem):
 
+    popup_menu = FeatureItem.popup_menu + (
+        'DeleteOperation',
+        'separator',
+        'CreateOperation'
+    )
+
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
 

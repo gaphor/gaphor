@@ -10,6 +10,13 @@ from feature import FeatureItem
 
 class AttributeItem(FeatureItem):
 
+    popup_menu = FeatureItem.popup_menu + (
+        'EditFeature',
+        'DeleteAttribute',
+        'separator',
+        'CreateAttribute'
+    )
+
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
 
