@@ -12,30 +12,33 @@ import gaphor.diagram as diagram
 import gc
 import traceback
 from threading import Thread
+import Queue
 
 import gaphor
 
 DEFAULT_EXT='.gaphor'
 
-def main_loop():
-    main = gobject.main_context_default()
-    while main.pending(): main.iteration(False)
-
 class WorkerThread(Thread):
     """Run a function within a thread. The worker thread has a blocking
-    start() function, which calls the GObject main loop every now and then.
+    start_blocking() function, which calls the GObject main loop every
+    now and then.
     """
 
     def __init__(self, function):
         Thread.__init__(self)
+	#self.setDaemon(True)
         self.function = function
         self.error = None
 
-    def start(self):
+    def start_blocking(self):
+	"""The thread is launched, however, as long as the thread is active
+	the main loop is ran.
+	"""
         Thread.start(self)
+	main = gobject.main_context_default()
         while self.isAlive():
-            main_loop()
-            self.join(0.5)
+	    main.iteration(False)
+            #self.join()
             #print '.',
 
     def run(self):
@@ -44,6 +47,41 @@ class WorkerThread(Thread):
         except Exception, e:
             log.error('Error occured while in worker thread', e)
             self.error = e
+
+def show_status_window(title, message, parent=None, queue=None):
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    win.set_title(title)
+    win.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
+    win.set_transient_for(parent)
+    win.set_modal(True)
+    vbox = gtk.VBox()
+    win.add(vbox)
+    label = gtk.Label(message)
+    label.set_padding(30,30)
+    vbox.pack_start(label)
+    progress_bar = gtk.ProgressBar()
+    vbox.pack_start(progress_bar, expand=False, fill=False)
+
+    def progress_idle_handler(progress_bar, queue):
+	#print '.',
+	try:
+	    percentage = queue.get_nowait()
+	    progress_bar.set_fraction(percentage / 100.0)
+	except Queue.Empty:
+	    pass
+	return True
+
+    if queue:
+	idle_id = gobject.idle_add(progress_idle_handler, progress_bar, queue, priority=gobject.PRIORITY_LOW)
+	# Make sure the idle fucntion is removed as soon as the window
+	# is destroyed.
+	def remove_progress_idle_handler(window, idle_id):
+	    #print 'remove_progress_idle_handler', idle_id
+	    gobject.source_remove(idle_id)
+	win.connect('destroy', remove_progress_idle_handler, idle_id)
+
+    win.show_all()
+    return win
 
 class NewAction(Action):
     id = 'FileNew'
@@ -91,17 +129,6 @@ class OpenAction(Action):
         self.filename = None
         self._window = window
 
-    def show_status_window(self, title, message):
-        win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        win.set_title(title)
-        win.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
-        win.set_parent(self._window.get_window())
-        label = gtk.Label(message)
-        label.set_padding(30,30)
-        win.add(label)
-        win.show_all()
-        return win
-
     def execute(self):
         filesel = gtk.FileSelection('Open Gaphor file')
         filesel.hide_fileop_buttons()
@@ -115,12 +142,13 @@ class OpenAction(Action):
             try:
                 import gaphor.storage as storage
                 log.debug('Loading from: %s' % filename)
-                win = self.show_status_window('Loading...', 'Loading model from %s' % filename)
+		queue = Queue.Queue()
+                win = show_status_window('Loading...', 'Loading model from %s' % filename, self._window.get_window(), queue)
                 self.filename = filename
                 gc.collect()
-                worker = WorkerThread(lambda: storage.load(filename))
+                worker = WorkerThread(lambda: storage.load(filename, status_queue=lambda m: queue.put_nowait(m) and 1))
                 self._window.action_pool.insensivate_actions()
-                worker.start()
+                worker.start_blocking()
                 if worker.error:
                     log.error('Error while loading model from file %s: %s' % (filename, worker.error))
 
@@ -165,29 +193,19 @@ class SaveAsAction(Action):
         if self._window.get_state() == self._window.STATE_CLOSED:
             self.factory.disconnect(self.on_element_factory)
 
-    def show_status_window(self, title, message):
-        win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        win.set_title(title)
-        win.set_parent(self._window.get_window())
-        win.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
-        label = gtk.Label(message)
-        label.set_padding(30,30)
-        win.add(label)
-        win.show_all()
-        return win
-
     def save(self, filename):
         if filename and len(filename) > 0:
             import gaphor.storage as storage
             if not filename.endswith(DEFAULT_EXT):
                 filename = filename + DEFAULT_EXT
 
+	    queue = Queue.Queue()
             log.debug('Saving to: %s' % filename)
-            win = self.show_status_window('Saving...', 'Saving model to %s' % filename)
-            worker = WorkerThread(lambda: storage.save(filename))
+            win = show_status_window('Saving...', 'Saving model to %s' % filename, self._window.get_window(), queue)
+            worker = WorkerThread(lambda: storage.save(filename, status_queue=lambda m: queue.put_nowait(m) and 1))
             action_states = self._window.action_pool.get_action_states()
             self._window.action_pool.insensivate_actions()
-            worker.start()
+            worker.start_blocking()
             if worker.error:
                 log.error('Error while saving model to file %s: %s' % (filename, worker.error))
 

@@ -27,7 +27,7 @@ __all__ = [ 'load', 'save' ]
 
 FILE_FORMAT_VERSION = '3.0'
 
-def save(filename=None, factory=None):
+def save(filename=None, factory=None, status_queue=None):
     """Save the current model to @filename. If no filename is given,
     standard out is used.
     """
@@ -103,12 +103,17 @@ def save(filename=None, factory=None):
     buffer.write('<?xml version="1.0"?>\n')
     buffer.write('<gaphor version="%s" gaphor_version="%s">' % (FILE_FORMAT_VERSION, gaphor.resource('Version')))
 
+    n_items = len(factory.values())
+    cur_item = 0
     for e in factory.values():
         clazz = e.__class__.__name__
         assert e.id
         buffer.write('<%s id="%s">' % (clazz, str(e.id)))
         e.save(save_element)
         buffer.write('</%s>' % clazz)
+        cur_item += 1
+        if status_queue and cur_item % 10 == 0:
+            status_queue((cur_item * 100) / n_items)
 
     buffer.write('</gaphor>')
 
@@ -125,7 +130,7 @@ def save(filename=None, factory=None):
         finally:
             file.close()
 
-def _load(elements, factory):
+def _load(elements, factory, status_queue=None):
     """Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
@@ -133,6 +138,8 @@ def _load(elements, factory):
     log.debug(_('Loading %d elements...') % len(elements.keys()))
 
     log.info('0%')
+    if status_queue:
+        status_queue(25)
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
@@ -152,6 +159,8 @@ def _load(elements, factory):
             raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
 
     log.info('0% ... 33%')
+    if status_queue:
+        status_queue(50)
 
     # load attributes and create references:
     for id, elem in elements.items():
@@ -202,21 +211,29 @@ def _load(elements, factory):
                         raise
                 
     log.info('0% ... 33% ... 66%')
+    if status_queue:
+        status_queue(75)
 
     # do a postload:
     for id, elem in elements.items():
         elem.element.postload()
 
     log.info('0% ... 33% ... 66% ... 100%')
+    if status_queue:
+        status_queue(100)
 
     factory.notify_model()
 
-def load(filename, factory=None):
+def load(filename, factory=None, status_queue=None):
     '''Load a file and create a model if possible.
+    Optionally, a status queue function can be given, to which the
+    progress is written (as status_queue(progress)).
     Exceptions: GaphorError.'''
     log.info('Loading file %s' % os.path.basename(filename))
     try:
         elements = parser.parse(filename) #dom.parse (filename)
+        if status_queue:
+            status_queue(25)
     except Exception, e:
         print e
         log.error('File could no be parsed')
@@ -238,7 +255,7 @@ def load(filename, factory=None):
             factory = gaphor.resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
-        _load(elements, factory)
+        _load(elements, factory, status_queue)
         # DEBUG code:
 #        print ''
 #        print ''
@@ -257,7 +274,7 @@ def load(filename, factory=None):
         import traceback
         traceback.print_exc()
         raise #GaphorError, 'Could not load file %s (%s)' % (filename, e)
-
+    
 def verify (filename):
     """Try to load the file. If loading succeeded, this file is
     probably a valid Gaphor file.
