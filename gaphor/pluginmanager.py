@@ -205,6 +205,7 @@ class PluginLoader(handler.ContentHandler):
                 action.accel = attrs.get('accel', '').encode()
                 self.plugin.provided_actions.append(action)
                 self.mode = self.ACTION
+                log.debug('Added action %s (#%d)' % (action.id, len(self.plugin.provided_actions)))
             else:
                 raise ParserException, 'Invalid XML: expecting <action>. Got <%s>.' % name
 
@@ -290,6 +291,7 @@ class PluginManager(object):
         """Load a plugin definition and store the plugin in the manager.
         """
         assert not self.plugins.has_key(os.path.dirname(plugin_xml))
+        log.debug('Loading definitions from %s' % plugin_xml)
         self.parser.parse(plugin_xml)
         plugin = self.loader.plugin
         plugin.path = os.path.dirname(plugin_xml)
