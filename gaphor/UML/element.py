@@ -167,6 +167,12 @@ class Element(object):
         """Returns true if the object is of the same type as other."""
         return type(self) == type(other)
 
+try:
+    import psyco
+except ImportError:
+    pass
+else:
+    psyco.bind(Element)
 
 if __name__ == '__main__':
     a = Element()

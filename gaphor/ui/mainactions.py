@@ -36,7 +36,7 @@ class NewAction(Action):
 	self._window.set_filename(None)
 	self._window.set_message('Created a new model')
 	factory.notify_model()
-	self._window.get_view().expand_row(self._window.get_model().path_from_element(model), False)
+	self._window.get_tree_view().expand_row(self._window.get_model().path_from_element(model), False)
 
 register_action(NewAction)
 
@@ -75,7 +75,7 @@ class OpenAction(Action):
 		    self._window.set_filename(filename)
 		    self._window.set_message('Model loaded successfully')
 		    model = self._window.get_model()
-		    view = self._window.get_view()
+		    view = self._window.get_tree_view()
 
 		    # Expand all root elements:
 		    for node in model.root[1]:
@@ -269,12 +269,12 @@ class CreateDiagramAction(Action):
 	self._window = window
 
     def update(self):
-	element = self._window.get_view().get_selected_element()
+	element = self._window.get_tree_view().get_selected_element()
 	print 'OpenElementAction', element
 	self.sensitive = isinstance(element, UML.Package)
 
     def execute(self):
-	element = self._window.get_view().get_selected_element()
+	element = self._window.get_tree_view().get_selected_element()
 	diagram = gaphor.resource('ElementFactory').create(UML.Diagram)
 	diagram.package = element
 
@@ -289,19 +289,27 @@ class OpenElementAction(Action):
 	self._window = window
 
     def update(self):
-	element = self._window.get_view().get_selected_element()
+	element = self._window.get_tree_view().get_selected_element()
 	print 'OpenElementAction', element
 	self.sensitive = isinstance(element, UML.Diagram)
 
     def execute(self):
-	element = self._window.get_view().get_selected_element()
+	element = self._window.get_tree_view().get_selected_element()
 	if isinstance(element, UML.Diagram):
+	    # Try to find an existing window/tab and let it get focus:
+	    for tab in self._window.get_tabs():
+		if tab.get_diagram() is element:
+		    self._window.set_current_page(tab)
+		    return
 	    # Import here to avoid cyclic references
-	    from gaphor.ui import DiagramWindow
-	    newwin = DiagramWindow()
-	    newwin.set_diagram(element)
-	    newwin.construct()
-	    self._window.add_transient_window(newwin)
+	    from gaphor.ui.diagramtab import DiagramTab
+	    diagram_tab = DiagramTab(self._window)
+	    #diagram_tab.set_owning_window(self._window)
+	    #diagram_tab.sub_window = False
+	    diagram_tab.set_diagram(element)
+	    diagram_tab.construct()
+	    #self._window.add_transient_window(diagram_window)
+	    #self._window.new_notebook_tab(diagram_window, element.name)
 	else:
 	    log.debug('No action defined for element %s' % element.__class__.__name__)
 
@@ -316,7 +324,7 @@ class RenameElementAction(Action):
 	self._window = window
 
     def execute(self):
-	view = self._window.get_view()
+	view = self._window.get_tree_view()
 	selection = view.get_selection()
 	model, iter = selection.get_selected()
 	if not iter:
@@ -359,3 +367,11 @@ class SelectRowAction(Action):
 
 register_action(SelectRowAction)
 
+
+class TabChangeAction(Action):
+    id = 'TabChange'
+
+    def init(self, window):
+	pass
+
+register_action(TabChangeAction)

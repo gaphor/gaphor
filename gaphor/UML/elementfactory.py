@@ -81,11 +81,10 @@ class ElementFactory(object):
         for key, value in self._elements.items():
             #print 'ElementFactory: unlinking', value
             #print 'references:', gc.get_referrers(value)
-            if isinstance (value, Diagram):
-                value.canvas.clear_undo()
-                value.canvas.clear_redo()
             value.unlink()
         assert len(self._elements) == 0, 'Still items in the factory: %s' % str(self._elements.values())
+	import gc
+	for i in range(4): gc.collect()
 
     def connect(self, callback, *data):
         """Attach 'callback'."""

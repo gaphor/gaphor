@@ -1,3 +1,10 @@
+2004-03-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/diagramtab.py: New File. A tab containing a diagram
+	within the main window.
+	* A lot of changes to make the diagram tabs work. all actions have
+	been changed to support new layout.
+
 2004-03-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* Removed GNOME dependencies from (almost) all of Gaphor

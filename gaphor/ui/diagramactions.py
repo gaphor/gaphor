@@ -3,23 +3,33 @@ Commands related to the Diagram (DiaCanvas)
 """
 # vim: sw=4
 
-import gaphor.UML as UML
-from gaphor.misc.action import Action, CheckAction, RadioAction, register_action, action_dependencies
 import gtk
 import diacanvas
+import gaphor.UML as UML
+from gaphor.misc.action import Action, CheckAction, RadioAction
+from gaphor.misc.action import register_action as _register_action
+from gaphor.misc.action import action_dependencies as _action_dependencies
 
-class CloseAction(Action):
-    id = 'FileClose'
+def register_action(action, *args):
+    _register_action(action, *args)
+    _action_dependencies(action, 'TabChange')
+
+class CloseTabAction(Action):
+    id = 'FileCloseTab'
     stock_id = 'gtk-close'
     tooltip='Close the diagram window'
 
     def init(self, window):
 	self._window = window
 
-    def execute(self):
-	self._window.close()
+    def update(self):
+	self.sensitive = self._window.get_current_diagram_tab() is not None
 
-register_action(CloseAction)
+    def execute(self):
+	window = self._window.get_current_diagram_tab()
+	window.close()
+
+register_action(CloseTabAction)
 
 
 class ExportSVGAction(Action):
@@ -30,6 +40,10 @@ class ExportSVGAction(Action):
     def init(self, window):
 	self.filename = None
 	self._window = window
+
+    def update(self):
+	tab = self._window.get_current_diagram_tab()
+	self.sensitive = tab and True or False
 
     def execute(self):
 	filesel = gtk.FileSelection('Export diagram to SVG file')
@@ -48,7 +62,7 @@ class ExportSVGAction(Action):
 	    if filename and len(filename) > 0:
 		self.filename = filename
 		log.debug('Exporting SVG image to: %s' % filename)
-		canvas = self._window.get_diagram().canvas
+		canvas = self._window.get_current_diagram_tab().get_canvas()
 		export = diacanvas.ExportSVG()
 		try:
 		    export.render (canvas)
@@ -78,18 +92,16 @@ class UndoAction(Action):
 
     def init(self, window):
 	self._window = window
-	window.get_canvas().connect('undo', self.on_undo_item)
-	self.on_undo_item(window.get_canvas())
 
-    def on_undo_item(self, canvas):
-	self.sensitive = canvas.get_undo_depth() > 0
+    def update(self):
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = diagram_tab and diagram_tab.get_canvas().get_undo_depth() > 0
 
     def execute(self):
 	log.debug('UndoCommand')
-	self._window.get_view().canvas.pop_undo()
+	self._window.get_current_diagram_view().canvas.pop_undo()
 
-register_action(UndoAction)
-action_dependencies(UndoAction, 'EditUndoStack')
+register_action(UndoAction, 'EditUndoStack')
 
 
 class RedoAction(Action):
@@ -99,17 +111,26 @@ class RedoAction(Action):
 
     def init(self, window):
 	self._window = window
-	window.get_canvas().connect('undo', self.on_undo_item)
-	self.on_undo_item(window.get_canvas())
 
-    def on_undo_item(self, canvas):
-	self.sensitive = canvas.get_redo_depth() > 0
+    def update(self):
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = diagram_tab and diagram_tab.get_canvas().get_redo_depth() > 0
 
     def execute(self):
-	self._window.get_view().canvas.pop_redo()
+	self._window.get_current_diagram_view().canvas.pop_redo()
 
-register_action(RedoAction)
-action_dependencies(RedoAction, 'EditUndoStack')
+register_action(RedoAction, 'EditUndoStack')
+
+class ToolChangeAction(Action):
+    """Dummy, triggered when a new tool is selected.
+    """
+    id = 'ToolChange'
+
+    def init(self, window):
+	pass
+
+register_action(ToolChangeAction)
+
 
 class SelectAction(Action):
     """Dummy action that is "called" when the selected items on the canvas
@@ -142,7 +163,7 @@ class SelectAllAction(Action):
 	self._window = window
 
     def execute(self):
-	self._window.get_view().select_all()
+	self._window.get_current_diagram_view().select_all()
 
 register_action(SelectAllAction)
 
@@ -152,19 +173,19 @@ class DeselectAllAction(Action):
 
     def init(self, window):
 	self._window = window
-#	window.get_view().connect('select-item', self.on_select_item)
-#	window.get_view().connect('unselect-item', self.on_select_item)
-#	self.on_select_item(window.get_view(), None)
+#	window.get_current_diagram_view().connect('select-item', self.on_select_item)
+#	window.get_current_diagram_view().connect('unselect-item', self.on_select_item)
+#	self.on_select_item(window.get_current_diagram_view(), None)
 
 #    def on_select_item(self, view, select_item):
     def update(self):
-	self.sensitive = len(self._window.get_view().selected_items) > 0
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = diagram_tab and len(diagram_tab.get_view().selected_items) > 0
 
     def execute(self):
-	self._window.get_view().unselect_all()
+	self._window.get_current_diagram_view().unselect_all()
 
-register_action(DeselectAllAction)
-action_dependencies(DeselectAllAction, 'ItemSelect', 'EditDelete')
+register_action(DeselectAllAction, 'ItemSelect', 'EditDelete')
 
 
 class DeleteAction(Action):
@@ -175,23 +196,23 @@ class DeleteAction(Action):
 
     def init(self, window):
 	self._window = window
-#	window.get_view().connect('select-item', self.on_select_item)
-#	window.get_view().connect('unselect-item', self.on_select_item)
-#	self.on_select_item(window.get_view(), None)
+#	window.get_current_diagram_view().connect('select-item', self.on_select_item)
+#	window.get_current_diagram_view().connect('unselect-item', self.on_select_item)
+#	self.on_select_item(window.get_current_diagram_view(), None)
 
 #    def on_select_item(self, view, select_item):
     def update(self):
-	self.sensitive = len(self._window.get_view().selected_items) > 0
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.sensitive = diagram_tab and len(diagram_tab.get_view().selected_items) > 0
 
     def execute(self):
-	view = self._window.get_view()
+	view = self._window.get_current_diagram_view()
 	view.canvas.push_undo('delete')
 	items = view.selected_items
 	for i in items:
 	    i.item.unlink()
 
-register_action(DeleteAction)
-action_dependencies(DeleteAction, 'ItemSelect')
+register_action(DeleteAction, 'ItemSelect')
 
 
 class ZoomInAction(Action):
@@ -204,7 +225,7 @@ class ZoomInAction(Action):
 	self._window = window
 
     def execute(self):
-	view = self._window.get_view()
+	view = self._window.get_current_diagram_view()
 	view.set_zoom(view.get_zoom() + 0.1)
 
 register_action(ZoomInAction)
@@ -219,7 +240,7 @@ class ZoomOutAction(Action):
 	self._window = window
 
     def execute(self):
-	view = self._window.get_view()
+	view = self._window.get_current_diagram_view()
 	view.set_zoom(view.get_zoom() - 0.1)
 
 register_action(ZoomOutAction)
@@ -234,7 +255,7 @@ class Zoom100Action(Action):
 	self._window = window
 
     def execute(self):
-	self._window.get_view().set_zoom(1.0)
+	self._window.get_current_diagram_view().set_zoom(1.0)
 
 register_action(Zoom100Action)
 
@@ -245,10 +266,14 @@ class SnapToGridAction(CheckAction):
 
     def init(self, window):
 	self._window = window
-	self.active = self._window.get_view().canvas.get_property('snap_to_grid')
+
+    def update(self):
+	diagram_tab = self._window.get_current_diagram_tab()
+	self.active = diagram_tab and diagram_tab.get_canvas().get_property('snap_to_grid')
 
     def execute(self):
-	self._window.get_view().canvas.set_property('snap_to_grid', self.active)
+	diagram_tab = self._window.get_current_diagram_tab()
+	diagram_tab.get_canvas().set_property('snap_to_grid', self.active)
 
 register_action(SnapToGridAction)
 

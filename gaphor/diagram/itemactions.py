@@ -8,18 +8,22 @@ import gaphor
 import gaphor.UML as UML
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 
+from klass import ClassItem
+
 class NoFocusItemError(gaphor.GaphorError):
     pass
 
 
 def get_parent_focus_item(window):
     """Get the outer most focus item (the obe that's not a composite)."""
-    fi = window.get_view().focus_item
-    if fi:
-        item = fi.item
-        while (item.flags & diacanvas.COMPOSITE) != 0:
-            item = item.parent
-        return item
+    view = window.get_current_diagram_view()
+    if view:
+	fi = view.focus_item
+	if fi:
+	    item = fi.item
+	    while (item.flags & diacanvas.COMPOSITE) != 0:
+		item = item.parent
+	    return item
     raise NoFocusItemError, 'No item has focus.'
 
 # NOTE: attributes and operations can now only be created on classes,
@@ -33,6 +37,15 @@ class CreateAttributeAction(Action):
 
     def init(self, window):
         self._window = window
+
+    def update(self):
+	try:
+	    item = get_parent_focus_item(self._window)
+	except NoFocusItemError:
+	    pass
+	else:
+	    if isinstance(item, ClassItem):
+		self.sensitive = item.get_property('show-attributes')
 
     def execute(self):
         subject = get_parent_focus_item(self._window).subject
@@ -54,6 +67,15 @@ class CreateOperationAction(Action):
     def init(self, window):
         self._window = window
 
+    def update(self):
+	try:
+	    item = get_parent_focus_item(self._window)
+	except NoFocusItemError:
+	    pass
+	else:
+	    if isinstance(item, ClassItem):
+		self.sensitive = item.get_property('show-operations')
+
     def execute(self):
         subject = get_parent_focus_item(self._window).subject
         assert isinstance(subject, UML.Classifier)
@@ -72,7 +94,7 @@ class DeleteFeatureAction(Action):
 
     def execute(self):
         #subject = get_parent_focus_item(self._window).subject
-        item = self._window.get_view().focus_item.item
+        item = self._window.get_current_diagram_view().focus_item.item
         #assert isinstance(subject, (UML.Property, UML.Operation))
         item.subject.unlink()
 
@@ -106,7 +128,6 @@ class ShowAttributesAction(CheckAction):
 	except NoFocusItemError:
 	    pass
 	else:
-	    from klass import ClassItem
 	    if isinstance(item, ClassItem):
 		self.active = item.get_property('show-attributes')
 
@@ -153,7 +174,7 @@ class SegmentAction(Action):
 
     def get_item_and_segment(self):
         fi = get_parent_focus_item(self._window)
-        view = self._window.get_view()
+        view = self._window.get_current_diagram_view()
         assert isinstance(fi, diacanvas.CanvasLine)
 	#x = view.event()
 	#print 'event =', event
@@ -215,7 +236,7 @@ class OrthogonalAction(CheckAction):
 
     def execute(self):
         fi = get_parent_focus_item(self._window)
-        view = self._window.get_view()
+        view = self._window.get_current_diagram_view()
         assert isinstance(fi, diacanvas.CanvasLine)
         #orthogonal = not fi.get_property('orthogonal')
         #log.debug('Setting orthogonal for %s: %d' % (fi, orthogonal))

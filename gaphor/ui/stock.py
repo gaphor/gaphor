@@ -43,7 +43,12 @@ def add_stock_icon(id, icon_dir, icon_files, uml_class=None):
     set = gtk.IconSet()
     for icon in icon_files:
 	source = gtk.IconSource()
-	source.set_size(gtk.ICON_SIZE_MENU)
+	if icon.find('16') != -1:
+	    source.set_size(gtk.ICON_SIZE_MENU)
+	elif icon.find('24') != -1:
+	    source.set_size(gtk.ICON_SIZE_SMALL_TOOLBAR)
+	elif icon.find('48') != -1:
+	    source.set_size(gtk.ICON_SIZE_LARGE_TOOLBAR)
 	source.set_filename(os.path.join(icon_dir, icon))
 	set.add_source(source)
     _icon_factory.add(id, set)

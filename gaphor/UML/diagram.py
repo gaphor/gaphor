@@ -82,3 +82,10 @@ class Diagram(Namespace, PackageableElement):
         self.canvas.root.add(obj)
         return obj
 
+    def unlink(self):
+	self.canvas.set_property('allow_undo', False)
+	self.canvas.clear_undo()
+	self.canvas.clear_redo()
+	Namespace.unlink(self)
+	for i in self.canvas.root.children:
+	    i.unlink()

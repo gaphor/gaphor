@@ -19,19 +19,51 @@ class MainWindow(AbstractWindow):
                 'FileSave',
                 'FileSaveAs',
                 'separator',
+                'FileCloseTab',
+                'separator',
                 'FileQuit'),
+            '_Edit', (
+                'EditUndo',
+                'EditRedo',
+                'separator',
+                'EditDelete',
+                'separator',
+                'EditSelectAll',
+                'EditDeselectAll'),
+            '_Diagram', (
+                'ViewZoomIn',
+                'ViewZoomOut',
+                'ViewZoom100',
+                'separator',
+                'SnapToGrid',
+                'separator',
+                'CreateDiagram',
+                'separator',
+                'FileExportSVG'),
             '_Window', (
                 'OpenEditorWindow',
                 'OpenConsoleWindow'),
-            '_Help', (
-                'About',)
+            #'_Help', (
+            #    'About',)
             )
 
     toolbar =  ('FileNew',
                 'FileOpen',
                 'separator',
                 'FileSave',
-                'FileSaveAs')
+                'FileSaveAs',
+                'separator',
+                'Pointer',
+                'separator',
+                'InsertClass',
+                'InsertPackage',
+                'separator',
+                'InsertAssociation',
+                'InsertDependency',
+                'InsertGeneralization',
+                'separator',
+                'InsertComment',
+                'InsertCommentLine')
 
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',
@@ -41,18 +73,18 @@ class MainWindow(AbstractWindow):
     def __init__(self):
         AbstractWindow.__init__(self)
         self.__filename = None
-        self.__transient_windows = list()
+        self.__transient_windows = []
+        self.notebook_map = {}
         # Act on changes in the element factory resource
-        factory = gaphor.resource(UML.ElementFactory)
-        factory.connect(self.__on_element_factory_signal)
+        #factory = gaphor.resource(UML.ElementFactory)
+        #factory.connect(self.__on_element_factory_signal)
 
     def get_model(self):
         self._check_state(AbstractWindow.STATE_ACTIVE)
-        return self.__model
+        return self.model
 
-    def get_view(self):
-        self._check_state(AbstractWindow.STATE_ACTIVE)
-        return self.__view
+    def get_tree_view(self):
+        return self.view
 
     def set_filename(self, filename):
         self.__filename = filename
@@ -63,6 +95,17 @@ class MainWindow(AbstractWindow):
     def get_transient_windows(self):
         return self.__transient_windows
 
+    def get_current_diagram_tab(self):
+        return self.get_current_tab()
+
+    def get_current_diagram(self):
+        tab = self.get_current_diagram_tab()
+        return tab and tab.get_diagram()
+
+    def get_current_diagram_view(self):
+        tab = self.get_current_diagram_tab()
+        return tab and tab.get_view()
+
     def construct(self):
         model = namespace.NamespaceModel(gaphor.resource(UML.ElementFactory))
         view = namespace.NamespaceView(model)
@@ -72,40 +115,102 @@ class MainWindow(AbstractWindow):
         scrolled_window.add(view)
         
         view.connect_after('event-after', self.on_view_event)
-        view.connect('row_activated', self.on_view_row_activated)
+        view.connect('row-activated', self.on_view_row_activated)
         view.connect('cursor-changed', self.on_view_cursor_changed)
+        view.set_size_request(200, 200)
 
-        scrolled_window.show_all()
+        #scrolled_window.show_all()
 
-        self.__model = model
-        self.__view = view
+        paned = gtk.HPaned()
+        paned.pack1(scrolled_window)
 
-        #paned = gtk.HPaned()
-        #paned.pack1(scrolled_window)
+        notebook = gtk.Notebook()
+        #notebook.popup_enable()
+        notebook.set_scrollable(True)
+        notebook.set_show_border(False)
+ 
+        notebook.connect('switch-page', self.on_notebook_switch_page)
 
-        #notebook = gtk.Notebook()
-        #paned.pack2(notebook)
+        paned.pack2(notebook)
+        paned.show_all()
+
+        self.notebook = notebook
+        self.model = model
+        self.view = view
 
         self._construct_window(name='main',
                                title='Gaphor v' + gaphor.resource('Version'),
-                               size=(400, 400),
-                               contents=scrolled_window)
+                               size=(600, 400),
+                               contents=paned)
+                               #contents=scrolled_window)
 
     def add_transient_window(self, window):
         """Add a window as a sub-window of the main application.
         """
         # Assign the window the accelerators od the main window too
         window.get_window().add_accel_group(self.accel_group)
-        self.__transient_windows.append(window)
+        #self.__transient_windows.append(window)
         #window.connect(self.on_transient_window_closed)
 
-    def _on_window_destroy (self, window):
+    # Notebook methods:
+
+    def new_tab(self, window, contents, label):
+        #contents = tab.get_contents()
+        l = gtk.Label(label)
+        #img = gtk.Image()
+        #img.set_from_stock('gtk-close', gtk.ICON_SIZE_MENU)
+        #b = gtk.Button()
+        #b.set_border_width(0)
+        #b.add(img)
+        #h = gtk.HBox()
+        #h.set_spacing(4)
+        #h.pack_start(l, expand=False)
+        #h.pack_start(b, expand=False)
+        #h.show_all()
+        self.notebook.append_page(contents, l)
+        page_num = self.notebook.page_num(contents)
+        self.notebook.set_current_page(page_num)
+        self.notebook_map[contents] = window
+        self.execute_action('TabChange')
+        return page_num
+
+        current = self.notebook.get_current_page()
+        content = self.notebook.get_nth_page(current)
+        return self.notebook_map[content]
+
+    def get_current_tab(self):
+        current = self.notebook.get_current_page()
+        content = self.notebook.get_nth_page(current)
+        return self.notebook_map.get(content)
+
+    def set_current_page(self, window):
+        for c, w in self.notebook_map.iteritems():
+            if window is w:
+                num = self.notebook.page_num(c)
+                self.notebook.set_current_page(num)
+                return
+
+    def get_tabs(self):
+        return self.notebook_map.values()
+
+    def remove_tab(self, window):
+        for c, w in self.notebook_map.iteritems():
+            if window is w:
+                num = self.notebook.page_num(c)
+                self.notebook.remove_page(num)
+                del self.notebook_map[c]
+                self.execute_action('TabChange')
+                return
+
+    # Signal callbacks:
+
+    def _on_window_destroy(self, window):
         """Window is destroyed... Quit the application.
         """
         AbstractWindow._on_window_destroy(self, window)
-        gaphor.resource(UML.ElementFactory).disconnect(self.__on_element_factory_signal)
-        del self.__model
-        del self.__view
+        #gaphor.resource(UML.ElementFactory).disconnect(self.__on_element_factory_signal)
+        del self.model
+        del self.view
 
     def on_view_event(self, view, event):
         self._check_state(AbstractWindow.STATE_ACTIVE)
@@ -113,7 +218,7 @@ class MainWindow(AbstractWindow):
         if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
             #selection = view.get_selection()
             #model, iter = selection.get_selected()
-            #assert model is self.__model
+            #assert model is self.model
             #if not iter:
                 #return
             #element = model.get_value(iter, 0)
@@ -124,11 +229,14 @@ class MainWindow(AbstractWindow):
         self._check_state(AbstractWindow.STATE_ACTIVE)
         node = self.get_model().node_from_path(path)
         element = self.get_model().element_from_node(node)
-        action = self.menu_factory.get_action('OpenModelElement')
-        action.execute()
+        self.execute_action('OpenModelElement')
 
     def on_view_cursor_changed(self, view):
         self.execute_action('SelectRow')
+
+    def on_notebook_switch_page(self, notebook, tab, page_num):
+        print notebook, tab, page_num
+        self.execute_action('TabChange')
 
 #    def on_transient_window_closed(self, window):
 #        assert window in self.__transient_windows
@@ -138,9 +246,9 @@ class MainWindow(AbstractWindow):
     def __on_transient_window_notify_title(self, window):
         pass
 
-    def __on_element_factory_signal(self, obj, key):
+    #def __on_element_factory_signal(self, obj, key):
         #print '__on_element_factory_signal', key
-        factory = gaphor.resource(UML.ElementFactory)
-        self.set_capability('model', not factory.is_empty())
+        #factory = gaphor.resource(UML.ElementFactory)
+        #self.set_capability('model', not factory.is_empty())
 
 import mainactions

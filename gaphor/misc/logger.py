@@ -5,6 +5,7 @@ Logger
 Logger is a simple entry point for writing log messages.
 """
 import sys
+import traceback
 
 class Logger(object):
     DEBUG = 1
@@ -69,4 +70,4 @@ class Logger(object):
 	    print '[Gaphor-%s] %s' % (('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL' )[level - 1], message)
 	    if exc:
 		print '[Gaphor-Exception]', exc
-
+		print traceback.print_exc()

@@ -148,11 +148,13 @@ class ActionPool(object):
 
     def execute(self, action_id):
         global _dependent_actions
+        print 'ActionPool: executing', action_id
         action = self.get_action(action_id)
         action.execute()
         # Fetch dependent actions and ask them to update themselves.
         for d in _dependent_actions.get(action_id) or ():
             dep_action = self.get_action(d)
+            print 'ActionPool: updating', d
             dep_action.update()
 
 

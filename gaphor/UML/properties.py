@@ -511,3 +511,14 @@ class redefine(umlproperty):
     def __delete__(self, obj, value=None):
         self.original.__delete__(obj, value)
 
+try:
+    import psyco
+except ImportError:
+    pass
+else:
+    psyco.bind(umlproperty)
+    psyco.bind(attribute)
+    psyco.bind(enumeration)
+    psyco.bind(association)
+    psyco.bind(derivedunion)
+    psyco.bind(redefine)

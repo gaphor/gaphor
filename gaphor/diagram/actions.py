@@ -6,16 +6,29 @@ This module is initialized from gaphor.ui.diagramwindow
 import gaphor
 import gaphor.UML as UML
 import gaphor.diagram as diagram
-from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
+from gaphor.misc.action import Action, CheckAction, RadioAction
+from gaphor.misc.action import register_action as _register_action
+from gaphor.misc.action import action_dependencies as _action_dependencies
 
-def tool_changed(view, pspec, window):
+def register_action(action, *args):
+    _register_action(action, *args)
+    _action_dependencies(action, 'ToolChange', 'TabChange', 'OpenModelElement')
+
+def tool_changed(action, window):
+    view = window.get_current_diagram_view()
+    if not view:
+	action.sensitive = False
+	return
+    else:
+	action.sensitive = True
     tool = view.get_property('tool')
     if tool:
 	id = tool.action_id
     else:
 	id = 'Pointer'
-    action = window.menu_factory.get_action(id)
-    action.active = True
+    if id == action.id:
+	action.active = True
+
 
 class PointerAction(RadioAction):
     id = 'Pointer'
@@ -26,10 +39,13 @@ class PointerAction(RadioAction):
 
     def init(self, window):
 	self._window = window
-	self._window.get_view().connect('notify::tool', tool_changed, window)
+	#self._window.get_current_diagram_view().connect('notify::tool', tool_changed, window)
+
+    def update(self):
+	tool_changed(self, self._window)
 
     def execute(self):
-	self._window.get_view().set_tool(None)
+	self._window.get_current_diagram_view().set_tool(None)
 	self._window.set_message('')
 
 register_action(PointerAction)
@@ -46,9 +62,12 @@ class PlacementAction(RadioAction):
     def init(self, window):
 	self._window = window
 
+    def update(self):
+	tool_changed(self, self._window)
+
     def item_factory(self):
 	"""Create a new instance of the item and return it."""
-        item = self._window.get_diagram().create(self.type)
+        item = self._window.get_current_diagram().create(self.type)
 	if self.subject_type:
 	    subject = gaphor.resource('ElementFactory').create(self.subject_type)
 	    try:
@@ -63,7 +82,7 @@ class PlacementAction(RadioAction):
     def execute(self):
 	assert self.type != None
 	tool = diagram.PlacementTool(self.item_factory, self.id)
-	self._window.get_view().set_tool(tool)
+	self._window.get_current_diagram_view().set_tool(tool)
 	self._window.set_message('Create new %s' % self.name)
 
 
@@ -72,7 +91,7 @@ class NamespacePlacementAction(PlacementAction):
     def item_factory(self):
 	"""Create a new instance of the item and return it."""
         item = PlacementAction.item_factory(self)
-	item.subject.package = self._window.get_diagram().namespace
+	item.subject.package = self._window.get_current_diagram().namespace
 	return item
 
 
