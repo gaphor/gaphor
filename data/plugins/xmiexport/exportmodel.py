@@ -139,7 +139,18 @@ class XMIExport(Action):
         """
         """
         ends=node.memberEnd
+        if len(ends)!=2:
+            return
         
+        # Temp fix for line direction
+        end_sequence = [0,1]
+        if ends[1].aggregation=='composite':
+            end_sequence = [0,1]
+        else:
+            end_sequence = [1,0]
+        if ends[1].class_:
+            end_sequence.reverse()
+
         attributes=XMLAttributes()
         attributes['xmi.id']=node.id
         attributes['isSpecification']='false'
@@ -148,7 +159,8 @@ class XMIExport(Action):
         attributes['isAbstract']='false'
         xmi.startElement('UML:Association', attrs=attributes)
         xmi.startElement('UML:Association.connection', attrs=XMLAttributes())
-        for i in (0,1): # Need an index for class lookup
+
+        for i in end_sequence: # Need an index for class lookup
             end=ends[i]
             attributes=XMLAttributes()
             attributes['xmi.id']=end.id
@@ -156,7 +168,7 @@ class XMIExport(Action):
             attributes['isSpecification']='false'
             attributes['isNavigable']=end.class_ and 'true' or 'false'
             attributes['ordering']='unordered'
-            attributes['aggregation']=end.aggregation # TODO: Handle None?
+            attributes['aggregation']=ends[1-i].aggregation # TODO: Handle None?
             attributes['targetScope']='instance' 
             attributes['changeability']='changeable'
             
@@ -193,7 +205,7 @@ class XMIExport(Action):
             xmi.endElement('UML:AssociationEnd.multiplicity')
             xmi.startElement('UML:AssociationEnd.participant', attrs=XMLAttributes())
             attributes=XMLAttributes()
-            attributes['xmi.idref']=ends[1-i].type.id # Take the type opposite type as this is the easest way to get the owner
+            attributes['xmi.idref']=end.type.id 
             xmi.startElement('UML:Class', attrs=attributes)
             xmi.endElement('UML:Class')
             xmi.endElement('UML:AssociationEnd.participant')
