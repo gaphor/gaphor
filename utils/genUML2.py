@@ -118,7 +118,7 @@ class Writer:
             self.overrides.write_override(self, full_name)
         elif eval(a.isDerived or '0'):
             msg('ignoring derived attribute %s.%s: no definition' % (a.class_name, a.name))
-        elif type.endswith('Kind'):
+        elif type.endswith('Kind') or type.endswith('Sort'):
             e = filter(lambda e: e['name'] == type, enumerations.values())[0]
             self.write_property("%s.%s" % (a.class_name, a.name),
                                 "enumeration('%s', %s, '%s')" % (a.name, e.enumerates, default or e.enumerates[0]))
@@ -344,7 +344,7 @@ def generate(filename, outfile=None, overridesfile=None):
         # Find classes, *Kind (enumerations) are given special treatment
         if isinstance(val, element):
             if val.type == 'Class' and val.get('name'):
-                if val['name'].endswith('Kind'):
+                if val['name'].endswith('Kind') or val['name'].endswith('Sort'):
                     enumerations[key] = val
                 else:
                     classes[key] = val

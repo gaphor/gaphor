@@ -1,3 +1,8 @@
+2004-11-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: implemented Interaction diagrams.
+	* utils/genUML2.py: let code generator support Sort suffix.
+
 2004-11-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/misc/resource.py: added persistent property to resource values.
