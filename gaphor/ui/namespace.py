@@ -69,7 +69,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 #		pass
 	elif key == 'remove' and isinstance (obj, UML.Namespace):
 	    if obj is self.model:
-		for n in obj.ownedElement.list:
+		for n in obj.ownedElement:
 		    self.row_deleted((0,))
 	    else:
 		path = self.get_path (obj)
@@ -188,7 +188,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 	    return None
 	#print "on_iter_next", index
 	try:
-	    index = parent.ownedElement.list.index (node)
+	    index = parent.ownedElement.index (node)
 	    return parent.ownedElement[index + 1]
 	except IndexError:
 	    return None
@@ -256,12 +256,8 @@ class NamespaceView(gtk.TreeView):
 	value = model.get_value(iter, 0)
 	stock_id = stock.get_stock_id(value.__class__)
 	if stock_id:
-	    cell.set_property('stock-id', stock.get_stock_id(value.__class__))
-	#name = value.__class__.__name__
-	#if len(name) > 0:
-	#    cell.set_property('markup', '[<b>' + name[0] + '</b>]')
-	#else:
-	#    cell.set_property('markup', '[<b>?</b>]')
+	    icon = self.render_icon (stock_id, gtk.ICON_SIZE_MENU, '')
+	    cell.set_property('pixbuf', icon)
 
     def _set_name (self, column, cell, model, iter, data):
 	value = model.get_value(iter, 0)
