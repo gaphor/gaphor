@@ -25,6 +25,8 @@ a tupple as value.  A tupple contains two or three fields:
 
 
 import types, copy
+from Enumeration import Enumeration_
+from Sequence import Sequence
 
 # Some default types as defined in the MetaModel.
 class Integer(int): pass
@@ -40,83 +42,7 @@ Geometry = types.ListType
 FALSE = 0
 TRUE = not FALSE
 
-# A hash table contaiing all elements that are created. the key is the objects
-# ID.
-elements = { }
 
-def lookup (id):
-    try:
-        return elements[id]
-    except KeyError:
-        return None
-
-class Enumeration_:
-    '''The Enumerration class is an abstract class that can be used to create
-    enumerated types. One should inherit from Enumeration and define a variable
-    '_values' at class level, which holds a list of valid values for the class.
-    '''
-    def __init__(self):
-        self.v = self._values[0]
-    def __setattr__(self, key, value):
-        if key == 'v' and value in self._values:
-	    self.__dict__['v'] = value
-	else:
-	    raise AttributeError, "Value '" + str(value) + "' is an invalid enumeration type."
-
-class Sequence:
-    '''A Sequence class has the following properties:
-    - A sequence is an unordered list of unique elements.
-    - Only accepts object of a certain type (or descendants).
-    - Only keep one reference to the object.
-    - A Sequence might have an owner. In that care the owners
-      sequence_{add|remove}() functions are called to allow
-      bi-directional relations to be added and deleted.'''
-    def __init__(self, owner, type):
-	self.owner = owner
-	self.requested_type = type
-	self.list = []
-
-    def __len__(self):
-        return self.list.__len__()
-
-    def __setitem__(self, key, value):
-	raise Exception, 'Sequence: items should not be overwritten.'
-
-    def __delitem__(self, key):
-	if self.owner:
-	    self.owner.sequence_remove(self, key)
-	else:
-            self.list.__delitem__(key)
-
-    def __getitem__(self, key):
-        return self.list.__getitem__(key)
-
-    def __getslice__(self, i, j):
-        return self.list.__getslice__(i, j)
-
-    def __setslice__(self, i, j, s):
-	raise IndexError, 'Sequence: items should not be overwritten.'
-
-    def __delslice__(self, i, j):
-	raise IndexError, 'Sequence: items should not be deleted this way.'
-
-    def __contains__(self, obj):
-        return self.list.__contains__(obj)
-
-    def append(self, obj):
-	if isinstance (obj, self.requested_type):
-	    if self.list.count(obj) == 0:
-		self.list.append(obj)
-	else:
-	    raise ValueError, 'Sequence._add(obj): Object is not of type ' + \
-	    			str(self.requested_type)
-
-    def remove(self, key):
-        self.__delitem__(key)
-
-    def index(self, key):
-        return self.list.index(key)
-    
 
 class Element:
     '''Element is the base class for *all* UML MetaModel classes. The
@@ -133,17 +59,17 @@ A special attribute is added: itemsOnUndoStack. This is a counter that is used
 by the diagram item's implementation to avoid deletion (unlink()ing) of the 
 object if references are lehd by the object on the undo stack.
 '''
-    _index = 1
+    #_index = 1
     _attrdef = { 'documentation': ( "", types.StringType ),
 		 'presentation': ( Sequence, types.ObjectType ),
     		 'itemsOnUndoStack': (0, types.IntType ) }
 
-    def __init__(self):
+    def __init__(self, id):
 	#print "New object of type", self.__class__
-	self.__dict__['__id'] = Element._index
+	self.__dict__['__id'] = id
 	self.__dict__['__signals'] = [ ]
-	elements[Element._index] = self
-	Element._index += 1
+	#elements[Element._index] = self
+	#Element._index += 1
 
     def unlink(self):
 	'''Remove all references to the object. This will also remove the
@@ -156,8 +82,8 @@ object if references are lehd by the object on the undo stack.
 	self.__unlink ()
 
     def __unlink(self):
-	if elements.has_key(self.__dict__['__id']):
-	    del elements[self.__dict__['__id']]
+	#if elements.has_key(self.__dict__['__id']):
+	#    del elements[self.__dict__['__id']]
 	for key in self.__dict__.keys():
 	    # In case of a cyclic reference, we should check if the element
 	    # not yet has been removed.
@@ -199,7 +125,8 @@ object if references are lehd by the object on the undo stack.
 	    if len (self.presentation) == 0:
 		assert self.__dict__.has_key ('__undodata')
 		# Add myself to the 'elements' hash 
-		elements[self.id] = self
+		#elements[self.id] = self
+		self.emit ('add_to_factory')
 		# Add elements from __undodata
 		#print self.__dict__
 		undodata = self.__dict__['__undodata']
@@ -226,7 +153,8 @@ object if references are lehd by the object on the undo stack.
 		# Remove yourself from the 'elements' hash
 		if lookup (self.id):
 		    #print 'Removing element from elements hash.'
-		    del elements[self.id]
+		    #del elements[self.id]
+		    self.emit ('remove_from_factory')
 		# Create __undodata, so we can undo the element's state
 		undodata = { }
 		for key in self.__dict__.keys():
@@ -424,38 +352,33 @@ object if references are lehd by the object on the undo stack.
 	    #print 'signal:', signal_func, 'data:', data
 	    signal_func (key, *data)
 
-    def save(self, document, parent):
+    def save(self, parent, ns):
 	def save_children (obj):
 	    if isinstance (obj, Element):
 		#subnode = document.createElement (key)
-		subnode = document.createElement ('Reference')
-		node.appendChild (subnode)
-		subnode.setAttribute ('name', key)
-		subnode.setAttribute ('refid', str(obj.__dict__['__id']))
+		subnode = node.newChild (ns, 'Reference', None)
+		subnode.setProp ('name', key)
+		subnode.setProp ('refid', str(obj.__dict__['__id']))
 	    else:
-		subnode = document.createElement ('Value')
-		node.appendChild (subnode)
-		subnode.setAttribute ('name', key)
+		data = None
 		if isinstance (obj, types.IntType) or \
 			isinstance (obj, types.LongType) or \
 			isinstance (obj, types.FloatType):
-		    text = document.createTextNode (str(obj))
-		    subnode.appendChild (text)
-		#elif isinstance (obj, types.FloatType):
-		#    text = document.createTextNode ("%e" % obj)
-		#    subnode.appendChild (text)
+		    data = str(obj)
 		elif isinstance (obj, types.StringType):
-		    cdata = document.createCDATASection (str(obj))
-		    subnode.appendChild (cdata)
+		    data = str(obj)
+		if data:
+		    subnode = node.newChild (ns, 'Value', None)
+		    cdata = subnode.doc.newCDataBlock (data, len(data))
+		    subnode.addChild (cdata)
+		    subnode.setProp ('name', key)
 
-        #node = document.createElement (self.__class__.__name__)
-        node = document.createElement ('Element')
-	parent.appendChild (node)
-	node.setAttribute ('type', self.__class__.__name__)
-	node.setAttribute ('id', str (self.__dict__['__id']))
+        node = parent.newChild (ns, 'Element', None)
+	node.setProp ('type', self.__class__.__name__)
+	node.setProp ('id', str (self.__dict__['__id']))
 	for key in self.__dict__.keys():
 	    if key not in ( 'presentation', 'itemsOnUndoStack', \
-	    		    '__signals', '__id' ):
+	    		    '__signals', '__id', 'canvas' ):
 		obj = self.__dict__[key]
 		if isinstance (obj, Sequence):
 		    for item in obj.list:
@@ -465,10 +388,11 @@ object if references are lehd by the object on the undo stack.
 	return node
 
     def load(self, node):
-	for child in node.childNodes:
-	    if child.tagName == 'Reference':
-		name = child.getAttribute ('name')
-	        refid = int (child.getAttribute ('refid'))
+	child = node.children
+	while child:
+	    if child.name == 'Reference':
+		name = child.prop ('name')
+	        refid = int (child.prop ('refid'))
 		refelement = lookup (refid)
 		attr_info = self.__get_attr_info (name, self.__class__)
 		if not isinstance (refelement, attr_info[1]):
@@ -481,19 +405,21 @@ object if references are lehd by the object on the undo stack.
 		else:
 		    self.__dict__[name] = refelement
 		    self.emit (name)
-	    elif child.tagName == 'Value':
-		name = child.getAttribute ('name')
-		subchild = child.firstChild
+	    elif child.name == 'Value':
+		name = child.prop ('name')
+		#subchild = child.children
 		attr_info = self.__get_attr_info (name, self.__class__)
 		if issubclass (attr_info[1], types.IntType) or \
 		   issubclass (attr_info[1], types.LongType):
-		    self.__dict__[name] = int (subchild.data)
+		    self.__dict__[name] = int (child.content)
 		elif issubclass (attr_info[1], types.FloatType):
-		    self.__dict__[name] = float (subchild.data)
+		    self.__dict__[name] = float (child.content)
 		else:
-		    if hasattr (subchild, 'data'):
-			self.__dict__[name] = subchild.data
+		    if child.content and child.content != '':
+			self.__dict__[name] = child.content
+		print 'content = "%s"' % child.content
 		self.emit (name)
+	    child = child.next
 
     def postload (self, node):
 	'''Do some things after the items are initialized... This is basically
@@ -535,7 +461,7 @@ if __name__ == '__main__':
     a.unlink()
     del a
 
-    assert len (elements) == 0
+    #assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -567,7 +493,7 @@ if __name__ == '__main__':
 
     a.unlink()
 
-    assert len (elements) == 0
+    #assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -614,7 +540,7 @@ if __name__ == '__main__':
     a.unlink()
     b.unlink()
 
-    assert len (elements) == 0
+    #assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -698,7 +624,7 @@ if __name__ == '__main__':
     b.unlink()
 
     #print elements
-    assert len (elements) == 0
+    #assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -761,7 +687,7 @@ if __name__ == '__main__':
     a.unlink()
     b.unlink()
 
-    assert len (elements) == 0
+    #assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -818,7 +744,7 @@ if __name__ == '__main__':
     b.unlink()
     del b
 
-    assert len (elements) == 0
+    #assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -832,14 +758,14 @@ if __name__ == '__main__':
     a = A()
     b = A()
 
-    assert len (elements) == 2
+    #assert len (elements) == 2
     
     a.rel = b
 
     a.unlink()
     b.unlink()
 
-    assert len (elements) == 0
+    #assert len (elements) == 0
 
     print '\tOK ==='
 

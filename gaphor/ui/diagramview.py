@@ -3,26 +3,28 @@
 
 import types, gtk, UML, diacanvas, diagram
 
-FILE_LOAD = 0
-FILE_SAVE = 1
-FILE_DUMP = 2
-FILE_QUIT = 3
-EDIT_UNDO = 10
-EDIT_REDO = 11
-EDIT_DEL_FOCUSED = 12
-VIEW_ZOOM_IN = 20
-VIEW_ZOOM_OUT = 21
-VIEW_ZOOM_100 = 22
-VIEW_SNAP_TO_GRID = 23
-ITEM_ADD_ACTOR = 30
-ITEM_ADD_USECASE = 31
-ITEM_ADD_COMMENT = 32
-ITEM_ADD_COMMENT_LINE = 33
-ITEM_ADD_GENERALIZATION = 34
-ITEM_ADD_DEPENDENCY = 35
-ITEM_ADD_REALIZATION = 36
-ITEM_ADD_INCLUDE = 37
-ITEM_ADD_EXTEND = 38
+[
+    FILE_LOAD,
+    FILE_SAVE,
+    FILE_DUMP,
+    FILE_QUIT,
+    EDIT_UNDO,
+    EDIT_REDO,
+    EDIT_DEL_FOCUSED,
+    VIEW_ZOOM_IN,
+    VIEW_ZOOM_OUT,
+    VIEW_ZOOM_100,
+    VIEW_SNAP_TO_GRID,
+    ITEM_ADD_ACTOR,
+    ITEM_ADD_USECASE,
+    ITEM_ADD_COMMENT,
+    ITEM_ADD_COMMENT_LINE,
+    ITEM_ADD_GENERALIZATION,
+    ITEM_ADD_DEPENDENCY,
+    ITEM_ADD_REALIZATION,
+    ITEM_ADD_INCLUDE,
+    ITEM_ADD_EXTEND
+] = range(20)
 
 class DiagramView:
 
@@ -94,7 +96,8 @@ class DiagramView:
 	def post_button_press (tool, view, event, diagram, uml_type):
 	    print 'Unset_tool:', tool, view, event
 	    if uml_type is not None:
-		subject = uml_type()
+		factory = UML.ElementFactory()
+		subject = factory.create (uml_type)
 		if issubclass (uml_type, UML.Namespace):
 		    subject.namespace = dia.namespace
 		tool.new_object.set_subject(subject)
@@ -122,13 +125,16 @@ class DiagramView:
 	    print 'UML.load'
 	    UML.load ('a.xml')
 	    print 'UML.lookup'
-	    self.diagram = UML.lookup (2)
+	    factory = UML.ElementFactory ()
+	    self.diagram = factory.lookup (2)
 	    print 'view.set_canvas'
 	    view.set_canvas (self.diagram.canvas)
 	elif action == FILE_SAVE:
-	    UML.save ('a.xml')
+	    factory = UML.ElementFactory ()
+	    factory.save ('a.xml')
 	elif action == FILE_DUMP:
-	    for val in UML.elements.values():
+	    factory = UML.ElementFactory ()
+	    for val in factory.values():
 	        print 'Object', val
 		for key in val.__dict__.keys():
 		    print '	', key, ':',

@@ -446,8 +446,9 @@ relationship_handle_disconnect (DiaCanvasItem *connected_to,
 	//if (!head->connected_to || !tail->connected_to)
 	//	return TRUE;
 
-	g_assert (head->connected_to != NULL);
-	g_assert (tail->connected_to != NULL);
+	/* These assertions are not true in case of a "del focused" event */
+	/* g_assert (head->connected_to != NULL); */
+	/* g_assert (tail->connected_to != NULL); */
 
 	//g_message (__FUNCTION__": Going to disconnect subject...");
 	relationship_set_subject (rel, NULL);

@@ -11,3 +11,12 @@ As always, there is much to do...
   I need someone with a little vision to create me a useable UI.
 
 - Exporting diagrams to UML XMI, code, images (SVG/png), etc.
+
+More specific:
+- Popup menu's: they should be created through an ItemFactory, but what is
+  the most easy interface for adding those items (esp. for plugins)
+- Some logic about what classes can be connected to each other should be
+  moved from the DiagramItems to the data elements.
+- A more pattern driven design (using Factories, Singletons etc.)
+- Notifiers that should tell the tree model to update.
+- 

@@ -21,10 +21,15 @@ def mainquit(*args):
     gtk.main_quit()
 
 
-model = UML.Model()
+factory = UML.ElementFactory()
+fact2 = UML.ElementFactory()
+assert factory is fact2
+del fact2
 
-print "diagram creating"
-dia = diagram.Diagram()
+model = factory.create (UML.Model)
+
+dia = factory.create (diagram.Diagram)
+print 'diagram created:', dia
 dia.namespace = model
 print dia.namespace
 print model.ownedElement.list
@@ -36,19 +41,19 @@ treemodel = tree.NamespaceModel(model)
 #item.move (30, 50)
 #item = canvas.root.add (diagram.Actor)
 #item.move (150, 50)
-item = dia.create_item (diagram.UseCase, (50, 150))
+item = dia.create (diagram.UseCase, (50, 150))
 usecase = item.subject
-dia.create_item (diagram.UseCase, (50, 200), subject=usecase)
+dia.create (diagram.UseCase, (50, 200), subject=usecase)
 print item.subject
 print item.subject
 print item.subject
 print item.subject
 
-item = dia.create_item (diagram.Actor, (150, 50))
+item = dia.create (diagram.Actor, (150, 50))
 actor = item.subject
 actor.name = "Actor"
 
-item = dia.create_item (diagram.Comment, (10,10))
+item = dia.create (diagram.Comment, (10,10))
 comment = item.subject
 
 del item# , actor, usecase, comment
@@ -80,11 +85,11 @@ gtk.main()
 
 #diagram_view.destroy()
 
-UML.save('x.xml')
+factory.save('x.xml')
 
 #treemodel.dump()
 
-UML.flush()
+factory.flush()
 
 #print "Comment.presentation:", comment.presentation.list
 #print "Actor.presentation:", actor.presentation.list
@@ -100,9 +105,9 @@ UML.flush()
 #del usecase
 #del comment
 
-print "Garbage collection after gtk.main() has finished (should be empty):",
+#print "Garbage collection after gtk.main() has finished (should be empty):",
 #UML.update_model()
-for k in UML.elements.keys():
-    print "Element", k, ":", UML.elements[k].__dict__
+#for k in UML.elements.keys():
+#    print "Element", k, ":", UML.elements[k].__dict__
 
 print "Program ended normally..."
