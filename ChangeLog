@@ -1,3 +1,9 @@
+2004-09-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: always do config check before build
+	* gaphor/pluginmanager.py: Fixed plugin loading (no longer change
+	sys.path). Patch by Cedric Delfosse.
+
 2004-09-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* utils/install_mo.py: fixed bug in installation

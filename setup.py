@@ -72,7 +72,6 @@ class config_Gaphor(Command):
         #self.module_check('gobject', 'glib_version', (2, 0))
         self.module_check('gtk', ('gtk_version', (2, 0)),
                                  ('pygtk_version', (2, 0)))
-        self.module_check('gtk.glade')
         self.module_check('gnome')
         self.module_check('gnome.canvas')
         #self.module_check('gconf')
@@ -87,7 +86,6 @@ class config_Gaphor(Command):
             raise SystemExit
         else:
             print 'Config succeeded.'
-            print 'You can run Gaphor by typing: python setup.py run'
 
     def pkg_config_check(self, package, version):
         """Check for availability of a package via pkg-config."""
@@ -165,6 +163,7 @@ class build_py_Gaphor(build_py, version_py):
     description = "build_py and generate gaphor/UML/uml2.py."
 
     def run(self):
+        self.run_command('config')
         build_py.run(self)
         sys.path.insert(0, self.build_lib)
         # All data is stored in the local data directory
