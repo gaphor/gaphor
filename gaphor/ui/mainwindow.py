@@ -119,6 +119,7 @@ class MainWindow(AbstractWindow):
                 'Pointer',
                 'InsertComment',
                 'InsertCommentLine')),
+        ("Use Cases", ('InsertUseCase', 'InsertActor')),
         ("Classes", (
                 'InsertClass',
                 'InsertInterface',
