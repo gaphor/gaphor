@@ -120,7 +120,7 @@ class TreeModel(gtk.GenericTreeModel):
 	#return 0
 	klass = self.class_from_node(node)
 	#print "on_iter_has_child", node
-	return klass.__dict__.has_key("_attrdef")
+	return klass.__dict__.has_key("_attrdef") and len(klass._attrdef) > 0
 
     def on_iter_n_children(self, node):
 	'''returns the number of children of this node'''

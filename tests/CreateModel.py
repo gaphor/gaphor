@@ -5,7 +5,7 @@
 
 import sys
 
-sys.path.append("../gmodeler")
+sys.path.append("../gaphor")
 
 import UML
 
