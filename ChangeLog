@@ -2,6 +2,7 @@
 
 	* data/icons.xml: contains descriptions of icons, rather than
 	hardcoding them in gaphor/ui/stock.py.
+	* setup.py, MANIFEST.in: added icons.xml
 	* gaphor/ui/stock.py: use icons.xml. Added an XML parser.
 	* gaphor/ui/mainwindow.py, mainactions.py: added About dialog.
 	* gaphor/diagram/interface.py: make it work
