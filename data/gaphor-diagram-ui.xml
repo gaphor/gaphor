@@ -88,14 +88,14 @@
 		<menuitem name="Head_isNavigable" verb="" type="toggle"/>
 		<separator/>
 		<menuitem name="Head_None" verb="" type="radio" group="ak_head"/>
-		<menuitem name="Head_Aggregate" verb="" type="radio" group="ak_head"/>
+		<menuitem name="Head_Shared" verb="" type="radio" group="ak_head"/>
 		<menuitem name="Head_Composite" verb="" type="radio" group="ak_head"/>
 	    </submenu>
 	    <submenu _label="Side B">
 		<menuitem name="Tail_isNavigable" verb="" type="toggle"/>
 		<separator/>
 		<menuitem name="Tail_None" verb="" type="radio" group="ak_tail"/>
-		<menuitem name="Tail_Aggregate" verb="" type="radio" group="ak_tail"/>
+		<menuitem name="Tail_Shared" verb="" type="radio" group="ak_tail"/>
 		<menuitem name="Tail_Composite" verb="" type="radio" group="ak_tail"/>
 	    </submenu>
 	    <separator/>

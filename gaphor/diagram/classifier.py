@@ -27,7 +27,7 @@ class ClassifierItem(ModelElementItem):
 
     def on_subject_notify(self, pspec, notifiers=()):
         """See DiagramItem.on_subject_notify()."""
-        log.info('ClassifierItem.on_subject_notify: %s' % str(notifiers))
+        #log.info('ClassifierItem.on_subject_notify: %s' % str(notifiers))
         ModelElementItem.on_subject_notify(self, pspec, ('name',) + notifiers)
         self._name.set(text=self.subject and self.subject.name or '')
 

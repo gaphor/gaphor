@@ -10,7 +10,7 @@ from package import *
 from relationship import *
 from dependency import *
 from generalization import *
-#from association import *
+from association import *
 
 # Map UML elements to their (default) representation.
 
@@ -18,7 +18,7 @@ import gaphor.UML as UML
 
 _uml_to_item_map = {
     UML.Actor: ActorItem,
-#    UML.Association: AssociationItem,
+    UML.Association: AssociationItem,
     UML.Class: ClassItem,
     UML.Comment: CommentItem,
     UML.Dependency: DependencyItem,

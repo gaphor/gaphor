@@ -23,10 +23,10 @@ class DiagramLine(diacanvas.CanvasLine):
         save_func('points', points)
         c = self.handles[0].connected_to
         if c:
-            save_func('head_connection', c)
+            save_func('head_connection', c, reference=True)
         c = self.handles[-1].connected_to
         if c:
-            save_func ('tail_connection', c)
+            save_func ('tail_connection', c, reference=True)
 
     def load (self, name, value):
         if name == 'points':

@@ -57,8 +57,14 @@ class ElementFactory(object):
     def keys (self):
         return self._elements.keys()
 
+    def iterkeys (self):
+        return self._elements.iterkeys()
+
     def values (self):
         return self._elements.values()
+
+    def itervalues (self):
+        return self._elements.itervalues()
 
     def is_empty(self):
         """Returns True if the factory holds no elements."""

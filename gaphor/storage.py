@@ -29,10 +29,16 @@ def save(filename=None, factory=None):
     from xml.sax.saxutils import escape
 
     def save_reference(name, value):
+        """Save a value as a reference to another element in the model.
+        This applies to both UML as well as canvas items.
+        """
         # Save a reference to the object:
         buffer.write('<reference name="%s" refid="%s"/>\n' % (name, value.id))
 
     def save_value(name, value):
+        """Save a value (attribute).
+        If the value is a string, it is saves as a CDATA block.
+        """
         buffer.write('<value name="%s">' % name)
         if isinstance(value, types.StringTypes):
             buffer.write('<![CDATA[%s]]>' % value.replace(']]>', '] ]>'))
@@ -41,6 +47,11 @@ def save(filename=None, factory=None):
         buffer.write('</value>\n')
 
     def save_element(name, value):
+        """Save attributes and references from items in the gaphor.UML module.
+        A value may be a primitive (string, int), a gaphor.UML.collection
+        (which contains a list of references to other UML elements) or a
+        diacanvas.Canvas (which contains canvas items).
+        """
         if isinstance (value, (UML.Element, diacanvas.CanvasItem)):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
@@ -56,8 +67,12 @@ def save(filename=None, factory=None):
         else:
             save_value(name, value)
 
-    def save_canvasitem(name, value):
-        if isinstance (value, UML.Element):
+    def save_canvasitem(name, value, reference=False):
+        """Save attributes and references in a gaphor.diagram.* object.
+        The extra attribute reference can be used to force UML 
+        """
+        #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
+        if reference or isinstance(value, UML.Element):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
             # Save a list of references:
@@ -67,7 +82,7 @@ def save(filename=None, factory=None):
             #buffer.write('</reflist>')
         elif isinstance(value, diacanvas.CanvasItem):
             buffer.write('<canvasitem id="%s" type="%s">' % (value.id, value.__class__.__name__))
-            value.save(save_element)
+            value.save(save_canvasitem)
             buffer.write('</canvasitem>')
         else:
             save_value(name, value)
@@ -99,32 +114,43 @@ def save(filename=None, factory=None):
         finally:
             file.close()
 
-def _load (elements, factory):
+def _load(elements, factory):
     '''Load a file and create a model if possible.
-    Exceptions: IOError, ValueError.'''
+    Exceptions: IOError, ValueError.
+    '''
+
+    log.debug('Loading %d elements...' % len(elements.keys()))
 
     log.info('0%')
 
-    # First create elements and canvas items in the factory:
+    # First create elements and canvas items in the factory
+    # The elements are stored as attribute 'element' on the parser objects:
     for id, elem in elements.items():
         if isinstance(elem, parser.element):
-            type = getattr (UML, elem.type)
-            elem.element = factory.create_as (type, id)
+            try:
+                cls = getattr(UML, elem.type)
+                log.debug('Creating UML element for %s' % elem)
+                elem.element = factory.create_as(cls, id)
+            except:
+                raise
         elif isinstance(elem, parser.canvasitem):
             cls = getattr(diagram, elem.type)
+            log.debug('Creating canvas item for %s' % elem)
             elem.element = cls(id)
-            #elem.element.id = idset_property('id', id)
-            # Add a canvas property so we can be lasy and do not check...
-            elem.canvas = None
+        else:
+            raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
 
     log.info('0% ... 33%')
 
     # load attributes and create references:
     for id, elem in elements.items():
+        # Ensure that all elements have their element instance ready...
+        assert hasattr(elem, 'element')
+
         # establish parent/child relations on canvas items:
-        if elem.canvas:
+        if isinstance(elem, parser.element) and elem.canvas:
             for item in elem.canvas.canvasitems:
-                #print 'item:', item.element
+                assert item in elements.values(), 'Item %s is a canvas item, but it is not in the parsed objects table'
                 item.element.set_property('parent', elem.element.canvas.root)
         if isinstance(elem, parser.canvasitem):
             for item in elem.canvasitems:

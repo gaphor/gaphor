@@ -20,13 +20,19 @@ class DiagramCanvas(diacanvas.Canvas):
 	    'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
 	    'grid_ofs_y', 'grid_color', 'grid_bg' ]
 
+    def __init__(self, diagram):
+	self.__gobject_init__()
+	self._diagram = diagram
+
+    diagram = property(lambda d: d._diagram)
+
     def save(self, save_func):
 	for prop in DiagramCanvas._savable_canvas_properties:
 	    save_func(prop, self.get_property(prop))
 	save_func('root_affine', self.root.get_property('affine'))
 	# Save child items:
 	for item in self.root.children:
-	    save_func(None, item) #item.save(canvas_store.new(item))
+	    save_func(None, item)
 
     def load(self, name, value):
 	self.set_property ("allow_undo", 0)
@@ -55,7 +61,7 @@ class Diagram(Namespace, PackageableElement):
 
     def __init__(self, id):
 	super(Diagram, self).__init__(id)
-        self.canvas = DiagramCanvas()
+        self.canvas = DiagramCanvas(self)
 	self.canvas.set_undo_stack_depth(10)
 	self.canvas.set_property ("allow_undo", 1)
 

@@ -62,11 +62,11 @@ class umlproperty(object):
         self._set(obj, value)
 
     def save(self, obj, save_func):
-        if hasattr(obj, '_' + self.name):
+        if hasattr(obj, self._name):
             save_func(self.name, self._get(obj))
 
 #    def unlink(self, obj):
-#        if hasattr(obj, '_' + self.name):
+#        if hasattr(obj, self._name):
 #            self.__delete__(obj)
 
     def notify(self, obj):
@@ -79,7 +79,7 @@ class umlproperty(object):
 
         # we need to check if a deriviate is part of the current object:
         # TODO: can we do this faster?
-        mro = obj.__class__.__mro__
+        mro = type(obj).__mro__
         try:
             for d in self.deriviates:
                 for c in mro:
@@ -95,7 +95,8 @@ class attribute(umlproperty):
 
     # TODO: check if lower and upper are actually needed for attributes
     def __init__(self, name, type, default, lower=0, upper=1):
-        self.name = name
+        self.name = intern(name)
+        self._name = intern('_' + name)
         self.type = type
         self.default = default
         self.lower = lower
@@ -104,7 +105,7 @@ class attribute(umlproperty):
     def load(self, obj, value):
         if not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s (is %s)' % (self.type.__name__, type(value))
-        setattr(obj, '_' + self.name, value)
+        setattr(obj, self._name, value)
 
     def __str__(self):
         if self.lower == self.upper:
@@ -114,21 +115,21 @@ class attribute(umlproperty):
 
     def _get(self, obj):
         try:
-            return getattr(obj, '_' + self.name)
+            return getattr(obj, self._name)
         except AttributeError:
             return self.default
 
     def _set(self, obj, value):
         if value is not None and not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type
-        if value == self.default and hasattr(obj, '_' + self.name):
-            delattr(obj, '_' + self.name)
+        if value == self.default and hasattr(obj, self._name):
+            delattr(obj, self._name)
         else:
-            setattr(obj, '_' + self.name, value)
+            setattr(obj, self._name, value)
         self.notify(obj)
 
     def _del(self, obj, value=None):
-        delattr(obj, '_' + self.name)
+        delattr(obj, self._name)
         self.notify(obj)
 
 
@@ -137,7 +138,8 @@ class enumeration(umlproperty):
     Element.enum = enumeration('enum', ('one', 'two', 'three'), 'one')"""
 
     def __init__(self, name, values, default):
-        self.name = name
+        self.name = intern(name)
+        self._name = intern('_' + name)
         self.values = values
         self.default = default
 
@@ -146,27 +148,27 @@ class enumeration(umlproperty):
 
     def _get(self, obj):
         try:
-            return getattr(obj, '_' + self.name)
+            return getattr(obj, self._name)
         except AttributeError:
             return self.default
 
     def load(self, obj, value):
         if not value in self.values:
             raise AttributeError, 'Value should be in %s' % str(self.values)
-        setattr(obj, '_' + self.name, value)
+        setattr(obj, self._name, value)
 
     def _set(self, obj, value):
         if not value in self.values:
             raise AttributeError, 'Value should be in %s' % str(self.values)
         if value != self._get(obj):
             if value == self.default:
-                delattr(obj, '_' + self.name)
+                delattr(obj, self._name)
             else:
-                setattr(obj, '_' + self.name, value)
+                setattr(obj, self._name, value)
             self.notify(obj)
 
     def _del(self, obj, value=None):
-        delattr(obj, '_' + self.name)
+        delattr(obj, self._name)
         self.notify(obj)
 
 
@@ -183,12 +185,13 @@ class association(umlproperty):
     """
  
     def __init__(self, name, type, lower=0, upper='*', composite=False, opposite=None):
-        self.name = name
+        self.name = intern(name)
+        self._name = intern('_' + name)
         self.type = type
         self.lower = lower
         self.upper = upper
         self.composite = composite
-        self.opposite = opposite
+        self.opposite = opposite and intern(opposite)
 
     def load(self, obj, value):
         if not isinstance(value, self.type):
@@ -216,7 +219,8 @@ class association(umlproperty):
         """Set a new value for our attribute. If this is a collection, append
         to the existing collection."""
         #print '__set__', self, obj, value
-        if not isinstance(value, self.type):
+        if not (isinstance(value, self.type) or \
+                (value is None and self.upper == 1)):
             raise AttributeError, 'Value should be of type %s' % self.type.__name__
         # Remove old value only for uni-directional associations
         if self.upper == 1:
@@ -226,12 +230,16 @@ class association(umlproperty):
                 return
             if old:
                 self.__delete__(obj, old)
+            if value is None:
+                self.notify(obj)
+                return
+
         # if we needed to set our own side, set the opposite
         if self._set2(obj, value):
             # Set opposite side.
             # Use value.__class__ since the property may be overridden:
             if self.opposite:
-                getattr(value.__class__, self.opposite)._set(value, obj)
+                getattr(type(value), self.opposite)._set(value, obj)
             self.notify(obj)
 
     def __delete__(self, obj, value=None):
@@ -244,18 +252,18 @@ class association(umlproperty):
         if not value:
             value = self._get(obj)
         if self.opposite:
-            getattr(value.__class__, self.opposite)._del(value, obj)
+            getattr(type(value), self.opposite)._del(value, obj)
         self._del(obj, value)
         
     def _get(self, obj):
         #print '_get', self, obj
         # TODO: Handle lower and add items if lower > 0
         try:
-            return getattr(obj, '_' + self.name)
+            return getattr(obj, self._name)
         except AttributeError:
             if self.upper > 1:
                 l = collection(self, obj, self.type)
-                setattr(obj, '_' + self.name, l)
+                setattr(obj, self._name, l)
                 return l
             else:
                 return None
@@ -276,7 +284,7 @@ class association(umlproperty):
                 return False
             self._get(obj).items.append(value)
         else:
-            setattr(obj, '_' + self.name, value)
+            setattr(obj, self._name, value)
         value.connect('__unlink__', self.__on_unlink, obj)
         if self.composite:
             obj.connect('__unlink__', self.__on_composite_unlink, value)
@@ -292,10 +300,10 @@ class association(umlproperty):
             except:
                 pass
             if not items:
-                delattr(obj, '_' + self.name)
+                delattr(obj, self._name)
         else:
             try:
-                delattr(obj, '_' + self.name)
+                delattr(obj, self._name)
             except:
                 pass
                 #print 'association._del: delattr failed for %s' % self.name
@@ -306,7 +314,7 @@ class association(umlproperty):
 
 #    def unlink(self, obj):
 #        #print 'unlink', self, obj
-#        lst = getattr(obj, '_' + self.name)
+#        lst = getattr(obj, self._name)
 #        while lst:
 #            self.__delete__(obj, lst[0])
 #            # re-establish unlink handler:
@@ -350,7 +358,8 @@ class derivedunion(umlproperty):
     """
 
     def __init__(self, name, lower, upper, *subsets):
-        self.name = name
+        self.name = intern(name)
+        self._name = intern('_' + name)
         self.lower = lower
         self.upper = upper
         self.subsets = subsets
@@ -412,7 +421,8 @@ class redefine(umlproperty):
     """
 
     def __init__(self, name, type, original):
-        self.name = name
+        self.name = intern(name)
+        self._name = intern('_' + name)
         self.type = type
         self.original = original
         original.add_deriviate(self)

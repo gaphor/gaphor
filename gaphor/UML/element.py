@@ -35,13 +35,14 @@ notify (name)
 __all__ = [ 'Element' ]
 
 import types, mutex
+import gaphor.misc.uniqueid as uniqueid
 from properties import umlproperty, association
 
 class Element(object):
     """Base class for UML data classes."""
 
     def __init__(self, id=None):
-        self.id = id
+        self.id = id or uniqueid.generate_id()
         self._observers = dict()
         self.__in_unlink = mutex.mutex()
 

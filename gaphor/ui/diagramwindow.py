@@ -94,9 +94,11 @@ class DiagramWindow(AbstractWindow):
     def __on_view_event(self, view, event):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	# handle mouse button 3 (popup menu):
-	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
+	if event.type == gtk.gdk.BUTTON_PRESS:
 	    # First push the undo stack...
 	    view.canvas.push_undo(None)
+
+	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
 	    elements = list()
 	    vitem = view.focus_item
 	    ui_component = self.get_ui_component()

@@ -2,6 +2,9 @@
 """
 # vim:sw=4:et
 
+# TODO: make loading of features work (adjust on_groupable_add)
+#       probably best to do is subclass Feature in OperationItem and A.Item
+
 from __future__ import generators
 
 import gobject
@@ -11,6 +14,8 @@ import diacanvas
 import gaphor.UML as UML
 from classifier import ClassifierItem
 from feature import FeatureItem
+from attribute import AttributeItem
+from operation import OperationItem
 
 class Compartment(object):
     """Specify a compartment in a class item.
@@ -25,22 +30,41 @@ class Compartment(object):
         self.separator.set_line_width(2.0)
         self.sep_y = 0
 
+    def save(self, save_func):
+        log.debug('Compartment.save: %s' % self.items)
+        for item in self.items:
+            save_func(None, item)
+
+    # Loading is done directly in the FeatureItem
+
     def create(self, feature):
         assert isinstance(feature, UML.Feature)
         for f in self.items:
             if f.subject is feature:
                 return
-        item = FeatureItem()
+        if isinstance(feature, UML.Property):
+            if feature.association:
+                return
+            item = AttributeItem()
+        elif isinstance(feature, UML.Operation):
+            item = OperationItem()
+        else:
+            raise ValueError, 'Unsupported class type for compartment: %s' % type(feature).__name__
         item.set_property('subject', feature)
 
         self.owner.add(item)
-        # self.features.append(item)
-        #self.owner.on_update(None)
         self.owner.request_update()
         item.focus()
 
+    def append(self, item):
+        if item not in self.items:
+            self.items.append(item)
+
     def remove(self, feature):
-        self.owner.remove(feature)
+        for f in self.items:
+            if f.subject is feature:
+                self.owner.remove(f)
+                return
         self.owner.request_update()
 
     def pre_update(self, width, height, affine):
@@ -48,7 +72,7 @@ class Compartment(object):
             self.sep_y = height
             height += ClassItem.COMP_MARGIN_Y
             for f in self.items:
-                log.debug(f)
+                #log.debug(f)
                 layout = f.get_property('layout')
                 w, h = layout.get_pixel_size()
                 if affine:
@@ -99,6 +123,8 @@ class ClassItem(ClassifierItem):
         self.save_property(save_func, 'show-attributes')
         self.save_property(save_func, 'show-operations')
         ClassifierItem.save(self, save_func)
+        for comp in (self._attributes, self._operations):
+            comp.save(save_func)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'show-attributes':
@@ -129,15 +155,18 @@ class ClassItem(ClassifierItem):
 
     def on_subject_notify(self, pspec, notifiers=()):
         ClassifierItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation'))
-        for f in self.subject.ownedAttribute:
-            self._attributes.create(f)
-        for f in self.subject.ownedOperation:
-            self._operations.create(f)
+        # Create already existing attributes and operations:
+        if self.subject:
+            for f in self.subject.ownedAttribute:
+                if not f.association:
+                    self._attributes.create(f)
+            for f in self.subject.ownedOperation:
+                self._operations.create(f)
         self.request_update()
 
     def compare_owned_features(self, features, compartment):
-        """Common function for on_subject_ownedAttribute_changed() and
-        on_subject_ownedOperation_changed().
+        """Common function for on_subject_notify__ownedAttribute() and
+        on_subject_notify__ownedOperation().
         """
         featlen = len(features)
         mylen = len(compartment.items)
@@ -156,7 +185,13 @@ class ClassItem(ClassifierItem):
 
     def on_subject_notify__ownedAttribute(self, subject, pspec):
         log.debug('on_subject_notify__ownedAttribute')
-        self.compare_owned_features(subject.ownedAttribute, self._attributes)
+        # Filter attributes that are connected to an association:
+        attr = []
+        for a in subject.ownedAttribute:
+            if not a.association:
+                attr.append(a)
+        self.compare_owned_features(attr, self._attributes)
+        #self.compare_owned_features(subject.ownedAttribute, self._attributes)
 
     def on_subject_notify__ownedOperation(self, subject, pspec):
         log.debug('on_subject_notify__ownedOperation')
@@ -219,12 +254,14 @@ class ClassItem(ClassifierItem):
 
     def on_groupable_add(self, item):
         """Add an attribute or operation."""
-        if isinstance(item.subject, UML.Property):
+        #if isinstance(item.subject, UML.Property):
+        if isinstance(item, AttributeItem):
             #log.debug('Adding attribute %s' % item)
-            self._attributes.items.append(item)
-        elif isinstance(item.subject, UML.Operation):
+            self._attributes.append(item)
+        #elif isinstance(item.subject, UML.Operation):
+        elif isinstance(item, OperationItem):
             #log.debug('Adding operation %s' % item)
-            self._operations.items.append(item)
+            self._operations.append(item)
         else:
             log.warning('feature %s is not a Feature' % item)
             return 0

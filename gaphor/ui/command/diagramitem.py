@@ -20,72 +20,87 @@ CommandInfo(name='Pointer', _label='_Pointer', context='diagram.menu',
 
 
 class PlacementCommand(Command):
-    """
-    Abstract base command for commands that place an object on the canvas.
+    """Abstract base command for commands that place an object on the canvas.
     """
 
     def __init__(self):
-	self._name = ''
-	self._class = None
-	self._subject_class = None
+	self.name = ''
+	self.type = None
+	self.subject_type = None
 
     def set_parameters(self, params):
 	self._window = params['window']
 
+    def item_factory(self):
+	"""Create a new instance of the item and return it."""
+        item = self._window.get_diagram().create(self.type)
+	if self.subject_type:
+	    subject = GaphorResource('ElementFactory').create(self.subject_type)
+	    item.set_property ('subject', subject)
+	return item
+
     def execute(self):
-	assert self._class != None
-	view = self._window.get_view()
-	tool = diagram.PlacementTool (self._class, self._subject_class)
-	view.set_tool(tool)
-	self._window.set_message('Create new %s' % self._name)
+	assert self.type != None
+	tool = diagram.PlacementTool(self.item_factory)
+	self._window.get_view().set_tool(tool)
+	self._window.set_message('Create new %s' % self.name)
 
 
-class ActorPlacementCommand(PlacementCommand):
+class NamespacePlacementCommand(PlacementCommand):
+
+    def item_factory(self):
+	"""Create a new instance of the item and return it."""
+        item = PlacementCommand.item_factory(self)
+	item.subject.package = self._window.get_diagram().namespace
+	return item
+
+
+class ActorPlacementCommand(NamespacePlacementCommand):
 
     def __init__(self):
-	PlacementCommand.__init__(self)
-	self._name = 'Actor'
-	self._class = diagram.ActorItem
-	self._subject_class = UML.Actor
+	NamespacePlacementCommand.__init__(self)
+	self.name = 'Actor'
+	self.type = diagram.ActorItem
+	self.subject_type = UML.Actor
 
 CommandInfo(name='InsertActor', _label='_Actor', context='diagram.menu',
 	    _tip='Create a new Actor item', pixname='gaphor-actor',
 	    command_class=ActorPlacementCommand).register()
 
 
-class UseCasePlacementCommand(PlacementCommand):
+class UseCasePlacementCommand(NamespacePlacementCommand):
 
     def __init__(self):
-	PlacementCommand.__init__(self)
-	self._name = 'UseCase'
-	self._class = diagram.UseCaseItem
-	self._subject_class = UML.UseCase
+	NamespacePlacementCommand.__init__(self)
+	self.name = 'UseCase'
+	self.type = diagram.UseCaseItem
+	self.subject_type = UML.UseCase
 
 CommandInfo(name='InsertUseCase', _label='_UseCase', context='diagram.menu',
 	    _tip='Create a new Use case item', pixname='gaphor-usecase',
 	    command_class=UseCasePlacementCommand).register()
 
 
-class ClassPlacementCommand(PlacementCommand):
+class ClassPlacementCommand(NamespacePlacementCommand):
 
     def __init__(self):
-	PlacementCommand.__init__(self)
-	self._name = 'Class'
-	self._class = diagram.ClassItem
-	self._subject_class = UML.Class
+	NamespacePlacementCommand.__init__(self)
+	self.name = 'Class'
+	self.type = diagram.ClassItem
+	self.subject_type = UML.Class
 
 CommandInfo(name='InsertClass', _label='_Class', context='diagram.menu',
 	    _tip='Create a new Class item', pixname='gaphor-class',
 	    command_class=ClassPlacementCommand).register()
 
 
-class PackagePlacementCommand(PlacementCommand):
+class PackagePlacementCommand(NamespacePlacementCommand):
 
     def __init__(self):
-	PlacementCommand.__init__(self)
-	self._name = 'Package'
-	self._class = diagram.PackageItem
-	self._subject_class = UML.Package
+	NamespacePlacementCommand.__init__(self)
+	self.name = 'Package'
+	self.type = diagram.PackageItem
+	self.subject_type = UML.Package
 
 CommandInfo(name='InsertPackage', _label='_Package', context='diagram.menu',
 	    _tip='Create a new Package item', pixname='gaphor-package',
@@ -96,9 +111,9 @@ class CommentPlacementCommand(PlacementCommand):
 
     def __init__(self):
 	PlacementCommand.__init__(self)
-	self._name = 'Comment'
-	self._class = diagram.CommentItem
-	self._subject_class = UML.Comment
+	self.name = 'Comment'
+	self.type = diagram.CommentItem
+	self.subject_type = UML.Comment
 
 CommandInfo(name='InsertComment', _label='_Comment', context='diagram.menu',
 	    _tip='Create a new Comment item', pixname='gaphor-comment',
@@ -109,8 +124,8 @@ class CommentLinePlacementCommand(PlacementCommand):
 
     def __init__(self):
 	PlacementCommand.__init__(self)
-	self._name = 'Comment line'
-	self._class = diagram.CommentLineItem
+	self.name = 'Comment line'
+	self.type = diagram.CommentLineItem
 
 CommandInfo(name='InsertCommentLine', _label='_Comment line', context='diagram.menu',
 	    _tip='Create a new Comment line', pixname='gaphor-comment-line',
@@ -121,8 +136,8 @@ class AssociationPlacementCommand(PlacementCommand):
 
     def __init__(self):
 	PlacementCommand.__init__(self)
-	self._name = 'Association'
-	#self._class = diagram.AssociationItem
+	self.name = 'Association'
+	self.type = diagram.AssociationItem
 
 CommandInfo(name='InsertAssociation', _label='_Association', context='diagram.menu',
 	    _tip='Create a new Association', pixname='gaphor-association',
@@ -133,8 +148,8 @@ class DependencyPlacementCommand(PlacementCommand):
 
     def __init__(self):
 	PlacementCommand.__init__(self)
-	self._name = 'Dependency'
-	self._class = diagram.DependencyItem
+	self.name = 'Dependency'
+	self.type = diagram.DependencyItem
 
 CommandInfo(name='InsertDependency', _label='_Dependency', context='diagram.menu',
 	    _tip='Create a new Dependency', pixname='gaphor-dependency',
@@ -145,8 +160,8 @@ class GeneralizationPlacementCommand(PlacementCommand):
 
     def __init__(self):
 	PlacementCommand.__init__(self)
-	self._name = 'Generalization'
-	self._class = diagram.GeneralizationItem
+	self.name = 'Generalization'
+	self.type = diagram.GeneralizationItem
 
 CommandInfo(name='InsertGeneralization', _label='_Generalization', context='diagram.menu',
 	    _tip='Create a new Generalization item', pixname='gaphor-generalization',

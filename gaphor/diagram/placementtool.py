@@ -5,9 +5,12 @@ import gaphor.UML as UML
 
 class PlacementTool(diacanvas.PlacementTool):
 
-    def __init__(self, type, subject_class, **properties):
-        diacanvas.PlacementTool.__init__(self, type, **properties)
-        self.subject_class = subject_class
+    def __init__(self, item_factory, **properties):
+        """item_factory is a callable. It is used to create a CanvasItem
+        that is displayed on the diagram.
+        """
+        diacanvas.PlacementTool.__init__(self, None, **properties)
+        self.item_factory = item_factory
         self.connect ('button_press_event', self.__button_press)
         self.connect ('button_release_event', self.__button_release)
 
@@ -15,20 +18,14 @@ class PlacementTool(diacanvas.PlacementTool):
         if event.button == 3:
             return None
 
-        elemfact = GaphorResource('ElementFactory')
-        item = view.get_diagram().create(self.type)
-        if self.subject_class:
-            subject = elemfact.create(self.subject_class)
-            item.set_property ('subject', subject)
-            if isinstance(subject, UML.Namespace):
-                subject.package = view.get_diagram().namespace
+        item = self.item_factory()
 
         if self.properties and len(self.properties) > 0:
             try:
-                for (k,v) in self.properties.items():
+                for (k, v) in self.properties.items():
                     item.set_property(k, v)
             except TypeError, e:
-                log.error('PlacementTool:', e)
+                log.error('PlacementTool: could not set property %s' % k, e)
         return item
 
     def __button_press (self, tool, view, event):

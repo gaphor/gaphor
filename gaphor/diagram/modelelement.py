@@ -37,9 +37,6 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
         DiagramItem.save(self, save_func)
 
     def load(self, name, value):
-        #if name in ( 'affine', 'width', 'height', 'auto-resize' ):
-        #if name == 'subject':
-        #self.set_property('subject', store.reference('subject')[0])
         if name == 'subject':
             self.subject = value
         else:

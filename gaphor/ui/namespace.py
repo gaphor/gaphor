@@ -126,17 +126,17 @@ class NamespaceModel(gtk.GenericTreeModel):
             original = list(parent_node[1])
             self.sort_node(parent_node)
             children = parent_node[1]
-            if children != original:
-                new_order = []
-                for o in original:
-                    new_order.append(children.index(o))
-#TODO:                self.rows_reordered(parent_path, self.get_iter(parent_path), new_order)
+            if children != original and hasattr(self, 'rows_reordered'):
+                # reorder the list:
+                self.rows_reordered(parent_path, self.get_iter(parent_path),
+                                    map(list.index,
+                                        [original] * len(children), children))
 
     def on_ownedmember_changed(self, element, pspec):
         """update the tree model when the ownedMember list changes.
         Element is the object whose ownedMember property has changed.
         """
-        print 'on_ownedmember_changed', element
+        #print 'on_ownedmember_changed', element
         node = self.node_from_element(element)
         # The elements currently known by the tree model
         node_members = map(lambda e: e[0], node[1])
@@ -144,7 +144,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         owned_members = element.ownedMember
         if len(node_members) < len(owned_members):
             # element added
-            print 'NamespaceModel: element added'
+            #print 'NamespaceModel: element added'
             for om in owned_members:
                 if om not in node_members:
                     # we have found the newly added element
@@ -153,7 +153,7 @@ class NamespaceModel(gtk.GenericTreeModel):
                     break
         elif len(node_members) > len(owned_members):
             # element removed
-            print 'element removed', element.name, element.namespace, node
+            #print 'element removed', element.name, element.namespace, node
             index = 0
             for child in node[1]:
                 if child[0] not in owned_members:
@@ -161,23 +161,21 @@ class NamespaceModel(gtk.GenericTreeModel):
                     #path = self.path_from_element(child[0])
                     path = self.path_from_element(element) + (index,)
                     log.debug('NS: removing node "%s" from "%s" (path=%s)' % (child[0].name, element.name, path))
-                    print 'path=', child[0].name, path
+                    #print 'path=', child[0].name, path
                     try:
                         self.detach_notifiers_from_node(child)
                         node[1].remove(child)
                         self.row_deleted(path)
                         assert len(node[1]) == len(owned_members)
                     except Exception, e:
-                        print 'error:', e
-                        import traceback
-                        traceback.print_exc()
+                        log.warning('error:', e)
                     break
                 index += 1
             if len(owned_members) == 0:
                 path = self.path_from_element(element)
                 self.row_has_child_toggled(path, self.get_iter(path))
         else:
-            print 'model is in sync for "%s"' % element.name
+            log.debug('model is in sync for "%s"' % element.name)
 
     def on_factory_signals (self, obj, pspec):
         if pspec == 'model':

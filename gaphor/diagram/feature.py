@@ -38,6 +38,12 @@ class FeatureItem(CanvasText, DiagramItem):
     connect = DiagramItem.connect
     disconnect = DiagramItem.disconnect
 
+    def save(self, save_func):
+        log.debug('FeatureItem.save()')
+        for prop in ('affine', 'width', 'height'):
+            self.save_property(save_func, prop)
+        DiagramItem.save(self, save_func)
+        
     def on_subject_notify(self, pspec):
         DiagramItem.on_subject_notify(self, pspec, ('name',))
         self.set(text=self.subject and self.subject.name or '')

@@ -3,9 +3,11 @@
 Such as a modifier 'subject' property and a unique id.
 """
 
-from gaphor.UML import Element, Presentation
-from diacanvas import CanvasItem
 import gobject
+from diacanvas import CanvasItem
+
+import gaphor.misc.uniqueid as uniqueid
+from gaphor.UML import Element, Presentation
 from gaphor.UML.properties import association
 
 
@@ -15,6 +17,9 @@ class diagramassociation(association):
     gaphor/UML/properties.py, but delegates everything to the GObject property
     handlers.
     """
+
+    # TODO: Maybe we should not break our side of the association...
+    #       Since signals are still connected as the diagram item is unlinked.
 
     def unlink(self, obj):
         #print 'diagramassociation.unlink', obj, value
@@ -69,7 +74,7 @@ class DiagramItem(Presentation):
 
     def __init__(self, id=None):
         Presentation.__init__(self)
-        self._id = id
+        self._id = id or uniqueid.generate_id()
         self.__handler_to_id = { }
         # Add the class' on_subject_notify() as handler:
         self.connect('notify::subject', type(self).on_subject_notify)
@@ -104,6 +109,9 @@ class DiagramItem(Presentation):
     def load(self, name, value):
         if name == 'subject':
             self.subject = value
+        else:
+            #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
+            self.set_property(name, eval(value))
 
     def postload(self):
         pass
@@ -150,19 +158,20 @@ class DiagramItem(Presentation):
         """
         if isinstance(handler_or_id, int):
             CanvasItem.disconnect(self, handler_or_id)
-            for v in self.__handler_to_id.values():
+            for v in self.__handler_to_id.itervalues():
                 if handler_or_id in v:
                     v.remove(handler_or_id)
                     break
         else:
             try:
-                ids = self.__handler_to_id[(handler_or_id,) + args]
+                key = (handler_or_id,) + args
+                ids = self.__handler_to_id[key]
             except KeyError, e:
                 print e
             else:
                 for id in ids:
                     CanvasItem.disconnect(self, id)
-                del self.__handler_to_id[(handler_or_id,) + args]
+                del self.__handler_to_id[key]
 
     def get_subject(self, x=None, y=None):
         """Get the subject that is represented by this diagram item.
@@ -189,7 +198,7 @@ class DiagramItem(Presentation):
         callback function. Callbacks have the signature
         on_subject_notify__<notifier>(self, subject, pspec).
         """
-        log.info('DiagramItem.on_subject_notify: %s' % str(notifiers))
+        #log.info('DiagramItem.on_subject_notify: %s' % str(notifiers))
         old_subject = self.__subject_notifier_ids[0]
         for id in self.__subject_notifier_ids[1:]:
             old_subject.disconnect(id)
@@ -198,7 +207,7 @@ class DiagramItem(Presentation):
         if self.subject:
             self.__subject_notifier_ids = [self.subject]
             for signal in notifiers:
-                log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
+                #log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
                 self.__subject_notifier_ids.append(self.subject.connect(signal,
                              getattr(self, 'on_subject_notify__%s' % signal)))
 
