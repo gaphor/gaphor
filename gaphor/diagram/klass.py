@@ -142,7 +142,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         in self.subject.
         """
         owned_attributes = [a for a in self.subject.ownedAttribute if not a.association]
-        log.debug('sync_attributes %s' % owned_attributes)
+        #log.debug('sync_attributes %s' % owned_attributes)
         self.sync_uml_elements(owned_attributes, self._attributes,
                            self._create_attribute)
 
@@ -181,14 +181,14 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
         """Called when the ownedAttribute property of our subject changes.
         """
-        log.debug('on_subject_notify__ownedAttribute')
+        #log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
         self.sync_attributes()
 
     def on_subject_notify__ownedOperation(self, subject, pspec=None):
         """Called when the ownedOperation property of our subject changes.
         """
-        log.debug('on_subject_notify__ownedOperation')
+        #log.debug('on_subject_notify__ownedOperation')
         self.sync_operations()
 
     # Groupable
@@ -239,4 +239,4 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         for i in self._operations:
             yield i
 
-initialize_item(ClassItem, UML.Class)
+initialize_item(ClassItem, UML.Class, UML.Stereotype)

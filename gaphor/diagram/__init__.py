@@ -25,7 +25,7 @@ def get_diagram_item(element):
     except:
         return None
 
-def initialize_item(item_class, default_uml_class=None):
+def initialize_item(item_class, *default_uml_classes):
     """Initialize a new diagram item.
     This involves:
     1. registring the new diagram item with the GObject type
@@ -49,7 +49,7 @@ def initialize_item(item_class, default_uml_class=None):
     if (diacanvas.CanvasEditable in bases):
 	diacanvas.set_editable (item_class)
 
-    if default_uml_class:
+    for default_uml_class in default_uml_classes:
 	_uml_to_item_map[default_uml_class] = item_class
 
 from placementtool import PlacementTool
