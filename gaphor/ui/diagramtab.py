@@ -39,8 +39,8 @@ class DiagramTab(object):
         title = self.diagram and self.diagram.name or '<None>'
 
         table = gtk.Table(2,2, gtk.FALSE)
-        table.set_row_spacings (4)
-        table.set_col_spacings (4)
+        #table.set_row_spacings (4)
+        #table.set_col_spacings (4)
 
         frame = gtk.Frame()
         frame.set_shadow_type (gtk.SHADOW_IN)
@@ -53,11 +53,11 @@ class DiagramTab(object):
 
         frame.add (view)
         
-        sbar = gtk.VScrollbar (view.get_vadjustment())
+        sbar = gtk.VScrollbar(view.get_vadjustment())
         table.attach (sbar, 1, 2, 0, 1, gtk.FILL,
                       gtk.EXPAND | gtk.FILL | gtk.SHRINK)
 
-        sbar = gtk.HScrollbar (view.get_hadjustment())
+        sbar = gtk.HScrollbar(view.get_hadjustment())
         table.attach (sbar, 0, 1, 1, 2, gtk.EXPAND | gtk.FILL | gtk.SHRINK,
                       gtk.FILL)
 
