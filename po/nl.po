@@ -4,16 +4,52 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: Thu Nov 13 21:45:40 2003\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: 0.4.0\n"
+"POT-Creation-Date: Thu Jun 10 07:47:32 2004\n"
+"PO-Revision-Date: 2004-06-10 08:00+001\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.4\n"
 
-#: gaphor/storage.py:128
+#: gaphor/diagram/klass.py:259
+msgid "(from %s)"
+msgstr ""
+
+#: gaphor/storage.py:143
 msgid "Loading %d elements..."
+msgstr "Laden van %s elementen..."
+
+#: gaphor/ui/mainactions.py:48
+msgid "Error occured while in worker thread"
+msgstr "Er is een fout opgetreden in de worker thread"
+
+#: gaphor/ui/mainactions.py:115
+msgid "Created a new model"
+msgstr "Maak een nieuw model"
+
+#: gaphor/ui/mainactions.py:154
+msgid "Loading model from %s"
+msgstr "Laden van model %s"
+
+#: gaphor/ui/mainactions.py:154
+msgid "Loading..."
+msgstr "Bezig met laden..."
+
+#: gaphor/ui/stereotypewindow.py:51
+msgid "Stereotypes"
+msgstr ""
+
+#: gaphor/ui/stereotypewindow.py:60
+msgid "Base class:"
+msgstr ""
+
+#: gaphor/ui/stereotypewindow.py:65
+msgid "Description:"
+msgstr ""
+
+#: gaphor/ui/stereotypewindow.py:70
+msgid "Constraints:"
 msgstr ""

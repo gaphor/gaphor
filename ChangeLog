@@ -1,3 +1,9 @@
+2004-06-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/__init__.py: do the resource initialization of the
+	ElementFactory. Added some functions that make it more easy to access
+	the default element factory.
+
 2004-06-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/uml2.gaphor: fixed typo: implementingClassifier ->

@@ -167,6 +167,12 @@ class Element(object):
         """Returns true if the object is of the same type as other."""
         return type(self) == type(other)
 
+#    def __setattr__(self, key, value):
+#        if key.startswith('_') or key == 'id':
+#            object.__setattr__(self, key, value)
+#        else:
+#            raise AttributeError, 'Invalid attribute "%s"' % key
+
 try:
     import psyco
 except ImportError:

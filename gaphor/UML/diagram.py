@@ -47,6 +47,23 @@ class DiagramCanvas(diacanvas.Canvas):
         self.clear_redo()
         self.set_property ("allow_undo", True)
 
+    def _select(self, item_list, expression=None):
+	l = []
+	if expression is None:
+	    expression = lambda e: 1
+	CanvasGroupable = diacanvas.CanvasGroupable
+	for item in item_list:
+	    if expression(item):
+		l.append(item)
+	    if isinstance(item, CanvasGroupable):
+		l.extend(self._select(item.groupable_iter(), expression))
+	return l
+
+    def select(self, expression=None):
+	"""Return a list of all canvas items that match expression.
+	"""
+	return self._select(self.root.children, expression)
+
 gobject.type_register(DiagramCanvas)
 
 
@@ -77,6 +94,10 @@ class Diagram(Namespace, PackageableElement):
         #obj.set_property('parent', self.canvas.root)
         self.canvas.root.add(obj)
         return obj
+
+    def substitute_item(self, item, new_item_type):
+	"""Create a new item and replace item with the new item.
+	"""
 
     def unlink(self):
 	self.canvas.set_property('allow_undo', False)

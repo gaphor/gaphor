@@ -693,6 +693,9 @@ class MoveDownAction(MoveAction):
 register_action(MoveDownAction, 'ItemFocus')
 
 
+class DummyItem(UML.Element, UML.Presentation):
+    pass
+
 class Fold(Action):
     accel = 'C-f'
 
@@ -715,16 +718,56 @@ class Fold(Action):
         # create interface diagram element and assign model element to
         # diagram element
         diag = self._window.get_current_diagram()
-        new_el = self.newElement(diag)
-        new_el.subject = item.subject
+        new_item = self.newElement(diag)
+        new_item.subject = item.subject
 
         # center new element diagram in the centre of old one
         x, y = item.get_property('affine')[4:]
-        #new_el.on_update(new_el.get_property('affine'))
-        new_el.move(x + (item.width - new_el.width) / 2.0,
-                    y + (item.height - new_el.height) / 2.0)
+        new_item.update_now()
+        new_item.move(x + (item.width - new_item.width) / 2.0,
+                    y + (item.height - new_item.height) / 2.0)
 
-	# TODO: reattach handles that have been  connected to 'item'
+	# Create a dummy presentation, since we should keep tract of the items subject
+	dummy = DummyItem()
+	# Some extra dummy presentations for association ends
+	dummy_head_end = DummyItem()
+	dummy_tail_end = DummyItem()
+
+	# Find all elements that are connected to our item
+	# (Should become (added 10-6-2004 to diacanvas2))
+	#for connected_handle in item.connected_handles:
+	for connected_item in item.canvas.select(lambda i: i.handles and \
+	                                         (i.handles[0].connected_to is item or \
+					          i.handles[-1].connected_to is item)):
+	    connected_item = connected_handle.owner
+	    #print 'connected item', connected_item
+	    # Store the subject, in case of an association also store the
+	    # head and tail ends subjects
+	    if connected_item.subject:
+		dummy.subject = connected_item.subject
+		if isinstance(dummy.subject, UML.Association):
+		    dummy_head_end.subject = connected_item.get_property('head_subject')
+		    dummy_tail_end.subject = connected_item.get_property('tail_subject')
+
+	    # This is the main part. First disconnect, then restore the subject (like if we are
+	    # loading the model) and at last connect to the new item.
+	    if connected_item.handles[0].connected_to is item:
+		item.disconnect_handle(connected_item.handles[0])
+		connected_item.subject = dummy.subject
+		new_item.connect_handle(connected_item.handles[0])
+	    if connected_item.handles[-1].connected_to is item:
+		item.disconnect_handle(connected_item.handles[-1])
+		connected_item.subject = dummy.subject
+		new_item.connect_handle(connected_item.handles[-1])
+
+	    assert connected_item.subject is dummy.subject
+
+	    # Remove our connected dummy items
+	    if isinstance(dummy.subject, UML.Association):
+		connected_item.set_property('head-subject', dummy_head_end.subject)
+		connected_item.set_property('tail-subject', dummy_tail_end.subject)
+		del dummy_head_end.subject, dummy_tail_end.subject
+	    del dummy.subject
 
         # remove old diagram element
         item.unlink()

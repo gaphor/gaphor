@@ -4,15 +4,13 @@
 
 import gaphor
 import gaphor.misc.uniqueid as uniqueid
-#import weakref
 from element import Element
 from diagram import Diagram
-#from gaphor.misc.weakmethod import WeakMethod
 import gaphor.misc.odict
 
 class ElementFactory(object):
-    """The ElementFactory is used to create elements ans do lookups to
-    elements. A model can contain only one Model element, though.
+    """The ElementFactory is used to create elements and do lookups to
+    elements.
 
     Notifications are send with as arguments (name, element, *user_data).
     The following names are used:
@@ -27,49 +25,60 @@ class ElementFactory(object):
         self._observers = list()
 
     def create(self, type):
-        """Create a new Model element of type type"""
+        """Create a new model element of type type.
+	"""
         return self.create_as(type, uniqueid.generate_id())
 
     def create_as(self, type, id):
         """Create a new model element of type 'type' with 'id' as its ID.
-        This method should only be used when loading models. If the ID is
-        higher that the current id that should be used for the next item, the
-        ID for the next item is set to id + 1."""
+        This method should only be used when loading models.
+        """
         assert issubclass(type, Element)
         obj = type(id, self)
         self._elements[id] = obj
-        #obj.connect('__unlink__', self.__element_signal, weakref.ref(obj))
         obj.connect('__unlink__', self.__element_signal)
         self.notify(obj, 'create')
         return obj
 
     def size(self):
+	"""Return the amount of elements currently in the factory.
+	"""
 	return len(self._elements)
 
     def lookup(self, id):
-        try:
-            return self._elements[id]
-        except KeyError:
-            return None
+	"""Find element with a specific id.
+	"""
+	return self._elements.get(id)
 
-    def select(self, expression):
-        """Create a list of elements that comply with expression."""
+    def select(self, expression=None):
+        """Create a list of elements that comply with expression.
+	"""
+	if expression is None:
+	    return self.values()
         l = []
-        for e in self._elements.values():
+        for e in self._elements.itervalues():
             if expression(e):
                 l.append(e)
         return l
 
     def keys(self):
+	"""Return a list with all id's in the factory.
+	"""
         return self._elements.keys()
 
     def iterkeys(self):
+	"""Return a iterator with all id's in the factory.
+	"""
         return self._elements.iterkeys()
 
     def values(self):
+	"""Return a list with all elements in the factory.
+	"""
         return self._elements.values()
 
     def itervalues(self):
+	"""Return a iterator with all elements in the factory.
+	"""
         return self._elements.itervalues()
 
     def is_empty(self):
@@ -126,8 +135,6 @@ class ElementFactory(object):
 
     def __element_signal(self, element, pspec):
         """Remove an element from the factory """
-        #element = weak_element()
-        #if not element: return
 	#log.debug('element %s send signal %s' % (element, name))
         if pspec == '__unlink__' and self._elements.has_key(element.id):
             #log.debug('Unlinking element: %s' % element)
@@ -138,5 +145,3 @@ class ElementFactory(object):
             self._elements[element.id] = element
             self.notify(element, 'create')
 
-# Make one ElementFactory instance an application-wide resource
-gaphor.resource(ElementFactory)

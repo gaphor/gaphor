@@ -21,7 +21,7 @@ from gaphor.diagram import initialize_item
 from diagramitem import DiagramItem
 from relationship import RelationshipItem
 
-class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
+class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
     """AssociationItem represents associations. 
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
