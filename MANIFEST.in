@@ -7,7 +7,9 @@ include gaphor/UML/uml2.override
 recursive-include po gaphor.pot *.po 
 include data/icons.xml
 recursive-include data/pixmaps *24.png diagram16.png logo.png
-recursive-include data/plugins *.py *.xml readme.txt
+include data/plugins/*/*.py
+include data/plugins/*/*.xml readme.txt
+include data/plugins/*/readme.txt
 recursive-include tests *.py *.sh
 recursive-include utils *.py
 global-exclude */CVS/*
