@@ -47,7 +47,7 @@ class umlproperty(object):
         except AttributeError:
             self.deriviates = [ deriviate ]
 
-    def __get__(self, obj, clazz=None):
+    def __get__(self, obj, class_=None):
         if not obj:
             return self
         return self._get(obj)
@@ -98,7 +98,7 @@ class attribute(umlproperty):
     Element.attr = attribute('attr', types.StringType, '')"""
 
     # TODO: check if lower and upper are actually needed for attributes
-    def __init__(self, name, type, default, lower=0, upper=1):
+    def __init__(self, name, type, default=None, lower=0, upper=1):
         self.name = intern(name)
         self._name = intern('_' + name)
         self.type = type
@@ -107,8 +107,12 @@ class attribute(umlproperty):
         self.upper = upper
         
     def load(self, obj, value):
-        if not isinstance(value, self.type):
-            raise AttributeError, 'Value should be of type %s (is %s)' % (self.type.__name__, type(value))
+        # FixMe: value might be a string while some other type is required:
+        value = self.type(value)
+        #if not isinstance(value, self.type):
+        #    if type(self.type) is not type(()):
+        #    else:
+        #        raise AttributeError, 'Value should be of type %s (is %s)' % (self.type.__name__, type(value))
         setattr(obj, self._name, value)
 
     def __str__(self):
@@ -241,10 +245,10 @@ class association(umlproperty):
             s += ' %s-> %s' % (self.composite and '<>' or '', self.opposite)
         return s + '>'
 
-    def __get__(self, obj, clazz=None):
+    def __get__(self, obj, class_=None):
         """Retrieve the value of the association. In case this is called
         directly on the class, return self."""
-        #print '__get__', self, obj, clazz
+        #print '__get__', self, obj, class_
         if not obj:
             return self
         return self._get(obj)
@@ -408,7 +412,7 @@ class derivedunion(umlproperty):
             s.add_deriviate(self)
 
     def load(self, obj, value):
-        raise 'Derivedunion: Properties should not be loaded in a derived union %s: %s' % (self.name, value)
+        raise ValueError, 'Derivedunion: Properties should not be loaded in a derived union %s: %s' % (self.name, value)
 
     def save(self, obj, save_func):
         pass
@@ -481,10 +485,10 @@ class redefine(umlproperty):
     def __str__(self):
         return '<redefine %s: %s = %s>' % (self.name, self.type.__name__, str(self.original))
 
-    def __get__(self, obj, clazz=None):
+    def __get__(self, obj, class_=None):
         if not obj:
             return self
-        return self.original.__get__(obj, clazz)
+        return self.original.__get__(obj, class_)
 
     def __set__(self, obj, value):
         if not isinstance(value, self.type):

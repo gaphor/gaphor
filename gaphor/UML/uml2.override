@@ -1,5 +1,5 @@
 comment
-  vim:sw=4:et
+  vim:sw=4:et:syntax=python
 
   This is a file with custom definitions for Gaphors data model.
 
@@ -14,17 +14,42 @@ from element import Element
 override Diagram
 from diagram import Diagram
 %%
-comment
 override MultiplicityElement.lower
+# Make it watch MultiplicityElement.lowerValue.value
+def _get(self):
+    return self.lowerValue and self.lowerValue.value
+def _set(self, value):
+    if not self.lowerValue:
+        self.lowerValue = self._factory.create(LiteralString)
+    self.lowerValue.value = value
+def _del(self):
+    if self.lowerValue:
+        del self.lowerValue.value
 
-# TODO: Make them watch MultiplicityElement.lowerValue.value
-
+MultiplicityElement.lower = property(_get, _set, _del)
+del _get, _set, _del
+# TODO: let it also emit notifications
+# A notifier should be connected on instantiation of the lowerValue element.
+# - this should be done on creation of the lowerValue, hence we should
+#   add a notifier when self.lowerValue changes.
+# - This requires some extra code to be executed on creation of our
+#   MultiplicityElement. This can be done either in the Element or the
+#   ElementFactory.
 %%
-comment
 override MultiplicityElement.upper
+# Make it watch MultiplicityElement.upperValue.value
+def _get(self):
+    return self.upperValue and self.upperValue.value
+def _set(self, value):
+    if not self.upperValue:
+        self.upperValue = self._factory.create(LiteralString)
+    self.upperValue.value = value
+def _del(self):
+    if self.upperValue:
+        del self.upperValue.value
 
-# TODO: Make them watch MultiplicityElement.upperValue.value
-
+MultiplicityElement.upper = property(_get, _set, _del)
+del _get, _set, _del
 %%
 override Classifier.inheritedMember
 Classifier.inheritedMember = derivedunion('inheritedMember', 0, '*')
@@ -55,7 +80,6 @@ def property_opposite(self):
                or self.association.memberEnd[0]
     return None
 
-#Property.opposite = derivedunion('opposite', 0, 1)
 Property.opposite = property(property_opposite, doc=property_opposite.__doc__)
 
 del property_opposite
@@ -73,14 +97,14 @@ override Operation.type
 Operation.type = derivedunion('type', 0, 1)
 %%
 override Property.parse
-from umllex import parse_attribute
-Property.parse = parse_attribute
-del parse_attribute
+from umllex import parse_property
+Property.parse = parse_property
+del parse_property
 %%
 override Property.render
-from umllex import render_attribute
-Property.render = render_attribute
-del render_attribute
+from umllex import render_property
+Property.render = render_property
+del render_property
 %%
 override Operation.parse
 from umllex import parse_operation

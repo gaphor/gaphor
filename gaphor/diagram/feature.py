@@ -50,8 +50,8 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         DiagramItem.save(self, save_func)
         
     def postload(self):
-        if self.subject and self.subject.name:
-            self._expression.set_text(self.subject.name)
+        if self.subject:
+            self._expression.set_text(self.subject.render())
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'expression':
@@ -85,18 +85,18 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         self.set(affine=a)
 
     def on_subject_notify(self, pspec, notifiers=()):
-        DiagramItem.on_subject_notify(self, pspec, ('name',) + notifiers)
-        self._expression.set_text(self.subject and self.subject.name or '')
+        DiagramItem.on_subject_notify(self, pspec, ('name', 'typeValue') + notifiers)
+        self._expression.set_text(self.subject and self.subject.render() or '')
 
     def on_subject_notify__name(self, subject, pspec):
         assert self.subject is subject
-        self._expression.set_text(self.subject.name)
+        self._expression.set_text(self.subject.render())
         self.request_update()
 
-    def on_text_notify(self, pspec):
-        if self.subject and self.text != self.subject.name:
-            self.subject.name = self.text
-            #self.parent.request_update()
+    def on_subject_notify__typeValue(self, subject, pspec):
+        assert self.subject is subject
+        self._expression.set_text(self.subject.render())
+        self.request_update()
 
     # CanvasItem callbacks:
 

@@ -17,10 +17,16 @@ class CloseCommand(Command):
     def execute(self):
 	self._window.close()
 
-CommandInfo (name='FileClose', _label='_Close', pixname='Close',
+CommandInfo (name='FileClose', _label='_Close', pixname='close',
 	     _tip='Close the diagram window',
 	     accel='*Control*w',
 	     context='editor.menu',
+	     command_class=CloseCommand).register()
+
+CommandInfo (name='FileClose', _label='_Close', pixname='close',
+	     _tip='Close the diagram window',
+	     accel='*Control*w',
+	     context='console.menu',
 	     command_class=CloseCommand).register()
 
 

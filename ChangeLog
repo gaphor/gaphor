@@ -1,3 +1,9 @@
+2003-12-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/umllex.py: Added parser and renderer for association
+	ends.
+	* gaphor/diagram/association.py: use the association end parser.
+
 2003-12-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/storage.py: Store data in new format (see doc/xml-format.txt)

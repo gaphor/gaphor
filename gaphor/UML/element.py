@@ -5,7 +5,9 @@
 Method names have changed on some places to emphasize that we deal
 with a completely new data model here.
 
-save()/load()/postload()
+save(save_func)
+load(name, value)
+postload()
     Load/save the element.
 
 unlink()
@@ -41,10 +43,15 @@ from properties import umlproperty, association
 class Element(object):
     """Base class for UML data classes."""
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, factory=None):
         self.id = id or uniqueid.generate_id()
+        # The factory this element belongs to.
+        self._factory = factory
         self._observers = dict()
         self.__in_unlink = mutex.mutex()
+
+    factory = property(lambda self: self._factory,
+                       doc="The factory that created this element")
 
     def save(self, save_func):
         """Save the state by calling save_func(name, value)."""
@@ -151,9 +158,9 @@ class Element(object):
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
-    def isKindOf(self,clazz):
+    def isKindOf(self, class_):
         """Returns true if the object is an instance of clazz."""
-        return isinstance(self, clazz)
+        return isinstance(self, class_)
 
     def isTypeOf(self, other):
         """Returns true if the object is of the same type as other."""

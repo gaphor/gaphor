@@ -177,6 +177,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
                            self._create_operation)
 
     def on_subject_notify(self, pspec, notifiers=()):
+        #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
         ClassifierItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation'))
         # Create already existing attributes and operations:
         if self.subject:

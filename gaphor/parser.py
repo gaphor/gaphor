@@ -33,7 +33,8 @@ __all__ = [ 'parse', 'ParserException' ]
 from xml.sax import handler
 
 class base(object):
-    """Simple base class for element, canvas and canvasitem."""
+    """Simple base class for element, canvas and canvasitem.
+    """
 
     def __init__(self):
         self.values = { }

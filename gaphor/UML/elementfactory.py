@@ -34,7 +34,7 @@ class ElementFactory(object):
         higher that the current id that should be used for the next item, the
         ID for the next item is set to id + 1."""
         assert issubclass(type, Element)
-        obj = type(id)
+        obj = type(id, self)
         self._elements[id] = obj
         #obj.connect('__unlink__', self.__element_signal, weakref.ref(obj))
         obj.connect('__unlink__', self.__element_signal)

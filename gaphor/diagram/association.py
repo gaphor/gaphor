@@ -289,7 +289,6 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     recreated by the owning Association.
     
     TODO:
-    - remove AssociationLabels and add shape.Text.
     - Remove set_groupable and add set_editable.
     - add on_point() and let it return min(distance(_name), distance(_mult)) or
       the first 20-30 units of the line, for association end popup menu.
@@ -336,11 +335,16 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     disconnect = DiagramItem.disconnect
 
     def postload(self):
+        self.set_text()
+
+    def set_text(self):
+        """Set the text on the association end.
+        """
         if self.subject:
-            if self.subject.name:
-                self._name.set_text(self.subject.name)
-            if self.subject.lowerValue and self.subject.lowerValue.value:
-                self._mult.set_text(self.subject.lowerValue.value)
+            n, m = self.subject.render()
+            self._name.set_text(n)
+            self._mult.set_text(m)
+            self.request_update()
 
     def set_navigable(self, navigable):
         """Change the AsociationEnd's navigability.
@@ -445,25 +449,26 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec,
                         notifiers + ('aggregation', 'name', 'lowerValue'))
-        # Set name:
+        self.set_text()
         if self.subject:
-            self._name.set_text(self.subject.name or '')
+            #self._name.set_text(self.subject.name or '')
             self.on_subject_notify__lowerValue(self.subject, None)
-            if self.subject.lowerValue:
+#            if self.subject.lowerValue:
                 # Add a callback to lowerValue
-                self._mult.set_text(self.subject.lowerValue.value or '')
+#                self._mult.set_text(self.subject.lowerValue.value or '')
                 #self.subject.lowerValue.connect('value',
                 #                                self.on_lowerValue_value_notify)
-            else:
-                self._mult.set_text('')
+            #else:
+                #self._mult.set_text('')
         self.request_update()
         
     def on_subject_notify__aggregation(self, subject, pspec):
         self.request_update()
 
     def on_subject_notify__name(self, subject, pspec):
-        if subject:
-            self._name.set_text(subject.name)
+        self.set_text()
+        #if subject:
+            #self._name.set_text(subject.name)
 
     def on_subject_notify__lowerValue(self, subject, pspec):
         print 'lowerValue', subject, subject.lowerValue
@@ -474,16 +479,18 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
             self.__the_lowerValue = self.subject.lowerValue
             log.debug('Have a lowerValue: %s' % self.subject.lowerValue)
             self.subject.lowerValue.connect('value', self.on_lowerValue_notify__value)
-            self._mult.set_text(self.subject.lowerValue.value or '')
-        else:
-            self._mult.set_text('')
+            #self._mult.set_text(self.subject.lowerValue.value or '')
+        #else:
+            #self._mult.set_text('')
+        self.set_text()
         self.request_update()
 
     def on_lowerValue_notify__value(self, lower_value, pspec):
         log.debug('New value for lowerValue.value: %s' % self.subject.lowerValue.value)
-        if self.subject:
-            self._mult.set_text(self.subject.lowerValue.value)
-        self.request_update()
+        #if self.subject:
+            #self._mult.set_text(self.subject.lowerValue.value)
+        self.set_text()
+        self.parent.request_update()
 
     def on_update(self, affine):
         diacanvas.CanvasItem.on_update(self, affine)
@@ -546,18 +553,11 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         #self.preserve_property('name')
 
     def on_editable_editing_done(self, shape, new_text):
-        if shape == self._name:
-            if new_text != self.subject.name:
-                self.subject.name = new_text
-            log.info('editing name done')
-        elif shape == self._mult:
-            log.info('editing mult done: %s' % new_text)
-            if not self.subject.lowerValue:
-                log.debug('creating new lowerValue')
-                self.subject.lowerValue = gaphor.resource(UML.ElementFactory).create(UML.LiteralSpecification)
-                log.debug('created: %s' % self.subject.lowerValue)
-            if new_text != self.subject.lowerValue.value:
-                self.subject.lowerValue.value = new_text
+        if shape in (self._name, self._mult):
+            if self.subject:
+                self.subject.parse(new_text)
+            self.set_text()
+            log.info('editing done')
 
 initialize_item(AssociationItem, UML.Association)
 initialize_item(AssociationEnd)

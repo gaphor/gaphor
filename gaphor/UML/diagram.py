@@ -62,8 +62,8 @@ class Diagram(Namespace, PackageableElement):
     """Diagrams may contain model elements and can be owned by a Package.
     """
 
-    def __init__(self, id):
-        super(Diagram, self).__init__(id)
+    def __init__(self, id=None, factory=None):
+        super(Diagram, self).__init__(id, factory)
         self.canvas = DiagramCanvas(self)
         self.canvas.set_undo_stack_depth(10)
         self.canvas.set_property ("allow_undo", 1)
@@ -74,7 +74,8 @@ class Diagram(Namespace, PackageableElement):
 
     def create(self, type):
         """Create a new canvas item on the canvas. It is created with
-        a unique ID and it is attached to the diagram's root item."""
+        a unique ID and it is attached to the diagram's root item.
+	"""
         assert issubclass(type, diacanvas.CanvasItem)
         obj = type(uniqueid.generate_id())
         #obj.set_property('parent', self.canvas.root)

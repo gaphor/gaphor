@@ -8,7 +8,7 @@ The regular expressions are constructed based on a series of
 attribute/operation.
 """
 
-__all__ = [ 'parse_attribute', 'parse_operation', 'render_attribute', 'render_operation' ]
+__all__ = [ 'parse_property', 'parse_operation', 'render_property', 'render_operation' ]
 
 import re
 from cStringIO import StringIO
@@ -25,6 +25,7 @@ name_subpat = r'\s*(?P<name>\w+)'
 
 # Multiplicity (added to type_subpat) ::= '[' [mult_l ..] mult_u ']'
 mult_subpat = r'\s*(\[\s*((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\s*\])?'
+multa_subpat = r'\s*(((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*)))?'
 
 # Type and multiplicity (optional) ::= ':' type [mult]
 type_subpat = r'\s*(:\s*(?P<type>\w+)\s*' + mult_subpat + r')?'
@@ -47,9 +48,17 @@ dir_subpat = r'\s*(?P<dir>in|out|inout)?'
 # Some trailing garbage => no valid syntax...
 garbage_subpat = r'\s*(?P<garbage>.*)'
 
-# Property:
+# Attribute:
 #   [+-#] [/] name [: type[\[mult\]]] [= default] [{ tagged values }]
-property_pat = re.compile(r'^' + vis_subpat + derived_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + garbage_subpat)
+attribute_pat = re.compile(r'^' + vis_subpat + derived_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + garbage_subpat)
+
+# Association end name:
+#   [[+-#] [/] name [\[mult\]]] [{ tagged values }]
+association_end_name_pat = re.compile(r'^' + '(' + vis_subpat + derived_subpat + name_subpat + mult_subpat + ')?' + tags_subpat + garbage_subpat)
+
+# Association end multiplicity:
+#   [mult] [{ tagged values }]
+association_end_mult_pat = re.compile(r'^' + multa_subpat + tags_subpat + garbage_subpat)
 
 # Operation:
 #   [+|-|#] name ([parameters]) [: type[\[mult\]]] [{ tagged values }]
@@ -65,6 +74,8 @@ def _set_visibility(self, vis):
         self.visibility = 'public'
     elif vis == '#':
         self.visibility = 'protected'
+    elif vis == '~':
+        self.visibility = 'package'
     elif vis == '-':
         self.visibility = 'private'
     else:
@@ -73,11 +84,11 @@ def _set_visibility(self, vis):
         except AttributeError:
             pass
 
-def parse_attribute(self, s, element_factory=None):
+def parse_attribute(self, s):
     """Parse string s in the property. Tagged values, multiplicity and stuff
     like that is altered to reflect the data in the property string.
     """
-    m = property_pat.match(s)
+    m = attribute_pat.match(s)
     g = m.group
     if not m or g('garbage'):
         self.name = s
@@ -95,64 +106,114 @@ def parse_attribute(self, s, element_factory=None):
             self.taggedValue.value = None
     else:
         from uml2 import LiteralString
-        if not element_factory:
-            element_factory = gaphor.resource("ElementFactory")
+        create = self._factory.create
         _set_visibility(self, g('vis'))
         self.isDerived = g('derived') and True or False
         self.name = g('name')
         if not self.typeValue:
-            self.typeValue = element_factory.create(LiteralString)
+            self.typeValue = create(LiteralString)
         self.typeValue.value = g('type')
         if not self.lowerValue:
-            self.lowerValue = element_factory.create(LiteralString)
+            self.lowerValue = create(LiteralString)
         self.lowerValue.value = g('mult_l')
         if not self.upperValue:
-            self.upperValue = element_factory.create(LiteralString)
+            self.upperValue = create(LiteralString)
         self.upperValue.value = g('mult_u')
         if not self.defaultValue:
-            self.defaultValue = element_factory.create(LiteralString)
+            self.defaultValue = create(LiteralString)
         self.defaultValue.value = g('default')
         if not self.taggedValue:
-            self.taggedValue = element_factory.create(LiteralString)
+            self.taggedValue = create(LiteralString)
         self.taggedValue.value = g('tags')
         #print g('vis'), g('derived'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('default'), g('tags')
 
+def parse_association_end(self, s):
+    """Parse the text at one end of an association. The association end holds
+    two strings. It is automattically figured out which string is fed to the
+    parser.
+    """
+    from uml2 import LiteralString
+    create = self._factory.create
+    m = association_end_mult_pat.match(s)
+    if m and m.group('mult_u') or m.group('tags'):
+        #print 'multmatch'
+        g = m.group
+        if not self.lowerValue:
+            self.lowerValue = create(LiteralString)
+        self.lowerValue.value = g('mult_l')
+        if not self.upperValue:
+            self.upperValue = create(LiteralString)
+        self.upperValue.value = g('mult_u')
+        if not self.taggedValue:
+            self.taggedValue = create(LiteralString)
+        self.taggedValue.value = g('tags')
+        # We have multiplicity
+    else:
+        #print 'namematch'
+        m = association_end_name_pat.match(s)
+        g = m.group
+        if g('garbage'):
+            self.name = s
+            del self.visibility
+            del self.isDerived
+        else:
+            _set_visibility(self, g('vis'))
+            self.isDerived = g('derived') and True or False
+            self.name = g('name')
+            # Optionally, the multiplicity and tagged values may be defined:
+            if g('mult_l'):
+                if not self.lowerValue:
+                    self.lowerValue = create(LiteralString)
+                self.lowerValue.value = g('mult_l')
+            if g('mult_u'):
+                if not g('mult_l') and self.lowerValue:
+                    self.lowerValue.value = None
+                if not self.upperValue:
+                    self.upperValue = create(LiteralString)
+                self.upperValue.value = g('mult_u')
+            if g('tags'):
+                if not self.taggedValue:
+                    self.taggedValue = create(LiteralString)
+                self.taggedValue.value = g('tags')
 
-def parse_operation(self, s, element_factory=None):
+def parse_property(self, s):
+    if self.association:
+        parse_association_end(self, s)
+    else:
+        parse_attribute(self, s)
+
+def parse_operation(self, s):
     """Parse string s in the operation. Tagged values, parameters and
     visibility is altered to reflect the data in the operation string.
     """
+    from uml2 import Parameter, LiteralString
     m = operation_pat.match(s)
-    g = m.group
-    if not m or g('garbage'):
+    if not m or m.group('garbage'):
         self.name = s
         del self.visibility
-        if self.returnResult:
-            self.returnResult.unlink()
-        if self.formalParameter:
-            self.formalParameter.unlink()
+        map(Parameter.unlink, list(self.returnResult))
+        map(Parameter.unlink, list(self.formalParameter))
     else:
-        from uml2 import Parameter, LiteralString
-        if not element_factory:
-            element_factory = gaphor.resource("ElementFactory")
+        g = m.group
+        create = self._factory.create
         _set_visibility(self, g('vis'))
         self.name = g('name')
         if not self.returnResult:
-            self.returnResult = element_factory.create(Parameter)
+            self.returnResult = create(Parameter)
         p = self.returnResult[0]
         p.direction = 'return'
         if not p.typeValue:
-            p.typeValue = element_factory.create(LiteralString)
+            p.typeValue = create(LiteralString)
         p.typeValue.value = g('type')
         if not p.lowerValue:
-            p.lowerValue = element_factory.create(LiteralString)
+            p.lowerValue = create(LiteralString)
         p.lowerValue.value = g('mult_l')
         if not p.upperValue:
-            p.upperValue = element_factory.create(LiteralString)
+            p.upperValue = create(LiteralString)
         p.upperValue.value = g('mult_u')
         # FIXME: Maybe add to Operation.ownedRule?
         if not p.taggedValue:
-            p.taggedValue = element_factory.create(LiteralString)
+            p.taggedValue = create(LiteralString)
         p.taggedValue.value = g('tags')
         #print g('vis'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('tags')
         
@@ -166,23 +227,23 @@ def parse_operation(self, s, element_factory=None):
             try:
                 p = self.formalParameter[pindex]
             except IndexError:
-                p = element_factory.create(Parameter)
+                p = create(Parameter)
             p.direction = g('dir') or 'in'
             p.name = g('name')
             if not p.typeValue:
-                p.typeValue = element_factory.create(LiteralString)
+                p.typeValue = create(LiteralString)
             p.typeValue.value = g('type')
             if not p.lowerValue:
-                p.lowerValue = element_factory.create(LiteralString)
+                p.lowerValue = create(LiteralString)
             p.lowerValue.value = g('mult_l')
             if not p.upperValue:
-                p.upperValue = element_factory.create(LiteralString)
+                p.upperValue = create(LiteralString)
             p.upperValue.value = g('mult_u')
             if not p.defaultValue:
-                p.defaultValue = element_factory.create(LiteralString)
+                p.defaultValue = create(LiteralString)
             p.defaultValue.value = g('default')
             if not p.taggedValue:
-                p.taggedValue = element_factory.create(LiteralString)
+                p.taggedValue = create(LiteralString)
             p.taggedValue.value = g('tags')
             self.formalParameter = p
 
@@ -201,30 +262,93 @@ no_render_pat = re.compile(r'^\s*[+#-]')
 vis_map = {
     'public': '+',
     'protected': '#',
+    'package': '~',
     'private': '-'
 }
 
-def render_attribute(self):
+def render_attribute(self, visibility=False, is_derived=False, type=False,
+                           multiplicity=False, default=False, tags=False):
     """Create a OCL representation of the attribute,
     Returns the attribute as a string.
+    If one or more of the parameters (visibility, is_derived, type,
+    multiplicity, default and/or tags) is set, only that field is rendered.
+    Note that the name of the attribute is always rendered, so a parseable
+    string is returned.
+
+    Note that, when some of those parameters are set, parsing the string
+    will not give you the same result.
     """
     name = self.name
     if no_render_pat.match(name):
         return name
 
-    s = '%s %s%s' % (vis_map[self.visibility], self.isDerived and '/ ' or '', name) 
-    if self.typeValue and self.typeValue.value:
-        s += ': %s' % self.typeValue.value
+    if visibility or is_derived or type or multiplicity or default or tags:
+        all = False
+    else:
+        all = True
+
+    s = StringIO()
+
+    if all or visibility:
+        s.write(vis_map[self.visibility])
+        s.write(' ')
+
+    if all or is_derived:
+        if self.isDerived: s.write('/')
+
+    s.write(name)
+    
+    if (all or type) and self.typeValue and self.typeValue.value:
+        s.write(': %s' % self.typeValue.value)
+
+    if (all or multiplicity) and self.upperValue and self.upperValue.value:  
+        if self.lowerValue and self.lowerValue.value:
+            s.write('[%s..%s]' % (self.lowerValue.value, self.upperValue.value))
+        else:
+            s.write('[%s]' % self.upperValue.value)
+
+    if (all or default) and self.defaultValue and self.defaultValue.value:
+        s.write(' = %s' % self.defaultValue.value)
+
+    if (all or tags) and self.taggedValue and self.taggedValue.value:
+        s.write(' { %s }' % self.taggedValue.value)
+    s.reset()
+    return s.read()
+
+def render_association_end(self):
+    """
+    """
+    n = StringIO()
+    n.write(vis_map[self.visibility])
+    n.write(' ')
+    if self.isDerived:
+        n.write('/')
+    if self.name:
+        n.write(self.name)
+    n.reset()
+
+    m = StringIO()
     if self.upperValue and self.upperValue.value:  
         if self.lowerValue and self.lowerValue.value:
-            s += '[%s..%s]' % (self.lowerValue.value, self.upperValue.value)
+            m.write('%s..%s' % (self.lowerValue.value, self.upperValue.value))
         else:
-            s += '[%s]' % self.upperValue.value
-    if self.defaultValue and self.defaultValue.value:
-        s += ' = %s' % self.defaultValue.value
+            m.write('%s' % self.upperValue.value)
     if self.taggedValue and self.taggedValue.value:
-        s += ' { %s }' % self.taggedValue.value
-    return s
+        m.write(' { %s }' % self.taggedValue.value)
+    m.reset()
+
+    return n.read(), m.read()   
+
+def render_property(self, *args, **kwargs):
+    """Render a gaphor.UML.Property either as an attribute or as a
+    (name, multiplicity) tuple for association ends.
+
+    See also: render_attribute, render_association_end
+    """
+    if self.association:
+        return render_association_end(self)
+    else:
+        return render_attribute(self, *args, **kwargs)
 
 def render_operation(self):
     """Create a OCL representation of the operation,
@@ -233,6 +357,7 @@ def render_operation(self):
     name = self.name
     if no_render_pat.match(name):
         return name
+
     s = '%s %s(' % (vis_map[self.visibility], name) 
     for p in self.formalParameter:
         #print p # direction, name, type, mult, default, tags

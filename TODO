@@ -2,13 +2,14 @@ As always, there is much to do...
 
 - Class: Association end properties are shown in the tree view
 - Undo/redo functionality doesn;t work as espected
+- Implement and test attribute/operation parser.
+- Convert Data model to use the parsed attributes + operations.
+- Attributes are not added to classes that are loaded.
+- Operation is not part of namespace (assoc. should be bi-dir.)
 
 - Make sure than, when a model is loaded and saved again, both save files do
   not differ.
 
-- The application crashes every now and then when items are freed. The cause
-  is probably GnomeCanvasItem::canvas, which points to an invalid canvas (the
-  canvas has been freed before the items are freed.
 - attributes and operations visible for classes.
 - deselect doesn't work properly on all elements...
 - fix Class implementation.

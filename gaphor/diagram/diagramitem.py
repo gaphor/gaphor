@@ -123,7 +123,8 @@ class DiagramItem(Presentation):
                 log.warning('%s has no property named %s (value %s)' % (self, name, value))
 
     def postload(self):
-        pass
+        if self.subject:
+            self.on_subject_notify(type(self).subject)
 
     def unlink(self):
         """Send the unlink signal and remove itself from the canvas.
