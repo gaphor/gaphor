@@ -153,9 +153,8 @@ class Element(object):
         for cb_data in list(cb_list):
             try:
                 apply(cb_data[0], (self, pspec) + cb_data[1:])
-            except:
-                import traceback
-                traceback.print_exc()
+            except Exception, e:
+                log.error('failed notification for %s' % cb_data[0], e)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 

@@ -55,3 +55,10 @@ class Resource(object):
 	_resources[r.__name__] = i
 	return i
 
+    def set(self, r, value):
+	"""Set a resource to a specific value.
+	No smart things are done with classes and class names (like the
+	resource() method does).
+	"""
+	self._resources[r] = value
+

@@ -423,3 +423,17 @@ class MenuFactory(object):
             icon = None
         return icon, label
 
+
+def toolbox_to_menu(toolbox):
+    """Given a toolbox definition, create a list suitable for
+    inclusion in a menu.
+    """
+    l = []
+    for box in toolbox:
+        if box[0]:
+            l.append(box[0])
+            l.append(box[1])
+        else:
+            for item in box[1]:
+                l.append(item)
+    return l

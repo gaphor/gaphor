@@ -9,6 +9,7 @@ from gaphor.i18n import _
 from abstractwindow import AbstractWindow
 from diagramtab import DiagramTab
 from toolbox import Toolbox
+from menufactory import toolbox_to_menu
 
 # Load actions
 import mainactions, diagramactions
@@ -17,6 +18,40 @@ class MainWindow(AbstractWindow):
     """The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
+
+    toolbox = (
+        ('', (
+                'Pointer',
+                'InsertComment',
+                'InsertCommentLine')),
+        (_('Classes'), (
+                'InsertClass',
+                'InsertInterface',
+                'InsertPackage',
+                'InsertAssociation',
+                'InsertDependency',
+                'InsertGeneralization',
+                'InsertImplementation')),
+        (_('Actions'), (
+                'InsertAction',
+                'InsertInitialNode',
+                'InsertActivityFinalNode',
+                'InsertDecisionNode',
+                'InsertFlow')),
+        (_('Components'), (
+                'InsertComponent',)),
+        (_('Use Cases'), (
+                'InsertUseCase',
+                'InsertActor',
+                'InsertUseCaseAssociation',
+                'InsertInclude',
+                'InsertExtend')),
+        (_('Profiles'), (
+                'InsertProfile',
+                'InsertMetaClass',
+                'InsertStereotype',
+                'InsertExtension')),
+    )
 
     menu = (_('_File'), (
                 'FileNew',
@@ -47,6 +82,8 @@ class MainWindow(AbstractWindow):
                 'separator',
                 'EditSelectAll',
                 'EditDeselectAll',
+                'separator',
+                'ResetToolAfterCreate',
                 '<EditSlot>'),
             _('_Diagram'), (
                 'ViewZoomIn',
@@ -58,6 +95,11 @@ class MainWindow(AbstractWindow):
                 'separator',
                 'CreateDiagram',
                 'DeleteDiagram',
+                'separator',
+                # Copy the tool box:
+                _('Tools'),
+                    toolbox_to_menu(toolbox),
+                'separator',
                 '<DiagramSlot>'),
             _('_Window'), (
                 'OpenEditorWindow',
@@ -79,40 +121,6 @@ class MainWindow(AbstractWindow):
                 'ViewZoomIn',
                 'ViewZoomOut',
                 'ViewZoom100')
-
-    toolbox = [
-        ("", (
-                'Pointer',
-                'InsertComment',
-                'InsertCommentLine')),
-        (_("Classes"), (
-                'InsertClass',
-                'InsertInterface',
-                'InsertPackage',
-                'InsertAssociation',
-                'InsertDependency',
-                'InsertGeneralization',
-                'InsertImplementation')),
-        (_("Actions"), (
-                'InsertAction',
-                'InsertInitialNode',
-                'InsertActivityFinalNode',
-                'InsertDecisionNode',
-                'InsertFlow')),
-        (_("Components"), (
-                'InsertComponent',)),
-        (_("Use Cases"), (
-                'InsertUseCase',
-                'InsertActor',
-                'InsertUseCaseAssociation',
-                'InsertInclude',
-                'InsertExtend')),
-        (_("Profiles"), (
-                'InsertProfile',
-                'InsertMetaClass',
-                'InsertStereotype',
-                'InsertExtension')),
-    ]
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',
                 'separator',
@@ -375,3 +383,4 @@ class MainWindow(AbstractWindow):
         #self.set_capability('model', not factory.is_empty())
 
 gtk.accel_map_add_filter('gaphor')
+print toolbox_to_menu(MainWindow.toolbox)

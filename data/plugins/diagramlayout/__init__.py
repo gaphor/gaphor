@@ -77,6 +77,9 @@ def layout_diagram(diag):
     sorted = toposort.toposort(nodes, relations, 0)
     other_sorted = toposort.toposort(nodes, other_relations, 0)
 
+    if not sorted:
+        return;
+
     # Move nodes from the first (generalization) row to the other rows
     # if they are not superclasses for some other class
     # Run the list twice, just to ensure no items are left behind.

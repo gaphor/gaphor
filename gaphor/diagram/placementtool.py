@@ -3,6 +3,7 @@
 import gobject
 import diacanvas
 import gaphor.UML as UML
+from gaphor import resource
 
 class PlacementTool(diacanvas.PlacementTool):
 
@@ -46,7 +47,8 @@ class PlacementTool(diacanvas.PlacementTool):
                 else:                
                     view_item = view.find_view_item(item)
                     view.focus(view_item)
-                    view.set_tool(None)
+                    if resource('reset-tool-after-create', False):
+                        view.set_tool(None)
                     return
             else:
                 diacanvas.PlacementTool._grab_handle(self, view, event, item)
@@ -58,7 +60,8 @@ class PlacementTool(diacanvas.PlacementTool):
 
     def do_button_release_event(self, view, event):
         self.is_released = True
-        view.set_tool(None)
+        if resource('reset-tool-after-create', False):
+            view.set_tool(None)
         #print 'Gaphor: do_button_release_event: %s' % self.__dict__
         return diacanvas.PlacementTool.do_button_release_event(self, view, event)
 

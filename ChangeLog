@@ -1,3 +1,13 @@
+2004-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagramitem.py: fixed bug in on_subject_notify(),
+	that kept old references around.
+	* gaphor/ui/mainactions.py: added action that switches the
+	reset-to-default-tool behavior of the toolbox.
+	* gaphor/diagram/actions.py: classes, packages, etc. are assigned a
+	unique name on creation.
+	* gaphor/ui/mainwindow.py: added toolbox items to the menu.
+
 2004-10-07  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/itemtool.py, gaphor/ui/*: updated to use new

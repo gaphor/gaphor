@@ -43,8 +43,8 @@ class DiagramCanvas(diacanvas.Canvas):
 
         # setting allow-undo to 1 here will cause update info from later
         # created elements to be put on the undo stack.
-        self.clear_undo()
-        self.clear_redo()
+        #self.clear_undo()
+        #self.clear_redo()
         self.set_property ("allow_undo", True)
 
     def _select(self, item_list, expression=None):
@@ -108,7 +108,7 @@ class Diagram(Namespace, PackageableElement):
 	    except:
 		pass
 
-	self.canvas.clear_undo()
-	self.canvas.clear_redo()
+	#self.canvas.clear_undo()
+	#self.canvas.clear_redo()
 
 	Namespace.unlink(self)

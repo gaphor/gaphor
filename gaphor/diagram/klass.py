@@ -288,7 +288,10 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
     def on_subject_notify(self, pspec, notifiers=()):
         #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation', 'namespace', 'isAbstract', 'appliedStereotype'))
+        NamedItem.on_subject_notify(self, pspec,
+                                    ('ownedAttribute', 'ownedOperation',
+                                     'namespace', 'namespace.name',
+                                     'isAbstract', 'appliedStereotype'))
         # Create already existing attributes and operations:
         if self.subject:
             self.sync_attributes()
@@ -315,12 +318,17 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         """Add a line '(from ...)' to the class item if subject's namespace
         is not the same as the namespace of this diagram.
         """
+        #print 'on_subject_notify__namespace', self, subject
         if self.subject and self.subject.namespace and self.canvas and \
            self.canvas.diagram.namespace is not self.subject.namespace:
             self._from.set_text(_('(from %s)') % self.subject.namespace.name)
         else:
             self._from.set_text('')
         self.request_update()
+
+    def on_subject_notify__namespace_name(self, subject, pspec=None):
+        print 'on_subject_notify__namespace_name', self, subject
+        self.on_subject_notify__namespace(subject, pspec)
 
     def on_subject_notify__isAbstract(self, subject, pspec=None):
         subject = self.subject

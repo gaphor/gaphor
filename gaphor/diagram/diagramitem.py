@@ -218,10 +218,12 @@ class DiagramItem(Presentation):
 
         See: DiagramItem.on_subject_notify()
         """
+        #log.debug('_subject_connect_helper: %s %s %s' % (element, callback_prefix, prop_list))
+
         prop = prop_list[0]
         callback_name = '%s_%s' % (callback_prefix, prop)
         if len(prop_list) == 1:
-            #log.debug('_subject_connect_helper - %s' % callback_name)
+            #log.debug('_subject_connect_helper - %s %s' % (element, callback_name))
             handler = getattr(self, callback_name)
             element.connect(prop, handler)
             # Call the handler, so it can update its state
@@ -229,9 +231,9 @@ class DiagramItem(Presentation):
             #handler(element, getattr(type(element), prop))
         else:
             p = getattr(element, prop)
-            #log.debug('_subject_connect_helper 2 - %s' % prop)
+            #log.debug('_subject_connect_helper 2 - %s: %s' % (prop, p))
             pl = prop_list[1:]
-            element.connect(prop, self._on_subject_notify_helper, callback_name, pl, p)
+            element.connect(prop, self._on_subject_notify_helper, callback_name, pl, [p])
             if p:
                 self._subject_connect_helper(p, callback_name, pl)
             else:
@@ -242,10 +244,11 @@ class DiagramItem(Presentation):
 
         See: DiagramItem.on_subject_notify()
         """
+        #log.debug('_subject_disconnect_helper: %s %s %s' % (element, callback_prefix, prop_list))
         prop = prop_list[0]
         callback_name = '%s_%s' % (callback_prefix, prop)
         if len(prop_list) == 1:
-            #log.debug('_subject_disconnect_helper - %s' % callback_name)
+            #log.debug('_subject_disconnect_helper - %s %s' % (element, callback_name))
             handler = getattr(self, callback_name)
             element.disconnect(handler)
             # Call the handler, so it can update its state
@@ -254,17 +257,17 @@ class DiagramItem(Presentation):
             p = getattr(element, prop)
             #log.debug('_subject_disconnect_helper 2 - %s' % prop)
             pl = prop_list[1:]
-            element.disconnect(self._on_subject_notify_helper, callback_name, pl, p)
+            element.disconnect(self._on_subject_notify_helper, callback_name, pl, [p])
             if p:
                 self._subject_disconnect_helper(p, callback_name, pl)
             else:
-                # TODO: Maybe do an update here to, if p is None.
                 pass
 
     def _on_subject_notify_helper(self, element, pspec, callback_name, prop_list, old):
         """This signal handler handles signals that are not direct properties
-        of self.subject (e.g. 'subject.lowerValue.value'). This way the presentation class is
-        not bothered with the details of keeping track of those properties.
+        of self.subject (e.g. 'subject.lowerValue.value'). This way the
+        presentation class is not bothered with the details of keeping track
+        of those properties.
 
         NOTE: This only works for properties with multiplicity [0..1] or [1].
 
@@ -272,12 +275,16 @@ class DiagramItem(Presentation):
         """
         name = pspec.name
         prop = getattr(element, name)
-        if prop is not old:
-            # Attach a new signal handler with the new 'old' value:
-            if old:
-                self._subject_disconnect_helper(old, callback_name, prop_list)
-            if prop:
-                self._subject_connect_helper(prop, callback_name, prop_list)
+        #log.debug('_on_subject_notify_helper: %s %s %s %s %s' % (element, name, callback_name, prop_list, old))
+        # Attach a new signal handler with the new 'old' value:
+        if old[0]:
+            #log.info('disconnecting')
+            self._subject_disconnect_helper(old[0], callback_name, prop_list)
+        if prop:
+            self._subject_connect_helper(prop, callback_name, prop_list)
+
+        # Set the new "old" value
+        old[0] = prop
 
     def on_subject_notify(self, pspec, notifiers=()):
         """A new subject is set on this model element.

@@ -138,8 +138,66 @@ class TestDiagramItems(unittest.TestCase):
         self.failUnless(w_m() is None, getrefcount(w_p1()))
         self.failUnless(w_d() is None, getrefcount(w_p1()))
 
+    def testSubjectNotify(self):
+        """Test the working of the DiagramItem.on_subject_notify().
+        """
+        p1 = factory.create(UML.Package)
+        p2 = factory.create(UML.Package)
+        c = factory.create(UML.Class)
+        d = factory.create(UML.Diagram)
+        self.failUnless(getrefcount(c) == 3, getrefcount(c))
+        ci = d.create(diagram.ClassItem)
 
+        # Add the class to the item
+        #c.package = p1
+        ci.subject = c
+        self.failUnless(len(c._observers['appliedStereotype']) == 1,
+                        c._observers['appliedStereotype'])
+        self.failUnless(len(c._observers['isAbstract']) == 1,
+                        c._observers['isAbstract'])
+        self.failUnless(len(c._observers['namespace']) == 2,
+                        c._observers['namespace'])
+        self.failUnless(len(c._observers['ownedOperation']) == 1,
+                        c._observers['ownedOperation'])
+        self.failUnless(len(c._observers['ownedAttribute']) == 1,
+                        c._observers['ownedAttribute'])
+        
+        # Change the package:
+        #print '\n\nPhase 2:'
+        c.package = p1
+        self.failUnless(len(c._observers['namespace']) == 2,
+                        c._observers['namespace'])
+        self.failUnless(len(p1._observers.get('name', [])) == 1,
+                        p1._observers.get('name'))
 
+        #print '\n\nPhase 3:'
+        c.package = p2
+        self.failUnless(len(c._observers['namespace']) == 2,
+                        c._observers['namespace'])
+        self.failUnless(len(p1._observers.get('name', [])) == 0,
+                        p1._observers.get('name'))
+        self.failUnless(len(p2._observers.get('name', [])) == 1,
+                        p2._observers.get('name'))
+
+        ci.subject = None
+        # Note: does a __unlink__ on all elements -> c.package = None
+        self.failUnless(len(c._observers['namespace']) == 0,
+                        c._observers['namespace'])
+        self.failUnless(len(p1._observers.get('name', [])) == 0,
+                        p1._observers.get('name'))
+        self.failUnless(len(p2._observers.get('name', [])) == 0,
+                        p2._observers.get('name'))
+        
+        #print '\nLast:'
+        c.package = p2
+        ci.subject = c
+        self.failUnless(len(c._observers['namespace']) == 2,
+                        c._observers['namespace'])
+        self.failUnless(len(p1._observers.get('name', [])) == 0,
+                        p1._observers.get('name'))
+        self.failUnless(len(p2._observers.get('name', [])) == 1,
+                        p2._observers.get('name'))
+        
 if __name__ == '__main__':
     unittest.main()
 

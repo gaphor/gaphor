@@ -10,6 +10,7 @@ import gaphor.diagram as diagram
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
+from gaphor import resource
 
 def register_action(action, *args):
     _register_action(action, *args)
@@ -29,6 +30,20 @@ def tool_changed(action, window):
 	id = 'Pointer'
     if id == action.id:
 	action.active = True
+
+class ResetToolAfterCreateAction(CheckAction):
+    id = 'ResetToolAfterCreate'
+    label = 'Reset _tool'
+    tooltip = 'Reset the tool to the pointer tool after creation of an item'
+
+    def init(self, window):
+	self._window = window
+        self.active = resource('reset-tool-after-create', False)
+
+    def execute(self):
+        resource.set('reset-tool-after-create', self.active)
+
+register_action(ResetToolAfterCreateAction)
 
 
 class PointerAction(RadioAction):
@@ -89,11 +104,14 @@ class PlacementAction(RadioAction):
 
 
 class NamespacePlacementAction(PlacementAction):
+    __index = 1
 
     def item_factory(self):
 	"""Create a new instance of the item and return it."""
         item = PlacementAction.item_factory(self)
 	item.subject.package = self._window.get_current_diagram().namespace
+	item.subject.name = '%s%d' % (self.name, self.__index)
+	self.__index += 1
 	return item
 
 
