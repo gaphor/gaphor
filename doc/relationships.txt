@@ -1,0 +1,43 @@
+Relationships
+
+A difficult point is relationships. We already have coded out one specific case:
+comment lines, but those have a different behavior since they do not have
+a model element of their own...
+
+- In case of generalizations, realizations and dependencies, the direction of
+the relationship is very important (not to mention state diagrams...)
+- Assocuations have special model elements (AssociationEnd) at the end of
+each line.
+
+
+Generalization, Realization, Denepency, etc.
+
+If one end of a relationship is not connected, nothing should happen...
+
+We should try to manage all interaction from the model elements (classifiers,
+etc.), since the canvas sends connect signals to those items (not the item
+which handle is about to be connected).
+
+This means that we should be able to determine:
+- on which end of the relationship we are 
+- what's on the other end of the relationship
+- do a lookup to see if such relationship already exists
+- create a new/assign an existing relationship to the connecting item
+- remove the relationship on disconnect or deletion (reset on UNDO)
+
+
+Association
+
+Association is a pretty difficult case, since we are dealing with a collection
+of objects at one (Assocation and a bunch of AssociationEnd objects).
+
+At first we will only make bi-directional assocaitions (no n-ary assocaitions,
+the ones with a 'diamond' inside).
+
+If only one end is connected we do not need to do anything.
+
+We should be able to determine:
+- If an assocaition already exists between the given classes
+- If an assocaition between classes is already drawn on the diagram (in which
+  case we should look for another existing assocaition or create a new one)
+- 
