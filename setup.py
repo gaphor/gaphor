@@ -156,8 +156,8 @@ class version_py:
         if os.name == 'nt':
             home = 'USERPROFILE'
         else:
-            home = 'USER'
-        f.write('DATA_DIR=\'%s\'\n' % data_dir)
+            home = 'HOME'
+        #f.write('DATA_DIR=\'%s\'\n' % data_dir)
         f.write('import os\n')
         f.write('USER_DATA_DIR=os.path.join(os.getenv(\'%s\'), \'.gaphor\')\n' % home)
         f.write('del os\n')
