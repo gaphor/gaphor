@@ -8,8 +8,9 @@ import gtk
 import gobject
 import types
 import UML
+import tree.treemodel
 
-class NamespaceModel(gtk.GenericTreeModel):
+class NamespaceModel(tree.TreeModel):
     ''' The node is defined by a instance. We can reach the parent
         by <object>.namespace. The children can be found in the
 	<object>.ownerElement list.'''

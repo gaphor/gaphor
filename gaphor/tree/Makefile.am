@@ -17,6 +17,10 @@ nodist_treemodelmodule_la_SOURCES = pytreemodel.c
 
 pytreemodel.c: pytreemodel.defs pytreemodel.override
 
+all-local:
+	test -f $(srcdir)/treemodelmodule.so || $(LN_S) $(srcdir)/.libs/treemodelmodule.so $(srcdir)
+	(cd .. && $(PYTHON) -c "import tree.treemodel")
+
 .defs.c:
 	(cd $(srcdir) \
 	 && $(PYGTK_CODEGEN) \
