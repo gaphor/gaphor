@@ -183,7 +183,7 @@ def main():
     scrolled_window.add(tree_view)
     window.show_all()
 
-    if __name__ == '__main__': gtk.main()
+    gtk.main()
 
 if __name__ == '__main__':
     main()

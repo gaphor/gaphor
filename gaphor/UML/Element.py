@@ -173,7 +173,7 @@ retrieve all information from the _attrdef structure.'''
 	   b. Set up a new relationship between self-value and value-self.'''
 
 	rec = self.__get_attr_info (key, self.__class__)
-	#print "__setattr__", rec
+	#print "Element:__setattr__(" + key + ")"
 	if len(rec) == 2: # Attribute or one-way relation
 	    if rec[0] is Sequence:
 	        self.__ensure_seq (key, rec[1]).append(value)

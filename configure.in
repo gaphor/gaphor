@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(gaphor, 0.0.1)
 
-AC_CONFIG_SRCDIR([utils/genUML.py])
+AC_CONFIG_SRCDIR([gaphor/gaphor.py])
 AM_CONFIG_HEADER(config.h)
 
 dnl This is the only place where the package version appears
@@ -11,37 +11,79 @@ AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 dnl put the ACLOCAL flags in the makefile
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
-AC_PATH_PROG(PYTHON, python)
+AM_MAINTAINER_MODE
 
-AC_MSG_CHECKING(for python >= 2.2a4)
+AC_PROG_CC
+
+AM_PROG_LIBTOOL
+
+
+#########
+# Python
+
+AM_PATH_PYTHON
+
+AC_MSG_CHECKING(for python >= 2.2)
 prog="
 import sys, string
-minver = (2,2,0,'alpha',4)
+minver = (2,2,0,'final',0)
 if sys.version_info < minver:
-  sys.exit(1)
-  sys.exit(0)"
+	sys.exit(1)
+sys.exit(0)"
 if $PYTHON -c "$prog" 1>&AC_FD_CC 2>&AC_FD_CC; then
-    AC_MSG_RESULT(okay)
+	AC_MSG_RESULT(okay)
 else
-    AC_MSG_ERROR(too old)
+	AC_MSG_ERROR(too old)
 fi
 
-AC_MSG_CHECKING(for required python modules)
-for mod in types sys xmllib weakref copy; do
-    if $PYTHON -c "import $mod" 1>&AC_FD_CC 2>&AC_FD_CC; then
-        true
-    else
-        AC_MSG_ERROR(module '$mod' not found)
-    fi
-done
-AC_MSG_RESULT(okay)
+AM_CHECK_PYTHON_HEADERS
+
+AM_CHECK_PYMOD(types)
+AM_CHECK_PYMOD(sys)
+AM_CHECK_PYMOD(xmllib)
+AM_CHECK_PYMOD(copy)
+AM_CHECK_PYMOD(gobject)
+AM_CHECK_PYMOD(gtk)
+AM_CHECK_PYMOD(gnome)
+AM_CHECK_PYMOD(gnome.canvas)
+AM_CHECK_PYMOD(diacanvas)
+
+
+##########
+# C stuff
+
+PKG_CHECK_MODULES(DIACANVAS2, diacanvas2 >= 0.4.1, \
+			AC_MSG_RESULT(okay), \
+			AC_MSG_ERROR(Can't find DiaCanvas2))
+AC_SUBST(DIACANVAS2_CFLAGS)
+AC_SUBST(DIACANVAS2_LIBS)
+
+# PyGTK 
+
+PKG_CHECK_MODULES(PYGTK, [pygtk-2.0 >= 1.99.6])
+AC_SUBST(PYGTK_CFLAGS)
+
+AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
+if test "x$PYGTK_CODEGEN" = xno; then
+	AC_MSG_RESULT(could not find pygtk-codegen-2.0 script)
+fi
+
+AC_MSG_CHECKING(for pygtk defs)
+PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
+AC_SUBST(PYGTK_DEFSDIR)
+AC_MSG_RESULT($PYGTK_DEFSDIR)
+
+
+#########
+# Output
 
 AC_CONFIG_FILES(
-    Makefile
-    utils/Makefile
-    gaphor/Makefile
-    gaphor/UML/Makefile
-    gaphor/ui/Makefile
-    tests/Makefile
-    doc/Makefile)
+	Makefile
+	utils/Makefile
+	gaphor/Makefile
+	gaphor/UML/Makefile
+	gaphor/diagram/Makefile
+	gaphor/ui/Makefile
+	tests/Makefile
+	doc/Makefile)
 AC_OUTPUT
