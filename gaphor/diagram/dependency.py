@@ -27,7 +27,7 @@ class DependencyItem(relationship.RelationshipItem):
             #print 'supplier', supplier, supplier.client, tail_subject
             if tail_subject in supplier.client:
                 # Check if the dependency is not already in our diagram
-                for item in self.subject.presentation:
+                for item in supplier.presentation:
                     if item.canvas is self.canvas and item is not self:
                         break
                 else:

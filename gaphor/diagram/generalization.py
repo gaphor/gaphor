@@ -30,7 +30,7 @@ class GeneralizationItem(relationship.RelationshipItem):
         for gen in tail_subject.generalization:
             if gen.general is head_subject:
                 # check for this entry on self.canvas
-                for item in spec.subject.presentation:
+                for item in gen.presentation:
                     # Allow self to be returned. Avoids strange
                     # behaviour during loading
                     if item.canvas is self.canvas and item is not self:

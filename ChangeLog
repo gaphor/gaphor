@@ -1,5 +1,8 @@
 2004-05-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
+	* gaphor/diagram/dependency.py, generalization.py: fixed bug which
+	avoids adding multiple dependencies/generalizations between two
+	classes.
 	* gaphor/ui/wrapbox.py: new file. replaces the C GtkWrapBox library.
 	* gaphor/ui/stereotypewindow.py: new file. This dialog should be used
 	to add/edit stereotypes.
