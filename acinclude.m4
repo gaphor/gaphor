@@ -37,7 +37,7 @@ AC_DEFUN([AM_PATH_PYTHON],
   dnl $prefix/lib/site-python in 1.4 to $prefix/lib/python1.5/site-packages
   dnl in 1.5, and I don't want to maintain that logic.
 
-  AC_PATH_PROG(PYTHON, python2.2 python2 python)
+  AC_PATH_PROGS(PYTHON, python2.2 python2 python)
 
   dnl should we do the version check?
   AC_MSG_CHECKING(if Python version >= 2.2)
