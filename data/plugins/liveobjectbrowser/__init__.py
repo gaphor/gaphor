@@ -7,4 +7,6 @@ import gaphor
 class LiveObjectBrowserAction(gaphor.plugin.Action):
 
     def execute(self):
-        self.browser = Browser("resource", gaphor.resource('ElementFactory').select())
+        browser = Browser()
+        browser.construct("resource", gaphor.resource('ElementFactory').select())
+        self.window.add_transient_window(browser)

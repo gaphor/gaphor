@@ -55,12 +55,15 @@ class EditItemAction(Action):
         self._window = window
 
     def execute(self):
-        #item = self._window.get_current_diagram_view().focus_item.item
-        #assert isinstance(subject, (UML.Property, UML.Operation))
-        #item.edit()
-        view = self._window.get_current_diagram_view()
-        wx, wy = view.window_to_world(*view.get_pointer())
-        view.start_editing(view.focus_item, wx, wy)
+        # Stay backwards compatible:
+        if diacanvas.diacanvas_version < (0, 14, 0):
+            item = self._window.get_current_diagram_view().focus_item.item
+            #assert isinstance(subject, (UML.Property, UML.Operation))
+            item.edit()
+        else:
+            view = self._window.get_current_diagram_view()
+            wx, wy = view.window_to_world(*view.get_pointer())
+            view.start_editing(view.focus_item, wx, wy)
 
 register_action(EditItemAction, 'ItemFocus')
 

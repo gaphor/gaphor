@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# vim:sw=4:et:
 """
 Title: Live Object Browser
 Submitter: Simon Burton (other recipes)
@@ -14,8 +15,49 @@ Given an object, this tool throws up a gtk tree widget that maps all the referen
 import pygtk
 pygtk.require('2.0')
 import gtk
+from gaphor.ui.abstractwindow import AbstractWindow
 
-class Browser:
+class Browser(AbstractWindow):
+
+    menu = ('_File', ('FileClose',))
+
+    def __init__(self):
+        AbstractWindow.__init__(self)
+
+    def construct(self, name, value):
+
+        # we will store the name, the type name, and the repr 
+        columns = [str,str,str]
+        self.treestore = gtk.TreeStore(*columns)
+
+        # the otank tells us what object we put at each node in the tree
+        self.otank = {} # map path -> (name,value)
+        self.make( name, value )
+
+        self.treeview = gtk.TreeView(self.treestore)
+        self.treeview.connect("row-expanded", self.row_expanded )
+
+        self.tvcolumns = [ gtk.TreeViewColumn() for _type in columns ]
+        i = 0
+        for tvcolumn in self.tvcolumns:
+            self.treeview.append_column(tvcolumn)
+            cell = gtk.CellRendererText()
+            tvcolumn.pack_start(cell, True)
+            tvcolumn.add_attribute(cell, 'text', i)
+            i = i + 1
+
+        scrolled_window = gtk.ScrolledWindow()
+        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+        scrolled_window.add(self.treeview)
+        scrolled_window.set_size_request(512, 320)
+        scrolled_window.show_all()
+
+        self._construct_window(name='console',
+                               title='Gaphor Console',
+                               size=(400, 400),
+                               contents=scrolled_window)
+
     def make_row( self, piter, name, value ):
         info = repr(value)
         if not hasattr(value, "__dict__"):
@@ -70,7 +112,7 @@ class Browser:
         #gtk.main_quit()
         return gtk.FALSE
 
-    def __init__(self, name, value):
+    def original__init__(self, name, value):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title("Browser")
         self.window.set_size_request(512, 320)
