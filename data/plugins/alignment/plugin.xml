@@ -24,10 +24,14 @@
     <action id="AlignHorizontal"
             label="Align horizontal"
             tooltip="Align diagram elements horizontally"
-            class="AlignHorizontal" slot="DiagramSlot"/>
+            class="AlignHorizontal" slot="DiagramSlot">
+      <depends action="ItemSelect"/>
+    </action>
     <action id="AlignVertical"
             label="Align vertical"
             tooltip="Align diagram elements vertically"
-            class="AlignVertical" slot="DiagramSlot"/>
+            class="AlignVertical" slot="DiagramSlot">
+      <depends action="ItemSelect"/>
+    </action>
   </provide>
 </plugin>

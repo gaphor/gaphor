@@ -4,6 +4,10 @@ class Alignment(Action):
     def init(self, window):
 	self._window = window
     
+    def update(self):
+        diagram_tab = self.get_window().get_current_diagram_tab()
+        self.sensitive = diagram_tab and len(diagram_tab.get_view().selected_items) > 0
+
     def execute(self):
         view = self._window.get_current_diagram_view()
         items = view.selected_items
