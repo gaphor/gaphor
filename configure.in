@@ -39,9 +39,9 @@ AC_MSG_RESULT(okay)
 AC_CONFIG_FILES(
     Makefile
     utils/Makefile
-    src/Makefile
-    src/model/Makefile
-    src/gui/Makefile
+    gaphor/Makefile
+    gaphor/UML/Makefile
+    gaphor/ui/Makefile
     tests/Makefile
     doc/Makefile)
 AC_OUTPUT

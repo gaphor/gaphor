@@ -1,3 +1,8 @@
+2001-12-29  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/Element.py: Reimplemented, now all sorts of relations
+	  work properly.
+
 2001-10-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor: initial version.

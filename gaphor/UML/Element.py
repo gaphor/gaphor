@@ -2,6 +2,19 @@
 #
 # Base class for all UML model objects
 #
+# A word on the <class>._attrdef structure:
+# The <class>._attrdef structures are dictionaries decribing the
+# attributes that may be added to an object of that class.
+# Since a lot of objects have di-directional relations with other objects we
+# have to create those maps.
+# A record consists of two or three fields:
+# 1. The default value of the attribute (e.g. "NoName") or a reference to the
+#    Sequence class in case of a 0..* relationship.
+# 2. Type of object that way be added.
+# 3. In case of bi-directional relationships the third argument is the name
+#    by which the object is known on the other side.
+#
+
 
 import types, copy
 
@@ -53,7 +66,7 @@ class Sequence:
 
     def __delitem__(self, key):
 	if self.owner:
-	    self.owner.sequence_remove(self, obj)
+	    self.owner.sequence_remove(self, key)
 	else:
             self.list.__delitem__(key)
 
@@ -64,10 +77,10 @@ class Sequence:
         return self.list.__getslice__(i, j)
 
     def __setslice__(self, i, j, s):
-	raise Exception, "Sequence: items should not be overwritten."
+	raise IndexError, "Sequence: items should not be overwritten."
 
     def __delslice__(self, i, j):
-	raise Exception, "Sequence: items should not be deleted this way."
+	raise IndexError, "Sequence: items should not be deleted this way."
 
     def __contains__(self, obj):
         return self.list.__contains__(obj)
@@ -75,7 +88,11 @@ class Sequence:
     def append(self, obj):
 	if isinstance (obj, self.requested_type):
 	    if self.list.count(obj) == 0:
+		#print "seq.list:", self.list
 		self.list.append(obj)
+		#print "seq.list:", self.list
+	    #else:
+	        #print "Sequence.append: Item already in sequence (" + str(obj) + ")"
 	else:
 	    raise ValueError, "Sequence._add(obj): Object is not of type " + \
 	    			str(self.requested_type)
@@ -86,27 +103,6 @@ class Sequence:
     def index(self, key):
         return self.list.index(key)
     
-
-if __name__ == '__main__':
-    print "\n============== Starting Sequence tests... ============\n"
-
-# End of Sequence tests
-
-#
-# Base class for all UML model objects
-#
-# A word on the <class>._attrdef structure:
-# The <class>._attrdef structures are dictionaries decribing the
-# attributes that may be added to an object of that class.
-# Since a lot of objects have di-directional relations with other objects we
-# have to create those maps.
-# A record consists of two or three fields:
-# 1. The default value of the attribute (e.g. "NoName") or a reference to the
-#    Sequence class in case of a 0..* relationship.
-# 2. Type of object that way be added.
-# 3. In case of bi-directional relationships the third argument is the name
-#    by which the object is known on the other side.
-#
 
 class Element:
     '''Element is the base class for *all* UML MetaModel classes. The
@@ -140,6 +136,18 @@ retrieve all information from the _attrdef structure.'''
 	else:
 	    return rec
 
+    def __ensure_seq(self, key, type):
+	if not self.__dict__.has_key(key):
+	    self.__dict__[key] = Sequence(self, type)
+	return self.__dict__[key]
+
+    def __del_seq_item(self, seq, val):
+	try:
+	    index = seq.list.index(val)
+	    del seq.list[index]
+	except ValueError:
+	    pass
+
     def __getattr__(self, key):
 	if key == "id":
 	    return self.__dict__["_Element__id"]
@@ -150,8 +158,7 @@ retrieve all information from the _attrdef structure.'''
 	    rec = self.__get_attr_info (key, self.__class__)
 	    if rec[0] is Sequence:
 		# We do not have a sequence here... create it and return it.
-		self.__dict__[key] = Sequence(self, rec[1])
-	        return self.__dict__[key]
+		return self.__ensure_seq (key, rec[1])
 	    else:
 	        # Otherwise, return the default value
 	        return copy.copy(rec[0])
@@ -162,68 +169,118 @@ retrieve all information from the _attrdef structure.'''
 	   of a Sequence, append the value to a list.
 	2. In case of a bi-directional relationship:
 	   a. First remove a possible already existing relationship (not that
-	      both sides can have a ultiplicity of '1'.
+	      both sides can have a multiplicity of '1'.
 	   b. Set up a new relationship between self-value and value-self.'''
 
 	rec = self.__get_attr_info (key, self.__class__)
+	#print "__setattr__", rec
 	if len(rec) == 2: # Attribute or one-way relation
-	    self.__dict__[key] = value
+	    if rec[0] is Sequence:
+	        self.__ensure_seq (key, rec[1]).append(value)
+	    else:
+		self.__dict__[key] = value
 	else:
 	    xrec = value.__get_attr_info (rec[2], value.__class__)
-	    if self.__dict__[key]:
+	    #print "__setattr__x", xrec
+	    if len(xrec) > 2:
+	        assert xrec[2] == key
+	    if self.__dict__.has_key(key):
+		#print "del old..."
 	        xself = self.__dict__[key]
 		# Keep the relationship if we have a n:m relationship
 		if rec[0] is not Sequence or xrec[0] is not Sequence:
 		    if rec[0] is Sequence:
-			del self.__dict__[key].list[xself]
-		    else:
-		        del self.__dict__[key]
+			#print "del-seq-item rec"
+			self.__del_seq_item(self.__dict__[key], xself)
+		    elif self.__dict__.has_key(key):
+			    #print "del-item rec"
+			    del self.__dict__[key]
 		    if xrec[0] is Sequence:
-			del xself.__dict__[key].list[self]
-		    else:
-		        del xself.__dict__[key]
+			#print "del-seq-item xrec"
+			xself.__del_seq_item(xself.__dict__[rec[2]], self)
+		    elif xself.__dict__.has_key(rec[2]):
+			    #print "del-item xrec"
+			    del xself.__dict__[rec[2]]
+	    # Establish the relationship
+	    if rec[0] is Sequence:
+	    	#print "add to seq"
+		self.__ensure_seq(key, rec[1]).append (value)
+	    else:
+		#print "add to item"
+		self.__dict__[key] = value
+	    if xrec[0] is Sequence:
+		#print "add to xseq"
+		value.__ensure_seq(rec[2], xrec[1]).append (self)
+	    else:
+		#print "add to xitem"
+		value.__dict__[rec[2]] = self
 	    
-    def __delattr__(self, name):
+    def __delattr__(self, key):
+	rec = self.__get_attr_info (key, self.__class__)
+	if rec[0] is Sequence:
+	    raise AttributeError, "Element: you can not remove a sequence"
+	if not self.__dict__.has_key(key):
+	    return
+	xval = self.__dict__[key]
+	del self.__dict__[key]
+	if len(rec) > 2: # Bi-directional relationship
+	    xrec = xval.__get_attr_info (rec[2], rec[1])
+	    if xrec[0] is Sequence:
+		xval.__del_seq_item(xval.__dict__[rec[2]], self)
+	    else:
+	        del xval.__dict__[rec[2]]
 
     def sequence_remove(self, seq, obj):
         '''Remove an entry. Should only be called by Sequence's implementation.
 	This function is used to trap the 'del' function.'''
-	def del_attr (self, key, value, rec):
-	    if rec[0] is not Sequence:
-		del self.__dict__[key]
-	    else:
-		if not self.__dict__.has_key(key):
-		    self.__dict__[key] = Sequence(self, rec[1])
-		self.__dict__[key]._remove(value)
-
-        key = None
-	# Find the name for the Sequence...
-        for k in self.__dict__.keys():
-	    if self.__dict__[k] is seq:
-		key = k
-		break
-	if key is None:
-	    return
+	# Find the key that belongs to 'seq'
+	for key in self.__dict__.keys():
+	    if self.__dict__[key] is seq:
+	        break
 	rec = self.__get_attr_info (key, self.__class__)
-	if len(rec) == 2: # One-way relation
-	    del_attr (self, key, obj, rec)
-	else:
-	    xrec = obj.__get_attr_info (rec[2], obj.__class__)
-	    del_attr (self, key, obj, rec)
-	    try:
-		del_attr (obj, rec[2], self, xrec)
-	    except AttributeError, e:
-		self.__dict__[key]._add(obj)
-		raise e
-
-# END Element
-
-
+	if rec[0] is not Sequence:
+	    raise AttributeError, "Element: This should be called from Sequence"
+	seq.list.remove(obj)
+	if len(rec) > 2: # Bi-directional relationship
+	    xrec = obj.__get_attr_info (rec[2], rec[1])
+	    if xrec[0] is Sequence:
+		obj.__del_seq_item(obj.__dict__[rec[2]], self)
+	    else:
+	        del obj.__dict__[rec[2]]
+	
 if __name__ == '__main__':
 
     print "\n============== Starting Element tests... ============\n"
 
-    print "=== 1 ==="
+    print "=== Sequence: ",
+
+    class A(Element): _attrdef = { }
+
+    A._attrdef["seq"] = ( Sequence, types.StringType )
+
+    a = A(1)
+    assert a.seq.list == [ ]
+
+    aap = "aap"
+    noot = "noot"
+    mies = "mies"
+
+    a.seq = aap
+    assert a.seq.list == [ aap ]
+
+    a.seq = noot
+    assert a.seq.list == [ aap, noot ]
+
+    assert len(a.seq) == 2
+    assert a.seq[0] is aap
+    assert a.seq[1] is noot
+    assert aap in a.seq
+    assert noot in a.seq
+    assert mies not in a.seq
+
+    print "\tOK ==="
+
+    print "=== Single:",
 
     class A(Element): _attrdef = { }
 
@@ -249,7 +306,9 @@ if __name__ == '__main__':
     a.seq.remove(aap)
     assert a.seq.list == [ noot ]
 
-    print "=== 1:1 ==="
+    print "\tOK ==="
+
+    print "=== 1:1:",
 
     class A(Element): _attrdef = { }
 
@@ -262,13 +321,15 @@ if __name__ == '__main__':
     assert a.ref2 is None
 
     a.ref1 = a
+    #print a.ref1
+    #print a.ref2
     assert a.ref1 is a
     assert a.ref2 is a
 
     del a.ref1
     assert a.ref1 is None
-    print a.ref2
-####    assert a.ref2 is None
+    #print a.ref2
+    assert a.ref2 is None
 
     a = A(1)
     b = A(2)
@@ -283,9 +344,11 @@ if __name__ == '__main__':
     assert a.ref1 is a
     assert a.ref2 is a
     assert b.ref1 is None
-####    assert b.ref2 is None
+    assert b.ref2 is None
 
-    print "=== 1:n ==="
+    print "\tOK ==="
+
+    print "=== 1:n",
 
     class A(Element): _attrdef = { }
 
@@ -330,9 +393,82 @@ if __name__ == '__main__':
     assert b.ref is b
     assert b.seq.list == [ a, b ]
 
+    b.ref = b
+    assert a.ref is b
+    assert a.seq.list == [ ]
+    assert b.ref is b
+    assert b.seq.list == [ a, b ]
+
     del b.seq[a]
     assert a.ref is None
     assert a.seq.list == [ ]
     assert b.ref is b
     assert b.seq.list == [ b ]
 
+    del b.ref
+    assert a.ref is None
+    assert a.seq.list == [ ]
+    assert b.ref is None
+    assert b.seq.list == [ ]
+
+    print "\tOK ==="
+
+    print "=== n:m:",
+
+    class A(Element): _attrdef = { }
+
+    A._attrdef['seq1'] = ( Sequence, A, 'seq2' )
+    A._attrdef['seq2'] = ( Sequence, A, 'seq1' )
+
+    a = A(1)
+    assert a.seq1.list == [ ]
+    assert a.seq2.list == [ ]
+
+    b = A(2)
+    assert b.seq1.list == [ ]
+    assert b.seq2.list == [ ]
+
+    a.seq1 = a
+    assert a.seq1.list == [ a ]
+    assert a.seq2.list == [ a ]
+    assert b.seq1.list == [ ]
+    assert b.seq2.list == [ ]
+
+    a.seq2 = a
+    assert a.seq1.list == [ a ]
+    assert a.seq2.list == [ a ]
+    assert b.seq1.list == [ ]
+    assert b.seq2.list == [ ]
+
+    a.seq1 = b
+    assert a.seq1.list == [ a, b ]
+    assert a.seq2.list == [ a ]
+    assert b.seq1.list == [ ]
+    assert b.seq2.list == [ a ]
+
+    del a.seq1[a]
+    assert a.seq1.list == [ b ]
+    assert a.seq2.list == [ ]
+    assert b.seq1.list == [ ]
+    assert b.seq2.list == [ a ]
+
+    b.seq1 = a
+    assert a.seq1.list == [ b ]
+    assert a.seq2.list == [ b ]
+    assert b.seq1.list == [ a ]
+    assert b.seq2.list == [ a ]
+
+    try:
+	del a.seq1
+    except AttributeError:
+        pass
+    except Exception:
+        assert 0
+    assert a.seq1.list == [ b ]
+    assert a.seq2.list == [ b ]
+    assert b.seq1.list == [ a ]
+    assert b.seq2.list == [ a ]
+
+    print "\tOK ==="
+
+    print "\n============== All Element tests passed... ============\n"
