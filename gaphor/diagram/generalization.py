@@ -47,7 +47,7 @@ class GeneralizationItem(relationship.RelationshipItem):
         """See RelationshipItem.allow_connect_handle().
         """
         try:
-            if not isinstance(connecting_to.subject, UML.Classifier):
+            if not connecting_to or not isinstance(connecting_to.subject, UML.Classifier):
                 return False
 
             c1 = self.handles[0].connected_to
@@ -55,12 +55,14 @@ class GeneralizationItem(relationship.RelationshipItem):
             if not c1 and not c2:
                 return True
             if self.handles[0] is handle:
-                return (self.handles[-1].connected_to.subject is not connecting_to.subject)
+		h = self.handles[-1].connected_to
+                return (h and h.subject is not connecting_to.subject)
             elif self.handles[-1] is handle:
-                return (self.handles[0].connected_to.subject is not connecting_to.subject)
-            assert 1, 'Should never be reached...'
+		h = self.handles[0].connected_to
+                return (h and h.subject is not connecting_to.subject)
+            assert 0, 'Should never be reached...'
         except AttributeError, e:
-            log.debug('Generalization.allow_connect_handle: %s' % e)
+            log.error('Generalization.allow_connect_handle: %s' % e, e)
             return False
 
     def confirm_connect_handle (self, handle):

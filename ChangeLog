@@ -1,3 +1,14 @@
+2004-05-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/icons.xml: contains descriptions of icons, rather than
+	hardcoding them in gaphor/ui/stock.py.
+	* gaphor/ui/stock.py: use icons.xml. Added an XML parser.
+	* gaphor/ui/mainwindow.py, mainactions.py: added About dialog.
+	* gaphor/diagram/interface.py: make it work
+	* gaphor/diagram/actions.py: added placement tool and action for
+	interfaces (creates both an interface and an Implementation
+	dependency.
+
 2004-05-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/mainactions.py: Do loading and saving in a separate

@@ -98,8 +98,8 @@ class MainWindow(AbstractWindow):
             '_Window', (
                 'OpenEditorWindow',
                 'OpenConsoleWindow'),
-            #'_Help', (
-            #    'About',)
+            '_Help', (
+                'About',)
             )
 
     toolbar =  ('FileOpen',

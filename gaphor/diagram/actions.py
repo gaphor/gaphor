@@ -3,6 +3,7 @@
 
 This module is initialized from gaphor.ui.diagramwindow
 """
+import diacanvas
 import gaphor
 import gaphor.UML as UML
 import gaphor.diagram as diagram
@@ -132,14 +133,73 @@ class ClassPlacementAction(NamespacePlacementAction):
 register_action(ClassPlacementAction)
 
 
+class InterfacePlacementTool(diacanvas.PlacementTool):
+    """The Interface placement tool creates an InterfaceItem and a
+    DependencyItem (for the Implementation relationship) on the diagram.
+    """
+
+    def __init__(self, window, action_id):
+	diacanvas.PlacementTool.__init__(self, None)
+	self._window = window
+        self.action_id = action_id
+	self.handle_tool = diacanvas.view.HandleTool()
+
+    def do_button_press_event(self, view, event):
+	factory = gaphor.resource('ElementFactory')
+	diag = self._window.get_current_diagram()
+	iface = factory.create(UML.Interface)
+	iface.package = diag.namespace
+        iface_item = diag.create(diagram.InterfaceItem)
+	iface_item.set_property('parent', view.canvas.root)
+	iface_item.subject = iface
+	impl_item = diag.create(diagram.DependencyItem)
+	impl_item.set_dependency_type(UML.Implementation)
+	impl_item.set_property('parent', view.canvas.root)
+
+	wx, wy = view.window_to_world(event.x, event.y)
+	ix, iy = iface_item.affine_point_w2i(wx, wy)
+	iface_item.move(ix, iy)
+	
+	ix += iface_item.RADIUS * 2
+	iy += iface_item.RADIUS
+	impl_item.move(ix, iy)
+	
+	# Select the new items:
+	view.unselect_all()
+	view.select(view.find_view_item(iface_item))
+	view.focus(view.find_view_item(impl_item))
+
+	# Attach the head handle to the interface item:
+	first = impl_item.handles[0]
+	iface_item.connect_handle(first)
+
+	# Grab the last handle with the mouse cursor
+	last = impl_item.handles[-1]
+	last.set_pos_i(20,0)
+	self.handle_tool.set_grabbed_handle(last)
+	return True
+
+    def do_button_release_event(self, view, event):
+        view.set_tool(None)
+	return self.handle_tool.button_release(view, event)
+
+    def do_motion_notify_event(self, view, event):
+	return self.handle_tool.motion_notify(view, event)
+
+import gobject
+gobject.type_register(InterfacePlacementTool)
+
 class InterfacePlacementAction(NamespacePlacementAction):
     id = 'InsertInterface'
     label = '_Interface'
     tooltip = 'Create a new Interface item'
     stock_id = 'gaphor-interface'
-    name = 'interface'
-    type = diagram.InterfaceItem
-    subject_type = UML.Interface
+    name = 'Interface'
+
+    def execute(self):
+	tool = InterfacePlacementTool(self._window, self.id)
+	self._window.get_current_diagram_view().set_tool(tool)
+	self._window.set_message('Create new %s' % self.name)
 
 register_action(InterfacePlacementAction)
 

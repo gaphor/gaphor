@@ -13,14 +13,6 @@ from gaphor.diagram import initialize_item
 from nameditem import NamedItem
 from relationship import RelationshipItem
 
-class ImplementationItem(RelationshipItem):
-    """This element describes the relationship between an interface and a class
-    that implements that interface.
-    """
-
-    def __init__(self, id=None):
-        RelationshipItem.__init__(self, id)
-
 
 class InterfaceItem(NamedItem):
     RADIUS=10

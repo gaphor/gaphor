@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<stock-icons>
+  <icon id="gaphor-pointer">
+    <file>pointer24.png</file>
+  </icon>
+  <icon id="gaphor-activity-final-node">
+    <file>activityfinalnode24.png</file>
+    <element>ActivityFinalNode</element>
+  </icon>
+  <icon id="gaphor-action">
+    <file>action24.png</file>
+    <element>Action</element>
+  </icon>
+  <icon id="gaphor-actor">
+    <file>actor24.png</file>
+    <element>Actor</element>
+  </icon>
+  <icon id="gaphor-association">
+    <file>association24.png</file>
+    <element>Association</element>
+  </icon>
+  <icon id="gaphor-class">
+    <file>class24.png</file>
+    <element>Class</element>
+  </icon>
+  <icon id="gaphor-comment">
+    <file>comment24.png</file>
+    <element>Comment</element>
+  </icon>
+  <icon id="gaphor-comment-line">
+    <file>commentline24.png</file>
+  </icon>
+  <icon id="gaphor-control-flow">
+    <file>controlflow24.png</file>
+    <element>ControlFlow</element>
+  </icon>
+  <icon id="gaphor-decision-node">
+    <file>decisionnode24.png</file>
+    <element>DecisionNode</element>
+  </icon>
+  <icon id="gaphor-dependency">
+    <file>dependency24.png</file>
+    <element>Dependency</element>
+  </icon>
+  <icon id="gaphor-diagram">
+    <file>diagram16.png</file>
+    <element>Diagram</element>
+  </icon>
+  <icon id="gaphor-extension">
+    <file>extension24.png</file>
+    <element>Extension</element>
+  </icon>
+  <icon id="gaphor-generalization">
+    <file>generalization24.png</file>
+    <element>Generalization</element>
+  </icon>
+  <icon id="gaphor-initial-node">
+    <file>initialnode24.png</file>
+    <element>InitialNode</element>
+  </icon>
+  <icon id="gaphor-operation">
+    <file>pointer24.png</file>
+    <element>Operation</element>
+  </icon>
+  <icon id="gaphor-package">
+    <file>package24.png</file>
+    <element>Package</element>
+  </icon>
+  <icon id="gaphor-parameter">
+    <file>pointer24.png</file>
+    <element>Parameter</element>
+  </icon>
+  <icon id="gaphor-profile">
+    <file>package24.png</file>
+    <element>Profile</element>
+  </icon>
+  <icon id="gaphor-property">
+    <file>pointer24.png</file>
+    <element>Property</element>
+  </icon>
+  <icon id="gaphor-stereotype">
+    <file>stereotype24.png</file>
+    <element>Stereotype</element>
+  </icon>
+  <icon id="gaphor-usecase">
+    <file>usecase24.png</file>
+    <element>UseCase</element>
+  </icon>
+</stock-icons>

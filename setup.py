@@ -350,7 +350,8 @@ setup(name='gaphor',
       ],
 #      ext_modules=ext_modules,
       # data files are relative to <prefix>/share/gaphor (see setup.cfg)
-      data_files=[('pixmaps', glob('data/pixmaps/*.png'),)
+      data_files=[('', ['data/icons.xml']),
+                  ('pixmaps', glob('data/pixmaps/*.png'))
       ],
       scripts=['bin/gaphor'],
 

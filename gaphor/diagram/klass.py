@@ -21,8 +21,6 @@ from operation import OperationItem
 
 STEREOTYPE_OPEN = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
-#STEREOTYPE_OPEN = '«'
-#STEREOTYPE_CLOSE = '»'
 
 class Compartment(list):
     """Specify a compartment in a class item.
@@ -105,7 +103,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     )
 
     def __init__(self, id=None):
-        self.is_stereotype = False
+        self.has_stereotype = False
         NamedItem.__init__(self, id)
         self.set(height=50, width=100)
         self._attributes = Compartment('attributes', self)
@@ -129,7 +127,8 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
     def postload(self):
         NamedItem.postload(self)
-        self.sync_compartments()
+        self.sync_attributes()
+        self.sync_operations()
         self.on_subject_notify__isAbstract(self.subject)
 
     def do_set_property(self, pspec, value):
@@ -186,12 +185,18 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
             for a in tmp:
                 self.remove(mapping[a])
             
-    def sync_compartments(self):
-        """Sync the contents of the attributes and operations compartments
-        with the data in self.subject.
+    def sync_attributes(self):
+        """Sync the contents of the attributes compartment with the data
+        in self.subject.
         """
-        attributes = [a for a in self.subject.ownedAttribute if not a.association]
-        self.sync_features(attributes, self._attributes, self._create_attribute)
+        owned_attributes = [a for a in self.subject.ownedAttribute if not a.association]
+        self.sync_features(owned_attributes, self._attributes,
+                           self._create_attribute)
+
+    def sync_operations(self):
+        """Sync the contents of the operations compartment with the data
+        in self.subject.
+        """
         self.sync_features(self.subject.ownedOperation, self._operations,
                            self._create_operation)
 
@@ -200,9 +205,12 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         NamedItem.on_subject_notify(self, pspec, ('ownedAttribute', 'ownedOperation', 'isAbstract'))
         # Create already existing attributes and operations:
         if self.subject:
-            self.sync_compartments()
+            self.sync_attributes()
+            self.sync_operations()
             self.on_subject_notify__isAbstract(self.subject)
-            self.is_stereotype = isinstance(self.subject, UML.Stereotype)
+            self.has_stereotype = not isinstance(self.subject, UML.Class)
+            if isinstance(self.subject, UML.Stereotype):
+                self._stereotype.set_text(STEREOTYPE_OPEN + 'stereotype' + STEREOTYPE_CLOSE)
         self.request_update()
 
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
@@ -210,15 +218,13 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         """
         #log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
-        attributes = [a for a in subject.ownedAttribute if not a.association]
-        self.sync_features(attributes, self._attributes, self._create_attribute)
+        self.sync_attributes()
 
     def on_subject_notify__ownedOperation(self, subject, pspec=None):
         """Called when the ownedOperation property of our subject changes.
         """
         #log.debug('on_subject_notify__ownedOperation')
-        self.sync_features(subject.ownedOperation, self._operations,
-                                 self._create_operation)
+        self.sync_operations()
 
     def on_subject_notify__isAbstract(self, subject, pspec=None):
         subject = self.subject
@@ -231,14 +237,14 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
     def on_update(self, affine):
         """Overrides update callback.
         """
-        is_stereotype = self.is_stereotype
+        has_stereotype = self.has_stereotype
 
         width = 0
         height = ClassItem.HEAD_MARGIN_Y
 
         compartments = (self._attributes, self._operations)
 
-        if is_stereotype:
+        if has_stereotype:
             st_width, st_height = self._stereotype.to_pango_layout(True).get_pixel_size()
             width = st_width + ClassItem.HEAD_MARGIN_X/2
             st_y = height = height / 2
@@ -261,7 +267,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
         height = max(height, self.height)
 
         # TODO: update stereotype
-        if is_stereotype:
+        if has_stereotype:
             self._stereotype.set_pos((0, st_y))
             self._stereotype.set_max_width(width)
             self._stereotype.set_max_height(st_height)
@@ -281,7 +287,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
 
     def on_shape_iter(self):
         yield self._border
-        if self.is_stereotype:
+        if self.has_stereotype:
             yield self._stereotype
         for s in NamedItem.on_shape_iter(self):
             yield s

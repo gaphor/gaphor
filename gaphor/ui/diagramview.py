@@ -47,7 +47,7 @@ class DiagramView(CanvasView):
 	return 1
    
     def on_drag_data_received(self, context, x, y, data, info, time):
-	#rint 'drag_data_received'
+	#print 'drag_data_received'
         if data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
 	    #print 'drag_data_received:', data.data, info
 	    elemfact = gaphor.resource('ElementFactory')
@@ -59,6 +59,7 @@ class DiagramView(CanvasView):
 		assert item
 		wx, wy = self.window_to_world(x + self.get_hadjustment().value,
 					      y + self.get_vadjustment().value)
+		# TODO: Invoke an Action here(?)
 		ix, iy = item.affine_point_w2i(max(0, wx), max(0, wy))
 		item.move(ix, iy)
 		item.set_property ('subject', element)

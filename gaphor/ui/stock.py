@@ -6,7 +6,12 @@ import os.path
 import gtk
 import gaphor
 import gaphor.UML as UML
+from xml.sax import handler
+from gaphor.parser import ParserException
 
+XMLNS='http://gaphor.sourceforge.net/gaphor/stock-icons'
+
+# These are not used:
 STOCK_POINTER = 'gaphor-pointer'
 STOCK_ACTIVITY_FINAL_NODE = 'gaphor-activity-final-node'
 STOCK_ACTION = 'gaphor-action'
@@ -64,32 +69,88 @@ def add_stock_icon(id, icon_dir, icon_files, uml_class=None):
     if uml_class:
 	_uml_to_stock_id_map[uml_class] = id
 
-icon_dir = os.path.join(gaphor.resource('DataDir'), 'pixmaps')
 
-# Initialize stock icons:
-add_stock_icon(STOCK_POINTER,	icon_dir, ('pointer24.png',))
+class StockIconLoader(handler.ContentHandler):
+    """Load stock icons from an xml file in the icons directory.
+    """
 
-add_stock_icon(STOCK_ACTIVITY_FINAL_NODE, icon_dir, ('activityfinalnode24.png',), UML.ActivityFinalNode)
-add_stock_icon(STOCK_ACTION,	icon_dir, ('action24.png',), UML.Action)
-add_stock_icon(STOCK_ACTOR,	icon_dir, ('actor24.png',), UML.Actor)
-add_stock_icon(STOCK_ASSOCIATION, icon_dir, ('association24.png',), UML.Association)
-add_stock_icon(STOCK_CLASS,	icon_dir, ('class24.png',), UML.Class)
-add_stock_icon(STOCK_COMMENT,	icon_dir, ('comment24.png',), UML.Comment)
-add_stock_icon(STOCK_COMMENT_LINE, icon_dir, ('commentline24.png',))
-add_stock_icon(STOCK_CONTROL_FLOW,	icon_dir, ('controlflow24.png',), UML.ControlFlow)
-add_stock_icon(STOCK_DECISION_NODE, icon_dir, ('decisionnode24.png',), UML.DecisionNode)
-add_stock_icon(STOCK_DEPENDENCY, icon_dir, ('dependency24.png',), UML.Dependency)
-add_stock_icon(STOCK_DIAGRAM,	icon_dir, ('diagram16.png',), UML.Diagram)
-add_stock_icon(STOCK_EXTENSION, icon_dir, ('extension24.png',), UML.Extension)
-add_stock_icon(STOCK_GENERALIZATION, icon_dir, ('generalization24.png',), UML.Generalization)
-add_stock_icon(STOCK_INITIAL_NODE, icon_dir, ('initialnode24.png',), UML.InitialNode)
-add_stock_icon(STOCK_OPERATION,	icon_dir, ('pointer24.png',), UML.Operation)
-add_stock_icon(STOCK_PACKAGE,	icon_dir, ('package24.png',), UML.Package)
-add_stock_icon(STOCK_PARAMETER,	icon_dir, ('pointer24.png',), UML.Parameter)
-add_stock_icon(STOCK_PROFILE,	icon_dir, ('package24.png',), UML.Profile)
-add_stock_icon(STOCK_PROPERTY,	icon_dir, ('pointer24.png',), UML.Property)
-add_stock_icon(STOCK_STEREOTYPE, icon_dir, ('stereotype24.png',), UML.Stereotype)
-add_stock_icon(STOCK_USECASE,	icon_dir, ('usecase24.png',), UML.UseCase)
+    def __init__(self, icon_dir):
+        handler.ContentHandler.__init__(self)
+	self.icon_dir = icon_dir
 
-del icon_dir
+    def endDTD(self):
+        pass
+
+    def startDocument(self):
+        """Start of document: all our attributes are initialized.
+        """
+	self.id = ''
+        self.files = []
+        self.data = ''
+	self.element = None
+
+    def endDocument(self):
+	pass
+
+    def startElement(self, name, attrs):
+        self.data = ''
+
+	# A new icon is found
+        if name == 'icon':
+            self.id = attrs['id']
+	    self.files = []
+	    self.element = None
+
+	elif name in ('element', 'file', 'stock-icons'):
+	    pass
+        else:
+            raise ParserException, 'Invalid XML: tag <%s> not known' % name
+
+    def endElement(self, name):
+        if name == 'icon':
+            assert self.id
+	    assert self.files
+	    add_stock_icon(self.id, self.icon_dir, self.files, self.element)
+	elif name == 'element':
+	    try:
+		self.element = getattr(UML, self.data)
+	    except:
+		raise ParserException, 'No element found with name %s' % self.data
+	elif name == 'file':
+	    self.files.append(self.data)
+	elif name == 'stock-icons':
+	    pass
+
+    def startElementNS(self, name, qname, attrs):
+        if not name[0] or name[0] == XMLNS:
+            a = { }
+            for key, val in attrs.items():
+                a[key[1]] = val
+            self.startElement(name[1], a)
+
+    def endElementNS(self, name, qname):
+        if not name[0] or name[0] == XMLNS:
+            self.endElement(name[1])
+
+    def characters(self, content):
+        """Read characters."""
+	self.data = self.data + content
+
+def load_stock_icons():
+    """
+    """
+    from xml.sax import make_parser
+    parser = make_parser()
+
+    data_dir = gaphor.resource('DataDir')
+    icon_dir = os.path.join(data_dir, 'pixmaps')
+    loader = StockIconLoader(icon_dir)
+
+    parser.setFeature(handler.feature_namespaces, 1)
+    parser.setContentHandler(loader)
+
+    parser.parse(os.path.join(data_dir, 'icons.xml'))
+    #parser.close()
+
+load_stock_icons()
 

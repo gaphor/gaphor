@@ -46,6 +46,7 @@ class PlacementTool(diacanvas.PlacementTool):
                 else:                
                     view_item = view.find_view_item(item)
                     view.focus(view_item)
+                    view.set_tool(None)
                     return
             else:
                 diacanvas.PlacementTool._grab_handle(self, view, event, item)

@@ -309,15 +309,22 @@ class AboutAction(Action):
         self._window = window
 
     def execute(self):
-        import gnome.ui
         logo = gtk.gdk.pixbuf_new_from_file (gaphor.resource('DataDir') + '/pixmaps/logo.png')
-        about = gnome.ui.About(name = 'Gaphor',
-                           version = gaphor.resource('Version'),
-                           copyright = 'Copyright (c) 2001-2003 Arjan J. Molenaar',
-                           comments = 'UML Modeling for GNOME',
-                           authors = ('Arjan J. Molenaar <arjanmolenaar@hetnet.nl>',),
-                           logo_pixbuf = logo)
-        about.show()
+	version = gaphor.resource('Version')
+        about = gtk.Dialog("About Gaphor", self._window.get_window(), 0, (gtk.STOCK_OK, gtk.RESPONSE_OK))
+	vbox = about.vbox
+
+	image = gtk.Image()
+	image.set_from_pixbuf(logo)
+	vbox.pack_start(image)
+	label = gtk.Label('<span size="xx-large" weight="bold">Gaphor %s</span>' % version)
+	label.set_property('use-markup', True)
+	vbox.pack_start(label)
+	vbox.pack_start(gtk.Label('UML Modeling for GNOME'))
+	vbox.pack_start(gtk.Label('Copyright (c) 2001-2004 Arjan J. Molenaar'))
+	vbox.show_all()
+        about.run()
+	about.destroy()
 
 register_action(AboutAction)
 
