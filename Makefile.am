@@ -1,0 +1,2 @@
+
+SUBDIRS=gaphor utils doc

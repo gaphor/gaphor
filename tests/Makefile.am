@@ -1,0 +1,3 @@
+
+TESTS = model-consistency.sh
+

@@ -1,0 +1,9 @@
+	Gaphor - A UML CASE tool.
+
+
+This is to become a CASE tool what uses GNOME (GTK-2.0) for visualiization.
+
+Gaphor is mainly written in Python, which makes it very easy to use and
+very easy to extend.
+
+	- Arjan Molenaar <arjanmolenaar@hetnet.nl>
