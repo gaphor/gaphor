@@ -1,0 +1,15 @@
+Plugins
+-------
+
+Gaphor is growing and the need arises to add optional modules: plugins.
+
+A plugin is loaded on startup of the application (and possibly on demand).
+
+Before a plugin is loaded an xml file is read which contains some definitions
+for the plugin:
+ - information such as author, version, and of course the name
+ - requirements: other plugins this one depends on, modules
+ - definitions of Actions
+ - Code that should be ran before and after installation, before and after
+   removal.
+

@@ -3,7 +3,10 @@
 	* gaphor/plugin.py: new file. provided stuff needed by possible
 	plugins.
 	* gaphor/pluginmanager.py: new file. Plugin loading facility.
-
+	* data/plugins/*: added (demo) plugin.
+	* setup.py: reordered some code, so version.py is properly generated
+	on FreeBSD.
+	
 2004-06-20  wrobell
 
 	* gaphor/diagram/interface.py: - change look of interface depending
