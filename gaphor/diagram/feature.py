@@ -26,6 +26,8 @@ class FeatureItem(CanvasText, DiagramItem):
     FONT='sans 10'
 
     def __init__(self):
+	self.__gobject_init__()
+	DiagramItem.__init__(self)
 	diacanvas.CanvasText.__init__(self)
 	font = pango.FontDescription(ClassMember.FONT)
 	self.set(font=font, width=self.width,
@@ -33,7 +35,6 @@ class FeatureItem(CanvasText, DiagramItem):
 	w, h = self.__name.get_property('layout').get_pixel_size()
 	self.set(height=h)
 	self.connect('text_changed', self.on_text_changed)
-	self.subject = None
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'subject':

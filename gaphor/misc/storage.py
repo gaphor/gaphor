@@ -66,7 +66,9 @@ def save (filename=None):
 		self.__parent.appendChild(node)
 		node.setAttribute (NAME, name)
 		if isinstance(obj, types.StringType):
-		    cdata = doc.createCDATASection(obj)
+		    # Ensure that a CDATA section does not contain ']]>', since
+		    # some XML parsers have problems with it...
+		    cdata = doc.createCDATASection(obj.replace(']]>', ']] >'))
 		    node.appendChild(cdata)
 		else:
 		    node.setAttribute (PVALUE, str(obj))

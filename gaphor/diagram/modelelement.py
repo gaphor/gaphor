@@ -29,17 +29,10 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
 
     def __init__(self):
 	self.__gobject_init__()
+	#diacanvas.CanvasElement.__init__(self)
 	DiagramItem.__init__(self)
-	self.subject = None
 	self.auto_resize = 0
 	self.__id = -1
-
-#    def save (self, store):
-#	store.save_property('affine')
-#	store.save_property('width')
-#	store.save_property('height')
-#	store.save_attribute('subject', self.subject)
-#	store.save_property('auto-resize')
 
     def save (self, save_func):
 	self.save_property(save_func, 'affine')

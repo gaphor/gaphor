@@ -21,8 +21,8 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 			'color', 'cap', 'join', 'orthogonal', 'horizontal' ]
     def __init__(self):
 	self.__gobject_init__()
+	#diacanvas.CanvasLine.__init__(self)
 	DiagramItem.__init__(self)
-	self.subject = None
 	self.__id = None
 
     def save (self, save_func):

@@ -163,6 +163,7 @@ class DiagramWindow(AbstractWindow):
 	    self.set_message('')
 
     def __on_diagram_undo(self, canvas):
+	#log.debug('Undo: %d, Redo: %d' % (canvas.get_undo_depth(), canvas.get_redo_depth()))
 	self.get_ui_component().set_prop ('/commands/EditUndo', 'sensitive', 
 				((canvas.get_undo_depth() > 0) and '1' or '0'))
 	self.get_ui_component().set_prop ('/commands/EditRedo', 'sensitive', 

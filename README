@@ -1,15 +1,24 @@
 	Gaphor - A UML CASE tool.
 
 
-This is to become a CASE tool what uses GNOME (GTK-2.0) for visualization.
+Gaphor is rapidly becoming the first really usable CASE tool for GNOME (and
+Linux in general).
 
-Gaphor is mainly written in Python, which makes it very easy to use and
+Gaphor is written in Python, which makes it very easy to use and
 very easy to extend.
 
-NOTE:	If you compile Gaphor yourself, you might want to patch your sources
-	of PyGTK too. This will avoid reference leak (resulting in memory
-	leaks) from objects referenced by a gtk.GenericTreeModel object.
-	I know it is not a nice solution, but it makes things work as long
-	as PyGTK itself does not solve the problem...
+To get started do the following things:
+- Get orbit-python, pygtk and gnome-python.
+- Patch the orbit-python sources with 'orbit-python-fix.patch'
+- Compile and install orbit-python, pygtk and gnome-python.
+- do './configure; make' in the Gaphor source directory.
+- Launch gaphor using the 'gaphor.sh' shell script.
+
+NOTE:	Gaphor is using Bonobo. For now the Python bindings for Bonobo
+	rely on Orbit-Python. You would like to patch orbit-python with
+	'orbit-python-fix.patch'. This will prevent gaphor from crashing when
+	you close a window. I hop this patch will disappear as soon as the
+	new Orbit bindings for Python are mature enough.
+	If in doubt, please mail me.
 
 	- Arjan Molenaar <arjanmolenaar@hetnet.nl>

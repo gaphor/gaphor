@@ -1,3 +1,5 @@
+- Text conflicts with UNDO
+
 As always, there is much to do...
 
 - Diagram items should be created for lots of model elements
@@ -20,3 +22,15 @@ More specific:
 - Some logic about what classes can be connected to each other should be
   moved from the DiagramItems to the data elements.
 - A more pattern driven design (using Factories, Singletons etc.)
+- creeer een property subject (ro) in DiagramItem. Subjects moeten gezet
+worden via set_property().
+- Add features to classes (attribute and operation).
+- Capability architecture
+   - Main: elements (factory empty?), Model element
+   - Diagram: undo/redo, Model element
+   - Popup menu items for DiagramItems (should be hidden if not applicable)
+   - add line segment
+   - ...
+- Plugin architecture.
+- Text near lines (associations, dependencies, etc.)
+

@@ -85,6 +85,7 @@ class UndoCommand(Command):
 	self._view = params['window'].get_view()
 
     def execute(self):
+	log.debug('UndoCommand')
 	self._view.canvas.pop_undo()
 
 CommandInfo (name='EditUndo', _label='_Undo', pixname='Undo', accel='*Control*z',
@@ -116,7 +117,7 @@ class SelectAllCommand(Command):
 	self._view.select_all()
 
 CommandInfo (name='EditSelectAll', _label='_Select All', pixname='select-all',
-	     context='diagram.menu',
+	     context='diagram.menu', accel='*Control*a',
 	     command_class=SelectAllCommand).register()
 
 class UnselectAllCommand(Command):

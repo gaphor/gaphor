@@ -24,16 +24,11 @@ class UseCaseItem(ModelElementItem):
 	font = pango.FontDescription(UseCaseItem.FONT)
 	self.__name.set(font=font, width=self.width,
 			alignment=pango.ALIGN_CENTER)
-	# Center the text:
-	#w, h = self.__name.get_property('layout').get_pixel_size()
-	#self.__name.move(0, (self.height - h) / 2)
-	#self.__name.set(height=h)
 	self.__name.connect('text_changed', self.on_text_changed)
 
     def _set_subject(self, subject):
 	ModelElementItem._set_subject(self, subject)
 	self.__name.set(text=self.subject and self.subject.name or '')
-	#self.__name_update()
 	self.request_update()
 
     def on_update(self, affine):
@@ -83,6 +78,7 @@ class UseCaseItem(ModelElementItem):
 
     def on_groupable_get_iter(self):
 	return self.__name
+#	return None
 
     def on_groupable_next(self, iter):
 	return None

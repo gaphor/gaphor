@@ -9,22 +9,31 @@ class DiagramItem(object):
     """
 
     def __init__(self):
+	self.__subject = None
 	self.connect ('notify::parent', DiagramItem.on_parent_notify)
-	pass
+
+    def get_subject(self):
+	return self.__subject
 
     def set_subject(self, subject):
-	self._set_subject(subject)
+	self.set_property('subject', subject)
+	#self._set_subject(subject)
 
     def _set_subject(self, subject):
-	#self.preserve_property('subject')
-	if subject is not self.subject:
-	    if self.subject:
-		self.subject.disconnect(self.on_subject_update)
-		self.subject.remove_presentation(self)
-	    self.subject = subject
+	"""
+	Real (protected) set_subject method. should be called by
+	do_set_property(), in the sub-classes.
+	"""
+	if subject is not self.__subject:
+	    if self.__subject:
+		self.__subject.disconnect(self.on_subject_update)
+		self.__subject.remove_presentation(self)
+	    self.__subject = subject
 	    if subject:
 		subject.add_presentation(self)
 		subject.connect(self.on_subject_update)
+
+    subject = property (get_subject, set_subject, None, 'Subject')
 
     def save_property(self, save_func, name):
 	'''
@@ -66,13 +75,13 @@ class DiagramItem(object):
 
     def on_parent_notify (self, parent):
 	#print self
-	if self.subject:
+	if self.__subject:
 	    if self.parent:
 		#print 'Have Parent', self, parent
-		self.subject.add_presentation (self)
+		self.__subject.add_presentation (self)
 	    else:
 		#print 'No parent...', self, parent
-		self.subject.remove_presentation (self)
+		self.__subject.remove_presentation (self)
 
     def on_subject_update (self, name, old_value, new_value):
 	pass

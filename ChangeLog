@@ -1,3 +1,11 @@
+2002-10-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* orbit-python-fix.patch: added patch to fix refcounting problem
+	in Orbit-Python.
+	* gaphor/misc/uniqueid.py: New file. Real unique ID's!
+	* gaphor/**/*.py: lots of changes. Most importantly a redesign of
+	the load/save code.
+	
 2002-10-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/klass.py,usecase.py,comment.py,actor.py,package.py:

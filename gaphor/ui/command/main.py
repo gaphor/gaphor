@@ -27,7 +27,7 @@ class NewCommand(Command):
 
     def execute(self):
 	fact = GaphorResource(UML.ElementFactory)
-	#fact.flush()
+	fact.flush()
 	gc.collect()
 	model = fact.create(UML.Model)
 	diagram = fact.create(UML.Diagram)
