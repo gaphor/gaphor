@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <!-- vim:sw=2:et:
 -->
-<plugin name="Data Browser"
+<plugin name="Live Object Browser"
         version="0.1"
         author="Arjan Molenaar">
   <description>
     Plugin based on the Live Object browser
     (http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/300304).
+    It shows the state of the data model at the time the browser is activated.
   </description>
 
   <require>

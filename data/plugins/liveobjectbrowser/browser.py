@@ -1,4 +1,15 @@
 #!/usr/bin/env python
+"""
+Title: Live Object Browser
+Submitter: Simon Burton (other recipes)
+Last Updated: 2004/08/18
+Version no: 1.0
+Category: Debugging
+
+Description:
+
+Given an object, this tool throws up a gtk tree widget that maps all the references found. It dynamically builds the tree, which means it can handle large amounts of data and circular references.
+"""
 
 import pygtk
 pygtk.require('2.0')
