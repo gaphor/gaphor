@@ -63,7 +63,27 @@ class DiagramWindow(AbstractWindow):
 
 	view = DiagramView (diagram=self.__diagram)
 	view.set_scroll_region(0, 0, 600, 450)
+	# TEST
+	label = gtk.Label('Drop Here!\n')
+	#label.drag_dest_set(gtk.DEST_DEFAULT_ALL, DiagramView.DND_TARGETS,
+	view.drag_dest_set(gtk.DEST_DEFAULT_ALL, DiagramView.DND_TARGETS,
+			    gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_MOVE)
+
+	def label_drag_data_received(w, context, x, y, data, info, time):
+	    try:
+		if data and data.format == 8:
+		    print 'Received "%s" in label' % data.data
+		    context.finish(gtk.TRUE, gtk.FALSE, time)
+		else:
+		    print 'Received something in label'
+		    context.finish(gtk.FALSE, gtk.FALSE, time)
+	    except:
+	    	pass
+	#label.connect('drag_data_received', label_drag_data_received)
+	#view.connect('drag_data_received', label_drag_data_received)
+
 	frame.add (view)
+	#frame.add(label)
 	
 	sbar = gtk.VScrollbar (view.get_vadjustment())
 	table.attach (sbar, 1, 2, 0, 1, gtk.FILL,

@@ -11,6 +11,8 @@
         <menuitem name="EditUndo" verb=""/>
         <menuitem name="EditRedo" verb=""/>
 	<separator/>
+        <menuitem name="EditDelete" verb=""/>
+	<separator/>
         <menuitem name="EditSelectAll" verb=""/>
         <menuitem name="EditUnselectAll" verb=""/>
 	<separator/>

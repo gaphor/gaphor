@@ -17,6 +17,7 @@ class MainWindow(AbstractWindow):
 
     def __init__(self):
 	AbstractWindow.__init__(self)
+	self.__filename = None
 	self.__transient_window = list()
 
     def get_window(self):
@@ -34,6 +35,12 @@ class MainWindow(AbstractWindow):
     def get_ui_component(self):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
 	return self.__ui_component
+
+    def set_filename(self, filename):
+	self.__filename = filename
+
+    def get_filename(self):
+	return self.__filename
 
     def construct(self):
 	self._check_state(AbstractWindow.STATE_INIT)
@@ -122,13 +129,17 @@ class MainWindow(AbstractWindow):
 	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
 		selection = view.get_selection()
 		model, iter = selection.get_selected()
+		assert model is self.__model
 		if not iter:
 		    return
 		element = model.get_value(iter, 0)
+		path = model.get_path(element)
 		cmd_reg = GaphorResource('CommandRegistry')
 		verbs = cmd_reg.create_verbs(context='main.popup',
 					     params={ 'window': self,
-						      'element': element })
+						      'element': element,
+						      'iterator': iter,
+						      'path': path })
 		self.__ui_component.add_verb_list (verbs, None)
 		menu = gtk.Menu()
 		# The window takes care of destroying the old menu, if any...

@@ -27,7 +27,7 @@ class PlacementTool(diacanvas.PlacementTool):
                 for (k,v) in self.properties.items():
                     item.set_property(k, v)
             except TypeError, e:
-                print 'PlacementTool:', e
+                log.error('PlacementTool:', e)
         return item
 
     def __button_press (self, tool, view, event):

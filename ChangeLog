@@ -1,3 +1,11 @@
+2002-10-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/klass.py,usecase.py,comment.py,actor.py,package.py:
+	cleaned up the code.
+	* gaphor/ui/namespace.py,diagramview.py: implemented DND from
+	tree view to diagram.
+	* gaphor/ui/command/diagram.py: added delete command
+
 2002-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* configure.in: increased release number to 0.2.0

@@ -25,56 +25,91 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	self.subject = None
 	self.__id = -1
 
-    def save (self, store):
+#    def save (self, store):
+#	for prop in RelationshipItem.__savable_properties:
+#	    store.save_property(prop)
+#	points = [ ]
+#	for h in self.handles:
+#	    pos = h.get_pos_i ()
+#	    #print 'pos:', pos, h.get_property('pos_i')
+#	    points.append (pos)
+#	store.save_attribute ('points', points)
+#	c = self.handles[0].connected_to
+#	if c:
+#	    store.save_attribute ('head_connection', c)
+#	c = self.handles[-1].connected_to
+#	if c:
+#	    store.save_attribute ('tail_connection', c)
+#	if self.subject:
+#	    store.save_attribute('subject', self.subject)
+
+    def save (self, save_func):
 	for prop in RelationshipItem.__savable_properties:
-	    store.save_property(prop)
+	    self.save_property(save_func, prop)
 	points = [ ]
 	for h in self.handles:
 	    pos = h.get_pos_i ()
 	    #print 'pos:', pos, h.get_property('pos_i')
 	    points.append (pos)
-	store.save_attribute ('points', points)
+	save_func ('points', points)
 	c = self.handles[0].connected_to
 	if c:
-	    store.save_attribute ('head_connection', c)
+	    save_func('head_connection', c)
 	c = self.handles[-1].connected_to
 	if c:
-	    store.save_attribute ('tail_connection', c)
+	    save_func('tail_connection', c)
 	if self.subject:
-	    store.save_attribute('subject', self.subject)
+	    save_func('subject', self.subject)
 
-    def load (self, store):
-	for prop in RelationshipItem.__savable_properties:
-	    self.set_property(prop, eval (store.value(prop)))
-	points = eval(store.value('points'))
-	assert len(points) >= 2
-	self.set_property('head_pos', points[0])
-	self.set_property('tail_pos', points[1])
-	for p in points[2:]:
-	    item.set_property ('add_point', p)
-	# Subject may have been omited.
-	try:
-	    subject = store.reference('subject')
-	    assert len(subject) == 1
-	    self._set_subject(subject[0])
-	except ValueError:
-	    pass
+    def load (self, name, value):
+	if name == 'points':
+	    points = eval(value)
+	    assert len(points) >= 2
+	    self.set_property('head_pos', points[0])
+	    self.set_property('tail_pos', points[1])
+	    for p in points[2:]:
+		item.set_property ('add_point', p)
+	elif name == 'head_connection':
+	    self._load_head_connection = value
+	elif name == 'tail_connection':
+	    self._load_tail_connection = value
+	elif name == 'subject':
+	    self.set_property(name, value)
+	else:
+	    self.set_property(name, eval(value))
+#	# Subject may have been omited.
+#	try:
+#	    subject = store.reference('subject')
+#	    assert len(subject) == 1
+#	    self._set_subject(subject[0])
+#	except ValueError:
+#	    pass
+#	for prop in RelationshipItem.__savable_properties:
 
-    def postload(self, store):
-	for name, refs in store.references().items():
-	    if name == 'head_connection':
-		assert len(refs) == 1
-		refs[0].connect_handle (self.handles[0])
-	    elif name == 'tail_connection':
-		assert len(refs) == 1
-		refs[0].connect_handle (self.handles[-1])
+#    def postload(self, store):
+#	for name, refs in store.references().items():
+#	    if name == 'head_connection':
+#		assert len(refs) == 1
+#		refs[0].connect_handle (self.handles[0])
+#	    elif name == 'tail_connection':
+#		assert len(refs) == 1
+#		refs[0].connect_handle (self.handles[-1])
+
+    def postload(self):
+	print 'postload:', self
+	if hasattr(self, '_load_head_connection'):
+	    self._load_head_connection.connect_handle (self.handles[0])
+	    del self._load_head_connection
+	elif hasattr(self, '_load_tail_connection'):
+	    self._load_tail_connection.connect_handle (self.handles[-1])
+	    del self._load_tail_connection
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
-	    print self, 'id', value
+	    #print self, 'id', value
 	    self.__id = int(value)
 	elif pspec.name == 'subject':
-	    print 'Setting subject:', value
+	    #print 'Setting subject:', value
 	    self._set_subject(value)
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name

@@ -30,17 +30,25 @@ class PackageItem(ModelElementItem):
 	w, h = self.__name.get_property('layout').get_pixel_size()
 	self.__name.move(0, (self.height - h + PackageItem.TAB_Y) / 2)
 	self.__name.set(height=h)
-	# Hack since self.<method> is not GC'ed
-	def on_text_changed(text_item, text, package):
-	    if text != package.subject.name:
-		package.subject.name = text
-		package.__name_update()
-	self.__name.connect('text_changed', on_text_changed, self)
-	#self.__name.connect('text_changed', self.on_text_changed)
+	self.__name.connect('text_changed', self.on_text_changed)
+
+    def _set_subject(self, subject):
+	ModelElementItem._set_subject(self, subject)
+	self.__name.set(text=self.subject and self.subject.name or '')
+	self.request_update()
 
     def __name_update (self):
 	'''Center the name text in the package body.'''
-	w, h = self.__name.get_property('layout').get_pixel_size()
+
+    def load(self, store):
+	ModelElementItem.load(self, store)
+	self.__name_update()
+
+    def on_update(self, affine):
+	# Center the text
+	layout = self.__name.get_property('layout')
+	layout.set_width(-1)
+	w, h = layout.get_pixel_size()
 	self.set(min_width=w + PackageItem.MARGIN_X,
 		 min_height=h + PackageItem.MARGIN_Y)
 	a = self.__name.get_property('affine')
@@ -48,12 +56,9 @@ class PackageItem(ModelElementItem):
 		(self.height - h + PackageItem.TAB_Y) / 2)
 	self.__name.set(affine=aa, width=self.width, height=h)
 
-    def load(self, store):
-	ModelElementItem.load(self, store)
-	self.__name_update()
-
-    def on_update(self, affine):
+	self.update_child(self.__name, affine)
 	ModelElementItem.on_update(self, affine)
+
 	O = 0.0
 	H = self.height
 	W = self.width
@@ -61,15 +66,7 @@ class PackageItem(ModelElementItem):
 	Y = PackageItem.TAB_Y
 	line = ((X, Y), (X, O), (O, O), (O, H), (W, H), (W, Y), (O, Y))
 	self.__border.line(line)
-	self.__border.request_update()
-	self.update_child(self.__name, affine)
-	b1, b2, b3, b4 = self.bounds
-	self.set_bounds((b1 - 1, b2 - 1, b3 + 1, b4 + 1))
-
-    def on_handle_motion (self, handle, wx, wy, mask):
-	retval = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
-	self.__name_update()
-	return retval
+	self.expand_bounds(1.0)
 
     def on_event (self, event):
 	if event.type == diacanvas.EVENT_KEY_PRESS:
@@ -95,8 +92,8 @@ class PackageItem(ModelElementItem):
 
     def on_groupable_remove(self, item):
 	'''Do not allow the name to be removed.'''
-	self.emit_stop_by_name('remove')
-	return 0
+	#self.emit_stop_by_name('remove')
+	return 1
 
     def on_groupable_get_iter(self):
 	return self.__name
@@ -119,7 +116,6 @@ class PackageItem(ModelElementItem):
     def on_subject_update(self, name, old_value, new_value):
 	if name == 'name':
 	    self.__name.set(text=self.subject.name)
-	    self.__name_update()
 	else:
 	    ModelElementItem.on_subject_update(self, name, old_value, new_value)
 
@@ -128,4 +124,3 @@ class PackageItem(ModelElementItem):
 	    self.subject.name = text
 
 gobject.type_register(PackageItem)
-

@@ -3,6 +3,9 @@
 class DiagramItem(object):
     """
     Basic functionality for all model elements (lines and elements!).
+
+    This class contains common functionallity for model elements and
+    relationships.
     """
 
     def __init__(self):
@@ -22,6 +25,12 @@ class DiagramItem(object):
 	    if subject:
 		subject.add_presentation(self)
 		subject.connect(self.on_subject_update)
+
+    def save_property(self, save_func, name):
+	'''
+	Save a property, this is a shorthand method.
+	'''
+	save_func(name, self.get_property(name))
 
     # DiaCanvasItem callbacks
     def _on_glue(self, handle, wx, wy, parent):
@@ -66,4 +75,5 @@ class DiagramItem(object):
 		self.subject.remove_presentation (self)
 
     def on_subject_update (self, name, old_value, new_value):
-	log.debug('DiagramItem: unhandled signal "%s"' % str(name))
+	pass
+	#log.debug('DiagramItem: unhandled signal "%s"' % str(name))

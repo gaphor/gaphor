@@ -40,7 +40,7 @@ class DependencyItem(relationship.RelationshipItem):
 	This method is called after a connection is established. This method
 	sets the internal state of the line and updates the data model.
 	"""
-	print 'confirm_connect_handle', handle
+	#print 'confirm_connect_handle', handle
 	c1 = self.handles[0].connected_to
 	c2 = self.handles[-1].connected_to
 	if c1 and c2:
@@ -54,7 +54,7 @@ class DependencyItem(relationship.RelationshipItem):
 	    self._set_subject(relation)
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
-	print 'confirm_disconnect_handle', handle
+	#print 'confirm_disconnect_handle', handle
 	if self.subject:
 	    self._set_subject(None)
 

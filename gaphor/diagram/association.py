@@ -28,27 +28,42 @@ class AssociationItem(relationship.RelationshipItem):
 	self.tail_label = None
 	self.tail_mult = None
 
-    def save (self, store):
-	self.__super.save(store)
-	if self.head_end:
-	    store.save_attribute('head_end', self.head_end)
-	if self.tail_end:
-	    store.save_attribute('tail_end', self.tail_end)
+#    def save (self, store):
+#	self.__super.save(store)
+#	if self.head_end:
+#	    store.save_attribute('head_end', self.head_end)
+#	if self.tail_end:
+#	    store.save_attribute('tail_end', self.tail_end)
 
-    def load (self, store):
-	self.__super.load(store)
-	try:
-	    head_end = store.reference('head_end')
-	    assert len(head_end) == 1
-	    self._set_head_end(head_end[0])
-	except ValueError:
-	    pass
-	try:
-	    tail_end = store.reference('tail_end')
-	    assert len(tail_end) == 1
-	    self._set_tail_end(tail_end[0])
-	except ValueError:
-	    pass
+    def save (self, save_func):
+	self.__super.save(save_func)
+	if self.head_end:
+	    save_func('head_end', self.head_end)
+	if self.tail_end:
+	    save_func('tail_end', self.tail_end)
+
+#    def load (self, store):
+#	self.__super.load(store)
+#	try:
+#	    head_end = store.reference('head_end')
+#	    assert len(head_end) == 1
+#	    self._set_head_end(head_end[0])
+#	except ValueError:
+#	    pass
+#	try:
+#	    tail_end = store.reference('tail_end')
+#	    assert len(tail_end) == 1
+#	    self._set_tail_end(tail_end[0])
+#	except ValueError:
+#	    pass
+
+    def load (self, name, value):
+	if name == 'head_end':
+	    self._set_head_end(value)
+	elif name == 'tail_end':
+	    self._set_tail_end(value)
+	else:
+	    self.__super.load(name, value)
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'head_end':

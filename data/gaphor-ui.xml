@@ -7,8 +7,8 @@
 	    <menuitem name="FileOpen" verb=""/>
 	    <menuitem name="FileSave" verb=""/>
 	    <menuitem name="FileSaveAs" verb=""/>
+	    <menuitem name="FileRevert" verb=""/>
 	    <!--
-	    <menuitem name="FileRevert" verb="" hidden="1"/>
 	    <separator/>
 	    <menuitem name="FilePrint" verb="" hidden="1"/>
 	    <menuitem name="FilePrintSetup" verb="" hidden="1"/>
@@ -75,6 +75,7 @@
     <popups>
 	<popup name="NamespaceView">
 	    <menuitem name="OpenModelElement" verb=""/>
+	    <menuitem name="RenameModelElement" verb=""/>
 	</popup>
     </popups>
 

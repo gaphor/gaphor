@@ -16,10 +16,14 @@ import gtk
 import gaphor.UML as UML
 import gaphor.diagram as diagram
 import gc
+import traceback
 
 DEFAULT_EXT='.gaphor'
 
 class NewCommand(Command):
+
+    def set_parameters(self, params):
+	self._window = params['window']
 
     def execute(self):
 	fact = GaphorResource(UML.ElementFactory)
@@ -29,6 +33,7 @@ class NewCommand(Command):
 	diagram = fact.create(UML.Diagram)
 	diagram.namespace = model
 	diagram.name='main'
+	self._window.set_filename(None)
 
 CommandInfo (name='FileNew', _label='_New', pixname='New',
 	     _tip='Create a new Gaphor project',
@@ -38,44 +43,32 @@ CommandInfo (name='FileNew', _label='_New', pixname='New',
 
 class OpenCommand(Command):
 
-    def __init__(self):
-	Command.__init__(self)
-	self.filename = None
+    def set_parameters(self, params):
+	self._window = params['window']
 
     def execute(self):
 	filesel = gtk.FileSelection('Open Gaphor file')
-	filesel.set_modal(True)
 	filesel.hide_fileop_buttons()
 	
-	if self.filename:
-	    filesel.set_filename(self.filename)
+	response = filesel.run()
+	filesel.hide()
+	if response == gtk.RESPONSE_OK:
+	    filename = filesel.get_filename()
+	    if filename and len(filename) > 0:
+		log.debug('Loading from: %s' % filename)
+		GaphorResource(UML.ElementFactory).flush()
+		#GaphorResource(diagram.DiagramItemFactory).flush()
 
-	filesel.ok_button.connect('clicked', self.on_ok_button_pressed, filesel)
-	filesel.cancel_button.connect('clicked',
-				      self.on_cancel_button_pressed, filesel)
-	
-	filesel.show()
+		gc.collect()
 
-    def on_ok_button_pressed(self, button, filesel):
-	filename = filesel.get_filename()
-	filesel.destroy()
-	if filename and len(filename) > 0:
-	    self.filename = filename
-	    log.debug('Loading from: %s' % filename)
-	    GaphorResource(UML.ElementFactory).flush()
-	    #GaphorResource(diagram.DiagramItemFactory).flush()
-
-	    gc.collect()
-
-	    store = Storage()
-	    try:
-		store.load(filename)
-	    except Exception, e:
-		import traceback
-		log.error('Error while loading model from file %s: %s' % (filename, e))
-		traceback.print_exc()
-
-    def on_cancel_button_pressed(self, button, filesel):
+		store = Storage()
+		try:
+		    store.load(filename)
+		    self._window.set_filename(filename)
+		except Exception, e:
+		    import traceback
+		    log.error('Error while loading model from file %s: %s' % (filename, e))
+		    traceback.print_exc()
 	filesel.destroy()
 
 CommandInfo (name='FileOpen', _label='_Open...', pixname='Open', accel='F3',
@@ -86,38 +79,29 @@ CommandInfo (name='FileOpen', _label='_Open...', pixname='Open', accel='F3',
 
 class SaveCommand(Command):
 
-    def __init__(self):
-	Command.__init__(self)
-	self.filename = None
+    def set_parameters(self, params):
+	self._window = params['window']
 
     def execute(self):
-	filesel = gtk.FileSelection('Save file')
-	filesel.set_modal(True)
-	if self.filename:
-	    filesel.set_filename(self.filename)
-
-	filesel.ok_button.connect('clicked', self.on_ok_button_pressed, filesel)
-	filesel.cancel_button.connect('clicked',
-				      self.on_cancel_button_pressed, filesel)
-	
-	filesel.show()
-
-    def on_ok_button_pressed(self, button, filesel):
-	filename = filesel.get_filename()
-	filesel.destroy()
+	filename = self._window.get_filename()
+	if not filename:
+	    filesel = gtk.FileSelection('Save file')
+	    response = filesel.run()
+	    filesel.hide()
+	    if response == gtk.RESPONSE_OK:
+		filename = filesel.get_filename()
+	    filesel.destroy()
 	if filename and len(filename) > 0:
 	    if not filename.endswith(DEFAULT_EXT):
 		filename = filename + DEFAULT_EXT
-	    self.filename = filename
 	    log.debug('Saving to: %s' % filename)
 	    store = Storage()
 	    try:
 		store.save(filename)
+		self._window.set_filename(filename)
 	    except Exception, e:
-		log.error('Error while saving model to file %s: %s' % (filename, e))
-
-    def on_cancel_button_pressed(self, button, filesel):
-	filesel.destroy()
+		log.error('Failed to save to file %s: %s' % (filename, e))
+		traceback.print_exc()
 
 CommandInfo (name='FileSave', _label='_Save', pixname='Save',
 	     accel='*Control*s',
@@ -128,11 +112,27 @@ CommandInfo (name='FileSave', _label='_Save', pixname='Save',
 
 class SaveAsCommand(Command):
 
-    def is_valid(self):
-	return SaveCommand().is_valid()
+    def set_parameters(self, params):
+	self._window = params['window']
 
     def execute(self):
-	SaveCommand().execute()
+	filesel = gtk.FileSelection('Save file as')
+	response = filesel.run()
+	filesel.hide()
+	if response == gtk.RESPONSE_OK:
+	    filename = filesel.get_filename()
+	filesel.destroy()
+	if filename and len(filename) > 0:
+	    if not filename.endswith(DEFAULT_EXT):
+		filename = filename + DEFAULT_EXT
+	    log.debug('Saving to: %s' % filename)
+	    store = Storage()
+	    try:
+		store.save(filename)
+		self._window.set_filename(filename)
+	    except Exception, e:
+		log.error('Failed to save to file %s: %s' % (filename, e))
+		traceback.print_exc()
 
 CommandInfo (name='FileSaveAs', _label='_Save as...', pixname='Save As',
 	     _tip='Save the current gaphor project',
@@ -142,8 +142,21 @@ CommandInfo (name='FileSaveAs', _label='_Save as...', pixname='Save As',
 
 class RevertCommand(Command):
 
+    def set_parameters(self, params):
+	self._window = params['window']
+
     def execute(self):
-	pass
+	if self._window.get_filename():
+	    log.debug('Loading from: %s' % filename)
+	    GaphorResource(UML.ElementFactory).flush()
+
+	    store = Storage()
+	    try:
+		store.load(filename)
+	    except Exception, e:
+		import traceback
+		log.error('Error while loading model from file %s: %s' % (filename, e))
+		traceback.print_exc()
 
 class QuitCommand(Command):
 

@@ -369,20 +369,55 @@ The signals protocol is:
     def __emit (self, key, old_value_or_action, new_value):
 	self.__dict__['__signal'].emit (key, old_value_or_action, new_value)
 
-    def save(self, store):
+    def save(self, save_func):
 	for key in self.__dict__.keys():
 	    if not key.startswith('__'):
 		obj = self.__dict__[key]
 		if isinstance (obj, Sequence):
 		    for item in obj.items:
-			store.save_attribute (key, item)
+			save_func(key, item)
+			#store.save_attribute (key, item)
 		else:
-		    store.save_attribute (key, obj)
+		    save_func(key, obj)
+		    #store.save_attribute (key, obj)
 	return None
 
-    def load(self, store):
-	for name, value in store.values().items():
-	    attr_info = self.__get_attr_info (name, self.__class__)
+#    def load(self, store):
+#	for name, value in store.values().items():
+#	    attr_info = self.__get_attr_info (name, self.__class__)
+#	    if issubclass (attr_info[1], types.IntType) or \
+#	       issubclass (attr_info[1], types.LongType):
+#		self.__dict__[name] = int (value)
+#	    elif issubclass (attr_info[1], types.FloatType):
+#		self.__dict__[name] = float (value)
+#	    else:
+#		if value and value != '':
+#		    self.__dict__[name] = value
+#	    self.__queue (name, None, value)
+#	
+#	for name, reflist in store.references().items():
+#	    attr_info = self.__get_attr_info (name, self.__class__)
+#	    for refelem in reflist:
+#		if not isinstance (refelem, attr_info[1]):
+#		    raise ValueError, 'Referenced item is of the wrong type'
+#		if attr_info[0] is Sequence:
+#		    self.__ensure_seq (name, attr_info[1])
+#		    if refelem not in self.__dict__[name]:
+#			self.__dict__[name].items.append (refelem)
+#			self.__queue (name, 'add', refelem)
+#		else:
+#		    self.__dict__[name] = refelem
+#		    self.__queue (name, None, refelem)
+
+    def load(self, name, value):
+	#print self, name, value
+	attr_info = self.__get_attr_info (name, self.__class__)
+	if attr_info[0] is Sequence:
+	    self.__ensure_seq (name, attr_info[1])
+	    if value not in self.__dict__[name]:
+		self.__dict__[name].items.append (value)
+		self.__queue (name, 'add', value)
+	else:
 	    if issubclass (attr_info[1], types.IntType) or \
 	       issubclass (attr_info[1], types.LongType):
 		self.__dict__[name] = int (value)
@@ -390,26 +425,14 @@ The signals protocol is:
 		self.__dict__[name] = float (value)
 	    else:
 		if value and value != '':
+		    print 'loading val:', value, 'for', name, self
 		    self.__dict__[name] = value
 	    self.__queue (name, None, value)
 	
-	for name, reflist in store.references().items():
-	    attr_info = self.__get_attr_info (name, self.__class__)
-	    for refelem in reflist:
-		if not isinstance (refelem, attr_info[1]):
-		    raise ValueError, 'Referenced item is of the wrong type'
-		if attr_info[0] is Sequence:
-		    self.__ensure_seq (name, attr_info[1])
-		    if refelem not in self.__dict__[name]:
-			self.__dict__[name].items.append (refelem)
-			self.__queue (name, 'add', refelem)
-		else:
-		    self.__dict__[name] = refelem
-		    self.__queue (name, None, refelem)
-
-    def postload (self, store):
+    def postload (self):
 	'''Do some things after the items are initialized... This is basically
 	used for Diagrams.'''
+	print 'postload:', self.id, self
 	self.__flush()
 
 

@@ -10,6 +10,44 @@ __date__ = '$date$'
 from modelelements import Namespace
 import diacanvas
 
+class _Canvas(diacanvas.Canvas):
+    '''
+    Some additions to diacanvas.Canvas class, esp. load and save functionallity.
+    '''
+    _savable_canvas_properties = [ 'extents', 'static_extents',
+	    'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
+	    'grid_ofs_y', 'grid_color', 'grid_bg' ]
+
+    def save(self, save_func):
+	print '_Canvas.save'
+	for prop in _Canvas._savable_canvas_properties:
+	    save_func(prop, self.get_property(prop))
+	save_func('root_affine', self.root.get_property('affine'))
+	# Save child items:
+	for item in self.root.children:
+	    save_func(None, item) #item.save(canvas_store.new(item))
+
+    def load(self, name, value):
+	self.set_property ("allow_undo", 0)
+
+	# First create the canvas:
+	if name == 'root_affine':
+	    self.root.set_property('affine', eval(value))
+	else:
+	    self.set_property (name, eval(value))
+
+	self.update_now ()
+
+    def postload(self):
+	print 'postload:', self
+	self.update_now ()
+
+	# setting allow-undo to 1 here will cause update info from later
+	# created elements to be put on the undo stack.
+	self.clear_undo()
+	self.clear_redo()
+	self.set_property ("allow_undo", 1)
+
 
 class Diagram(Namespace):
     __index = 1
@@ -17,14 +55,10 @@ class Diagram(Namespace):
     _attrdef = { 'canvas': ( None, diacanvas.Canvas ) }
     # Diagram item to UML model element mapping:
     diagram2UML = { }
-    _savable_canvas_properties = [ 'extents', 'static_extents',
-	    'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
-	    'grid_ofs_y', 'grid_color', 'grid_bg' ]
-    _savable_root_item_properties = [ 'affine', ]
 
     def __init__(self, id):
 	Namespace.__init__(self, id)
-        self.canvas = diacanvas.Canvas()
+        self.canvas = _Canvas()
 	self.canvas.set_undo_stack_depth(10)
 	self.canvas.set_property ("allow_undo", 1)
 
@@ -39,60 +73,62 @@ class Diagram(Namespace):
 	Diagram.__index += 1
 	return obj
 
-    def save(self, store):
+#    def save(self, save_func):
 	# Save the diagram attributes, but not the canvas
-	self_canvas = self.canvas
-	del self.__dict__['canvas']
-	node = Namespace.save (self, store)
-	self.__dict__['canvas'] = self_canvas
-	del self_canvas
+	#self_canvas = self.canvas
+	#del self.__dict__['canvas']
+#	Namespace.save (self, save_func)
+	#self.__dict__['canvas'] = self_canvas
+	#del self_canvas
 
 	# Save attributes of the canvas:
-	canvas_store = store.new (self.canvas)
-	for prop in Diagram._savable_canvas_properties:
-	    canvas_store.save_property(prop)
+	#canvas_store = store.new (self.canvas)
+#	for prop in Diagram._savable_canvas_properties:
+#	    save_func(prop, self.canvas.get_property(prop))
+	    #canvas_store.save_property(prop)
 
-	canvas_store.save_attribute ('root_affine', self.canvas.root.get_property('affine'))
-
-	# Save child items:
-	for item in self.canvas.root.children:
-	    item.save(canvas_store.new(item))
-
-    def load (self, store):
-	#print 'Doing Namespace'
-        Namespace.load (self, store)
-	#print 'Namespace done'
-
-	self.canvas.set_property ("allow_undo", 0)
-
-	# First create the canvas:
-	canvas_store = store.canvas()
-	for name, value in canvas_store.values().items():
-	    #print 'Diagram: loading attribute', name
-	    if name == 'root_affine':
-	    	self.canvas.root.set_property('affine', eval(value))
-	    else:
-		#print 'value = "%s"' % value
-		v = eval(value)
-		self.canvas.set_property (name, v)
-
-	item_dict = canvas_store.canvas_items()
+#	save_func('root_affine', self.canvas.root.get_property('affine'))
+	#canvas_store.save_attribute ('root_affine', self.canvas.root.get_property('affine'))
 	
-	for id, item_store in item_dict.items():
-	    #log.debug('Creating item %s with id %i' % (str(item_store.type()), id))
-	    type = item_store.type()
-	    item = type()
-	    if id > Diagram.__index:
-		Diagram.__index = id + 1
+	# Save child items:
+#	for item in self.canvas.root.children:
+#	    save_func(None, item) #item.save(canvas_store.new(item))
 
-	    self.canvas.root.add(item)
-	    item_store.add_cid_to_item_mapping (id, item)
-	    item.set_property ('id', id)
-	    item.load(item_store)
+#    def load (self, store):
+#	#print 'Doing Namespace'
+#        Namespace.load (self, store)
+#	#print 'Namespace done'
+#
+#	self.canvas.set_property ("allow_undo", 0)
 
-	self.canvas.update_now ()
+#	# First create the canvas:
+#	canvas_store = store.canvas()
+#	for name, value in canvas_store.values().items():
+#	    #print 'Diagram: loading attribute', name
+#	    if name == 'root_affine':
+#	    	self.canvas.root.set_property('affine', eval(value))
+#	    else:
+#		#print 'value = "%s"' % value
+#		v = eval(value)
+#		self.canvas.set_property (name, v)
+#
+#	item_dict = canvas_store.canvas_items()
+#	
+#	for id, item_store in item_dict.items():
+#	    #log.debug('Creating item %s with id %i' % (str(item_store.type()), id))
+#	    type = item_store.type()
+#	    item = type()
+#	    if id > Diagram.__index:
+#		Diagram.__index = id + 1
+#
+#	    self.canvas.root.add(item)
+#	    item_store.add_cid_to_item_mapping (id, item)
+#	    item.set_property ('id', id)
+#	    item.load(item_store)
+#
+#	self.canvas.update_now ()
 
-    def postload (self, store): 
+    def __postload (self, store): 
         '''We use postload() to connect objects to each other. This can not
 	be done in the load() method, since objects can change their size and
 	contents after we have connected to them (since they are not yet

@@ -138,12 +138,13 @@ class DeleteCommand(Command):
 	self._view = params['window'].get_view()
 
     def execute(self):
-	self._view.delete_selected()
-	pass
+	items = self._view.selected_items
+	for i in items:
+	    i.item.parent.remove(i.item)
 
-#CommandInfo (name='DiagramCreate', _label='_New diagram', pixname='gaphor-diagram',
-#	     context='main.menu',
-#	     command_class=CreateDiagramCommand).register()
+CommandInfo (name='EditDelete', _label='_Delete', pixname='gtk-delete',
+	     context='diagram.menu', accel='*Control*d',
+	     command_class=DeleteCommand).register()
 
 
 class ZoomInCommand(Command):
@@ -155,7 +156,7 @@ class ZoomInCommand(Command):
 	self._view.set_zoom(self._view.get_zoom() + 0.1)
 
 CommandInfo (name='ViewZoomIn', _label='Zoom _In', pixname='gtk-zoom-in',
-	     context='diagram.menu',
+	     context='diagram.menu', accel='*Control*plus',
 	     command_class=ZoomInCommand).register()
 
 
@@ -168,7 +169,7 @@ class ZoomOutCommand(Command):
 	self._view.set_zoom(self._view.get_zoom() - 0.1)
 
 CommandInfo (name='ViewZoomOut', _label='Zoom _Out', pixname='gtk-zoom-out',
-	     context='diagram.menu',
+	     context='diagram.menu', accel='*Control*minus',
 	     command_class=ZoomOutCommand).register()
 
 

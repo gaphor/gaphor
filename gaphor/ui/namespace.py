@@ -19,70 +19,11 @@ class NamespaceModel(gtk.GenericTreeModel):
     <object>.ownerElement list.
     """
 
-    def __element_signals (self, key, old_value, new_value, obj):
-	if key == 'name':
-	    path = self.get_path (obj)
-	    if path != ():
-		# During loading, the item may be connected, but is not
-		# in the tree path (ie. the namespace is not set).
-		iter = self.get_iter(path)
-		self.row_changed(path,  iter)
-#        elif key == 'namespace' and obj.namespace:
-#	    # FixMe: How should we handle elements that are being moved? The
-#	    # Namespace changes, but this happens before the tree is notified.
-#	    path = self.get_path()
-#	    #print 'Namespace path =', path, type(path)
-#	    iter = self.get_iter(path)
-#	    #print 'Namespace set for', obj, path
-#	    self.row_inserted(path, iter)
-	elif key == 'ownedElement' and old_value == 'add':
-	    def recursive_add(element):
-		path = self.get_path(element)
-		#print 'ownedElement ADD', element, element.namespace, path
-		iter = self.get_iter(path)
-		self.row_inserted(path, iter)
-		for child in element.ownedElement:
-		    recursive_add(child)
-	    recursive_add(new_value)
-	elif key == 'ownedElement' and old_value == 'remove':
-	    path = self.get_path(new_value)
-	    #print 'ownedElement remove', old_value, new_value, path
-	    if path != ():
-		self.row_deleted (path)
-	elif key == '__unlink__':
-	    pass # Stuff is handled in namespace and ownedElement keys...
-	    #print 'Destroying', obj
-
-    def __factory_signals (self, key, obj, factory):
-        if key == 'create' and isinstance (obj, UML.Namespace):
-	    #print 'Object added'
-	    obj.connect (self.__element_signals, obj)
-	    if obj.id == 1:
-		self.model = obj
-#	    try:
-#		if obj.namespace:
-#		     path = self.get_path(obj)
-#		     iter = self.get_iter(path)
-#		     self.row_inserted (path, iter)
-#	    except AttributeError:
-#		pass
-	elif key == 'remove' and isinstance (obj, UML.Namespace):
-	    if obj is self.model:
-		for n in obj.ownedElement:
-		    self.row_deleted((0,))
-	    else:
-		path = self.get_path (obj)
-		print 'Removing object', obj, path
-		if path != ():
-		    self.row_deleted (path)
-	    obj.disconnect (self.__element_signals)
-
     def __init__(self, factory):
 	if not isinstance (factory, UML.ElementFactory):
 	    raise AttributeError
 
 	self.model = factory.lookup(1);
-	#print "self.model =", self.model
 	# Init parent:
 	gtk.GenericTreeModel.__init__(self)
 	# We own the references to the iterators.
@@ -95,6 +36,43 @@ class NamespaceModel(gtk.GenericTreeModel):
 	    if isinstance (element, UML.Namespace):
 		element.connect (self.__element_signals, element)
  
+    def __element_signals (self, key, old_value, new_value, obj):
+	if key == 'name':
+	    path = self.get_path (obj)
+	    if path != ():
+		# During loading, the item may be connected, but is not
+		# in the tree path (ie. the namespace is not set).
+		iter = self.get_iter(path)
+		self.row_changed(path, iter)
+	elif key == 'ownedElement' and old_value == 'add':
+	    def recursive_add(element):
+		path = self.get_path(element)
+		#print 'ownedElement ADD', element, element.namespace, path
+		iter = self.get_iter(path)
+		self.row_inserted(path, iter)
+		for child in element.ownedElement:
+		    recursive_add(child)
+	    recursive_add(new_value)
+	elif key == 'ownedElement' and old_value == 'remove':
+	    path = self.get_path(new_value)
+	    log.debug( 'ownedElement remove: %s %s %s' % (old_value, new_value, path))
+	    if path != ():
+		self.row_deleted(path)
+	elif key == '__unlink__':
+	    pass # Stuff is handled in namespace and ownedElement keys...
+	    #print 'Destroying', obj
+
+    def __factory_signals (self, key, obj, factory):
+        if key == 'create' and isinstance (obj, UML.Namespace):
+	    obj.connect (self.__element_signals, obj)
+	    if obj.id == 1:
+		self.model = obj
+	elif key == 'remove' and isinstance (obj, UML.Namespace):
+	    if obj is self.model:
+		for n in obj.ownedElement:
+		    self.row_deleted((0,))
+	    obj.disconnect (self.__element_signals)
+
     def dump(self):
         '''Dump the static structure of the model to stdout.'''
 	def doit(node, depth):
@@ -225,15 +203,16 @@ class NamespaceModel(gtk.GenericTreeModel):
 
 class NamespaceView(gtk.TreeView):
     TARGET_STRING = 0
-    TARGET_ROOTWIN = 1
+    TARGET_ELEMENT_ID = 1
     DND_TARGETS = [
 	('STRING', 0, TARGET_STRING),
 	('text/plain', 0, TARGET_STRING),
-	('application/x-rootwin-drop', 0, TARGET_ROOTWIN)]
-    __gsignals__ = { 'drag_begin': 'override',
-    		     'drag_data_get': 'override',
-    		     'drag_data_delete': 'override',
-		     'drag_data_received': 'override' }
+	('gaphor/element-id', 0, TARGET_ELEMENT_ID)]
+    # Can not set signals for some reason...
+#    __gsignals__ = { 'drag_begin': 'override',
+#    		     'drag_data_get': 'override',
+#    		     'drag_data_delete': 'override',
+#		     'drag_data_received': 'override' }
 
     def __init__(self, model):
 	assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
@@ -252,7 +231,7 @@ class NamespaceView(gtk.TreeView):
 	# Second cell if for the name of the object...
 	cell = gtk.CellRendererText ()
 	#cell.set_property ('editable', 1)
-	cell.connect('edited', self._name_edited, None)
+	cell.connect('edited', self._name_edited)
 	column.pack_start (cell, 0)
 	column.set_cell_data_func (cell, self._set_name, None)
 
@@ -262,16 +241,17 @@ class NamespaceView(gtk.TreeView):
 	# DND info:
 	# drag
 	self.drag_source_set(gtk.gdk.BUTTON1_MASK | gtk.gdk.BUTTON3_MASK,
-			     NamespaceView.DND_TARGETS, gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+			     NamespaceView.DND_TARGETS,
+			     gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
 	#self.connect('drag_begin', NamespaceView.do_drag_begin)
-	#self.connect('drag_data_get', NamespaceView.do_drag_data_get)
+	self.connect('drag_data_get', NamespaceView.do_drag_data_get)
 	#self.connect('drag_data_delete', NamespaceView.do_drag_data_delete)
 	# drop
-	self.drag_dest_set (gtk.DEST_DEFAULT_ALL, NamespaceView.DND_TARGETS[:-1],
-			    gtk.gdk.ACTION_COPY)
+	#self.drag_dest_set (gtk.DEST_DEFAULT_ALL, NamespaceView.DND_TARGETS[:-1],
+	#		    gtk.gdk.ACTION_COPY)
 	#self.connect('drag_data_received', NamespaceView.do_drag_data_received)
-	self.connect('drag_motion', NamespaceView.do_drag_motion)
-	self.connect('drag_drop', NamespaceView.do_drag_drop)
+	#self.connect('drag_motion', NamespaceView.do_drag_motion)
+	#self.connect('drag_drop', NamespaceView.do_drag_drop)
 
     def _set_pixbuf (self, column, cell, model, iter, data):
 	value = model.get_value(iter, 0)
@@ -285,7 +265,7 @@ class NamespaceView(gtk.TreeView):
 	name = string.replace(value.name, '\n', ' ')
 	cell.set_property('text', name)
 
-    def _name_edited (self, cell, path_str, new_text, data):
+    def _name_edited (self, cell, path_str, new_text):
 	"""
 	The text has been edited. This method updates the data object.
 	Note that 'path_str' is a string where the fields are separated by
@@ -300,12 +280,19 @@ class NamespaceView(gtk.TreeView):
 	element = model.get_value(iter, 0)
 	element.name = new_text
 
-    def do_drag_begin (self, context):
-	print 'do_drag_begin'
+#    def do_drag_begin (self, context):
+#	print 'do_drag_begin'
 
     def do_drag_data_get (self, context, selection_data, info, time):
 	print 'do_drag_data_get'
-	selection_data.set(selection_data.target, 8, "I'm Data!")
+	selection = self.get_selection()
+	model, iter = selection.get_selected()
+	if iter:
+	    element = model.get_value (iter, 0)
+	    if info == NamespaceView.TARGET_ELEMENT_ID:
+		selection_data.set(selection_data.target, 8, str(element.id))
+	    else:
+		selection_data.set(selection_data.target, 8, element.name)
 
     def do_drag_data_delete (self, context, data):
 	print 'Delete the data!'

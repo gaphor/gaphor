@@ -34,19 +34,31 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
 	self.auto_resize = 0
 	self.__id = -1
 
-    def save (self, store):
-	store.save_property('affine')
-	store.save_property('width')
-	store.save_property('height')
-	store.save_attribute('subject', self.subject)
-	store.save_property('auto-resize')
+#    def save (self, store):
+#	store.save_property('affine')
+#	store.save_property('width')
+#	store.save_property('height')
+#	store.save_attribute('subject', self.subject)
+#	store.save_property('auto-resize')
 
-    def load (self, store):
-	for prop in [ 'affine', 'width', 'height', 'auto-resize' ]:
-	    self.set_property(prop, eval (store.value(prop)))
-	self.set_property('subject', store.reference('subject')[0])
+    def save (self, save_func):
+	self.save_property(save_func, 'affine')
+	self.save_property(save_func, 'width')
+	self.save_property(save_func, 'height')
+	save_func('subject', self.subject)
+	self.save_property(save_func, 'auto-resize')
 
-    def postload(self, store):
+    def load (self, name, value):
+	#if name in ( 'affine', 'width', 'height', 'auto-resize' ):
+	#if name == 'subject':
+	#self.set_property('subject', store.reference('subject')[0])
+	if name == 'subject':
+	    self.set_property(name, value)
+	else:
+	    self.set_property(name, eval(value))
+
+    def postload(self):
+	print 'postload:', self
 	pass
 
     def do_set_property (self, pspec, value):

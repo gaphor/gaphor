@@ -47,9 +47,10 @@ class ElementFactory(object):
 	ID for the next item is set to id + 1.'''
 	old_index = self.__index
 	self.__index = id
-	self.create (type)
+	obj = self.create (type)
 	if old_index > self.__index:
 	    self.__index = old_index
+	return obj
 
     def lookup (self, id):
 	try:
