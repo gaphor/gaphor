@@ -16,6 +16,7 @@ class MainWindow(object):
     """
 
     def __init__(self):
+	self.__menu = None
 	pass
 
     def get_window(self):
@@ -52,6 +53,8 @@ class MainWindow(object):
 	window.show_all()
 
 	window.connect ('destroy', self.__destroy_event_cb)
+	view.connect_after ('event', self.__view_event_cb)
+	view.connect ('row_activated', self.__view_row_activated_cb)
 
 	self.__window = window
 	self.__ui_component = ui_component
@@ -60,10 +63,39 @@ class MainWindow(object):
 
 	# Set commands:
 	command_registry = GaphorResource('CommandRegistry')
-	ui_component.set_translate ('/', command_registry.create_command_xml(context='main.menu'))
+	ui_component.set_translate ('/', command_registry.create_command_xml(context='main.'))
 	verbs = command_registry.create_verbs(context='main.menu',
 					      params={ 'window': self })
 	ui_component.add_verb_list (verbs, None)
 
     def __destroy_event_cb (self, window):
 	bonobo.main_quit()
+
+    def __view_row_activated_cb(self, view, path, column):
+	item = self.get_model().on_get_iter(path)
+	cmd_reg = GaphorResource('CommandRegistry')
+	cmd = cmd_reg.create_command('OpenModelElement')
+	cmd.set_parameters({ 'window': self,
+			     'element': item })
+	cmd.execute()
+
+    def __view_event_cb(self, view, event):
+	# handle mouse button 3:
+	if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
+		print 'Pressed button Three, popup now!'
+		selection = view.get_selection()
+		print 'Selected:', selection.get_selected()
+		model, iter = selection.get_selected()
+		if not iter:
+		    return
+		element = model.get_value(iter, 0)
+		cmd_reg = GaphorResource('CommandRegistry')
+		verbs = cmd_reg.create_verbs(context='main.popup',
+					     params={ 'window': self,
+						      'element': element })
+		self.__ui_component.add_verb_list (verbs, None)
+		menu = gtk.Menu()
+		# The window takes care of destroying the old menu, if any...
+		self.__window.add_popup(menu, '/popups/NamespaceView')
+		menu.popup(None, None, None, event.button, 0)
+

@@ -230,9 +230,7 @@ class NamespaceView(gtk.TreeView):
 	self.__gobject_init__()
 	gtk.TreeView.__init__(self, model)
 	self.set_property('headers-visible', 0)
-	self.connect('row_activated', NamespaceView.on_row_activated)
 	self.set_rules_hint(gtk.TRUE)
-	#self.connect('event', NamespaceView._event)
 	selection = self.get_selection()
 	selection.set_mode(gtk.SELECTION_BROWSE)
 	column = gtk.TreeViewColumn ('')
@@ -278,23 +276,5 @@ class NamespaceView(gtk.TreeView):
 	element = model.get_value(iter, 0)
 	element.name = new_text
 
-    def on_row_activated(self, path, column):
-	item = self.get_model().on_get_iter(path)
-	cmd_reg = GaphorResource('CommandRegistry')
-	cmd = cmd_reg.create_command('OpenModelElement')
-	cmd.set_parameters({ 'window': self.get_toplevel(),
-			     'element': item })
-	cmd.execute()
-
-#    def _event(self, event):
-#	if event.type == gtk.gdk._2BUTTON_PRESS:
-#	    def handle_selection(model, path, iter):
-#		print 'Handling:', model, path, iter
-#		element = model.get_value(iter, 0)
-#		OpenModelElementCommand(element).execute()
-#
-#	    selection = self.get_selection()
-#	    selection.selected_foreach(handle_selection)
-	    
 gobject.type_register(NamespaceModel)
 gobject.type_register(NamespaceView)

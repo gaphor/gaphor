@@ -42,7 +42,7 @@ class CommandRegistry(object):
     def create_command_xml(self, context):
 	xml = '<commands>'
 	for info in self.values():
-	    if info.context == context:
+	    if info.context.startswith(context):
 		xml += info.create_cmd_xml()
 	xml += '</commands>'
 	return xml
@@ -54,7 +54,7 @@ class CommandRegistry(object):
 	"""
 	verbs = list()
 	for info in self.values():
-	    if info.context == context:
+	    if info.context.startswith(context):
 		try:
 		    cmd = info.command_class()
 		    # TODO: Add some sort of capability structure. Based on the

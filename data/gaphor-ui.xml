@@ -72,6 +72,12 @@
 	<separator/>
     </dockitem>
 
+    <popups>
+	<popup name="NamespaceView">
+	    <menuitem name="OpenModelElement" verb=""/>
+	</popup>
+    </popups>
+
     <status>
 	<item name="main"/>
     </status>
