@@ -1,3 +1,7 @@
+2005-01-11  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/itemactions.py gaphor/diagram/association.py: UML 2.0
+	navigability support
+
 2005-01-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/uml2.gaphor: fixed bug in Lifeline diagram.

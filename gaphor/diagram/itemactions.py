@@ -444,7 +444,7 @@ weave_method(AssociationInvertDirectionAction.execute, UndoTransactionAspect)
 register_action(AssociationInvertDirectionAction, 'ItemFocus')
 
 
-class NavigableAction(CheckAction):
+class NavigableAction(RadioAction):
     end_name=''
     def init(self, window):
         self._window = window
@@ -458,7 +458,7 @@ class NavigableAction(CheckAction):
             if isinstance(item, AssociationItem):
                 end = item.get_property(self.end_name)
                 if end.subject:
-                    self.active = (end.subject.classifier != None)
+                    self.active = (end.get_navigability() == self.navigable)
         except NoFocusItemError:
             pass
 
@@ -466,7 +466,7 @@ class NavigableAction(CheckAction):
         item = self.get_association_end()
         assert item.subject
         assert isinstance(item.subject, UML.Property)
-        item.set_navigable(self.active)
+        item.set_navigable(self.navigable)
 
 weave_method(NavigableAction.execute, UndoTransactionAspect)
 
@@ -475,16 +475,54 @@ class HeadNavigableAction(NavigableAction):
     id = 'Head_isNavigable'
     label = 'Navigable'
     end_name = 'head'
+    navigable = True
 
 register_action(HeadNavigableAction, 'ItemFocus')
+
+
+class HeadNotNavigableAction(NavigableAction):
+    id = 'Head_isNotNavigable'
+    label = 'Not Navigable'
+    end_name = 'head'
+    navigable = False
+
+register_action(HeadNotNavigableAction, 'ItemFocus')
+
+
+class HeadUnknownNavigationAction(NavigableAction):
+    id = 'Head_unknownNavigation'
+    label = 'Unknown Navigation'
+    end_name = 'head'
+    navigable = None
+
+register_action(HeadUnknownNavigationAction, 'ItemFocus')
 
 
 class TailNavigableAction(NavigableAction):
     id = 'Tail_isNavigable'
     label = 'Navigable'
     end_name = 'tail'
+    navigable = True
 
 register_action(TailNavigableAction, 'ItemFocus')
+
+
+class TailNotNavigableAction(NavigableAction):
+    id = 'Tail_isNotNavigable'
+    label = 'Not Navigable'
+    end_name = 'tail'
+    navigable = False
+
+register_action(TailNotNavigableAction, 'ItemFocus')
+
+
+class TailUnknownNavigationAction(NavigableAction):
+    id = 'Tail_unknownNavigation'
+    label = 'Unknown Navigation'
+    end_name = 'head'
+    navigable = None
+
+register_action(TailUnknownNavigationAction, 'ItemFocus')
 
 
 class AggregationAction(RadioAction):
