@@ -33,7 +33,8 @@ def save(filename=None, factory=None):
         This applies to both UML as well as canvas items.
         """
         # Save a reference to the object:
-        buffer.write('<reference name="%s" refid="%s"/>\n' % (name, value.id))
+        if value.id:
+            buffer.write('<reference name="%s" refid="%s"/>\n' % (name, value.id))
 
     def save_value(name, value):
         """Save a value (attribute).
@@ -129,13 +130,13 @@ def _load(elements, factory):
         if isinstance(elem, parser.element):
             try:
                 cls = getattr(UML, elem.type)
-                log.debug('Creating UML element for %s' % elem)
+                #log.debug('Creating UML element for %s' % elem)
                 elem.element = factory.create_as(cls, id)
             except:
                 raise
         elif isinstance(elem, parser.canvasitem):
             cls = getattr(diagram, elem.type)
-            log.debug('Creating canvas item for %s' % elem)
+            #log.debug('Creating canvas item for %s' % elem)
             elem.element = cls(id)
         else:
             raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
@@ -150,14 +151,16 @@ def _load(elements, factory):
         # establish parent/child relations on canvas items:
         if isinstance(elem, parser.element) and elem.canvas:
             for item in elem.canvas.canvasitems:
-                assert item in elements.values(), 'Item %s is a canvas item, but it is not in the parsed objects table'
+                assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
                 item.element.set_property('parent', elem.element.canvas.root)
         if isinstance(elem, parser.canvasitem):
             for item in elem.canvasitems:
+                assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
                 item.element.set_property('parent', elem.element)
 
         # load attributes and references:
         for name, value in elem.values.items():
+            #log.debug('Loading value %s (%s) for element %s' % (name, value, elem.element))
             elem.element.load(name, value)
         for name, refids in elem.references.items():
             for refid in refids:
@@ -166,6 +169,7 @@ def _load(elements, factory):
                 except:
                     raise ValueError, 'Invalid ID for reference (%s)' % refid
                 else:
+                    #log.debug('Loading %s.%s with value %s' % (type(elem.element).__name__, name, ref.element.id))
                     elem.element.load(name, ref.element)
         
     log.info('0% ... 33% ... 66%')
@@ -202,7 +206,8 @@ def load (filename, factory=None):
         #gc.collect()
         #print '===================================== pre load succeeded =='
         if not factory:
-            factory = GaphorResource(UML.ElementFactory)
+            from gaphor import Gaphor
+            factory = Gaphor.get_resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
         _load(elements, factory)

@@ -36,7 +36,7 @@ class CommentItem(ModelElementItem):
 
         self._body.set(text=self.subject and self.subject.body or '')
 
-    def on_subject_notify__name(self, subject, pspec):
+    def on_subject_notify__body(self, subject, pspec):
         self._body.set(text=self.subject.body)
 
     def on_text_changed(self, text_item, text):

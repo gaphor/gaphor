@@ -102,7 +102,7 @@ class AbstractWindow(object):
 		log.default_logger(level, message, exc)
 	    while main.pending():
 	    	main.iteration(False)
-	    return True
+	    #return True
 
     def _construct_window(self, name, title, size, contents, params):
 	"""Construct a BonoboWindow.

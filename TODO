@@ -1,3 +1,6 @@
+Class: Association end properties are shown in the tree view
+Undo/redo functionality doesn;t work as espected
+
 As always, there is much to do...
 
 - Make sure than, when a model is loaded and saved again, both save files do

@@ -36,7 +36,13 @@ class PlacementCommand(Command):
         item = self._window.get_diagram().create(self.type)
 	if self.subject_type:
 	    subject = GaphorResource('ElementFactory').create(self.subject_type)
-	    item.set_property ('subject', subject)
+	    try:
+		print 'set subject'
+		#item.set_property('subject', subject)
+		item.subject = subject
+		print 'set subject done'
+	    except Exception, e:
+		print 'ERROR:', e
 	return item
 
     def execute(self):

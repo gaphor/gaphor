@@ -20,8 +20,13 @@ class GeneralizationItem(relationship.RelationshipItem):
     def find_relationship(self, head_subject, tail_subject):
         """See RelationshipItem.find_relationship().
         """
-        for spec in head_subject.generalization:
-            if spec.general is tail_subject:
+	if self.subject and \
+	   self.subject.general is head_subject and \
+	   self.subject.specific is tail_subject:
+	    return self.subject
+
+        for gen in tail_subject.generalization:
+            if gen.general is head_subject:
                 # check for this entry on self.canvas
                 for item in spec.subject.presentation:
                     # Allow self to be returned. Avoids strange

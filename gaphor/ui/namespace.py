@@ -40,15 +40,15 @@ class NamespaceModel(gtk.GenericTreeModel):
         """Create a new node for an element. Owned members are also created."""
         node = (element, [])
         parent[1].append(node)
-        self.sort_node(parent)
+        #self.sort_node(parent)
         path = self.path_from_element(element)
-        #print 'new_node_from_element', path
+        #print 'new_node_from_element', path, element, element.name
         self.row_inserted(path, self.get_iter(path))
         element.connect('name', self.on_name_changed)
 
         if isinstance(element, UML.Namespace):
             element.connect('ownedMember', self.on_ownedmember_changed)
-            for om in element.ownedMember:
+            for om in list(element.ownedMember):
                 self.new_node_from_element(om, node)
         return node
 

@@ -68,7 +68,17 @@ class Element(object):
             prop.load(self, value)
 
     def postload(self):
-        pass
+        """Fix up the odds and ends.
+        """
+        for name in dir(type(self)):
+            try:
+                prop = getattr(self.__class__, name)
+            except AttributeError, e:
+                raise AttributeError, "'%s' has no property '%s'" % \
+                                            (self.__class__.__name__, name)
+            else:
+                if isinstance(prop, umlproperty):
+                    prop.postload(self)
 
     def __unlink(self, signal):
         """Unlink the element. For both the __unlink__ and __relink__ signal

@@ -23,3 +23,6 @@ A __unlink__ signal is added.
 
 Element.presentation connects to '__unlink__' of Presentation.subject.
 
+Note that the subject notifiers are not called during loading, since no
+notifications are send during loading.
+

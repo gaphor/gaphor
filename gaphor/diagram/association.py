@@ -3,6 +3,10 @@ AssociationItem -- Graphical representation of an association.
 '''
 # vim:sw=4:et
 
+# TODO: for Association.postload(): in some cases where the association ends
+# are connected to the same Class, the head_end property is connected to the
+# tail end and visa versa.
+
 from __future__ import generators
 
 import gobject
@@ -17,7 +21,21 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
     """
-    
+    __gproperties__ = {
+        'head':         (gobject.TYPE_OBJECT, 'head',
+                         'AssociationEnd held by the head end of the association',
+                         gobject.PARAM_READABLE),
+        'tail':         (gobject.TYPE_OBJECT, 'tail',
+                         'AssociationEnd held by the tail end of the association',
+                         gobject.PARAM_READABLE),
+        'head-subject': (gobject.TYPE_PYOBJECT, 'head-subject',
+                         'subject held by the head end of the association',
+                         gobject.PARAM_READWRITE),
+        'tail-subject': (gobject.TYPE_PYOBJECT, 'tail-subject',
+                         'subject held by the tail end of the association',
+                         gobject.PARAM_READWRITE),
+    }
+
     def __init__(self, id=None):
         RelationshipItem.__init__(self, id)
 
@@ -31,31 +49,40 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     def save (self, save_func):
         RelationshipItem.save(self, save_func)
         if self.head_end:
-            save_func('head_end', self._head_end.subject)
+            save_func('head_subject', self._head_end.subject)
         if self.tail_end:
-            save_func('tail_end', self._tail_end.subject)
+            save_func('tail_subject', self._tail_end.subject)
 
     def load (self, name, value):
         # end_head and end_tail were used in an older Gaphor version
-        if name in ( 'head_end', 'head-end' ):
+        if name in ( 'head_end', 'head_subject' ):
             self._head_end.subject = value
-        elif name in ( 'tail_end', 'tail-end' ):
+        elif name in ( 'tail_end', 'tail_subject' ):
             self._tail_end.subject = value
         else:
             RelationshipItem.load(self, name, value)
 
+    def postload(self):
+        RelationshipItem.postload(self)
+        self._head_end.postload()
+        self._tail_end.postload()
+
     def do_set_property (self, pspec, value):
-        if pspec.name == 'head_end':
+        if pspec.name == 'head-subject':
             self._head_end.subject = value
-        elif pspec.name == 'tail_end':
+        elif pspec.name == 'tail-subject':
             self._tail_end.subject = value
         else:
             RelationshipItem.do_set_property(self, pspec, value)
 
     def do_get_property(self, pspec):
-        if pspec.name == 'head_end':
+        if pspec.name == 'head':
+            return self._head_end
+        if pspec.name == 'tail':
+            return self._tail_end
+        elif pspec.name == 'head-subject':
             return self._head_end.subject
-        elif pspec.name == 'tail_end':
+        elif pspec.name == 'tail-subject':
             return self._tail_end.subject
         else:
             return RelationshipItem.do_get_property(self, pspec)
@@ -144,12 +171,33 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
                     
     # Gaphor Connection Protocol
 
+    def allow_connect_handle(self, handle, connecting_to):
+        """This method is called by a canvas item if the user tries to connect
+        this object's handle. allow_connect_handle() checks if the line is
+        allowed to be connected. In this case that means that one end of the
+        line should be connected to a Comment.
+        Returns: TRUE if connection is allowed, FALSE otherwise.
+        """
+        #log.debug('AssociationItem.allow_connect_handle')
+        if isinstance(connecting_to.subject, UML.Classifier):
+            return True
+        return False
+
     def find_relationship(self, head_subject, tail_subject):
         # Head and tail subjects are connected to an Association by 
         # Properties. Here we check if head_subject and tail_subject
         # already have an association. That association, however should not
         # be in our diagram yet.
-        # 
+         
+        # First check if we do not already contain the right subject:
+        if self.subject:
+            end1 = self.subject.memberEnd[0]
+            end2 = self.subject.memberEnd[1]
+            if (end1.type is head_subject and end2.type is tail_subject):
+                return end1, end2, self.subject
+            if (end2.type is head_subject and end1.type is tail_subject):
+                return end2, end1, self.subject
+
         # Find all associations and determine if the properties on the
         # association ends have a type that points to the class.
         Association = UML.Association
@@ -170,43 +218,54 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
         log.debug('No association found')
         return None, None, None
                     
-    def allow_connect_handle(self, handle, connecting_to):
-        """This method is called by a canvas item if the user tries to connect
-        this object's handle. allow_connect_handle() checks if the line is
-        allowed to be connected. In this case that means that one end of the
-        line should be connected to a Comment.
-        Returns: TRUE if connection is allowed, FALSE otherwise.
-        """
-        #log.debug('AssociationItem.allow_connect_handle')
-        try:
-            if not isinstance(connecting_to.subject, UML.Classifier):
-                return 0
-
-            # Also allow connections to the same class...
-            c1 = self.handles[0].connected_to
-            c2 = self.handles[-1].connected_to
-            if not c1 and not c2:
-                return 1
-            if self.handles[0] is handle:
-                return (self.handles[-1].connected_to.subject is not connecting_to.subject)
-            elif self.handles[-1] is handle:
-                return (self.handles[0].connected_to.subject is not connecting_to.subject)
-            assert 1, 'Should never be reached...'
-        except AttributeError:
-            return 0
-
     def confirm_connect_handle (self, handle):
         """This method is called after a connection is established. This method
         sets the internal state of the line and updates the data model.
         """
         #log.debug('AssociationItem.confirm_connect_handle')
+
         c1 = self.handles[0].connected_to
         c2 = self.handles[-1].connected_to
         if c1 and c2:
-            s1 = c1.subject
-            s2 = c2.subject
-            head_end, tail_end, relation = self.find_relationship(s1, s2)
-            if not relation:
+            head_type = c1.subject
+            tail_type = c2.subject
+            #head_end, tail_end, relation = self.find_relationship(s1, s2)
+
+            # First check if we do not already contain the right subject:
+            if self.subject:
+                end1 = self.subject.memberEnd[0]
+                end2 = self.subject.memberEnd[1]
+                if (end1.type is head_type and end2.type is tail_type) \
+                   or (end2.type is head_type and end1.type is tail_type):
+                    return
+                    
+            # Find all associations and determine if the properties on the
+            # association ends have a type that points to the class.
+            Association = UML.Association
+            for assoc in GaphorResource(UML.ElementFactory).itervalues():
+                if isinstance(assoc, Association):
+                    #print 'assoc.memberEnd', assoc.memberEnd
+                    end1 = assoc.memberEnd[0]
+                    end2 = assoc.memberEnd[1]
+                    if (end1.type is head_type and end2.type is tail_type) \
+                       or (end2.type is head_type and end1.type is tail_type):
+                        # check if this entry is not yet in the diagram
+                        # Return if the association is not (yet) on the canvas
+                        for item in assoc.presentation:
+                            if item.canvas is self.canvas:
+                                break
+                        else:
+                            #return end1, end2, assoc
+                            self.subject = assoc
+                            if (end1.type is head_type and end2.type is tail_type):
+                                self._head_end.subject = end1
+                                self._tail_end.subject = end2
+                            else:
+                                self._head_end.subject = end2
+                                self._tail_end.subject = end1
+                            return
+            #if not relation:
+            else:
                 element_factory = GaphorResource(UML.ElementFactory)
                 relation = element_factory.create(UML.Association)
                 head_end = element_factory.create(UML.Property)
@@ -214,17 +273,20 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
                 relation.package = self.canvas.diagram.namespace
                 relation.memberEnd = head_end
                 relation.memberEnd = tail_end
-                head_end.type = head_end.clazz = s1
-                tail_end.type = tail_end.clazz = s2
+                head_end.type = tail_end.class_ = head_type
+                tail_end.type = head_end.class_ = tail_type
 
                 # copy text from ends to AssociationEnds:
                 head_end.name = self._head_end._name.get_property('text')
                 #head_end.multiplicity = self._head__end._mult.get_property('text')
                 tail_end.name = self._tail_end._name.get_property('text')
                 #tail_end.multiplicity = self._tail_end._mult.get_property('text')
-            self.subject = relation
-            self._head_end.subject = head_end
-            self._tail_end.subject = tail_end
+                # TODO: Add a callback that destroys the Properties when
+                # the association is unlinked.
+
+                self.subject = relation
+                self._head_end.subject = head_end
+                self._tail_end.subject = tail_end
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
         log.debug('AssociationItem.confirm_disconnect_handle')
@@ -269,7 +331,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasAbstractGroup, Diagra
 
     def __init__(self, id=None):
         self.__gobject_init__()
-        DiagramItem.__init__(self, id)
+        DiagramItem.__init__(self) #, id)
         self.set_flags(diacanvas.COMPOSITE)
         self._name = AssociationLabel('name')
         self.add_construction(self._name)
@@ -281,11 +343,38 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasAbstractGroup, Diagra
     # AssociationEnd's are inseperable from AssociationItem's. We even
     # pretend to have the same id (for loading and saving), since the
     # AssociationItem saves the subject.
-    id = property(lambda self: self.parent.id, doc='Id')
+    #id = property(lambda self: self.parent.id, doc='Id')
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
     disconnect = DiagramItem.disconnect
+
+    def postload(self):
+        if self.subject:
+            self._name.set_property('text', self.subject.name)
+            if self.subject.lowerValue:
+                self._mult.set_property('text', self.subject.lowerValue.value)
+
+    def set_navigable(self, navigable):
+        """Change the AsociationEnd's navigability.
+
+        A warning is issued if the subject or opposite property is missing.
+        """
+        subject = self.subject
+        if subject and subject.opposite:
+            opposite = subject.opposite
+            if navigable:
+                # Set owner to the class.
+                if subject.owningAssociation:
+                    del subject.owningAssociation
+                subject.class_ = opposite.type
+            else:
+                if subject.class_:
+                    del subject.class_
+                subject.owningAssociation = subject.association
+        else:
+            log.warning('AssociationEnd.set_navigable: %s missing' % \
+                        (subject and 'subject' or 'opposite Property'))
 
     def update_labels(self, p1, p2):
         """Update label placement for association's name and
@@ -399,7 +488,9 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasAbstractGroup, Diagra
 
     def on_subject_notify__lowerValue(self, subject, pspec):
         print 'lowerValue', subject, subject.lowerValue
-        if self.subject.lowerValue:
+        #import pdb
+        #pdb.set_trace()
+        if self.subject and self.subject.lowerValue:
             self._mult.set_property('text', self.subject.lowerValue.value)
         # Add a callback to lowerValue
 

@@ -44,6 +44,10 @@ class FeatureItem(CanvasText, DiagramItem):
             self.save_property(save_func, prop)
         DiagramItem.save(self, save_func)
         
+    def postload(self):
+        if self.subject:
+            self.set(text=self.subject.name)
+
     def on_subject_notify(self, pspec):
         DiagramItem.on_subject_notify(self, pspec, ('name',))
         self.set(text=self.subject and self.subject.name or '')

@@ -58,12 +58,15 @@ class umlproperty(object):
     def __delete__(self, obj, value=None):
         self._del(obj, value)
 
-    def load(self, obj, value):
-        self._set(obj, value)
-
     def save(self, obj, save_func):
         if hasattr(obj, self._name):
             save_func(self.name, self._get(obj))
+
+    def load(self, obj, value):
+        self._set(obj, value)
+
+    def postload(self, obj):
+        pass
 
 #    def unlink(self, obj):
 #        if hasattr(obj, self._name):
@@ -71,7 +74,8 @@ class umlproperty(object):
 
     def notify(self, obj):
         """Notify obj that the property's value has been changed.
-        Deriviates are also triggered to send a notify signal."""
+        Deriviates are also triggered to send a notify signal.
+        """
         try:
             obj.notify(self.name)
         except:
@@ -195,8 +199,30 @@ class association(umlproperty):
 
     def load(self, obj, value):
         if not isinstance(value, self.type):
-            raise AttributeError, 'Value should be of type %s' % self.type.__name__
-        self._set2(obj, value)
+            raise AttributeError, 'Value for %s should be of type %s' % (self.name, self.type.__name__)
+        if self._set2(obj, value) and self.opposite:
+            opposite = getattr(type(value), self.opposite)
+            if opposite.upper > 1:
+                if not obj in opposite._get(value):
+                    #print 'Setting opposite*:', self.name, obj, value
+                    opposite._set2(value, obj)
+            else:
+                if not obj is opposite._get(value):
+                    #print 'Setting opposite1:', self.name, obj, value
+                    opposite._set2(value, obj)
+
+    def postload(self, obj):
+        """In the postload step, ensure that bi-directional associations
+        are bi-directional.
+        """
+        values = self._get(obj)
+        if not values:
+            return
+        if self.upper == 1:
+            values = [ values ]
+        for value in values:
+            if not isinstance(value, self.type):
+                raise AttributeError, 'Error in postload validation for %s: Value %s should be of type %s' % (self.name, value, self.type.__name__)
 
     def __str__(self):
         if self.lower == self.upper:
@@ -284,7 +310,13 @@ class association(umlproperty):
                 return False
             self._get(obj).items.append(value)
         else:
+            if value is self._get(obj):
+                #log.debug('association: value already in obj: %s' % value)
+                return False
             setattr(obj, self._name, value)
+
+        # Callbacks are only connected if a new relationship has
+        # been established.
         value.connect('__unlink__', self.__on_unlink, obj)
         if self.composite:
             obj.connect('__unlink__', self.__on_composite_unlink, value)
@@ -368,7 +400,7 @@ class derivedunion(umlproperty):
             s.add_deriviate(self)
 
     def load(self, obj, value):
-        pass
+        raise 'Derivedunion: Properties should not be loaded in a derived union %s: %s' % (self.name, value)
 
     def save(self, obj, save_func):
         pass

@@ -14,7 +14,9 @@ __author__ = 'Arjan J. Molenaar'
 __date__ = '$date$'
 
 
-class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, DiagramItem):
+class ModelElementItem (diacanvas.CanvasElement, \
+			diacanvas.CanvasGroupable, \
+			DiagramItem):
     # Properties, also add the DiagramItem properties here.
     __gproperties__ = {
         'auto-resize':        (gobject.TYPE_BOOLEAN, 'auto resize',

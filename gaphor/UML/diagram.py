@@ -74,6 +74,7 @@ class Diagram(Namespace, PackageableElement):
 	a unique ID and it is attached to the diagram's root item."""
 	assert issubclass(type, diacanvas.CanvasItem)
 	obj = type(uniqueid.generate_id())
-	obj.set_property('parent', self.canvas.root)
+	#obj.set_property('parent', self.canvas.root)
+	self.canvas.root.add(obj)
 	return obj
 

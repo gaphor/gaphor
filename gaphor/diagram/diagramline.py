@@ -34,7 +34,7 @@ class DiagramLine(diacanvas.CanvasLine):
             self.set_property('head_pos', points[0])
             self.set_property('tail_pos', points[1])
             for p in points[2:]:
-                item.set_property ('add_point', p)
+                self.set_property ('add_point', p)
         elif name == 'head_connection':
             self._load_head_connection = value
         elif name == 'tail_connection':
@@ -44,10 +44,10 @@ class DiagramLine(diacanvas.CanvasLine):
 
     def postload(self):
         if hasattr(self, '_load_head_connection'):
-            self._load_head_connection.connect_handle (self.handles[0])
+            self._load_head_connection.connect_handle(self.handles[0])
             del self._load_head_connection
         if hasattr(self, '_load_tail_connection'):
-            self._load_tail_connection.connect_handle (self.handles[-1])
+            self._load_tail_connection.connect_handle(self.handles[-1])
             del self._load_tail_connection
 
     def has_capability(self, capability):

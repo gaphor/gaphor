@@ -1,4 +1,5 @@
 comment
+  vim:sw=4:et
 
   This is a file with custom definitions for Gaphors data model.
 
@@ -23,7 +24,32 @@ override Namespace.importedMember
 Namespace.importedMember = derivedunion('importedMember', 0, '*')
 %%
 override Property.opposite
-Property.opposite = derivedunion('opposite', 0, 1)
+
+def property_opposite(self):
+    """In the case where the property is one navigable end of a binary
+    association with both ends navigable, this gives the other end.
+
+    For Gaphor the property on the other end is returned regardless the
+    navigability.
+    """
+    #if not self.owningAssociation and len(self.association.memberEnd) == 2:
+    #    other_end = self.association.memberEnd[0] is self \
+    #                and self.association.memberEnd[1] \
+    #                or self.association.memberEnd[0]
+    #    return other_end
+    if len(self.association.memberEnd) == 2:
+        return self.association.memberEnd[0] is self \
+               and self.association.memberEnd[1] \
+               or self.association.memberEnd[0]
+    return None
+
+#Property.opposite = derivedunion('opposite', 0, 1)
+Property.opposite = property(property_opposite, doc=property_opposite.__doc__)
+
+del property_opposite
+%%
+override Property.isComposite
+Property.isComposite = property(lambda self: self.aggregation == intern('composite'))
 %%
 override Constraint.context
 Constraint.context = derivedunion('context', 0, 1)

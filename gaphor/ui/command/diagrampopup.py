@@ -205,19 +205,15 @@ class NavigableCommand(StatefulCommand):
         raise NotImplementedError
 
     def execute(self, new_state):
-        subject = self.get_association_end()
-        assert isinstance(subject, UML.Property)
-	if new_state: # navigable
-	    subject.owningAssociation = None
-	    subject.clazz = subject.type
-	else: # not navigable
-	    subject.clazz = None
-	    subject.owningAssociation = subject.association
+        item = self.get_association_end()
+        assert item.subject
+	assert isinstance(item.subject, UML.Property)
+	item.set_navigable(new_state)
 
 class HeadNavigableCommand(NavigableCommand):
 
     def get_association_end(self):
-        return get_parent_focus_item(self._window).head_end.subject
+        return get_parent_focus_item(self._window).get_property('head')
 
 CommandInfo (name='Head_isNavigable', _label='Navigable',
              _tip='',
@@ -229,7 +225,8 @@ CommandInfo (name='Head_isNavigable', _label='Navigable',
 class TailNavigableCommand(NavigableCommand):
 
     def get_association_end(self):
-        return get_parent_focus_item(self._window).tail_end.subject
+        return get_parent_focus_item(self._window).get_property('tail')
+        #return get_parent_focus_item(self._window).tail_end.subject
 
 CommandInfo (name='Tail_isNavigable', _label='Navigable',
              _tip='',

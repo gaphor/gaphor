@@ -1,5 +1,32 @@
 # vim:sw=4:et
-"""Gaphor file reader."""
+"""Gaphor file reader.
+
+This module contains only one interesting function:
+
+    parse(filename)
+
+which returns a dictionary of ID -> <parsed_object> pairs.
+
+A parsed_object is one of element, canvas or canvasitem.
+
+A parsed_object contains values and references. values is a dictionary of
+name -> value pairs. A value contains a string with the value read from the
+model file. references contains a list of name -> reference_list pairs, where
+reference_list is a list of ID's.
+
+element objects can contain a canvas object (which is the case for elements
+of type Diagram). Each element has a type, which corresponds to a class name
+in the gaphor.UML module. Elements also have a unique ID, by which they are
+referered to in the dictionary returned by parse().
+
+canvas does not have an ID, but contains a list of canvasitems (which is a
+list of real canvasitem objects, not references).
+
+canvasitem objects can also contain a list of canvasitems (canvasitems can be
+nested). They also have a unique ID by which they have been added to the
+dictionary returned by parse(). Each canvasitem has a type, which maps to a
+class name in the gaphor.diagram module.
+"""
 
 __all__ = [ 'parse' ]
 

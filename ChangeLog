@@ -1,3 +1,9 @@
+2002-09-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* doc/UML2.gaphor: UML model is now based on new data model
+	* gaphor/diagram/association.py: make it work
+	* Loads of work to get the conversion done.
+
 2002-08-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/operation.py, gaphor/diagram/attribute.py: new files

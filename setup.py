@@ -155,7 +155,9 @@ class build_py_Gaphor(build_py):
         py_model = 'gaphor/UML/uml2.py'
         outfile = os.path.join(self.build_lib, py_model)
         self.mkpath(os.path.dirname(outfile))
-        if self.force or newer(model, outfile) or newer(gen, outfile):
+        if self.force or newer(model, outfile) \
+                      or newer(overrides, outfile) \
+                      or newer(gen, outfile):
             print 'generating %s from %s...' % (py_model, model)
             utils.genUML2.generate(model, outfile, overrides)
         else:

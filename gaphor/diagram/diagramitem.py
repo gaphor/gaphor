@@ -35,7 +35,7 @@ class diagramassociation(association):
         return association._set2(self, obj, value)
 
     def _del(self, obj, value):
-        #print 'diagramassociation._del', obj, value, obj._subject
+        print 'diagramassociation._del', obj, value, value.id
         obj.preserve_property('subject')
         association._del(self, obj, value)
         if len(value.presentation) == 0 or \
@@ -74,7 +74,7 @@ class DiagramItem(Presentation):
 
     def __init__(self, id=None):
         Presentation.__init__(self)
-        self._id = id or uniqueid.generate_id()
+        self._id = id # or uniqueid.generate_id()
         self.__handler_to_id = { }
         # Add the class' on_subject_notify() as handler:
         self.connect('notify::subject', type(self).on_subject_notify)

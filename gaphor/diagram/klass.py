@@ -19,7 +19,8 @@ from operation import OperationItem
 
 class Compartment(object):
     """Specify a compartment in a class item.
-    A compartment has a line on top and a list of FeatureItems."""
+    A compartment has a line on top and a list of FeatureItems.
+    """
 
     def __init__(self, name, owner):
         self.name = name
@@ -31,7 +32,7 @@ class Compartment(object):
         self.sep_y = 0
 
     def save(self, save_func):
-        log.debug('Compartment.save: %s' % self.items)
+        #log.debug('Compartment.save: %s' % self.items)
         for item in self.items:
             save_func(None, item)
 
@@ -123,8 +124,18 @@ class ClassItem(ClassifierItem):
         self.save_property(save_func, 'show-attributes')
         self.save_property(save_func, 'show-operations')
         ClassifierItem.save(self, save_func)
-        for comp in (self._attributes, self._operations):
-            comp.save(save_func)
+        #for comp in (self._attributes, self._operations):
+            #comp.save(save_func)
+
+    def postload(self):
+        ClassifierItem.postload(self)
+        #self.on_subject_notify__ownedAttribute(self.subject)
+        #self.on_subject_notify__ownedOperation(self.subject)
+        for f in self.subject.ownedAttribute:
+            if not f.association:
+                self._attributes.create(f)
+        for f in self.subject.ownedOperation:
+            self._operations.create(f)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'show-attributes':
@@ -164,7 +175,7 @@ class ClassItem(ClassifierItem):
                 self._operations.create(f)
         self.request_update()
 
-    def compare_owned_features(self, features, compartment):
+    def sync_owned_features(self, features, compartment):
         """Common function for on_subject_notify__ownedAttribute() and
         on_subject_notify__ownedOperation().
         """
@@ -183,23 +194,21 @@ class ClassItem(ClassifierItem):
                     compartment.remove(a)
                     break
 
-    def on_subject_notify__ownedAttribute(self, subject, pspec):
-        log.debug('on_subject_notify__ownedAttribute')
+    def on_subject_notify__ownedAttribute(self, subject, pspec=None):
+        # Note: This method is also called in postload()
+        #log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
         attr = []
         for a in subject.ownedAttribute:
             if not a.association:
                 attr.append(a)
-        self.compare_owned_features(attr, self._attributes)
+        self.sync_owned_features(attr, self._attributes)
         #self.compare_owned_features(subject.ownedAttribute, self._attributes)
 
-    def on_subject_notify__ownedOperation(self, subject, pspec):
-        log.debug('on_subject_notify__ownedOperation')
-        self.compare_owned_features(subject.ownedOperation, self._operations)
-
-    def __check_ops(self):
-        for i in self._operations.items:
-            log.debug('need update after update: %s' % str(i.flags & diacanvas.NEED_UPDATE))
+    def on_subject_notify__ownedOperation(self, subject, pspec=None):
+        # Note: This method is also called in postload()
+        #log.debug('on_subject_notify__ownedOperation')
+        self.sync_owned_features(subject.ownedOperation, self._operations)
 
     def on_update(self, affine):
         """Overrides update callback. If affine is None, it is called just for
@@ -211,13 +220,15 @@ class ClassItem(ClassifierItem):
         # TODO: update stereotype
 
         # Update class name
-        layout = self._name.get_property('layout')
-        w, h = layout.get_pixel_size()
-        height += h
-        if affine:
-            a = self._name.get_property('affine')
-            a = (a[0], a[1], a[2], a[3], a[4], height / 2)
-            self._name.set(affine=a, height=h)
+        w, name_height = self.get_name_size()
+        height += name_height
+        name_y = height / 2
+        #self.update_name(x=0, y=self.height / 2,
+        #                 width=self.width, height=h)
+        #if affine:
+        #    a = self._name.get_property('affine')
+        #    a = (a[0], a[1], a[2], a[3], a[4], height / 2)
+        #    self._name.set(affine=a, height=h)
         
         height += ClassItem.HEAD_MARGIN_Y
         width = w + ClassItem.HEAD_MARGIN_X
@@ -227,24 +238,27 @@ class ClassItem(ClassifierItem):
 
         self.set(min_width=width, min_height=height)
 
-        if affine:
-            width = max(width, self.width)
-            height = max(height, self.height)
+        #if affine:
+        width = max(width, self.width)
+        height = max(height, self.height)
 
-            # We know the width of all text components and set it:
-            # Note: here the upadte flag is set for all sub-items (again)!
-            self._name.set_property('width', width)
+        # We know the width of all text components and set it:
+        # Note: here the upadte flag is set for all sub-items (again)!
+        #    self._name.set_property('width', width)
+        self.update_name(x=0, y=name_y, width=width, height=name_height)
 
-            for comp in (self._attributes, self._operations):
-                comp.update(width, affine)
+        for comp in (self._attributes, self._operations):
+            comp.update(width, affine)
 
-            ClassifierItem.on_update(self, affine)
+        ClassifierItem.on_update(self, affine)
 
-            self._border.rectangle((0,0),(width, height))
-            self.expand_bounds(1.0)
+        self._border.rectangle((0,0),(width, height))
+        self.expand_bounds(1.0)
 
     def on_shape_iter(self):
         yield self._border
+        for s in ClassifierItem.on_shape_iter(self):
+            yield s
         if self._attributes.visible:
             yield self._attributes.separator
         if self._operations.visible:
@@ -297,12 +311,12 @@ class ClassItem(ClassifierItem):
                + len(self._attributes.items) + len(self._operations.items)
 
     def on_groupable_pos(self, item):
-        if item == self._name:
-            return 0
-        elif item in self._attributes.items:
-            return 1 + self._attributes.items.index(item)
+        #if item == self._name:
+        #    return 0
+        if item in self._attributes.items:
+            return self._attributes.items.index(item)
         elif item in self._operations.items:
-            return 1 + len(self._attributes.items) + self._operations.items.index(item)
+            return len(self._attributes.items) + self._operations.items.index(item)
         else:
             return -1
 
