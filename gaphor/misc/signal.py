@@ -51,7 +51,7 @@ class Signal:
 	self.__queue = [ ]
 
 	for keys in queue:
-	    self.emit(*keys)
+	    apply(self.emit, keys)
 
     def emit (self, *keys):
         """
@@ -66,11 +66,11 @@ class Signal:
 	"""
 	#print 'Signal.emit():', keys
 	if len(self.__queue) > 0:
-	    self.queue(*keys)
+	    apply(self.queue, keys)
 	else:
 	    for signal in self.__signals:
 		signal_handler = signal[0]
 		data = keys + signal[1:]
 		#print 'signal:', signal_handler, data
-		signal_handler (*data)
+		apply(signal_handler, data)
 

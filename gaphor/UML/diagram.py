@@ -31,32 +31,6 @@ class Diagram(Namespace):
 	self.canvas.set_property ("allow_undo", 1)
 	print 'Diagram: allow undo =', self.canvas.get_property('allow_undo')
 
-    def create_depricated (self, type, pos=(0, 0), subject=None):
-	'''Add a new item to the diagram. This method should be used as a
-	Factory for creating diagram items.'''
-	item = type()
-	self.canvas.root.add(item)
-	if not subject:
-	    uml_type = None
-	    if Diagram.diagram2UML.has_key(type):
-		uml_type = Diagram.diagram2UML[type]
-	    if uml_type is not None:
-		#print 'Setting new subject of type', uml_type
-		factory = ElementFactory ()
-		subject = factory.create (uml_type)
-		if issubclass (uml_type, Namespace):
-		    #print 'Diagram.create:', self.namespace
-		    subject.namespace = self.namespace
-		    #print '...', subject.namespace
-		item.set_property ('subject', subject)
-	else:
-	    #print 'Setting existing subject', subject
-	    item.set_property ('subject', subject)
-	#item.set_property ('id', Diagram.__index)
-	#Diagram.__index += 1
-	item.move(pos[0], pos[1])
-	return item
-
     def save(self, store):
 	# Save the diagram attributes, but not the canvas
 	self_canvas = self.canvas

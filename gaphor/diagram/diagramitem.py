@@ -12,12 +12,12 @@ class DiagramItem(object):
 	self.preserve_property('subject')
 	if subject != self.subject:
 	    if self.subject:
-		self.subject.remove_presentation(self)
 		self.subject.disconnect(self.on_subject_update)
+		self.subject.remove_presentation(self)
 	    self.subject = subject
 	    if subject:
-		subject.connect(self.on_subject_update)
 		subject.add_presentation(self)
+		subject.connect(self.on_subject_update)
 
     # DiaCanvasItem callbacks
     def _on_glue(self, handle, wx, wy, parent):
@@ -62,9 +62,4 @@ class DiagramItem(object):
 		self.subject.remove_presentation (self)
 
     def on_subject_update (self, name, old_value, new_value):
-	if name == '__unlink__':
-	    #self.set_property('subject', None)
-	    if self.parent:
-		    self.parent.remove(self)
-	else:
-	    print 'DiagramItem: unhandled signal "%s"' % str(name)
+	print 'DiagramItem: unhandled signal "%s"' % str(name)

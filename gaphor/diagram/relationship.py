@@ -62,8 +62,6 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	    elif name == 'tail_connection':
 		assert len(refs) == 1
 		refs[0].connect_handle (self.handles[-1])
-	    else:
-		raise AttributeError, 'Only head_connection and tail_connection are premitted as references, not %s' % name
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
@@ -79,16 +77,7 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	if pspec.name == 'id':
 	    return self.__id
 	elif pspec.name == 'subject':
-	    print 'Setting subject:', value
-	    self.preserve_property('subject')
-	    if value != self.subject:
-		if self.subject:
-		    self.subject.remove_presentation(self)
-		    self.subject.disconnect(self.on_subject_update)
-		self.subject = value
-		if value:
-		    value.connect(self.on_subject_update)
-		    value.add_presentation(self)
+	    return self.subject
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 

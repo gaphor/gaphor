@@ -81,6 +81,13 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
     def on_disconnect_handle (self, handle):
 	return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
 
+    def on_subject_update (self, name, old_value, new_value):
+	if name == '__unlink__':
+	    #self.set_property('subject', None)
+	    if self.parent:
+		    self.parent.remove(self)
+	else:
+	    DiagramItem.on_subject_update(self, name, old_value, new_value)
 
 gobject.type_register(ModelElementItem)
 diacanvas.set_callbacks(ModelElementItem)

@@ -31,10 +31,8 @@ class DependencyItem(relationship.RelationshipItem):
 	Returns: TRUE if connection is allowed, FALSE otherwise.
 	"""
 	try:
-	    print 'Is it a ModelElement:', isinstance(connecting_to.subject, UML.ModelElement)
 	    return isinstance(connecting_to.subject, UML.ModelElement)
 	except AttributeError:
-	    print 'Dependency: AttributeError'
 	    return 0
 
     def confirm_connect_handle (self, handle):
@@ -50,33 +48,14 @@ class DependencyItem(relationship.RelationshipItem):
 	    s2 = c2.subject
 	    relation = self.find_relationship(s1, s2)
 	    if not relation:
-		relation = Dependency()
+		relation = UML.ElementFactory().create(UML.Dependency)
 		relation.supplier = s1
 		relation.client = s2
-	    self.set_property ('subject', relation)
-
-    def allow_disconnect_handle (self, handle):
-	return 1
+	    self._set_subject(relation)
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
 	print 'confirm_disconnect_handle', handle
-	c1 = None
-	c2 = None
-	if handle is self.handles[0]:
-	    c1 = was_connected_to
-	    c2 = self.handles[-1].connected_to
-	elif handle is self.handles[-1]:
-	    c1 = self.handles[0].connected_to
-	    c2 = was_connected_to
-	
-	if c1 and c2:
-	    s1 = c1.subject
-	    s2 = c2.subject
-	    if isinstance (s1, UML.Comment):
-		del s1.annotatedElement[s2]
-	    elif isinstance (s2, UML.Comment):
-		del s2.annotatedElement[s1]
-	    else:
-		raise TypeError, 'One end of the CommentLine should connect to a Comment. How could this connect anyway?'
+	if self.subject:
+	    self._set_subject(None)
 
 gobject.type_register(DependencyItem)

@@ -67,13 +67,6 @@ class ElementFactory(Singleton):
 	    value.unlink()
 	assert len(self.__elements) == 0, 'Still items in the factory: %s' % str(self.__elements.values())
 	self.__index = 1
-	#while 1:
-	#    try:
-	#	(key, value) = self.__elements.popitem()
-	#    except KeyError:
-	#	break;
-	#    value.unlink()
-	#    assert len(self.__elements) == 0
 
     def connect (self, signal_func, *data):
 	self.__signal.connect (signal_func, *data)

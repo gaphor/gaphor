@@ -48,9 +48,6 @@ class Sequence:
     def append(self, obj):
 	if isinstance(obj, self.required_type):
 	    self.owner.sequence_add(self, obj)
-	    #if self.list.count(obj) == 0:
-		#self.list.append(obj)
-		#self.list.sort()
 	else:
 	    raise SequenceError, 'append(): Object is not of type ' + \
 	    			str (self.required_type)
