@@ -86,6 +86,20 @@ class Diagram(Namespace, PackageableElement):
 	self.canvas.set_property('allow_undo', False)
 	self.canvas.clear_undo()
 	self.canvas.clear_redo()
+	def dispose(item):
+	    try:
+		for i in item.groupable_iter():
+		    dispose(i)
+	    except AttributeError:
+		pass
+	    try:
+		item.unlink()
+	    except:
+		pass
+	    # Clear all references on a C-level
+	    item.dispose()
+
+	#for i in self.canvas.root.children:
+	#    dispose(i)
+
 	Namespace.unlink(self)
-	for i in self.canvas.root.children:
-	    i.unlink()

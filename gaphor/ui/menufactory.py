@@ -8,6 +8,7 @@ TODO: show tooltips in the status bar when a menu item is selected.
 import gobject
 import gtk
 from gaphor.misc.action import ActionError, Action, CheckAction, RadioAction
+import gaphor.misc.wrapbox
 
 #from logilab.aspects.weaver import weaver
 
@@ -45,6 +46,22 @@ class MenuFactory(object):
             return self.action_pool.get_action(action_id)
         except ActionError:
             return None
+
+    def get_icon_and_label(self, action, icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR):
+        if action.stock_id:
+            # Fetch stock icon, and probably a text and tooltip:
+            stock_info = gtk.stock_lookup(action.stock_id)
+            #print stock_info # (id, label, mod, key, translationdomain)
+            try:
+                label = stock_info[1].replace('_', '')
+            except TypeError:
+                label = action.label.replace('_', '')
+            icon = gtk.Image()
+            icon.set_from_stock(action.stock_id, icon_size)
+        else:
+            label = action.label.replace('_', '')
+            icon = None
+        return icon, label
 
     def on_item_activate(self, menu_item, action_id):
         self.action_pool.execute(action_id)
@@ -224,19 +241,7 @@ class MenuFactory(object):
                                     callback=None,
                                     user_data=None)
             else:
-                if action.stock_id:
-                    # Fetch stock icon, and probably a text and tooltip:
-                    stock_info = gtk.stock_lookup(action.stock_id)
-                    #print stock_info # (id, label, mod, key, translationdomain)
-                    try:
-                        label = stock_info[1].replace('_', '')
-                    except TypeError:
-                        label = action.label.replace('_', '')
-                    icon = gtk.Image()
-                    icon.set_from_stock(action.stock_id, toolbar.get_icon_size())
-                else:
-                    label = action.label.replace('_', '')
-                    icon = None
+                icon, label = self.get_icon_and_label(action, toolbar.get_icon_size())
                 if isinstance(action, RadioAction):
                     try:
                         group = groups[action.group]
@@ -277,4 +282,72 @@ class MenuFactory(object):
                 self.connect_item_to_action('notify::sensitive', action, item,
                                             self.on_menu_item_notify_action)
         return toolbar
+
+    def create_wrapbox(self, menu_def):
+        """Create a Wrapbox. items in menu_def should not be nested as
+        they are when creating a normal menu.
+        """
+        wrapbox = gaphor.misc.wrapbox.HWrapBox()
+        groups = { }
+        for id in menu_def:
+            action = self.get_action(id)
+            if not action:
+                if id == 'separator':
+                    sep = gtk.HSeparator()
+                    wrapbox.add(sep)
+                    sep.show()
+                    continue
+                label = id
+                icon = None
+                item = gtk.Button()
+            else:
+                icon, label = self.get_icon_and_label(action)
+                if isinstance(action, RadioAction):
+                    try:
+                        group = groups[action.group]
+                    except KeyError:
+                        group = None
+                    item = gtk.RadioButton(group)
+                    item.set_mode(False)
+                    item.connect('toggled', self.on_radio_item_activate, action.id)
+                    self.connect_item_to_action('notify::active', action, item,
+                                                self.on_radio_menu_item_notify_active)
+                    self.in_activation = True
+                    if not group:
+                        groups[action.group] = item
+                    #else:
+                    #    item.set_group(group)
+                    item.set_active(action.active)
+                    self.in_activation = False
+                elif isinstance(action, CheckAction):
+                    item = gtk.CheckButton()
+                    item.set_mode(False)
+                    item.connect('toggled', self.on_check_item_activate, action.id)
+                    self.connect_item_to_action('notify::active', action, item,
+                                                self.on_menu_item_notify_action)
+                    self.in_activation = True
+                    item.set_active(action.active)
+                    self.in_activation = False
+                else:
+                    #if action.stock_id:
+                        #item = gtk.Button(action.stock_id)
+                        #item.set_property('use-stock', True)
+                    #else:
+                    item = gtk.Button()
+                if action.stock_id:
+                    #item.set_property('stock-id', action.stock_id)
+                    item.add(icon)
+                    icon.show()
+                    pass
+                else:
+                    item.set_label(label)
+                item.set_property('visible', action.visible)
+                item.set_property('sensitive', action.sensitive)
+                self.connect_item_to_action('notify::visible', action, item,
+                                            self.on_menu_item_notify_action)
+                self.connect_item_to_action('notify::sensitive', action, item,
+                                            self.on_menu_item_notify_action)
+                wrapbox.pack(item, False, False, False, False)
+                item.show()
+        return wrapbox
 

@@ -10,6 +10,10 @@ import stock
 
 import gaphor.UML as UML
 
+# The following items will not be shown in the treeview, although they
+# are UML.Namespace elements.
+_default_exclude_list = ( UML.Parameter, UML.Association )
+
 class NamespaceModel(gtk.GenericTreeModel):
     """The NamespaceModel holds a view on the data model based on namespace
     relationships (such as a Package containing a Class).
@@ -33,9 +37,12 @@ class NamespaceModel(gtk.GenericTreeModel):
 
         self.root = (None, [])
 
+        self.exclude = _default_exclude_list
 
     def new_node_from_element(self, element, parent):
         """Create a new node for an element. Owned members are also created."""
+        if isinstance(element, self.exclude):
+            return
         node = (element, [])
         parent[1].append(node)
         #self.sort_node(parent)
@@ -154,7 +161,8 @@ class NamespaceModel(gtk.GenericTreeModel):
         # The elements currently known by the tree model
         node_members = map(lambda e: e[0], node[1])
         # The elements that are now children of the element
-        owned_members = element.ownedMember
+        owned_members = filter(lambda e: not isinstance(e, self.exclude), element.ownedMember)
+        #owned_members = element.ownedMember
         if len(node_members) < len(owned_members):
             # element added
             #print 'NamespaceModel: element added'

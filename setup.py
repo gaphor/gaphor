@@ -297,6 +297,36 @@ class run_Gaphor(Command):
             gaphor.main()
 
 
+from dsextras import TemplateExtension, BuildExt, GLOBAL_INC
+
+pygtkincludedir = getoutput('pkg-config --variable pygtkincludedir pygtk-2.0')
+codegendir = getoutput('pkg-config --variable codegendir pygtk-2.0')
+defsdir = getoutput('pkg-config --variable defsdir pygtk-2.0')
+
+sys.path.append(codegendir)
+
+GLOBAL_INC.append(pygtkincludedir)
+GLOBAL_INC.append('.')
+GTKDEFS = [os.path.join(defsdir, 'gtk-types.defs')]
+
+ext_modules = []
+gtkwrapbox = TemplateExtension(name='wrapbox',
+                               pkc_name='gtk+-2.0',
+                               pkc_version='2.0.0',
+                               output='gaphor.misc.wrapbox',
+                               defs='src/wrapbox.defs',
+                               sources=['src/gtkwrapbox.c',
+                                        'src/gtkhwrapbox.c',
+                                        'src/wrapbox.c',
+                                        'src/wrapboxmodule.c'],
+                               register=GTKDEFS,
+                               override='src/wrapbox.override')
+
+if gtkwrapbox.can_build():
+    ext_modules.append(gtkwrapbox)
+else:
+    pass
+
 setup(name='gaphor',
       version=VERSION,
       description="Gaphor is a UML modeling tool",
@@ -314,6 +344,7 @@ setup(name='gaphor',
                 'gaphor.ui',
                 'gaphor.misc'
       ],
+      ext_modules=ext_modules,
       # data files are relative to <prefix>/share/gaphor (see setup.cfg)
       data_files=[('', ['data/gaphor-main-ui.xml',
                         'data/gaphor-diagram-ui.xml',
@@ -328,6 +359,7 @@ setup(name='gaphor',
                 'build_py': build_py_Gaphor,
                 #'install_schemas': install_schemas,
                 'build': build,
+                'build_ext': BuildExt,
                 'build_mo': build_mo,
                 'build_pot': build_pot,
                 'install': install,

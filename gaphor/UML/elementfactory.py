@@ -2,11 +2,11 @@
 """elementfactory.py
 """
 
-from diagram import Diagram
 import gaphor
 import gaphor.misc.uniqueid as uniqueid
 #import weakref
 from element import Element
+from diagram import Diagram
 #from gaphor.misc.weakmethod import WeakMethod
 
 class ElementFactory(object):
@@ -78,11 +78,17 @@ class ElementFactory(object):
     def flush(self):
         """Flush all elements (remove them from the factory)."""
         self.notify(None, 'flush')
+	# First flush all diagrams:
+	for value in self.select(lambda e: isinstance(e, Diagram)):
+	    value.unlink()
+
         for key, value in self._elements.items():
             #print 'ElementFactory: unlinking', value
             #print 'references:', gc.get_referrers(value)
             value.unlink()
+
         assert len(self._elements) == 0, 'Still items in the factory: %s' % str(self._elements.values())
+
 	import gc
 	for i in range(4): gc.collect()
 

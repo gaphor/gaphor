@@ -1,0 +1,17 @@
+%%
+headers
+#include <Python.h>
+
+#define NO_IMPORT_PYGOBJECT
+#include "pygobject.h"
+#include <src/gtkwrapbox.h>
+#include <src/gtkhwrapbox.h>
+%%
+modulename gaphor.misc.wrapbox
+%%
+import gtk._gtk.Widget as PyGtkWidget_Type
+import gtk._gtk.Container as PyGtkContainer_Type
+%%
+ignore-glob
+  *_get_type
+

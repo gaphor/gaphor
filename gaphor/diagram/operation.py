@@ -21,7 +21,7 @@ class OperationItem(FeatureItem):
 
     def on_subject_notify__name(self, subject, pspec):
         self._expression.set_text(self.subject.render())
-        #self.request_update()
+        self.request_update()
 
     on_subject_notify__visibility = on_subject_notify__name
     on_subject_notify__taggedValue_value = on_subject_notify__name

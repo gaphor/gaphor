@@ -213,6 +213,10 @@ event_box.set_size_request(100, 100)
 event_box.connect('event', on_event_box_event)
 vbox.pack_start(event_box, expand=gtk.TRUE)
 
+wrap_box = menu_factory.create_wrapbox(('FileNew', 'FileCheck', 'separator', 'Green', 'Yellow', 'Blue'))
+vbox.pack_start(wrap_box, expand=gtk.TRUE)
+wrap_box.show()
+
 vbox.pack_end(statusbar, expand=gtk.FALSE)
 vbox.show()
 

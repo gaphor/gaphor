@@ -11,14 +11,10 @@ class DiagramTab(object):
         self.diagram = None
         self.owning_window = owning_window
 
-    #def set_owning_window(self, owning_window):
-        #self.owning_window = owning_window
-
     def get_diagram(self):
         return self.diagram
 
     def get_view(self):
-        #self._check_state(AbstractWindow.STATE_ACTIVE)
         return self.view
 
     def get_canvas(self):
@@ -83,7 +79,7 @@ class DiagramTab(object):
         #handle_box.show()
         #toolbar.show()
         #vbox.show_all()
-        self.table = table
+        #self.table = table
         #self._construct_window(name='diagram',
         #                       title=title,
         #                       size=(550, 550),
@@ -97,11 +93,12 @@ class DiagramTab(object):
         # Set diagram to None, so all refrences to the diagram are destroyed.
         self.owning_window.remove_tab(self)
         self.set_diagram(None)
+        # We need this to get the view deleted properly:
+        del self.view.diagram
         del self.view
         del self.diagram
 
     def __on_view_event_after(self, view, event):
-        #self._check_state(AbstractWindow.STATE_ACTIVE)
         # handle mouse button 3 (popup menu):
         if event.type == gtk.gdk.BUTTON_PRESS:
             # First push the undo stack...
@@ -113,7 +110,6 @@ class DiagramTab(object):
                 item = vitem.item
                 self.owning_window._construct_popup_menu(menu_def=item.get_popup_menu(),
                                            event=event)
-                #self.stop_emission('event-after')
             return True
         return False
 

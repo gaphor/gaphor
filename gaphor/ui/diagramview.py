@@ -5,6 +5,7 @@ import gobject
 import gtk
 from diacanvas import CanvasView
 import gaphor
+from gaphor.diagram import get_diagram_item
 
 class DiagramView(CanvasView):
     TARGET_STRING = 0
@@ -46,10 +47,9 @@ class DiagramView(CanvasView):
 	return 1
    
     def on_drag_data_received(self, context, x, y, data, info, time):
-	print 'drag_data_received'
+	#rint 'drag_data_received'
         if data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
-	    from gaphor.diagram import get_diagram_item
-	    print 'drag_data_received:', data.data, info
+	    #print 'drag_data_received:', data.data, info
 	    elemfact = gaphor.resource('ElementFactory')
 	    element = elemfact.lookup(data.data)
 	    assert element
@@ -69,7 +69,7 @@ class DiagramView(CanvasView):
 	    context.finish(gtk.FALSE, gtk.FALSE, time)
 
     def do_drag_drop(self, context, x, y, time):
-	print 'drag_drop'
+	#print 'drag_drop'
 	return 1
 
 gobject.type_register(DiagramView)

@@ -79,7 +79,7 @@ class umlproperty(object):
         try:
             obj.notify(self.name, pspec=self)
         except Exception, e:
-            log.error(str(e))
+            log.error(str(e), e)
 
         # we need to check if a deriviate is part of the current object:
         # TODO: can we do this faster?
@@ -97,7 +97,7 @@ class umlproperty(object):
                     try:
                         d.notify(obj)
                     except Exception, e:
-                        log.error(e)
+                        log.error(e, e)
 
 
 class attribute(umlproperty):

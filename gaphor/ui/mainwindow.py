@@ -51,9 +51,9 @@ class MainWindow(AbstractWindow):
                 'FileOpen',
                 'separator',
                 'FileSave',
-                'FileSaveAs',
-                'separator',
-                'Pointer',
+                'FileSaveAs')
+
+    wrapbox =  ('Pointer',
                 'separator',
                 'InsertClass',
                 'InsertPackage',
@@ -111,7 +111,7 @@ class MainWindow(AbstractWindow):
         view = namespace.NamespaceView(model)
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+        #scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
         scrolled_window.add(view)
         
         view.connect_after('event-after', self.on_view_event)
@@ -120,10 +120,15 @@ class MainWindow(AbstractWindow):
         view.set_size_request(200, 200)
 
         #scrolled_window.show_all()
+        #ns_paned = gtk.VPaned()
+        #ns_paned.pack1(scrolled_window)#, expand=True)
+        vbox = gtk.VBox()
+        vbox.pack_start(scrolled_window, expand=True)
 
         paned = gtk.HPaned()
-        paned.pack1(scrolled_window)
-
+        #paned.pack1(scrolled_window)
+        #paned.pack1(ns_paned)
+        paned.pack1(vbox)
         notebook = gtk.Notebook()
         #notebook.popup_enable()
         notebook.set_scrollable(True)
@@ -143,6 +148,30 @@ class MainWindow(AbstractWindow):
                                size=(600, 400),
                                contents=paned)
                                #contents=scrolled_window)
+        wrapbox = self.menu_factory.create_wrapbox(self.wrapbox)
+        #wrapbox.set_aspect_ratio(1/256)
+        vbox.pack_start(wrapbox, expand=False)
+        wrapbox.show()
+        #vbox.set_resize_mode(gtk.RESIZE_QUEUE)
+        #wrapbox.set_resize_mode(gtk.RESIZE_QUEUE)
+        #scrolled_window = gtk.ScrolledWindow()
+        #scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
+        #scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+        #scrolled_window.add_with_viewport(wrapbox)
+        #scrolled_window.show()
+        #ns_paned.pack2(scrolled_window)#, expand=False)
+        #wrapbox.queue_resize()
+        #wrapbox.set_size_request(0,0)
+
+        #def print_me(wrapbox, rect, mutex):
+        #    print wrapbox, rect, mutex
+        #    if not mutex:
+        #        mutex.append(1)
+        #        wrapbox.queue_resize()
+        #        mutex.remove(1)
+
+        #paned.connect('motion-notify-event', print_me)
+        #wrapbox.connect('size-allocate', print_me, [])
 
     def add_transient_window(self, window):
         """Add a window as a sub-window of the main application.
@@ -173,10 +202,6 @@ class MainWindow(AbstractWindow):
         self.notebook_map[contents] = window
         self.execute_action('TabChange')
         return page_num
-
-        current = self.notebook.get_current_page()
-        content = self.notebook.get_nth_page(current)
-        return self.notebook_map[content]
 
     def get_current_tab(self):
         current = self.notebook.get_current_page()

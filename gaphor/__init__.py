@@ -76,7 +76,7 @@ def resource(r, default=_no_default):
     case of a string the resource will be looked up in the GConf configuration.
 
     example: Get the element factory:
-	    elemfact = gaphor.resource(gaphor.UML.ElementFactory)
+	    factory = gaphor.resource(gaphor.UML.ElementFactory)
 
     Also builtin resources are 'Name', 'Version' and 'DataDir'. In case main()
     is run, 'MainWindow' points to the main window of the application.
@@ -106,4 +106,15 @@ def resource(r, default=_no_default):
 
 import __builtin__
 __builtin__.__dict__['log'] = misc.logger.Logger()
+
+try: 
+    # Keep track of all model elements that are created
+    from misc.aspects import ReferenceAspect, weave_method
+    import UML.elementfactory
+    import UML.diagram
+    refs = []
+    weave_method(UML.elementfactory.ElementFactory.create, ReferenceAspect, refs)
+    weave_method(UML.diagram.Diagram.create, ReferenceAspect, refs)
+except ImportError:
+    pass
 
