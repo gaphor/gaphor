@@ -1,3 +1,8 @@
+2004-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/properties.py: added upper, lower, _get, _set and _set2
+	to redefine.
+
 2004-04-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/placementtool.py: use new PlacementTool from

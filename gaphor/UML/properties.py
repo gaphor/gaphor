@@ -227,7 +227,7 @@ class association(umlproperty):
             opposite = getattr(type(value), self.opposite)
             if opposite.upper > 1:
                 if not obj in opposite._get(value):
-                    #print 'Setting opposite*:', self.name, obj, value
+                    #print 'Setting opposite*:', self.name, str(opposite), obj, value
                     opposite._set2(value, obj)
             else:
                 if not obj is opposite._get(value):
@@ -486,6 +486,9 @@ class redefine(umlproperty):
         self.original = original
         original.add_deriviate(self)
 
+    upper = property(lambda s: s.original.upper)
+    lower = property(lambda s: s.original.lower)
+
     def load(self, obj, value):
         if self.original.name == self.name:
             self.original.load(obj, value)
@@ -499,6 +502,15 @@ class redefine(umlproperty):
 
     def __str__(self):
         return '<redefine %s: %s = %s>' % (self.name, self.type.__name__, str(self.original))
+
+    def _get(self, obj):
+        return self.original._get(obj)
+
+    def _set(self, obj, value):
+        return self.original._set(obj, value)
+
+    def _set2(self, obj, value):
+        return self.original._set2(obj, value)
 
     def __get__(self, obj, class_=None):
         if not obj:
