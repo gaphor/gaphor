@@ -92,19 +92,6 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         self._dir.set_fill(diacanvas.shape.FILL_SOLID)
         self._dir.set_cyclic(True)
 
-        self._head_xa = diacanvas.shape.Path()
-        self._head_xa.set_line_width(2.0)
-
-        self._head_xb = diacanvas.shape.Path()
-        self._head_xb.set_line_width(2.0)
-
-        self._tail_xa = diacanvas.shape.Path()
-        self._tail_xa.set_line_width(2.0)
-
-        self._tail_xb = diacanvas.shape.Path()
-        self._tail_xb.set_line_width(2.0)
-
-
     def save(self, save_func):
         RelationshipItem.save(self, save_func)
         self.save_property(save_func, 'show-direction')
@@ -214,7 +201,6 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         #return x, y, max(x + 10, x + w), max(y + 10, y + h)
         return x, y, x + w, y + h
 
-
     def update_dir(self, p1, p2):
         """Create a small arrow near the middle of the association line and
         let it point in the direction of self.subject.memberEnd[0].
@@ -256,11 +242,6 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 
     def on_update(self, affine):
         """Update the shapes and sub-items of the association."""
-
-        RelationshipItem.on_update(self, affine)
-
-        handles = self.handles
-
         # Update line endings:
         head_subject = self._head_end.subject
         tail_subject = self._tail_end.subject
@@ -273,13 +254,11 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             elif tail_subject.aggregation == intern('shared'):
                 self.set(has_head=1, head_a=20, head_b=10, head_c=6, head_d=6,
                          head_fill_color=diacanvas.color(255,255,255,255))
-            elif self._head_end.get_navigability():
+            elif head_subject.class_:
                 # This side is navigable:
                 self.set(has_head=1, head_a=0, head_b=15, head_c=6, head_d=6)
             else:
                 self.set(has_head=0)
-                if self._head_end.get_navigability() == False:
-                    xs(self, handles[0].get_pos_i(), handles[1].get_pos_i(), 'head')
 
             if head_subject.aggregation == intern('composite'):
                 self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
@@ -287,15 +266,15 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             elif head_subject.aggregation == intern('shared'):
                 self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
                          tail_fill_color=diacanvas.color(255,255,255,255))
-            elif self._tail_end.get_navigability():
+            elif tail_subject.class_:
                 # This side is navigable:
                 self.set(has_tail=1, tail_a=0, tail_b=15, tail_c=6, tail_d=6)
             else:
                 self.set(has_tail=0)
-                if self._tail_end.get_navigability() == False:
-                    xs(self, handles[-1].get_pos_i(), handles[-2].get_pos_i(), 'tail')
 
+        RelationshipItem.on_update(self, affine)
 
+        handles = self.handles
         # Calculate alignment of the head name and multiplicity
         self._head_end.update_labels(handles[0].get_pos_i(),
                                      handles[1].get_pos_i())
@@ -331,17 +310,6 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         yield self._label
         if self._show_direction:
             yield self._dir
-
-        if self._head_end.subject and self._tail_end.subject:
-            if self._head_end.subject.aggregation == intern('none') \
-                    and self._head_end.get_navigability() == False:
-                yield self._head_xa
-                yield self._head_xb
-
-            if self._tail_end.subject.aggregation == intern('none') \
-                    and self._tail_end.get_navigability() == False:
-                yield self._tail_xa
-                yield self._tail_xb
 
     # Gaphor Connection Protocol
 
@@ -520,8 +488,6 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     FONT='sans 10'
 
     head_popup_menu = (
-        'Head_unknownNavigation',
-        'Head_isNotNavigable',
         'Head_isNavigable',
         'separator',
         'Head_AggregationNone',
@@ -530,8 +496,6 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     )
 
     tail_popup_menu = (
-        'Tail_unknownNavigation',
-        'Tail_isNotNavigable',
         'Tail_isNavigable',
         'separator',
         'Tail_AggregationNone',
@@ -598,37 +562,6 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
                 self._mult.set_text(m)
                 self.request_update()
 
-
-    def get_navigability(self):
-        """
-        Check navigability of the AssociationEnd. If property is owned by
-        class via ownedAttribute, then it is navigable. If property is
-        owned by association by owndedEnd, then it is not navigable.
-        Otherwise the navigability is unknown.
-
-        Returned navigability values:
-            - None  - unknown
-            - False - not navigable
-            - True  - navigable
-        """
-        navigability = None # unknown navigability as default
-        subject = self.subject
-
-        if subject and subject.opposite:
-            opposite = subject.opposite
-            if isinstance(opposite.type, UML.Interface):
-                type = subject.interface_
-            else: # isinstance(opposite.type, UML.Class):
-                type = subject.class_
-
-            if type and subject in type.ownedAttribute:
-                navigability = True
-            elif subject.association and subject in subject.association.ownedEnd:
-                navigability = False
-
-        return navigability
-                
-
     def set_navigable(self, navigable):
         """Change the AsociationEnd's navigability.
 
@@ -637,46 +570,30 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         subject = self.subject
         if subject and subject.opposite:
             opposite = subject.opposite
-
-            #
-            # Remove any navigability info, so unknown navigability state
-            # is the default.
-            #
-
-            # if navigable
-            if isinstance(opposite.type, UML.Class):
-                if subject.class_:
-                    del subject.class_
-            elif isinstance(opposite.type, UML.Interface):
-                if subject.interface_:
-                    del subject.interface_
-            else:
-                assert 0, 'Should never be reached'
-
-            # if not navigable
-            if subject.owningAssociation:
-                del subject.owningAssociation
-
-
-            #
-            # Set navigability.
-            #
             if navigable:
+                # Set owner to the class.
+                if subject.owningAssociation:
+                    del subject.owningAssociation
+
                 if isinstance(opposite.type, UML.Class):
                     subject.class_ = opposite.type
                 elif isinstance(opposite.type, UML.Interface):
                     subject.interface_ = opposite.type
                 else:
                     assert 0, 'Should never be reached'
-            elif navigable == False:
+            else:
+                if isinstance(opposite.type, UML.Class):
+                    if subject.class_:
+                        del subject.class_
+                elif isinstance(opposite.type, UML.Interface):
+                    if subject.interface_:
+                        del subject.interface_
+                else:
+                    assert 0, 'Should never be reached'
                 subject.owningAssociation = subject.association
-
-            # else navigability is unknown
-
         else:
             log.warning('AssociationEnd.set_navigable: %s missing' % \
                         (subject and 'subject' or 'opposite Property'))
-
 
     def point_name(self, x, y):
         p = (x, y)
@@ -871,46 +788,6 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
                 self.canvas.get_undo_manager().commit_transaction()
             #self.set_text()
             #log.info('editing done')
-
-
-def rotate(p1, p2, points):
-    """
-    Rotate points around p1. Rotation angle is determined by line (p0, p1).
-    Every point is moved into p1 + (10, 0) after rotation.
-    """
-    try:
-        angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0]))
-    except ZeroDivisionError:
-        angle = pi * 1.5
-        
-
-    sin_angle = sin(angle)
-    cos_angle = cos(angle)
-
-    def r(a, b, x, y):
-        return (cos_angle * a - sin_angle * b + x,
-                sin_angle * a + cos_angle * b + y)
-
-    x0 = p1[0] < p2[0] and 10 or -10
-    y0 = 0
-
-    # rotate around the (10, 0)
-    x0, y0 = r(x0, y0, 0, 0)
-
-    # move to the destination point
-    x0 += p1[0]
-    y0 += p1[1]
-
-    return [ r(x, y, x0, y0) for x, y in points ]
-
-
-def xs(self, p0, p1, name):
-    """
-    Utility function to draw xs (unknown navigability).
-    """
-    points = rotate(p0, p1, ((-4, -4), (4, 4), (4, -4), (-4, 4)))
-    getattr(self, '_%s_xa' % name).line(points[0:2])
-    getattr(self, '_%s_xb' % name).line(points[2:])
 
 initialize_item(AssociationItem, UML.Association)
 initialize_item(AssociationEnd)
