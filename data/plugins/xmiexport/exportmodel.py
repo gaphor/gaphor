@@ -28,6 +28,11 @@ class XMIExport(object):
 
     def handleClass(self, xmi, node):
         """ """    
+
+        # Check for stereotype definition classes
+        if node.name == 'Class':
+            return
+        
         attributes=XMLAttributes()
         attributes['xmi.id']=node.id
         attributes['name']=node.name
@@ -40,20 +45,25 @@ class XMIExport(object):
         xmi.startElement('UML:Class', attrs=attributes)
         
         # Generalization stuff
-        try:
-            node.generalization
-            hasGeneralization=True
-        except AttributeError:
-            hasGeneralization=False
-
-        if hasGeneralization:
+        generalizations = node.generalization
+        if generalizations:
             xmi.startElement('UML:GeneralizableElement.generalization', attrs=XMLAttributes())
-            for item in node.generalization:
+            for item in generalizations:
                 attributes=XMLAttributes()
                 attributes['xmi.idref']=item.id
                 xmi.startElement('UML:Generalization', attrs=attributes)
                 xmi.endElement('UML:Generalization')
             xmi.endElement('UML:GeneralizableElement.generalization')
+
+        # Stereotypes
+        stereotypes = node.appliedStereotype
+        if stereotypes:
+            xmi.startElement('UML:ModelElement.stereotype', attrs=XMLAttributes())
+            for stereotype in stereotypes:
+                attributes = XMLAttributes({'xmi.idref': stereotype.id})
+                xmi.startElement('UML:Stereotype', attrs=attributes)
+                xmi.endElement('UML:Stereotype')
+            xmi.endElement('UML:ModelElement.stereotype')
         
         # Generate the field type classes
         xmi.startElement('UML:Namespace.ownedElement', attrs=XMLAttributes())
@@ -130,8 +140,19 @@ class XMIExport(object):
         xmi.endElement('UML:Generalization.parent')
         xmi.endElement('UML:Generalization')
         
-    def handleLiteralSpecification(self, xmi, node):
-        pass
+    def handleStereotype(self, xmi, node):
+        attributes=XMLAttributes()
+        attributes['xmi.id']=node.id
+        attributes['name']=node.name
+        attributes['visibility']='public'
+        attributes['isSpecification']='false'
+        attributes['isRoot']='false'
+        attributes['isAbstract']='false'
+        xmi.startElement('UML:Stereotype', attributes)
+        xmi.startElement('UML:Stereotype.baseClass', attrs=XMLAttributes())
+        xmi.characters('Classifier')
+        xmi.endElement('UML:Stereotype.baseClass')
+        xmi.endElement('UML:Stereotype')
         
     def handleAssociation(self, xmi, node):
         """
