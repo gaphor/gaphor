@@ -12,10 +12,10 @@ import relationship
 
 class ImplementationItem(relationship.RelationshipItem):
 
-    def __init__(self, id=None):
+    def __init__(self, id = None):
         relationship.RelationshipItem.__init__(self, id)
-        self.set(dash=(7.0, 5.0), has_head=1, head_fill_color=0,
-                 head_a=15.0, head_b=15.0, head_c=10.0, head_d=10.0)
+        self.set(dash = (7.0, 5.0), has_head = 1, head_fill_color = 0,
+                 head_a = 15.0, head_b = 15.0, head_c = 10.0, head_d = 10.0)
         
     # Gaphor Connection Protocol
 
@@ -23,38 +23,34 @@ class ImplementationItem(relationship.RelationshipItem):
         """See RelationshipItem.find_relationship().
         """
         return self._find_relationship(head_subject, tail_subject,
-                                       ('contract', None),
-                                       ('implementatingClassifier', 'implementation'))
+           ('contract', None),
+           ('implementatingClassifier', 'implementation'))
+
 
     def allow_connect_handle(self, handle, connecting_to):
-        """See RelationshipItem.allow_connect_handle().
         """
-        try:
-            if not connecting_to or not isinstance(connecting_to.subject, UML.Classifier):
-                return False
+        Implementation can connect head to Interface and
+        tail to BehavioredClassifier.
+        """
+        can_connect = False
 
-            c1 = self.handles[0].connected_to
-            c2 = self.handles[-1].connected_to
+        head = self.handles[0] 
+        tail = self.handles[-1]
 
-            if not c1 and not c2:
-                return True
+        if head is handle and isinstance(connecting_to.subject, UML.Interface):
+            can_connect = True
+        elif tail is handle and isinstance(connecting_to.subject, UML.BehavioredClassifier):
+            can_connect = True
 
-            if c1 and c2:
-                print isinstance(c1.subject, UML.BehavioredClassifier) \
-                    and isinstance(c2.subject, UML.Interface)
-                return isinstance(c1.subject, UML.BehavioredClassifier) \
-                    and isinstance(c2.subject, UML.Interface)
+        assert not head.connected_to \
+            or head.connected_to and isinstance(head.connected_to.subject, UML.Interface)
+        assert not tail.connected_to or \
+            tail.connected_to and isinstance(tail.connected_to.subject, UML.BehavioredClassifier)
+        assert not head.connected_to or not tail.connected_to \
+            or head.connected_to and tail.connected_to \
+                and head.connected_to.subject != tail.connected_to.subject
 
-            if self.handles[0] is handle:
-                h = self.handles[-1].connected_to
-                return (h and h.subject is not connecting_to.subject)
-            elif self.handles[-1] is handle:
-                h = self.handles[0].connected_to
-                return (h and h.subject is not connecting_to.subject)
-            assert 0, 'Should never be reached...'
-        except AttributeError, e:
-            log.error('Implementation.allow_connect_handle: %s' % e, e)
-            return False
+        return can_connect
 
     def confirm_connect_handle (self, handle):
         """See RelationshipItem.confirm_connect_handle().
