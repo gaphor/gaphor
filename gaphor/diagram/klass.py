@@ -40,6 +40,25 @@ class Compartment(list):
         for item in self:
             save_func(None, item)
 
+    def reorder(self, features):
+        """Reorder the items in this compartment so they have the same
+        order as the items in the features list.
+        """
+        items = list(self)
+        tmp = [(item.subject, item) for item in self]
+        newlist = []
+        for f in features:
+            for t in tmp:
+                if t[0] is f:
+                    newlist.append(t[1])
+                    tmp.remove(t)
+                    break
+        if newlist != items:
+            print self[:]
+            print 'new list', newlist
+            self[:] = newlist
+            self.owner.request_update()
+
     def pre_update(self, width, height, affine):
         """Calculate the size of the feates in this compartment.
         """
@@ -184,11 +203,14 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
             mapping = dict(zip(my_features, compartment))
             for a in tmp:
                 self.remove(mapping[a])
-            
+
+        compartment.reorder(features)
+
     def sync_attributes(self):
         """Sync the contents of the attributes compartment with the data
         in self.subject.
         """
+        print 'sync_attributes'
         owned_attributes = [a for a in self.subject.ownedAttribute if not a.association]
         self.sync_features(owned_attributes, self._attributes,
                            self._create_attribute)

@@ -13,6 +13,7 @@ class AttributeItem(FeatureItem):
     popup_menu = FeatureItem.popup_menu + (
         'EditItem',
         'DeleteAttribute',
+        'MoveUp',
         'separator',
         'CreateAttribute'
     )

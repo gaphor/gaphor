@@ -1,6 +1,11 @@
 2004-06-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/association.py: added hollow diamond end for shared
+	* gaphor/diagram/itemactions.py: Added MoveUp action (for attributes
+	and operations)
+	* gaphor/UML/collection.py: added method moveUp().
+	* gaphor/diagram/(attribute|operation).py: added MoveUp action to
+	popup menu.
 
 2004-05-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

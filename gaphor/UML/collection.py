@@ -68,7 +68,9 @@ class collection(object):
             items.remove(value)
             items.insert(i, value)
         # Send a notification that this list has changed
-        self.property.notify(value)
+        print self.property, value
+        self.property.notify(self.object)
+        #self.owner.notify(self.property.name, pspec=self.property)
 
     def index(self, key):
         """Given an object, return the position of that object in the

@@ -14,6 +14,7 @@ class OperationItem(FeatureItem):
     popup_menu = FeatureItem.popup_menu + (
         'EditItem',
         'DeleteOperation',
+        'MoveUp',
         'separator',
         'CreateOperation'
     )

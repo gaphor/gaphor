@@ -10,6 +10,8 @@ from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 
 from klass import ClassItem
 from component import ComponentItem
+from attribute import AttributeItem
+from operation import OperationItem
 from nameditem import NamedItem
 from association import AssociationEnd
 
@@ -612,3 +614,36 @@ class IndirectlyInstantiatedComponentAction(CheckAction):
 
 register_action(IndirectlyInstantiatedComponentAction, 'ItemFocus')
 
+
+class MoveUpAction(Action):
+    id = 'MoveUp'
+    label = 'Move Up'
+    tooltip = 'Move Up'
+
+    def _get_item(self):
+        return self._window.get_current_diagram_view().focus_item.item
+
+
+    def init(self, window):
+        self._window = window
+
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, (AttributeItem, OperationItem)):
+                self.active = item.subject 
+
+
+    def execute(self):
+        feature = self._get_item()
+        subject = get_parent_focus_item(self._window).subject
+	if isinstance(feature, AttributeItem):
+	    subject.ownedAttribute.moveUp(feature.subject)
+	elif isinstance(feature, OperationItem):
+	    subject.ownedOperation.moveUp(feature.subject)
+
+register_action(MoveUpAction, 'ItemFocus')
