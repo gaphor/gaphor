@@ -84,8 +84,8 @@ class MenuFactory(object):
                 item.set_submenu(submenu)
                 submenu.show()
             elif id.startswith('<') and id.endswith('>'):
-                # We're dealing with a placeholder here
-                slot_def = get_actions_for_slot(id)
+                # We're dealing with a placeholder here, strip the <>
+                slot_def = get_actions_for_slot(id[1:-1])
                 self._create_menu_items(slot_def, groups, menu, item)
             else:
                 item = self.create_menu_item(id, groups)
@@ -328,7 +328,7 @@ class MenuFactory(object):
         """Create a Wrapbox. items in menu_def should not be nested as
         they are when creating a normal menu.
         """
-        wrapbox = gaphor.ui.wrapbox.WrapBox()
+        wrapbox = gaphor.ui.wrapbox.Wrapbox()
         tooltips = gtk.Tooltips()
         if groups is None:
             groups = { }

@@ -372,7 +372,7 @@ class NavigableAction(CheckAction):
             if isinstance(item, AssociationItem):
                 end = item.get_property(self.end_name)
                 if end.subject:
-                    self.active = (end.subject.class_ != None)
+                    self.active = (end.subject.classifier != None)
         except NoFocusItemError:
             pass
 

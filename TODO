@@ -2,11 +2,20 @@
 
 As always, there is much to do...
 
+- Storing last open files or having a quick-list of most important
+  directories or so would be great 
+
+- How to figure out if a module exists without loading it?
+
 - fix accelarators (HOW?), partially done, accelerators on items in popup menus
   does not work.
+  Accelerators should be activated by the window, should not depend on menu
+  items
 
 - Undo/redo functionality doesn;t work as espected
-- Stereotypes: check documentation page 581 (597 absolute).
+#- Stereotypes: check documentation page 581 (597 absolute). Fixed. An extra
+   association has been created between Stereotype and Class, Interface and
+   Package.
 
 #- Class: Association end properties are shown in the tree view
 #- Implement and test attribute/operation parser.
@@ -18,8 +27,8 @@ As always, there is much to do...
 
 - Exporting diagrams to UML XMI, code, images (SVG/png), etc.
 
-- Set up a plugin architecture. Since the internals of gaphor are pretty
-  modular, plugins should not be that hard.
+#- Set up a plugin architecture. Since the internals of gaphor are pretty
+   modular, plugins should not be that hard.
 
 UI
 --

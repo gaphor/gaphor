@@ -262,10 +262,12 @@ def register_action_for_slot(action, slot, *dependency_ids):
     register_action(action, *dependency_ids)
     path = slot.split('/')
     slot = _registered_slots
+    if path[0].startswith('<') and path[0].endswith('>'):
+        path[0] = path[0][1:-1]
     for p in path:
         slot = slot.setdefault(p, {})
     slot[action.id] = None
-    print _registered_slots
+    #print _registered_slots
 
 def get_actions_for_slot(slot):
     global _registered_slots

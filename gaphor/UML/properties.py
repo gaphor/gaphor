@@ -460,7 +460,7 @@ class derivedunion(umlproperty):
             if self.upper > 1:
                 return u
             else:
-                assert len(u) <= 1, 'Derived union %s should have length 1 %s' % (self.name, tuple(u))
+                assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
                 return u and u[0] or None
 
     def _set(self, obj, value):

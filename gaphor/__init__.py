@@ -27,7 +27,8 @@ from misc.resource import Resource
 resource = Resource(initial_resources = {
 			'Name': 'gaphor',
 			'Version': version.VERSION,
-			'DataDir': version.DATA_DIR
+			'DataDir': version.DATA_DIR,
+			'UserDataDir': version.USER_DATA_DIR
 		    })
 
 class GaphorError(Exception):
@@ -38,13 +39,17 @@ class GaphorError(Exception):
 	    Exception.__init__(self)
             self.args = args
 
-
 def main():
     """Start the interactive application.
     """
     # Import stuff here, since the user might not need all the GUI stuff
     import gtk
+    # Load plugin definitions:
+    import pluginmanager
     from ui import MainWindow
+
+    resource('PluginManager').bootstrap()
+
     # should we set a default icon here or something?
     main_window = MainWindow()
     main_window.construct()

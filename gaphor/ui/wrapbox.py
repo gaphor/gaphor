@@ -6,14 +6,17 @@ import gobject
 import gtk
 
 
-class WrapBox(object):
+class Wrapbox(gtk.Table):
 
     def __init__(self):
+	self.__gobject_init__()
         self.resize_idle_id = 0
         self.rows = 1
         self.cols = 0
-        self.table = gtk.Table(self.rows, self.cols)
-        self.table.connect('size_allocate', self.on_size_allocate)
+        #self.table = gtk.Table(self.rows, self.cols)
+        self.resize(self.rows, self.cols)
+        #self.table.connect('size_allocate', self.on_size_allocate)
+        self.connect('size_allocate', self.on_size_allocate)
         self.children = []
 
     def calculate_size(self, allocation):
@@ -32,7 +35,8 @@ class WrapBox(object):
         return cols, rows
 
     def set_new_size(self):
-        table = self.table
+        #table = self.table
+        table = self
         children = self.children
         rows = self.rows
         cols = self.cols
@@ -66,18 +70,20 @@ class WrapBox(object):
         self.cols += 1
         row = self.rows
         col = self.cols
-        self.table.attach(widget, left_attach=col-1, right_attach=col,
+        #self.table.attach(widget, left_attach=col-1, right_attach=col,
+        self.attach(widget, left_attach=col-1, right_attach=col,
                           top_attach=row-1, bottom_attach=row)
         self.children.append(widget)
 
+gobject.type_register(Wrapbox)
 
 if __name__ == '__main__':
     def make_wrapbox(button_labels):
-        wrapbox = WrapBox()
+        wrapbox = Wrapbox()
         for label in button_labels:
             b = gtk.Button(label)
             wrapbox.add(b)
-        return wrapbox.table
+        return wrapbox
 
         table = gtk.Table(len(button_labels), 1)
         i = 0

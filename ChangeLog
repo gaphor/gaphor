@@ -1,4 +1,11 @@
+2004-06-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/plugin.py: new file. provided stuff needed by possible
+	plugins.
+	* gaphor/pluginmanager.py: new file. Plugin loading facility.
+
 2004-06-20  wrobell
+
 	* gaphor/diagram/interface.py: - change look of interface depending
 	on connected associations and implementations, nfy
 	* gaphor/diagram/implementation.py: - change look into solid line

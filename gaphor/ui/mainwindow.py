@@ -6,58 +6,7 @@ import namespace
 import gaphor
 import gaphor.UML as UML
 from abstractwindow import AbstractWindow
-
-def on_wrapbox_decorator_toggled(button, content):
-    """This function is called when the Wrapbox decorator is clicked. It
-    changes the visibility of the content and the arrow in front of the
-    button label.
-    """
-    # Fetch the arrow item:
-    arrow = button.get_children()[0].get_children()[0]
-    if not content.get_property('visible'):
-        content.show()
-        arrow.set(gtk.ARROW_DOWN, gtk.SHADOW_IN)
-    else:
-        content.hide()
-        arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
-
-def make_wrapbox_decorator(title, content, expanded=False):
-    """Create a gtk.VBox with in the top compartment a label that can be
-    clicked to show/hide the lower compartment.
-    """
-    vbox = gtk.VBox()
-
-    button = gtk.Button()
-    button.set_relief(gtk.RELIEF_NONE)
-
-    hbox = gtk.HBox()
-    button.add(hbox)
-
-    arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
-    hbox.pack_start(arrow, False, False, 0)
-
-    label = gtk.Label(title)
-    hbox.pack_start(label, expand=False, fill=False)
-
-    sep = gtk.HSeparator()
-    hbox.pack_start(sep, expand=True, fill=True)
-    hbox.set_spacing(3)
-
-    vbox.pack_start(button, False, False, 1)
-
-    vbox.show_all()
-
-    button.connect('clicked', on_wrapbox_decorator_toggled, content)
-
-    vbox.pack_start(content, True, True)
-    
-    vbox.label = label
-    vbox.content = content
-
-    content.set_property('visible', not expanded)
-    on_wrapbox_decorator_toggled(button, content)
-
-    return vbox
+from toolbox import Toolbox
 
 
 class MainWindow(AbstractWindow):
@@ -97,7 +46,8 @@ class MainWindow(AbstractWindow):
                 'CreateDiagram'),
             '_Window', (
                 'OpenEditorWindow',
-                'OpenConsoleWindow'),
+                'OpenConsoleWindow',
+                '<WindowSlot>'),
             '_Help', (
                 'About',)
             )
@@ -114,7 +64,7 @@ class MainWindow(AbstractWindow):
                 'ViewZoomOut',
                 'ViewZoom100')
 
-    wrapboxes = [
+    toolbox = [
         ("", (
                 'Pointer',
                 'InsertComment',
@@ -229,17 +179,12 @@ class MainWindow(AbstractWindow):
 
         vbox.set_border_width(3)
 
-	# Create icon boxes in the lower left corner of the window.
-        wrapbox_groups = { }
-        for title, items in self.wrapboxes:
-            wrapbox = self.menu_factory.create_wrapbox(items,
-                                                       groups=wrapbox_groups)
-            if title:
-                wrapbox_dec = make_wrapbox_decorator(title, wrapbox.table)
-                vbox.pack_start(wrapbox_dec, expand=False)
-            else:
-                vbox.pack_start(wrapbox.table, expand=False)
-                wrapbox.table.show()
+        toolbox = Toolbox(self.menu_factory, self.toolbox)
+        toolbox.construct()
+        vbox.pack_start(toolbox, expand=False)
+        toolbox.show()
+
+        self._toolbox = toolbox
 
 
     def add_transient_window(self, window):

@@ -366,10 +366,22 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
                 # Set owner to the class.
                 if subject.owningAssociation:
                     del subject.owningAssociation
-                subject.class_ = opposite.type
+
+                if isinstance(opposite.type, UML.Class):
+                    subject.class_ = opposite.type
+                elif isinstance(opposite.type, UML.Interface):
+                    subject.interface_ = opposite.type
+                else:
+                    assert 0, 'Should never be reached'
             else:
-                if subject.class_:
-                    del subject.class_
+                if isinstance(opposite.type, UML.Class):
+                    if subject.class_:
+                        del subject.class_
+                elif isinstance(opposite.type, UML.Interface):
+                    if subject.interface_:
+                        del subject.interface_
+                else:
+                    assert 0, 'Should never be reached'
                 subject.owningAssociation = subject.association
         else:
             log.warning('AssociationEnd.set_navigable: %s missing' % \

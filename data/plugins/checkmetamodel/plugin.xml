@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<plugin name="UML metamodel sanity check"
+        version="0.1"
+        author="Arjan Molenaar">
+  <require>
+    <!--
+      Define modules and plugins that are needed for this plugin to function
+      properly.
+    - ->
+    <module name="some.module"/>
+    <plugin name="anotherPlugin"/>
+    -->
+  </require>
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+    <action id="CheckMetamodel"
+            label="Check UML metamodel"
+            icon-file="uml.png"
+            tooltip="Check the UML meta model for errors"
+            class="CheckMetamodelAction" slot="WindowSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      - ->
+      <depends action=""/>
+      -->
+    </action>
+  </provide>
+</plugin>

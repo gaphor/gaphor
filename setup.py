@@ -141,11 +141,14 @@ class version_py:
         """Create a file gaphor/version.py which contains the current version.
         """
         outfile = os.path.join(dir, 'gaphor', 'version.py')
-        print 'generating %s' % outfile
+        print 'generating %s' % outfile, dir, data_dir
         self.mkpath(os.path.dirname(outfile))
         f = open(outfile, 'w')
         f.write('VERSION=\'%s\'\n' % VERSION)
         f.write('DATA_DIR=\'%s\'\n' % data_dir)
+        f.write('import os\n')
+        f.write('USER_DATA_DIR=os.getenv(\'HOME\') + \'.gaphor\'\n')
+        f.write('del os\n')
         f.close()
         self.byte_compile([outfile])
 
@@ -194,9 +197,9 @@ class install_lib_Gaphor(install_lib, version_py):
                                    ('install_dir', 'install_data'))
 
     def run(self):
-        install_lib.run(self)
         # Install a new version.py with install_data as data_dir:
         self.generate_version(self.install_dir, self.install_data)
+        install_lib.run(self)
 
 
 class install_schemas(Command):
@@ -351,7 +354,8 @@ setup(name='gaphor',
 #      ext_modules=ext_modules,
       # data files are relative to <prefix>/share/gaphor (see setup.cfg)
       data_files=[('', ['data/icons.xml']),
-                  ('pixmaps', glob('data/pixmaps/*.png'))
+                  ('pixmaps', glob('data/pixmaps/*.png')),
+                  ('plugins', glob('data/plugins/**'))
       ],
       scripts=['bin/gaphor'],
 
