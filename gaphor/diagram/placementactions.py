@@ -42,7 +42,7 @@ class ResetToolAfterCreateAction(CheckAction):
         self.active = resource('reset-tool-after-create', True)
 
     def execute(self):
-        resource.set('reset-tool-after-create', self.active)
+        resource.set('reset-tool-after-create', self.active, persistent=True)
 
 register_action(ResetToolAfterCreateAction)
 

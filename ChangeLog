@@ -2,6 +2,11 @@
 
 	* gaphor/UML/uml2.gaphor: implemented Interaction diagrams.
 	* utils/genUML2.py: let code generator support Sort suffix.
+	* gaphor/misc/resource.py: Added resource file backend.
+	* gaphor/__init__.py: save resources when the program exits
+	* gaphor/ui/mainwindow.py: Added persistent property for window size.
+	* gaphor/diagram/placementactions.py: made reset-tool property
+	persistent.
 
 2004-11-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

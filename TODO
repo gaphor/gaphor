@@ -7,9 +7,9 @@ As always, there is much to do...
 
 - Store application state:
   - last opened files
-  - open/closed status of diagram toolbox
-  - window size
-  - reset tool option
+  #- open/closed status of diagram toolbox
+  #- window size
+  #- reset tool option
 
 - When Stereotype has no submenu items, grey it out. Same goes for "Export" menu.
 

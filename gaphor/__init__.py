@@ -69,6 +69,7 @@ def main(gaphor_file=None):
         main_window.execute_action('FileNew')
     gtk.main()
     #gtk.threads_leave()
+    resource.save()
     log.info('Bye!')
 
 # TODO: Remove this

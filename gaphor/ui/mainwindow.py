@@ -4,8 +4,8 @@
 import gtk
 import namespace
 import gaphor
-import gaphor.UML as UML
-import gaphor.undomanager as undomanager
+from gaphor import UML
+from gaphor import undomanager
 from gaphor.i18n import _
 from abstractwindow import AbstractWindow
 from diagramtab import DiagramTab
@@ -240,9 +240,10 @@ class MainWindow(AbstractWindow):
         self.model = model
         self.view = view
 
+        window_size = gaphor.resource('ui.window-size', (760, 580))
         self._construct_window(name='main',
                                title='Gaphor',
-                               size=(760, 580),
+                               size=window_size,
                                contents=paned)
 
         vbox.set_border_width(3)
@@ -254,6 +255,9 @@ class MainWindow(AbstractWindow):
         toolbox.show()
 
         self._toolbox = toolbox
+
+        # We want to store the window size, so it can be reloaded on startup
+        self.window.connect('size-allocate', self.on_window_size_allocate)
 
         # Set some handles for the undo manager
         undomanager.get_undo_manager().connect('begin_transaction', self.on_undo)
@@ -379,6 +383,9 @@ class MainWindow(AbstractWindow):
         A dummy action is executed.
         """
         self.execute_action('TabChange')
+
+    def on_window_size_allocate(self, window, allocation):
+        gaphor.resource.set('ui.window-size', (allocation.width, allocation.height), persistent=True)
 
 #    def on_toolbox_toggled(self, toolbox, box_name, visible):
 #        print 'Box', box_name, 'is visible:', visible
