@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<plugin name="PyNSource"
+        version="0.1"
+        author="Arjan Molenaar">
+  <description>
+    Code reverse engineer plugin for Python source code.
+
+    This plugin uses PyNSource, written by Andy Bulka
+    [http://www.atug.com/andypatterns/pynsource.htm].
+  </description>
+  <require>
+    <!--
+    <module name="some.module"/>
+    -->
+    <plugin name="Diagram Layout"/>
+  </require>
+  <provide>
+    <action id="PyNSource"
+            label="_Import Python files"
+            tooltip=""
+            class="PyNSourceAction" slot="FileImportSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      - ->
+      <depends action=""/>
+      -->
+    </action>
+  </provide>
+</plugin>

@@ -148,7 +148,7 @@ def load_elements(elements, factory, status_queue=None):
         if status_queue:
             status_queue(status)
 
-def load_elements_generator(elements, factory):
+def load_elements_generator(elements, factory, gaphor_version=None):
     """Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
@@ -233,7 +233,9 @@ def load_elements_generator(elements, factory):
                         log.error('Loading %s.%s with value %s failed' % (type(elem.element).__name__, name, ref.element.id))
                         raise
 
-                
+    # Fix version inconsistencies
+    version_0_5_2(elements, factory, gaphor_version)
+
     # do a postload:
     for id, elem in elements.items():
         yield update_status_queue()
@@ -269,6 +271,7 @@ def load_generator(filename, factory=None):
             else:
                 yield percentage
         elements = loader.elements
+        gaphor_version = loader.gaphor_version
         #elements = parser.parse(filename)
         #yield 100
     except Exception, e:
@@ -280,7 +283,7 @@ def load_generator(filename, factory=None):
             factory = gaphor.resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
-        for percentage in load_elements_generator(elements, factory):
+        for percentage in load_elements_generator(elements, factory, gaphor_version):
             if percentage:
                 yield percentage / 2 + 50
             else:
@@ -291,4 +294,24 @@ def load_generator(filename, factory=None):
         import traceback
         traceback.print_exc()
         raise
-    
+
+
+# Version inconsistencies can be fixed:
+
+def version_0_5_2(elements, factory, gaphor_version):
+    """Before version 0.5.2, the wrong memberEnd of the association was
+    holding the aggregation information.
+    """
+    if tuple(gaphor_version.split('.')) < (0, 5, 2):
+        log.info('Fix composition on Associations (file version: %s)' % gaphor_version)
+        for elem in elements.values():
+            try:
+                if elem.type == 'Association':
+                    a = elem.element
+                    agg1 = a.memberEnd[0].aggregation
+                    agg2 = a.memberEnd[1].aggregation
+                    a.memberEnd[0].aggregation = agg2
+                    a.memberEnd[1].aggregation = agg1
+            except Exception, e:
+                log.error('Error while updating Association', e)
+

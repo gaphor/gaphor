@@ -78,8 +78,8 @@ class Plugin(object):
 	    pluginstatus[p.name] = bool(p.initialized)
 	for p in self.required_plugins:
 	    if not pluginstatus.get(p):
-		self.status = 'Plugin %s is required by this plugin' % p
-		log.debug(self.status)
+		self.status = 'Plugin %s is a prerequisite' % p
+		log.debug(self.status + ' for %s' % self.name)
 		return False
 
 	return True

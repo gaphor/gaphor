@@ -151,6 +151,8 @@ class GaphorLoader(handler.ContentHandler):
     def startDocument(self):
         """Start of document: all our attributes are initialized.
         """
+        self.version = None
+        self.gaphor_version = None
         self.elements = gaphor.misc.odict.odict() # map id: element/canvasitem
         self.__stack = []
         self.value_is_cdata = 0
@@ -230,6 +232,8 @@ class GaphorLoader(handler.ContentHandler):
         # The <gaphor> tag is the toplevel tag:
         elif state == ROOT and name == 'gaphor':
             assert attrs['version'] in ('3.0',)
+            self.version = attrs['version']
+            self.gaphor_version = attrs.get('gaphor_version')
             self.push(None, GAPHOR)
 
         else:

@@ -133,6 +133,13 @@ class config_Gaphor(Command):
                         self.config_failed.append(module)
 
 
+class build_Gaphor(build):
+
+    def run(self):
+        self.run_command('config')
+        build.run(self)
+
+
 class version_py:
 
     def generate_version(self, dir, data_dir):
@@ -163,7 +170,6 @@ class build_py_Gaphor(build_py, version_py):
     description = "build_py and generate gaphor/UML/uml2.py."
 
     def run(self):
-        self.run_command('config')
         build_py.run(self)
         sys.path.insert(0, self.build_lib)
         # All data is stored in the local data directory
@@ -300,6 +306,9 @@ class run_Gaphor(Command):
             sys.exit(not result.wasSuccessful())
         elif self.file:
             print 'Executing file: %s...' % self.file
+            dir, f = os.path.split(self.file)
+            print 'Extending PYTHONPATH with %s' % dir
+            sys.path.append(dir)
             execfile(self.file, {})
         else:
             print 'Launching Gaphor...'
@@ -341,6 +350,9 @@ class run_Gaphor(Command):
 #else:
 #    pass
 
+def plugin_data(name):
+    return 'plugins/%s' % name, glob('data/plugins/%s/*.*' % name)
+
 setup(name='gaphor',
       version=VERSION,
       description="Gaphor is a UML modeling tool",
@@ -362,9 +374,11 @@ setup(name='gaphor',
       # data files are relative to <prefix>/share/gaphor (see setup.cfg)
       data_files=[('', ['data/icons.xml']),
                   ('pixmaps', glob('data/pixmaps/*.png')),
-                  ('plugins/plugineditor', glob('data/plugins/plugineditor/*.*')),
-                  ('plugins/liveobjectbrowser', glob('data/plugins/liveobjectbrowser/*.*')),
-                  ('plugins/checkmetamodel', glob('data/plugins/checkmetamodel/*.*'))
+                  plugin_data('plugineditor'),
+                  plugin_data('checkmetamodel'),
+                  plugin_data('diagramlayout'),
+                  plugin_data('liveobjectbrowser'),
+                  plugin_data('pynsource')
       ],
       scripts=['bin/gaphor'],
 
@@ -372,7 +386,7 @@ setup(name='gaphor',
       cmdclass={'config': config_Gaphor,
                 'build_py': build_py_Gaphor,
                 #'install_schemas': install_schemas,
-                'build': build,
+                'build': build_Gaphor,
 #                'build_ext': BuildExt,
                 'build_mo': build_mo,
                 'build_pot': build_pot,

@@ -1,3 +1,18 @@
+2004-09-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/plugins/diagramlayout: new plugin, layout elements in a diagram
+	* data/plugins/pynsource: new plugin. Create diagrams from Python
+	code. Uses Andy Bulka's PyNSource code.
+	# During creation of the plugin I noticed a bug in Associations:
+	# The aggregation attribute of the wrong Property instance is used.
+	# This behavior has been fixed:
+	* gaphor/storage.py: added workaround in load_elements_generator()
+	* gaphor/diagram/association.py: updated code to show aggregation on
+	the right end.
+	* gaphor/UML/uml2.gaphor: loaded and saved (bug no longer in data
+	model)
+	* utils/genUML2.py: updated.
+
 2004-09-14  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/itemactions.py: Support new Editable interface.

@@ -192,7 +192,7 @@ class Writer:
             a += ', lower=%s' % lower
         if upper != '*':
             a += ', upper=%s' % upper
-        if tail.get('aggregation') == 'composite':
+        if head.get('aggregation') == 'composite':
             a += ', composite=True'
 
         # Add the opposite property if the head itself is navigable:

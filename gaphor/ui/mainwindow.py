@@ -29,6 +29,8 @@ class MainWindow(AbstractWindow):
                 'FileSaveAs',
                 '<FileSaveSlot>',
                 'separator',
+                _('_Import'), (
+                    '<FileImportSlot>',),
                 _('_Export'), (
                     'FileExportSVG',
                     '<FileExportSlot>'),
@@ -289,7 +291,6 @@ class MainWindow(AbstractWindow):
         """Window is destroyed... Quit the application.
         """
         AbstractWindow._on_window_destroy(self, window)
-        #gaphor.resource(UML.ElementFactory).disconnect(self.__on_element_factory_signal)
         del self.model
         del self.view
 
@@ -308,8 +309,6 @@ class MainWindow(AbstractWindow):
 
     def on_view_row_activated(self, view, path, column):
         self._check_state(AbstractWindow.STATE_ACTIVE)
-        node = self.get_model().node_from_path(path)
-        element = self.get_model().element_from_node(node)
         self.execute_action('OpenModelElement')
 
     def on_view_cursor_changed(self, view):

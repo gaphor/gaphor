@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<plugin name="Diagram Layout"
+        version="0.1"
+        author="Arjan Molenaar">
+  <description>
+    Reorder the elements a diagram.
+  </description>
+  <require>
+    <!--
+    <module name="some.module"/>
+    <plugin name="anotherPlugin"/>
+    -->
+  </require>
+  <provide>
+    <action id="DiagramLayout"
+            label="Layout diagram"
+            tooltip="Do layout the elements in a diagram"
+            class="DiagramLayoutAction" slot="DiagramSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      -->
+      <depends action="TabChange"/>
+    </action>
+  </provide>
+</plugin>
