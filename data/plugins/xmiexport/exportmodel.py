@@ -127,6 +127,8 @@ class XMIExport(object):
             xmi.endElement('UML:Class')
         xmi.endElement('UML:Namespace.ownedElement')
  
+        xmi.startElement('UML:Classifier.feature', attrs=XMLAttributes())
+        
         # Now generate the XML for the attribute itself
         for attribute in node.ownedAttribute:
             try:
@@ -135,7 +137,6 @@ class XMIExport(object):
             except AttributeError:
                 continue
  
-            xmi.startElement('UML:Classifier.feature', attrs=XMLAttributes())
             attributes=XMLAttributes()
             attributes['xmi.id']=attribute.id
             attributes['name']=attribute.name or ''
@@ -151,8 +152,41 @@ class XMIExport(object):
             xmi.endElement('UML:StructuralFeature.type')
                            
             xmi.endElement('UML:Attribute')
-               
-            xmi.endElement('UML:Classifier.feature')
+        
+        # Generate all methods
+        for operation in node.ownedOperation:
+            attributes=XMLAttributes()
+            attributes['xmi.id']=operation.id
+            attributes['name']=operation.name or ''
+            attributes['visibility']='public'
+            attributes['isSpecification']='false'
+            attributes['ownerScope']='instance'
+            attributes['isQuery']='false'
+            attributes['concurrency']='seqeuntial'
+            attributes['isRoot']='false'
+            attributes['isLeaf']='false'
+            attributes['isAbstract']='false'
+            xmi.startElement('UML:Operation', attrs=attributes)
+            
+            xmi.startElement('UML:BehavioralFeature.parameters', XMLAttributes())
+            for parameter in operation.returnResult:
+                attributes=XMLAttributes()
+                attributes['xmi.id']=operation.id
+                attributes['name']=operation.name or ''
+                attributes['kind']='return'
+                attributes['isSpecification']='false'
+                xmi.startElement('UML:Parameter', attrs=attributes)
+                xmi.startElement('UML:Parameter.type', attrs=XMLAttributes())
+                xmi.startElement('UML:DataType', XMLAttributes({'xmi.idref': parameter.typeValue.id}))
+                xmi.endElement('UML:DataType')
+                xmi.endElement('UML:Parameter.type')
+                xmi.endElement('UML:Parameter')
+            xmi.endElement('UML:BehavioralFeature.parameters')
+
+            xmi.endElement('UML:Operation')
+
+        
+        xmi.endElement('UML:Classifier.feature')
         xmi.endElement('UML:Class')
 
 
