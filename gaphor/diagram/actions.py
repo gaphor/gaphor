@@ -185,7 +185,7 @@ class DecisionNodePlacementAction(PlacementAction):
     id = 'InsertDecisionNode'
     label = 'Decision node'
     tooltip = 'Create a new Decision action node'
-    stock_id = 'gaphor-pointer'
+    stock_id = 'gaphor-decision-node'
     name = 'DecisionNode'
     type = diagram.DecisionNodeItem
     subject_type = UML.DecisionNode
@@ -276,7 +276,7 @@ class FlowPlacementAction(PlacementAction):
     id = 'InsertFlow'
     label = '_Flow'
     tooltip = 'Create a Flow'
-    stock_id = 'gaphor-pointer'
+    stock_id = 'gaphor-control-flow'
     name = 'Flow'
     type = diagram.FlowItem
 
