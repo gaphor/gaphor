@@ -16,8 +16,11 @@ STOCK_COMMENT_LINE = 'gaphor-comment-line'
 STOCK_DEPENDENCY = 'gaphor-dependency'
 STOCK_DIAGRAM = 'gaphor-diagram'
 STOCK_EXTEND = 'gaphor-extend'
+STOCK_EXTENSION = 'gaphor-extension'
+STOCK_ACTIVITY_FINAL_NODE = 'gaphor-activity-final-node'
 STOCK_GENERALIZATION = 'gaphor-generalization'
 STOCK_INCLUDE = 'gaphor-include'
+STOCK_INITIAL_NODE = 'gaphor-initial-node'
 STOCK_OPERATION = 'gaphor-operation'
 STOCK_PACKAGE = 'gaphor-package'
 STOCK_PROFILE = 'gaphor-profile'
@@ -62,8 +65,11 @@ icon_dir = os.path.join(gaphor.resource('DataDir'), 'pixmaps')
 
 # Initialize stock icons:
 add_stock_icon(STOCK_POINTER,	icon_dir, ('pointer24.png',))
+
+add_stock_icon(STOCK_ACTIVITY_FINAL_NODE, icon_dir, ('activityfinalnode24.png',), UML.ActivityFinalNode)
 add_stock_icon(STOCK_ACTOR,	icon_dir, ('actor24.png',), UML.Actor)
 add_stock_icon(STOCK_ASSOCIATION, icon_dir, ('association24.png',), UML.Association)
+add_stock_icon(STOCK_EXTENSION, icon_dir, ('extension24.png',), UML.Extension)
 add_stock_icon(STOCK_STEREOTYPE, icon_dir, ('class24.png',), UML.Stereotype)
 add_stock_icon(STOCK_CLASS,	icon_dir, ('class24.png',), UML.Class)
 add_stock_icon(STOCK_DEPENDENCY, icon_dir, ('dependency24.png',), UML.Dependency)
@@ -76,6 +82,7 @@ add_stock_icon(STOCK_PACKAGE,	icon_dir, ('package24.png',), UML.Package)
 add_stock_icon(STOCK_PROFILE,	icon_dir, ('package24.png',), UML.Profile)
 add_stock_icon(STOCK_PROPERTY,	icon_dir, ('pointer24.png',), UML.Property)
 add_stock_icon(STOCK_PARAMETER,	icon_dir, ('pointer24.png',), UML.Parameter)
+add_stock_icon(STOCK_INITIAL_NODE, icon_dir, ('initialnode24.png',), UML.InitialNode)
 add_stock_icon(STOCK_USECASE,	icon_dir, ('usecase24.png',), UML.UseCase)
 
 del icon_dir

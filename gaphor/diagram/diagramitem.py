@@ -186,7 +186,7 @@ class DiagramItem(Presentation):
                 key = (handler_or_id,) + args
                 ids = self.__handler_to_id[key]
             except KeyError, e:
-                log.error(e, e)
+                log.error("Couldn't retrieve connection handle ids", e)
             else:
                 for id in ids:
                     CanvasItem.disconnect(self, id)

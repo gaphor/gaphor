@@ -161,7 +161,7 @@ class InitialNodePlacementAction(PlacementAction):
     id = 'InsertInitialNode'
     label = 'Initial node'
     tooltip = 'Create a new Initial action node'
-    stock_id = 'gaphor-pointer'
+    stock_id = 'gaphor-initial-node'
     name = 'InitialNode'
     type = diagram.InitialNodeItem
     subject_type = UML.InitialNode
@@ -173,7 +173,7 @@ class ActivityFinalNodePlacementAction(PlacementAction):
     id = 'InsertActivityFinalNode'
     label = 'Final activity node'
     tooltip = 'Create a new Final activity node'
-    stock_id = 'gaphor-pointer'
+    stock_id = 'gaphor-activity-final-node'
     name = 'ActivityFinalNode'
     type = diagram.ActivityFinalNodeItem
     subject_type = UML.ActivityFinalNode
@@ -243,7 +243,7 @@ class ExtensionPlacementAction(PlacementAction):
     id = 'InsertExtension'
     label = '_Extension'
     tooltip = 'Create a new Extension line'
-    stock_id = 'gaphor-association'
+    stock_id = 'gaphor-extension'
     name = 'Extension'
     type = diagram.ExtensionItem
 
