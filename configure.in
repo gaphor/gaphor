@@ -38,21 +38,21 @@ fi
 
 AM_CHECK_PYTHON_HEADERS
 
-AM_CHECK_PYMOD(types)
-AM_CHECK_PYMOD(sys)
-AM_CHECK_PYMOD(xmllib)
-AM_CHECK_PYMOD(copy)
-AM_CHECK_PYMOD(gobject)
-AM_CHECK_PYMOD(gtk)
-AM_CHECK_PYMOD(gnome)
-AM_CHECK_PYMOD(gnome.canvas)
-AM_CHECK_PYMOD(diacanvas)
+AM_CHECK_PYMOD(types, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(sys, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(xmllib, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(copy, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(gobject, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(gtk, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(gnome, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(gnome.canvas, , , AC_MSG_ERROR(This Python module is required))
+AM_CHECK_PYMOD(diacanvas, , , AC_MSG_ERROR(This Python module is required))
 
 
 ##########
 # C stuff
 
-PKG_CHECK_MODULES(DIACANVAS2, diacanvas2 >= 0.4.1, \
+PKG_CHECK_MODULES(DIACANVAS2, diacanvas2 >= 0.5.0, \
 			AC_MSG_RESULT(okay), \
 			AC_MSG_ERROR(Can't find DiaCanvas2))
 AC_SUBST(DIACANVAS2_CFLAGS)
@@ -60,7 +60,9 @@ AC_SUBST(DIACANVAS2_LIBS)
 
 # PyGTK 
 
-PKG_CHECK_MODULES(PYGTK, [pygtk-2.0 >= 1.99.6])
+PKG_CHECK_MODULES(PYGTK, [pygtk-2.0 >= 1.99.6], \
+			AC_MSG_RESULT(okay),
+			AC_MSG_ERROR(Can't find PyGTK))
 AC_SUBST(PYGTK_CFLAGS)
 
 AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
