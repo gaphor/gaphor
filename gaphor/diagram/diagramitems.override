@@ -1,0 +1,158 @@
+%%
+headers
+/* vim: syntax=c sw=4
+ */
+#include <Python.h>
+
+#include <pygobject.h>
+#include <pygtk/pygtk.h>
+#include "model-element.h"
+#include "actor.h"
+#include "comment.h"
+#include "comment-line.h"
+#include "usecase.h"
+
+#include "relationship.h"
+#include "generalization.h"
+
+%%
+import gobject.GObject as PyGObject_Type
+import diacanvas.CanvasElement as PyDiaCanvasElement_Type
+import diacanvas.CanvasLine as PyDiaCanvasLine_Type
+import diacanvas.Tool as PyDiaTool_Type
+%%
+override model_element_set_subject kwargs
+static PyObject *
+_wrap_model_element_set_subject(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "subject", NULL };
+    PyObject *subject;
+		
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O:diagram.ModelElement", kwlist, &subject))
+	return NULL;
+
+    g_object_set (self->obj, "subject", subject, NULL);
+
+    //Py_DECREF (subject);
+
+    //g_message (__FUNCTION__": subject refcnt = %d", subject->ob_refcnt);
+
+    Py_INCREF (Py_None);
+    return Py_None;
+}
+%%
+override model_element_get_subject noargs
+static PyObject *
+_wrap_model_element_get_subject(PyGObject *self)
+{
+    PyObject *subject;
+
+    g_object_get (self->obj, "subject", &subject, NULL);
+    /* Do not increase the refcount since g_object_get has already done that. */
+ 
+    //g_message (__FUNCTION__": subject refcnt = %d", subject->ob_refcnt);
+
+    return subject;
+}
+%%
+override relationship_set_subject kwargs
+static PyObject *
+_wrap_relationship_set_subject(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "subject", NULL };
+    PyObject *subject;
+		
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O:diagram.Relationship", kwlist, &subject))
+	return NULL;
+
+    g_object_set (self->obj, "subject", subject, NULL);
+
+    //Py_DECREF (subject);
+
+    Py_INCREF (Py_None);
+    return Py_None;
+}
+%%
+override relationship_get_subject noargs
+static PyObject *
+_wrap_relationship_get_subject(PyGObject *self)
+{
+    PyObject *subject;
+
+    g_object_get (self->obj, "subject", &subject, NULL);
+    /* Do not increase the refcount since g_object_get has already done that. */
+ 
+    return subject;
+}
+%%
+override placement_tool_new kwargs
+static int
+_wrap_placement_tool_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_object_type = NULL;
+    PyObject *subject;
+    GType object_type;
+    GObjectClass *class;
+    PyObject *value;
+    PyObject *key;
+    int pos=0, num_params=0, i;
+    GParameter *params;
+
+    g_message  (__FUNCTION__": PlacementTool");
+
+    if (!PyArg_ParseTuple (args, "OO:PlacementTool.__init__", &py_object_type, &subject))
+	return -1;
+
+    if ((object_type = pyg_type_from_object(py_object_type)) == 0)
+        return -1;
+    self->obj = (GObject *)placement_tool_new(object_type, subject, NULL);
+
+    if (!self->obj) {
+        PyErr_SetString(PyExc_RuntimeError, "could not create PlacementTool object");
+        return -1;
+    }
+    pygobject_register_wrapper((PyObject *)self);
+
+    /* And now some customization... */
+    if ((class = g_type_class_ref (object_type)) == NULL) {
+	PyErr_SetString(PyExc_TypeError,
+			"could not get a reference to type class");
+	return -1;
+    }
+
+    params = g_new0 (GParameter, PyDict_Size(kwargs));
+    
+    while (kwargs && PyDict_Next (kwargs, &pos, &key, &value)) {
+	GParamSpec *pspec;
+	gchar *key_str = g_strdup(PyString_AsString (key));
+	pspec = g_object_class_find_property (class, key_str);
+	if (!pspec) {
+	    gchar buf[512];
+
+	    g_snprintf(buf, sizeof(buf),
+		       "gobject `%s' doesn't support property `%s'",
+		       g_type_name(object_type), key_str);
+	    PyErr_SetString(PyExc_TypeError, buf);
+	    break;
+	}
+	g_value_init(&params[num_params].value,
+		     G_PARAM_SPEC_VALUE_TYPE(pspec));
+	if (pyg_value_from_pyobject(&params[num_params].value, value)) {
+	    gchar buf[512];
+
+	    g_snprintf(buf, sizeof(buf),
+		       "could not convert value for property `%s'", key_str);
+	    PyErr_SetString(PyExc_TypeError, buf);
+	    break;
+	}
+	params[num_params].name = key_str;
+	num_params++;
+    }
+
+    PLACEMENT_TOOL (self->obj)->params = params;
+    PLACEMENT_TOOL (self->obj)->n_params = num_params;
+
+    g_type_class_unref(class);
+
+    return 0;
+}
