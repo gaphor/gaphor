@@ -15,6 +15,7 @@ verify(filename)
 #import gaphor.UML as UML
 import UML
 #import gaphor.diagram as diagram
+import parser
 import diagram
 import diacanvas
 import os.path
@@ -106,7 +107,7 @@ def save (filename=None):
 	finally:
 	    file.close()
 
-def _load (doc, factory):
+def x_load (doc, factory):
     '''Load a file and create a model if possible.
     Exceptions: IOError, ValueError.'''
 
@@ -236,13 +237,65 @@ def _load (doc, factory):
 
     log.info('0% ... 33% ... 66% ... 100%')
 
+def _load (elements, factory):
+    '''Load a file and create a model if possible.
+    Exceptions: IOError, ValueError.'''
+
+    log.info('0%')
+
+    # First create elements and canvas items in the factory:
+    for id, elem in elements.items():
+	if isinstance(elem, parser.element):
+	    type = getattr (UML, elem.type)
+	    elem.element = factory.create_as (type, id)
+	elif isinstance(elem, parser.canvasitem):
+	    cls = getattr(diagram, elem.type)
+	    elem.element = cls()
+	    elem.element.set_property('id', id)
+	    # Add a canvas property so we can be lasy and do not check...
+	    elem.canvas = None
+
+    log.info('0% ... 33%')
+
+    # load attributes and create references:
+    for id, elem in elements.items():
+	# establish parent/child relations on canvas items:
+	if elem.canvas:
+	    for item in elem.canvas.canvasitems:
+		print 'item:', item.element
+		item.element.set_property('parent', elem.element.canvas.root)
+	if isinstance(elem, parser.canvasitem):
+	    for item in elem.canvasitems:
+		item.element.set_property('parent', elem.element)
+
+	# load attributes and references:
+	for name, value in elem.values.items():
+	    elem.element.load(name, value)
+	for name, refids in elem.references.items():
+	    for refid in refids:
+		try:
+		    ref = elements[refid]
+		except:
+		    raise ValueError, 'Invalid ID for reference (%s)' % refid
+		else:
+		    elem.element.load(name, ref.element)
+	
+    log.info('0% ... 33% ... 66%')
+
+    # do a postload:
+    for id, elem in elements.items():
+	elem.element.postload()
+
+    log.info('0% ... 33% ... 66% ... 100%')
+
 def load (filename):
     '''Load a file and create a model if possible.
     Exceptions: GaphorError.'''
     log.info('Loading file %s' % os.path.basename(filename))
     try:
-	doc = dom.parse (filename)
+	elements = parser.parse(filename) #dom.parse (filename)
     except Exception, e:
+	print e
 	log.error('File could no be parsed')
 	raise GaphorError, 'File %s is probably no valid XML.' % filename
 
@@ -260,7 +313,7 @@ def load (filename):
 	factory = GaphorResource(UML.ElementFactory)
 	factory.flush()
 	gc.collect()
-    	_load(doc, factory)
+    	_load(elements, factory)
 	# DEBUG code:
 #	print ''
 #	print ''

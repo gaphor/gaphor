@@ -27,12 +27,22 @@ methods:
 """
 
 from collection import Collection
+import operator
 
-infinite = 100000
+#infinite = 100000
 
 class umlproperty(object):
-    """Superclass for attribute, enumeration and association."""
-    name='umlproperty'
+    """Superclass for attribute, enumeration and association.
+    The subclasses should define a 'name' attribute that contains the name
+    of the property. Derived properties (derivedunion and redefine) can be
+    connected, they will be notified when the value changes.
+    """
+
+    def add_deriviate(self, deriviate):
+        try:
+            self.deriviates.append(deriviate)
+        except AttributeError:
+            self.deriviates = [ deriviate ]
 
     def __get__(self, obj, clazz=None):
         if not obj:
@@ -43,7 +53,7 @@ class umlproperty(object):
         self._set(obj, value)
 
     def __delete__(self, obj, value=None):
-        self._del(obj)
+        self._del(obj, value)
 
     def load(self, obj, value):
         self._set(obj, value)
@@ -57,11 +67,23 @@ class umlproperty(object):
             self.__delete__(obj)
 
     def notify(self, obj):
-        """Notify obj that the property's value has been changed"""
+        """Notify obj that the property's value has been changed.
+        Deriviates are also triggered to send a notify signal."""
         try:
             obj.notify(self.name)
         except:
             pass
+
+        # we need to check if a deriviate is part of the current object:
+        # TODO: can we do this faster?
+        mro = obj.__class__.__mro__
+        try:
+            for d in self.deriviates:
+                for c in mro:
+                    if d in c.__dict__.values():
+                        d.notify(obj)
+        except AttributeError:
+            pass # no derivedunion or redefine attribute
 
 
 class attribute(umlproperty):
@@ -76,16 +98,22 @@ class attribute(umlproperty):
         self.lower = lower
         self.upper = upper
         
+    def load(self, obj, value):
+        if not isinstance(value, self.type):
+            raise AttributeError, 'Value should be of type %s' % self.type.__name__
+        setattr(obj, '_' + self.name, value)
+
+    def __str__(self):
+        if self.lower == self.upper:
+            return '<attribute %s: %s[%s] = %s>' % (self.name, self.type, self.lower, self.default)
+        else:
+            return '<attribute %s: %s[%s..%s] = %s>' % (self.name, self.type, self.lower, self.upper, self.default)
+
     def _get(self, obj):
         try:
             return getattr(obj, '_' + self.name)
         except AttributeError:
             return self.default
-
-    def load(self, obj, value):
-        if not isinstance(value, self.type):
-            raise AttributeError, 'Value should be of type %s' % self.type.__name__
-        setattr(obj, '_' + self.name, value)
 
     def _set(self, obj, value):
         if not isinstance(value, self.type):
@@ -109,6 +137,9 @@ class enumeration(umlproperty):
         self.name = name
         self.values = values
         self.default = default
+
+    def __str__(self):
+        return '<enumeration %s: %s = %s>' % (self.name, self.values, self.default)
 
     def _get(self, obj):
         try:
@@ -157,11 +188,12 @@ class association(umlproperty):
 
     def __str__(self):
         if self.lower == self.upper:
-            return '<association %s: %s[%s]>' % (self.name, self.type.__name__, self.lower)
+            s = '<association %s: %s[%s]' % (self.name, self.type.__name__, self.lower)
         else:
-            return '<association %s: %s[%s..%s]>' % (self.name, self.type.__name__, self.lower, self.upper)
-
-    __repr__ = __str__
+            s = '<association %s: %s[%s..%s]' % (self.name, self.type.__name__, self.lower, self.upper)
+        if self.opposite:
+            s += ' -> %s' % self.opposite
+        return s + '>'
 
     def __get__(self, obj, clazz=None):
         """Retrieve the value of the association. In case this is called
@@ -244,23 +276,6 @@ class association(umlproperty):
         while lst:
             self.__delete__(obj, lst[0])
 
-    def notify(self, obj):
-        """Notify that the property has changed. Also let derived unions
-        notify.
-        TODO: does this also apply to attributes and enumerations?
-        """
-        umlproperty.notify(self, obj)
-
-        # Also notify derived unions that superset this property
-        # This is done by finding derived unions in the class' dict that
-        # contain references to this association.
-        # Optimized for speed:
-        _ii = isinstance
-        _du = derivedunion
-        for u in obj.__class__.__dict__.values():
-            if _ii(u, _du) and self in u:
-                u.notify(obj)
-
     def __on_unlink(self, name, obj, value):
         """Disconnect when the element on the other end of the association
         sends the '__unlink__' signal. This is especially important for
@@ -274,12 +289,18 @@ class derivedunion(umlproperty):
     """Derived union
     Element.union = derivedunion('union', subset1, subset2..subsetn)
     The subsets are the properties that participate in the union (Element.name),
+
+    The derivedunion is added to the subsets deriviates list.
     """
 
-    def __init__(self, name, *subsets):
+    def __init__(self, name, lower, upper, *subsets):
         self.name = name
+        self.lower = lower
+        self.upper = upper
         self.subsets = subsets
         self.single = len(subsets) == 1
+        for s in subsets:
+            s.add_deriviate(self)
 
     def load(self, obj, value):
         pass
@@ -290,9 +311,8 @@ class derivedunion(umlproperty):
     def unlink(self, obj):
         pass
 
-    def __contains__(self, obj):
-        """Returns if 'obj' is in the subsets list."""
-        return obj in self.subsets
+    def __str__(self):
+        return '<derivedunion %s: %s>' % (self.name, str(map(str, self.subsets))[1:-1])
 
     def _get(self, obj):
         if self.single:
@@ -306,14 +326,64 @@ class derivedunion(umlproperty):
                 if tmp:
                     # append or extend tmp (is it a list or not)
                     try:
-                        u.extend(tmp)
+                        for t in tmp:
+                            if t not in u:
+                                u.append(t)
+                        #u.extend(tmp)
                     except TypeError:
-                        u.append(tmp)
-            return u
+                        if tmp not in u:
+                            u.append(tmp)
+            if self.upper > 1:
+                return u
+            else:
+                assert len(u) <= 1, 'Derived union %s should have length 1 %s' % (self.name, tuple(u))
+                return u and u[0] or None
 
     def _set(self, obj, value):
         raise AttributeError, 'Can not set values on a union'
 
     def _del(self, obj, value=None):
         raise AttributeError, 'Can not delete values on a union'
+
+class redefine(umlproperty):
+    """Redefined association
+    Element.x = redefine('x', Class, Element.assoc)
+    If the redefine eclipses the original property (it has the same name)
+    it ensures that the original values are saved and restored.
+
+    This property is connected to the originals deriviates list.
+    """
+
+    def __init__(self, name, type, original):
+        self.name = name
+        self.type = type
+        self.original = original
+        original.add_deriviate(self)
+
+    def load(self, obj, value):
+        if self.original.name == self.name:
+            self.original.load(obj, value)
+
+    def save(self, obj, save_func):
+        if self.original.name == self.name:
+            self.original.save(obj, save_func)
+
+    def unlink(self, obj):
+        self.original.unlink(obj)
+
+    def __str__(self):
+        return '<redefine %s: %s = %s>' % (self.name, self.type.__name__, str(self.original))
+
+    def __get__(self, obj, clazz=None):
+        if not obj:
+            return self
+        return self.original.__get__(obj, clazz)
+
+    def __set__(self, obj, value):
+        if not isinstance(value, self.type):
+            raise AttributeError, 'Value should be of type %s' % self.type.__name__
+        self.original.__set__(obj, value)
+
+    def __delete__(self, obj, value=None):
+        self.original.__delete__(obj, value)
 
