@@ -62,36 +62,6 @@ def make_wrapbox_decorator(title, content, expanded=False):
 
 class Toolbox(gtk.VBox):
 
-    wrapboxes = [
-        ("", (
-                'Pointer',
-                'InsertComment',
-                'InsertCommentLine')),
-        ("Use Cases", (
-                'InsertUseCase',
-                'InsertActor')),
-        ("Classes", (
-                'InsertClass',
-                'InsertInterface',
-                'InsertPackage',
-                'InsertAssociation',
-                'InsertDependency',
-                'InsertGeneralization',
-                'InsertImplementation')),
-        ("Actions", (
-                'InsertAction',
-                'InsertInitialNode',
-                'InsertActivityFinalNode',
-                'InsertDecisionNode',
-                'InsertFlow')),
-        ("Components", (
-                'InsertComponent', )),
-        ("Profiles", (
-                'InsertProfile',
-                'InsertStereotype',
-                'InsertExtension')),
-    ]
-
     def __init__(self, menu_factory, toolboxdef):
         self.__gobject_init__()
         self.menu_factory = menu_factory

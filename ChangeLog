@@ -1,3 +1,9 @@
+2004-11-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/resource.py: added persistent property to resource values.
+	This should allow us to store specific properties to a persistent
+	storage.
+
 2004-11-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/activitynodes.py: Renamed node.py to this file.
