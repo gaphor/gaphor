@@ -303,23 +303,23 @@ class DiagramItem(Presentation):
         about being connected. handle.owner.allow_connect_handle() is
         called to determine if a connection is allowed.
         """
-        if handle.owner.allow_connect_handle (handle, self):
+        if handle.owner.allow_connect_handle(handle, self):
             #print self.__class__.__name__, 'Glueing allowed.'
-            return parent_class.on_glue (self, handle, wx, wy)
+            return parent_class.on_glue(self, handle, wx, wy)
         #else:
             #print self.__class__.__name__, 'Glueing NOT allowed.'
         # Dummy value with large distance value
-        return None
+        return 10000.0, (0, 0)
 
-    def _on_connect_handle (self, handle, parent_class):
+    def _on_connect_handle(self, handle, parent_class):
         """This function is used to notify the connecting item
         about being connected. handle.owner.allow_connect_handle() is
         called to determine if a connection is allowed. If the connection
         succeeded handle.owner.confirm_connect_handle() is called.
         """
-        if handle.owner.allow_connect_handle (handle, self):
+        if handle.owner.allow_connect_handle(handle, self):
             #print self.__class__.__name__, 'Connection allowed.'
-            ret = parent_class.on_connect_handle (self, handle)
+            ret = parent_class.on_connect_handle(self, handle)
             if ret != 0:
                 handle.owner.confirm_connect_handle(handle)
                 return ret
@@ -327,7 +327,7 @@ class DiagramItem(Presentation):
             #print self.__class__.__name__, 'Connection NOT allowed.'
         return 0
 
-    def _on_disconnect_handle (self, handle, parent_class):
+    def _on_disconnect_handle(self, handle, parent_class):
         """Use this function to disconnect handles. It notifies
         the connected item about being disconnected.
         handle.owner.allow_disconnect_handle() is
@@ -335,9 +335,9 @@ class DiagramItem(Presentation):
         If the disconnect succeeded handle.owner.confirm_connect_handle()
         is called.
         """
-        if handle.owner.allow_disconnect_handle (handle):
+        if handle.owner.allow_disconnect_handle(handle):
             #print self.__class__.__name__, 'Disconnecting allowed.'
-            ret = parent_class.on_disconnect_handle (self, handle)
+            ret = parent_class.on_disconnect_handle(self, handle)
             if ret != 0:
                 handle.owner.confirm_disconnect_handle(handle, self)
                 # TODO: call ConnectAction

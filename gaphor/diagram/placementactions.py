@@ -464,3 +464,47 @@ class NodePlacementAction(NamespacePlacementAction):
 
 register_action(NodePlacementAction)
 
+class InteractionPlacementAction(NamespacePlacementAction):
+    id = 'InsertInteraction'
+    label = '_Interaction'
+    tooltip = 'Create a new Interaction item'
+    stock_id = 'gaphor-interaction'
+    name = 'Interaction'
+    type = diagram.InteractionItem
+    subject_type = UML.Interaction
+
+register_action(InteractionPlacementAction)
+
+class LifelinePlacementAction(PlacementAction):
+    id = 'InsertLifeline'
+    label = '_Lifeline'
+    tooltip = 'Create a new Lifeline item'
+    stock_id = 'gaphor-lifeline'
+    name = 'Lifeline'
+    type = diagram.LifelineItem
+    subject_type = UML.Lifeline
+    __index = 1
+
+    def item_factory(self):
+        """Create a new instance of the item and return it."""
+        item = PlacementAction.item_factory(self)
+        #log.debug('Setting namespace for new item %s: %s' % (item, self._window.get_current_diagram().namespace))
+        item.subject.interaction = self._window.get_current_diagram().namespace
+        item.subject.name = '%s%d' % (self.name, self.__index)
+        self.__index += 1
+        return item
+
+register_action(LifelinePlacementAction)
+
+
+class MessagePlacementAction(PlacementAction):
+    id = 'InsertMessage'
+    label = '_Message'
+    tooltip = 'Create a new Message line'
+    stock_id = 'gaphor-message'
+    name = 'Message'
+    type = diagram.MessageItem
+
+register_action(MessagePlacementAction)
+
+

@@ -1,3 +1,12 @@
+2004-12-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	
+	* gaphor/diagram/association.py (unlink): explicitly unlink()
+	AssociationEnds.
+	* gaphor/diagram/interaction.py: New class, a sequence diagram
+	interaction.
+	* gaphor/diagram/lifeline.py: New class, a sequence diagram lifeline
+	* gaphor/diagram/message.py: New class, a Message (seq. diagram).
+
 2004-11-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 	
 	* gaphor/ui/mainwindow.py: Allow mainwindow to shrink.

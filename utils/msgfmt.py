@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Written by Martin v. Löwis <loewis@informatik.hu-berlin.de>
+# Written by Martin v. Lo"wis <loewis@informatik.hu-berlin.de>
 
 """Generate binary message catalog from textual translation description.
 

@@ -33,16 +33,20 @@ class MainWindow(AbstractWindow):
                 'InsertDependency',
                 'InsertGeneralization',
                 'InsertImplementation')),
+        (_('Components'), (
+                'InsertComponent',
+                'InsertNode',
+                'InsertArtifact')),
         (_('Actions'), (
                 'InsertAction',
                 'InsertInitialNode',
                 'InsertActivityFinalNode',
                 'InsertDecisionNode',
                 'InsertFlow')),
-        (_('Components'), (
-                'InsertComponent',
-                'InsertNode',
-                'InsertArtifact')),
+        (_('Interactions'), (
+                'InsertInteraction',
+                'InsertLifeline',
+                'InsertMessage')),
         (_('Use Cases'), (
                 'InsertUseCase',
                 'InsertActor',

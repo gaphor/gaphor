@@ -1,5 +1,7 @@
 As always, there is much to do...
 
+- Check association removal when connected to a class.
+
 - Storing last open files or having a quick-list of most important
   directories or so would be great 
   Problem: the existing <Placeholder> stuff works only on construction time.
@@ -35,7 +37,7 @@ As always, there is much to do...
 - Stereotype export and import function. Allow to export packages and import
   them into other models.
 
-- Create distinctive icons for Include and Extend relationships (use cases).
+#- Create distinctive icons for Include and Extend relationships (use cases).
 
 - How to figure out if a module exists without loading it?
 

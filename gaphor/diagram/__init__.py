@@ -75,6 +75,9 @@ from flow import FlowItem
 from component import ComponentItem
 from artifact import ArtifactItem
 from node import NodeItem
+from interaction import InteractionItem
+from lifeline import LifelineItem
+from message import MessageItem
 import itemactions
 
 #if __debug__: 

@@ -147,6 +147,11 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 
     tail_end = property(lambda self: self._tail_end)
 
+    def unlink(self):
+        self._head_end.unlink()
+        self._tail_end.unlink()
+        RelationshipItem.unlink(self)
+
     def get_popup_menu(self):
         if self.subject:
             return self.popup_menu + self.association_popup_menu
