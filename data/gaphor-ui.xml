@@ -117,15 +117,15 @@
 
         <menuitem name="FileRevert" verb="" _label="_Revert"/>
 	
-	<placeholder name="Print" delimit="top" hidden="1">
+	<separator/>
 
-	        <menuitem name="FilePrint" verb="" _label="_Print"/>
+	<menuitem name="FilePrint" verb="" _label="_Print" hidden="1"/>
 	
-	        <menuitem name="FilePrintSetup" verb="" _label="Print S_etup..."/>
+	<menuitem name="FilePrintSetup" verb="" _label="Print S_etup..." hidden="1"/>
 
-		<menuitem name="FilePrintPreview" verb="" _label="Print Pre_view"/>
+	<menuitem name="FilePrintPreview" verb="" _label="Print Pre_view" hidden="1"/>
 
-	</placeholder>
+	<separator/>
 	
 	<placeholder name="RecentFiles" delimit="top"/>
 

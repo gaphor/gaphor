@@ -17,7 +17,7 @@ class CreateDiagramCommand(Command):
 
 class _CanvasViewCommand(Command):
 
-    def __init__(self, view):
+    def __init__(self, view, **args):
 	Command.__init__(self)
 	self._view = view
 

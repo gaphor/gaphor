@@ -26,6 +26,7 @@ a tupple as value.  A tupple contains two or three fields:
 if __name__ == '__main__':
     import sys
     sys.path.append('../..')
+    import gaphor
 
 import types, copy
 from enumeration import Enumeration_
@@ -89,10 +90,10 @@ The signals protocol is:
 		if isinstance (self.__dict__[key], Sequence):
 		    # Remove each item in the sequence, then remove
 		    # the sequence from __dict__.
-		    list = self.__dict__[key].list
-		    while len (list) > 0:
-		        del self.__dict__[key][list[0]]
-		    assert len (self.__dict__[key].list) == 0
+		    items = self.__dict__[key].items
+		    while len (items) > 0:
+		        del self.__dict__[key][items[0]]
+		    assert len (self.__dict__[key].items) == 0
 		    del self.__dict__[key]
 		else:
 		    # do a 'del self.key'
@@ -161,7 +162,7 @@ The signals protocol is:
 		    #print 'Preserving value for', key
 		    value = self.__dict__[key]
 		    if isinstance (value, Sequence):
-			undodata[key] = copy.copy (value.list)
+			undodata[key] = copy.copy (value.items)
 		    else:
 			undodata[key] = value
 	    self.__dict__['__undodata'] = undodata
@@ -235,15 +236,15 @@ The signals protocol is:
 	self.__real_sequence_add(key, seq, obj)
 
     def __real_sequence_add(self, key, seq, obj):
-	list = seq.list
-	if list.count(obj) == 0:
-	    list.append(obj)
-	    list.sort()
+	items = seq.items
+	if items.count(obj) == 0:
+	    items.append(obj)
+	    items.sort()
 	    self.__queue(key, 'add', obj)
 
     def __sequence_remove(self, key, obj):
 	self.__emit(key, 'remove', obj)
-	self.__dict__[key].list.remove(obj)
+	self.__dict__[key].items.remove(obj)
 
     def __getattr__(self, key):
 	if key == 'id':
@@ -341,7 +342,7 @@ The signals protocol is:
 	info = self.__get_attr_info (key, self.__class__)
 	if info[0] is not Sequence:
 	    raise AttributeError, 'Element: This should be called from Sequence'
-	seq.list.remove(obj)
+	seq.items.remove(obj)
 	if len(info) > 2:
 	    xself = obj
 	    xkey = info[2]
@@ -373,7 +374,7 @@ The signals protocol is:
 	    if not key.startswith('__'):
 		obj = self.__dict__[key]
 		if isinstance (obj, Sequence):
-		    for item in obj.list:
+		    for item in obj.items:
 			store.save_attribute (key, item)
 		else:
 		    store.save_attribute (key, obj)
@@ -400,7 +401,7 @@ The signals protocol is:
 		if attr_info[0] is Sequence:
 		    self.__ensure_seq (name, attr_info[1])
 		    if refelem not in self.__dict__[name]:
-			self.__dict__[name].list.append (refelem)
+			self.__dict__[name].items.append (refelem)
 			self.__queue (name, 'add', refelem)
 		else:
 		    self.__dict__[name] = refelem
@@ -411,7 +412,19 @@ The signals protocol is:
 	used for Diagrams.'''
 	self.__flush()
 
-###################################
+
+    # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
+
+    def oclIsKindOf(self,c):
+        """Returns true if the object is an instance of c"""
+        return isinstance(self,c)
+
+    def isTypeOf(self,anotherO):
+        """Returns true if the object is of the same type as anotherO"""
+        return type(self)==type(anotherO)
+
+
+###
 # Testing
 if __name__ == '__main__':
 
@@ -424,17 +437,17 @@ if __name__ == '__main__':
     A._attrdef['seq'] = ( Sequence, types.StringType )
 
     a = A(1)
-    assert a.seq.list == [ ]
+    assert a.seq.items == [ ]
 
     aap = 'aap'
     noot = 'noot'
     mies = 'mies'
 
     a.seq = aap
-    assert a.seq.list == [ aap ]
+    assert a.seq.items == [ aap ]
 
     a.seq = noot
-    assert a.seq.list == [ aap, noot ]
+    assert a.seq.items == [ aap, noot ]
 
     assert len(a.seq) == 2
     assert a.seq[0] is aap
@@ -460,7 +473,7 @@ if __name__ == '__main__':
     a = A(2)
 
     assert a.str == 'one'
-    assert a.seq.list == [ ]
+    assert a.seq.items == [ ]
 
     aap = 'aap'
     noot = 'noot'
@@ -468,13 +481,13 @@ if __name__ == '__main__':
     assert a.str is aap
 
     a.seq = aap
-    assert a.seq.list == [ aap ]
+    assert a.seq.items == [ aap ]
 
     a.seq = noot
-    assert a.seq.list == [ aap, noot ]
+    assert a.seq.items == [ aap, noot ]
 
     a.seq.remove(aap)
-    assert a.seq.list == [ noot ]
+    assert a.seq.items == [ noot ]
 
     a.unlink()
 
@@ -539,33 +552,33 @@ if __name__ == '__main__':
     a = A(6)
 
     assert a.ref is None
-    assert a.seq.list == [ ]
+    assert a.seq.items == [ ]
 
     a.ref = a
     assert a.ref is a
-    assert a.seq.list == [ a ]
+    assert a.seq.items == [ a ]
 
     del a.seq[a]
     assert a.ref is None
-    assert a.seq.list == [ ]
+    assert a.seq.items == [ ]
 
     a.seq = a
     assert a.ref is a
-    assert a.seq.list == [ a ]
+    assert a.seq.items == [ a ]
 
     b = A(7)
     a.seq = b
     assert b.ref is a
     try:
-	a.seq.list.index(a)
-	a.seq.list.index(b)
+	a.seq.items.index(a)
+	a.seq.items.index(b)
     except:
-	raise AssertionError, 'elements are not in list'
+	raise AssertionError, 'elements are not in items'
     
     del a.seq[a]
     assert a.ref is None
     assert b.ref is a
-    assert a.seq.list == [ b ]
+    assert a.seq.items == [ b ]
 
     b.unlink()
     a.unlink()
@@ -574,39 +587,39 @@ if __name__ == '__main__':
 
     a.ref = a
     assert a.ref is a
-    assert a.seq.list == [ a ]
+    assert a.seq.items == [ a ]
     assert b.ref is None
-    assert b.seq.list == [ ]
+    assert b.seq.items == [ ]
 
     a.ref = b
     assert a.ref is b
-    assert a.seq.list == [ ]
+    assert a.seq.items == [ ]
     assert b.ref is None
-    assert b.seq.list == [ a ]
+    assert b.seq.items == [ a ]
 
     b.ref = b
     assert a.ref is b
-    assert a.seq.list == [ ]
+    assert a.seq.items == [ ]
     assert b.ref is b
-    assert b.seq.list == [ a, b ]
+    assert len(b.seq.items) == 2 and a in b.seq.items and b in b.seq.items
 
     b.ref = b
     assert a.ref is b
-    assert a.seq.list == [ ]
+    assert a.seq.items == [ ]
     assert b.ref is b
-    assert b.seq.list == [ a, b ]
+    assert len(b.seq.items) == 2 and a in b.seq.items and b in b.seq.items
 
     del b.seq[a]
     assert a.ref is None, 'a.ref = ' + str(a.ref)
-    assert a.seq.list == [ ]
+    assert a.seq.items == [ ]
     assert b.ref is b
-    assert b.seq.list == [ b ]
+    assert b.seq.items == [ b ]
 
     del b.ref
     assert a.ref is None
-    assert a.seq.list == [ ]
+    assert a.seq.items == [ ]
     assert b.ref is None
-    assert b.seq.list == [ ]
+    assert b.seq.items == [ ]
 
     a.unlink()
     b.unlink()
@@ -624,42 +637,42 @@ if __name__ == '__main__':
     A._attrdef['seq2'] = ( Sequence, A, 'seq1' )
 
     a = A(10)
-    assert a.seq1.list == [ ]
-    assert a.seq2.list == [ ]
+    assert a.seq1.items == [ ]
+    assert a.seq2.items == [ ]
 
     b = A(11)
-    assert b.seq1.list == [ ]
-    assert b.seq2.list == [ ]
+    assert b.seq1.items == [ ]
+    assert b.seq2.items == [ ]
 
     a.seq1 = a
-    assert a.seq1.list == [ a ]
-    assert a.seq2.list == [ a ]
-    assert b.seq1.list == [ ]
-    assert b.seq2.list == [ ]
+    assert a.seq1.items == [ a ]
+    assert a.seq2.items == [ a ]
+    assert b.seq1.items == [ ]
+    assert b.seq2.items == [ ]
 
     a.seq2 = a
-    assert a.seq1.list == [ a ]
-    assert a.seq2.list == [ a ]
-    assert b.seq1.list == [ ]
-    assert b.seq2.list == [ ]
+    assert a.seq1.items == [ a ]
+    assert a.seq2.items == [ a ]
+    assert b.seq1.items == [ ]
+    assert b.seq2.items == [ ]
 
     a.seq1 = b
-    assert a.seq1.list == [ a, b ]
-    assert a.seq2.list == [ a ]
-    assert b.seq1.list == [ ]
-    assert b.seq2.list == [ a ]
+    assert a.seq1.items == [ a, b ]
+    assert a.seq2.items == [ a ]
+    assert b.seq1.items == [ ]
+    assert b.seq2.items == [ a ]
 
     del a.seq1[a]
-    assert a.seq1.list == [ b ]
-    assert a.seq2.list == [ ]
-    assert b.seq1.list == [ ]
-    assert b.seq2.list == [ a ]
+    assert a.seq1.items == [ b ]
+    assert a.seq2.items == [ ]
+    assert b.seq1.items == [ ]
+    assert b.seq2.items == [ a ]
 
     b.seq1 = a
-    assert a.seq1.list == [ b ]
-    assert a.seq2.list == [ b ]
-    assert b.seq1.list == [ a ]
-    assert b.seq2.list == [ a ]
+    assert a.seq1.items == [ b ]
+    assert a.seq2.items == [ b ]
+    assert b.seq1.items == [ a ]
+    assert b.seq2.items == [ a ]
 
     try:
 	del a.seq1
@@ -667,10 +680,10 @@ if __name__ == '__main__':
         pass
     except Exception:
         assert 0
-    assert a.seq1.list == [ b ]
-    assert a.seq2.list == [ b ]
-    assert b.seq1.list == [ a ]
-    assert b.seq2.list == [ a ]
+    assert a.seq1.items == [ b ]
+    assert a.seq2.items == [ b ]
+    assert b.seq1.items == [ a ]
+    assert b.seq2.items == [ a ]
 
     a.unlink()
     b.unlink()

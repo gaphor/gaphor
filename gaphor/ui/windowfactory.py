@@ -10,7 +10,8 @@ from menufactory import MenuFactory
 class WindowFactory(object):
     """
     Factory used for creating GUI windows. Gaphor windows are based on the
-    Bonobo.ui.Window class. The factory keeps reference
+    Bonobo.ui.Window class. The factory keeps references from the window to
+    the shell object (mediator).
     """
 
     def __init__(self):
@@ -18,8 +19,8 @@ class WindowFactory(object):
 	self.__shells = dict()
 	self.__signal = Signal()
     
-    def create(self, type):
-	shell = type()
+    def create(self, type, **args):
+	shell = type(**args)
 	name = shell.get_name()
 	title = shell.get_title()
 	size = shell.get_default_size()
@@ -28,7 +29,6 @@ class WindowFactory(object):
 	xml_file = shell.get_ui_xml_file()
 	
 	window = bonobo.ui.Window (name, title)
-	window.show_all ()
 
 	window.set_size_request(size[0], size[1])
 
@@ -36,7 +36,7 @@ class WindowFactory(object):
 
 	ui_container = window.get_ui_container ()
 	engine = window.get_ui_engine ()
-	engine.config_set_path ('/gaphor/UIConfig/kvps')
+	engine.config_set_path ('/apps/gaphor/UIConfig/kvps')
 	ui_component = bonobo.ui.Component (name)
 	ui_component.set_container (ui_container.corba_objref ())
 
@@ -44,7 +44,8 @@ class WindowFactory(object):
 	    bonobo.ui.util_set_ui (ui_component, config.DATADIR,
 				   xml_file, config.PACKAGE_NAME)
 
-	verbs = GaphorResource(MenuFactory).create_verbs()
+	verbs = GaphorResource(MenuFactory).create_verbs(window=window,
+							 shell=shell)
 	ui_component.add_verb_list (verbs, None)
 
 	window.set_contents(contents)
@@ -53,6 +54,8 @@ class WindowFactory(object):
 	window.connect ('destroy', self.__destroy_event_cb)
 
 	self.__shells[window] = shell
+
+	window.show_all ()
 
 	return window
 

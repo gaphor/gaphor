@@ -6,8 +6,12 @@ from diacanvas import CanvasView
 
 class DiagramView(CanvasView):
 
-    def __init__(self, canvas):
+    def __init__(self, diagram=None):
 	self.__gobject_init__()
+	if diagram:
+	    canvas = diagram.canvas
+	else:
+	    canvas = None
 	CanvasView.__init__(self, canvas)
 
 

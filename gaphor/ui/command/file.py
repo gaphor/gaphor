@@ -12,6 +12,7 @@ from gaphor.misc.command import Command
 from gaphor.misc.storage import Storage
 import sys
 import gtk
+import bonobo
 import gaphor.UML as UML
 import gaphor.diagram as diagram
 import gc
@@ -31,8 +32,8 @@ class NewCommand(Command):
 
 class OpenCommand(Command):
 
-    def __init__(self):
-	Command.__init__(self)
+    def __init__(self, **args):
+	Command.__init__(self, **args)
 	self.filename = None
 
     def execute(self):
@@ -77,8 +78,8 @@ class OpenCommand(Command):
 
 class SaveCommand(Command):
 
-    def __init__(self):
-	Command.__init__(self)
+    def __init__(self, **args):
+	Command.__init__(self, **args)
 	self.filename = None
 
     def is_valid(self):
@@ -136,14 +137,13 @@ class QuitCommand(Command):
 
     def execute(self):
 	print 'Exiting gaphor...',
-	#gtk.main_quit()
-	sys.exit(0)
+	bonobo.main_quit()
 	print 'bye!'
 
 
 class CloseCommand(Command):
 
-    def __init__(self, window):
+    def __init__(self, window, **args):
 	self._window = window
 
     def execute(self):

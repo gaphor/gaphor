@@ -4,15 +4,31 @@
 import gtk, gnome.ui
 from diagramview import DiagramView
 import gaphor.UML as UML
-import gaphor.diagram as diagram
+#import gaphor.diagram as diagram
 from gaphor import Gaphor
 from gaphor.misc.menufactory import MenuFactory, Menu, MenuItem, MenuStockItem, MenuSeparator
 import stock
 import command.file, command.diagram
+from abstractwindow import AbstractWindow
 
-class DiagramWindow:
+class DiagramWindow(AbstractWindow):
 
-    def __init__(self, dia):
+    def __init__(self, diagram=None):
+	self.__diagram = None
+	if diagram:
+	    self.set_diagram(diagram)
+
+    def set_diagram(self, dia):
+	if self.__diagram:
+	    self.__diagram.disconnect(self.__unlink)
+	self.__diagram = dia
+	if dia:
+	    dia.connect(self.__unlink)
+
+    def get_diagram(self):
+	return self.__diagram
+
+    def __depricated_code():
 	win = gtk.Window()
 	if dia.name == '':
 	    title = 'Unknown'
@@ -107,6 +123,47 @@ class DiagramWindow:
 
 	win.connect("destroy", self.__remove)
 	dia.connect(self.__unlink)
+
+
+    def get_name(self):
+    	return 'gaphor.diagram'
+
+    def get_title(self):
+	if self.__diagram:
+	    return self.__diagram.name or 'NoName'
+    	return 'NoName'
+
+    def get_default_size(self):
+	return (300, 300)
+
+    def create_contents(self):
+	table = gtk.Table(2,2, gtk.FALSE)
+	table.set_row_spacings (4)
+	table.set_col_spacings (4)
+
+	frame = gtk.Frame()
+	frame.set_shadow_type (gtk.SHADOW_IN)
+	table.attach (frame, 0, 1, 0, 1,
+		      gtk.EXPAND | gtk.FILL | gtk.SHRINK,
+		      gtk.EXPAND | gtk.FILL | gtk.SHRINK)
+
+	view = DiagramView (diagram=self.__diagram)
+	view.set_scroll_region(0, 0, 600, 450)
+	frame.add (view)
+	
+	sbar = gtk.VScrollbar (view.get_vadjustment())
+	table.attach (sbar, 1, 2, 0, 1, gtk.FILL,
+		      gtk.EXPAND | gtk.FILL | gtk.SHRINK)
+
+	sbar = gtk.HScrollbar (view.get_hadjustment())
+	table.attach (sbar, 0, 1, 1, 2, gtk.EXPAND | gtk.FILL | gtk.SHRINK,
+		      gtk.FILL)
+
+	self.__view = view
+	return table
+
+    def get_ui_xml_file(self):
+	return 'gaphor-diagram-ui.xml'
 
     def __remove(self, win):
 	Gaphor().get_main_window().remove_window(self)

@@ -10,10 +10,11 @@ from gaphor.misc.observer import Subject
 
 class MenuEntry(Subject):
 
-    def __init__(self, name, command_class=None):
+    def __init__(self, name, command_class=None, extra_args=None):
 	if not name: raise ValueError, 'name may not be None'
 	self._name = name
 	self._command_class = command_class
+	self._extra_args = extra_args
 
     def get_name(self):
 	return self._name
@@ -22,9 +23,11 @@ class MenuEntry(Subject):
 	return self._command_class
 
     def create_command(self, **args):
+	print self._command_class
+	ea = self._extra_args
 	return self._command_class(**args)
 	
-    # properties based on getters:
+    # read only properties:
     name = property (get_name, None, None, 'Name of the menu entry')
     command_class = property (get_command_class, None, None, 'Command to be executed')
 

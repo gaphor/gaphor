@@ -1,5 +1,6 @@
 '''
-ClassMember diagram item
+Feature diagram item. Feature is a super class of both Attribute, Operations and
+Methods.
 '''
 # vim:sw=4
 
@@ -10,9 +11,9 @@ import gobject
 from diacanvas import CanvasText
 from diagramitem import DiagramItem
 
-class ClassMember(CanvasText, DiagramItem):
+class FeatureItem(CanvasText, DiagramItem):
     """
-    Classmembers are model elements who recide inside a ClassItem, such as
+    FeatureItems are model elements who recide inside a ClassItem, such as
     methods and attributes. Those items can have comments attached, but only on
     the left and right side.
     Note that classmembers can also be used inside objects.
@@ -28,7 +29,7 @@ class ClassMember(CanvasText, DiagramItem):
 	diacanvas.CanvasText.__init__(self)
 	font = pango.FontDescription(ClassMember.FONT)
 	self.set(font=font, width=self.width,
-			alignment=pango.ALIGN_CENTER)
+			alignment=pango.ALIGN_LEFT)
 	w, h = self.__name.get_property('layout').get_pixel_size()
 	self.set(height=h)
 	self.connect('text_changed', self.on_text_changed)
@@ -63,6 +64,6 @@ class ClassMember(CanvasText, DiagramItem):
 	if text != self.subject.name:
 	    self.subject.name = text
 
-gobject.type_register(ClassMember)
-diacanvas.set_callbacks(ClassMember)
+gobject.type_register(FeatureItem)
+diacanvas.set_callbacks(FeatureItem)
 

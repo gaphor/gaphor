@@ -14,7 +14,9 @@ entries = [
     ( 'FileOpen',	c.OpenCommand ),
     ( 'FileSave',	c.SaveCommand ),
     ( 'FileSaveAs',	c.SaveAsCommand ),
-    ( 'FileExit',	c.QuitCommand )
+    ( 'FileClose',	c.CloseCommand ),
+    ( 'FileExit',	c.QuitCommand ),
+    ( 'About',		c.AboutCommand )
 ]
 
 mf = GaphorResource(MenuFactory)
