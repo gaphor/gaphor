@@ -249,6 +249,7 @@ class MainWindow(AbstractWindow):
 
         toolbox = Toolbox(self.menu_factory, self.toolbox)
         toolbox.construct()
+	#toolbox.connect('toggled', self.on_toolbox_toggled)
         vbox.pack_start(toolbox, expand=False)
         toolbox.show()
 
@@ -378,6 +379,10 @@ class MainWindow(AbstractWindow):
         A dummy action is executed.
         """
         self.execute_action('TabChange')
+
+#    def on_toolbox_toggled(self, toolbox, box_name, visible):
+#        print 'Box', box_name, 'is visible:', visible
+#        #gaphor.resource.set('ui.toolbox.%s' % box_name, visible, persistent=True)
 
     def on_undo(self, *args):
         self.execute_action('UndoStack')

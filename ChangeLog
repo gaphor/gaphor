@@ -3,6 +3,8 @@
 	* gaphor/misc/resource.py: added persistent property to resource values.
 	This should allow us to store specific properties to a persistent
 	storage.
+	* gaphor/ui/toolbox.py: added persistent properties that should tell the
+	box to be open or closed at startup.
 
 2004-11-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

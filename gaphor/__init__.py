@@ -27,7 +27,8 @@ resource = Resource(initial_resources = {
                         'Name': 'gaphor',
                         'Version': version.VERSION,
                         'DataDir': version.DATA_DIR,
-                        'UserDataDir': version.USER_DATA_DIR
+                        'UserDataDir': version.USER_DATA_DIR,
+                        'ui.toolbox.classes': True,
                     })
 
 class GaphorError(Exception):
