@@ -64,6 +64,7 @@ usecase.name = 'UC1'
 diagram_view = ui.DiagramView (dia)
 diagram_view.window.connect ('destroy', mainquit)
 print "diagram displayed"
+dia.canvas.clear_undo()
 del dia, diagram_view
 
 ui.TreeView (treemodel)

@@ -27,7 +27,9 @@ class Diagram(Namespace):
 	Namespace.__init__(self, id)
         self.canvas = diacanvas.Canvas()
 	print 'Diagram:', self.canvas
+	self.canvas.set_undo_stack_depth(10)
 	self.canvas.set_property ("allow_undo", 1)
+	print 'Diagram: allow undo =', self.canvas.get_property('allow_undo')
 
     def create_depricated (self, type, pos=(0, 0), subject=None):
 	'''Add a new item to the diagram. This method should be used as a

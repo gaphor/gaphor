@@ -9,6 +9,7 @@ import pango
 import gobject
 
 class ActorItem(ModelElementItem):
+    __gsignals__ = { 'need_update': 'override' }
     HEAD=11
     ARM=19
     NECK=10
@@ -82,6 +83,9 @@ class ActorItem(ModelElementItem):
 	ModelElementItem.load(self, store)
 	self.set_property('name-width', eval (store.value('name-width')))
 	#self.__name_update()
+
+    def do_need_update(self):
+	self.__name.request_update()
 
     def on_update(self, affine):
 	ModelElementItem.on_update(self, affine)

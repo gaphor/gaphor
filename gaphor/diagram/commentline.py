@@ -26,7 +26,7 @@ class CommentLineItem(diacanvas.CanvasLine):
 	points = [ ]
 	for h in self.handles:
 	    pos = h.get_pos_i ()
-	    print 'pos:', pos, h.get_property('pos_i')
+	    #print 'pos:', pos, h.get_property('pos_i')
 	    points.append (pos)
 	store.save_attribute ('points', points)
 	c = self.handles[0].connected_to

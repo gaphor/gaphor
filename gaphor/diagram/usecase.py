@@ -8,6 +8,7 @@ import diacanvas
 import pango
 
 class UseCaseItem(ModelElementItem):
+    __gsignals__ = { 'need_update': 'override' }
     MARGIN_X=60
     MARGIN_Y=30
     FONT='sans bold 10'
@@ -42,6 +43,9 @@ class UseCaseItem(ModelElementItem):
 	ModelElementItem.load(self, store)
 	self.__name_update()
 
+    def do_need_update(self):
+	self.__name.request_update()
+
     def on_update(self, affine):
 	ModelElementItem.on_update(self, affine)
 	self.__border.ellipse(center=(self.width / 2, self.height / 2), width=self.width - 0.5, height=self.height - 0.5)
@@ -57,14 +61,14 @@ class UseCaseItem(ModelElementItem):
     def on_shape_value(self, iter):
 	return iter
 
-    def on_move(self, x, y):
-	self.__name.request_update()
-	ModelElementItem.on_move(self, x, y)
+#    def on_move(self, x, y):
+#	self.__name.request_update()
+#	ModelElementItem.on_move(self, x, y)
 
-    def on_handle_motion (self, handle, wx, wy, mask):
-	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
-	self.__name_update()
-	return retval
+#    def on_handle_motion (self, handle, wx, wy, mask):
+#	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)
+#	self.__name_update()
+#	return retval
 
     # Groupable
 
