@@ -1,3 +1,8 @@
+2004-01-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* utils/install_mo.py: fixed some path related stuff so we can do a
+	bdist now.
+
 2003-12-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/UML/umllex.py: Added parser and renderer for association

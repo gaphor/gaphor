@@ -11,6 +11,7 @@ where install_locales should default to:
 
 from distutils.core import Command
 from distutils.command.install import install as _install
+from distutils.util import change_root
 import os.path
 
 class install(_install):
@@ -21,8 +22,8 @@ class install(_install):
 
     def finalize_options(self):
         _install.finalize_options(self)
-        if not self.install_locales:
-            self.install_locales = os.path.join(self.install_base, 'share', 'locale')
+        #if not self.install_locales:
+        self.install_locales = os.path.join(change_root(self.root, self.install_base), 'share', 'locale')
 
 install.sub_commands.append(('install_mo', None))
 
@@ -52,9 +53,9 @@ class install_mo(Command):
             return
 
         for lingua in self.all_linguas:
-            mofile = os.path.join(self.build_dir, lingua + '.mo')
+            mofile = os.path.join(self.build_dir, '%s.mo' % lingua)
             path = os.path.join(self.install_dir, lingua, 'LC_MESSAGES')
             self.mkpath(path)
-            outfile = os.path.join(path, self.name + '.mo')
+            outfile = os.path.join(path, '%s.mo' % self.name)
             self.copy_file(mofile, outfile)
 
