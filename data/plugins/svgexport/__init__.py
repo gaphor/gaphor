@@ -12,13 +12,16 @@ class SVGExportAction(Action):
         self.sensitive = tab and True or False
 
     def execute(self):
+        filename = (self.get_window().get_current_diagram().name or 'export') + '.svg'
         if gtk.gtk_version < (2, 4, 0):
             filesel = gtk.FileSelection('Export diagram to SVG file')
+            filesel.set_filename(filename)
         else:
             filesel = gtk.FileChooserDialog(title='Export diagram to SVG file',
                                             action=gtk.FILE_CHOOSER_ACTION_SAVE,
                                             buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
-        filesel.set_filename((self.get_window().get_current_diagram().name or 'export') + '.svg')
+            filesel.set_current_name(filename)
+
 
         response = filesel.run()
         filename = filesel.get_filename()

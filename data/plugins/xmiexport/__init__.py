@@ -8,18 +8,20 @@ from gaphor.plugin import Action
 class XMIExportAction(Action):
 
     def execute(self):
-        if gtk.gtk_version < (2, 4, 0):
-            filesel = gtk.FileSelection('Export model to XMI file')
-        else:
-            filesel = gtk.FileChooserDialog(title='Export model to XMI file',
-                                            action=gtk.FILE_CHOOSER_ACTION_SAVE,
-                                            buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
         filename = self.get_window().get_filename()
         if filename:
             filename = filename.replace('.gaphor', '.xmi')
         else:
             filename = 'model.xmi'
-        filesel.set_filename(filename)
+
+        if gtk.gtk_version < (2, 4, 0):
+            filesel = gtk.FileSelection('Export model to XMI file')
+            filesel.set_filename(filename)
+        else:
+            filesel = gtk.FileChooserDialog(title='Export model to XMI file',
+                                            action=gtk.FILE_CHOOSER_ACTION_SAVE,
+                                            buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
+            filesel.set_current_name(filename)
 
         response = filesel.run()
         filename = filesel.get_filename()
