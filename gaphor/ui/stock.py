@@ -66,7 +66,7 @@ add_stock_icon(STOCK_DEPENDENCY, icon_dir, ('dependency24.png', 'dependency16.pn
 add_stock_icon(STOCK_DIAGRAM,	icon_dir, ('diagram24.png', 'diagram16.png'), UML.Diagram)
 add_stock_icon(STOCK_COMMENT,	icon_dir, ('comment24.png',), UML.Comment)
 add_stock_icon(STOCK_COMMENT_LINE, icon_dir, ('commentline24.png', 'commentline16.png'))
-add_stock_icon(STOCK_GENERALIZATION, icon_dir, ('generalization24.png', 'generalization16.png'), UML.Generalization)
+add_stock_icon(STOCK_GENERALIZATION, icon_dir, ('generalization24.png',), UML.Generalization)
 add_stock_icon(STOCK_OPERATION,	icon_dir, ('pointer24.png', 'pointer16.png'), UML.Operation)
 add_stock_icon(STOCK_PACKAGE,	icon_dir, ('package24.png',), UML.Package)
 add_stock_icon(STOCK_PROPERTY,	icon_dir, ('pointer24.png', 'pointer16.png'), UML.Property)

@@ -65,3 +65,9 @@ from generalization import GeneralizationItem
 from association import AssociationItem
 #import diagramitemactions
 import itemactions
+
+if __debug__: 
+    # Keep track of all model elements that are created
+    from gaphor.misc.aspects import ReferenceAspect, weave_method
+    from gaphor import refs
+    weave_method(create_as, ReferenceAspect, refs)

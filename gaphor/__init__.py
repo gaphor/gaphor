@@ -107,16 +107,6 @@ def resource(r, default=_no_default):
 import __builtin__
 __builtin__.__dict__['log'] = misc.logger.Logger()
 
-try: 
-    # Keep track of all model elements that are created
-    from misc.aspects import ReferenceAspect, weave_method
-    import UML.elementfactory
-    import UML.diagram
-    import diagram
+if __debug__: 
     refs = []
-    weave_method(UML.elementfactory.ElementFactory.create_as, ReferenceAspect, refs)
-    weave_method(UML.diagram.Diagram.create, ReferenceAspect, refs)
-    weave_method(diagram.create_as, ReferenceAspect, refs)
-except ImportError:
-    pass
 

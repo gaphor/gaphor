@@ -48,7 +48,7 @@ class ExportSVGAction(Action):
     def execute(self):
 	filesel = gtk.FileSelection('Export diagram to SVG file')
 	filesel.set_modal(True)
-	filesel.set_filename(self.filename or self._window.get_diagram().name + '.svg' or 'export.svg')
+	filesel.set_filename(self.filename or self._window.get_current_diagram().name + '.svg' or 'export.svg')
 
 	#filesel.ok_button.connect('clicked', self.on_ok_button_pressed, filesel)
 	#filesel.cancel_button.connect('clicked',
