@@ -282,6 +282,9 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
     will not give you the same result.
     """
     name = self.name
+    if not name:
+        return ''
+
     if not name or no_render_pat.match(name):
         return name
 
@@ -364,6 +367,8 @@ def render_operation(self, visibility=False, type=False, multiplicity=False,
     Returns the operation as a string.
     """
     name = self.name
+    if not name:
+        return ''
     if no_render_pat.match(name):
         return name
 

@@ -193,7 +193,6 @@ class InterfaceItem(ClassItem):
 
     def on_connect_handle(self, handle):
         self.request_update()
-        
         return ClassItem.on_connect_handle(self, handle)
 
     def on_disconnect_handle(self, handle):

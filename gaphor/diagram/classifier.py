@@ -81,11 +81,20 @@ class ClassifierItem(NamedItem):
 
     ClassifierItem controls the stereotype, namespace and owning package.
 
-    A classifier has three drawing style:
+    A classifier has three drawing style (ClassifierItem.drawing_style):
      - The comparttment view, as often used by Classes
      - A compartment view, but with a little stereotype icon in the right corner
      - One big icon, as used by Actors and sometimes interfaces.
+
+    To support this behavior a few helper methods are defined which can be
+    called/overridden:
+     - update_compartment (the standard box-style)
+     - update_compartment_icon (box-style with small icon (see ComponentItem))
+     - update_compartment_common (update parts used in both methods)
+     - update_icon (does nothing by default, an impl. should be provided by
+                    subclasses (see ActorItem))
     """
+
     # Draw the famous box style
     DRAW_COMPARTMENT = 0
     # Draw compartment with little icon in upper right corner
@@ -98,10 +107,15 @@ class ClassifierItem(NamedItem):
                             'set the drawing style for the classifier',
                             0, 2, 0, gobject.PARAM_READWRITE),
     }
-    HEAD_MARGIN_X=30
-    HEAD_MARGIN_Y=10
-    COMP_MARGIN_X=5
-    COMP_MARGIN_Y=5
+    HEAD_MARGIN_X = 30
+    HEAD_MARGIN_Y = 10
+    COMP_MARGIN_X = 5 
+    COMP_MARGIN_Y = 5
+    # Default size for small icons
+    ICON_WIDTH    = 15
+    ICON_HEIGHT   = 25
+    ICON_MARGIN_X = 10
+    ICON_MARGIN_Y = 10
 
     FONT_STEREOTYPE='sans 10'
     FONT_ABSTRACT='sans bold italic 10'
@@ -165,17 +179,22 @@ class ClassifierItem(NamedItem):
     def create_compartment(self, name):
         """Create a new compartment. Compartments contain data such as
         attributes and operations.
+
+        It is common to create compartments during the construction of the
+        diagram item. Their visibility can be toggled by Compartment.visible.
         """
         c = Compartment(name, self)
         self._compartments.append(c)
         return c
 
     def sync_uml_elements(self, elements, compartment, creator=None):
-        """Common function for on_subject_notify__ownedAttribute() and
-        on_subject_notify__ownedOperation().
-        - elements: the list of attributes or operations in the model
-        - compartment: our local representation
-        - creator: factory method for creating new attr. or oper.'s
+        """This method synchronized a list of elements with the items
+        in a compartment. A creator-function should be passed which is used
+        for creating new compartment items.
+
+        @elements: the list of attributes or operations in the model
+        @compartment: our local representation
+        @creator: factory method for creating new attr. or oper.'s
         """
         # extract the UML elements from the compartment
         local_elements = [f.subject for f in compartment]
@@ -207,9 +226,13 @@ class ClassifierItem(NamedItem):
 
         self.request_update()
 
-    def set_stereotype(self, stereotype=None):
-        if stereotype:
-            self._stereotype.set_text(STEREOTYPE_OPEN + stereotype + STEREOTYPE_CLOSE)
+    def set_stereotype(self, text=None):
+        """Set the stereotype text for the diagram item.
+        The text, not a Stereotype object.
+        @text: text to set.
+        """
+        if text:
+            self._stereotype.set_text(STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE)
             self._has_stereotype = True
         else:
             self._has_stereotype = False
@@ -218,7 +241,8 @@ class ClassifierItem(NamedItem):
     def update_stereotype(self):
         """Update the stereotype definitions (text) on this class.
 
-        Note: This method is also called from ExtensionItem.confirm_connect_handle
+        Note: This method is also called from
+        ExtensionItem.confirm_connect_handle
         """
         subject = self.subject
         if not hasattr(subject, 'appliedStereotype'): return
@@ -260,6 +284,8 @@ class ClassifierItem(NamedItem):
         self.request_update()
 
     def on_subject_notify__namespace_name(self, subject, pspec=None):
+        """Change the '(from ...)' line if the namespace's name changes.
+        """
         print 'on_subject_notify__namespace_name', self, subject
         self.on_subject_notify__namespace(subject, pspec)
 
@@ -275,22 +301,15 @@ class ClassifierItem(NamedItem):
         if self.subject:
             self.update_stereotype()
 
-    def update_compartment(self, affine):
-        """Update state so it can draw itself with the box style.
+    def update_compartment_common(self, affine, width, height):
+        """Update parts that are common for update_compartment() and
+        update_compartment_icon().
+
+        @affine:
+        @width: Height calculated before this function was called.
+        @height: Width
+        @return: (width, height) newly calculated size.
         """
-        has_stereotype = self._has_stereotype
-
-        width = 0
-        height = ClassifierItem.HEAD_MARGIN_Y or 0
-
-        compartments = self._compartments
-
-        if has_stereotype:
-            st_width, st_height = self._stereotype.to_pango_layout(True).get_pixel_size()
-            width = st_width + ClassifierItem.HEAD_MARGIN_X/2
-            st_y = height = height / 2
-            height += st_height
-
         # Update class name
         name_width, name_height = self.get_name_size()
         name_y = height
@@ -299,17 +318,14 @@ class ClassifierItem(NamedItem):
         height += ClassifierItem.HEAD_MARGIN_Y
         width = max(width, name_width + ClassifierItem.HEAD_MARGIN_X)
 
+        compartments = self._compartments
+
         for comp in compartments: width, height = comp.pre_update(width, height, affine)
 
         self.set(min_width=width, min_height=height)
 
         width = max(width, self.width)
         height = max(height, self.height)
-
-        if has_stereotype:
-            self._stereotype.set_pos((0, st_y))
-            self._stereotype.set_max_width(width)
-            self._stereotype.set_max_height(st_height)
 
         # We know the width of all text components and set it:
         # Note: here the upadte flag is set for all sub-items (again)!
@@ -325,11 +341,39 @@ class ClassifierItem(NamedItem):
 
         self._border.rectangle((0,0),(width, height))
 
+        return width, height
+
+    def update_compartment(self, affine):
+        """Update state so it can draw itself with the box style.
+        """
+        has_stereotype = self._has_stereotype
+
+        width = 0
+        height = ClassifierItem.HEAD_MARGIN_Y
+
+        if has_stereotype:
+            st_width, st_height = self._stereotype.to_pango_layout(True).get_pixel_size()
+            width = st_width + ClassifierItem.HEAD_MARGIN_X/2
+            st_y = height = height / 2
+            height += st_height
+
+        width, height = self.update_compartment_common(affine, width, height)
+
+        if has_stereotype:
+            self._stereotype.set_pos((0, st_y))
+            self._stereotype.set_max_width(width)
+            self._stereotype.set_max_height(st_height)
+
+
     def update_compartment_icon(self, affine):
-        raise NotImplementedError
+        """Update state for box-style w/ small icon.
+        """
+        self.update_compartment_common(affine, self.ICON_WIDTH, self.ICON_HEIGHT + self.ICON_MARGIN_Y)
 
     def update_icon(self, affine):
-        raise NotImplementedError
+        """Update state to draw as one bug icon.
+        """
+        pass
 
     def on_update(self, affine):
         """Overrides update callback.

@@ -5,6 +5,8 @@ As always, there is much to do...
   Problem: the existing <Placeholder> stuff works only on constrcution time.
     For this we need a menu that can change during the life of the application.
 
+- disable actions when editing.
+
 - write really good test cases for undo functionality. Have some already.
 
 - confirmation window when creating a new model.

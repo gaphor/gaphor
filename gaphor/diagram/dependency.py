@@ -128,6 +128,7 @@ class DependencyItem(RelationshipItem):
 	return x, y, w, h
 
     def on_update (self, affine):
+        self._set_line_style();
         RelationshipItem.on_update(self, affine)
         handles = self.handles
         middle = len(handles)/2

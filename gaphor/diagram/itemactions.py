@@ -7,7 +7,8 @@ import diacanvas
 import gaphor
 import gaphor.diagram
 import gaphor.UML as UML
-from gaphor.undomanager import get_undo_manager
+#from gaphor.undomanager import get_undo_manager
+from gaphor.undomanager import UndoTransactionAspect, weave_method
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 
@@ -107,10 +108,11 @@ class AbstractClassAction(CheckAction):
 
     def execute(self):
         item = get_parent_focus_item(self._window)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         item.subject.isAbstract = self.active
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(AbstractClassAction.execute, UndoTransactionAspect)
 register_action(AbstractClassAction, 'ItemFocus')
 
 
@@ -142,7 +144,7 @@ class CreateAttributeAction(Action):
         assert isinstance(subject, (UML.Class, UML.Interface))
         elemfact = gaphor.resource(UML.ElementFactory)
         
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         attribute = elemfact.create(UML.Property)
         attribute.parse('new')
         subject.ownedAttribute = attribute
@@ -157,8 +159,9 @@ class CreateAttributeAction(Action):
                 vf = view.find_view_item(f)
                 view.start_editing(vf, wx, wy)
                 break
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(CreateAttributeAction.execute, UndoTransactionAspect)
 register_action(CreateAttributeAction, 'ShowAttributes', 'ItemFocus')
 
 
@@ -186,7 +189,7 @@ class CreateOperationAction(Action):
         assert isinstance(subject, UML.Classifier)
         elemfact = gaphor.resource(UML.ElementFactory)
 
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         operation = elemfact.create(UML.Operation)
         operation.parse('new()')
         subject.ownedOperation = operation
@@ -200,8 +203,9 @@ class CreateOperationAction(Action):
                 vf = view.find_view_item(f)
                 view.start_editing(vf, wx, wy)
                 break
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(CreateOperationAction.execute, UndoTransactionAspect)
 register_action(CreateOperationAction, 'ShowOperations', 'ItemFocus')
 
 
@@ -214,9 +218,9 @@ class DeleteFeatureAction(Action):
         #subject = get_parent_focus_item(self._window).subject
         item = self._window.get_current_diagram_view().focus_item.item
         #assert isinstance(subject, (UML.Property, UML.Operation))
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         item.subject.unlink()
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
 
 class DeleteAttributeAction(DeleteFeatureAction):
@@ -224,6 +228,7 @@ class DeleteAttributeAction(DeleteFeatureAction):
     label = 'Delete A_ttribute'
     tooltip='Delete the selected attribute'
 
+weave_method(DeleteAttributeAction.execute, UndoTransactionAspect)
 register_action(DeleteAttributeAction, 'ShowAttributes', 'CreateAttribute', 'ItemFocus')
 
 
@@ -232,6 +237,7 @@ class DeleteOperationAction(DeleteFeatureAction):
     label = 'Delete O_peration'
     tooltip = 'Delete the selected operation'
 
+weave_method(DeleteOperationAction.execute, UndoTransactionAspect)
 register_action(DeleteOperationAction, 'ShowOperations', 'CreateOperation', 'ItemFocus')
 
 
@@ -254,10 +260,11 @@ class ShowAttributesAction(CheckAction):
 
     def execute(self):
         item = get_parent_focus_item(self._window)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         item.set_property('show-attributes', self.active)
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(DeleteOperationAction.execute, UndoTransactionAspect)
 register_action(ShowAttributesAction, 'ItemFocus')
 
 
@@ -281,10 +288,11 @@ class ShowOperationsAction(CheckAction):
 
     def execute(self):
         item = get_parent_focus_item(self._window)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         item.set_property('show-operations', self.active)
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(ShowOperationsAction.execute, UndoTransactionAspect)
 register_action(ShowOperationsAction, 'ItemFocus')
 
 #
@@ -317,10 +325,11 @@ class AddSegmentAction(SegmentAction):
     def execute(self):
         item, segment = self.get_item_and_segment()
         if item:
-            get_undo_manager().begin_transaction()
+            #get_undo_manager().begin_transaction()
             item.set_property('add_segment', segment)
-            get_undo_manager().commit_transaction()
+            #get_undo_manager().commit_transaction()
             
+weave_method(AddSegmentAction.execute, UndoTransactionAspect)
 register_action(AddSegmentAction, 'ItemFocus')
 
 
@@ -340,10 +349,11 @@ class DeleteSegmentAction(SegmentAction):
     def execute(self):
         item, segment = self.get_item_and_segment()
         if item:
-            get_undo_manager().begin_transaction()
+            #get_undo_manager().begin_transaction()
             item.set_property('del_segment', segment)
-            get_undo_manager().commit_transaction()
+            #get_undo_manager().commit_transaction()
             
+weave_method(DeleteSegmentAction.execute, UndoTransactionAspect)
 register_action(DeleteSegmentAction, 'ItemFocus', 'AddSegment')
 
 
@@ -366,12 +376,13 @@ class OrthogonalAction(CheckAction):
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, diacanvas.CanvasLine)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         if self.active and len(fi.handles) < 3:
             fi.set_property('add_segment', 0)
         fi.set_property('orthogonal', self.active)
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(OrthogonalAction.execute, UndoTransactionAspect)
 register_action(OrthogonalAction, 'ItemFocus', 'AddSegment', 'DeleteSegment')
 
 
@@ -395,10 +406,11 @@ class OrthogonalAlignmentAction(CheckAction):
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, diacanvas.CanvasLine)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         fi.set_property('horizontal', self.active)
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(OrthogonalAlignmentAction.execute, UndoTransactionAspect)
 register_action(OrthogonalAlignmentAction, 'ItemFocus', 'Orthogonal')
 
 
@@ -429,9 +441,11 @@ class NavigableAction(CheckAction):
         item = self.get_association_end()
         assert item.subject
         assert isinstance(item.subject, UML.Property)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         item.set_navigable(self.active)
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
+
+weave_method(NavigableAction.execute, UndoTransactionAspect)
 
 
 class HeadNavigableAction(NavigableAction):
@@ -470,10 +484,11 @@ class AggregationAction(RadioAction):
         if self.active:
             subject = get_parent_focus_item(self._window).get_property(self.end_name).subject
             assert isinstance(subject, UML.Property)
-            get_undo_manager().begin_transaction()
+            #get_undo_manager().begin_transaction()
             subject.aggregation = self.aggregation
-            get_undo_manager().commit_transaction()
+            #get_undo_manager().commit_transaction()
 
+weave_method(AggregationAction.execute, UndoTransactionAspect)
 
 class HeadNoneAction(AggregationAction):
     id = 'Head_AggregationNone'
@@ -607,11 +622,13 @@ class DependencyTypeAction(RadioAction):
     def execute(self):
         if self.active:
             item = get_parent_focus_item(self._window)
-            get_undo_manager().begin_transaction()
+            #get_undo_manager().begin_transaction()
             item.set_dependency_type(self.dependency_type)
             #item.auto_dependency = False
             self._window.get_action_pool().execute('AutoDependency', active=False)
-            get_undo_manager().commit_transaction()
+            #get_undo_manager().commit_transaction()
+
+weave_method(DependencyTypeAction.execute, UndoTransactionAspect)
         
 
 class DependencyTypeDependencyAction(DependencyTypeAction):
@@ -668,10 +685,11 @@ class AutoDependencyAction(CheckAction):
 
     def execute(self):
         item = get_parent_focus_item(self._window)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         item.auto_dependency = self.active
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(AutoDependencyAction.execute, UndoTransactionAspect)
 register_action(AutoDependencyAction, 'ItemFocus')
 
 
@@ -694,10 +712,11 @@ class IndirectlyInstantiatedComponentAction(CheckAction):
 
     def execute(self):
         item = get_parent_focus_item(self._window)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         item.subject.isIndirectlyInstantiated = self.active
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(IndirectlyInstantiatedComponentAction.execute, UndoTransactionAspect)
 register_action(IndirectlyInstantiatedComponentAction, 'ItemFocus')
 
 
@@ -742,11 +761,12 @@ class MoveAction(Action):
 
         # get method to move the element: moveUp or moveDown
         move = getattr(self._getElements(cls, item), self.move_action)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         move(item.subject)
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
         self._window.execute_action('ItemFocus')
 
+weave_method(MoveAction.execute, UndoTransactionAspect)
 
 class MoveUpAction(MoveAction):
     id = 'MoveUp'
@@ -774,92 +794,6 @@ class MoveDownAction(MoveAction):
 register_action(MoveDownAction, 'ItemFocus')
 
 
-class DummyItem(UML.Element, UML.Presentation):
-    pass
-
-class Fold(Action):
-    accel = 'C-f'
-
-    def init(self, window):
-        self._window = window
-
-    def update(self):
-        try:
-            item = get_parent_focus_item(self._window)
-        except NoFocusItemError:
-            pass
-        else:
-            self.sensitive = self.isSensitive(item)
-
-    def execute(self):
-        item = get_parent_focus_item(self._window)
-        log.debug('Action %s: %s' % (self.id, item.subject.name))
-
-        get_undo_manager().begin_transaction()
-
-        # TODO: store handle positions, store a special UndoFoldAction.
-
-        # create interface diagram element and assign model element to
-        # diagram element
-        diag = self._window.get_current_diagram()
-        new_item = self.newElement(diag)
-        new_item.subject = item.subject
-
-        # center new element diagram in the centre of old one
-        x, y = item.get_property('affine')[4:]
-        new_item.update_now()
-        new_item.move(x + (item.width - new_item.width) / 2.0,
-                    y + (item.height - new_item.height) / 2.0)
-
-        # Create a dummy presentation, since we should keep tract of the items subject
-        dummy = DummyItem()
-        #dummy.canvas = item.canvas
-        # Some extra dummy presentations for association ends
-        dummy_head_end = DummyItem()
-        dummy_tail_end = DummyItem()
-
-        # Find all elements that are connected to our item
-        # (Should become (added 10-6-2004 to diacanvas2))
-        for connected_handle in item.connected_handles:
-        #for connected_item in item.canvas.select(lambda i: i.handles and \
-        #                                         (i.handles[0].connected_to is item or \
-        #                                          i.handles[-1].connected_to is item)):
-            connected_item = connected_handle.owner
-
-            #print 'connected item', connected_item
-            # Store the subject, in case of an association also store the
-            # head and tail ends subjects
-            if connected_item.subject:
-                dummy.subject = connected_item.subject
-                if isinstance(dummy.subject, UML.Association):
-                    dummy_head_end.subject = connected_item.get_property('head_subject')
-                    dummy_tail_end.subject = connected_item.get_property('tail_subject')
-
-            # This is the main part. First disconnect, then restore the subject (like if we are
-            # loading the model) and at last connect to the new item.
-            if connected_item.handles[0].connected_to is item:
-                item.disconnect_handle(connected_item.handles[0])
-                connected_item.subject = dummy.subject
-                new_item.connect_handle(connected_item.handles[0])
-            if connected_item.handles[-1].connected_to is item:
-                item.disconnect_handle(connected_item.handles[-1])
-                connected_item.subject = dummy.subject
-                new_item.connect_handle(connected_item.handles[-1])
-
-            assert connected_item.subject is dummy.subject
-
-            # Remove our connected dummy items
-            if isinstance(dummy.subject, UML.Association):
-                connected_item.set_property('head-subject', dummy_head_end.subject)
-                connected_item.set_property('tail-subject', dummy_tail_end.subject)
-                del dummy_head_end.subject, dummy_tail_end.subject
-            del dummy.subject
-
-        # remove old diagram element
-        item.unlink()
-        get_undo_manager().commit_transaction()
-
-
 class FoldAction(Action):
     id = 'Fold'
     label = '_Fold'
@@ -880,10 +814,11 @@ class FoldAction(Action):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
 
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         item.set_property('drawing-style', InterfaceItem.DRAW_ICON)
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
 
+weave_method(FoldAction.execute, UndoTransactionAspect)
 register_action(FoldAction, 'ItemFocus')
 
 
@@ -896,10 +831,14 @@ class UnfoldAction(FoldAction):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
 
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         item.set_property('drawing-style', InterfaceItem.DRAW_COMPARTMENT)
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
+        # Make sure lines are updated properly:
+        item.canvas.update_now()
+        item.canvas.update_now()
 
+weave_method(UnfoldAction.execute, UndoTransactionAspect)
 register_action(UnfoldAction, 'ItemFocus')
 
 
@@ -926,10 +865,12 @@ class ApplyStereotypeAction(CheckAction, ObjectAction):
 
     def execute(self):
         item = get_parent_focus_item(self._window)
-        get_undo_manager().begin_transaction()
+        #get_undo_manager().begin_transaction()
         if self.active:
             item.subject.appliedStereotype = self.stereotype
         else:
             del item.subject.appliedStereotype[self.stereotype]
-        get_undo_manager().commit_transaction()
+        #get_undo_manager().commit_transaction()
+
+weave_method(ApplyStereotypeAction.execute, UndoTransactionAspect)
 

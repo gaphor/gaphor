@@ -36,4 +36,10 @@ class OperationItem(FeatureItem):
     on_subject_notify__visibility = on_subject_notify__name
     on_subject_notify__taggedValue_value = on_subject_notify__name
 
+    def on_update(self, affine):
+        # Render the operation on every update, since we can't monitor
+        # the parameters and return parameters.
+        self._expression.set_text(self.subject and self.subject.render() or '')
+        FeatureItem.on_update(self, affine)
+
 initialize_item(OperationItem)

@@ -2,11 +2,28 @@
 
 import gobject
 import diacanvas
+from gaphor.misc.aspects import Aspect, weave_method
+
 
 def get_undo_manager():
     """Return the default undo manager.
     """
     return _default_undo_manager
+
+
+class UndoTransactionAspect(Aspect):
+
+    def __init__(self, method):
+        self.method = method
+
+    def before(self):
+        get_undo_manager().begin_transaction()
+
+    def after(self, retval, exc):
+        if exc:
+            get_undo_manager().discard_transaction()
+        else:
+            get_undo_manager().commit_transaction()
 
 
 class TransactionError(Exception):
@@ -56,6 +73,7 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
 
     def __init__(self):
         self.__gobject_init__()
+        self._in_undo = False
         self._undo_stack = []
         self._redo_stack = []
         self._stack_depth = 20
@@ -81,9 +99,14 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
     # UndoManager interface:
 
     def on_begin_transaction(self):
+        if self._in_undo:
+            return
+
         #log.debug('begin_transaction')
         if self._current_transaction:
-            raise TransactionError, 'Already in a transaction'
+            self._transaction_depth += 1
+            #raise TransactionError, 'Already in a transaction'
+            return
 
         self._current_transaction = Transaction()
         self.clear_redo_stack()
@@ -105,6 +128,9 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
         self._current_transaction.add(action)
 
     def on_commit_transaction(self):
+        if self._in_undo:
+            return
+
         #log.debug('commit_transaction')
         if not self._current_transaction:
             return #raise TransactionError, 'No transaction to commit'
@@ -119,6 +145,9 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
             self._current_transaction = None
 
     def on_discard_transaction(self):
+        if self._in_undo:
+            return
+
         if not self._current_transaction:
             raise TransactionError, 'No transaction to discard'
 
@@ -134,7 +163,11 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
             log.warning('Trying to undo a transaction, while in a transaction')
             self.commit_transaction()
         transaction = self._undo_stack.pop()
-        transaction.undo()
+        try:
+            self._in_undo = True
+            transaction.undo()
+        finally:
+            self._in_undo = False
         self._redo_stack.append(transaction)
 
     def on_redo_transaction(self):
@@ -142,7 +175,11 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
             return
 
         transaction = self._redo_stack.pop()
-        transaction.redo()
+        try:
+            self._in_undo = True
+            transaction.redo()
+        finally:
+            self._in_undo = False
         self._undo_stack.append(transaction)
 
     def on_in_transaction(self):

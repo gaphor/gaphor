@@ -185,6 +185,9 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     #log.info('0% ... 33%')
 
+    # Fix version inconsistencies
+    version_0_6_1(elements, factory, gaphor_version)
+
     # load attributes and create references:
     for id, elem in elements.items():
         yield update_status_queue()
@@ -298,6 +301,22 @@ def load_generator(filename, factory=None):
 
 
 # Version inconsistencies can be fixed:
+
+def version_0_6_1(elements, factory, gaphor_version):
+    """Before 0.6.1 an Interface could be represented by a ClassItem and
+    a InterfaceItem. Now only InterfaceItems are used.
+    """
+    if tuple(gaphor_version.split('.')) < (0, 6, 1):
+        for elem in elements.values():
+            try:
+                if type(elem) is parser.element and elem.type == 'Interface':
+                    for p_id in elem.presentation:
+                        p = elements[p_id]
+                        if p.type == 'ClassItem':
+                            p.type = 'InterfaceItem'
+            except Exception, e:
+                log.error('Error while updating InterfaceItems', e)
+
 
 def version_0_5_2(elements, factory, gaphor_version):
     """Before version 0.5.2, the wrong memberEnd of the association was

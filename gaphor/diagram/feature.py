@@ -94,25 +94,13 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec, notifiers)
         #log.debug('setting text %s' % self.subject.render() or '')
-        self._expression.set_text(self.subject and self.subject.render() or '')
+        #self._expression.set_text(self.subject and self.subject.render() or '')
 
     # CanvasItem callbacks:
 
     def on_update(self, affine):
         CanvasItem.on_update(self, affine)
         #log.debug('FeatureItem.on_update: %f, %f' % self.get_size(True))
-
-    def on_event(self, event):
-        if event.type == diacanvas.EVENT_BUTTON_PRESS:
-            #log.debug('FeatureItem.on_event: button_press')
-            return True
-        if event.type == diacanvas.EVENT_2BUTTON_PRESS:
-            #log.debug('FeatureItem.on_event: 2button_press')
-            # First make sure the complete string is parsed!
-            self.edit()
-            return True
-        else:
-            return CanvasItem.on_event(self, event)
 
     def on_point(self, x, y):
         return distance_rectangle_point(self.get_bounds(), (x, y))
@@ -133,7 +121,7 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         self.set_property('expression', new_text)
         #if new_text != self.subject.name:
         #    self.subject.name = new_text
-        #self.request_update()
+        self.request_update()
 
 initialize_item(FeatureItem)
 

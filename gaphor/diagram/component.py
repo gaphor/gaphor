@@ -10,7 +10,7 @@ import pango
 import diacanvas
 import gaphor.UML as UML
 from gaphor.diagram import initialize_item
-from nameditem import NamedItem
+from classifier import ClassifierItem
 
 #class ComponentIcon(diacanvas.CanvasElement):
 #    def __init__(self):
@@ -23,30 +23,19 @@ from nameditem import NamedItem
 #        yield self._ci
 
 
-class ComponentItem(NamedItem):
-    HEAD_MARGIN_X = 10
-    HEAD_MARGIN_Y = 10
-    ICON_MARGIN_X = 10
-    ICON_MARGIN_Y = 10
-    ICON_WIDTH    = 15
-    ICON_HEIGHT   = 25
+class ComponentItem(ClassifierItem):
     BAR_WIDTH     = 10
     BAR_HEIGHT    =  5
     BAR_PADDING   =  5
 
-    MARGIN_X      = HEAD_MARGIN_X * 2 + ICON_WIDTH + ICON_MARGIN_X + BAR_PADDING
-    MARGIN_Y      = HEAD_MARGIN_Y + ICON_HEIGHT
-
-    popup_menu = NamedItem.popup_menu \
+    popup_menu = ClassifierItem.popup_menu \
         + ('separator', 'IndirectlyInstantiated')
 
     def __init__(self, id=None):
-        NamedItem.__init__(self, id)
+        ClassifierItem.__init__(self, id)
         self.set(height=50, width=120)
-        self._border = diacanvas.shape.Path()
-        self._border.set_line_width(2.0)
-
-        #self._ci = ComponentIcon()
+        # Set drawing style to compartment w// small icon
+        self.drawing_style = self.DRAW_COMPARTMENT_ICON
 
         for attr in ('_component_icon', '_lower_bar', '_upper_bar'):
             shape = diacanvas.shape.Path()
@@ -55,18 +44,9 @@ class ComponentItem(NamedItem):
             shape.set_fill_color(diacanvas.color(255, 255, 255))
             setattr(self, attr, shape)
 
+    def update_compartment_icon(self, affine):
 
-    def on_update(self, affine):
-        # Center the text
-        w, h = self.get_name_size()
-        self.set(min_width=w + ComponentItem.MARGIN_X,
-                 min_height=h + ComponentItem.MARGIN_Y)
-        self.update_name(x=ComponentItem.HEAD_MARGIN_X,
-                         y=ComponentItem.HEAD_MARGIN_Y + ComponentItem.ICON_MARGIN_Y,
-                         width=self.width - ComponentItem.ICON_WIDTH - ComponentItem.ICON_MARGIN_X * 2,
-                         height=h)
-
-        NamedItem.on_update(self, affine)
+        ClassifierItem.update_compartment_icon(self, affine)
 
         # draw icon
         ix = self.width - self.ICON_MARGIN_X - self.ICON_WIDTH
@@ -84,13 +64,8 @@ class ComponentItem(NamedItem):
         self._upper_bar.rectangle((bx, bar_upper_y),
             (bx + self.BAR_WIDTH, bar_upper_y + self.BAR_HEIGHT))
 
-        # draw border
-        self._border.rectangle((0, 0), (self.width, self.height))
-        self.expand_bounds(1.0)
-
     def on_shape_iter(self):
-        yield self._border
-        for s in NamedItem.on_shape_iter(self):
+        for s in ClassifierItem.on_shape_iter(self):
             yield s
         yield self._component_icon
         yield self._lower_bar
