@@ -231,7 +231,7 @@ one of the diagrams.
 	if list.count(obj) == 0:
 	    list.append(obj)
 	    list.sort()
-	    self.__queue(key, 'add', seq.index(obj))
+	    self.__queue(key, 'add', obj)
 
     def __sequence_remove(self, key, obj):
 	self.__emit(key, 'remove', obj)
@@ -274,6 +274,7 @@ one of the diagrams.
 		    xself.__sequence_remove(xkey, self)
 		else:
 		    xself.__del(xkey)
+		xself.__flush()
 
 	    # Establish the relationship
 	    if info[0] is Sequence:
@@ -289,6 +290,7 @@ one of the diagrams.
 	    else:
 		#print 'add to xitem'
 		value.__set(xkey, self)
+	    value.__flush()
 	self.__flush()
 
     def __delattr__(self, key):
@@ -306,6 +308,7 @@ one of the diagrams.
 		xself.__sequence_remove(xkey, self)
 	    else:
 		xself.__del(xkey)
+	    xself.__flush()
 	self.__del(key)
 	self.__flush()
 
@@ -379,7 +382,7 @@ one of the diagrams.
 	    else:
 		if value and value != '':
 		    self.__dict__[name] = value
-	    self.__emit (name, None, value)
+	    self.__queue (name, None, value)
 	
 	for name, reflist in store.references().items():
 	    attr_info = self.__get_attr_info (name, self.__class__)
@@ -390,15 +393,15 @@ one of the diagrams.
 		    self.__ensure_seq (name, attr_info[1])
 		    if refelem not in self.__dict__[name]:
 			self.__dict__[name].list.append (refelem)
-			self.__emit (name, 'add', refelem)
+			self.__queue (name, 'add', refelem)
 		else:
 		    self.__dict__[name] = refelem
-		    self.__emit (name, None, refelem)
+		    self.__queue (name, None, refelem)
 
     def postload (self, store):
 	'''Do some things after the items are initialized... This is basically
 	used for Diagrams.'''
-        pass
+	self.__flush()
 
 ###################################
 # Testing

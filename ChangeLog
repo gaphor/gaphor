@@ -1,3 +1,11 @@
+2002-07-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/element.py: Fixed bug and changed load() to queue
+	signals. Changed postload to flush the queue.
+	* gaphor/command: New directory. Here command classes will be stored.
+	Simple and more complex operations should be executed through
+	commands.
+
 2002-07-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* doc/gaphor.dtd: Allow text data in Value tag.

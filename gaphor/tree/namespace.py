@@ -26,18 +26,24 @@ class NamespaceModel(gtk.GenericTreeModel):
 		# in the tree path (ie. the namespace is not set).
 		iter = self.get_iter(path)
 		self.row_changed(path,  iter)
-        elif key == 'namespace' and obj.namespace:
-	    # FixMe: How should we handle elements that are being moved? The
-	    # Namespace changes, but this happens before the tree is notified.
-	    path = self.get_path(obj)
-	    #print 'Namespace path =', path, type(path)
+#        elif key == 'namespace' and obj.namespace:
+#	    # FixMe: How should we handle elements that are being moved? The
+#	    # Namespace changes, but this happens before the tree is notified.
+#	    path = self.get_path()
+#	    #print 'Namespace path =', path, type(path)
+#	    iter = self.get_iter(path)
+#	    #print 'Namespace set for', obj, path
+#	    self.row_inserted(path, iter)
+	elif key == 'ownedElement' and old_value == 'add':
+	    path = self.get_path(new_value)
+	    print 'ownedElement ADD', old_value, new_value, new_value.namespace, path
 	    iter = self.get_iter(path)
-	    #print 'Namespace set for', obj, path
 	    self.row_inserted(path, iter)
-	#elif key == 'ownedElement' and old_value == 'remove':
-	#    path = self.get_path(new_value)
-	#    if path != ():
-	#	self.row_deleted (path)
+	elif key == 'ownedElement' and old_value == 'remove':
+	    path = self.get_path(new_value)
+	    print 'ownedElement remove', old_value, new_value, path
+	    if path != ():
+		self.row_deleted (path)
 	elif key == '__unlink__':
 	    pass # Stuff is handled in namespace and ownedElement keys...
 	    #print 'Destroying', obj
@@ -48,13 +54,13 @@ class NamespaceModel(gtk.GenericTreeModel):
 	    obj.connect (self.__element_signals, obj)
 	    if obj.id == 1:
 		self.model = obj
-	    try:
-		if obj.namespace:
-		     path = self.get_path(obj)
-		     iter = self.get_iter(path)
-		     self.row_inserted (path, iter)
-	    except AttributeError:
-		pass
+#	    try:
+#		if obj.namespace:
+#		     path = self.get_path(obj)
+#		     iter = self.get_iter(path)
+#		     self.row_inserted (path, iter)
+#	    except AttributeError:
+#		pass
 	elif key == 'remove' and isinstance (obj, UML.Namespace):
 	    if obj is self.model:
 		for n in obj.ownedElement.list:
@@ -127,6 +133,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 	'''returns the tree path (a tuple of indices at the various
 	levels) for a particular node. This is done in reverse order, so the
 	root path will become first.'''
+	assert isinstance (node, UML.Element)
 	def to_path (n):
 	    ns = n.namespace
 	    if ns:
@@ -217,6 +224,8 @@ class NamespaceView(gtk.TreeView):
 	assert isinstance (model, NamespaceModel)
 	self.__gobject_init__()
 	gtk.TreeView.__init__(self, model)
+
+	self.set_property('headers-visible', 0)
 
 	column = gtk.TreeViewColumn ('')
 	# First cell in the column is for an image...

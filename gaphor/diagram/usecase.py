@@ -50,7 +50,7 @@ class UseCaseItem(ModelElementItem):
 	ModelElementItem.on_update(self, affine)
 	self.__border.ellipse(center=(self.width / 2, self.height / 2), width=self.width - 0.5, height=self.height - 0.5)
 	self.__border.request_update()
-	self.__name.update_now()
+	self.update_child(affine, self.__name)
 
     def on_handle_motion (self, handle, wx, wy, mask):
 	retval  = ModelElementItem.on_handle_motion(self, handle, wx, wy, mask)

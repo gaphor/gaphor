@@ -106,7 +106,7 @@ class ActorItem(ModelElementItem):
 			  (ActorItem.ARM * fx, (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY) * fy),
 			  (ActorItem.ARM * 2 * fx, (ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM) * fy)))
 	self.__legs.request_update()
-	self.__name.update_now()
+	self.update_child(affine, self.__name)
 	# Update the bounding box:
 	ulx, uly, lrx, lry = self.bounds
 	w, h = self.__name.get_property('layout').get_pixel_size()

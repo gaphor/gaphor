@@ -56,6 +56,11 @@ class Sequence:
         self.owner.sequence_remove(self, key)
 
     def index(self, key):
+	"""
+	Sequence.index takes an object as an argument. That argument should
+	be an element that is in the list. It returns the position of the
+	object in the sequence.
+	"""
 	for i in range (0, len (self.list)):
 	    if self.list[i] is key:
 	        return i

@@ -9,5 +9,9 @@ __author__ = "Arjan Molenaar"
 __date__ = "2002-03-19"
 
 class Command:
-    def execute ():
+
+    def __init__(self):
+        pass
+
+    def execute (self):
 	pass

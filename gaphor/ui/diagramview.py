@@ -5,12 +5,15 @@ import types, gtk, UML, diacanvas
 import diagram
 from misc.storage import Storage
 from placementtool import PlacementTool
+import command.loadsave
+import command.about
 
 [
     FILE_LOAD,
     FILE_SAVE,
     FILE_DUMP,
     FILE_FLUSH,
+    FILE_ABOUT,
     FILE_QUIT,
     EDIT_UNDO,
     EDIT_REDO,
@@ -28,7 +31,7 @@ from placementtool import PlacementTool
     ITEM_ADD_REALIZATION,
     ITEM_ADD_INCLUDE,
     ITEM_ADD_EXTEND
-] = range(21)
+] = range(22)
 
 class DiagramView:
 
@@ -89,7 +92,9 @@ class DiagramView:
 	self.window = win
 	self.canvasview = view
 	self.diagram = dia
-
+	self.save_command = command.loadsave.SaveCommand()
+	self.load_command = command.loadsave.LoadCommand()
+	
     def __menu_item_cb (self, action, widget):
 	view = self.canvasview
 	dia = self.diagram
@@ -103,25 +108,16 @@ class DiagramView:
 	view.canvas.push_undo(None)
 
 	if action == FILE_LOAD:
-	    factory = UML.ElementFactory ()
 	    print 'unset_canvas'
 	    view.unset_canvas ()
-	    print 'UML.flush'
 	    del self.diagram
-	    factory.flush ()
-	    store = Storage()
-	    store.save('c.xml')
-	    print 'UML.load'
-	    store.load ('a.xml')
-	    print 'UML.lookup'
-	    self.diagram = factory.lookup (2)
+	    self.load_command.execute()
+	    self.diagram = UML.ElementFactory().lookup (2)
 
 	    print 'view.set_canvas'
 	    view.set_canvas (self.diagram.canvas)
 	elif action == FILE_SAVE:
-	    factory = UML.ElementFactory ()
-	    store = Storage()
-	    store.save ('a.xml')
+	    self.save_command.execute()
 	elif action == FILE_DUMP:
 	    factory = UML.ElementFactory ()
 	    for val in factory.values():
@@ -135,6 +131,8 @@ class DiagramView:
 	elif action == FILE_FLUSH:
 	    factory = UML.ElementFactory ()
 	    factory.flush ()
+	elif action == FILE_ABOUT:
+	    command.about.AboutCommand().execute()
 	elif action == FILE_QUIT:
 	    gtk.Widget.destroy (self.window)
 	    gtk.main_quit()
@@ -182,10 +180,11 @@ class DiagramView:
 
     __menu_items = (
 	( '/_File', None, None, 0, '<Branch>' ),
-	( '/File/_Load from a.xml', '<control>L', __menu_item_cb, FILE_LOAD, ''),
-	( '/File/_Save to a.xml', '<control>S', __menu_item_cb, FILE_SAVE, ''),
+	( '/File/_Load...', '<control>L', __menu_item_cb, FILE_LOAD, ''),
+	( '/File/_Save as...', '<control>S', __menu_item_cb, FILE_SAVE, ''),
 	( '/File/_Dump', '<control>D', __menu_item_cb, FILE_DUMP, ''),
 	( '/File/_Flush', None, __menu_item_cb, FILE_FLUSH, ''),
+	( '/File/_About', None, __menu_item_cb, FILE_ABOUT, ''),
 	( '/File/sep1', None, None, 0, '<Separator>' ),
 	( '/File/_Quit', '<control>Q', __menu_item_cb, FILE_QUIT, ''),
 	( '/_Edit', None, None, 0, '<Branch>' ),
