@@ -2,6 +2,7 @@ check Classifier.substitution, InstanceSpecification.slot.
 
 As always, there is much to do...
 
+- fix stock icon loading (image size versus usage in bars etc.)
 - fix accelarators (HOW?)
 - Let the item box behave the same way as the toolbox in GIMP.
 
