@@ -32,6 +32,14 @@ Geometry = types.ListType
 FALSE = 0
 TRUE = not FALSE
 
+elements = { }
+
+def lookup (id):
+    if elements.has_key(id):
+        return elements[id]
+    else:
+        return None
+
 class Enumeration_:
     '''The Enumerration class is an abstract class that can be used to create
     enumerated types. One should inherit from Enumeration and define a variable
@@ -105,7 +113,7 @@ class Element:
 attributes and relations are defined by a <class>._attrdef structure.
 A class does not need to define any local variables itself: Element will
 retrieve all information from the _attrdef structure.
-Element._hash is a table containing all assigned objects as weak references.
+elements is a table containing all assigned objects as weak references.
 This class has its own __del__() method. This means that it can not be freed
 by the garbage collector. Instead you should call Element::unlink() to
 remove all relationships with the element and then it will remove itself if
@@ -120,37 +128,39 @@ object if references are lehd by the object on the undo stack.
     _index = 1
     _attrdef = { 'presentation': ( Sequence, types.ObjectType ),
     		 'itemsOnUndoStack': (0, types.IntType ) }
-    _hash = { }
 
     def __init__(self):
-	print "New object of type", self.__class__
+	#print "New object of type", self.__class__
 	self.__dict__['__id'] = Element._index
 	self.__dict__['__signals'] = [ ]
 	#Element._hash[Element._index] = weakref.ref (self)
-	Element._hash[Element._index] = self
+	elements[Element._index] = self
 	Element._index += 1
 
     def unlink(self):
 	'''Remove all references to the object.'''
-	#print 'Element.unlink()'
+	#print 'Element.unlink():', self
         self.emit("unlink")
-	if Element._hash.has_key(self.__dict__['__id']):
-	    del Element._hash[self.__dict__['__id']]
+	if elements.has_key(self.__dict__['__id']):
+	    del elements[self.__dict__['__id']]
 	for key in self.__dict__.keys():
 	    # In case of a cyclic reference, we should check if the element
 	    # not yet has been removed.
 	    if self.__dict__.has_key (key) and \
-			key not in ( 'presentation', '__signals', '__id' ):
+			key not in ( 'presentation', 'itemsOnUndoStack', \
+				     '__signals', '__id' ):
 		if isinstance (self.__dict__[key], Sequence):
 		    # Remove each item in the sequence, then remove
 		    # the sequence from __dict__.
-		    for s in self.__dict__[key].list:
-		        del self.__dict__[key][s]
+		    list = self.__dict__[key].list
+		    while len (list) > 0:
+		        del self.__dict__[key][list[0]]
 		    del self.__dict__[key]
 		else:
 		    # do a 'del self.key'
-		    if isinstance (self.__dict__[key], Element):
-			self.__delattr__(key)
+		    #if isinstance (self.__dict__[key], Element):
+		    #print '\tunlink:', key
+		    self.__delattr__(key)
     	return self
     
     # Hooks for presentation elements to add themselves:
@@ -167,6 +177,9 @@ object if references are lehd by the object on the undo stack.
 
     def undo_presentation (self, presentation):
         if not presentation in self.presentation:
+	    # Add myself to the 'elements' hash 
+	    if len (self.presentation) == 0:
+	        elements[self.id] = self
 	    self.presentation = presentation
 	    self.itemsOnUndoStack -= 1
 	    assert self.itemsOnUndoStack >= 0
@@ -175,8 +188,14 @@ object if references are lehd by the object on the undo stack.
         if presentation in self.presentation:
 	    del self.presentation[presentation]
 	    self.itemsOnUndoStack += 1
+	    # Remove yourself from the 'elements' hash
+	    if len (self.presentation) == 0:
+	        if lookup (self.id):
+		    del elements[self.id]
 
     def remove_undoability (self):
+	if not self.__dict__.has_key ('itemsOnUndoStack'):
+	    return
         self.itemsOnUndoStack -= 1
 	assert self.itemsOnUndoStack >= 0
 	if len (self.presentation) == 0 and self.itemsOnUndoStack == 0:
@@ -184,7 +203,7 @@ object if references are lehd by the object on the undo stack.
 	    self.unlink()
 
     def __get_attr_info(self, key, klass):
-        '''Find the record for 'key' in the <class>._attrdef map.'''
+        '''Find the record for 'key' in the <klass>._attrdef map.'''
 	done = [ ]
 	def real_get_attr_info(key, klass):
 	    if klass in done:
@@ -211,21 +230,23 @@ object if references are lehd by the object on the undo stack.
 	    self.__dict__[key] = Sequence(self, type)
 	return self.__dict__[key]
 
-    def __del_seq_item(self, seq, val):
-	try:
-	    index = seq.list.index(val)
-	    del seq.list[index]
-	except ValueError:
-	    pass
+    #def __del_seq_item(self, seq, val):
+	#try:
+	    #index = seq.list.index(val)
+	    #del seq.list[index]
+	#    seq.list.remove (val)
+	#except ValueError:
+	#    pass
 
     def __getattr__(self, key):
-	#print 'Element.__getattr__(' + key + ')'
 	if key == 'id':
 	    return self.__dict__['__id']
 	elif self.__dict__.has_key(key):
 	    # Key is already in the object
 	    return self.__dict__[key]
 	else:
+	    #if key[0] != '_':
+		#print 'Unknown attr: Element.__getattr__(' + key + ')'
 	    rec = self.__get_attr_info (key, self.__class__)
 	    if rec[0] is Sequence:
 		# We do not have a sequence here... create it and return it.
@@ -264,13 +285,16 @@ object if references are lehd by the object on the undo stack.
 		if rec[0] is not Sequence or xrec[0] is not Sequence:
 		    if rec[0] is Sequence:
 			#print 'del-seq-item rec'
-			self.__del_seq_item(self.__dict__[key], xself)
+			#self.__del_seq_item(self.__dict__[key], xself)
+			if xself in self.__dict__[key].list:
+			    self.__dict__[key].list.remove(xself)
 		    elif self.__dict__.has_key(key):
 			    #print 'del-item rec'
 			    del self.__dict__[key]
 		    if xrec[0] is Sequence:
 			#print 'del-seq-item xrec'
-			xself.__del_seq_item(xself.__dict__[rec[2]], self)
+			#xself.__del_seq_item(xself.__dict__[rec[2]], self)
+			xself.__dict__[rec[2]].list.remove (self)
 		    elif xself.__dict__.has_key(rec[2]):
 			    #print 'del-item xrec'
 			    del xself.__dict__[rec[2]]
@@ -297,15 +321,18 @@ object if references are lehd by the object on the undo stack.
 	if not self.__dict__.has_key(key):
 	    return
 	xval = self.__dict__[key]
-	del self.__dict__[key]
 	if len(rec) > 2: # Bi-directional relationship
 	    xrec = xval.__get_attr_info (rec[2], rec[1])
 	    if xrec[0] is Sequence:
-		xval.__del_seq_item(xval.__dict__[rec[2]], self)
+		#xval.__del_seq_item(xval.__dict__[rec[2]], self)
+		#xval.__dict__[rec[2]].list.remove (self)
+		# Handle it via sequence_remove()
+		del xval.__dict__[rec[2]][self]
 	    else:
 	        del xval.__dict__[rec[2]]
-	    xval.emit(rec[2])
-	self.emit (key)
+		del self.__dict__[key]
+		self.emit (key)
+		xval.emit(rec[2])
 
     def sequence_remove(self, seq, obj):
         '''Remove an entry. Should only be called by Sequence's implementation.
@@ -315,20 +342,24 @@ object if references are lehd by the object on the undo stack.
 	    if self.__dict__[key] is seq:
 	        break
 	#print 'Element.sequence_remove', key
+	seq_len = len (seq)
 	rec = self.__get_attr_info (key, self.__class__)
 	if rec[0] is not Sequence:
 	    raise AttributeError, 'Element: This should be called from Sequence'
 	seq.list.remove(obj)
 	if len(rec) > 2: # Bi-directional relationship
-	    xrec = obj.__get_attr_info (rec[2], rec[1])
+	    xrec = obj.__get_attr_info (rec[2], obj.__class__) #rec[1])
 	    if xrec[0] is Sequence:
-		obj.__del_seq_item(obj.__dict__[rec[2]], self)
+		#obj.__del_seq_item(obj.__dict__[rec[2]], self)
+		#print 'sequence_remove: Sequence'
+		obj.__dict__[rec[2]].list.remove (self)
 	    else:
-		try:
-		    del obj.__dict__[rec[2]]
-		except Exception, e:
-		    print 'ERROR: (Element.sequence_remove)', e
-
+		#try:
+		#print 'sequence_remove: item'
+		del obj.__dict__[rec[2]]
+		#except Exception, e:
+		#    print 'ERROR: (Element.sequence_remove)', e
+	assert len (seq) == seq_len - 1
     # Functions used by the signal functions
     def connect (self, signal_func, *data):
 	self.__dict__['__signals'].append ((signal_func,) + data)
@@ -338,24 +369,81 @@ object if references are lehd by the object on the undo stack.
 					     self.__dict__['__signals'])
 
     def emit (self, key):
-	if not self.__dict__.has_key ('__signals'):
-	    print 'No __signals attribute in object', self
-	    return
+	print 'emit', self, key
+	#if not self.__dict__.has_key ('__signals'):
+	#    print 'No __signals attribute in object', self
+	#    return
         for signal in self.__dict__['__signals']:
 	    signal_func = signal[0]
 	    data = signal[1:]
+	    #print 'signal:', signal_func, 'data:', data
 	    signal_func (key, *data)
 
-#def update_model():
-#    '''Do a garbage collection on the hash table, also removing
-#    weak references that do not point to valid objects.'''
-#    gc.collect()
-#    for k in Element._hash.keys():
-#	if Element._hash[k]() is None:
-#	    del Element._hash[k]
+    def save(self, document, parent):
+	def save_children (obj):
+	    if isinstance (obj, Element):
+		#subnode = document.createElement (key)
+		subnode = document.createElement ('Reference')
+		node.appendChild (subnode)
+		subnode.setAttribute ('name', key)
+		subnode.setAttribute ('refid', str(obj.__dict__['__id']))
+	    elif isinstance (obj, types.IntType) or \
+		    isinstance (obj, types.LongType) or \
+	            isinstance (obj, types.FloatType):
+		subnode = document.createElement ('Value')
+		node.appendChild (subnode)
+		subnode.setAttribute ('name', key)
+		text = document.createTextNode (str(obj))
+		subnode.appendChild (text)
+	    elif isinstance (obj, types.StringType):
+		subnode = document.createElement ('Value')
+		node.appendChild (subnode)
+		subnode.setAttribute ('name', key)
+		cdata = document.createCDATASection (str(obj))
+		subnode.appendChild (cdata)
 
-#Element_hash_gc = update_model
+        node = document.createElement (self.__class__.__name__)
+	parent.appendChild (node)
+	node.setAttribute ('id', str (self.__dict__['__id']))
+	for key in self.__dict__.keys():
+	    if key not in ( 'presentation', 'itemsOnUndoStack', \
+	    		    '__signals', '__id' ):
+		obj = self.__dict__[key]
+		if isinstance (obj, Sequence):
+		    for item in obj.list:
+			save_children (item)
+		else:
+		    save_children (obj)
+	return node
 
+    def load(self, node):
+	for child in node.childNodes:
+	    if child.tagName == 'Reference':
+		name = child.getAttribute ('name')
+	        refid = int (child.getAttribute ('refid'))
+		refelement = lookup (refid)
+		attr_info = self.__get_attr_info (name, self.__class__)
+		if not isinstance (refelement, attr_info[1]):
+		    raise ValueError, 'Referenced item is of the wrong type'
+		if attr_info[0] is Sequence:
+		    self.__ensure_seq (name, attr_info[1]).list.append (refelement)
+		else:
+		    self.__dict__[name] = refelement
+	    elif child.tagName == 'Value':
+		name = child.getAttribute ('name')
+		subchild = child.firstChild
+		attr_info = self.__get_attr_info (name, self.__class__)
+		if issubclass (attr_info[1], types.IntType) or \
+		   issubclass (attr_info[1], types.LongType):
+		    self.__dict__[name] = int (subchild.data)
+		elif issubclass (attr_info[1], types.FloatType):
+		    self.__dict__[name] = float (subchild.data)
+		else:
+		    self.__dict__[name] = subchild.data
+
+
+###################################
+# Testing
 if __name__ == '__main__':
 
     print '\n============== Starting Element tests... ============\n'
@@ -389,7 +477,7 @@ if __name__ == '__main__':
     a.unlink()
     del a
 
-    assert len (Element._hash) == 0
+    assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -421,7 +509,7 @@ if __name__ == '__main__':
 
     a.unlink()
 
-    assert len (Element._hash) == 0
+    assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -468,7 +556,7 @@ if __name__ == '__main__':
     a.unlink()
     b.unlink()
 
-    assert len (Element._hash) == 0
+    assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -496,6 +584,18 @@ if __name__ == '__main__':
     assert a.ref is a
     assert a.seq.list == [ a ]
 
+    b = A()
+    a.seq = b
+    assert b.ref is a
+    assert a.seq.list == [ a, b ]
+
+    
+    del a.seq[a]
+    assert a.ref is None
+    assert b.ref is a
+    assert a.seq.list == [ b ]
+
+    b.unlink()
     a.unlink()
     a = A()
     b = A()
@@ -539,8 +639,8 @@ if __name__ == '__main__':
     a.unlink()
     b.unlink()
 
-    #print Element._hash
-    assert len (Element._hash) == 0
+    #print elements
+    assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -603,7 +703,7 @@ if __name__ == '__main__':
     a.unlink()
     b.unlink()
 
-    assert len (Element._hash) == 0
+    assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -660,7 +760,7 @@ if __name__ == '__main__':
     b.unlink()
     del b
 
-    assert len (Element._hash) == 0
+    assert len (elements) == 0
 
     print '\tOK ==='
 
@@ -674,14 +774,14 @@ if __name__ == '__main__':
     a = A()
     b = A()
 
-    assert len (Element._hash) == 2
+    assert len (elements) == 2
     
     a.rel = b
 
     a.unlink()
     b.unlink()
 
-    assert len (Element._hash) == 0
+    assert len (elements) == 0
 
     print '\tOK ==='
 

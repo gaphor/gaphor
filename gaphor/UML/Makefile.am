@@ -9,4 +9,4 @@ ModelElements.py: $(GEN_UML) $(METAMODEL_XMI)
 	grep -v "PresentationElement" genModelElements.py > ModelElements.py
 	rm -f genModelElements.py
 
-EXTRA_DIST=Element.py ModelElements.py __init__.py
+EXTRA_DIST=Element.py ModelElements.py management.py __init__.py
