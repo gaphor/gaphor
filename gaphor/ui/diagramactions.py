@@ -252,6 +252,7 @@ class DeleteAction(Action):
                 gtk.BUTTONS_YES_NO,
                 'This will remove the selected items from the model. Are you sure?'
                 )
+        dialog.set_transient_for(self._window.window)
         value = dialog.run()
         dialog.destroy()
         if value==gtk.RESPONSE_YES:
