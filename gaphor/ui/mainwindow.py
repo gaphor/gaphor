@@ -7,7 +7,10 @@ import namespace
 import command.file
 import gaphor.UML as UML
 import gaphor.config
-from gaphor.misc.menufactory import MenuFactory, MenuItem, MenuSeparator
+from gaphor.misc.menufactory import MenuFactory, MenuItem, MenuSeparator, MenuPlaceholder, MenuStockItem
+
+
+print '\n\n\n*** ' + __file__
 
 class MainWindow:
     """
@@ -15,73 +18,40 @@ class MainWindow:
     view and a menu and a statusbar.
     """
 
-    def __2init__(self):
-	# Menu items have the following structure:
-	# ( Name, Comment, (ctrl) + Modifier, Command or Submenu )
-	menu =  MenuItem(submenu=(
-		    MenuItem(name='_File', submenu=(
-			MenuItem(stock=gtk.STOCK_NEW,
-				 comment='Create a new model',
-				 command=command.file.NewCommand()),
-	 		MenuItem(stock=gtk.STOCK_OPEN,
-				 comment='Open an existing model',
-				 command=command.file.OpenCommand()),
-			MenuItem(stock=gtk.STOCK_SAVE,
-				 comment='Save current model',
-				 command=command.file.SaveCommand()),
-			MenuSeparator(),
-			MenuItem(stock=gtk.STOCK_QUIT,
-				 comment='Exit Gaphor',
-				 command=command.file.QuitCommand())
-			,))
-		    ,))
-	win = gtk.Window ()
-	accelgroup = gtk.AccelGroup()
-	statusbar = gtk.Statusbar()
-	model = namespace.NamespaceModel(UML.ElementFactory())
-	view = namespace.NamespaceView(model)
-
-	menu_factory = MenuFactory(menu=menu, accelgroup=accelgroup, statusbar=statusbar)
-	menubar = menu_factory.create_menu()
-
-	vbox = gtk.VBox(homogeneous=gtk.FALSE)
-	win.add (vbox)
-	win.add_accel_group (accelgroup)
-	
-	vbox.pack_start(menubar, gtk.FALSE, gtk.FALSE, 0)
-	vbox.pack_start(view)
-	vbox.pack_end(statusbar, gtk.FALSE, gtk.FALSE, 0)
-
-	self.__win = win
-	self.__accelgroup = accelgroup
-	self.__statusbar = statusbar
-	self.__model = model
-	self.__view = view
-	self.__menubar = menubar
-
-	win.show_all()
-	
-	statusbar.push (0, 'Gaphor v%s' % gaphor.config.GAPHOR_VERSION)
-
     def __init__(self, name, title):
+	recent_files = MenuPlaceholder()
+	open_windows = MenuPlaceholder()
 	# Menu items have the following structure:
 	# ( Name, Comment, (ctrl) + Modifier, Command or Submenu )
 	menu =  MenuItem(submenu=(
 		    MenuItem(name='_File', submenu=(
-			MenuItem(stock=gtk.STOCK_NEW,
+			MenuStockItem(stock_id=gtk.STOCK_NEW,
 				 comment='Create a new model',
 				 command=command.file.NewCommand()),
-	 		MenuItem(stock=gtk.STOCK_OPEN,
+	 		MenuStockItem(stock_id=gtk.STOCK_OPEN,
 				 comment='Open an existing model',
 				 command=command.file.OpenCommand()),
-			MenuItem(stock=gtk.STOCK_SAVE,
+			MenuStockItem(stock_id=gtk.STOCK_SAVE,
 				 comment='Save current model',
 				 command=command.file.SaveCommand()),
 			MenuSeparator(),
-			MenuItem(stock=gtk.STOCK_QUIT,
+			recent_files,
+			MenuSeparator(),
+			MenuStockItem(stock_id=gtk.STOCK_QUIT,
 				 comment='Exit Gaphor',
 				 command=command.file.QuitCommand())
-			,))
+			,)),
+		    MenuItem(name='_Insert', submenu=(
+			MenuItem(name='_Diagram',
+				comment='Create a new diagram')
+			,)),
+		    MenuItem(name='_Windows', submenu=(
+			open_windows,
+			MenuSeparator(),
+			MenuItem(name='_Close all',
+				comment='Close all open windows',
+				command=None)
+		        ,))
 		    ,))
 	app = gnome.ui.App (name, title)
 	app.set_default_size (200, 300)
@@ -104,9 +74,12 @@ class MainWindow:
 	self.__model = model
 	self.__view = view
 	self.__menubar = menubar
-	self.__windows = []
+	self.__recent_files = recent_files
+	self.__open_windows = open_windows
 	app.show_all()
 	
-    def add_window(self, window):
-	self.__windows.append(window)
+    def add_window(self, window, name, command=None):
+	self.__open_windows.add(key=window, name=name, command=command)
 
+    def remove_window(self, window):
+	self.__open_windows.remove(window)

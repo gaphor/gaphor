@@ -21,6 +21,16 @@ FILES_FILES="gaphor/Files \
 
 AC_SUBST(FILES_FILES)
 
+dnl AC_CONFIG_HEADERS(config.h)
+
+##########
+# GetText
+
+GETTEXT_PACKAGE=gaphor
+AC_SUBST(GETTEXT_PACKAGE)
+ALL_LINGUAS="nl"
+
+AM_GLIB_GNU_GETTEXT
 
 #########
 # Python
@@ -118,8 +128,10 @@ AC_SUBST(FILES)
 
 AC_CONFIG_FILES(
 	Makefile
+	gaphor.sh
 	utils/Makefile
 	gaphor/config.py
+	po/Makefile.in
 	tests/Makefile
 	doc/Makefile)
 AC_OUTPUT

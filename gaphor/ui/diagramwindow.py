@@ -8,14 +8,9 @@ from gaphor.misc.storage import Storage
 from placementtool import PlacementTool
 import command.file
 import command.about
+from gaphor.gaphor import Gaphor
 
 [
-    FILE_LOAD,
-    FILE_SAVE,
-    FILE_DUMP,
-    FILE_FLUSH,
-    FILE_ABOUT,
-    FILE_QUIT,
     EDIT_UNDO,
     EDIT_REDO,
     EDIT_DEL_FOCUSED,
@@ -34,7 +29,7 @@ import command.about
     ITEM_ADD_REALIZATION,
     ITEM_ADD_INCLUDE,
     ITEM_ADD_EXTEND
-] = range(24)
+] = range(18)
 
 class DiagramWindow:
 
@@ -50,36 +45,7 @@ class DiagramWindow:
 	print 'Action:', action, gtk.item_factory_path_from_widget(widget), view
 	view.canvas.push_undo(None)
 
-	if action == FILE_LOAD:
-	    print 'unset_canvas'
-	    view.unset_canvas ()
-	    del self.diagram
-	    self.load_command.execute()
-	    self.diagram = UML.ElementFactory().lookup (2)
-
-	    print 'view.set_canvas'
-	    view.set_canvas (self.diagram.canvas)
-	elif action == FILE_SAVE:
-	    self.save_command.execute()
-	elif action == FILE_DUMP:
-	    factory = UML.ElementFactory ()
-	    for val in factory.values():
-	        print 'Object', val
-		for key in val.__dict__.keys():
-		    print '	', key, ':',
-		    if isinstance (val.__dict__[key], UML.Sequence):
-			print val.__dict__[key].list
-		    else:
-		        print val.__dict__[key]
-	elif action == FILE_FLUSH:
-	    factory = UML.ElementFactory ()
-	    factory.flush ()
-	elif action == FILE_ABOUT:
-	    command.about.AboutCommand().execute()
-	elif action == FILE_QUIT:
-	    gtk.Widget.destroy (self.window)
-	    gtk.main_quit()
-	elif action == EDIT_UNDO:
+	if action == EDIT_UNDO:
 	    view.canvas.pop_undo()
 	elif action == EDIT_REDO:
 	    view.canvas.pop_redo()
@@ -126,14 +92,6 @@ class DiagramWindow:
 	    print 'This item is not iimplemented yet.'
 
     __menu_items = (
-	( '/_File', None, None, 0, '<Branch>' ),
-	( '/File/_Load...', '<control>L', __menu_item_cb, FILE_LOAD, ''),
-	( '/File/_Save as...', '<control>S', __menu_item_cb, FILE_SAVE, ''),
-	( '/File/_Dump', '<control>D', __menu_item_cb, FILE_DUMP, ''),
-	( '/File/_Flush', None, __menu_item_cb, FILE_FLUSH, ''),
-	( '/File/_About', None, __menu_item_cb, FILE_ABOUT, ''),
-	( '/File/sep1', None, None, 0, '<Separator>' ),
-	( '/File/_Quit', '<control>Q', __menu_item_cb, FILE_QUIT, ''),
 	( '/_Edit', None, None, 0, '<Branch>' ),
 	( '/Edit/_Undo', '<control>Z', __menu_item_cb, EDIT_UNDO ),
 	( '/Edit/_Redo', '<control>R', __menu_item_cb, EDIT_REDO ),
@@ -161,10 +119,11 @@ class DiagramWindow:
     def __init__(self, dia):
 	win = gtk.Window()
 	if dia.name == '':
-	    win.set_title ('Unknown')
+	    title = 'Unknown'
 	else:
-	    win.set_title (dia.name)
+	    title = dia.name
 
+	win.set_title (title)
 	win.set_default_size (300, 300)
 	
 	view = diacanvas.CanvasView (canvas=dia.canvas)
@@ -212,6 +171,10 @@ class DiagramWindow:
 	self.canvasview = view
 	self.diagram = dia
 	self.item_factory = item_factory
-	self.save_command = command.file.SaveCommand()
-	self.load_command = command.file.OpenCommand()
-	
+
+	Gaphor().get_main_window().add_window(self, title)
+
+	win.connect("destroy", self.__remove)
+
+    def __remove(self, win):
+	Gaphor().get_main_window().remove_window(self)
