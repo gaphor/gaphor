@@ -3,6 +3,10 @@
 	* gaphor/ui/diagramactions.py: Made a start if simple copy/paste
 	functionality.
 
+2004-11-04  Jeroen Vloothuis <jeroen@vloothuis.net>
+        * gaphor/ui/diagramactions.py: Implemented a confirmation dialog for
+        the delete action.
+
 2004-11-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/misc/xmlwriter.py: new file. XMLGenerator with CDATA handling
