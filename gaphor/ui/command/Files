@@ -1,5 +1,6 @@
 __init__.py
-about.py
+commandinfo.py
 diagram.py
-file.py
-tree.py
+diagramitem.py
+main.py
+mainpopup.py

@@ -1,6 +1,7 @@
 __init__.py
 conf.py
 command.py
+logger.py
 menufactory.py
 signal.py
 singleton.py

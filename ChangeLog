@@ -1,5 +1,6 @@
 2002-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
+	* configure.in: increased release number to 0.2.0
 	* gaphor/ui/command/diagramitem.py: Added commands for placing
 	diagram items on the canvas.
 	* Lots of improvements everywhere.

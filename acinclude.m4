@@ -176,7 +176,7 @@ dnl GTK+-2.0.
 AC_DEFUN(AM_CHECK_PYMOD_2_0,
 [AC_REQUIRE([AM_PATH_PYTHON])
 py_mod_var=`echo $1['_']$2 | sed 'y%./+-%__p_%'`
-AC_MSG_CHECKING(for ifelse([$2],[],,[$2 in ])python module $1)
+AC_MSG_CHECKING(for GNOME2 ifelse([$2],[],,[$2 in ])python module $1)
 AC_CACHE_VAL(py_cv_mod_$py_mod_var, [
 ifelse([$2],[], [prog="
 import pygtk

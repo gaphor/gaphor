@@ -18,9 +18,14 @@ pixmaps_DATA = \
 	include24.png \
 	package16.png \
 	package24.png \
+	pointer16.png \
+	pointer24.png \
 	ucassociation16.png \
 	ucassociation24.png \
 	usecase16.png \
 	usecase24.png
 
 pixmapsdir=$(pkgdatadir)/pixmaps
+
+EXTRA_DIST = $(pixmaps_DATA)
+

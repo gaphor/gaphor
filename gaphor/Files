@@ -1,2 +1,4 @@
 __init__.py
 gaphor.py
+config.py
+plugin.py

@@ -1,12 +1,12 @@
 __init__.py
+placementtool.py
 actor.py
 association.py
-classmember.py
 comment.py
 commentline.py
 dependency.py
 diagramitem.py
-diagramitemfactory.py
+feature.py
 generalization.py
 klass.py
 metaitem.py

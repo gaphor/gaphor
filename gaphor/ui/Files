@@ -1,8 +1,8 @@
 __init__.py
+abstractwindow.py
+commandregistry.py
 diagramview.py
-namespace.py
-placementtool.py
-treeview.py
-mainwindow.py
 diagramwindow.py
+mainwindow.py
+namespace.py
 stock.py
