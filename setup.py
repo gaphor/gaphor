@@ -8,7 +8,7 @@
 
 MAJOR_VERSION = 0
 MINOR_VERSION = 5
-MICRO_VERSION = 0
+MICRO_VERSION = 1
 
 VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 
@@ -147,7 +147,7 @@ class version_py:
         f.write('VERSION=\'%s\'\n' % VERSION)
         f.write('DATA_DIR=\'%s\'\n' % data_dir)
         f.write('import os\n')
-        f.write('USER_DATA_DIR=os.getenv(\'HOME\') + \'.gaphor\'\n')
+        f.write('USER_DATA_DIR=os.path.join(os.getenv(\'HOME\'), \'.gaphor\')\n')
         f.write('del os\n')
         f.close()
         self.byte_compile([outfile])
@@ -355,7 +355,8 @@ setup(name='gaphor',
       # data files are relative to <prefix>/share/gaphor (see setup.cfg)
       data_files=[('', ['data/icons.xml']),
                   ('pixmaps', glob('data/pixmaps/*.png')),
-                  ('plugins', glob('data/plugins/**'))
+                  ('plugins/plugineditor', glob('data/plugins/plugineditor/*.*')),
+                  ('plugins/checkmetamodel', glob('data/plugins/checkmetamodel/*.*'))
       ],
       scripts=['bin/gaphor'],
 

@@ -18,10 +18,13 @@ Plugin - This class represents a plugin. It contains data from plugin.xml
 PluginAction - Defines an gaphor.plugin.Action instance.
 PluginLoader - SAX parser used to read the plugin.xml file of a plugin. This
 	class creates a Plugin instance from the xml file.
-"""
 
+User provided plugins overrule the system provided plugins.
+"""
+import os
 import os.path
 import glob
+import sys
 from xml.sax import handler, make_parser
 from gaphor import resource
 from gaphor.parser import ParserException
@@ -30,9 +33,15 @@ from gaphor.misc.odict import odict
 
 XMLNS='http://gaphor.sourceforge.net/gaphor/plugin'
 
-# Directories to look for plugins
-DEFAULT_PLUGIN_DIRS = [os.path.join(resource('DataDir'), 'plugins'),
-		       os.path.join(resource('UserDataDir'), 'plugins')]
+# Directories to look for plugins. These sirectories are added to the
+# search path. User provided plugins overrule system plugins.
+DEFAULT_PLUGIN_DIRS = [os.path.join(resource('UserDataDir'), 'plugins'),
+                       os.path.join(resource('DataDir'), 'plugins')]
+
+sys.path.extend(DEFAULT_PLUGIN_DIRS)
+
+#log.debug('sys.path=' + str(sys.path))
+#log.debug('DEFAULT_PLUGIN_DIRS=' + str(DEFAULT_PLUGIN_DIRS))
 
 class Plugin(object):
     """A plugin represents one plugin loaded from the file system.
@@ -79,7 +88,7 @@ class Plugin(object):
     def import_plugin(self):
 	"""Do the actual import of the plugin module.
 	"""
-	mod = __import__(self.path, globals(), locals(), [])
+	mod = __import__(self.path.split(os.sep)[-1], globals(), locals(), [])
 	self.module = mod
 	self.initialized = True
 	if mod:
@@ -244,7 +253,12 @@ class PluginManager(object):
 	if self.bootstrapped:
 	    return
 
-	for plugin_dir in DEFAULT_PLUGIN_DIRS:
+	# Load the plugins in reverse order, so the user plugins will
+	# overwrite the default plugins. (they are imported in sys.path as
+	# [user plugins, default plugins]).
+	default_plugin_dirs = list(DEFAULT_PLUGIN_DIRS)
+	default_plugin_dirs.reverse()
+	for plugin_dir in default_plugin_dirs:
 	    self.load_plugins_from_dir(plugin_dir)
 
 	import_done = True
@@ -272,6 +286,7 @@ class PluginManager(object):
 	self.plugins[plugin.name] = plugin
 
     def load_plugins_from_dir(self, plugin_dir):
+	log.debug('Loading plugins from %s' % plugin_dir)
 	if not os.path.isdir(plugin_dir):
 	    return
 	for plugin_xml in glob.glob(os.path.join(plugin_dir, '*', 'plugin.xml')):

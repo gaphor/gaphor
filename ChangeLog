@@ -1,3 +1,18 @@
+2004-09-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* utils/install_mo.py: fixed bug in installation
+	* gaphor/i18n.py: make i18n support work
+
+2004-08-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: fix bug in plugin installation.
+	* gaphor/pluginmanager.py: add the plugin directories to sys.path,
+	the plugins will not be loaded after installing gaphor.
+	* data/plugins/plugineditor: new. was pluginmanager, but that gives
+	naming conflicts with the gaphor.pluginmanager module.
+	* gaphor/ui/mainwindow.py: do not put the main window's accel group
+	on any transient window.
+
 2004-07-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/mainactions.py: Added DeleteDiagram action.

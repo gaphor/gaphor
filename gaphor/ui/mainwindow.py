@@ -5,6 +5,7 @@ import gtk
 import namespace
 import gaphor
 import gaphor.UML as UML
+from gaphor.i18n import _
 from abstractwindow import AbstractWindow
 from diagramtab import DiagramTab
 from toolbox import Toolbox
@@ -17,18 +18,18 @@ class MainWindow(AbstractWindow):
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
 
-    menu = ('_File', (
+    menu = (_('_File'), (
                 'FileNew',
                 'FileOpen',
-                'Recent files', (
-                    'To be implemented',),
+                _('Recent files'), (
+                    _('To be implemented'),),
                 '<FileOpenSlot>',
                 'separator',
                 'FileSave',
                 'FileSaveAs',
                 '<FileSaveSlot>',
                 'separator',
-                '_Export', (
+                _('_Export'), (
                     'FileExportSVG',
                     '<FileExportSlot>'),
                 'separator',
@@ -36,7 +37,7 @@ class MainWindow(AbstractWindow):
                 '<FileSlot>',
                 'separator',
                 'FileQuit'),
-            '_Edit', (
+            _('_Edit'), (
                 'EditUndo',
                 'EditRedo',
                 'separator',
@@ -45,7 +46,7 @@ class MainWindow(AbstractWindow):
                 'EditSelectAll',
                 'EditDeselectAll',
                 '<EditSlot>'),
-            '_Diagram', (
+            _('_Diagram'), (
                 'ViewZoomIn',
                 'ViewZoomOut',
                 'ViewZoom100',
@@ -56,11 +57,11 @@ class MainWindow(AbstractWindow):
                 'CreateDiagram',
                 'DeleteDiagram',
                 '<DiagramSlot>'),
-            '_Window', (
+            _('_Window'), (
                 'OpenEditorWindow',
                 'OpenConsoleWindow',
                 '<WindowSlot>'),
-            '_Help', (
+            _('_Help'), (
                 'About',
                 '<HelpSlot>')
             )
@@ -82,7 +83,7 @@ class MainWindow(AbstractWindow):
                 'Pointer',
                 'InsertComment',
                 'InsertCommentLine')),
-        ("Classes", (
+        (_("Classes"), (
                 'InsertClass',
                 'InsertInterface',
                 'InsertPackage',
@@ -90,21 +91,21 @@ class MainWindow(AbstractWindow):
                 'InsertDependency',
                 'InsertGeneralization',
                 'InsertImplementation')),
-        ("Actions", (
+        (_("Actions"), (
                 'InsertAction',
                 'InsertInitialNode',
                 'InsertActivityFinalNode',
                 'InsertDecisionNode',
                 'InsertFlow')),
-        ("Components", (
+        (_("Components"), (
                 'InsertComponent',)),
-        ("Use Cases", (
+        (_("Use Cases"), (
                 'InsertUseCase',
                 'InsertActor',
                 'InsertUseCaseAssociation',
                 'InsertInclude',
                 'InsertExtend')),
-        ("Profiles", (
+        (_("Profiles"), (
                 'InsertProfile',
                 'InsertMetaClass',
                 'InsertStereotype',
@@ -225,7 +226,7 @@ class MainWindow(AbstractWindow):
         """Add a window as a sub-window of the main application.
         """
         # Assign the window the accelerators od the main window too
-        window.get_window().add_accel_group(self.accel_group)
+        pass #window.get_window().add_accel_group(self.accel_group)
         #self.__transient_windows.append(window)
         #window.connect(self.on_transient_window_closed)
 

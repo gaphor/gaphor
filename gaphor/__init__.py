@@ -41,11 +41,13 @@ class GaphorError(Exception):
 
 def main():
     """Start the interactive application.
+
+    This involves importing plugins and creating the main window.
     """
     # Import stuff here, since the user might not need all the GUI stuff
     import gtk
-    # Load plugin definitions:
     import diagram
+    # Load plugin definitions:
     import pluginmanager
     from ui.mainwindow import MainWindow
 

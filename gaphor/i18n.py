@@ -13,7 +13,9 @@ import gettext
 
 try:
     catalog = gettext.Catalog('gaphor')
+    #log.info('catalog = %s' % catalog.info())
     _ = catalog.gettext
-except IOError:
+except IOError, e:
+    #log.error('Could not load locale catalog', e)
     def _(s): return s
 

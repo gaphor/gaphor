@@ -4,19 +4,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.4.0\n"
-"POT-Creation-Date: Thu Jun 10 07:47:32 2004\n"
+"Project-Id-Version: 0.5.1\n"
+"POT-Creation-Date: Tue Aug 31 17:32:43 2004\n"
 "PO-Revision-Date: 2004-06-10 08:00+001\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Arjan Molenaar <arjanmol_at_users.sourceforge.org>\n"
 "Language-Team: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.4\n"
 
-#: gaphor/diagram/klass.py:259
+#: gaphor/diagram/klass.py:320
 msgid "(from %s)"
-msgstr ""
+msgstr "(van %s)"
 
 #: gaphor/storage.py:143
 msgid "Loading %d elements..."
@@ -38,18 +38,54 @@ msgstr "Laden van model %s"
 msgid "Loading..."
 msgstr "Bezig met laden..."
 
-#: gaphor/ui/stereotypewindow.py:51
-msgid "Stereotypes"
-msgstr ""
+#: gaphor/ui/mainwindow.py:21
+msgid "_File"
+msgstr "_Bestand"
 
-#: gaphor/ui/stereotypewindow.py:60
-msgid "Base class:"
-msgstr ""
+#: gaphor/ui/mainwindow.py:24
+msgid "Recent files"
+msgstr "Recente bestanden"
 
-#: gaphor/ui/stereotypewindow.py:65
-msgid "Description:"
-msgstr ""
+#: gaphor/ui/mainwindow.py:25
+msgid "To be implemented"
+msgstr "Not niet gemaakt"
 
-#: gaphor/ui/stereotypewindow.py:70
-msgid "Constraints:"
-msgstr ""
+#: gaphor/ui/mainwindow.py:32
+msgid "_Export"
+msgstr "_Exporteer"
+
+#: gaphor/ui/mainwindow.py:40
+msgid "_Edit"
+msgstr "_Wijzig"
+
+#: gaphor/ui/mainwindow.py:49
+msgid "_Diagram"
+msgstr "_Diagram"
+
+#: gaphor/ui/mainwindow.py:60
+msgid "_Window"
+msgstr "_Venster"
+
+#: gaphor/ui/mainwindow.py:64
+msgid "_Help"
+msgstr "_Help"
+
+#: gaphor/ui/mainwindow.py:86
+msgid "Classes"
+msgstr "Klassen"
+
+#: gaphor/ui/mainwindow.py:94
+msgid "Actions"
+msgstr "Akties"
+
+#: gaphor/ui/mainwindow.py:100
+msgid "Components"
+msgstr "Componenten"
+
+#: gaphor/ui/mainwindow.py:102
+msgid "Use Cases"
+msgstr "Use cases"
+
+#: gaphor/ui/mainwindow.py:108
+msgid "Profiles"
+msgstr "Profilen"

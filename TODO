@@ -2,7 +2,7 @@ As always, there is much to do...
 
 - Storing last open files or having a quick-list of most important
   directories or so would be great 
-  Problem: the existing <Placeholder> stuff works only on onstrcution time.
+  Problem: the existing <Placeholder> stuff works only on constrcution time.
     For this we need a menu that can change during the life of the application.
 
 
@@ -15,13 +15,13 @@ As always, there is much to do...
 
 - Undo/redo functionality doesn;t work as espected
 
+- Exporting diagrams to UML XMI, code, images (SVG/png), etc. - make a plugin!
+
 #- Make text selected when starting to edit it: fixed in DiaCanvas2
 
 #- Stereotypes: check documentation page 581 (597 absolute). Fixed. An extra
    association has been created between Stereotype and Class, Interface and
    Package.
-
-- Exporting diagrams to UML XMI, code, images (SVG/png), etc. - make a plugin!
 
 #- Set up a plugin architecture. Since the internals of gaphor are pretty
    modular, plugins should not be that hard.

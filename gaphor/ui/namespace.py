@@ -346,6 +346,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         return self.node_from_element(node[0].namespace)
 
 class NamespaceView(gtk.TreeView):
+
     TARGET_STRING = 0
     TARGET_ELEMENT_ID = 1
     DND_TARGETS = [
@@ -392,16 +393,16 @@ class NamespaceView(gtk.TreeView):
         self.drag_source_set(gtk.gdk.BUTTON1_MASK | gtk.gdk.BUTTON3_MASK,
                              NamespaceView.DND_TARGETS,
                              gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
-        self.connect('drag-data-get', NamespaceView.do_drag_data_get)
+        self.connect('drag-data-get', NamespaceView.on_drag_data_get)
 
         # drop
         #self.drag_dest_set (gtk.DEST_DEFAULT_ALL, [NamespaceView.DND_TARGETS[-1]],
         #                    gtk.gdk.ACTION_DEFAULT)
         self.enable_model_drag_dest([NamespaceView.DND_TARGETS[-1]],
                                     gtk.gdk.ACTION_DEFAULT)
-        self.connect('drag-data-received', NamespaceView.do_drag_data_received)
-        self.connect('drag-drop', NamespaceView.do_drag_drop)
-        self.connect('drag-data-delete', NamespaceView.do_drag_data_delete)
+        self.connect('drag-data-received', NamespaceView.on_drag_data_received)
+        self.connect('drag-drop', NamespaceView.on_drag_drop)
+        self.connect('drag-data-delete', NamespaceView.on_drag_data_delete)
 
     def get_selected_element(self):
         selection = self.get_selection()
@@ -445,11 +446,11 @@ class NamespaceView(gtk.TreeView):
 #    def do_drag_begin (self, context):
 #        print 'do_drag_begin'
 
-    def do_drag_data_get(self, context, selection_data, info, time):
-        """Get the data to be dropped by do_drag_data_received().
+    def on_drag_data_get(self, context, selection_data, info, time):
+        """Get the data to be dropped by on_drag_data_received().
         We send the id of the dragged element.
         """
-        #log.debug('do_drag_data_get')
+        #log.debug('on_drag_data_get')
         selection = self.get_selection()
         model, iter = selection.get_selected()
         if iter:
@@ -459,14 +460,14 @@ class NamespaceView(gtk.TreeView):
             else:
                 selection_data.set(selection_data.target, 8, element.name)
 
-    def do_drag_data_delete (self, context):
+    def on_drag_data_delete (self, context):
         """DnD magic. do not touch
         """
         self.emit_stop_by_name('drag-data-delete')
 
     # Drop
-    def do_drag_data_received(self, context, x, y, selection, info, time):
-        """Drop the data send by do_drag_data_get().
+    def on_drag_data_received(self, context, x, y, selection, info, time):
+        """Drop the data send by on_drag_data_get().
         """
         self.emit_stop_by_name('drag-data-received')
         #print 'drag_data_received'
@@ -510,7 +511,7 @@ class NamespaceView(gtk.TreeView):
                 selection = self.get_selection()
                 selection.select_path(path)
 
-    def do_drag_drop(self, context, x, y, time):
+    def on_drag_drop(self, context, x, y, time):
         """DnD magic. do not touch
         """
         self.emit_stop_by_name('drag-drop')
