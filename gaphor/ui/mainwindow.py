@@ -36,6 +36,7 @@ class MainWindow(AbstractWindow):
                 'ViewZoom100',
                 'separator',
                 'SnapToGrid',
+                'ShowGrid',
                 'separator',
                 'CreateDiagram',
                 'separator',
