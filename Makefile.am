@@ -1,12 +1,12 @@
 
-SUBDIRS=gaphor utils doc
+SUBDIRS=gaphor utils doc tests
 
 .PHONY: release snapshot
 
 release:
 	$(MAKE) dist
 	tar zxf $(PACKAGE)-$(VERSION).tar.gz && cd $(PACKAGE)-$(VERSION) && \
-	./configure && make && cd .. && rm -rf $(PACKAGE)-$(VERSION)
+	./configure --prefix=$(prefix) && make && cd .. && rm -rf $(PACKAGE)-$(VERSION)
 
 snapshot:
 	$(MAKE) dist distdir=$(PACKAGE)`date +"%y%m%d"`

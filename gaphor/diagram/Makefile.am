@@ -4,6 +4,11 @@ INCLUDES = $(DIACANVAS2_CFLAGS) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS)
 
 PYGTK_DEFSDIR = @PYGTK_DEFSDIR@
 
+python_files = \
+	__init__.py	\
+	diagram.py	\
+	itemstorage.py
+
 sources = \
 	common.c	\
 	model-element.c	\
@@ -48,7 +53,8 @@ diagramitemsmodule_la_SOURCES = $(sources) diagramitemsmodule.c
 nodist_diagramitemsmodule_la_SOURCES = diagramitems.c
 
 CLEANFILES = diagramitems.c *.pyc *.pyo
-EXTRA_DIST = diagramitems.defs diagramitems.override
+EXTRA_DIST = $(headers) diagramitems.defs diagramitems.override $(python_files)
+
 diagramitems.c: diagramitems.defs diagramitems.override
 
 .defs.c:
@@ -62,4 +68,7 @@ diagramitems.c: diagramitems.defs diagramitems.override
 	&& cp gen-$*.c $*.c \
 	&& rm -f gen-$*.c
 
+# Ctags for VI(M)
+ctags:
+	rm tags; ctags -dt $(sources) $(headers)
 

@@ -9,6 +9,12 @@ ModelElements.py: $(GEN_UML) $(METAMODEL_XMI)
 	grep -v "PresentationElement" genModelElements.py > ModelElements.py
 	rm -f genModelElements.py
 
-EXTRA_DIST = Element.py ModelElements.py management.py __init__.py
+python_files = \
+	__init__.py	\
+	Element.py	\
+	management.py	\
+	ModelElements.py
+
+EXTRA_DIST = $(python_files)
 
 CLEANFILES = *.pyc *.pyo

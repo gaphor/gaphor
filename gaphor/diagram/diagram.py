@@ -54,15 +54,22 @@ class Diagram(UML.Namespace):
 	def save_item (item, document, parent):
 	    node = itemstorage.save (item, document, parent)
 
-	    if isinstance (item, diacanvas.CanvasGroup):
-	        for child in item.children:
-		    save_item (child, document, node)
+	    if isinstance (item, diacanvas.CanvasGroupable):
+		iter = item.get_iter ()
+		if iter:
+		    while item.value (iter):
+		        save_item (item.value (iter), document, node)
+			item.next(iter);
+	        #for child in item.children:
+		#    save_item (child, document, node)
 
 	save_item (self.canvas.root, document, canvas)
 	return node
 
     def load (self, node):
+	print 'Doing Namespace'
         UML.Namespace.load (self, node)
+	print 'Namespace done'
 	self.transtable = { } # table to translate 'cid' to object
 
 	# First create all objects:
@@ -87,25 +94,27 @@ class Diagram(UML.Namespace):
 	    itemstorage.load (item, node)
 
 	    # Create child items in case of a canvas group...
-	    if isinstance (item, diacanvas.CanvasGroup):
-	        childnode = node.firstChild
-		while childnode:
-		    if childnode.tagName == 'CanvasItem':
-			typestr = childnode.getAttribute ('type')
-			type = getattr (diagramitems, typestr)
-			childitem = item.add (type)
-			load_item (childitem, childnode)
-		    childnode = childnode.nextSibling
+	    #if isinstance (item, diacanvas.CanvasGroupable):
+	    childnode = node.firstChild
+	    while childnode:
+		if childnode.tagName == 'CanvasItem':
+		    typestr = childnode.getAttribute ('type')
+		    type = getattr (diagramitems, typestr)
+		    childitem = item.add (type)
+		    load_item (childitem, childnode)
+		childnode = childnode.nextSibling
 	
 	load_item (self.canvas.root, rootnode)
 	self.transtable = itemstorage.get_transtable ()
-	self.canvas.update_now ()
 
     def postload (self, node): 
         '''We use postload() to connect objects to each other. This can not
 	be done in the load() method, since objects can change their size and
 	contents after we have connected to them (since they are not yet
 	initialized).'''
+
+	# All objects are loaded and the fields are properly set.
+	self.canvas.update_now ()
 
         itemstorage.set_transtable (self.transtable)
 
@@ -122,16 +131,18 @@ class Diagram(UML.Namespace):
 	    itemstorage.postload (item, node)
 
 	    # Do examine child objects:
-	    if isinstance (item, diacanvas.CanvasGroup):
+	    if isinstance (item, diacanvas.CanvasGroupable):
 	        childnode = node.firstChild
-		childindex = 0
-		children = item.children
+		iter = item.get_iter()
 		while childnode:
 		    if childnode.tagName == 'CanvasItem':
-			postload_item (children[childindex], childnode)
-			childindex += 1
+			postload_item (item.value(iter), childnode)
+			item.next(iter)
 		    childnode = childnode.nextSibling
 	    
 	postload_item (self.canvas.root, rootnode)
 	del self.transtable
 	itemstorage.flush_transtable ()
+	self.canvas.set_property ("allow_undo", 1)
+	self.canvas.update_now ()
+

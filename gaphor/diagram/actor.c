@@ -203,6 +203,9 @@ do_auto_resize (DiaCanvasItem *item, DiaShape *shape_text)
 	gdouble dw;
 	PangoLayout *layout;
 
+	if (!MODEL_ELEMENT (item)->auto_resize)
+		return;
+
 	layout = dia_shape_text_to_pango_layout (shape_text,
 						 TRUE);
 
@@ -222,6 +225,7 @@ do_auto_resize (DiaCanvasItem *item, DiaShape *shape_text)
 	g_object_unref (layout);
 	//DIA_SET_FLAGS (item, DIA_NEED_ALIGN_HANDLES);
 	dia_canvas_element_align_handles (DIA_CANVAS_ELEMENT (item));
+	MODEL_ELEMENT (item)->need_resize = FALSE;
 }
 
 static void
@@ -346,7 +350,8 @@ actor_element_update (ModelElement *element, const gchar *key)
 		dia_shape_text_set_text (SHAPE_TEXT (element),
 					 subject_get_string (element->subject,
 							     "name"));
-		do_auto_resize ((DiaCanvasItem*) element, SHAPE_TEXT (element));
+		//do_auto_resize ((DiaCanvasItem*) element, SHAPE_TEXT (element));
+		element->need_resize = TRUE;
 		dia_canvas_item_request_update ((DiaCanvasItem*) element);
 	} else {
 		MODEL_ELEMENT_CLASS (parent_class)->element_update (element, key);

@@ -1,2 +1,2 @@
 
-EXTRA_DIST=genUML.py browseUML.py gbrowseUML.py
+EXTRA_DIST = genUML.py browseUML.py gbrowseUML.py

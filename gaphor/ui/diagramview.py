@@ -146,7 +146,7 @@ class DiagramView:
 	    view.canvas.pop_redo()
 	elif action == EDIT_DEL_FOCUSED:
 	    if view.focus_item and view.focus_item.item.parent:
-		view.focus_item.item.parent.remove_item (view.focus_item.item)
+		view.focus_item.item.parent.remove (view.focus_item.item)
 	elif action == VIEW_ZOOM_IN:
 	    view.set_zoom (view.get_zoom() + 0.1)
 	elif action == VIEW_ZOOM_OUT:

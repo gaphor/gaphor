@@ -432,23 +432,26 @@ object if references are lehd by the object on the undo stack.
 		node.appendChild (subnode)
 		subnode.setAttribute ('name', key)
 		subnode.setAttribute ('refid', str(obj.__dict__['__id']))
-	    elif isinstance (obj, types.IntType) or \
-		    isinstance (obj, types.LongType) or \
-	            isinstance (obj, types.FloatType):
+	    else:
 		subnode = document.createElement ('Value')
 		node.appendChild (subnode)
 		subnode.setAttribute ('name', key)
-		text = document.createTextNode (str(obj))
-		subnode.appendChild (text)
-	    elif isinstance (obj, types.StringType):
-		subnode = document.createElement ('Value')
-		node.appendChild (subnode)
-		subnode.setAttribute ('name', key)
-		cdata = document.createCDATASection (str(obj))
-		subnode.appendChild (cdata)
+		if isinstance (obj, types.IntType) or \
+			isinstance (obj, types.LongType) or \
+			isinstance (obj, types.FloatType):
+		    text = document.createTextNode (str(obj))
+		    subnode.appendChild (text)
+		#elif isinstance (obj, types.FloatType):
+		#    text = document.createTextNode ("%e" % obj)
+		#    subnode.appendChild (text)
+		elif isinstance (obj, types.StringType):
+		    cdata = document.createCDATASection (str(obj))
+		    subnode.appendChild (cdata)
 
-        node = document.createElement (self.__class__.__name__)
+        #node = document.createElement (self.__class__.__name__)
+        node = document.createElement ('Element')
 	parent.appendChild (node)
+	node.setAttribute ('type', self.__class__.__name__)
 	node.setAttribute ('id', str (self.__dict__['__id']))
 	for key in self.__dict__.keys():
 	    if key not in ( 'presentation', 'itemsOnUndoStack', \
@@ -488,7 +491,8 @@ object if references are lehd by the object on the undo stack.
 		elif issubclass (attr_info[1], types.FloatType):
 		    self.__dict__[name] = float (subchild.data)
 		else:
-		    self.__dict__[name] = subchild.data
+		    if hasattr (subchild, 'data'):
+			self.__dict__[name] = subchild.data
 		self.emit (name)
 
     def postload (self, node):

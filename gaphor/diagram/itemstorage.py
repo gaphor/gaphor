@@ -3,6 +3,7 @@
 import UML, diacanvas, diagramitems
 
 
+# Forward declaration
 loadsavetable = None
 
 _transtable = { } # table to translate 'cid' to object
@@ -158,23 +159,29 @@ def model_element_load (item, node):
 	    item.set_subject (subject)
 	else:
 	    raise ValueError, 'Item has subject, but no such object found'
-    load_attr (item, node, 'auto_resize')
+    # Do not set auto_resize now, so we can update the items content without
+    # changing the stored width and height.
+    item.set_property ('auto_resize', 0)
 
+def model_element_postload (item, node):
+    load_attr (item, node, 'auto_resize')
+    
 #
 # Relationship
 #
 def relationship_save (item, document, parent):
     node = canvas_line_save (item, document, parent)
     node.setAttribute ('subject', str (item.subject.id))
-    canvas_line_save (item, document, node)
     return node
 
 def relationship_load (item, node):
     canvas_line_load (item, node)
     attr = node.getAttribute ('subject')
     if attr:
+	print item, 'Have a subject'
 	subject = UML.lookup (eval (attr))
 	if subject:
+	    print item, 'Set a subject', subject
 	    item.set_subject (subject)
 	else:
 	    raise ValueError, 'Item has subject, but no such object found'
@@ -199,9 +206,9 @@ def generalization_load (item, node):
 
 loadsavetable = {
 	diacanvas.CanvasGroup: (canvas_item_save, canvas_item_load ),
-	diagramitems.Actor: (model_element_save, actor_load ),
-	diagramitems.Comment: (model_element_save, comment_load ),
-	diagramitems.UseCase: (model_element_save, usecase_load ),
+	diagramitems.Actor: (model_element_save, actor_load, model_element_postload ),
+	diagramitems.Comment: (model_element_save, comment_load, model_element_postload ),
+	diagramitems.UseCase: (model_element_save, usecase_load, model_element_postload ),
 	diagramitems.CommentLine: ( canvas_line_save, canvas_line_load, canvas_line_postload ),
 	diagramitems.Generalization: ( relationship_save, generalization_load, canvas_line_postload ),
 	diagramitems.Dependency: ( relationship_save, relationship_load, canvas_line_postload ),

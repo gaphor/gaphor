@@ -1,3 +1,10 @@
+2002-03-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/relationship.c: (relationship_handle_connect)
+	Check if the currently connected subject can be used to set the subject.
+	* gaphor/UML/__init__.py: Make dependencies only can connect to 1
+	model element.
+
 2002-02-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* utils/genUML.py: Changed to make use of the aggregation attribute.

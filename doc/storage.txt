@@ -18,12 +18,12 @@ All elements inside a canvas have a tag `Item'.
 
 <?xml version="1.0" ?>
 <Gaphor version="1.0">
-  <Model id="1">
+  <Element type="Model" id="1">
     <Reference name="ownedElement" refid="2"/>
     <Reference name="ownedElement" refid="3"/>
     <Reference name="ownedElement" refid="4"/>
-  </Model>
-  <Diagram id="2">
+  </Element>
+  <Element type="Diagram" id="2">
     <Reference name="namespace" refid="1"/>
     <Canvas extents="(9.0, 9.0, 189.0, 247.0)" grid_bg="0xFFFFFFFF"
 	    grid_color="0x80ff" grid_int_x="10.0" grid_int_y="10.0"
@@ -37,14 +37,14 @@ All elements inside a canvas have a tag `Item'.
 		height="26.0" subject="5" type="Comment" width="100.0"/>
       </CanvasItem>
     </Canvas>
-  </Diagram>
-  <Actor id="3">
+  </Element>
+  <Element type="Actor" id="3">
     <Value name="name">
 <![CDATA[Actor]]>    </Value>
     <Reference name="namespace" refid="1"/>
-  </Actor>
-  <UseCase id="4">
+  </Element>
+  <Element type="UseCase" id="4">
     <Reference name="namespace" refid="1"/>
-  </UseCase>
-  <Comment id="5"/>
+  </Element>
+  <Element type="Comment" id="5"/>
 </Gaphor>

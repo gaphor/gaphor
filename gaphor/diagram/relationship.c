@@ -55,7 +55,7 @@ static gpointer
 relationship_subject_copy (gpointer p)
 {
 	if (p && p != Py_None) {
-		g_message (__FUNCTION__);
+		//g_message (__FUNCTION__);
 		if (p != Py_None)
 			subject_add_undoability (p);
 		Py_INCREF ((PyObject*) p);
@@ -67,7 +67,7 @@ static void
 relationship_subject_free (gpointer p)
 {
 	if (p) {
-		g_message (__FUNCTION__);
+		//g_message (__FUNCTION__);
 		if (p != Py_None)
 			subject_remove_undoability (p);
 		Py_DECREF ((PyObject*) p);
@@ -181,15 +181,16 @@ relationship_set_subject (Relationship *rel, PyObject *subject)
 
 	dia_canvas_item_preserve_property (DIA_CANVAS_ITEM (rel),
 					   "internal_subject");
-
 	if (rel->subject) {
 		PyObject *self = pygobject_new (G_OBJECT (rel));
 
-		g_message (__FUNCTION__": if (rel->subject)");
+		//g_message (__FUNCTION__": (%p) if (rel->subject)", rel);
 		/* subject.disconnect(self.rel_update) */
 		subject_disconnect_element_update (rel->subject, self);
 		subject_remove_presentation_undoable (rel->subject, self);
-		/* Remove the undoability bit from the Relationship */
+		/* Remove the undoability bit from the Relationship (it should
+		 * be held by the element on the undo stack) */
+		//if (DIA_CANVAS_ITEM (rel)->canvas->allow_undo)
 		subject_remove_undoability (rel->subject);
 		Py_DECREF (self);
 		Py_DECREF (rel->subject);
@@ -199,7 +200,7 @@ relationship_set_subject (Relationship *rel, PyObject *subject)
 	if (subject && subject != Py_None) {
 		PyObject *self = pygobject_new (G_OBJECT (rel));
 
-		g_message (__FUNCTION__": if (subject)");
+		//g_message (__FUNCTION__": if (subject)");
 		rel->subject = subject;
 		Py_INCREF (rel->subject);
 
@@ -207,11 +208,7 @@ relationship_set_subject (Relationship *rel, PyObject *subject)
 		if (DIA_CANVAS_ITEM (rel)->canvas->in_undo) {
 			/* Add extra undo-counter, since undo_presentation
 			 * decrements the counter. */
-			/* One for the fact that the counter is not incremented
-			 * on a g_object_get(). */
-			//subject_add_undoability (subject);
-			/* And one to counter the effect of undo_presentation()
-			 * on the subject. */
+			//if (DIA_CANVAS_ITEM (rel)->canvas->allow_undo)
 			subject_add_undoability (subject);
 			subject_undo_presentation (subject, self);
 		} else
@@ -373,7 +370,7 @@ static void
 relationship_real_element_update (Relationship *relationship, const gchar* key)
 {
 	if (g_str_equal (key, "unlink")) {
-		g_message (__FUNCTION__": Unlinking subject");
+		//g_message (__FUNCTION__": Unlinking subject");
 		relationship_unset_subject (relationship);
 		relationship->subject = NULL;
 	}
@@ -452,7 +449,7 @@ relationship_handle_disconnect (DiaCanvasItem *connected_to,
 	g_assert (head->connected_to != NULL);
 	g_assert (tail->connected_to != NULL);
 
-	g_message (__FUNCTION__": Going to disconnect subject...");
+	//g_message (__FUNCTION__": Going to disconnect subject...");
 	relationship_set_subject (rel, NULL);
 
 	return TRUE;
@@ -512,10 +509,10 @@ relationship_handle_connect (Relationship *rel, DiaHandle *handle,
 	DiaHandle *head, *tail;
 	DiaCanvasItem *head_item, *tail_item;
 	PyObject *head_subject, *tail_subject;
-	PyObject *py_rel;
+	PyObject *py_rel = NULL;
 
-	g_message (__FUNCTION__);
-	/* Only connect if the other end is connected */
+	//g_message (__FUNCTION__);
+
 	self = pygobject_new (G_OBJECT (rel));
 
 	head = g_list_first (DIA_CANVAS_ITEM (rel)->handles)->data;
@@ -531,7 +528,7 @@ relationship_handle_connect (Relationship *rel, DiaHandle *handle,
 		g_assert_not_reached ();
 
 	if (!head_item || !tail_item) {
-		g_message (__FUNCTION__": Do not connect...");
+		//g_message (__FUNCTION__": Do not connect...");
 		return TRUE;
 	}
 
@@ -546,16 +543,44 @@ relationship_handle_connect (Relationship *rel, DiaHandle *handle,
 	g_object_get (tail_item, "subject", &tail_subject, NULL);
 	g_assert (tail_subject != NULL);
 
+	/* First check if we already have a subject and, if so,
+	 * check if the ends match and if they match, connect the CanvasItem
+	 * and do nothing more. */
+	if (rel->subject) {
+		PyObject *hs, *ts;
+
+		//g_message (__FUNCTION__": already have a subject...");
+		hs = PyObject_GetAttrString (rel->subject, klass->head_name);
+		g_assert (hs != NULL);
+		ts = PyObject_GetAttrString (rel->subject, klass->tail_name);
+		g_assert (ts != NULL);
+
+		//g_message (__FUNCTION__": (%p) %p %p, %p %p, %p %p.", rel->subject, hs, ts, head_subject, tail_subject, head_item, tail_item);
+
+		if ((hs == head_subject) && (ts == tail_subject)) {
+			//g_message (__FUNCTION__": already have the right subject...");
+			Py_DECREF (head_subject);
+			Py_DECREF (tail_subject);
+			Py_DECREF (hs);
+			Py_DECREF (ts);
+			Py_DECREF (self);
+			return TRUE;
+		}
+		Py_DECREF (hs);
+		Py_DECREF (ts);
+	}
+
 	/* Do a lookup for an already existing generalization between the
 	 * elements. Do the lookup using the element connected to the tail,
 	 * since this one is bi-directional on Include and Extend elements. */
 	py_rel = find_relationship (tail_subject, klass->tail_xname,
 				    head_subject, klass->head_name);
 	
+	//g_message (__FUNCTION__": py_rel = %p", py_rel);
 	/* If a generalization already exists, use this one and approve the
 	 * generalization. */
 	if (py_rel) {
-		g_message (__FUNCTION__": Using existing relationship (%p)", py_rel);
+		//g_message (__FUNCTION__": Using existing relationship (%p)", py_rel);
 		relationship_set_subject (rel, py_rel);
 	} else {
 		int res;
@@ -563,21 +588,20 @@ relationship_handle_connect (Relationship *rel, DiaHandle *handle,
 		 * between the elements. */
 		py_rel = create_uml_object (klass->subject_class);
 
-		g_message (__FUNCTION__": Creating a new relationship (%p)", py_rel);
+		//g_message (__FUNCTION__": Creating a new relationship (%p)", py_rel);
 		
 		relationship_set_subject (rel, py_rel);
 
-		//res = PyObject_SetAttrString (py_rel, klass->head_name, head_subject);
 		res = PyObject_SetAttrString (head_subject, klass->head_xname, py_rel);
 		g_assert (res == 0);
-		//res = PyObject_SetAttrString (py_rel, klass->tail_name, tail_subject);
 		res = PyObject_SetAttrString (tail_subject, klass->tail_xname, py_rel);
 		g_assert (res == 0);
 	}
 
 	Py_DECREF (head_subject);
 	Py_DECREF (tail_subject);
-	Py_DECREF (py_rel);
+	if (py_rel)
+		Py_DECREF (py_rel);
 	Py_DECREF (self);
 	return TRUE;
 }

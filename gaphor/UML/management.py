@@ -4,7 +4,7 @@ This module contains some functions for managing UML models. This
 includes saving, loading and flushing models. In the future things like
 consistency checking should also be included.'''
 
-import ModelElements as UML
+import ModelElements
 import diagram
 from xmllib import XMLParser
 from xml.dom.minidom import Document
@@ -63,11 +63,13 @@ class GaphorParser (XMLParser):
 	raise ValueError, tag + " not supported."
 
 def save (filename=None):
+    '''Save the current model to @filename. If no filename is given, standard
+    out is used.'''
     document = Document()
     rootnode = document.createElement ('Gaphor')
     document.appendChild (rootnode)
     rootnode.setAttribute ('version', '1.0')
-    for e in UML.elements.values():
+    for e in ModelElements.elements.values():
 	print 'Saving object', e
         e.save(document, rootnode)
 
@@ -94,47 +96,61 @@ def load (filename):
     parser.close()
     f.close()
      
-    # Now iterate over the tree and create every element in the UML.elements
-    # table.
+    # Now iterate over the tree and create every element in the
+    # ModelElements.elements table.
     rootnode = parser.doc.firstChild
     for node in rootnode.childNodes:
+        assert node.tagName == 'Element'
+	type = node.getAttribute('type')
 	try:
-	    if node.tagName == 'Diagram':
-		cls = getattr (diagram, node.tagName)
+	    #if node.tagName == 'Diagram':
+	    if type == 'Diagram':
+		#cls = getattr (diagram, node.tagName)
+		cls = getattr (diagram, type)
 	    else:
-		cls = getattr (UML, node.tagName)
+		#cls = getattr (ModelElements, node.tagName)
+		cls = getattr (ModelElements, type)
 	except:
-	    raise ValueError, 'Invalid field in Gaphor file: ' + node.tagName
+	    #raise ValueError, 'Invalid field in Gaphor file: ' + node.tagName
+	    raise ValueError, 'Invalid field in Gaphor file: ' + type
 	id = int (node.getAttribute('id'))
-	old_index = UML.Element._index
-	UML.Element._index = id
+	old_index = ModelElements.Element._index
+	ModelElements.Element._index = id
+	# Create the Model element
 	cls()
 	if old_index > id:
-	    UML.Element._index = old_index
+	    ModelElements.Element._index = old_index
         #print node.tagName, node.getAttribute('id')
 
     # Second step: call Element.load() for every object in the element hash.
     # We also provide the XML node, so it can recreate it's state
+    print "Now calling load() for every model element"
     for node in rootnode.childNodes:
 	id = int (node.getAttribute('id'))
-	element = UML.lookup (id)
+	element = ModelElements.lookup (id)
+	print element
 	assert element != None
 	element.load (node)
+	print element.__dict__
 
     # Do some things after the loadingof the objects is done...
+    print ModelElements.elements
+    save ('b.xml')
+    print "Now calling postload() for every model element"
     for node in rootnode.childNodes:
 	id = int (node.getAttribute('id'))
-	element = UML.lookup (id)
+	element = ModelElements.lookup (id)
+	print element
 	assert element != None
 	element.postload (node)
 
 
 def flush():
-    '''Flush all elements in the UML.elements'''
+    '''Flush all elements in the UML.elements table.'''
     while 1:
 	try:
-	    (key, value) = UML.elements.popitem()
+	    (key, value) = ModelElements.elements.popitem()
 	except KeyError:
 	    break;
 	value.unlink()
-    UML.elements.clear()
+    ModelElements.elements.clear()

@@ -2,9 +2,10 @@ As always, there is much to do...
 
 - Diagram items should be created for lots of model elements
   (we currently have Actor, UseCase, Comment and the fancy line that connects
-   a comment with another model element). First I will focus on some
-   relationships (Generatlization and Association), since that will make
-   use cases usable. Then we can start with Package and Class items...
+   a comment with another model element). Also a buch of relationships are
+   already implemented (Generalization, Include, Extend, Dependency).
+   Next we should focus on the Association and then some static model elements
+   like classes and packages.
 
 - Overall user interface... I have some vague idea how to set it up, but
   I need someone with a little vision to create me a useable UI.

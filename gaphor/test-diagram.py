@@ -73,7 +73,7 @@ del dia, diagram_view
 #for k in UML.Element._hash.keys():
 #    print "Element", k, ":", UML.Element._hash[k].__dict__
 
-treemodel.dump()
+#treemodel.dump()
 
 print 'Going into main'
 gtk.main()
@@ -82,7 +82,7 @@ gtk.main()
 
 UML.save('x.xml')
 
-treemodel.dump()
+#treemodel.dump()
 
 UML.flush()
 
