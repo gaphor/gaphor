@@ -16,7 +16,7 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
     FONT='sans bold 10'
 
     popup_menu = (
-        'ItemRename',
+        'RenameItem',
         'separator',
         'EditDelete',
     )
@@ -36,8 +36,8 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
         # notifications.
         self._name.set_text(self.subject.name or '')
 
-    def edit(self):
-        self.start_editing(self._name)
+#    def edit(self):
+#        self.start_editing(self._name)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'name':
@@ -91,6 +91,10 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
         return iter([self._name])
 
     # Editable
+
+    def on_editable_get_editable_shape(self, x, y):
+        #print 'on_editable_get_editable_shape', x, y
+        return self._name
 
     def on_editable_start_editing(self, shape):
         self.preserve_property('name')

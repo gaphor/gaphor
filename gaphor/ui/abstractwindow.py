@@ -29,9 +29,9 @@ class AbstractWindow(object):
     STATE_CLOSE: The window is closed and no interaction can be done with the
                      window anymore.
     """
-    STATE_INIT=1
-    STATE_ACTIVE=2
-    STATE_CLOSED=3
+    STATE_INIT = 1
+    STATE_ACTIVE = 2
+    STATE_CLOSED = 3
 
     menu = ()
     toolbar = ()

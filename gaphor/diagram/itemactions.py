@@ -46,13 +46,29 @@ class ItemNewSubjectAction(Action):
 
 register_action(ItemNewSubjectAction)
 
-class ItemRenameAction(Action):
-    id = 'ItemRename'
-    label = '_Rename'
-    tooltip = 'Rename selected item'
+class EditItemAction(Action):
+    id = 'EditItem'
+    label = 'Edit'
+    tooltip='Edit'
 
     def init(self, window):
         self._window = window
+
+    def execute(self):
+        #item = self._window.get_current_diagram_view().focus_item.item
+        #assert isinstance(subject, (UML.Property, UML.Operation))
+        #item.edit()
+        view = self._window.get_current_diagram_view()
+        wx, wy = view.window_to_world(*view.get_pointer())
+        view.start_editing(view.focus_item, wx, wy)
+
+register_action(EditItemAction, 'ItemFocus')
+
+
+class RenameItemAction(EditItemAction):
+    id = 'RenameItem'
+    label = '_Rename'
+    tooltip = 'Rename selected item'
 
     def update(self):
         try:
@@ -63,27 +79,7 @@ class ItemRenameAction(Action):
             if isinstance(item, NamedItem):
                 self.sensitive = True
 
-    def execute(self):
-        item = self._window.get_current_diagram_view().focus_item.item
-        item.edit()
-
-register_action(ItemRenameAction, 'ItemFocus')
-
-
-class EditItemAction(Action):
-    id = 'EditItem'
-    label = 'Edit'
-    tooltip='Edit'
-
-    def init(self, window):
-        self._window = window
-
-    def execute(self):
-        item = self._window.get_current_diagram_view().focus_item.item
-        #assert isinstance(subject, (UML.Property, UML.Operation))
-        item.edit()
-
-register_action(EditItemAction, 'ItemFocus')
+register_action(RenameItemAction, 'ItemFocus')
 
 
 class AbstractClassAction(CheckAction):

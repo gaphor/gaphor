@@ -101,6 +101,9 @@ class CommentItem(ElementItem, diacanvas.CanvasEditable):
 
     # Editable
 
+    def on_editable_get_editable_shape(self, x, y):
+        return self._body
+
     def on_editable_start_editing(self, shape):
         self.preserve_property('body')
 

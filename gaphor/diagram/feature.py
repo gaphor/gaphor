@@ -118,6 +118,9 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
 
     # Editable
 
+    def on_editable_get_editable_shape(self, x,y):
+        return self._expression
+
     def on_editable_start_editing(self, shape):
         #self.preserve_property('expression')
         pass

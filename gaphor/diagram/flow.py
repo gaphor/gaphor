@@ -174,6 +174,9 @@ class FlowGuard(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
 
     # Editable
 
+    def on_editable_get_editable_shape(self, x, y):
+        return self._name
+
     def on_editable_start_editing(self, shape):
 	pass
         #self.preserve_property('name')

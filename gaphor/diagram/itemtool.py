@@ -62,17 +62,17 @@ class ItemTool(diacanvas.view.Tool):
             # On double clicks, the item is normally edited.
             # TODO: invoke Actions here
             if isinstance(item, NamedItem):
-                self.execute_action('ItemRename')
-            elif hasattr(item, 'edit'):
+                self.execute_action('RenameItem')
+            elif hasattr(item, 'is_editable') and item.is_editable():
                 self.execute_action('EditItem')
-            elif isinstance(item, AssociationEnd):
-                x, y = view_item.w2i(event.x, event.y)
-                if item.point_name(x, y) < item.point_mult(x, y):
-                    #item.edit_name()
-                    self.execute_action('AssociationEndRenameName')
-                else:
-                    self.execute_action('AssociationEndRenameMult')
-                    #item.edit_mult()
+#            elif isinstance(item, AssociationEnd):
+#                x, y = view_item.w2i(event.x, event.y)
+#                if item.point_name(x, y) < item.point_mult(x, y):
+#                    #item.edit_name()
+#                    self.execute_action('AssociationEndRenameName')
+#                else:
+#                    self.execute_action('AssociationEndRenameMult')
+#                    #item.edit_mult()
         return True
 
     def do_button_release_event(self, view, event):
