@@ -137,6 +137,9 @@ class GaphorLoader(handler.ContentHandler):
         except IndexError:
             return ROOT
 
+    def endDTD(self):
+        pass
+
     def startDocument(self):
         """Start of document: all our attributes are initialized.
         """
