@@ -17,7 +17,6 @@ FILES_FILES="gaphor/Files \
 	gaphor/diagram/Files \
 	gaphor/ui/Files \
 	gaphor/ui/command/Files \
-	gaphor/ui/icons/Files \
 	gaphor/misc/Files"
 
 AC_SUBST(FILES_FILES)
@@ -133,6 +132,7 @@ AC_SUBST(FILES)
 AC_CONFIG_FILES([bin/gaphor], [chmod +x bin/gaphor])
 AC_CONFIG_FILES(
 	Makefile
+	data/Makefile
 	utils/Makefile
 	gaphor/config.py
 	po/Makefile.in

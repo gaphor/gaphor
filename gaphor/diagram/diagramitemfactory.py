@@ -12,7 +12,7 @@ class DiagramItemFactory(object):
     """
     __diagram2uml = { }
 
-    def init(self, *args, **kwargs):
+    def __init__(self):
 	self.__index = 1
 
     def create (self, diagram, type, subject=None):

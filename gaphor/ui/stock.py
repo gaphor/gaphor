@@ -2,7 +2,7 @@
 
 
 import gtk
-from gaphor.config import GETTEXT_PACKAGE
+from gaphor.config import GETTEXT_PACKAGE, DATADIR
 import gaphor.UML as UML
 import os.path as path
 
@@ -52,7 +52,8 @@ default_stock_items = (
     (STOCK_USECASE,	'_Use case',	'usecase24.png', 'usecase16.png')
 )
 
-default_icon_dir = path.dirname(path.abspath(__file__)) + '/icons/'
+#default_icon_dir = path.dirname(path.abspath(__file__)) + '/icons/'
+default_icon_dir = DATADIR + '/'
 
 print 'default_icon_dir:', default_icon_dir
 

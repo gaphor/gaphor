@@ -6,7 +6,7 @@ AUTOMAKE_OPTIONS = 1.6
 # FILES: The files named 'Files' that contain (Python) files that should be
 #	 added to the distribution.
 
-SUBDIRS = utils po doc tests
+SUBDIRS = data utils po doc tests
 
 bin_SCRIPTS = bin/gaphor
 

@@ -1,3 +1,3 @@
-__all__ = [ 'UML', 'diagram', 'tree', 'ui', 'misc' ]
+__all__ = [ 'plugin.py', 'UML', 'diagram', 'tree', 'ui', 'misc' ]
 
 from gaphor import Gaphor

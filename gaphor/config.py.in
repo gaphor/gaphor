@@ -1,3 +1,7 @@
 VERSION='@VERSION@'
 GETTEXT_PACKAGE='@GETTEXT_PACKAGE@'
 LOCALEDIR='@LOCALEDIR@'
+DATADIR='@pkgdatadir@'
+import os
+if os.environ.has_key('GAPHOR_DATADIR'):
+    DATADIR = os.environ['GAPHOR_DATADIR']

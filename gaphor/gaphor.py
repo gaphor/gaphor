@@ -8,8 +8,11 @@ This function can be used to locate application wide resources, such as
 object factories.
 """
 
+#import pygtk
+#pygtk.require('2.0')
+
 from misc.singleton import Singleton
-from misc.conf import Conf
+#from misc.conf import Conf
 import config
 import types
 
@@ -44,7 +47,7 @@ class Gaphor(Singleton):
     TITLE='Gaphor v' + VERSION
 
     __resources = { }
-    __conf = Conf(NAME)
+#    __conf = Conf(NAME)
 
     def init(self, install=1):
 	self.__main_window = None
@@ -57,9 +60,9 @@ class Gaphor(Singleton):
 
     def main(self):
 	from gtk import main as _main
-	from gnome import program_init
+	import gnome
 	from ui import MainWindow
-	program_init(Gaphor.NAME, Gaphor.VERSION)
+	gnome.init(Gaphor.NAME, Gaphor.VERSION)
 	# should we set a default icon here or something?
 	mainwin = MainWindow(Gaphor.NAME, Gaphor.TITLE)
 	mainwin.get_window().connect("destroy", self.__destroy_cb)
@@ -92,7 +95,8 @@ class Gaphor(Singleton):
 		elemfact = GaphorResource(gaphor.UML.ElementFactory)
 	"""
 	if isinstance (resource, types.StringType):
-	    return Gaphor.__conf.get_value(resource)
+#	    return Gaphor.__conf.get_value(resource)
+	    pass
 	else:
 	    hash = Gaphor.__resources
 	    if hash.has_key(resource):

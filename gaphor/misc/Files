@@ -1,5 +1,5 @@
 __init__.py
-GConf.py
+conf.py
 command.py
 menufactory.py
 signal.py
