@@ -37,9 +37,25 @@ class XMIExport(Action):
         attributes['isSpecification']='false'
         attributes['isRoot']='false'
         attributes['isLeaf']='false'
-        attributes['isAbstract']='false'
+        attributes['isAbstract']=node.isAbstract and 'true' or 'false'
         attributes['isActive']='false'
         xmi.startElement('UML:Class', attrs=attributes)
+        
+        # Generalization stuff
+        try:
+            node.generalization
+            hasGeneralization=True
+        except AttributeError:
+            hasGeneralization=False
+
+        if hasGeneralization:
+            xmi.startElement('UML:GeneralizableElement.generalization', attrs=XMLAttributes())
+            for item in node.generalization:
+                attributes=XMLAttributes()
+                attributes['xmi.idref']=item.id
+                xmi.startElement('UML:Generalization', attrs=attributes)
+                xmi.endElement('UML:Generalization')
+            xmi.endElement('UML:GeneralizableElement.generalization')
         
         # Generate the field type classes
         xmi.startElement('UML:Namespace.ownedElement', attrs=XMLAttributes())
@@ -90,6 +106,27 @@ class XMIExport(Action):
             
             xmi.endElement('UML:Classifier.feature')
         xmi.endElement('UML:Class')
+
+
+    def handleGeneralization(self, xmi, node):
+        # Write out the generalization specifications
+        attributes=XMLAttributes()
+        attributes['xmi.id']=node.id
+        attributes['isSpecification']='false'
+        xmi.startElement('UML:Generalization', attrs=attributes)
+        xmi.startElement('UML:Generalization.child', attrs=XMLAttributes())
+        attributes=XMLAttributes()
+        attributes['xmi.idref']=node.specific.id
+        xmi.startElement('UML:Class', attrs=attributes)
+        xmi.endElement('UML:Class')
+        xmi.endElement('UML:Generalization.child')
+        xmi.startElement('UML:Generalization.parent', attrs=XMLAttributes())
+        attributes=XMLAttributes()
+        attributes['xmi.idref']=node.general.id
+        xmi.startElement('UML:Class', attrs=attributes)
+        xmi.endElement('UML:Class')
+        xmi.endElement('UML:Generalization.parent')
+        xmi.endElement('UML:Generalization')
         
     def handleLiteralSpecification(self, xmi, node):
         pass
@@ -179,7 +216,7 @@ class XMIExport(Action):
         handlers={}
 
     def writeHeader(self, xmi):
-        # Writer XMI header section
+        # Write out the XMI header
         xmi.startElement('XMI.header', attrs=XMLAttributes())
         xmi.startElement('XMI.documentation', attrs=XMLAttributes())
         xmi.startElement('XMI.exporter', attrs=XMLAttributes())
@@ -190,6 +227,7 @@ class XMIExport(Action):
         xmi.endElement('XMI.exporterVersion')
         xmi.endElement('XMI.documentation')
         xmi.endElement('XMI.header')
+
 
     def writeModel(self, xmi, attributes):
         # Generator the model
