@@ -39,15 +39,18 @@ print "diagram created"
 #dia.canvas.root.add (diacanvas.CanvasLine(head_pos=(0,0), tail_pos=(50,50)))
 treemodel = namespace.NamespaceModel(factory)
 
-item = dia.create(diagram.CommentItem)
+diafact = diagram.DiagramItemFactory()
+
+item = diafact.create(dia, diagram.CommentItem)
 item.move (30, 50)
-item = dia.create(diagram.ActorItem)
+item = diafact.create(dia, diagram.ActorItem)
 item.move (150, 50)
 item.subject.name = "Jaap"
 #item = dia.canvas.root.create_item (diagram.UseCase)
-item = dia.create(diagram.UseCaseItem)
+item = diafact.create(dia, diagram.UseCaseItem)
 usecase = item.subject
-dia.create (diagram.UseCaseItem, (50, 200), subject=usecase)
+item = diafact.create (dia, diagram.UseCaseItem, subject=usecase)
+item.move (200, 100)
 usecase.name = 'UC1'
 #item.subject.name = 'UC1'
 

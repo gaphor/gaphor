@@ -12,8 +12,6 @@ if __name__ == '__main__':
 
 import gobject
 import diacanvas
-#from metaitem import MetaItem
-#from UML import Element
 
 __revision__ = '$revision$'
 __author__ = 'Arjan J. Molenaar'
@@ -21,7 +19,6 @@ __date__ = '$date$'
 
 
 class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
-#    __metaclass__ = MetaItem
     __gproperties__ = {
 	'id':		(gobject.TYPE_PYOBJECT, 'id',
 			 'Identification number of the canvas item',
@@ -36,6 +33,7 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
 
     def __init__(self):
 	self.__gobject_init__()
+	DiagramItem.__init__(self)
 	self.subject = None
 	self.auto_resize = 0
 	self.__id = -1
@@ -86,13 +84,26 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup):
 
     # DiaCanvasItem callbacks
     def on_glue(self, handle, wx, wy):
-	return diacanvas.CanvasElement.on_glue (self, handle, wx, wy)
+	if handle.owner.allow_connect_handle (handle, self):
+	    return diacanvas.CanvasElement.on_glue (self, handle, wx, wy)
+	# Dummy value with large distance value
+	return None
 
     def on_connect_handle (self, handle):
-	return diacanvas.CanvasElement.on_connect_handle (self, handle)
+	if handle.owner.allow_connect_handle (handle, self):
+	    ret = diacanvas.CanvasElement.on_connect_handle (self, handle)
+	    if ret != 0:
+		handle.owner.confirm_connect_handle(handle)
+		return ret
+	return 0
 
     def on_disconnect_handle (self, handle):
-	return diacanvas.CanvasElement.on_disconnect_handle (self, handle)
+	if handle.owner.allow_disconnect_handle (handle):
+	    ret = diacanvas.CanvasElement.on_disconnect_handle (self, handle)
+	    if ret != 0:
+		handle.owner.confirm_disconnect_handle(handle, self)
+		return ret
+	return 0
 
     def on_parent_notify (self, parent):
 	print self

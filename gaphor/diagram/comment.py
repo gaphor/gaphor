@@ -3,8 +3,6 @@ CommentItem diagram item
 '''
 # vim:sw=4
 
-from UML import Comment
-import registrar
 from modelelement import ModelElementItem
 import diacanvas
 import pango
@@ -122,4 +120,3 @@ class CommentItem(ModelElementItem):
 	if text != self.subject.name:
 	    self.subject.name = text
 
-registrar.register(CommentItem, Comment)

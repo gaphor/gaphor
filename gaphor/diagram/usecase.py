@@ -3,8 +3,6 @@ UseCaseItem diagram item
 '''
 # vim:sw=4
 
-from UML import UseCase
-import registrar
 from modelelement import ModelElementItem
 import diacanvas
 import pango
@@ -113,4 +111,3 @@ class UseCaseItem(ModelElementItem):
 	if text != self.subject.name:
 	    self.subject.name = text
 
-registrar.register(UseCaseItem, UseCase)

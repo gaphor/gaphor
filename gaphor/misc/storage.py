@@ -120,6 +120,7 @@ class Storage(object):
 	    node = self.__node.newChild (Storage.NS, Storage.CANVAS_ITEM, None)
 	    node.setProp (Storage.TYPE, obj.__class__.__name__)
 	    node.setProp (Storage.CID, 'c' + str(obj.get_property('id')))
+	    #node.setProp (Storage.CID, 'c' + str(obj.id))
 	return Storage (self.__factory, node, obj)
 
     def save_property (self, prop):
@@ -132,6 +133,10 @@ class Storage(object):
 	    node = self.__node.newChild (Storage.NS, Storage.REFERENCE, None)
 	    node.setProp (self.NAME, name)
 	    node.setProp (self.REFID, 'a' + str(obj.id))
+	if isinstance (obj, diacanvas.CanvasItem):
+	    node = self.__node.newChild (Storage.NS, Storage.REFERENCE, None)
+	    node.setProp (self.NAME, name)
+	    node.setProp (self.REFID, 'c' + str(obj.get_property('id')))
 	else:
 	    node = self.__node.newChild (Storage.NS, Storage.VALUE, None)
 	    node.setProp (Storage.NAME, name)
@@ -202,6 +207,9 @@ class Storage(object):
 	    if ref.name == Storage.REFERENCE:
 		name = ref.prop(Storage.NAME)
 		refid = ref.prop(Storage.REFID)
+		if refid[0] == 'c':
+		    return int(refid[1:])
+
 		if not refid[0] == 'a':
 		    raise ValueError, 'Invalid ID for reference (%s)' % refid
 		refid = int(refid[1:])

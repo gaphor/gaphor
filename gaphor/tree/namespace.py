@@ -105,11 +105,12 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def on_get_n_columns(self):
 	'''returns the number of columns in the model'''
-	return 2
+	return 1
 
     def on_get_column_type(self, index):
 	'''returns the type of a column in the model'''
 	return gobject.TYPE_STRING
+	#return gobject.TYPE_PYOBJECT
 
     def get_path(self, node):
 	'''returns the tree path (a tuple of indices at the various
@@ -134,7 +135,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 	   tuple of values, like (0 1 1). We have to figure out a path that is
 	   easy to use by on_get_value() and can also be easely extended by
 	   on_iter_children() and chopped by on_iter_parent()'''
-	print 'Namespace.on_get_iter():', path
+	#print 'Namespace.on_get_iter():', path
 	node = self.model
 	try:
 	    for n in path:
@@ -150,10 +151,11 @@ class NamespaceModel(gtk.GenericTreeModel):
 	assert column == 0 or column == 1
 	assert isinstance (node, UML.Namespace)
 	#print "on_get_value", node.name
-	if column == 0:
-	    return '[' + str(node.__class__.__name__)[0] + ']'
-	else:
-	    return node.name
+	#if column == 0:
+	#    return '[' + str(node.__class__.__name__)[0] + ']'
+	#else:
+	#    return node.name
+	return node.name
 	#return ( '[' + str(node.__class__.__name__)[0] + '] ', node.name )
 
     def on_iter_next(self, node):

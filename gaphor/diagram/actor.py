@@ -3,8 +3,6 @@ ActorItem diagram item
 '''
 # vim:sw=4
 
-from UML import Actor
-import registrar
 from modelelement import ModelElementItem
 import diacanvas
 import pango
@@ -183,4 +181,3 @@ class ActorItem(ModelElementItem):
 	    self.subject.name = text
 	    self.__name_update()
 
-registrar.register(ActorItem, Actor)

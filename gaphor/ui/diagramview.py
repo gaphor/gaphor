@@ -4,6 +4,7 @@
 import types, gtk, UML, diacanvas
 import diagram
 from misc.storage import Storage
+from placementtool import PlacementTool
 
 [
     FILE_LOAD,
@@ -93,29 +94,10 @@ class DiagramView:
 	view = self.canvasview
 	dia = self.diagram
 
-	def pre_button_press (tool, view, event):
-	    view.unselect_all()
-	    return 0
-
-	def post_button_press (tool, view, event, diag, uml_type):
-	    print 'Unset_tool:', tool, view, event
-	    view.set_tool (None)
-	    if uml_type is not None:
-		factory = UML.ElementFactory()
-		subject = factory.create (uml_type)
-		if issubclass (uml_type, UML.Namespace):
-		    subject.namespace = dia.namespace
-		tool.new_object.set_property('subject', subject)
-	    print 'Tool unset'
-	    return 0
-
 	def set_placement_tool (diagram_type, uml_type):
 	    #diagram = view.get_data ('diagram')
-	    tool = diacanvas.PlacementTool (diagram_type)
+	    tool = PlacementTool (dia, diagram_type)
 	    view.set_tool (tool)
-	    tool.connect ('button_press_event', pre_button_press)
-	    tool.connect ('button_release_event', post_button_press,
-	    			dia, uml_type)
 
 	print 'Action:', action, gtk.item_factory_path_from_widget(widget), view
 	view.canvas.push_undo(None)

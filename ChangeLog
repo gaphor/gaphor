@@ -1,3 +1,9 @@
+2002-03-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/registrar.py: renamed to diagramitemfactory.py and
+	created a full blown Factory.
+	* gaphor/UML/diagram.py: removed create() method
+	
 2002-03-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/diagram.py: moved to the UML module.

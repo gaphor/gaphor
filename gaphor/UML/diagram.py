@@ -22,7 +22,7 @@ class Diagram(Namespace):
 	    'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
 	    'grid_ofs_y', 'snap_to_grid', 'grid_color', 'grid_bg' ]
     _savable_root_item_properties = [ 'affine', ]
-    __index = 0
+    #__index = 0
 
     def __init__(self, id):
 	Namespace.__init__(self, id)
@@ -30,7 +30,7 @@ class Diagram(Namespace):
 	print 'Diagram:', self.canvas
 	self.canvas.set_property ("allow_undo", 1)
 
-    def create (self, type, pos=(0, 0), subject=None):
+    def create_depricated (self, type, pos=(0, 0), subject=None):
 	'''Add a new item to the diagram. This method should be used as a
 	Factory for creating diagram items.'''
 	item = type()
@@ -51,8 +51,8 @@ class Diagram(Namespace):
 	else:
 	    #print 'Setting existing subject', subject
 	    item.set_property ('subject', subject)
-	item.set_property ('id', Diagram.__index)
-	Diagram.__index += 1
+	#item.set_property ('id', Diagram.__index)
+	#Diagram.__index += 1
 	item.move(pos[0], pos[1])
 	return item
 

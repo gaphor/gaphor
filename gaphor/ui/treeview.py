@@ -1,7 +1,30 @@
 #
 # vim: sw=4
 
+import gobject
 import gtk
+
+class ModelElementCellRenderer(gtk.CellRendererText):
+    __gproperties__ = {
+	'element':	(gobject.TYPE_PYOBJECT, 'element',
+			 'Element to visualize in the cell',
+			 gobject.PARAM_WRITABLE),
+    }
+    def __init__(self):
+	self.__gobject_init__()
+
+    def do_set_property (self, pspec, value):
+	if pspec.name == 'element':
+	    self.set_property ('text', element.name)
+	else:
+	    raise AttributeError, 'Unknown property %s' % pspec.name
+
+    def do_get_property(self, pspec):
+	#if pspec.name == 'element':
+	#else:
+     	raise AttributeError, 'Unknown property %s' % pspec.name
+
+gobject.type_register(ModelElementCellRenderer)
 
 class TreeView:
     def __init__(self, treemodel):
@@ -22,14 +45,16 @@ class TreeView:
 	    assert len (column.get_cell_renderers()) == 2
 	    rend = column.get_cell_renderers()
 	    assert rend[0] is cell
+	    value = model.get_value(iter, 0)
 	    #print 'TESTFUNC:', rend, data
-	    rend[0].set_property('markup', '<b>' + model.get_value(iter, 0) + '</b>')
-	    rend[1].set_property('text', model.get_value(iter, 1))
+	    if value:
+		rend[0].set_property('markup', '<b>' + 'M' + '</b>')
+		rend[1].set_property('text', value)
 
 	cell = gtk.CellRendererText ()
-	#cell = gtk.CellEditable ()
 	#column = gtk.TreeViewColumn ('', cell, text=0)
 	#view.append_column (column)
+	#cell = ModelElementCellRenderer()
 	column = gtk.TreeViewColumn ('', cell, text=0)
 	column.set_cell_data_func (cell, my_cell_renderer, None)
 	cell = gtk.CellRendererText ()
