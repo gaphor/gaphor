@@ -35,19 +35,11 @@ class DiagramCanvas(diacanvas.Canvas):
         for item in self.root.children:
             save_func(None, item)
 
-    def load(self, name, value):
-        self.set_property ("allow_undo", False)
-
-        # First create the canvas:
-        if name == 'root_affine':
-            self.root.set_property('affine', eval(value))
-        else:
-            self.set_property (name, eval(value))
-
-        self.update_now ()
-
     def postload(self):
-        self.update_now ()
+        self.set_property ("allow_undo", False)
+        self.update_now()
+	self.resolve_now()
+        self.update_now()
 
         # setting allow-undo to 1 here will cause update info from later
         # created elements to be put on the undo stack.
@@ -71,6 +63,10 @@ class Diagram(Namespace, PackageableElement):
     def save(self, save_func):
         super(Diagram, self).save(save_func)
         save_func('canvas', self.canvas)
+
+    def postload(self):
+        super(Diagram, self).postload()
+	self.canvas.postload()
 
     def create(self, type):
         """Create a new canvas item on the canvas. It is created with
