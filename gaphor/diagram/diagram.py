@@ -19,6 +19,10 @@ class Diagram(UML.Namespace):
 		 # Translation table used to keep relations between the
 		 # old object's cid and the new objects 
     		 'transtable': ( None, types.DictType ) } 
+    _savable_canvas_properties = [ 'extents', 'static_extents',
+	    'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
+	    'grid_ofs_y', 'snap_to_grid', 'grid_color', 'grid_bg' ]
+    _savable_root_item_properties = [ 'affine', ]
 
     def __init__(self, id):
 	UML.Namespace.__init__(self, id)
@@ -48,35 +52,26 @@ class Diagram(UML.Namespace):
 	item.move(pos[0], pos[1])
 	return item
 
-    def save(self, parent, ns):
+    def save(self, store):
 	# Save the diagram attributes, but not the canvas
 	self_canvas = self.canvas
 	del self.__dict__['canvas']
-	node = UML.Namespace.save (self, parent, ns)
+	node = UML.Namespace.save (self, store)
 	self.__dict__['canvas'] = self_canvas
 	del self_canvas
 
-	canvas = node.newChild (ns, 'Canvas', None)
 	# Save attributes of the canvas:
-	for a in [ 'extents', 'static_extents', 'snap_to_grid',
-		   'grid_int_x', 'grid_int_y', 'grid_ofs_x',
-		   'grid_ofs_y', 'snap_to_grid', 'grid_color', 'grid_bg' ]:
-	    node = canvas.newChild (ns, 'Value', None)
-	    node.setProp ('name', a)
-	    node.setProp ('value', repr (self.canvas.get_property (a)))
+	canvas_store = store.new (self.canvas)
+	for prop in Diagram._savable_canvas_properties:
+	    canvas_store.save_property(prop)
 
-	def save_item (item, parent, ns):
-	    node = itemstorage.save (item, parent, ns)
+	root_store = store.new (self.canvas.root)
+	for prop in Diagram._savable_root_item_properties:
+	    root_store.save_property(prop)
 
-	    if isinstance (item, diacanvas.CanvasGroupable):
-		iter = item.get_iter ()
-		if iter:
-		    while item.value (iter):
-		        save_item (item.value (iter), node, ns)
-			item.next(iter);
-
-	save_item (self.canvas.root, canvas, ns)
-	return node
+	# Save child items:
+	for item in self.canvas.root.children:
+	    item.save(root_store.new(item))
 
     def load (self, factory, node):
 	#print 'Doing Namespace'

@@ -321,41 +321,16 @@ one of the diagrams.
     def __emit (self, key):
 	self.__dict__['__signal'].emit (key)
 
-    def save(self, parent, ns):
-	def save_children (obj):
-	    if isinstance (obj, Element):
-		#subnode = document.createElement (key)
-		subnode = node.newChild (ns, 'Reference', None)
-		subnode.setProp ('name', key)
-		subnode.setProp ('refid', 'a' + str(obj.__dict__['__id']))
-	    else:
-		data = None
-		if isinstance (obj, types.IntType) or \
-			isinstance (obj, types.LongType) or \
-			isinstance (obj, types.FloatType):
-		    data = str(obj)
-		elif isinstance (obj, types.StringType):
-		    data = str(obj)
-		if data:
-		    subnode = node.newChild (ns, 'Value', None)
-		    #cdata = subnode.doc.newCDataBlock (data, len(data))
-		    #subnode.addChild (cdata)
-		    subnode.setProp ('name', key)
-		    subnode.setProp ('value', data)
-
-        node = parent.newChild (ns, 'Element', None)
-	node.setProp ('type', self.__class__.__name__)
-	node.setProp ('id', 'a' + str (self.__dict__['__id']))
+    def save(self, store):
 	for key in self.__dict__.keys():
-	    if key not in ( 'presentation', 'itemsOnUndoStack', \
-	    		    '__signals', '__id' ):
+	    if not key.startswith('__'):
 		obj = self.__dict__[key]
 		if isinstance (obj, Sequence):
 		    for item in obj.list:
-			save_children (item)
+			store.save (key, item)
 		else:
-		    save_children (obj)
-	return node
+		    store.save (key, obj)
+	return None
 
     def load(self, factory, node):
 	child = node.children

@@ -5,6 +5,9 @@ from element import *
 from modelelements import *
 from elementfactory import *
 
+import libxml2
+libxml2.initParser()
+
 #
 # A few associations need to be modified to keep the bi-directional aspects
 # true (these associations are not well defined in the UML meta model).

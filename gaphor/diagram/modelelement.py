@@ -26,7 +26,7 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	'subject': (gobject.TYPE_PYOBJECT, 'subject',
 		    'subject held by the model element',
 		    gobject.PARAM_READWRITE),
-	'auto_resize': (gobject.TYPE_BOOLEAN, 'auto resize',
+	'auto-resize': (gobject.TYPE_BOOLEAN, 'auto resize',
 			'Set auto-resize for the diagram item',
 			1, gobject.PARAM_READWRITE),
     }
@@ -36,6 +36,13 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	self.subject = None
 	self.auto_resize = 0
 	self.connect ('notify::parent', ModelElement.on_parent_notify)
+
+    def save (self, store):
+	store.save_property('affine')
+	store.save_property('width')
+	store.save_property('height')
+	store.save('subject', self.subject)
+	store.save_property('auto-resize')
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'subject':
@@ -51,7 +58,7 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 		    print 'do_set_property', self
 		    value.add_presentation(self)
 
-	elif pspec.name == 'auto_resize':
+	elif pspec.name == 'auto-resize':
 	    self.auto_resize = value
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
@@ -59,7 +66,7 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
     def do_get_property(self, pspec):
 	if pspec.name == 'subject':
 	    return self.subject
-	elif pspec.name == 'auto_resize':
+	elif pspec.name == 'auto-resize':
 	    return self.auto_resize
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name

@@ -4,11 +4,8 @@ This module contains some functions for managing UML models. This
 includes saving, loading and flushing models. In the future things like
 consistency checking should also be included.'''
 
-import modelelements
-import diagram
+from misc import Singleton, Signal, Storage
 import libxml2 as xml
-from misc import Singleton, Signal
-#import sys
 
 class ElementFactory(Singleton):
 
@@ -76,9 +73,10 @@ class ElementFactory(Singleton):
 	ns = None
 	rootnode = doc.newChild (ns, 'Gaphor', None)
 	rootnode.setProp ('version', '1.0')
+	store = Storage(self, ns, rootnode)
 	for e in self.__elements.values():
 	    #print 'Saving object', e
-	    e.save(rootnode, ns)
+	    e.save(store.new(e))
 
 	if not filename:
 	    filename = '-'
@@ -170,4 +168,3 @@ class ElementFactory(Singleton):
 
 	doc.freeDoc ()
 
-xml.initParser ()
