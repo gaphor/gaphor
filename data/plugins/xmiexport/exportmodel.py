@@ -40,12 +40,17 @@ class XMIExport(Action):
         attributes['isAbstract']='false'
         attributes['isActive']='false'
         xmi.startElement('UML:Class', attrs=attributes)
-        for attribute in node.:
+        for attribute in node.ownedAttribute:
+            print attribute.typeValue
+            try:
+                attribute.name
+            except AttributeError:
+                continue
             xmi.startElement('UML:Classifier.feature', attrs=XMLAttributes())
             attributes=XMLAttributes()
             attributes['xmi.id']=attribute.id
-            attributes['name']=
-            attributes['visibility']=
+            attributes['name']=attribute.name or ''
+            attributes['visibility']='public'
             attributes['isSpecification']='false'
             attributes['ownerScope']='instance'
             attributes['changeability']='changeable'
