@@ -6,9 +6,9 @@ Implementation - - - -|>
 from gaphor import resource
 from gaphor import UML
 from gaphor.diagram import initialize_item
-import gaphor.diagram.relationship
+from gaphor.diagram.relationship import RelationshipItem
 
-class ImplementationItem(relationship.RelationshipItem):
+class ImplementationItem(RelationshipItem):
     default_look = {
         'dash': (7.0, 5.0),
         'has_head': 1,
@@ -24,7 +24,7 @@ class ImplementationItem(relationship.RelationshipItem):
     }
 
     def __init__(self, id = None):
-        relationship.RelationshipItem.__init__(self, id)
+        RelationshipItem.__init__(self, id)
         self.set(**self.default_look)
         
     # Gaphor Connection Protocol
@@ -86,17 +86,13 @@ class ImplementationItem(relationship.RelationshipItem):
         # change look into solid line when connected to folded interface
         from gaphor.diagram.interface import InterfaceItem
         conn_to = self.handles[0].connected_to
-<<<<<<< implementation.py
         if isinstance(conn_to, InterfaceItem) \
            and conn_to.is_folded():
-=======
-        if isinstance(conn_to, InterfaceItem) and conn_to.is_folded():
->>>>>>> 1.13
             self.set(**self.folded_interface_look)
         else:
             self.set(**self.default_look)
 
-        relationship.RelationshipItem.on_update(self, affine)
+        RelationshipItem.on_update(self, affine)
 
 
 initialize_item(ImplementationItem, UML.Implementation)

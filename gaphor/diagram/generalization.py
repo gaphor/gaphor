@@ -9,12 +9,12 @@ import diacanvas
 from gaphor import resource
 from gaphor import UML
 from gaphor.diagram import initialize_item
-import gaphor.diagram.relationship
+from gaphor.diagram.relationship import RelationshipItem
 
-class GeneralizationItem(relationship.RelationshipItem):
+class GeneralizationItem(RelationshipItem):
 
     def __init__(self, id=None):
-        relationship.RelationshipItem.__init__(self, id)
+        RelationshipItem.__init__(self, id)
         self.set(has_head=1, head_fill_color=0,
                  head_a=15.0, head_b=15.0, head_c=10.0, head_d=10.0)
         
