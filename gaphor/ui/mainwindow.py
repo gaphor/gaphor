@@ -85,9 +85,7 @@ class MainWindow(AbstractWindow):
                 'EditDelete',
                 'separator',
                 'EditSelectAll',
-                'EditDeselectAll',
-                'separator',
-                'OpenStereotypeWindow'),
+                'EditDeselectAll'),
             '_Diagram', (
                 'ViewZoomIn',
                 'ViewZoomOut',
@@ -133,9 +131,9 @@ class MainWindow(AbstractWindow):
                 'InsertActivityFinalNode',
                 'InsertDecisionNode',
                 'InsertFlow')),
-        ("Stereotypes", (
-                'InsertStereotype',
-                'InsertExtension'))
+#        ("Stereotypes", (
+#                'InsertStereotype',
+#                'InsertExtension'))
     ]
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',

@@ -38,8 +38,8 @@ class NewAction(Action):
 	diagram = factory.create(UML.Diagram)
 	diagram.package = model
 	diagram.name='main'
-	stereotypes = factory.create(UML.Profile)
-	stereotypes.name = 'Stereotypes'
+	#stereotypes = factory.create(UML.Profile)
+	#stereotypes.name = 'Stereotypes'
 	self._window.set_filename(None)
 	self._window.set_message('Created a new model')
 	factory.notify_model()

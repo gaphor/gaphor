@@ -1,11 +1,11 @@
-Makefile
-Makefile.in
+MANIFEST
 *.pyc
 *.pyo
 *.gaphor
 *.xml
 aclocal.m4
 build
+dist
 confdefs.h
 config.cache
 config.guess

@@ -9,6 +9,7 @@ import gaphor.UML as UML
 
 STOCK_POINTER = 'gaphor-pointer'
 STOCK_ACTIVITY_FINAL_NODE = 'gaphor-activity-final-node'
+STOCK_ACTION = 'gaphor-action'
 STOCK_ACTOR = 'gaphor-actor'
 STOCK_ASSOCIATION = 'gaphor-association'
 STOCK_CLASS = 'gaphor-class'
@@ -69,6 +70,7 @@ icon_dir = os.path.join(gaphor.resource('DataDir'), 'pixmaps')
 add_stock_icon(STOCK_POINTER,	icon_dir, ('pointer24.png',))
 
 add_stock_icon(STOCK_ACTIVITY_FINAL_NODE, icon_dir, ('activityfinalnode24.png',), UML.ActivityFinalNode)
+add_stock_icon(STOCK_ACTION,	icon_dir, ('action24.png',), UML.Action)
 add_stock_icon(STOCK_ACTOR,	icon_dir, ('actor24.png',), UML.Actor)
 add_stock_icon(STOCK_ASSOCIATION, icon_dir, ('association24.png',), UML.Association)
 add_stock_icon(STOCK_CLASS,	icon_dir, ('class24.png',), UML.Class)

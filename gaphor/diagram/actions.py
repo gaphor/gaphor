@@ -197,7 +197,7 @@ class ActionPlacementAction(PlacementAction):
     id = 'InsertAction'
     label = 'Action node'
     tooltip = 'Create a new Action node'
-    stock_id = 'gaphor-pointer'
+    stock_id = 'gaphor-action'
     name = 'Action'
     type = diagram.ActionItem
     subject_type = UML.Action
