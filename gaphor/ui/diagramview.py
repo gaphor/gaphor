@@ -7,6 +7,7 @@ import types, gtk, UML, diacanvas, diagram
     FILE_LOAD,
     FILE_SAVE,
     FILE_DUMP,
+    FILE_FLUSH,
     FILE_QUIT,
     EDIT_UNDO,
     EDIT_REDO,
@@ -24,7 +25,7 @@ import types, gtk, UML, diacanvas, diagram
     ITEM_ADD_REALIZATION,
     ITEM_ADD_INCLUDE,
     ITEM_ADD_EXTEND
-] = range(20)
+] = range(21)
 
 class DiagramView:
 
@@ -124,10 +125,13 @@ class DiagramView:
 	    print 'UML.flush'
 	    del self.diagram
 	    factory.flush ()
+	    factory.save('c.xml')
 	    print 'UML.load'
 	    factory.load ('a.xml')
+	    factory.save('b.xml')
 	    print 'UML.lookup'
 	    self.diagram = factory.lookup (2)
+
 	    print 'view.set_canvas'
 	    view.set_canvas (self.diagram.canvas)
 	elif action == FILE_SAVE:
@@ -143,7 +147,9 @@ class DiagramView:
 			print val.__dict__[key].list
 		    else:
 		        print val.__dict__[key]
-
+	elif action == FILE_FLUSH:
+	    factory = UML.ElementFactory ()
+	    factory.flush ()
 	elif action == FILE_QUIT:
 	    gtk.Widget.destroy (self.window)
 	    gtk.main_quit()
@@ -195,6 +201,7 @@ class DiagramView:
 	( '/File/_Load from a.xml', '<control>L', __menu_item_cb, FILE_LOAD, ''),
 	( '/File/_Save to a.xml', '<control>S', __menu_item_cb, FILE_SAVE, ''),
 	( '/File/_Dump', '<control>D', __menu_item_cb, FILE_DUMP, ''),
+	( '/File/_Flush', None, __menu_item_cb, FILE_FLUSH, ''),
 	( '/File/sep1', None, None, 0, '<Separator>' ),
 	( '/File/_Quit', '<control>Q', __menu_item_cb, FILE_QUIT, ''),
 	( '/_Edit', None, None, 0, '<Branch>' ),

@@ -19,8 +19,11 @@ class NamespaceModel(gtk.GenericTreeModel):
     def __element_signals (self, key, obj):
 	if key == 'name':
 	    path = self.get_path (obj)
-	    iter = self.get_iter (path)
-	    self.row_changed (path,  iter)
+	    if path != ():
+		# During loading, the item may be connected, but is not
+		# in the tree path (ie. the namespace is not set).
+		iter = self.get_iter (path)
+		self.row_changed (path,  iter)
         elif key == 'namespace' and obj.namespace:
 	    path = self.get_path(obj)
 	    iter = self.get_iter(path)
@@ -28,12 +31,13 @@ class NamespaceModel(gtk.GenericTreeModel):
 	    self.row_inserted (path, iter)
 	elif key == '__unlink__':
 	    print 'Destroying', obj
-	    
 
     def __factory_signals (self, key, obj, factory):
         if key == 'create' and isinstance (obj, UML.Namespace):
 	    print 'Object added'
 	    obj.connect (self.__element_signals, obj)
+	    if obj.id == 1:
+		self.model = obj
 	    try:
 		if obj.namespace:
 		     path = self.get_path(obj)
@@ -42,8 +46,13 @@ class NamespaceModel(gtk.GenericTreeModel):
 	    except AttributeError:
 		pass
 	elif key == 'remove' and isinstance (obj, UML.Namespace):
-	    print 'object removed'
-	    self.row_deleted (self.get_path (obj))
+	    if obj is self.model:
+		for n in obj.ownedElement.list:
+		    self.row_deleted((0,))
+	    else:
+		path = self.get_path (obj)
+		print 'Removing object', obj, path
+		self.row_deleted (path)
 	    obj.disconnect (self.__element_signals)
 
     def __init__(self, factory):
@@ -125,9 +134,14 @@ class NamespaceModel(gtk.GenericTreeModel):
 	   tuple of values, like (0 1 1). We have to figure out a path that is
 	   easy to use by on_get_value() and can also be easely extended by
 	   on_iter_children() and chopped by on_iter_parent()'''
+	print 'Namespace.on_get_iter():', path
 	node = self.model
-	for n in path:
-	    node = node.ownedElement[n]
+	try:
+	    for n in path:
+		node = node.ownedElement[n]
+	except IndexError, e:
+	    print 'No path %s to a node' % str(path)
+	    return None
 	#print "on_get_iter", path, node
 	return node
 
@@ -140,14 +154,17 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def on_iter_next(self, node):
 	'''returns the next node at this level of the tree'''
+	print 'on_iter_next:', node, node.namespace
 	parent = node.namespace
-	index = parent.ownedElement.list.index (node)
+	if not parent:
+	    return None
 	#print "on_iter_next", index
 	try:
-		return parent.ownedElement[index + 1]
+	    index = parent.ownedElement.list.index (node)
+	    return parent.ownedElement[index + 1]
 	except IndexError:
-		return None
-
+	    return None
+	
     def on_iter_has_child(self, node):
 	'''returns true if this node has children'''
 	#print 'on_iter_has_child', node

@@ -23,18 +23,22 @@ __date__ = '$date$'
 class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 #    __metaclass__ = MetaItem
     __gproperties__ = {
-	'subject': (gobject.TYPE_PYOBJECT, 'subject',
-		    'subject held by the model element',
-		    gobject.PARAM_READWRITE),
-	'auto-resize': (gobject.TYPE_BOOLEAN, 'auto resize',
-			'Set auto-resize for the diagram item',
-			1, gobject.PARAM_READWRITE),
+	'id':		(gobject.TYPE_PYOBJECT, 'id',
+			 'Identification number of the canvas item',
+			 gobject.PARAM_READWRITE),
+	'subject':	(gobject.TYPE_PYOBJECT, 'subject',
+			 'subject held by the model element',
+			 gobject.PARAM_READWRITE),
+	'auto-resize':	(gobject.TYPE_BOOLEAN, 'auto resize',
+			 'Set auto-resize for the diagram item',
+			 1, gobject.PARAM_READWRITE),
     }
 
     def __init__(self):
 	self.__gobject_init__()
 	self.subject = None
 	self.auto_resize = 0
+	self.__id = -1
 	self.connect ('notify::parent', ModelElement.on_parent_notify)
 
     def save (self, store):
@@ -44,8 +48,15 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	store.save('subject', self.subject)
 	store.save_property('auto-resize')
 
+    def load (self, store):
+	for prop in [ 'affine', 'width', 'height', 'auto-resize' ]:
+	    self.set_property(prop, eval (store.value(prop)))
+	self.set_property('subject', store.reference('subject')[0])
+
     def do_set_property (self, pspec, value):
-	if pspec.name == 'subject':
+	if pspec.name == 'id':
+	    self.__id = int(value)
+	elif pspec.name == 'subject':
 	    print 'Setting subject:', value
 	    self.preserve_property('subject')
 	    if value != self.subject:
@@ -55,7 +66,6 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 		self.subject = value
 		if value:
 		    value.connect(self.on_subject_update)
-		    print 'do_set_property', self
 		    value.add_presentation(self)
 
 	elif pspec.name == 'auto-resize':
@@ -64,7 +74,9 @@ class ModelElement (dia.CanvasElement, dia.CanvasAbstractGroup):
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
     def do_get_property(self, pspec):
-	if pspec.name == 'subject':
+	if pspec.name == 'id':
+	    return self.__id
+	elif pspec.name == 'subject':
 	    return self.subject
 	elif pspec.name == 'auto-resize':
 	    return self.auto_resize

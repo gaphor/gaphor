@@ -6,8 +6,10 @@ consistency checking should also be included.'''
 
 from misc import Singleton, Signal, Storage
 import libxml2 as xml
+from element import Element
 
 class ElementFactory(Singleton):
+    NS = None
 
     def __element_signal (self, key, obj):
 	if key == '__unlink__' and self.__elements.has_key(obj.id):
@@ -30,6 +32,7 @@ class ElementFactory(Singleton):
 	self.__index += 1
 	obj.connect (self.__element_signal, obj)
 	self.__emit_create (obj)
+	print 'ElementFactory:', str(self.__index), 'elements in the factory'
 	return obj
 
     def lookup (self, id):
@@ -46,13 +49,17 @@ class ElementFactory(Singleton):
 
     def flush(self):
 	'''Flush all elements in the UML.elements table.'''
+	for key, value in self.__elements.items():
+	    value.unlink()
+	assert len(self.__elements) == 0
+	return None
 	while 1:
 	    try:
 		(key, value) = self.__elements.popitem()
 	    except KeyError:
 		break;
 	    value.unlink()
-	    self.__elements.clear()
+	    assert len(self.__elements) == 0
 
     def connect (self, signal_func, *data):
 	self.__signal.connect (signal_func, *data)
@@ -73,7 +80,7 @@ class ElementFactory(Singleton):
 	ns = None
 	rootnode = doc.newChild (ns, 'Gaphor', None)
 	rootnode.setProp ('version', '1.0')
-	store = Storage(self, ns, rootnode)
+	store = Storage(self, ElementFactory.NS, rootnode)
 	for e in self.__elements.values():
 	    #print 'Saving object', e
 	    e.save(store.new(e))
@@ -97,74 +104,57 @@ class ElementFactory(Singleton):
 	if rootnode.name != 'Gaphor':
 	    raise ValueError, 'File %s is not a Gaphor file.' % filename
 
-	node = rootnode.children
-	while node:
-	    #if node.name != 'Element' or node.type != 'text':
-	    #    raise ValueError, 'No Element tag (%s).' % node.name
-	     
-	    #print node.__dict__
-	    if node.name == 'Element':
-		type = node.prop('type')
-		#print 'New node: ' + type
-		try:
-		    if type == 'Diagram':
-			cls = getattr (diagram, type)
-		    else:
-			cls = getattr (modelelements, type)
-		except:
-		    raise ValueError, 'Could not find class %s.' % type
-		# Create the Model element
-		id = int (node.prop('id')[1:])
-		#print 'node id =', id
-		old_index = self.__index
+	# Set store to the first child element of rootnode.
+	first_store = Storage(self, ElementFactory.NS, rootnode)
+	print 'first_store =', first_store.__dict__
+	first_store = first_store.child()
+	# Create plain elements in the factory
+	print 'first_store =', first_store.__dict__
+	store = first_store
+	while store:
+	    print 'Creating object of type', store.type()
+	    type = store.type()
+	    if not issubclass(type, Element):
+		raise ValueError, 'Not an UML.Element'
+
+	    id = store.id()
+	    old_index = self.__index
+	    self.__index = id
+	    self.create (type)
+
+	    if old_index > id:
 		self.__index = id
-		self.create (cls)
 
-		if old_index > id:
-		    self.__index = id
-
-		node = node.next
-		#if node: print 'Next node:', node.name
-	    # Remove text nodes (libxml2 seems to like adding text nodes)
-	    elif node.name == 'text':
-		next = node.next
-		node.unlinkNode ()
-		node.freeNode ()
-		node = next
-		#if node: print 'Next node:', node.name
-	    else:
-		raise ValueError, 'No Element tag (%s).' % node.name
+	    store = store.next()
 
 	# Second step: call Element.load() for every object in the element hash.
 	# We also provide the XML node, so it can recreate it's state
 	print "Now calling load() for every model element"
-	node = rootnode.children
-	while node:
-	    assert node.name == 'Element'
-
-	    #print 'ID:' + node.prop('id')
-	    id = int (node.prop('id')[1:])
-	    element = self.lookup (id)
+	store = first_store
+	while store:
+	    element = self.lookup (store.id())
 	    print element
 	    if not element:
 		raise ValueError, 'Element with id %d was created but can not be found anymore.' % id
 
-	    element.load (self, node)
+	    element.load (store)
 	    
-	    node = node.next
+	    store = store.next()
 
 	# Do some things after the loading of the objects is done...
 	print self.__elements
 	#save ('b.xml')
 	print "Now calling postload() for every model element"
-	node = rootnode.children
-	while node:
-	    id = int (node.prop('id')[1:])
-	    element = self.lookup (id)
+	store = first_store
+	while store:
+	    element = self.lookup (store.id())
 	    print element
-	    assert element != None
-	    element.postload (node)
-	    node = node.next
+	    if not element:
+		raise ValueError, 'Element with id %d was created but can not be found anymore.' % id
+
+	    element.postload (store)
+	    
+	    store = store.next()
 
 	doc.freeDoc ()
 

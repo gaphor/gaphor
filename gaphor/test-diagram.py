@@ -17,11 +17,15 @@ print 'getattr (UML, "UseCase") ->', uc
 def mainquit(*args):
     gtk.main_quit()
 
+def test_factory_signals(name, obj):
+    print 'XXX Signal', name, 'for object', obj
 
 factory = UML.ElementFactory()
 fact2 = UML.ElementFactory()
 assert factory is fact2
 del fact2
+
+factory.connect(test_factory_signals)
 
 model = factory.create (UML.Model)
 

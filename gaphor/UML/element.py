@@ -101,11 +101,11 @@ one of the diagrams.
     
     def unlink(self):
 	'''Remove all references to the object.'''
-	#print 'Element.unlink():', self
+	print 'Element.unlink():', self
 	# Notify other objects that we want to unlink()
+	self.__unlink ()
 	if self.__dict__.has_key ('__undodata'):
 	    del self.__dict__['__undodata']
-	self.__unlink ()
 
     # Hooks for presentation elements to add themselves:
     def add_presentation (self, presentation):
@@ -332,45 +332,34 @@ one of the diagrams.
 		    store.save (key, obj)
 	return None
 
-    def load(self, factory, node):
-	child = node.children
-	while child:
-	    if child.name == 'Reference':
-		name = child.prop ('name')
-	        refid = int (child.prop ('refid')[1:])
-		refelement = factory.lookup (refid)
-		attr_info = self.__get_attr_info (name, self.__class__)
-		if not isinstance (refelement, attr_info[1]):
+    def load(self, store):
+	for name, value in store.values().items():
+	    attr_info = self.__get_attr_info (name, self.__class__)
+	    if issubclass (attr_info[1], types.IntType) or \
+	       issubclass (attr_info[1], types.LongType):
+		self.__dict__[name] = int (value)
+	    elif issubclass (attr_info[1], types.FloatType):
+		self.__dict__[name] = float (value)
+	    else:
+		if value and value != '':
+		    self.__dict__[name] = value
+	    self.__emit (name)
+	
+	for name, reflist in store.references().items():
+	    attr_info = self.__get_attr_info (name, self.__class__)
+	    for refelem in reflist:
+		if not isinstance (refelem, attr_info[1]):
 		    raise ValueError, 'Referenced item is of the wrong type'
 		if attr_info[0] is Sequence:
 		    self.__ensure_seq (name, attr_info[1])
-		    if refelement not in self.__dict__[name]:
-			self.__dict__[name].list.append (refelement)
+		    if refelem not in self.__dict__[name]:
+			self.__dict__[name].list.append (refelem)
 			self.__emit (name)
 		else:
-		    self.__dict__[name] = refelement
+		    self.__dict__[name] = refelem
 		    self.__emit (name)
-	    elif child.name == 'Value':
-		name = child.prop ('name')
-		value = child.prop ('value')
-		#subchild = child.children
-		attr_info = self.__get_attr_info (name, self.__class__)
-		if issubclass (attr_info[1], types.IntType) or \
-		   issubclass (attr_info[1], types.LongType):
-		    #self.__dict__[name] = int (child.content)
-		    self.__dict__[name] = int (value)
-		elif issubclass (attr_info[1], types.FloatType):
-		    #self.__dict__[name] = float (child.content)
-		    self.__dict__[name] = float (value)
-		else:
-		    if value and value != '':
-			#self.__dict__[name] = child.content
-			self.__dict__[name] = value
-		#print 'content = "%s"' % child.content
-		self.__emit (name)
-	    child = child.next
 
-    def postload (self, node):
+    def postload (self, store):
 	'''Do some things after the items are initialized... This is basically
 	used for Diagrams.'''
         pass
