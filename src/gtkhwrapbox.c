@@ -233,10 +233,10 @@ gtk_hwrap_box_size_request (GtkWidget      *widget,
 
   requisition->width += GTK_CONTAINER (wbox)->border_width * 2; /*<h2v-skip>*/
   requisition->height += GTK_CONTAINER (wbox)->border_width * 2; /*<h2v-skip>*/
-  /* g_print ("choosen: width %d, height %d\n",
+  g_print ("choosen: width %d, height %d\n",
      requisition->width,
      requisition->height);
-  */
+  
 }
 
 static GSList*
@@ -589,14 +589,19 @@ gtk_hwrap_box_size_allocate (GtkWidget     *widget,
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (widget);
   GtkAllocation area;
+  GtkRequisition req; //AJM
   gint border = GTK_CONTAINER (wbox)->border_width; /*<h2v-skip>*/
   
+  gtk_widget_size_request (widget, &req); //AJM
+
   widget->allocation = *allocation;
   area.x = allocation->x + border;
   area.y = allocation->y + border;
-  area.width = MAX (1, (gint) allocation->width - border * 2);
-  area.height = MAX (1, (gint) allocation->height - border * 2);
-  
+  //AJM area.width = MAX (1, (gint) allocation->width - border * 2);
+  //AJM area.height = MAX (1, (gint) allocation->height - border * 2);
+  area.width = MAX (1, req.width - border * 2);
+  area.height = MAX (1, req.height - border * 2);
+
   /*<h2v-off>*/
   /* g_print ("got: width %d, height %d\n",
      allocation->width,

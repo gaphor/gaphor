@@ -124,7 +124,7 @@ class MainWindow(AbstractWindow):
         view.connect_after('event-after', self.on_view_event)
         view.connect('row-activated', self.on_view_row_activated)
         view.connect_after('cursor-changed', self.on_view_cursor_changed)
-        view.set_size_request(200, 200)
+        #view.set_size_request(200, 200)
 
         #scrolled_window.show_all()
         #ns_paned = gtk.VPaned()
@@ -156,7 +156,7 @@ class MainWindow(AbstractWindow):
                                contents=paned)
                                #contents=scrolled_window)
         wrapbox = self.menu_factory.create_wrapbox(self.wrapbox)
-        wrapbox.set_size_request(-1, 120)
+        wrapbox.set_size_request(160, 120)
         #wrapbox.set_aspect_ratio(1/256)
         vbox.pack_start(wrapbox, expand=False)
         wrapbox.show()

@@ -212,6 +212,7 @@ class ClassItem(NamedItem, diacanvas.CanvasGroupable):
             self._name.set_font_description(pango.FontDescription(self.FONT_ABSTRACT))
         else:
             self._name.set_font_description(pango.FontDescription(self.FONT))
+        self.request_update()
 
     def on_update(self, affine):
         """Overrides update callback.
