@@ -31,8 +31,8 @@ def base__getitem__(self, key):
 base.__getitem__ = base__getitem__
 
 # redefine 'bool' for Python version < 2.3
-if map(int, sys.version[:3].split('.')) < [2, 3]:
-    header = header + "bool = int\n"
+#if map(int, sys.version[:3].split('.')) < [2, 3]:
+#    header = header + "bool = int\n"
 
 def msg(s):
     sys.stderr.write('  ')
@@ -114,7 +114,7 @@ class Writer:
         full_name = "%s.%s" % (a.class_name, a.name)
         if self.overrides.has_override(full_name):
             self.overrides.write_override(self, full_name)
-        elif int(a.isDerived or 0):
+        elif eval(a.isDerived or '0'):
             msg('Ignoring derived attribute %s.%s: no definition' % (a.class_name, a.name))
         elif type.endswith('Kind'):
             e = filter(lambda e: e['name'] == type, enumerations.values())[0]

@@ -48,7 +48,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         path = self.path_from_element(element)
         #print 'new_node_from_element', path, element, element.name
         self.row_inserted(path, self.get_iter(path))
-        self.sort_node(parent)
+        #self.sort_node(parent)
         element.connect('name', self.on_name_changed)
 
         if isinstance(element, UML.Namespace):
