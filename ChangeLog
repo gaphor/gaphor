@@ -1,5 +1,10 @@
+2004-04-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/flow.py: New file, ControlFlow item.
+
 2004-04-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
+	* utils/install_mo.py: fixed bug that made the installation crash.
 	* gaphor/diagram/elementitem.py: renamed modelelement.py to this file,
 	  changed dependent files.
 	* gaphor/diagram/nameditem.py: renamed classifier.py to this file,

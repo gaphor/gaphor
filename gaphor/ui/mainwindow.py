@@ -74,7 +74,9 @@ class MainWindow(AbstractWindow):
                 'InsertCommentLine',
                 'InsertAction',
                 'InsertInitialNode',
-                'InsertActivityFinalNode')
+                'InsertActivityFinalNode',
+                'InsertDecisionNode',
+                'InsertFlow')
 
     ns_popup = ('RenameModelElement',
                 'OpenModelElement',
@@ -290,5 +292,7 @@ class MainWindow(AbstractWindow):
         #print '__on_element_factory_signal', key
         #factory = gaphor.resource(UML.ElementFactory)
         #self.set_capability('model', not factory.is_empty())
+
+gtk.accel_map_add_filter('gaphor')
 
 import mainactions

@@ -87,6 +87,7 @@ class UndoAction(Action):
     id = 'EditUndo'
     stock_id = 'gtk-undo'
     tooltip = 'Undo the most recent changes'
+    accel = 'C-u'
 
     # TODO: check if the diagram can undo.
 

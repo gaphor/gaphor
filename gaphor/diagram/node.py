@@ -65,6 +65,25 @@ class ActivityFinalNodeItem(NodeItem):
     def on_shape_iter(self):
         return iter([self._outer, self._inner])
 
+
+class DecisionNodeItem(NodeItem):
+    RADIUS = 15
+
+    def __init__(self, id=None):
+        NodeItem.__init__(self, id)
+        r = self.RADIUS
+        r2 = r * 2/3
+        self._diamond = diacanvas.shape.Path()
+        self._diamond.line(((r2,0), (r2*2, r), (r2, r*2), (0, r)))
+        self._diamond.set_cyclic(True)
+        self._diamond.set_line_width(2.0)
+        self.set(width=r2*2, height=r*2)
+
+    def on_shape_iter(self):
+        return iter([self._diamond])
+
+
 initialize_item(NodeItem)
 initialize_item(InitialNodeItem, UML.InitialNode)
 initialize_item(ActivityFinalNodeItem, UML.ActivityFinalNode)
+initialize_item(DecisionNodeItem, UML.DecisionNode)

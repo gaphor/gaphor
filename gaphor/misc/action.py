@@ -185,9 +185,9 @@ def register_action(action, *dependency_ids):
             #print (((action.stock_id, action.label, modifier, keyval, 'gaphor'),))
             gtk.stock_add(((action.stock_id, action.label, modifier, keyval, 'gaphor'),))
         #elif stock_info and action.accel:
-        #    # update accelerator for this (registered) stock item
-        #    modifier, keyval = _mod_and_keyval_from_accel(action.accel)
-        #    gtk.stock_add(((stock_info[0], stock_info[1], modifier, keyval, stock_info[4]),))
+            # update accelerator for this (registered) stock item
+            #modifier, keyval = _mod_and_keyval_from_accel(action.accel)
+            #gtk.stock_add(((stock_info[0], stock_info[1], modifier, keyval, stock_info[4]),))
     if dependency_ids:
         action_dependencies(action, *dependency_ids)
 

@@ -169,6 +169,18 @@ class ActivityFinalNodePlacementAction(PlacementAction):
 register_action(ActivityFinalNodePlacementAction)
 
 
+class DecisionNodePlacementAction(PlacementAction):
+    id = 'InsertDecisionNode'
+    label = 'Decision node'
+    tooltip = 'Create a new Decision action node'
+    stock_id = 'gaphor-pointer'
+    name = 'DecisionNode'
+    type = diagram.DecisionNodeItem
+    subject_type = UML.DecisionNode
+
+register_action(DecisionNodePlacementAction)
+
+
 class ActionPlacementAction(PlacementAction):
     id = 'InsertAction'
     label = 'Action node'
@@ -238,4 +250,15 @@ class GeneralizationPlacementAction(PlacementAction):
     type = diagram.GeneralizationItem
 
 register_action(GeneralizationPlacementAction)
+
+
+class FlowPlacementAction(PlacementAction):
+    id = 'InsertFlow'
+    label = '_Flow'
+    tooltip = 'Create a Flow'
+    stock_id = 'gaphor-pointer'
+    name = 'Flow'
+    type = diagram.FlowItem
+
+register_action(FlowPlacementAction)
 

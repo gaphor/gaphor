@@ -63,8 +63,9 @@ from relationship import RelationshipItem
 from dependency import DependencyItem
 from generalization import GeneralizationItem
 from association import AssociationItem
-from node import InitialNodeItem, ActivityFinalNodeItem
+from node import InitialNodeItem, ActivityFinalNodeItem, DecisionNodeItem
 from action import ActionItem
+from flow import FlowItem
 import itemactions
 
 if __debug__: 

@@ -148,6 +148,7 @@ class AbstractWindow(object):
 
         accel_group = gtk.AccelGroup()
         window.add_accel_group(accel_group)
+        #window.set_accel_path('/', accel_group)
 
         statusbar = gtk.Statusbar()
         vbox.pack_end(statusbar, expand=False)

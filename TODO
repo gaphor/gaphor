@@ -12,11 +12,8 @@ As always, there is much to do...
   then clean the rest of the elements in the ElementFactory.
 
 - Activity: implement
-	Action,
-	InitialNode,
-	ActivityFinalNode,
+	Add guards to ControlFlow
 	FlowFinalNode (intermediate activities),
-	ControlFlow,
 	ObjectFlow (if the arrow is connected to a ObjectNode),
 	DecisionNode (/ MergeNode),
 
