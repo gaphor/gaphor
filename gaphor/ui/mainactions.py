@@ -255,7 +255,7 @@ class SaveAsAction(Action):
         else:
             filesel = gtk.FileChooserDialog(title='Save Gaphor model as',
                                             action=gtk.FILE_CHOOSER_ACTION_SAVE,
-                                            buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
+                                            buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
         filesel.set_filename(filename or '')
         response = filesel.run()
         filename = None

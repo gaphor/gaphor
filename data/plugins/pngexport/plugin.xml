@@ -22,7 +22,7 @@
       Actions should be defined on the module's toplevel (like in __init__.py).
     -->
     <action id="PNGExport"
-            label="PNG Export"
+            label="PNG Export (experimental)"
             tooltip="Export the model to PNG"
             class="PNGExport" slot="FileExportSlot">
       <!--

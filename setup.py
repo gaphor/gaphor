@@ -7,12 +7,12 @@
 """
 
 MAJOR_VERSION = 0
-MINOR_VERSION = 6
-MICRO_VERSION = 2
+MINOR_VERSION = 7
+MICRO_VERSION = 0
 
 VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 
-GCONF_DOMAIN='/apps/gaphor/' # don't forget trailing slash
+#GCONF_DOMAIN='/apps/gaphor/' # don't forget trailing slash
 
 import sys, os
 from glob import glob

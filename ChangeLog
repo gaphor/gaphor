@@ -1,3 +1,11 @@
+2004-11-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: bumped version to 0.7.0.
+	* data/plugins/xmiexport/__init__.py,
+	data/plugins/svgexport/__init__.py,
+	data/plugins/pngexport/pngexport.py: add FileChooserDialog. PNG export
+	marked as experimental.
+
 2004-11-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/association.py: do no longer draw arrows if the

@@ -245,7 +245,6 @@ class ClassifierItem(NamedItem):
         ExtensionItem.confirm_connect_handle
         """
         subject = self.subject
-        #if not hasattr(subject, 'appliedStereotype'): return
         applied_stereotype = subject.appliedStereotype
         if applied_stereotype:
             # Return a nice name to display as stereotype:
