@@ -17,7 +17,7 @@ class Aspect(object):
         pass
 
     def after(self, retval, exc):
-        """Code executed after the weaved methid has been executed.
+        """Code executed after the weaved method has been executed.
         """
         pass
 
