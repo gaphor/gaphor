@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<plugin name="Python generator"
+        version="0.1"
+        author="Nicolas Chauvat">
+  <description>
+    This plugin generates Python code from a UML model and import a UML model
+    from Python code.
+  </description>
+
+  <require>
+    <!--
+      Define modules and plugins that are needed for this plugin to function
+      properly.
+      - ->
+    <module name="os.path"/>
+    <plugin name="another plugin"/>
+      -->
+  </require>
+
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+
+    <action id="PythonExp"
+            label="Generate Python Code"
+            tooltip="Generate Python Code"
+            class="PythonExportAction" slot="WindowSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      - ->
+      <depends action=""/>
+      -->
+    </action>
+
+    <action id="PythonImp"
+            label="Import Python Code"
+            tooltip="Import Python Code"
+            class="PythonImportAction" slot="WindowSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      - ->
+      <depends action=""/>
+      -->
+    </action>
+
+    <action id="PythonReload"
+            label="Reload the Python plugin"
+            tooltip="Import Python Code"
+            class="PythonReloadAction" slot="WindowSlot"/>
+  </provide>
+</plugin>
