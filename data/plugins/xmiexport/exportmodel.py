@@ -26,12 +26,44 @@ class XMLAttributes(dict):
 
 class XMIExport(object):
 
-    def handleClass(self, xmi, node):
-        """ """    
+    def handlePackage(self, xmi, node):
+        if node.package != None: return
+        self.writePackage(xmi, node)
 
+    def writePackage(self, xmi, node):
+        attributes=XMLAttributes()
+        attributes['xmi.id']=node.id
+        attributes['name']=node.name
+        attributes['visibility']='public' # TODO
+        attributes['isSpecification']='false'
+        attributes['isRoot']='false'
+        attributes['isLeaf']='false'
+        attributes['isAbstract']='false' #node.isAbstract and 'true' or 'false'
+        attributes['isActive']='false'
+        xmi.startElement('UML:Package', attrs=attributes)
+        xmi.startElement('UML:Namespace.ownedElement', attrs=XMLAttributes())
+        classes = [element for element in gaphor.resource('ElementFactory').select()]
+        for klass in classes:
+            if klass.package==node:
+                try:
+                    handler=getattr(self, 'write%s'%klass.__class__.__name__)
+                except AttributeError:
+                    continue
+                handler(xmi, klass)
+        xmi.endElement('UML:Namespace.ownedElement')
+        xmi.endElement('UML:Package')
+
+
+    def handleClass(self, xmi, node):
+        """ """ 
+        # Check for packages, classes will be serialized through the package
+        if node.package != None: return
+        
+        self.writeClass(xmi, node)
+
+    def writeClass(self, xmi, node):
         # Check for stereotype definition classes
-        if node.name == 'Class':
-            return
+        if node.name in ('Class', 'Interface', 'Package'): return
         
         attributes=XMLAttributes()
         attributes['xmi.id']=node.id
@@ -54,7 +86,7 @@ class XMIExport(object):
                 xmi.startElement('UML:Generalization', attrs=attributes)
                 xmi.endElement('UML:Generalization')
             xmi.endElement('UML:GeneralizableElement.generalization')
-
+    
         # Stereotypes
         stereotypes = node.appliedStereotype
         if stereotypes:
@@ -90,7 +122,7 @@ class XMIExport(object):
             xmi.startElement('UML:Class', attrs=attributes)
             xmi.endElement('UML:Class')
         xmi.endElement('UML:Namespace.ownedElement')
-
+ 
         # Now generate the XML for the attribute itself
         for attribute in node.ownedAttribute:
             try:
@@ -98,7 +130,7 @@ class XMIExport(object):
                 attribute.typeValue.value
             except AttributeError:
                 continue
-
+ 
             xmi.startElement('UML:Classifier.feature', attrs=XMLAttributes())
             attributes=XMLAttributes()
             attributes['xmi.id']=attribute.id
@@ -113,9 +145,9 @@ class XMIExport(object):
             xmi.startElement('UML:Class', XMLAttributes({'xmi.idref': attribute.typeValue.id}))
             xmi.endElement('UML:Class')
             xmi.endElement('UML:StructuralFeature.type')
-                        
+                           
             xmi.endElement('UML:Attribute')
-            
+               
             xmi.endElement('UML:Classifier.feature')
         xmi.endElement('UML:Class')
 
