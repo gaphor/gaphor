@@ -1,4 +1,4 @@
-include COPYING NEWS README TODO AUTHORS run
+include COPYING INSTALL NEWS README TODO AUTHORS run-gaphor.sh
 include bin/gaphor
 recursive-include doc usecases.txt ui-design.txt diagram-in-python.txt
 recursive-include doc aspects-en.txt
@@ -6,7 +6,7 @@ recursive-include gaphor *.py
 include gaphor/UML/uml2.gaphor
 include gaphor/UML/uml2.override
 recursive-include po gaphor.pot *.po 
-recursive-include data *.png
+recursive-include data/pixmaps *24.png diagram16.png
 recursive-include tests *.py *.sh
 recursive-include utils *.py
 recursive-include src gtk*wrapbox.c gtk*wrapbox.h wrapbox.defs wrapbox.override wrapboxmodule.c

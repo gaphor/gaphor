@@ -19,6 +19,9 @@ class MainWindow(AbstractWindow):
                 'FileSave',
                 'FileSaveAs',
                 'separator',
+                '_Export', (
+                    'FileExportSVG',),
+                'separator',
                 'FileCloseTab',
                 'separator',
                 'FileQuit'),
@@ -38,9 +41,7 @@ class MainWindow(AbstractWindow):
                 'SnapToGrid',
                 'ShowGrid',
                 'separator',
-                'CreateDiagram',
-                'separator',
-                'FileExportSVG'),
+                'CreateDiagram'),
             '_Window', (
                 'OpenEditorWindow',
                 'OpenConsoleWindow'),
@@ -48,11 +49,17 @@ class MainWindow(AbstractWindow):
             #    'About',)
             )
 
-    toolbar =  ('FileNew',
-                'FileOpen',
+    toolbar =  ('FileOpen',
                 'separator',
                 'FileSave',
-                'FileSaveAs')
+                'FileSaveAs',
+                'separator',
+                'EditUndo',
+                'EditRedo',
+                'separator',
+                'ViewZoomIn',
+                'ViewZoomOut',
+                'ViewZoom100')
 
     wrapbox =  ('Pointer',
                 'separator',

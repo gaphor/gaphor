@@ -7,15 +7,8 @@ Linux in general).
 Gaphor is written in Python, which makes it very easy to use (and
 very easy to extend (and to write ;-).
 
-To get started do the following things:
-- Get pygtk and gnome-python (the latest versions)
-- Compile and install pygtk and gnome-python.
-  (If you installed a packaged version of PyGTK (such as RPM's or .deb files)
-   make sure you install the development packages too.)
-- Get DiaCanvas2 and install it. If PyGTK is installed properly, it should
-  be automatically detected by DiaCanvas2's configure script.
-- do 'python setup.py config' to check if every thing is okay.
-- Launch gaphor using the 'run' shell script.
+In the file 'INSTALL' you'll find information about how to get this thing
+started.
 
 Have fun,
 

@@ -145,6 +145,17 @@ class PackagePlacementAction(NamespacePlacementAction):
 register_action(PackagePlacementAction)
 
 
+#class StatePlacementAction(PlacementAction):
+#    id = 'InsertState'
+#    label = 'State'
+#    tooltip = 'Create a new State node'
+#    stock_id = 'gaphor-comment-line'
+#    name = 'State'
+#    type = diagram.StateItem
+#
+#register_action(StatePlacementAction)
+
+
 class CommentPlacementAction(PlacementAction):
     id = 'InsertComment'
     label = 'C_omment'
