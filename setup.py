@@ -312,7 +312,6 @@ setup(name='gaphor',
                 'gaphor.UML',
                 'gaphor.diagram',
                 'gaphor.ui',
-                'gaphor.ui.command',
                 'gaphor.misc'
       ],
       # data files are relative to <prefix>/share/gaphor (see setup.cfg)
