@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<plugin name="Data Browser"
+        version="0.1"
+        author="Arjan Molenaar">
+  <description>
+    Plugin based on the Live Object browser
+    (http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/300304).
+  </description>
+
+  <require>
+    <!--
+      Define modules and plugins that are needed for this plugin to function
+      properly.
+    - ->
+    <module name="os.path"/>
+    <plugin name="Test plugin"/>
+    -->
+  </require>
+
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+    <action id="LiveObjectBrowser"
+            label="Live Object Browser"
+            tooltip="Browser objects in Gaphor"
+            class="LiveObjectBrowserAction" slot="WindowSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      - ->
+      <depends action=""/>
+      -->
+    </action>
+  </provide>
+</plugin>
