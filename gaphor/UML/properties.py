@@ -384,6 +384,7 @@ class association(umlproperty):
         elements from a list.
         """
         #print '__delete__', self, obj, value
+
         if not value:
             if self.upper > 1:
                 raise Exception, 'Can not delete collections'

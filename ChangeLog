@@ -4,6 +4,10 @@
 	when they have to.
 	* gaphor/diagram/__init__.py: make register_item accept more default
 	classes. (fixes DND of Stereotype item).
+	* gaphor/diagram/diagramitem.py: bug fix: UML elements were no longer
+	removed when all presentations were removed.
+	* gaphor/UML/uml2.gaphor: added Classifier.appliedStereotype (in stead
+	of Class.appliedStereotype).
 
 2004-10-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

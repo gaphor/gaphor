@@ -96,9 +96,10 @@ class DiagramItem(Presentation):
         """
         #log.debug('DiagramItem.unlink(%s)' % self)
         # emit the __unlink__ signal the way UML.Element would have done:
+        self.set_subject(None)
+
         self.emit('__unlink__', '__unlink__')
 
-        self.set_subject(None)
 
         self.set_property('parent', None)
 
@@ -167,6 +168,7 @@ class DiagramItem(Presentation):
         """Set the subject. In addition, if there are no more presentations
         on the subject, the subject is unlink()'ed.
         """
+        #log.debug('set_subject %s %s' % (self.subject, subject))
         old = self.subject
 
         # remove the subject if we have one
@@ -284,6 +286,7 @@ class DiagramItem(Presentation):
                 #log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
                 #self._subject_connect(self.subject, n)
                 subject_connect_helper(subject, callback_prefix, n)
+
         # Execute some sort of ItemNewSubject action
         try:
             main_window = resource('MainWindow')
