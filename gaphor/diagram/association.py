@@ -180,7 +180,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
         """This method is called by a canvas item if the user tries to connect
         this object's handle. allow_connect_handle() checks if the line is
         allowed to be connected. In this case that means that one end of the
-        line should be connected to a Comment.
+        line should be connected to a Class or Actor.
         Returns: TRUE if connection is allowed, FALSE otherwise.
         """
         # TODO: Should allow to connect to Class and Actor.
@@ -234,7 +234,6 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
                                 self._head_end.subject = end2
                                 self._tail_end.subject = end1
                             return
-            #if not relation:
             else:
                 # TODO: How should we handle other types than Class???
 
@@ -289,10 +288,8 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     recreated by the owning Association.
     
     TODO:
-    - Remove set_groupable and add set_editable.
     - add on_point() and let it return min(distance(_name), distance(_mult)) or
       the first 20-30 units of the line, for association end popup menu.
-    - Calculate x,y,width,height of _name and _mult and use it to draw the box.
     """
     __gproperties__ = DiagramItem.__gproperties__
     ___gproperties__ = {
@@ -306,13 +303,14 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 
     def __init__(self, id=None):
         self.__gobject_init__()
-        DiagramItem.__init__(self)
+        DiagramItem.__init__(self, id)
         self.set_flags(diacanvas.COMPOSITE)
         
         font = pango.FontDescription(AssociationEnd.FONT)
         self._name = diacanvas.shape.Text()
         self._name.set_font_description(font)
         self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
+        self._name.set_markup(False)
         self._name_border = diacanvas.shape.Path()
         self._name_border.set_color(diacanvas.color(128,128,128))
         self._name_border.set_line_width(1.0)
@@ -320,6 +318,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         self._mult = diacanvas.shape.Text()
         self._mult.set_font_description(font)
         self._mult.set_wrap_mode(diacanvas.shape.WRAP_NONE)
+        self._mult.set_markup(False)
         self._mult_border = diacanvas.shape.Path()
         self._mult_border.set_color(diacanvas.color(128,128,128))
         self._mult_border.set_line_width(1.0)
@@ -449,6 +448,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec,
                         notifiers + ('aggregation', 'name', 'lowerValue'))
+        print 'w/ assoc', self.subject and self.subject.association
         self.set_text()
         if self.subject:
             #self._name.set_text(self.subject.name or '')
@@ -471,7 +471,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
             #self._name.set_text(subject.name)
 
     def on_subject_notify__lowerValue(self, subject, pspec):
-        print 'lowerValue', subject, subject.lowerValue
+        #print 'lowerValue', subject, subject.lowerValue
         if self.__the_lowerValue:
             self.__the_lowerValue.disconnect(self.on_lowerValue_notify__value)
 
@@ -554,7 +554,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 
     def on_editable_editing_done(self, shape, new_text):
         if shape in (self._name, self._mult):
-            if self.subject:
+            if self.subject and (shape == self._name or new_text != ''):
                 self.subject.parse(new_text)
             self.set_text()
             log.info('editing done')

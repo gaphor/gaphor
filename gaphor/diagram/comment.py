@@ -30,6 +30,7 @@ class CommentItem(ModelElementItem, diacanvas.CanvasEditable):
         self._body = diacanvas.shape.Text()
         self._body.set_font_description(pango.FontDescription(CommentItem.FONT))
         #self._body.set_text_width(self.width - (CommentItem.OFFSET * 2))
+        self._body.set_markup(False)
         self._body.set_pos((CommentItem.OFFSET, CommentItem.OFFSET))
 
     def postload(self):

@@ -1,3 +1,6 @@
+"""This module contains user interface related code, such as the
+main screen and diagram windows.
+"""
 __all__ = [ 'command', 'commandregistry', 'namespace', 'stock' ]
 
 # Make sure we have GTK+ >= 2.0:

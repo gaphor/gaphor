@@ -47,7 +47,8 @@ def save(filename=None, factory=None):
             buffer.write('<%s><reflist>' % name)
             for v in value:
                 #save_reference(name, v)
-                buffer.write('<ref refid="%s"/>' % v.id)
+                if v.id:
+                    buffer.write('<ref refid="%s"/>' % v.id)
             buffer.write('</reflist></%s>' % name)
 
     def save_value(name, value):
@@ -171,7 +172,7 @@ def _load(elements, factory):
             try:
                 elem.element.load(name, value)
             except:
-                log.debug('Loading value %s (%s) for element %s failed.' % (name, value, elem.element))
+                log.error('Loading value %s (%s) for element %s failed.' % (name, value, elem.element))
                 raise
 
         for name, refids in elem.references.items():
@@ -182,16 +183,22 @@ def _load(elements, factory):
                     except:
                         raise ValueError, 'Invalid ID for reference (%s) for element %s.%s' % (refid, elem.type, name)
                     else:
-                        log.debug('Loading %s.%s with value %s' % (type(elem.element).__name__, name, ref.element.id))
-                        elem.element.load(name, ref.element)
+                        try:
+                            elem.element.load(name, ref.element)
+                        except:
+                            log.error('Loading %s.%s with value %s failed' % (type(elem.element).__name__, name, ref.element.id))
+                            raise
             else:
                 try:
                     ref = elements[refids]
                 except:
                     raise ValueError, 'Invalid ID for reference (%s)' % refids
                 else:
-                    log.debug('Loading %s.%s with value %s' % (type(elem.element).__name__, name, ref.element.id))
-                    elem.element.load(name, ref.element)
+                    try:
+                        elem.element.load(name, ref.element)
+                    except:
+                        log.error('Loading %s.%s with value %s failed' % (type(elem.element).__name__, name, ref.element.id))
+                        raise
                 
     log.info('0% ... 33% ... 66%')
 

@@ -1,7 +1,17 @@
 2004-01-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
+	* moved model definitions from doc/UML2.gaphor to
+	gaphor/UML/uml2.gaphor.
+	* setup.py: updated.
 	* utils/install_mo.py: fixed some path related stuff so we can do a
 	bdist now.
+	* utils/genUML2.py: updated to reflect latest changes in the model.
+
+2004-01-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagramitem.py: fixed loading.
+	* gaphor/diagram/comment.py, association.py, classifier.py,
+	feature.py: disable markup for text.
 
 2003-12-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 

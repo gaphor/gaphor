@@ -1,3 +1,5 @@
+check Classifier.substitution, InstanceSpecification.slot.
+
 As always, there is much to do...
 
 - Class: Association end properties are shown in the tree view

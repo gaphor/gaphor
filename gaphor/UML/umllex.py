@@ -48,25 +48,28 @@ dir_subpat = r'\s*(?P<dir>in|out|inout)?'
 # Some trailing garbage => no valid syntax...
 garbage_subpat = r'\s*(?P<garbage>.*)'
 
+def compile(regex):
+    return re.compile(regex, re.MULTILINE | re.S)
+
 # Attribute:
 #   [+-#] [/] name [: type[\[mult\]]] [= default] [{ tagged values }]
-attribute_pat = re.compile(r'^' + vis_subpat + derived_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + garbage_subpat)
+attribute_pat = compile(r'^' + vis_subpat + derived_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + garbage_subpat)
 
 # Association end name:
 #   [[+-#] [/] name [\[mult\]]] [{ tagged values }]
-association_end_name_pat = re.compile(r'^' + '(' + vis_subpat + derived_subpat + name_subpat + mult_subpat + ')?' + tags_subpat + garbage_subpat)
+association_end_name_pat = compile(r'^' + '(' + vis_subpat + derived_subpat + name_subpat + mult_subpat + ')?' + tags_subpat + garbage_subpat)
 
 # Association end multiplicity:
 #   [mult] [{ tagged values }]
-association_end_mult_pat = re.compile(r'^' + multa_subpat + tags_subpat + garbage_subpat)
+association_end_mult_pat = compile(r'^' + multa_subpat + tags_subpat + garbage_subpat)
 
 # Operation:
 #   [+|-|#] name ([parameters]) [: type[\[mult\]]] [{ tagged values }]
-operation_pat = re.compile(r'^' + vis_subpat + name_subpat + params_subpat + type_subpat + tags_subpat + garbage_subpat)
+operation_pat = compile(r'^' + vis_subpat + name_subpat + params_subpat + type_subpat + tags_subpat + garbage_subpat)
 
 # One parameter supplied with an operation:
 #   [in|out|inout] name [: type[\[mult\]] [{ tagged values }]
-parameter_pat = re.compile(r'^' + dir_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + rest_subpat)
+parameter_pat = compile(r'^' + dir_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + rest_subpat)
 
 
 def _set_visibility(self, vis):
@@ -105,25 +108,25 @@ def parse_attribute(self, s):
         if self.taggedValue:
             self.taggedValue.value = None
     else:
-        from uml2 import LiteralString
+        from uml2 import LiteralSpecification
         create = self._factory.create
         _set_visibility(self, g('vis'))
         self.isDerived = g('derived') and True or False
         self.name = g('name')
         if not self.typeValue:
-            self.typeValue = create(LiteralString)
+            self.typeValue = create(LiteralSpecification)
         self.typeValue.value = g('type')
         if not self.lowerValue:
-            self.lowerValue = create(LiteralString)
+            self.lowerValue = create(LiteralSpecification)
         self.lowerValue.value = g('mult_l')
         if not self.upperValue:
-            self.upperValue = create(LiteralString)
+            self.upperValue = create(LiteralSpecification)
         self.upperValue.value = g('mult_u')
         if not self.defaultValue:
-            self.defaultValue = create(LiteralString)
+            self.defaultValue = create(LiteralSpecification)
         self.defaultValue.value = g('default')
         if not self.taggedValue:
-            self.taggedValue = create(LiteralString)
+            self.taggedValue = create(LiteralSpecification)
         self.taggedValue.value = g('tags')
         #print g('vis'), g('derived'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('default'), g('tags')
 
@@ -132,20 +135,20 @@ def parse_association_end(self, s):
     two strings. It is automattically figured out which string is fed to the
     parser.
     """
-    from uml2 import LiteralString
+    from uml2 import LiteralSpecification
     create = self._factory.create
     m = association_end_mult_pat.match(s)
     if m and m.group('mult_u') or m.group('tags'):
         #print 'multmatch'
         g = m.group
         if not self.lowerValue:
-            self.lowerValue = create(LiteralString)
+            self.lowerValue = create(LiteralSpecification)
         self.lowerValue.value = g('mult_l')
         if not self.upperValue:
-            self.upperValue = create(LiteralString)
+            self.upperValue = create(LiteralSpecification)
         self.upperValue.value = g('mult_u')
         if not self.taggedValue:
-            self.taggedValue = create(LiteralString)
+            self.taggedValue = create(LiteralSpecification)
         self.taggedValue.value = g('tags')
         # We have multiplicity
     else:
@@ -163,17 +166,17 @@ def parse_association_end(self, s):
             # Optionally, the multiplicity and tagged values may be defined:
             if g('mult_l'):
                 if not self.lowerValue:
-                    self.lowerValue = create(LiteralString)
+                    self.lowerValue = create(LiteralSpecification)
                 self.lowerValue.value = g('mult_l')
             if g('mult_u'):
                 if not g('mult_l') and self.lowerValue:
                     self.lowerValue.value = None
                 if not self.upperValue:
-                    self.upperValue = create(LiteralString)
+                    self.upperValue = create(LiteralSpecification)
                 self.upperValue.value = g('mult_u')
             if g('tags'):
                 if not self.taggedValue:
-                    self.taggedValue = create(LiteralString)
+                    self.taggedValue = create(LiteralSpecification)
                 self.taggedValue.value = g('tags')
 
 def parse_property(self, s):
@@ -186,7 +189,7 @@ def parse_operation(self, s):
     """Parse string s in the operation. Tagged values, parameters and
     visibility is altered to reflect the data in the operation string.
     """
-    from uml2 import Parameter, LiteralString
+    from uml2 import Parameter, LiteralSpecification
     m = operation_pat.match(s)
     if not m or m.group('garbage'):
         self.name = s
@@ -203,17 +206,17 @@ def parse_operation(self, s):
         p = self.returnResult[0]
         p.direction = 'return'
         if not p.typeValue:
-            p.typeValue = create(LiteralString)
+            p.typeValue = create(LiteralSpecification)
         p.typeValue.value = g('type')
         if not p.lowerValue:
-            p.lowerValue = create(LiteralString)
+            p.lowerValue = create(LiteralSpecification)
         p.lowerValue.value = g('mult_l')
         if not p.upperValue:
-            p.upperValue = create(LiteralString)
+            p.upperValue = create(LiteralSpecification)
         p.upperValue.value = g('mult_u')
         # FIXME: Maybe add to Operation.ownedRule?
         if not p.taggedValue:
-            p.taggedValue = create(LiteralString)
+            p.taggedValue = create(LiteralSpecification)
         p.taggedValue.value = g('tags')
         #print g('vis'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('tags')
         
@@ -231,19 +234,19 @@ def parse_operation(self, s):
             p.direction = g('dir') or 'in'
             p.name = g('name')
             if not p.typeValue:
-                p.typeValue = create(LiteralString)
+                p.typeValue = create(LiteralSpecification)
             p.typeValue.value = g('type')
             if not p.lowerValue:
-                p.lowerValue = create(LiteralString)
+                p.lowerValue = create(LiteralSpecification)
             p.lowerValue.value = g('mult_l')
             if not p.upperValue:
-                p.upperValue = create(LiteralString)
+                p.upperValue = create(LiteralSpecification)
             p.upperValue.value = g('mult_u')
             if not p.defaultValue:
-                p.defaultValue = create(LiteralString)
+                p.defaultValue = create(LiteralSpecification)
             p.defaultValue.value = g('default')
             if not p.taggedValue:
-                p.taggedValue = create(LiteralString)
+                p.taggedValue = create(LiteralSpecification)
             p.taggedValue.value = g('tags')
             self.formalParameter = p
 
@@ -258,7 +261,7 @@ def parse_operation(self, s):
             fp.unlink()
 
 # Do not render if the name still contains a visibility element
-no_render_pat = re.compile(r'^\s*[+#-]')
+no_render_pat = compile(r'^\s*[+#-]')
 vis_map = {
     'public': '+',
     'protected': '#',
@@ -279,7 +282,7 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
     will not give you the same result.
     """
     name = self.name
-    if no_render_pat.match(name):
+    if not name or no_render_pat.match(name):
         return name
 
     if visibility or is_derived or type or multiplicity or default or tags:
@@ -318,26 +321,32 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
 def render_association_end(self):
     """
     """
+    name = ''
     n = StringIO()
-    n.write(vis_map[self.visibility])
-    n.write(' ')
-    if self.isDerived:
-        n.write('/')
     if self.name:
-        n.write(self.name)
-    n.reset()
+        n.write(vis_map[self.visibility])
+        n.write(' ')
+        if self.isDerived:
+            n.write('/')
+        if self.name:
+            n.write(self.name)
+        n.reset()
+        name = n.read()
 
     m = StringIO()
     if self.upperValue and self.upperValue.value:  
         if self.lowerValue and self.lowerValue.value:
+            #print 'render_association_end:', self.lowerValue.value, self.upperValue.value
             m.write('%s..%s' % (self.lowerValue.value, self.upperValue.value))
         else:
             m.write('%s' % self.upperValue.value)
     if self.taggedValue and self.taggedValue.value:
-        m.write(' { %s }' % self.taggedValue.value)
+        m.write(' {%s}' % self.taggedValue.value)
     m.reset()
+    mult = m.read()
 
-    return n.read(), m.read()   
+    #print 'render_association_end', name, mult
+    return name, mult
 
 def render_property(self, *args, **kwargs):
     """Render a gaphor.UML.Property either as an attribute or as a

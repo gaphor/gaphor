@@ -92,7 +92,7 @@ class DiagramItem(Presentation):
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'subject':
-            #print 'set subject:', value
+            print 'set subject:', value
             if value:
                 self.subject = value
             elif self.subject:
@@ -114,9 +114,10 @@ class DiagramItem(Presentation):
 
     def load(self, name, value):
         if name == 'subject':
-            self.subject = value
+            print 'loading subject', value
+            type(self).subject.load(self, value)
         else:
-            #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
+            log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
             try:
                 self.set_property(name, eval(value))
             except:

@@ -1,10 +1,11 @@
 # vim:sw=4:et
+"""This file contains code for loading up an override file.  The override file
+provides implementations of functions where the code generator could not
+do its job correctly.
 
-# this file contains code for loading up an override file.  The override file
-# provides implementations of functions where the code generator could not
-# do its job correctly.
+This is a simple rip-off of the override script used in PyGTK.
+"""
 
-# This is a simple rip-off of the override script used in PyGTK.
 
 import sys, string
 
@@ -17,12 +18,12 @@ class Overrides:
 
 
     def read_overrides(self, filename):
-        """Read a file and return a dictionary of overriden properties and their
-        implementation.
+        """Read a file and return a dictionary of overriden properties
+        and their implementation.
 
         An override file ahs the form:
         override <property>
-        <implementation
+        <implementation>
         %%
         """
         fp = open(filename, 'r')

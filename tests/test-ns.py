@@ -46,19 +46,19 @@ print '---'
 ns.dump()
 assert ns.path_from_element(m) == (0,)
 assert ns.path_from_element(a) == (0, 0)
-assert ns.path_from_element(b) == (0, 0, 0)
-assert ns.path_from_element(c) == (0, 0, 0, 0)
-assert ns.path_from_element(d) == (0, 0, 1)
-assert ns.path_from_element(e) == (0, 0, 0, 1)
+assert ns.path_from_element(b) == (0, 0, 1)
+assert ns.path_from_element(c) == (0, 0, 1, 0)
+assert ns.path_from_element(d) == (0, 0, 0)
+assert ns.path_from_element(e) == (0, 0, 1, 1)
 
 print '--- del.b.ownedClassifier[c]'
 del b.ownedClassifier[c]
 ns.dump()
 assert ns.path_from_element(m) == (0,)
 assert ns.path_from_element(a) == (0, 0)
-assert ns.path_from_element(b) == (0, 0, 0)
-assert ns.path_from_element(d) == (0, 0, 1)
-assert ns.path_from_element(e) == (0, 0, 0, 0)
+assert ns.path_from_element(b) == (0, 0, 1)
+assert ns.path_from_element(d) == (0, 0, 0)
+assert ns.path_from_element(e) == (0, 0, 1, 0)
 try:
     ns.path_from_element(c)
 except AttributeError:
@@ -71,10 +71,10 @@ c.package = a
 ns.dump()
 assert ns.path_from_element(m) == (0,)
 assert ns.path_from_element(a) == (0, 0)
-assert ns.path_from_element(b) == (0, 0, 0)
-assert ns.path_from_element(c) == (0, 0, 1)
-assert ns.path_from_element(d) == (0, 0, 2)
-assert ns.path_from_element(e) == (0, 0, 0, 0)
+assert ns.path_from_element(b) == (0, 0, 1)
+assert ns.path_from_element(c) == (0, 0, 2)
+assert ns.path_from_element(d) == (0, 0, 0)
+assert ns.path_from_element(e) == (0, 0, 1, 0)
 
 print '--- b.package = m'
 b.package = m
@@ -82,8 +82,8 @@ ns.dump()
 assert ns.path_from_element(m) == (0,)
 assert ns.path_from_element(a) == (0, 0)
 assert ns.path_from_element(b) == (0, 1)
-assert ns.path_from_element(c) == (0, 0, 0)
-assert ns.path_from_element(d) == (0, 0, 1)
+assert ns.path_from_element(c) == (0, 0, 1)
+assert ns.path_from_element(d) == (0, 0, 0)
 assert ns.path_from_element(e) == (0, 1, 0)
 
 print '--- e.unlink()'

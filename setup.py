@@ -169,7 +169,7 @@ class build_py_Gaphor(build_py, version_py):
         import utils.genUML2
         gen = 'utils/genUML2.py'
         overrides = 'gaphor/UML/uml2.override'
-        model = 'doc/UML2.gaphor'
+        model = 'gaphor/UML/uml2.gaphor'
         py_model = 'gaphor/UML/uml2.py'
         outfile = os.path.join(self.build_lib, py_model)
         self.mkpath(os.path.dirname(outfile))

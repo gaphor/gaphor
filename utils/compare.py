@@ -134,13 +134,18 @@ class Compare(object):
             if key in keys2:
                 val1 = element1.references.get(key)
                 val2 = element2.references.get(key)
-                for val in val1:
-                    if val not in val2:
-                        self.report(self.factory1, element1, key, val, True)
+                try:
+                    for val in val1:
+                        if val not in val2:
+                            self.report(self.factory1, element1, key, val, True)
 
-                for val in val2:
-                    if val not in val1:
-                        self.report(self.factory2, element2, key, val, True)
+                    for val in val2:
+                        if val not in val1:
+                            self.report(self.factory2, element2, key, val, True)
+                except TypeError:
+                    if val1 != val2:
+                        self.report(self.factory1, element1, key, val1, True)
+                        self.report(self.factory2, element2, key, val2, True)
 
     def check_missing_values(self, element1, element2):
         keys1 = element1.values.keys()

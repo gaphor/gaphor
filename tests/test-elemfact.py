@@ -3,7 +3,7 @@ from gaphor.UML import *
 import gc
 import weakref, sys
 
-ef = GaphorResource(ElementFactory)
+ef = ElementFactory()
 
 p = ef.create(Parameter)
 wp = weakref.ref(p)

@@ -108,7 +108,10 @@ class attribute(umlproperty):
         
     def load(self, obj, value):
         # FixMe: value might be a string while some other type is required:
-        value = self.type(value)
+        #print 'attribute.load:', self.name, self.type, value,
+        if self.type is not object:
+            value = self.type(value)
+        print value
         #if not isinstance(value, self.type):
         #    if type(self.type) is not type(()):
         #    else:

@@ -31,8 +31,10 @@
 	</submenu>
 
 	<submenu name="Insert" _label="_Insert">
+	    <!--
 	    <menuitem name="InsertActor" verb=""/>
 	    <menuitem name="InsertUseCase" verb=""/>
+	    -->
 	    <menuitem name="InsertClass" verb=""/>
 	    <menuitem name="InsertPackage" verb=""/>
 	    <menuitem name="InsertComment" verb=""/>
@@ -44,9 +46,11 @@
     </menu>
 
     <dockitem name="Toolbar" _tip="Diagram toolbar" behavior="detachable,exclusive">
+	<!--
 	<toolitem name="InsertActor" verb=""/>
 	<toolitem name="InsertUseCase" verb=""/>
 	<separator/>
+	-->
 	<toolitem name="InsertClass" verb=""/>
 	<toolitem name="InsertPackage" verb=""/>
 	<toolitem name="InsertAssociation" verb=""/>

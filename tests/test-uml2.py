@@ -42,11 +42,3 @@ class TestUML2(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-def on_modelelement(*args):
-    print 'on_modelelement', args
-
-p.connect('ownedMember', on_modelelement)
-
-c.unlink()
-

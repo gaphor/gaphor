@@ -38,6 +38,7 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         self._expression = diacanvas.shape.Text()
         self._expression.set_font_description(pango.FontDescription(FeatureItem.FONT))
         self._expression.set_wrap_mode(diacanvas.shape.WRAP_NONE)
+        self._expression.set_markup(False)
         self.set_flags(diacanvas.COMPOSITE)
 
     # Ensure we call the right connect functions:
