@@ -2,3 +2,4 @@
 
 from diagram import *
 from usecase import *
+from actor import *

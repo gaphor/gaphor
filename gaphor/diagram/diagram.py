@@ -5,6 +5,7 @@ repreesentation of a UML diagram.'''
 
 import UML, diacanvas, types
 from usecase import UseCase
+from actor import Actor
 
 # We should get rid of the CID, since it changes a lot of values each save
 # so it is not really useful for archiving in CVS. Each item should create
@@ -13,7 +14,7 @@ from usecase import UseCase
 # CanvasItemFactory).
 
 diagram2UML = {
-#	Actor: UML.Actor,
+	Actor: UML.Actor,
 #	Comment: UML.Comment,
 	UseCase: UML.UseCase
 #	CommentLine: None,

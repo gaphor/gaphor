@@ -1,8 +1,9 @@
 <!ELEMENT Gaphor (Element)* >
 <!ATTLIST Gaphor
+    xmlns	CDATA	#FIXED 'http://gaphor.sourceforge.net/gaphor.dtd'
     version	CDATA	#REQUIRED >
 
-<!ELEMENT Element ((Reference | Value)* | Canvas)* >
+<!ELEMENT Element ((Reference | Value)* , Canvas?) >
 <!ATTLIST Element
     type	CDATA	#REQUIRED
     id		ID	#REQUIRED >
@@ -17,10 +18,10 @@
     name 	CDATA	#REQUIRED
     value	CDATA	#REQUIRED >
 
-<!ELEMENT Canvas ((Value)*, (CanvasItem)+) >
+<!ELEMENT Canvas (Value | CanvasItem)* >
 
-<!ELEMENT CanvasItem ((Value)*, (CanvasItem)*) >
+<!ELEMENT CanvasItem (Value | Reference | CanvasItem)* >
 <!ATTLIST CanvasItem
     type	CDATA	#REQUIRED
     cid		ID	#REQUIRED >
-    
+

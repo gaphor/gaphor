@@ -21,7 +21,7 @@ class UseCase(ModelElement):
 	self.add(diacanvas.CanvasText())
 	assert self.__name != None
 	font = pango.FontDescription(UseCase.FONT)
-	self.__name.set(font=font, width=self.width, \
+	self.__name.set(font=font, width=self.width,
 			alignment=pango.ALIGN_CENTER)
 	# Center the text:
 	w, h = self.__name.get_property('layout').get_pixel_size()

@@ -13,7 +13,7 @@ if __name__ == '__main__':
 import gobject
 import diacanvas as dia
 #from metaitem import MetaItem
-from UML import Element
+#from UML import Element
 
 __revision__ = '$revision$'
 __author__ = 'Arjan J. Molenaar'

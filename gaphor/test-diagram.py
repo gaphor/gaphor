@@ -41,8 +41,9 @@ treemodel = tree.NamespaceModel(factory)
 
 #item = canvas.root.add (diagram.Comment)
 #item.move (30, 50)
-#item = canvas.root.add (diagram.Actor)
-#item.move (150, 50)
+item = dia.create(diagram.Actor)
+item.move (150, 50)
+item.subject.name = "Jaap"
 #item = dia.canvas.root.create_item (diagram.UseCase)
 item = dia.create(diagram.UseCase)
 usecase = item.subject

@@ -154,7 +154,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def on_iter_next(self, node):
 	'''returns the next node at this level of the tree'''
-	print 'on_iter_next:', node, node.namespace
+	#print 'on_iter_next:', node, node.namespace
 	parent = node.namespace
 	if not parent:
 	    return None
