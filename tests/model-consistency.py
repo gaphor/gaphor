@@ -3,8 +3,9 @@
 # module. 
 
 import sys
+sys.path.insert(0, '..')
 from testlist import *
-from UML import *
+from gaphor.UML import *
 
 def testvar(var1, var2):
     if isinstance(var1, Sequence):
@@ -21,13 +22,14 @@ def testvar(var1, var2):
 	    sys.exit(1)
 
 for c in testlist:
+    assert hasattr(c, '_attrdef'), 'Every model element should have a _attrdef structure (%s)' % str(c)
     for key in c._attrdef:
         # Test associations:
 	if len(c._attrdef[key]) == 3:
 	    mult, c2, key2 = c._attrdef[key]
 	    print c.__name__ + "." + key + " <-> " + c2.__name__ + "." + key2,
-	    i1 = c()
-	    i2 = c2()
+	    i1 = c(1)
+	    i2 = c2(2)
 	    try:
 		i1.__setattr__(key, i2)
 	    except AttributeError, e:

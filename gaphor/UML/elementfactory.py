@@ -5,34 +5,37 @@ includes saving, loading and flushing models. In the future things like
 consistency checking should also be included.'''
 
 #import misc.singleton as Singleton
-from gaphor.misc.singleton import Singleton
-from gaphor.misc.signal import Signal
+from gaphor.misc.singleton import Singleton as _Singleton
+from gaphor.misc.signal import Signal as _Signal
 #from misc.storage import Storage
-#import libxml2 as xml
+import weakref, gc
 from element import Element
 
-class ElementFactory(Singleton):
+class ElementFactory(_Singleton):
 
     def __element_signal (self, key, old_value, new_value, obj):
-	if key == '__unlink__' and self.__elements.has_key(obj.id):
-	    print 'Unlinking element', obj
-	    del self.__elements[obj.id]
-	    self.__emit_remove (obj)
-	elif key == '__relink__' and not self.__elements.has_key(obj.id):
-	    print 'Relinking element', obj
-	    self.__elements[obj.id] = obj
-	    self.__emit_create (obj)
+	element = obj()
+	if not element:
+	    return
+	if key == '__unlink__' and self.__elements.has_key(element.id):
+	    print 'Unlinking element', element
+	    del self.__elements[element.id]
+	    self.__emit_remove (element)
+	elif key == '__relink__' and not self.__elements.has_key(element.id):
+	    print 'Relinking element', element
+	    self.__elements[element.id] = element
+	    self.__emit_create (element)
 
     def init (self, *args, **kwargs):
 	self.__elements = { }
 	self.__index = 1
-	self.__signal = Signal()
+	self.__signal = _Signal()
 
     def create (self, type):
         obj = type(self.__index)
 	self.__elements[self.__index] = obj
 	self.__index += 1
-	obj.connect (self.__element_signal, obj)
+	obj.connect (self.__element_signal, weakref.ref(obj))
 	self.__emit_create (obj)
 	#print 'ElementFactory:', str(self.__index), 'elements in the factory'
 	return obj
@@ -67,6 +70,7 @@ class ElementFactory(Singleton):
 
 	for key, value in self.__elements.items():
 	    print 'ElementFactory: unlinking', value
+	    #print 'references:', gc.get_referrers(value)
 	    value.unlink()
 	assert len(self.__elements) == 0, 'Still items in the factory: %s' % str(self.__elements.values())
 	self.__index = 1
@@ -82,6 +86,10 @@ class ElementFactory(Singleton):
 
     def __emit_remove (self, obj):
 	self.__signal.emit ('remove', obj)
+
+    def __element_destroyed(self, obj):
+	print 'ElementFactory::element_destroyed...'
+	obj().disconnect_by_data(obj)
 
     def values(self):
 	return self.__elements.values()

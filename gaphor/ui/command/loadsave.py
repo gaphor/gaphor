@@ -5,6 +5,7 @@ from gaphor.misc.storage import Storage
 import gtk
 import gaphor.UML as UML
 import gaphor.diagram as diagram
+import gc
 
 DEFAULT_EXT='.gaphor'
 
@@ -37,6 +38,8 @@ class LoadCommand(Command):
 	    print 'Flushing old data...'
 	    UML.ElementFactory().flush()
 	    diagram.DiagramItemFactory().flush()
+
+	    gc.collect()
 
 	    store = Storage()
 	    try:

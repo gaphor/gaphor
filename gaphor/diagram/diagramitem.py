@@ -7,9 +7,13 @@ class DiagramItem(object):
 
     def __init__(self):
 	self.connect ('notify::parent', DiagramItem.on_parent_notify)
+	pass
+
+    def set_subject(self, subject):
+	self._set_subject(subject)
 
     def _set_subject(self, subject):
-	self.preserve_property('subject')
+	#self.preserve_property('subject')
 	if subject != self.subject:
 	    if self.subject:
 		self.subject.disconnect(self.on_subject_update)

@@ -109,5 +109,5 @@ Gaphor is configured:
 	Python interpreter:	$PYTHON
 
 NOTE:	You do not need to install Gaphor, just execute 'test-diagram.py'
-	in the 'diagram' directory.
+	in the current directory.
 "

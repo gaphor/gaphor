@@ -7,6 +7,7 @@ from modelelement import ModelElementItem
 import diacanvas
 import pango
 import gobject
+import sys
 
 class ActorItem(ModelElementItem):
     __gsignals__ = { 'need_update': 'override' }
@@ -22,7 +23,9 @@ class ActorItem(ModelElementItem):
 			 1, gobject.PARAM_READWRITE),
     }
     def __init__(self):
+	#assert sys.getrefcount(self) == 5, sys.getrefcount(self)
 	ModelElementItem.__init__(self)
+	#assert sys.getrefcount(self) == 6, sys.getrefcount(self)
 	self.set(height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
 		 width=(ActorItem.ARM * 2))
 	self.set(min_height=(ActorItem.HEAD + ActorItem.NECK + ActorItem.BODY + ActorItem.ARM),
@@ -40,13 +43,23 @@ class ActorItem(ModelElementItem):
 	self.__legs = diacanvas.shape.Path()
 	self.__legs.set_line_width(2.0)
 	# Name
-	self.add(diacanvas.CanvasText())
+	self.__name = diacanvas.CanvasText()
+	self.add_construction(self.__name)
 	assert self.__name != None
 	font = pango.FontDescription(ActorItem.FONT)
 	self.__name.set(font=font,
 			alignment=pango.ALIGN_CENTER)
 	self.__name_update()
-	self.__name.connect_object('text_changed', ActorItem.on_text_changed, self)
+	#assert sys.getrefcount(self) == 6, sys.getrefcount(self)
+	def on_text_changed(text_item, text, actor):
+	    if text != actor.subject.name:
+		actor.subject.name = text
+		actor.__name_update()
+	#self.__name.connect('text_changed', self.on_text_changed)
+	# This statement makes it crash... Seems like python and signals do
+	# not get along very well...
+	self.__name.connect('text_changed', on_text_changed, self)
+	#assert sys.getrefcount(self) == 7, sys.getrefcount(self)
 
     def do_set_property (self, pspec, value):
 	print 'Actor: Trying to set property', pspec.name, value
@@ -142,12 +155,6 @@ class ActorItem(ModelElementItem):
     # Groupable
 
     def on_groupable_add(self, item):
-	try:
-	    if self.__name is not None:
-		raise AttributeError, 'No more canvas items should be set'
-	except AttributeError:
-	    self.__name = item
-	    return 1
 	return 0
 
     def on_groupable_remove(self, item):
@@ -179,7 +186,8 @@ class ActorItem(ModelElementItem):
 	    self.__name_update()
 	else:
 	    ModelElementItem.on_subject_update(self, name, old_value, new_value)
-    def on_text_changed(self, text):
+
+    def on_text_changed(self, text_item, text):
 	if text != self.subject.name:
 	    self.subject.name = text
 	    self.__name_update()

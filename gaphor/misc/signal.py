@@ -20,6 +20,11 @@ class Signal:
         self.__signals = [ ]
 	self.__queue = [ ]
 
+    def __signal_handler_destroyed(self, ref):
+	print '__signal_handler_destroyed'
+	self.__signals = filter (lambda o: o[0] != ref,
+				 self.__signals)
+	
     def connect (self, signal_handler, *data):
 	"""
 	Connect to the object. You should provide a signal handler and a
@@ -27,6 +32,7 @@ class Signal:
 	"""
 	#print 'Signal.connect():', data
 	self.__signals.append ((signal_handler,) + data)
+	#self.__signals.append ((weakref.ref(signal_handler, self.__signal_handler_destroyed),) + data)
 
     def disconnect (self, signal_handler):
         """
@@ -34,6 +40,12 @@ class Signal:
 	"""
 	self.__signals = filter (lambda o: o[0] != signal_handler,
 				 self.__signals)
+
+    def disconnect_by_data (self, *data):
+	print 'Signal::disconnect_by_data', len (self.__signals)
+	self.__signals = filter (lambda o: o[1:] != data,
+				 self.__signals)
+	print 'Signal::disconnect_by_data', len (self.__signals)
 
     def queue (self, *keys):
 	"""
@@ -71,6 +83,6 @@ class Signal:
 	    for signal in self.__signals:
 		signal_handler = signal[0]
 		data = keys + signal[1:]
-		print 'signal:', signal_handler
+		#print 'signal:', signal[0], signal_handler
 		apply(signal_handler, data)
 

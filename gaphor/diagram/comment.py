@@ -19,7 +19,8 @@ class CommentItem(ModelElementItem):
 		 height=50, width=100)
 	self.__border = diacanvas.shape.Path()
 	self.__border.set_line_width(2.0)
-	self.add(diacanvas.CanvasText())
+	self.__body = diacanvas.CanvasText()
+	self.add_construction(self.__body)
 	assert self.__body != None
 	font = pango.FontDescription(CommentItem.FONT)
 	self.__body.set(font=font, width=self.width - (CommentItem.OFFSET * 2),
@@ -29,7 +30,7 @@ class CommentItem(ModelElementItem):
 	self.__body.move(CommentItem.OFFSET, CommentItem.OFFSET)
 	self.__body_update()
 	#self.__body.set(height=h, width=self.width)
-	self.__body.connect_object('text_changed', CommentItem.on_text_changed, self)
+	#self.__body.connect('text_changed', self.on_text_changed)
 
     def __body_update (self):
 	'''Center the body text in the usecase.'''
@@ -81,17 +82,11 @@ class CommentItem(ModelElementItem):
     # Groupable
 
     def on_groupable_add(self, item):
-	try:
-	    if self.__body is not None:
-		raise AttributeError, 'No more canvas items should be set'
-	except AttributeError:
-	    self.__body = item
-	    return 1
 	return 0
 
     def on_groupable_remove(self, item):
 	'''Do not allow the body to be removed.'''
-	self.emit_stop_by_body('remove')
+	self.emit_stop_by_name('remove')
 	return 0
 
     def on_groupable_get_iter(self):
@@ -119,7 +114,7 @@ class CommentItem(ModelElementItem):
 	else:
 	    ModelElementItem.on_subject_update(self, name, old_value, new_value)
 
-    def on_text_changed(self, text):
+    def on_text_changed(self, text_item, text):
 	self.__body_update()
 	if text != self.subject.body:
 	    self.subject.body = text

@@ -244,7 +244,7 @@ class NamespaceView(gtk.TreeView):
 	
 	# Second cell if for the name of the object...
 	cell = gtk.CellRendererText ()
-	cell.set_property ('editable', 1)
+	#cell.set_property ('editable', 1)
 	cell.connect('edited', self._name_edited, None)
 	column.pack_start (cell, 0)
 	column.set_cell_data_func (cell, self._set_name, None)
@@ -281,7 +281,8 @@ class NamespaceView(gtk.TreeView):
 	element.name = new_text
 
     def on_row_activated(self, path, column):
-	item = self.on_get_iter(path)
+	print self, path, column
+	item = self.get_model().on_get_iter(path)
 	OpenModelElementCommand(item).execute()
 
     def _event(self, event):

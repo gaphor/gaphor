@@ -18,7 +18,8 @@ class UseCaseItem(ModelElementItem):
 	self.set(height=50, width=100)
 	self.__border = diacanvas.shape.Ellipse()
 	self.__border.set_line_width(2.0)
-	self.add(diacanvas.CanvasText())
+	self.__name = diacanvas.CanvasText()
+	self.add_construction(self.__name)
 	assert self.__name != None
 	font = pango.FontDescription(UseCaseItem.FONT)
 	self.__name.set(font=font, width=self.width,
@@ -28,7 +29,7 @@ class UseCaseItem(ModelElementItem):
 	print 'UseCaseItem:',w,h
 	self.__name.move(0, (self.height - h) / 2)
 	self.__name.set(height=h)
-	self.__name.connect_object('text_changed', UseCaseItem.on_text_changed, self)
+	#self.__name.connect('text_changed', self.on_text_changed)
 
     def __name_update (self):
 	'''Center the name text in the usecase.'''
@@ -69,12 +70,6 @@ class UseCaseItem(ModelElementItem):
     # Groupable
 
     def on_groupable_add(self, item):
-	try:
-	    if self.__name is not None:
-		raise AttributeError, 'No more canvas items should be set'
-	except AttributeError:
-	    self.__name = item
-	    return 1
 	return 0
 
     def on_groupable_remove(self, item):
@@ -107,7 +102,7 @@ class UseCaseItem(ModelElementItem):
 	else:
 	    ModelElementItem.on_subject_update(self, name, old_value, new_value)
 
-    def on_text_changed(self, text):
+    def on_text_changed(self, text_item, text):
 	if text != self.subject.name:
 	    self.subject.name = text
 

@@ -31,7 +31,7 @@ import types, copy
 from enumeration import Enumeration_
 from sequence import Sequence, SequenceError
 #from misc import Signal
-from gaphor.misc.signal import Signal
+from gaphor.misc.signal import Signal as _Signal
 
 # Some default types as defined in the MetaModel.
 class Integer(int): pass
@@ -72,7 +72,7 @@ one of the diagrams.
     def __init__(self, id):
 	#print "New object of type", self.__class__
 	self.__dict__['__id'] = id
-	self.__dict__['__signal'] = Signal()
+	self.__dict__['__signal'] = _Signal()
 	self.__dict__['__presentation'] = [ ]
 
     def __unlink(self):
