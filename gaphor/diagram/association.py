@@ -45,9 +45,9 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.
         self._head_end = AssociationEnd()
-        self.add_construction(self._head_end)
+        self._head_end.set_child_of(self)
         self._tail_end = AssociationEnd()
-        self.add_construction(self._tail_end)
+        self._tail_end.set_child_of(self)
 
     def save (self, save_func):
         RelationshipItem.save(self, save_func)

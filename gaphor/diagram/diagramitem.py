@@ -115,7 +115,7 @@ class DiagramItem(Presentation):
             try:
                 self.set_property(name, eval(value))
             except:
-                log.warning('%s has no property names %s (value %s)' % (self, name, value))
+                log.warning('%s has no property named %s (value %s)' % (self, name, value))
 
     def postload(self):
         pass

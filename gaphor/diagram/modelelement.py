@@ -40,11 +40,7 @@ class ModelElementItem (diacanvas.CanvasElement, DiagramItem):
         DiagramItem.save(self, save_func)
 
     def load(self, name, value):
-        if name == 'subject':
-            self.subject = value
-        else:
-            #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
-            self.set_property(name, eval(value))
+	DiagramItem.load(self, name, value)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'auto-resize':

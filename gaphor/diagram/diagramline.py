@@ -40,7 +40,10 @@ class DiagramLine(diacanvas.CanvasLine):
         elif name == 'tail_connection':
             self._load_tail_connection = value
         else:
-            self.set_property(name, eval(value))
+            try:
+                self.set_property(name, eval(value))
+            except:
+                log.warning('%s has no property named %s (value %s)' % (self, name, value))
 
     def postload(self):
         if hasattr(self, '_load_head_connection'):

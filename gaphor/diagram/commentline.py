@@ -31,8 +31,10 @@ class CommentLineItem(DiagramLine, DiagramItem):
         DiagramLine.save(self, save_func)
     
     def load (self, name, value):
-	DiagramItem.load(self, name, value)
-	DiagramLine.load(self, name, value)
+        if name == 'subject':
+	    DiagramItem.load(self, name, value)
+        else:
+	    DiagramLine.load(self, name, value)
 
     def postload(self):
         DiagramItem.postload(self)
