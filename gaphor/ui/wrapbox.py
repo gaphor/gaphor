@@ -54,9 +54,9 @@ class WrapBox(object):
 
     def on_size_allocate(self, table, allocation):
         rows, cols = self.calculate_size(allocation)
-        print 'size_allocate', rows, cols
+        #print 'size_allocate', rows, cols
         if not self.resize_idle_id and (rows != self.rows or cols != self.cols):
-            print 'size_allocate', 'setting idle handler'
+            #print 'size_allocate', 'setting idle handler'
             self.resize_idle_id = gobject.idle_add(self._idle_handler)
         self.rows = rows
         self.cols = cols
