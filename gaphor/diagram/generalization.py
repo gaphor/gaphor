@@ -18,9 +18,23 @@ class GeneralizationItem(relationship.RelationshipItem):
     # Gaphor Connection Protocol
 
     def find_relationship(self, head_subject, tail_subject):
+	"""
+	Find an existing relationship by iterating the 'specialization's
+	of @head_subject and check if the @tail_subject is the child.
+	This does not check if such a relationship is already on the canvas,
+	in which case a new relationship should be created.
+	"""
 	for rel in head_subject.specialization:
 	    if rel.child is tail_subject:
-		return rel
+		# check for this entry on self.canvas
+		for item in rel.presentations():
+		    # Allow self to be returned. Avoids strange
+		    # behaviour during loading
+		    if item.canvas is self.canvas and item is not self:
+			break
+		else:
+		    return rel
+	return None
 
     def allow_connect_handle(self, handle, connecting_to):
 	"""
@@ -51,7 +65,7 @@ class GeneralizationItem(relationship.RelationshipItem):
 	This method is called after a connection is established. This method
 	sets the internal state of the line and updates the data model.
 	"""
-	print 'confirm_connect_handle', handle
+	#print 'confirm_connect_handle', handle
 	c1 = self.handles[0].connected_to
 	c2 = self.handles[-1].connected_to
 	if c1 and c2:
@@ -65,7 +79,7 @@ class GeneralizationItem(relationship.RelationshipItem):
 	    self._set_subject(relation)
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
-	print 'confirm_disconnect_handle', handle
+	#print 'confirm_disconnect_handle', handle
 	if self.subject:
 	    self._set_subject(None)
 

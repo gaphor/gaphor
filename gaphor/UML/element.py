@@ -47,24 +47,25 @@ Geometry = types.ListType
 FALSE = 0
 TRUE = not FALSE
 
-
-
 class Element:
     '''Element is the base class for *all* UML MetaModel classes. The
 attributes and relations are defined by a <class>._attrdef structure.
 A class does not need to define any local variables itself: Element will
 retrieve all information from the _attrdef structure.
 You should call Element::unlink() to remove all relationships with the element.
-In the unlink function all relationships are removed except __presentation,
-__id and __signals. Presentation items are removed by the diagram items that
-represent them (they are connected to the 'unlink' signal). The element will
-also be removed from the element_hash by unlink().
 
 An element can send signals. All normal signals have the name of the attribute
-that's altered. There are three special (system) signals:
+that's altered. There are two special (system) signals:
 __unlink__ and __relink__. __unlink__ is emited if the object is 'destroyed',
 __relink__ is used if the object is active again due to a undo action in
 one of the diagrams.
+The signals protocol is:
+	For single relationships:
+		(signal_name, value_before, value_after) 
+	for sequences:
+		(signal_name, 'add'/'remove', value_to_add_or_remove)
+	for 'system' signals:
+		(__signal_name__, None, None)
 '''
 
     _attrdef = { 'documentation': ( "", types.StringType ) }
@@ -132,6 +133,9 @@ one of the diagrams.
 		self.__save_undo_data()
 		# unlink, but do not destroy __undo_data
 	        self.__unlink()
+    
+    def presentations (self):
+        return self.__dict__['__presentation']
 
     def __load_undo_data (self):
         #print 'undo_presentation', self.__dict__

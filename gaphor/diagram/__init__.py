@@ -7,10 +7,11 @@ from usecase import *
 from relationship import *
 from dependency import *
 from generalization import *
+from association import *
 
 from diagramitemfactory import *
 
-#  Register diagram items with the diagram item factory
+# Register diagram items with the diagram item factory
 
 import gaphor.UML as UML
 

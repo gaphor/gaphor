@@ -104,6 +104,9 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
     # (mostly Relationship objects or CommentLines) know what kind of item
     # they are allowed to connect to.
 
+    def find_relationship(self, head_subject, tail_subject):
+        pass
+
     def allow_connect_handle(self, handle, connecting_to):
 	"""
 	This method is called by a canvas item if the user tries to connect

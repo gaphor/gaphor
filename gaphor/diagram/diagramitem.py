@@ -14,7 +14,7 @@ class DiagramItem(object):
 
     def _set_subject(self, subject):
 	#self.preserve_property('subject')
-	if subject != self.subject:
+	if subject is not self.subject:
 	    if self.subject:
 		self.subject.disconnect(self.on_subject_update)
 		self.subject.remove_presentation(self)

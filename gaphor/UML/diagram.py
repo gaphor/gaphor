@@ -19,7 +19,7 @@ class Diagram(Namespace):
     diagram2UML = { }
     _savable_canvas_properties = [ 'extents', 'static_extents',
 	    'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
-	    'grid_ofs_y', 'snap_to_grid', 'grid_color', 'grid_bg' ]
+	    'grid_ofs_y', 'grid_color', 'grid_bg' ]
     _savable_root_item_properties = [ 'affine', ]
     #__index = 0
 

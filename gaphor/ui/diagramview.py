@@ -28,11 +28,12 @@ import command.about
     ITEM_ADD_COMMENT,
     ITEM_ADD_COMMENT_LINE,
     ITEM_ADD_GENERALIZATION,
+    ITEM_ADD_ASSOCIATION,
     ITEM_ADD_DEPENDENCY,
     ITEM_ADD_REALIZATION,
     ITEM_ADD_INCLUDE,
     ITEM_ADD_EXTEND
-] = range(22)
+] = range(23)
 
 class DiagramView:
 
@@ -168,6 +169,8 @@ class DiagramView:
 	    set_placement_tool (diagram.CommentLineItem, None)
 	elif action == ITEM_ADD_GENERALIZATION:
 	    set_placement_tool (diagram.GeneralizationItem, None)
+	elif action == ITEM_ADD_ASSOCIATION:
+	    set_placement_tool (diagram.AssociationItem, None)
 	#elif action == ITEM_ADD_REALIZATION:
 	#    set_placement_tool (diagram.Realization, None)
 	elif action == ITEM_ADD_DEPENDENCY:
@@ -204,6 +207,7 @@ class DiagramView:
 	( '/New Item/Comment', None, __menu_item_cb,  ITEM_ADD_COMMENT ),
 	( '/New Item/Comment Line', None, __menu_item_cb,  ITEM_ADD_COMMENT_LINE ),
 	( '/New Item/Generalization', None, __menu_item_cb,  ITEM_ADD_GENERALIZATION ),
+	( '/New Item/Association', None, __menu_item_cb,  ITEM_ADD_ASSOCIATION ),
 	( '/New Item/Dependency', None, __menu_item_cb,  ITEM_ADD_DEPENDENCY ),
 #	( '/New Item/Realization', None, __menu_item_cb,  ITEM_ADD_REALIZATION ),
 #	( '/New Item/Include', None, __menu_item_cb,  ITEM_ADD_INCLUDE ),

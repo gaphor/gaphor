@@ -45,7 +45,9 @@ class LoadCommand(Command):
 	    try:
 		store.load(filename)
 	    except Exception, e:
+		import traceback
 		print 'Error while loading model from file %s: %s' % (filename, e)
+		traceback.print_exc()
 	gtk.main_quit()
 
     def on_cancel_button_pressed(self, button, filesel):

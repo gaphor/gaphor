@@ -95,7 +95,7 @@ class Storage(object):
 	    element = self.__info.factory.lookup (store.id())
 	    #print element
 	    if not element:
-		raise ValueError, 'Element with id %d was created but can not be found anymore.' % id
+		raise ValueError, 'Element with id %d was created but can not be found anymore.' % store.id()
 
 	    element.load (store)
 	    
@@ -110,7 +110,7 @@ class Storage(object):
 	    element = self.__info.factory.lookup (store.id())
 	    #print element
 	    if not element:
-		raise ValueError, 'Element with id %d was created but can not be found anymore.' % id
+		raise ValueError, 'Element with id %d was created but can not be found anymore.' % store.id()
 
 	    element.postload (store)
 	    

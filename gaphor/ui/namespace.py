@@ -38,7 +38,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 	elif key == 'ownedElement' and old_value == 'add':
 	    def recursive_add(element):
 		path = self.get_path(element)
-		print 'ownedElement ADD', element, element.namespace, path
+		#print 'ownedElement ADD', element, element.namespace, path
 		iter = self.get_iter(path)
 		self.row_inserted(path, iter)
 		for child in element.ownedElement:
@@ -46,7 +46,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 	    recursive_add(new_value)
 	elif key == 'ownedElement' and old_value == 'remove':
 	    path = self.get_path(new_value)
-	    print 'ownedElement remove', old_value, new_value, path
+	    #print 'ownedElement remove', old_value, new_value, path
 	    if path != ():
 		self.row_deleted (path)
 	elif key == '__unlink__':
