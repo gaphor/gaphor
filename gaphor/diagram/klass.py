@@ -67,9 +67,12 @@ class ClassItem(ModelElementItem):
 	]
 
     def save(self, save_func):
-	ModelElementItem.save(self, save_func)
+	# Store the show- properties *before* the width/height properties,
+	# otherwise the classes will unintentionally grow due to "visible"
+	# attributes or operations.
 	self.save_property(save_func, 'show-attributes')
 	self.save_property(save_func, 'show-operations')
+	ModelElementItem.save(self, save_func)
 
     def do_set_property(self, pspec, value):
 	if pspec.name == 'show-attributes':

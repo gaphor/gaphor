@@ -7,6 +7,7 @@ from gaphor.misc.command import Command, StatefulCommand
 from commandinfo import CommandInfo
 import gaphor.UML as UML
 import diacanvas
+import gaphor.diagram as diagram
 
 CONTEXT='diagram.popup'
 
@@ -77,7 +78,7 @@ class ShowAttributesCommand(StatefulCommand):
 
 CommandInfo (name='ShowAttributes', _label='Show Attributes',
 	     _tip='show attribute compartment',
-	     context=CONTEXT, subject=UML.Class,
+	     context=CONTEXT, subject=diagram.ClassItem,
 	     state=('show-attributes',),
 	     command_class=ShowAttributesCommand).register()
 
@@ -93,7 +94,7 @@ class ShowOperationsCommand(StatefulCommand):
 
 CommandInfo (name='ShowOperations', _label='Show Operations',
 	     _tip='show attribute compartment',
-	     context=CONTEXT, subject=UML.Class,
+	     context=CONTEXT, subject=diagram.ClassItem,
 	     state=('show-operations',),
 	     command_class=ShowOperationsCommand).register()
 

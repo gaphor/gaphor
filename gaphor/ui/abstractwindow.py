@@ -190,6 +190,7 @@ class AbstractWindow(object):
 		if isinstance(e, klass):
 		    hidden = '0'
 		    if hasattr(e, 'has_capability'):
+			#log.debug('%s.has_capability found.' % e)
 			capable_elements.append(e)
 		    break
 	    if not name.startswith('/'):
