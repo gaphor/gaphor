@@ -143,7 +143,6 @@ def load_stock_icons():
     """
     from xml.sax import make_parser
     parser = make_parser()
-
     data_dir = gaphor.resource('DataDir')
     icon_dir = os.path.join(data_dir, 'pixmaps')
     loader = StockIconLoader(icon_dir)
@@ -151,8 +150,11 @@ def load_stock_icons():
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    parser.parse(os.path.join(data_dir, 'icons.xml'))
-    #parser.close()
+    filename = os.path.join(data_dir, 'icons.xml')
+    if os.name == 'nt' and data_dir[1] == ':':
+        # Make the filename a full URL
+        filename = 'file:' + filename.replace('\\\\', '/')
+    parser.parse(filename)
 
 load_stock_icons()
 
