@@ -309,6 +309,34 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 
     # Gaphor Connection Protocol
 
+    def find_relationship(self, head_type, tail_type):
+        # First check if we do not already contain the right subject:
+        if self.subject:
+            end1 = self.subject.memberEnd[0]
+            end2 = self.subject.memberEnd[1]
+            if (end1.type is head_type and end2.type is tail_type) \
+               or (end2.type is head_type and end1.type is tail_type):
+                return
+                
+        # Find all associations and determine if the properties on the
+        # association ends have a type that points to the class.
+        Association = UML.Association
+        for assoc in gaphor.resource(UML.ElementFactory).itervalues():
+            if isinstance(assoc, Association):
+                #print 'assoc.memberEnd', assoc.memberEnd
+                end1 = assoc.memberEnd[0]
+                end2 = assoc.memberEnd[1]
+                if (end1.type is head_type and end2.type is tail_type) \
+                   or (end2.type is head_type and end1.type is tail_type):
+                    # check if this entry is not yet in the diagram
+                    # Return if the association is not (yet) on the canvas
+                    for item in assoc.presentation:
+                        if item.canvas is self.canvas:
+                            break
+                    else:
+                        return assoc
+        return None
+
     def allow_connect_handle(self, handle, connecting_to):
         """This method is called by a canvas item if the user tries to connect
         this object's handle. allow_connect_handle() checks if the line is

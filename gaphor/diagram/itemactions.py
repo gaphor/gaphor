@@ -903,24 +903,54 @@ class CreateLinksAction(Action):
                 if pres.canvas is canvas:
                     yield pres
 
+    def find_relationship(self, new_rel, head_subject, tail_subject):
+        pass
+
+    def create_missing_relationships(self, item, diagram, item_type):
+        new_rel = diagram.create(item_type)
+        for other_item in diagram.canvas.root.children:
+            if not other_item.subject:
+                continue
+
+            try:
+                while new_rel.find_relationship(item.subject, other_item.subject):
+                    item.connect_handle(new_rel.handles[0])
+                    other_item.connect_handle(new_rel.handles[-1])
+                    # Create a new item we want to connect
+                    new_rel = diagram.create(item_type)
+            except AttributeError:
+                pass
+
+            # Try the other way too:
+            try:
+                while new_rel.find_relationship(other_item.subject, item.subject):
+                    other_item.connect_handle(new_rel.handles[0])
+                    item.connect_handle(new_rel.handles[-1])
+                    # Create a new item we want to connect
+                    new_rel = diagram.create(item_type)
+            except AttributeError:
+                pass
+
+        # We always create one relationship to much. Remove it.
+        new_rel.unlink()
+
     def execute(self):
         diagram_tab = self._window.get_current_diagram_tab()
+        diagram = diagram_tab.get_diagram()
         for view_item in diagram_tab.get_view().selected_items:
             item = view_item.item
-            if isinstance(item, gaphor.diagram.ClassifierItem):
-                for dep in item.subject.supplierDependency:
-                    for pres in dep.presentation:
-                        if pres.canvas is item.canvas:
-                            continue
-                    for opposite in self.find_items_on_this_canvas(dep.client, item.canvas):
-                        new_item = diagram_tab.get_diagram().create(gaphor.diagram.DependencyItem)
-                        item.connect_handle(new_item.handles[0])
-                        new_item.subject = dep
-                        opposite.connect_handle(new_item.handles[-1])
+            if isinstance(item, gaphor.diagram.ClassItem):
+                self.create_missing_relationships(item, diagram,
+                                            gaphor.diagram.AssociationItem)
 
-            # If Class: iterate associations, dependency, inheritance,
-            # implementation ...
-            # If Actor...
+            if isinstance(item, gaphor.diagram.ClassifierItem):
+                self.create_missing_relationships(item, diagram,
+                                            gaphor.diagram.ImplementationItem)
+                self.create_missing_relationships(item, diagram,
+                                            gaphor.diagram.GeneralizationItem)
+
+            self.create_missing_relationships(item, diagram,
+                                              gaphor.diagram.DependencyItem)
 
 weave_method(CreateLinksAction.execute, UndoTransactionAspect)
 register_action(CreateLinksAction, 'ItemFocus', 'ItemSelect')
