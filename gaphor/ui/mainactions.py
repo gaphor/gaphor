@@ -3,7 +3,6 @@
 Main window actions.
 """
 
-from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 import sys
 import gobject
 import gtk
@@ -15,6 +14,8 @@ from threading import Thread
 import Queue
 
 import gaphor
+from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
+from gaphor.i18n import _
 
 DEFAULT_EXT='.gaphor'
 
@@ -36,16 +37,15 @@ class WorkerThread(Thread):
 	"""
         Thread.start(self)
 	main = gobject.main_context_default()
+	# Run main iterations as long as this thread exists.
         while self.isAlive():
 	    main.iteration(False)
-            #self.join()
-            #print '.',
 
     def run(self):
         try:
             self.function()
         except Exception, e:
-            log.error('Error occured while in worker thread', e)
+            log.error(_('Error occured while in worker thread'), e)
             self.error = e
 
 def show_status_window(title, message, parent=None, queue=None):
@@ -54,21 +54,31 @@ def show_status_window(title, message, parent=None, queue=None):
     win.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
     win.set_transient_for(parent)
     win.set_modal(True)
-    vbox = gtk.VBox()
+    win.set_resizable(False)
+    win.set_decorated(False)
+    win.set_skip_taskbar_hint(True)
+    win.set_skip_pager_hint(True)
+    win.set_border_width(24)
+    vbox = gtk.VBox(spacing=24)
     win.add(vbox)
     label = gtk.Label(message)
-    label.set_padding(30,30)
+    label.set_padding(8,8)
     vbox.pack_start(label)
     progress_bar = gtk.ProgressBar()
-    vbox.pack_start(progress_bar, expand=False, fill=False)
+    vbox.pack_start(progress_bar, expand=False, fill=False, padding=0)
+    #progress_bar.set_size_request(100, 15)
+    #progress_bar.set_padding(100, 20)
 
     def progress_idle_handler(progress_bar, queue):
 	#print '.',
+	percentage = 0
 	try:
-	    percentage = queue.get_nowait()
-	    progress_bar.set_fraction(percentage / 100.0)
+	    while True:
+		percentage = queue.get_nowait()
 	except Queue.Empty:
 	    pass
+	if percentage:
+	    progress_bar.set_fraction(percentage / 100.0)
 	return True
 
     if queue:
@@ -104,7 +114,7 @@ class NewAction(Action):
         #stereotypes = factory.create(UML.Profile)
         #stereotypes.name = 'Stereotypes'
         self._window.set_filename(None)
-        self._window.set_message('Created a new model')
+        self._window.set_message(_('Created a new model'))
         factory.notify_model()
 
         path = self._window.get_model().path_from_element(diagram)
@@ -143,7 +153,7 @@ class OpenAction(Action):
                 import gaphor.storage as storage
                 log.debug('Loading from: %s' % filename)
 		queue = Queue.Queue()
-                win = show_status_window('Loading...', 'Loading model from %s' % filename, self._window.get_window(), queue)
+                win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, self._window.get_window(), queue)
                 self.filename = filename
                 gc.collect()
                 worker = WorkerThread(lambda: storage.load(filename, status_queue=lambda m: queue.put_nowait(m) and 1))

@@ -103,17 +103,17 @@ def save(filename=None, factory=None, status_queue=None):
     buffer.write('<?xml version="1.0"?>\n')
     buffer.write('<gaphor version="%s" gaphor_version="%s">' % (FILE_FORMAT_VERSION, gaphor.resource('Version')))
 
-    n_items = len(factory.values())
-    cur_item = 0
+    size = factory.size()
+    n = 0
     for e in factory.values():
         clazz = e.__class__.__name__
         assert e.id
         buffer.write('<%s id="%s">' % (clazz, str(e.id)))
         e.save(save_element)
         buffer.write('</%s>' % clazz)
-        cur_item += 1
-        if status_queue and cur_item % 10 == 0:
-            status_queue((cur_item * 100) / n_items)
+        n += 1
+        if status_queue and n % 25 == 0:
+            status_queue((n * 100) / size)
 
     buffer.write('</gaphor>')
 
@@ -135,15 +135,22 @@ def _load(elements, factory, status_queue=None):
     Exceptions: IOError, ValueError.
     """
 
-    log.debug(_('Loading %d elements...') % len(elements.keys()))
+    log.debug(_('Loading %d elements...') % len(elements))
+
+    # The elements are iterated three times:
+    size = len(elements) * 3
+    def update_status_queue(_n=[0]):
+        if status_queue:
+            n = _n[0] = _n[0] + 1
+            if n % 10 == 0:
+                status_queue((n * 100) / size)
 
     log.info('0%')
-    if status_queue:
-        status_queue(25)
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     for id, elem in elements.items():
+        update_status_queue()
         if isinstance(elem, parser.element):
             try:
                 cls = getattr(UML, elem.type)
@@ -159,11 +166,10 @@ def _load(elements, factory, status_queue=None):
             raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
 
     log.info('0% ... 33%')
-    if status_queue:
-        status_queue(50)
 
     # load attributes and create references:
     for id, elem in elements.items():
+        update_status_queue()
         # Ensure that all elements have their element instance ready...
         assert hasattr(elem, 'element')
 
@@ -209,18 +215,16 @@ def _load(elements, factory, status_queue=None):
                     except:
                         log.error('Loading %s.%s with value %s failed' % (type(elem.element).__name__, name, ref.element.id))
                         raise
+
                 
     log.info('0% ... 33% ... 66%')
-    if status_queue:
-        status_queue(75)
 
     # do a postload:
     for id, elem in elements.items():
+        update_status_queue()
         elem.element.postload()
 
     log.info('0% ... 33% ... 66% ... 100%')
-    if status_queue:
-        status_queue(100)
 
     factory.notify_model()
 
@@ -233,7 +237,7 @@ def load(filename, factory=None, status_queue=None):
     try:
         elements = parser.parse(filename) #dom.parse (filename)
         if status_queue:
-            status_queue(25)
+            status_queue(100)
     except Exception, e:
         print e
         log.error('File could no be parsed')

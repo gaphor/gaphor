@@ -117,7 +117,7 @@ class Writer:
         if self.overrides.has_override(full_name):
             self.overrides.write_override(self, full_name)
         elif eval(a.isDerived or '0'):
-            msg('Ignoring derived attribute %s.%s: no definition' % (a.class_name, a.name))
+            msg('ignoring derived attribute %s.%s: no definition' % (a.class_name, a.name))
         elif type.endswith('Kind'):
             e = filter(lambda e: e['name'] == type, enumerations.values())[0]
             self.write_property("%s.%s" % (a.class_name, a.name),
@@ -423,7 +423,7 @@ def generate(filename, outfile=None, overridesfile=None):
             try:
                 derivedunions[s].union.append(a)
             except KeyError:
-                msg('Not a derived union: %s.%s' % (a.class_name, s))
+                msg('not a derived union: %s.%s' % (a.class_name, s))
 
     for d in derivedunions.values():
         writer.write_derivedunion(d)

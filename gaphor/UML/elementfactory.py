@@ -42,6 +42,9 @@ class ElementFactory(object):
         self.notify(obj, 'create')
         return obj
 
+    def size(self):
+	return len(self._elements)
+
     def lookup(self, id):
         try:
             return self._elements[id]

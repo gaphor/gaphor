@@ -1,3 +1,11 @@
+2004-05-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+        * gaphor/storage.py: Be more verbose wrt load status.
+	* gaphor/UML/elementfactory.py: Added method size().
+	* gaphor/UML/uml2.gaphor: change in Interfaces diagram
+	* gaphor/ui/mainactions.py: made load/save
+	window look prettier.
+
 2004-05-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* data/icons.xml: contains descriptions of icons, rather than
