@@ -38,14 +38,20 @@ class RelationshipItem(DiagramLine):
         node_tail_name = tail_relation[1]
 
 	if self.subject and \
-	   getattr(self.subject, head_relation[0]) is head_subject and \
-	   getattr(self.subject, tail_relation[0]) is tail_subject:
+	   getattr(self.subject, edge_head_name) is head_subject and \
+	   getattr(self.subject, edge_tail_name) is tail_subject:
 	    return self.subject
+
+        # This is the type of the relationship we're looking for
+        required_type = getattr(type(tail_subject), node_tail_name).type
 
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram.
-        for gen in getattr(tail_subject, tail_relation[1]):
-            gen_head = getattr(gen, head_relation[0])
+        for gen in getattr(tail_subject, node_tail_name):
+            if not isinstance(gen, required_type):
+                continue
+                
+            gen_head = getattr(gen, edge_head_name)
             try:
                 if not head_subject in gen_head:
                     continue

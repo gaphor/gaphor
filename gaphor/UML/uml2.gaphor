@@ -197,7 +197,7 @@
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(0.0, 61.0), (140.0, 61.0)]</val></points>
+<points><val>[(0.0, 61.0), (140.00000000000006, 61.000000000000057)]</val></points>
 <head_connection><ref refid="DCE:DECCED70-4A87-11D7-B089-133D836EF880"/></head_connection>
 <tail_connection><ref refid="DCE:69148026-83D9-11D7-ADE2-4B1972AF3391"/></tail_connection>
 <head_subject><ref refid="DCE:7265A7FE-83D9-11D7-ADE2-4B1972AF3391"/></head_subject>
@@ -266,7 +266,7 @@
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(8.4073254559594659, 5.135696545495648), (62.0, 6.0)]</val></points>
+<points><val>[(8.4073254559594375, 5.135696545495648), (62.0, 6.0)]</val></points>
 <head_connection><ref refid="DCE:5138249A-863A-11D7-8239-5A25B8C2F569"/></head_connection>
 <tail_connection><ref refid="DCE:91252432-863B-11D7-8239-5A25B8C2F569"/></tail_connection>
 </item></canvas></Diagram><LiteralSpecification id="DCE:ECFBFEA0-4864-11D8-A4FB-20895068F46E"><value><val><![CDATA[subsets ownedElement]]></val></value>
@@ -529,7 +529,7 @@
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(-5.6843418860808015e-14, 16.0), (0.14693877551007972, -85.000000000000028)]</val></points>
+<points><val>[(-5.6843418860808015e-14, 16.0), (0.14693877551007972, -85.0)]</val></points>
 <head_connection><ref refid="DCE:DCD70090-A419-11D8-A88E-00061BC22919"/></head_connection>
 <tail_connection><ref refid="DCE:601C11DA-A419-11D8-B4C8-00061BC22919"/></tail_connection>
 <head_subject><ref refid="DCE:E944DEC6-A419-11D8-A88E-00061BC22919"/></head_subject>
@@ -1225,7 +1225,7 @@
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(-24.916518874835447, 1.0), (-15.226804123711418, 57.0)]</val></points>
+<points><val>[(-24.916518874835674, 1.0), (-15.226804123711418, 57.0)]</val></points>
 <head_connection><ref refid="DCE:4EDEF382-4B56-11D7-A5E6-6257AF3C5118"/></head_connection>
 <tail_connection><ref refid="DCE:F3BEEB38-4B55-11D7-A5E6-6257AF3C5118"/></tail_connection>
 </item><item id="DCE:647EFD20-4B56-11D7-A5E6-6257AF3C5118" type="AssociationItem"><subject><ref refid="DCE:C90400F8-83E1-11D7-ADE2-4B1972AF3391"/></subject>
@@ -1778,7 +1778,7 @@ namespace, featuringClassifier]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>1</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(0.0, -50.0), (-152.0, -50.0), (-152.0, -3.0), (0.0, -3.0)]</val></points>
+<points><val>[(0.0, -49.999999999999943), (-152.0, -49.999999999999943), (-152.0, -3.0), (0.0, -3.0)]</val></points>
 <head_connection><ref refid="DCE:4B26A412-8320-11D8-BEC8-00C00C03A405"/></head_connection>
 <tail_connection><ref refid="DCE:4B26A412-8320-11D8-BEC8-00C00C03A405"/></tail_connection>
 <head_subject><ref refid="DCE:42784EE6-8321-11D8-BEC8-00C00C03A405"/></head_subject>
@@ -1798,7 +1798,7 @@ namespace, featuringClassifier]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(15.121428571428396, 0.0), (15.349999999999909, 68.0)]</val></points>
+<points><val>[(15.12142857142851, 0.0), (15.349999999999909, 68.0)]</val></points>
 <head_connection><ref refid="DCE:4B26A412-8320-11D8-BEC8-00C00C03A405"/></head_connection>
 <tail_connection><ref refid="DCE:991BB40E-8321-11D8-BEC8-00C00C03A405"/></tail_connection>
 </item><item id="DCE:DD293C7E-8FD1-11D8-9422-00C00C03A405" type="ClassItem"><show-attributes><val>1</val></show-attributes>
@@ -2133,7 +2133,7 @@ namespace, featuringClassifier]]></val></value>
 <grid_int_y><val>10.0</val></grid_int_y>
 <grid_ofs_x><val>0.0</val></grid_ofs_x>
 <grid_ofs_y><val>0.0</val></grid_ofs_y>
-<grid_color><val>255</val></grid_color>
+<grid_color><val>33023</val></grid_color>
 <grid_bg><val>4294967295</val></grid_bg>
 <root_affine><val>(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)</val></root_affine>
 <item id="DCE:E0850A3C-45CE-11D7-B5CA-613352B2821F" type="PackageItem"><affine><val>(1.0, 0.0, 0.0, 1.0, 218.0, 74.0)</val></affine>
@@ -2772,7 +2772,7 @@ namespace, featuringClassifier]]></val></value>
 <grid_int_y><val>10.0</val></grid_int_y>
 <grid_ofs_x><val>0.0</val></grid_ofs_x>
 <grid_ofs_y><val>0.0</val></grid_ofs_y>
-<grid_color><val>255</val></grid_color>
+<grid_color><val>33023</val></grid_color>
 <grid_bg><val>4294967295</val></grid_bg>
 <root_affine><val>(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)</val></root_affine>
 <item id="DCE:0D9DCE64-97BA-11D8-9E36-00C00C03A405" type="ClassItem"><show-attributes><val>0</val></show-attributes>
@@ -5070,7 +5070,7 @@ featuringClassifier]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(2.0000000000000568, -1.0), (1.9999999999999432, 109.0)]</val></points>
+<points><val>[(2.0, -1.0000000000000568), (2.0, 109.00000000000006)]</val></points>
 <head_connection><ref refid="DCE:10978112-8402-11D8-82A2-7B88E55A3BEC"/></head_connection>
 <tail_connection><ref refid="DCE:3CF0EBEC-8403-11D8-82A2-7B88E55A3BEC"/></tail_connection>
 </item></canvas></Diagram><Generalization id="DCE:124886C8-7652-11D7-8271-9A319BBF187B"><general><ref refid="DCE:7D753EF0-464D-11D7-AA08-1B85D5275D8A"/></general>
@@ -5089,7 +5089,7 @@ ownedMember]]></val></value>
 <upperValue><ref refid="DCE:BC5E0F38-2E06-11D8-A169-52D559F3DAB9"/></upperValue>
 </Property><Diagram id="DCE:DA3B1A4E-8405-11D8-82A2-7B88E55A3BEC"><name><val><![CDATA[Groups]]></val></name>
 <package><ref refid="DCE:E4B1E900-8322-11D8-8D1E-00C00C03A405"/></package>
-<canvas><extents><val>(20.0, 43.0, 760.0, 377.00000000000006)</val></extents>
+<canvas><extents><val>(20.0, 43.0, 760.0, 377.0)</val></extents>
 <static_extents><val>0</val></static_extents>
 <snap_to_grid><val>0</val></snap_to_grid>
 <grid_int_x><val>10.0</val></grid_int_x>
@@ -5179,7 +5179,7 @@ ownedMember]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(-33.0, 62.0), (-116.0, 87.000000000000057)]</val></points>
+<points><val>[(-33.0, 62.0), (-116.0, 87.0)]</val></points>
 <head_connection><ref refid="DCE:FB5C328A-8405-11D8-82A2-7B88E55A3BEC"/></head_connection>
 <tail_connection><ref refid="DCE:C0147696-8406-11D8-82A2-7B88E55A3BEC"/></tail_connection>
 <head_subject><ref refid="DCE:CF5D27EC-8406-11D8-82A2-7B88E55A3BEC"/></head_subject>
@@ -5713,8 +5713,9 @@ ownedMember]]></val></value>
 </Property><Property id="DCE:C2293130-A418-11D8-B4C8-00061BC22919"><aggregation><val><![CDATA[composite]]></val></aggregation>
 <association><ref refid="DCE:C229073A-A418-11D8-B4C8-00061BC22919"/></association>
 <class_><ref refid="DCE:882D4230-A35C-11D8-9D85-00C00C03A405"/></class_>
+<isDerived><val>0</val></isDerived>
 <lowerValue><ref refid="DCE:C2295B9C-A418-11D8-B4C8-00061BC22919"/></lowerValue>
-<name><val><![CDATA[implementingClassifier]]></val></name>
+<name><val><![CDATA[implementatingClassifier]]></val></name>
 <presentation><reflist></reflist></presentation><taggedValue><ref refid="DCE:D132F7B0-A418-11D8-B4C8-00061BC22919"/></taggedValue>
 <type><ref refid="DCE:555F3576-6679-11D7-A84E-6C8643AD0CA4"/></type>
 <upperValue><ref refid="DCE:D12FDF54-A418-11D8-B4C8-00061BC22919"/></upperValue>
@@ -5776,7 +5777,7 @@ ownedMember]]></val></value>
 <grid_int_y><val>10.0</val></grid_int_y>
 <grid_ofs_x><val>0.0</val></grid_ofs_x>
 <grid_ofs_y><val>0.0</val></grid_ofs_y>
-<grid_color><val>33023</val></grid_color>
+<grid_color><val>255</val></grid_color>
 <grid_bg><val>4294967295</val></grid_bg>
 <root_affine><val>(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)</val></root_affine>
 <item id="DCE:357C844A-A35C-11D8-9D85-00C00C03A405" type="ClassItem"><show-attributes><val>0</val></show-attributes>
@@ -5801,7 +5802,7 @@ ownedMember]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(-160.00000000000006, 15.999999999999986), (-159.51000000000016, 77.999999999999972)]</val></points>
+<points><val>[(-160.0, 16.0), (-159.51000000000022, 78.0)]</val></points>
 <head_connection><ref refid="DCE:357C844A-A35C-11D8-9D85-00C00C03A405"/></head_connection>
 <tail_connection><ref refid="DCE:3B61B1FA-A35C-11D8-9D85-00C00C03A405"/></tail_connection>
 </item><item id="DCE:651CE0E8-A35C-11D8-9D85-00C00C03A405" type="ClassItem"><show-attributes><val>0</val></show-attributes>
@@ -5873,7 +5874,7 @@ ownedMember]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(-0.99999999999988631, 2.7982456140350678), (159.0, 3.0), (159.0, 46.0), (-1.0000000000001137, 45.999999999999915)]</val></points>
+<points><val>[(-0.99999999999988631, 2.7982456140350678), (159.0, 3.0), (159.0, 46.0), (-1.0, 45.999999999999915)]</val></points>
 <head_connection><ref refid="DCE:3B61B1FA-A35C-11D8-9D85-00C00C03A405"/></head_connection>
 <tail_connection><ref refid="DCE:3B61B1FA-A35C-11D8-9D85-00C00C03A405"/></tail_connection>
 <head_subject><ref refid="DCE:EE13EC80-A417-11D8-B4C8-00061BC22919"/></head_subject>
@@ -6087,7 +6088,7 @@ ownedMember]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(0.0, -35.000000000000057), (319.0, -35.0)]</val></points>
+<points><val>[(5.6843418860808015e-14, -35.0), (319.0, -35.0)]</val></points>
 <head_connection><ref refid="DCE:C4730890-50A1-11D7-807A-302CB4EF44FD"/></head_connection>
 <tail_connection><ref refid="DCE:160EBB4E-50A3-11D7-807A-302CB4EF44FD"/></tail_connection>
 <head_subject><ref refid="DCE:2C685A9C-50A3-11D7-807A-302CB4EF44FD"/></head_subject>
@@ -6100,7 +6101,7 @@ ownedMember]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(318.00000000000011, -57.785714285713993), (-0.99999999999994316, -57.999999999999602)]</val></points>
+<points><val>[(318.0, -57.78571428571405), (-1.0, -57.999999999999659)]</val></points>
 <head_connection><ref refid="DCE:160EBB4E-50A3-11D7-807A-302CB4EF44FD"/></head_connection>
 <tail_connection><ref refid="DCE:C4730890-50A1-11D7-807A-302CB4EF44FD"/></tail_connection>
 <head_subject><ref refid="DCE:64DA33A0-50A3-11D7-807A-302CB4EF44FD"/></head_subject>
@@ -6894,7 +6895,7 @@ classifier]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(27.0, 3.0000000000000568), (351.88000000000011, 2.0000000000000568)]</val></points>
+<points><val>[(27.0, 3.0000000000000568), (351.87999999999988, 2.0)]</val></points>
 <head_connection><ref refid="DCE:403F722A-78D6-11D7-B68E-7835A4497977"/></head_connection>
 <tail_connection><ref refid="DCE:2CDCED42-78D6-11D7-B68E-7835A4497977"/></tail_connection>
 <head_subject><ref refid="DCE:54A3CA4C-78D6-11D7-B68E-7835A4497977"/></head_subject>
@@ -6916,7 +6917,7 @@ classifier]]></val></value>
 <tail_connection><ref refid="DCE:403F722A-78D6-11D7-B68E-7835A4497977"/></tail_connection>
 </item></canvas></Diagram><Diagram id="DCE:D2653A36-464C-11D7-AA08-1B85D5275D8A"><name><val><![CDATA[Namespaces]]></val></name>
 <package><ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/></package>
-<canvas><extents><val>(102.66666666666663, 42.666666666666657, 987.33333333333314, 1020.7841530054643)</val></extents>
+<canvas><extents><val>(102.66666666666663, 42.666666666666657, 987.33333333333326, 1020.7841530054643)</val></extents>
 <static_extents><val>0</val></static_extents>
 <snap_to_grid><val>0</val></snap_to_grid>
 <grid_int_x><val>10.0</val></grid_int_x>
@@ -7104,7 +7105,7 @@ classifier]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(175.33333333333371, 105.33333333333337), (176.66666666666663, 213.33333333333348)]</val></points>
+<points><val>[(175.33333333333371, 105.33333333333337), (176.66666666666674, 213.33333333333348)]</val></points>
 <head_connection><ref refid="DCE:A70E26A6-4695-11D7-B567-379CA7034986"/></head_connection>
 <tail_connection><ref refid="DCE:B4456442-4695-11D7-B567-379CA7034986"/></tail_connection>
 <head_subject><ref refid="DCE:C02292F8-4695-11D7-B567-379CA7034986"/></head_subject>
@@ -7432,7 +7433,7 @@ classifier]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(-9.9999999999998863, 251.0), (62.0, 159.0)]</val></points>
+<points><val>[(-9.9999999999997726, 251.00000000000011), (62.0, 159.0)]</val></points>
 <head_connection><ref refid="DCE:A78F7D8A-6690-11D7-A84E-6C8643AD0CA4"/></head_connection>
 <tail_connection><ref refid="DCE:E90F7030-6690-11D7-A84E-6C8643AD0CA4"/></tail_connection>
 </item><item id="DCE:B607CF74-6691-11D7-A84E-6C8643AD0CA4" type="AssociationItem"><subject><ref refid="DCE:B751CA7E-6691-11D7-A84E-6C8643AD0CA4"/></subject>
@@ -7812,7 +7813,7 @@ classifier]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(24.0, -19.0), (46.228915662650707, -69.0)]</val></points>
+<points><val>[(24.0, -19.0), (46.228915662650593, -69.000000000000114)]</val></points>
 <head_connection><ref refid="DCE:A41A17DC-8324-11D8-8D1E-00C00C03A405"/></head_connection>
 <tail_connection><ref refid="DCE:816AF662-8324-11D8-8D1E-00C00C03A405"/></tail_connection>
 <head_subject><ref refid="DCE:B2B4E3B0-8324-11D8-8D1E-00C00C03A405"/></head_subject>
@@ -8061,7 +8062,7 @@ classifier]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>1</val></horizontal>
-<points><val>[(9.363636363636374, 0.0), (329.09090909090924, 0.0)]</val></points>
+<points><val>[(9.3636363636364877, 5.6843418860808015e-14), (329.09090909090924, 0.0)]</val></points>
 <head_connection><ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/></head_connection>
 <tail_connection><ref refid="DCE:5EE7DC76-4B35-11D7-B391-02BBFE4396CE"/></tail_connection>
 <head_subject><ref refid="DCE:99FB75E6-4B35-11D7-B391-02BBFE4396CE"/></head_subject>
@@ -8222,7 +8223,7 @@ classifier]]></val></value>
 <grid_int_y><val>10.0</val></grid_int_y>
 <grid_ofs_x><val>0.0</val></grid_ofs_x>
 <grid_ofs_y><val>0.0</val></grid_ofs_y>
-<grid_color><val>255</val></grid_color>
+<grid_color><val>33023</val></grid_color>
 <grid_bg><val>4294967295</val></grid_bg>
 <root_affine><val>(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)</val></root_affine>
 <item id="DCE:9464AAD2-B7DE-11D8-8AD1-9AC43285B64C" type="ClassItem"><show-attributes><val>0</val></show-attributes>
@@ -8267,7 +8268,7 @@ classifier]]></val></value>
 <join><val>1</val></join>
 <orthogonal><val>0</val></orthogonal>
 <horizontal><val>0</val></horizontal>
-<points><val>[(1.0000000000000568, 2.8421709430404007e-14), (-181.0, -2.8421709430404007e-14)]</val></points>
+<points><val>[(1.0, 2.8421709430404007e-14), (-181.00000000000003, -2.8421709430404007e-14)]</val></points>
 <head_connection><ref refid="DCE:B50F0138-B7DE-11D8-8AD1-9AC43285B64C"/></head_connection>
 <tail_connection><ref refid="DCE:9464AAD2-B7DE-11D8-8AD1-9AC43285B64C"/></tail_connection>
 <head_subject><ref refid="DCE:F67462EC-B7DE-11D8-8AD1-9AC43285B64C"/></head_subject>

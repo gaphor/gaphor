@@ -1,42 +1,41 @@
-
-check Classifier.substitution, InstanceSpecification.slot.
+- Check Implementation.implementingClassifier!
 
 As always, there is much to do...
 
-- fix stock icon loading (image size versus usage in bars etc.)
-- fix accelarators (HOW?)
+- fix accelarators (HOW?), partially done, accelerators on items in popup menus
+  does not work.
 
-- Activity: implement
-	Add guards to ControlFlow
-	FlowFinalNode (intermediate activities),
-	ObjectFlow (if the arrow is connected to a ObjectNode),
-	DecisionNode (/ MergeNode),
+- Undo/redo functionality doesn;t work as espected
+- Stereotypes: check documentation page 581 (597 absolute).
 
 #- Class: Association end properties are shown in the tree view
-- Undo/redo functionality doesn;t work as espected
 #- Implement and test attribute/operation parser.
 #- Convert Data model to use the parsed attributes + operations.
 #- Operation is not part of namespace (assoc. should be bi-dir.)
-- Stereotypes: check documentation page 581 (597 absolute).
 
-- Make sure than, when a model is loaded and saved again, both save files do
-  not differ.
-
-- reordering of model elements doesn't work properly.
+#- Make sure than, when a model is loaded and saved again, both save files do
+#  not differ.
 
 - Exporting diagrams to UML XMI, code, images (SVG/png), etc.
 
 - Set up a plugin architecture. Since the internals of gaphor are pretty
   modular, plugins should not be that hard.
 
-- Some nice icons.
+UI
+--
+>I would like to see
+> some logic to align diagrams like Visio does, it's probably hard to do
+> correct though. Also Visio has a very nice feature for bending lines in
+> 90 degree bends by holding down shift, something like that would be very
+> nice in Gaphor
 
-More specific:
-- Let commands determine if they are visible/sensible, instead of a
-  has_capability function on the diagram item. This will be much easier with
-  gtk+ 2.4.
+I also intend to "merge" lines (as is often used for generalizations: a line with one arrow, which splits into two lines, one for each subclass)
 
-  Classes have a makeup like this:
+The text editing also needs a facelift.
+
+Classes
+-------
+Classes have a makeup like this:
 	+------------+
 	|   <<st>>  o| stereotype: centered, icon: right justified.
 	|  *class*   | class name, centered, bold
@@ -48,9 +47,7 @@ More specific:
 	+------------+
 - Create stereotype, so we can add them to classes.
 - How to put things like multiplicity and visibility in a popup menu
-- parsers for attributes, operations
 - lose (not in a comment box) text
-- make generator functions from load() and save()
 
 
 Stereotypes
