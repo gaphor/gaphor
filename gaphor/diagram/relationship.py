@@ -37,6 +37,7 @@ class RelationshipItem(DiagramLine):
         edge_tail_name = tail_relation[0]
         node_tail_name = tail_relation[1]
 
+        # First check if the right subject is already connected:
         if self.subject and \
            getattr(self.subject, edge_head_name) is head_subject and \
            getattr(self.subject, edge_tail_name) is tail_subject:
