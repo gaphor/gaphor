@@ -8,7 +8,7 @@
 
 MAJOR_VERSION = 0
 MINOR_VERSION = 5
-MICRO_VERSION = 1
+MICRO_VERSION = 2
 
 VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 
@@ -363,6 +363,7 @@ setup(name='gaphor',
       data_files=[('', ['data/icons.xml']),
                   ('pixmaps', glob('data/pixmaps/*.png')),
                   ('plugins/plugineditor', glob('data/plugins/plugineditor/*.*')),
+                  ('plugins/liveobjectbrowser', glob('data/plugins/liveobjectbrowser/*.*')),
                   ('plugins/checkmetamodel', glob('data/plugins/checkmetamodel/*.*'))
       ],
       scripts=['bin/gaphor'],
