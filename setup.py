@@ -144,10 +144,17 @@ class version_py:
         print 'generating %s' % outfile, dir, data_dir
         self.mkpath(os.path.dirname(outfile))
         f = open(outfile, 'w')
+        f.write('import os\n')
         f.write('VERSION=\'%s\'\n' % VERSION)
+        # expand backspaces
+        f.write('DATA_DIR=\'%s\'\n' % data_dir.replace('\\', '\\\\'))
+        if os.name == 'nt':
+            home = 'USERPROFILE'
+        else:
+            home = 'USER'
         f.write('DATA_DIR=\'%s\'\n' % data_dir)
         f.write('import os\n')
-        f.write('USER_DATA_DIR=os.path.join(os.getenv(\'HOME\'), \'.gaphor\')\n')
+        f.write('USER_DATA_DIR=os.path.join(os.getenv(\'%s\'), \'.gaphor\')\n' % home)
         f.write('del os\n')
         f.close()
         self.byte_compile([outfile])
@@ -162,6 +169,7 @@ class build_py_Gaphor(build_py, version_py):
         sys.path.insert(0, self.build_lib)
         # All data is stored in the local data directory
         data_dir = os.path.join(os.getcwd(), 'data')
+        #data_dir = "os.path.join(os.getcwd(), 'data')"
         self.generate_version(self.build_lib, data_dir)
         self.generate_uml2()
 
