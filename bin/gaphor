@@ -1,0 +1,5 @@
+#!python
+
+from gaphor import Gaphor
+
+Gaphor().main()

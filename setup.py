@@ -54,6 +54,9 @@ class config_Gaphor(Command):
 	self.pkg_config_check('gobject-2.0', '2.0.0')
 	self.pkg_config_check('gtk+-2.0', '2.0.0')
 	self.pkg_config_check('pygtk-2.0', '1.99.15')
+	self.pkg_config_check('gconf-2.0', '2.0.0')
+	self.pkg_config_check('libbonobo-2.0', '2.0.0')
+	self.pkg_config_check('libbonoboui-2.0', '2.0.0')
 	self.pkg_config_check('diacanvas2', '0.9.1')
 
 	self.module_check('gobject')
@@ -101,16 +104,28 @@ class build_py_Gaphor(build_py):
 
     def run(self):
         build_py.run(self)
+        self.generate_modelelements()
+        self.generate_version()
+
+    def generate_modelelements(self):
         import utils.genUML
         gen = 'utils/genUML.py'
         xmi = 'doc/UmlMetaModel.xmi'
-        out = os.path.join(self.build_lib, 'gaphor/UML/modelelements.py')
-        if self.force or newer(xmi, out) or newer(gen, out):
-            utils.genUML.generate(xmi, out)
+        outfile = os.path.join(self.build_lib, 'gaphor/UML/modelelements.py')
+        self.mkpath(os.path.dirname(outfile))
+        if self.force or newer(xmi, outfile) or newer(gen, outfile):
+            utils.genUML.generate(xmi, outfile)
         else:
-            print 'not generating %s (up-to-date)' % out
+            print 'not generating %s (up-to-date)' % outfile
+        self.byte_compile([outfile])
 
-#build.sub_commands.insert(0, ('build_modelelements', None))
+    def generate_version(self):
+        outfile = os.path.join(self.build_lib, 'gaphor/version.py')
+        self.mkpath(os.path.dirname(outfile))
+        f = open(outfile, 'w')
+        f.write('VERSION=\'%s\'' % VERSION)
+        f.close()
+        self.byte_compile([outfile])
 
 
 class install_config(Command):
@@ -118,14 +133,14 @@ class install_config(Command):
     description = "Install a configuration (using GConf)."
 
     user_options = [
-	('install-data', None, 'installation directory for data files'),
+	('install-data=', None, 'installation directory for data files'),
 	('force', 'f', 'force installation (overwrite existing keys)')
     ]
 
     boolean_options = ['force']
 
     def initialize_options(self):
-	self.install_data = ''
+	self.install_data = None
 	self.force = None
 	self.gconf_client = None
 
@@ -140,10 +155,18 @@ class install_config(Command):
 	self._set_value('datadir', self.install_data, 'string')
 
     def _set_value(self, key, value, type):
-	if self.force or not apply(getattr(self, 'get_' + type), (GCONF_DOMAIN + key,)):
-	    apply(getattr(self, 'set_' + type), (GCONF_DOMAIN + key, value))
+	if self.force or not apply(getattr(self.gconf_client, 'get_' + type), (GCONF_DOMAIN + key,)):
+            print 'setting gconf value "%s" to "%s"' % (key, value)
+	    apply(getattr(self.gconf_client, 'set_' + type), (GCONF_DOMAIN + key, value))
 
 install.sub_commands.append(('install_config', None))
+
+class run_Gaphor(Command):
+
+    description = 'Execute Gaphor from the local directory'
+
+    def run(self):
+        print 'Run gaphor'
 
 
 setup(name='gaphor',
@@ -164,9 +187,12 @@ setup(name='gaphor',
 			      'data/gaphor.dtd']),
 		  ('gaphor/pixmaps', glob('data/pixmaps/*.png'))
       ],
+      scripts=['bin/gaphor'
+      ],
       cmdclass={'config': config_Gaphor,
                 'build_py': build_py_Gaphor,
                 'install_config': install_config,
+                'run': run_Gaphor
       }
 )
 
