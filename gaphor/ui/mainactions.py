@@ -326,15 +326,15 @@ class AboutAction(Action):
 	    label.set_justify(gtk.JUSTIFY_CENTER)
 	    vbox.pack_start(label)
 
-	add_label('<span size="xx-large" weight="bold">Gaphor</span>')
+	#add_label('<span size="xx-large" weight="bold">Gaphor</span>')
 	add_label('<span weight="bold">version %s</span>' % version)
-	add_label('<span variant="smallcaps">UML Modeling for GNOME</span>',8,8)
+	add_label('<span variant="smallcaps">UML Modeling tool for GNOME</span>', 8, 8)
 	add_label('<span size="small">Copyright (c) 2001-2004 Arjan J. Molenaar</span>', 8, 8)
 	vbox.pack_start(gtk.HSeparator())
 	add_label('This software is published\n'
 		  'under the terms of the\n'
 		  '<span weight="bold">GNU General Public License v2</span>.\n'
-		  'See the COPYING file for details.', 8, 8)
+		  'See the COPYING file for details.', 0, 8)
 	vbox.show_all()
         about.run()
 	about.destroy()
