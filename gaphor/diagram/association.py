@@ -130,28 +130,28 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable):
             # Update line ends using the aggregation and isNavigable values:
 
             if head_subject.aggregation == intern('composite'):
-                self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
-                         tail_fill_color=diacanvas.color(0,0,0,255))
-            elif head_subject.aggregation == intern('shared'):
-                self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
-                         tail_fill_color=diacanvas.color(255,255,255,255))
-            elif not head_subject.owningAssociation:
-                # This side is navigable:
-                self.set(has_tail=1, tail_a=0, tail_b=15, tail_c=6, tail_d=6)
-            else:
-                self.set(has_tail=0)
-
-            if tail_subject.aggregation == intern('composite'):
                 self.set(has_head=1, head_a=20, head_b=10, head_c=6, head_d=6,
                          head_fill_color=diacanvas.color(0,0,0,255))
-            elif tail_subject.aggregation == intern('shared'):
+            elif head_subject.aggregation == intern('shared'):
                 self.set(has_head=1, head_a=20, head_b=10, head_c=6, head_d=6,
                          head_fill_color=diacanvas.color(255,255,255,255))
-            elif not tail_subject.owningAssociation:
+            elif not head_subject.owningAssociation:
                 # This side is navigable:
                 self.set(has_head=1, head_a=0, head_b=15, head_c=6, head_d=6)
             else:
                 self.set(has_head=0)
+
+            if tail_subject.aggregation == intern('composite'):
+                self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
+                         tail_fill_color=diacanvas.color(0,0,0,255))
+            elif tail_subject.aggregation == intern('shared'):
+                self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
+                         tail_fill_color=diacanvas.color(255,255,255,255))
+            elif not tail_subject.owningAssociation:
+                # This side is navigable:
+                self.set(has_tail=1, tail_a=0, tail_b=15, tail_c=6, tail_d=6)
+            else:
+                self.set(has_tail=0)
 
         RelationshipItem.on_update(self, affine)
 

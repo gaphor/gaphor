@@ -1,3 +1,8 @@
+2004-10-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: arrow heads were drawn in the wrong
+	direction. corrected
+
 2004-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/diagramitem.py: fixed bug in on_subject_notify(),
