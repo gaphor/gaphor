@@ -32,7 +32,7 @@ _default_stock_icons = (
     (STOCK_DIAGRAM,	UML.Diagram,	'diagram24.png', 'diagram16.png'),
     (STOCK_EXTEND,	UML.Extend,	None),
     (STOCK_COMMENT,	UML.Comment,	'comment24.png', 'comment16.png'),
-    (STOCK_COMMENT_LINE, None,		None),
+    (STOCK_COMMENT_LINE, None,		'commentline24.png', 'commentline16.png'),
     (STOCK_GENERALIZATION, UML.Generalization, 'generalization24.png', 'generalization16.png'),
     (STOCK_INCLUDE,	UML.Include,	None),
     (STOCK_PACKAGE,	UML.Package,	'package24.png', 'package16.png'),

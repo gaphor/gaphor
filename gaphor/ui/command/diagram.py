@@ -28,6 +28,7 @@ class ExportSVGCommand(Command):
 
     def __init__(self):
 	Command.__init__(self)
+	self.filename = None
 
     def set_parameters(self, params):
 	self._window = params['window']
@@ -35,29 +36,43 @@ class ExportSVGCommand(Command):
     def execute(self):
 	filesel = gtk.FileSelection('Export diagram to SVG file')
 	filesel.set_modal(True)
-	filesel.set_filename(self._window.get_diagram().name + '.svg' or 'export.svg')
+	filesel.set_filename(self.filename or self._window.get_diagram().name + '.svg' or 'export.svg')
 
-	filesel.ok_button.connect('clicked', self.on_ok_button_pressed, filesel)
-	filesel.cancel_button.connect('clicked',
-				      self.on_cancel_button_pressed, filesel)
+	#filesel.ok_button.connect('clicked', self.on_ok_button_pressed, filesel)
+	#filesel.cancel_button.connect('clicked',
+	#			      self.on_cancel_button_pressed, filesel)
 	
-	filesel.show()
+	#filesel.show()
+	response = filesel.run()
+	filesel.hide()
+	if response == gtk.RESPONSE_OK:
+	    filename = filesel.get_filename()
+	    if filename and len(filename) > 0:
+		self.filename = filename
+		log.debug('Exporting SVG image to: %s' % filename)
+		canvas = self._window.get_diagram().canvas
+		export = diacanvas.ExportSVG()
+		try:
+		    export.render (canvas)
+		    export.save(filename)
+		except Exception, e:
+		    log.error('Error while saving model to file %s: %s' % (filename, e))
 
-    def on_ok_button_pressed(self, button, filesel):
-	filename = filesel.get_filename()
-	filesel.destroy()
-	if filename and len(filename) > 0:
-	    log.debug('Exporting SVG image to: %s' % filename)
-	    canvas = self._window.get_diagram().canvas
-	    export = diacanvas.ExportSVG()
-	    try:
-		export.render (canvas)
-		export.save(filename)
-	    except Exception, e:
-		log.error('Error while saving model to file %s: %s' % (filename, e))
+#    def on_ok_button_pressed(self, button, filesel):
+#	filename = filesel.get_filename()
+#	filesel.destroy()
+#	if filename and len(filename) > 0:
+#	    log.debug('Exporting SVG image to: %s' % filename)
+#	    canvas = self._window.get_diagram().canvas
+#	    export = diacanvas.ExportSVG()
+#	    try:
+#		export.render (canvas)
+#		export.save(filename)
+#	    except Exception, e:
+#		log.error('Error while saving model to file %s: %s' % (filename, e))
 
-    def on_cancel_button_pressed(self, button, filesel):
-	filesel.destroy()
+#    def on_cancel_button_pressed(self, button, filesel):
+#	filesel.destroy()
 
 CommandInfo (name='FileExportSVG', _label='_Export SVG...', pixname='Export',
 	     _tip='Save the current diagram to a SVG file',

@@ -90,6 +90,7 @@ class DiagramWindow(AbstractWindow):
 	File->Close was pressed.
 	"""
 	AbstractWindow._on_window_destroy(self, window)
+	# Set diagram to None, so all refrences to the diagram are destroyed.
 	self.set_diagram(None)
 	del self.__view
 	del self.__diagram

@@ -1,5 +1,10 @@
 __all__ = [ 'command', 'commandregistry', 'namespace', 'stock' ]
 
+# Make sure we have GTK+ >= 2.0:
+import pygtk
+pygtk.require('2.0')
+del pygtk
+
 import commandregistry
 
 from abstractwindow import AbstractWindow

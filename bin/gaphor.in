@@ -1,6 +1,4 @@
 PYTHON="@PYTHON@"
 
-$PYTHON -c "import pygtk
-pygtk.require('2.0')
-from gaphor import Gaphor
+$PYTHON -c "from gaphor import Gaphor
 Gaphor().main()"

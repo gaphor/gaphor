@@ -25,6 +25,9 @@ class RelationshipItem(diacanvas.CanvasLine, DiagramItem):
 	DiagramItem.__init__(self)
 	self.__id = None
 
+    def set_id(self, value):
+	self.__id = value
+
     def save (self, save_func):
 	for prop in RelationshipItem.__savable_properties:
 	    self.save_property(save_func, prop)

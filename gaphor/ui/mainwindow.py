@@ -19,6 +19,8 @@ class MainWindow(AbstractWindow):
 	AbstractWindow.__init__(self)
 	self.__filename = None
 	self.__transient_window = list()
+	factory = GaphorResource(UML.ElementFactory)
+	factory.connect(self.__on_element_factory_signal, factory)
 
     def get_model(self):
 	self._check_state(AbstractWindow.STATE_ACTIVE)
@@ -71,6 +73,7 @@ class MainWindow(AbstractWindow):
 	Window is destroyed... Quit the application.
 	"""
 	AbstractWindow._on_window_destroy(self, window)
+	GaphorResource(UML.ElementFactory).disconnect(self.__on_element_factory_signal)
 	del self.__model
 	del self.__view
 
@@ -109,4 +112,7 @@ class MainWindow(AbstractWindow):
 
     def __on_transient_window_notify_title(self, window):
 	pass
+
+    def __on_element_factory_signal(self, key, obj, factory):
+	self.set_capability('model', factory.get_model() is not None)
 

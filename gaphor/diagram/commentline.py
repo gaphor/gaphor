@@ -19,9 +19,14 @@ class CommentLineItem(diacanvas.CanvasLine):
     __savable_properties = [ 'affine', 'line_width',
 			'color', 'cap', 'join', 'orthogonal', 'horizontal' ]
     def __init__(self):
+	diacanvas.CanvasLine.__init__(self)
 	self.__gobject_init__()
 	self.__id = None
+	self.__shape = None
 	self.set_property('dash', (7.0, 5.0))
+
+    def set_id(self, value):
+	self.__id = value
 
     def save (self, save_func):
 	for prop in CommentLineItem.__savable_properties:
@@ -62,13 +67,16 @@ class CommentLineItem(diacanvas.CanvasLine):
 
     def do_set_property (self, pspec, value):
 	if pspec.name == 'id':
-	    self.__id = value
+	    #self.__id = value
+	    self.set_data('id', value)
 	    #print self, '__id', self.__dict__
 	else:
 	    raise AttributeError, 'Unknown property %s' % pspec.name
 
     def do_get_property(self, pspec):
 	if pspec.name == 'id':
+	    return self.get_data('id')
+
 	    #print self, 'get_property(id)', self.__dict__
 	    if not hasattr(self, '_CommentLineItem__id'):
 		log.warning('No ID found, generating a new one...')
@@ -170,3 +178,4 @@ class CommentLineItem(diacanvas.CanvasLine):
 
 gobject.type_register(CommentLineItem)
 diacanvas.set_callbacks(CommentLineItem)
+

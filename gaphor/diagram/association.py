@@ -58,6 +58,7 @@ class AssociationItem(relationship.RelationshipItem):
 	elif pspec.name == 'tail_end':
 	    return self.tail_end
 	else:
+	    #print 'Association.__dict__ =', self.__dict__
 	    return self.__super.do_get_property(pspec)
 
     def _set_head_end(self, head_end):

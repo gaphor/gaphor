@@ -57,10 +57,10 @@ class ClassItem(ModelElementItem):
     def _add_feature(self, feature):
 	"""Add a feature. The feature may be of class Attribute or
 	Operation."""
-	try:
-	    log.debug('Adding feature for class %s: %s' % (self.subject.name, feature.name))
-	except:
-	    pass
+	#try:
+	#    log.debug('Adding feature for class %s: %s' % (self.subject.name, feature.name))
+	#except:
+	#    pass
 	# We have to ensure an item has not yet been added for the feature,
 	# somehow featureItems doubled when loaded from a file...
 	for f in self.__features:
@@ -73,10 +73,10 @@ class ClassItem(ModelElementItem):
 
     def _remove_feature(self, feature):
 	"""Remove a feature (Attribute or Operation)."""
-	try:
-	    log.debug('Removing feature for class %s: %s' % (self.subject.name, feature.name))
-	except:
-	    pass
+	#try:
+	#    log.debug('Removing feature for class %s: %s' % (self.subject.name, feature.name))
+	#except:
+	#    pass
 	for f in self.__features:
 	    if f.subject is feature:
 		self.remove(f)
@@ -160,7 +160,7 @@ class ClassItem(ModelElementItem):
     def on_groupable_add(self, item):
 	"""Add an attribute or operation."""
 	if isinstance(item.subject, UML.Feature):
-	    log.debug('Adding feature %s' % item)
+	    #log.debug('Adding feature %s' % item)
 	    self.__features.append(item)
 	    return 1
 	else:
@@ -171,7 +171,7 @@ class ClassItem(ModelElementItem):
 	"""Remove a feature subitem."""
 	if item in self.__features:
 	    self.__features.remove(item)
-	    log.debug('Feature removed: %s' % item)
+	    #log.debug('Feature removed: %s' % item)
 	    return 1
 	else:
 	    log.warning('feature %s not found in feature list' % item)
@@ -217,7 +217,7 @@ class ClassItem(ModelElementItem):
 	    self.__name.set(text=self.subject.name)
 	elif name == 'feature' and (self.canvas and not self.canvas.in_undo):
 	    # Only hande the feature if we're part of a diagram
-	    log.debug('on_subject_update(%s, %s)' % (old_value, new_value))
+	    #log.debug('on_subject_update(%s, %s)' % (old_value, new_value))
 	    if old_value == 'add':
 		self._add_feature(new_value)
 	    elif old_value == 'remove':

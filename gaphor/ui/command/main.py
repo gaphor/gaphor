@@ -42,22 +42,25 @@ CommandInfo (name='FileNew', _label='_New', pixname='New',
 
 class OpenCommand(Command):
 
+    def __init__(self):
+	Command.__init__(self)
+	self.filename = None
+
     def set_parameters(self, params):
 	self._window = params['window']
 
     def execute(self):
 	filesel = gtk.FileSelection('Open Gaphor file')
 	filesel.hide_fileop_buttons()
-	
+	filesel.set_filename(self.filename or '')
+
 	response = filesel.run()
 	filesel.hide()
 	if response == gtk.RESPONSE_OK:
 	    filename = filesel.get_filename()
 	    if filename and len(filename) > 0:
 		log.debug('Loading from: %s' % filename)
-		#GaphorResource(UML.ElementFactory).flush()
-		#GaphorResource(diagram.DiagramItemFactory).flush()
-
+		self.filename = filename
 		gc.collect()
 
 		try:
@@ -107,7 +110,7 @@ class SaveCommand(Command):
 CommandInfo (name='FileSave', _label='_Save', pixname='Save',
 	     accel='*Control*s',
 	     _tip='Save the current gaphor project',
-	     context='main.menu',
+	     context='main.menu', sensitive=('model',),
 	     command_class=SaveCommand).register()
 
 
@@ -137,7 +140,7 @@ class SaveAsCommand(Command):
 
 CommandInfo (name='FileSaveAs', _label='_Save as...', pixname='Save As',
 	     _tip='Save the current gaphor project',
-	     context='main.menu',
+	     context='main.menu', sensitive=('model',),
 	     command_class=SaveAsCommand).register()
 
 
@@ -195,7 +198,7 @@ class CreateDiagramCommand(Command):
 
 CommandInfo (name='CreateDiagram', _label='_New diagram', pixname='gaphor-diagram',
 	     _tip='Create a new diagram at toplevel',
-	     context='main.menu',
+	     context='main.menu', sensitive=('model',),
 	     command_class=CreateDiagramCommand).register()
 
 

@@ -131,7 +131,8 @@ def _load (doc, factory):
 		cls = getattr(diagram, type)
 		child_item = cls()
 		child_item.set_property('id', copy.copy(id))
-		print 'Setting property __id for', child_item, child_item.get_property('id')
+		#child_item.set_id(id)
+		#print 'Setting property __id for', child_item, child_item.get_property('id')
 		id2element[id] = child_item
 		child_item.set_property('parent', item)
 		load_canvas_items(child, child_item)
@@ -196,6 +197,7 @@ def _load (doc, factory):
 
     version = rootnode.getAttribute('version')
 
+    print '0'
     # Create Element's
     for node in rootnode.childNodes:
 	if node.nodeName != ELEMENT:
@@ -213,11 +215,13 @@ def _load (doc, factory):
 		    assert isinstance (element, UML.Diagram)
 		    load_canvas_items(child, element.canvas.root)
 
+    print '.... 33'
     # Let the elements load their variables
     for node in rootnode.childNodes:
 	element = factory.lookup (node.getAttribute(ID))
 	load_node(node, element)
 
+    print '.... 67'
     # Postprocess the element, give them a chance to clean up etc.
     diagrams = []
     for node in rootnode.childNodes:
@@ -229,14 +233,7 @@ def _load (doc, factory):
     for node, element in diagrams:
 	postload_node(node, element)
 
-    gc.collect()
-    for id, item in id2element.items():
-	if isinstance(item, UML.Element):
-	    if item.id != id:
-	    	log.error('Invalid id for element %s (%s)' % (item, id))
-	elif isinstance(item, diacanvas.CanvasItem):
-	    if item.get_property('id') != id:
-	    	log.error('Invalid id for item %s (%s)' % (item, id))
+    print '.... 100'
 
 def load (filename):
     '''Load a file and create a model if possible.
@@ -259,8 +256,21 @@ def load (filename):
 	#print '===================================== pre load succeeded =='
 	factory = GaphorResource(UML.ElementFactory)
 	factory.flush()
-    	_load(doc, factory)
 	gc.collect()
+    	_load(doc, factory)
+	# DEBUG code:
+#	print ''
+#	print ''
+#	print ''
+#	for d in factory.select(lambda e: e.isKindOf(UML.Diagram)):
+#	    for i in d.canvas.root.children:
+#		print i, i.__dict__
+	gc.collect()
+#	for d in factory.select(lambda e: e.isKindOf(UML.Diagram)):
+#	    for i in d.canvas.root.children:
+#		print i, i.__dict__
+#		print '   ', i.get_property('id')
+
     except Exception, e:
 	log.info('file %s could not be loaded' % filename)
 	import traceback

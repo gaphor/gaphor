@@ -34,6 +34,9 @@ class ModelElementItem (diacanvas.CanvasElement, diacanvas.CanvasAbstractGroup, 
 	self.auto_resize = 0
 	self.__id = -1
 
+    def set_id(self, value):
+	self.__id = value
+
     def save (self, save_func):
 	self.save_property(save_func, 'affine')
 	self.save_property(save_func, 'width')
