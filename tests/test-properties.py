@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # vim:sw=4:et
 
-from properties import *
-from element import Element
+from gaphor.UML.properties import *
+from gaphor.UML.element import Element
 
 def test_associations():
     #
@@ -12,7 +12,7 @@ def test_associations():
     class B(Element): pass
     class C(Element): pass
 
-    A.one = association('one', B, 0, 1, 'two')
+    A.one = association('one', B, 0, 1, opposite='two')
     B.two = association('two', A, 0, 1)
     a = A()
     b = B()
@@ -27,7 +27,7 @@ def test_associations():
     class B(Element): pass
     class C(Element): pass
 
-    A.one = association('one', B, 0, infinite, 'two')
+    A.one = association('one', B, 0, '*', opposite='two')
     B.two = association('two', A, 0, 1)
 
     a = A()
@@ -43,8 +43,8 @@ def test_associations():
     class B(Element): pass
     class C(Element): pass
 
-    A.one = association('one', B, 0, 1, 'two')
-    B.two = association('two', A, 0, 1, 'one')
+    A.one = association('one', B, 0, 1, opposite='two')
+    B.two = association('two', A, 0, 1, opposite='one')
 
     a = A()
     b = B()
@@ -83,8 +83,8 @@ def test_associations():
     class B(Element): pass
     class C(Element): pass
 
-    A.one = association('one', B, 0, 1, 'two')
-    B.two = association('two', A, 0, infinite, 'one')
+    A.one = association('one', B, 0, 1, opposite='two')
+    B.two = association('two', A, 0, '*', opposite='one')
 
     a1 = A()
     a2 = A()
@@ -149,8 +149,8 @@ def test_associations():
     class B(Element): pass
     class C(Element): pass
 
-    A.one = association('one', B, 0, infinite, 'two')
-    B.two = association('two', A, 0, infinite, 'one')
+    A.one = association('one', B, 0, '*', opposite='two')
+    B.two = association('two', A, 0, '*', opposite='one')
 
     a1 = A()
     a2 = A()
@@ -205,8 +205,8 @@ def test_associations():
     class B(Element): pass
     class C(Element): pass
 
-    A.one = association('one', B, 0, infinite, 'two')
-    B.two = association('two', A, 0, infinite)
+    A.one = association('one', B, 0, '*', opposite='two')
+    B.two = association('two', A, 0, '*')
 
     a1 = A()
     a2 = A()

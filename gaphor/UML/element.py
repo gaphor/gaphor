@@ -9,8 +9,9 @@ save()/load()/postload()
     Load/save the element.
 
 unlink()
-    Remove all references to the element. First of all the signal
-    '__unlink__' is send to all attached signals.
+     Remove all references to the element. This is done by emiting the
+     '__unlink__' signal to all attached signals. unlink() can not be called
+     recursively.
 
 connect ('name', callback, *data) or
 connect (('name', 'other_property'), callback, *data)
@@ -26,27 +27,32 @@ notify (name)
     Notify all listeners the property 'name' has changed.
 """
 
-import types
+__all__ = [ 'Element' ]
+
+import types, mutex
+from properties import umlproperty, association
 
 class Element(object):
     """Base class for UML data classes."""
 
     def __init__(self, id=None):
         self.id = id
-	self._observers = dict()
+        self._observers = dict()
+        self.__in_unlink = mutex.mutex()
 
     def save(self, save_func):
-	"""Save the state by calling save_func(name, value)."""
-        from properties import umlproperty
-        for propname in dir(self.__class__):
-            prop = getattr(self.__class__, propname)
-            if isinstance(prop, umlproperty):
+        """Save the state by calling save_func(name, value)."""
+        umlprop = umlproperty
+        clazz = self.__class__
+        for propname in dir(clazz):
+            prop = getattr(clazz, propname)
+            if isinstance(prop, umlprop):
                 prop.save(self, save_func)
 
     def load(self, name, value):
-	"""Loads value in name. Make sure that for every load postload()
-	should be called."""
-	try:
+        """Loads value in name. Make sure that for every load postload()
+        should be called."""
+        try:
             prop = getattr(self.__class__, name)
         except AttributeError, e:
             raise AttributeError, "'%s' has no property '%s'" % \
@@ -55,13 +61,20 @@ class Element(object):
             prop.load(self, value)
 
     def postload(self):
-	pass
+        pass
 
     def unlink(self):
-	self.notify('__unlink__')
-           
+        """Unlink the element."""
+        # Uses a mutex to make sure it is not called recursively
+        if self.__in_unlink.testandset():
+            try:
+                self.notify('__unlink__')
+            finally:
+                self.__in_unlink.unlock()
+
     def connect(self, names, callback, *data):
-	"""Attach 'callback' to a list of names. Names may also be a string."""
+        """Attach 'callback' to a list of names. Names may also be a string.
+        A name is the name od a property of the object or '__unlink__'."""
         if type(names) is types.StringType:
             names = (names,)
         cb = (callback,) + data
@@ -75,10 +88,10 @@ class Element(object):
                 self._observers[name] = [cb]
 
     def disconnect(self, callback, *data):
-	"""Detach a callback identified by it's data."""
+        """Detach a callback identified by it's data."""
         #print 'disconnect', callback, data
         cb = (callback,) + data
-	for values in self._observers.values():
+        for values in self._observers.values():
             # Remove all occurences of 'cb' from values
             # (if none is found ValueError is raised).
             try:
@@ -89,9 +102,10 @@ class Element(object):
 
     def notify(self, name):
         """Send notification to attached callbacks that a property
-	has changed."""
-	cb_list = self._observers.get(name) or ()
-        for cb_data in cb_list:
+        has changed."""
+        cb_list = self._observers.get(name) or ()
+        # Use a copy of the list to ensure all items are notified
+        for cb_data in list(cb_list):
             try:
                 apply(cb_data[0], (name,) + cb_data[1:])
             except:

@@ -1,0 +1,12 @@
+include NEWS README TODO AUTHORS run-gaphor.sh
+include bin/gaphor
+recursive-include doc usecases.txt ui-design.txt diagram-in-python.txt
+recursive-include doc UmlMetaModel.xmi gnome-packages.gaphor UML2.gaphor
+recursive-include gaphor *.py
+recursive-include po gaphor.pot *.po 
+exclude gaphor/UML/modelelements.py
+recursive-include data *.xml gaphor.dtd *.png
+recursive-include tests *.py *.sh
+recursive-include utils *.py
+global-exclude */CVS/*
+global-exclude */.xvpics/*

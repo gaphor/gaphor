@@ -1,4 +1,4 @@
-from uml2 import *
+from gaphor.UML.uml2 import *
 c = Class()
 p = Package()
 

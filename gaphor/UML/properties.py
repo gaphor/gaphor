@@ -118,9 +118,9 @@ class attribute(umlproperty):
             return self.default
 
     def _set(self, obj, value):
-        if not isinstance(value, self.type):
-            raise AttributeError, 'Value should be of type %s' % self.type.__name__
-        if value == self.default:
+        if value is not None and not isinstance(value, self.type):
+            raise AttributeError, 'Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type
+        if value == self.default and hasattr(obj, '_' + self.name):
             delattr(obj, '_' + self.name)
         else:
             setattr(obj, '_' + self.name, value)
@@ -171,13 +171,22 @@ class enumeration(umlproperty):
 
 class association(umlproperty):
     """Association, both uni- and bi-directional.
-    Element.assoc = association('assoc', Element, opposite='other')"""
-
-    def __init__(self, name, type, lower=0, upper='*', opposite=None):
+    Element.assoc = association('assoc', Element, opposite='other')
+    
+    A listerer is connected to the value added to the association. This
+    will cause the association to be ended if the element on the other end
+    of the association is unlinked.
+    If the association is a composite relationship, the value is connected to
+    the elements __unlink__ signal too. This will cause the value to be
+    unlinked as soon as the element is unlinked.
+    """
+ 
+    def __init__(self, name, type, lower=0, upper='*', composite=False, opposite=None):
         self.name = name
         self.type = type
         self.lower = lower
         self.upper = upper
+        self.composite = composite
         self.opposite = opposite
 
     def load(self, obj, value):
@@ -258,8 +267,11 @@ class association(umlproperty):
         else:
             setattr(obj, '_' + self.name, value)
         value.connect('__unlink__', self.__on_unlink, obj, value)
+        if self.composite:
+            obj.connect('__unlink__', self.__on_composite_unlink, value)
 
     def _del(self, obj, value):
+        """Delete value from the association."""
         #print '_del', self, obj, value
         if self.upper > 1:
             items = self._get(obj).items
@@ -269,6 +281,8 @@ class association(umlproperty):
         else:
             delattr(obj, '_' + self.name)
         value.disconnect(self.__on_unlink, obj, value)
+        if self.composite:
+            obj.disconnect(self.__on_composite_unlink, value)
         self.notify(obj)
 
     def unlink(self, obj):
@@ -278,11 +292,20 @@ class association(umlproperty):
 
     def __on_unlink(self, name, obj, value):
         """Disconnect when the element on the other end of the association
-        sends the '__unlink__' signal. This is especially important for
-        uni-directional associations.
+        (value) sends the '__unlink__' signal. This is especially important
+        for uni-directional associations.
         """
         #print '__on_unlink:', self, name, obj, value
         self.__delete__(obj, value)
+
+    def __on_composite_unlink(self, name, value):
+        """Unlink value if we have a part-whole (composite) relationship
+        (value is a composite of obj).
+        The implementation of value.unlink() should ensure that no deadlocks
+        occur.
+        """
+        #print '__on_composite_unlink:', self, name, value
+        value.unlink()
 
 
 class derivedunion(umlproperty):
@@ -344,6 +367,7 @@ class derivedunion(umlproperty):
 
     def _del(self, obj, value=None):
         raise AttributeError, 'Can not delete values on a union'
+
 
 class redefine(umlproperty):
     """Redefined association

@@ -1,4 +1,8 @@
 # vim:sw=4:et
+"""Gaphor file reader."""
+
+__all__ = [ 'parse' ]
+
 from xml.sax import handler
 
 class base(object):

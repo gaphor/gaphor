@@ -1,0 +1,45 @@
+comment
+
+  This is a file with custom definitions for Gaphors data model.
+
+  Parts are separated by '%%' (no training spaces) on a line.
+  Comment parts start with 'comment' on the line belowe the percentage
+  symbols, 'override' is used to define a overridden variable. 
+
+%%
+override Element
+from element import Element
+%%
+override Diagram
+from diagram import Diagram
+%%
+override Classifier.inheritedMember
+Classifier.inheritedMember = derivedunion('inheritedMember', 0, '*')
+%%
+override Classifier.general
+Classifier.general = derivedunion('inheritedMember', 0, '*')
+%%
+override Namespace.importedMember
+Namespace.importedMember = derivedunion('importedMember', 0, '*')
+%%
+override Property.opposite
+Property.opposite = derivedunion('opposite', 0, 1)
+%%
+override Constraint.context
+Constraint.context = derivedunion('context', 0, 1)
+%%
+override Association.endType
+Association.endType = derivedunion('endType', 1, '*')
+%%
+override Operation.type
+Operation.type = derivedunion('type', 0, 1)
+%%
+override Property.parse
+from umllex import parse_property
+Property.parse = parse_property
+del parse_property
+%%
+override Operation.parse
+from umllex import parse_operation
+Operation.parse = parse_operation
+del parse_operation
