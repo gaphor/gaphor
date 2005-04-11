@@ -1,3 +1,7 @@
+2005-04-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/itemactions.py: reverted to version 1.41.
+
 2005-03-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/association.py: reverted to version 1.60.
