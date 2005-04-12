@@ -72,8 +72,8 @@ class config_Gaphor(Command):
         #self.module_check('gobject', 'glib_version', (2, 0))
         self.module_check('gtk', ('gtk_version', (2, 3)),
                                  ('pygtk_version', (2, 3)))
-        self.module_check('gnome')
-        self.module_check('gnome.canvas')
+        #self.module_check('gnome')
+        self.module_check('gnomecanvas')
         #self.module_check('gconf')
         self.module_check('diacanvas', ('diacanvas_version', (0, 14, 0)))
 
@@ -378,10 +378,14 @@ setup(name='gaphor',
       data_files=[('', ['data/icons.xml']),
                   ('pixmaps', glob('data/pixmaps/*.png')),
                   plugin_data('plugineditor'),
+                  plugin_data('alignment'),
                   plugin_data('checkmetamodel'),
                   plugin_data('diagramlayout'),
                   plugin_data('liveobjectbrowser'),
-                  plugin_data('pynsource')
+                  plugin_data('pngexport'),
+                  plugin_data('pynsource'),
+                  plugin_data('svgexport'),
+                  plugin_data('xmiexport')
       ],
       scripts=['bin/gaphor'],
 
