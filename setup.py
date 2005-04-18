@@ -366,7 +366,7 @@ setup(name='gaphor',
       long_description="Gaphor is a UML modeling tool written in Python. "
       "It uses the GNOME2 environment for user interaction.",
       platforms=['GNOME2'],
-      all_linguas=['nl'],
+      all_linguas=['nl', 'es'],
       packages=['gaphor',
                 'gaphor.UML',
                 'gaphor.diagram',

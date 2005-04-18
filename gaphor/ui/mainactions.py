@@ -164,14 +164,14 @@ class RevertAction(Action):
             except:
                 pass
 
-weave_method(RevertAction.execute, ErrorHandlerAspect, message='Could not load model file.')
+weave_method(RevertAction.execute, ErrorHandlerAspect, message=_('Could not load model file.'))
 register_action(RevertAction, 'FileNew', 'FileOpen', 'FileSave', 'FileSaveAs')
 
 
 class OpenAction(RevertAction):
 
     id = 'FileOpen'
-    label = '_Open...'
+    label = _('_Open...')
     stock_id='gtk-open'
     tooltip = 'Load a Gaphor project from a file'
 
@@ -208,7 +208,7 @@ register_action(OpenAction)
 class SaveAsAction(Action):
     id = 'FileSaveAs'
     stock_id = 'gtk-save-as'
-    tooltip = 'Save the model to a new file'
+    tooltip = _('Save the model to a new file')
 
     def init(self, window):
         self._window = window
@@ -260,7 +260,7 @@ class SaveAsAction(Action):
 
     def execute(self):
         filename = self._window.get_filename()
-        filesel = gtk.FileChooserDialog(title='Save Gaphor model as',
+        filesel = gtk.FileChooserDialog(title=_('Save Gaphor model as'),
                                         action=gtk.FILE_CHOOSER_ACTION_SAVE,
                                         buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
         if filename:

@@ -8,6 +8,7 @@ rem
 rem This is where you installed the Gaphor-win32-libs package.
 
 set GAPHOR_WIN32_LIBS=gaphor-win32-libs
+rem set GAPHOR_WIN32_LIBS=c:\msys\1.0\target
 
 rem Where is Python installed?
 

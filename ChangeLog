@@ -1,3 +1,7 @@
+2005-04-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* po/es.po: Espanish translation, thanks to David Roguin.
+
 2005-04-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/itemactions.py: reverted to version 1.41.
