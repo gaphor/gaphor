@@ -5,25 +5,24 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: Mon Apr 18 09:40:57 2005\n"
+"POT-Creation-Date: Sat May 14 17:29:44 2005\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: David Roguin <nesdavid_at_users.sourceforge.net>\n"
 "Language-Team: es <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: ENCODING\n"
 "Generated-By: pygettext.py 1.5\n"
 
-
-#: gaphor/diagram/classifier.py:280
+#: gaphor/diagram/classifier.py:281
 msgid "(from %s)"
 msgstr "(desde %s)"
 
-#: gaphor/misc/errorhandler.py:18
+#: gaphor/misc/errorhandler.py:22
 msgid "An error occured."
 msgstr "Un error ha ocurrido."
 
-#: gaphor/misc/errorhandler.py:25
+#: gaphor/misc/errorhandler.py:29
 msgid ""
 "\n"
 "\n"
@@ -32,91 +31,165 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"¿Quiere iniciar el debug?\n"
+"Quiere iniciar el debug?\n"
 "(Debe iniciar Gaphor desde la linea de comandos)"
 
-
-#: gaphor/storage.py:158
+#: gaphor/storage.py:160
 msgid "Loading %d elements..."
 msgstr "Cargando %d elementos..."
 
-#: gaphor/ui/mainactions.py:84
+#: gaphor/ui/mainactions.py:74
+msgid "_New"
+msgstr "_Nuevo"
+
+#: gaphor/ui/mainactions.py:87
 msgid ""
 "Opening a new model will flush the currently loaded model.\n"
 "Any changes made will not be saved. Do you want to continue?"
 msgstr ""
-"Abrir un modelo nuevo borrará el modelo actual.\n"
-"Cualquier modificación no será guardada. ¿Desea continuar?"
+"Abrir un modelo nuevo borrar\u00E1 el modelo actual.\n"
+"Cualquier modificaci\u00E3n no ser guardada. \00BFDesea continuar?"
 
-#: gaphor/ui/mainactions.py:101
+#: gaphor/ui/mainactions.py:103
 msgid "Created a new model"
 msgstr "Modelo nuevo creado"
 
-#: gaphor/ui/mainactions.py:128
+#: gaphor/ui/mainactions.py:114
+msgid "_Revert..."
+msgstr "_Deshacer..."
+
+#: gaphor/ui/mainactions.py:136
 msgid "Loading model from %s"
 msgstr "Cargando modelo desde %s"
 
-#: gaphor/ui/mainactions.py:128
+#: gaphor/ui/mainactions.py:136
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: gaphor/ui/mainwindow.py:28
+#: gaphor/ui/mainactions.py:167
+msgid "Could not load model file."
+msgstr "No se pudo cargar el modelo del archivo."
+
+#: gaphor/ui/mainactions.py:174
+msgid "_Open..."
+msgstr "_Abrir..."
+
+#: gaphor/ui/mainactions.py:211
+msgid "Save the model to a new file"
+msgstr "Guarda el modelo a un nuevo archivo"
+
+#: gaphor/ui/mainactions.py:263
+msgid "Save Gaphor model as"
+msgstr "Guardar el modelo Gaphor como"
+
+#: gaphor/ui/mainactions.py:327
+#, fuzzy
+msgid "_Editor"
+msgstr "_Editar"
+
+#: gaphor/ui/mainactions.py:346
+msgid "_Console"
+msgstr "_Consola"
+
+#: gaphor/ui/mainactions.py:364
+msgid "_Manual"
+msgstr "_Manual"
+
+#: gaphor/ui/mainactions.py:384
+msgid "_About"
+msgstr "_Acerca de"
+
+#: gaphor/ui/mainactions.py:451
+#, fuzzy
+msgid "_New diagram"
+msgstr "_Nuevo Diagrama"
+
+#: gaphor/ui/mainactions.py:477
+#, fuzzy
+msgid "_Delete diagram"
+msgstr "_Borrar Diagrama"
+
+#: gaphor/ui/mainactions.py:506
+msgid "_Open"
+msgstr "_Abrir"
+
+#: gaphor/ui/mainactions.py:527
+msgid "_Rename"
+msgstr "_Renombrar"
+
+#: gaphor/ui/mainactions.py:555
+msgid "_Refresh"
+msgstr "_Refrescar"
+
+#: gaphor/ui/mainactions.py:570
+msgid "_Delete"
+msgstr "_Borrar"
+
+#: gaphor/ui/mainactions.py:615
+#, fuzzy
+msgid "_Undo"
+msgstr "_Deshacer"
+
+#: gaphor/ui/mainwindow.py:29
 msgid "Classes"
 msgstr "Clases"
 
-#: gaphor/ui/mainwindow.py:36
-msgid "Actions"
-msgstr "Acciones"
-
-#: gaphor/ui/mainwindow.py:42
+#: gaphor/ui/mainwindow.py:37
 msgid "Components"
 msgstr "Componentes"
 
-#: gaphor/ui/mainwindow.py:44
+#: gaphor/ui/mainwindow.py:41
+msgid "Actions"
+msgstr "Acciones"
+
+#: gaphor/ui/mainwindow.py:47
+#, fuzzy
+msgid "Interactions"
+msgstr "Acciones"
+
+#: gaphor/ui/mainwindow.py:51
 msgid "Use Cases"
 msgstr "Casos de Uso"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:57
 msgid "Profiles"
 msgstr "Perfiles"
 
-#: gaphor/ui/mainwindow.py:57
+#: gaphor/ui/mainwindow.py:64
 msgid "_File"
 msgstr "_Archivo"
 
-#: gaphor/ui/mainwindow.py:60
+#: gaphor/ui/mainwindow.py:68
 msgid "Recent files"
 msgstr "Archivos recientes"
 
-#: gaphor/ui/mainwindow.py:61
-msgid "To be implemented"
-msgstr "Próximo a implementar"
-
-#: gaphor/ui/mainwindow.py:68
+#: gaphor/ui/mainwindow.py:75
 msgid "_Import"
 msgstr "_Importar"
 
-#: gaphor/ui/mainwindow.py:70
+#: gaphor/ui/mainwindow.py:77
 msgid "_Export"
 msgstr "_Exportar"
 
-#: gaphor/ui/mainwindow.py:77
+#: gaphor/ui/mainwindow.py:84
 msgid "_Edit"
 msgstr "_Editar"
 
-#: gaphor/ui/mainwindow.py:91
+#: gaphor/ui/mainwindow.py:98
 msgid "_Diagram"
 msgstr "_Diagrama"
 
-#: gaphor/ui/mainwindow.py:103
+#: gaphor/ui/mainwindow.py:110
 msgid "Tools"
 msgstr "Herramientas"
 
-#: gaphor/ui/mainwindow.py:107
+#: gaphor/ui/mainwindow.py:114
 msgid "_Window"
 msgstr "_Ventana"
 
-#: gaphor/ui/mainwindow.py:111
+#: gaphor/ui/mainwindow.py:118
 msgid "_Help"
 msgstr "_Ayuda"
 
+#~ msgid "To be implemented"
+#~ msgstr "Pr\u00E3ximo a implementar"

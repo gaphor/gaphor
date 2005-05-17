@@ -342,7 +342,8 @@ class HandleInheritedClasses(HandleClasses):
             self._ClearwaitingInheriteClasses()
 
         elif self.nexttokenisSuperclass:
-            self.currsuperclass += self.token
+            #self.currsuperclass += self.token
+            self.currsuperclass = self.token
             if self.token == '.' or self.nexttoken == '.':
                 #print 'processing multi part superclass detected!', self.token, self.nexttoken
                 self.nexttokenisSuperclass = 1

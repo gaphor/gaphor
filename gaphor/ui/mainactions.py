@@ -71,7 +71,7 @@ def show_status_window(title, message, parent=None, queue=None):
 
 class NewAction(Action):
     id = 'FileNew'
-    label = '_New'
+    label = _('_New')
     tooltip = 'Create a new Gaphor project'
     stock_id = 'gtk-new'
 
@@ -111,7 +111,7 @@ register_action(NewAction)
 
 class RevertAction(Action):
     id = 'FileRevert'
-    label = '_Revert...'
+    label = _('_Revert...')
     stock_id='gtk-revert'
     tooltip = 'Reload the loaded Gaphor project from file'
 
@@ -324,7 +324,7 @@ register_action(QuitAction)
 
 class OpenEditorWindowAction(Action):
     id = 'OpenEditorWindow'
-    label = '_Editor'
+    label = _('_Editor')
     tooltip = 'Open the Gaphor Editor'
 
     def init(self, window):
@@ -343,7 +343,7 @@ register_action(OpenEditorWindowAction)
 
 class OpenConsoleWindowAction(Action):
     id = 'OpenConsoleWindow'
-    label = '_Console'
+    label = _('_Console')
     tooltip = 'Open the Gaphor Console'
 
     def init(self, window):
@@ -361,7 +361,7 @@ register_action(OpenConsoleWindowAction)
 
 class ManualAction(Action):
     id = 'Manual'
-    label = '_Manual'
+    label = _('_Manual')
     stock_id = 'gtk-about'
     tooltip='Manual for Gaphor'
 
@@ -381,7 +381,7 @@ register_action(ManualAction)
 
 class AboutAction(Action):
     id = 'About'
-    label = '_About'
+    label = _('_About')
     stock_id = 'gtk-about'
     tooltip='About Gaphor'
     
@@ -448,7 +448,7 @@ register_action(AboutAction)
 
 class CreateDiagramAction(Action):
     id = 'CreateDiagram'
-    label = '_New diagram'
+    label = _('_New diagram')
     stock_id = 'gaphor-diagram'
 
     def init(self, window):
@@ -474,7 +474,7 @@ register_action(CreateDiagramAction, 'SelectRow')
 
 class DeleteDiagramAction(Action):
     id = 'DeleteDiagram'
-    label = '_Delete diagram'
+    label = _('_Delete diagram')
     stock_id = 'gtk-delete'
 
     def init(self, window):
@@ -503,7 +503,7 @@ register_action(DeleteDiagramAction, 'SelectRow')
 
 class OpenElementAction(Action):
     id = 'OpenModelElement'
-    label = '_Open'
+    label = _('_Open')
 
     def init(self, window):
         self._window = window
@@ -524,7 +524,7 @@ register_action(OpenElementAction, 'SelectRow')
 
 class RenameElementAction(Action):
     id = 'RenameModelElement'
-    label = '_Rename'
+    label = _('_Rename')
 
     def init(self, window):
         self._window = window
@@ -552,7 +552,7 @@ class RefreshNamespaceModelAction(Action):
     """Delete a model element through the tree view. This is only applicable
     to Diagram's and is not undoable."""
     id = 'RefreshNamespaceModel'
-    label = '_Refresh'
+    label = _('_Refresh')
 
     def init(self, window):
         self._window = window
@@ -567,7 +567,7 @@ class DeleteCommand(Action):
     """Delete a model element through the tree view. This is only applicable
     to Diagram's and is not undoable."""
     id = 'DeleteElement'
-    label = '_Delete'
+    label = _('_Delete')
 
     def set_parameters(self, params):
         self._window = params['window']
@@ -612,7 +612,7 @@ register_action(UndoStackAction)
 class UndoAction(Action):
     id = 'Undo'
     stock_id = 'gtk-undo'
-    label = '_Undo'
+    label = _('_Undo')
     tooltip = 'Undo the most recent changes'
     accel = 'C-z'
 
