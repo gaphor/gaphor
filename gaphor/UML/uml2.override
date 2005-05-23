@@ -106,7 +106,7 @@ def property_opposite(self):
     #                and self.association.memberEnd[1] \
     #                or self.association.memberEnd[0]
     #    return other_end
-    if len(self.association.memberEnd) == 2:
+    if self.association is not None and len(self.association.memberEnd) == 2:
         return self.association.memberEnd[0] is self \
                and self.association.memberEnd[1] \
                or self.association.memberEnd[0]

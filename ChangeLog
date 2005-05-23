@@ -1,3 +1,7 @@
+2005-05-23  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.override: while loading model, the association can be
+	not loaded when accessing opposite property
+
 2005-04-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram/mainactions.py, po/es.po, po/nl.po:
