@@ -333,12 +333,12 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             yield self._dir
 
         if self._head_end.subject and self._tail_end.subject:
-            if self._head_end.subject.aggregation == intern('none') \
+            if self._tail_end.subject.aggregation == intern('none') \
                     and self._head_end.get_navigability() == False:
                 yield self._head_xa
                 yield self._head_xb
 
-            if self._tail_end.subject.aggregation == intern('none') \
+            if self._head_end.subject.aggregation == intern('none') \
                     and self._tail_end.get_navigability() == False:
                 yield self._tail_xa
                 yield self._tail_xb

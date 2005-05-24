@@ -482,7 +482,7 @@ register_action(HeadNavigableAction, 'ItemFocus')
 
 class HeadNotNavigableAction(NavigableAction):
     id = 'Head_isNotNavigable'
-    label = 'Not Navigable'
+    label = 'Non-Navigable'
     end_name = 'head'
     navigable = False
 
@@ -491,7 +491,7 @@ register_action(HeadNotNavigableAction, 'ItemFocus')
 
 class HeadUnknownNavigationAction(NavigableAction):
     id = 'Head_unknownNavigation'
-    label = 'Unknown Navigation'
+    label = 'Unknown'
     end_name = 'head'
     navigable = None
 
@@ -509,7 +509,7 @@ register_action(TailNavigableAction, 'ItemFocus')
 
 class TailNotNavigableAction(NavigableAction):
     id = 'Tail_isNotNavigable'
-    label = 'Not Navigable'
+    label = 'Non-Navigable'
     end_name = 'tail'
     navigable = False
 
@@ -518,8 +518,8 @@ register_action(TailNotNavigableAction, 'ItemFocus')
 
 class TailUnknownNavigationAction(NavigableAction):
     id = 'Tail_unknownNavigation'
-    label = 'Unknown Navigation'
-    end_name = 'head'
+    label = 'Unknown'
+    end_name = 'tail'
     navigable = None
 
 register_action(TailUnknownNavigationAction, 'ItemFocus')
