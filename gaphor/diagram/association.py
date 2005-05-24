@@ -630,7 +630,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
                 
 
     def set_navigable(self, navigable):
-        """Change the AsociationEnd's navigability.
+        """Change the AssociationEnd's navigability.
 
         A warning is issued if the subject or opposite property is missing.
         """
@@ -780,7 +780,8 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         DiagramItem.on_subject_notify(self, pspec,
                         notifiers + ('aggregation', 'visibility',
                         'name', 'lowerValue.value',
-                        'upperValue.value', 'taggedValue.value'))
+                        'upperValue.value', 'taggedValue.value',
+                        'owningAssociation', 'class_', 'interface_'))
         #print 'w/ assoc', self.subject and self.subject.association
         self.set_text()
         self.request_update()
@@ -807,6 +808,15 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     def on_subject_notify__taggedValue_value(self, tagged_value, pspec):
         log.debug('New value for taggedValue.value: %s' % tagged_value and self.subject.taggedValue.value)
         self.set_text()
+        self.parent.request_update()
+
+    def on_subject_notify__owningAssociation(self, upper_value, pspec):
+        self.parent.request_update()
+
+    def on_subject_notify__class_(self, upper_value, pspec):
+        self.parent.request_update()
+
+    def on_subject_notify__interface_(self, upper_value, pspec):
         self.parent.request_update()
 
     def on_update(self, affine):

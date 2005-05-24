@@ -1,3 +1,8 @@
+2005-05-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram.association.py: Make association redraw when setting
+	navigability.
+
 2005-05-23  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/itemactions.py gaphor/diagram/association.py: UML 2.0
 	navigability support is back with fixed bug which caused problems when
