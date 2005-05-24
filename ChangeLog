@@ -1,3 +1,7 @@
+2005-05-24  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/itemactions.py: check if item and item.subject exist
+	when executing AbstractClassAction
+
 2005-05-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/diagram.association.py: Make association redraw when setting

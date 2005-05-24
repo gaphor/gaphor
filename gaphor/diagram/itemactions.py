@@ -113,7 +113,8 @@ class AbstractClassAction(CheckAction):
 
     def execute(self):
         item = get_parent_focus_item(self._window)
-        item.subject.isAbstract = self.active
+        if item and item.subject:
+            item.subject.isAbstract = self.active
 
 weave_method(AbstractClassAction.execute, UndoTransactionAspect)
 register_action(AbstractClassAction, 'ItemFocus')
