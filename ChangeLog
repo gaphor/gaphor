@@ -1,3 +1,7 @@
+2005-05-25  wrobell <wrobell@pld-linux.org>
+	* gaphor/ui/namespace.py: change font of diagram names to bold and
+	abstract classifiers to italic in tree view
+
 2005-05-24  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/itemactions.py: check if item and item.subject exist
 	when executing AbstractClassAction

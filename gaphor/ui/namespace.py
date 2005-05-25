@@ -55,7 +55,10 @@ class NamespaceModel(gtk.GenericTreeModel):
         path = self.path_from_element(element)
         #print 'new_node_from_element', path, element, element.name
         self.row_inserted(path, self.get_iter(path))
+
         element.connect('name', self.on_name_changed)
+        if isinstance(element, UML.Classifier):
+            element.connect('isAbstract', self.on_element_changed)
 
         if isinstance(element, UML.Namespace):
             element.connect('ownedMember', self.on_ownedmember_changed)
@@ -66,9 +69,14 @@ class NamespaceModel(gtk.GenericTreeModel):
     def detach_notifiers_from_node(self, node):
         """Detach notifiers for node
         """
-        node[0].disconnect(self.on_name_changed)
-        if isinstance(node[0], UML.Namespace):
-            node[0].disconnect(self.on_ownedmember_changed)
+        element = node[0]
+
+        element.disconnect(self.on_name_changed)
+
+        if isinstance(element, UML.Classifier):
+            element.disconnect(self.on_element_changed)
+        if isinstance(element, UML.Namespace):
+            element.disconnect(self.on_ownedmember_changed)
             for child in node[1]:
                 self.detach_notifiers_from_node(child)
 
@@ -164,6 +172,13 @@ class NamespaceModel(gtk.GenericTreeModel):
             for child in node[1]:
                 doit(child, depth + 1)
         doit(self.root)
+
+    def on_element_changed(self, element, pspec):
+        """element changed, update appropriate row
+        """
+        path = self.path_from_element(element)
+        if path:
+            self.row_changed(path, self.get_iter(path))
 
     def on_name_changed(self, element, pspec):
         """the name of element has changed, update the tree model
@@ -426,11 +441,21 @@ class NamespaceView(gtk.TreeView):
             self.icon_cache[type(value)] = icon
         cell.set_property('pixbuf', icon)
 
+
     def _set_text (self, column, cell, model, iter, data):
+        """set font and of model elements in tree view
+        """
         value = model.get_value(iter, 0)
         #print 'set_name:', value
         text = value and (value.name or '').replace('\n', ' ') or '<None>'
-        cell.set_property('text', text)
+
+        if isinstance(value, UML.Diagram):
+            text = '<b>%s</b>' % text
+        elif isinstance(value, UML.Classifier) and value.isAbstract:
+            text = '<i>%s</i>' % text
+
+        cell.set_property('markup', text)
+
 
     def _text_edited(self, cell, path_str, new_text):
         """The text has been edited. This method updates the data object.
