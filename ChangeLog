@@ -1,4 +1,8 @@
 2005-05-25  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/itemactions.py, gaphor/diagram/operation.py,
+	gaphor/ui/namespace.py: allow to set class operation to be abstract
+		
+2005-05-25  wrobell <wrobell@pld-linux.org>
 	* gaphor/ui/namespace.py: change font of diagram names to bold and
 	abstract classifiers to italic in tree view
 

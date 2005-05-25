@@ -57,7 +57,8 @@ class NamespaceModel(gtk.GenericTreeModel):
         self.row_inserted(path, self.get_iter(path))
 
         element.connect('name', self.on_name_changed)
-        if isinstance(element, UML.Classifier):
+        if isinstance(element, UML.Classifier) \
+                or isinstance(element, UML.Operation):
             element.connect('isAbstract', self.on_element_changed)
 
         if isinstance(element, UML.Namespace):
@@ -73,8 +74,10 @@ class NamespaceModel(gtk.GenericTreeModel):
 
         element.disconnect(self.on_name_changed)
 
-        if isinstance(element, UML.Classifier):
+        if isinstance(element, UML.Classifier) \
+                or isinstance(element, UML.Operation):
             element.disconnect(self.on_element_changed)
+
         if isinstance(element, UML.Namespace):
             element.disconnect(self.on_ownedmember_changed)
             for child in node[1]:
@@ -451,7 +454,8 @@ class NamespaceView(gtk.TreeView):
 
         if isinstance(value, UML.Diagram):
             text = '<b>%s</b>' % text
-        elif isinstance(value, UML.Classifier) and value.isAbstract:
+        elif (isinstance(value, UML.Classifier) 
+                or isinstance(value, UML.Operation)) and value.isAbstract:
             text = '<i>%s</i>' % text
 
         cell.set_property('markup', text)

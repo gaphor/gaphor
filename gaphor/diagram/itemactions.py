@@ -120,6 +120,35 @@ weave_method(AbstractClassAction.execute, UndoTransactionAspect)
 register_action(AbstractClassAction, 'ItemFocus')
 
 
+class AbstractOperationAction(CheckAction):
+    id = 'AbstractOperation'
+    label = 'Abstract Operation'
+    tooltip='Abstract Operation'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            get_parent_focus_item(self._window)
+            item = self._window.get_current_diagram_view() \
+                .focus_item.item
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, OperationItem):
+                self.active = item.subject and item.subject.isAbstract
+
+    def execute(self):
+        item = self._window.get_current_diagram_view() \
+            .focus_item.item
+        if item and item.subject:
+            item.subject.isAbstract = self.active
+
+weave_method(AbstractOperationAction.execute, UndoTransactionAspect)
+register_action(AbstractOperationAction, 'ItemFocus')
+
+
 # NOTE: attributes and operations can now only be created on classes,
 #       actors and use-cases are also classifiers, but we can't add 
 #       attrs and opers via the UI right now.
