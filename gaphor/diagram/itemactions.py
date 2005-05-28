@@ -96,7 +96,7 @@ register_action(RenameItemAction, 'ItemFocus')
 
 class AbstractClassAction(CheckAction):
     id = 'AbstractClass'
-    label = 'Abstract class'
+    label = 'Abstract Class'
     tooltip='Abstract class'
 
     def init(self, window):
@@ -123,7 +123,7 @@ register_action(AbstractClassAction, 'ItemFocus')
 class AbstractOperationAction(CheckAction):
     id = 'AbstractOperation'
     label = 'Abstract Operation'
-    tooltip='Abstract Operation'
+    tooltip='Abstract operation'
 
     def init(self, window):
         self._window = window
@@ -296,7 +296,7 @@ register_action(ShowAttributesAction, 'ItemFocus')
 class ShowOperationsAction(CheckAction):
     id = 'ShowOperations'
     label = 'Show Operations'
-    tooltip='show attribute compartment'
+    tooltip='Show attribute compartment'
 
     def init(self, window):
         self._window = window
@@ -404,7 +404,7 @@ register_action(OrthogonalAction, 'ItemFocus', 'AddSegment', 'DeleteSegment')
 
 class OrthogonalAlignmentAction(CheckAction):
     id = 'OrthogonalAlignment'
-    label = 'Switched alignment'
+    label = 'Switched Alignment'
     tooltip = 'Set the line to orthogonal'
 
     def init(self, window):
@@ -435,7 +435,7 @@ register_action(OrthogonalAlignmentAction, 'ItemFocus', 'Orthogonal')
 class AssociationShowDirectionAction(CheckAction):
     id = 'AssociationShowDirection'
     label = 'Show Direction'
-    tooltip='show direction arrow'
+    tooltip='Show direction arrow'
 
     def init(self, window):
         self._window = window
@@ -780,7 +780,7 @@ register_action(AutoDependencyAction, 'ItemFocus')
 class IndirectlyInstantiatedComponentAction(CheckAction):
     id = 'IndirectlyInstantiated'
     label = 'Indirectly Instantiated'
-    tooltip = 'Indirectly Instantiated Component'
+    tooltip = 'Indirectly instantiated component'
 
     def init(self, window):
         self._window = window
@@ -851,7 +851,7 @@ weave_method(MoveAction.execute, UndoTransactionAspect)
 class MoveUpAction(MoveAction):
     id = 'MoveUp'
     label = 'Move Up'
-    tooltip = 'Move Up'
+    tooltip = 'Move up'
     move_action = 'moveUp' # name of method to move the element
 
     def _isSensitive(self, cls, item):
@@ -864,7 +864,7 @@ register_action(MoveUpAction, 'ItemFocus')
 class MoveDownAction(MoveAction):
     id = 'MoveDown'
     label = 'Move Down'
-    tooltip = 'Move Down'
+    tooltip = 'Move down'
     move_action = 'moveDown' # name of method to move the element
 
     def _isSensitive(self, cls, item):

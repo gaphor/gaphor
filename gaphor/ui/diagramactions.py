@@ -142,7 +142,7 @@ register_action(DiagramDropAction)
 
 class SelectAllAction(Action):
     id = 'EditSelectAll'
-    label = '_Select all'
+    label = '_Select All'
     accel = 'C-a'
 
     def init(self, window):
@@ -160,7 +160,7 @@ register_action(SelectAllAction)
 
 class DeselectAllAction(Action):
     id = 'EditDeselectAll'
-    label = 'Des_elect all'
+    label = 'Des_elect All'
     accel = 'C-S-a'
 
     def init(self, window):
@@ -438,7 +438,7 @@ register_action(Zoom100Action)
 
 class SnapToGridAction(CheckAction):
     id = 'SnapToGrid'
-    label = '_Snap to grid'
+    label = '_Snap to Grid'
 
     def init(self, window):
         self._window = window
@@ -456,7 +456,7 @@ register_action(SnapToGridAction)
 
 class ShowGridAction(CheckAction):
     id = 'ShowGrid'
-    label = 'S_how grid'
+    label = 'S_how Grid'
 
     def init(self, window):
         self._window = window
@@ -476,7 +476,7 @@ register_action(ShowGridAction)
 
 class ShowElementInTreeViewAction(Action):
     id = 'ShowElementInTreeView'
-    label = 'S_how element in tree view'
+    label = 'S_how Element in Tree View'
 
     def init(self, window):
         self._window = window
