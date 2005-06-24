@@ -46,7 +46,7 @@ class DiagramTab(object):
     def construct(self):
         title = self.diagram and self.diagram.name or '<None>'
 
-        table = gtk.Table(2,2, gtk.FALSE)
+        table = gtk.Table(2,2, False)
         #table.set_row_spacings (4)
         #table.set_col_spacings (4)
 
@@ -176,7 +176,7 @@ class DiagramTab(object):
 
             else:
                 log.warning ('No graphical representation for UML element %s' % type(element).__name__)
-            context.finish(gtk.TRUE, gtk.FALSE, time)
+            context.finish(True, False, time)
         else:
-            context.finish(gtk.FALSE, gtk.FALSE, time)
+            context.finish(False, False, time)
 

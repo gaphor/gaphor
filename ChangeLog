@@ -1,3 +1,8 @@
+2005-06-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/console.py, gaphor/ui/diagramtab.py,
+	gaphor/ui/namespace.py: s/gtk.TRUE/True/, s/gtk.FALSE/False/.
+
 2005-05-28  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/itemactions.py, gaphor/ui/diagramactions.py:
 	capitalize menu labels, tooltips first word capitalized

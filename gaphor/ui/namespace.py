@@ -386,7 +386,7 @@ class NamespaceView(gtk.TreeView):
         self.icon_cache = {}
 
         self.set_property('headers-visible', 0)
-        self.set_rules_hint(gtk.TRUE)
+        self.set_rules_hint(True)
         selection = self.get_selection()
         selection.set_mode(gtk.SELECTION_BROWSE)
         column = gtk.TreeViewColumn ('')
@@ -537,9 +537,9 @@ class NamespaceView(gtk.TreeView):
 
             except AttributeError:
                 #print dir(context)
-                context.drop_finish(gtk.FALSE, time)
+                context.drop_finish(False, time)
             else:
-                context.drop_finish(gtk.TRUE, time)
+                context.drop_finish(True, time)
                 # Finally let's try to select the element again.
                 path = model.path_from_element(element)
                 self.expand_row(path[:-1], False)
