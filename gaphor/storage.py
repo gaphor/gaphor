@@ -242,6 +242,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     # Fix version inconsistencies
     version_0_5_2(elements, factory, gaphor_version)
+    version_0_7_1(elements, factory, gaphor_version)
 
     # do a postload:
     for id, elem in elements.items():
@@ -303,7 +304,40 @@ def load_generator(filename, factory=None):
         raise
 
 
-# Version inconsistencies can be fixed:
+def version_0_7_1(elements, factory, gaphor_version):
+    """Before version 0.7.1, there were two states for association
+    navigability (in terms of UML 2.0): unknown and navigable.
+    In case of unknown navigability Property.owningAssociation was set.
+
+    Now, we have three states: unknown, non-navigable and navigable.
+    In case of unknown navigability the Property.owningAssociation
+    should not be set.
+    """
+    def fix(end1, end2):
+        if isinstance(end2.type, UML.Interface):
+            type = end1.interface_
+        else: # isinstance(end2.type, UML.Class):
+            type = end1.class_
+
+        # if the end of association is not navigable (in terms of UML 1.x)
+        # then set navigability to unknown (in terms of UML 2.0)
+        if not (type and end1 in type.ownedAttribute):
+            del end1.owningAssociation
+
+    if tuple(map(int, gaphor_version.split('.'))) < (0, 7, 1):
+        log.info('Fix navigability of Associations (file version: %s)' % gaphor_version)
+        for elem in elements.values():
+            try:
+                if elem.type == 'Association':
+                    asc = elem.element
+                    end1 = asc.memberEnd[0]
+                    end2 = asc.memberEnd[1]
+                    if end1 and end2:
+                        fix(end1, end2)
+                        fix(end2, end1)
+            except Exception, e:
+                log.error('Error while updating Association', e)
+
 
 def version_0_6_2(elements, factory, gaphor_version):
     """Before 0.6.2 an Interface could be represented by a ClassItem and

@@ -1,3 +1,9 @@
+2005-06-26  wrobell <wrobell@pld-linux.org>
+	* setup.py, gaphor/storage.py, gaphor/UML/uml2.gaphor: use unkown
+	navigability state of UML 2.0, when converting from UML 1.x association
+	non-navigability (UML 2.0 metamodel fixed, too); gaphor file format
+	version increased to 0.7.1
+
 2005-06-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/misc/console.py, gaphor/ui/diagramtab.py,
