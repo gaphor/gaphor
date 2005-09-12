@@ -1,3 +1,7 @@
+2005-09-12  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.gaphor: extended Internal Structures diagram to
+	support delegation and assembly connectors
+
 2005-06-26  wrobell <wrobell@pld-linux.org>
 	* setup.py, gaphor/storage.py, gaphor/UML/uml2.gaphor: use unkown
 	navigability state of UML 2.0, when converting from UML 1.x association
