@@ -28,6 +28,15 @@ def get_superclasses(class_):
     for superclass in class_.superClass:
         gen = 1
 
+
+def check_classes():
+    classes = UML.select(lambda e: e.isKindOf(UML.Class))
+    names = [ c.name for c in classes ]
+    for c in classes:
+        if names.count(c.name) > 1:
+            report(c, 'Class name %s used more than once' % c.name)
+    
+
 def check_association_end_subsets(end):
     subsets = get_subsets(end.taggedValue and end.taggedValue.value or '')
     opposite_subsets = get_subsets(end.opposite.taggedValue and end.opposite.taggedValue.value or '')

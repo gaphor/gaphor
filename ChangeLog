@@ -2,6 +2,8 @@
 
 	* gaphor/UML/uml2.gaphor: fixed bug with multiple ConnectableElement
 	classes.
+	* data/plugins/checkmodel/checkmodel(gui).py: Added check to search for
+	duplicate class names.
 
 2005-09-12  wrobell <wrobell@pld-linux.org>
 	* gaphor/UML/uml2.gaphor: extended Internal Structures diagram to

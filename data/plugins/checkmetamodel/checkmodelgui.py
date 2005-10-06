@@ -59,6 +59,7 @@ class CheckModelWindow(AbstractWindow):
 
     def run(self):
         # TODO: Let this run in a Thread(?)
+        checkmodel.check_classes()
         checkmodel.check_attributes()
         checkmodel.check_associations()
 
