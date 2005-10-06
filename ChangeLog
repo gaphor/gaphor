@@ -1,3 +1,8 @@
+2005-10-06  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: fixed bug with multiple ConnectableElement
+	classes.
+
 2005-09-12  wrobell <wrobell@pld-linux.org>
 	* gaphor/UML/uml2.gaphor: extended Internal Structures diagram to
 	support delegation and assembly connectors
