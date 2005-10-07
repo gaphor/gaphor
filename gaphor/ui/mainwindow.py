@@ -44,10 +44,10 @@ class MainWindow(AbstractWindow):
                 'InsertActivityFinalNode',
                 'InsertDecisionNode',
                 'InsertFlow')),
-        (_('Interactions'), (
-                'InsertInteraction',
-                'InsertLifeline',
-                'InsertMessage')),
+#        (_('Interactions'), (
+#                'InsertInteraction',
+#                'InsertLifeline',
+#                'InsertMessage')),
         (_('Use Cases'), (
                 'InsertUseCase',
                 'InsertActor',

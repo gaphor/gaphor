@@ -1,3 +1,15 @@
+0.7.1
+-----
+- Real UML2 associations;
+- Stereotypes;
+- Atrifact and Node types;
+- Settings of open and closed toolboxes as well as the window size are saved;
+- Diagrams are shown in bold in the tree view, abstract classes are italic;
+- Added recent files option;
+- Keyboard shortcuts can be configured at runtime.
+- Spanish translation
+- Python2.4 fixes
+
 0.7.0
 -----
 - XMI export plugin
