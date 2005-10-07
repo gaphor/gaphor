@@ -1,3 +1,7 @@
+2005-10-07  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* Released version 0.7.1
+
 2005-10-07  wrobell <wrobell@pld-linux.org>
 	* gaphor/UML/uml2.gaphor: ConnectableElement derives from TypedElement
 	according to UML 2.0 specification; Interface derives from
