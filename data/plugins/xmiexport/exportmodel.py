@@ -25,6 +25,35 @@ class XMLAttributes(dict):
 
 
 class XMIExport(object):
+    
+    # State diagram specific
+    # ======================
+    def handleInitialNode(self, xmi, node):
+        attributes = XMLAttributes()
+        attributes['xmi.id']=node.id
+        attributes['name']="start" # Gaphor doens't have name support 
+                                   # for start actions.
+        attributes['visibility'] = 'public'
+        attributes['isSpecification'] = 'false'
+        attributes['kind'] = 'initial'
+        xmi.startElement('UML2:Pseudostate', attrs=attributes)
+        xmi.startElement('UML2:Vertex.outgoing')
+        
+                         
+        
+    def handleAction(self, xmi, node):
+        attributes = XMLAttributes()
+        attributes['xmi.id']=node.id
+        attributes['name']=node.name
+        attributes['visibility'] = 'public'
+        attributes['isSpecification'] = 'false'
+    
+    def handleControlFlow(self, xmi, node):
+        pass
+    
+    
+    # Class diagram specific
+    #=========================
 
     def handlePackage(self, xmi, node):
         if node.package != None: return
@@ -370,6 +399,7 @@ class XMIExport(object):
             try:
                 handler=getattr(self, 'handle%s'%element.__class__.__name__)
             except AttributeError:
+                print element.__class__.__name__
                 continue
             handler(xmi, element)
         xmi.endElement('UML:Namespace.ownedElement')    

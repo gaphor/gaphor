@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<gaphor-plugin name="Kid Export"
+        version="0.1"
+        author="Jeroen Vloothuis">
+  <description>
+        This plugin extends Gaphor with XMI export functionality based on Kid 
+        templates.
+  </description>
+
+  <require>
+    <!--
+      Define modules and plugins that are needed for this plugin to function
+      properly.
+    - ->
+    <module name="xml.sax.saxutils.XMLGenerator"/>
+    -->
+  </require>
+
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+    <action id="KidExport"
+            label="Kid Export"
+            tooltip="Export the model to XMI using a Kid template"
+            class="KidExportAction" slot="FileExportSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      - ->
+      <depends action=""/>
+      -->
+    </action>
+  </provide>
+</gaphor-plugin>
