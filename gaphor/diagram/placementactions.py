@@ -313,6 +313,18 @@ class ActivityFinalNodePlacementAction(PlacementAction):
 register_action(ActivityFinalNodePlacementAction)
 
 
+class FlowFinalNodePlacementAction(PlacementAction):
+    id = 'InsertFlowFinalNode'
+    label = 'Flow final node'
+    tooltip = 'Create a new Flow final action node'
+    stock_id = 'gaphor-flow-final-node'
+    name = 'FlowFinalNode'
+    type = diagram.FlowFinalNodeItem
+    subject_type = UML.FlowFinalNode
+
+register_action(FlowFinalNodePlacementAction)
+
+
 class DecisionNodePlacementAction(PlacementAction):
     id = 'InsertDecisionNode'
     label = 'Decision node'
@@ -323,6 +335,19 @@ class DecisionNodePlacementAction(PlacementAction):
     subject_type = UML.DecisionNode
 
 register_action(DecisionNodePlacementAction)
+
+
+class ForkNodePlacementAction(PlacementAction):
+    id = 'InsertForkNode'
+    label = 'Fork node'
+    tooltip = 'Create a new Fork action node'
+    stock_id = 'gaphor-fork-node'
+    name = 'ForkNode'
+    type = diagram.ForkNodeItem
+    subject_type = UML.ForkNode
+
+register_action(ForkNodePlacementAction)
+
 
 
 class ActionPlacementAction(PlacementAction):
@@ -441,6 +466,22 @@ class ComponentPlacementAction(NamespacePlacementAction):
     subject_type = UML.Component
 
 register_action(ComponentPlacementAction)
+
+#class ConnectorPlacementAction(NamespacePlacementAction):
+#    id = 'InsertConnector'
+#    label = '_Connector'
+#    tooltip = 'Create a new Connector item'
+#    stock_id = 'gaphor-connector'
+#    name = 'Connector'
+#    type = diagram.ConnectorItem
+#    subject_type = UML.Connector
+
+#    def _execute(self):
+#        tool = InterfacePlacementTool(self._window, self.id)
+#        self._window.get_current_diagram_view().set_tool(tool)
+#        self._window.set_message('Create new %s' % self.name)
+
+#register_action(ConnectorPlacementAction)
 
 class ArtifactPlacementAction(NamespacePlacementAction):
     id = 'InsertArtifact'

@@ -46,6 +46,14 @@
     <file>decisionnode24.png</file>
     <element>DecisionNode</element>
   </icon>
+  <icon id="gaphor-fork-node">
+    <file>forknode.png</file>
+    <element>ForkNode</element>
+  </icon>
+  <icon id="gaphor-flow-final-node">
+    <file>flowfinalnode.png</file>
+    <element>FlowFinalNode</element>
+  </icon>
   <icon id="gaphor-dependency">
     <file>dependency24.png</file>
     <element>Dependency</element>

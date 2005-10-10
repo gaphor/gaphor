@@ -36,13 +36,16 @@ class MainWindow(AbstractWindow):
                 'InsertImplementation')),
         (_('Components'), (
                 'InsertComponent',
+#                'InsertConnector',
                 'InsertNode',
                 'InsertArtifact')),
         (_('Actions'), (
                 'InsertAction',
                 'InsertInitialNode',
                 'InsertActivityFinalNode',
+                'InsertFlowFinalNode',
                 'InsertDecisionNode',
+                'InsertForkNode',
                 'InsertFlow')),
 #        (_('Interactions'), (
 #                'InsertInteraction',

@@ -1,3 +1,9 @@
+2005-10-10  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.gaphor: added Flow Final, Fork and Join nodes to
+	Control nodes diagram
+	* gaphor/diagram/activitynodes.py: implemented Flow Final and Fork
+	nodes
+
 2005-10-09  Jeroen Vloothuis  <jeroen@vloothuis.net>
 	* gaphor/data/plugins/kidexport: New template based exported for XMI
 

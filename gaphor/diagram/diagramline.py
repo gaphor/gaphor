@@ -117,7 +117,7 @@ class DiagramLine(diacanvas.CanvasLine, DiagramItem):
         This method is here mainly for the sake of completeness, since it
         is quite unlikely that a handle is not allowed to disconnect.
         """
-        return 1
+        return True
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
         """This method is called to do some cleanup after 'self' has been

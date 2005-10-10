@@ -2,6 +2,8 @@
 """
 # vim:sw=4:et
 
+import math
+
 import gobject
 import pango
 import diacanvas
@@ -19,7 +21,7 @@ class ActivityNodeItem(ElementItem):
         ElementItem.__init__(self, id)
         # Do not allow resizing of the node
         for h in self.handles:
-            h.set_property('movable', 0)
+            h.set_property('movable', False)
 
 
 class InitialNodeItem(ActivityNodeItem):
@@ -66,6 +68,33 @@ class ActivityFinalNodeItem(ActivityNodeItem):
         return iter([self._outer, self._inner])
 
 
+class FlowFinalNodeItem(ActivityNodeItem):
+    RADIUS = 10
+
+    def __init__(self, id=None):
+        ActivityNodeItem.__init__(self, id)
+        r = self.RADIUS
+        d = r * 2
+        self._circle = diacanvas.shape.Ellipse()
+        self._circle.ellipse((r, r), d, d)
+        self._circle.set_line_width(2)
+
+        def getLine(p1, p2):
+            line = diacanvas.shape.Path()
+            line.line((p1, p2))
+            line.set_line_width(2)
+            return line
+
+        dr = (1 - math.sin(math.pi / 4)) * r
+        self._line1 = getLine((dr, dr), (d - dr, d - dr))
+        self._line2 = getLine((dr, d - dr), (d - dr, dr))
+
+        self.set(width=d, height=d)
+
+    def on_shape_iter(self):
+        return iter([self._circle, self._line1, self._line2])
+
+
 class DecisionNodeItem(ActivityNodeItem):
     RADIUS = 15
 
@@ -83,7 +112,31 @@ class DecisionNodeItem(ActivityNodeItem):
         return iter([self._diamond])
 
 
+
+class ForkNodeItem(ActivityNodeItem):
+    WIDTH = 6.0
+
+    def __init__(self, id=None):
+        ActivityNodeItem.__init__(self, id)
+        self._line = diacanvas.shape.Path()
+        self._line.set_line_width(self.WIDTH)
+
+        self.handles[0].set_property('movable', True)
+        self.handles[3].set_property('movable', True)
+
+    def on_update(self, affine):
+        ActivityNodeItem.on_update(self, affine)
+        self._line.line(((0, 0), (0, self.height)))
+        self.set(width=self.WIDTH, height=self.height)
+
+    def on_shape_iter(self):
+        return iter([self._line])
+
+
+
 initialize_item(ActivityNodeItem)
 initialize_item(InitialNodeItem, UML.InitialNode)
 initialize_item(ActivityFinalNodeItem, UML.ActivityFinalNode)
+initialize_item(FlowFinalNodeItem, UML.FlowFinalNode)
 initialize_item(DecisionNodeItem, UML.DecisionNode)
+initialize_item(ForkNodeItem, UML.ForkNode)
