@@ -34,7 +34,7 @@ def tool_changed(action, window):
 
 class ResetToolAfterCreateAction(CheckAction):
     id = 'ResetToolAfterCreate'
-    label = 'Reset _tool'
+    label = 'Reset _Tool'
     tooltip = 'Reset the tool to the pointer tool after creation of an item'
 
     def init(self, window):
