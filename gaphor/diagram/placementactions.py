@@ -120,7 +120,7 @@ class ActorPlacementAction(NamespacePlacementAction):
     id = 'InsertActor'
     label = '_Actor'
     stock_id = 'gaphor-actor'
-    tooltip = 'Create a new Actor item'
+    tooltip = 'Create a new actor item'
     name = 'Actor'
     type = diagram.ActorItem
     subject_type = UML.Actor
@@ -131,7 +131,7 @@ register_action(ActorPlacementAction)
 class UseCasePlacementAction(NamespacePlacementAction):
     id = 'InsertUseCase'
     label = '_UseCase'
-    tooltip = 'Create a new Use case item'
+    tooltip = 'Create a new use case item'
     stock_id = 'gaphor-usecase'
     name = 'UseCase'
     type = diagram.UseCaseItem
@@ -143,7 +143,7 @@ register_action(UseCasePlacementAction)
 class IncludePlacementAction(PlacementAction):
     id = 'InsertInclude'
     label = '_Include'
-    tooltip = 'Create a new Include'
+    tooltip = 'Create a new include'
     stock_id = 'gaphor-include'
     name = 'Include'
     type = diagram.IncludeItem
@@ -154,7 +154,7 @@ register_action(IncludePlacementAction)
 class ExtendPlacementAction(PlacementAction):
     id = 'InsertExtend'
     label = '_Extend'
-    tooltip = 'Create a new Extend'
+    tooltip = 'Create a new extend'
     stock_id = 'gaphor-extend'
     name = 'Extend'
     type = diagram.ExtendItem
@@ -165,7 +165,7 @@ register_action(ExtendPlacementAction)
 class ClassPlacementAction(NamespacePlacementAction):
     id = 'InsertClass'
     label = '_Class'
-    tooltip = 'Create a new Class item'
+    tooltip = 'Create a new class item'
     stock_id = 'gaphor-class'
     name = 'Class'
     type = diagram.ClassItem
@@ -239,7 +239,7 @@ gobject.type_register(InterfacePlacementTool)
 class InterfacePlacementAction(NamespacePlacementAction):
     id = 'InsertInterface'
     label = '_Interface'
-    tooltip = 'Create a new Interface item'
+    tooltip = 'Create a new interface item'
     stock_id = 'gaphor-interface'
     name = 'Interface'
     type = diagram.InterfaceItem
@@ -256,7 +256,7 @@ register_action(InterfacePlacementAction)
 class StereotypePlacementAction(NamespacePlacementAction):
     id = 'InsertStereotype'
     label = '_Stereotype'
-    tooltip = 'Create a new Stereotype item'
+    tooltip = 'Create a new stereotype item'
     stock_id = 'gaphor-stereotype'
     name = 'Stereotype'
     type = diagram.ClassItem
@@ -268,7 +268,7 @@ register_action(StereotypePlacementAction)
 class ProfilePlacementAction(NamespacePlacementAction):
     id = 'InsertProfile'
     label = '_Profile'
-    tooltip = 'Create a new Profile'
+    tooltip = 'Create a new profile'
     stock_id = 'gaphor-profile'
     name = 'Profile'
     type = diagram.PackageItem
@@ -280,7 +280,7 @@ register_action(ProfilePlacementAction)
 class PackagePlacementAction(NamespacePlacementAction):
     id = 'InsertPackage'
     label = '_Package'
-    tooltip = 'Create a new Package item'
+    tooltip = 'Create a new package item'
     stock_id = 'gaphor-package'
     name = 'Package'
     type = diagram.PackageItem
@@ -365,7 +365,7 @@ register_action(ActionPlacementAction)
 class CommentPlacementAction(PlacementAction):
     id = 'InsertComment'
     label = 'C_omment'
-    tooltip = 'Create a new Comment item'
+    tooltip = 'Create a new comment item'
     stock_id = 'gaphor-comment'
     name = 'Comment'
     type = diagram.CommentItem
@@ -377,7 +377,7 @@ register_action(CommentPlacementAction)
 class CommentLinePlacementAction(PlacementAction):
     id = 'InsertCommentLine'
     label = 'Comment _line'
-    tooltip = 'Create a new Comment line'
+    tooltip = 'Create a new comment line'
     stock_id = 'gaphor-comment-line'
     name = 'Comment line'
     type = diagram.CommentLineItem
@@ -388,7 +388,7 @@ register_action(CommentLinePlacementAction)
 class AssociationPlacementAction(PlacementAction):
     id = 'InsertAssociation'
     label = '_Association'
-    tooltip = 'Create a new Association line'
+    tooltip = 'Create a new association line'
     stock_id = 'gaphor-association'
     name = 'Association'
     type = diagram.AssociationItem
@@ -405,7 +405,7 @@ register_action(UseCaseAssociationPlacementAction)
 class ExtensionPlacementAction(PlacementAction):
     id = 'InsertExtension'
     label = '_Extension'
-    tooltip = 'Create a new Extension line'
+    tooltip = 'Create a new extension line'
     stock_id = 'gaphor-extension'
     name = 'Extension'
     type = diagram.ExtensionItem
@@ -416,7 +416,7 @@ register_action(ExtensionPlacementAction)
 class DependencyPlacementAction(PlacementAction):
     id = 'InsertDependency'
     label = '_Dependency'
-    tooltip = 'Create a new Dependency'
+    tooltip = 'Create a new dependency'
     stock_id = 'gaphor-dependency'
     name = 'Dependency'
     type = diagram.DependencyItem
@@ -427,7 +427,7 @@ register_action(DependencyPlacementAction)
 class GeneralizationPlacementAction(PlacementAction):
     id = 'InsertGeneralization'
     label = '_Generalization'
-    tooltip = 'Create a new Generalization'
+    tooltip = 'Create a new generalization'
     stock_id = 'gaphor-generalization'
     name = 'Generalization'
     type = diagram.GeneralizationItem
@@ -438,7 +438,7 @@ register_action(GeneralizationPlacementAction)
 class ImplementationPlacementAction(PlacementAction):
     id = 'InsertImplementation'
     label = '_Implementation'
-    tooltip = 'Create a new Implementation'
+    tooltip = 'Create a new implementation'
     stock_id = 'gaphor-implementation'
     name = 'Implementation'
     type = diagram.ImplementationItem
@@ -459,7 +459,7 @@ register_action(FlowPlacementAction)
 class ComponentPlacementAction(NamespacePlacementAction):
     id = 'InsertComponent'
     label = '_Component'
-    tooltip = 'Create a new Component item'
+    tooltip = 'Create a new component item'
     stock_id = 'gaphor-component'
     name = 'Component'
     type = diagram.ComponentItem
@@ -470,7 +470,7 @@ register_action(ComponentPlacementAction)
 #class ConnectorPlacementAction(NamespacePlacementAction):
 #    id = 'InsertConnector'
 #    label = '_Connector'
-#    tooltip = 'Create a new Connector item'
+#    tooltip = 'Create a new connector item'
 #    stock_id = 'gaphor-connector'
 #    name = 'Connector'
 #    type = diagram.ConnectorItem
@@ -486,7 +486,7 @@ register_action(ComponentPlacementAction)
 class ArtifactPlacementAction(NamespacePlacementAction):
     id = 'InsertArtifact'
     label = '_Artifact'
-    tooltip = 'Create a new Artifact item'
+    tooltip = 'Create a new artifact item'
     stock_id = 'gaphor-artifact'
     name = 'Artifact'
     type = diagram.ArtifactItem
@@ -497,7 +497,7 @@ register_action(ArtifactPlacementAction)
 class NodePlacementAction(NamespacePlacementAction):
     id = 'InsertNode'
     label = '_Node'
-    tooltip = 'Create a new Node item'
+    tooltip = 'Create a new node item'
     stock_id = 'gaphor-node'
     name = 'Node'
     type = diagram.NodeItem
@@ -508,7 +508,7 @@ register_action(NodePlacementAction)
 class InteractionPlacementAction(NamespacePlacementAction):
     id = 'InsertInteraction'
     label = '_Interaction'
-    tooltip = 'Create a new Interaction item'
+    tooltip = 'Create a new interaction item'
     stock_id = 'gaphor-interaction'
     name = 'Interaction'
     type = diagram.InteractionItem
@@ -519,7 +519,7 @@ register_action(InteractionPlacementAction)
 class LifelinePlacementAction(PlacementAction):
     id = 'InsertLifeline'
     label = '_Lifeline'
-    tooltip = 'Create a new Lifeline item'
+    tooltip = 'Create a new lifeline item'
     stock_id = 'gaphor-lifeline'
     name = 'Lifeline'
     type = diagram.LifelineItem
@@ -541,7 +541,7 @@ register_action(LifelinePlacementAction)
 class MessagePlacementAction(PlacementAction):
     id = 'InsertMessage'
     label = '_Message'
-    tooltip = 'Create a new Message line'
+    tooltip = 'Create a new message line'
     stock_id = 'gaphor-message'
     name = 'Message'
     type = diagram.MessageItem
