@@ -291,8 +291,8 @@ register_action(PackagePlacementAction)
 
 class InitialNodePlacementAction(PlacementAction):
     id = 'InsertInitialNode'
-    label = 'Initial node'
-    tooltip = 'Create a new Initial action node'
+    label = 'Initial Node'
+    tooltip = 'Create a new initial node'
     stock_id = 'gaphor-initial-node'
     name = 'InitialNode'
     type = diagram.InitialNodeItem
@@ -303,8 +303,8 @@ register_action(InitialNodePlacementAction)
 
 class ActivityFinalNodePlacementAction(PlacementAction):
     id = 'InsertActivityFinalNode'
-    label = 'Final activity node'
-    tooltip = 'Create a new Final activity node'
+    label = 'Activity Final Node'
+    tooltip = 'Create a new activity final node'
     stock_id = 'gaphor-activity-final-node'
     name = 'ActivityFinalNode'
     type = diagram.ActivityFinalNodeItem
@@ -315,8 +315,8 @@ register_action(ActivityFinalNodePlacementAction)
 
 class FlowFinalNodePlacementAction(PlacementAction):
     id = 'InsertFlowFinalNode'
-    label = 'Flow final node'
-    tooltip = 'Create a new Flow final action node'
+    label = 'Flow Final Node'
+    tooltip = 'Create a new flow final node'
     stock_id = 'gaphor-flow-final-node'
     name = 'FlowFinalNode'
     type = diagram.FlowFinalNodeItem
@@ -327,8 +327,8 @@ register_action(FlowFinalNodePlacementAction)
 
 class DecisionNodePlacementAction(PlacementAction):
     id = 'InsertDecisionNode'
-    label = 'Decision node'
-    tooltip = 'Create a new Decision action node'
+    label = 'Decision/Merge Node'
+    tooltip = 'Create a new decision/merge node'
     stock_id = 'gaphor-decision-node'
     name = 'DecisionNode'
     type = diagram.DecisionNodeItem
@@ -339,8 +339,8 @@ register_action(DecisionNodePlacementAction)
 
 class ForkNodePlacementAction(PlacementAction):
     id = 'InsertForkNode'
-    label = 'Fork node'
-    tooltip = 'Create a new Fork action node'
+    label = 'Fork/Join Node'
+    tooltip = 'Create a new fork/join node'
     stock_id = 'gaphor-fork-node'
     name = 'ForkNode'
     type = diagram.ForkNodeItem
@@ -352,8 +352,8 @@ register_action(ForkNodePlacementAction)
 
 class ActionPlacementAction(PlacementAction):
     id = 'InsertAction'
-    label = 'Action node'
-    tooltip = 'Create a new Action node'
+    label = 'Action'
+    tooltip = 'Create a new action'
     stock_id = 'gaphor-action'
     name = 'Action'
     type = diagram.ActionItem
@@ -448,8 +448,8 @@ register_action(ImplementationPlacementAction)
 
 class FlowPlacementAction(PlacementAction):
     id = 'InsertFlow'
-    label = '_Flow'
-    tooltip = 'Create a Flow'
+    label = 'Control/Object _Flow'
+    tooltip = 'Create a new control/object flow'
     stock_id = 'gaphor-control-flow'
     name = 'Flow'
     type = diagram.FlowItem
