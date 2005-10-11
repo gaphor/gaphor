@@ -13,9 +13,8 @@
     <!--
       Define modules and plugins that are needed for this plugin to function
       properly.
-    - ->
-    <module name="xml.sax.saxutils.XMLGenerator"/>
     -->
+    <module name="kid"/>
   </require>
 
   <provide>
