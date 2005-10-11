@@ -10,6 +10,7 @@ import diacanvas
 from gaphor import UML
 from gaphor.diagram import initialize_item
 from elementitem import ElementItem
+from nameditem import NamedItem
 
 class ActivityNodeItem(ElementItem):
     
@@ -24,11 +25,14 @@ class ActivityNodeItem(ElementItem):
             h.set_property('movable', False)
 
 
-class InitialNodeItem(ActivityNodeItem):
+class InitialNodeItem(NamedItem):
     RADIUS = 10
+    MARGIN_Y = RADIUS*2
 
     def __init__(self, id=None):
-        ActivityNodeItem.__init__(self, id)
+        NamedItem.__init__(self, id)
+        for h in self.handles:
+            h.set_property('movable', False)
         r = self.RADIUS
         d = r * 2
         self._circle = diacanvas.shape.Ellipse()
@@ -37,9 +41,23 @@ class InitialNodeItem(ActivityNodeItem):
         self._circle.set_fill(diacanvas.shape.FILL_SOLID)
         self._circle.set_fill_color(diacanvas.color(0, 0, 0, 255))
         self.set(width=d, height=d)
+       
+    def on_update(self, affine):
+        # Center the text
+        w, h = self.get_name_size()
+        self.set(min_width=w,
+                 min_height=h + self.MARGIN_Y)
+        self.update_name(x=0, y=(self.height - h),
+                         width=self.width, height=h)
+
+        NamedItem.on_update(self, affine)
+        self.expand_bounds(1.0)
 
     def on_shape_iter(self):
-        return iter([self._circle])
+        for s in NamedItem.on_shape_iter(self):
+            yield s
+        for c in iter([self._circle]):
+            yield c
 
 
 class ActivityFinalNodeItem(ActivityNodeItem):
