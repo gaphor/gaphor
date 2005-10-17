@@ -50,6 +50,10 @@
     <file>forknode.png</file>
     <element>ForkNode</element>
   </icon>
+  <icon id="gaphor-object-node">
+    <file>objectnode.png</file>
+    <element>ObjectNode</element>
+  </icon>
   <icon id="gaphor-flow-final-node">
     <file>flowfinalnode.png</file>
     <element>FlowFinalNode</element>

@@ -2,6 +2,8 @@
 """
 # vim:sw=4:et
 
+import itertools
+
 import gobject
 import pango
 import diacanvas
@@ -110,6 +112,49 @@ class NamedItem(ElementItem, diacanvas.CanvasEditable):
             self.canvas.get_undo_manager().commit_transaction()
 
         self.request_update()
+
+
+class SimpleNamedItem(NamedItem):
+    """
+    Simple named item with border.
+
+    Deriving classes have to implement get_border and draw_border methods.
+
+    _border - border of named item, i.e. ellipse for usecase, rectangle for
+              object
+
+    See ObjectNodeItem and UseCaseItem for examples.
+    """
+
+    WIDTH = 120
+    HEIGHT = 60
+    MARGIN_X = 60
+    MARGIN_Y = 30
+
+    def __init__(self, id=None):
+        NamedItem.__init__(self, id)
+        self._border = self.get_border()
+        self._border.set_line_width(2.0)
+        self.set(width = self.WIDTH, height = self.HEIGHT)
+
+    def on_update(self, affine):
+        width, height = self.get_name_size()
+        self.set(min_width = width + self.MARGIN_X,
+            min_height = height + self.MARGIN_Y)
+
+        self.update_name(x = 0, y = (self.height - height) / 2,
+           width = self.width, height = height)
+
+        NamedItem.on_update(self, affine)
+
+        self.draw_border()
+        self.expand_bounds(1.0)
+
+    def on_shape_iter(self):
+        return itertools.chain(
+            NamedItem.on_shape_iter(self),
+            iter([self._border]))
+
 
 initialize_item(NamedItem)
 

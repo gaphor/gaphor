@@ -349,7 +349,6 @@ class ForkNodePlacementAction(PlacementAction):
 register_action(ForkNodePlacementAction)
 
 
-
 class ActionPlacementAction(PlacementAction):
     id = 'InsertAction'
     label = 'Action'
@@ -360,6 +359,18 @@ class ActionPlacementAction(PlacementAction):
     subject_type = UML.Action
 
 register_action(ActionPlacementAction)
+
+
+class ObjectNodePlacementAction(PlacementAction):
+    id = 'InsertObjectNode'
+    label = 'Object Node'
+    tooltip = 'Create a new object node'
+    stock_id = 'gaphor-object-node'
+    name = 'ObjectNode'
+    type = diagram.ObjectNodeItem
+    subject_type = UML.ObjectNode
+
+register_action(ObjectNodePlacementAction)
 
 
 class CommentPlacementAction(PlacementAction):

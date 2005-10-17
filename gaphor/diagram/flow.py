@@ -5,7 +5,6 @@ ControlFlow and ObjectFlow --
 
 from __future__ import generators
 
-import gobject
 import pango
 import diacanvas
 
@@ -65,12 +64,85 @@ class FlowItem(RelationshipItem, diacanvas.CanvasGroupable):
             relation = self.find_relationship(s1, s2)
             if not relation:
                 factory = resource(UML.ElementFactory)
-                relation = factory.create(UML.ControlFlow)
+
+                # if we connect to object node than flow uml class should
+                # ObjectFlow
+                if isinstance(s1, UML.ObjectNode) \
+                        or isinstance(s2, UML.ObjectNode):
+                    relcls = UML.ObjectFlow
+                else:
+                    relcls = UML.ControlFlow
+                assert relcls == UML.ObjectFlow or relcls == UML.ControlFlow
+
+                relation = factory.create(relcls)
                 relation.source = s1
                 relation.target = s2
                 relation.guard = factory.create(UML.LiteralSpecification)
             self.subject = relation
             self._guard.subject = relation.guard
+
+            # determine classes of nodes
+            # - if there is no more than one incoming edge nor outgoing edge, then
+            #   by default diamond represents decision node and line represents fork node
+            # - if there is one incoming edge and second flow is attached with its head
+            #   (creating second incoming edge) then subject of UI element is changed
+            #   to merge or join node
+            # - if there is more than one incoming edge and flow is detached
+            #   from UI element, then subject of UI element is changed from merge/join to
+            #   decision or fork
+            def move_collection(src, target, name):
+                # first make of copy of collection, because assigning
+                # element to target collection moves this element
+                for flow in list(getattr(src, name)):
+                    getattr(target, name).append(flow)
+
+            def check_node(src):
+                if not isinstance(src, (UML.ForkNode, UML.JoinNode, UML.DecisionNode, UML.MergeNode)):
+                    return src
+
+                node = src
+                if len(src.incoming) > 1:
+                    # tcls: target node class
+                    if isinstance(src, UML.ForkNode):
+                        tcls = UML.JoinNode
+                    elif isinstance(src, UML.DecisionNode):
+                        tcls = UML.MergeNode
+
+                    log.debug('changing %s to %s' % (src.__class__, tcls))
+
+                    target = factory.create(tcls) # create target node
+                    move_collection(src, target, 'incoming')
+
+                    if len(src.outgoing) > 1:
+                        log.debug('combining nodes')
+                        flow = factory.create(UML.ControlFlow)
+                        flow.source = target
+                        flow.target = src
+                    else:
+                        move_collection(src, target, 'outgoing')
+                        log.debug('deleting node %s', src)
+                        #src.unlink()
+                        #del src
+                    node = target
+                else:
+                    log.debug('leaving node %s' % node)
+
+                assert isinstance(node, (UML.ForkNode, UML.DecisionNode)) \
+                    and len(node.incoming) <= 1 \
+                    and len(node.outgoing) >= 0 \
+                    or isinstance(node, (UML.JoinNode, UML.MergeNode)) \
+                    and len(node.incoming) > 1 \
+                    and len(node.outgoing) <= 1, \
+                    'UML metamodel problem %s (%d, %d)' \
+                    % (node, len(node.incoming), len(node.outgoing))
+
+                return node
+
+            #c1.set_subject(check_node(s1))
+            #c2.set_subject(check_node(s2))
+
+
+
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
         """See RelationshipItem.confirm_disconnect_handle().

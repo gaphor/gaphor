@@ -69,7 +69,7 @@ from generalization import GeneralizationItem
 from implementation import ImplementationItem
 from association import AssociationItem
 from extension import ExtensionItem
-from activitynodes import InitialNodeItem, ActivityFinalNodeItem, FlowFinalNodeItem, DecisionNodeItem, ForkNodeItem
+from activitynodes import InitialNodeItem, ActivityFinalNodeItem, FlowFinalNodeItem, DecisionNodeItem, ForkNodeItem, ObjectNodeItem
 from action import ActionItem
 from flow import FlowItem
 from component import ComponentItem

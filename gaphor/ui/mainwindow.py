@@ -46,6 +46,7 @@ class MainWindow(AbstractWindow):
                 'InsertFlowFinalNode',
                 'InsertDecisionNode',
                 'InsertForkNode',
+                'InsertObjectNode',
                 'InsertFlow')),
 #        (_('Interactions'), (
 #                'InsertInteraction',

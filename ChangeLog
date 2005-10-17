@@ -1,3 +1,11 @@
+2005-10-17  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/activitynodes.py: implemented object node
+	* gaphor/diagram/flow.py: change control flow to object flow
+	when source or target is connected to object node
+	* gaphor/diagram/nameditem.py, gaphor/diagram/usecase.py: created
+	SimpleNamedItem for named item UI elements, which contain just name
+	and border (like use case, object, etc.)
+
 2005-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 	* gaphor/data/plugins/kidexport/plugin.xml: added module dependency kid.
 

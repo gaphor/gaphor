@@ -4,13 +4,11 @@
 
 import math
 
-import gobject
-import pango
 import diacanvas
 from gaphor import UML
 from gaphor.diagram import initialize_item
 from elementitem import ElementItem
-from nameditem import NamedItem
+from nameditem import NamedItem, SimpleNamedItem
 
 class ActivityNodeItem(ElementItem):
     
@@ -97,15 +95,15 @@ class FlowFinalNodeItem(ActivityNodeItem):
         self._circle.ellipse((r, r), d, d)
         self._circle.set_line_width(2)
 
-        def getLine(p1, p2):
+        def get_line(p1, p2):
             line = diacanvas.shape.Path()
             line.line((p1, p2))
             line.set_line_width(2)
             return line
 
         dr = (1 - math.sin(math.pi / 4)) * r
-        self._line1 = getLine((dr, dr), (d - dr, d - dr))
-        self._line2 = getLine((dr, d - dr), (d - dr, dr))
+        self._line1 = get_line((dr, dr), (d - dr, d - dr))
+        self._line2 = get_line((dr, d - dr), (d - dr, dr))
 
         self.set(width=d, height=d)
 
@@ -152,9 +150,19 @@ class ForkNodeItem(ActivityNodeItem):
 
 
 
+class ObjectNodeItem(SimpleNamedItem):
+    def get_border(self):
+        return diacanvas.shape.Path()
+
+    def draw_border(self):
+        self._border.rectangle((0, 0), (self.width, self.height))
+
+
+
 initialize_item(ActivityNodeItem)
 initialize_item(InitialNodeItem, UML.InitialNode)
 initialize_item(ActivityFinalNodeItem, UML.ActivityFinalNode)
 initialize_item(FlowFinalNodeItem, UML.FlowFinalNode)
 initialize_item(DecisionNodeItem, UML.DecisionNode)
 initialize_item(ForkNodeItem, UML.ForkNode)
+initialize_item(ObjectNodeItem, UML.ObjectNode)
