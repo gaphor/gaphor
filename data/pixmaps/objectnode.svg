@@ -20,7 +20,78 @@
    inkscape:export-xdpi="22.500000"
    inkscape:export-ydpi="22.500000">
   <defs
-     id="defs4" />
+     id="defs4">
+    <linearGradient
+       id="linearGradient2971">
+      <stop
+         style="stop-color:#a5c2d1;stop-opacity:0.24705882;"
+         offset="0.0000000"
+         id="stop2987" />
+      <stop
+         id="stop2995"
+         offset="0.15000001"
+         style="stop-color:#a5c2d1;stop-opacity:0.62352941;" />
+      <stop
+         id="stop2993"
+         offset="1.0000000"
+         style="stop-color:#a5c2d1;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         sodipodi:nodetypes="ccccc"
+         id="path2955"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
+         transform="scale(0.8)" />
+    </marker>
+    <linearGradient
+       id="linearGradient2821">
+      <stop
+         style="stop-color:#a5c2d1;stop-opacity:1;"
+         offset="0"
+         id="stop2823" />
+      <stop
+         id="stop2832"
+         offset="0.85000002"
+         style="stop-color:#a5c2d1;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#a5c2d1;stop-opacity:0;"
+         offset="1"
+         id="stop2825" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2079">
+      <stop
+         id="stop2081"
+         offset="0"
+         style="stop-color:#a5e4d1;stop-opacity:1;" />
+      <stop
+         style="stop-color:#a5e4d1;stop-opacity:0.49803922;"
+         offset="0.80000001"
+         id="stop2085" />
+      <stop
+         id="stop2083"
+         offset="1"
+         style="stop-color:#a5e4d1;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2047">
+      <stop
+         style="stop-color:#a5e4d1;stop-opacity:1;"
+         offset="0"
+         id="stop2049" />
+      <stop
+         style="stop-color:#a5e4d1;stop-opacity:0;"
+         offset="1"
+         id="stop2051" />
+    </linearGradient>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -59,36 +130,23 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g4304"
-       transform="translate(0.000000,-3.776581)"
-       style="font-family:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:24.000000;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%">
+       id="g1342">
       <use
-         style="opacity:0.49999997;stroke-width:4.0000000;stroke-miterlimit:4.0000000;stroke-dasharray:none;font-family:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:24.000000;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%"
+         style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125.00000%;writing-mode:lr-tb;text-anchor:start;opacity:0.49999997;stroke-width:4.0000000;stroke-miterlimit:4.0000000;stroke-dasharray:none;font-family:Arial"
          height="96.000000"
          width="96.000000"
-         transform="translate(5.000000,3.566117)"
+         transform="translate(4.237351,3.412154)"
          id="use2072"
          xlink:href="#rect1316"
          y="0.0000000"
          x="0.0000000" />
       <rect
-         y="30.364428"
-         x="10.500000"
+         y="26.587847"
+         x="7.8892498"
          height="39.258190"
-         width="70.000000"
+         width="74.873398"
          id="rect1316"
-         style="opacity:1.0000000;fill:#e1e4e6;fill-opacity:1.0000000;fill-rule:evenodd;stroke:#000000;stroke-width:4.0000024;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;font-family:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:24.000000;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%" />
+         style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125.00000%;writing-mode:lr-tb;text-anchor:start;opacity:1.0000000;fill:#e1e4e6;fill-opacity:1.0000000;fill-rule:evenodd;stroke:#000000;stroke-width:4.0000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;font-family:Arial" />
     </g>
-    <text
-       xml:space="preserve"
-       style="font-size:22.000000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Arial"
-       x="16"
-       y="51.748047"
-       id="text4288"
-       sodipodi:linespacing="125.00000%"><tspan
-         sodipodi:role="line"
-         id="tspan4290"
-         x="16.000000"
-         y="51.748047">object</tspan></text>
   </g>
 </svg>
