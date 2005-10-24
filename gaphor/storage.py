@@ -243,6 +243,17 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # Fix version inconsistencies
     version_0_5_2(elements, factory, gaphor_version)
     version_0_7_1(elements, factory, gaphor_version)
+    # Before version 0.7.2 there was only decision node (no merge nodes).
+    # This node could have many incoming and outgoing flows (edges).
+    # According to UML specification decision node has no more than one
+    # incoming node.
+    #
+    # Now, we have implemented merge node, which can have many incoming
+    # flows. We also support combining of decision and merge nodes as
+    # described in UML specification.
+    #
+    # Data model, loaded from file, is updated automatically, so there is
+    # no need for special function.
 
     # do a postload:
     for id, elem in elements.items():
@@ -302,6 +313,7 @@ def load_generator(filename, factory=None):
         import traceback
         traceback.print_exc()
         raise
+
 
 
 def version_0_7_1(elements, factory, gaphor_version):

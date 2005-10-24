@@ -10,6 +10,9 @@ Bugs:
 
 from __future__ import generators
 
+import pygtk
+pygtk.require('2.0')
+
 import gobject
 import gtk
 import diacanvas

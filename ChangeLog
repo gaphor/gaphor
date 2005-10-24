@@ -1,3 +1,15 @@
+2005-10-24  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/util.py: added functions which
+		- determine subject's class of fork and decision UI elements
+		- combine or decombine fork/join and decision/merge nodes in case
+		  of many incoming and outgoig flows
+	* gaphor/diagram/activitynodes.py: store information about combined
+	fork/decision nodes; support for ordering of object nodes
+	* gaphor/diagram/flow.py: determine fork/decision node subject's class
+	and/or combine/decombine nodes according to UML specs
+	* gaphor/UML/uml2.gaphor: added complete activities package with
+	object nodes diagram to support ordering of object nodes
+
 2005-10-17  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/activitynodes.py: implemented object node
 	* gaphor/diagram/flow.py: change control flow to object flow

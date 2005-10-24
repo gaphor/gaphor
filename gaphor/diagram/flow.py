@@ -14,6 +14,8 @@ from gaphor.diagram import initialize_item
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.relationship import RelationshipItem
 
+import gaphor.diagram.util
+
 class FlowItem(RelationshipItem, diacanvas.CanvasGroupable):
 
     def __init__(self, id=None):
@@ -56,17 +58,21 @@ class FlowItem(RelationshipItem, diacanvas.CanvasGroupable):
     def confirm_connect_handle (self, handle):
         """See RelationshipItem.confirm_connect_handle().
         """
-        c1 = self.handles[0].connected_to
-        c2 = self.handles[-1].connected_to
+        c1 = self.handles[0].connected_to   # source
+        c2 = self.handles[-1].connected_to  # target
         if c1 and c2:
             s1 = c1.subject
+            if isinstance(s1, tuple(gaphor.diagram.util.node_classes.keys())) and c1.combined:
+                log.debug('getting combined node for flow source')
+                s1 = s1.outgoing[0].target
+
             s2 = c2.subject
             relation = self.find_relationship(s1, s2)
             if not relation:
                 factory = resource(UML.ElementFactory)
 
                 # if we connect to object node than flow uml class should
-                # ObjectFlow
+                # be ObjectFlow
                 if isinstance(s1, UML.ObjectNode) \
                         or isinstance(s2, UML.ObjectNode):
                     relcls = UML.ObjectFlow
@@ -81,65 +87,8 @@ class FlowItem(RelationshipItem, diacanvas.CanvasGroupable):
             self.subject = relation
             self._guard.subject = relation.guard
 
-            # determine classes of nodes
-            # - if there is no more than one incoming edge nor outgoing edge, then
-            #   by default diamond represents decision node and line represents fork node
-            # - if there is one incoming edge and second flow is attached with its head
-            #   (creating second incoming edge) then subject of UI element is changed
-            #   to merge or join node
-            # - if there is more than one incoming edge and flow is detached
-            #   from UI element, then subject of UI element is changed from merge/join to
-            #   decision or fork
-            def move_collection(src, target, name):
-                # first make of copy of collection, because assigning
-                # element to target collection moves this element
-                for flow in list(getattr(src, name)):
-                    getattr(target, name).append(flow)
-
-            def check_node(src):
-                if not isinstance(src, (UML.ForkNode, UML.JoinNode, UML.DecisionNode, UML.MergeNode)):
-                    return src
-
-                node = src
-                if len(src.incoming) > 1:
-                    # tcls: target node class
-                    if isinstance(src, UML.ForkNode):
-                        tcls = UML.JoinNode
-                    elif isinstance(src, UML.DecisionNode):
-                        tcls = UML.MergeNode
-
-                    log.debug('changing %s to %s' % (src.__class__, tcls))
-
-                    target = factory.create(tcls) # create target node
-                    move_collection(src, target, 'incoming')
-
-                    if len(src.outgoing) > 1:
-                        log.debug('combining nodes')
-                        flow = factory.create(UML.ControlFlow)
-                        flow.source = target
-                        flow.target = src
-                    else:
-                        move_collection(src, target, 'outgoing')
-                        log.debug('deleting node %s', src)
-                        #src.unlink()
-                        #del src
-                    node = target
-                else:
-                    log.debug('leaving node %s' % node)
-
-                assert isinstance(node, (UML.ForkNode, UML.DecisionNode)) \
-                    and len(node.incoming) <= 1 \
-                    and len(node.outgoing) >= 0 \
-                    or isinstance(node, (UML.JoinNode, UML.MergeNode)) \
-                    and len(node.incoming) > 1 \
-                    and len(node.outgoing) <= 1, \
-                    'UML metamodel problem %s (%d, %d)' \
-                    % (node, len(node.incoming), len(node.outgoing))
-
-                return node
-
-            #c1.set_subject(check_node(s1))
-            #c2.set_subject(check_node(s2))
+            gaphor.diagram.util.determine_node_on_connect(c1)
+            gaphor.diagram.util.determine_node_on_connect(c2)
 
 
 
@@ -147,7 +96,20 @@ class FlowItem(RelationshipItem, diacanvas.CanvasGroupable):
     def confirm_disconnect_handle (self, handle, was_connected_to):
         """See RelationshipItem.confirm_disconnect_handle().
         """
+        c1 = self.handles[0].connected_to   # source
+        c2 = self.handles[-1].connected_to  # target
+
+        if not c1:
+            c1 = was_connected_to
+        if not c2:
+            c2 = was_connected_to
+
         self.set_subject(None)
+
+        if c1:
+            gaphor.diagram.util.determine_node_on_disconnect(c1)
+        if c2:
+            gaphor.diagram.util.determine_node_on_disconnect(c2)
 
     # Groupable
 
@@ -260,4 +222,3 @@ class FlowGuard(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
 
 initialize_item(FlowItem, UML.ControlFlow)
 initialize_item(FlowGuard)
-

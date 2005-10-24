@@ -13,11 +13,11 @@ from gaphor.undomanager import UndoTransactionAspect, weave_method
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 
+from gaphor.diagram.activitynodes import ObjectNodeItem
 from gaphor.diagram.klass import ClassItem
 from gaphor.diagram.package import PackageItem
 from gaphor.diagram.component import ComponentItem
 from gaphor.diagram.attribute import AttributeItem
-from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.operation import OperationItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.interface import InterfaceItem
@@ -1038,3 +1038,88 @@ class CreateLinksAction(Action):
 weave_method(CreateLinksAction.execute, UndoTransactionAspect)
 register_action(CreateLinksAction, 'ItemFocus', 'ItemSelect')
 
+
+class ObjectNodeOrderingAction(RadioAction):
+    id = 'ObjectNodeOrdering'
+    label = 'Show'
+    group = 'object_node_ordering'
+    ordering = None
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+            if isinstance(item, ObjectNodeItem):
+                self.active = (item.get_ordering() == self.ordering)
+        except NoFocusItemError:
+            pass
+
+    def execute(self):
+        if self.active:
+            item = get_parent_focus_item(self._window)
+            item.set_ordering(self.ordering)
+
+weave_method(ObjectNodeOrderingAction.execute, UndoTransactionAspect)
+
+
+class ObjectNodeOrderingUnorderedAction(ObjectNodeOrderingAction):
+    id = 'ObjectNodeOrderingUnordered'
+    label = 'Unordered'
+    group = 'object_node_ordering'
+    ordering = 'unordered'
+
+register_action(ObjectNodeOrderingUnorderedAction, 'ItemFocus')
+
+
+class ObjectNodeOrderingOrderedAction(ObjectNodeOrderingAction):
+    id = 'ObjectNodeOrderingOrdered'
+    label = 'Ordered'
+    group = 'object_node_ordering'
+    ordering = 'ordered'
+
+register_action(ObjectNodeOrderingOrderedAction, 'ItemFocus')
+
+
+class ObjectNodeOrderingLIFOAction(ObjectNodeOrderingAction):
+    id = 'ObjectNodeOrderingLIFO'
+    label = 'LIFO'
+    group = 'object_node_ordering'
+    ordering = 'LIFO'
+
+register_action(ObjectNodeOrderingLIFOAction, 'ItemFocus')
+
+
+class ObjectNodeOrderingFIFOAction(ObjectNodeOrderingAction):
+    id = 'ObjectNodeOrderingFIFO'
+    label = 'FIFO'
+    group = 'object_node_ordering'
+    ordering = 'FIFO'
+
+register_action(ObjectNodeOrderingFIFOAction, 'ItemFocus')
+
+
+class ObjectNodeOrderingVisibiltyAction(CheckAction):
+    id = 'ObjectNodeOrderingVisibilty'
+    label = 'Visible'
+    tooltip = 'Show or hide object node ordering'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, ObjectNodeItem):
+                self.active = item.show_ordering
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        item.set_show_ordering(self.active)
+
+weave_method(ObjectNodeOrderingVisibiltyAction.execute, UndoTransactionAspect)
+register_action(ObjectNodeOrderingVisibiltyAction, 'ItemFocus')
