@@ -2,48 +2,9 @@
 
 import unittest
 import gaphor.UML as UML
-import gaphor.diagram as diagram
+import gaphortests
 
-factory = UML.ElementFactory()
-
-class TestActivityNodes(unittest.TestCase):
-    def setUp(self):
-        self.pkg = factory.create(UML.Package)
-        self.dgm = factory.create(UML.Diagram)
-        self.dgm.package = self.pkg
-
-
-    def createItem(self, ui_item_cls, item_cls):
-        item = self.dgm.create(ui_item_cls)
-        item.package = self.pkg
-        item.subject = factory.create(item_cls)
-        return item
-
-
-    def createFlow(self):
-        return self.createItem(diagram.FlowItem, UML.ControlFlow)
-
-
-    def createActionItem(self):
-        return self.createItem(diagram.ActionItem, UML.ActivityNode)
-
-
-    def createDecisionNode(self):
-        return self.createItem(diagram.DecisionNodeItem, UML.DecisionNode)
-
-
-    def connectNodes(self, source, target, flow):
-        source.connect_handle(flow.handles[0])
-        target.connect_handle(flow.handles[-1])
-
-
-    def disconnectNodes(self, flow):
-        source = flow.handles[0].connected_to
-        target = flow.handles[-1].connected_to
-        source.disconnect_handle(flow.handles[0])
-        target.disconnect_handle(flow.handles[-1])
-
-
+class TestActivityNodes(gaphortests.TestCase):
     def testMergeNode(self):
         """
         Create decision node UI element and add two incoming flows.
