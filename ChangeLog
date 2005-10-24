@@ -1,3 +1,14 @@
+2005-10-24 Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: bumped version to 0.7.2, since data model has undergone some
+	changes.
+	* gaphor/UML/uml2.gaphor: added taggedValue to NamedElement as 0..*.
+	* gaphor/storage.py, gaphor/UML/umllex.py,
+	gaphor/diagram/association.py, gaphor/diagram/attribute.py,
+	gaphor/diagram/diagramline.py, gaphor/diagram/operation.py:
+	Changed to support NamedElement.taggedValue[*].
+	* utils/genUML2.py: parse new taggedValues properly.
+
 2005-10-24  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/util.py: added functions which
 		- determine subject's class of fork and decision UI elements

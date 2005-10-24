@@ -12,12 +12,12 @@ rem set GAPHOR_WIN32_LIBS=c:\msys\1.0\target
 
 rem Where is Python installed?
 
-set PYTHONHOME=c:\Python23
+set PYTHONHOME=c:\Python24
 
 rem Should have to change these:
 
 set PATH=%GAPHOR_WIN32_LIBS%\bin;%PYTHONHOME%;%PATH%
 
-set PYTHONPATH=%GAPHOR_WIN32_LIBS%\lib\python23
+set PYTHONPATH=%GAPHOR_WIN32_LIBS%\lib\python24
 
 python setup.py run %1 %2 %3 %4

@@ -30,7 +30,7 @@ class AttributeItem(FeatureItem):
                                                     'upperValue.value',
                                                     'defaultValue.value',
                                                     'typeValue.value',
-                                                    'taggedValue.value',
+                                                    'taggedValue',
                                                     'association')
                                                     + notifiers)
         #self._expression.set_text(self.subject.render() or '')
@@ -47,7 +47,7 @@ class AttributeItem(FeatureItem):
     on_subject_notify__upperValue_value = on_subject_notify__name
     on_subject_notify__defaultValue_value = on_subject_notify__name
     on_subject_notify__typeValue_value = on_subject_notify__name
-    on_subject_notify__taggedValue_value = on_subject_notify__name
+    on_subject_notify__taggedValue = on_subject_notify__name
 
     def on_subject_notify__association(self, subject, pspec):
         """Make sure we update the attribute compartment (in case

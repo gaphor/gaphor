@@ -53,7 +53,7 @@ class OperationItem(FeatureItem):
         self.request_update()
 
     on_subject_notify__visibility = on_subject_notify__name
-    on_subject_notify__taggedValue_value = on_subject_notify__name
+    on_subject_notify__taggedValue = on_subject_notify__name
 
     def on_update(self, affine):
         # Render the operation on every update, since we can't monitor

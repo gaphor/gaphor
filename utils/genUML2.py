@@ -166,13 +166,12 @@ class Writer:
 
         derived = int(head.isDerived or 0)
 
-        #lower, upper, subsets, redefines = parse_association_multiplicity(head.lowerValue)
         #print head.id, head.lowerValue
         upper = head.upperValue and head.upperValue.value or '*'
         lower = head.lowerValue and head.lowerValue.value or upper
         if lower == '*':
             lower = 0
-        subsets, redefines = parse_association_tags(head.taggedValue and head.taggedValue.value or '')
+        subsets, redefines = parse_association_tags(head.taggedValue)
 
         # Add the values found. These are used later to generate derived unions.
         head.derived = derived
@@ -252,53 +251,26 @@ def parse_association_name(name):
         name = name[1:]
     return derived, name
 
-def parse_association_multiplicity(mult):
-    subsets = []
-    redefines = None
-    tag = None
-    if '{' in mult:
-        # we have tagged values
-        mult, tag = map(string.strip, mult.split('{'))
-        if tag[-1] == '}':
-            tag = tag[:-1]
-    else:
-        mult = mult.strip()
-    
-    mult = mult.split('.')
-    lower = mult[0]
-    upper = mult[-1]
-    if lower == '*':
-        lower = 0
-    #if upper == '*':
-    #    upper = "'*'"
-
-    if tag and tag.find('subsets') != -1:
-        # find the text after 'subsets':
-        subsets = tag[tag.find('subsets') + len('subsets'):]
-        # remove all whitespaces and stuff
-        subsets = subsets.replace(' ', '').replace('\n', '').replace('\r', '')
-        subsets = subsets.split(',')
-    if tag and tag.find('redefines') != -1:
-        # find the text after 'redefines':
-        redefines = tag[tag.find('redefines') + len('redefines'):]
-        # remove all whitespaces and stuff
-        redefines = redefines.replace(' ', '').replace('\n', '').replace('\r', '')
-        l = redefines.split(',')
-        assert len(l) == 1
-        redefines = l[0]
-
-    return lower, upper, subsets, redefines
 
 def parse_association_tags(tag):
     subsets = []
     redefines = None
 
+    # subsets has a comma separated syntax. Add all taggedValues together
+    if type(tag) is type([]):
+        tag = ', '.join(filter(None, map(getattr, tag, ['value'] * len(tag))))
+    elif tag:
+        tag = tag.value
+
+    print 'scanning tags: %s' % tag
+
     if tag and tag.find('subsets') != -1:
         # find the text after 'subsets':
         subsets = tag[tag.find('subsets') + len('subsets'):]
         # remove all whitespaces and stuff
         subsets = subsets.replace(' ', '').replace('\n', '').replace('\r', '')
         subsets = subsets.split(',')
+
     if tag and tag.find('redefines') != -1:
         # find the text after 'redefines':
         redefines = tag[tag.find('redefines') + len('redefines'):]
@@ -308,6 +280,7 @@ def parse_association_tags(tag):
         assert len(l) == 1
         redefines = l[0]
 
+    print 'found', subsets, redefines
     return subsets, redefines
 
 def generate(filename, outfile=None, overridesfile=None):

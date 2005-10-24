@@ -51,10 +51,10 @@ class DiagramLine(diacanvas.CanvasLine, DiagramItem):
         save_func('points', points)
         c = self.handles[0].connected_to
         if c:
-            save_func('head_connection', c, reference=True)
+            save_func('head-connection', c, reference=True)
         c = self.handles[-1].connected_to
         if c:
-            save_func('tail_connection', c, reference=True)
+            save_func('tail-connection', c, reference=True)
 
     def load (self, name, value):
         if name == 'points':
@@ -63,9 +63,9 @@ class DiagramLine(diacanvas.CanvasLine, DiagramItem):
             self.set_property('tail_pos', points[1])
             for p in points[2:]:
                 self.set_property ('add_point', p)
-        elif name == 'head_connection':
+        elif name in ('head_connection', 'head-connection'):
             self._load_head_connection = value
-        elif name == 'tail_connection':
+        elif name in ('tail_connection', 'tail-connection'):
             self._load_tail_connection = value
         else:
             DiagramItem.load(self, name, value)

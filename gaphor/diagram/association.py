@@ -780,7 +780,7 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         DiagramItem.on_subject_notify(self, pspec,
                         notifiers + ('aggregation', 'visibility',
                         'name', 'lowerValue.value',
-                        'upperValue.value', 'taggedValue.value',
+                        'upperValue.value', 'taggedValue',
                         'owningAssociation', 'class_', 'interface_'))
         #print 'w/ assoc', self.subject and self.subject.association
         self.set_text()
@@ -805,8 +805,8 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
         self.set_text()
         self.parent.request_update()
 
-    def on_subject_notify__taggedValue_value(self, tagged_value, pspec):
-        log.debug('New value for taggedValue.value: %s' % tagged_value and self.subject.taggedValue.value)
+    def on_subject_notify__taggedValue(self, tagged_value, pspec):
+        #log.debug('New value for taggedValue.value: %s' % tagged_value and self.subject.taggedValue.value)
         self.set_text()
         self.parent.request_update()
 

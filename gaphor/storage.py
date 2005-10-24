@@ -170,6 +170,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     # Fix version inconsistencies
     version_0_6_2(elements, factory, gaphor_version)
+    version_0_7_2(elements, factory, gaphor_version)
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
@@ -314,6 +315,34 @@ def load_generator(filename, factory=None):
         traceback.print_exc()
         raise
 
+
+def version_0_7_2(elements, factory, gaphor_version):
+    """Before 0.7.2, only Property and Parameter elements had taggedValues.
+    Since 0.7.2 all NamedElements are able to have taggedValues. However,
+    the multiplicity of taggedValue has changed from 0..1 to *, so all elements
+    should be converted to a list.
+    """
+    from gaphor.misc.uniqueid import generate_id
+
+    if tuple(map(int, gaphor_version.split('.'))) < (0, 7, 2):
+        for elem in elements.values():
+            try:
+                if type(elem) is parser.element \
+                   and elem.type in ('Property', 'Parameter') \
+                   and elem.taggedValue:
+                    tvlist = []
+                    tv = elements[elem.taggedValue]
+                    if tv.value:
+                        for t in map(str.strip, str(tv.value).split(',')):
+                            log.debug("Tagged value: %s" % t)
+                            newtv = parser.element(generate_id(),
+                                                   'LiteralSpecification')
+                            newtv.values['value'] = t
+                            elements[newtv.id] = newtv
+                            tvlist.append(newtv.id)
+                        elem.references['taggedValue'] = tvlist
+            except Exception, e:
+                log.error('Error while updating taggedValues', e)
 
 
 def version_0_7_1(elements, factory, gaphor_version):
