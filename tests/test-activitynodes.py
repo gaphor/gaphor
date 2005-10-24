@@ -32,13 +32,12 @@ class TestActivityNodes(unittest.TestCase):
         target.connect_handle(flow.handles[-1])
 
     def disconnectNodes(self, flow):
-        #print '-' * 10
-        #source = flow.handles[0].connected_to
-        #target = flow.handles[-1].connected_to
-        #source.connect_handle(flow.handles[0])
-        #target.connect_handle(flow.handles[-1])
-        #print '-' * 10
-        pass
+        print '-' * 10
+        source = flow.handles[0].connected_to
+        target = flow.handles[-1].connected_to
+        source.disconnect_handle(flow.handles[0])
+        target.disconnect_handle(flow.handles[-1])
+        print '-' * 10
 
     def testMergeNode(self):
         """
@@ -147,7 +146,7 @@ class TestActivityNodes(unittest.TestCase):
         self.disconnectNodes(f1)
 
         self.assertFalse(dnode.combined)
-        self.assertEqual(dnode.subject.__class__, UML.DecisioNode)
+        self.assertEqual(dnode.subject.__class__, UML.DecisionNode)
         self.assert_(f1.subject not in dnode.subject.incoming)
 
 
