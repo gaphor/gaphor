@@ -38,6 +38,7 @@ class TestActivityNodes(unittest.TestCase):
         #source.connect_handle(flow.handles[0])
         #target.connect_handle(flow.handles[-1])
         #print '-' * 10
+        pass
 
     def testMergeNode(self):
         """
