@@ -1,3 +1,7 @@
+2005-10-24  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/flow.py: forbid flow source to connect to final node;
+	forbid flow target to connect to initial nodes
+
 2005-10-24 Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* setup.py: bumped version to 0.7.2, since data model has undergone some

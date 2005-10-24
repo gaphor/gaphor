@@ -50,10 +50,21 @@ class FlowItem(RelationshipItem, diacanvas.CanvasGroupable):
     def allow_connect_handle(self, handle, connecting_to):
         """See RelationshipItem.allow_connect_handle().
         """
-        try:
-            return isinstance(connecting_to.subject, UML.ActivityNode)
-        except AttributeError:
-            return 0
+        can_connect = False
+
+        subject = connecting_to.subject
+        if isinstance(subject, UML.ActivityNode):
+            source = self.handles[0] 
+            target = self.handles[-1]
+
+            # forbid flow source to connect to final node
+            # forbid flow target to connect to initial nodes
+            can_connect = True
+            if source is handle and isinstance(subject, UML.FinalNode) \
+                    or target is handle and isinstance(subject, UML.InitialNode):
+                can_connect = False
+
+        return can_connect
 
     def confirm_connect_handle (self, handle):
         """See RelationshipItem.confirm_connect_handle().
