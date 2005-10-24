@@ -38,7 +38,7 @@ def change_node_class(node):
     If constraints are met, then return node itself.
     """
     if is_fd(node) and len(node.incoming) > 1 \
-            or not is_fd(node) and len(node.outgoing) > 1:
+            or not is_fd(node) and len(node.incoming) < 2:
 
         factory = resource(UML.ElementFactory)
         cls = node_classes[node.__class__]
