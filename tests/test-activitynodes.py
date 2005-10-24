@@ -12,32 +12,37 @@ class TestActivityNodes(unittest.TestCase):
         self.dgm = factory.create(UML.Diagram)
         self.dgm.package = self.pkg
 
+
     def createItem(self, ui_item_cls, item_cls):
         item = self.dgm.create(ui_item_cls)
         item.package = self.pkg
         item.subject = factory.create(item_cls)
         return item
 
+
     def createFlow(self):
         return self.createItem(diagram.FlowItem, UML.ControlFlow)
+
 
     def createActionItem(self):
         return self.createItem(diagram.ActionItem, UML.ActivityNode)
 
+
     def createDecisionNode(self):
         return self.createItem(diagram.DecisionNodeItem, UML.DecisionNode)
+
 
     def connectNodes(self, source, target, flow):
         source.connect_handle(flow.handles[0])
         target.connect_handle(flow.handles[-1])
 
+
     def disconnectNodes(self, flow):
-        print '-' * 10
         source = flow.handles[0].connected_to
         target = flow.handles[-1].connected_to
         source.disconnect_handle(flow.handles[0])
         target.disconnect_handle(flow.handles[-1])
-        print '-' * 10
+
 
     def testMergeNode(self):
         """
@@ -58,8 +63,6 @@ class TestActivityNodes(unittest.TestCase):
         self.connectNodes(a1, dnode, f1)
         self.connectNodes(a2, dnode, f2)
 
-        self.dgm.canvas.update_now()
-
         self.assertEquals(dnode.subject.__class__, UML.MergeNode)
         self.assertEquals(dnode.combined, False)
         # fixme: check that previous subject is destroyed
@@ -68,6 +71,7 @@ class TestActivityNodes(unittest.TestCase):
 
         self.assertEquals(dnode.subject.__class__, UML.DecisionNode)
         self.assertEquals(dnode.combined, False)
+
 
     def checkCombinedNode(self, node):
         """
@@ -82,6 +86,7 @@ class TestActivityNodes(unittest.TestCase):
         self.assertEquals(combined_node.__class__, UML.DecisionNode)
         self.assertEquals(len(combined_node.incoming), 1)
         return node.subject, combined_node
+
 
     def testCombinedNodes(self):
         dnode = self.createDecisionNode()
