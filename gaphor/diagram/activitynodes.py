@@ -151,7 +151,6 @@ class FDNode(ActivityNodeItem):
             return ActivityNodeItem.do_get_property(self, pspec)
 
 
-
 class DecisionNodeItem(FDNode):
     RADIUS = 15
 
@@ -305,6 +304,7 @@ class ObjectNodeItem(SimpleNamedItem):
 
 
 
+gobject.type_register(FDNode)
 initialize_item(ActivityNodeItem)
 initialize_item(InitialNodeItem, UML.InitialNode)
 initialize_item(ActivityFinalNodeItem, UML.ActivityFinalNode)
