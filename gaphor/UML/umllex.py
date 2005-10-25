@@ -110,8 +110,8 @@ def parse_attribute(self, s):
             self.defaultValue.value = None
         #if self.taggedValue:
         #    self.taggedValue.value = None
-        for tv in self.taggedValue:
-            tv.unlink()
+        while self.taggedValue:
+            self.taggedValue[0].unlink()
     else:
         from uml2 import LiteralSpecification
         create = self._factory.create
@@ -133,8 +133,8 @@ def parse_attribute(self, s):
         #if not self.taggedValue:
         #    self.taggedValue = create(LiteralSpecification)
         #self.taggedValue.value = g('tags')
-        for tv in self.taggedValue:
-            tv.unlink()
+        while self.taggedValue:
+            self.taggedValue[0].unlink()
         tags = g('tags')
         if tags:
             for t in map(str.strip, tags.split(',')):
