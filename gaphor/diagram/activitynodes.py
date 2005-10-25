@@ -305,6 +305,7 @@ class ObjectNodeItem(SimpleNamedItem):
 
 
 gobject.type_register(FDNode)
+gobject.type_register(ObjectNodeItem)
 initialize_item(ActivityNodeItem)
 initialize_item(InitialNodeItem, UML.InitialNode)
 initialize_item(ActivityFinalNodeItem, UML.ActivityFinalNode)
