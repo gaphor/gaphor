@@ -1,9 +1,12 @@
+2005-10-25 Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	* gaphor/UML/uml2.gaphor: added TaggedValue class in Expressions
+	diagram.
+
 2005-10-24  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/flow.py: forbid flow source to connect to final node;
 	forbid flow target to connect to initial nodes
 
 2005-10-24 Arjan Molenaar  <arjanmolenaar@hetnet.nl>
-
 	* setup.py: bumped version to 0.7.2, since data model has undergone some
 	changes.
 	* gaphor/UML/uml2.gaphor: added taggedValue to NamedElement as 0..*.
