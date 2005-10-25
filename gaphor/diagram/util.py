@@ -167,10 +167,10 @@ def determine_node_on_connect(el):
     else:
         new_subject = change_node_class(subject)
 
+    change_node_subject(el, new_subject)
+
     if el.combined:
         check_combining_flow(el)
-
-    change_node_subject(el, new_subject)
 
 
 def determine_node_on_disconnect(el):
@@ -192,6 +192,8 @@ def determine_node_on_disconnect(el):
 
     if el.combined:
         cs = subject.outgoing[0].target
+        # decombine node when there is no more than one incoming
+        # and no more than one outgoing flow
         if len(subject.incoming) < 2 or len(cs.outgoing) < 2:
             new_subject = decombine_nodes(subject)
             el.combined = False

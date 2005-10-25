@@ -50,6 +50,9 @@ class TestActivityNodes(gaphortests.TestCase):
 
 
     def testCombinedNodes(self):
+        """
+        Test combined nodes.
+        """
         dnode = self.createDecisionNode()
         f1 = self.createFlow()
         f2 = self.createFlow()
@@ -63,6 +66,11 @@ class TestActivityNodes(gaphortests.TestCase):
 
         self.connectNodes(a1, dnode, f1)
         self.connectNodes(a2, dnode, f2)
+
+        # merge node created with two incoming flows, not combined yet
+        assert dnode.subject.__class__ == UML.MergeNode, 'test problem'
+
+        # connect two more outgoing nodes, node should be combined now
         self.connectNodes(dnode, a3, f3)
         self.connectNodes(dnode, a4, f4)
 
@@ -77,6 +85,7 @@ class TestActivityNodes(gaphortests.TestCase):
         self.assert_(f3.subject in n2.outgoing)
         self.assert_(f4.subject in n2.outgoing)
 
+        # add outgoing flow to combined node
         f5 = self.createFlow()
         a5 = self.createActionItem()
         self.connectNodes(dnode, a5, f5)
@@ -91,29 +100,44 @@ class TestActivityNodes(gaphortests.TestCase):
         n1, n2 = self.checkCombinedNode(dnode)
         # f5 is removed from combined node
         self.assertEquals(len(n2.outgoing), 2)
-        self.assert_(f5.subject not in n2.outgoing)
         
+        # disconnect outgoing flow, going back to non-combined merge node
         self.disconnectNodes(f4)
+
         # node should not be combined anymore
         self.assertFalse(dnode.combined)
-        # f4 was outgoing flow, so UML node class should merge node
+
+        # f4 was outgoing flow, so UML node should be merge node
         self.assertEqual(dnode.subject.__class__, UML.MergeNode)
+
         # f3 should be outgoing flow of UML node
         self.assert_(f3.subject in dnode.subject.outgoing)
         # f1 and f2 should be kept as incoming nodes
         self.assert_(f1.subject in dnode.subject.incoming)
         self.assert_(f2.subject in dnode.subject.incoming)
 
+        # combine node again: two incoming flows: f1, f2, two outgoing
+        # flows: f3, f4
         f4 = self.createFlow()
         self.connectNodes(dnode, a4, f4)
-        self.checkCombinedNode(dnode)
+        n1, n2 = self.checkCombinedNode(dnode)
+        self.assert_(f4.subject in n2.outgoing)
 
         # now, disconnect f1, dnode should be non-combined decision node
         self.disconnectNodes(f1)
-
         self.assertFalse(dnode.combined)
         self.assertEqual(dnode.subject.__class__, UML.DecisionNode)
-        self.assert_(f1.subject not in dnode.subject.incoming)
+
+        assert dnode.subject.__class__ == UML.DecisionNode, 'test problem'
+
+        assert f2.subject and f3.subject and f4.subject, \
+            'test problem: f2, f3 and f4 should stay connected'
+        assert not f1.subject, 'test problem: f1 should stay disconnected'
+
+        # create combined node from decision node
+        self.connectNodes(a1, dnode, f1)
+        n1, n2 = self.checkCombinedNode(dnode)
+        
 
 
     def testCombinedObjectNodes(self):
