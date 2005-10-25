@@ -36,6 +36,19 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
             data='1'
         attributes[value]=data
     return attributes
+    
+from gaphor.misc.uniqueid import generate_id
+
+
+def getTagDefinitions():
+    items = []
+    for node in elements:
+        if hasattr(node, 'taggedValue'):
+            for tag in node.taggedValue:
+                items.append(tag)
+    return items
+    
+
 ?>
 
 <XMI
@@ -54,17 +67,28 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
       xmi.id = 'I48de81cbm106d41f950cmm7f54' name = 'topModel' isSpecification = 'false'
       isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
       py:attrs="{'xmi.id':topLevelPackage.id, 'name':topLevelPackage.name}">
+      <UML:ModelElement.taggedValue
+            py:replace="processModelElementTaggedValue(topLevelPackage)"/>
       
       <UML:Classifier.feature py:def="processClassifierFeature(item)">
+      
+        <UML:Namespace.ownedElement>
+          <UML:Class py:for="cls in [a.typeValue for a in item.ownedAttribute if a.typeValue]"
+            visibility='public' isSpecification='false' isRoot='false' isAbstract='false'
+            isActive='false'
+            py:attrs="{'xmi.id': cls.id, 'name':cls.value}"/>
+        </UML:Namespace.ownedElement>
 
         <UML:Attribute xmi.id = 'I48de81cbm106d41f950cmm7f35' name = 'someAttribute'
           visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
           changeability = 'changeable'
           py:for="attribute in [a for a in item.ownedAttribute if a.typeValue]"
           py:attrs="{'xmi.id':attribute.id, 'name':attribute.name}">
+          <UML:ModelElement.taggedValue
+            py:replace="processModelElementTaggedValue(attribute)"/>
           <UML:StructuralFeature.type>
             <UML:Class xmi.idref = 'I48de81cbm106d41f950cmm7f24'
-              py:attrs="{'xmi.id':attribute.typeValue.id}"/>
+              py:attrs="{'xmi.idref':attribute.typeValue.id}"/>
           </UML:StructuralFeature.type>
         </UML:Attribute>
         
@@ -98,7 +122,43 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
           </UML:Method.specification>
         </UML:Method>
         
+        
+        
       </UML:Classifier.feature>
+      
+      <UML:ModelElement.taggedValue
+            py:def="processModelElementTaggedValue(node)"
+            py:for="taggedValue in node.taggedValue"
+            py:content="processTaggedValue(taggedValue)">
+      </UML:ModelElement.taggedValue>
+      
+      <UML:TagDefinition py:def="processTagDefinition(tagDefinition)"
+        xmi.id = 'I5bd6b6fm106dbda4889mm7f24' name = 'someTag'
+        py:attrs="{'xmi.id':tagDefinition.id+'ref', 'name':tagDefinition.value.split('=')[0]}"    
+          isSpecification = 'false'>
+          <UML:TagDefinition.multiplicity>
+            <UML:Multiplicity xmi.id = 'I5bd6b6fm106dbda4889mm7f23'
+              py:attrs="{'xmi.id':tagDefinition.id+'multi'}">
+              <UML:Multiplicity.range>
+                <UML:MultiplicityRange xmi.id = 'I5bd6b6fm106dbda4889mm7f22' lower = '1'
+                  upper = '1'
+                  py:attrs="{'xmi.id':tagDefinition.id+'multirange'}"/>
+              </UML:Multiplicity.range>
+            </UML:Multiplicity>
+          </UML:TagDefinition.multiplicity>
+        </UML:TagDefinition>
+      
+      
+      <UML:TaggedValue py:def="processTaggedValue(taggedValue)"
+          xmi.id = 'I5bd6b6fm106dbda4889mm7f21' isSpecification = 'false'
+          py:attrs="{'xmi.id':taggedValue.id}">
+            <UML:TaggedValue.dataValue 
+              py:content="taggedValue.value.split('=')[-1]">someTagValue</UML:TaggedValue.dataValue>
+            <UML:TaggedValue.type>
+              <UML:TagDefinition xmi.idref = 'I5bd6b6fm106dbda4889mm7f24'
+                py:attrs="{'xmi.idref':taggedValue.id+'ref'}"/>
+            </UML:TaggedValue.type>
+          </UML:TaggedValue>
 
       <UML:Abstraction py:def="processImplementation(abstraction)"
         xmi.id = 'I48de81cbm106d41f950cmm7e5d' isSpecification = 'false'
@@ -118,6 +178,8 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
       <UML:Generalization py:def="processGeneralization(generalization)"
         xmi.id = 'I48de81cbm106d41f950cmm7eb4' isSpecification = 'false'
         py:attrs="{'xmi.id':generalization.id}">
+        <UML:ModelElement.taggedValue
+            py:replace="processModelElementTaggedValue(generalization)"/>
         <UML:Generalization.child>
           <UML:Class xmi.idref = 'I48de81cbm106d41f950cmm7ec7' 
             py:attrs="{'xmi.idref':generalization.specific.id}"/>
@@ -133,6 +195,8 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
         visibility = 'public' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
         isAbstract = 'false'
         py:attrs="{'xmi.id':interface.id, 'name':interface.name}">
+        <UML:ModelElement.taggedValue
+            py:replace="processModelElementTaggedValue(interface)"/>
         <UML:Classifier.feature py:replace="processClassifierFeature(interface)"/>
       </UML:Interface>
     
@@ -143,6 +207,8 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
         isAbstract = 'true' isActive = 'false'
         py:attrs="{'xmi.id':cls.id, 'name':cls.name, 
                    'isAbstract':cls.isAbstract and 'true' or 'false'}">
+          <UML:ModelElement.taggedValue
+            py:replace="processModelElementTaggedValue(cls)"/>
 
         <UML:ModelElement.stereotype py:if="cls.appliedStereotype">
           <UML:Stereotype xmi.idref = 'I48de81cbm106d41f950cmm7e0c'
@@ -169,6 +235,8 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
           visibility = 'public' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'
           py:attrs="{'xml.id':stereotype.id, 'name':stereotype.name}">
+          <UML:ModelElement.taggedValue
+            py:replace="processModelElementTaggedValue(stereotype)"/>
         <UML:Stereotype.baseClass py:content="stereotype.ownedAttribute.type.name">Class</UML:Stereotype.baseClass>
       </UML:Stereotype>
       
@@ -176,6 +244,8 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
         xmi.id = 'I48de81cbm106d41f950cmm7e01' name = 'aPackage' visibility = 'public'
           isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
           py:attrs="{'xmi.idref':package.id, 'name':package.name}">
+          <UML:ModelElement.taggedValue
+            py:replace="processModelElementTaggedValue(package)"/>
         <UML:Namespace.ownedElement>
           <packageContent py:for="item in getPackageChildNodes(package=package)" 
             py:replace="modelProcessNode(item)"/>
@@ -188,6 +258,8 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
         xmi.id = 'I48de81cbm106d41f950cmm7d2f' isSpecification = 'false'
         isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
         py:attrs="{'xmi.id':association.id, 'name':association.name}">
+        <UML:ModelElement.taggedValue
+            py:replace="processModelElementTaggedValue(association)"/>
         <UML:Association.connection>
           <UML:AssociationEnd xmi.id = 'I48de81cbm106d41f950cmm7d35' visibility = 'public'
             isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'none'
@@ -217,50 +289,12 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
     
       <UML:Namespace.ownedElement>
         <packageContent py:for="item in getPackageChildNodes(package=topLevelPackage)" 
-          py:replace="modelProcessNode(item)"/>  
+          py:replace="modelProcessNode(item)"/> 
         
+
+        <UML:TagDefinition py:for="tagDef in getTagDefinitions()"
+          py:replace="processTagDefinition(tagDef)"/>
         
-      
-        <UML:Class xmi.id = 'I48de81cbm106d41f950cmm7cb9' name = 'ClassWithWorkflow'
-          visibility = 'public' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-          isAbstract = 'false' isActive = 'false'>
-          <UML2:BehavioredClassifier.ownedBehavior>
-            <UML2:StateMachine xmi.id = 'I48de81cbm106d41f950cmm7ca6' name = 'State_Machine_1'
-              visibility = 'public' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false' isActive = 'false'>
-              <UML2:StateMachine.region>
-                <UML2:Region xmi.id = 'I48de81cbm106d41f950cmm7ca5' name = 'TopRegion_1'
-                  visibility = 'public' isSpecification = 'false'>
-                  <UML2:Region.subvertex>
-                    <UML2:Pseudostate xmi.id = 'I48de81cbm106d41f950cmm7c9d' name = 'start'
-                      visibility = 'public' isSpecification = 'false' kind = 'initial'>
-                      <UML2:Vertex.outgoing>
-                        <UML2:Transition xmi.idref = 'I48de81cbm106d41f950cmm7c8d'/>
-                      </UML2:Vertex.outgoing>
-                    </UML2:Pseudostate>
-                    <UML2:State xmi.id = 'I48de81cbm106d41f950cmm7c98' name = 'middle' visibility = 'public'
-                      isSpecification = 'false'>
-                      <UML2:Vertex.incoming>
-                        <UML2:Transition xmi.idref = 'I48de81cbm106d41f950cmm7c8d'/>
-                      </UML2:Vertex.incoming>
-                    </UML2:State>
-                  </UML2:Region.subvertex>
-                  <UML2:Region.transition>
-                    <UML2:Transition xmi.id = 'I48de81cbm106d41f950cmm7c8d' name = 'gotoMiddle'
-                      visibility = 'public' isSpecification = 'false' kind = 'external'>
-                      <UML2:Transition.source>
-                        <UML2:Pseudostate xmi.idref = 'I48de81cbm106d41f950cmm7c9d'/>
-                      </UML2:Transition.source>
-                      <UML2:Transition.target>
-                        <UML2:State xmi.idref = 'I48de81cbm106d41f950cmm7c98'/>
-                      </UML2:Transition.target>
-                    </UML2:Transition>
-                  </UML2:Region.transition>
-                </UML2:Region>
-              </UML2:StateMachine.region>
-            </UML2:StateMachine>
-          </UML2:BehavioredClassifier.ownedBehavior>
-        </UML:Class>
       </UML:Namespace.ownedElement>
     </UML:Model>
   </XMI.content>

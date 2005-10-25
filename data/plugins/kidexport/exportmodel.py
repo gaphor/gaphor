@@ -10,4 +10,6 @@ class KidExport(object):
         """Export the loaded Gaphor model with the specific template."""
         template = kid.Template(file=self.template)
         isinstance(template, kid.XMLSerializer)
-        print template.serialize()
+        f = open(filename, 'w')
+        f.write(template.serialize())
+        f.close()
