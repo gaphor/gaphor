@@ -1,3 +1,7 @@
+2005-10-26  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.gaphor: added control nodes diagram from complete
+	activities
+
 2005-10-25 Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 	* gaphor/UML/uml2.gaphor: added TaggedValue class in Expressions
 	diagram.
