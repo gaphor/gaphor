@@ -15,7 +15,7 @@ from gaphor import resource
 from gaphor.diagram import initialize_item, TextElement
 from elementitem import ElementItem
 from nameditem import NamedItem, SimpleNamedItem, SideNamedItem
-from gaphor.diagram.groupable import GroupBase
+from gaphor.diagram.groupable import GroupBase, Groupable
 
 
 class ActivityNodeItem(ElementItem):
@@ -42,6 +42,8 @@ class InitialNodeItem(ActivityNodeItem, SideNamedItem):
     Representation of initial node. Initial node has name which is put near
     top-left side of node.
     """
+
+    __metaclass__ = Groupable
     RADIUS = 10
 
     def __init__(self, id=None):
@@ -172,7 +174,7 @@ class FDNode(ActivityNodeItem):
 
 class DecisionNodeItem(FDNode):
     """
-    Representation decision or merge node.
+    Representation of decision or merge node.
     """
     RADIUS = 15
 
@@ -193,8 +195,11 @@ class DecisionNodeItem(FDNode):
 
 class ForkNodeItem(FDNode, GroupBase):
     """
-    Representation fork or join node.
+    Representation of fork or join node.
     """
+
+    __metaclass__ = Groupable
+
     WIDTH  =  6.0
     HEIGHT = 45.0
 
@@ -256,11 +261,13 @@ class ForkNodeItem(FDNode, GroupBase):
 
 class ObjectNodeItem(SimpleNamedItem, GroupBase):
     """
-    Representation object node. Object node is ordered and has upper bound
+    Representation of object node. Object node is ordered and has upper bound
     specification.
 
     Ordering information can be hidden by user.
     """
+
+    __metaclass__ = Groupable
 
     FONT = 'sans 10'
     MARGIN = 10
@@ -429,7 +436,6 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
 
 
 gobject.type_register(FDNode)
-gobject.type_register(ObjectNodeItem)
 initialize_item(ActivityNodeItem)
 initialize_item(InitialNodeItem, UML.InitialNode)
 initialize_item(ActivityFinalNodeItem, UML.ActivityFinalNode)
@@ -437,8 +443,3 @@ initialize_item(FlowFinalNodeItem, UML.FlowFinalNode)
 initialize_item(DecisionNodeItem, UML.DecisionNode)
 initialize_item(ForkNodeItem, UML.ForkNode)
 initialize_item(ObjectNodeItem, UML.ObjectNode)
-
-# fixme
-diacanvas.set_groupable(InitialNodeItem)
-diacanvas.set_groupable(ObjectNodeItem)
-diacanvas.set_groupable(ForkNodeItem)

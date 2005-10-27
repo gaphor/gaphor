@@ -46,7 +46,7 @@ def initialize_item(item_class, *default_uml_classes):
         (diacanvas.CanvasImage in bases):
         diacanvas.set_callbacks (item_class)
 
-    if diacanvas.CanvasGroupable in bases or GroupBase in bases:
+    if diacanvas.CanvasGroupable in bases:
         diacanvas.set_groupable (item_class)
 
     if (diacanvas.CanvasEditable in bases):

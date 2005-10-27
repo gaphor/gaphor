@@ -1,3 +1,8 @@
+2005-10-27  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/activitynodes.py, gaphor/diagram/flow.py,
+	gaphor/diagram/groupable.py, gaphor/diagram/__item__.py: added
+	Groupable metaclass to automate development of groupable classes
+
 2005-10-27 Jeroen Vlootuis <jeroen@vloothuis.net>
 	* Added new object inspector panel at bottom of diagram. This makes use
 	of the Zope 3 component architecture. Therefore Gaphor now depends on

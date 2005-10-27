@@ -12,11 +12,18 @@ from gaphor import UML
 from gaphor.diagram import initialize_item, TextElement
 from gaphor.diagram.relationship import RelationshipItem
 
-from gaphor.diagram.groupable import GroupBase
+from gaphor.diagram.groupable import GroupBase, Groupable
 import gaphor.diagram.util
 
 
 class FlowItem(RelationshipItem, GroupBase):
+    """
+    Representation of control flow and object flow. Flow item has name and
+    guard.
+    """
+
+    __metaclass__ = Groupable
+
     def __init__(self, id = None):
         GroupBase.__init__(self, {
             '_name': TextElement('name'),
