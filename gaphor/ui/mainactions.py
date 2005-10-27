@@ -109,6 +109,7 @@ class NewAction(Action):
 weave_method(NewAction.execute, ErrorHandlerAspect, message='Could not create a new model.')
 register_action(NewAction)
 
+
 class RevertAction(Action):
     id = 'FileRevert'
     label = _('_Revert...')

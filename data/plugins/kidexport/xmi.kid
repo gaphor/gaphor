@@ -39,15 +39,28 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
     
 from gaphor.misc.uniqueid import generate_id
 
-
-def getTagDefinitions():
-    items = []
-    for node in elements:
-        if hasattr(node, 'taggedValue'):
-            for tag in node.taggedValue:
-                items.append(tag)
-    return items
+tagDefinitions = []
+class TaggedValue(object):
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+        self.id = generate_id()
+        
+    def getTypeRef(self):
+        """Return a auto generated typeref for use with type definitions."""
+        return self.id+"_typeref"
+        
+    typeref = property(getTypeRef)
+        
+def convertTaggedValue(taggedValue):
+    tags = taggedValue.value.split(',')
+    converted = [map(unicode.strip, tag.split("=")) for tag in tags]
+    data = dict(converted)
+    tags = [TaggedValue(key, value) for (key, value) in data.items()]
+    tagDefinitions.extend(tags)
+    return tags
     
+
 
 ?>
 
@@ -67,11 +80,9 @@ def getTagDefinitions():
       xmi.id = 'I48de81cbm106d41f950cmm7f54' name = 'topModel' isSpecification = 'false'
       isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
       py:attrs="{'xmi.id':topLevelPackage.id, 'name':topLevelPackage.name}">
-      <UML:ModelElement.taggedValue
-            py:replace="processModelElementTaggedValue(topLevelPackage)"/>
       
-      <UML:Classifier.feature py:def="processClassifierFeature(item)">
-      
+      <UML:Classifier.feature py:def="processClassifierFeature(item)">        
+
         <UML:Namespace.ownedElement>
           <UML:Class py:for="cls in [a.typeValue for a in item.ownedAttribute if a.typeValue]"
             visibility='public' isSpecification='false' isRoot='false' isAbstract='false'
@@ -85,7 +96,9 @@ def getTagDefinitions():
           py:for="attribute in [a for a in item.ownedAttribute if a.typeValue]"
           py:attrs="{'xmi.id':attribute.id, 'name':attribute.name}">
           <UML:ModelElement.taggedValue
-            py:replace="processModelElementTaggedValue(attribute)"/>
+            py:for="taggedValue in convertTaggedValue(attribute.taggedValue)"
+            py:content="processTaggedValue(taggedValue)">
+          </UML:ModelElement.taggedValue>
           <UML:StructuralFeature.type>
             <UML:Class xmi.idref = 'I48de81cbm106d41f950cmm7f24'
               py:attrs="{'xmi.idref':attribute.typeValue.id}"/>
@@ -126,23 +139,18 @@ def getTagDefinitions():
         
       </UML:Classifier.feature>
       
-      <UML:ModelElement.taggedValue
-            py:def="processModelElementTaggedValue(node)"
-            py:for="taggedValue in node.taggedValue"
-            py:content="processTaggedValue(taggedValue)">
-      </UML:ModelElement.taggedValue>
       
       <UML:TagDefinition py:def="processTagDefinition(tagDefinition)"
         xmi.id = 'I5bd6b6fm106dbda4889mm7f24' name = 'someTag'
-        py:attrs="{'xmi.id':tagDefinition.id+'ref', 'name':tagDefinition.value.split('=')[0]}"    
+        py:attrs="{'xmi.id':tagDefinition.typeref, 'name':tagDefinition.name}"    
           isSpecification = 'false'>
           <UML:TagDefinition.multiplicity>
             <UML:Multiplicity xmi.id = 'I5bd6b6fm106dbda4889mm7f23'
-              py:attrs="{'xmi.id':tagDefinition.id+'multi'}">
+              py:attrs="{'xmi.id':tagDefinition.typeref+'multi'}">
               <UML:Multiplicity.range>
                 <UML:MultiplicityRange xmi.id = 'I5bd6b6fm106dbda4889mm7f22' lower = '1'
                   upper = '1'
-                  py:attrs="{'xmi.id':tagDefinition.id+'multirange'}"/>
+                  py:attrs="{'xmi.id':tagDefinition.typeref+'multirange'}"/>
               </UML:Multiplicity.range>
             </UML:Multiplicity>
           </UML:TagDefinition.multiplicity>
@@ -153,10 +161,10 @@ def getTagDefinitions():
           xmi.id = 'I5bd6b6fm106dbda4889mm7f21' isSpecification = 'false'
           py:attrs="{'xmi.id':taggedValue.id}">
             <UML:TaggedValue.dataValue 
-              py:content="taggedValue.value.split('=')[-1]">someTagValue</UML:TaggedValue.dataValue>
+              py:content="taggedValue.value">someTagValue</UML:TaggedValue.dataValue>
             <UML:TaggedValue.type>
               <UML:TagDefinition xmi.idref = 'I5bd6b6fm106dbda4889mm7f24'
-                py:attrs="{'xmi.idref':taggedValue.id+'ref'}"/>
+                py:attrs="{'xmi.idref':taggedValue.typeref}"/>
             </UML:TaggedValue.type>
           </UML:TaggedValue>
 
@@ -178,8 +186,6 @@ def getTagDefinitions():
       <UML:Generalization py:def="processGeneralization(generalization)"
         xmi.id = 'I48de81cbm106d41f950cmm7eb4' isSpecification = 'false'
         py:attrs="{'xmi.id':generalization.id}">
-        <UML:ModelElement.taggedValue
-            py:replace="processModelElementTaggedValue(generalization)"/>
         <UML:Generalization.child>
           <UML:Class xmi.idref = 'I48de81cbm106d41f950cmm7ec7' 
             py:attrs="{'xmi.idref':generalization.specific.id}"/>
@@ -195,8 +201,6 @@ def getTagDefinitions():
         visibility = 'public' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
         isAbstract = 'false'
         py:attrs="{'xmi.id':interface.id, 'name':interface.name}">
-        <UML:ModelElement.taggedValue
-            py:replace="processModelElementTaggedValue(interface)"/>
         <UML:Classifier.feature py:replace="processClassifierFeature(interface)"/>
       </UML:Interface>
     
@@ -207,8 +211,6 @@ def getTagDefinitions():
         isAbstract = 'true' isActive = 'false'
         py:attrs="{'xmi.id':cls.id, 'name':cls.name, 
                    'isAbstract':cls.isAbstract and 'true' or 'false'}">
-          <UML:ModelElement.taggedValue
-            py:replace="processModelElementTaggedValue(cls)"/>
 
         <UML:ModelElement.stereotype py:if="cls.appliedStereotype">
           <UML:Stereotype xmi.idref = 'I48de81cbm106d41f950cmm7e0c'
@@ -235,8 +237,6 @@ def getTagDefinitions():
           visibility = 'public' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'
           py:attrs="{'xml.id':stereotype.id, 'name':stereotype.name}">
-          <UML:ModelElement.taggedValue
-            py:replace="processModelElementTaggedValue(stereotype)"/>
         <UML:Stereotype.baseClass py:content="stereotype.ownedAttribute.type.name">Class</UML:Stereotype.baseClass>
       </UML:Stereotype>
       
@@ -244,8 +244,6 @@ def getTagDefinitions():
         xmi.id = 'I48de81cbm106d41f950cmm7e01' name = 'aPackage' visibility = 'public'
           isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
           py:attrs="{'xmi.idref':package.id, 'name':package.name}">
-          <UML:ModelElement.taggedValue
-            py:replace="processModelElementTaggedValue(package)"/>
         <UML:Namespace.ownedElement>
           <packageContent py:for="item in getPackageChildNodes(package=package)" 
             py:replace="modelProcessNode(item)"/>
@@ -258,8 +256,6 @@ def getTagDefinitions():
         xmi.id = 'I48de81cbm106d41f950cmm7d2f' isSpecification = 'false'
         isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
         py:attrs="{'xmi.id':association.id, 'name':association.name}">
-        <UML:ModelElement.taggedValue
-            py:replace="processModelElementTaggedValue(association)"/>
         <UML:Association.connection>
           <UML:AssociationEnd xmi.id = 'I48de81cbm106d41f950cmm7d35' visibility = 'public'
             isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'none'
@@ -292,7 +288,7 @@ def getTagDefinitions():
           py:replace="modelProcessNode(item)"/> 
         
 
-        <UML:TagDefinition py:for="tagDef in getTagDefinitions()"
+        <UML:TagDefinition py:for="tagDef in tagDefinitions"
           py:replace="processTagDefinition(tagDef)"/>
         
       </UML:Namespace.ownedElement>

@@ -14,6 +14,9 @@ from gaphor.ui.abstractwindow import AbstractWindow
 import gaphor.ui.diagramactions
 import gaphor.diagram.placementactions
 
+from gaphor.event import DiagramItemFocused
+from zope import component
+
 class DiagramTab(object):
     
     def __init__(self, owning_window):
@@ -126,6 +129,7 @@ class DiagramTab(object):
 
     def __on_view_focus_item(self, view, focus_item):
         self.owning_window.execute_action('ItemFocus')
+        component.handle(DiagramItemFocused(focus_item))
 
     def __on_view_select_item(self, view, select_item):
         self.owning_window.execute_action('ItemSelect')

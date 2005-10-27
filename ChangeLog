@@ -1,3 +1,11 @@
+2005-10-27 Jeroen Vlootuis <jeroen@vloothuis.net>
+	* Added new object inspector panel at bottom of diagram. This makes use
+	of the Zope 3 component architecture. Therefore Gaphor now depends on
+	Zope 3. This dependency should be diminshed to component and
+	interface. At the moment there is no seperate package for component.
+
+	* Made Kid export handle tagged values. 
+
 2005-10-27  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/activitynodes.py: object node has upper bound
 	specification; join node has join specification; initial node naming

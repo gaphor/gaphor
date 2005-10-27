@@ -19,6 +19,8 @@ from classifier import ClassifierItem
 from attribute import AttributeItem
 from operation import OperationItem
 
+from gaphor.interfaces import IClassView
+from zope import interface
         
 class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     """This item visualizes a Class instance.
@@ -29,6 +31,8 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     Items can be added by callling class.add() and class.remove().
     This is used to handle CanvasItems, not UML objects!
     """
+    interface.implements(IClassView)
+    
     __gproperties__ = {
         'show-attributes': (gobject.TYPE_BOOLEAN, 'show attributes',
                             '',

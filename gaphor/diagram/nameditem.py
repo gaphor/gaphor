@@ -169,7 +169,12 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
 
 
 
+from zope import interface
+from gaphor.interfaces import INamedItemView
+
 class NamedItem(ElementItem, diacanvas.CanvasEditable):
+    interface.implements(INamedItemView)
+    
     __gproperties__ = {
         'name': (gobject.TYPE_STRING, 'name', '', '', gobject.PARAM_READWRITE)
     }

@@ -15,6 +15,11 @@ from gaphor.ui.menufactory import toolbox_to_menu
 
 # Load actions
 from gaphor.ui import mainactions, diagramactions
+from gaphor.ui.objectinspector import ObjectInspector
+
+
+from gaphor.interfaces import *
+from zope import component
 
 class MainWindow(AbstractWindow):
     """The main window for the application.
@@ -122,7 +127,7 @@ class MainWindow(AbstractWindow):
             _('_Help'), (
                 'Manual',
                 'About',
-                '<HelpSlot>')
+                '<HelpSlot>'),
             )
 
     toolbar =  ('FileOpen',
@@ -243,6 +248,7 @@ class MainWindow(AbstractWindow):
         paned = gtk.HPaned()
         paned.set_property('position', 160)
         paned.pack1(vbox)
+        
         notebook = gtk.Notebook()
         #notebook.popup_enable()
         notebook.set_scrollable(True)
@@ -250,7 +256,17 @@ class MainWindow(AbstractWindow):
  
         notebook.connect_after('switch-page', self.on_notebook_switch_page)
 
-        paned.pack2(notebook)
+        self.objectInspector = ObjectInspector()
+        diagramReceivedFocus = component.adapter(IDiagramElementReceivedFocus)(
+            self.objectInspector)
+        component.provideHandler(diagramReceivedFocus)
+        
+        secondPaned = gtk.VPaned()
+        secondPaned.set_property('position', 600)
+        secondPaned.pack1(notebook)
+        secondPaned.pack2(self.objectInspector)
+        secondPaned.show_all()
+        paned.pack2(secondPaned)
         paned.show_all()
 
         self.notebook = notebook
@@ -360,6 +376,7 @@ class MainWindow(AbstractWindow):
         a Diagram).
         """
         path = self.get_model().path_from_element(element)
+        #log.debug("PATH = %s" % path)
         # Expand the first row:
         self.get_tree_view().expand_row(path[:-1], False)
         # Select the diagram, so it can be opened by the OpenModelElement action

@@ -8,7 +8,11 @@ from gaphor.diagram import initialize_item
 
 from feature import FeatureItem
 
+from zope import interface
+from gaphor.interfaces import IAttributeView
+
 class AttributeItem(FeatureItem):
+    interface.implements(IAttributeView)
 
     popup_menu = FeatureItem.popup_menu + (
         'EditItem',
