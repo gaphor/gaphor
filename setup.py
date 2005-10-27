@@ -379,7 +379,6 @@ setup(name='gaphor',
                 'zope.interface.common',
                 'zope.component',
                 'zope.exceptions',
-                'zope.proxy',
                 'zope.deprecation',
                 'zope.testing',
                 
