@@ -141,12 +141,13 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
         remove pattern from real text value.
         """
         if self.subject:
-            # remove pattern from real text value
-            s1, s2 = self.subject_pattern.split('%s')
-            if new_text.startswith(s1) and new_text.endswith(s2):
-                l1, l2 = map(len, (s1, s2))
-                new_text = new_text[l1:]
-                new_text = new_text[:-l2]
+            if self.subject_pattern != '%s':
+                # remove pattern from real text value
+                s1, s2 = self.subject_pattern.split('%s')
+                if new_text.startswith(s1) and new_text.endswith(s2):
+                    l1, l2 = map(len, (s1, s2))
+                    new_text = new_text[l1:]
+                    new_text = new_text[:-l2]
 
             log.debug('setting %s to %s' % (self.subject_attr, new_text))
             setattr(self.subject, self.subject_attr, new_text)
