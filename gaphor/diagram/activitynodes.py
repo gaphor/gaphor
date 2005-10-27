@@ -1,4 +1,5 @@
-"""InitialNode and ActivityFinalNode.
+"""
+Activity nodes.
 """
 # vim:sw=4:et
 
@@ -10,12 +11,19 @@ import pango
 
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
+from gaphor import resource
+from gaphor.diagram import initialize_item, TextElement
 from elementitem import ElementItem
-from nameditem import NamedItem, SimpleNamedItem
+from nameditem import NamedItem, SimpleNamedItem, SideNamedItem
+from gaphor.diagram.groupable import GroupBase
 
 
 class ActivityNodeItem(ElementItem):
+    """
+    Basic class for simple activity nodes. Simple activity node is not
+    resizable.
+    """
+    MARGIN = 10
     
     popup_menu = (
         'EditDelete',
@@ -28,14 +36,17 @@ class ActivityNodeItem(ElementItem):
             h.set_property('movable', False)
 
 
-class InitialNodeItem(NamedItem):
+
+class InitialNodeItem(ActivityNodeItem, SideNamedItem):
+    """
+    Representation of initial node. Initial node has name which is put near
+    top-left side of node.
+    """
     RADIUS = 10
-    MARGIN_Y = RADIUS*2
 
     def __init__(self, id=None):
-        NamedItem.__init__(self, id)
-        for h in self.handles:
-            h.set_property('movable', False)
+        ActivityNodeItem.__init__(self, id)
+        SideNamedItem.__init__(self)
         r = self.RADIUS
         d = r * 2
         self._circle = diacanvas.shape.Ellipse()
@@ -44,26 +55,28 @@ class InitialNodeItem(NamedItem):
         self._circle.set_fill(diacanvas.shape.FILL_SOLID)
         self._circle.set_fill_color(diacanvas.color(0, 0, 0, 255))
         self.set(width=d, height=d)
-       
-    def on_update(self, affine):
-        # Center the text
-        w, h = self.get_name_size()
-        self.set(min_width=w,
-                 min_height=h + self.MARGIN_Y)
-        self.update_name(x=0, y=(self.height - h),
-                         width=self.width, height=h)
 
-        NamedItem.on_update(self, affine)
-        self.expand_bounds(1.0)
+
+    def on_subject_notify(self, pspec, notifiers = ()):
+        ActivityNodeItem.on_subject_notify(self, pspec, notifiers)
+        self._name.subject = self.subject
+        self.request_update()
+
+
+    def on_update(self, affine):
+        ActivityFinalNodeItem.on_update(self, affine)
+        SideNamedItem.on_update(self, affine)
+
 
     def on_shape_iter(self):
-        for s in NamedItem.on_shape_iter(self):
-            yield s
-        for c in iter([self._circle]):
-            yield c
+        return iter([self._circle])
+
 
 
 class ActivityFinalNodeItem(ActivityNodeItem):
+    """
+    Representation of activity final node.
+    """
     RADIUS_1 = 10
     RADIUS_2 = 15
 
@@ -90,6 +103,9 @@ class ActivityFinalNodeItem(ActivityNodeItem):
 
 
 class FlowFinalNodeItem(ActivityNodeItem):
+    """
+    Representation of flow final node.
+    """
     RADIUS = 10
 
     def __init__(self, id=None):
@@ -112,8 +128,10 @@ class FlowFinalNodeItem(ActivityNodeItem):
 
         self.set(width=d, height=d)
 
+
     def on_shape_iter(self):
         return iter([self._circle, self._line1, self._line2])
+
 
 
 class FDNode(ActivityNodeItem):
@@ -151,7 +169,11 @@ class FDNode(ActivityNodeItem):
             return ActivityNodeItem.do_get_property(self, pspec)
 
 
+
 class DecisionNodeItem(FDNode):
+    """
+    Representation decision or merge node.
+    """
     RADIUS = 15
 
     def __init__(self, id=None):
@@ -169,11 +191,17 @@ class DecisionNodeItem(FDNode):
 
 
 
-class ForkNodeItem(FDNode):
+class ForkNodeItem(FDNode, GroupBase):
+    """
+    Representation fork or join node.
+    """
     WIDTH  =  6.0
     HEIGHT = 45.0
 
     def __init__(self, id=None):
+        GroupBase.__init__(self, {
+            '_join_spec': TextElement('value', '{ joinSpec = %s }'),
+        })
         FDNode.__init__(self, id)
         self._rect = diacanvas.shape.Path()
         self._rect.rectangle((0, 0), (self.WIDTH, self.HEIGHT))
@@ -186,8 +214,39 @@ class ForkNodeItem(FDNode):
 
 
     def on_update(self, affine):
+        """
+        Update fork/join node.
+
+        If node is join node then update also join specification.
+        """
         FDNode.on_update(self, affine)
         self._rect.rectangle((0, 0), (self.width, self.height))
+
+        if isinstance(self.subject, UML.JoinNode) and self.subject.joinSpec == 'and':
+            self._join_spec.set_text('')
+
+        w, h = self._join_spec.get_size()
+        self._join_spec.update_label((self.width - w) / 2, 
+            -h - self.MARGIN)
+
+        GroupBase.on_update(self, affine)
+
+
+    def on_subject_notify(self, pspec, notifiers = ()):
+        """
+        Detect changes of subject.
+
+        If subject is join node, then set subject of join specification
+        text element.
+        """
+        FDNode.on_subject_notify(self, pspec, notifiers)
+        if self.subject and isinstance(self.subject, UML.JoinNode):
+            factory = resource(UML.ElementFactory)
+            self.subject.joinSpec = factory.create(UML.LiteralSpecification)
+            self._join_spec.subject = self.subject.joinSpec
+        else:
+            self._join_spec.subject = None
+        self.request_update()
 
 
     def on_shape_iter(self):
@@ -195,8 +254,16 @@ class ForkNodeItem(FDNode):
 
 
 
-class ObjectNodeItem(SimpleNamedItem):
+class ObjectNodeItem(SimpleNamedItem, GroupBase):
+    """
+    Representation object node. Object node is ordered and has upper bound
+    specification.
+
+    Ordering information can be hidden by user.
+    """
+
     FONT = 'sans 10'
+    MARGIN = 10
 
     node_popup_menu = (
         'separator',
@@ -214,6 +281,9 @@ class ObjectNodeItem(SimpleNamedItem):
     }
 
     def __init__(self, id = None):
+        GroupBase.__init__(self, {
+            '_upper_bound': TextElement('value', '{ upperBound = %s }'),
+        })
         SimpleNamedItem.__init__(self, id)
 
         self.show_ordering = False
@@ -224,7 +294,28 @@ class ObjectNodeItem(SimpleNamedItem):
         self._ordering.set_markup(False)
 
 
+    def on_subject_notify(self, pspec, notifiers = ()):
+        """
+        Detect subject changes. If subject is set then set upper bound text
+        element subject.
+        """
+        SimpleNamedItem.on_subject_notify(self, pspec, notifiers)
+        if self.subject:
+            factory = resource(UML.ElementFactory)
+            self.subject.upperBound = factory.create(UML.LiteralSpecification)
+            self._upper_bound.subject = self.subject.upperBound
+        else:
+            self._upper_bound.subject = None
+        self.request_update()
+
+
+    #
+    # fixme: saving and getting properties, cannot we automate this?
+    #
     def save(self, save_func):
+        """
+        Save visibility of object node ordering.
+        """
         self.save_property(save_func, 'show-ordering')
         SimpleNamedItem.save(self, save_func)
 
@@ -249,6 +340,9 @@ class ObjectNodeItem(SimpleNamedItem):
 
 
     def set_show_ordering(self, value):
+        """
+        Set visibility of object node ordering and request update.
+        """
         self.show_ordering = value
         self.request_update()
 
@@ -269,30 +363,60 @@ class ObjectNodeItem(SimpleNamedItem):
 
 
     def get_border(self):
+        """
+        Return border of simple named item.
+        """
         return diacanvas.shape.Path()
 
 
     def draw_border(self):
+        """
+        Draw border of simple named item.
+        """
         self._border.rectangle((0, 0), (self.width, self.height))
 
 
     def on_update(self, affine):
+        """
+        Update object node, its ordering and upper bound specification.
+        """
         SimpleNamedItem.on_update(self, affine)
+
         if self.subject:
             self._ordering.set_text('{ ordering = %s }' % self.subject.ordering)
+
+            if self.subject.upperBound.value == '*':
+                self._upper_bound.set_text('')
+
         else:
             self._ordering.set_text('')
 
-        # center ordering below border
-        width, height = self._ordering.to_pango_layout(True).get_pixel_size()
-        x = (self.width - width) / 2
-        self._ordering.set_pos((x, self.height + 10))
-        self._ordering.set_max_width(width)
-        self._ordering.set_max_height(height)
-
+        # 
+        # object ordering
+        #
         if self.show_ordering:
+            # center ordering below border
+            ord_width, ord_height = self._ordering.to_pango_layout(True).get_pixel_size()
+            x = (self.width - ord_width) / 2
+            self._ordering.set_pos((x, self.height + self.MARGIN))
+
+            self._ordering.set_max_width(ord_width)
+            self._ordering.set_max_height(ord_height)
+
             self.set_bounds((min(0, x), 0,
-                max(self.width, width), self.height + 10 + height))
+                max(self.width, ord_width), self.height + self.MARGIN + ord_height))
+        else:
+            ord_width, ord_height = 0, 0
+
+        #
+        # upper bound
+        #
+        ub_width, ub_height = self._upper_bound.get_size()
+        x = (self.width - ub_width) / 2
+        y = self.height + ord_height + self.MARGIN
+        self._upper_bound.update_label(x, y)
+
+        GroupBase.on_update(self, affine)
 
 
     def on_shape_iter(self):
@@ -313,3 +437,8 @@ initialize_item(FlowFinalNodeItem, UML.FlowFinalNode)
 initialize_item(DecisionNodeItem, UML.DecisionNode)
 initialize_item(ForkNodeItem, UML.ForkNode)
 initialize_item(ObjectNodeItem, UML.ObjectNode)
+
+# fixme
+diacanvas.set_groupable(InitialNodeItem)
+diacanvas.set_groupable(ObjectNodeItem)
+diacanvas.set_groupable(ForkNodeItem)

@@ -1,3 +1,14 @@
+2005-10-27  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/activitynodes.py: object node has upper bound
+	specification; join node has join specification; initial node naming
+	reimplemented with text element and grouping
+	* gaphor/diagram/flow.py: flow has name and guard implemented with text
+	element (since now flows can have names)
+	* gaphor/diagram/nameditem.py: added sided named elements base class
+	and text element class
+	* gaphor/diagram/groupable.py: added basic class for grouping different
+	diagram items
+
 2005-10-26  wrobell <wrobell@pld-linux.org>
 	* gaphor/UML/uml2.gaphor: added control nodes diagram from complete
 	activities

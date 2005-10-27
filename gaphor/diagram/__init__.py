@@ -7,6 +7,7 @@ __date__ = '$date$'
 
 import gobject
 import diacanvas
+from gaphor.diagram.groupable import GroupBase
 from gaphor.misc import uniqueid
 
 # Map UML elements to their (default) representation.
@@ -44,14 +45,17 @@ def initialize_item(item_class, *default_uml_classes):
         (diacanvas.CanvasText in bases) or \
         (diacanvas.CanvasImage in bases):
         diacanvas.set_callbacks (item_class)
-    if (diacanvas.CanvasGroupable in bases):
+
+    if diacanvas.CanvasGroupable in bases or GroupBase in bases:
         diacanvas.set_groupable (item_class)
+
     if (diacanvas.CanvasEditable in bases):
         diacanvas.set_editable (item_class)
 
     for default_uml_class in default_uml_classes:
         _uml_to_item_map[default_uml_class] = item_class
 
+from nameditem import TextElement
 from placementtool import PlacementTool
 from classifier import ClassifierItem
 from actor import ActorItem
