@@ -13,7 +13,7 @@ from gaphor.undomanager import UndoTransactionAspect, weave_method
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 
-from gaphor.diagram.activitynodes import ObjectNodeItem
+from gaphor.diagram.objectnode import ObjectNodeItem
 from gaphor.diagram.klass import ClassItem
 from gaphor.diagram.package import PackageItem
 from gaphor.diagram.component import ComponentItem

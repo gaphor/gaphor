@@ -1,3 +1,7 @@
+2005-10-28  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/activitynodes.py, gaphor/diagram/objectnode.py: moved
+	ObjectNodeItem class to gaphor.diagram.objectnode package
+
 2005-10-27  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/activitynodes.py, gaphor/diagram/flow.py,
 	gaphor/diagram/groupable.py, gaphor/diagram/__item__.py: added
