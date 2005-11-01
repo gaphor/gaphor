@@ -83,6 +83,8 @@ class ElementFactory(object):
         """
         return self._elements.get(id)
 
+    __getitem__ = lookup
+
     def select(self, expression=None):
         """Create a list of elements that comply with expression.
         """

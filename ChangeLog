@@ -1,3 +1,7 @@
+2005-11-01  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/elementfactory.py: added __getitem__ method (live object
+	browser works again)
+
 2005-10-28  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/activitynodes.py, gaphor/diagram/objectnode.py: moved
 	ObjectNodeItem class to gaphor.diagram.objectnode package
