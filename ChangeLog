@@ -5,7 +5,7 @@
 	* gaphor/diagram/activitynodes.py, gaphor/diagram/flow.py,
 	gaphor/diagram/objectnode.py, gaphor/diagram/util.py,
 	gaphor/diagram/itemactions.py, tests/test-activitynodes.py: use
-	persistent properties where possible; refer to properites with
+	persistent properties where possible; refer to properties with
 	self.props
 
 2005-11-01  wrobell <wrobell@pld-linux.org>
