@@ -56,7 +56,18 @@ class DiagramItem(Presentation):
         # new subject is set (or the original one is removed)
         self.__the_subject = None
 
+        # properties, which should be saved in file
+        self._persistent_props = set()
+
+
     id = property(lambda self: self._id, doc='Id')
+
+    def set_prop_persistent(self, name):
+        """
+        Specify property of diagram item, which should be saved in file.
+        """
+        self._persistent_props.add(name)
+
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'subject':
@@ -64,17 +75,24 @@ class DiagramItem(Presentation):
         else:
             raise AttributeError, 'Unknown property %s' % pspec.name
 
+
     def do_get_property(self, pspec):
         if pspec.name == 'subject':
             return self.subject
         else:
             raise AttributeError, 'Unknown property %s' % pspec.name
 
+
     # UML.Element interface used by properties:
 
     def save(self, save_func):
         if self.subject:
             save_func('subject', self.subject)
+
+        # save persistent properties
+        for p in self._persistent_props:
+            save_func(p, getattr(self.props, p))
+
 
     def load(self, name, value):
         if name == 'subject':

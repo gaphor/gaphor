@@ -162,14 +162,14 @@ def determine_node_on_connect(el):
 
     if len(subject.incoming) > 1 and len(subject.outgoing) > 1:
         new_subject = combine_nodes(subject)
-        el.combined = True
+        el.props.combined = True
 
     else:
         new_subject = change_node_class(subject)
 
     change_node_subject(el, new_subject)
 
-    if el.combined:
+    if el.props.combined:
         check_combining_flow(el)
 
 
@@ -190,13 +190,13 @@ def determine_node_on_disconnect(el):
 
     new_subject = subject
 
-    if el.combined:
+    if el.props.combined:
         cs = subject.outgoing[0].target
         # decombine node when there is no more than one incoming
         # and no more than one outgoing flow
         if len(subject.incoming) < 2 or len(cs.outgoing) < 2:
             new_subject = decombine_nodes(subject)
-            el.combined = False
+            el.props.combined = False
         else:
             check_combining_flow(el)
 
@@ -261,3 +261,14 @@ def check_combining_flow(el):
     elif c1 == 0 and c2 == 0 and isinstance(flow, UML.ObjectFlow):
         log.debug('changing combing flow to control flow')
         create_flow(UML.ControlFlow, flow)
+
+
+def create_connector_end(connector, role):
+    """
+    Create Connector End, set role and attach created end to
+    connector.
+    """
+    end = resource(UML.ElementFactory).create(UML.ConnectorEnd)
+    end.role = role
+    connector.end = end
+    assert end in role.end

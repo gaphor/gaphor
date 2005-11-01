@@ -1115,11 +1115,11 @@ class ObjectNodeOrderingVisibiltyAction(CheckAction):
             pass
         else:
             if isinstance(item, ObjectNodeItem):
-                self.active = item.show_ordering
+                self.active = item.props.show_ordering
 
     def execute(self):
         item = get_parent_focus_item(self._window)
-        item.set_show_ordering(self.active)
+        item.props.show_ordering = self.active
 
 weave_method(ObjectNodeOrderingVisibiltyAction.execute, UndoTransactionAspect)
 register_action(ObjectNodeOrderingVisibiltyAction, 'ItemFocus')

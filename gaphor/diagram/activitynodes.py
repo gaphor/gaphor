@@ -145,28 +145,29 @@ class FDNode(ActivityNodeItem):
 
     """
     __gproperties__ = {
-        'combined': (gobject.TYPE_BOOLEAN, 'combined', '', 1,
-                gobject.PARAM_READWRITE),
+        'combined': (gobject.TYPE_BOOLEAN, 'combined',
+            'check if node item is combination of fork/join or decision/merge nodes',
+            False,
+            gobject.PARAM_READWRITE),
     }
 
     def __init__(self, id):
         ActivityNodeItem.__init__(self, id)
-        self.combined = False
+        self._combined = False
+        self.set_prop_persistent('combined')
 
-    def save(self, save_func):
-        self.save_property(save_func, 'combined')
-        ActivityNodeItem.save(self, save_func)
 
     def do_set_property(self, pspec, value):
         if pspec.name == 'combined':
             self.preserve_property('combined')
-            self.combined = value
+            self._combined = value
         else:
             ActivityNodeItem.do_set_property(self, pspec, value)
 
+
     def do_get_property(self, pspec):
         if pspec.name == 'combined':
-            return self.combined
+            return self._combined
         else:
             return ActivityNodeItem.do_get_property(self, pspec)
 

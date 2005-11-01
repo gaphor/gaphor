@@ -39,8 +39,9 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
     )
 
     __gproperties__ = {
-        'show-ordering': (gobject.TYPE_BOOLEAN, 'show ordering', '', 1,
-                gobject.PARAM_READWRITE),
+        'show-ordering': (gobject.TYPE_BOOLEAN, 'show ordering',
+            'show ordering of object node', False,
+            gobject.PARAM_READWRITE),
     }
 
     def __init__(self, id = None):
@@ -49,12 +50,13 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
         })
         SimpleNamedItem.__init__(self, id)
 
-        self.show_ordering = False
-
         self._ordering = diacanvas.shape.Text()
         self._ordering.set_font_description(pango.FontDescription(self.FONT))
         self._ordering.set_alignment(pango.ALIGN_CENTER)
         self._ordering.set_markup(False)
+
+        self._show_ordering = False
+        self.set_prop_persistent('show-ordering')
 
 
     def on_subject_notify(self, pspec, notifiers = ()):
@@ -72,42 +74,27 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
         self.request_update()
 
 
-    #
-    # fixme: saving and getting properties, cannot we automate this?
-    #
-    def save(self, save_func):
-        """
-        Save visibility of object node ordering.
-        """
-        self.save_property(save_func, 'show-ordering')
-        SimpleNamedItem.save(self, save_func)
+    def get_popup_menu(self):
+        return self.popup_menu + self.node_popup_menu
 
 
     def do_set_property(self, pspec, value):
+        """
+        In case of ordering visibility set request update of item.
+        """
         if pspec.name == 'show-ordering':
-            self.preserve_property('show-ordering')
-            self.show_ordering = value
+            self.preserve_property(pspec.name)
+            self._show_ordering = value
+            self.request_update()
         else:
             SimpleNamedItem.do_set_property(self, pspec, value)
 
 
     def do_get_property(self, pspec):
         if pspec.name == 'show-ordering':
-            return self.show_ordering
+            return self._show_ordering
         else:
             return SimpleNamedItem.do_get_property(self, pspec)
-
-
-    def get_popup_menu(self):
-        return self.popup_menu + self.node_popup_menu
-
-
-    def set_show_ordering(self, value):
-        """
-        Set visibility of object node ordering and request update.
-        """
-        self.show_ordering = value
-        self.request_update()
 
 
     def set_ordering(self, ordering):
@@ -157,7 +144,7 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
         # 
         # object ordering
         #
-        if self.show_ordering:
+        if self.props.show_ordering:
             # center ordering below border
             ord_width, ord_height = self._ordering.to_pango_layout(True).get_pixel_size()
             x = (self.width - ord_width) / 2
@@ -184,7 +171,7 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
 
     def on_shape_iter(self):
         it = SimpleNamedItem.on_shape_iter(self)
-        if self.show_ordering:
+        if self.props.show_ordering:
             return itertools.chain(it, iter([self._ordering]))
         else:
             return it

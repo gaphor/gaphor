@@ -25,13 +25,13 @@ class TestActivityNodes(gaphortests.TestCase):
         self.connectNodes(a2, dnode, f2)
 
         self.assertEquals(dnode.subject.__class__, UML.MergeNode)
-        self.assertEquals(dnode.combined, False)
+        self.assertEquals(dnode.props.combined, False)
         # fixme: check that previous subject is destroyed
 
         self.disconnectNodes(f2)
 
         self.assertEquals(dnode.subject.__class__, UML.DecisionNode)
-        self.assertEquals(dnode.combined, False)
+        self.assertEquals(dnode.props.combined, False)
 
 
     def checkCombinedNode(self, node):
@@ -40,7 +40,7 @@ class TestActivityNodes(gaphortests.TestCase):
 
         Return subject of UI node element and combined UML node.
         """
-        self.assertEquals(node.combined, True)
+        self.assertEquals(node.props.combined, True)
         self.assertEquals(node.subject.__class__, UML.MergeNode)
         self.assertEquals(len(node.subject.outgoing), 1)
         combined_node = node.subject.outgoing[0].target
@@ -105,7 +105,7 @@ class TestActivityNodes(gaphortests.TestCase):
         self.disconnectNodes(f4)
 
         # node should not be combined anymore
-        self.assertFalse(dnode.combined)
+        self.assertFalse(dnode.props.combined)
 
         # f4 was outgoing flow, so UML node should be merge node
         self.assertEqual(dnode.subject.__class__, UML.MergeNode)
@@ -125,7 +125,7 @@ class TestActivityNodes(gaphortests.TestCase):
 
         # now, disconnect f1, dnode should be non-combined decision node
         self.disconnectNodes(f1)
-        self.assertFalse(dnode.combined)
+        self.assertFalse(dnode.props.combined)
         self.assertEqual(dnode.subject.__class__, UML.DecisionNode)
 
         assert dnode.subject.__class__ == UML.DecisionNode, 'test problem'
@@ -194,7 +194,7 @@ class TestActivityNodes(gaphortests.TestCase):
 
         self.disconnectNodes(f1)
 
-        assert dnode.combined, 'test problem'
+        assert dnode.props.combined, 'test problem'
 
         # still combined node, combining flow should be control flow
         n1, n2 = self.checkCombinedNode(dnode)

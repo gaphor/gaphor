@@ -118,7 +118,8 @@ class FlowItem(RelationshipItem, GroupBase):
         c2 = self.handles[-1].connected_to  # target
         if c1 and c2:
             s1 = c1.subject
-            if isinstance(s1, tuple(gaphor.diagram.util.node_classes.keys())) and c1.combined:
+            if isinstance(s1, tuple(gaphor.diagram.util.node_classes.keys())) \
+                    and c1.props.combined:
                 log.debug('getting combined node for flow source')
                 s1 = s1.outgoing[0].target
 
