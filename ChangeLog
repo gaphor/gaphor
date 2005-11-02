@@ -1,3 +1,6 @@
+2005-11-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	* setup.py: require GTK+ version 2.8 or newer
+
 2005-11-01  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/diagramitem.py: added support for persistent
 	properties
