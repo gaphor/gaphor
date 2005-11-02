@@ -209,14 +209,18 @@ class ForkNodeItem(FDNode, GroupBase):
             '_join_spec': TextElement('value', '{ joinSpec = %s }'),
         })
         FDNode.__init__(self, id)
-        self._rect = diacanvas.shape.Path()
-        self._rect.rectangle((0, 0), (self.WIDTH, self.HEIGHT))
-        self._rect.set_fill_color(diacanvas.color(0,0,0))
-        self._rect.set_fill(diacanvas.shape.FILL_SOLID)
+        self._line = diacanvas.shape.Path()
+        self._line.set_line_width(self.WIDTH)
 
         self.set(width = self.WIDTH, height = self.HEIGHT)
-        self.handles[0].set_property('movable', True)
-        self.handles[3].set_property('movable', True)
+        for h in self.handles:
+            h.props.movable = False
+# for visibility we need handle visibility patch in diacanvas
+#            h.props.visible = False
+#        self.handles[diacanvas.HANDLE_N].props.visible = True
+#        self.handles[diacanvas.HANDLE_S].props.visible = True
+        self.handles[diacanvas.HANDLE_N].props.movable = True
+        self.handles[diacanvas.HANDLE_S].props.movable = True
 
 
     def on_update(self, affine):
@@ -226,7 +230,9 @@ class ForkNodeItem(FDNode, GroupBase):
         If node is join node then update also join specification.
         """
         FDNode.on_update(self, affine)
-        self._rect.rectangle((0, 0), (self.width, self.height))
+        p1 = self.handles[diacanvas.HANDLE_N].get_pos_i()
+        p2 = self.handles[diacanvas.HANDLE_S].get_pos_i()
+        self._line.line((p1, p2))
 
         if isinstance(self.subject, UML.JoinNode) and self.subject.joinSpec == 'and':
             self._join_spec.set_text('')
@@ -256,7 +262,7 @@ class ForkNodeItem(FDNode, GroupBase):
 
 
     def on_shape_iter(self):
-        return iter([self._rect])
+        return iter([self._line])
 
 
 
