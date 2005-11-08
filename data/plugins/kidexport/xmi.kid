@@ -39,28 +39,11 @@ def getLowerAndUpperValuesFromAssociationEnd(end):
     
 from gaphor.misc.uniqueid import generate_id
 
-tagDefinitions = []
-class TaggedValue(object):
-    def __init__(self, name, value):
-        self.name = name
-        self.value = value
-        self.id = generate_id()
-        
-    def getTypeRef(self):
-        """Return a auto generated typeref for use with type definitions."""
-        return self.id+"_typeref"
-        
-    typeref = property(getTypeRef)
-        
-def convertTaggedValue(taggedValue):
-    tags = taggedValue.value.split(',')
-    converted = [map(unicode.strip, tag.split("=")) for tag in tags]
-    data = dict(converted)
-    tags = [TaggedValue(key, value) for (key, value) in data.items()]
-    tagDefinitions.extend(tags)
-    return tags
-    
+taggedValues = []
 
+def registerTaggedValue(taggedValue):
+    taggedValues.append(taggedValue)
+    return taggedValue
 
 ?>
 
@@ -96,8 +79,8 @@ def convertTaggedValue(taggedValue):
           py:for="attribute in [a for a in item.ownedAttribute if a.typeValue]"
           py:attrs="{'xmi.id':attribute.id, 'name':attribute.name}">
           <UML:ModelElement.taggedValue
-            py:for="taggedValue in convertTaggedValue(attribute.taggedValue)"
-            py:content="processTaggedValue(taggedValue)">
+            py:for="taggedValue in attribute.taggedValue"
+            py:content="registerTaggedValue(taggedValue)">
           </UML:ModelElement.taggedValue>
           <UML:StructuralFeature.type>
             <UML:Class xmi.idref = 'I48de81cbm106d41f950cmm7f24'
@@ -140,17 +123,17 @@ def convertTaggedValue(taggedValue):
       </UML:Classifier.feature>
       
       
-      <UML:TagDefinition py:def="processTagDefinition(tagDefinition)"
+      <UML:TagDefinition py:def="processTagDefinition(taggedValue)"
         xmi.id = 'I5bd6b6fm106dbda4889mm7f24' name = 'someTag'
-        py:attrs="{'xmi.id':tagDefinition.typeref, 'name':tagDefinition.name}"    
+        py:attrs="{'xmi.id':taggedValue.id+'ref', 'name':taggedValue.value.split('=')[0]}"    
           isSpecification = 'false'>
           <UML:TagDefinition.multiplicity>
             <UML:Multiplicity xmi.id = 'I5bd6b6fm106dbda4889mm7f23'
-              py:attrs="{'xmi.id':tagDefinition.typeref+'multi'}">
+              py:attrs="{'xmi.id':taggedValue.id+'multi'}">
               <UML:Multiplicity.range>
                 <UML:MultiplicityRange xmi.id = 'I5bd6b6fm106dbda4889mm7f22' lower = '1'
                   upper = '1'
-                  py:attrs="{'xmi.id':tagDefinition.typeref+'multirange'}"/>
+                  py:attrs="{'xmi.id':taggedValue.id+'multirange'}"/>
               </UML:Multiplicity.range>
             </UML:Multiplicity>
           </UML:TagDefinition.multiplicity>
@@ -161,10 +144,10 @@ def convertTaggedValue(taggedValue):
           xmi.id = 'I5bd6b6fm106dbda4889mm7f21' isSpecification = 'false'
           py:attrs="{'xmi.id':taggedValue.id}">
             <UML:TaggedValue.dataValue 
-              py:content="taggedValue.value">someTagValue</UML:TaggedValue.dataValue>
+              py:content="taggedValue.value.split('=')[1]">someTagValue</UML:TaggedValue.dataValue>
             <UML:TaggedValue.type>
               <UML:TagDefinition xmi.idref = 'I5bd6b6fm106dbda4889mm7f24'
-                py:attrs="{'xmi.idref':taggedValue.typeref}"/>
+                py:attrs="{'xmi.idref':taggedValue.id+'ref'}"/>
             </UML:TaggedValue.type>
           </UML:TaggedValue>
 
@@ -288,7 +271,7 @@ def convertTaggedValue(taggedValue):
           py:replace="modelProcessNode(item)"/> 
         
 
-        <UML:TagDefinition py:for="tagDef in tagDefinitions"
+        <UML:TagDefinition py:for="tagDef in taggedValues"
           py:replace="processTagDefinition(tagDef)"/>
         
       </UML:Namespace.ownedElement>
