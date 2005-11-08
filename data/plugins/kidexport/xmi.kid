@@ -94,6 +94,10 @@ def registerTaggedValue(taggedValue):
           isAbstract = 'false'
           py:for="operation in item.ownedOperation"
           py:attrs="{'xmi.id':operation.id, 'name':operation.name}">
+          <UML:ModelElement.taggedValue
+            py:for="taggedValue in operation.taggedValue"
+            py:content="registerTaggedValue(taggedValue)">
+          </UML:ModelElement.taggedValue>
           <UML:BehavioralFeature.parameter>
             <UML:Parameter xmi.id = 'I48de81cbm106d41f950cmm7ee1' name = 'return' isSpecification = 'false'
               kind = 'return'
@@ -184,6 +188,10 @@ def registerTaggedValue(taggedValue):
         visibility = 'public' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
         isAbstract = 'false'
         py:attrs="{'xmi.id':interface.id, 'name':interface.name}">
+        <UML:ModelElement.taggedValue
+            py:for="taggedValue in interface.taggedValue"
+            py:content="registerTaggedValue(taggedValue)">
+        </UML:ModelElement.taggedValue>
         <UML:Classifier.feature py:replace="processClassifierFeature(interface)"/>
       </UML:Interface>
     
@@ -194,6 +202,11 @@ def registerTaggedValue(taggedValue):
         isAbstract = 'true' isActive = 'false'
         py:attrs="{'xmi.id':cls.id, 'name':cls.name, 
                    'isAbstract':cls.isAbstract and 'true' or 'false'}">
+                   
+        <UML:ModelElement.taggedValue
+            py:for="taggedValue in cls.taggedValue"
+            py:content="registerTaggedValue(taggedValue)">
+        </UML:ModelElement.taggedValue>
 
         <UML:ModelElement.stereotype py:if="cls.appliedStereotype">
           <UML:Stereotype xmi.idref = 'I48de81cbm106d41f950cmm7e0c'
@@ -220,6 +233,10 @@ def registerTaggedValue(taggedValue):
           visibility = 'public' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'
           py:attrs="{'xml.id':stereotype.id, 'name':stereotype.name}">
+          <UML:ModelElement.taggedValue
+            py:for="taggedValue in stereotype.taggedValue"
+            py:content="registerTaggedValue(taggedValue)">
+          </UML:ModelElement.taggedValue>
         <UML:Stereotype.baseClass py:content="stereotype.ownedAttribute.type.name">Class</UML:Stereotype.baseClass>
       </UML:Stereotype>
       
@@ -227,6 +244,10 @@ def registerTaggedValue(taggedValue):
         xmi.id = 'I48de81cbm106d41f950cmm7e01' name = 'aPackage' visibility = 'public'
           isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
           py:attrs="{'xmi.idref':package.id, 'name':package.name}">
+          <UML:ModelElement.taggedValue
+            py:for="taggedValue in package.taggedValue"
+            py:content="registerTaggedValue(taggedValue)">
+          </UML:ModelElement.taggedValue>
         <UML:Namespace.ownedElement>
           <packageContent py:for="item in getPackageChildNodes(package=package)" 
             py:replace="modelProcessNode(item)"/>
@@ -239,6 +260,10 @@ def registerTaggedValue(taggedValue):
         xmi.id = 'I48de81cbm106d41f950cmm7d2f' isSpecification = 'false'
         isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
         py:attrs="{'xmi.id':association.id, 'name':association.name}">
+        <UML:ModelElement.taggedValue
+            py:for="taggedValue in association.taggedValue"
+            py:content="registerTaggedValue(taggedValue)">
+          </UML:ModelElement.taggedValue>
         <UML:Association.connection>
           <UML:AssociationEnd xmi.id = 'I48de81cbm106d41f950cmm7d35' visibility = 'public'
             isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'none'
@@ -267,6 +292,10 @@ def registerTaggedValue(taggedValue):
       </UML:Association>
     
       <UML:Namespace.ownedElement>
+        <UML:ModelElement.taggedValue
+            py:for="taggedValue in topLevelPackage.taggedValue"
+            py:content="registerTaggedValue(taggedValue)">
+        </UML:ModelElement.taggedValue>
         <packageContent py:for="item in getPackageChildNodes(package=topLevelPackage)" 
           py:replace="modelProcessNode(item)"/> 
         
