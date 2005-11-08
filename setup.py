@@ -28,9 +28,9 @@ from utils.dist_mo import Distribution
 
 str_version = sys.version[:3]
 version = map(int, str_version.split('.'))
-if version < [2, 2]:
+if version < [2, 4]:
     raise SystemExit, \
-        "Python 2.2 or higher is required, %s found" % str_version
+        "Python 2.4 or higher is required, %s found" % str_version
 
 
 class config_Gaphor(Command):
