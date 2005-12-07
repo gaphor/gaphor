@@ -206,7 +206,7 @@ class ForkNodeItem(FDNode, GroupBase):
 
     def __init__(self, id=None):
         GroupBase.__init__(self, {
-            '_join_spec': TextElement('value', '{ joinSpec = %s }'),
+            '_join_spec': TextElement('value', '{ joinSpec = %s }', 'and'),
         })
         FDNode.__init__(self, id)
         self._line = diacanvas.shape.Path()
@@ -234,9 +234,6 @@ class ForkNodeItem(FDNode, GroupBase):
         p2 = self.handles[diacanvas.HANDLE_S].get_pos_i()
         self._line.line((p1, p2))
 
-        if isinstance(self.subject, UML.JoinNode) and self.subject.joinSpec == 'and':
-            self._join_spec.set_text('')
-
         w, h = self._join_spec.get_size()
         self._join_spec.update_label((self.width - w) / 2, 
             -h - self.MARGIN)
@@ -255,6 +252,7 @@ class ForkNodeItem(FDNode, GroupBase):
         if self.subject and isinstance(self.subject, UML.JoinNode):
             factory = resource(UML.ElementFactory)
             self.subject.joinSpec = factory.create(UML.LiteralSpecification)
+            self.subject.joinSpec.value = 'and'
             self._join_spec.subject = self.subject.joinSpec
         else:
             self._join_spec.subject = None

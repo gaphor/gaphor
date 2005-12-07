@@ -46,7 +46,7 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
 
     def __init__(self, id = None):
         GroupBase.__init__(self, {
-            '_upper_bound': TextElement('value', '{ upperBound = %s }'),
+            '_upper_bound': TextElement('value', '{ upperBound = %s }', '*'),
         })
         SimpleNamedItem.__init__(self, id)
 
@@ -68,6 +68,7 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
         if self.subject:
             factory = resource(UML.ElementFactory)
             self.subject.upperBound = factory.create(UML.LiteralSpecification)
+            self.subject.upperBound.value = '*'
             self._upper_bound.subject = self.subject.upperBound
         else:
             self._upper_bound.subject = None
@@ -134,10 +135,6 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
 
         if self.subject:
             self._ordering.set_text('{ ordering = %s }' % self.subject.ordering)
-
-            if self.subject.upperBound.value == '*':
-                self._upper_bound.set_text('')
-
         else:
             self._ordering.set_text('')
 

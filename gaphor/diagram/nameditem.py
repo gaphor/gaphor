@@ -27,7 +27,7 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
 
     subject:         flow guard, join node specification, etc.
     subject_attr:    subject attribute containing text value
-    subject_pattern: default to %s, is used to render text value, i.e. for
+    subject_pattern: defaults to %s, is used to render text value, i.e. for
                      join node join specification it should be set to
                      '{ joinSpec = %s }'
     """
@@ -37,12 +37,13 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
 
     FONT='sans 10'
 
-    def __init__(self, attr, pattern = '%s', id = None):
+    def __init__(self, attr, pattern = '%s', default = None, id = None):
         self.__gobject_init__()
         DiagramItem.__init__(self, id)
 
         self.subject_attr = attr
         self.subject_pattern = pattern
+        self.subject_defualt = default
 
         def f(subject, pspec):
             self.set_text(getattr(subject, self.subject_attr))
@@ -72,7 +73,7 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
         """
         Set text of text element. It is rendered with pattern.
         """
-        if txt:
+        if txt and txt != self.subject_defualt:
             self._name.set_text(self.subject_pattern % txt)
         else:
             self._name.set_text('')
