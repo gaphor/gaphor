@@ -12,25 +12,10 @@ class GroupBase(diacanvas.CanvasGroupable):
     This class allows to group different diagram elememnts. It should be
     set as a base class of main diagram element. Main diagram element
     (parent) has children.
-
-    Children are specified as dictionary. Keys represent attributes of
-    parent and values of dictionary should be instances of these
-    attributes.
     """
-    def __init__(self, children):
+    def __init__(self):
         diacanvas.CanvasGroupable.__init__(self)
-        self.children = children
-        log.debug('creating groupable with children: %s' % self.children.keys())
-        for name, kid in children.items():
-            setattr(self, name, kid)
-            kid.set_child_of(self)
-
-
-    def get_children(self):
-        """
-        Return children of parent.
-        """
-        return (getattr(self, kid) for kid in self.children.keys())
+        self.children = set()
 
 
     def on_update(self, affine):
@@ -38,26 +23,33 @@ class GroupBase(diacanvas.CanvasGroupable):
         Update all children and calculate bounds which should include
         parent and all kids.
         """
-        for kid in self.get_children():
+        bounds = [self.bounds]
+        for kid in self.children:
             self.update_child(kid, affine)
+            bounds.append(kid.get_bounds(kid.affine))
 
-        bounds = [self.bounds] \
-            + [ kid.get_bounds(kid.affine) for kid in self.get_children() ]
         b0, b1, b2, b3 = itertools.izip(*bounds)
         self.set_bounds((min(b0), min(b1), max(b2), max(b3)))
 
 
-    # Groupable
-
+    #
+    # groupable interface
+    #
     def on_groupable_add(self, item):
-        return 0
+        self.children.add(item)
+        item.set_child_of(self)
+        return True
+
 
     def on_groupable_remove(self, item):
-        '''Do not allow the name to be removed.'''
-        return 1
+        self.children.remove(item)
+        item.set_child_of(None)
+        return True
+
 
     def on_groupable_iter(self):
-        return self.get_children()
+        return iter(self.children)
+
 
 
 class Groupable(gobject.GObjectMeta):

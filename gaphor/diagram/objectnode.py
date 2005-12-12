@@ -45,10 +45,11 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
     }
 
     def __init__(self, id = None):
-        GroupBase.__init__(self, {
-            '_upper_bound': TextElement('value', '{ upperBound = %s }', '*'),
-        })
+        GroupBase.__init__(self)
         SimpleNamedItem.__init__(self, id)
+
+        self._upper_bound = TextElement('value', '{ upperBound = %s }', '*')
+        self.add(self._upper_bound)
 
         self._ordering = diacanvas.shape.Text()
         self._ordering.set_font_description(pango.FontDescription(self.FONT))

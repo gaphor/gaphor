@@ -25,18 +25,16 @@ class FlowItem(RelationshipItem, GroupBase):
     __metaclass__ = Groupable
 
     def __init__(self, id = None):
-        GroupBase.__init__(self, {
-            '_name': TextElement('name'),
-            '_guard': TextElement('value'),
-        })
-
+        GroupBase.__init__(self)
         RelationshipItem.__init__(self, id)
+
+        self._name = TextElement('name')
+        self._guard = TextElement('value')
+        self.add(self._name)
+        self.add(self._guard)
 
         self.set(has_tail=1, tail_fill_color=0,
                  tail_a=0.0, tail_b=15.0, tail_c=6.0, tail_d=6.0)
-
-        isinstance(self._guard, TextElement)
-        isinstance(self._name, TextElement)
 
 
     def on_subject_notify(self, pspec, notifiers = ()):

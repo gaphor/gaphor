@@ -205,10 +205,12 @@ class ForkNodeItem(FDNode, GroupBase):
     HEIGHT = 45.0
 
     def __init__(self, id=None):
-        GroupBase.__init__(self, {
-            '_join_spec': TextElement('value', '{ joinSpec = %s }', 'and'),
-        })
+        GroupBase.__init__(self)
         FDNode.__init__(self, id)
+
+        self._join_spec = TextElement('value', '{ joinSpec = %s }', 'and')
+        self.add(self._join_spec)
+
         self._line = diacanvas.shape.Path()
         self._line.set_line_width(self.WIDTH)
 
