@@ -1,3 +1,9 @@
+----
+- object inspector panel added
+- flows and initial nodes can have names
+- actions: flow final, fork, join and object nodes
+- require gtk+ 2.8.x
+
 0.7.1
 -----
 - Real UML2 associations;
