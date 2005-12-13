@@ -266,7 +266,7 @@ class ForkNodeItem(FDNode, GroupBase):
 
 
 
-gobject.type_register(FDNode)
+#gobject.type_register(FDNode)
 initialize_item(ActivityNodeItem)
 initialize_item(InitialNodeItem, UML.InitialNode)
 initialize_item(ActivityFinalNodeItem, UML.ActivityFinalNode)

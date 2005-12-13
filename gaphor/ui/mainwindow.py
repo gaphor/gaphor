@@ -253,21 +253,28 @@ class MainWindow(AbstractWindow):
         #notebook.popup_enable()
         notebook.set_scrollable(True)
         notebook.set_show_border(False)
- 
+        #notebook.set_size_request(-1, 10000)
+
         notebook.connect_after('switch-page', self.on_notebook_switch_page)
 
         self.objectInspector = ObjectInspector()
+        #self.objectInspector.set_size_request(-1, 50)
+
         diagramReceivedFocus = component.adapter(IDiagramElementReceivedFocus)(
             self.objectInspector)
         component.provideHandler(diagramReceivedFocus)
         
         secondPaned = gtk.VPaned()
-        secondPaned.set_property('position', 600)
+        secondPaned.set_property('position',
+                                 int(resource('ui.object-inspector-position', 600)))
         secondPaned.pack1(notebook)
         secondPaned.pack2(self.objectInspector)
         secondPaned.show_all()
         paned.pack2(secondPaned)
         paned.show_all()
+
+        secondPaned.connect('notify::position',
+                            self.on_object_inspector_notify_position)
 
         self.notebook = notebook
         self.model = model
@@ -421,6 +428,10 @@ class MainWindow(AbstractWindow):
 
     def on_window_size_allocate(self, window, allocation):
         resource.set('ui.window-size', (allocation.width, allocation.height), persistent=True)
+
+    def on_object_inspector_notify_position(self, paned, arg):
+        resource.set('ui.object-inspector-position',
+                     paned.get_position(), persistent=True)
 
 #    def on_toolbox_toggled(self, toolbox, box_name, visible):
 #        print 'Box', box_name, 'is visible:', visible

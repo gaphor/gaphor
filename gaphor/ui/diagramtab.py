@@ -46,6 +46,11 @@ class DiagramTab(object):
             # Set capabilities:
             #self.__on_diagram_undo(diagram.canvas.undo_manager)
 
+            if hasattr(self, 'view'):
+                self.view.get_hadjustment().set_value(0.0)
+                self.view.get_vadjustment().set_value(0.0)
+
+
     def construct(self):
         title = self.diagram and self.diagram.name or '<None>'
 
@@ -83,6 +88,9 @@ class DiagramTab(object):
 
         item_tool = ItemTool(self.owning_window.get_action_pool())
         view.get_default_tool().set_item_tool(item_tool)
+
+        view.get_hadjustment().set_value(0.0)
+        view.get_vadjustment().set_value(0.0)
 
         table.show_all()
 

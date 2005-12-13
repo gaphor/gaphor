@@ -53,7 +53,7 @@ def show_status_window(title, message, parent=None, queue=None):
         except QueueEmpty:
             pass
         if percentage:
-            progress_bar.set_fraction(percentage / 100.0)
+            progress_bar.set_fraction(min(percentage / 100.0, 100.0))
         return True
 
     if queue:

@@ -35,7 +35,7 @@ def initialize_item(item_class, *default_uml_classes):
     4. If nessesary: add canvas editable callbacks
     """
     global _uml_to_item_map
-    gobject.type_register(item_class)
+    #gobject.type_register(item_class)
     bases = item_class.__bases__
     if (diacanvas.CanvasItem in bases) or \
         (diacanvas.CanvasGroup in bases) or \
