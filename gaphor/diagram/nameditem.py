@@ -332,9 +332,10 @@ class SideNamedItem(GroupBase):
     MARGIN_Y = 10
 
     def __init__(self):
-        GroupBase.__init__(self, {
-            '_name': TextElement('name'),
-        })
+        GroupBase.__init__(self)
+
+        self._name = TextElement('name')
+        self.add(self._name)
 
 
     def on_update(self, affine):
