@@ -397,7 +397,7 @@ setup(name='gaphor',
                   plugin_data('svgexport'),
                   plugin_data('xmiexport')
       ],
-      scripts=['bin/gaphor'],
+      scripts=['bin/gaphor', 'bin/gaphorconvert'],
 
       distclass=Distribution,
       cmdclass={'config': config_Gaphor,

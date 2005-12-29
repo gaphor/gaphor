@@ -1,3 +1,7 @@
+2005-12-29  wrobell <wrobell@pld-linux.org>
+	* bin/gaphorconvert, setup.py: added gaphorconvert utility, which
+	allows to convert gaphor files into svg and pdf
+
 2005-12-13  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/mainwindow.py: make position of objectInspector persistent.
