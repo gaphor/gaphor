@@ -43,7 +43,7 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
 
         self.subject_attr = attr
         self.subject_pattern = pattern
-        self.subject_defualt = default
+        self.subject_default = default
 
         def f(subject, pspec):
             self.set_text(getattr(subject, self.subject_attr))
