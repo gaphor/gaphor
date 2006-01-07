@@ -21,9 +21,11 @@ from gaphor.diagram.attribute import AttributeItem
 from gaphor.diagram.operation import OperationItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.interface import InterfaceItem
+from gaphor.diagram.connector import AssemblyConnectorItem
 from gaphor.diagram.association import AssociationItem, AssociationEnd
 from gaphor.diagram import ClassifierItem, ImplementationItem, \
      GeneralizationItem, DependencyItem
+from gaphor.diagram.flow import FlowItem, CFlowItem, CFlowItemA, CFlowItemB
 
 
 class NoFocusItemError(GaphorError):
@@ -1123,3 +1125,181 @@ class ObjectNodeOrderingVisibiltyAction(CheckAction):
 
 weave_method(ObjectNodeOrderingVisibiltyAction.execute, UndoTransactionAspect)
 register_action(ObjectNodeOrderingVisibiltyAction, 'ItemFocus')
+
+
+
+class RotateAction(Action):
+    id = 'Rotate'
+    label = 'Rotate'
+    tooltip = 'Rotate item'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+            self.active = isinstance(item, AssemblyConnectorItem) \
+                or isinstance(item, InterfaceItem) and item.is_folded()
+        except NoFocusItemError:
+            pass
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        item.rotate()
+
+weave_method(RotateAction.execute, UndoTransactionAspect)
+register_action(RotateAction, 'ItemFocus')
+
+
+
+class SplitFlowAction(Action):
+    id = 'SplitFlow'
+    label = 'Split'
+    tooltip = 'Split flow using activity edge connector'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+            self.active = isinstance(item, FlowItem)
+        except NoFocusItemError:
+            pass
+
+    def execute(self):
+        """
+        Split flow using activity edge connector. Two flows are created,
+        which are connected to activity edge connectors. Names are
+        assigned to connectors, like: A, B, C.
+        """
+        view = self._window.get_current_diagram_view()
+
+        # find flows on diagram, which has activity edge connector
+        # they are used to determine name of new connectors
+        flows = view.canvas.select(lambda item: isinstance(item, CFlowItem))
+
+        # get flow end's positions
+        item = get_parent_focus_item(self._window)
+        xa, ya = item.handles[0].get_pos_w()
+        xb, yb = item.handles[-1].get_pos_w()
+        ca = item.handles[0].connected_to
+        cb = item.handles[-1].connected_to
+        
+        # is used for nice splitting
+        dy = yb < ya and -50 or 50
+
+        # create flows with connectors and set appropriate data, like:
+        # - end positions
+        # - subject
+        # - handle connection info
+        fa = view.canvas._diagram.create(CFlowItemA)
+        fb = view.canvas._diagram.create(CFlowItemB)
+        fa._opposite = fb
+        fb._opposite = fa
+        fa.set_subject(item.subject)
+        fb.set_subject(item.subject)
+
+        fa_ha = fa.get_active_handle()
+        fa_hi = fa.get_inactive_handle()
+        fa_ha.set_pos_w(xa, ya)
+        fa_hi.set_pos_w(xa, ya + dy)
+        if ca:
+            ca.connect_handle(fa_ha)
+
+        fb_ha = fb.get_active_handle()
+        fb_hi = fb.get_inactive_handle()
+        fb_ha.set_pos_w(xb, yb)
+        fb_hi.set_pos_w(xb, yb - dy)
+        if cb:
+            cb.connect_handle(fb_ha)
+
+        # original flow is no longer required
+        item.unlink()
+
+        # create unique connector name
+        # also try to use missing one, i.e. if there are connectors
+        # like A, C, D, then we should find B as connector name
+        names = set([f._connector.subject.value for f in flows])
+        names = list(names)
+        names.sort()
+        name = 'A'
+        if len(names) > 0 and names[0] == 'A':
+            if len(names) > 1:
+                name = None
+                for i, n in enumerate(names[:-1]):
+                    c1 = ord(n)
+                    c2 = ord(names[i + 1])
+                    if c2 - c1 > 1:
+                        name = chr(c1 + 1)
+                        break
+                if not name:
+                    name = chr(ord(names[-1]) + 1)
+            elif len(names) == 1:
+                name = chr(ord(names[0]) + 1)
+
+        assert name and name not in names
+        if ord(name) > ord('Z'): # fixme: really!
+            name = 'Z1' # just for case
+        fa._connector.subject.value = name
+        fb._connector.subject.value = name
+
+
+weave_method(SplitFlowAction.execute, UndoTransactionAspect)
+register_action(SplitFlowAction, 'ItemFocus')
+
+
+
+class MergeFlowAction(Action):
+    id = 'MergeFlow'
+    label = 'Merge'
+    tooltip = 'Merge flow'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+            self.active = isinstance(item, CFlowItem)
+        except NoFocusItemError:
+            pass
+
+    def execute(self):
+        """
+        Merge flows with activity edge connectors.
+        """
+        view = self._window.get_current_diagram_view()
+
+        # make sure, which flow with connector is first,
+        # this way we know how attach normal flow 
+        fa = get_parent_focus_item(self._window)
+        fb = fa._opposite
+        if isinstance(fa, CFlowItemB):
+            fa, fb = fb, fa
+
+        # get handle position and handle connection information
+        fa_ha = fa.get_active_handle()
+        fb_ha = fb.get_active_handle()
+        xa, ya = fa_ha.get_pos_w()
+        xb, yb = fb_ha.get_pos_w()
+        ca = fa_ha.connected_to
+        cb = fb_ha.connected_to
+
+        # recreate flow and set subject and connection info
+        f = view.canvas._diagram.create(FlowItem)
+        f.set_subject(fa.subject)
+        f.handles[0].set_pos_w(xa, ya)
+        f.handles[-1].set_pos_w(xb, yb)
+
+        if ca:
+            ca.connect_handle(f.handles[0])
+        if cb:
+            cb.connect_handle(f.handles[-1])
+
+        fa.unlink()
+        fb.unlink()
+
+weave_method(MergeFlowAction.execute, UndoTransactionAspect)
+register_action(MergeFlowAction, 'ItemFocus')

@@ -41,9 +41,11 @@ class MainWindow(AbstractWindow):
                 'InsertImplementation')),
         (_('Components'), (
                 'InsertComponent',
-#                'InsertConnector',
+                'InsertAssemblyConnector',
                 'InsertNode',
                 'InsertArtifact')),
+#        (_('Composite Structures'), (
+#                'InsertConnector',)),
         (_('Actions'), (
                 'InsertAction',
                 'InsertInitialNode',
@@ -53,10 +55,10 @@ class MainWindow(AbstractWindow):
                 'InsertForkNode',
                 'InsertObjectNode',
                 'InsertFlow')),
-#        (_('Interactions'), (
-#                'InsertInteraction',
-#                'InsertLifeline',
-#                'InsertMessage')),
+        (_('Interactions'), (
+                'InsertInteraction',
+                'InsertLifeline',
+                'InsertMessage')),
         (_('Use Cases'), (
                 'InsertUseCase',
                 'InsertActor',

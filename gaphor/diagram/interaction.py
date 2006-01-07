@@ -111,7 +111,6 @@ class InteractionItem(NamedItem, diacanvas.CanvasGroupable):
         """
         self._children.append(item)
         if self.subject and item.subject:
-            print self.subject, item.subject
             item.subject.interaction = self.subject
         item.set_child_of(self)
         self.request_update()

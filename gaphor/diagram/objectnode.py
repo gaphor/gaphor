@@ -68,8 +68,9 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
         SimpleNamedItem.on_subject_notify(self, pspec, notifiers)
         if self.subject:
             factory = resource(UML.ElementFactory)
-            self.subject.upperBound = factory.create(UML.LiteralSpecification)
-            self.subject.upperBound.value = '*'
+            if not self.subject.upperBound:
+                self.subject.upperBound = factory.create(UML.LiteralSpecification)
+                self.subject.upperBound.value = '*'
             self._upper_bound.subject = self.subject.upperBound
         else:
             self._upper_bound.subject = None

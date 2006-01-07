@@ -1,10 +1,43 @@
+2006-01-03  wrobell <wrobell@pld-linux.org>
+	* data/plugins/pdfexport/__init__.py,
+	data/plugins/pdfexport/plugin.xml: PDF export plugin created
+
+2006-01-03  wrobell <wrobell@pld-linux.org>
+	* data/plugins/svgexport/__init__.py,
+	data/plugins/pngexport/pngexport.py, gaphor/plugin.py: use common code
+	for export a diagram into a file
+
 2005-12-29  wrobell <wrobell@pld-linux.org>
 	* bin/gaphorconvert, setup.py: added gaphorconvert utility, which
 	allows to convert gaphor files into svg and pdf
 
+2005-12-19  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/__init__.py, gaphor/diagram/flow.py,
+	gaphor/diagram/itemactions.py: allow to split flows using activity edge
+	connector
+
+2005-12-19  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/placementactions.py: assign names for actions and
+	object nodes
+
 2005-12-13  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 
 	* gaphor/ui/mainwindow.py: make position of objectInspector persistent.
+
+2005-12-05  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/__init__.py gaphor/diagram/connector.py: use grouping
+	interface properly to maintain connector end items;
+	free connector end items are created and destroyed by assembly
+	connector;
+	assembly connector is saved and loaded properly
+
+2005-12-05  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/interface.py: update connected connector end items
+	when updating interface in folded mode
+
+2005-12-05  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/placementtool.py: invoke can_contain method on
+	grouping items (like interaction)
 
 2005-11-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
 	* setup.py: require GTK+ version 2.8 or newer

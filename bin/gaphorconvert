@@ -40,6 +40,8 @@ parser = optparse.OptionParser(usage = usage)
 
 parser.add_option('-v', '--verbose', dest = 'verbose', action = 'store_true',
     help = 'verbose output')
+parser.add_option('-u', '--use-underscores', dest = 'underscores', action = 'store_true',
+    help = 'use underscores instead of spaces for output filenames')
 parser.add_option('-d', '--dir', dest = 'dir', metavar = 'directory',
     help = 'output to directory')
 parser.add_option('-f', '--format', dest = 'format', metavar = 'format',
@@ -74,6 +76,9 @@ for model in args:
 
         pname = dir + '/' + diagram.name # plain name, no extension
                                          # or additional directories
+        if options.underscores:
+            dir = dir.replace(' ', '_')
+            pname = pname.replace(' ', '_')
 
         if name_re and not name_re.search(pname):
             message('skipping %s' % pname)

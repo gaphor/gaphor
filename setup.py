@@ -395,6 +395,7 @@ setup(name='gaphor',
                   plugin_data('pngexport'),
                   plugin_data('pynsource'),
                   plugin_data('svgexport'),
+                  plugin_data('pdfexport'),
                   plugin_data('xmiexport')
       ],
       scripts=['bin/gaphor', 'bin/gaphorconvert'],

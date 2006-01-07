@@ -76,9 +76,9 @@ from extension import ExtensionItem
 from activitynodes import InitialNodeItem, ActivityFinalNodeItem, FlowFinalNodeItem, DecisionNodeItem, ForkNodeItem
 from action import ActionItem
 from objectnode import ObjectNodeItem
-from flow import FlowItem
+from flow import FlowItem, CFlowItemA, CFlowItemB
 from component import ComponentItem
-#from connector import ConnectorItem
+from connector import ConnectorItem, AssemblyConnectorItem, ConnectorEndItem
 from artifact import ArtifactItem
 from node import NodeItem
 from interaction import InteractionItem

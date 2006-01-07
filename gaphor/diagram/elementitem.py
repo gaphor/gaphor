@@ -16,7 +16,6 @@ __date__ = '$date$'
 
 
 class ElementItem(diacanvas.CanvasElement, DiagramItem):
-    # Properties, also add the DiagramItem properties here.
     __gproperties__ = {
         'auto-resize':  (gobject.TYPE_BOOLEAN, 'auto resize',
                          'Set auto-resize for the diagram item',

@@ -1,8 +1,13 @@
 0.8.0
 -----
-- object inspector panel added
-- flows and initial nodes can have names
 - actions: flow final, fork, join and object nodes
+- assembly connector
+- flows and initial nodes can have names
+- flows can be splitted and merged using activity edge connectors 
+- object inspector panel added
+- pdf file export
+- gaphorconvert utility, which allows easy batch conversion of diagrams
+  into svg and pdf files
 - require gtk+ 2.8.x
 
 0.7.1

@@ -23,6 +23,7 @@ from gaphor.misc.action import CheckAction as _CheckAction
 from gaphor.misc.action import RadioAction as _RadioAction
 from gaphor.misc.action import ObjectAction
 
+import gtk
 
 def import_plugin(name):
     """A normal 'import gaphor._plugins.<name>' doesn't work.
@@ -48,6 +49,41 @@ class _ActionMixIn(object):
 class Action(_Action, _ActionMixIn): pass
 class CheckAction(_CheckAction, _ActionMixIn): pass
 class RadioAction(_RadioAction, _ActionMixIn): pass
+
+class DiagramExportAction(Action):
+    """
+    Diagram export action allows to save a diagram into filename.
+    Deriving classes should:: 
+        - implement save method
+        - define title attribute
+        - define file extension
+    """
+    title = None # gtk file chooser title
+    ext   = None # file extension, like .svg
+
+    def update(self):
+        tab = self.get_window().get_current_diagram_tab()
+        self.sensitive = tab and True or False
+
+
+    def execute(self):
+        filename = (self.get_window().get_current_diagram().name or 'export') + self.ext
+        filesel = gtk.FileChooserDialog(title = self.title,
+            action = gtk.FILE_CHOOSER_ACTION_SAVE,
+            buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK))
+        filesel.set_current_name(filename)
+
+        response = filesel.run()
+        filename = filesel.get_filename()
+        filesel.destroy()
+        if response == gtk.RESPONSE_OK:
+            if filename and len(filename) > 0:
+                self.save(filename)
+
+
+    def save(self, filename):
+        raise NotImplementedError, 'save method should be implemented'
+
 
 del _Action, _CheckAction, _RadioAction, _ActionMixIn
 

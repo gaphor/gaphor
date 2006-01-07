@@ -36,7 +36,10 @@ class PlacementTool(diacanvas.PlacementTool):
 
             item_at_mouse = view.get_item_at(event.x, event.y)
             log.debug('item at (%f %f)= %s' % (event.x, event.y, item_at_mouse))
-            if item_at_mouse and item_at_mouse.item and hasattr(item_at_mouse.item, 'can_contain'):
+            if item_at_mouse and item_at_mouse.item \
+                    and hasattr(item_at_mouse.item, 'can_contain') \
+                    and item_at_mouse.item.can_contain(item):
+
                 if item.get_property('parent'):
                     item.set_property('parent', None)
                 log.debug('adding')
@@ -61,8 +64,11 @@ class PlacementTool(diacanvas.PlacementTool):
                 else:                
                     view_item = view.find_view_item(item)
                     view.focus(view_item)
-                    if resource('reset-tool-after-create', False):
-                        view.set_tool(None)
+
+                    # do not reset tool here, it is done in release event
+                    # callback method
+                    #if resource('reset-tool-after-create', False):
+                    #    view.set_tool(None)
                     return
             else:
                 diacanvas.PlacementTool._grab_handle(self, view, event, item)

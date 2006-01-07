@@ -2,33 +2,20 @@
 
 import gtk
 import diacanvas
-from gaphor.plugin import Action
+from gaphor.plugin import DiagramExportAction
 
 
-class SVGExportAction(Action):
+class SVGExportAction(DiagramExportAction):
+    title = 'Export diagram to SVG file'
+    ext = '.svg'
 
-    def update(self):
-        tab = self.get_window().get_current_diagram_tab()
-        self.sensitive = tab and True or False
-
-    def execute(self):
-        filename = (self.get_window().get_current_diagram().name or 'export') + '.svg'
-        filesel = gtk.FileChooserDialog(title='Export diagram to SVG file',
-                                        action=gtk.FILE_CHOOSER_ACTION_SAVE,
-                                        buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
-        filesel.set_current_name(filename)
-
-        response = filesel.run()
-        filename = filesel.get_filename()
-        filesel.destroy()
-        if response == gtk.RESPONSE_OK:
-            if filename and len(filename) > 0:
-                log.debug('Exporting SVG image to: %s' % filename)
-                canvas = self.get_window().get_current_diagram_tab().get_canvas()
-                export = diacanvas.ExportSVG()
-                try:
-                    export.render (canvas)
-                    export.save(filename)
-                except Exception, e:
-                    log.error('Error while saving model to file %s: %s' % (filename, e))
+    def save(self, filename):
+        log.debug('Exporting SVG image to: %s' % filename)
+        canvas = self.get_window().get_current_diagram_tab().get_canvas()
+        export = diacanvas.ExportSVG()
+        try:
+            export.render (canvas)
+            export.save(filename)
+        except Exception, e:
+            log.error('Error while saving model to file %s: %s' % (filename, e))
 

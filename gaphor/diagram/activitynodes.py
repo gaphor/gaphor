@@ -33,7 +33,7 @@ class ActivityNodeItem(ElementItem):
         ElementItem.__init__(self, id)
         # Do not allow resizing of the node
         for h in self.handles:
-            h.set_property('movable', False)
+            h.props.movable = False
 
 
 
@@ -217,10 +217,9 @@ class ForkNodeItem(FDNode, GroupBase):
         self.set(width = self.WIDTH, height = self.HEIGHT)
         for h in self.handles:
             h.props.movable = False
-# for visibility we need handle visibility patch in diacanvas
-#            h.props.visible = False
-#        self.handles[diacanvas.HANDLE_N].props.visible = True
-#        self.handles[diacanvas.HANDLE_S].props.visible = True
+            h.props.visible = False
+        self.handles[diacanvas.HANDLE_N].props.visible = True
+        self.handles[diacanvas.HANDLE_S].props.visible = True
         self.handles[diacanvas.HANDLE_N].props.movable = True
         self.handles[diacanvas.HANDLE_S].props.movable = True
 
@@ -253,8 +252,9 @@ class ForkNodeItem(FDNode, GroupBase):
         FDNode.on_subject_notify(self, pspec, notifiers)
         if self.subject and isinstance(self.subject, UML.JoinNode):
             factory = resource(UML.ElementFactory)
-            self.subject.joinSpec = factory.create(UML.LiteralSpecification)
-            self.subject.joinSpec.value = 'and'
+            if not self.subject.joinSpec:
+                self.subject.joinSpec = factory.create(UML.LiteralSpecification)
+                self.subject.joinSpec.value = 'and'
             self._join_spec.subject = self.subject.joinSpec
         else:
             self._join_spec.subject = None

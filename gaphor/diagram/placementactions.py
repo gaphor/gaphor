@@ -349,7 +349,7 @@ class ForkNodePlacementAction(PlacementAction):
 register_action(ForkNodePlacementAction)
 
 
-class ActionPlacementAction(PlacementAction):
+class ActionPlacementAction(NamespacePlacementAction):
     id = 'InsertAction'
     label = 'Action'
     tooltip = 'Create a new action'
@@ -361,12 +361,12 @@ class ActionPlacementAction(PlacementAction):
 register_action(ActionPlacementAction)
 
 
-class ObjectNodePlacementAction(PlacementAction):
+class ObjectNodePlacementAction(NamespacePlacementAction):
     id = 'InsertObjectNode'
     label = 'Object Node'
     tooltip = 'Create a new object node'
     stock_id = 'gaphor-object-node'
-    name = 'ObjectNode'
+    name = 'Object'
     type = diagram.ObjectNodeItem
     subject_type = UML.ObjectNode
 
@@ -478,21 +478,28 @@ class ComponentPlacementAction(NamespacePlacementAction):
 
 register_action(ComponentPlacementAction)
 
-#class ConnectorPlacementAction(NamespacePlacementAction):
-#    id = 'InsertConnector'
-#    label = '_Connector'
-#    tooltip = 'Create a new connector item'
-#    stock_id = 'gaphor-connector'
-#    name = 'Connector'
-#    type = diagram.ConnectorItem
-#    subject_type = UML.Connector
+class ConnectorPlacementAction(PlacementAction):
+    id = 'InsertConnector'
+    label = '_Connector'
+    tooltip = 'Create a new connector item'
+    stock_id = 'gaphor-connector'
+    name = 'Connector'
+    type = diagram.ConnectorItem
 
-#    def _execute(self):
-#        tool = InterfacePlacementTool(self._window, self.id)
-#        self._window.get_current_diagram_view().set_tool(tool)
-#        self._window.set_message('Create new %s' % self.name)
+register_action(ConnectorPlacementAction)
 
-#register_action(ConnectorPlacementAction)
+
+class AssemblyConnectorPlacementAction(PlacementAction):
+    id = 'InsertAssemblyConnector'
+    label = 'Assembly Connector'
+    tooltip = 'Create a new assembly connector item'
+    stock_id = 'gaphor-assembly-connector'
+    name = 'AssemblyConnector'
+    type = diagram.AssemblyConnectorItem
+    subject_type = UML.Connector
+
+register_action(AssemblyConnectorPlacementAction)
+
 
 class ArtifactPlacementAction(NamespacePlacementAction):
     id = 'InsertArtifact'

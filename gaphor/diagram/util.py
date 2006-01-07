@@ -1,6 +1,8 @@
 from gaphor import resource
 from gaphor import UML
 
+from math import atan, pi, sin, cos
+
 node_classes = {
     UML.ForkNode:     UML.JoinNode,
     UML.DecisionNode: UML.MergeNode,
@@ -272,3 +274,22 @@ def create_connector_end(connector, role):
     end.role = role
     connector.end = end
     assert end in role.end
+    return end
+
+
+def rotate(p1, p2, a, b, x, y):
+    """
+    Rotate point (a, b) by angle, which is determined by line (p1, p2).
+
+    Rotated point is moved by vector (x, y).
+    """
+    try:
+        angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0]))
+    except ZeroDivisionError:
+        da = p1[1] < p2[1] and 1.5 or -1.5
+        angle = pi * da
+
+    sin_angle = sin(angle)
+    cos_angle = cos(angle)
+    return (cos_angle * a - sin_angle * b + x,
+            sin_angle * a + cos_angle * b + y)

@@ -64,6 +64,9 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
         self._name_border.set_line_width(1.0)
         self._name_bounds = (0, 0, 0, 0)
 
+        # show name border when (parent) diagram item is selected
+        self.show_border = True
+
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
     disconnect = DiagramItem.disconnect
@@ -73,7 +76,7 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
         """
         Set text of text element. It is rendered with pattern.
         """
-        if txt and txt != self.subject_defualt:
+        if txt and txt != self.subject_default:
             self._name.set_text(self.subject_pattern % txt)
         else:
             self._name.set_text('')
@@ -122,7 +125,7 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
         """
         if self.subject:
             yield self._name
-            if self.is_selected():
+            if self.is_selected() and self.show_border:
                 yield self._name_border
 
     # Editable
@@ -150,8 +153,10 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
                     new_text = new_text[l1:]
                     new_text = new_text[:-l2]
 
+            self.canvas.get_undo_manager().begin_transaction()
             log.debug('setting %s to %s' % (self.subject_attr, new_text))
             setattr(self.subject, self.subject_attr, new_text)
+            self.canvas.get_undo_manager().commit_transaction()
 
 
     # notifications
