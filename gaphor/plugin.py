@@ -16,12 +16,14 @@ by the 'window' property.
 """
 
 import sys
+import os.path
 from gaphor import resource
 
 from gaphor.misc.action import Action as _Action
 from gaphor.misc.action import CheckAction as _CheckAction
 from gaphor.misc.action import RadioAction as _RadioAction
 from gaphor.misc.action import ObjectAction
+from gaphor.i18n import _
 
 import gtk
 
@@ -73,12 +75,31 @@ class DiagramExportAction(Action):
             buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK))
         filesel.set_current_name(filename)
 
-        response = filesel.run()
-        filename = filesel.get_filename()
+        save = False
+        while True:
+            response = filesel.run()
+            filename = filesel.get_filename()
+
+            if response == gtk.RESPONSE_OK:
+                if os.path.exists(filename):
+                    dialog = gtk.MessageDialog(filesel,
+                        gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                        gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
+                        _("The file %s already exists. Do you want to replace it with the file you are exporting to?") % filename)
+                    answer = dialog.run()
+                    dialog.destroy()
+                    if answer == gtk.RESPONSE_YES:
+                        save = True
+                        break
+                else:
+                    save = True
+                    break
+            else:
+                break
+
+        if save and filename:
+            self.save(filename)
         filesel.destroy()
-        if response == gtk.RESPONSE_OK:
-            if filename and len(filename) > 0:
-                self.save(filename)
 
 
     def save(self, filename):
