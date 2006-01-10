@@ -1,3 +1,20 @@
+2006-01-10  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.override: Components.{required,provided} basic
+	implementation
+	* gaphor/diagram/dependency.py: determine dependency type before
+	connecting items
+	* gaphor/ui/diagramactions.py: added zoom tooltips
+	* gaphor/diagram/node.py: use proper UML element for node item
+	* gaphor/ui/mainactions.py, gaphor/ui/mainwindow.py,
+	gaphor/ui/abstractwindow.py: ask for permission to quit gaphor
+	* 
+
+2006-01-09  wrobell <wrobell@pld-linux.org>
+	* gaphor/plugin.py: ask user if existing file can be overwritten during
+	diagram export
+	* gaphor/diagram/nameditem.py, gaphor/diagram/activitynodes.py: flow
+	final and activity final nodes can have names, now
+
 2006-01-03  wrobell <wrobell@pld-linux.org>
 	* data/plugins/pdfexport/__init__.py,
 	data/plugins/pdfexport/plugin.xml: PDF export plugin created
