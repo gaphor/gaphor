@@ -55,4 +55,4 @@ class NodeItem(ClassifierItem):
         yield self._back
         yield self._diag_line
 
-initialize_item(NodeItem, UML.Component)
+initialize_item(NodeItem, UML.Node)
