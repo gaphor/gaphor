@@ -179,7 +179,6 @@ class AbstractWindow(object):
             #handle_box.show()
             toolbar.show()
 
-        self.__destroy_id = window.connect('delete-event', self._on_window_delete)
         self.__destroy_id = window.connect('destroy', self._on_window_destroy)
         # On focus in/out a log handler is added to the logger.
         #window.connect('focus_in_event', self._on_window_focus_in_event)

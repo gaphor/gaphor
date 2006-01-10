@@ -300,6 +300,8 @@ class MainWindow(AbstractWindow):
                                size=window_size,
                                contents=paned)
 
+        self.window.connect('delete-event', self._on_window_delete)
+
         vbox.set_border_width(3)
 
         toolbox = Toolbox(self.menu_factory, self.toolbox)
