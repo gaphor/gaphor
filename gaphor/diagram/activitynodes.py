@@ -36,19 +36,38 @@ class ActivityNodeItem(ElementItem):
             h.props.movable = False
 
 
-
-class InitialNodeItem(ActivityNodeItem, SideNamedItem):
+class NamedNodeItem(ActivityNodeItem, SideNamedItem):
     """
-    Representation of initial node. Initial node has name which is put near
-    top-left side of node.
+    Abstract class which represents node item with name.
     """
 
     __metaclass__ = Groupable
-    RADIUS = 10
 
     def __init__(self, id=None):
         ActivityNodeItem.__init__(self, id)
         SideNamedItem.__init__(self)
+
+
+    def on_update(self, affine):
+        ActivityNodeItem.on_update(self, affine)
+        SideNamedItem.on_update(self, affine)
+
+
+    def on_subject_notify(self, pspec, notifiers = ()):
+        ActivityNodeItem.on_subject_notify(self, pspec, notifiers)
+        self._name.subject = self.subject
+        self.request_update()
+
+
+class InitialNodeItem(NamedNodeItem):
+    """
+    Representation of initial node. Initial node has name which is put near
+    top-left side of node.
+    """
+    RADIUS = 10
+
+    def __init__(self, id = None):
+        NamedNodeItem.__init__(self, id)
         r = self.RADIUS
         d = r * 2
         self._circle = diacanvas.shape.Ellipse()
@@ -58,32 +77,21 @@ class InitialNodeItem(ActivityNodeItem, SideNamedItem):
         self._circle.set_fill_color(diacanvas.color(0, 0, 0, 255))
         self.set(width=d, height=d)
 
-
-    def on_subject_notify(self, pspec, notifiers = ()):
-        ActivityNodeItem.on_subject_notify(self, pspec, notifiers)
-        self._name.subject = self.subject
-        self.request_update()
-
-
-    def on_update(self, affine):
-        ActivityFinalNodeItem.on_update(self, affine)
-        SideNamedItem.on_update(self, affine)
-
-
     def on_shape_iter(self):
         return iter([self._circle])
 
 
 
-class ActivityFinalNodeItem(ActivityNodeItem):
+class ActivityFinalNodeItem(NamedNodeItem):
     """
-    Representation of activity final node.
+    Representation of activity final node. Activity final node has name
+    which is put near right-bottom side of node.
     """
     RADIUS_1 = 10
     RADIUS_2 = 15
 
-    def __init__(self, id=None):
-        ActivityNodeItem.__init__(self, id)
+    def __init__(self, id = None):
+        NamedNodeItem.__init__(self, id)
         r = self.RADIUS_2
         d = self.RADIUS_1 * 2
         self._inner = diacanvas.shape.Ellipse()
@@ -98,20 +106,24 @@ class ActivityFinalNodeItem(ActivityNodeItem):
         self._outer.set_line_width(2)
         self._outer.set_color(diacanvas.color(0, 0, 0, 255))
 
+        # set name side
+        self.side = self.SIDE_RIGHT + self.SIDE_BOTTOM
+
         self.set(width=d+2, height=d+2)
 
     def on_shape_iter(self):
         return iter([self._outer, self._inner])
 
 
-class FlowFinalNodeItem(ActivityNodeItem):
+class FlowFinalNodeItem(NamedNodeItem):
     """
-    Representation of flow final node.
+    Representation of flow final node. Flow final node has name which is
+    put near right-bottom side of node.
     """
     RADIUS = 10
 
     def __init__(self, id=None):
-        ActivityNodeItem.__init__(self, id)
+        NamedNodeItem.__init__(self, id)
         r = self.RADIUS
         d = r * 2
         self._circle = diacanvas.shape.Ellipse()
@@ -127,6 +139,9 @@ class FlowFinalNodeItem(ActivityNodeItem):
         dr = (1 - math.sin(math.pi / 4)) * r
         self._line1 = get_line((dr, dr), (d - dr, d - dr))
         self._line2 = get_line((dr, d - dr), (d - dr, dr))
+
+        # set name side
+        self.side = self.SIDE_RIGHT + self.SIDE_BOTTOM
 
         self.set(width=d, height=d)
 

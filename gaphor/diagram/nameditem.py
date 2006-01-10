@@ -330,26 +330,60 @@ class SimpleNamedItem(NamedItem):
 
 class SideNamedItem(GroupBase):
     """
-    Base class for named elements, which name should be over, below or on
-    on of the sides of an element.
+    Base class for named items, which name should be over, below or on
+    one of the sides of an element.
+
+    Side property of named element determines where name should be put,
+    i.e. left-top side of an item.
     """
     MARGIN_X = 10
     MARGIN_Y = 10
+    SIDES = (SIDE_TOP, SIDE_BOTTOM, SIDE_LEFT, SIDE_RIGHT) = ('t', 'b', 'l', 'r')
 
     def __init__(self):
         GroupBase.__init__(self)
 
         self._name = TextElement('name')
         self.add(self._name)
+        self.side = self.SIDE_TOP + self.SIDE_LEFT
+
+    def set_side(self, side):
+        if len(side) > 2:
+            raise ValueError('side should contain max two values')
+
+        assert len(side) < 3
+
+        if len(side) == 1 and side[0] not in self.SIDES \
+                or len(side) == 2 and side[1] not in self.SIDES:
+            raise ValueError('side value should contain only one of values %s' % (self.SIDES, ))
+
+        self._side = side
+
+
+    side = property(lambda self: self._side, set_side)
 
 
     def on_update(self, affine):
         w, h = self._name.get_size()
-        self._name.update_label(-w, -h)
-        GroupBase.on_update(self, affine)
 
+        side = self.side
+        if self.SIDE_LEFT in side:
+            x = -w
+        elif self.SIDE_RIGHT in side:
+            x = self.width
+        else:
+            x = (self.width - w) / 2
+
+        if self.SIDE_TOP in side:
+            y = -h
+        elif self.SIDE_BOTTOM in side:
+            y = self.height
+        else:
+            y = (self.height - h) / 2
+            
+        self._name.update_label(x, y)
+        GroupBase.on_update(self, affine)
 
 
 initialize_item(TextElement)
 initialize_item(NamedItem)
-
