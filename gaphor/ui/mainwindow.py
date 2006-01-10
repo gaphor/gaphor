@@ -215,6 +215,18 @@ class MainWindow(AbstractWindow):
         tab = self.get_current_diagram_tab()
         return tab and tab.get_view()
 
+    def ask_to_close(self):
+        """
+        Ask user to close window.
+        """
+        dialog = gtk.MessageDialog(self.get_window(),
+            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+            gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
+            _("Quit Gaphor?"))
+        answer = dialog.run()
+        dialog.destroy()
+        return answer == gtk.RESPONSE_YES
+
     def show_diagram(self, diagram):
         """Show a Diagram element in a new tab. If a tab is already open,
         show that one instead.
@@ -401,6 +413,9 @@ class MainWindow(AbstractWindow):
         AbstractWindow._on_window_destroy(self, window)
         del self.model
         del self.view
+
+    def _on_window_delete(self, window = None, event = None):
+        return not self.ask_to_close()
 
     def on_view_event(self, view, event):
         """Show a popup menu if button3 was pressed on the TreeView.

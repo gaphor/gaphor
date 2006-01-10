@@ -315,10 +315,11 @@ class QuitAction(Action):
         self._window = window
 
     def execute(self):
-        log.debug('Quiting gaphor...')
-        self._window.close()
-        del self._window
-        gc.collect()
+        if self._window.ask_to_close():
+            log.debug('Quiting gaphor...')
+            self._window.close()
+            del self._window
+            gc.collect()
 
 register_action(QuitAction)
 
@@ -419,7 +420,7 @@ class AboutAction(Action):
         #add_label('<span size="xx-large" weight="bold">Gaphor</span>')
         add_label('<span weight="bold">version %s</span>' % version)
         add_label('<span variant="smallcaps">UML Modeling tool for GNOME</span>', 8, 8)
-        add_label('<span size="small">Copyright (c) 2001-2005 Arjan J. Molenaar</span>', 8, 8)
+        add_label('<span size="small">Copyright (c) 2001-2006 Arjan J. Molenaar</span>', 8, 8)
         #vbox.pack_start(gtk.HSeparator())
         notebook.append_page(tab_vbox, gtk.Label('About'))
 
