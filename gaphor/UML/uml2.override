@@ -177,4 +177,28 @@ def extension_metaclass(self):
 
 Extenstion.metaclass = property(extension_metaclass, doc=extension_metaclass.__doc__)
 del extension_metaclass
+%%
+override Component.provided
+def component_provided(self):
+    interfaces = [ impl.contract[0] for impl in self.implementation \
+        if impl.isKindOf(Implementation) ] # should we process with this condition?
+    return interfaces
+
+Component.provided = property(component_provided, doc = \
+    """
+    Interfaces provided to component environment. 
+    """)
+del component_provided
+%%
+override Component.required
+def component_required(self):
+    interfaces = [ dep.supplier[0] for dep in self.clientDependency \
+        if dep.isKindOf(Usage) and dep.supplier[0].isKindOf(Interface) ]
+    return interfaces
+
+Component.required = property(component_required, doc = \
+    """
+    Interfaces required by component. 
+    """)
+del component_required
 
