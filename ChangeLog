@@ -7,7 +7,11 @@
 	* gaphor/diagram/node.py: use proper UML element for node item
 	* gaphor/ui/mainactions.py, gaphor/ui/mainwindow.py,
 	gaphor/ui/abstractwindow.py: ask for permission to quit gaphor
-	* 
+	* gaphor/diagram/connector.py, gaphor/diagram/interface.py
+	gaphor/diagram/interfaceicon.py gaphor/diagram/itemactions.py:
+	connect assembly connector end items to components and allow to choose
+	provided/required interfaces from menu; this way we kill dotted
+	interface icon and speed up component diagram creation
 
 2006-01-09  wrobell <wrobell@pld-linux.org>
 	* gaphor/plugin.py: ask user if existing file can be overwritten during
