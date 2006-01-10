@@ -154,44 +154,6 @@ class AssembledInterfaceIcon(object):
 
 
 
-class DotInterfaceIcon(object):
-    """
-    Interface icon as an dot. Useful when connected to assembly connector.
-    """
-    def __init__(self, parent):
-        self.parent = parent
-        self._dot = diacanvas.shape.Path()
-        self._dot.set_line_width(2.0)
-        self._dot.line(((0, 0), (0, 0)))
-        self.width = 1
-        self.height = 1
-
-
-    def update_icon(self):
-        pass
-
-
-    def on_shape_iter(self):
-        return iter((self._dot, ))
-
-
-    def get_required_pos_w(self):
-        return self.parent.affine[-2:]
-
-
-    def get_provided_pos_w(self):
-        return self.parent.affine[-2:]
-
-
-    def get_required_pos_i(self):
-        return 0, 0
-
-
-    def get_provided_pos_i(self):
-        return 0, 0
-
-
-
 def make_arc(radius, edges, q=0):
     """Create a tupple of edges points, which represent a 90 degrees
     arc in the first quadrant

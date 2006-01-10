@@ -78,7 +78,8 @@ from action import ActionItem
 from objectnode import ObjectNodeItem
 from flow import FlowItem, CFlowItemA, CFlowItemB
 from component import ComponentItem
-from connector import ConnectorItem, AssemblyConnectorItem, ConnectorEndItem
+from connector import ConnectorItem, AssemblyConnectorItem, \
+    ConnectorEndItem, ProvidedConnectorEndItem, RequiredConnectorEndItem
 from artifact import ArtifactItem
 from node import NodeItem
 from interaction import InteractionItem

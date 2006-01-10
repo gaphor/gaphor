@@ -50,15 +50,19 @@ from gaphor.diagram import initialize_item
 from diagramline import DiagramLine
 from diagramitem import DiagramItem
 from elementitem import ElementItem
+from component import ComponentItem
 from util import create_connector_end
 from gaphor.diagram.interfaceicon import AssembledInterfaceIcon
 from gaphor.diagram.rotatable import SimpleRotation
+from gaphor.diagram import TextElement
 from gaphor.misc import uniqueid
 from gaphor.misc.meta import GObjectPropsMerge
+from gaphor.diagram.groupable import GroupBase, Groupable
 
-class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
+
+class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
     """
-    Connector end item.
+    Connector end item abstract class.
 
     Connector end item without subject is called free connector end item.
 
@@ -69,6 +73,7 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
     main point and it is not connected to any item, then it is moved to
     main point again.
     """
+    __metaclass__ = Groupable
     __gproperties__ = DiagramItem.__gproperties__
     __gsignals__ = DiagramItem.__gsignals__
 
@@ -76,8 +81,13 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
     disconnect = DiagramItem.disconnect
     notify = DiagramItem.notify
 
+    interface_actions = []
+#    popup_menu = interface_actions
+
     popup_menu = (
-        'EditDelete',
+        'DisconnectConnector',
+        'separator',
+        'Interface', interface_actions
     )
 
     def __init__(self, id = None, mpt = None):
@@ -88,6 +98,7 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
         """
         diacanvas.CanvasItem.__init__(self)
         DiagramItem.__init__(self, id)
+        GroupBase.__init__(self)
 
         self.set_flags(diacanvas.COMPOSITE)
 
@@ -101,6 +112,28 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
 
         self._line = diacanvas.shape.Path()
         self._line.set_line_width(2.0)
+
+        self._interface_name = TextElement('name')
+        self.add(self._interface_name)
+
+
+    def get_component(self):
+        if self._handle.connected_to:
+            return self._handle.connected_to.subject
+        return None
+
+
+    def get_popup_menu(self):
+        from itemactions import ApplyInterfaceAction, register_action
+        if self._handle.connected_to:
+            del self.interface_actions[:]
+            for interface in self.get_interfaces():
+                action = ApplyInterfaceAction(interface)
+                register_action(action, 'ItemFocus')
+                self.interface_actions.append(action.id)
+            return self.popup_menu
+        else:
+            return None
 
 
     def save(self, save_func):
@@ -165,8 +198,15 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
         """
         Draw line between main point and current position.
         """
-        # move handle to main point if it is connected
-        # to no item
+        def get_pos_centered(p1, p2, width, height):
+            x = p1[0] > p2[0] and width + 2 or -2
+            x = (p1[0] + p2[0]) / 2.0 - x
+            y = p1[1] <= p2[1] and height or 0
+            y = (p1[1] + p2[1]) / 2.0 - y
+            return x, y
+
+        # move handle to main point if there is no component
+        # associated with this connector end item
         if not self.subject and not self.is_focused():
             self._handle.set_pos_i(self._mpt[0], self._mpt[1])
 
@@ -178,10 +218,38 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
         pos = x, y
         self._line.line((self._mpt, pos))
 
+        w, h = self._interface_name.get_size()
+        x, y = get_pos_centered(self._mpt, pos, w, h)
+        self._interface_name.update_label(x, y)
+
         self.set_bounds([min(self._mpt[0], pos[0]),
             min(self._mpt[1], pos[1]),
             max(self._mpt[0], pos[0]),
             max(self._mpt[1], pos[1])])
+
+        GroupBase.on_update(self, affine)
+
+
+    def on_point(self, x, y):
+        """Given a point (x, y) return the distance to the canvas item.
+        """
+        p = (x, y)
+
+        p1 = self._mpt
+        p2 = self._handle.get_pos_i()
+
+        # distance between main point and handle position
+        delta = diacanvas.geometry.distance_point_point(p1, p2)
+
+        # distance between main point and mouse cursor
+        dp = diacanvas.geometry.distance_point_point(p1, p)
+
+        # distance between line p1, p2 and mouse cursor
+        dl, dummy = diacanvas.geometry.distance_line_point(p1, p2, p, 1.0, 0) #diacanvas.shape.CAP_ROUND)
+
+        if dp < delta and dl < 10: 
+            dp = 0.0  # focus connector end item
+        return min(delta, dp)
 
 
     def on_subject_notify(self, pspec, notifiers=()):
@@ -192,8 +260,20 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
         DiagramItem.on_subject_notify(self, pspec, notifiers)
         if self.subject and not self._id:
             self._id = uniqueid.generate_id()
+
+        if self.subject:
+            self._interface_name.subject = self.subject
+
+            # kill connector end item if interface is no longer provided
+            # or required by component
+            component = self.get_component()
+            component.connect('clientDependency', self.on_component_change)
+
         else:
+            self._interface_name.subject = None
             self._id = None
+
+        self.request_update()
 
 
     def on_shape_iter(self):
@@ -205,35 +285,20 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
 
     def allow_connect_handle(self, handle, item):
         """
-        Allow to connect to interfaces only. Do not allow to connect to the
-        same interface item twice (still it should be possible to connect
-        to the same interface several times).
+        Allow to connect to components only and if they require or provide
+        at least one interface.
         """
-        allow_connection = isinstance(item.subject, UML.Interface)
-
-        if allow_connection:
-            # check if this interface item is already connected
-            # with other connector end item
-            for c in self.parent._ends:
-                # disalow connection if other connector item end is alread
-                # connected to interface
-                if c != self and c._handle.connected_to == item:
-                    allow_connection = False
-                    break
-        return allow_connection
+        return isinstance(item, ComponentItem) \
+            and len(self.get_interfaces(item.subject)) > 0
 
 
     def confirm_connect_handle(self, handle):
         """
-        Create new connector end between connectable element and connector.
+        Set first inteface as subject of item.
         """
         if not self.subject:
-            item = handle.connected_to
-
-            connector = self.parent.subject
-            end = create_connector_end(connector, item.subject)
-            self.set_subject(end)
-            item.request_update()
+            assert len(self.get_interfaces()) > 0
+            self.set_subject(self.get_interfaces()[0])
 
 
     def confirm_disconnect_handle(self, handle, item):
@@ -248,6 +313,38 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem):
         It is always allowed to disconnect handle.
         """
         return True
+
+
+    def on_component_change(self, component, data):
+        """
+        Kill connector end item if interface is no longer in component
+        environment.
+        """
+        if self.subject:
+            if self.subject not in self.get_interfaces():
+                self.unlink()
+
+
+
+class ProvidedConnectorEndItem(ConnectorEndItem):
+    def get_interfaces(self, component = None):
+        """
+        Get component provided interfaces.
+        """
+        if not component:
+            component = self.get_component()
+        return component.provided
+
+
+
+class RequiredConnectorEndItem(ConnectorEndItem):
+    def get_interfaces(self, component = None):
+        """
+        Get component required interfaces.
+        """
+        if not component:
+            component = self.get_component()
+        return component.required
 
 
 
@@ -354,13 +451,13 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
         self.request_update()
 
 
-    def create_end(self, mpt):
+    def create_end(self, cls, mpt):
         """
         Create new connector end item.
 
         Connector end item is added using canvas groupable interface.
         """
-        c = ConnectorEndItem(mpt = mpt)
+        c = cls(mpt = mpt)
         self.add(c)
         return c
 
@@ -370,7 +467,7 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
         Update assemble connector and its connector end items.
 
         Maintain also free connector end items, so there is always two of
-        them. One per main point kind (provided/required).
+        them, one per main point kind (provided/required).
         """
         ElementItem.on_update(self, affine)
 
@@ -395,16 +492,16 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
             self.set_bounds(diacanvas.geometry.rectangle_add_point(self.get_bounds(),
                 pos))
 
-            # store free conector end items;
-            # checking for connector end item id is important during load
-            if not c.subject and not c._id:
+            # store free conector end items:
+            # - checking for id and subject is important during diagram load
+            if not c.id and not c.subject:
                 free_ends[c._mpt].add(c)
 
-        self.update_free_ends(free_ends, pmpt, affine)
-        self.update_free_ends(free_ends, rmpt, affine)
+        self.update_free_ends(free_ends, ProvidedConnectorEndItem, pmpt, affine)
+        self.update_free_ends(free_ends, RequiredConnectorEndItem, rmpt, affine)
 
 
-    def update_free_ends(self, free_ends, mpt, affine):
+    def update_free_ends(self, free_ends, cls, mpt, affine):
         """
         There should only one free connector end item for given main point.
 
@@ -437,7 +534,7 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
 
         elif count == 0:
             # if there is no free connector end items, then create one
-            c = self.create_end(mpt)
+            c = self.create_end(cls, mpt)
             self.update_child(c, affine)
 
 

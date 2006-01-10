@@ -14,9 +14,8 @@ from gaphor import UML
 from gaphor.diagram import initialize_item
 from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.implementation import ImplementationItem
-from gaphor.diagram.connector import ConnectorEndItem
 from gaphor.diagram.interfaceicon import AssembledInterfaceIcon, \
-    ProvidedInterfaceIcon, RequiredInterfaceIcon, DotInterfaceIcon
+    ProvidedInterfaceIcon, RequiredInterfaceIcon
 from gaphor.diagram.rotatable import SimpleRotation
 from nameditem import NamedItem
 from klass import ClassItem
@@ -40,7 +39,6 @@ class InterfaceItem(ClassItem, SimpleRotation):
         ClassItem.__init__(self, id)
         SimpleRotation.__init__(self, id)
 
-        self._dicon = DotInterfaceIcon(self)
         self._ricon = RequiredInterfaceIcon(self)
         self._aicon = AssembledInterfaceIcon(self)
         self._picon = ProvidedInterfaceIcon(self)
@@ -100,20 +98,14 @@ class InterfaceItem(ClassItem, SimpleRotation):
         # assembled (wired) or dotted (minimal) look.
         usages = 0
         implementations = 0
-        connectors = 0
         for h in self.connected_handles:
             ci = h.owner
             if gives_required(ci): 
                 usages += 1
             elif gives_provided(ci):
                 implementations += 1
-            elif isinstance(ci, ConnectorEndItem):
-                connectors += 1
 
-        if connectors > 0:
-            # interface connected with assembly connector, todo: we need more specific condition
-            self._icon = self._dicon
-        elif usages > 0 and implementations == 0:
+        if usages > 0 and implementations == 0:
             self._icon = self._ricon
         elif usages > 0 and implementations > 0:
             self._icon = self._aicon
@@ -122,11 +114,6 @@ class InterfaceItem(ClassItem, SimpleRotation):
             self._icon = self._picon
 
         self._icon.update_icon()
-
-        width = self._icon.width
-        height = self._icon.height
-
-        self.set(width = width, height = height)
 
 
     def on_update(self, affine):
@@ -137,20 +124,21 @@ class InterfaceItem(ClassItem, SimpleRotation):
         # class item on_update method must be run first
         #
 
-        width = self._icon.width
-        height = self._icon.height
-
         # update connected handles
         if self.is_folded():
+            width = self._icon.width
+            height = self._icon.height
+
             for h in self.connected_handles:
                 if gives_provided(h.owner):
                     x, y = self._icon.get_provided_pos_w()
                     h.set_pos_w(x, y)
-                elif gives_required(h.owner) or isinstance(h.owner, ConnectorEndItem):
+                    self.request_update()
+                elif gives_required(h.owner):
                     x, y = self._icon.get_required_pos_w()
                     h.set_pos_w(x, y)
+                    self.request_update()
 
-        if self.is_folded():
             # center interface name
             name_width, name_height = self.get_name_size()
             xn = (width - name_width) / 2

@@ -21,7 +21,7 @@ from gaphor.diagram.attribute import AttributeItem
 from gaphor.diagram.operation import OperationItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.interface import InterfaceItem
-from gaphor.diagram.connector import AssemblyConnectorItem
+from gaphor.diagram.connector import AssemblyConnectorItem, ConnectorEndItem
 from gaphor.diagram.association import AssociationItem, AssociationEnd
 from gaphor.diagram import ClassifierItem, ImplementationItem, \
      GeneralizationItem, DependencyItem
@@ -33,7 +33,7 @@ class NoFocusItemError(GaphorError):
 
 
 def get_parent_focus_item(window):
-    """Get the outer most focus item (the obe that's not a composite)."""
+    """Get the outer most focus item (the one that's not a composite)."""
     view = window.get_current_diagram_view()
     if view:
         fi = view.focus_item
@@ -42,6 +42,17 @@ def get_parent_focus_item(window):
             while (item.flags & diacanvas.COMPOSITE) != 0:
                 item = item.parent
             return item
+    raise NoFocusItemError, 'No item has focus.'
+
+def get_focused_item(window):
+    """
+    Get selected item.
+    """
+    view = window.get_current_diagram_view()
+    if view:
+        fi = view.focus_item
+        if fi:
+            return fi.item
     raise NoFocusItemError, 'No item has focus.'
 
 def get_pointer(view):
@@ -1303,3 +1314,58 @@ class MergeFlowAction(Action):
 
 weave_method(MergeFlowAction.execute, UndoTransactionAspect)
 register_action(MergeFlowAction, 'ItemFocus')
+
+
+class DisconnectConnector(Action):
+    id = 'DisconnectConnector'
+    label = '_Disconnect Connector'
+    tooltip = 'Disconnect connected item'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_focused_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            self.active = isinstance(item, ConnectorEndItem)
+
+    def execute(self):
+        item = get_focused_item(self._window)
+        assembly = item.parent
+        item.unlink()
+        assembly.request_update()
+
+weave_method(DisconnectConnector.execute, UndoTransactionAspect)
+register_action(DisconnectConnector, 'ItemFocus')
+
+class ApplyInterfaceAction(RadioAction, ObjectAction):
+
+    def __init__(self, interface):
+        RadioAction.__init__(self)
+        ObjectAction.__init__(self, id = 'ApplyInterface' + str(interface.name),
+            label = str(interface.name))
+        self.interface = interface
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_focused_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, ConnectorEndItem):
+                self.active = (self.interface == item.subject)
+
+    def execute(self):
+        item = get_focused_item(self._window)
+        if self.active:
+            item.subject = self.interface
+        else:
+            item.set_subject(None)
+
+weave_method(ApplyInterfaceAction.execute, UndoTransactionAspect)
