@@ -174,6 +174,14 @@ class DependencyItem(RelationshipItem):
         self._set_line_style(c1)
 
         c2 = self.handles[-1].connected_to
+
+        if self.auto_dependency:
+            # Determine the dependency_type if only one handle is connected
+            if c1 and isinstance(c1.subject, UML.Interface):
+                self.set_dependency_type(UML.Usage)
+            else:
+                self.set_dependency_type(UML.Dependency)
+
         if c1 and c2:
             s1 = c1.subject
             s2 = c2.subject
@@ -183,14 +191,6 @@ class DependencyItem(RelationshipItem):
                 relation.supplier = s1
                 relation.client = s2
             self.subject = relation
-
-        if self.auto_dependency:
-            # Determine the dependency_type if only one handle is connected
-            #from interface import InterfaceItem
-            if c1 and isinstance(c1.subject, UML.Interface):
-                self.set_dependency_type(UML.Usage)
-            else:
-                self.set_dependency_type(UML.Dependency)
 
     def confirm_disconnect_handle(self, handle, was_connected_to):
         """See RelationshipItem.confirm_disconnect_handle().
