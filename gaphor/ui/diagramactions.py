@@ -383,6 +383,7 @@ class ZoomInAction(Action):
     label = 'Zoom _In'
     accel = 'C-+'
     stock_id = 'gtk-zoom-in'
+    tooltip = 'Zoom in'
 
     def init(self, window):
         self._window = window
@@ -403,6 +404,7 @@ class ZoomOutAction(Action):
     label = 'Zoom _Out'
     accel = 'C--'
     stock_id = 'gtk-zoom-out'
+    tooltip = 'Zoom out'
 
     def init(self, window):
         self._window = window
@@ -422,6 +424,7 @@ class Zoom100Action(Action):
     id = 'ViewZoom100'
     label = '_Zoom 100%'
     stock_id = 'gtk-zoom-100'
+    tooltip = 'Set zoom 1:1'
 
     def init(self, window):
         self._window = window
