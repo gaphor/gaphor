@@ -1,16 +1,4 @@
 ======= 0.8.0 ========
-- <<use>> dependency is incorrectly created as normal dependency
-  - crearte component
-  - create interface
-  - create dependency but do not connect it to anything
-  - connect tail of dependency to component
-  - connect head of dependency to interface
-dependency should be usage not dependency; on diagram it is rendered
-as <<use>> but it is normal dependency and that is incorrect
-
-!!!should be fixed now by moving dependency detection code before creating
-relation in DependencyItem.confirm_connect_handle
-
 - load uml2.gaphor and open other file or split flows and undo/redo.
   exception is raised. seems to be related to diagram item unlinking.
 
