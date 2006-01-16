@@ -1,3 +1,12 @@
+2006-01-16  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/commentline.py: allow_connect_handle does not throw an
+	exception in some cases, now
+	* gaphor/diagram/interface.py, gaphor/diagram/interfaceicon.py: use
+	on_glue method to determine to which point of interface item handles of
+	usage and implementation lines should be connected to in case of
+	interface icon; interface icon provided and required points are always
+	the same for all types of icons
+
 2006-01-10  wrobell <wrobell@pld-linux.org>
 	* gaphor/UML/uml2.override: Components.{required,provided} basic
 	implementation
