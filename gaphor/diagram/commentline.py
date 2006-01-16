@@ -45,7 +45,7 @@ class CommentLineItem(DiagramLine):
         return 0
 
     def on_disconnect_handle(self, handle):
-        "No connections are allows to the CommentLine."
+        "No connections are allowed to the CommentLine."
         return 0
 
     # Gaphor Connection Protocol
@@ -56,9 +56,6 @@ class CommentLineItem(DiagramLine):
         h = self.handles
         c1 = h[0].connected_to
         c2 = h[-1].connected_to
-        # OK if both sides are not connected yet.
-        if not c1 and not c2:
-            return 1
         
         if handle is h[0]:
             c1 = connecting_to
@@ -67,17 +64,15 @@ class CommentLineItem(DiagramLine):
         else:
             raise AttributeError, 'handle should be the first or the last handle of the CommentLine'
 
-        # We should not connect if both ends will become a Comment
-        if isinstance(c1.subject, UML.Comment) and \
-                isinstance(c2.subject, UML.Comment):
-            return False
-        # Also do not connect if both ends are non-Comments
-        if not isinstance(c1.subject, UML.Comment) and \
-                not isinstance(c2.subject, UML.Comment):
-            return False
+        # ok if after connection both sides will be not connected
+        if not c1 or not c2:
+            return True
 
-        # Allow connection
-        return True
+        # We should not connect if both ends will become a Comment.
+        # Also do not connect if both ends are non-Comments.
+        return isinstance(c1.subject, UML.Comment) \
+            ^ isinstance(c2.subject, UML.Comment)
+
 
     def confirm_connect_handle (self, handle):
         """See DiagramLine.confirm_connect_handle().
