@@ -71,10 +71,28 @@ class InterfaceItem(ClassItem, SimpleRotation):
             # Do not allow resizing of the node
             for h in self.handles:
                 h.props.movable = False
+
+            # update connected handles
+            self.update_handle_pos()
         else:
             # Do allow resizing of the node
             for h in self.handles:
                 h.props.movable = True
+
+
+    def update_handle_pos(self):
+        """
+        Update connected lines position.
+        """
+        for h in self.connected_handles:
+            if gives_provided(h):
+                f = self._icon.get_provided_pos_w
+            elif gives_required(h):
+                f = self._icon.get_required_pos_w
+            if f:
+                x, y = f()
+                h.set_pos_w(x, y)
+                self.connect_handle(h)
 
 
     def get_popup_menu(self):
@@ -94,15 +112,16 @@ class InterfaceItem(ClassItem, SimpleRotation):
 
  
     def update_icon(self, affine):
-        # Figure out if this interface represents a required, provided,
-        # assembled (wired) or dotted (minimal) look.
+        """
+        Figure out if this interface represents a required, provided,
+        assembled (wired) or dotted (minimal) look.
+        """
         usages = 0
         implementations = 0
         for h in self.connected_handles:
-            ci = h.owner
-            if gives_required(ci): 
+            if gives_required(h):
                 usages += 1
-            elif gives_provided(ci):
+            elif gives_provided(h):
                 implementations += 1
 
         if usages > 0 and implementations == 0:
@@ -114,6 +133,26 @@ class InterfaceItem(ClassItem, SimpleRotation):
             self._icon = self._picon
 
         self._icon.update_icon()
+
+
+    def on_glue(self, handle, wx, wy):
+        """
+        Allow connect only to provided/required points in case of interface
+        icon.
+        """
+        d, p1 = ClassItem.on_glue(self, handle, wx, wy)
+        if self.drawing_style == self.DRAW_ICON:
+            if d < 15:
+                f = None
+                if gives_provided(handle):
+                    f = self._icon.get_provided_pos_w
+                elif gives_required(handle):
+                    f = self._icon.get_required_pos_w
+
+                if f:
+                    p2 = f()
+                    p1 = p2
+        return d, p1
 
 
     def on_update(self, affine):
@@ -128,16 +167,6 @@ class InterfaceItem(ClassItem, SimpleRotation):
         if self.is_folded():
             width = self._icon.width
             height = self._icon.height
-
-            for h in self.connected_handles:
-                if gives_provided(h.owner):
-                    x, y = self._icon.get_provided_pos_w()
-                    h.set_pos_w(x, y)
-                    self.request_update()
-                elif gives_required(h.owner):
-                    x, y = self._icon.get_required_pos_w()
-                    h.set_pos_w(x, y)
-                    self.request_update()
 
             # center interface name
             name_width, name_height = self.get_name_size()
@@ -164,36 +193,49 @@ class InterfaceItem(ClassItem, SimpleRotation):
             return it
 
 
-    def on_connect_handle(self, handle):
-        self.request_update()
-        return ClassItem.on_connect_handle(self, handle)
+    def rotate(self, step = 1):
+        """
+        Update connected handle positions after rotation.
+        """
+        SimpleRotation.rotate(self, step)
+        self.update_handle_pos()
 
 
     def on_disconnect_handle(self, handle):
+        """
+        Request update on disconnect handle, so icon is updated after i.e.
+        usage dependency disconnection.
+        """
         self.request_update()
         return ClassItem.on_disconnect_handle(self, handle)
 
-    def rotate(self, step = 1):
-        SimpleRotation.rotate(self, step)
-        self.request_update()
 
 
-
-def gives_provided(item):
+def gives_provided(handle):
     """
     Check if an item connected to an interface changes semantics of this
     interface to be provided.
+
+    handle - handle of an item
     """
-    return isinstance(item, ImplementationItem)
+    return isinstance(handle.owner, ImplementationItem)
 
 
-def gives_required(item):
+def gives_required(handle):
     """
     Check if an item connected to an interface changes semantics of this
     interface to be required.
+
+    handle - handle of an item
     """
-    return isinstance(item, DependencyItem) \
-        and item.dependency_type is UML.Usage
+    item = handle.owner
+    # check for dependency item, interfaces is required if
+    # - connecting handle is head one
+    # - is in auto dependency
+    # - if is not in auto dependency then its UML type is Usage
+    return isinstance(item, DependencyItem) and item.handles[0] == handle \
+        and (not item.auto_dependency and item.dependency_type is UML.Usage
+            or item.auto_dependency)
 
 
 initialize_item(InterfaceItem, UML.Interface)

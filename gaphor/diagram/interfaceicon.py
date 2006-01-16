@@ -12,14 +12,48 @@ import math
 import diacanvas
 from gaphor.diagram import rotatable
 
-class InterfaceIconBase(object):
+class Base(object):
     """
-    Basic class for interface icons like::
-        - provided interface
-        - required interface
+    Basic class for all interface icons. It provides
+    - handles of parent item
+    - direction of an icon
+    - methods to get positions of points, where items (like Implementation
+      and Usage) should connect to
     """
+    handles = property(lambda self: self.parent.handles)
+
+    dir = property(lambda self: self.parent.props.dir)
+
     def __init__(self, parent):
         self.parent = parent
+
+    def get_provided_pos_w(self):
+        return self.handles[rotatable.dir2dh[self.dir]].get_pos_w()
+
+
+    def get_required_pos_w(self):
+        dir = rotatable.dirside[self.dir]
+        return self.handles[rotatable.dir2dh[dir]].get_pos_w()
+
+
+    def get_provided_pos_i(self):
+        return self.handles[rotatable.dir2dh[self.dir]].get_pos_i()
+
+
+    def get_required_pos_i(self):
+        dir = rotatable.dirside[self.dir]
+        return self.handles[rotatable.dir2dh[dir]].get_pos_i()
+
+
+
+class PRBase(Base):
+    """
+    Basic class for interface icons like::
+    - provided interface
+    - required interface
+    """
+    def __init__(self, parent):
+        Base.__init__(self, parent)
         self.show_bar = True
 
         self._bar = diacanvas.shape.Path()
@@ -31,11 +65,8 @@ class InterfaceIconBase(object):
         self.width = self.height = (self.RADIUS + self.BAR_WIDTH) * 2
 
 
-    handles = property(lambda self: self.parent.handles)
-
-
     def update_icon(self):
-        dir = self.dir
+        dir = self.get_draw_dir()
 
         dh = self.handles[rotatable.dir2dh[dir]]
         p1 = dh.get_pos_i()
@@ -49,24 +80,6 @@ class InterfaceIconBase(object):
         self.draw_circle()
 
 
-    def get_provided_pos_w(self):
-        dir = rotatable.dirside[self.dir]
-        return self.handles[rotatable.dir2dh[self.dir]].get_pos_w()
-
-
-    def get_required_pos_w(self):
-        return self.handles[rotatable.dir2dh[self.dir]].get_pos_w()
-
-
-    def get_provided_pos_i(self):
-        dir = rotatable.dirside[self.dir]
-        return self.handles[rotatable.dir2dh[self.dir]].get_pos_i()
-
-
-    def get_required_pos_i(self):
-        return self.handles[rotatable.dir2dh[self.dir]].get_pos_i()
-
-
     def on_shape_iter(self):
         if self.show_bar:
             yield self._bar
@@ -74,15 +87,13 @@ class InterfaceIconBase(object):
 
 
 
-class ProvidedInterfaceIcon(InterfaceIconBase):
+class ProvidedInterfaceIcon(PRBase):
     """
     Provided interface icon.
     """
 
     RADIUS = 10
     BAR_WIDTH = 8
-
-    dir = property(lambda self: self.parent.props.dir)
 
     def get_circle(self):
         return diacanvas.shape.Ellipse()
@@ -93,9 +104,12 @@ class ProvidedInterfaceIcon(InterfaceIconBase):
         d = 2 * self.RADIUS
         self._circle.ellipse((r, r), d, d)
 
+    
+    def get_draw_dir(self):
+        return self.dir
 
 
-class RequiredInterfaceIcon(InterfaceIconBase):
+class RequiredInterfaceIcon(PRBase):
     """
     Required interface icon.
     """
@@ -103,23 +117,28 @@ class RequiredInterfaceIcon(InterfaceIconBase):
     RADIUS = 14
     BAR_WIDTH = 4
 
-    dir = property(lambda self: rotatable.dirside[self.parent.props.dir])
+    #dir = property(lambda self: rotatable.dirside[self.parent.props.dir])
+    dir = property(lambda self: self.parent.props.dir)
 
     def get_circle(self): # todo: change to arc
         return diacanvas.shape.Path()
 
 
     def draw_circle(self):
-        self._circle.line(required_arcs[self.dir])
+        self._circle.line(required_arcs[self.get_draw_dir()])
+
+
+    def get_draw_dir(self):
+        return rotatable.dirside[self.dir]
 
 
 
-class AssembledInterfaceIcon(object):
+class AssembledInterfaceIcon(Base):
     """
     Assembled provided and required interface icons.
     """
     def __init__(self, parent):
-        self.parent = parent
+        Base.__init__(self, parent)
         self._provided = ProvidedInterfaceIcon(parent)
         self._required = RequiredInterfaceIcon(parent)
 
@@ -135,22 +154,6 @@ class AssembledInterfaceIcon(object):
     def on_shape_iter(self):
         return itertools.chain(self._provided.on_shape_iter(),
             self._required.on_shape_iter())
-
-
-    def get_provided_pos_w(self):
-        return self._provided.get_provided_pos_w()
-
-
-    def get_required_pos_w(self):
-        return self._required.get_required_pos_w()
-
-
-    def get_provided_pos_i(self):
-        return self._provided.get_provided_pos_i()
-
-
-    def get_required_pos_i(self):
-        return self._required.get_required_pos_i()
 
 
 
