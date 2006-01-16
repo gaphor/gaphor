@@ -1,10 +1,15 @@
 """
 Connectors and connector ends from Composite Structures and Components.
 
-Assembly connector (see Components in UML specs) is implemented with
-AssemblyConnectorItem class.  Connector class implements normal connector
-(see Composite Structures) and delegation connector (see Components).
+Actually only Assembly connector (see Components in UML specs) is
+implemented. This is done with AssemblyConnectorItem class.
+AssemblyConnectorItem uses ConnectorEndItem (see ProvidedConnectorEndItem
+and RequiredConnectorEndItem classes) instances to connect to components.
 
+Component should provide at least one interface so ProvidedConnectorEndItem
+can be connected to it. If there are more than one provided interfaces,
+then user can choose appropriate one from ProvidedConnectorEndItem object
+menu. Above also applies for required stuff.
 
 UML Specificatiom Issues
 ========================
@@ -72,6 +77,11 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
     put in its main point. If free connector end item is moved behind the
     main point and it is not connected to any item, then it is moved to
     main point again.
+
+    Deriving classes should implement get_interfaces method.
+
+    For non-abstract implementations see ProvidedConnectorEndItem and
+    RequiredConnectorEndItem classes.
     """
     __metaclass__ = Groupable
     __gproperties__ = DiagramItem.__gproperties__
@@ -118,12 +128,22 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
 
 
     def get_component(self):
+        """
+        Get component to which this connector end item is connected to or
+        None.
+        """
         if self._handle.connected_to:
             return self._handle.connected_to.subject
         return None
 
 
     def get_popup_menu(self):
+        """
+        Return pop up menu for connector end item, so an user can
+        - disconnect from component
+        - choose an interface, which assembly connector should be connected
+          to
+        """
         from itemactions import ApplyInterfaceAction, register_action
         if self._handle.connected_to:
             del self.interface_actions[:]
@@ -149,7 +169,7 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
     def postload(self):
         """
         Establish real connection between connector end item and connected
-        item.
+        item after loading diagram.
         """
         if hasattr(self, '_load_connected_to'):
             self._load_connected_to.connect_handle(self._handle)
@@ -231,7 +251,8 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
 
 
     def on_point(self, x, y):
-        """Given a point (x, y) return the distance to the canvas item.
+        """
+        Enable to focus connector end items.
         """
         p = (x, y)
 
@@ -294,7 +315,7 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
 
     def confirm_connect_handle(self, handle):
         """
-        Set first inteface as subject of item.
+        Set first interface as subject of item.
         """
         if not self.subject:
             assert len(self.get_interfaces()) > 0
@@ -327,6 +348,10 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
 
 
 class ProvidedConnectorEndItem(ConnectorEndItem):
+    """
+    Connector end item which allows to connect to components, which provide
+    interfaces.
+    """
     def get_interfaces(self, component = None):
         """
         Get component provided interfaces.
@@ -338,6 +363,10 @@ class ProvidedConnectorEndItem(ConnectorEndItem):
 
 
 class RequiredConnectorEndItem(ConnectorEndItem):
+    """
+    Connector end item which allows to connect to components, which require
+    interfaces.
+    """
     def get_interfaces(self, component = None):
         """
         Get component required interfaces.
@@ -464,7 +493,7 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
 
     def on_update(self, affine):
         """
-        Update assemble connector and its connector end items.
+        Update assembly connector and its connector end items.
 
         Maintain also free connector end items, so there is always two of
         them, one per main point kind (provided/required).
