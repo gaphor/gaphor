@@ -99,7 +99,7 @@ class DependencyItem(RelationshipItem):
         from interface import InterfaceItem
         dependency_type = self.dependency_type
         c1 = c1 or self.handles[0].connected_to
-        if c1 and self.dependency_type is UML.Usage and isinstance(c1, InterfaceItem) and c1.is_folded():
+        if c1 and dependency_type is UML.Usage and isinstance(c1, InterfaceItem) and c1.is_folded():
             if self.get_property('has_head'):
                 self.set(dash=None, has_head=0)
             self._stereotype.set_text('')
