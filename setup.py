@@ -75,7 +75,7 @@ class config_Gaphor(Command):
         #self.module_check('gnome')
         self.module_check('gnomecanvas')
         #self.module_check('gconf')
-        self.module_check('diacanvas', ('diacanvas_version', (0, 14, 0)))
+        self.module_check('diacanvas', ('diacanvas_version', (0, 14, 3)))
 
         print ''
         if self.config_failed:
@@ -210,8 +210,11 @@ class install_lib_Gaphor(install_lib, version_py):
                                    ('install_dir', 'install_data'))
 
     def run(self):
-        # Install a new version.py with install_data as data_dir:
-        self.generate_version(self.install_dir, self.install_data)
+        # install a new version.py with install_data as data_dir;
+        # get rid of install root directory
+        skip = len(self.get_finalized_command('install').root) - 1
+
+        self.generate_version(self.install_dir, self.install_data[skip:])
         install_lib.run(self)
 
 
