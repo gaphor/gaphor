@@ -809,7 +809,8 @@ class IndirectlyInstantiatedComponentAction(CheckAction):
 
     def execute(self):
         item = get_parent_focus_item(self._window)
-        item.subject.isIndirectlyInstantiated = self.active
+        if item.subject:
+            item.subject.isIndirectlyInstantiated = self.active
 
 weave_method(IndirectlyInstantiatedComponentAction.execute, UndoTransactionAspect)
 register_action(IndirectlyInstantiatedComponentAction, 'ItemFocus')
