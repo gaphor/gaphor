@@ -449,11 +449,11 @@ class SnapToGridAction(CheckAction):
     def update(self):
         diagram_tab = self._window.get_current_diagram_tab()
         self.sensitive = bool(diagram_tab)
-        self.active = diagram_tab and diagram_tab.get_canvas().get_property('snap_to_grid')
+        self.active = diagram_tab and diagram_tab.get_canvas().props.snap_to_grid
 
     def execute(self):
         diagram_tab = self._window.get_current_diagram_tab()
-        diagram_tab.get_canvas().set_property('snap_to_grid', self.active)
+        diagram_tab.get_canvas().props.snap_to_grid = self.active
 
 register_action(SnapToGridAction)
 
