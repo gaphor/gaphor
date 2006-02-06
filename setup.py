@@ -212,7 +212,7 @@ class install_lib_Gaphor(install_lib, version_py):
     def run(self):
         # install a new version.py with install_data as data_dir;
         # get rid of install root directory
-        skip = len(self.get_finalized_command('install').root) - 1
+        skip = len(self.get_finalized_command('install').root)
 
         self.generate_version(self.install_dir, self.install_data[skip:])
         install_lib.run(self)
