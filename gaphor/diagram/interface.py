@@ -85,6 +85,7 @@ class InterfaceItem(ClassItem, SimpleRotation):
         Update connected lines position.
         """
         for h in self.connected_handles:
+            f = None
             if gives_provided(h):
                 f = self._icon.get_provided_pos_w
             elif gives_required(h):
