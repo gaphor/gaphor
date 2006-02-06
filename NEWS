@@ -1,6 +1,10 @@
 0.8.1
 -----
-- small bug fixes
+- support for automatic realization dependencies between components and
+  interfaces
+- provided and required interfaces of component realizing classifiers are
+  visible in Component.{provided,required} derived associations
+- missing icons added
 
 0.8.0
 -----

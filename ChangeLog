@@ -1,3 +1,12 @@
+2006-02-06  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.override: provided and required interfaces of
+	component realizing classifiers are visible in Component.{provided,required}
+	derived associations
+	* gaphor/UML/util.py: added utility functions for getting provided and
+	required interfaces of classifier/component
+	* gaphor/diagram/dependency.py: support for automatic realization
+	dependencies between components and interfaces
+
 2006-01-16  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/commentline.py: allow_connect_handle does not throw an
 	exception in some cases, now

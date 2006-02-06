@@ -180,9 +180,17 @@ del extension_metaclass
 %%
 override Component.provided
 def component_provided(self):
-    interfaces = [ impl.contract[0] for impl in self.implementation \
-        if impl.isKindOf(Implementation) ] # should we process with this condition?
-    return interfaces
+    from gaphor.UML.util import pr_interface_deps, pr_rc_interface_deps
+    import itertools
+
+    implementations = (impl.contract[0] for impl in self.implementation if impl.isKindOf(Implementation))
+    realizations = pr_interface_deps(self, Realization)
+
+    # realizing classifiers realizations
+    # this generator of generators, so flatten it later
+    rc_realizations = pr_rc_interface_deps(self, Realization)
+
+    return tuple(set(itertools.chain(implementations, realizations, *rc_realizations)))
 
 Component.provided = property(component_provided, doc = \
     """
@@ -192,9 +200,16 @@ del component_provided
 %%
 override Component.required
 def component_required(self):
-    interfaces = [ dep.supplier[0] for dep in self.clientDependency \
-        if dep.isKindOf(Usage) and dep.supplier[0].isKindOf(Interface) ]
-    return interfaces
+    from gaphor.UML.util import pr_interface_deps, pr_rc_interface_deps
+    import itertools
+
+    usages = pr_interface_deps(self, Usage)
+
+    # realizing classifiers usages
+    # this generator of generators, so flatten it later
+    rc_usages = pr_rc_interface_deps(self, Usage)
+
+    return tuple(set(itertools.chain(usages, *rc_usages)))
 
 Component.required = property(component_required, doc = \
     """

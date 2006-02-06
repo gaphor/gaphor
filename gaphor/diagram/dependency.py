@@ -35,6 +35,9 @@ class DependencyItem(RelationshipItem):
     dependencies to an interface, it will probably not be very explaining
     (esp. Usage dependencies).
 
+    Function get_dependency_type should be used to determine automatically
+    type of a dependency.
+
     TODO (see also InterfaceItem): When a Usage dependency is drawn and is
           connected to an InterfaceItem, draw a solid line, but stop drawing
           the line 'x' points before the last handle.
@@ -149,9 +152,12 @@ class DependencyItem(RelationshipItem):
     def find_relationship(self, head_subject, tail_subject):
         """See RelationshipItem.find_relationship().
         """
-        return self._find_relationship(head_subject, tail_subject,
-                                       ('supplier', 'supplierDependency'),
-                                       ('client', 'clientDependency'))
+        if get_dependency_type(head_subject, tail_subject) == UML.Realization:
+            args = (('realizingClassifier', None), ('abstraction', 'realization'))
+        else:
+            args = (('supplier', 'supplierDependency'), ('client', 'clientDependency'))
+        return self._find_relationship(head_subject, tail_subject, *args)
+
 
     def allow_connect_handle(self, handle, connecting_to):
         """See RelationshipItem.allow_connect_handle().
@@ -176,11 +182,14 @@ class DependencyItem(RelationshipItem):
         c2 = self.handles[-1].connected_to
 
         if self.auto_dependency:
-            # Determine the dependency_type if only one handle is connected
-            if c1 and isinstance(c1.subject, UML.Interface):
-                self.set_dependency_type(UML.Usage)
-            else:
-                self.set_dependency_type(UML.Dependency)
+            # determining the dependency type can be performed when only
+            # one handle is connected
+            s1 = s2 = None
+            if c1:
+                s1 = c1.subject
+            if c2:
+                s2 = c2.subject
+            self.set_dependency_type(get_dependency_type(s1, s2))
 
         if c1 and c2:
             s1 = c1.subject
@@ -188,8 +197,12 @@ class DependencyItem(RelationshipItem):
             relation = self.find_relationship(s1, s2)
             if not relation:
                 relation = resource(UML.ElementFactory).create(self.dependency_type)
-                relation.supplier = s1
-                relation.client = s2
+                if get_dependency_type(s1, s2) == UML.Realization:
+                    relation.realizingClassifier = s1
+                    relation.abstraction = s2
+                else:
+                    relation.supplier = s1
+                    relation.client = s2
             self.subject = relation
 
     def confirm_disconnect_handle(self, handle, was_connected_to):
@@ -198,5 +211,42 @@ class DependencyItem(RelationshipItem):
         #print 'confirm_disconnect_handle', handle
         self._set_line_style()
         self.set_subject(None)
+
+
+
+def is_usage(s):
+    """
+    Return true if dependency should be usage dependency.
+    """
+    return isinstance(s, UML.Interface)
+
+
+def is_component_realization(ts, hs):
+    """
+    Return true if dependency should be realization dependency.
+    """
+    return isinstance(ts, UML.Classifier) and isinstance(hs, UML.Component)
+
+
+def get_dependency_type(ts, hs):
+    """
+    Determine dependency type:
+    - check if it is usage
+    - check if it is realization
+    - if none of above, then it is normal dependency
+
+    The checks should be performed in above order. For example if ts and hs
+    are Interface and Component, then we have two choices:
+    - claim it is an usage (as ts is an Interface)
+    - or claim it is a realization (as Interface is Classifier, too)
+    In this case we want usage to win over realization.
+    """
+    dt = UML.Dependency
+    if is_usage(ts):
+        dt = UML.Usage
+    elif is_component_realization(ts, hs):
+        dt = UML.Realization
+    return dt
+
 
 initialize_item(DependencyItem, UML.Dependency)
