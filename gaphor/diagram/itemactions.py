@@ -26,6 +26,7 @@ from gaphor.diagram.association import AssociationItem, AssociationEnd
 from gaphor.diagram import ClassifierItem, ImplementationItem, \
      GeneralizationItem, DependencyItem
 from gaphor.diagram.flow import FlowItem, CFlowItem, CFlowItemA, CFlowItemB
+from gaphor.diagram.lifeline import LifelineItem
 
 
 class NoFocusItemError(GaphorError):
@@ -1370,3 +1371,29 @@ class ApplyInterfaceAction(RadioAction, ObjectAction):
             item.set_subject(None)
 
 weave_method(ApplyInterfaceAction.execute, UndoTransactionAspect)
+
+
+
+class LifelineHasLifetimeAction(CheckAction):
+    id = 'LifelineHasLifetime'
+    label = 'Lifetime line'
+    tooltip = 'Show or hide lifetime line'
+
+    def init(self, window):
+        self._window = window
+
+    def update(self):
+        try:
+            item = get_parent_focus_item(self._window)
+        except NoFocusItemError:
+            pass
+        else:
+            if isinstance(item, LifelineItem):
+                self.active = item.props.has_lifetime
+
+    def execute(self):
+        item = get_parent_focus_item(self._window)
+        item.props.has_lifetime = self.active
+
+weave_method(LifelineHasLifetimeAction.execute, UndoTransactionAspect)
+register_action(LifelineHasLifetimeAction, 'ItemFocus')

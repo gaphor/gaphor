@@ -9,10 +9,12 @@ import gobject
 import pango
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from nameditem import NamedItem
 
 class InteractionItem(NamedItem, diacanvas.CanvasGroupable):
+
+    __uml__ = UML.Interaction
+
     MARGIN_X = 10
     MARGIN_Y = 5
     PADDING = 20
@@ -131,5 +133,3 @@ class InteractionItem(NamedItem, diacanvas.CanvasGroupable):
 
     def on_groupable_iter(self):
         return iter(self._children)
-
-initialize_item(InteractionItem, UML.Interaction)

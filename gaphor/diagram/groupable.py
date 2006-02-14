@@ -49,15 +49,3 @@ class GroupBase(diacanvas.CanvasGroupable):
 
     def on_groupable_iter(self):
         return iter(self.children)
-
-
-
-class Groupable(gobject.GObjectMeta):
-    """
-    Metaclass for groupable diagram item classes.
-    """
-    def __new__(cls, name, bases, data):
-        c = gobject.GObjectMeta.__new__(cls, name, bases, data)
-        gobject.type_register(c)
-        diacanvas.set_groupable(c)
-        return c

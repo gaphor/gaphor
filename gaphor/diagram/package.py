@@ -9,13 +9,15 @@ import gobject
 import pango
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from nameditem import NamedItem
 
 STEREOTYPE_OPEN = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
 
 class PackageItem(NamedItem):
+
+    __uml__ = UML.Package
+
     TAB_X=50
     TAB_Y=20
     MARGIN_X=60
@@ -151,5 +153,3 @@ class PackageItem(NamedItem):
             yield s
         if self._has_stereotype:
             yield self._stereotype
-
-initialize_item(PackageItem, UML.Package)

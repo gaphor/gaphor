@@ -18,7 +18,6 @@ import diacanvas.shape
 import diacanvas.geometry
 
 from gaphor import resource, UML
-from gaphor.diagram import initialize_item
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.relationship import RelationshipItem
 
@@ -27,6 +26,9 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
     """
+
+    __uml__ = UML.Association
+
     __gproperties__ = {
         'show-direction': (gobject.TYPE_BOOLEAN, 'show direction',
                             '',
@@ -921,6 +923,3 @@ def xs(self, p0, p1, name):
     points = rotate(p0, p1, ((-4, -4), (4, 4), (4, -4), (-4, 4)))
     getattr(self, '_%s_xa' % name).line(points[0:2])
     getattr(self, '_%s_xb' % name).line(points[2:])
-
-initialize_item(AssociationItem, UML.Association)
-initialize_item(AssociationEnd)

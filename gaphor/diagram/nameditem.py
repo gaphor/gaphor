@@ -7,11 +7,10 @@ import itertools
 import gobject
 import pango
 import diacanvas
-from gaphor.diagram import initialize_item
 from elementitem import ElementItem
 from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.diagramitem import DiagramItem
-
+from gaphor.diagram import DiagramItemMeta
 
 
 class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
@@ -31,6 +30,7 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
                      join node join specification it should be set to
                      '{ joinSpec = %s }'
     """
+    __metaclass__ = DiagramItemMeta
 
     __gproperties__ = DiagramItem.__gproperties__
     __gsignals__ = DiagramItem.__gsignals__
@@ -328,6 +328,22 @@ class SimpleNamedItem(NamedItem):
 
 
 
+class RectNamedItem(SimpleNamedItem):
+    def get_border(self):
+        """
+        Return border of simple named item.
+        """
+        return diacanvas.shape.Path()
+
+
+    def draw_border(self):
+        """
+        Draw border of simple named item.
+        """
+        self._border.rectangle((0, 0), (self.width, self.height))
+
+
+
 class SideNamedItem(GroupBase):
     """
     Base class for named items, which name should be over, below or on
@@ -383,7 +399,3 @@ class SideNamedItem(GroupBase):
             
         self._name.update_label(x, y)
         GroupBase.on_update(self, affine)
-
-
-initialize_item(TextElement)
-initialize_item(NamedItem)

@@ -5,7 +5,6 @@
 import gobject
 import pango
 import diacanvas
-from gaphor.diagram import initialize_item
 from feature import FeatureItem
 
 # TODO: handle Parameter's
@@ -60,5 +59,3 @@ class OperationItem(FeatureItem):
         # the parameters and return parameters.
         self._expression.set_text(self.subject and self.subject.render() or '')
         FeatureItem.on_update(self, affine)
-
-initialize_item(OperationItem)

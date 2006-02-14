@@ -4,7 +4,6 @@
 
 import gobject
 import diacanvas
-from gaphor.diagram import initialize_item
 
 from feature import FeatureItem
 
@@ -60,5 +59,3 @@ class AttributeItem(FeatureItem):
         """
         if self.parent:
             self.parent.sync_attributes()
-
-initialize_item(AttributeItem)

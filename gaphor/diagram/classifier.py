@@ -12,7 +12,6 @@ import pango
 import diacanvas
 
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from gaphor.i18n import _
 
 from nameditem import NamedItem
@@ -404,5 +403,3 @@ class ClassifierItem(NamedItem):
 
         for s in NamedItem.on_shape_iter(self):
             yield s
-
-initialize_item(ClassifierItem)

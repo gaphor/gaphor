@@ -1,3 +1,16 @@
+2006-02-14  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/*.py: get rid of initialize_item function, use
+	metaclass instead; use __uml__ attribute for UML classes assignement;
+	no need for Groupable metaclass anymore
+	* gaphor/diagram/diagramline.py: added FreeLine diagram line (abstract
+	class) with one disabled handle
+	* gaphor/diagram/connector.py: ConnectorEndItem uses FreeLine,
+	saving/loading not implemented yet
+	* gaphor/diagram/lifeline.py: LifelineItem and its lifetime (LifetimeItem
+	class) is separated now
+	* gaphor/diagram/message.py: message name reimplemented using
+	TextElement
+
 2006-02-06  wrobell <wrobell@pld-linux.org>
 	* gaphor/UML/uml2.override: provided and required interfaces of
 	component realizing classifiers are visible in Component.{provided,required}

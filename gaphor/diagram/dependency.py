@@ -11,7 +11,6 @@ import pango
 import diacanvas
 
 from gaphor import resource, UML
-from gaphor.diagram import initialize_item
 
 from gaphor.diagram.relationship import RelationshipItem
 
@@ -42,6 +41,8 @@ class DependencyItem(RelationshipItem):
           connected to an InterfaceItem, draw a solid line, but stop drawing
           the line 'x' points before the last handle.
     """
+
+    __uml__ = UML.Dependency
 
     FONT = 'sans 10'
 
@@ -247,6 +248,3 @@ def get_dependency_type(ts, hs):
     elif is_component_realization(ts, hs):
         dt = UML.Realization
     return dt
-
-
-initialize_item(DependencyItem, UML.Dependency)

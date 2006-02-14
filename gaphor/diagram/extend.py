@@ -11,7 +11,6 @@ import pango
 import diacanvas
 import gaphor
 from gaphor import UML
-from gaphor.diagram import initialize_item
 
 from include import IncludeItem, STEREOTYPE_OPEN, STEREOTYPE_CLOSE
 
@@ -19,6 +18,8 @@ from include import IncludeItem, STEREOTYPE_OPEN, STEREOTYPE_CLOSE
 class ExtendItem(IncludeItem):
     """A UseCase Include dependency.
     """
+
+    __uml__ = UML.Extend
 
     FONT = 'sans 10'
 
@@ -57,5 +58,3 @@ class ExtendItem(IncludeItem):
                 relation.extendedCase = s1
                 relation.extension = s2
             self.subject = relation
-
-initialize_item(ExtendItem, UML.Extend)

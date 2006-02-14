@@ -11,12 +11,12 @@ import diacanvas
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.diagram import initialize_item, TextElement
+from gaphor.diagram import TextElement
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.relationship import RelationshipItem
 from gaphor.diagram.nameditem import SimpleNamedItem
 
-from gaphor.diagram.groupable import GroupBase, Groupable
+from gaphor.diagram.groupable import GroupBase
 import gaphor.diagram.util
 
 import itertools
@@ -28,7 +28,8 @@ class FlowBase(RelationshipItem, GroupBase):
     with name and guard.
     """
 
-    __metaclass__ = Groupable
+    __uml__ = UML.ControlFlow
+
     def __init__(self, id = None):
         GroupBase.__init__(self)
         RelationshipItem.__init__(self, id)
@@ -72,10 +73,10 @@ class FlowBase(RelationshipItem, GroupBase):
             y = p2[1] - y
             return x, y
 
+        p1 = handles[-2].get_pos_i()
+        p2 = handles[-1].get_pos_i()
         w, h = self._name.get_size()
-        x, y = get_pos(handles[-2].get_pos_i(),
-            handles[-1].get_pos_i(),
-            w, h)
+        x, y = get_pos(p1, p2, w, h)
         self._name.update_label(x, y)
 
 
@@ -90,10 +91,10 @@ class FlowBase(RelationshipItem, GroupBase):
             y = (p1[1] + p2[1]) / 2.0 - y
             return x, y
 
+        p1 = handles[middle-1].get_pos_i()
+        p2 = handles[middle].get_pos_i()
         w, h = self._guard.get_size()
-        x, y = get_pos_centered(handles[middle-1].get_pos_i(),
-            handles[middle].get_pos_i(),
-            w, h)
+        x, y = get_pos_centered(p1, p2, w, h)
         self._guard.update_label(x, y)
 
 
@@ -470,9 +471,3 @@ class CFlowItemB(CFlowItem):
         Return source handle as inactive one.
         """
         return self.handles[0]
-
-
-
-initialize_item(FlowItem, UML.ControlFlow)
-initialize_item(CFlowItemA, UML.ControlFlow)
-initialize_item(CFlowItemB, UML.ControlFlow)

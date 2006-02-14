@@ -8,9 +8,11 @@ import pango
 import diacanvas
 
 from gaphor import resource, UML
-from gaphor.diagram import initialize_item
 
 from gaphor.diagram.diagramline import DiagramLine
+from gaphor.diagram.lifeline import LifelineItem, LifetimeItem
+from gaphor.diagram import TextElement
+from gaphor.diagram.groupable import GroupBase
 
 #
 # TODO: asynch message has open arrow head
@@ -25,82 +27,66 @@ from gaphor.diagram.diagramline import DiagramLine
 # Message.signature points to the operation or signal that is executed
 # Message.arguments provides a list of arguments for the operation.
 #
-class MessageItem(DiagramLine, diacanvas.CanvasEditable):
+class MessageItem(DiagramLine, GroupBase):
     
     FONT='sans 10'
 
     def __init__(self, id=None):
+        GroupBase.__init__(self)
         DiagramLine.__init__(self, id)
-        self.set(has_tail=1, tail_fill_color=0, tail_a=0.0, tail_b=15.0, tail_c=6.0, tail_d=6.0)
 
-        self._label = diacanvas.shape.Text()
-        self._label.set_font_description(pango.FontDescription(MessageItem.FONT))
-        self._label.set_markup(False)
-        #self._label.set_text('blah')
+        self._name  = TextElement('name')
+        self.add(self._name)
 
-    def save (self, save_func):
-        DiagramLine.save(self, save_func)
+        self.set(has_tail = 1, tail_fill_color = 0, tail_a = 0.0,
+            tail_b = 15.0, tail_c = 6.0, tail_d = 6.0)
 
-    def load (self, name, value):
-        DiagramLine.load(self, name, value)
-
-    def postload(self):
-        DiagramLine.postload(self)
 
     def on_subject_notify(self, pspec, notifiers=()):
-        DiagramLine.on_subject_notify(self, pspec,
-                                      notifiers + ('name',))
-
-        self.on_subject_notify__name(self.subject, pspec)
-
-    def on_subject_notify__name(self, subject, pspec):
-        #log.debug('Association name = %s' % (subject and subject.name))
-        if subject:
-            self._label.set_text(subject.name or '')
-        else:
-            self._label.set_text('')
+        DiagramLine.on_subject_notify(self, pspec, notifiers)
+        if self.subject:
+            self._name.subject = self.subject
         self.request_update()
 
-    def update_label(self, p1, p2):
-        """Update the name label near the middle of the association.
-        """
-        w, h = self._label.to_pango_layout(True).get_pixel_size()
-
-        x = p1[0] > p2[0] and w + 2 or -2
-        x = (p1[0] + p2[0]) / 2.0 - x
-        y = p1[1] <= p2[1] and h or 0
-        y = (p1[1] + p2[1]) / 2.0 - y
-
-        self._label.set_pos((x, y))
-        #log.debug('label pos = (%d, %d)' % (x, y))
-        #return x, y, max(x + 10, x + w), max(y + 10, y + h)
-        return x, y, x + w, y + h
 
     def on_update(self, affine):
-        DiagramLine.on_update(self, affine)
-
         handles = self.handles
         middle = len(handles)/2
-        b1 = self.update_label(handles[middle-1].get_pos_i(),
-                               handles[middle].get_pos_i())
 
-        bv = zip(b1, self.bounds)
-        self.set_bounds((min(bv[0]), min(bv[1]), max(bv[2]), max(bv[3])))
+        def get_pos_centered(p1, p2, width, height):
+            x = p1[0] > p2[0] and width + 2 or -2
+            x = (p1[0] + p2[0]) / 2.0 - x
+            y = p1[1] <= p2[1] and height or 0
+            y = (p1[1] + p2[1]) / 2.0 - y
+            return x, y
 
-    def on_shape_iter(self):
-        for s in DiagramLine.on_shape_iter(self):
-            yield s
-        yield self._label
+        p1 = handles[middle-1].get_pos_i()
+        p2 = handles[middle].get_pos_i()
 
+        w, h = self._name.get_size()
+        x, y = get_pos_centered(p1, p2, w, h)
+        self._name.update_label(x, y)
+
+        DiagramLine.on_update(self, affine)
+        GroupBase.on_update(self, affine)
+
+
+    #
     # Gaphor Connection Protocol
-
-    def allow_connect_handle(self, handle, connecting_to):
-        """See RelationshipItem.allow_connect_handle().
+    #
+    def allow_connect_handle(self, handle, item):
         """
-        try:
-            return isinstance(connecting_to.subject, UML.Lifeline)
-        except AttributeError:
-            return 0
+        """
+        if isinstance(item, (LifelineItem, LifetimeItem)):
+            if handle is self.handles[0]:
+                c = self.handles[-1].connected_to
+            else:
+                c = self.handles[0].connected_to
+            return c is None or isinstance(item, c.__class__)
+        else:
+            return False
+        
+
 
     def confirm_connect_handle(self, handle):
         """See RelationshipItem.confirm_connect_handle().
@@ -111,6 +97,7 @@ class MessageItem(DiagramLine, diacanvas.CanvasEditable):
         c1 = self.handles[0].connected_to
         c2 = self.handles[-1].connected_to
         if c1 and c2:
+            assert c1.__class__ == c2.__class__
             s1 = c1.subject
             s2 = c2.subject
             if self.subject and \
@@ -135,21 +122,3 @@ class MessageItem(DiagramLine, diacanvas.CanvasEditable):
         """See RelationshipItem.confirm_disconnect_handle().
         """
         self.set_subject(None)
-
-    # Editable
-
-    def on_editable_get_editable_shape(self, x, y):
-        log.debug('association edit on (%d,%d)' % (x, y))
-        #p = (x, y)
-        #drp = diacanvas.geometry.distance_rectangle_point
-        #if drp(self._label_bounds, p) < 1.0:
-        return self._label
-
-    def on_editable_start_editing(self, shape):
-        pass
-
-    def on_editable_editing_done(self, shape, new_text):
-        if self.subject and self.subject.name != new_text:
-            self.subject.name = new_text
-
-initialize_item(MessageItem)

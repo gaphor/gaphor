@@ -7,8 +7,8 @@ Abstract base class for element-like Diagram items.
 
 import gobject
 import diacanvas
-from gaphor.diagram import initialize_item
 from diagramitem import DiagramItem
+from gaphor.diagram import DiagramItemMeta
 
 __revision__ = '$revision$'
 __author__ = 'Arjan J. Molenaar'
@@ -16,6 +16,8 @@ __date__ = '$date$'
 
 
 class ElementItem(diacanvas.CanvasElement, DiagramItem):
+    __metaclass__ = DiagramItemMeta
+
     __gproperties__ = {
         'auto-resize':  (gobject.TYPE_BOOLEAN, 'auto resize',
                          'Set auto-resize for the diagram item',
@@ -68,6 +70,3 @@ class ElementItem(diacanvas.CanvasElement, DiagramItem):
 
     def on_disconnect_handle(self, handle):
         return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
-
-
-initialize_item(ElementItem)

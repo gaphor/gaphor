@@ -11,8 +11,7 @@ import diacanvas.shape
 from diacanvas import CanvasItem, CanvasEditable
 from diacanvas.geometry import distance_rectangle_point
 from diagramitem import DiagramItem
-
-from gaphor.diagram import initialize_item
+from gaphor.diagram import DiagramItemMeta
 
 class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
     """FeatureItems are model elements who recide inside a ClassItem, such as
@@ -20,6 +19,8 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
     the left and right side.
     Note that features can also be used inside objects.
     """
+    __metaclass__ = DiagramItemMeta
+
     # Properties, also add the DiagramItem properties here.
     __gproperties__ = {
         'expression':  (gobject.TYPE_STRING, 'expression',
@@ -127,6 +128,3 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         #if new_text != self.subject.name:
         #    self.subject.name = new_text
         self.request_update()
-
-initialize_item(FeatureItem)
-

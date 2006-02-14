@@ -10,12 +10,12 @@ import pango
 import diacanvas
 from gaphor import UML
 from gaphor import resource
-from gaphor.diagram import initialize_item, TextElement
-from nameditem import SimpleNamedItem
-from gaphor.diagram.groupable import GroupBase, Groupable
+from gaphor.diagram import TextElement
+from nameditem import RectNamedItem
+from gaphor.diagram.groupable import GroupBase
 
 
-class ObjectNodeItem(SimpleNamedItem, GroupBase):
+class ObjectNodeItem(RectNamedItem, GroupBase):
     """
     Representation of object node. Object node is ordered and has upper bound
     specification.
@@ -23,7 +23,7 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
     Ordering information can be hidden by user.
     """
 
-    __metaclass__ = Groupable
+    __uml__ = UML.ObjectNode
 
     FONT = 'sans 10'
     MARGIN = 10
@@ -46,7 +46,7 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
 
     def __init__(self, id = None):
         GroupBase.__init__(self)
-        SimpleNamedItem.__init__(self, id)
+        RectNamedItem.__init__(self, id)
 
         self._upper_bound = TextElement('value', '{ upperBound = %s }', '*')
         self.add(self._upper_bound)
@@ -65,7 +65,7 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
         Detect subject changes. If subject is set then set upper bound text
         element subject.
         """
-        SimpleNamedItem.on_subject_notify(self, pspec, notifiers)
+        RectNamedItem.on_subject_notify(self, pspec, notifiers)
         if self.subject:
             factory = resource(UML.ElementFactory)
             if not self.subject.upperBound:
@@ -83,21 +83,21 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
 
     def do_set_property(self, pspec, value):
         """
-        In case of ordering visibility set request update of item.
+        Request update of item in case of ordering visibility.
         """
         if pspec.name == 'show-ordering':
             self.preserve_property(pspec.name)
             self._show_ordering = value
             self.request_update()
         else:
-            SimpleNamedItem.do_set_property(self, pspec, value)
+            RectNamedItem.do_set_property(self, pspec, value)
 
 
     def do_get_property(self, pspec):
         if pspec.name == 'show-ordering':
             return self._show_ordering
         else:
-            return SimpleNamedItem.do_get_property(self, pspec)
+            return RectNamedItem.do_get_property(self, pspec)
 
 
     def set_ordering(self, ordering):
@@ -133,7 +133,7 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
         """
         Update object node, its ordering and upper bound specification.
         """
-        SimpleNamedItem.on_update(self, affine)
+        RectNamedItem.on_update(self, affine)
 
         if self.subject:
             self._ordering.set_text('{ ordering = %s }' % self.subject.ordering)
@@ -169,12 +169,8 @@ class ObjectNodeItem(SimpleNamedItem, GroupBase):
 
 
     def on_shape_iter(self):
-        it = SimpleNamedItem.on_shape_iter(self)
+        it = RectNamedItem.on_shape_iter(self)
         if self.props.show_ordering:
             return itertools.chain(it, iter([self._ordering]))
         else:
             return it
-
-
-
-initialize_item(ObjectNodeItem, UML.ObjectNode)

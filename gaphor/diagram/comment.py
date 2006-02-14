@@ -8,11 +8,13 @@ import pango
 import diacanvas
 
 from gaphor import UML
-from gaphor.diagram import initialize_item
 
 from elementitem import ElementItem
 
 class CommentItem(ElementItem, diacanvas.CanvasEditable):
+
+    __uml__ = UML.Comment
+
     __gproperties__ = {
         'body': (gobject.TYPE_STRING, 'body', '', '', gobject.PARAM_READWRITE)
     }
@@ -112,5 +114,3 @@ class CommentItem(ElementItem, diacanvas.CanvasEditable):
             self.subject.body = new_text
         #self._body.set_text(new_text)
         self.request_update()
-
-initialize_item(CommentItem, UML.Comment)

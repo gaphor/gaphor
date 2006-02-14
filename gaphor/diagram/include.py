@@ -12,7 +12,6 @@ import diacanvas
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from gaphor.diagram.relationship import RelationshipItem
 
 STEREOTYPE_OPEN = '\xc2\xab' # '<<'
@@ -21,6 +20,8 @@ STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
 class IncludeItem(RelationshipItem):
     """A UseCase Include dependency.
     """
+
+    __uml__ = UML.Include
 
     FONT = 'sans 10'
 
@@ -114,5 +115,3 @@ class IncludeItem(RelationshipItem):
         """
         #print 'confirm_disconnect_handle', handle
         self.set_subject(None)
-
-initialize_item(IncludeItem, UML.Include)

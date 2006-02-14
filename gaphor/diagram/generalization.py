@@ -8,10 +8,11 @@ import diacanvas
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from gaphor.diagram.relationship import RelationshipItem
 
 class GeneralizationItem(RelationshipItem):
+
+    __uml__ = UML.Generalization
 
     def __init__(self, id=None):
         RelationshipItem.__init__(self, id)
@@ -87,5 +88,3 @@ class GeneralizationItem(RelationshipItem):
         """
         #print 'confirm_disconnect_handle', handle
         self.set_subject(None)
-
-initialize_item(GeneralizationItem, UML.Generalization)

@@ -17,7 +17,6 @@ import diacanvas.geometry
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.relationship import RelationshipItem
 
@@ -26,6 +25,9 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item
     represents a Property (with Property.association == my association).
     """
+
+    __uml__ = UML.Extension
+
     __gproperties__ = {
         'head':         (gobject.TYPE_OBJECT, 'head',
                          'ExtensionEnd held by the head end of the association',
@@ -288,7 +290,3 @@ class ExtensionEnd(diacanvas.CanvasItem, DiagramItem):
 
     def on_disconnect(self, handle):
         return False
-
-
-initialize_item(ExtensionItem, UML.Extension)
-initialize_item(ExtensionEnd)

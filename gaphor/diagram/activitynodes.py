@@ -12,10 +12,10 @@ import pango
 import diacanvas
 from gaphor import UML
 from gaphor import resource
-from gaphor.diagram import initialize_item, TextElement
+from gaphor.diagram import TextElement
 from elementitem import ElementItem
 from nameditem import NamedItem, SimpleNamedItem, SideNamedItem
-from gaphor.diagram.groupable import GroupBase, Groupable
+from gaphor.diagram.groupable import GroupBase
 
 
 class ActivityNodeItem(ElementItem):
@@ -40,9 +40,6 @@ class NamedNodeItem(ActivityNodeItem, SideNamedItem):
     """
     Abstract class which represents node item with name.
     """
-
-    __metaclass__ = Groupable
-
     def __init__(self, id=None):
         ActivityNodeItem.__init__(self, id)
         SideNamedItem.__init__(self)
@@ -64,6 +61,8 @@ class InitialNodeItem(NamedNodeItem):
     Representation of initial node. Initial node has name which is put near
     top-left side of node.
     """
+    __uml__ = UML.InitialNode
+
     RADIUS = 10
 
     def __init__(self, id = None):
@@ -87,6 +86,9 @@ class ActivityFinalNodeItem(NamedNodeItem):
     Representation of activity final node. Activity final node has name
     which is put near right-bottom side of node.
     """
+
+    __uml__ = UML.ActivityFinalNode
+
     RADIUS_1 = 10
     RADIUS_2 = 15
 
@@ -120,6 +122,9 @@ class FlowFinalNodeItem(NamedNodeItem):
     Representation of flow final node. Flow final node has name which is
     put near right-bottom side of node.
     """
+
+    __uml__ = UML.FlowFinalNode
+
     RADIUS = 10
 
     def __init__(self, id=None):
@@ -192,6 +197,9 @@ class DecisionNodeItem(FDNode):
     """
     Representation of decision or merge node.
     """
+
+    __uml__ = UML.DecisionNode
+
     RADIUS = 15
 
     def __init__(self, id=None):
@@ -213,8 +221,7 @@ class ForkNodeItem(FDNode, GroupBase):
     """
     Representation of fork or join node.
     """
-
-    __metaclass__ = Groupable
+    __uml__ = UML.ForkNode
 
     WIDTH  =  6.0
     HEIGHT = 45.0
@@ -278,13 +285,3 @@ class ForkNodeItem(FDNode, GroupBase):
 
     def on_shape_iter(self):
         return iter([self._line])
-
-
-
-#gobject.type_register(FDNode)
-initialize_item(ActivityNodeItem)
-initialize_item(InitialNodeItem, UML.InitialNode)
-initialize_item(ActivityFinalNodeItem, UML.ActivityFinalNode)
-initialize_item(FlowFinalNodeItem, UML.FlowFinalNode)
-initialize_item(DecisionNodeItem, UML.DecisionNode)
-initialize_item(ForkNodeItem, UML.ForkNode)

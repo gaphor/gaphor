@@ -9,10 +9,12 @@ import gobject
 import pango
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from classifier import ClassifierItem
 
 class NodeItem(ClassifierItem):
+
+    __uml__ = UML.Node
+
     DEPTH = 10
 
 #    popup_menu = ClassifierItem.popup_menu \
@@ -54,5 +56,3 @@ class NodeItem(ClassifierItem):
             yield s
         yield self._back
         yield self._diag_line
-
-initialize_item(NodeItem, UML.Node)

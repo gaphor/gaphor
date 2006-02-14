@@ -5,9 +5,10 @@ __version__ = '$revision$'
 __author__ = 'Arjan J. Molenaar'
 __date__ = '$date$'
 
+import inspect
 import gobject
 import diacanvas
-from gaphor.diagram.groupable import GroupBase
+
 from gaphor.misc import uniqueid
 
 # Map UML elements to their (default) representation.
@@ -26,34 +27,54 @@ def get_diagram_item(element):
     except:
         return None
 
-def initialize_item(item_class, *default_uml_classes):
-    """Initialize a new diagram item.
+def set_diagram_item(element, item):
+    global _uml_to_item_map
+    _uml_to_item_map[element] = item
+
+
+class DiagramItemMeta(gobject.GObjectMeta):
+    """
+    Initialize a new diagram item.
     This involves:
     1. registring the new diagram item with the GObject type
     2. If nessesary: add canvas item callbacks
     3. If nessesary: add canvas groupable callbacks
     4. If nessesary: add canvas editable callbacks
     """
-    global _uml_to_item_map
-    #gobject.type_register(item_class)
-    bases = item_class.__bases__
-    if (diacanvas.CanvasItem in bases) or \
-        (diacanvas.CanvasGroup in bases) or \
-        (diacanvas.CanvasLine in bases) or \
-        (diacanvas.CanvasElement in bases) or \
-        (diacanvas.CanvasBox in bases) or \
-        (diacanvas.CanvasText in bases) or \
-        (diacanvas.CanvasImage in bases):
-        diacanvas.set_callbacks (item_class)
+    def __new__(cls, name, bases, data):
+        all_bases = set()
+        for base in bases:
+            all_bases = all_bases.union(set(inspect.getmro(base)))
 
-    if diacanvas.CanvasGroupable in bases:
-        diacanvas.set_groupable (item_class)
+        item_class = gobject.GObjectMeta.__new__(cls, name, bases, data)
+        gobject.type_register(item_class)
 
-    if (diacanvas.CanvasEditable in bases):
-        diacanvas.set_editable (item_class)
+        if (diacanvas.CanvasItem in all_bases) or \
+                (diacanvas.CanvasGroup in all_bases) or \
+                (diacanvas.CanvasLine in all_bases) or \
+                (diacanvas.CanvasElement in all_bases) or \
+                (diacanvas.CanvasBox in all_bases) or \
+                (diacanvas.CanvasText in all_bases) or \
+                (diacanvas.CanvasImage in all_bases):
+            diacanvas.set_callbacks(item_class)
 
-    for default_uml_class in default_uml_classes:
-        _uml_to_item_map[default_uml_class] = item_class
+        if diacanvas.CanvasGroupable in all_bases:
+            diacanvas.set_groupable(item_class)
+
+        if (diacanvas.CanvasEditable in all_bases):
+            diacanvas.set_editable(item_class)
+
+        # map uml classes to diagram items
+        if '__uml__' in data:
+            obj = data['__uml__']
+            if isinstance(obj, (tuple, set, list)):
+                for c in obj:
+                    set_diagram_item(c, item_class)
+            else:
+                set_diagram_item(obj, item_class)
+
+        return item_class
+
 
 from nameditem import TextElement
 from placementtool import PlacementTool

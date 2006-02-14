@@ -9,10 +9,11 @@ import gobject
 import pango
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from classifier import ClassifierItem
 
 class ArtifactItem(ClassifierItem):
+
+    __uml__ = UML.Artifact
 
     ICON_HEIGHT = 20
 
@@ -53,5 +54,3 @@ class ArtifactItem(ClassifierItem):
         for s in ClassifierItem.on_shape_iter(self):
             yield s
         yield self._note
-
-initialize_item(ArtifactItem, UML.Artifact)

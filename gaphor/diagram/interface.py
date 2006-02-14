@@ -11,7 +11,6 @@ import gobject
 import pango
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.implementation import ImplementationItem
 from gaphor.diagram.interfaceicon import AssembledInterfaceIcon, \
@@ -33,11 +32,12 @@ class InterfaceItem(ClassItem, SimpleRotation):
           handle. Stop drawing the line 'x' points earlier. 
     """
 
+    __uml__ = UML.Interface
     __metaclass__ = GObjectPropsMerge # merge properties from SimpleRotation
 
     def __init__(self, id=None):
         ClassItem.__init__(self, id)
-        SimpleRotation.__init__(self, id)
+        SimpleRotation.__init__(self)
 
         self._ricon = RequiredInterfaceIcon(self)
         self._aicon = AssembledInterfaceIcon(self)
@@ -237,6 +237,3 @@ def gives_required(handle):
     return isinstance(item, DependencyItem) and item.handles[0] == handle \
         and (not item.auto_dependency and item.dependency_type is UML.Usage
             or item.auto_dependency)
-
-
-initialize_item(InterfaceItem, UML.Interface)

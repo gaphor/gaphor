@@ -3,81 +3,29 @@
 """
 
 import diacanvas
-from gaphor.diagram import initialize_item
 from diagramitem import DiagramItem
+from gaphor.diagram import DiagramItemMeta
 
-class DiagramLine(diacanvas.CanvasLine, DiagramItem):
-    """Gaphor lines. This line is serializable and has a popup
-    menu."""
+class DiagramLineBase(diacanvas.CanvasLine, DiagramItem):
+    """
+    Base class for diagram lines.
+    """
+
+    __metaclass__ = DiagramItemMeta
 
     __gproperties__ = DiagramItem.__gproperties__
-
     __gsignals__ = DiagramItem.__gsignals__
-
-    popup_menu = (
-        'AddSegment',
-        'DeleteSegment',
-        'Orthogonal',
-        'OrthogonalAlignment',
-        'separator',
-        'EditDelete'
-    )
-
-    def __init__(self, id=None):
-        #print '#diacanvas.CanvasLine.__init__(self)'
-        self.__gobject_init__()
-        DiagramItem.__init__(self, id)
-        self.set_property('horizontal', False)
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
     disconnect = DiagramItem.disconnect
     notify = DiagramItem.notify
 
-    def do_set_property (self, pspec, value):
-        pass
-
-    def do_get_property(self, pspec):
-        pass
-
-    def save (self, save_func):
-        DiagramItem.save(self, save_func)
-        for prop in ('affine', 'color', 'orthogonal', 'horizontal'):
-            save_func(prop, self.get_property(prop))
-        points = [ ]
-        for h in self.handles:
-            pos = h.get_pos_i ()
-            points.append (pos)
-        save_func('points', points)
-        c = self.handles[0].connected_to
-        if c:
-            save_func('head-connection', c, reference=True)
-        c = self.handles[-1].connected_to
-        if c:
-            save_func('tail-connection', c, reference=True)
-
-    def load (self, name, value):
-        if name == 'points':
-            points = eval(value)
-            self.set_property('head_pos', points[0])
-            self.set_property('tail_pos', points[1])
-            for p in points[2:]:
-                self.set_property ('add_point', p)
-        elif name in ('head_connection', 'head-connection'):
-            self._load_head_connection = value
-        elif name in ('tail_connection', 'tail-connection'):
-            self._load_tail_connection = value
-        else:
-            DiagramItem.load(self, name, value)
-
-    def postload(self):
-        if hasattr(self, '_load_head_connection'):
-            self._load_head_connection.connect_handle(self.handles[0])
-            del self._load_head_connection
-        if hasattr(self, '_load_tail_connection'):
-            self._load_tail_connection.connect_handle(self.handles[-1])
-            del self._load_tail_connection
-        DiagramItem.postload(self)
+    def __init__(self, id = None):
+        #diacanvas.CanvasLine.__init__(self)
+        self.__gobject_init__()
+        DiagramItem.__init__(self, id)
+        self.props.horizontal = False
 
 
     # Gaphor Connection Protocol
@@ -125,6 +73,7 @@ class DiagramLine(diacanvas.CanvasLine, DiagramItem):
         """
         pass
 
+
     # DiaCanvasItem callbacks
     def on_glue(self, handle, wx, wy):
         return self._on_glue(handle, wx, wy, diacanvas.CanvasLine)
@@ -135,4 +84,98 @@ class DiagramLine(diacanvas.CanvasLine, DiagramItem):
     def on_disconnect_handle (self, handle):
         return self._on_disconnect_handle(handle, diacanvas.CanvasLine)
 
-initialize_item(DiagramLine)
+
+
+class DiagramLine(DiagramLineBase):
+    """
+    Gaphor lines. This line is serializable and has a popup
+    menu.
+    """
+
+    popup_menu = (
+        'AddSegment',
+        'DeleteSegment',
+        'Orthogonal',
+        'OrthogonalAlignment',
+        'separator',
+        'EditDelete'
+    )
+
+    def do_set_property (self, pspec, value):
+        pass
+
+    def do_get_property(self, pspec):
+        pass
+
+    def save (self, save_func):
+        DiagramLineBase.save(self, save_func)
+        for prop in ('affine', 'color', 'orthogonal', 'horizontal'):
+            save_func(prop, self.get_property(prop))
+        points = [ ]
+        for h in self.handles:
+            pos = h.get_pos_i ()
+            points.append (pos)
+        save_func('points', points)
+        c = self.handles[0].connected_to
+        if c:
+            save_func('head-connection', c, reference=True)
+        c = self.handles[-1].connected_to
+        if c:
+            save_func('tail-connection', c, reference=True)
+
+    def load (self, name, value):
+        if name == 'points':
+            points = eval(value)
+            self.set_property('head_pos', points[0])
+            self.set_property('tail_pos', points[1])
+            for p in points[2:]:
+                self.set_property ('add_point', p)
+        elif name in ('head_connection', 'head-connection'):
+            self._load_head_connection = value
+        elif name in ('tail_connection', 'tail-connection'):
+            self._load_tail_connection = value
+        else:
+            DiagramLineBase.load(self, name, value)
+
+    def postload(self):
+        if hasattr(self, '_load_head_connection'):
+            self._load_head_connection.connect_handle(self.handles[0])
+            del self._load_head_connection
+        if hasattr(self, '_load_tail_connection'):
+            self._load_tail_connection.connect_handle(self.handles[-1])
+            del self._load_tail_connection
+        DiagramLineBase.postload(self)
+
+
+
+class FreeLine(DiagramLineBase):
+    """
+    A line with disabled last handle. This allows to create diagram items,
+    which have one or more additional lines.
+
+    Last handle is usually attached to a point of diagram item. This point
+    is called main point.
+    """
+    def __init__(self, id = None, mpt = None):
+        DiagramLineBase.__init__(self, id)
+
+        # expose first handle
+        self._handle = self.handles[0]
+
+        # disable last handle, it should be in main point
+        h = self.handles[-1]
+        h.props.movable = False
+        h.props.connectable = False
+        h.props.visible = False
+
+        self._main_point = mpt
+
+        if self._main_point is None:
+            self._main_point = 0, 0
+
+
+    def on_update(self, affine):
+        self.handles[-1].set_pos_i(*self._main_point)
+        self._handle.set_pos_i(*self._handle.get_pos_i()) # really strange, but we have to do this
+
+        DiagramLineBase.on_update(self, affine)

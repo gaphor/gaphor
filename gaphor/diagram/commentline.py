@@ -9,7 +9,6 @@ has been loaded. It works okay when creating new items.
 import gobject
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 
 from diagramline import DiagramLine
 
@@ -127,6 +126,3 @@ class CommentLineItem(DiagramLine):
                 del s2.annotatedElement[s1]
             #else:
                 #raise TypeError, 'One end of the CommentLine should connect to a Comment. How could this connect anyway?'
-
-initialize_item(CommentLineItem)
-

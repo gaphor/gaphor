@@ -9,10 +9,12 @@ import gobject
 import pango
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from classifier import ClassifierItem
 
 class ComponentItem(ClassifierItem):
+
+    __uml__ = UML.Component
+
     BAR_WIDTH     = 10
     BAR_HEIGHT    =  5
     BAR_PADDING   =  5
@@ -59,5 +61,3 @@ class ComponentItem(ClassifierItem):
         yield self._component_icon
         yield self._lower_bar
         yield self._upper_bar
-
-initialize_item(ComponentItem, UML.Component)

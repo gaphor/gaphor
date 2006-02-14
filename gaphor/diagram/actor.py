@@ -10,13 +10,15 @@ import pango
 import diacanvas
 
 from gaphor import UML
-from gaphor.diagram import initialize_item
 
 from classifier import ClassifierItem
 
 # TODO: add appliedStereotype to actor classifier
 
 class ActorItem(ClassifierItem):
+
+    __uml__ = UML.Actor
+
     HEAD=11
     ARM=19
     NECK=10
@@ -137,5 +139,3 @@ class ActorItem(ClassifierItem):
             yield self._legs
         for s in ClassifierItem.on_shape_iter(self):
             yield s
-
-initialize_item(ActorItem, UML.Actor)

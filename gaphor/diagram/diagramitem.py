@@ -4,6 +4,7 @@ Such as a modifier 'subject' property and a unique id.
 """
 
 import gobject
+import diacanvas
 from diacanvas import CanvasItem
 
 from gaphor import resource

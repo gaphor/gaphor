@@ -10,7 +10,6 @@ import gobject
 import pango
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from nameditem import NamedItem
 
 def make_arc(radius, edges, q=1):
@@ -37,6 +36,8 @@ class ActionItem(NamedItem):
     arc_2 = make_arc(radius=RADIUS, edges=10, q=1)
     arc_3 = make_arc(radius=RADIUS, edges=10, q=2)
     arc_4 = make_arc(radius=RADIUS, edges=10, q=3)
+
+    __uml__ = UML.Action
 
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
@@ -70,4 +71,3 @@ class ActionItem(NamedItem):
         for s in NamedItem.on_shape_iter(self):
             yield s
 
-initialize_item(ActionItem, UML.Action)

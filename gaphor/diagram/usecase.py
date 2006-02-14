@@ -7,10 +7,10 @@ from __future__ import generators
 
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from nameditem import SimpleNamedItem
 
 class UseCaseItem(SimpleNamedItem):
+    __uml__ = UML.UseCase
 
     def get_border(self):
         return diacanvas.shape.Ellipse()
@@ -20,4 +20,3 @@ class UseCaseItem(SimpleNamedItem):
                               width=self.width, height=self.height)
 
 
-initialize_item(UseCaseItem, UML.UseCase)

@@ -51,21 +51,20 @@ this area.
 
 import diacanvas
 from gaphor import resource, UML
-from gaphor.diagram import initialize_item
-from diagramline import DiagramLine
-from diagramitem import DiagramItem
+from diagramline import DiagramLine, FreeLine
 from elementitem import ElementItem
 from component import ComponentItem
 from util import create_connector_end
+
 from gaphor.diagram.interfaceicon import AssembledInterfaceIcon
 from gaphor.diagram.rotatable import SimpleRotation
 from gaphor.diagram import TextElement
 from gaphor.misc import uniqueid
 from gaphor.misc.meta import GObjectPropsMerge
-from gaphor.diagram.groupable import GroupBase, Groupable
+from gaphor.diagram.groupable import GroupBase
 
 
-class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
+class ConnectorEndItem(FreeLine, GroupBase):
     """
     Connector end item abstract class.
 
@@ -83,16 +82,8 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
     For non-abstract implementations see ProvidedConnectorEndItem and
     RequiredConnectorEndItem classes.
     """
-    __metaclass__ = Groupable
-    __gproperties__ = DiagramItem.__gproperties__
-    __gsignals__ = DiagramItem.__gsignals__
-
-    connect = DiagramItem.connect
-    disconnect = DiagramItem.disconnect
-    notify = DiagramItem.notify
 
     interface_actions = []
-#    popup_menu = interface_actions
 
     popup_menu = (
         'DisconnectConnector',
@@ -106,22 +97,10 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
 
         If main point is not specified then it is set to (0, 0).
         """
-        diacanvas.CanvasItem.__init__(self)
-        DiagramItem.__init__(self, id)
+        FreeLine.__init__(self, id, mpt)
         GroupBase.__init__(self)
 
         self.set_flags(diacanvas.COMPOSITE)
-
-        self._mpt = mpt # main point is the point where required or
-                        # provided connector end item starts its life
-        if self._mpt is None:
-            self._mpt = 0, 0
-
-        self._handle = diacanvas.Handle(self)
-        self._handle.props.connectable = True
-
-        self._line = diacanvas.shape.Path()
-        self._line.set_line_width(2.0)
 
         self._interface_name = TextElement('name')
         self.add(self._interface_name)
@@ -160,9 +139,9 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
         """
         Save handle position, main point and reference to connected item.
         """
-        DiagramItem.save(self, save_func)
+        FreeLine.save(self, save_func)
         save_func('handle-position', self._handle.get_pos_w())
-        save_func('main-point', self._mpt)
+        save_func('main-point', self._main_point)
         save_func('connected-to', self._handle.connected_to, True)
 
 
@@ -174,7 +153,7 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
         if hasattr(self, '_load_connected_to'):
             self._load_connected_to.connect_handle(self._handle)
             del self._load_connected_to
-        DiagramItem.postload(self)
+        FreeLine.postload(self)
 
 
     def load(self, name, value):
@@ -189,11 +168,11 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
             x, y = eval(value)
             self._handle.set_pos_w(x, y)
         elif name == 'main-point':
-            self._mpt = eval(value)
+            self._main_point = eval(value)
         elif name == 'connected-to':
             self._load_connected_to = value
         else:
-            DiagramItem.load(self, name, value)
+            FreeLine.load(self, name, value)
 
 
     def on_handle_motion(self, handle, x, y, event_mask):
@@ -203,15 +182,16 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
         
         This allows user to easily move handle to main point.
         """
-        mpt = self._mpt
+        if handle is self._handle:
+            mpt = self._main_point
 
-        x, y = self.affine_point_w2i(x, y)
+            x, y = self.affine_point_w2i(x, y)
 
-        if abs(mpt[0] - x) < 10 and abs(mpt[1] - y) < 10:
-            x, y = mpt
-        x, y = self.affine_point_i2w(x, y)
-
-        return x, y
+            if abs(mpt[0] - x) < 10 and abs(mpt[1] - y) < 10:
+                x, y = mpt
+            return self.affine_point_i2w(x, y)
+        else:
+            return FreeLine.on_handle_motion(self, handle, x, y, event_mask)
 
 
     def on_update(self, affine):
@@ -227,50 +207,16 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
 
         # move handle to main point if there is no component
         # associated with this connector end item
-        if not self.subject and not self.is_focused():
-            self._handle.set_pos_i(self._mpt[0], self._mpt[1])
+        if not self.is_focused() and not self.subject:
+            self._handle.set_pos_i(self._main_point[0], self._main_point[1])
 
-        diacanvas.CanvasItem.on_update(self, affine)
-
-        # draw line from main point to current handle position
-        x, y = self._handle.get_pos_w()
-        x, y = self.affine_point_w2i(x, y)
-        pos = x, y
-        self._line.line((self._mpt, pos))
-
+        pos = self._handle.get_pos_i()
         w, h = self._interface_name.get_size()
-        x, y = get_pos_centered(self._mpt, pos, w, h)
+        x, y = get_pos_centered(self._main_point, pos, w, h)
         self._interface_name.update_label(x, y)
 
-        self.set_bounds([min(self._mpt[0], pos[0]),
-            min(self._mpt[1], pos[1]),
-            max(self._mpt[0], pos[0]),
-            max(self._mpt[1], pos[1])])
-
+        FreeLine.on_update(self, affine)
         GroupBase.on_update(self, affine)
-
-
-    def on_point(self, x, y):
-        """
-        Enable to focus connector end items.
-        """
-        p = (x, y)
-
-        p1 = self._mpt
-        p2 = self._handle.get_pos_i()
-
-        # distance between main point and handle position
-        delta = diacanvas.geometry.distance_point_point(p1, p2)
-
-        # distance between main point and mouse cursor
-        dp = diacanvas.geometry.distance_point_point(p1, p)
-
-        # distance between line p1, p2 and mouse cursor
-        dl, dummy = diacanvas.geometry.distance_line_point(p1, p2, p, 1.0, 0) #diacanvas.shape.CAP_ROUND)
-
-        if dp < delta and dl < 10: 
-            dp = 0.0  # focus connector end item
-        return min(delta, dp)
 
 
     def on_subject_notify(self, pspec, notifiers=()):
@@ -278,7 +224,7 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
         Generate an id when subject is set or set id to None if there is no
         subject.
         """
-        DiagramItem.on_subject_notify(self, pspec, notifiers)
+        FreeLine.on_subject_notify(self, pspec, notifiers)
         if self.subject and not self._id:
             self._id = uniqueid.generate_id()
 
@@ -295,13 +241,6 @@ class ConnectorEndItem(diacanvas.CanvasItem, DiagramItem, GroupBase):
             self._id = None
 
         self.request_update()
-
-
-    def on_shape_iter(self):
-        """
-        Return line drawn between main point and current position.
-        """
-        yield self._line
 
 
     def allow_connect_handle(self, handle, item):
@@ -377,7 +316,7 @@ class RequiredConnectorEndItem(ConnectorEndItem):
 
 
 
-class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupable):
+class AssemblyConnectorItem(ElementItem, SimpleRotation, GroupBase):
     """
     Assembly connector item.
 
@@ -403,8 +342,9 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
         """
         Create assembly connector item.
         """
+        GroupBase.__init__(self)
         ElementItem.__init__(self, id)
-        SimpleRotation.__init__(self, id)
+        SimpleRotation.__init__(self)
 
         self._assembly = AssembledInterfaceIcon(self)
 
@@ -413,8 +353,6 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
 
         self.set(width = self._assembly.width,
             height = self._assembly.height)
-
-        self._ends = set() # connector end items
 
 
     def do_set_property(self, pspec, value):
@@ -436,13 +374,13 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
             self._assembly.get_provided_pos_i()
 
 
-    def update_end_mpt(self, old_rmpt, old_pmpt):
+    def update_end_main_point(self, old_rmpt, old_pmpt):
         rmpt, pmpt = self.get_end_pos()
-        for c in self._ends:
-            if c._mpt == old_rmpt:
-                c._mpt = rmpt
-            elif c._mpt == old_pmpt:
-                c._mpt = pmpt
+        for c in self.children:
+            if c._main_point == old_rmpt:
+                c._main_point = rmpt
+            elif c._main_point == old_pmpt:
+                c._main_point = pmpt
 
 
     def save(self, save_func):
@@ -450,7 +388,7 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
         Save non-free connector end items.
         """
         ElementItem.save(self, save_func)
-        for c in self._ends: 
+        for c in self.children: 
             if c.subject:
                 save_func(None, c)
 
@@ -462,7 +400,7 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
         if name == 'dir':
             old_rmpt, old_pmpt = self.get_end_pos()
             ElementItem.load(self, name, value)
-            self.update_end_mpt(old_rmpt, old_pmpt)
+            self.update_end_main_point(old_rmpt, old_pmpt)
         else:
             ElementItem.load(self, name, value)
 
@@ -475,7 +413,7 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
         """
         old_rmpt, old_pmpt = self.get_end_pos()
         SimpleRotation.rotate(self, step)
-        self.update_end_mpt(old_rmpt, old_pmpt)
+        self.update_end_main_point(old_rmpt, old_pmpt)
 
         self.request_update()
 
@@ -498,8 +436,6 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
         Maintain also free connector end items, so there is always two of
         them, one per main point kind (provided/required).
         """
-        ElementItem.on_update(self, affine)
-
         self._assembly.update_icon()
 
         rmpt = self._assembly.get_required_pos_i()
@@ -511,23 +447,17 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
             pmpt: set(),
         }
 
-        for c in self._ends:
-            self.update_child(c, affine)
-
-            # update bounds
-            x, y = c._handle.get_pos_w()
-            x, y = c.affine_point_w2i(x, y)
-            pos = x, y
-            self.set_bounds(diacanvas.geometry.rectangle_add_point(self.get_bounds(),
-                pos))
-
-            # store free conector end items:
-            # - checking for id and subject is important during diagram load
+        for c in self.children:
+            # store free conector end items; checking for id and subject is
+            # important during diagram load
             if not c.id and not c.subject:
-                free_ends[c._mpt].add(c)
+                free_ends[c._main_point].add(c)
 
         self.update_free_ends(free_ends, ProvidedConnectorEndItem, pmpt, affine)
         self.update_free_ends(free_ends, RequiredConnectorEndItem, rmpt, affine)
+
+        ElementItem.on_update(self, affine)
+        GroupBase.on_update(self, affine)
 
 
     def update_free_ends(self, free_ends, cls, mpt, affine):
@@ -547,7 +477,7 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
             # first, remove all, which are not in main point
             to_be_removed = list(free_ends[mpt])
             for c in to_be_removed:
-                if c._handle.get_pos_i() != c._mpt:
+                if c._handle.get_pos_i() != c._main_point:
                     c.unlink()
                     free_ends[mpt].remove(c)
 
@@ -583,36 +513,6 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, diacanvas.CanvasGroupab
         Return assembled interface icon as a shape.
         """
         return self._assembly.on_shape_iter()
-
-
-    #
-    # groupable
-    #
-
-    def on_groupable_iter(self):
-        """
-        Return connector end items.
-        """
-        return iter(self._ends)
-
-
-    def on_groupable_add(self, item):
-        """
-        Add connector end item.
-        """
-        self._ends.add(item)
-        item.set_child_of(self)
-        return True
-
-
-    def on_groupable_remove(self, item):
-        """
-        Remove connector end item.
-        """
-        assert item in self._ends
-        self._ends.remove(item)
-        item.set_child_of(None)
-        return True
 
 
 
@@ -689,10 +589,5 @@ class ConnectorItem(DiagramLine):
 #            return iter([self._assembly])
 #        else:
 #            return DiagramLine.on_shape_iter(self)
-
-
-initialize_item(ConnectorItem)
-initialize_item(ConnectorEndItem)
-initialize_item(AssemblyConnectorItem)
 
 # vim:sw=4:et

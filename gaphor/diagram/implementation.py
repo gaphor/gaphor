@@ -5,10 +5,12 @@ Implementation - - - -|>
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from gaphor.diagram.relationship import RelationshipItem
 
 class ImplementationItem(RelationshipItem):
+
+    __uml__ = UML.Implementation
+
     default_look = {
         'dash': (7.0, 5.0),
         'has_head': 1,
@@ -93,6 +95,3 @@ class ImplementationItem(RelationshipItem):
             self.set(**self.default_look)
 
         RelationshipItem.on_update(self, affine)
-
-
-initialize_item(ImplementationItem, UML.Implementation)

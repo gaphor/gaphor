@@ -47,7 +47,7 @@ class SimpleRotation:
                 NORTH, WEST, WEST, gobject.PARAM_READWRITE),
     }
 
-    def __init__(self, id):
+    def __init__(self):
         self._dir = WEST
         self.set_prop_persistent('dir')
 

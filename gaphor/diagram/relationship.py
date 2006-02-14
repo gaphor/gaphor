@@ -6,7 +6,6 @@ Relationship -- Base class for dependencies and associations.
 import gobject
 import diacanvas
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from diagramline import DiagramLine
 
 # TODO: Relationship should be extended to add a name/stereotype label
@@ -70,4 +69,3 @@ class RelationshipItem(DiagramLine):
                 return gen
         return None
 
-initialize_item(RelationshipItem)

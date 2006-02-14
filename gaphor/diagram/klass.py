@@ -12,7 +12,6 @@ import pango
 import diacanvas
 
 from gaphor import UML
-from gaphor.diagram import initialize_item
 from gaphor.i18n import _
 
 from classifier import ClassifierItem
@@ -32,6 +31,8 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     This is used to handle CanvasItems, not UML objects!
     """
     interface.implements(IClassView)
+
+    __uml__ = UML.Class, UML.Stereotype
     
     __gproperties__ = {
         'show-attributes': (gobject.TYPE_BOOLEAN, 'show attributes',
@@ -248,5 +249,3 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
             yield i
         for i in self._operations:
             yield i
-
-initialize_item(ClassItem, UML.Class, UML.Stereotype)
