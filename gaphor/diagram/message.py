@@ -1,7 +1,8 @@
 '''
 Relationship -- Base class for dependencies and associations.
 '''
-# vim:sw=4:et
+
+import itertools
 
 import gobject
 import pango
@@ -38,6 +39,11 @@ class MessageItem(DiagramLine, GroupBase):
         self._name  = TextElement('name')
         self.add(self._name)
 
+        self._circle = diacanvas.shape.Ellipse()
+        #self._circle.set_line_width(2.0)
+        self._circle.set_fill_color(diacanvas.color(0, 0, 0))
+        self._circle.set_fill(diacanvas.shape.FILL_SOLID)
+
         self.set(has_tail = 1, tail_fill_color = 0, tail_a = 0.0,
             tail_b = 15.0, tail_c = 6.0, tail_d = 6.0)
 
@@ -67,8 +73,26 @@ class MessageItem(DiagramLine, GroupBase):
         x, y = get_pos_centered(p1, p2, w, h)
         self._name.update_label(x, y)
 
+        if self.subject:
+            if self.subject.messageKind == 'lost':
+                x, y = self.handles[-1].get_pos_i()
+            if self.subject.messageKind == 'found':
+                x, y = self.handles[0].get_pos_i()
+            self._circle.ellipse((x, y), 10, 10)
+
         DiagramLine.on_update(self, affine)
         GroupBase.on_update(self, affine)
+        
+
+    def on_shape_iter(self):
+        """
+        Return activity edge name and circle.
+        """
+        it = DiagramLine.on_shape_iter(self)
+        if self.subject and self.subject.messageKind in ('lost', 'found'):
+            return itertools.chain(it, [self._circle])
+        else:
+            return it
 
 
     #
@@ -85,7 +109,6 @@ class MessageItem(DiagramLine, GroupBase):
             return c is None or isinstance(item, c.__class__)
         else:
             return False
-        
 
 
     def confirm_connect_handle(self, handle):
@@ -94,31 +117,65 @@ class MessageItem(DiagramLine, GroupBase):
         Always create a new Message with two EventOccurence instances.
         """
         #print 'confirm_connect_handle', handle, self.subject
-        c1 = self.handles[0].connected_to
-        c2 = self.handles[-1].connected_to
-        if c1 and c2:
-            assert c1.__class__ == c2.__class__
-            s1 = c1.subject
-            s2 = c2.subject
-            if self.subject and \
-               self.subject.sendEvent.covered is s1 and \
-               self.subject.receiveEvent.covered is s2:
-                return
+        send = self.handles[0].connected_to
+        received = self.handles[-1].connected_to
+        factory = resource(UML.ElementFactory)
 
-            factory = resource(UML.ElementFactory)
-            message = factory.create(UML.Message)
-            message.messageKind = 'complete'
-            head_event = factory.create(UML.EventOccurrence)
-            head_event.sendMessage = message
-            head_event.covered = s1
+        def get_subject(c):
+            if not self.subject:
+                factory = resource(UML.ElementFactory)
+                message = factory.create(UML.Message)
+                self.set_subject(message)
+            return self.subject
 
-            tail_event = factory.create(UML.EventOccurrence)
-            tail_event.receiveMessage = message
-            tail_event.covered = s2
+        if send:
+            message = get_subject(send)
+            if not message.sendEvent:
+                event = factory.create(UML.EventOccurrence)
+                event.sendMessage = message
+                event.covered = send.subject
 
-            self.set_subject(message)
+        if received:
+            message = get_subject(received)
+            if not message.receiveEvent:
+                event = factory.create(UML.EventOccurrence)
+                event.receiveMessage = message
+                event.covered = received.subject
+
+        if send and received:
+            assert send.__class__ == received.__class__
+            kind = 'complete'
+        elif send and not received:
+            kind = 'lost'
+        elif not send and received:
+            kind = 'found'
+
+        message.messageKind = kind
+
 
     def confirm_disconnect_handle(self, handle, was_connected_to):
         """See RelationshipItem.confirm_disconnect_handle().
         """
-        self.set_subject(None)
+        send = self.handles[0].connected_to
+        received = self.handles[-1].connected_to
+
+        if send:
+            self.subject.messageKind = 'lost'
+            event = self.subject.receiveEvent
+            if event:
+                event.receiveMessage = None
+                event.covered = None
+                del event
+
+        if received:
+            self.subject.messageKind = 'found'
+            event = self.subject.sendEvent
+            if event:
+                event.sendMessage = None
+                event.covered = None
+                del event
+
+        if not send and not received:
+            self.set_subject(None)
+
+# vim:sw=4:et
