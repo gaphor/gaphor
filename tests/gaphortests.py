@@ -5,6 +5,9 @@ import gaphor.diagram as diagram
 import gaphor.UML as UML
 
 class TestCase(unittest.TestCase):
+    """
+    Test case basic, abstract class.
+    """
     def setUp(self):
         self.factory = UML.ElementFactory()
 
