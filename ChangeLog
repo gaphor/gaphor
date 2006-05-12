@@ -1,3 +1,6 @@
+2006-05-12  arjan <arjan at yirdis dot nl>
+	* po/sv.po: new language file, thanks to Daniel Nylander.
+
 2006-02-14  wrobell <wrobell@pld-linux.org>
 	* gaphor/diagram/*.py: get rid of initialize_item function, use
 	metaclass instead; use __uml__ attribute for UML classes assignement;
@@ -6,8 +9,8 @@
 	class) with one disabled handle
 	* gaphor/diagram/connector.py: ConnectorEndItem uses FreeLine,
 	saving/loading not implemented yet
-	* gaphor/diagram/lifeline.py: LifelineItem and its lifetime (LifetimeItem
-	class) is separated now
+	* gaphor/diagram/lifeline.py: LifelineItem and its lifetime
+	(LifetimeItem class) is separated now
 	* gaphor/diagram/message.py: message name reimplemented using
 	TextElement
 
