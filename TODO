@@ -52,6 +52,8 @@ As always, there is much to do...
 
 - Create a good algorithm for placement of lines and maybe nodes too.
 
+- Use default GTK+ menu classes, in stead of the home-brew one.
+
 #- Use GTK+ 2.4 UIManager and ActionGroups (?):
   . We have to keep the gaphor.misc.action module intact.
   . As far as I can see, cross action updates, are not supported.
