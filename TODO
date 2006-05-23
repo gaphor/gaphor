@@ -1,3 +1,11 @@
+
+
+!!! Create some example diagrams,
+
+ - using stereotypes
+ - associations
+ - components and stuff
+
 ======= 0.8.0 ========
 - load uml2.gaphor and open other file or split flows and undo/redo.
   exception is raised. seems to be related to diagram item unlinking.

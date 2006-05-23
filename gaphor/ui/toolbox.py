@@ -55,7 +55,7 @@ class Toolbox(gtk.VBox):
         resource.set('ui.toolbox.%s' % button.toggle_id,
                      content.get_property('visible'), persistent=True)
 
-    def make_wrapbox_decorator(self, title, content):
+    def old_make_wrapbox_decorator(self, title, content):
         """Create a gtk.VBox with in the top compartment a label that can be
         clicked to show/hide the lower compartment.
         """
@@ -78,6 +78,7 @@ class Toolbox(gtk.VBox):
         hbox.set_spacing(3)
 
         vbox.pack_start(button, False, False, 1)
+        vbox.pack_start(content, False, False, 1)
 
         vbox.show_all()
 
@@ -93,6 +94,29 @@ class Toolbox(gtk.VBox):
         self.on_wrapbox_decorator_toggled(button, content)
 
         return vbox
+
+    def make_wrapbox_decorator(self, title, content):
+        """Create a gtk.VBox with in the top compartment a label that can be
+        clicked to show/hide the lower compartment.
+        """
+        expander = gtk.Expander()
+        hbox = gtk.HBox()
+        expander.set_label_widget(hbox)
+
+        label = gtk.Label(title)
+        hbox.pack_start(label, expand=False, fill=False)
+
+        sep = gtk.HSeparator()
+        hbox.pack_start(sep, expand=True, fill=True)
+        hbox.set_spacing(3)
+
+        expander.add(content)
+        
+        expanded = resource('ui.toolbox.%s' % title.replace(' ', '-').lower(), False)
+        expander.set_expanded(expanded)
+
+        expander.show_all()
+        return expander
 
     def construct(self):
 
