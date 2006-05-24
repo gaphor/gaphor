@@ -9,7 +9,7 @@ import diacanvas
 
 from gaphor import GaphorError, resource
 from gaphor import UML
-from gaphor.undomanager import UndoTransactionAspect, weave_method
+from gaphor.undomanager import undoable
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 
@@ -125,12 +125,12 @@ class AbstractClassAction(CheckAction):
             if isinstance(item, ClassItem):
                 self.active = item.subject and item.subject.isAbstract
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         if item and item.subject:
             item.subject.isAbstract = self.active
 
-weave_method(AbstractClassAction.execute, UndoTransactionAspect)
 register_action(AbstractClassAction, 'ItemFocus')
 
 
@@ -153,13 +153,13 @@ class AbstractOperationAction(CheckAction):
             if isinstance(item, OperationItem):
                 self.active = item.subject and item.subject.isAbstract
 
+    @undoable
     def execute(self):
         item = self._window.get_current_diagram_view() \
             .focus_item.item
         if item and item.subject:
             item.subject.isAbstract = self.active
 
-weave_method(AbstractOperationAction.execute, UndoTransactionAspect)
 register_action(AbstractOperationAction, 'ItemFocus')
 
 
@@ -184,6 +184,7 @@ class CreateAttributeAction(Action):
             if isinstance(item, ClassItem):
                 self.sensitive = item.get_property('show-attributes')
 
+    @undoable
     def execute(self):
         view = self._window.get_current_diagram_view()
         focus_item = get_parent_focus_item(self._window)
@@ -206,7 +207,6 @@ class CreateAttributeAction(Action):
                 view.start_editing(vf, wx, wy)
                 break
 
-weave_method(CreateAttributeAction.execute, UndoTransactionAspect)
 register_action(CreateAttributeAction, 'ShowAttributes', 'ItemFocus')
 
 
@@ -227,6 +227,7 @@ class CreateOperationAction(Action):
             if isinstance(item, ClassItem):
                 self.sensitive = item.get_property('show-operations')
 
+    @undoable
     def execute(self):
         view = self._window.get_current_diagram_view()
         focus_item = get_parent_focus_item(self._window)
@@ -248,7 +249,6 @@ class CreateOperationAction(Action):
                 view.start_editing(vf, wx, wy)
                 break
 
-weave_method(CreateOperationAction.execute, UndoTransactionAspect)
 register_action(CreateOperationAction, 'ShowOperations', 'ItemFocus')
 
 
@@ -257,6 +257,7 @@ class DeleteFeatureAction(Action):
     def init(self, window):
         self._window = window
 
+    @undoable
     def execute(self):
         #subject = get_parent_focus_item(self._window).subject
         item = self._window.get_current_diagram_view().focus_item.item
@@ -269,7 +270,6 @@ class DeleteAttributeAction(DeleteFeatureAction):
     label = 'Delete A_ttribute'
     tooltip='Delete the selected attribute'
 
-weave_method(DeleteAttributeAction.execute, UndoTransactionAspect)
 register_action(DeleteAttributeAction, 'ShowAttributes', 'CreateAttribute', 'ItemFocus')
 
 
@@ -278,7 +278,6 @@ class DeleteOperationAction(DeleteFeatureAction):
     label = 'Delete O_peration'
     tooltip = 'Delete the selected operation'
 
-weave_method(DeleteOperationAction.execute, UndoTransactionAspect)
 register_action(DeleteOperationAction, 'ShowOperations', 'CreateOperation', 'ItemFocus')
 
 
@@ -299,11 +298,11 @@ class ShowAttributesAction(CheckAction):
             if isinstance(item, ClassItem):
                 self.active = item.get_property('show-attributes')
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.set_property('show-attributes', self.active)
 
-weave_method(DeleteOperationAction.execute, UndoTransactionAspect)
 register_action(ShowAttributesAction, 'ItemFocus')
 
 
@@ -324,11 +323,11 @@ class ShowOperationsAction(CheckAction):
             if isinstance(item, ClassItem):
                 self.active = item.get_property('show-operations')
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.set_property('show-operations', self.active)
 
-weave_method(ShowOperationsAction.execute, UndoTransactionAspect)
 register_action(ShowOperationsAction, 'ItemFocus')
 
 #
@@ -358,12 +357,12 @@ class AddSegmentAction(SegmentAction):
     label = 'Add _Segment'
     tooltip='Add a segment to the line'
 
+    @undoable
     def execute(self):
         item, segment = self.get_item_and_segment()
         if item:
             item.set_property('add_segment', segment)
             
-weave_method(AddSegmentAction.execute, UndoTransactionAspect)
 register_action(AddSegmentAction, 'ItemFocus')
 
 
@@ -380,12 +379,12 @@ class DeleteSegmentAction(SegmentAction):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         item, segment = self.get_item_and_segment()
         if item:
             item.set_property('del_segment', segment)
             
-weave_method(DeleteSegmentAction.execute, UndoTransactionAspect)
 register_action(DeleteSegmentAction, 'ItemFocus', 'AddSegment')
 
 
@@ -405,6 +404,7 @@ class OrthogonalAction(CheckAction):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, diacanvas.CanvasLine)
@@ -412,7 +412,6 @@ class OrthogonalAction(CheckAction):
             fi.set_property('add_segment', 0)
         fi.set_property('orthogonal', self.active)
 
-weave_method(OrthogonalAction.execute, UndoTransactionAspect)
 register_action(OrthogonalAction, 'ItemFocus', 'AddSegment', 'DeleteSegment')
 
 
@@ -433,12 +432,12 @@ class OrthogonalAlignmentAction(CheckAction):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, diacanvas.CanvasLine)
         fi.set_property('horizontal', self.active)
 
-weave_method(OrthogonalAlignmentAction.execute, UndoTransactionAspect)
 register_action(OrthogonalAlignmentAction, 'ItemFocus', 'Orthogonal')
 
 
@@ -462,12 +461,12 @@ class AssociationShowDirectionAction(CheckAction):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, AssociationItem)
         fi.set_property('show-direction', self.active)
 
-weave_method(AssociationShowDirectionAction.execute, UndoTransactionAspect)
 register_action(AssociationShowDirectionAction, 'ItemFocus')
 
 
@@ -479,12 +478,12 @@ class AssociationInvertDirectionAction(Action):
     def init(self, window):
         self._window = window
 
+    @undoable
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, AssociationItem)
         fi.invert_direction()
 
-weave_method(AssociationInvertDirectionAction.execute, UndoTransactionAspect)
 register_action(AssociationInvertDirectionAction, 'ItemFocus')
 
 
@@ -506,13 +505,12 @@ class NavigableAction(RadioAction):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         item = self.get_association_end()
         assert item.subject
         assert isinstance(item.subject, UML.Property)
         item.set_navigable(self.navigable)
-
-weave_method(NavigableAction.execute, UndoTransactionAspect)
 
 
 class HeadNavigableAction(NavigableAction):
@@ -584,13 +582,13 @@ class AggregationAction(RadioAction):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         if self.active:
             subject = get_parent_focus_item(self._window).get_property(self.end_name).subject
             assert isinstance(subject, UML.Property)
             subject.aggregation = self.aggregation
 
-weave_method(AggregationAction.execute, UndoTransactionAspect)
 
 class HeadNoneAction(AggregationAction):
     id = 'Head_AggregationNone'
@@ -721,14 +719,13 @@ class DependencyTypeAction(RadioAction):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         if self.active:
             item = get_parent_focus_item(self._window)
             item.set_dependency_type(self.dependency_type)
             #item.auto_dependency = False
             self._window.get_action_pool().execute('AutoDependency', active=False)
-
-weave_method(DependencyTypeAction.execute, UndoTransactionAspect)
         
 
 class DependencyTypeDependencyAction(DependencyTypeAction):
@@ -783,11 +780,11 @@ class AutoDependencyAction(CheckAction):
             if isinstance(item, DependencyItem):
                 self.active = item.auto_dependency
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.auto_dependency = self.active
 
-weave_method(AutoDependencyAction.execute, UndoTransactionAspect)
 register_action(AutoDependencyAction, 'ItemFocus')
 
 
@@ -808,12 +805,12 @@ class IndirectlyInstantiatedComponentAction(CheckAction):
             if isinstance(item, ComponentItem):
                 self.active = item.subject and item.subject.isIndirectlyInstantiated
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         if item.subject:
             item.subject.isIndirectlyInstantiated = self.active
 
-weave_method(IndirectlyInstantiatedComponentAction.execute, UndoTransactionAspect)
 register_action(IndirectlyInstantiatedComponentAction, 'ItemFocus')
 
 
@@ -849,6 +846,7 @@ class MoveAction(Action):
                 self.active = item.subject 
                 self.sensitive = self._isSensitive(cls_item.subject, item)
 
+    @undoable
     def execute(self):
         cls = self._getParent().subject
         item = self._getItem()
@@ -861,7 +859,6 @@ class MoveAction(Action):
         move(item.subject)
         self._window.execute_action('ItemFocus')
 
-weave_method(MoveAction.execute, UndoTransactionAspect)
 
 class MoveUpAction(MoveAction):
     id = 'MoveUp'
@@ -905,13 +902,13 @@ class FoldAction(Action):
         else:
             self.sensitive = isinstance(item, InterfaceItem)
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
 
         item.set_property('drawing-style', InterfaceItem.DRAW_ICON)
 
-weave_method(FoldAction.execute, UndoTransactionAspect)
 register_action(FoldAction, 'ItemFocus')
 
 
@@ -920,6 +917,7 @@ class UnfoldAction(FoldAction):
     label = '_Unfold'
     tooltip = 'View details'
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
@@ -929,7 +927,6 @@ class UnfoldAction(FoldAction):
         item.canvas.update_now()
         item.canvas.update_now()
 
-weave_method(UnfoldAction.execute, UndoTransactionAspect)
 register_action(UnfoldAction, 'ItemFocus')
 
 
@@ -956,14 +953,13 @@ class ApplyStereotypeAction(CheckAction, ObjectAction):
             else:
                 self.active = False
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         if self.active:
             item.subject.appliedStereotype = self.stereotype
         else:
             del item.subject.appliedStereotype[self.stereotype]
-
-weave_method(ApplyStereotypeAction.execute, UndoTransactionAspect)
 
 
 class CreateLinksAction(Action):
@@ -1032,6 +1028,7 @@ class CreateLinksAction(Action):
         # We always create one relationship to much. Remove it.
         new_rel.unlink()
 
+    @undoable
     def execute(self):
         diagram_tab = self._window.get_current_diagram_tab()
         diagram = diagram_tab.get_diagram()
@@ -1050,7 +1047,6 @@ class CreateLinksAction(Action):
             self.create_missing_relationships(item, diagram,
                                               DependencyItem)
 
-weave_method(CreateLinksAction.execute, UndoTransactionAspect)
 register_action(CreateLinksAction, 'ItemFocus', 'ItemSelect')
 
 
@@ -1071,12 +1067,11 @@ class ObjectNodeOrderingAction(RadioAction):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         if self.active:
             item = get_parent_focus_item(self._window)
             item.set_ordering(self.ordering)
-
-weave_method(ObjectNodeOrderingAction.execute, UndoTransactionAspect)
 
 
 class ObjectNodeOrderingUnorderedAction(ObjectNodeOrderingAction):
@@ -1132,11 +1127,11 @@ class ObjectNodeOrderingVisibiltyAction(CheckAction):
             if isinstance(item, ObjectNodeItem):
                 self.active = item.props.show_ordering
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.props.show_ordering = self.active
 
-weave_method(ObjectNodeOrderingVisibiltyAction.execute, UndoTransactionAspect)
 register_action(ObjectNodeOrderingVisibiltyAction, 'ItemFocus')
 
 
@@ -1157,11 +1152,11 @@ class RotateAction(Action):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.rotate()
 
-weave_method(RotateAction.execute, UndoTransactionAspect)
 register_action(RotateAction, 'ItemFocus')
 
 
@@ -1181,6 +1176,7 @@ class SplitFlowAction(Action):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         """
         Split flow using activity edge connector. Two flows are created,
@@ -1258,10 +1254,7 @@ class SplitFlowAction(Action):
         fa._connector.subject.value = name
         fb._connector.subject.value = name
 
-
-weave_method(SplitFlowAction.execute, UndoTransactionAspect)
 register_action(SplitFlowAction, 'ItemFocus')
-
 
 
 class MergeFlowAction(Action):
@@ -1279,6 +1272,7 @@ class MergeFlowAction(Action):
         except NoFocusItemError:
             pass
 
+    @undoable
     def execute(self):
         """
         Merge flows with activity edge connectors.
@@ -1314,7 +1308,6 @@ class MergeFlowAction(Action):
         fa.unlink()
         fb.unlink()
 
-weave_method(MergeFlowAction.execute, UndoTransactionAspect)
 register_action(MergeFlowAction, 'ItemFocus')
 
 
@@ -1334,14 +1327,15 @@ class DisconnectConnector(Action):
         else:
             self.active = isinstance(item, ConnectorEndItem)
 
+    @undoable
     def execute(self):
         item = get_focused_item(self._window)
         assembly = item.parent
         item.unlink()
         assembly.request_update()
 
-weave_method(DisconnectConnector.execute, UndoTransactionAspect)
 register_action(DisconnectConnector, 'ItemFocus')
+
 
 class ApplyInterfaceAction(RadioAction, ObjectAction):
 
@@ -1363,15 +1357,13 @@ class ApplyInterfaceAction(RadioAction, ObjectAction):
             if isinstance(item, ConnectorEndItem):
                 self.active = (self.interface == item.subject)
 
+    @undoable
     def execute(self):
         item = get_focused_item(self._window)
         if self.active:
             item.subject = self.interface
         else:
             item.set_subject(None)
-
-weave_method(ApplyInterfaceAction.execute, UndoTransactionAspect)
-
 
 
 class LifelineHasLifetimeAction(CheckAction):
@@ -1391,9 +1383,9 @@ class LifelineHasLifetimeAction(CheckAction):
             if isinstance(item, LifelineItem):
                 self.active = item.props.has_lifetime
 
+    @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.props.has_lifetime = self.active
 
-weave_method(LifelineHasLifetimeAction.execute, UndoTransactionAspect)
 register_action(LifelineHasLifetimeAction, 'ItemFocus')

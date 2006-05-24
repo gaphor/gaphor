@@ -17,6 +17,7 @@ VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 import sys, os
 from glob import glob
 from commands import getoutput, getstatus, getstatusoutput
+import py2app
 from distutils.core import setup, Command
 from distutils.command.build_py import build_py
 from distutils.command.install_lib import install_lib
@@ -415,6 +416,7 @@ setup(name='gaphor',
                 'install_lib': install_lib_Gaphor,
                 'install_mo': install_mo,
                 'run': run_Gaphor
-      }
+      },
+      app=['gaphor-osx.py']
 )
 

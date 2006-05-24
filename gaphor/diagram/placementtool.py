@@ -4,6 +4,8 @@ import gobject
 import diacanvas
 from gaphor import UML
 from gaphor import resource
+from gaphor.undomanager import get_undo_manager
+
 
 class PlacementTool(diacanvas.PlacementTool):
 
@@ -77,14 +79,14 @@ class PlacementTool(diacanvas.PlacementTool):
         self.is_released = False
         view.unselect_all()
         #print 'Gaphor: on_button_press_event: %s' % self.__dict__
-        view.canvas.get_undo_manager().begin_transaction()
+        get_undo_manager().begin_transaction()
         return diacanvas.PlacementTool.do_button_press_event(self, view, event)
 
     def do_button_release_event(self, view, event):
         self.is_released = True
         if resource('reset-tool-after-create', False):
             view.set_tool(None)
-        view.canvas.get_undo_manager().commit_transaction()
+        get_undo_manager().commit_transaction()
         #print 'Gaphor: do_button_release_event: %s' % self.__dict__
         return diacanvas.PlacementTool.do_button_release_event(self, view, event)
 

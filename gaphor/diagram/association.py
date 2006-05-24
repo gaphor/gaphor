@@ -18,6 +18,7 @@ import diacanvas.shape
 import diacanvas.geometry
 
 from gaphor import resource, UML
+from gaphor.undomanager import undoable
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.relationship import RelationshipItem
 
@@ -875,12 +876,11 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
     def on_editable_start_editing(self, shape):
         pass
 
+    @undoable
     def on_editable_editing_done(self, shape, new_text):
         if shape in (self._name, self._mult):
             if self.subject and (shape == self._name or new_text != ''):
-                self.canvas.get_undo_manager().begin_transaction()
                 self.subject.parse(new_text)
-                self.canvas.get_undo_manager().commit_transaction()
             #self.set_text()
             #log.info('editing done')
 

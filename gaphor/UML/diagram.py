@@ -10,7 +10,6 @@ __date__ = '$date$'
 import gobject
 import diacanvas
 from gaphor.misc import uniqueid
-from gaphor.undomanager import get_undo_manager
 from uml2 import Namespace, PackageableElement
 
 class DiagramCanvas(diacanvas.Canvas):
@@ -25,7 +24,6 @@ class DiagramCanvas(diacanvas.Canvas):
     def __init__(self, diagram):
         self.__gobject_init__()
         self._diagram = diagram
-        self.set_undo_manager(get_undo_manager())
 
     diagram = property(lambda d: d._diagram)
 

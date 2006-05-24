@@ -39,12 +39,8 @@ class DiagramTab(object):
             #self.diagram.canvas.disconnect(self.__snap_to_grid_id)
         self.diagram = diagram
         if diagram:
-            #log.info('set diagram')
             diagram.canvas.set_property ('allow_undo', 1)
             diagram.connect(('name', '__unlink__'), self.__on_diagram_event)
-            #self.__undo_id = diagram.canvas.undo_manager.connect('begin_transaction', self.__on_diagram_undo)
-            # Set capabilities:
-            #self.__on_diagram_undo(diagram.canvas.undo_manager)
 
             if hasattr(self, 'view'):
                 self.view.get_hadjustment().set_value(0.0)
@@ -144,10 +140,6 @@ class DiagramTab(object):
 
     def __on_view_notify_tool(self, view, pspec):
         self.owning_window.execute_action('ToolChange')
-
-#    def __on_diagram_undo(self, undo_manager):
-#        #log.info('set undo stack %s' % (undo_manager))
-#        self.owning_window.execute_action('editundostack')
 
     def __on_diagram_event(self, element, pspec):
         if pspec == '__unlink__':

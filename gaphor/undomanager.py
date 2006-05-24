@@ -1,9 +1,6 @@
 # vim:sw=4:et:
 
 import gobject
-import diacanvas
-
-from gaphor.misc.aspects import Aspect, weave_method
 
 
 def get_undo_manager():
@@ -12,19 +9,16 @@ def get_undo_manager():
     return _default_undo_manager
 
 
-class UndoTransactionAspect(Aspect):
-
-    def __init__(self, method):
-        self.method = method
-
-    def before(self):
-        get_undo_manager().begin_transaction()
-
-    def after(self, retval, exc):
-        if exc:
-            get_undo_manager().discard_transaction()
-        else:
-            get_undo_manager().commit_transaction()
+def undoable(func):
+    """Descriptor. Enables an undo transaction around the method/function.
+    """
+    def wrapper(*args, **kwargs):
+        undo_manager = get_undo_manager()
+        undo_manager.begin_transaction()
+        try:
+            func(*args, **kwargs)
+        finally:
+            undo_manager.commit_transaction()
 
 
 class TransactionError(Exception):
@@ -67,7 +61,7 @@ class Transaction(object):
                 log.error('Error while redoing action %s' % action, e)
 
 
-class UndoManager(gobject.GObject, diacanvas.UndoManager):
+class UndoManager(gobject.GObject):
     """Simple transaction manager for Gaphor.
     This transaction manager supports nested transactions.
     """
@@ -97,9 +91,9 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
 #        finally:
 #            self._short_circuit = False
 
-    # UndoManager interface:
-
-    def on_begin_transaction(self):
+    def begin_transaction(self):
+        """Add an action to the current transaction
+        """
         if self._in_undo:
             return
 
@@ -113,7 +107,7 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
         self.clear_redo_stack()
         self._transaction_depth += 1
 
-    def on_add_undo_action(self, action):
+    def add_undo_action(self, action):
         """Add an action to undo. An action
         """
         if self._short_circuit:
@@ -128,7 +122,7 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
 
         self._current_transaction.add(action)
 
-    def on_commit_transaction(self):
+    def commit_transaction(self):
         if self._in_undo:
             return
 
@@ -145,7 +139,7 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
 
             self._current_transaction = None
 
-    def on_discard_transaction(self):
+    def discard_transaction(self):
         if self._in_undo:
             return
 
@@ -156,7 +150,7 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
         if self._transaction_depth == 0:
             self._current_transaction = None
 
-    def on_undo_transaction(self):
+    def undo_transaction(self):
         if not self._undo_stack:
             return
 
@@ -171,7 +165,7 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
             self._in_undo = False
         self._redo_stack.append(transaction)
 
-    def on_redo_transaction(self):
+    def redo_transaction(self):
         if not self._redo_stack:
             return
 
@@ -183,17 +177,15 @@ class UndoManager(gobject.GObject, diacanvas.UndoManager):
             self._in_undo = False
         self._undo_stack.append(transaction)
 
-    def on_in_transaction(self):
+    def in_transaction(self):
         return self._current_transaction is not None
 
-    def on_can_undo(self):
+    def can_undo(self):
         return bool(self._current_transaction or self._undo_stack)
 
-    def on_can_redo(self):
+    def can_redo(self):
         return bool(self._redo_stack)
 
-gobject.type_register(UndoManager)
-diacanvas.set_undo_manager(UndoManager)
 
 # Register as resource:
 import gaphor

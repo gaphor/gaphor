@@ -11,7 +11,9 @@ import diacanvas.shape
 from diacanvas import CanvasItem, CanvasEditable
 from diacanvas.geometry import distance_rectangle_point
 from diagramitem import DiagramItem
+from gaphor.undomanager import undoable
 from gaphor.diagram import DiagramItemMeta
+
 
 class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
     """FeatureItems are model elements who recide inside a ClassItem, such as
@@ -56,13 +58,12 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         if self.subject:
             self._expression.set_text(self.subject.render())
 
+    @undoable
     def do_set_property(self, pspec, value):
         if pspec.name == 'expression':
             if self.subject:
                 #self.preserve_property('expression')
-                self.canvas.get_undo_manager().begin_transaction()
                 self.subject.parse(value)
-                self.canvas.get_undo_manager().commit_transaction()
 
                 self._expression.set_text(self.subject.render())
                 self.request_update()

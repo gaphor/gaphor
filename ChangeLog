@@ -1,3 +1,8 @@
+2006-05-23  arjan <arjan at yirdis dot nl>
+
+        * gaphor/undomanager.py: disconnected from diacanvas.UndoManager
+        * */*actions.py: use new undoable descriptior in stead of aspects
+
 2006-05-18  arjan <arjan at yirdis dot nl>
 	* po/es.po: updated by Jordi Vilalta Prat.
 	* po/ca.po: Catalan translation thanks to Jordi Vilalta Prat.

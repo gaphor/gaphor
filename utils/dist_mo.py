@@ -1,6 +1,7 @@
 # vim:sw=4:et
 
-from distutils.dist import Distribution as _Distribution
+#from distutils.dist import Distribution as _Distribution
+from distutils.core import Distribution as _Distribution
 
 class Distribution(_Distribution):
 

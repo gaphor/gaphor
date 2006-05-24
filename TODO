@@ -19,10 +19,28 @@
 
 As always, there is much to do...
 
+- At this point we have three event systems:
+   1. GObject - used by GTK+, should be restricted to the GUI
+   2. Actions - used for (pseudo) menu actions (artifical actions are triggered
+                some times (e.g. to notify about changes in the Undo Manager)
+                works with string based notifiers.
+   3. Zope - fairly optimized, works with interfaces and objects for a
+             change.
+
+   GObject will stay as long as we use GTK+. Restrict it's influence to the GUI.
+   (to much management overhead)
+   Actions work fine, for menu actions. Gaphor specific and should work
+   with the GTK+ menu manager classes.
+   Zope classes are quite optimized. However, mainly provides the same
+   functionality as Actions, but not as fine grained.
+
 - Check association removal when connected to a class.
 
 - Fix namespace relations between Lifeline and Interaction and Message and
   Interaction
+
+- Allow to make Action objects, instead of defining classes.
+  Should use meta-classes for registration too (define __abstract__ or\something to prevent registration).
 
 #- Store application state:
   #- last opened files
@@ -62,7 +80,8 @@ As always, there is much to do...
 
 - Use default GTK+ menu classes, in stead of the home-brew one.
 
-#- Use GTK+ 2.4 UIManager and ActionGroups (?):
+- Use GTK+ 2.4 UIManager and ActionGroups (?):
+  * Reconsider since GTK+ 2.8 bindings are fairly better than the 2.4 bindings
   . We have to keep the gaphor.misc.action module intact.
   . As far as I can see, cross action updates, are not supported.
   . Properties can be mapped in a straightforward way.
@@ -73,7 +92,7 @@ As always, there is much to do...
     to read the tutorial some day ;-).
   . The current structure is simple and quite Pythonic. It should be this way.
   . Stuff like a recent-file box will be easier to create (I guess).
-  Conclusion: keep using the gaphor.misc.action code
+  Previous conclusion: keep using the gaphor.misc.action code
 
 #- Storing last open files or having a quick-list of most important
   directories or so would be great 
@@ -133,10 +152,13 @@ UI
 > 90 degree bends by holding down shift, something like that would be very
 > nice in Gaphor
 
-Lineup selected elements vertically, horizontally in context menu
+- Lineup selected elements vertically, horizontally in context menu
 
-I also intend to "merge" lines (as is often used for generalizations: a line with one arrow, which splits into two lines, one for each subclass)
+- I also intend to "merge" lines (as is often used for generalizations: a
+  line with one arrow, which splits into two lines, one for each subclass)
 
-The text editing also needs a facelift.
+- The text editing also needs a facelift.
 
-Alert a user when deleting the last reference to an object (Are you sure you want to remove all the selected elements from the model?)
+#- Alert a user when deleting the last reference to an object (Are you
+  sure you want to remove all the selected elements from the model?)
+

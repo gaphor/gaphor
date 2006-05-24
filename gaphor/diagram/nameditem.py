@@ -8,6 +8,7 @@ import gobject
 import pango
 import diacanvas
 from elementitem import ElementItem
+from gaphor.undomanager import get_undo_manager
 from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram import DiagramItemMeta
@@ -153,10 +154,10 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
                     new_text = new_text[l1:]
                     new_text = new_text[:-l2]
 
-            self.canvas.get_undo_manager().begin_transaction()
+            get_undo_manager().begin_transaction()
             log.debug('setting %s to %s' % (self.subject_attr, new_text))
             setattr(self.subject, self.subject_attr, new_text)
-            self.canvas.get_undo_manager().commit_transaction()
+            get_undo_manager().commit_transaction()
 
 
     # notifications

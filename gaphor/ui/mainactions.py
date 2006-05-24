@@ -13,8 +13,7 @@ from threading import Thread
 from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
-from gaphor import undomanager
-#from gaphor.undomanager import UndoTransactionAspect, weave_method
+from gaphor.undomanager import get_undo_manager
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 from gaphor.misc.action import DynamicMenu, ObjectAction, register_slot
 from gaphor.misc.action import ActionError
@@ -139,8 +138,8 @@ class RevertAction(Action):
             gc.collect()
             worker = GIdleThread(storage.load_generator(filename), queue)
             self._window.action_pool.insensivate_actions()
-            undomanager.get_undo_manager().clear_undo_stack()
-            undomanager.get_undo_manager().clear_redo_stack()
+            get_undo_manager().clear_undo_stack()
+            get_undo_manager().clear_redo_stack()
             worker.start()
             worker.wait()
             if worker.error:
@@ -624,10 +623,10 @@ class UndoAction(Action):
         self._window = window
 
     def update(self):
-        self.sensitive = undomanager.get_undo_manager().can_undo()
+        self.sensitive = get_undo_manager().can_undo()
 
     def execute(self):
-        undomanager.get_undo_manager().undo_transaction()
+        get_undo_manager().undo_transaction()
         #self.update()
         self._window.execute_action('UndoStack')
 
@@ -644,10 +643,10 @@ class RedoAction(Action):
         self._window = window
 
     def update(self):
-        self.sensitive = undomanager.get_undo_manager().can_redo()
+        self.sensitive = get_undo_manager().can_redo()
 
     def execute(self):
-        undomanager.get_undo_manager().redo_transaction()
+        get_undo_manager().redo_transaction()
         #self.update()
         self._window.execute_action('UndoStack')
 

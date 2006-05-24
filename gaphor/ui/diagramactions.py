@@ -8,7 +8,7 @@ import diacanvas
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.undomanager import UndoTransactionAspect, weave_method
+from gaphor.undomanager import get_undo_manager, undoable
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
@@ -60,10 +60,10 @@ class UndoAction(Action):
 
     def update(self):
         diagram_tab = self._window.get_current_diagram_tab()
-        self.sensitive = diagram_tab and diagram_tab.get_canvas().undo_manager.can_undo()
+        self.sensitive = diagram_tab and get_undo_manager().can_undo()
 
     def execute(self):
-        self._window.get_current_diagram_view().canvas.undo_manager.undo_transaction()
+        get_undo_manager().undo_transaction()
         self.update()
         self._window.execute_action('EditUndoStack')
 
@@ -81,10 +81,10 @@ class RedoAction(Action):
 
     def update(self):
         diagram_tab = self._window.get_current_diagram_tab()
-        self.sensitive = diagram_tab and diagram_tab.get_canvas().undo_manager.can_redo()
+        self.sensitive = diagram_tab and get_undo_manager().can_redo()
 
     def execute(self):
-        self._window.get_current_diagram_view().canvas.undo_manager.redo_transaction()
+        get_undo_manager().redo_transaction()
         self.update()
         self._window.execute_action('EditUndoStack')
 
@@ -199,13 +199,13 @@ class DeleteAction(Action):
             return
 
         if view.is_focus():
-            view.canvas.undo_manager.begin_transaction()
+            get_undo_manager().begin_transaction()
             try:
                 items = view.selected_items
                 for i in items:
                     i.item.unlink()
             finally:
-                view.canvas.undo_manager.commit_transaction()
+                get_undo_manager().commit_transaction()
     
     def mayRemoveFromModal(self, view):
         ''' Check if there are items which will be deleted from the model (when their last views are deleted). If so request user confirmation before deletion. '''
@@ -333,6 +333,7 @@ class PasteAction(Action):
             # Plain attribute
             self._item.load(name, str(value))
 
+    @undoable
     def execute(self):
         view = self._window.get_current_diagram_view()
         diagram = self._window.get_current_diagram()
@@ -374,7 +375,6 @@ class PasteAction(Action):
         for item in self._new_items.values():
             view.select(view.find_view_item(item))
 
-weave_method(PasteAction.execute, UndoTransactionAspect)
 register_action(PasteAction, 'EditCopy')
 
 

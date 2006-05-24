@@ -6,9 +6,9 @@
 __all__ = [ 'main', 'resource', 'GaphorError' ]
 
 # Check for GTK-2.0, since we need it anyway...
-import pygtk
-pygtk.require('2.0')
-del pygtk
+#import pygtk
+#pygtk.require('2.0')
+#del pygtk
 
 import misc.singleton
 import misc.logger
