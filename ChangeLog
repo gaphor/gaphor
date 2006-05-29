@@ -1,3 +1,7 @@
+2006-05-29  arjan <arjan at yirdis dot nl>
+
+	* setup.py: added languages Swedish and Catalan.
+
 2006-05-23  arjan <arjan at yirdis dot nl>
 
         * gaphor/undomanager.py: disconnected from diacanvas.UndoManager
