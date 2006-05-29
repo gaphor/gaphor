@@ -20,7 +20,10 @@ from commands import getoutput, getstatus, getstatusoutput
 try:
     import py2app
 except ImportError:
-    print 'No py2app..'
+    print 'No py2app.'
+    py2appargs = dict()
+else:
+    py2appargs = dict(app=['gaphor-osx.py'])
 
 from distutils.core import setup, Command
 from distutils.command.build_py import build_py
@@ -423,6 +426,6 @@ setup(name='gaphor',
                 'install_mo': install_mo,
                 'run': run_Gaphor
       },
-      app=['gaphor-osx.py']
+      **py2appargs
 )
 
