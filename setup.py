@@ -17,7 +17,11 @@ VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 import sys, os
 from glob import glob
 from commands import getoutput, getstatus, getstatusoutput
-import py2app
+try:
+    import py2app
+except ImportError:
+    print 'No py2app..'
+
 from distutils.core import setup, Command
 from distutils.command.build_py import build_py
 from distutils.command.install_lib import install_lib
@@ -188,9 +192,11 @@ class build_py_Gaphor(build_py, version_py):
         py_model = os.path.join('gaphor', 'UML', 'uml2.py')
         outfile = os.path.join(self.build_lib, py_model)
         self.mkpath(os.path.dirname(outfile))
-        if self.force or newer(model, outfile) \
-                      or newer(overrides, outfile) \
-                      or newer(gen, outfile):
+
+        # Figure out if the uml2.py (outfile) is the newest or should be
+        # generated (again).
+        if self.force or reduce(lambda a, b: newer(a,b) and a or b,
+                                (model, overrides, gen, outfile)) != outfile:
             print 'generating %s from %s...' % (py_model, model)
             print '  (warnings can be ignored)'
             utils.genUML2.generate(model, outfile, overrides)
