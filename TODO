@@ -1,0 +1,164 @@
+
+
+!!! Create some example diagrams,
+
+ - using stereotypes
+ - associations
+ - components and stuff
+
+======= 0.8.0 ========
+- load uml2.gaphor and open other file or split flows and undo/redo.
+  exception is raised. seems to be related to diagram item unlinking.
+
+    Traceback (most recent call last):
+      File "build/lib/gaphor/diagram/diagramitem.py", line 163, in disconnect
+        ids = self.__handler_to_id[key]
+    KeyError: (<bound method association.__on_unlink of <gaphor.UML.properties.association object at 0x3034e030>>, <gaphor.UML.uml2.ControlFlow object at 0x3083b150>)
+
+======= End of 0.8.0 ========
+
+As always, there is much to do...
+
+- At this point we have three event systems:
+   1. GObject - used by GTK+, should be restricted to the GUI
+   2. Actions - used for (pseudo) menu actions (artifical actions are triggered
+                some times (e.g. to notify about changes in the Undo Manager)
+                works with string based notifiers.
+   3. Zope - fairly optimized, works with interfaces and objects for a
+             change.
+
+   GObject will stay as long as we use GTK+. Restrict it's influence to the GUI.
+   (to much management overhead)
+   Actions work fine, for menu actions. Gaphor specific and should work
+   with the GTK+ menu manager classes.
+   Zope classes are quite optimized. However, mainly provides the same
+   functionality as Actions, but not as fine grained.
+
+- Check association removal when connected to a class.
+
+- Fix namespace relations between Lifeline and Interaction and Message and
+  Interaction
+
+- Allow to make Action objects, instead of defining classes.
+  Should use meta-classes for registration too (define __abstract__ or\something to prevent registration).
+
+#- Store application state:
+  #- last opened files
+  #- open/closed status of diagram toolbox
+  #- window size
+  #- reset tool option
+
+#- When Stereotype has no submenu items, grey it out. Same goes for "Export"
+  menu. This will be handled by the UIManager in the near future.
+
+- disable actions when editing.
+
+- write really good test cases for undo functionality. Have some already.
+
+- An option that shows the selected item (in the namespace view) in a diagram.
+
+- Stereotype export and import function. Allow to export packages and import
+  them into other models.
+
+#- Create distinctive icons for Include and Extend relationships (use cases).
+
+- How to figure out if a module exists without loading it?
+
+- Exporting diagrams to UML XMI (work in progress),
+  code, images (SVG/png), etc. - make a plugin!
+
+- fix accelarators (HOW?), partially done, accelerators on items in popup menus
+  does not work.
+  Accelerators should be activated by the (Abstract)Window, should not depend
+  on menu items. Intercept Window::key_pressed_event and let it handle
+  popup menu actions.
+
+- In some cases (like when editing attributes) Enter should be used to
+  complete the edit action.
+
+- Create a good algorithm for placement of lines and maybe nodes too.
+
+- Use default GTK+ menu classes, in stead of the home-brew one.
+
+- Use GTK+ 2.4 UIManager and ActionGroups (?):
+  * Reconsider since GTK+ 2.8 bindings are fairly better than the 2.4 bindings
+  . We have to keep the gaphor.misc.action module intact.
+  . As far as I can see, cross action updates, are not supported.
+  . Properties can be mapped in a straightforward way.
+  . Should actions be split up: one for the main window, one group per
+    diagram and one group per item type?
+  . GtkUIManager looks useful, some structures in Gaphor may have to be
+    reconsidered. What to do with AccelMaps for example. (I really have
+    to read the tutorial some day ;-).
+  . The current structure is simple and quite Pythonic. It should be this way.
+  . Stuff like a recent-file box will be easier to create (I guess).
+  Previous conclusion: keep using the gaphor.misc.action code
+
+#- Storing last open files or having a quick-list of most important
+  directories or so would be great 
+  Problem: the existing <Placeholder> stuff works only on construction time.
+    For this we need a menu that can change during the life of the application.
+
+#- Make associations look nice with usecases:
+   . No arrows at the end
+   . Disable popup menu for navigability and composition
+
+#- Automatically draw relations when an item is DND-ed from the tree-view
+  to the diagram.
+
+#- confirmation window when creating a new model.
+
+#- Copy/Paste for diagramitems
+  - in order to make copy/paste work, the load/save functions should be
+    generatlised to allow a subset to be saved/loaded (which is needed
+    anyway for exporting/importing stereotype Profiles).
+  - How many data should be saved? (e.g. we copy a diagram item, remove it
+    (the underlaying UML element is removed) and the paste the copied item.
+    The diagram should act as if we have placed a copy of the removed item
+    on the canvas and make the uml element visible again.
+
+#- Undo/redo functionality
+
+#- Make text selected when starting to edit it: fixed in DiaCanvas2
+
+#- Stereotypes: check documentation page 581 (597 absolute). Fixed. An extra
+   association has been created between Stereotype and Class, Interface and
+   Package.
+
+#- Set up a plugin architecture. Since the internals of gaphor are pretty
+   modular, plugins should not be that hard. I'm very happy with the new one
+   it is easy to program, yet powerful (due to the XML description file, which
+   allows gaphor to check several dependencies upfront.
+
+Diagram Items
+=============
+Gaphor does not need to support *all* diagram types, but at least some
+functinality should be provided for those.
+
+- Deployment diagram:
+  . Node
+  . Artifact
+  . some relations
+- Sequence diagram:
+  . Life line
+  . different message types
+  . Interaction
+
+UI
+--
+>I would like to see
+> some logic to align diagrams like Visio does, it's probably hard to do
+> correct though. Also Visio has a very nice feature for bending lines in
+> 90 degree bends by holding down shift, something like that would be very
+> nice in Gaphor
+
+- Lineup selected elements vertically, horizontally in context menu
+
+- I also intend to "merge" lines (as is often used for generalizations: a
+  line with one arrow, which splits into two lines, one for each subclass)
+
+- The text editing also needs a facelift.
+
+#- Alert a user when deleting the last reference to an object (Are you
+  sure you want to remove all the selected elements from the model?)
+

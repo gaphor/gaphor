@@ -1,0 +1,47 @@
+Gaphor
+~~~~~~
+
+Gaphor is a UML CASE tool aiming for symplicity. It is written in Python and
+C. The goal is to write as much as possible in Python (easy scriptable for
+code generators) and only some elementary parts are written in C (this involves
+mainly the graphical items).
+
+So here's what has to be created:
+- A main window containing a tree-like representation of the classes
+- Windows which display the various diagrams
+- A model that contain all abstract data (generate from the UML metamodel
+  definition)
+- Graphical items for classes, use cases, etc. (in C)
+- Keep the code modular and easy to extend in Python
+
+Main Window
+~~~~~~~~~~~
+The main window can be created in Python. It can be created using Glade.
+We need a custom GtkTreeModel class that acts as a view over the UML model.
+The model is very extensive since it is generated from the UML Metamodel
+definition.
+
+Diagram Windows
+~~~~~~~~~~~~~~~
+Diagrams have to be displayed in separate windows. Each window should carry
+a toolbox with diagram related objects. We do not restrict the use of elements
+from different diagram types in one diagram (like the Catalyst method).
+Actually we do restrict as little as possible, as long as it is permitted by
+the "MetaModel".
+
+Data Model
+~~~~~~~~~~
+The data model itself is generated from the UML Metamodel. This has the
+advantage that we can do everything with it as long as the OMG's (Object
+Management Group <http://www.omg.org>, they develop UML now) rules are
+not violated.
+
+Graphical items
+~~~~~~~~~~~~~~~
+Of course we need something to draw. The items that are to be placed on the
+diagrams need to be created. Since graphical stuff can take up a lot of time
+I think it is wise to create those things in C, instead of Python.
+We will however create hooks for the graphical items, so we can at least move
+them around and place them on a diagram from within Python.
+
+

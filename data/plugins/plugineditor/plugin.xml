@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<gaphor-plugin name="Plugin Editor"
+        version="0.1"
+        author="Arjan Molenaar">
+  <description>
+    This plugin lets the user inform and interact with the plugins.
+  </description>
+
+  <require>
+    <!--
+      Define modules and plugins that are needed for this plugin to function
+      properly.
+    - ->
+    <module name="os.path"/>
+    <plugin name="Test plugin"/>
+    -->
+  </require>
+
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+    <action id="PluginEditor"
+            label="Plugin editor"
+            tooltip="Show status of plugins"
+            class="PluginEditorAction" slot="WindowSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      - ->
+      <depends action=""/>
+      -->
+    </action>
+  </provide>
+</gaphor-plugin>

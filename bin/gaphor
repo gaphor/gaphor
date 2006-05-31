@@ -1,0 +1,13 @@
+#!python
+
+import sys
+
+del sys.path[0]
+
+import gaphor
+
+model = None
+if len(sys.argv) > 1:
+    model = sys.argv[1]
+
+gaphor.main(model)

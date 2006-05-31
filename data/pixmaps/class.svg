@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   id="svg548"
+   sodipodi:version="0.32"
+   width="625.28000pt"
+   height="795.89000pt"
+   sodipodi:docbase="/home/users/wrobell/projects/gaphor/data/pixmaps"
+   sodipodi:docname="class.svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   inkscape:version="0.38.1">
+  <defs
+     id="defs550" />
+  <sodipodi:namedview
+     id="base"
+     showborder="true"
+     snaptogrid="true"
+     showgrid="true"
+     inkscape:zoom="0.43117285"
+     inkscape:cx="297.63774"
+     inkscape:cy="420.94487"
+     inkscape:window-width="853"
+     inkscape:window-height="612"
+     inkscape:window-x="11"
+     inkscape:window-y="0"
+     pagecolor="#ffffff"
+     inkscape:pageopacity="0.0000000"
+     vertgrid="true"
+     horizgrid="true"
+     snaptoguides="true"
+     gridspacingx="1.0000000mm"
+     gridspacingy="1.0000000mm"
+     gridtolerance="1.0000000px" />
+  <rect
+     style="fill-rule:evenodd;stroke:#000000;stroke-width:0.90262547pt;"
+     id="rect838"
+     width="688.01879"
+     height="897.44522"
+     x="38.359159"
+     y="41.124576" />
+  <rect
+     style="fill:#a6c2d1;fill-rule:evenodd;stroke:#000000;stroke-width:0.0000000;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect833"
+     width="598.81891"
+     height="250.28627"
+     x="77.352418"
+     y="73.023729" />
+  <rect
+     style="fill:#e1e4e6;fill-rule:evenodd;stroke:#000000;stroke-width:0.0000000;"
+     id="rect835"
+     width="598.81891"
+     height="250.99582"
+     x="77.352394"
+     y="357.06727" />
+  <rect
+     style="fill:#e1e4e6;fill-rule:evenodd;stroke:#000000;stroke-width:0.0000000;"
+     id="rect837"
+     width="598.81891"
+     height="248.03149"
+     x="77.352395"
+     y="639.95288" />
+</svg>

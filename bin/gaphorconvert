@@ -1,0 +1,124 @@
+#!/usr/bin/python
+
+import gaphor
+import gaphor.storage as storage
+import gaphor.UML as UML
+import diacanvas
+
+import cairo
+import cairo.svg
+
+import optparse
+import os
+import re
+import sys
+import tempfile
+
+def pkg2dir(package):
+    """
+    Return directory path from UML package class.
+    """
+    name = []
+    while package:
+        name.insert(0, package.name)
+        package = package.package
+    return '/'.join(name)
+
+
+def message(msg):
+    """
+    Print message if user set verbose mode.
+    """
+    global options
+    if options.verbose:
+        print >> sys.stderr, msg
+
+
+usage = 'usage: %prog [options] file1 file2...'
+
+parser = optparse.OptionParser(usage = usage)
+
+parser.add_option('-v', '--verbose', dest = 'verbose', action = 'store_true',
+    help = 'verbose output')
+parser.add_option('-u', '--use-underscores', dest = 'underscores', action = 'store_true',
+    help = 'use underscores instead of spaces for output filenames')
+parser.add_option('-d', '--dir', dest = 'dir', metavar = 'directory',
+    help = 'output to directory')
+parser.add_option('-f', '--format', dest = 'format', metavar = 'format',
+    help = 'output file format, default pdf', default = 'pdf',
+    choices = ['pdf', 'svg'])
+parser.add_option('-r', '--regex', dest = 'regex', metavar = 'regex',
+    help = 'process diagrams which name matches given regular expresion;' \
+    ' name includes package name; regular expressions are case insensitive')
+
+(options, args) = parser.parse_args()
+
+if not args:
+    parser.print_help()
+    sys.exit(1)
+
+
+factory = UML.ElementFactory()
+
+
+name_re = None
+if options.regex:
+    name_re = re.compile(options.regex, re.I)
+
+# we should have some gaphor files to be processed at this point
+for model in args:
+    message('loading model %s' % model)
+    storage.load(model, factory)
+    message('\nready for rendering\n')
+
+    for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
+        dir = pkg2dir(diagram.package)
+
+        pname = dir + '/' + diagram.name # plain name, no extension
+                                         # or additional directories
+        if options.underscores:
+            dir = dir.replace(' ', '_')
+            pname = pname.replace(' ', '_')
+
+        if name_re and not name_re.search(pname):
+            message('skipping %s' % pname)
+            continue
+
+        if options.dir:
+            dir = '%s/%s' % (options.dir, dir)
+
+        pdf_name = '%s/%s.pdf' % (dir, diagram.name)
+
+        # in case of pdf format we create temporary svg file; see comment below
+        if options.format == 'svg':
+            svg_name = '%s/%s.svg' % (dir, diagram.name)
+            out_name = svg_name
+        else:
+            fd, svg_name = tempfile.mkstemp()
+            del fd # we do not use it anymore
+            out_name = pdf_name
+
+        if not os.path.exists(dir):
+            message('creating dir %s' % dir)
+            os.makedirs(dir)
+
+        message('rendering: %s -> %s...' % (pname, out_name))
+
+        # we use always svg as midstep for conversion between gaphor file
+        # and pdf; it should be changed in the future, when diacanvas
+        # uses canvas which supports pdf as output format...
+        svg = diacanvas.ExportSVG()
+        svg.render(diagram.canvas)
+        svg.save(svg_name)
+
+        if options.format == 'pdf':
+            svg = cairo.svg.Context()
+            svg.parse(svg_name)
+            width, height = svg.get_size()
+
+            ctx = cairo.Context(cairo.PDFSurface(pdf_name, width, height))
+            svg.render(ctx)
+            ctx.show_page()
+
+            # svg file is no longer necessary
+            os.unlink(svg_name)

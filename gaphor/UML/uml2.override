@@ -1,0 +1,219 @@
+comment
+  vim:sw=4:et:syntax=python
+
+  This is a file with custom definitions for Gaphors data model.
+
+  Parts are separated by '%%' (no training spaces) on a line.
+  Comment parts start with 'comment' on the line belowe the percentage
+  symbols, 'override' is used to define a overridden variable. 
+
+%%
+override Element
+from element import Element
+%%
+override Diagram
+from diagram import Diagram
+%%
+override MultiplicityElement.lower
+# Make it watch MultiplicityElement.lowerValue.value
+def _get(self):
+    return self.lowerValue and self.lowerValue.value
+def _set(self, value):
+    if not self.lowerValue:
+        self.lowerValue = self._factory.create(LiteralString)
+    self.lowerValue.value = value
+def _del(self):
+    if self.lowerValue:
+        del self.lowerValue.value
+
+MultiplicityElement.lower = property(_get, _set, _del)
+del _get, _set, _del
+# TODO: let it also emit notifications
+# A notifier should be connected on instantiation of the lowerValue element.
+# - this should be done on creation of the lowerValue, hence we should
+#   add a notifier when self.lowerValue changes.
+# - This requires some extra code to be executed on creation of our
+#   MultiplicityElement. This can be done either in the Element or the
+#   ElementFactory.
+%%
+override MultiplicityElement.upper
+# Make it watch MultiplicityElement.upperValue.value
+def _get(self):
+    return self.upperValue and self.upperValue.value
+def _set(self, value):
+    if not self.upperValue:
+        self.upperValue = self._factory.create(LiteralString)
+    self.upperValue.value = value
+def _del(self):
+    if self.upperValue:
+        del self.upperValue.value
+
+MultiplicityElement.upper = property(_get, _set, _del)
+del _get, _set, _del
+%%
+override Class.extension
+def class_extension(self):
+    extension = []
+    for e in self._factory.select(lambda e: e.isKindOf(Extension) and self in e.endType):
+
+        extension.append(e)
+    return extension
+
+Class.extension = property(class_extension, doc=\
+    """References the Extensions that specify additional properties of the
+    metaclass. The property is derived from the extensions whose memberEnds
+    are typed by the Class.""")
+del class_extension
+%%
+override Extension.metaclass
+def extension_metaclass(self):
+    ownedEnd = self.ownedEnd
+    return [c for c in self.memberEnd if c not in ownedEnd][0].type
+
+Extension.metaclass = property(extension_metaclass, doc=\
+    """References the Class that is extended through an Extension. The
+    property is derived from the type of the memberEnd that is not the
+    ownedEnd.""")
+del extension_metaclass
+%%
+override Classifier.inheritedMember
+Classifier.inheritedMember = derivedunion('inheritedMember', 0, '*')
+%%
+override Classifier.general
+def classifier_general(self):
+    return [g.general for g in self.generalization]
+
+Classifier.general = property(classifier_general, doc="")
+del classifier_general
+%%
+override Class.superClass
+Class.superClass = Classifier.general
+%%
+override Namespace.importedMember
+Namespace.importedMember = derivedunion('importedMember', 0, '*')
+%%
+override Property.opposite
+
+def property_opposite(self):
+    """In the case where the property is one navigable end of a binary
+    association with both ends navigable, this gives the other end.
+
+    For Gaphor the property on the other end is returned regardless the
+    navigability.
+    """
+    #if not self.owningAssociation and len(self.association.memberEnd) == 2:
+    #    other_end = self.association.memberEnd[0] is self \
+    #                and self.association.memberEnd[1] \
+    #                or self.association.memberEnd[0]
+    #    return other_end
+    if self.association is not None and len(self.association.memberEnd) == 2:
+        return self.association.memberEnd[0] is self \
+               and self.association.memberEnd[1] \
+               or self.association.memberEnd[0]
+    return None
+
+Property.opposite = property(property_opposite, doc=property_opposite.__doc__)
+
+del property_opposite
+
+%%
+override Property.isComposite
+Property.isComposite = property(lambda self: self.aggregation == intern('composite'))
+%%
+override Constraint.context
+Constraint.context = derivedunion('context', 0, 1)
+%%
+override Association.endType
+
+Association.endType = property(lambda self: [end.type for end in self.memberEnd if end], doc=\
+    """References the classifiers that are used as types of the ends of the
+    association.""")
+
+%%
+override Property.parse
+from umllex import parse_property
+Property.parse = parse_property
+del parse_property
+%%
+override Property.render
+from umllex import render_property
+Property.render = render_property
+del render_property
+%%
+override Operation.type
+Operation.type = derivedunion('type', 0, 1)
+%%
+override Operation.parse
+from umllex import parse_operation
+Operation.parse = parse_operation
+del parse_operation
+%%
+override Operation.render
+from umllex import render_operation
+Operation.render = render_operation
+del render_operation
+%%
+override Lifeline.parse
+from umllex import parse_lifeline
+Lifeline.parse = parse_lifeline
+del parse_lifeline
+%%
+override Lifeline.render
+from umllex import render_lifeline
+Lifeline.render = render_lifeline
+del render_lifeline
+%%
+override Extenstion.metaclass
+
+def extension_metaclass(self):
+    """References the Class that is extended through an Extension. The
+    property is derived from the type of the memberEnd that is not the
+    ownedEnd.
+    """
+    for m in self.memberEnd:
+        if m not in self.ownedEnd:
+            return m
+    return None
+
+Extenstion.metaclass = property(extension_metaclass, doc=extension_metaclass.__doc__)
+del extension_metaclass
+%%
+override Component.provided
+def component_provided(self):
+    from gaphor.UML.util import pr_interface_deps, pr_rc_interface_deps
+    import itertools
+
+    implementations = (impl.contract[0] for impl in self.implementation if impl.isKindOf(Implementation))
+    realizations = pr_interface_deps(self, Realization)
+
+    # realizing classifiers realizations
+    # this generator of generators, so flatten it later
+    rc_realizations = pr_rc_interface_deps(self, Realization)
+
+    return tuple(set(itertools.chain(implementations, realizations, *rc_realizations)))
+
+Component.provided = property(component_provided, doc = \
+    """
+    Interfaces provided to component environment. 
+    """)
+del component_provided
+%%
+override Component.required
+def component_required(self):
+    from gaphor.UML.util import pr_interface_deps, pr_rc_interface_deps
+    import itertools
+
+    usages = pr_interface_deps(self, Usage)
+
+    # realizing classifiers usages
+    # this generator of generators, so flatten it later
+    rc_usages = pr_rc_interface_deps(self, Usage)
+
+    return tuple(set(itertools.chain(usages, *rc_usages)))
+
+Component.required = property(component_required, doc = \
+    """
+    Interfaces required by component. 
+    """)
+del component_required
+

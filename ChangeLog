@@ -1,0 +1,1412 @@
+2006-05-29  arjan <arjan at yirdis dot nl>
+
+	* setup.py: added languages Swedish and Catalan.
+
+2006-05-23  arjan <arjan at yirdis dot nl>
+
+        * gaphor/undomanager.py: disconnected from diacanvas.UndoManager
+        * */*actions.py: use new undoable descriptior in stead of aspects
+
+2006-05-18  arjan <arjan at yirdis dot nl>
+	* po/es.po: updated by Jordi Vilalta Prat.
+	* po/ca.po: Catalan translation thanks to Jordi Vilalta Prat.
+
+2006-05-12  arjan <arjan at yirdis dot nl>
+	* po/sv.po: new language file, thanks to Daniel Nylander.
+
+2006-02-14  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/*.py: get rid of initialize_item function, use
+	metaclass instead; use __uml__ attribute for UML classes assignement;
+	no need for Groupable metaclass anymore
+	* gaphor/diagram/diagramline.py: added FreeLine diagram line (abstract
+	class) with one disabled handle
+	* gaphor/diagram/connector.py: ConnectorEndItem uses FreeLine,
+	saving/loading not implemented yet
+	* gaphor/diagram/lifeline.py: LifelineItem and its lifetime
+	(LifetimeItem class) is separated now
+	* gaphor/diagram/message.py: message name reimplemented using
+	TextElement
+
+2006-02-06  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.override: provided and required interfaces of
+	component realizing classifiers are visible in Component.{provided,required}
+	derived associations
+	* gaphor/UML/util.py: added utility functions for getting provided and
+	required interfaces of classifier/component
+	* gaphor/diagram/dependency.py: support for automatic realization
+	dependencies between components and interfaces
+
+2006-01-16  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/commentline.py: allow_connect_handle does not throw an
+	exception in some cases, now
+	* gaphor/diagram/interface.py, gaphor/diagram/interfaceicon.py: use
+	on_glue method to determine to which point of interface item handles of
+	usage and implementation lines should be connected to in case of
+	interface icon; interface icon provided and required points are always
+	the same for all types of icons
+
+2006-01-10  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.override: Components.{required,provided} basic
+	implementation
+	* gaphor/diagram/dependency.py: determine dependency type before
+	connecting items
+	* gaphor/ui/diagramactions.py: added zoom tooltips
+	* gaphor/diagram/node.py: use proper UML element for node item
+	* gaphor/ui/mainactions.py, gaphor/ui/mainwindow.py,
+	gaphor/ui/abstractwindow.py: ask for permission to quit gaphor
+	* gaphor/diagram/connector.py, gaphor/diagram/interface.py
+	gaphor/diagram/interfaceicon.py gaphor/diagram/itemactions.py:
+	connect assembly connector end items to components and allow to choose
+	provided/required interfaces from menu; this way we kill dotted
+	interface icon and speed up component diagram creation
+
+2006-01-09  wrobell <wrobell@pld-linux.org>
+	* gaphor/plugin.py: ask user if existing file can be overwritten during
+	diagram export
+	* gaphor/diagram/nameditem.py, gaphor/diagram/activitynodes.py: flow
+	final and activity final nodes can have names, now
+
+2006-01-03  wrobell <wrobell@pld-linux.org>
+	* data/plugins/pdfexport/__init__.py,
+	data/plugins/pdfexport/plugin.xml: PDF export plugin created
+
+2006-01-03  wrobell <wrobell@pld-linux.org>
+	* data/plugins/svgexport/__init__.py,
+	data/plugins/pngexport/pngexport.py, gaphor/plugin.py: use common code
+	for export a diagram into a file
+
+2005-12-29  wrobell <wrobell@pld-linux.org>
+	* bin/gaphorconvert, setup.py: added gaphorconvert utility, which
+	allows to convert gaphor files into svg and pdf
+
+2005-12-19  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/__init__.py, gaphor/diagram/flow.py,
+	gaphor/diagram/itemactions.py: allow to split flows using activity edge
+	connector
+
+2005-12-19  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/placementactions.py: assign names for actions and
+	object nodes
+
+2005-12-13  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainwindow.py: make position of objectInspector persistent.
+
+2005-12-05  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/__init__.py gaphor/diagram/connector.py: use grouping
+	interface properly to maintain connector end items;
+	free connector end items are created and destroyed by assembly
+	connector;
+	assembly connector is saved and loaded properly
+
+2005-12-05  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/interface.py: update connected connector end items
+	when updating interface in folded mode
+
+2005-12-05  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/placementtool.py: invoke can_contain method on
+	grouping items (like interaction)
+
+2005-11-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	* setup.py: require GTK+ version 2.8 or newer
+
+2005-11-01  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/diagramitem.py: added support for persistent
+	properties
+
+	* gaphor/diagram/activitynodes.py, gaphor/diagram/flow.py,
+	gaphor/diagram/objectnode.py, gaphor/diagram/util.py,
+	gaphor/diagram/itemactions.py, tests/test-activitynodes.py: use
+	persistent properties where possible; refer to properties with
+	self.props
+
+2005-11-01  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/elementfactory.py: added __getitem__ method (live object
+	browser works again)
+
+2005-10-28  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/activitynodes.py, gaphor/diagram/objectnode.py: moved
+	ObjectNodeItem class to gaphor.diagram.objectnode package
+
+2005-10-27  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/activitynodes.py, gaphor/diagram/flow.py,
+	gaphor/diagram/groupable.py, gaphor/diagram/__item__.py: added
+	Groupable metaclass to automate development of groupable classes
+
+2005-10-27 Jeroen Vlootuis <jeroen@vloothuis.net>
+	* Added new object inspector panel at bottom of diagram. This makes use
+	of the Zope 3 component architecture. Therefore Gaphor now depends on
+	Zope 3. This dependency should be diminshed to component and
+	interface. At the moment there is no seperate package for component.
+
+	* Made Kid export handle tagged values. 
+
+2005-10-27  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/activitynodes.py: object node has upper bound
+	specification; join node has join specification; initial node naming
+	reimplemented with text element and grouping
+	* gaphor/diagram/flow.py: flow has name and guard implemented with text
+	element (since now flows can have names)
+	* gaphor/diagram/nameditem.py: added sided named elements base class
+	and text element class
+	* gaphor/diagram/groupable.py: added basic class for grouping different
+	diagram items
+
+2005-10-26  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.gaphor: added control nodes diagram from complete
+	activities
+
+2005-10-25 Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	* gaphor/UML/uml2.gaphor: added TaggedValue class in Expressions
+	diagram.
+
+2005-10-24  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/flow.py: forbid flow source to connect to final node;
+	forbid flow target to connect to initial nodes
+
+2005-10-24 Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	* setup.py: bumped version to 0.7.2, since data model has undergone some
+	changes.
+	* gaphor/UML/uml2.gaphor: added taggedValue to NamedElement as 0..*.
+	* gaphor/storage.py, gaphor/UML/umllex.py,
+	gaphor/diagram/association.py, gaphor/diagram/attribute.py,
+	gaphor/diagram/diagramline.py, gaphor/diagram/operation.py:
+	Changed to support NamedElement.taggedValue[*].
+	* utils/genUML2.py: parse new taggedValues properly.
+
+2005-10-24  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/util.py: added functions which
+		- determine subject's class of fork and decision UI elements
+		- combine or decombine fork/join and decision/merge nodes in case
+		  of many incoming and outgoig flows
+	* gaphor/diagram/activitynodes.py: store information about combined
+	fork/decision nodes; support for ordering of object nodes
+	* gaphor/diagram/flow.py: determine fork/decision node subject's class
+	and/or combine/decombine nodes according to UML specs
+	* gaphor/UML/uml2.gaphor: added complete activities package with
+	object nodes diagram to support ordering of object nodes
+
+2005-10-17  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/activitynodes.py: implemented object node
+	* gaphor/diagram/flow.py: change control flow to object flow
+	when source or target is connected to object node
+	* gaphor/diagram/nameditem.py, gaphor/diagram/usecase.py: created
+	SimpleNamedItem for named item UI elements, which contain just name
+	and border (like use case, object, etc.)
+
+2005-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	* gaphor/data/plugins/kidexport/plugin.xml: added module dependency kid.
+
+2005-10-10  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.gaphor: added Flow Final, Fork and Join nodes to
+	Control nodes diagram
+	* gaphor/diagram/activitynodes.py: implemented Flow Final and Fork
+	nodes
+
+2005-10-09  Jeroen Vloothuis  <jeroen@vloothuis.net>
+	* gaphor/data/plugins/kidexport: New template based exported for XMI
+
+2005-10-07  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* Released version 0.7.1
+
+2005-10-07  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.gaphor: ConnectableElement derives from TypedElement
+	according to UML 2.0 specification; Interface derives from
+	ConnectableElement; kill Property multiple incarnations
+
+2005-10-06  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: fixed bug with multiple ConnectableElement
+	classes.
+	* data/plugins/checkmodel/checkmodel(gui).py: Added check to search for
+	duplicate class names.
+
+2005-09-12  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.gaphor: extended Internal Structures diagram to
+	support delegation and assembly connectors
+
+2005-06-26  wrobell <wrobell@pld-linux.org>
+	* setup.py, gaphor/storage.py, gaphor/UML/uml2.gaphor: use unkown
+	navigability state of UML 2.0, when converting from UML 1.x association
+	non-navigability (UML 2.0 metamodel fixed, too); gaphor file format
+	version increased to 0.7.1
+
+2005-06-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/console.py, gaphor/ui/diagramtab.py,
+	gaphor/ui/namespace.py: s/gtk.TRUE/True/, s/gtk.FALSE/False/.
+
+2005-05-28  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/itemactions.py, gaphor/ui/diagramactions.py:
+	capitalize menu labels, tooltips first word capitalized
+
+2005-05-25  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/itemactions.py, gaphor/diagram/operation.py,
+	gaphor/ui/namespace.py: allow to set class operation to be abstract
+		
+2005-05-25  wrobell <wrobell@pld-linux.org>
+	* gaphor/ui/namespace.py: change font of diagram names to bold and
+	abstract classifiers to italic in tree view
+
+2005-05-24  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/itemactions.py: check if item and item.subject exist
+	when executing AbstractClassAction
+
+2005-05-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram.association.py: Make association redraw when setting
+	navigability.
+
+2005-05-23  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/itemactions.py gaphor/diagram/association.py: UML 2.0
+	navigability support is back with fixed bug which caused problems when
+	loading large UML model
+
+2005-05-23  wrobell <wrobell@pld-linux.org>
+	* gaphor/UML/uml2.override: while loading model, the association can be
+	not loaded when accessing opposite property
+
+2005-04-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/mainactions.py, po/es.po, po/nl.po:
+	Updated. More translations.
+
+2005-04-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* po/es.po: Espanish translation, thanks to David Roguin.
+
+2005-04-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/itemactions.py: reverted to version 1.41.
+
+2005-03-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: reverted to version 1.60.
+
+2005-01-24  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/association.py: use one rotation function (update_dir
+	method and xs rotation refactorized), show direction arrow on proper
+	side of association name
+
+2005-01-24  wrobell <wrobell@pld-linux.org>
+	* gaphor/diagram/itemactions.py gaphor/diagram/association.py: UML 2.0
+	navigability support
+
+2005-01-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/pluginmanager.py: use modutils in favor of imp.
+	Now actions can be nested in packages!
+	Load plugins under namespace gaphor.plugins.
+
+2005-01-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/plugins/*/plugin.xml: changed toplevel plugin tag to
+	'gaphor-plugin'
+	* gaphor/pluginmanager.py: changed xml parser to load new tag.
+
+2005-01-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: fixed bug in Lifeline diagram.
+
+2005-01-11  wrobell <wrobell@pld-linux.org>
+
+	* gaphor/UML/uml2.gaphor: added InternalStructures diagrams
+
+2005-01-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/menufactory.py: Use gtk.AccelMap to store accelerator
+	keys. Now accelerators can be configured at runtime.
+	* gaphor/__init__.py, gaphor/ui/__init__.py: load/save accelmap at
+	start/end of application.
+
+2005-01-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainactions.py: fixed small bug, now recent-files also
+	works with an empty recent-files list.
+
+2005-01-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/action.py: fixed ObjectAction for use with slots.
+	Added ActionPool.set_action().
+	* gaphor/ui/mainactions.py: added Recent files slot
+	* gaphor/ui/mainwindow.py: (set_filename) add file to recent files.
+
+2005-01-04  wrobell <wrobell@pld-linux.org>
+
+	* gaphor/ui/mainactions.py: set default name for created diagram and
+	allow user to edit it immediately
+
+2005-01-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: added parse() and render operations to
+	Lifeline.
+	* gaphor/misc/action.py: added better support for Slots. Now a
+	slot can be represented by a class. A slot can be rebuild (so the
+	menu is rebuild).
+	* gaphor/ui/menufactory.py: extented for use of slots.
+	* tests/menu.py: added test for slots.
+
+2005-01-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/pluginmanager.py: raise exceptions when a wrong xml-tag is
+	found in the plugin.xml file.
+
+2004-12-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/message.py: added message text.
+
+2004-12-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/implementation.py: removed recursive import of
+	InterfaceItem.
+
+2004-12-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	
+	* gaphor/diagram/association.py (unlink): explicitly unlink()
+	AssociationEnds.
+	* gaphor/diagram/interaction.py: New class, a sequence diagram
+	interaction.
+	* gaphor/diagram/lifeline.py: New class, a sequence diagram lifeline
+	* gaphor/diagram/message.py: New class, a Message (seq. diagram).
+
+2004-11-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	
+	* gaphor/ui/mainwindow.py: Allow mainwindow to shrink.
+
+2004-11-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: implemented Interaction diagrams.
+	* utils/genUML2.py: let code generator support Sort suffix.
+	* gaphor/misc/resource.py: Added resource file backend.
+	* gaphor/__init__.py: save resources when the program exits
+	* gaphor/ui/mainwindow.py: Added persistent property for window size.
+	* gaphor/diagram/placementactions.py: made reset-tool property
+	persistent.
+
+2004-11-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/resource.py: added persistent property to resource values.
+	This should allow us to store specific properties to a persistent
+	storage.
+	* gaphor/ui/toolbox.py: added persistent properties that should tell the
+	box to be open or closed at startup.
+
+2004-11-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/activitynodes.py: Renamed node.py to this file.
+	* gaphor/diagram/artifact.py: Implemented Artifact item.
+	* gaphor/diagram/node.py: Implemented Node item.
+	* data/pixmaps/node24.png, artifact24.png: new icons.
+
+2004-11-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/namespace.py: added DND support when renaming in tree view.
+
+2004-11-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/package.py: Packages now support stereotypes.
+
+2004-11-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: bumped version to 0.7.0.
+	* data/plugins/xmiexport/__init__.py,
+	data/plugins/svgexport/__init__.py,
+	data/plugins/pngexport/pngexport.py: add FileChooserDialog. PNG export
+	marked as experimental.
+
+2004-11-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: do no longer draw arrows if the
+	association is drawn between an Actor and a UseCase.
+
+2004-11-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/errorhandler.py: Error handler (+ aspect) for Gaphor.
+	Shows a dialog when an exception occured and allows for debuging.
+	* gaphor/ui/mainactions.py: implemented error handler for file
+	open/save actions.
+	* gaphor/diagram/diagramline.py: No longer save properties cap, join
+	and line_width, since they are not changed anyway.
+
+2004-11-13  Jeroen Vloothuis  <jeroen@vloothuis.net>
+
+        * gaphor/data/plugins/xmiexport/exportmodel.py: Added support for
+        stereotypes.
+        * gaphor/data/plugins/xmiexport/exportmodel.py: Added support for
+        association names.
+
+2004-11-12  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: Implemented find_relationship().
+	* gaphor/diagram/itemactions.py: Implemented CreateLinks action. This
+	action is called after a DND action to that canvas and re-creates
+	existing relationships.
+	* gaphor/ui/diagramtab.py: DND a diagram to the diagram notebook opens
+	the diagram (may be: create shortcut from one diagram to another).
+
+2004-11-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/klass.py: save width/height when
+	subject.ownedAttribute and subject.ownedOperation change.
+	* gaphor/ui/mainactions.py: Use new-style file chooser if possible
+	(else fall back to the old-and-less-usable version)
+
+2004-11-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/plugins/xmiexport/__init__.py: Added action with save dialog.
+	* data/plugins/xmiexport/exportmodel.py: Added timestamp, use
+	XMLWriter.
+	* FAQ: new file.
+	* gaphor/ui/diagramview.py: Focus item that is DND'd to the canvas.
+	* gaphor/*/*: replaced tabs by spaces.
+	* gaphor/diagram/placementactions.py: renamed actions.py to
+	placementactions.py to avoid ambiguity with action.py (used for
+	state diagrams)
+	* gaphor/ui/diagramtab.py: moved DND code from diagramview.py to
+	DiagramTab. This will make it easy to run actions when an item is
+	DND'd.
+
+2004-11-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/attribute.py: added listener for 'association', so
+	undo can work properly.
+        * data/plugins/alignment: Make only sensitive if items are selected.
+	* data/plugins/svgexport: New plugin.
+	* gaphor/ui/diagramactions.py: Moved SVG export code to svgexport
+	plugin.
+	* gaphor/diagram/association.py: Moved the Side A/B submenu's in
+	separate sub menu's that can be activated when the mouse pointer is
+	at the end of the association.
+
+2004-11-07  Jeroen Vloothuis  <jeroen@vloothuis.net>
+
+        * data/plugins/alignment: Added a plugin for adjusting the
+        alignment of diagram items. Currentyl does horizontal and
+        vertical alignment.
+
+2004-11-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/diagramactions.py: Made a start if simple copy/paste
+	functionality.
+
+2004-11-04  Jeroen Vloothuis  <jeroen@vloothuis.net>
+        * gaphor/ui/diagramactions.py: Implemented a confirmation dialog for
+        the delete action.
+
+2004-11-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/xmlwriter.py: new file. XMLGenerator with CDATA handling
+	following the SAX standard.
+	* gaphor/storage.py: (save_generator) use XMLWriter for saving, no
+	longer produces XML statement itself. NOTE: also accepts the writer
+	as argument, no more filename!
+
+2004-11-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: added direction arrow.
+	* gaphor/diagram/itemactions.py: added two new actions:
+	AssociationShowDirection: show/hide direction arrow (default = hide)
+	AssociationInvertDirection: invert the association direction.
+
+2004-11-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: added name and made a start with
+	direction.
+	* gaphor/ui/mainactions.py: confirmation dialog when starting a new
+	model.
+
+2004-10-29  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/feature.py: fixed bug that didn't render attributes
+	when they have to.
+	* gaphor/diagram/__init__.py: make register_item accept more default
+	classes. (fixes DND of Stereotype item).
+	* gaphor/diagram/diagramitem.py: bug fix: UML elements were no longer
+	removed when all presentations were removed.
+	* gaphor/UML/uml2.gaphor: added Classifier.appliedStereotype (in stead
+	of Class.appliedStereotype).
+	* gaphor/storage.py: made conversion from ClassItem to InterfaceItem
+	for pre-0.6.2 classes
+	* setup.py: bump version to 0.6.2 to ensure the conversion works.
+
+2004-10-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/classifier.py: new class. Generic subclass for
+	Class, Interface, Component, Actor, etc.
+	* gaphor/diagram/actor.py: made subclass of ClassifierItem.
+	* gaphor/diagram/klass.py: made subclass of ClassifierItem.
+	* gaphor/diagram/interface.py: made subclass of ClassItem.
+	* gaphor/diagram/itemactions.py: Made changes to Fold/Unfold actions.
+
+2004-10-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/properties/py: refactored association code. made
+	undo/redo really work.
+	* gaphor/diagram/itemactions.py: made lots of actions undo-aware.
+	* As of here, Gaphor has one application wide undo manager (no longer
+	one per diagram).
+	* setup.py: bumped version to 0.6.1.
+	
+2004-10-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagramitem.py: do no longer automatically unlink
+	in diagramassociation. unlink in DiagramItem.unlink() instead.
+
+2004-10-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: arrow heads were drawn in the wrong
+	direction. corrected
+	* gaphor/*: got complete rid of the __relink__ signal.
+	* gaphor/diagram/itemactions.py: added undo transactions to actions.
+	* gaphor/UML/properties/py: implemented undo awareness for attributes,
+	enumerations and associations.
+	* gaphor/diagram/association.py, nameditem.py, feature.py: added
+	undo awareness to on_editing_done() methods.
+
+2004-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagramitem.py: fixed bug in on_subject_notify(),
+	that kept old references around.
+	* gaphor/ui/mainactions.py: added action that switches the
+	reset-to-default-tool behavior of the toolbox.
+	* gaphor/diagram/actions.py: classes, packages, etc. are assigned a
+	unique name on creation.
+	* gaphor/ui/mainwindow.py: added toolbox items to the menu.
+	* gaphor/ui/diagramtab.py: 'Delete' has the same meaning as Ctrl-d
+	from now on.
+
+2004-10-07  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/itemtool.py, gaphor/ui/*: updated to use new
+	UndoManager interface of DiaCanvas2 0.14.0. Requires CVS version
+	of diacanvas2 to work.
+
+2004-10-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	Release 0.6.0
+
+2004-09-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/itemtool.py, itemactions.py, nameditem.py:
+	Added compatibility layer for Diacanvas 0.13.0.
+
+2004-09-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/plugins/pynsource: created nice Dialog for loading files
+	* data/plugins/liveobjectbrowser: Use AbstractWindow as mediator
+
+2004-09-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/plugins/diagramlayout: new plugin, layout elements in a diagram
+	* data/plugins/pynsource: new plugin. Create diagrams from Python
+	code. Uses Andy Bulka's PyNSource code.
+	# During creation of the plugin I noticed a bug in Associations:
+	# The aggregation attribute of the wrong Property instance is used.
+	# This behavior has been fixed:
+	* gaphor/storage.py: added workaround in load_elements_generator()
+	* gaphor/diagram/association.py: updated code to show aggregation on
+	the right end.
+	* gaphor/UML/uml2.gaphor: loaded and saved (bug no longer in data
+	model)
+	* utils/genUML2.py: updated.
+
+2004-09-14  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/itemactions.py: Support new Editable interface.
+	* gaphor/diagram/*.py: updated diagram items.
+
+2004-09-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainactions.py: Removed multithread stuff.
+	* gaphor/misc/gidlethread.py: new file. A speudo-thread implementation
+	based on the GObject main loop.
+	* gaphor/storage.py, gaphor/parser.py: rewrote the load and save
+	functions to generators, to be used by the GIdleThread.
+
+2004-09-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: always do config check before build
+	* gaphor/pluginmanager.py: Fixed plugin loading (no longer change
+	sys.path). Patch by Cedric Delfosse.
+
+2004-09-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* utils/install_mo.py: fixed bug in installation
+	* gaphor/i18n.py: make i18n support work
+
+2004-08-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: fix bug in plugin installation.
+	* gaphor/pluginmanager.py: add the plugin directories to sys.path,
+	the plugins will not be loaded after installing gaphor.
+	* data/plugins/plugineditor: new. was pluginmanager, but that gives
+	naming conflicts with the gaphor.pluginmanager module.
+	* gaphor/ui/mainwindow.py: do not put the main window's accel group
+	on any transient window.
+
+2004-07-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainactions.py: Added DeleteDiagram action.
+
+2004-07-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/dependency.py: Added a new property auto_dependency,
+	this will try to automatically set the dependency type (Usage is set
+	if the head is connected to an Interface).
+	* gaphor/misc/actions.py (ActionPool.execute): added extra optional
+	parameter 'active', this can set the state for check- and
+	radio-actions.
+	* gaphor/diagram/itemactions.py: Added new action AutoDependency.
+
+2004-07-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainactions.py: Added authors to the About dialog.
+	* gaphor/diagram/interface.py: fixed small bug that prohibited a
+	required interface to be shown on the bottom.
+
+2004-07-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/interface.py: Fixed to use Usage and Implementation
+	dependencies. Now a half-a circle is shown on for required Interfaces
+	(using the Usage dependency).
+	& gaphor/ui/namespace.py: Treeview DnD for classes and packages works
+	again.
+
+2004-07-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/itemactions.py: Newly created attributes and
+	operations will be directly editable.
+
+2004-07-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: Added association UseCase <-> Property and
+	Actor <-> Property, so associations can work right (there was no
+	possible relationship possible between Actors and UseCases.
+	* gaphor/ui/mainwindow.py: Added toolbox entries for usecase assoc.
+	and metaclass.
+	* gaphor/diagram/actions.py: Added UseCaseAssociation and MetaClass actions.
+2004-07-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	Intermediate Windows Release 20040702
+
+	* gaphor/ui/mainwindow.py: moved use case toolbox down.
+	* gaphor/diagram/klass.py: fixed bug that prohibited popup menu
+	from popping up.
+
+2004-06-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainwindow.py, gaphor/ui/toolbox.py: explicitly import
+	actions.
+	* doc/plugin.txt: explenation how plugins work
+	* setup.py: Boost version to 0.5.0.
+
+2004-06-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/plugin.py: new file. provided stuff needed by possible
+	plugins.
+	* gaphor/pluginmanager.py: new file. Plugin loading facility.
+	* data/plugins/*: added (demo) plugin.
+	* setup.py: reordered some code, so version.py is properly generated
+	on FreeBSD.
+	
+2004-06-20  wrobell
+
+	* gaphor/diagram/interface.py: - change look of interface depending
+	on connected associations and implementations, nfy
+	* gaphor/diagram/implementation.py: - change look into solid line
+	when connected to folded interface   (InterfaceItem)
+
+2004-06-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/klass.py: Made stereotypes work. Added a menu entry
+	that allows the user to apply a stereotype to a class.
+	* data/pixmaps/profile24.png: new icon for Profile.
+
+2004-06-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/action.py: Added register_action_for_slot() and
+	get_actions_for_slot().
+	* gaphor/diagram/klass.py: added support for stereotypes.
+	* gaphor/ui/mainwindow.py: added stereotype box
+	* gaphor/UML/uml2.gaphor: added association appliedStereotype to
+	Class, Package and Interface.
+	
+2004-06-12  wrobell
+
+	* gaphor/ui/mainwindow.py: - use cases enabled, since associations work now
+
+2004-06-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/__init__.py: do the resource initialization of the
+	ElementFactory. Added some functions that make it more easy to access
+	the default element factory.
+
+2004-06-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: fixed typo: implementingClassifier ->
+	implementatingClassifier.
+	
+2004-06-05  wrobell
+	* gaphor/diagram/: interface.py, itemactions.py, klass.py: - first
+	steps to add folding/unfolding of interfaces
+	* data/icons.xml, data/pixmaps/implementation24.png,
+	gaphor/diagram/__init__.py, gaphor/diagram/actions.py,
+	gaphor/diagram/implementation.py, gaphor/ui/mainwindow.py,
+	gaphor/ui/stock.py: - added implementation element
+
+2004-06-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/uml2.gaphor: changed Interfaces diagram, so namespaces
+	work properly.
+	TODO: should write integrety checks for the data model (check if
+	derived unions are propertly subsetted everywhere, typos, etc.)
+	* gaphor/ui/namespace.py: do not allow properties and operations to
+	be dnd'ed from one class to another (will cause problems with
+	properties connected to associations)
+	* gaphor/diagram/klass.py: added a line "(from ...)" to classes that
+	come from another package than the diagrams one.
+	* gaphor/diagram/itemactions.py: make CreateAttributeAction work
+	for interfaces.
+
+2004-06-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/namespace.py: Added DND for elements within the tree view.
+
+2004-06-03  wrobell
+
+	* gaphor/: UML/collection.py, diagram/attribute.py,
+	diagram/itemactions.py, diagram/klass.py, diagram/operation.py: -
+	added support for moving up/down operations and attributes
+	* gaphor/UML/uml2.gaphor: - UML 2.0 (03-08-02), page 137, component
+	attribute   isIndirectlyInstantiated is set to true by default
+
+2004-06-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: added hollow diamond end for shared
+	* gaphor/diagram/itemactions.py: Added MoveUp action (for attributes
+	and operations)
+	* gaphor/UML/collection.py: added method moveUp().
+	* gaphor/diagram/(attribute|operation).py: added MoveUp action to
+	popup menu.
+
+2004-05-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	Applied patches from wrobell@pld-linux.org
+	* gaphor/misc/odict.py: new file. Ordered dictionary
+	* gaphor/diagram/component.py, data/pixmaps/component24.png: new
+	item: Component.
+	* several small changes in itemactions, actions.py and mainwindow.py.
+
+2004-05-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	RELEASE 0.4.0
+
+        * gaphor/storage.py: Be more verbose wrt load status.
+	* gaphor/UML/elementfactory.py: Added method size().
+	* gaphor/UML/uml2.gaphor: change in Interfaces diagram
+	* gaphor/ui/mainactions.py: made load/save
+	window look prettier.
+
+2004-05-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/icons.xml: contains descriptions of icons, rather than
+	hardcoding them in gaphor/ui/stock.py.
+	* setup.py, MANIFEST.in: added icons.xml
+	* gaphor/ui/stock.py: use icons.xml. Added an XML parser.
+	* gaphor/ui/mainwindow.py, mainactions.py: added About dialog.
+	* gaphor/diagram/interface.py: make it work
+	* gaphor/diagram/actions.py: added placement tool and action for
+	interfaces (creates both an interface and an Implementation
+	dependency.
+	* data/pixmaps/interface24.png: added icon for Interface.
+
+2004-05-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainactions.py: Do loading and saving in a separate
+	thread. This makes the UI react more smoothly (and we can do some
+	progress indicating in the near future).
+	* gaphor/misc/aspects.py: Added TimerAspect (a per function profiler)
+	* gaphor/ui/namespace.py: Now sorting works okay. Implemented faster
+	sorting algorithm.
+	* gaphor/diagram/dependency.py: Added load/save instructions for
+	dependency_type.
+	* gaphor/diagram/interface.py: new file, representing an Interface.
+
+2004-05-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/menufactory.py: fixed a few bugs
+	* gaphor/diagram/relationship.py: made a generic find_relationship()
+	function.
+	* gaphor/diagram/(dependency|generalization|flow).py: use this
+	function.
+
+2004-05-17  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/action.py: no longer register actions as stock items.
+	* gaphor/ui/menufactory.py: make accelerators work for menu items.
+
+2004-05-13  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data/pixmaps/extension24.png initalnode24.png,
+	activityfinalnode24.png, activityfinalnode.xcf: added
+	* gaphor/ui/stock.py: added the new icons as stock icons.
+	* data/pixmaps/: removed unused (old) icons. Added icons for Actions,
+	stereotype, extension, etc.
+	
+
+2004-05-12  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/extension.py: new file. Used to create stereotypes
+	* gaphor/diagram/klass.py: started implementing stereotypes.
+	* gaphor/diagram/dependency.py: Now one can add several dependency
+	types, such as Usage and Realization (the dependency may not be
+	connected on both sides for this option to work).
+
+2004-05-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/dependency.py, generalization.py: fixed bug which
+	avoids adding multiple dependencies/generalizations between two
+	classes.
+	* gaphor/ui/wrapbox.py: new file. replaces the C GtkWrapBox library.
+	* gaphor/ui/stereotypewindow.py: new file. This dialog should be used
+	to add/edit stereotypes.
+
+2004-05-07  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/menufactory.py: reordered some code, added function
+	create_button()
+
+2004-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/properties.py: added upper, lower, _get, _set and _set2
+	to redefine.
+
+2004-04-27  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/placementtool.py: use new PlacementTool from
+	diacanvas (CVS).
+	* gaphor/diagram/itemtool.py: New file. Handles items the *new* way.
+	* gaphor/diagram/klass.py: Added isAbstract handling.
+	* gaphor/diagram/itemactions.py: added action for isAbstract.
+	* gaphor/diagram/association.py: small updates.
+	* gaphor/diagram/diagramitem.py: emit action on the main window
+	if a subject is (un)set.
+	* gaphor/__init__.py: Now a new diagram is created on startup
+	* gaphor/ui/mainactions.py: Open the "main" diagram when creating
+	a new model.
+
+2004-04-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/flow.py: New file, ControlFlow item.
+
+2004-04-15  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* utils/install_mo.py: fixed bug that made the installation crash.
+	* gaphor/diagram/elementitem.py: renamed modelelement.py to this file,
+	  changed dependent files.
+	* gaphor/diagram/nameditem.py: renamed classifier.py to this file,
+	  changed dependent files.
+	* gaphor/diagram/actions.py: added create actions for InitialNode,
+	  ActivityFinalNode and Action.
+	* gaphor/diagram/action.py: New file, representing an Action.
+	* gaphor/diagram/node.py: New file, containing initial and final nodes.
+	* gaphor/ui/mainwindow.py: added items for new node types.
+
+2004-04-13  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	RELEASE 0.3.0
+
+	* Several small changes
+
+2004-03-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/attribute.py, operation.py: Added popup menu.
+	* gaphor/ui/diagramactions.py: Added action ShowGrid. Made actions non
+	sensitive when no diagram is shown
+	* gaphor/ui/mainwindow.py: Added ShowGrid to menu. fixed TabChange.
+
+2004-03-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/diagramtab.py: New File. A tab containing a diagram
+	within the main window.
+	* A lot of changes to make the diagram tabs work. all actions have
+	been changed to support new layout.
+
+2004-03-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* Removed GNOME dependencies from (almost) all of Gaphor
+	* gaphor/diagram/actions.py, gaphor/diagram/itemactions.py,
+	gaphor/misc/action.py, gaphor/ui/diagramactions.py,
+	gaphor/ui/editoractions.py, gaphor/ui/mainactions.py,
+	gaphor/ui/menufactory.py, tests/menu.py:
+	Introduced new Action structure for menus, toolbars and popups
+	* tests/test-association.py, tests/test-diagram.py,
+	tests/test-modelelement.py: Added some tests
+	* Lots of changes in the ui and diagram department
+
+2004-02-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/consolewindow.py: added
+
+2004-02-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagramitem.py: added code so you can easely connect
+	to properties like subject.lowerValue.value.
+	* gaphor/diagram/association.py, gaphor/diagram/attribute.py,
+	gaphor/diagram/feature.py, gaphor/diagram/operation.py:
+	makes use of those new features.
+
+2004-01-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* moved model definitions from doc/UML2.gaphor to
+	gaphor/UML/uml2.gaphor.
+	* setup.py: updated.
+	* utils/install_mo.py: fixed some path related stuff so we can do a
+	bdist now.
+	* utils/genUML2.py: updated to reflect latest changes in the model.
+
+2004-01-18  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagramitem.py: fixed loading.
+	* gaphor/diagram/comment.py, association.py, classifier.py,
+	feature.py: disable markup for text.
+
+2003-12-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/umllex.py: Added parser and renderer for association
+	ends.
+	* gaphor/diagram/association.py: use the association end parser.
+
+2003-12-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/storage.py: Store data in new format (see doc/xml-format.txt)
+	* gaphor/parser.py: New data is parsed. utils/genUML2.py and
+	gaphor/UML/element.py should be altered.
+
+2003-11-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/umllex.py: fixed some stuff.
+
+2003-11-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/consolewindow.py: new file. Adds a GtkInterpreterConsole
+	to gaphor.
+	* gaphor/ui/command/mainpy, data/gaphor-main-ui.xml: added entry
+	for console.
+
+2003-11-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/__init__.py: remove class Gaphor, instead just defined some
+	modules. the function resource(r) works also for version, name, etc.
+	* gaphor/diagram/klass.py: fixes and cleanup for attribute/operation
+	add/remove functionality.
+
+2003-09-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: Changed. the datadir is now added to gaphor/version.py.
+	* gaphor/__init__.py: changed to use new data_dir location.
+
+2003-09-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: made multiplicity work again.
+	* setup.py: bumped version to 0.3.0
+
+2003-09-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* doc/UML2.gaphor: UML model is now based on new data model
+	* gaphor/diagram/association.py: make it work
+	* Loads of work to get the conversion done.
+
+2003-08-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/operation.py, gaphor/diagram/attribute.py: new files
+	* gaphor/diagram/klass.py: works with new data model
+	* gaphor/diagram/association.py: works with new data model (kinda)
+	* Several changes...
+
+2003-06-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+	
+	* setup.py: first do a pygtk.require() before config_Gaphor.
+
+2003-06-01  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	(here, only the most important changes are noted)
+	* gaphor/diagram/classifier.py, diagramline.py: new class
+	* gaphor/diagram/*.py: updated Actor, Package, Dependency, Comment,
+	CommentLine, Generalization, UseCase: now work with the new datamodel
+	* gaphor/UML/element.py: Notify signals are send using GTK+ like
+	signals (element, param_spec). All other objects are updated to work
+	with it.
+	
+2003-05-30  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: added run --testfile option
+	* gaphor/ui/namespace.py: fix ownedMember remove actions
+	* tests/test-ns.py: added tests for NamespaceModel
+	* tests/test-properties.py: fixed tests.
+	
+2003-05-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/actor.py, modelelement.py, diagramitem.py:
+	make ActorItem kinda work...
+
+2003-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* updated doc/UML2.gaphor to third release of UML 2.0 proposal.
+	* did lots of other updates.
+
+2003-05-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* all files: Implementing UML2 data model based on the data
+	in doc/UML2.gaphor (use gaphor-0.2.0 to read it).
+
+2003-03-31  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py: check versions of modules.
+
+2003-03-22  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/association.py: fixed bug that didn't show
+	aggregation properly when a diagram was loaded.
+
+2003-03-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* setup.py, setup.cfg: Distutils setup scripts.
+	* utils/build_mo.py, utils/install_mo.py, utils/dist_mo.py,
+	utils/build_pot.py:
+	Distutils commands for supporting gettext files (.pot/po, .mo)
+	* autogen.sh, configure.in, */Files */Makefile.am:
+	These files are obsolete now.
+	* run-gaphor.sh: Run Gaphor, replaces gaphor.sh.
+	* gaphor/config.py.in: obsolete and removed.
+
+2003-03-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/diagramwindow.py, mainwindow.py: create popup menu on
+	event-after event.
+
+2003-02-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/command/diagrampopup.py: Added popup menu items for
+	Associations (Navigable, aggregation kind).
+	* gaphor/ui/diagramwindow.py: look for item specific popup menu
+	* data/gaphor-diagram-ui.xml: Added menu for Association.
+	* gaphor/misc/command.py: Added StatefulCommand.
+	* gaphor/diagram/association.py: several fixes.
+	* gaphor/ui/commandregistry.py: handle StatefulCommands right.
+
+2003-02-21  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/command/diagrampopup.py: Added commands for segment
+	addition and removal.
+
+2003-02-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/logger.py: Added all_logger() and remove_logger()
+	* gaphor/ui/abstractwindow.py: on focus in/out add/remove a logger
+	that writes messages to the active window's status bar.
+	* gaphor/diagram/association.py: make association end name and
+	multiplicity work.
+
+2003-02-16  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* utils/genUML.py: new generation script.
+	* gaphor/UML/element.py: reorganized. Overall more readable.
+	* gaphor/diagram/association.py: Added multiplicity and association
+	end name.
+	* *: several updates and fixes.
+
+2003-01-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/mainwindow.py, gaphor/ui/command/main.py: added
+	capabilities for main window.
+
+2002-12-30  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/abstractwindow.py: hide not-relevant items in popup menus.
+
+2002-12-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/abstractwindow.py: added capabilities. moved common parts
+	of diagramwindow and mainwindow here.
+	* gaphor/ui/editorwindow.py: new.
+	* gaphor/diagram/*.py: several changes. Updated code to latest
+	DiaCanvas2 code.
+	* data/gaphor-ui.xml: renamed to data/gaphor-main-ui.xml.
+
+2002-11-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/uniqueid.py: use sys.platform to determine OS.
+	* gaphor/diagram/klass.py: Added attributes and operations.
+
+2002-10-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* orbit-python-fix.patch: added patch to fix refcounting problem
+	in Orbit-Python.
+	* gaphor/misc/uniqueid.py: New file. Real unique ID's!
+	* gaphor/**/*.py: lots of changes. Most importantly a redesign of
+	the load/save code.
+	
+2002-10-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/klass.py,usecase.py,comment.py,actor.py,package.py:
+	cleaned up the code.
+	* gaphor/ui/namespace.py,diagramview.py: implemented DND from
+	tree view to diagram.
+	* gaphor/ui/command/diagram.py: added delete command
+
+2002-10-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* configure.in: increased release number to 0.2.0
+	* gaphor/ui/command/diagramitem.py: Added commands for placing
+	diagram items on the canvas.
+	* Lots of improvements everywhere.
+
+2002-10-10  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* configure.in, acinclude.m4: updated checks to use
+	pygtk.require('2.0').
+	* gaphor/diagram/diagramitemfactory.py: removed items can be
+	created through gaphor.UML.Diagram.create().
+	* gaphor/ui/command/diagramitem.py: new file. commands for creating
+	canvas items is stored here.
+	* gaphor/diagram/placementtool.py: Use 0.9.0 (CVS) version of
+	DiaCanvas2.
+	* gaphor/UML/diagram.py: added create() for creating nice model
+	elements.
+
+2002-10-08  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/placementtool.py: moved to gaphor/diagram.
+	* gaphor/ui/treeview.py, gaphor/ui/windowfactory.py: removed.
+	* gaphor/ui/command/file.py: renamed to main.py, commands for the main
+	window.
+	* gaphor/ui/command/about.py: removed, command is moved to main.py.
+	* gaphor/ui/command/tree.py: renamed to mainpopup.py.
+	* gaphor/plugin.py: New file. framework for plugins.
+	* gaphor/ui/command/commandinfo.py: New file. meta-info for commands.
+	* gaphor/ui/commandregistry.py: Registry for commands. UI menus are
+	created here.
+
+2002-09-24  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/abstractwindow.py: superclass for all window shells.
+	 Now in CVS.
+	* autogen.sh, configure.in: Added some small fixes by worbell.
+
+2002-09-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/feature.py: checked classmember.py to feature.py.
+	  Closer resemblance of the UML metamodel.
+	* gaphor/UML/element.py, gaphor/UML/sequence.py: Added OCL methods
+	  from SMW <http://www.abo.fi/~iporres/Projects/fog0000000023.html>
+	* Several changes to create a Bonobo UI.
+
+2002-09-13  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* data: New directory, shared data will be put here.
+	* data/pixmaps: New directory, icons have moved from gaphor/ui/icons
+	to this directory.
+	* data/gaphor-ui.xml: Bonobo XML ui file.
+	* gaphor/ui/windowfactory.py: new file. Create windows Bonobo style.
+	* gaphor/ui/menufactory.py: new file.
+	* gaphor/ui/mainwindow.py: Changed to be used by WindowFactory.
+	* gaphor/ui/*: several changes to ease the migration to bonobo.
+
+2002-09-06  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/conf.py: New file. wrapper for GConf.
+	* gaphor/gaphor.py (get_resource): added gconf support.
+	Renamed gaphorResource to GaphorResource.
+	* gaphor/UML/elementfactory.py, gaphor/diagram/diagramitemfactory.py:
+	No longer singleton. should be called through GaphorResource
+	
+2002-09-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/gaphor.py: Added GaphorError here. Added a generic resource
+	locator here. Added GaphorError and the resource locator
+	(gaphorResource) to the builtin namespace.
+	* gaphor/diagram/diagramitemfactory.py (register): do no longer
+	gobject.type_register(). Let every class take care of that for
+	themselves.
+	* gaphor/diagram/klass.py: New file. Implementation of Classes
+	(named klass, to avoid name conflicts with python).
+
+2002-08-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* Makefile.am: Now require Automake 1.6
+	* gaphor/ui/mainwindow.py: Created main window
+
+2002-08-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/**/Makefile*: removed. Now only define the files needed in
+	the file Files. The root Makefile takes care of the rest.
+	* gaphor/config.py.in: New file. configure time configuration stuff is
+	put here.
+
+2002-08-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/*: Added association and package item
+	* Added several comments.
+	* gaphor/misc/storage_minidom.py: works again
+	* configure.in: Gaphor needs DiaCanvas2 0.8.0 (= current CVS version)
+
+2002-07-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/tree: Directory removed, namespace.py is moved to gaphor/ui.
+	* gaphor/command: moved to gaphor/ui.command
+	* gaohor/UML/diagram.py: fixed bug in loading code.
+
+2002-07-03  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/element.py: Fixed bug and changed load() to queue
+	signals. Changed postload to flush the queue.
+	* gaphor/command: New directory. Here command classes will be stored.
+	Simple and more complex operations should be executed through
+	commands.
+	* *all files*: changed module paths to the project root. So now we
+	should include gaphor.UML in stead of UML.
+
+2002-07-02  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* doc/gaphor.dtd: Allow text data in Value tag.
+	* gaphor/UML/element.py: Restructured get/set attr stuff. Now it is
+	more readable and better usable for e.g. tree models.
+	* gaphor/UML/element.py: Changed signal protocol. Now old and new
+	values are also parameters.
+	* gaphor/diagram/(relationship.py|diagramitem.py|dependency.py):
+	new files.
+	* gaphor/misc/signal.py: Added signal queueing options (queue(),
+	flush())
+	* gaphor/misc: Added parsers using both libxml2 or xml.dom.minidom.
+	(work in progress).
+
+2002-03-28  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/misc/storage.py: Now use the standard Python XML stuff
+	(with expat).
+	* Various feature improvements and other nifty things...
+
+2002-03-25  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/registrar.py: renamed to diagramitemfactory.py and
+	created a full blown Factory.
+	* gaphor/UML/diagram.py: removed create() method
+	
+2002-03-23  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/diagram.py: moved to the UML module.
+	* gaphor/misc/storage.py: now contains the load and save methods of
+	ElementFactory.
+
+2002-03-19  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* */Makefile.am: fized path for make install
+	* gaphor/UML/*.py: made all files lower case.
+	* gaphor/UML/elementfactory.py: New file. Factory for creating model
+	elements.
+	* gaphor/misc/: New directory. Added Makefile.am, singleton.py and
+	command.py.
+	* gaphor/UML/element.py: put Enumeration_ and Sequence in separate
+	files.
+	* configure.in: Added dependency for libxml2.
+	* doc/gaphor.dtd: New file. DTD for gaphor files.
+	* gaphor/UML/elementfactory.py, gaphor/UML/element.py,
+	gaphor/diagram/diagram.py, gaphor/diagram/itemstorage.py:
+	Use libxml2 calls rather than xmllib (which is depricated anyway).
+
+2002-03-05  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/relationship.c: (relationship_handle_connect)
+	Check if the currently connected subject can be used to set the subject.
+	* gaphor/UML/__init__.py: Make dependencies only can connect to 1
+	model element.
+
+2002-02-20  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* utils/genUML.py: Changed to make use of the aggregation attribute.
+	* gaphor/UML/Element.py: Backup the internal dictionary if no
+	presentations are attached to the item.
+	* gaphor/UML/__init__.py: Added changes for new genUML.py script.
+	* gaphor/diagram/diagramitems.defs: 
+	* gaphor/ui/diagramview.py:
+	Added items for Dependency, Include, Extend and Realization.
+	* gaphor/diagram/diagramitems.override: 
+	* gaphor/diagram/generalization.[ch]: Rely on Relationship.
+	* gaphor/diagram/model-element.c: Added rules for Dependency and
+	Realization.
+	* gaphor/diagram/relationship.[ch]: made it work.
+	* gaphor/diagram/usecase.c: Added rules for Include and Extend.
+	* gaphor/diagram/extend.c: 
+	* gaphor/diagram/extend.h: 
+	* gaphor/diagram/include.c: 
+	* gaphor/diagram/include.h: 
+	* gaphor/diagram/realization.c: 
+	* gaphor/diagram/realization.h: 
+	* gaphor/diagram/dependency.c: 
+	* gaphor/diagram/dependency.h:
+	New files.
+	* gaphor/diagram/itemstorage.py: Storage rules for new elements.
+
+2002-02-14  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/ui/diagramview.py: Added file/load.
+	* gaphor/diagram/itemstorage.py: New file. Storage functions for
+	the diagram items. Storage format changed: points of lines is now an
+	attribute in the item, in stead of a bunch of tags.
+
+2002-02-11  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* doc/storage.txt: Draft about how Relationships should behave... I
+	doubt this is the way... but anyway...
+	* gaphor/UML/Element.py: Added postload method, will be called after
+	load()
+	* gaphor/UML/management.py: implemented postload method
+	* gaphor/diagram/diagram.py: implemented postload method. Diagrams are
+	loaded perfectly!!!
+	* gaphor/test-diagram.py: now a diagram is loaded from the file x.xml
+
+2002-02-04  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/Element.py: Added functions add_presentation,
+	remove_presentation, remove_presentation_undo, remove_undoability
+	and undo_presentation: simple interface for adding and removing diagram
+	items from model elements.
+	* gaphor/diagram/classifier.c: Now the `namespace' attribute is removed
+	from classifiers if they have no items in the subject.presentation list.
+	* gaphor/diagram/common.c: works well with classifier stuff, implemented
+	changes in UML.Element interface.
+
+2002-01-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/Element.py: Added unlink() method. This should be called
+	  before the object is destroyed.
+	* gaphor/diagram/usecase.c: Added use_case_handle_motion(), so
+	  text will remain centered even if the box is resized.
+
+2002-01-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/Element.py: Added signals
+	* gaphor/diagram/classifier.[ch],
+	  gaphor/diagram/relationship.[ch],
+	  gaphor/diagram/generalization.[ch]: New files.
+
+2002-01-12  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/comment-line.[ch]: New file: a line that connects a
+	  model element with a comment.
+
+2002-01-09  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/diagram/*: implemented Comment class (and actor class
+	  basically)
+2001-12-29  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor/UML/Element.py: Reimplemented, now all sorts of relations
+	  work properly.
+
+2001-10-26  Arjan Molenaar  <arjanmolenaar@hetnet.nl>
+
+	* gaphor: initial version.
+

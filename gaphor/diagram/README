@@ -1,0 +1,28 @@
+Diagram items
+
+Diagrams typically contain a diacanvas.Canvas. This Canvas contains a bunch of
+items. Those items are one way or another related to some UML.Element.
+
+In the UML module a class Presentation is defined. It defines the relation
+between one Element and its Presentations.
+
+In the UML module all relations between objects are presented as associations.
+
+There are some conflicts that have to be resolved when using Presentation in
+conjunction with diacanvas.CanvasItem:
+
+The default signature of the methods connect() and disconnect() is slightly
+different.
+
+This is resolved by overriding connect() and disconnect() and let them act
+the same way as UML.Element's.
+The unlink() method is added to remove the item from the canvas. This should
+be used in stead of disconnecting directly from the parent object.
+
+A __unlink__ signal is added.
+
+Element.presentation connects to '__unlink__' of Presentation.subject.
+
+Note that the subject notifiers are not called during loading, since no
+notifications are send during loading.
+

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- vim:sw=2:et:
+-->
+<gaphor-plugin name="UML metamodel sanity check"
+        version="0.1"
+        author="Arjan Molenaar">
+  <description>
+    This plugin provides a means to check the consistency of an UML model. The
+    rules have been optimized to work with the data model (gaphor/UML/uml2.gaphor),
+    so their might not be much use, except for hackers.
+
+    Also this plugin is a template for future plugins.
+  </description>
+
+  <require>
+    <!--
+      Define modules and plugins that are needed for this plugin to function
+      properly.
+    - ->
+    <module name="os.path"/>
+    <plugin name="Test plugin"/>
+    -->
+  </require>
+
+  <provide>
+    <!--
+      Actions should be defined on the module's toplevel (like in __init__.py).
+    -->
+    <action id="CheckMetamodel"
+            label="Check UML metamodel"
+            tooltip="Check the UML meta model for errors"
+            class="CheckMetamodelAction" slot="WindowSlot">
+      <!--
+        Add optional dependencies to this action. The action is then updated
+        when actions defined in the depends tag are executed.
+      - ->
+      <depends action=""/>
+      -->
+    </action>
+
+  </provide>
+</gaphor-plugin>

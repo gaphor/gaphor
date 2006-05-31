@@ -1,0 +1,196 @@
+# Dutch translations for Gaphor
+#
+# Copyright (C) 2004 Arjan Molenaar
+# Arjan Molenaar <arjanmol_at_users.sourceforge.net>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gaphor\n"
+"POT-Creation-Date: Sat May 14 17:29:44 2005\n"
+"PO-Revision-Date: 2006-05-11 16:34+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.4\n"
+
+#: gaphor/diagram/classifier.py:281
+msgid "(from %s)"
+msgstr "(från %s)"
+
+#: gaphor/misc/errorhandler.py:22
+msgid "An error occured."
+msgstr "Ett fel har inträffat."
+
+#: gaphor/misc/errorhandler.py:29
+msgid ""
+"\n"
+"\n"
+"Do you want to debug?\n"
+"(Gaphor should have been started from the command line)"
+msgstr ""
+"\n"
+"\n"
+"Vill du felsöka?\n"
+"(Gaphor bör ha startats från kommandoraden)"
+
+#: gaphor/storage.py:160
+msgid "Loading %d elements..."
+msgstr "Läser in %d element..."
+
+#: gaphor/ui/mainactions.py:74
+msgid "_New"
+msgstr "_Ny"
+
+#: gaphor/ui/mainactions.py:87
+msgid ""
+"Opening a new model will flush the currently loaded model.\n"
+"Any changes made will not be saved. Do you want to continue?"
+msgstr ""
+"Att öppna en ny modell kommer att ta bort den för närvarande\n"
+"inlästa modellen. Eventuella ändringar kommer inte att sparas.\n"
+"Vill du fortsätta?"
+
+#: gaphor/ui/mainactions.py:103
+msgid "Created a new model"
+msgstr "Skapade en ny modell"
+
+#: gaphor/ui/mainactions.py:114
+msgid "_Revert..."
+msgstr "_Gå tillbaka..."
+
+#: gaphor/ui/mainactions.py:136
+msgid "Loading model from %s"
+msgstr "Läser in modell från %s"
+
+#: gaphor/ui/mainactions.py:136
+msgid "Loading..."
+msgstr "Läser in..."
+
+#: gaphor/ui/mainactions.py:167
+msgid "Could not load model file."
+msgstr "Kunde inte läsa in modellfil."
+
+#: gaphor/ui/mainactions.py:174
+msgid "_Open..."
+msgstr "_Öppna..."
+
+#: gaphor/ui/mainactions.py:211
+msgid "Save the model to a new file"
+msgstr "Spara modellen till en ny fil"
+
+#: gaphor/ui/mainactions.py:263
+msgid "Save Gaphor model as"
+msgstr "Spara Gaphor-modell som"
+
+#: gaphor/ui/mainactions.py:327
+msgid "_Editor"
+msgstr "_Redigerare"
+
+#: gaphor/ui/mainactions.py:346
+msgid "_Console"
+msgstr "_Konsoll"
+
+#: gaphor/ui/mainactions.py:364
+msgid "_Manual"
+msgstr "_Manual"
+
+#: gaphor/ui/mainactions.py:384
+msgid "_About"
+msgstr "_Om"
+
+#: gaphor/ui/mainactions.py:451
+msgid "_New diagram"
+msgstr "_Nytt diagram"
+
+#: gaphor/ui/mainactions.py:477
+msgid "_Delete diagram"
+msgstr "_Ta bort diagram"
+
+#: gaphor/ui/mainactions.py:506
+msgid "_Open"
+msgstr "_Öppna"
+
+#: gaphor/ui/mainactions.py:527
+msgid "_Rename"
+msgstr "_Byt namn"
+
+#: gaphor/ui/mainactions.py:555
+msgid "_Refresh"
+msgstr "_Uppdatera"
+
+#: gaphor/ui/mainactions.py:570
+msgid "_Delete"
+msgstr "_Ta bort"
+
+#: gaphor/ui/mainactions.py:615
+msgid "_Undo"
+msgstr "_Ångra"
+
+#: gaphor/ui/mainwindow.py:29
+msgid "Classes"
+msgstr "Klasser"
+
+#: gaphor/ui/mainwindow.py:37
+msgid "Components"
+msgstr "Komponenter"
+
+#: gaphor/ui/mainwindow.py:41
+msgid "Actions"
+msgstr "Åtgärder"
+
+#: gaphor/ui/mainwindow.py:47
+msgid "Interactions"
+msgstr "Interaktioner"
+
+# Osäker på denna
+#: gaphor/ui/mainwindow.py:51
+msgid "Use Cases"
+msgstr "Använd lådor"
+
+#: gaphor/ui/mainwindow.py:57
+msgid "Profiles"
+msgstr "Profiler"
+
+#: gaphor/ui/mainwindow.py:64
+msgid "_File"
+msgstr "_Arkiv"
+
+#: gaphor/ui/mainwindow.py:68
+msgid "Recent files"
+msgstr "Tidigare filer"
+
+#: gaphor/ui/mainwindow.py:75
+msgid "_Import"
+msgstr "_Importera"
+
+#: gaphor/ui/mainwindow.py:77
+msgid "_Export"
+msgstr "_Exportera"
+
+#: gaphor/ui/mainwindow.py:84
+msgid "_Edit"
+msgstr "R_edigera"
+
+#: gaphor/ui/mainwindow.py:98
+msgid "_Diagram"
+msgstr "_Diagram"
+
+#: gaphor/ui/mainwindow.py:110
+msgid "Tools"
+msgstr "Verktyg"
+
+#: gaphor/ui/mainwindow.py:114
+msgid "_Window"
+msgstr "_Fönster"
+
+#: gaphor/ui/mainwindow.py:118
+msgid "_Help"
+msgstr "_Hjälp"
+
+#~ msgid "To be implemented"
+#~ msgstr "Not niet gemaakt"
+#~ msgid "Error occured while in worker thread"
+#~ msgstr "Er is een fout opgetreden in de worker thread"
+

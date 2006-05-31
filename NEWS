@@ -1,0 +1,63 @@
+0.8.1
+-----
+- support for automatic realization dependencies between components and
+  interfaces
+- provided and required interfaces of component realizing classifiers are
+  visible in Component.{provided,required} derived associations
+- missing icons added
+
+0.8.0
+-----
+- actions: flow final, fork, join and object nodes
+- assembly connector
+- flows and also initial, flow final and activity final nodes can have names
+- flows can be splitted and merged using activity edge connectors 
+- object inspector panel added
+- pdf file export
+- gaphorconvert utility, which allows easy batch conversion of diagrams
+  into svg or pdf files
+- user interface fixes
+- require gtk+ 2.8.x
+
+0.7.1
+-----
+- Real UML2 associations;
+- Stereotypes;
+- Atrifact and Node types;
+- Settings of open and closed toolboxes as well as the window size are saved;
+- Diagrams are shown in bold in the tree view, abstract classes are italic;
+- Added recent files option;
+- Keyboard shortcuts can be configured at runtime.
+- Spanish translation
+- Python2.4 fixes
+
+0.7.0
+-----
+- XMI export plugin
+- Item alignment
+- Full featured undo mechanism
+- Copy/paste
+- usability improvements
+- require DiaCanvas2 0.14.2
+
+0.6.0
+-----
+- Enhanced Plugin support
+- Interfaces
+- Support for Stereotypes
+
+0.5.0
+-----
+- Support for UseCases
+- Plugins
+- Packages can be reordered
+- Interfaces
+
+0.4.0
+-----
+- Support for Actions
+- Support for Components
+
+0.3.0
+-----
+- New and improved interface
