@@ -95,6 +95,7 @@ class Diagram(Namespace, PackageableElement):
         self.canvas.root.add(obj)
         return obj
 
+    # TODO: remove
     def substitute_item(self, item, new_item_type):
         """Create a new item and replace item with the new item.
         """

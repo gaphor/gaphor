@@ -17,13 +17,16 @@ VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 import sys, os
 from glob import glob
 from commands import getoutput, getstatus, getstatusoutput
+
+# Py2App should be imported before the utils classes are loaded
 try:
     import py2app
 except ImportError:
-    print 'No py2app.'
-    py2appargs = dict()
+    print "No py2app, can't create application bundle"
 else:
-    py2appargs = dict(app=['gaphor-osx.py'])
+    from modulegraph.modulegraph import AddPackagePath
+    AddPackagePath('gaphor', 'build/lib/gaphor')
+    AddPackagePath('gaphor.UML', 'build/lib/gaphor/UML')
 
 from distutils.core import setup, Command
 from distutils.command.build_py import build_py
@@ -195,11 +198,9 @@ class build_py_Gaphor(build_py, version_py):
         py_model = os.path.join('gaphor', 'UML', 'uml2.py')
         outfile = os.path.join(self.build_lib, py_model)
         self.mkpath(os.path.dirname(outfile))
-
-        # Figure out if the uml2.py (outfile) is the newest or should be
-        # generated (again).
-        if self.force or reduce(lambda a, b: newer(a,b) and a or b,
-                                (model, overrides, gen, outfile)) != outfile:
+        if self.force or newer(model, outfile) \
+                      or newer(overrides, outfile) \
+                      or newer(gen, outfile):
             print 'generating %s from %s...' % (py_model, model)
             print '  (warnings can be ignored)'
             utils.genUML2.generate(model, outfile, overrides)
@@ -379,7 +380,7 @@ setup(name='gaphor',
       long_description="Gaphor is a UML modeling tool written in Python. "
       "It uses the GNOME2 environment for user interaction.",
       platforms=['GNOME2'],
-      all_linguas=['ca', 'es', 'nl', 'sv'],
+      all_linguas=['nl', 'es'],
       packages=['gaphor',
                 'gaphor.UML',
                 'gaphor.diagram',
@@ -426,6 +427,12 @@ setup(name='gaphor',
                 'install_mo': install_mo,
                 'run': run_Gaphor
       },
-      **py2appargs
+      app=['gaphor-osx.py'],
+      options = dict(
+         py2app = dict(
+             includes=['atk', 'pango', 'cairo', 'pangocairo'],
+#             CFBundleDisplayName='Gaphor',
+#             CFBundleIdentifier='net.sourceforge.gaphor'
+         )
+     )
 )
-

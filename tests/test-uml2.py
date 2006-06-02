@@ -6,6 +6,28 @@ import gaphor.UML as UML
 
 class TestUML2(unittest.TestCase):
 
+    def test_element(self):
+        a = UML.Element()
+        b = UML.Element()
+        def cb_func(name, *args):
+            print '  cb_func:', name, args
+
+        a.connect('ev1', cb_func, a)
+        a.connect('ev1', cb_func, a)
+        a.connect('ev2', cb_func, 'ev2', a)
+
+        print 'notify: ev1'
+        a.notify('ev1')
+        print 'notify: ev2'
+        a.notify('ev2')
+
+        a.disconnect(cb_func, a)
+
+        print 'notify: ev1'
+        a.notify('ev1')
+        print 'notify: ev2'
+        a.notify('ev2')
+
     def test1(self):
         factory = UML.ElementFactory()
         c = factory.create(UML.Class)

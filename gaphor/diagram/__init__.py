@@ -22,10 +22,7 @@ def create_as(type, id):
 
 def get_diagram_item(element):
     global _uml_to_item_map
-    try:
-        return _uml_to_item_map[element]
-    except:
-        return None
+    return _uml_to_item_map.get(element)
 
 def set_diagram_item(element, item):
     global _uml_to_item_map
@@ -54,7 +51,6 @@ class DiagramItemMeta(gobject.GObjectMeta):
                 (diacanvas.CanvasLine in all_bases) or \
                 (diacanvas.CanvasElement in all_bases) or \
                 (diacanvas.CanvasBox in all_bases) or \
-                (diacanvas.CanvasText in all_bases) or \
                 (diacanvas.CanvasImage in all_bases):
             diacanvas.set_callbacks(item_class)
 

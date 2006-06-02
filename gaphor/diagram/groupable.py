@@ -7,6 +7,7 @@ import itertools
 import gobject
 import diacanvas
 
+# TODO: Remove alltogether (no longer used for Gaphas)
 class GroupBase(diacanvas.CanvasGroupable):
     """
     This class allows to group different diagram elememnts. It should be

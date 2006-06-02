@@ -8,7 +8,6 @@ import diacanvas
 from diacanvas import CanvasItem
 
 from gaphor import resource
-from gaphor.misc import uniqueid
 from gaphor.UML import Element, Presentation
 from gaphor.UML.properties import association
 
@@ -86,6 +85,7 @@ class DiagramItem(Presentation):
 
     # UML.Element interface used by properties:
 
+    # TODO: Use adapters for load/save functionality
     def save(self, save_func):
         if self.subject:
             save_func('subject', self.subject)
@@ -110,6 +110,7 @@ class DiagramItem(Presentation):
         if self.subject:
             self.on_subject_notify(type(self).subject)
 
+    # TODO: remove, use signaling from gaphor.UML.Element
     def unlink(self):
         """Send the unlink signal and remove itself from the canvas.
         """
@@ -122,14 +123,9 @@ class DiagramItem(Presentation):
 
         self.set_property('parent', None)
 
-#    def relink(self):
-#        """Relinking is done by popping the undo stack...
-#        """
-#        log.info('RELINK DiagramItem')
-#        #self.emit('__unlink__', '__relink__')
-
     # gaphor.UML.Element like signal interface:
 
+    # TODO: remove, use signaling from gaphor.UML.Element
     def connect(self, name, handler, *args):
         """Connect a handler to signal name with args.
         Note that in order to connect to the subject property, you have
@@ -145,6 +141,7 @@ class DiagramItem(Presentation):
             self.__handler_to_id[key] = [id]
         return id
 
+    # TODO: remove, use signaling from gaphor.UML.Element
     def disconnect(self, handler_or_id, *args):
         """Disconnect a signal handler. If handler_or_id is an integer (int)
         it is expected to be the signal handler id. Otherwise
@@ -317,6 +314,7 @@ class DiagramItem(Presentation):
 
     # DiaCanvasItem callbacks
 
+    # TODO: use connectable adapter here.
     def _on_glue(self, handle, wx, wy, parent_class):
         """This function is used to notify the connecting item
         about being connected. handle.owner.allow_connect_handle() is

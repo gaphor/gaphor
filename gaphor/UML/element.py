@@ -14,8 +14,6 @@ unlink()
      Remove all references to the element. This is done by emiting the
      '__unlink__' signal to all attached signals. unlink() can not be called
      recursively.
-#relink()
-#    Inverse operation of unlink(). Used by diagram items during undo operations.
 
 connect ('name', callback, *data) or
 connect (('name', 'other_property'), callback, *data)
@@ -53,6 +51,7 @@ class Element(object):
     factory = property(lambda self: self._factory,
                        doc="The factory that created this element")
 
+    # TODO: move save/load code to adapters
     def save(self, save_func):
         """Save the state by calling save_func(name, value)."""
         umlprop = umlproperty
@@ -87,43 +86,26 @@ class Element(object):
                 if isinstance(prop, umlproperty):
                     prop.postload(self)
 
-    def __unlink(self, signal):
-        """Unlink the element. For both the __unlink__ and __relink__ signal
-        the __unlink__ callback list is used.
+    def unlink(self):
+        """Unlink the element.
         """
         # Uses a mutex to make sure it is not called recursively
         if self.__in_unlink.testandset():
             try:
-                self.notify(signal, '__unlink__')
+                self.notify('__unlink__', '__unlink__')
             finally:
                 self.__in_unlink.unlock()
 
-    def unlink(self):
-        """Unlink the element."""
-        #log.debug('Element.unlink(%s)' % self)
-        self.__unlink('__unlink__')
-
-#    def relink(self):
-#        """Undo the unlink operation."""
-#        log.debug('Element.relink(%s)' % self)
-#        self.__unlink('__relink__')
-
     def connect(self, names, callback, *data):
         """Attach 'callback' to a list of names. Names may also be a string.
-        A name is the name od a property of the object or '__unlink__'.
+        A name is the name of a property of the object or '__unlink__'.
         """
         #log.debug('Element.connect(%s, %s, %s)' % (names, callback, data))
         if type(names) is types.StringType:
             names = (names,)
         cb = (callback,) + data
         for name in names:
-            try:
-                o = self._observers[name]
-                if not cb in o:
-                    o.append(cb)
-            except KeyError:
-                # create new entry
-                self._observers[name] = [cb]
+            self._observers.setdefault(name, []).append(cb)
 
     def disconnect(self, callback, *data):
         """Detach a callback identified by it's data."""
@@ -139,7 +121,7 @@ class Element(object):
 
     def notify(self, name, cb_name=None, pspec=None):
         """Send notification to attached callbacks that a property
-        has changed. the __relink__ signal uses the callbacks for __unlink__.
+        has changed.
         """
         cb_list = self._observers.get(cb_name or name, ())
         #log.debug('Element.notify: %s' % cb_list)
@@ -179,25 +161,3 @@ except ImportError:
 else:
     psyco.bind(Element)
 
-if __name__ == '__main__':
-    a = Element()
-    b = Element()
-    def cb_func(name, *args):
-        print '  cb_func:', name, args
-
-    a.connect('ev1', cb_func, a)
-    a.connect('ev1', cb_func, a)
-    a.connect('ev2', cb_func, 'ev2', a)
-
-    print 'notify: ev1'
-    a.notify('ev1')
-    print 'notify: ev2'
-    a.notify('ev2')
- 
-    a.disconnect(cb_func, a)
-
-    print 'notify: ev1'
-    a.notify('ev1')
-    print 'notify: ev2'
-    a.notify('ev2')
- 

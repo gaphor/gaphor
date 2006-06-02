@@ -80,9 +80,10 @@ def __generateID__():
                         ethernet = string.join(s[i:].split()[1].split(":"), "")
                         f.close()
                         break;
-            elif sys.platform.find('sun') >= 0:
+            elif sys.platform.find('darwin') >= 0 \
+                 or sys.platform.find('sun') >= 0:
                 #
-                # SunOS
+                # Darwin (Mac OS X) and SunOS
                 #
                 f = os.popen("/sbin/ifconfig -a")
                 while 1:
