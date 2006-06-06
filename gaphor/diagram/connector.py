@@ -526,10 +526,6 @@ class ConnectorItem(DiagramLine):
 #        DiagramLine.__init__(self, id)
 #
 #
-#    def find_relationship(self, head_subject, tail_subject):
-#        print "zz", head_subject, tail_subject
-#
-#
 #    def allow_connect_handle(self, handle, connecting_to):
 #        return True
 #        return isinstance(connecting_to.subject, UML.Interface)
@@ -543,7 +539,7 @@ class ConnectorItem(DiagramLine):
 #            s2 = c2.subject
 #            print s1.end
 #            print s2.end
-#            connector = self.find_relationship(s1, s2)
+#            connector = self.relationship
 #            if not connector:
 #                connector = resource(UML.ElementFactory).create(UML.Connector)
 #                connector.kind = 'assembly'

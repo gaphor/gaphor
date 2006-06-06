@@ -1,24 +1,17 @@
-'''
-ArtifactItem diagram item
-'''
-# vim:sw=4:et
+"""
+Artifact item
+"""
 
-from __future__ import generators
-
-import gobject
-import pango
 import diacanvas
 from gaphor import UML
-from classifier import ClassifierItem
+from gaphor.diagram.classifier import ClassifierItem
 
 class ArtifactItem(ClassifierItem):
 
-    __uml__ = UML.Artifact
+    __uml__  = UML.Artifact
+    __icon__ = True
 
     ICON_HEIGHT = 20
-
-#    popup_menu = ClassifierItem.popup_menu \
-#        + ('separator', 'IndirectlyInstantiated')
 
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
@@ -27,22 +20,20 @@ class ArtifactItem(ClassifierItem):
         self.drawing_style = self.DRAW_COMPARTMENT_ICON
         # TODO: underline text
         
-        for attr in ('_note',):
-            shape = diacanvas.shape.Path()
-            shape.set_line_width(1.0)
-            shape.set_fill(True)
-            shape.set_fill_color(diacanvas.color(255, 255, 255))
-            setattr(self, attr, shape)
+        self._note = diacanvas.shape.Path()
+        self._note.set_line_width(1.0)
+        self._note.set_fill(True)
+        self._note.set_fill_color(diacanvas.color(255, 255, 255))
+        self._shapes.add(self._note)
+
 
     def update_compartment_icon(self, affine):
-
         ClassifierItem.update_compartment_icon(self, affine)
 
         # draw icon
         w = self.ICON_WIDTH
         h = self.ICON_HEIGHT
-        ix = self.width - self.ICON_MARGIN_X - self.ICON_WIDTH
-        iy = self.ICON_MARGIN_Y
+        ix, iy = self.get_icon_pos()
         ear = 5
 
         self._note.line(((ix + w - ear, iy), (ix + w - ear, iy + ear),
@@ -50,7 +41,5 @@ class ArtifactItem(ClassifierItem):
                          (ix, iy), (ix, iy + h), (ix + w, iy + h),
                          (ix + w, iy + ear)))
 
-    def on_shape_iter(self):
-        for s in ClassifierItem.on_shape_iter(self):
-            yield s
-        yield self._note
+
+# vim:sw=4:et

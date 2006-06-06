@@ -4,13 +4,17 @@ Such as a modifier 'subject' property and a unique id.
 """
 
 import gobject
+import pango
 import diacanvas
 from diacanvas import CanvasItem
 
 from gaphor import resource
+from gaphor import UML
+from gaphor.misc import uniqueid
 from gaphor.UML import Element, Presentation
-from gaphor.UML.properties import association
 
+STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
+STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
 
 class DiagramItem(Presentation):
     """Basic functionality for all model elements (lines and elements!).
@@ -29,6 +33,9 @@ class DiagramItem(Presentation):
             disconnect = DiagramItem.disconnect
             ...
     """
+
+    FONT_STEREOTYPE = 'sans 10'
+
     __gproperties__ = {
         'subject':        (gobject.TYPE_PYOBJECT, 'subject',
                          'subject held by the diagram item',
@@ -40,7 +47,8 @@ class DiagramItem(Presentation):
                        gobject.TYPE_NONE, (gobject.TYPE_STRING,))
     }
 
-    popup_menu = ()
+    stereotype_list = []
+    popup_menu = ('Stereotype', stereotype_list)
 
     def __init__(self, id=None):
         Presentation.__init__(self)
@@ -59,8 +67,20 @@ class DiagramItem(Presentation):
         # properties, which should be saved in file
         self._persistent_props = set()
 
+        # stereotype
+        self._has_stereotype = False
+        self._stereotype = diacanvas.shape.Text()
+        self._stereotype.set_font_description(pango.FontDescription(self.FONT_STEREOTYPE))
+        self._stereotype.set_alignment(pango.ALIGN_CENTER)
+        self._stereotype.set_markup(False)
+
+        # parts of items to be drawn on diagram
+        # can contain stereotype, etc.
+        self._shapes = set()
+
 
     id = property(lambda self: self._id, doc='Id')
+
 
     def set_prop_persistent(self, name):
         """
@@ -198,6 +218,37 @@ class DiagramItem(Presentation):
         self.subject = subject
 
     def get_popup_menu(self):
+        """In the popup menu a submenu is created with Stereotypes than can be
+        applied to this classifier (Class, Interface).
+        If the class itself is a metaclass, an option is added to check if the class
+        exists.
+        """
+        subject = self.subject
+        stereotype_list = self.stereotype_list
+        stereotype_list[:] = []
+
+        # UML specs does not allow to extend stereotypes with stereotypes
+        if subject and not isinstance(subject, UML.Stereotype):
+            # look for stereotypes to put them into context menu of an item
+            # this can be only done when subject exists
+
+            from itemactions import ApplyStereotypeAction, register_action
+
+            cls = type(subject)
+
+            # find out names of classes, which are superclasses of our
+            # subject
+            names = set(c.__name__ for c in cls.__mro__ if issubclass(c, Element))
+
+            # find stereotypes that extend out metaclass
+            classes = subject._factory.select(lambda e: e.isKindOf(UML.Class) and e.name in names)
+
+            for class_ in classes:
+                for extension in class_.extension:
+                    stereotype = extension.ownedEnd.type
+                    stereotype_action = ApplyStereotypeAction(stereotype)
+                    register_action(stereotype_action, 'ItemFocus')
+                    stereotype_list.append(stereotype_action.id)
         return self.popup_menu
 
     def _subject_connect_helper(self, element, callback_prefix, prop_list):
@@ -286,7 +337,7 @@ class DiagramItem(Presentation):
         #log.info('DiagramItem.on_subject_notify: %s' % self.__subject_notifier_ids)
         # First, split all notifiers on '.'
         callback_prefix = 'on_subject_notify_'
-        notifiers = map(str.split, notifiers, ['.'] * len(notifiers))
+        notifiers = map(str.split, notifiers + ('appliedStereotype',), ['.'] * len(notifiers))
         old_subject = self.__the_subject
         subject_connect_helper = self._subject_connect_helper
         subject_disconnect_helper = self._subject_disconnect_helper
@@ -302,6 +353,7 @@ class DiagramItem(Presentation):
                 #log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
                 #self._subject_connect(self.subject, n)
                 subject_connect_helper(subject, callback_prefix, n)
+                self.update_stereotype()
 
         # Execute some sort of ItemNewSubject action
         try:
@@ -311,6 +363,11 @@ class DiagramItem(Presentation):
         else:
             main_window.execute_action('ItemNewSubject')
         self.request_update()
+
+
+    def on_subject_notify__appliedStereotype(self, subject, pspec=None):
+        if self.subject:
+            self.update_stereotype()
 
     # DiaCanvasItem callbacks
 
@@ -363,3 +420,103 @@ class DiagramItem(Presentation):
             #print self.__class__.__name__, 'Disconnecting NOT allowed.'
         return 0
 
+    #
+    # Stereotypes
+    #
+    def set_stereotype(self, text = None):
+        """
+        Set the stereotype text for the diagram item.
+
+        Note, that text is not Stereotype object.
+
+        @arg text: stereotype text
+        """
+        if text:
+            self._stereotype.set_text(STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE)
+            self._has_stereotype = True
+            self._shapes.add(self._stereotype)
+        else:
+            self._has_stereotype = False
+            if self._stereotype in self._shapes:
+                self._shapes.remove(self._stereotype)
+        self.request_update()
+
+
+    def update_stereotype(self):
+        """
+        Update the stereotype definitions (text) of this item.
+
+        Note, that this method is also called from
+        ExtensionItem.confirm_connect_handle method.
+        """
+        if self.subject:
+            applied_stereotype = self.subject.appliedStereotype
+        else:
+            applied_stereotype = None
+
+        def stereotype_name(name):
+            """
+            Return a nice name to display as stereotype. First will be
+            character lowercase unless the second character is uppercase.
+            """
+            if len(name) > 1 and name[1].isupper():
+                return name
+            else:
+                return name[0].lower() + name[1:]
+
+        # by default no stereotype, however check for __stereotype__
+        # attribute to assign some static stereotype see interfaces,
+        # use case relationships, package or class for examples
+        stereotype = getattr(self, '__stereotype__', None)
+        if stereotype:
+            stereotype = self.parse_stereotype(stereotype)
+
+        if applied_stereotype:
+            # generate string with stereotype names separated by coma
+            sl = ', '.join(stereotype_name(s.name) for s in applied_stereotype)
+            if stereotype:
+                stereotype = '%s, %s' % (stereotype, sl)
+            else:
+                stereotype = sl
+
+        # Phew! :]
+        self.set_stereotype(stereotype)
+
+        self.request_update()
+
+
+    #
+    # utility methods
+    #
+    @staticmethod
+    def get_text_size(text):
+        return text.to_pango_layout(True).get_pixel_size()
+
+
+    def parse_stereotype(self, data):
+        if isinstance(data, str): # return data as stereotype if it is a string
+            return data
+
+        subject = self.subject
+
+        for stereotype, condition in data.items():
+            if isinstance(condition, tuple):
+                cls, predicate = condition
+            elif isinstance(condition, type):
+                cls = condition
+                predicate = None
+            elif callable(condition):
+                cls = None
+                predicate = condition
+            else:
+                assert False, 'wrong conditional %s' % condition
+
+            ok = True
+            if cls:
+                ok = isinstance(subject, cls)
+            if predicate:
+                ok = predicate(self)
+
+            if ok:
+                return stereotype
+        return None

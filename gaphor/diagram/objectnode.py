@@ -10,12 +10,14 @@ import pango
 import diacanvas
 from gaphor import UML
 from gaphor import resource
+
 from gaphor.diagram import TextElement
-from nameditem import RectNamedItem
+from gaphor.diagram.align import V_ALIGN_MIDDLE
 from gaphor.diagram.groupable import GroupBase
+from gaphor.diagram.nameditem import NamedItem
 
 
-class ObjectNodeItem(RectNamedItem, GroupBase):
+class ObjectNodeItem(NamedItem, GroupBase):
     """
     Representation of object node. Object node is ordered and has upper bound
     specification.
@@ -23,12 +25,14 @@ class ObjectNodeItem(RectNamedItem, GroupBase):
     Ordering information can be hidden by user.
     """
 
-    __uml__ = UML.ObjectNode
+    __uml__      = UML.ObjectNode
+
+    __s_valign__ = V_ALIGN_MIDDLE
 
     FONT = 'sans 10'
     MARGIN = 10
 
-    node_popup_menu = (
+    popup_menu = NamedItem.popup_menu + (
         'separator',
         'Ordering', ('ObjectNodeOrderingVisibilty',
             'separator',
@@ -46,7 +50,7 @@ class ObjectNodeItem(RectNamedItem, GroupBase):
 
     def __init__(self, id = None):
         GroupBase.__init__(self)
-        RectNamedItem.__init__(self, id)
+        NamedItem.__init__(self, id)
 
         self._upper_bound = TextElement('value', '{ upperBound = %s }', '*')
         self.add(self._upper_bound)
@@ -65,7 +69,7 @@ class ObjectNodeItem(RectNamedItem, GroupBase):
         Detect subject changes. If subject is set then set upper bound text
         element subject.
         """
-        RectNamedItem.on_subject_notify(self, pspec, notifiers)
+        NamedItem.on_subject_notify(self, pspec, notifiers)
         if self.subject:
             factory = resource(UML.ElementFactory)
             if not self.subject.upperBound:
@@ -77,10 +81,6 @@ class ObjectNodeItem(RectNamedItem, GroupBase):
         self.request_update()
 
 
-    def get_popup_menu(self):
-        return self.popup_menu + self.node_popup_menu
-
-
     def do_set_property(self, pspec, value):
         """
         Request update of item in case of ordering visibility.
@@ -90,14 +90,14 @@ class ObjectNodeItem(RectNamedItem, GroupBase):
             self._show_ordering = value
             self.request_update()
         else:
-            RectNamedItem.do_set_property(self, pspec, value)
+            NamedItem.do_set_property(self, pspec, value)
 
 
     def do_get_property(self, pspec):
         if pspec.name == 'show-ordering':
             return self._show_ordering
         else:
-            return RectNamedItem.do_get_property(self, pspec)
+            return NamedItem.do_get_property(self, pspec)
 
 
     def set_ordering(self, ordering):
@@ -115,25 +115,11 @@ class ObjectNodeItem(RectNamedItem, GroupBase):
         return self.subject.ordering
 
 
-    def get_border(self):
-        """
-        Return border of simple named item.
-        """
-        return diacanvas.shape.Path()
-
-
-    def draw_border(self):
-        """
-        Draw border of simple named item.
-        """
-        self._border.rectangle((0, 0), (self.width, self.height))
-
-
     def on_update(self, affine):
         """
         Update object node, its ordering and upper bound specification.
         """
-        RectNamedItem.on_update(self, affine)
+        NamedItem.on_update(self, affine)
 
         if self.subject:
             self._ordering.set_text('{ ordering = %s }' % self.subject.ordering)
@@ -169,7 +155,7 @@ class ObjectNodeItem(RectNamedItem, GroupBase):
 
 
     def on_shape_iter(self):
-        it = RectNamedItem.on_shape_iter(self)
+        it = NamedItem.on_shape_iter(self)
         if self.props.show_ordering:
             return itertools.chain(it, iter([self._ordering]))
         else:

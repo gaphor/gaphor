@@ -1,15 +1,15 @@
-'''
-Implementation - - - -|>
-'''
-# vim:sw=4
+"""
+Implementation of interface.
+"""
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.diagram.relationship import RelationshipItem
+from gaphor.diagram.diagramline import DiagramLine
 
-class ImplementationItem(RelationshipItem):
+class ImplementationItem(DiagramLine):
 
-    __uml__ = UML.Implementation
+    __uml__          = UML.Implementation
+    __relationship__ = 'contract', None, 'implementatingClassifier', 'implementation'
 
     default_look = {
         'dash': (7.0, 5.0),
@@ -26,15 +26,8 @@ class ImplementationItem(RelationshipItem):
     }
 
     def __init__(self, id = None):
-        RelationshipItem.__init__(self, id)
+        DiagramLine.__init__(self, id)
         self.set(**self.default_look)
-        
-    # Gaphor Connection Protocol
-
-    def find_relationship(self, head_subject, tail_subject):
-        return self._find_relationship(head_subject, tail_subject,
-           ('contract', None),
-           ('implementatingClassifier', 'implementation'))
 
 
     def allow_connect_handle(self, handle, connecting_to):
@@ -69,7 +62,7 @@ class ImplementationItem(RelationshipItem):
         if c1 and c2:
             s1 = c1.subject
             s2 = c2.subject
-            relation = self.find_relationship(s1, s2)
+            relation = self.relationship
             if not relation:
                 #print 'No relationship found'
                 relation = resource(UML.ElementFactory).create(UML.Implementation)
@@ -79,7 +72,8 @@ class ImplementationItem(RelationshipItem):
 
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
-        """See RelationshipItem.confirm_disconnect_handle().
+        """
+        See DiagramLine.confirm_disconnect_handle().
         """
         self.set_subject(None)
 
@@ -94,4 +88,6 @@ class ImplementationItem(RelationshipItem):
         else:
             self.set(**self.default_look)
 
-        RelationshipItem.on_update(self, affine)
+        DiagramLine.on_update(self, affine)
+
+# vim:sw=4

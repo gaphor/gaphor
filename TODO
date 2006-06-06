@@ -1,10 +1,17 @@
 
-
 !!! Create some example diagrams,
 
  - using stereotypes
  - associations
  - components and stuff
+
+======== stereotypes branch =========
+- namedelement.py: from NamedElement
+- items.tex: describe:
+  - __uml__
+  - __stereotype__
+  - __fixed_stereotype__
+===== end of stereotypes branch =====
 
 ======= 0.8.0 ========
 - load uml2.gaphor and open other file or split flows and undo/redo.

@@ -8,45 +8,24 @@ import diacanvas
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.diagram.relationship import RelationshipItem
+from gaphor.diagram.diagramline import DiagramLine
 
-class GeneralizationItem(RelationshipItem):
+class GeneralizationItem(DiagramLine):
 
     __uml__ = UML.Generalization
+    __relationship__ = 'general', None, 'specific', 'generalization'
 
     def __init__(self, id=None):
-        RelationshipItem.__init__(self, id)
+        DiagramLine.__init__(self, id)
         self.set(has_head=1, head_fill_color=0,
                  head_a=15.0, head_b=15.0, head_c=10.0, head_d=10.0)
         
+    #
     # Gaphor Connection Protocol
-
-    def find_relationship(self, head_subject, tail_subject):
-        """See RelationshipItem.find_relationship().
-        """
-        return self._find_relationship(head_subject, tail_subject,
-                                       ('general', None),
-                                       ('specific', 'generalization'))
-
-        if self.subject and \
-           self.subject.general is head_subject and \
-           self.subject.specific is tail_subject:
-            return self.subject
-
-        for gen in tail_subject.generalization:
-            if gen.general is head_subject:
-                # check for this entry on self.canvas
-                for item in gen.presentation:
-                    # Allow self to be returned. Avoids strange
-                    # behaviour during loading
-                    if item.canvas is self.canvas and item is not self:
-                        break
-                else:
-                    return gen
-        return None
+    #
 
     def allow_connect_handle(self, handle, connecting_to):
-        """See RelationshipItem.allow_connect_handle().
+        """See DiagramLine.allow_connect_handle().
         """
         try:
             if not connecting_to or not isinstance(connecting_to.subject, UML.Classifier):
@@ -68,7 +47,7 @@ class GeneralizationItem(RelationshipItem):
             return False
 
     def confirm_connect_handle (self, handle):
-        """See RelationshipItem.confirm_connect_handle().
+        """See DiagramLine.confirm_connect_handle().
         """
         #print 'confirm_connect_handle', handle
         c1 = self.handles[0].connected_to
@@ -76,7 +55,7 @@ class GeneralizationItem(RelationshipItem):
         if c1 and c2:
             s1 = c1.subject
             s2 = c2.subject
-            relation = self.find_relationship(s1, s2)
+            relation = self.relationship
             if not relation:
                 relation = resource(UML.ElementFactory).create(UML.Generalization)
                 relation.general = s1
@@ -84,7 +63,6 @@ class GeneralizationItem(RelationshipItem):
             self.subject = relation
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
-        """See RelationshipItem.confirm_disconnect_handle().
+        """See DiagramLine.confirm_disconnect_handle().
         """
-        #print 'confirm_disconnect_handle', handle
         self.set_subject(None)

@@ -1,24 +1,17 @@
-'''
-InterfaceItem diagram item
-'''
-# vim:sw=4:et
+"""
+Interface item.
+"""
 
-from __future__ import generators
-
-import math
 import itertools
-import gobject
-import pango
-import diacanvas
 from gaphor import UML
+from gaphor.diagram.align import V_ALIGN_BOTTOM
 from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.implementation import ImplementationItem
 from gaphor.diagram.interfaceicon import AssembledInterfaceIcon, \
     ProvidedInterfaceIcon, RequiredInterfaceIcon
+from gaphor.diagram.klass import ClassItem
+from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.rotatable import SimpleRotation
-from nameditem import NamedItem
-from klass import ClassItem
-from relationship import RelationshipItem
 from gaphor.misc.meta import GObjectPropsMerge
 
 
@@ -32,8 +25,10 @@ class InterfaceItem(ClassItem, SimpleRotation):
           handle. Stop drawing the line 'x' points earlier. 
     """
 
-    __uml__ = UML.Interface
     __metaclass__ = GObjectPropsMerge # merge properties from SimpleRotation
+
+    __uml__        = UML.Interface
+    __stereotype__ = {'interface': lambda self: self.drawing_style != self.DRAW_ICON}
 
     def __init__(self, id=None):
         ClassItem.__init__(self, id)
@@ -72,12 +67,35 @@ class InterfaceItem(ClassItem, SimpleRotation):
             for h in self.handles:
                 h.props.movable = False
 
+            # copy align data from class to item instance, we need this because
+            # interface align data can change because of folding/unfolding
+            # interface
+            self.s_align = self.s_align.copy()
+            self.n_align = self.n_align.copy()
+
+            self.s_align.valign = V_ALIGN_BOTTOM
+            self.s_align.outside = True
+            self.s_align.margin = (0, 2) * 4
+            self.n_align.valign = V_ALIGN_BOTTOM
+            self.n_align.outside = True
+            self.n_align.margin = (2, ) * 4
+
+            self._shapes.remove(self._border)
+
             # update connected handles
             self.update_handle_pos()
         else:
             # Do allow resizing of the node
             for h in self.handles:
                 h.props.movable = True
+
+            # back to default InterfaceItem class align
+            del self.s_align
+            del self.n_align
+
+            self._shapes.add(self._border)
+
+        self.update_stereotype()
 
 
     def update_handle_pos(self):
@@ -105,11 +123,6 @@ class InterfaceItem(ClassItem, SimpleRotation):
 
     def is_folded(self):
         return self.drawing_style == self.DRAW_ICON
-
-
-    def update_stereotype(self):
-        if not ClassItem.update_stereotype(self):
-            self.set_stereotype('interface')
 
  
     def update_icon(self, affine):
@@ -154,36 +167,6 @@ class InterfaceItem(ClassItem, SimpleRotation):
                     p2 = f()
                     p1 = p2
         return d, p1
-
-
-    def on_update(self, affine):
-        ClassItem.on_update(self, affine)
-
-        #
-        # do not put code below to update_icon method
-        # class item on_update method must be run first
-        #
-
-        # update connected handles
-        if self.is_folded():
-            width = self._icon.width
-            height = self._icon.height
-
-            # center interface name
-            name_width, name_height = self.get_name_size()
-            xn = (width - name_width) / 2
-            yn = height
-
-            self.update_name(x = xn, y = yn, width = name_width, height = name_height)
-
-            # set bounds
-            x1, y1, x2, y2 = self.bounds
-            if name_width > width: # expand bounds if name width is > than icon width
-                x1 = xn
-                x2 = xn + name_width
-            y2 = yn + name_height # bottom is sum of icon height and name height
-
-            self.set_bounds((x1, y1, x2, y2))
 
 
     def on_shape_iter(self):
@@ -237,3 +220,6 @@ def gives_required(handle):
     return isinstance(item, DependencyItem) and item.handles[0] == handle \
         and (not item.auto_dependency and item.dependency_type is UML.Usage
             or item.auto_dependency)
+
+
+# vim:sw=4:et

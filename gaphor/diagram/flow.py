@@ -12,9 +12,7 @@ import diacanvas
 from gaphor import resource
 from gaphor import UML
 from gaphor.diagram import TextElement
-from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.relationship import RelationshipItem
-from gaphor.diagram.nameditem import SimpleNamedItem
+from gaphor.diagram.diagramline import DiagramLine
 
 from gaphor.diagram.groupable import GroupBase
 import gaphor.diagram.util
@@ -22,17 +20,18 @@ import gaphor.diagram.util
 import itertools
 
 
-class FlowBase(RelationshipItem, GroupBase):
+class FlowBase(DiagramLine, GroupBase):
     """
     Control flow and object flow abstract class. Allows to create flows
     with name and guard.
     """
 
     __uml__ = UML.ControlFlow
+    __relationship__ = 'source', 'outgoing', 'target', 'incoming'
 
     def __init__(self, id = None):
         GroupBase.__init__(self)
-        RelationshipItem.__init__(self, id)
+        DiagramLine.__init__(self, id)
 
         self.set(has_tail=1, tail_fill_color=0,
                  tail_a=0.0, tail_b=15.0, tail_c=6.0, tail_d=6.0)
@@ -49,7 +48,7 @@ class FlowBase(RelationshipItem, GroupBase):
 
 
     def on_subject_notify(self, pspec, notifiers = ()):
-        RelationshipItem.on_subject_notify(self, pspec, notifiers)
+        DiagramLine.on_subject_notify(self, pspec, notifiers)
 
         if hasattr(self, '_guard'):
             if self.subject:
@@ -99,12 +98,12 @@ class FlowBase(RelationshipItem, GroupBase):
 
 
     def on_update(self, affine):
-        RelationshipItem.on_update(self, affine)
+        DiagramLine.on_update(self, affine)
         GroupBase.on_update(self, affine)
 
 
     def allow_connect_handle(self, handle, connecting_to):
-        """See RelationshipItem.allow_connect_handle().
+        """See DiagramLine.allow_connect_handle().
         """
         can_connect = False
 
@@ -123,14 +122,6 @@ class FlowBase(RelationshipItem, GroupBase):
         return can_connect
 
 
-    def find_relationship(self, head_subject, tail_subject):
-        """See RelationshipItem.find_relationship().
-        """
-        return self._find_relationship(head_subject, tail_subject,
-                                       ('source', 'outgoing'),
-                                       ('target', 'incoming'))
-
-
     def connect_items(self, c1, c2):
         if c1 and c2:
             s1 = c1.subject
@@ -140,7 +131,7 @@ class FlowBase(RelationshipItem, GroupBase):
                 s1 = s1.outgoing[0].target
 
             s2 = c2.subject
-            relation = self.find_relationship(s1, s2)
+            relation = self.relationship
             if not relation:
                 factory = resource(UML.ElementFactory)
 
@@ -184,7 +175,7 @@ class FlowItem(FlowBase):
     guard. It can be splitted into two flows with activity edge connectors.
     """
 
-    popup_menu = RelationshipItem.popup_menu + (
+    popup_menu = DiagramLine.popup_menu + (
         'separator',
         'SplitFlow',
     )
@@ -205,7 +196,7 @@ class FlowItem(FlowBase):
     # Gaphor Connection Protocol
 
     def confirm_connect_handle (self, handle):
-        """See RelationshipItem.confirm_connect_handle().
+        """See DiagramLine.confirm_connect_handle().
         """
         c1 = self.handles[0].connected_to   # source
         c2 = self.handles[-1].connected_to  # target
@@ -213,7 +204,7 @@ class FlowItem(FlowBase):
 
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
-        """See RelationshipItem.confirm_disconnect_handle().
+        """See DiagramLine.confirm_disconnect_handle().
         """
         c1 = self.handles[0].connected_to   # source
         c2 = self.handles[-1].connected_to  # target
@@ -303,7 +294,7 @@ class CFlowItem(FlowBase):
     any node and inactive end is connected only to activity edge connector.
     """
 
-    popup_menu = RelationshipItem.popup_menu + (
+    popup_menu = DiagramLine.popup_menu + (
         'separator',
         'MergeFlow',
     )
@@ -371,7 +362,7 @@ class CFlowItem(FlowBase):
 
 
     def confirm_connect_handle(self, handle):
-        """See RelationshipItem.confirm_connect_handle().
+        """See DiagramLine.confirm_connect_handle().
         """
         c1 = self.get_active_handle().connected_to            # source
         c2 = self._opposite.get_active_handle().connected_to  # target
@@ -393,7 +384,7 @@ class CFlowItem(FlowBase):
 
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
-        """See RelationshipItem.confirm_disconnect_handle().
+        """See DiagramLine.confirm_disconnect_handle().
         """
         c1 = self.get_active_handle().connected_to             # source
         c2 = self._opposite.get_active_handle().connected_to   # target

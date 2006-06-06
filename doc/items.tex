@@ -1,0 +1,339 @@
+\documentclass[draft]{book}
+\usepackage[papername = a4paper, margin = 3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Gaphor Diagram Item Model}
+\author{wrobell@pld-linux.org}
+
+\newcommand{\rmodule}[1]{\texttt{#1}}
+\newcommand{\rclass}[1]{\texttt{#1}}
+\newcommand{\rattr}[1]{\texttt{#1}}
+\newcommand{\rstereotype}[1]{\texttt{<<#1>>}}
+\newcommand{\warning}[1]{\textbf{WARNING:~#1}}
+
+%\newenvironment{description}
+%               {\list{}{\labelwidth\z@ \itemindent-\leftmargin
+%                        \let\makelabel\descriptionlabel}}
+%               {\endlist}
+%\newcommand*\descriptionlabel[1]{\hspace\labelsep
+%                                \normalfont\bfseries #1}
+
+% length class, method and attribute block descriptions
+\newlength{\dscwidth}
+\setlength{\dscwidth}{\textwidth}
+\addtolength{\dscwidth}{-7em}
+
+\newlength{\abdscwidth}
+\setlength{\abdscwidth}{\textwidth}
+\addtolength{\abdscwidth}{-5em}
+
+\newlength{\adscwidth}
+\setlength{\adscwidth}{\textwidth}
+\addtolength{\adscwidth}{-9em}
+
+\newcommand{\dlabel}[1]{\par\noindent\makebox[6em][r]{\textbf{#1:}}\hspace{1em}}
+
+\newenvironment{entitydesc}{%
+\dlabel{Description}%
+\begin{minipage}[t]{\dscwidth}
+}{%
+\end{minipage}
+}
+
+\newcommand{\pre}{\dlabel{Pre}~}
+\newcommand{\post}{\dlabel{Post}~}
+
+\newenvironment{slist}{%
+    \begin{list}{-}{%
+        \setlength{\labelwidth}{3pt}%
+        \setlength{\leftmargin}{1em}%
+        \setlength{\labelsep}{2pt}%
+        \setlength{\rightmargin}{0pt}%
+        \setlength{\itemsep}{0pt}%
+        \setlength{\parsep}{0pt}%
+        \setlength{\topsep}{2pt}%
+        \setlength{\partopsep}{0pt}%
+    }%
+}{%
+    \end{list}%\vspace{3pt}%
+}
+
+% class
+\newenvironment{class}[1]{%
+\dlabel{\underline{Class}}\texttt{#1}\nopagebreak[4]
+}{%
+\par\vspace{2em}
+}
+
+% attributes
+\newenvironment{attrs}{%
+\\[1ex]
+\noindent\hspace*{5em}\begin{minipage}[t]{\abdscwidth}
+}{%
+\end{minipage}\\[-2ex]
+}
+
+\newcommand{\iattr}[2]{%
+\makebox[3em][r]{\texttt{#1}:}\hspace*{1em}%
+\begin{minipage}[t]{\adscwidth}
+#2%
+\end{minipage}\\
+}
+
+% methods
+\newenvironment{method}[1]{%
+\vspace*{2ex}
+\dlabel{\underline{Method}}\texttt{#1}
+}{%
+\par
+}
+
+\begin{document}
+\maketitle
+
+\chapter{Basic Classes of Diagram Items}
+\section{Introduction}
+UML specification defines UML data model, which is used by Gaphor to store
+information about modeled system. UML data model is visualized with
+Diacanvas library used as canvas library. Notation
+of UML diagram items is also specified by UML specification.
+
+Diacanvas library supports basic drawing operations but there are many
+entities and behaviors, which are common to many or all diagram items, i.e.
+stereotypes, items' name, popup menu, positioning of associated items, etc.
+
+We have to identify common elements and behaviors of UML diagram items
+and define basic diagram items classes, which will be used
+by Gaphor to provide modeling functionality.
+
+\section{Problem Description}
+
+\subsection{Items and Diacanvas}\label{gaphor:basic:itemsandcanvas}
+Diacanvas library supports different canvas objects
+\begin{itemize}
+\item canvas element
+\item canvas line
+\end{itemize}
+
+Because of differences between them, DiagramItem class cannot be directly
+associated with canvas line or canvas element. Connection between diacanvas
+classes and items has to be established by different abstract classes.
+
+\subsection{Items and UML Model Classes}
+Generaly there is one to one association between an item and UML class
+but it is not always so simple. 
+For example one diagram item can visualize more than one UML class
+\begin{itemize}
+\item decision node item can represent combined decision and merge nodes
+\item fork node item can represent combined fork and join nodes 
+\end{itemize}
+
+Also, there can be situation, when there is no UML class visualized, i.e.
+in case of CommentLine.
+
+\subsection{Line Items}
+Line has at least two handles. These handles are reffered as head (first
+handle) and tail (second handle) of line.
+
+When user puts an item on a diagram, then last handle can be moved to
+desired point. The same applies to line items. User puts line on diagram,
+head is set in mouse cursor point and tail is moved to desired point.
+
+Head and tail concepts are also used in diacanvas in case of canvas line.
+Head of line item is at the same end as head of canvas line. The same
+applies for tail.
+
+\section{Classes}
+\rclass{DiagramItem} class is a basic, abstract class for all items. Every
+item class is created using \rclass{DiagramItemMeta} metaclass. It
+assigns information about UML class, stereotypes,
+etc.\ to every item class.
+
+Different canvas elements (see~\ref{gaphor:basic:itemsandcanvas}) are
+supported with classes
+\begin{itemize}
+\itemsep0pt
+\item \rclass{LineItem}
+\item \rclass{ElementItem}
+\item \rclass{FeatureItem}
+\end{itemize}
+
+\begin{class}{DiagramItemMeta}
+\begin{attrs}
+\iattr{\_\_uml\_\_}{UML class associated with item}
+\iattr{\_\_stereotype\_\_}{item static stereotype}
+\iattr{s\_align}{stereotype align}
+\end{attrs}
+\begin{entitydesc}
+Basic metaclass for all items. Stereotypes are aligned according to
+\rattr{s\_align} attribute.
+\end{entitydesc}
+\end{class}
+
+\begin{class}{DiagramItem}
+\begin{attrs}
+\iattr{subject}{reference to UML class instance}
+\iattr{popup\_menu}{item popup menu definition, i.e. rename, delete, etc.}
+\end{attrs}
+\begin{entitydesc}
+Basic class for all diagram items.
+\end{entitydesc}
+\end{class}
+
+\begin{class}{LineItem}
+\begin{attrs}
+\iattr{head}{reference to head handle of a line}
+\iattr{tail}{reference to tail handle of a line}
+\iattr{s\_align}{stereotype align}
+\end{attrs}
+\begin{entitydesc}
+Canvas line based items like dependencies, association, flows, message, etc.
+\end{entitydesc}
+\end{class}
+
+\begin{class}{ElementItem}
+\begin{entitydesc}
+Canvas element based items like class, component, lifeline,
+comment, activity nodes, etc.
+\end{entitydesc}
+\end{class}
+
+\begin{class}{FeatureItem}
+\begin{entitydesc}
+Canvas element, which is part of an item. For example represents
+attributes and methods of classes.
+\end{entitydesc}
+\end{class}
+
+\section{Methods}
+\begin{method}{DiagramItem.set\_subject}
+\begin{attrs}
+\iattr{subject}{reference to UML class instance}
+\end{attrs}
+\begin{entitydesc}
+assign UML class instance to an item
+\end{entitydesc}
+\end{method}
+
+\chapter{Align of Item Elements}
+\section{Introduction}
+\begin{figure}
+\begin{center}
+\includegraphics[width=.5\textwidth]{flow}
+\end{center}
+\caption{Flow Item example}\label{items:example:flow}
+\end{figure}
+
+Many items consist of several elements, for example flow item is a line
+with
+\begin{itemize}
+\item stereotype
+\item name
+\item guard
+\end{itemize}
+These elements are aligned to a line of flow (see
+figure~\ref{items:example:flow})
+\begin{itemize}
+\item stereotype is near one of the ends of line
+\item name is under stereotype
+\item guard is near the middle of line
+\end{itemize}
+
+Element of items are aligned according to attributes of
+\rclass{ItemAlign} and \rclass{LineAlign} classes. Align information is
+assigned to every item element, but position is calculated from item
+perspective, for example
+\begin{itemize}
+\item align of an element to the (left, top) with margin $(10, 15, 15, 5)$
+puts an element in (left, top) corner of item; it is located $10px$ from the top
+and $5px$ from the left of item
+\item align of an element as above but outside item puts an element $10px$
+from top and $5px$ from the left of item; top and left margin values are
+used for top vertical and left horizontal align
+\end{itemize}
+See figure~\ref{items:align} for more examples.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=.95\textwidth]{align}
+\end{center}
+\caption{Align of Item Elements}\label{items:align}
+\end{figure}
+
+Align constants and classes are defined in \rmodule{gaphor::diagram::align} module.
+
+\subsection{Stereotype and Name Align}
+
+There are two important elements of items
+\begin{itemize}
+\item every item shown on diagram has stereotype (even item for Stereotype
+    UML class, which stereotype is \rstereotype{stereotype})
+\item many items has names
+\end{itemize}
+
+Therefore every item class has \rattr{s\_align} attribute, which defines
+align of stereotypes.
+
+Named items are aligned according to \rattr{n\_align} attribute. If
+stereotype and name align values are the same, then name is put
+centered under stereotype.
+
+\warning{What about FeatureItem stereotype?}
+
+\chapter{Named Items}
+\section{Introduction}
+Named items represent these UML classes, which derive from NamedElement.
+All named items are editable, so user can double click on an item and
+change or enter name of UML object.
+
+We have to distinguish between two kind of named elements. One is related
+to canvas elements and second is related to canvas lines. For example, name
+of UML object can be positioned inside or outside canvas element (class vs.
+initial node), also name can be centered or on left/right side of canvas
+element. In case of canvas line based items name can be near head, tail
+or centre of a line and name can be put horizontaly or along line path.
+
+\section{Problem Description}
+\subsection{Canvas Element Named Items}
+
+\subsection{Canvas Line Named Items}
+
+\chapter{Relationships}
+
+Relationships are implemented using Python descriptors. See Relationship,
+DependencyRelationship and AssociationRelationship classes for examples.
+
+\chapter{Profiles}
+
+\section{Gaphor Stereotypes}
+
+\begin{description}
+\item[name] UML class of an item derives from NamedElement; name
+        should be shown on diagram
+\item[nostereotype] item does not allow to edit stereotypes
+\end{description}
+
+\section{Diacanvas Stereotypes}
+
+\begin{description}
+\item[editable] item is editable when it is possible to change name of an
+    item by clicking twice on it
+\end{description}
+
+
+%fixme: chapter below should be chapter with number
+\chapter{Glossary}
+
+\begin{description}
+\item[static stereotype] stereotype, which is always assigned
+    to an item; for example interface item is annotated with
+    \rstereotype{interface} stereotype
+
+\item[item] item put on diagram by user, i.e. ClassItem, AssociationItem;
+    conforms to UML notation of UML metamodel classes
+
+\item[UML class] class defined in UML metamodel
+\end{description}
+
+\end{document}

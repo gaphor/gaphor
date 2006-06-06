@@ -70,3 +70,7 @@ class ElementItem(diacanvas.CanvasElement, DiagramItem):
 
     def on_disconnect_handle(self, handle):
         return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
+
+
+    def on_shape_iter(self):
+        return iter(self._shapes)

@@ -18,9 +18,9 @@ import diacanvas.geometry
 from gaphor import resource
 from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
-from gaphor.diagram.relationship import RelationshipItem
+from gaphor.diagram.diagramline import DiagramLine
 
-class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
+class ExtensionItem(DiagramLine, diacanvas.CanvasAbstractGroup):
     """ExtensionItem represents associations. 
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item
     represents a Property (with Property.association == my association).
@@ -44,7 +44,7 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
     }
 
     def __init__(self, id=None):
-        RelationshipItem.__init__(self, id)
+        DiagramLine.__init__(self, id)
 
         # ExtensionEnds are really inseperable from the ExtensionItem.
         # We give them the same id as the association item.
@@ -56,7 +56,7 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
                  head_fill_color=diacanvas.color(0,0,0,255))
 
     def save (self, save_func):
-        RelationshipItem.save(self, save_func)
+        DiagramLine.save(self, save_func)
         if self._head_end.subject:
             save_func('head_subject', self._head_end.subject)
         if self._tail_end.subject:
@@ -71,10 +71,10 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
             #type(self._tail_end).subject.load(self._tail_end, value)
             self._tail_end.load('subject', value)
         else:
-            RelationshipItem.load(self, name, value)
+            DiagramLine.load(self, name, value)
 
     def postload(self):
-        RelationshipItem.postload(self)
+        DiagramLine.postload(self)
         self._head_end.postload()
         self._tail_end.postload()
 
@@ -84,7 +84,7 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
         elif pspec.name == 'tail-subject':
             self._tail_end.subject = value
         else:
-            RelationshipItem.do_set_property(self, pspec, value)
+            DiagramLine.do_set_property(self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'head':
@@ -96,14 +96,14 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
         elif pspec.name == 'tail-subject':
             return self._tail_end.subject
         else:
-            return RelationshipItem.do_get_property(self, pspec)
+            return DiagramLine.do_get_property(self, pspec)
 
     head_end = property(lambda self: self._head_end)
 
     tail_end = property(lambda self: self._tail_end)
 
     def on_subject_notify(self, pspec, notifiers=()):
-        RelationshipItem.on_subject_notify(self, pspec,
+        DiagramLine.on_subject_notify(self, pspec,
                                            notifiers + ('ownedEnd',))
 
     def on_subject_notify__ownedEnd(self, subject, pspec):
@@ -113,7 +113,7 @@ class ExtensionItem(RelationshipItem, diacanvas.CanvasAbstractGroup):
         """Update the shapes and sub-items of the association."""
         # Update line endings:
 
-        RelationshipItem.on_update(self, affine)
+        DiagramLine.on_update(self, affine)
 
         self.update_child(self._head_end, affine)
         self.update_child(self._tail_end, affine)

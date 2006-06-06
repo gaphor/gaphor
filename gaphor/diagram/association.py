@@ -19,10 +19,45 @@ import diacanvas.geometry
 
 from gaphor import resource, UML
 from gaphor.undomanager import undoable
+from gaphor.diagram import Relationship
 from gaphor.diagram.diagramitem import DiagramItem
-from gaphor.diagram.relationship import RelationshipItem
+from gaphor.diagram.diagramline import DiagramLine
 
-class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.CanvasEditable):
+class AssociationRelationship(Relationship):
+    """
+    Relationship for associations.
+    """
+    def relationship(self, line, head_subject = None, tail_subject = None):
+        # First check if we do not already contain the right subject:
+        if line.subject:
+            end1 = line.subject.memberEnd[0]
+            end2 = line.subject.memberEnd[1]
+            if (end1.type is head_type and end2.type is tail_type) \
+               or (end2.type is head_type and end1.type is tail_type):
+                return
+                
+        # Find all associations and determine if the properties on the
+        # association ends have a type that points to the class.
+        Association = UML.Association
+        for assoc in resource(UML.ElementFactory).itervalues():
+            if isinstance(assoc, Association):
+                #print 'assoc.memberEnd', assoc.memberEnd
+                end1 = assoc.memberEnd[0]
+                end2 = assoc.memberEnd[1]
+                if (end1.type is head_type and end2.type is tail_type) \
+                   or (end2.type is head_type and end1.type is tail_type):
+                    # check if this entry is not yet in the diagram
+                    # Return if the association is not (yet) on the canvas
+                    for item in assoc.presentation:
+                        if item.canvas is line.canvas:
+                            break
+                    else:
+                        return assoc
+        return None
+
+
+
+class AssociationItem(DiagramLine, diacanvas.CanvasGroupable, diacanvas.CanvasEditable):
     """AssociationItem represents associations. 
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
@@ -48,6 +83,8 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
                          gobject.PARAM_READWRITE),
     }
 
+    relationship = AssociationRelationship()
+
     FONT='sans bold 10'
 
     association_popup_menu = (
@@ -70,7 +107,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
     )
 
     def __init__(self, id=None):
-        RelationshipItem.__init__(self, id)
+        DiagramLine.__init__(self, id)
 
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.
@@ -109,7 +146,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
 
 
     def save(self, save_func):
-        RelationshipItem.save(self, save_func)
+        DiagramLine.save(self, save_func)
         self.save_property(save_func, 'show-direction')
         if self._head_end.subject:
             save_func('head-subject', self._head_end.subject)
@@ -125,10 +162,10 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             #type(self._tail_end).subject.load(self._tail_end, value)
             self._tail_end.load('subject', value)
         else:
-            RelationshipItem.load(self, name, value)
+            DiagramLine.load(self, name, value)
 
     def postload(self):
-        RelationshipItem.postload(self)
+        DiagramLine.postload(self)
         self._head_end.postload()
         self._tail_end.postload()
 
@@ -142,7 +179,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
             self._show_direction = value
             self.request_update()
         else:
-            RelationshipItem.do_set_property(self, pspec, value)
+            DiagramLine.do_set_property(self, pspec, value)
 
     def do_get_property(self, pspec):
         if pspec.name == 'head':
@@ -156,7 +193,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         elif pspec.name == 'show-direction':
             return self._show_direction
         else:
-            return RelationshipItem.do_get_property(self, pspec)
+            return DiagramLine.do_get_property(self, pspec)
 
     head_end = property(lambda self: self._head_end)
 
@@ -165,7 +202,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
     def unlink(self):
         self._head_end.unlink()
         self._tail_end.unlink()
-        RelationshipItem.unlink(self)
+        DiagramLine.unlink(self)
 
     def get_popup_menu(self):
         if self.subject:
@@ -183,7 +220,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         self.subject.memberEnd.moveDown(self.subject.memberEnd[0])
 
     def on_subject_notify(self, pspec, notifiers=()):
-        RelationshipItem.on_subject_notify(self, pspec,
+        DiagramLine.on_subject_notify(self, pspec,
                                            notifiers + ('name', 'ownedEnd', 'memberEnd'))
 
         self.on_subject_notify__name(self.subject, pspec)
@@ -297,7 +334,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
                     xs(self, handles[-1].get_pos_i(), handles[-2].get_pos_i(), 'tail')
 
         # update relationship after self.set calls to avoid circural updates
-        RelationshipItem.on_update(self, affine)
+        DiagramLine.on_update(self, affine)
 
         # Calculate alignment of the head name and multiplicity
         self._head_end.update_labels(handles[0].get_pos_i(),
@@ -329,7 +366,7 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
         self.set_bounds((min(bv[0]), min(bv[1]), max(bv[2]), max(bv[3])))
                     
     def on_shape_iter(self):
-        for s in RelationshipItem.on_shape_iter(self):
+        for s in DiagramLine.on_shape_iter(self):
             yield s
         yield self._label
         if self._show_direction:
@@ -346,35 +383,9 @@ class AssociationItem(RelationshipItem, diacanvas.CanvasGroupable, diacanvas.Can
                 yield self._tail_xa
                 yield self._tail_xb
 
+    #
     # Gaphor Connection Protocol
-
-    def find_relationship(self, head_type, tail_type):
-        # First check if we do not already contain the right subject:
-        if self.subject:
-            end1 = self.subject.memberEnd[0]
-            end2 = self.subject.memberEnd[1]
-            if (end1.type is head_type and end2.type is tail_type) \
-               or (end2.type is head_type and end1.type is tail_type):
-                return
-                
-        # Find all associations and determine if the properties on the
-        # association ends have a type that points to the class.
-        Association = UML.Association
-        for assoc in resource(UML.ElementFactory).itervalues():
-            if isinstance(assoc, Association):
-                #print 'assoc.memberEnd', assoc.memberEnd
-                end1 = assoc.memberEnd[0]
-                end2 = assoc.memberEnd[1]
-                if (end1.type is head_type and end2.type is tail_type) \
-                   or (end2.type is head_type and end1.type is tail_type):
-                    # check if this entry is not yet in the diagram
-                    # Return if the association is not (yet) on the canvas
-                    for item in assoc.presentation:
-                        if item.canvas is self.canvas:
-                            break
-                    else:
-                        return assoc
-        return None
+    #
 
     def allow_connect_handle(self, handle, connecting_to):
         """This method is called by a canvas item if the user tries to connect
