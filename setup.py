@@ -71,22 +71,9 @@ class config_Gaphor(Command):
         import pygtk
         pygtk.require('2.0')
 
-        #self.pkg_config_check('gobject-2.0', '2.0.0')
-        #self.pkg_config_check('gtk+-2.0', '2.0.0')
-        #self.pkg_config_check('pygtk-2.0', '1.99.15')
-        #self.pkg_config_check('gconf-2.0', '2.0.0')
-        #self.pkg_config_check('libbonobo-2.0', '2.0.0')
-        #self.pkg_config_check('libbonoboui-2.0', '2.0.0')
-        #self.pkg_config_check('diacanvas2', '0.9.1')
-
         self.module_check('xml.parsers.expat')
-        #self.module_check('gobject', 'glib_version', (2, 8))
         self.module_check('gtk', ('gtk_version', (2, 8)),
                                  ('pygtk_version', (2, 8)))
-        #self.module_check('gnome')
-        self.module_check('gnomecanvas')
-        #self.module_check('gconf')
-        self.module_check('diacanvas', ('diacanvas_version', (0, 14, 3)))
 
         print ''
         if self.config_failed:

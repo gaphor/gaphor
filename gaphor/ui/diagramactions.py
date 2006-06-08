@@ -4,7 +4,7 @@ Commands related to the Diagram (DiaCanvas)
 # vim: sw=4
 
 import gtk
-import diacanvas
+import gaphas
 
 from gaphor import resource
 from gaphor import UML
@@ -327,7 +327,7 @@ class PasteAction(Action):
         elif isinstance(value, UML.collection):
             for item in value:
                 self._load_element(name, item)
-        elif isinstance(value, diacanvas.CanvasItem):
+        elif isinstance(value, gaphas.Item):
             self._load_element(name, value)
         else:
             # Plain attribute
@@ -354,7 +354,6 @@ class PasteAction(Action):
         # Create new id's that have to be used to create the items:
         for ci in copy_items:
             self._new_items[ci.id] = diagram.create(type(ci))
-            #self._new_items[ci.id].set_property('canvas', canvas)
 
         # Copy attributes and references. References should be
         #  1. in the ElementFactory (hence they are model elements)
@@ -394,7 +393,8 @@ class ZoomInAction(Action):
 
     def execute(self):
         view = self._window.get_current_diagram_view()
-        view.set_zoom(view.get_zoom() + 0.1)
+        view.zoom(1.2)
+        #view.set_zoom(view.get_zoom() + 0.1)
 
 register_action(ZoomInAction)
 
@@ -415,7 +415,8 @@ class ZoomOutAction(Action):
 
     def execute(self):
         view = self._window.get_current_diagram_view()
-        view.set_zoom(view.get_zoom() - 0.1)
+        #view.set_zoom(view.get_zoom() - 0.1)
+        view.zoom(1 / 1.2)
 
 register_action(ZoomOutAction)
 
@@ -455,7 +456,8 @@ class SnapToGridAction(CheckAction):
         diagram_tab = self._window.get_current_diagram_tab()
         diagram_tab.get_canvas().props.snap_to_grid = self.active
 
-register_action(SnapToGridAction)
+#register_action(SnapToGridAction)
+
 
 class ShowGridAction(CheckAction):
     id = 'ShowGrid'
@@ -473,9 +475,10 @@ class ShowGridAction(CheckAction):
         tab = self._window.get_current_diagram_tab()
         if tab:
             canvas = tab.get_canvas()
-            canvas.set_property('grid_color', self.active and 255 or canvas.get_property('grid_bg'))
+            #canvas.set_property('grid_color', self.active and 255 or canvas.get_property('grid_bg'))
 
-register_action(ShowGridAction)
+#register_action(ShowGridAction)
+
 
 class ShowElementInTreeViewAction(Action):
     id = 'ShowElementInTreeView'
@@ -486,17 +489,16 @@ class ShowElementInTreeViewAction(Action):
 
     def update(self):
         diagram_tab = self._window.get_current_diagram_tab()
-        self.sensitive = diagram_tab and diagram_tab.get_view().focus_item and \
-			 diagram_tab.get_view().focus_item.item and \
-			 diagram_tab.get_view().focus_item.item.subject
+        self.sensitive = diagram_tab and diagram_tab.get_view().focused_item and \
+			 diagram_tab.get_view().focused_item.subject
 
     def execute(self):
         tab = self._window.get_current_diagram_tab()
         if tab:
             view = tab.get_view()
-	    fi = view.focus_item
+	    fi = view.focused_item
 	    assert fi
-	    self._window.select_element(fi.item.subject)
+	    self._window.select_element(fi.subject)
 
 register_action(ShowElementInTreeViewAction)
 

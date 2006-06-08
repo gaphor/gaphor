@@ -23,7 +23,7 @@ def tool_changed(action, window):
         return
     else:
         action.sensitive = True
-    tool = view.get_property('tool')
+    tool = None #view.tool
     if tool:
         id = tool.action_id
     else:

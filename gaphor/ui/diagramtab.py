@@ -5,6 +5,7 @@ import gtk
 
 from gaphor import UML
 from gaphor import resource
+from gaphor.i18n import _
 from gaphor.diagram.itemtool import ItemTool
 from gaphor.diagram import get_diagram_item
 from gaphor.undomanager import get_undo_manager
@@ -21,6 +22,7 @@ class DiagramTab(object):
     
     def __init__(self, owning_window):
         self.diagram = None
+        #self.view = None
         self.owning_window = owning_window
 
     def get_diagram(self):
@@ -39,54 +41,50 @@ class DiagramTab(object):
             #self.diagram.canvas.disconnect(self.__snap_to_grid_id)
         self.diagram = diagram
         if diagram:
-            diagram.canvas.set_property ('allow_undo', 1)
             diagram.connect(('name', '__unlink__'), self.__on_diagram_event)
 
             if hasattr(self, 'view'):
-                self.view.get_hadjustment().set_value(0.0)
-                self.view.get_vadjustment().set_value(0.0)
+                self.view.hadjustment.set_value(0.0)
+                self.view.vadjustment.set_value(0.0)
 
 
     def construct(self):
-        title = self.diagram and self.diagram.name or '<None>'
+        title = self.diagram and self.diagram.name or _('<None>')
 
         table = gtk.Table(2,2, False)
-        #table.set_row_spacings (4)
-        #table.set_col_spacings (4)
+        #table.set_row_spacings(4)
+        #table.set_col_spacings(4)
 
         frame = gtk.Frame()
-        frame.set_shadow_type (gtk.SHADOW_IN)
-        table.attach (frame, 0, 1, 0, 1,
-                      gtk.EXPAND | gtk.FILL | gtk.SHRINK,
-                      gtk.EXPAND | gtk.FILL | gtk.SHRINK)
+        frame.set_shadow_type(gtk.SHADOW_IN)
+        table.attach(frame, 0, 1, 0, 1,
+                     gtk.EXPAND | gtk.FILL | gtk.SHRINK,
+                     gtk.EXPAND | gtk.FILL | gtk.SHRINK)
 
-        view = DiagramView (diagram=self.diagram)
-        view.set_scroll_region(0, 0, 600, 450)
+        view = DiagramView(diagram=self.diagram)
+        #view.set_scroll_region(0, 0, 600, 450)
 
-        frame.add (view)
+        frame.add(view)
         
-        sbar = gtk.VScrollbar(view.get_vadjustment())
-        table.attach (sbar, 1, 2, 0, 1, gtk.FILL,
-                      gtk.EXPAND | gtk.FILL | gtk.SHRINK)
+        sbar = gtk.VScrollbar(view.vadjustment)
+        table.attach(sbar, 1, 2, 0, 1, gtk.FILL,
+                     gtk.EXPAND | gtk.FILL | gtk.SHRINK)
 
-        sbar = gtk.HScrollbar(view.get_hadjustment())
-        table.attach (sbar, 0, 1, 1, 2, gtk.EXPAND | gtk.FILL | gtk.SHRINK,
-                      gtk.FILL)
+        sbar = gtk.HScrollbar(view.hadjustment)
+        table.attach(sbar, 0, 1, 1, 2, gtk.EXPAND | gtk.FILL | gtk.SHRINK,
+                     gtk.FILL)
 
-        view.connect('notify::tool', self.__on_view_notify_tool)
+        #view.connect('notify::tool', self.__on_view_notify_tool)
         view.connect_after('event-after', self.__on_view_event_after)
-        view.connect('focus-item', self.__on_view_focus_item)
-        view.connect('select-item', self.__on_view_select_item)
-        view.connect('unselect-item', self.__on_view_select_item)
+        view.connect('focus-changed', self.__on_view_focus_changed)
+        view.connect('selection-changed', self.__on_view_selection_changed)
+        #view.connect('unselect-item', self.__on_view_selection_changed)
         view.connect_after('key-press-event', self.__on_key_press_event)
-        view.connect('drag_data_received', self.__on_drag_data_received)
-        self.view = view
+        view.connect('drag-data-received', self.__on_drag_data_received)
 
         item_tool = ItemTool(self.owning_window.get_action_pool())
-        view.get_default_tool().set_item_tool(item_tool)
-
-        view.get_hadjustment().set_value(0.0)
-        view.get_vadjustment().set_value(0.0)
+        #view.get_default_tool().set_item_tool(item_tool)
+        self.view = view
 
         table.show_all()
 
@@ -131,11 +129,11 @@ class DiagramTab(object):
                     return True
         return False
 
-    def __on_view_focus_item(self, view, focus_item):
+    def __on_view_focus_changed(self, view, focus_item):
         self.owning_window.execute_action('ItemFocus')
         component.handle(DiagramItemFocused(focus_item))
 
-    def __on_view_select_item(self, view, select_item):
+    def __on_view_selection_changed(self, view, selection):
         self.owning_window.execute_action('ItemSelect')
 
     def __on_view_notify_tool(self, view, pspec):
@@ -171,7 +169,7 @@ class DiagramTab(object):
 
                 ix, iy = item.affine_point_w2i(max(0, wx), max(0, wy))
                 item.move(ix, iy)
-                item.set_property ('subject', element)
+                item.subject = element
                 get_undo_manager().commit_transaction()
                 view.unselect_all()
                 view.focus(view.find_view_item(item))
@@ -179,7 +177,7 @@ class DiagramTab(object):
                 self.owning_window.execute_action('ItemDiagramDrop')
 
             else:
-                log.warning ('No graphical representation for UML element %s' % type(element).__name__)
+                log.warning('No graphical representation for UML element %s' % type(element).__name__)
             context.finish(True, False, time)
         else:
             context.finish(False, False, time)

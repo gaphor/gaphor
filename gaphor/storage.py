@@ -20,7 +20,7 @@ import sys
 import os.path
 import gc
 
-import diacanvas
+import gaphas
 
 from gaphor import UML
 from gaphor import parser
@@ -94,13 +94,13 @@ def save_generator(writer=None, factory=None):
         """Save attributes and references from items in the gaphor.UML module.
         A value may be a primitive (string, int), a gaphor.UML.collection
         (which contains a list of references to other UML elements) or a
-        diacanvas.Canvas (which contains canvas items).
+        gaphas.Canvas (which contains canvas items).
         """
-        if isinstance (value, (UML.Element, diacanvas.CanvasItem)):
+        if isinstance (value, (UML.Element, gaphas.Item)):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
             save_collection(name, value)
-        elif isinstance(value, diacanvas.Canvas):
+        elif isinstance(value, gaphas.Canvas):
             writer.startElement('canvas', {})
             value.save(save_canvasitem)
             writer.endElement('canvas')
@@ -116,7 +116,7 @@ def save_generator(writer=None, factory=None):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
             save_collection(name, value)
-        elif isinstance(value, diacanvas.CanvasItem):
+        elif isinstance(value, gaphas.Item):
             writer.startElement('item', { 'id': value.id,
                                           'type': value.__class__.__name__ })
             value.save(save_canvasitem)

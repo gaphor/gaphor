@@ -228,8 +228,8 @@ class MainWindow(AbstractWindow):
         return answer == gtk.RESPONSE_YES
 
     def show_diagram(self, diagram):
-        """Show a Diagram element in a new tab. If a tab is already open,
-        show that one instead.
+        """Show a Diagram element in a new tab.
+        If a tab is already open, show that one instead.
         """
         # Try to find an existing window/tab and let it get focus:
         for tab in self.get_tabs():

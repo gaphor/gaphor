@@ -7,12 +7,13 @@ __author__ = "Arjan Molenaar"
 __date__ = "2002-08-28"
 
 class Signal:
-    """The signal class is an implementation of the Observer pattern. It can be
-    used to send signals to every function or method that connected to the
-    signal object, with a variable amount of parameters. Note that the owner
-    of the Signal instance should define a protocol for notifying the observers.
-    The subject should provide methods for connecting and disconnecting
-    observers (preferably 'connect()' and 'disconnect()'.
+    """The signal class is an implementation of the Observer pattern.
+
+    It can be used to send signals to every function or method that connected
+    to the signal object, with a variable amount of parameters. Note that the
+    owner of the Signal instance should define a protocol for notifying the
+    observers.  The subject should provide methods for connecting and
+    disconnecting observers (preferably 'connect()' and 'disconnect()'.
     """
 
     def __init__(self):

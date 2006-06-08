@@ -6,7 +6,6 @@ Commands related to the Editor
 from gaphor import UML
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 import gtk
-import diacanvas
 
 class RunAction(Action):
     id = 'EditorRun'

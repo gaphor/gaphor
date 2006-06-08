@@ -44,9 +44,9 @@ def main(gaphor_file=None):
 
     This involves importing plugins and creating the main window.
     """
-    # Import stuff here, since the user might not need all the GUI stuff
+    # Import GUI stuff here, since the user might not need all the GUI stuff
     import gtk
-    import diagram
+    #import diagram
     # Load plugin definitions:
     import pluginmanager
     import ui

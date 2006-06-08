@@ -1,4 +1,3 @@
-# vim:sw=4
 """Icons that are used by Gaphor.
 """
 
@@ -110,8 +109,10 @@ class StockIconLoader(handler.ContentHandler):
         """Read characters."""
         self.data = self.data + content
 
+
 def load_stock_icons():
-    """
+    """Load stock icon definitions from the DataDir location
+    (usually /usr/local/share/gaphor).
     """
     from xml.sax import make_parser
     parser = make_parser()
@@ -130,3 +131,4 @@ def load_stock_icons():
 
 load_stock_icons()
 
+# vim:sw=4:et
