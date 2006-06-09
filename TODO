@@ -43,6 +43,9 @@ As always, there is much to do...
 
 - Check association removal when connected to a class.
 
+- Add meta data (such as text alignment) to the model file (add a meta:
+  namespace?)
+.
 - Fix namespace relations between Lifeline and Interaction and Message and
   Interaction
 
