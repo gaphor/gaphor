@@ -8,14 +8,15 @@ import gobject
 import diacanvas
 
 # TODO: Remove alltogether (no longer used for Gaphas)
-class GroupBase(diacanvas.CanvasGroupable):
+#class GroupBase(diacanvas.CanvasGroupable):
+class GroupBase(object):
     """
     This class allows to group different diagram elememnts. It should be
     set as a base class of main diagram element. Main diagram element
     (parent) has children.
     """
     def __init__(self):
-        diacanvas.CanvasGroupable.__init__(self)
+        #diacanvas.CanvasGroupable.__init__(self)
         self.children = set()
 
 

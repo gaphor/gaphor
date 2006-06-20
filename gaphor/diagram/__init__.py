@@ -31,6 +31,7 @@ def set_diagram_item(element, item):
 
 
 class Relationship(object):
+
     def __init__(self, head_a = None, head_b = None, tail_a = None, tail_b = None):
         super(Relationship, self).__init__()
         self.head_relation = head_a, head_b
@@ -43,19 +44,15 @@ class Relationship(object):
 
         return self.relationship(line)
         
-
     def __set__(self, line, value):
         pass
-
 
     def __delete__(self, line):
         pass
 
-
     def relationship(self, line, head_subject = None, tail_subject = None):
         return self.find(line, self.head_relation, self.tail_relation,
                 head_subject, tail_subject)
-
 
     def find(self, line, head_relation, tail_relation,
             head_subject = None, tail_subject = None):
@@ -106,40 +103,14 @@ class Relationship(object):
         return None
 
 
+class DiagramItemMeta(type):
+    """Initialize a new diagram item.
+    1. Register UML.Elements
+    """
 
-class DiagramItemMeta(gobject.GObjectMeta):
-    """
-    Initialize a new diagram item.
-    This involves:
-    1. registring the new diagram item with the GObject type
-    2. If nessesary: add canvas item callbacks
-    3. If nessesary: add canvas groupable callbacks
-    4. If nessesary: add canvas editable callbacks
-    """
     def __new__(self, name, bases, data):
-
-        all_bases = set()
-        for base in bases:
-            all_bases = all_bases.union(set(inspect.getmro(base)))
-
-        cls = gobject.GObjectMeta.__new__(self, name, bases, data)
-        gobject.type_register(cls)
-
-        if (diacanvas.CanvasItem in all_bases) or \
-                (diacanvas.CanvasGroup in all_bases) or \
-                (diacanvas.CanvasLine in all_bases) or \
-                (diacanvas.CanvasElement in all_bases) or \
-                (diacanvas.CanvasBox in all_bases) or \
-                (diacanvas.CanvasImage in all_bases):
-            diacanvas.set_callbacks(cls)
-
-        if diacanvas.CanvasGroupable in all_bases:
-            diacanvas.set_groupable(cls)
-
-        if (diacanvas.CanvasEditable in all_bases):
-            diacanvas.set_editable(cls)
-
         # map uml classes to diagram items
+        cls = type.__new__(self, name, bases, data)
         if '__uml__' in data:
             obj = data['__uml__']
             if isinstance(obj, (tuple, set, list)):
@@ -197,34 +168,34 @@ class LineItemMeta(DiagramItemMeta):
 
 
 from nameditem import TextElement
-from placementtool import PlacementTool
+#from placementtool import PlacementTool
 from classifier import ClassifierItem
 from actor import ActorItem
-from klass import ClassItem
+#from klass import ClassItem
 from comment import CommentItem
-from commentline import CommentLineItem
-from usecase import UseCaseItem
-from package import PackageItem
-from interface import InterfaceItem
+#from commentline import CommentLineItem
+#from usecase import UseCaseItem
+#from package import PackageItem
+#from interface import InterfaceItem
 from dependency import DependencyItem
-from include import IncludeItem
-from extend import ExtendItem
+#from include import IncludeItem
+#from extend import ExtendItem
 from generalization import GeneralizationItem
 from implementation import ImplementationItem
-from association import AssociationItem
-from extension import ExtensionItem
-from activitynodes import InitialNodeItem, ActivityFinalNodeItem, FlowFinalNodeItem, DecisionNodeItem, ForkNodeItem
-from action import ActionItem
-from objectnode import ObjectNodeItem
-from flow import FlowItem, CFlowItemA, CFlowItemB
-from component import ComponentItem
-from connector import ConnectorItem, AssemblyConnectorItem, \
-    ConnectorEndItem, ProvidedConnectorEndItem, RequiredConnectorEndItem
-from artifact import ArtifactItem
-from node import NodeItem
-from interaction import InteractionItem
-from lifeline import LifelineItem
-from message import MessageItem
+#from association import AssociationItem
+#from extension import ExtensionItem
+#from activitynodes import InitialNodeItem, ActivityFinalNodeItem, FlowFinalNodeItem, DecisionNodeItem, ForkNodeItem
+#from action import ActionItem
+#from objectnode import ObjectNodeItem
+#from flow import FlowItem, CFlowItemA, CFlowItemB
+#from component import ComponentItem
+#from connector import ConnectorItem, AssemblyConnectorItem, \
+#    ConnectorEndItem, ProvidedConnectorEndItem, RequiredConnectorEndItem
+#from artifact import ArtifactItem
+#from node import NodeItem
+#from interaction import InteractionItem
+#from lifeline import LifelineItem
+#from message import MessageItem
 import itemactions
 
 #if __debug__: 

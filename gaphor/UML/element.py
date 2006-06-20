@@ -42,11 +42,13 @@ class Element(object):
     """Base class for UML data classes."""
 
     def __init__(self, id=None, factory=None):
-        self.id = id or uniqueid.generate_id()
+        self._id = id or uniqueid.generate_id()
         # The factory this element belongs to.
         self._factory = factory
         self._observers = dict()
         self.__in_unlink = mutex.mutex()
+
+    id = property(lambda self: self._id, doc='Id')
 
     factory = property(lambda self: self._factory,
                        doc="The factory that created this element")
@@ -148,11 +150,6 @@ class Element(object):
         """Returns true if the object is of the same type as other."""
         return type(self) == type(other)
 
-#    def __setattr__(self, key, value):
-#        if key.startswith('_') or key == 'id':
-#            object.__setattr__(self, key, value)
-#        else:
-#            raise AttributeError, 'Invalid attribute "%s"' % key
 
 try:
     import psyco

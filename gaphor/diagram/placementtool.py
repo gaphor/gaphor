@@ -1,20 +1,20 @@
 
-# vim:sw=4:et
 import gobject
-import diacanvas
+import gaphas
 from gaphor import UML
 from gaphor import resource
 from gaphor.undomanager import get_undo_manager
 
 
-class PlacementTool(diacanvas.PlacementTool):
+class PlacementTool(gaphas.tool.PlacementTool):
 
     def __init__(self, item_factory, action_id, **properties):
         """item_factory is a callable. It is used to create a CanvasItem
         that is displayed on the diagram.
         """
-        diacanvas.PlacementTool.__init__(self, None, **properties)
-        self.item_factory = item_factory
+        gaphas.tool.PlacementTool.__init__(self, factory=item_factory,
+                                           handle_tool=gaphas.tool.HandleTool,
+                                           handle_index=-1)
         self.action_id = action_id
         self.is_released = False
 
@@ -25,7 +25,7 @@ class PlacementTool(diacanvas.PlacementTool):
         item = None
 
         try:
-            item = self.item_factory()
+            item = self._factory()
         except Exception, e:
             log.error('Error while creating item: %s' % e, e)
         else:
@@ -90,5 +90,5 @@ class PlacementTool(diacanvas.PlacementTool):
         #print 'Gaphor: do_button_release_event: %s' % self.__dict__
         return diacanvas.PlacementTool.do_button_release_event(self, view, event)
 
-gobject.type_register(PlacementTool)
 
+# vim:sw=4:et

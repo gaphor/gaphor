@@ -4,19 +4,16 @@ Basic functionality for canvas line based items on a diagram.
 
 import itertools
 
-import diacanvas
+import gaphas
 from diagramitem import DiagramItem
 from gaphor.diagram import LineItemMeta
 
-class LineItem(diacanvas.CanvasLine, DiagramItem):
+class LineItem(gaphas.Line, DiagramItem):
     """
     Base class for diagram lines.
     """
 
     __metaclass__ = LineItemMeta
-
-    __gproperties__ = DiagramItem.__gproperties__
-    __gsignals__ = DiagramItem.__gsignals__
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect

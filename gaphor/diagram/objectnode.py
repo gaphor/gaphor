@@ -13,11 +13,12 @@ from gaphor import resource
 
 from gaphor.diagram import TextElement
 from gaphor.diagram.align import V_ALIGN_MIDDLE
-from gaphor.diagram.groupable import GroupBase
+#from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
 
 
-class ObjectNodeItem(NamedItem, GroupBase):
+#class ObjectNodeItem(NamedItem, GroupBase):
+class ObjectNodeItem(NamedItem):
     """
     Representation of object node. Object node is ordered and has upper bound
     specification.

@@ -6,7 +6,6 @@ Such as a modifier 'subject' property and a unique id.
 import gobject
 import pango
 import diacanvas
-from diacanvas import CanvasItem
 
 from gaphor import resource
 from gaphor import UML
@@ -16,7 +15,7 @@ from gaphor.UML import Element, Presentation
 STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
 
-class DiagramItem(Presentation):
+class DiagramItem(Presentation, Element):
     """Basic functionality for all model elements (lines and elements!).
 
     This class contains common functionallity for model elements and
@@ -36,17 +35,6 @@ class DiagramItem(Presentation):
 
     FONT_STEREOTYPE = 'sans 10'
 
-    __gproperties__ = {
-        'subject':        (gobject.TYPE_PYOBJECT, 'subject',
-                         'subject held by the diagram item',
-                         gobject.PARAM_READWRITE),
-    }
-
-    __gsignals__ = {
-        '__unlink__': (gobject.SIGNAL_RUN_FIRST,
-                       gobject.TYPE_NONE, (gobject.TYPE_STRING,))
-    }
-
     stereotype_list = []
     popup_menu = ('Stereotype', stereotype_list)
 
@@ -54,11 +42,8 @@ class DiagramItem(Presentation):
         Presentation.__init__(self)
         self._id = id # or uniqueid.generate_id()
 
-        # Mapping to convert handlers to GObject signal ids.
-        self.__handler_to_id = { }
-
         # Add the class' on_subject_notify() as handler:
-        self.connect('notify::subject', type(self).on_subject_notify)
+        self.connect('subject', type(self).on_subject_notify)
 
         # __the_subject is a backup that is used to disconnect signals when a
         # new subject is set (or the original one is removed)
@@ -81,26 +66,11 @@ class DiagramItem(Presentation):
 
     id = property(lambda self: self._id, doc='Id')
 
-
     def set_prop_persistent(self, name):
         """
         Specify property of diagram item, which should be saved in file.
         """
         self._persistent_props.add(name)
-
-
-    def do_set_property(self, pspec, value):
-        if pspec.name == 'subject':
-            self.set_subject(value)
-        else:
-            raise AttributeError, 'Unknown property %s' % pspec.name
-
-
-    def do_get_property(self, pspec):
-        if pspec.name == 'subject':
-            return self.subject
-        else:
-            raise AttributeError, 'Unknown property %s' % pspec.name
 
 
     # UML.Element interface used by properties:
@@ -129,65 +99,6 @@ class DiagramItem(Presentation):
     def postload(self):
         if self.subject:
             self.on_subject_notify(type(self).subject)
-
-    # TODO: remove, use signaling from gaphor.UML.Element
-    def unlink(self):
-        """Send the unlink signal and remove itself from the canvas.
-        """
-        #log.debug('DiagramItem.unlink(%s)' % self)
-        # emit the __unlink__ signal the way UML.Element would have done:
-        self.set_subject(None)
-
-        self.emit('__unlink__', '__unlink__')
-
-
-        self.set_property('parent', None)
-
-    # gaphor.UML.Element like signal interface:
-
-    # TODO: remove, use signaling from gaphor.UML.Element
-    def connect(self, name, handler, *args):
-        """Connect a handler to signal name with args.
-        Note that in order to connect to the subject property, you have
-        to use "notify::subject".
-        A signal handler id is returned.
-        """
-        id = CanvasItem.connect(self, name, handler, *args)
-        key = (handler,) + args
-        try:
-            self.__handler_to_id[key].append(id)
-        except:
-            # it's a new entry:
-            self.__handler_to_id[key] = [id]
-        return id
-
-    # TODO: remove, use signaling from gaphor.UML.Element
-    def disconnect(self, handler_or_id, *args):
-        """Disconnect a signal handler. If handler_or_id is an integer (int)
-        it is expected to be the signal handler id. Otherwise
-        handler_or_id + *args are the same arguments passed to the connect()
-        method (except the signal name). The latter form is used by
-        gaphor.UML.Element.
-        """
-        if isinstance(handler_or_id, int):
-            CanvasItem.disconnect(self, handler_or_id)
-            for v in self.__handler_to_id.itervalues():
-                if handler_or_id in v:
-                    v.remove(handler_or_id)
-                    break
-        else:
-            try:
-                key = (handler_or_id,) + args
-                ids = self.__handler_to_id[key]
-            except KeyError, e:
-                log.error("Couldn't retrieve connection handle ids", e)
-            else:
-                for id in ids:
-                    CanvasItem.disconnect(self, id)
-                del self.__handler_to_id[key]
-
-    def notify(self, name, pspec=None):
-        CanvasItem.notify(self, name)
 
     def save_property(self, save_func, name):
         """Save a property, this is a shorthand method.

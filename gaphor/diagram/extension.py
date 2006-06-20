@@ -20,7 +20,7 @@ from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.diagramline import DiagramLine
 
-class ExtensionItem(DiagramLine, diacanvas.CanvasAbstractGroup):
+class ExtensionItem(DiagramLine):
     """ExtensionItem represents associations. 
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item
     represents a Property (with Property.association == my association).
@@ -238,7 +238,7 @@ class ExtensionItem(DiagramLine, diacanvas.CanvasAbstractGroup):
         return self.popup_menu
 
 
-class ExtensionEnd(diacanvas.CanvasItem, DiagramItem):
+class ExtensionEnd(DiagramItem):
     """An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and
     one for the multiplicity (and maybe one for tagged values in the future).
@@ -255,14 +255,10 @@ class ExtensionEnd(diacanvas.CanvasItem, DiagramItem):
 #        'mult': (gobject.TYPE_STRING, 'mult', '', '', gobject.PARAM_READWRITE)
 #    }
 #    __gproperties__.update(DiagramItem.__gproperties__)
-    __gproperties__ = DiagramItem.__gproperties__
-
-    __gsignals__ = DiagramItem.__gsignals__
 
     FONT='sans 10'
 
     def __init__(self, id=None):
-        self.__gobject_init__()
         DiagramItem.__init__(self, id)
         self.set_flags(diacanvas.COMPOSITE)
         

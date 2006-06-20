@@ -8,30 +8,19 @@ import gobject
 import pango
 import diacanvas
 import diacanvas.shape
-from diacanvas import CanvasItem, CanvasEditable
 from diacanvas.geometry import distance_rectangle_point
 from diagramitem import DiagramItem
 from gaphor.undomanager import undoable
 from gaphor.diagram import DiagramItemMeta
 
 
-class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
+class FeatureItem(DiagramItem):
     """FeatureItems are model elements who recide inside a ClassItem, such as
     methods and attributes. Those items can have comments attached, but only on
     the left and right side.
     Note that features can also be used inside objects.
     """
     __metaclass__ = DiagramItemMeta
-
-    # Properties, also add the DiagramItem properties here.
-    __gproperties__ = {
-        'expression':  (gobject.TYPE_STRING, 'expression',
-                         'The expression represented by this Feature',
-                         '', gobject.PARAM_READWRITE)
-    }
-    __gproperties__.update(DiagramItem.__gproperties__)
-
-    __gsignals__ = DiagramItem.__gsignals__
 
     FONT='sans 10'
 

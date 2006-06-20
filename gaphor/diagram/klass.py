@@ -18,7 +18,7 @@ from operation import OperationItem
 from gaphor.interfaces import IClassView
 from zope import interface
         
-class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
+class ClassItem(ClassifierItem):
     """This item visualizes a Class instance.
 
     A ClassItem contains two compartments (Compartment): one for

@@ -15,7 +15,7 @@ from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.groupable import GroupBase
 
 
-class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
+class TextElement(DiagramItem):
     """
     Represents one text element of diagram item, i.e. flow guard, join node
     join specification, any UML named element name, etc.
@@ -34,13 +34,9 @@ class TextElement(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
     """
     __metaclass__ = DiagramItemMeta
 
-    __gproperties__ = DiagramItem.__gproperties__
-    __gsignals__ = DiagramItem.__gsignals__
-
     FONT='sans 10'
 
     def __init__(self, attr, pattern = '%s', default = None, id = None):
-        self.__gobject_init__()
         DiagramItem.__init__(self, id)
 
         self.subject_attr = attr
@@ -181,7 +177,7 @@ from zope import interface
 from gaphor.interfaces import INamedItemView
 
 
-class Named(diacanvas.CanvasEditable):
+class Named(object):
     interface.implements(INamedItemView)
 
     NAME_FONT = 'sans bold 10'
@@ -192,7 +188,6 @@ class Named(diacanvas.CanvasEditable):
         self._name.set_alignment(pango.ALIGN_CENTER)
         #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
         self._name.set_markup(False)
-
 
     #
     # DiagramItem subject notification methods
@@ -250,6 +245,7 @@ class Named(diacanvas.CanvasEditable):
 
 
 class NamedItemMeta(DiagramItemMeta):
+
     def __init__(self, name, bases, data):
         super(NamedItemMeta, self).__init__(name, bases, data)
         align = ItemAlign() # center, top
@@ -271,11 +267,8 @@ class NamedItemMeta(DiagramItemMeta):
 
 
 
-class NamedItem(ElementItem, Named, diacanvas.CanvasEditable):
+class NamedItem(ElementItem, Named):
     __metaclass__ = NamedItemMeta
-    __gproperties__ = {
-        'name': (gobject.TYPE_STRING, 'name', '', '', gobject.PARAM_READWRITE)
-    }
 
     popup_menu = ElementItem.popup_menu + (
         'RenameItem',
@@ -362,7 +355,6 @@ class NamedItem(ElementItem, Named, diacanvas.CanvasEditable):
 
         return align, x, y, width, height
 
-
     def on_update(self, affine):
         align, x, y, width, height = self.update_name(affine)
 
@@ -375,7 +367,6 @@ class NamedItem(ElementItem, Named, diacanvas.CanvasEditable):
 
         self.draw_border()
         self.expand_bounds(1.0)
-
 
     def on_shape_iter(self):
         return itertools.chain(Named.on_shape_iter(self),

@@ -13,6 +13,7 @@ from math import atan, pi, sin, cos
 
 import gobject
 import pango
+import gaphas
 import diacanvas
 import diacanvas.shape
 import diacanvas.geometry
@@ -57,7 +58,7 @@ class AssociationRelationship(Relationship):
 
 
 
-class AssociationItem(DiagramLine, diacanvas.CanvasGroupable, diacanvas.CanvasEditable):
+class AssociationItem(DiagramLine):
     """AssociationItem represents associations. 
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
@@ -510,7 +511,7 @@ class AssociationItem(DiagramLine, diacanvas.CanvasGroupable, diacanvas.CanvasEd
             self.subject.name = new_text
 
 
-class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem):
+class AssociationEnd(gaphas.Item, DiagramItem):
     """An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and
     one for the multiplicity (and maybe one for tagged values in the future).
@@ -527,9 +528,6 @@ class AssociationEnd(diacanvas.CanvasItem, diacanvas.CanvasEditable, DiagramItem
 #        'mult': (gobject.TYPE_STRING, 'mult', '', '', gobject.PARAM_READWRITE)
 #    }
 #    __gproperties__.update(DiagramItem.__gproperties__)
-    __gproperties__ = DiagramItem.__gproperties__
-
-    __gsignals__ = DiagramItem.__gsignals__
 
     FONT='sans 10'
 

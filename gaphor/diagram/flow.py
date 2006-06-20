@@ -14,13 +14,12 @@ from gaphor import UML
 from gaphor.diagram import TextElement
 from gaphor.diagram.diagramline import DiagramLine
 
-from gaphor.diagram.groupable import GroupBase
 import gaphor.diagram.util
 
 import itertools
 
 
-class FlowBase(DiagramLine, GroupBase):
+class FlowBase(DiagramLine):
     """
     Control flow and object flow abstract class. Allows to create flows
     with name and guard.
