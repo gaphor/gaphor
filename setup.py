@@ -303,13 +303,15 @@ class run_Gaphor(Command):
             print 'Running doctest cases in module: %s...' % self.doctest
             import imp, doctest
             # Figure out the file:
-            f = self.doctest.replace('.', '/') + '.py'
+            f = os.path.join(*self.doctest.split('.')) + '.py'
             fp = open(f)
-            # Add module's package path to sys.path
-            pkg = self.doctest.rsplit('.', 1)
-            if len(pkg) > 1:
-                sys.path.insert(0, pkg[0])
-            test_module = imp.load_source(self.doctest, f, fp)
+            # Prepend module's package path to sys.path
+            pkg = os.path.join(self.build_lib, *self.doctest.split('.')[:-1])
+            if pkg:
+                sys.path.insert(0, pkg)
+                print 'Added', pkg, 'to sys.path'
+            # Load the module as local module (without package)
+            test_module = imp.load_source(self.doctest.split('.')[-1], f, fp)
             failure, tests = doctest.testmod(test_module, name=self.doctest,
                  optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
             sys.exit(failure != 0)
