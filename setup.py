@@ -270,7 +270,8 @@ class run_Gaphor(Command):
         ('build-dir=', None, ''),
         ('command=', 'c', 'execute command'),
         ('file=', 'f', 'execute file'),
-        ('testfile=', 't', 'execute unittest file'),
+        ('doctest=', 'd', 'execute doctests in module (e.g. gaphor.geometry)'),
+        ('unittest=', 'u', 'execute unittest file (e.g. tests/test-ns.py)'),
         ('model=', 'm', 'load a model file'),
     ]
 
@@ -278,7 +279,8 @@ class run_Gaphor(Command):
         self.build_lib = None
         self.command = None
         self.file = None
-        self.testfile = None
+        self.doctest = None
+        self.unittest = None
         self.model = None
         self.verbosity = 2
 
@@ -297,13 +299,27 @@ class run_Gaphor(Command):
         if self.command:
             print 'Executing command: %s...' % self.command
             exec self.command
-        elif self.testfile:
+        elif self.doctest:
+            print 'Running doctest cases in module: %s...' % self.doctest
+            import imp, doctest
+            # Figure out the file:
+            f = self.doctest.replace('.', '/') + '.py'
+            fp = open(f)
+            # Add module's package path to sys.path
+            pkg = self.doctest.rsplit('.', 1)
+            if len(pkg) > 1:
+                sys.path.insert(0, pkg[0])
+            test_module = imp.load_source(self.doctest, f, fp)
+            failure, tests = doctest.testmod(test_module, name=self.doctest,
+                 optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
+            sys.exit(failure != 0)
+        elif self.unittest:
             # Running a unit test is done by opening the unit test file
             # as a module and running the tests within that module.
-            print 'Running test cases in unittest file: %s...' % self.testfile
+            print 'Running test cases in unittest file: %s...' % self.unittest
             import imp, unittest
-            fp = open(self.testfile)
-            test_module = imp.load_source('gaphor_test', self.testfile, fp)
+            fp = open(self.unittest)
+            test_module = imp.load_source('gaphor_test', self.unittest, fp)
             test_suite = unittest.TestLoader().loadTestsFromModule(test_module)
             test_runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = test_runner.run(test_suite)
