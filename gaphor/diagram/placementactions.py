@@ -11,6 +11,7 @@ from gaphor import diagram
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
+from gaphor.diagram.placementtool import PlacementTool
 
 def register_action(action, *args):
     _register_action(action, *args)
@@ -98,8 +99,8 @@ class PlacementAction(RadioAction):
 
     def execute(self):
         assert self.type != None
-        tool = gaphor.placementtool.PlacementTool(factory=self.item_factory,
-                                         self.id)
+        tool = PlacementTool(item_factory=self.item_factory,
+                             action_id=self.id)
         self._window.get_current_diagram_view().tool = tool
         self._window.set_message('Create new %s' % self.name)
 
