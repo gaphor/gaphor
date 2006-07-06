@@ -66,12 +66,12 @@ class Diagram(Namespace, PackageableElement):
         """
         assert issubclass(type, gaphas.Item)
         obj = type(uniqueid.generate_id())
-        self.canvas.root.add(obj, parent)
+        self.canvas.add(obj, parent)
         return obj
 
     def unlink(self):
         # Make sure all canvas items are unlinked
-        for item in self.canvas.select():
+        for item in self.canvas.all_items():
             try:
                 item.unlink()
             except:

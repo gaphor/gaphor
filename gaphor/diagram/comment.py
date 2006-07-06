@@ -9,6 +9,7 @@ import diacanvas
 from gaphor import UML
 
 from elementitem import ElementItem
+from gaphas.item import NW
 
 class CommentItem(ElementItem):
     # implements (Editable)
@@ -84,7 +85,7 @@ class CommentItem(ElementItem):
         line_to(ox, h)
         line_to(w, h)
         line_to(w, oy + ear)
-        c.show_text(self.subject.body)
+        #c.show_text(self.subject.body or '')
 
     # Editable
 

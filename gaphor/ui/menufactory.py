@@ -389,10 +389,11 @@ class MenuFactory(object):
                 #    self._create_menu_items(slot_def, groups, menu, item)
                 item = self.create_button(id, groups, tooltips)
                 #wrapbox.pack(item, False, False, False, False)
-                try:
-                    wrapbox.add(item)
-                except TypeError, e:
-                    log.error('Could not create item for %s' % id, e)
+                if item:
+                    try:
+                        wrapbox.add(item)
+                    except TypeError, e:
+                        log.error('Could not create item for %s' % id, e)
         tooltips.enable()
         wrapbox.tooltips = tooltips
         return wrapbox

@@ -5,9 +5,11 @@ This module is initialized from gaphor.ui.diagramwindow
 """
 import diacanvas
 
+import gaphas
 from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
+from gaphor.diagram.placementtool import PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
@@ -63,7 +65,7 @@ class PointerAction(RadioAction):
         tool_changed(self, self._window)
 
     def execute(self):
-        self._window.get_current_diagram_view().set_tool(None)
+        self._window.get_current_diagram_view().tool = gaphas.tool.DefaultTool()
         self._window.set_message('')
 
 register_action(PointerAction)
@@ -99,8 +101,7 @@ class PlacementAction(RadioAction):
 
     def execute(self):
         assert self.type != None
-        tool = PlacementTool(item_factory=self.item_factory,
-                             action_id=self.id)
+        tool = PlacementTool(item_factory=self.item_factory, action_id=self.id)
         self._window.get_current_diagram_view().tool = tool
         self._window.set_message('Create new %s' % self.name)
 
@@ -182,13 +183,13 @@ class NamespacePlacementAction(PlacementAction):
 #register_action(MetaClassPlacementAction)
 
 
-class InterfacePlacementTool(diacanvas.PlacementTool):
+class InterfacePlacementTool(gaphas.tool.PlacementTool):
     """The Interface placement tool creates an InterfaceItem and a
     DependencyItem (for the Implementation relationship) on the diagram.
     """
 
     def __init__(self, window, action_id):
-        diacanvas.PlacementTool.__init__(self, None)
+        gaphas.tool.PlacementTool.__init__(self, None)
         self._window = window
         self.action_id = action_id
         self.handle_tool = diacanvas.view.HandleTool()
@@ -235,8 +236,8 @@ class InterfacePlacementTool(diacanvas.PlacementTool):
     def do_motion_notify_event(self, view, event):
         return self.handle_tool.motion_notify(view, event)
 
-import gobject
-gobject.type_register(InterfacePlacementTool)
+#import gobject
+#gobject.type_register(InterfacePlacementTool)
 
 #class InterfacePlacementAction(NamespacePlacementAction):
 #    id = 'InsertInterface'

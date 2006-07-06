@@ -12,6 +12,7 @@ from association import AssociationEnd
 SHIFT_CONTROL_MASK = CONTROL_MASK | SHIFT_MASK
 
 class ItemTool(diacanvas.view.Tool):
+
     __gsignals__ = {
         'button_press_event': 'override',
         'button_release_event': 'override',
@@ -81,6 +82,4 @@ class ItemTool(diacanvas.view.Tool):
             return True
         return False
 
-
-gobject.type_register(ItemTool)
 

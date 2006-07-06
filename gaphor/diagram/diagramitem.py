@@ -39,6 +39,7 @@ class DiagramItem(Presentation, Element):
     popup_menu = ('Stereotype', stereotype_list)
 
     def __init__(self, id=None):
+        Element.__init__(self)
         Presentation.__init__(self)
         self._id = id # or uniqueid.generate_id()
 

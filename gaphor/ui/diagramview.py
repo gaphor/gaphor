@@ -25,5 +25,8 @@ class DiagramView(gaphas.View):
         self.drag_dest_set (gtk.DEST_DEFAULT_ALL, DiagramView.DND_TARGETS,
                             gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
 
-
+    def set_tool(self, tool):
+        print 'setting tool', tool
+        #self.tool.grab(tool)
+        pass
 # vim: sw=4:et

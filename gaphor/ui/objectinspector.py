@@ -176,5 +176,5 @@ class ObjectInspector(gtk.Notebook):
         self.clearAllTabs()
         if diagramItem is None:
             return
-        self.loadTabsForCurrentItem(diagramItem.item)
+        self.loadTabsForCurrentItem(diagramItem)
         
