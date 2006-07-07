@@ -323,6 +323,10 @@ class run_Gaphor(Command):
             test_module = imp.load_source(self.doctest.split('.')[-1], f, fp)
             failure, tests = doctest.testmod(test_module, name=self.doctest,
                  optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
+            if self.coverage:
+                print
+                print 'Coverage report:'
+                coverage.report(f)
             sys.exit(failure != 0)
         elif self.unittest:
             # Running a unit test is done by opening the unit test file
@@ -334,6 +338,10 @@ class run_Gaphor(Command):
             test_suite = unittest.TestLoader().loadTestsFromModule(test_module)
             test_runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = test_runner.run(test_suite)
+            if self.coverage:
+                print
+                print 'Coverage report:'
+                coverage.report(self.unittest)
             sys.exit(not result.wasSuccessful())
         elif self.file:
             print 'Executing file: %s...' % self.file
@@ -344,6 +352,7 @@ class run_Gaphor(Command):
         else:
             print 'Launching Gaphor...'
             gaphor.main(self.model)
+
 
 #try:
 #    from dsextras import TemplateExtension, BuildExt, GLOBAL_INC
