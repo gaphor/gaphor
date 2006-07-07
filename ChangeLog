@@ -1,3 +1,9 @@
+2006-07-07  arjan <arjan at yirdis dot nl>
+
+	* utils/coverage.py: new module for code coverage.
+	* setup.py: added --coverage option ro the run command, allowing for
+	code coverage output.
+
 2006-06-07  arjan <arjan at yirdis dot nl>
 
         * Changed Canvas and View to Gaphas. Items should still be converted.
