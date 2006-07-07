@@ -273,6 +273,7 @@ class run_Gaphor(Command):
         ('doctest=', 'd', 'execute doctests in module (e.g. gaphor.geometry)'),
         ('unittest=', 'u', 'execute unittest file (e.g. tests/test-ns.py)'),
         ('model=', 'm', 'load a model file'),
+        ('coverage', None, 'Calculate coverage (utils/coverage.py)'),
     ]
 
     def initialize_options(self):
@@ -282,6 +283,7 @@ class run_Gaphor(Command):
         self.doctest = None
         self.unittest = None
         self.model = None
+        self.coverage = None
         self.verbosity = 2
 
     def finalize_options(self):
@@ -296,12 +298,19 @@ class run_Gaphor(Command):
         import os.path
         import gaphor
         #os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
+        if self.coverage:
+            from utils import coverage
+            coverage.start()
+
         if self.command:
             print 'Executing command: %s...' % self.command
             exec self.command
         elif self.doctest:
             print 'Running doctest cases in module: %s...' % self.doctest
-            import imp, doctest
+            import imp
+            # use zope's one since it handles coverage right
+            from zope.testing import doctest
+
             # Figure out the file:
             f = os.path.join(*self.doctest.split('.')) + '.py'
             fp = open(f)
