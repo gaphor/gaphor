@@ -80,7 +80,10 @@ class CommentItem(ElementItem):
         line_to(w, h)
         line_to(w, oy + ear)
         c.stroke()
-        #c.show_text(self.subject.body or '')
+	if self.subject.body:
+	    # Do not print empty string, since cairo-win32 can't handle it.
+	    c.move_to(10, 10)
+	    c.show_text(self.subject.body)
 
     # Editable
 

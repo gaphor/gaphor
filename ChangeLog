@@ -1,3 +1,9 @@
+2006-07-19  arjan <arjan at yirdis dot nl>
+
+	* gaphor/diagram/placementtool.py: works with Gaphas
+	* gaphor/diagram/comment.py: can be placed on new canvas
+	* gaphor/ui/*, gaphor/UML/*: use gaphas instead of diacanvas
+
 2006-07-07  arjan <arjan at yirdis dot nl>
 
 	* utils/coverage.py: new module for code coverage.
