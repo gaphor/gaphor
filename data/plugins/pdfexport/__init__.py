@@ -1,7 +1,7 @@
 # vim:sw=4:et:
 
 import gtk
-import diacanvas
+#import diacanvas
 
 import cairo
 import cairo.svg
@@ -19,11 +19,11 @@ class PDFExportAction(DiagramExportAction):
     def save(self, filename):
         log.debug('Exporting PDF image to: %s' % filename)
         canvas = self.get_window().get_current_diagram_tab().get_canvas()
-        svg = diacanvas.ExportSVG()
+        #svg = diacanvas.ExportSVG()
         try:
             # first, export to svg
             fd, svg_name = tempfile.mkstemp()
-            svg = diacanvas.ExportSVG()
+            #svg = diacanvas.ExportSVG()
             svg.render(canvas)
             svg.save(svg_name)
 

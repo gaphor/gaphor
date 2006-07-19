@@ -35,6 +35,7 @@ def tool_changed(action, window):
         action.active = True
 
 
+@register_action
 class ResetToolAfterCreateAction(CheckAction):
     id = 'ResetToolAfterCreate'
     label = 'Reset _Tool'
@@ -47,9 +48,10 @@ class ResetToolAfterCreateAction(CheckAction):
     def execute(self):
         resource.set('reset-tool-after-create', self.active, persistent=True)
 
-register_action(ResetToolAfterCreateAction)
+#register_action(ResetToolAfterCreateAction)
 
 
+@register_action
 class PointerAction(RadioAction):
     id = 'Pointer'
     label = '_Pointer'
@@ -68,7 +70,7 @@ class PointerAction(RadioAction):
         self._window.get_current_diagram_view().tool = gaphas.tool.DefaultTool()
         self._window.set_message('')
 
-register_action(PointerAction)
+#register_action(PointerAction)
 
 
 class PlacementAction(RadioAction):

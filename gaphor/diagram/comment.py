@@ -31,12 +31,6 @@ class CommentItem(ElementItem):
         self.min_width = CommentItem.EAR + 2 * CommentItem.OFFSET
         self.height = 50
         self.width = 100
-        #self._border = diacanvas.shape.Path()
-        #self._border.set_line_width(2.0)
-        #self._body = diacanvas.shape.Text()
-        #self._body.set_font_description(pango.FontDescription(CommentItem.FONT))
-        #self._body.set_markup(False)
-        #self._body.set_pos((CommentItem.OFFSET, CommentItem.OFFSET))
 
     def postload(self):
         #self._body.set_text(self.subject.body or '')
@@ -55,7 +49,7 @@ class CommentItem(ElementItem):
         self.request_update()
 
     def on_subject_notify__body(self, subject, pspec):
-        #print 'on_subject_notify__body: %s' % self.subject.body
+        print 'on_subject_notify__body: %s' % self.subject.body
         #self.sbody.set_text(self.subject.body or '')
         self.request_update()
 
@@ -85,7 +79,8 @@ class CommentItem(ElementItem):
         line_to(ox, h)
         line_to(w, h)
         line_to(w, oy + ear)
-        #c.show_text(self.subject.body or '')
+        c.stroke()
+        c.show_text(self.subject.body or '')
 
     # Editable
 
