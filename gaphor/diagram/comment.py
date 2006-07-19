@@ -80,7 +80,7 @@ class CommentItem(ElementItem):
         line_to(w, h)
         line_to(w, oy + ear)
         c.stroke()
-        c.show_text(self.subject.body or '')
+        #c.show_text(self.subject.body or '')
 
     # Editable
 
