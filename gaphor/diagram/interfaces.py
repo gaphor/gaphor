@@ -4,15 +4,36 @@ These interfaces are:
 
  - IConnectable
    Use to define adapters for connecting 
- - IEditable
+ - IEditor
+   Text editor interface
+
 """
 
 
-from zope.interface import Interface
+from zope import interface
 
 
-class IEditable(Interface):
-    """Provide an interface for editing text.
+class IDiagramItem(interface.Interface):
+    """A diagram element"""
+    subject = interface.Attribute("The model element connect to this view")    
+
+class ICommentItem(IDiagramItem):
+    """A view on a Comment item."""
+
+class INamedItem(IDiagramItem):
+    """A view on an attribute (part of a class, interface etc.)."""
+    
+
+class IClassItem(INamedItem):
+    """The graphical view on a class."""
+    
+
+class IAttributeItem(INamedItem):
+    """A view on an attribute (part of a class, interface etc.)."""
+
+
+class IEditor(interface.Interface):
+    """Provide an interface for editing text. with the TextEditTool.
     """
 
     def is_editable(self, x, y):

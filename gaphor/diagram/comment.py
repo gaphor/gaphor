@@ -4,14 +4,16 @@ CommentItem diagram item
 
 import gobject
 import pango
+from zope import interface, component
 
 from gaphor import UML
-
 from elementitem import ElementItem
 from gaphas.item import NW
 
+from interfaces import ICommentItem, IEditor
+
 class CommentItem(ElementItem):
-    # implements (Editable)
+    interface.implements(ICommentItem)
 
     __uml__ = UML.Comment
 
@@ -97,5 +99,30 @@ class CommentItem(ElementItem):
             self.subject.body = new_text
         #self._body.set_text(new_text)
         self.request_update()
+
+
+class CommentItemEditor(object):
+    interface.implements(IEditor)
+    component.adapts(ICommentItem)
+
+    def __init__(self, item):
+	self._item = item
+
+    def is_editable(self, x, y):
+	return True
+
+    def get_text(self):
+	return self._item.subject.body
+
+    def get_bounds(self):
+	return None
+
+    def update_text(self, text):
+	self._item.subject.body = text
+
+    def key_pressed(self, pos, key):
+	pass
+
+component.provideAdapter(CommentItemEditor)
 
 # vim:sw=4

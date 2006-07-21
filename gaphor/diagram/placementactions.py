@@ -8,7 +8,7 @@ import gaphas
 from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
-from gaphor.diagram.tool import PlacementTool
+from gaphor.diagram.tool import DefaultTool, PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
@@ -63,7 +63,7 @@ class PointerAction(RadioAction):
         tool_changed(self, self._window)
 
     def execute(self):
-        self._window.get_current_diagram_view().tool = gaphas.tool.DefaultTool()
+        self._window.get_current_diagram_view().tool = DefaultTool()
         self._window.set_message('')
 
 register_action(PointerAction)

@@ -7,7 +7,7 @@ from gaphor import UML
 from gaphor import resource
 from gaphor.undomanager import get_undo_manager
 
-from interfaces import IEditable
+from interfaces import IEditor
 
 
 class PlacementTool(gaphas.tool.PlacementTool):
@@ -47,7 +47,7 @@ class TextEditTool(Tool):
     def __init__(self):
         pass
 
-    def create_edit_window(self, view, x,y, text):
+    def create_edit_window(self, view, x,y, text, *args):
         """Create a popup window with some editable text.
         """
         print 'Double click'
@@ -55,19 +55,19 @@ class TextEditTool(Tool):
         window.set_property('decorated', False)
         window.set_resize_mode(gtk.RESIZE_IMMEDIATE)
         #window.set_modal(True)
-        window.set_parent_window(context.view.window)
+        window.set_parent_window(view.window)
         buffer = gtk.TextBuffer()
         text_view = gtk.TextView()
         text_view.set_buffer(buffer)
         text_view.show()
         window.add(text_view)
-        window.size_allocate(gtk.gdk.Rectangle(int(event.x), int(event.y), 50, 50))
-        #window.move(int(event.x), int(event.y))
-        cursor_pos = context.view.get_toplevel().get_screen().get_display().get_pointer()
+        window.size_allocate(gtk.gdk.Rectangle(int(x), int(y), 50, 50))
+        #window.move(int(x), int(y))
+        cursor_pos = view.get_toplevel().get_screen().get_display().get_pointer()
         print 'cursor_pos', cursor_pos
         window.move(cursor_pos[1], cursor_pos[2])
-        window.connect('focus-out-event', self._on_focus_out_event, buffer)
-        text_view.connect('key-press-event', self._on_key_press_event, buffer)
+        window.connect('focus-out-event', self._on_focus_out_event, buffer, *args)
+        text_view.connect('key-press-event', self._on_key_press_event, buffer, *args)
         #text_view.set_size_request(50, 50)
         window.show()
         #text_view.grab_focus()
@@ -78,15 +78,15 @@ class TextEditTool(Tool):
         view = context.view
         item = view.hovered_item
         if item:
-            editable = IEditable(item)
+            editor = IEditor(item)
             x, y = view.transform_point_c2i(item, event.x, event.y)
-            if editable.is_editable(x, y):
-                text = editable.get_text()
+            if editor.is_editable(x, y):
+                text = editor.get_text()
                 # get item at cursor
-                self.create_edit_window(context.view, event.x, event.y, text)
+                self.create_edit_window(context.view, event.x, event.y, text, editor)
                 return True
 
-    def _on_key_press_event(self, widget, event, buffer):
+    def _on_key_press_event(self, widget, event, buffer, editor):
         
         if event.keyval == gtk.keysyms.Return:
             print 'Enter!'
@@ -95,10 +95,14 @@ class TextEditTool(Tool):
             print 'Escape!'
             widget.get_toplevel().destroy()
 
-    def _on_focus_out_event(self, widget, event, buffer):
-        print 'focus out!', buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
+    def _on_focus_out_event(self, widget, event, buffer, editor):
+        text = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
+        print 'focus out!', text
+        editor.update_text(text)
         widget.destroy()
 
+
+from gaphas.tool import ToolChain, HoverTool, HandleTool, ItemTool, RubberbandTool
 
 def DefaultTool():
     """The default tool chain build from HoverTool, ItemTool and HandleTool.
