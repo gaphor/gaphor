@@ -32,7 +32,7 @@ class IEditable(Interface):
         Returns: a gaphas.geometry.Rectangle
         """
 
-    def update_text(self, self):
+    def update_text(self, text):
         """Update with the new text.
         """
 
