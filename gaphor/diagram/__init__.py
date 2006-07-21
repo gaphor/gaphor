@@ -165,9 +165,6 @@ class LineItemMeta(DiagramItemMeta):
         return item_class
 
 
-import tool
-placementtool = tool
-
 from nameditem import TextElement
 #from placementtool import PlacementTool
 from classifier import ClassifierItem

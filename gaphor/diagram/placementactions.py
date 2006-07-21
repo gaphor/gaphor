@@ -8,11 +8,10 @@ import gaphas
 from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
-from gaphor.diagram.placementtool import PlacementTool
+from gaphor.diagram.tool import PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
-from gaphor.diagram.placementtool import PlacementTool
 
 def register_action(action, *args):
     _register_action(action, *args)

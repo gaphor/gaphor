@@ -2,7 +2,7 @@
 import unittest
 from gaphor import resource
 from gaphor.ui.mainwindow import MainWindow
-from gaphor.diagram.placementtool import PlacementTool
+from gaphor.diagram.tool import PlacementTool
 from gaphor.diagram import placementactions
 from gaphor import UML
 from gaphas.canvas import Context
