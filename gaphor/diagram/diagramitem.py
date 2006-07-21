@@ -5,7 +5,6 @@ Such as a modifier 'subject' property and a unique id.
 
 import gobject
 import pango
-import diacanvas
 
 from gaphor import resource
 from gaphor import UML
@@ -55,21 +54,20 @@ class DiagramItem(Presentation, Element):
 
         # stereotype
         self._has_stereotype = False
-        self._stereotype = diacanvas.shape.Text()
-        self._stereotype.set_font_description(pango.FontDescription(self.FONT_STEREOTYPE))
-        self._stereotype.set_alignment(pango.ALIGN_CENTER)
-        self._stereotype.set_markup(False)
+        #self._stereotype = diacanvas.shape.Text()
+        #self._stereotype.set_font_description(pango.FontDescription(self.FONT_STEREOTYPE))
+        #self._stereotype.set_alignment(pango.ALIGN_CENTER)
+        #self._stereotype.set_markup(False)
 
         # parts of items to be drawn on diagram
         # can contain stereotype, etc.
-        self._shapes = set()
+        #self._shapes = set()
 
 
     id = property(lambda self: self._id, doc='Id')
 
     def set_prop_persistent(self, name):
-        """
-        Specify property of diagram item, which should be saved in file.
+        """Specify property of diagram item, which should be saved in file.
         """
         self._persistent_props.add(name)
 
@@ -344,13 +342,13 @@ class DiagramItem(Presentation, Element):
         @arg text: stereotype text
         """
         if text:
-            self._stereotype.set_text(STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE)
+            #self._stereotype.set_text(STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE)
             self._has_stereotype = True
-            self._shapes.add(self._stereotype)
-        else:
-            self._has_stereotype = False
-            if self._stereotype in self._shapes:
-                self._shapes.remove(self._stereotype)
+            #self._shapes.add(self._stereotype)
+        #else:
+            #self._has_stereotype = False
+            #if self._stereotype in self._shapes:
+                #self._shapes.remove(self._stereotype)
         self.request_update()
 
 

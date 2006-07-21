@@ -5,7 +5,6 @@ Classes for grouping different elements.
 import itertools
 
 import gobject
-import diacanvas
 
 # TODO: Remove alltogether (no longer used for Gaphas)
 #class GroupBase(diacanvas.CanvasGroupable):

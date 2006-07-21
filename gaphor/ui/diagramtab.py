@@ -6,7 +6,7 @@ import gtk
 from gaphor import UML
 from gaphor import resource
 from gaphor.i18n import _
-from gaphor.diagram.itemtool import ItemTool
+#from gaphor.diagram.itemtool import ItemTool
 from gaphor.diagram import get_diagram_item
 from gaphor.undomanager import get_undo_manager
 from gaphor.ui.diagramview import DiagramView
@@ -82,7 +82,7 @@ class DiagramTab(object):
         view.connect_after('key-press-event', self.__on_key_press_event)
         view.connect('drag-data-received', self.__on_drag_data_received)
 
-        item_tool = ItemTool(self.owning_window.get_action_pool())
+        #item_tool = ItemTool(self.owning_window.get_action_pool())
         #view.get_default_tool().set_item_tool(item_tool)
         self.view = view
 

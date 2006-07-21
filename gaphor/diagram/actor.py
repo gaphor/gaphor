@@ -2,7 +2,7 @@
 Actor diagram item classes.
 """
 
-import diacanvas
+from math import pi
 
 from gaphor import UML
 from gaphor.diagram.align import V_ALIGN_BOTTOM
@@ -35,51 +35,43 @@ class ActorItem(ClassifierItem):
 
         self.drawing_style = self.DRAW_ICON
 
-        self.set(**self.DEFAULT_SIZE)
+        self.height = self.HEAD + self.NECK + self.BODY + self.ARM
+        self.width = self.ARM * 2
+        self.min_height = self.HEAD + self.NECK + self.BODY + self.ARM
+        self.min_width = self.ARM * 2
 
-        # Head
-        self._head = diacanvas.shape.Ellipse()
-        self._head.set_line_width(2.0)
-        # Body
-        self._body = diacanvas.shape.Path()
-        self._body.set_line_width(2.0)
-        # Arm
-        self._arms = diacanvas.shape.Path()
-        self._arms.set_line_width(2.0)
-        # Legs
-        self._legs = diacanvas.shape.Path()
-        self._legs.set_line_width(2.0)
-
-        self._shapes.update((self._head, self._body,
-            self._arms, self._legs))
-
+    def draw(self, context):
+        self.draw_icon(context)
 
     def draw_border(self):
         pass
 
-
-    def update_icon(self, affine):
+    def draw_icon(self, context):
         """Actors use Icon style, so update it.
         """
-        fx = self.width / (self.ARM * 2);
-        fy = self.height / (self.HEAD + self.NECK + self.BODY + self.ARM)
+        c = context.cairo
 
-        x = self.ARM * fx
-        y = (self.HEAD / 2) * fy
-        r1 = self.HEAD * fx
-        r2 = self.HEAD * fy
-        self._head.ellipse((x, y), r1, r2)
+        head, neck, arm, body = self.HEAD, self.NECK, self.ARM, self.BODY
 
-        self._body.line(((x, y + r2 / 2),
-            (self.ARM * fx,
-            (self.HEAD + self.NECK + self.BODY) * fy)))
+        fx = self.width / (arm * 2);
+        fy = self.height / (head + neck + body + arm)
 
-        self._arms.line(((0, (self.HEAD + self.NECK) * fy),
-            (self.ARM * 2 * fx,
-            (self.HEAD + self.NECK) * fy)))
+        x = arm * fx
+        y = (head / 2) * fy
+        cy = head * fy
 
-        self._legs.line(((0, (self.HEAD + self.NECK + self.BODY + self.ARM) * fy),
-            (self.ARM * fx, (self.HEAD + self.NECK + self.BODY) * fy),
-            (self.ARM * 2 * fx, (self.HEAD + self.NECK + self.BODY + self.ARM) * fy)))
+        c.arc(x, y, head / 2.0, 0, 2*pi)
+        #c.stroke()
+
+        c.move_to(x, y + cy / 2)
+        c.line_to(arm * fx, (head + neck + body) * fy)
+
+        c.move_to(0, (head + neck) * fy)
+        c.line_to(arm * 2 * fx, (head + neck) * fy)
+
+        c.move_to(0, (head + neck + body + arm) * fy)
+        c.line_to(arm * fx, (head + neck + body) * fy)
+        c.line_to(arm * 2 * fx, (head + neck + body + arm) * fy)
+        c.stroke()
 
 # vim:sw=4

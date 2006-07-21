@@ -20,7 +20,7 @@ class PlacementTool(gaphas.tool.PlacementTool):
 
     def on_button_press(self, context, event):
         self.is_released = False
-        view = resource('MainWindow').get_current_diagram_view()
+        view = context.view #resource('MainWindow').get_current_diagram_view()
         view.unselect_all()
         #print 'Gaphor: on_button_press event: %s' % self.__dict__
         get_undo_manager().begin_transaction()

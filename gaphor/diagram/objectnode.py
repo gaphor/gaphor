@@ -7,7 +7,7 @@ import itertools
 import gobject
 import pango
 
-import diacanvas
+#import diacanvas
 from gaphor import UML
 from gaphor import resource
 

@@ -60,12 +60,14 @@ class Diagram(Namespace, PackageableElement):
         super(Diagram, self).postload()
         self.canvas.postload()
 
-    def create(self, type, parent=None):
+    def create(self, type, parent=None, subject=None):
         """Create a new canvas item on the canvas. It is created with
         a unique ID and it is attached to the diagram's root item.
         """
         assert issubclass(type, gaphas.Item)
         obj = type(uniqueid.generate_id())
+        if subject:
+            obj.subject = subject
         self.canvas.add(obj, parent)
         return obj
 

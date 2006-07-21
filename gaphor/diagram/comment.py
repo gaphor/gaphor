@@ -4,7 +4,6 @@ CommentItem diagram item
 
 import gobject
 import pango
-import diacanvas
 
 from gaphor import UML
 

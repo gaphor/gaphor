@@ -7,7 +7,6 @@ __date__ = '$date$'
 
 import inspect
 import gobject
-import diacanvas
 
 from gaphor.misc import uniqueid
 from gaphor.diagram.align import ItemAlign

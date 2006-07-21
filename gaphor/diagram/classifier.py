@@ -9,7 +9,6 @@ import itertools
 
 import gobject
 import pango
-import diacanvas
 
 from gaphor import UML
 from gaphor.i18n import _
@@ -31,8 +30,8 @@ class Compartment(list):
         self.name = name
         self.owner = owner
         self.visible = True
-        self.separator = diacanvas.shape.Path()
-        self.separator.set_line_width(2.0)
+        #self.separator = diacanvas.shape.Path()
+        #self.separator.set_line_width(2.0)
 
     def save(self, save_func):
         #log.debug('Compartment.save: %s' % self)
@@ -123,17 +122,18 @@ class ClassifierItem(NamedItem):
 
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
-        self.set(height=50, width=100)
+        self.height = 50
+        self.width = 100
         self._compartments = []
         self._drawing_style = ClassifierItem.DRAW_COMPARTMENT
 
-        self._border = diacanvas.shape.Path()
-        self._border.set_line_width(2.0)
+        #self._border = diacanvas.shape.Path()
+        #self._border.set_line_width(2.0)
 
-        self._from = diacanvas.shape.Text()
-        self._from.set_font_description(pango.FontDescription(ClassifierItem.FONT_FROM))
-        self._from.set_alignment(pango.ALIGN_CENTER)
-        self._from.set_markup(False)
+        #self._from = diacanvas.shape.Text()
+        #self._from.set_font_description(pango.FontDescription(ClassifierItem.FONT_FROM))
+        #self._from.set_alignment(pango.ALIGN_CENTER)
+        #self._from.set_markup(False)
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -162,7 +162,7 @@ class ClassifierItem(NamedItem):
         DRAW_COMPARTMENT_ICON or DRAW_ICON.
         """
         if style != self._drawing_style:
-            self.preserve_property('drawing-style')
+            #self.preserve_property('drawing-style')
             self._drawing_style = style
             self.request_update()
 
@@ -235,11 +235,11 @@ class ClassifierItem(NamedItem):
         is not the same as the namespace of this diagram.
         """
         #print 'on_subject_notify__namespace', self, subject
-        if self.subject and self.subject.namespace and self.canvas and \
-           self.canvas.diagram.namespace is not self.subject.namespace:
-            self._from.set_text(_('(from %s)') % self.subject.namespace.name)
-        else:
-            self._from.set_text('')
+        #if self.subject and self.subject.namespace and self.canvas and \
+        #   self.canvas.diagram.namespace is not self.subject.namespace:
+        #    #self._from.set_text(_('(from %s)') % self.subject.namespace.name)
+        #else:
+        #    #self._from.set_text('')
         self.request_update()
 
     def on_subject_notify__namespace_name(self, subject, pspec=None):
@@ -250,10 +250,10 @@ class ClassifierItem(NamedItem):
 
     def on_subject_notify__isAbstract(self, subject, pspec=None):
         subject = self.subject
-        if subject.isAbstract:
-            self._name.set_font_description(pango.FontDescription(self.FONT_ABSTRACT))
-        else:
-            self._name.set_font_description(pango.FontDescription(self.NAME_FONT))
+        #if subject.isAbstract:
+        #    self._name.set_font_description(pango.FontDescription(self.FONT_ABSTRACT))
+        #else:
+        #    self._name.set_font_description(pango.FontDescription(self.NAME_FONT))
         self.request_update()
 
 

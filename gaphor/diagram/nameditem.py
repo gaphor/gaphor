@@ -6,7 +6,6 @@ import itertools
 
 import gobject
 import pango
-import diacanvas
 from gaphor.undomanager import get_undo_manager
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.align import ItemAlign
@@ -50,17 +49,17 @@ class TextElement(DiagramItem):
         # create callback method to watch for changes of subject attribute
         setattr(self, 'on_subject_notify__%s' % self.subject_attr, f)
 
-        self.set_flags(diacanvas.COMPOSITE)
+        #self.set_flags(diacanvas.COMPOSITE)
         
         font = pango.FontDescription(self.FONT)
-        self._name = diacanvas.shape.Text()
-        self._name.set_font_description(font)
-        self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
-        self._name.set_markup(False)
-        self._name_border = diacanvas.shape.Path()
-        self._name_border.set_color(diacanvas.color(128,128,128))
-        self._name_border.set_line_width(1.0)
-        self._name_bounds = (0, 0, 0, 0)
+        #self._name = diacanvas.shape.Text()
+        #self._name.set_font_description(font)
+        #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
+        #self._name.set_markup(False)
+        #self._name_border = diacanvas.shape.Path()
+        #self._name_border.set_color(diacanvas.color(128,128,128))
+        #self._name_border.set_line_width(1.0)
+        #self._name_bounds = (0, 0, 0, 0)
 
         # show name border when (parent) diagram item is selected
         self.show_border = True
@@ -96,7 +95,7 @@ class TextElement(DiagramItem):
         self._name_bounds = (0, 0, name_w, name_h)
 
     def on_update(self, affine):
-        diacanvas.CanvasItem.on_update(self, affine)
+        #diacanvas.CanvasItem.on_update(self, affine)
 
         # bounds calculation
         b1 = self._name_bounds
@@ -182,12 +181,12 @@ class Named(object):
 
     NAME_FONT = 'sans bold 10'
 
-    def __init__(self):
-        self._name = diacanvas.shape.Text()
-        self._name.set_font_description(pango.FontDescription(self.NAME_FONT))
-        self._name.set_alignment(pango.ALIGN_CENTER)
+    #def __init__(self):
+        #self._name = diacanvas.shape.Text()
+        #self._name.set_font_description(pango.FontDescription(self.NAME_FONT))
+        #self._name.set_alignment(pango.ALIGN_CENTER)
         #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
-        self._name.set_markup(False)
+        #self._name.set_markup(False)
 
     #
     # DiagramItem subject notification methods
@@ -285,20 +284,20 @@ class NamedItem(ElementItem, Named):
         ElementItem.__init__(self, id)
         Named.__init__(self)
 
-        self._border = self.create_border()
-        self._shapes.add(self._border)
+        #self._border = self.create_border()
+        #self._shapes.add(self._border)
 
 
     def create_border(self, border = None):
         """
         Create default border.
         """
-        if border is None:
-            border = diacanvas.shape.Path()
-        border.set_line_width(2.0)
-        self.set(width = self.WIDTH, height = self.HEIGHT)
-        return border
-
+        #if border is None:
+            #border = diacanvas.shape.Path()
+        #border.set_line_width(2.0)
+        #self.set(width = self.WIDTH, height = self.HEIGHT)
+        #return border
+        pass
 
     def draw_border(self):
         """

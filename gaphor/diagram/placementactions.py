@@ -3,7 +3,6 @@
 
 This module is initialized from gaphor.ui.diagramwindow
 """
-import diacanvas
 
 import gaphas
 from gaphor import resource
@@ -87,17 +86,11 @@ class PlacementAction(RadioAction):
 
     def item_factory(self):
         """Create a new instance of the item and return it."""
-        item = self._window.get_current_diagram().create(self.type)
+        subject = None
         if self.subject_type:
             subject = resource(UML.ElementFactory).create(self.subject_type)
-            try:
-                #print 'set subject'
-                #item.set_property('subject', subject)
-                item.subject = subject
-                #print 'set subject done'
-            except Exception, e:
-                print 'ERROR:', e
-        return item
+        diagram = self._window.get_current_diagram()
+        return diagram.create(self.type, subject=subject)
 
     def execute(self):
         assert self.type != None
@@ -119,16 +112,16 @@ class NamespacePlacementAction(PlacementAction):
         return item
 
 
-#class ActorPlacementAction(NamespacePlacementAction):
-#    id = 'InsertActor'
-#    label = '_Actor'
-#    stock_id = 'gaphor-actor'
-#    tooltip = 'Create a new actor item'
-#    name = 'Actor'
-#    type = diagram.ActorItem
-#    subject_type = UML.Actor
-#
-#register_action(ActorPlacementAction)
+class ActorPlacementAction(NamespacePlacementAction):
+    id = 'InsertActor'
+    label = '_Actor'
+    stock_id = 'gaphor-actor'
+    tooltip = 'Create a new actor item'
+    name = 'Actor'
+    type = diagram.ActorItem
+    subject_type = UML.Actor
+
+register_action(ActorPlacementAction)
 
 
 #class UseCasePlacementAction(NamespacePlacementAction):

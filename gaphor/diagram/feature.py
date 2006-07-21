@@ -6,9 +6,6 @@ Methods.
 
 import gobject
 import pango
-import diacanvas
-import diacanvas.shape
-from diacanvas.geometry import distance_rectangle_point
 from diagramitem import DiagramItem
 from gaphor.undomanager import undoable
 from gaphor.diagram import DiagramItemMeta
@@ -25,13 +22,12 @@ class FeatureItem(DiagramItem):
     FONT='sans 10'
 
     def __init__(self, id=None):
-        self.__gobject_init__()
         DiagramItem.__init__(self, id)
-        self._expression = diacanvas.shape.Text()
-        self._expression.set_font_description(pango.FontDescription(FeatureItem.FONT))
-        self._expression.set_wrap_mode(diacanvas.shape.WRAP_NONE)
-        self._expression.set_markup(False)
-        self.set_flags(diacanvas.COMPOSITE)
+        #self._expression = diacanvas.shape.Text()
+        #self._expression.set_font_description(pango.FontDescription(FeatureItem.FONT))
+        #self._expression.set_wrap_mode(diacanvas.shape.WRAP_NONE)
+        #self._expression.set_markup(False)
+        #self.set_flags(diacanvas.COMPOSITE)
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect

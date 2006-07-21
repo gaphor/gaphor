@@ -5,7 +5,6 @@ Commands related to the Diagram (DiaCanvas)
 
 from __future__ import generators
 
-import diacanvas
 
 from gaphor import GaphorError, resource
 from gaphor import UML
@@ -13,19 +12,19 @@ from gaphor.undomanager import undoable
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 
-from gaphor.diagram.objectnode import ObjectNodeItem
-from gaphor.diagram.klass import ClassItem
-from gaphor.diagram.component import ComponentItem
-from gaphor.diagram.attribute import AttributeItem
-from gaphor.diagram.operation import OperationItem
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.interface import InterfaceItem
-from gaphor.diagram.connector import AssemblyConnectorItem, ConnectorEndItem
-from gaphor.diagram.association import AssociationItem, AssociationEnd
-from gaphor.diagram import ClassifierItem, ImplementationItem, \
-     GeneralizationItem, DependencyItem
-from gaphor.diagram.flow import FlowItem, CFlowItem, CFlowItemA, CFlowItemB
-from gaphor.diagram.lifeline import LifelineItem
+#from gaphor.diagram.objectnode import ObjectNodeItem
+#from gaphor.diagram.klass import ClassItem
+#from gaphor.diagram.component import ComponentItem
+#from gaphor.diagram.attribute import AttributeItem
+#from gaphor.diagram.operation import OperationItem
+#from gaphor.diagram.nameditem import NamedItem
+#from gaphor.diagram.interface import InterfaceItem
+#from gaphor.diagram.connector import AssemblyConnectorItem, ConnectorEndItem
+#from gaphor.diagram.association import AssociationItem, AssociationEnd
+#from gaphor.diagram import ClassifierItem, ImplementationItem, \
+#     GeneralizationItem, DependencyItem
+#from gaphor.diagram.flow import FlowItem, CFlowItem, CFlowItemA, CFlowItemB
+#from gaphor.diagram.lifeline import LifelineItem
 
 
 class NoFocusItemError(GaphorError):

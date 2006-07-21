@@ -4,7 +4,6 @@ Generalization --
 # vim:sw=4
 
 import gobject
-import diacanvas
 
 from gaphor import resource
 from gaphor import UML
