@@ -1,3 +1,8 @@
+2006-07-21  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/comment.py: text editining working
+        * gaphor/diagram/actor.py: draws
+
 2006-07-19  arjan <arjan at yirdis dot nl>
 
 	* gaphor/diagram/placementtool.py: works with Gaphas

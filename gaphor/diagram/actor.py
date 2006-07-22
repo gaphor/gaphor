@@ -60,6 +60,7 @@ class ActorItem(ClassifierItem):
         y = (head / 2) * fy
         cy = head * fy
 
+        c.move_to(x + head / 2.0, y)
         c.arc(x, y, head / 2.0, 0, 2*pi)
         #c.stroke()
 

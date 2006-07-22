@@ -86,24 +86,10 @@ class CommentItem(ElementItem):
 	    c.move_to(10, 10)
 	    c.show_text(self.subject.body)
 
-    # Editable
-
-    def on_editable_get_editable_shape(self, x, y):
-        return self._body
-
-    def on_editable_start_editing(self, shape):
-        self.preserve_property('body')
-
-    def on_editable_editing_done(self, shape, new_text):
-        if new_text != self.subject.body:
-            self.subject.body = new_text
-        #self._body.set_text(new_text)
-        self.request_update()
-
 
 class CommentItemEditor(object):
     interface.implements(IEditor)
-    component.adapts(ICommentItem)
+    component.adapts(CommentItem)
 
     def __init__(self, item):
 	self._item = item
