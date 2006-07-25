@@ -83,7 +83,7 @@ class CommentItem(ElementItem):
         c.stroke()
 	if self.subject.body:
 	    # Do not print empty string, since cairo-win32 can't handle it.
-	    c.move_to(10, 10)
+	    c.move_to(10, 15)
 	    c.show_text(self.subject.body)
 
 

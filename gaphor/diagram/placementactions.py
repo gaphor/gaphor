@@ -107,6 +107,7 @@ class NamespacePlacementAction(PlacementAction):
         #log.debug('Setting namespace for new item %s: %s' % (item, self._window.get_current_diagram().namespace))
         item.subject.package = self._window.get_current_diagram().namespace
         item.subject.name = '%s%d' % (self.name, self.__index)
+        item.request_update()
         self.__index += 1
         return item
 

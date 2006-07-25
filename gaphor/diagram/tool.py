@@ -78,7 +78,11 @@ class TextEditTool(Tool):
         view = context.view
         item = view.hovered_item
         if item:
-            editor = IEditor(item)
+            try:
+                editor = IEditor(item)
+            except TypeError:
+                # Could not adapt to IEditor
+                return False
             x, y = view.transform_point_c2i(item, event.x, event.y)
             if editor.is_editable(x, y):
                 text = editor.get_text()

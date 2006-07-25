@@ -40,9 +40,6 @@ class ActorItem(ClassifierItem):
         self.min_height = self.HEAD + self.NECK + self.BODY + self.ARM
         self.min_width = self.ARM * 2
 
-    def draw(self, context):
-        self.draw_icon(context)
-
     def draw_border(self):
         pass
 
@@ -74,5 +71,14 @@ class ActorItem(ClassifierItem):
         c.line_to(arm * fx, (head + neck + body) * fy)
         c.line_to(arm * 2 * fx, (head + neck + body + arm) * fy)
         c.stroke()
+
+        text = self.subject.name
+        if text:
+            x_bear, y_bear, w, h, x_adv, y_adv = c.text_extents(text)
+            x = 0.5 - (w / 2 + x_bear)
+            y = 0.5 - (h + y_bear)
+            c.move_to(self.width / 2.0 + x, self.height + h * 1.5)
+            c.show_text(text)
+
 
 # vim:sw=4

@@ -196,7 +196,6 @@ class Named(object):
         Subject change notification callback.
         """
         ElementItem.on_subject_notify(self, pspec, ('name',) + notifiers)
-        self._name.set_text(self.subject and self.subject.name or '')
 
 
     def on_subject_notify__name(self, subject, pspec):
@@ -204,43 +203,8 @@ class Named(object):
         Subject name change notification callback.
         """
         assert self.subject is subject
-        self._name.set_text(self.subject.name or '')
         self.request_update()
 
-
-    #
-    # CanvasEditable interface implementation
-    #
-    def on_editable_get_editable_shape(self, x, y):
-        return self._name
-
-
-    def on_editable_start_editing(self, shape):
-        pass
-
-
-    def on_editable_editing_done(self, shape, new_text):
-        if new_text != self.subject.name:
-            self.canvas.get_undo_manager().begin_transaction()
-            self.subject.name = new_text
-            self.canvas.get_undo_manager().commit_transaction()
-
-        self.request_update()
-
-
-    #
-    # CanvasItem or CanvasLine callbacks
-    #
-    def on_event (self, event):
-        if event.type == diacanvas.EVENT_2BUTTON_PRESS:
-            self.rename()
-            return True
-        else:
-            return ElementItem.on_event(self, event)
-
-
-    def on_shape_iter(self):
-        return iter([self._name])
 
 
 class NamedItemMeta(DiagramItemMeta):

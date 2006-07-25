@@ -78,7 +78,7 @@ class Compartment(list):
                 f.props.visible = False
             return 0
 
-        
+
 class ClassifierItem(NamedItem):
     """This item visualizes a Class instance.
 
@@ -127,14 +127,6 @@ class ClassifierItem(NamedItem):
         self._compartments = []
         self._drawing_style = ClassifierItem.DRAW_COMPARTMENT
 
-        #self._border = diacanvas.shape.Path()
-        #self._border.set_line_width(2.0)
-
-        #self._from = diacanvas.shape.Text()
-        #self._from.set_font_description(pango.FontDescription(ClassifierItem.FONT_FROM))
-        #self._from.set_alignment(pango.ALIGN_CENTER)
-        #self._from.set_markup(False)
-
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
         # otherwise the classes will unintentionally grow due to "visible"
@@ -145,17 +137,6 @@ class ClassifierItem(NamedItem):
     def postload(self):
         NamedItem.postload(self)
         self.on_subject_notify__isAbstract(self.subject)
-
-    def do_set_property(self, pspec, value):
-        if pspec.name == 'drawing-style':
-            self.set_drawing_style(value)
-        else:
-            NamedItem.do_set_property(self, pspec, value)
-
-    def do_get_property(self, pspec):
-        if pspec.name == 'drawing-style':
-            return self._drawing_style
-        return NamedItem.do_get_property(self, pspec)
 
     def set_drawing_style(self, style):
         """Set the drawing style for this classifier: DRAW_COMPARTMENT,
@@ -302,38 +283,29 @@ class ClassifierItem(NamedItem):
 
 
     def update_icon(self, affine):
-        """Update state to draw as one bug icon.
+        """Update state to draw as one big icon.
         """
         pass
 
 
     def get_icon_pos(self):
-        """
-        Get icon position.
+        """Get icon position.
         """
         return self.width - self.ICON_MARGIN_X - self.ICON_WIDTH, \
             self.ICON_MARGIN_Y
 
-
-    def on_update(self, affine):
+    def update(self, context):
         """Overrides update callback.
         """
         if self._drawing_style == self.DRAW_COMPARTMENT_ICON:
-            self.update_compartment_icon(affine)
+            self.update_compartment_icon(context)
         elif self._drawing_style == self.DRAW_ICON:
-            self.update_icon(affine)
+            self.update_icon(context)
 
-        NamedItem.on_update(self, affine)
+        NamedItem.update(self, context)
 
-
-    def on_shape_iter(self):
-        if self._drawing_style in (self.DRAW_COMPARTMENT, self.DRAW_COMPARTMENT_ICON):
-            yield self._border
-            yield self._from
-
-            for c in self._compartments:
-                if c.visible:
-                    yield c.separator
-
-        for s in NamedItem.on_shape_iter(self):
-            yield s
+    def draw(self, context):
+        if self._drawing_style == self.DRAW_COMPARTMENT_ICON:
+            self.draw_compartment_icon(context)
+        elif self._drawing_style == self.DRAW_ICON:
+            self.draw_icon(context)
