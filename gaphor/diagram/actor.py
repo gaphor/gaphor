@@ -5,46 +5,43 @@ Actor diagram item classes.
 from math import pi
 
 from gaphor import UML
-from gaphor.diagram.align import V_ALIGN_BOTTOM
+#from gaphor.diagram.align import V_ALIGN_BOTTOM
 from gaphor.diagram.classifier import ClassifierItem
 
 class ActorItem(ClassifierItem):
-    """
-    Actor item is a classifier in icon mode. In future maybe it will be
-    possible to switch to comparment mode.
+    """Actor item is a classifier in icon mode.
+
+    In future maybe it will be possible to switch to comparment mode.
     """
 
-    __uml__      = UML.Actor
-    __o_align__  = True
-    __s_valign__ = V_ALIGN_BOTTOM
+    __uml__ = UML.Actor
+#    __o_align__  = True
+#    __s_valign__ = V_ALIGN_BOTTOM
 
     HEAD = 11
     ARM  = 19
     NECK = 10
     BODY = 20
 
-    DEFAULT_SIZE= {
-        'height'     : (HEAD + NECK + BODY + ARM),
-        'width'      : (ARM * 2),
-        'min_height' : (HEAD + NECK + BODY + ARM),
-        'min_width'  : (ARM * 2)
-    }
+#    DEFAULT_SIZE= {
+#        'height'     : (HEAD + NECK + BODY + ARM),
+#        'width'      : (ARM * 2),
+#        'min_height' : (HEAD + NECK + BODY + ARM),
+#        'min_width'  : (ARM * 2)
+#    }
 
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
 
         self.drawing_style = self.DRAW_ICON
 
-        self.height = self.HEAD + self.NECK + self.BODY + self.ARM
-        self.width = self.ARM * 2
         self.min_height = self.HEAD + self.NECK + self.BODY + self.ARM
         self.min_width = self.ARM * 2
-
-    def draw_border(self):
-        pass
+        self.height = self.min_height
+        self.width = self.min_width
 
     def draw_icon(self, context):
-        """Actors use Icon style, so update it.
+        """Actors use Icon style.
         """
         c = context.cairo
 
@@ -72,6 +69,8 @@ class ActorItem(ClassifierItem):
         c.line_to(arm * 2 * fx, (head + neck + body + arm) * fy)
         c.stroke()
 
+        # The item's boundings are not related to the size of the actors name
+        # So the update is trivial:
         text = self.subject.name
         if text:
             x_bear, y_bear, w, h, x_adv, y_adv = c.text_extents(text)
@@ -81,4 +80,4 @@ class ActorItem(ClassifierItem):
             c.show_text(text)
 
 
-# vim:sw=4
+# vim:sw=4:et

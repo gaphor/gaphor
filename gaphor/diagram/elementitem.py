@@ -9,10 +9,7 @@ import gaphas
 from diagramitem import DiagramItem
 from gaphor.diagram import DiagramItemMeta
 
-__revision__ = '$revision$'
-__author__ = 'Arjan J. Molenaar'
-__date__ = '$date$'
-
+__version__ = '$Revision$'
 
 class ElementItem(gaphas.Element, DiagramItem):
     __metaclass__ = DiagramItemMeta
@@ -30,17 +27,5 @@ class ElementItem(gaphas.Element, DiagramItem):
     def load(self, name, value):
         DiagramItem.load(self, name, value)
 
-    # DiaCanvasItem callbacks:
-
-    def on_glue(self, handle, wx, wy):
-        #import sys
-        #print self, handle, '=>', sys.getrefcount(self), sys.getrefcount(handle)
-        return self._on_glue(handle, wx, wy, diacanvas.CanvasElement)
-
-    def on_connect_handle(self, handle):
-        return self._on_connect_handle(handle, diacanvas.CanvasElement)
-
-    def on_disconnect_handle(self, handle):
-        return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
 
 # vim:sw=4

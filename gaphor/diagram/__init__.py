@@ -30,6 +30,8 @@ def set_diagram_item(element, item):
 
 
 class Relationship(object):
+    """Help! What does this class do?
+    """
 
     def __init__(self, head_a = None, head_b = None, tail_a = None, tail_b = None):
         super(Relationship, self).__init__()
@@ -104,7 +106,7 @@ class Relationship(object):
 
 class DiagramItemMeta(type):
     """Initialize a new diagram item.
-    1. Register UML.Elements
+    1. Register UML.Elements by means of the __uml__ attribute.
     """
 
     def __new__(self, name, bases, data):
@@ -148,6 +150,8 @@ class DiagramItemMeta(type):
 
 
 class LineItemMeta(DiagramItemMeta):
+    """Add support for __relationship__ (what does it do?) 
+    """
     def __new__(cls, name, bases, data):
         item_class = DiagramItemMeta.__new__(cls, name, bases, data)
 
@@ -159,8 +163,6 @@ class LineItemMeta(DiagramItemMeta):
                 item_class.relationship = rel
 
         # set head and tail handles
-        item_class.head = property(lambda self: self.handles[0])
-        item_class.tail = property(lambda self: self.handles[-1])
 
         return item_class
 

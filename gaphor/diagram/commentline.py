@@ -1,10 +1,9 @@
-# vim:sw=4:et
-'''
+"""
 CommentLine -- A line that connects a comment to another model element.
 
 TODO: Why do we lose the __id property when we do a get_property after a model
 has been loaded. It works okay when creating new items.
-'''
+"""
 
 import gobject
 from gaphor import UML
@@ -33,5 +32,8 @@ class CommentLineItem(DiagramLine):
         if not comment.parent and self.parent:
             self.parent.remove(self)
             
+    def draw(self, context):
+        context.cairo.set_dash((7.0, 5.0), 0)
+        DiagramLine.draw(self, context)
 
 # vim: sw=4:et:ai
