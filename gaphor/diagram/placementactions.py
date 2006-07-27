@@ -381,15 +381,15 @@ class CommentPlacementAction(PlacementAction):
 register_action(CommentPlacementAction)
 
 
-#class CommentLinePlacementAction(PlacementAction):
-#    id = 'InsertCommentLine'
-#    label = 'Comment _line'
-#    tooltip = 'Create a new comment line'
-#    stock_id = 'gaphor-comment-line'
-#    name = 'Comment line'
-#    type = diagram.CommentLineItem
-#
-#register_action(CommentLinePlacementAction)
+class CommentLinePlacementAction(PlacementAction):
+    id = 'InsertCommentLine'
+    label = 'Comment _line'
+    tooltip = 'Create a new comment line'
+    stock_id = 'gaphor-comment-line'
+    name = 'Comment line'
+    type = diagram.CommentLineItem
+
+register_action(CommentLinePlacementAction)
 
 
 #class AssociationPlacementAction(PlacementAction):

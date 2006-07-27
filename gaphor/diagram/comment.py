@@ -86,29 +86,4 @@ class CommentItem(ElementItem):
 	    c.move_to(10, 15)
 	    c.show_text(self.subject.body)
 
-
-class CommentItemEditor(object):
-    interface.implements(IEditor)
-    component.adapts(CommentItem)
-
-    def __init__(self, item):
-	self._item = item
-
-    def is_editable(self, x, y):
-	return True
-
-    def get_text(self):
-	return self._item.subject.body
-
-    def get_bounds(self):
-	return None
-
-    def update_text(self, text):
-	self._item.subject.body = text
-
-    def key_pressed(self, pos, key):
-	pass
-
-component.provideAdapter(CommentItemEditor)
-
 # vim:sw=4

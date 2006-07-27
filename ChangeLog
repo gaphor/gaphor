@@ -1,3 +1,10 @@
+2006-07-27  arjan <arjan at yirdis dot nl>
+
+        * Connect/disconnect works for comment-commentline
+        * gaphor/diagram/tool.py: Handle tool in place
+        * gaphor/diagram/interfaces.py: IConnect interface
+        * gaphor/diagram/actor.py: works
+
 2006-07-21  arjan <arjan at yirdis dot nl>
 
         * gaphor/diagram/comment.py: text editining working

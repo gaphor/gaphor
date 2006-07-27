@@ -15,17 +15,9 @@ class LineItem(gaphas.Line, DiagramItem):
 
     __metaclass__ = LineItemMeta
 
-    # Ensure we call the right connect functions:
-    connect = DiagramItem.connect
-    disconnect = DiagramItem.disconnect
-    notify = DiagramItem.notify
-
     def __init__(self, id = None):
-        #diacanvas.CanvasLine.__init__(self)
-        self.__gobject_init__()
+        gaphas.Line.__init__(self)
         DiagramItem.__init__(self, id)
-        #super(LineItem, self).__init__(id)
-        self.props.horizontal = False
 
 
     # Gaphor Connection Protocol

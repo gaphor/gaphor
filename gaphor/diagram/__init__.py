@@ -164,6 +164,10 @@ class LineItemMeta(DiagramItemMeta):
 
         return item_class
 
+#
+# Register adapters:
+#
+import adapters
 
 from nameditem import TextElement
 #from placementtool import PlacementTool
@@ -171,7 +175,7 @@ from classifier import ClassifierItem
 from actor import ActorItem
 #from klass import ClassItem
 from comment import CommentItem
-#from commentline import CommentLineItem
+from commentline import CommentLineItem
 #from usecase import UseCaseItem
 #from package import PackageItem
 #from interface import InterfaceItem
