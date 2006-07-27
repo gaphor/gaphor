@@ -9,8 +9,7 @@ from diagramitem import DiagramItem
 from gaphor.diagram import LineItemMeta
 
 class LineItem(gaphas.Line, DiagramItem):
-    """
-    Base class for diagram lines.
+    """Base class for diagram lines.
     """
 
     __metaclass__ = LineItemMeta
@@ -18,6 +17,9 @@ class LineItem(gaphas.Line, DiagramItem):
     def __init__(self, id = None):
         gaphas.Line.__init__(self)
         DiagramItem.__init__(self, id)
+
+    head = property(lambda self: self.handles[0])
+    tail = property(lambda self: self.handles[-1])
 
 
     # Gaphor Connection Protocol
