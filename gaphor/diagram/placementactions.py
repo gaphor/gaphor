@@ -8,6 +8,7 @@ import gaphas
 from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
+from gaphor.diagram import usecase
 from gaphor.diagram.tool import DefaultTool, PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
@@ -124,16 +125,16 @@ class ActorPlacementAction(NamespacePlacementAction):
 register_action(ActorPlacementAction)
 
 
-#class UseCasePlacementAction(NamespacePlacementAction):
-#    id = 'InsertUseCase'
-#    label = '_UseCase'
-#    tooltip = 'Create a new use case item'
-#    stock_id = 'gaphor-usecase'
-#    name = 'UseCase'
-#    type = diagram.UseCaseItem
-#    subject_type = UML.UseCase
-#
-#register_action(UseCasePlacementAction)
+class UseCasePlacementAction(NamespacePlacementAction):
+    id = 'InsertUseCase'
+    label = '_UseCase'
+    tooltip = 'Create a new use case item'
+    stock_id = 'gaphor-usecase'
+    name = 'UseCase'
+    type = diagram.usecase.UseCaseItem
+    subject_type = UML.UseCase
+
+register_action(UseCasePlacementAction)
 
 
 #class IncludePlacementAction(PlacementAction):

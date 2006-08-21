@@ -42,5 +42,8 @@ class PlacementToolTestCase(unittest.TestCase):
     def test_comment_line_placement(self):
         self.do_test_placement(placementactions.CommentLinePlacementAction())
 
+    def test_use_case_placement(self):
+        self.do_test_placement(placementactions.UseCasePlacementAction())
+
 
 # vim:sw=4:et:ai

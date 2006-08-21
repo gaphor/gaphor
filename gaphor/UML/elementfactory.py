@@ -2,10 +2,14 @@
 """elementfactory.py
 """
 
+from zope import component
 from gaphor.misc import uniqueid, odict
 from gaphor.undomanager import get_undo_manager
 from gaphor.UML.element import Element
 from gaphor.UML.diagram import Diagram
+from gaphor.UML.event import CreateElementEvent, RemoveElementEvent, \
+                             FlushFactoryEvent, ModelFactoryEvent
+
 
 class _UndoCreateAction(object):
 
@@ -19,10 +23,12 @@ class _UndoCreateAction(object):
         except KeyError:
             pass # Key was probably already removed in an unlink call
         self.factory.notify(self.element, 'remove')
+        component.handle(RemoveElementEvent(self.factory, self.element))
 
     def redo(self):
         self.factory._elements[self.element.id] = self.element
         self.factory.notify(self.element, 'create')
+        component.handle(CreateElementEvent(self.factory, self.element))
 
 
 class _UndoRemoveAction(object):
@@ -34,10 +40,12 @@ class _UndoRemoveAction(object):
     def undo(self):
         self.factory._elements[self.element.id] = self.element
         self.factory.notify(self.element, 'create')
+        component.handle(CreateElementEvent(self.factory, self.element))
 
     def redo(self):
         del self.factory._elements[self.element.id]
         self.factory.notify(self.element, 'remove')
+        component.handle(RemoveElementEvent(self.factory, self.element))
 
 
 class ElementFactory(object):
@@ -52,6 +60,7 @@ class ElementFactory(object):
     flush - model is flushed: all element are removed from the factory
             (element is None)
     """
+
     def __init__(self):
         self._elements = odict.odict()
         self._observers = list()
@@ -71,6 +80,7 @@ class ElementFactory(object):
         get_undo_manager().add_undo_action(_UndoCreateAction(self, obj))
         obj.connect('__unlink__', self.__element_signal)
         self.notify(obj, 'create')
+        component.handle(CreateElementEvent(self, obj))
         return obj
 
     def size(self):
@@ -126,6 +136,7 @@ class ElementFactory(object):
     def flush(self):
         """Flush all elements (remove them from the factory)."""
         self.notify(None, 'flush')
+        component.handle(FlushFactoryEvent(self))
         # First flush all diagrams:
         for value in self.select(lambda e: isinstance(e, Diagram)):
             value.unlink()
@@ -167,6 +178,7 @@ class ElementFactory(object):
 
     def notify_model(self):
         self.notify(None, 'model')
+        component.handle(ModelFactoryEvent(self))
 
     def __element_signal(self, element, pspec):
         """Remove an element from the factory """
@@ -177,6 +189,7 @@ class ElementFactory(object):
             del self._elements[element.id]
             get_undo_manager().add_undo_action(_UndoRemoveAction(self, element))
             self.notify(element, 'remove')
+            component.handle(RemoveElementEvent(self, element))
 #        elif pspec == '__relink__' and not self._elements.has_key(element.id):
 #            log.debug('Relinking element: %s' % element)
 #            self._elements[element.id] = element

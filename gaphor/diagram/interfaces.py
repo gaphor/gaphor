@@ -2,7 +2,7 @@
 This module describes the interfaces specific to the gaphor.diagram module.
 These interfaces are:
 
- - IConnectable
+ - IConnect
    Use to define adapters for connecting 
  - IEditor
    Text editor interface
@@ -66,7 +66,7 @@ class IEditor(interface.Interface):
 
 class IConnect(interface.Interface):
     """This interface is used by the HandleTool to allow connecting
-    lines to element items. For each specific case (Line, Element) an
+    lines to element items. For each specific case (Element, Line) an
     adapter could be written.
     """
 

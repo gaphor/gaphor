@@ -95,17 +95,18 @@ class TextElement(DiagramItem):
         self._name_bounds = (0, 0, name_w, name_h)
 
     def on_update(self, affine):
+        pass
         #diacanvas.CanvasItem.on_update(self, affine)
 
         # bounds calculation
-        b1 = self._name_bounds
-        self._name_border.rectangle((b1[0], b1[1]), (b1[2], b1[3]))
-        self.set_bounds(b1)
+        #b1 = self._name_bounds
+        #self._name_border.rectangle((b1[0], b1[1]), (b1[2], b1[3]))
+        #self.set_bounds(b1)
 
-    def on_point(self, x, y):
-        p = (x, y)
-        drp = diacanvas.geometry.distance_rectangle_point
-        return drp(self._name_bounds, p)
+#    def on_point(self, x, y):
+#        p = (x, y)
+#        drp = diacanvas.geometry.distance_rectangle_point
+#        return drp(self._name_bounds, p)
 
 
     def get_size(self):

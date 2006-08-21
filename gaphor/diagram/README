@@ -1,28 +1,47 @@
-Diagram items
+module: gaphor.diagram
+=============
 
-Diagrams typically contain a diacanvas.Canvas. This Canvas contains a bunch of
-items. Those items are one way or another related to some UML.Element.
+This module contains the items that can be placed in gaphor.UML.Diagram's.
+Each diagram item represents one or more gaphor.UML.Element's (subclasses
+thereof). Diagram items are subclassed from Presentation. This is the base
+class for "presentation elements": items used to visualize an UML element.
 
-In the UML module a class Presentation is defined. It defines the relation
-between one Element and its Presentations.
+Also gaphor.UML.Element is inherited. This class contains logic for event
+notification among other utility functions (e.g. the __unlink__ signal).
 
-In the UML module all relations between objects are presented as associations.
+Presentation elements ("items") have a "subject" attribute, that refers to the
+(main-) model element class that is represented (e.g. a class representation
+has as subject a gaphor.UML.Class instance, other elements, such as
+gaphor.UML.Property and gaphor.UML.Operation are implicitly referenced.
 
-There are some conflicts that have to be resolved when using Presentation in
-conjunction with diacanvas.CanvasItem:
+Signal handling
+---------------
 
-The default signature of the methods connect() and disconnect() is slightly
-different.
+As of this version, signal notification is done through zope.component. As a
+result all modification events originated from gaphor.UML classes are received
+by all items. (In the old days every item should register for specific events
+on specific model elements, which resulted in quite a complex administration of
+event handlers, since all those handlers should be unregistered when an item
+was removed).
 
-This is resolved by overriding connect() and disconnect() and let them act
-the same way as UML.Element's.
-The unlink() method is added to remove the item from the canvas. This should
-be used in stead of disconnecting directly from the parent object.
+Connecting items
+----------------
 
-A __unlink__ signal is added.
+Another change, due to the introduction of the Zope3 framework, is how items
+are connected to one another. This is done through adapters (multi-adapters to
+be more specific). An adapter is used to add additional behavior to an object.
+In this case the IConnect interface should be implemented for (element, line)
+tuples. For each possible connection an adapter should be written (CommentItem
+with any DiagramItem, AssociationItem with ClassifierItem, etc.). The big
+(huge) advantage is that complex connection stuff is removed from the diagram
+items (which resulted in cyclic dependencies in the past) and is put on a
+higher level: the adapter.
 
-Element.presentation connects to '__unlink__' of Presentation.subject.
+See interfaces.py and adapter.py for implementations.
 
-Note that the subject notifiers are not called during loading, since no
-notifications are send during loading.
+Text editing
+------------
+
+Like item connecting, text editing is also implemented through adapters. The IEditor interface is used for this.
+
 

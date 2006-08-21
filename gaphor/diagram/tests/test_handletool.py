@@ -16,7 +16,7 @@ class HandleToolTestCase(unittest.TestCase):
     main_window = resource(MainWindow)
     main_window.construct()
 
-    def test_glue(self):
+    def test_iconnect(self):
         """Test basic glue functionality using CommentItem and CommentLine
         items.
         """

@@ -180,7 +180,18 @@ class PlacementTool(gaphas.tool.PlacementTool):
         view.unselect_all()
         #print 'Gaphor: on_button_press event: %s' % self.__dict__
         get_undo_manager().begin_transaction()
-        return gaphas.tool.PlacementTool.on_button_press(self, context, event)
+        if gaphas.tool.PlacementTool.on_button_press(self, context, event):
+            try:
+                opposite = self.new_item.opposite(self.new_item.handles()[self._handle_index])
+            except (KeyError, AttributeError):
+                pass
+            else:
+                # Connect opposite handle first, using the HandleTool's
+                # mechanisms
+                wx, wy = view.canvas.get_matrix_i2w(self.new_item, calculate=True).transform_point(opposite.x, opposite.y)
+                item = self.handle_tool.glue(view, self.new_item, opposite, wx, wy)
+                if item:
+                    self.handle_tool.connect(view, self.new_item, opposite, wx, wy)
             
     def on_button_release(self, context, event):
         self.is_released = True

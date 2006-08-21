@@ -46,7 +46,6 @@ class Compartment(list):
         local_elements = [f.subject for f in self]
         return s and s in local_elements
 
-
     def get_size(self):
         # fixme: kill True argument of Feature.get_size method
         if len(self) > 0:
@@ -56,7 +55,6 @@ class Compartment(list):
             return width, height
         else:
             return 0, 0
-
 
     def update(self, affine, width, y):
         if self.visible:
