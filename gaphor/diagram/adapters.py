@@ -9,6 +9,7 @@ from gaphas import geometry
 from gaphas import constraint
 from interfaces import IConnect, IEditor
 from elementitem import ElementItem
+from nameditem import NamedItem
 from comment import CommentItem
 from commentline import CommentLineItem
 
@@ -38,6 +39,33 @@ class CommentItemEditor(object):
 	pass
 
 component.provideAdapter(CommentItemEditor)
+
+
+class NamedItemEditor(object):
+    """Text edit support for Named items.
+    """
+    interface.implements(IEditor)
+    component.adapts(NamedItem)
+
+    def __init__(self, item):
+	self._item = item
+
+    def is_editable(self, x, y):
+	return True
+
+    def get_text(self):
+	return self._item.subject.name
+
+    def get_bounds(self):
+	return None
+
+    def update_text(self, text):
+	self._item.subject.name = text
+
+    def key_pressed(self, pos, key):
+	pass
+
+component.provideAdapter(NamedItemEditor)
 
 
 class SimpleConnect(object):
