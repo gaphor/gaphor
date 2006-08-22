@@ -8,6 +8,7 @@ from gaphas.item import NW, SE
 from gaphas import geometry
 from gaphas import constraint
 from interfaces import IConnect, IEditor
+from elementitem import ElementItem
 from comment import CommentItem
 from commentline import CommentLineItem
 
@@ -39,9 +40,8 @@ class CommentItemEditor(object):
 component.provideAdapter(CommentItemEditor)
 
 
-class CommentLineToCommentConnect(object):
+class SimpleConnect(object):
     interface.implements(IConnect)
-    component.adapts(CommentItem, CommentLineItem)
 
     def __init__(self, element, line):
         self.element = element
@@ -125,6 +125,21 @@ class CommentLineToCommentConnect(object):
         handle.connected_to = None
         # TODO: disconnect at model level
 
+
+class CommentLineToCommentConnect(SimpleConnect):
+    """Connect a comment line to a comment item.
+    """
+    component.adapts(CommentItem, CommentLineItem)
+
 component.provideAdapter(CommentLineToCommentConnect)
+
+
+class CommentLineToElementConnect(SimpleConnect):
+    """Connect a comment line to a generic element (not a comment item)
+    """
+    component.adapts(ElementItem, CommentLineItem)
+
+component.provideAdapter(CommentLineToElementConnect)
+
 
 # vim:sw=4:et:ai
