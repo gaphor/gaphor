@@ -7,6 +7,7 @@ from zope import interface, component
 from gaphas.item import NW, SE
 from gaphas import geometry
 from gaphas import constraint
+from gaphor import UML
 from interfaces import IConnect, IEditor
 from elementitem import ElementItem
 from nameditem import NamedItem
@@ -105,24 +106,22 @@ class SimpleConnect(object):
         be connected to some other, or the same element by means of the
         handle.connected_to property. Also the connection at UML level
         still exists.
+        
+        Returns True if a connection is established.
         """
-        print 'connect'
         element = self.element
         canvas = element.canvas
         solver = canvas.solver
         pos = self.glue(handle, x, y)
 
         # Disconnect old model connection
-        print 'connect - disconnect'
         if handle.connected_to and handle.connected_to is not self.element:
             adapter = component.queryMultiAdapter((handle.connected_to, self.line), IConnect)
             adapter.full_disconnect(handle)
  
         # Stop here if no new connection should be established
         if not pos:
-            return
-
-        print 'connect - connect'
+            return False
 
         s = self.side(pos, element)
         #try:
@@ -134,12 +133,12 @@ class SimpleConnect(object):
                                 element.handles()[(s+1)%4], self.line, handle)
         solver.add_constraint(handle._connect_constraint)
         handle.connected_to = element
+        return True
 
     def disconnect(self, handle):
         """Disconnect() takes care of disconnecting the handle from the
         element it's attached to, by removing the constraints.
         """
-        print 'disconnect'
         solver = self.element.canvas.solver
         try:
             solver.remove_constraint(handle._connect_constraint)
@@ -149,25 +148,52 @@ class SimpleConnect(object):
 
     def full_disconnect(self, handle):
         """Do a full disconnect, also disconnect at UML model level.
+        Subclasses should disconnect model-level connections.
         """
         handle.connected_to = None
-        # TODO: disconnect at model level
 
 
-class CommentLineToCommentConnect(SimpleConnect):
+class CommentLineConnect(SimpleConnect):
     """Connect a comment line to a comment item.
-    """
-    component.adapts(CommentItem, CommentLineItem)
-
-component.provideAdapter(CommentLineToCommentConnect)
-
-
-class CommentLineToElementConnect(SimpleConnect):
-    """Connect a comment line to a generic element (not a comment item)
+    Connect Comment.annotatedElement to any element
     """
     component.adapts(ElementItem, CommentLineItem)
 
-component.provideAdapter(CommentLineToElementConnect)
+    def glue(self, handle, x, y):
+        """In addition to the normal check, both line ends may not be connected
+        to the same element. Same goes for subjects.
+        One of the ends should be connected to a UML.Comment element.
+        """
+        opposite = self.line.opposite(handle)
+        element = self.element
+        connected_to = opposite.connected_to
+        if connected_to is element:
+            print 'item identical', connected_to, element
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            print 'Subjects none or match:', connected_to.subject, element.subject
+            return None
+        return super(CommentLineConnect, self).glue(handle, x, y)
+
+    def connect(self, handle, x, y):
+        if super(CommentLineConnect, self).connect(handle, x, y):
+            opposite = self.line.opposite(handle)
+            if opposite.connected_to:
+                if isinstance(opposite.connected_to.subject, UML.Comment):
+                    opposite.connected_to.subject.annotatedElement = self.element.subject
+                else:
+                    self.element.subject.annotatedElement = opposite.connected_to.subject
+
+    def full_disconnect(self, handle):
+        super(CommentLineConnect, self).full_disconnect(handle)
+        if handle.connected_to:
+            del handle.connected_to.subject.annotatedElement[self.element.subject]
+
+component.provideAdapter(CommentLineConnect)
 
 
 # vim:sw=4:et:ai

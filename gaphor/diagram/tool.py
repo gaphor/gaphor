@@ -22,6 +22,9 @@ from interfaces import IEditor, IConnect
 __version__ = '$Revision$'
 
 class ConnectHandleTool(HandleTool):
+    """Handle Tool (acts on item handles) that uses the IConnect protocol
+    to connect items to one-another.
+    """
 
     def glue(self, view, item, handle, wx, wy):
         """Find the nearest item that the handle may connect to.
@@ -79,9 +82,11 @@ class ConnectHandleTool(HandleTool):
             x, y = view.canvas.get_matrix_w2i(glue_item).transform_point(wx, wy)
             print 'connecting:', adapter
             adapter.connect(handle, x, y)
+            return True
         elif handle.connected_to:
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
             adapter.full_disconnect(handle)
+        return False
 
     def disconnect(self, view, item, handle):
         """Disconnect the handle from the element by removing constraints.
