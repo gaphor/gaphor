@@ -85,7 +85,8 @@ class ConnectHandleTool(HandleTool):
             return True
         elif handle.connected_to:
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
-            adapter.full_disconnect(handle)
+            adapter.disconnect(handle)
+        print 'done handle connect'
         return False
 
     def disconnect(self, view, item, handle):
@@ -95,7 +96,7 @@ class ConnectHandleTool(HandleTool):
         """
         if handle.connected_to:
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
-            adapter.disconnect(handle)
+            adapter.disconnect_constraints(handle)
         
 
 class TextEditTool(Tool):

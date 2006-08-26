@@ -79,13 +79,15 @@ class IConnect(interface.Interface):
         the other element themselves.
         """
 
-    def disconnect(self, handle):
+    def disconnect_constraints(self, handle):
         """Disconnect a line's handle from an element.
+        This is called whenever a handle is dragged.
         """
 
-    def full_disconnect(self, handle):
-        """Disconnect a handle.connected_to from an element. This requires
-        that the relationship is also removed at model level.
+    def disconnect(self, handle):
+        """The true disconnect. Disconnect a handle.connected_to from an
+        element. This requires that the relationship is also removed at
+        model level.
         """
 
     def glue(self, handle, x, y):

@@ -117,17 +117,13 @@ class SimpleConnect(object):
         # Disconnect old model connection
         if handle.connected_to and handle.connected_to is not self.element:
             adapter = component.queryMultiAdapter((handle.connected_to, self.line), IConnect)
-            adapter.full_disconnect(handle)
+            adapter.disconnect(handle)
  
         # Stop here if no new connection should be established
         if not pos:
             return False
 
         s = self.side(pos, element)
-        #try:
-        #    solver.remove_constraint(handle._connect_constraint)
-        #except AttributeError:
-        #    pass # No _connect_constraint property yet
         handle._connect_constraint = \
             constraint.LineConstraint(canvas, element, element.handles()[s],
                                 element.handles()[(s+1)%4], self.line, handle)
@@ -135,7 +131,7 @@ class SimpleConnect(object):
         handle.connected_to = element
         return True
 
-    def disconnect(self, handle):
+    def disconnect_constraints(self, handle):
         """Disconnect() takes care of disconnecting the handle from the
         element it's attached to, by removing the constraints.
         """
@@ -146,10 +142,11 @@ class SimpleConnect(object):
             pass # No _connect_constraint property yet
         handle._connect_constraint = None
 
-    def full_disconnect(self, handle):
+    def disconnect(self, handle):
         """Do a full disconnect, also disconnect at UML model level.
         Subclasses should disconnect model-level connections.
         """
+        self.disconnect_constraints(handle)
         handle.connected_to = None
 
 
@@ -168,15 +165,22 @@ class CommentLineConnect(SimpleConnect):
         element = self.element
         connected_to = opposite.connected_to
         if connected_to is element:
-            print 'item identical', connected_to, element
+            #print 'item identical', connected_to, element
             return None
 
         # Same goes for subjects:
         if connected_to and \
                 (not (connected_to.subject or element.subject)) \
                  and connected_to.subject is element.subject:
-            print 'Subjects none or match:', connected_to.subject, element.subject
+            #print 'Subjects none or match:', connected_to.subject, element.subject
             return None
+
+        # One end should be connected to a CommentItem:
+        if connected_to and \
+                ((isinstance(connected_to, CommentItem) and isinstance(self.element, CommentItem)) or \
+                 (not isinstance(connected_to, CommentItem) and not isinstance(self.element, CommentItem))):
+            return None
+
         return super(CommentLineConnect, self).glue(handle, x, y)
 
     def connect(self, handle, x, y):
@@ -188,10 +192,14 @@ class CommentLineConnect(SimpleConnect):
                 else:
                     self.element.subject.annotatedElement = opposite.connected_to.subject
 
-    def full_disconnect(self, handle):
-        super(CommentLineConnect, self).full_disconnect(handle)
-        if handle.connected_to:
-            del handle.connected_to.subject.annotatedElement[self.element.subject]
+    def disconnect(self, handle):
+        opposite = self.line.opposite(handle)
+        if handle.connected_to and opposite.connected_to:
+            if isinstance(opposite.connected_to.subject, UML.Comment):
+                del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
+            else:
+                del handle.connected_to.subject.annotatedElement[opposite.connected_to.subject]
+        super(CommentLineConnect, self).disconnect(handle)
 
 component.provideAdapter(CommentLineConnect)
 

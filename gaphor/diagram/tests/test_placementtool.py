@@ -8,6 +8,7 @@ from gaphor import UML
 from gaphas.canvas import Context
 from gaphas.view import ToolContext
 
+
 Event = Context
 
 
