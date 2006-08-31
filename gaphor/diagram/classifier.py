@@ -7,9 +7,6 @@
 
 import itertools
 
-import gobject
-import pango
-
 from gaphor import UML
 from gaphor.i18n import _
 
@@ -17,6 +14,7 @@ from gaphor.diagram.nameditem import NamedItem, NamedItemMeta
 from gaphor.diagram.feature import FeatureItem
 from gaphor.diagram.align import MARGIN_TOP, MARGIN_RIGHT, MARGIN_BOTTOM, MARGIN_LEFT
 
+from gaphas.util import text_center
 
 class Compartment(list):
     """Specify a compartment in a class item.
@@ -30,8 +28,8 @@ class Compartment(list):
         self.name = name
         self.owner = owner
         self.visible = True
-        #self.separator = diacanvas.shape.Path()
-        #self.separator.set_line_width(2.0)
+        self.width = 0
+        self.height = 0
 
     def save(self, save_func):
         #log.debug('Compartment.save: %s' % self)
@@ -46,35 +44,23 @@ class Compartment(list):
         local_elements = [f.subject for f in self]
         return s and s in local_elements
 
-    def get_size(self):
-        # fixme: kill True argument of Feature.get_size method
-        if len(self) > 0:
+    def pre_update(self, context):
+        cr = context.cairo
+        for item in self:
+            item.pre_update(context)
+        if self:
             sizes = [f.get_size(True) for f in self]
-            width = max(map(lambda p: p[0], sizes))
-            height = sum(map(lambda p: p[1], sizes))
-            return width, height
-        else:
-            return 0, 0
+            self.width = max(map(lambda p: p[0], sizes))
+            self.height = sum(map(lambda p: p[1], sizes))
+        self.width += 2 * self.MARGIN_X
+        self.height += 2*self.MARGIN_Y
 
-    def update(self, affine, width, y):
-        if self.visible:
-            self.separator.line(((0, y), (width, y)))
+    def get_size(self):
+        return self.width, self.height
 
-            y += self.MARGIN_Y
-            for f in self:
-                w, h = f.get_size(update = True)
-                f.set_pos(self.MARGIN_X, y)
-                y += h
-
-                f.props.visible = True
-                self.owner.update_child(f, affine)
-            y += self.MARGIN_Y
-
-            return y
-        else:
-            for f in self:
-                f.props.visible = False
-            return 0
+    def update(self, context):
+        for item in self:
+            self.update(self, context)
 
 
 class ClassifierItem(NamedItem):
@@ -102,12 +88,6 @@ class ClassifierItem(NamedItem):
     DRAW_COMPARTMENT_ICON = 1
     # Draw as icon
     DRAW_ICON = 2
-
-    __gproperties__ = {
-        'drawing-style':   (gobject.TYPE_INT, 'Drawing style',
-                            'set the drawing style for the classifier',
-                            0, 2, 0, gobject.PARAM_READWRITE),
-    }
 
     # Default size for small icons
     ICON_WIDTH    = 15
@@ -191,8 +171,8 @@ class ClassifierItem(NamedItem):
             else:
                 compartment.append(mapping[el])
 
-        #log.debug('elements order in model: %s' % [f.name for f in elements])
-        #log.debug('elements order in diagram: %s' % [f.subject.name for f in compartment])
+        log.debug('elements order in model: %s' % [f.name for f in elements])
+        log.debug('elements order in diagram: %s' % [f.subject.name for f in compartment])
         assert tuple([f.subject for f in compartment]) == tuple(elements)
 
         self.request_update()
@@ -213,32 +193,20 @@ class ClassifierItem(NamedItem):
         """Add a line '(from ...)' to the class item if subject's namespace
         is not the same as the namespace of this diagram.
         """
-        #print 'on_subject_notify__namespace', self, subject
-        #if self.subject and self.subject.namespace and self.canvas and \
-        #   self.canvas.diagram.namespace is not self.subject.namespace:
-        #    #self._from.set_text(_('(from %s)') % self.subject.namespace.name)
-        #else:
-        #    #self._from.set_text('')
         self.request_update()
 
     def on_subject_notify__namespace_name(self, subject, pspec=None):
         """Change the '(from ...)' line if the namespace's name changes.
         """
-        print 'on_subject_notify__namespace_name', self, subject
         self.on_subject_notify__namespace(subject, pspec)
 
     def on_subject_notify__isAbstract(self, subject, pspec=None):
-        subject = self.subject
-        #if subject.isAbstract:
-        #    self._name.set_font_description(pango.FontDescription(self.FONT_ABSTRACT))
-        #else:
-        #    self._name.set_font_description(pango.FontDescription(self.NAME_FONT))
         self.request_update()
 
+    def pre_update(self, context):
+        for comp in self._compartments:
+            comp.pre_update(context)
 
-    def update_name(self, affine):
-
-        # determine width and height of comparments
         if self._drawing_style == self.DRAW_COMPARTMENT:
             sizes = [comp.get_size() for comp in self._compartments]
 
@@ -247,40 +215,16 @@ class ClassifierItem(NamedItem):
 
                 height = sum(map(lambda p: p[1], sizes))
                 height += len(self._compartments) * Compartment.MARGIN_Y * 2
-            else:
-                width = height = 0
+                self.min_width = width
+                self.min_height = height
 
-        align, nx, ny, name_width, name_height = NamedItem.update_name(self, affine)
-
-        if self._drawing_style == self.DRAW_COMPARTMENT:
-            y = self.props.min_height # first compartment position
-
-            # update minimum dimensions
-            min_width = max(width, self.props.min_width)
-            min_height = self.props.min_height + height
-            self.set(min_width = min_width, min_height = min_height)
-
-        #self._from.set_pos((0, name_y + name_height-2))
-        #self._from.set_max_width(width)
-        #self._from.set_max_height(name_height)
-
-            # determine current width of item
-            width = self.width
-            for comp in self._compartments:
-                y = comp.update(affine, width, y)
-
-            self._border.rectangle((0, 0), (width, height))
-
-        return align, nx, ny, name_width, name_height
-
-
-    def update_compartment_icon(self, affine):
+    def update_compartment_icon(self, context):
         """Update state for box-style w/ small icon.
         """
         pass
 
 
-    def update_icon(self, affine):
+    def update_icon(self, context):
         """Update state to draw as one big icon.
         """
         pass
@@ -302,8 +246,25 @@ class ClassifierItem(NamedItem):
 
         NamedItem.update(self, context)
 
+    def draw_compartment(self, context):
+        cr = context.cairo
+        cr.rectangle(0, 0, self.width, self.height)
+
+        # draw stereotype
+
+        # draw name
+
+        # draw 'from ... '
+
+        # draw compartments
+        for comp in self._compartments:
+
+            comp.draw(context)
     def draw(self, context):
-        if self._drawing_style == self.DRAW_COMPARTMENT_ICON:
+        if self._drawing_style == self.DRAW_COMPARTMENT:
+            self.draw_compartment(context)
+        elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
+            self.draw_compartment(context)
             self.draw_compartment_icon(context)
         elif self._drawing_style == self.DRAW_ICON:
             self.draw_icon(context)

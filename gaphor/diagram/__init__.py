@@ -171,35 +171,6 @@ class LineItemMeta(DiagramItemMeta):
 #
 import adapters
 
-from nameditem import TextElement
-#from placementtool import PlacementTool
-from classifier import ClassifierItem
-from actor import ActorItem
-#from klass import ClassItem
-from comment import CommentItem
-from commentline import CommentLineItem
-#from usecase import UseCaseItem
-#from package import PackageItem
-#from interface import InterfaceItem
-from dependency import DependencyItem
-#from include import IncludeItem
-#from extend import ExtendItem
-from generalization import GeneralizationItem
-from implementation import ImplementationItem
-#from association import AssociationItem
-#from extension import ExtensionItem
-#from activitynodes import InitialNodeItem, ActivityFinalNodeItem, FlowFinalNodeItem, DecisionNodeItem, ForkNodeItem
-#from action import ActionItem
-#from objectnode import ObjectNodeItem
-#from flow import FlowItem, CFlowItemA, CFlowItemB
-#from component import ComponentItem
-#from connector import ConnectorItem, AssemblyConnectorItem, \
-#    ConnectorEndItem, ProvidedConnectorEndItem, RequiredConnectorEndItem
-#from artifact import ArtifactItem
-#from node import NodeItem
-#from interaction import InteractionItem
-#from lifeline import LifelineItem
-#from message import MessageItem
 import itemactions
 
 #if __debug__: 

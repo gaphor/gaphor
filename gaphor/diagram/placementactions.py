@@ -8,7 +8,8 @@ import gaphas
 from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
-from gaphor.diagram import usecase
+from gaphor.diagram import comment, commentline
+from gaphor.diagram import usecase, klass, actor
 from gaphor.diagram.tool import DefaultTool, PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
@@ -119,7 +120,7 @@ class ActorPlacementAction(NamespacePlacementAction):
     stock_id = 'gaphor-actor'
     tooltip = 'Create a new actor item'
     name = 'Actor'
-    type = diagram.ActorItem
+    type = diagram.actor.ActorItem
     subject_type = UML.Actor
 
 register_action(ActorPlacementAction)
@@ -159,16 +160,16 @@ register_action(UseCasePlacementAction)
 #register_action(ExtendPlacementAction)
 
 
-#class ClassPlacementAction(NamespacePlacementAction):
-#    id = 'InsertClass'
-#    label = '_Class'
-#    tooltip = 'Create a new class item'
-#    stock_id = 'gaphor-class'
-#    name = 'Class'
-#    type = diagram.ClassItem
-#    subject_type = UML.Class
-#
-#register_action(ClassPlacementAction)
+class ClassPlacementAction(NamespacePlacementAction):
+    id = 'InsertClass'
+    label = '_Class'
+    tooltip = 'Create a new class item'
+    stock_id = 'gaphor-class'
+    name = 'Class'
+    type = diagram.klass.ClassItem
+    subject_type = UML.Class
+
+register_action(ClassPlacementAction)
 
 #class MetaClassPlacementAction(ClassPlacementAction):
 #    id = 'InsertMetaClass'
@@ -376,7 +377,7 @@ class CommentPlacementAction(PlacementAction):
     tooltip = 'Create a new comment item'
     stock_id = 'gaphor-comment'
     name = 'Comment'
-    type = diagram.CommentItem
+    type = comment.CommentItem
     subject_type = UML.Comment
 
 register_action(CommentPlacementAction)
@@ -388,7 +389,7 @@ class CommentLinePlacementAction(PlacementAction):
     tooltip = 'Create a new comment line'
     stock_id = 'gaphor-comment-line'
     name = 'Comment line'
-    type = diagram.CommentLineItem
+    type = commentline.CommentLineItem
 
 register_action(CommentLinePlacementAction)
 

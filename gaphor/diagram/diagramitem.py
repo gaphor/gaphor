@@ -3,9 +3,6 @@
 Such as a modifier 'subject' property and a unique id.
 """
 
-import gobject
-import pango
-
 from gaphor import resource
 from gaphor import UML
 from gaphor.misc import uniqueid
@@ -279,56 +276,8 @@ class DiagramItem(Presentation, Element):
         if self.subject:
             self.update_stereotype()
 
-    # DiaCanvasItem callbacks
-
-    # TODO: use connectable adapter here.
-    def _on_glue(self, handle, wx, wy, parent_class):
-        """This function is used to notify the connecting item
-        about being connected. handle.owner.allow_connect_handle() is
-        called to determine if a connection is allowed.
-        """
-        if handle.owner.allow_connect_handle(handle, self):
-            #print self.__class__.__name__, 'Glueing allowed.'
-            return parent_class.on_glue(self, handle, wx, wy)
-        #else:
-            #print self.__class__.__name__, 'Glueing NOT allowed.'
-        # Dummy value with large distance value
-        return 10000.0, (0, 0)
-
-    def _on_connect_handle(self, handle, parent_class):
-        """This function is used to notify the connecting item
-        about being connected. handle.owner.allow_connect_handle() is
-        called to determine if a connection is allowed. If the connection
-        succeeded handle.owner.confirm_connect_handle() is called.
-        """
-        if handle.owner.allow_connect_handle(handle, self):
-            #print self.__class__.__name__, 'Connection allowed.'
-            ret = parent_class.on_connect_handle(self, handle)
-            if ret != 0:
-                handle.owner.confirm_connect_handle(handle)
-                return ret
-        #else:
-            #print self.__class__.__name__, 'Connection NOT allowed.'
-        return 0
-
-    def _on_disconnect_handle(self, handle, parent_class):
-        """Use this function to disconnect handles. It notifies
-        the connected item about being disconnected.
-        handle.owner.allow_disconnect_handle() is
-        called to determine if a connection is allowed to be removed.
-        If the disconnect succeeded handle.owner.confirm_connect_handle()
-        is called.
-        """
-        if handle.owner.allow_disconnect_handle(handle):
-            #print self.__class__.__name__, 'Disconnecting allowed.'
-            ret = parent_class.on_disconnect_handle(self, handle)
-            if ret != 0:
-                handle.owner.confirm_disconnect_handle(handle, self)
-                # TODO: call ConnectAction
-                return ret
-        #else:
-            #print self.__class__.__name__, 'Disconnecting NOT allowed.'
-        return 0
+    def request_update(self):
+        pass
 
     #
     # Stereotypes
@@ -398,10 +347,6 @@ class DiagramItem(Presentation, Element):
     #
     # utility methods
     #
-    @staticmethod
-    def get_text_size(text):
-        return text.to_pango_layout(True).get_pixel_size()
-
 
     def parse_stereotype(self, data):
         if isinstance(data, str): # return data as stereotype if it is a string
