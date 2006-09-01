@@ -77,7 +77,10 @@ classImplements(NameError, INameError)
 classImplements(NotImplementedError, INotImplementedError)
 classImplements(OSError, IOSError)
 classImplements(OverflowError, IOverflowError)
-classImplements(OverflowWarning, IOverflowWarning)
+
+import sys
+if sys.version_info[:2] < (2, 5):
+    classImplements(OverflowWarning, IOverflowWarning)
 classImplements(ReferenceError, IReferenceError)
 classImplements(RuntimeError, IRuntimeError)
 classImplements(RuntimeWarning, IRuntimeWarning)

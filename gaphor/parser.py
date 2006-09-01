@@ -31,9 +31,9 @@ The generator parse_generator(filename, loader) may be used if the loading
 takes a long time. The yielded values are the percentage of the file read.
 """
 
-__all__ = [ 'parse', 'ParserException' ]
-
 from __future__ import generators
+
+__all__ = [ 'parse', 'ParserException' ]
 
 import os
 from xml.sax import handler
