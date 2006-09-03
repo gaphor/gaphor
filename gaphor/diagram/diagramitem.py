@@ -50,16 +50,7 @@ class DiagramItem(Presentation, Element):
         self._persistent_props = set()
 
         # stereotype
-        self._has_stereotype = False
-        #self._stereotype = diacanvas.shape.Text()
-        #self._stereotype.set_font_description(pango.FontDescription(self.FONT_STEREOTYPE))
-        #self._stereotype.set_alignment(pango.ALIGN_CENTER)
-        #self._stereotype.set_markup(False)
-
-        # parts of items to be drawn on diagram
-        # can contain stereotype, etc.
-        #self._shapes = set()
-
+        self._stereotype = None
 
     id = property(lambda self: self._id, doc='Id')
 
@@ -282,7 +273,11 @@ class DiagramItem(Presentation, Element):
     #
     # Stereotypes
     #
-    def set_stereotype(self, text = None):
+    def get_stereotype(self):
+        if self._stereotype:
+            return self._stereotype
+
+    def set_stereotype(self, text=None):
         """
         Set the stereotype text for the diagram item.
 
@@ -291,15 +286,12 @@ class DiagramItem(Presentation, Element):
         @arg text: stereotype text
         """
         if text:
-            #self._stereotype.set_text(STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE)
-            self._has_stereotype = True
-            #self._shapes.add(self._stereotype)
-        #else:
-            #self._has_stereotype = False
-            #if self._stereotype in self._shapes:
-                #self._shapes.remove(self._stereotype)
+            self._stereotype = STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE
+        else:
+            self._stereotype = None
         self.request_update()
 
+    stereotype = property(get_stereotype, set_stereotype)
 
     def update_stereotype(self):
         """
@@ -340,9 +332,6 @@ class DiagramItem(Presentation, Element):
 
         # Phew! :]
         self.set_stereotype(stereotype)
-
-        self.request_update()
-
 
     #
     # utility methods

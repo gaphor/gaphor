@@ -1,12 +1,9 @@
 """ClassifierItem diagram item
 """
-# vim:sw=4:et
-
-# TODO: make loading of features work (adjust on_groupable_add)
-#       probably best to do is subclass Feature in OperationItem and A.Item
 
 import itertools
 
+from gaphas.util import text_extents, text_center
 from gaphor import UML
 from gaphor.i18n import _
 
@@ -44,6 +41,9 @@ class Compartment(list):
         local_elements = [f.subject for f in self]
         return s and s in local_elements
 
+    def get_size(self):
+        return self.width, self.height
+
     def pre_update(self, context):
         cr = context.cairo
         for item in self:
@@ -55,12 +55,20 @@ class Compartment(list):
         self.width += 2 * self.MARGIN_X
         self.height += 2*self.MARGIN_Y
 
-    def get_size(self):
-        return self.width, self.height
-
     def update(self, context):
         for item in self:
-            self.update(self, context)
+            item.update(context)
+
+
+    def draw(self, context):
+        cr = context.cairo
+        for item in self:
+            cr.save()
+            # TODO: translate text offset
+            try:
+                item.draw(context)
+            finally:
+                cr.restore()
 
 
 class ClassifierItem(NamedItem):
@@ -82,12 +90,15 @@ class ClassifierItem(NamedItem):
      - update_icon (does nothing by default, an impl. should be provided by
                     subclasses (see ActorItem))
     """
+
+    # Do not use preset drawing style
+    DRAW_NONE = 0
     # Draw the famous box style
-    DRAW_COMPARTMENT = 0
+    DRAW_COMPARTMENT = 1
     # Draw compartment with little icon in upper right corner
-    DRAW_COMPARTMENT_ICON = 1
+    DRAW_COMPARTMENT_ICON = 2
     # Draw as icon
-    DRAW_ICON = 2
+    DRAW_ICON = 3
 
     # Default size for small icons
     ICON_WIDTH    = 15
@@ -103,7 +114,8 @@ class ClassifierItem(NamedItem):
         self.height = 50
         self.width = 100
         self._compartments = []
-        self._drawing_style = ClassifierItem.DRAW_COMPARTMENT
+        self._from = None # (from ...) text
+        self._drawing_style = ClassifierItem.DRAW_NONE
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -171,8 +183,8 @@ class ClassifierItem(NamedItem):
             else:
                 compartment.append(mapping[el])
 
-        log.debug('elements order in model: %s' % [f.name for f in elements])
-        log.debug('elements order in diagram: %s' % [f.subject.name for f in compartment])
+        #log.debug('elements order in model: %s' % [f.name for f in elements])
+        #log.debug('elements order in diagram: %s' % [f.subject.name for f in compartment])
         assert tuple([f.subject for f in compartment]) == tuple(elements)
 
         self.request_update()
@@ -193,6 +205,12 @@ class ClassifierItem(NamedItem):
         """Add a line '(from ...)' to the class item if subject's namespace
         is not the same as the namespace of this diagram.
         """
+        if self.subject and self.subject.namespace and self.canvas and \
+           self.canvas.diagram.namespace is not self.subject.namespace:
+            self._from = _('(from %s)') % self.subject.namespace.name
+        else:
+           self._from = None
+
         self.request_update()
 
     def on_subject_notify__namespace_name(self, subject, pspec=None):
@@ -203,32 +221,64 @@ class ClassifierItem(NamedItem):
     def on_subject_notify__isAbstract(self, subject, pspec=None):
         self.request_update()
 
-    def pre_update(self, context):
+    def pre_update_compartment(self, context):
         for comp in self._compartments:
             comp.pre_update(context)
 
         if self._drawing_style == self.DRAW_COMPARTMENT:
+            cr = context.cairo
+            s_w = s_h = 0
+            if self.stereotype:
+                s_w, s_h = text_extents(cr, self.stereotype)
+            n_w, n_h = text_extents(cr, self.subject.name)
+            f_w, f_h = 0, 0
+            if self.subject.namespace:
+                f_w, f_h = text_extents(cr, self._from, font=self.FONT_FROM)
+
             sizes = [comp.get_size() for comp in self._compartments]
 
+            self.min_width = max(s_w, n_w, f_w)
+            self.min_height = 30
+
+            if self.stereotype:
+                min_height += 10
+
             if sizes:
-                width = max(map(lambda p: p[0], sizes)) + Compartment.MARGIN_X * 2
+                width = max(map(lambda p: p[0], sizes))
 
                 height = sum(map(lambda p: p[1], sizes))
-                height += len(self._compartments) * Compartment.MARGIN_Y * 2
-                self.min_width = width
-                self.min_height = height
+                #height += len(self._compartments) * Compartment.MARGIN_Y * 2
+                self.min_width = max(self.min_width, width)
+                self.min_height += height
+
+    def pre_update_compartment_icon(self, context):
+        self.pre_update_compartment(context)
+
+    def pre_update_icon(self, context):
+        pass
+
+    def pre_update(self, context):
+        if self._drawing_style == self.DRAW_COMPARTMENT:
+            self.pre_update_compartment(context)
+        elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
+            self.pre_update_compartment_icon(context)
+        elif self._drawing_style == self.DRAW_ICON:
+            self.pre_update_icon(context)
+
+    def update_compartment(self, context):
+        """Update state for box-style presentation.
+        """
+        pass
 
     def update_compartment_icon(self, context):
         """Update state for box-style w/ small icon.
         """
         pass
 
-
     def update_icon(self, context):
         """Update state to draw as one big icon.
         """
         pass
-
 
     def get_icon_pos(self):
         """Get icon position.
@@ -239,7 +289,9 @@ class ClassifierItem(NamedItem):
     def update(self, context):
         """Overrides update callback.
         """
-        if self._drawing_style == self.DRAW_COMPARTMENT_ICON:
+        if self._drawing_style == self.DRAW_COMPARTMENT:
+            self.update_compartment(context)
+        elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
             self.update_compartment_icon(context)
         elif self._drawing_style == self.DRAW_ICON:
             self.update_icon(context)
@@ -249,22 +301,40 @@ class ClassifierItem(NamedItem):
     def draw_compartment(self, context):
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
+        y = 0
 
         # draw stereotype
+        if self.stereotype:
+            y += 10
+            text_center(cr, self.width / 2, y, self.stereotype)
 
         # draw name
+        y += 10
+        text_center(cr, self.width / 2, y, self.subject.name)
 
         # draw 'from ... '
+        if self.subject.namespace and self.canvas.diagram.namespace:
+            y += 10
+            text_center(cr, self.width / 2, y, 'from: ' + self.subject.namespace.name)
+
+        y += 10
+        cr.translate(0, y)
 
         # draw compartments
         for comp in self._compartments:
+            cr.save()
+            try:
+                comp.draw(context)
+            finally:
+                cr.restore()
 
-            comp.draw(context)
     def draw(self, context):
         if self._drawing_style == self.DRAW_COMPARTMENT:
             self.draw_compartment(context)
         elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
-            self.draw_compartment(context)
             self.draw_compartment_icon(context)
         elif self._drawing_style == self.DRAW_ICON:
             self.draw_icon(context)
+
+
+# vim:sw=4:et

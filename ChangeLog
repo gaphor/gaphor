@@ -1,3 +1,9 @@
+2006-09-03  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/classifier.py: cleanup
+        * gaphor.diagram/klass.py: is now placeable
+        * several fixes, cleanup and improved unit tests
+
 2006-08-21  arjan <arjan at yirdis dot nl>
 
         * gaphor/diagram/usecase.py: drawing works

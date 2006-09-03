@@ -19,6 +19,7 @@ class UseCaseItem(ClassifierItem):
         self.min_height = 30
         self.width = self.min_width
         self.height = self.min_height
+        self.drawing_style = -1
 
     def update(self, context):
         c = context.cairo
