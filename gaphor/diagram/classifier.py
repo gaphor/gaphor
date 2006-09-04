@@ -3,7 +3,7 @@
 
 import itertools
 
-from gaphas.util import text_extents, text_center
+from gaphas.util import text_extents, text_center, text_set_font
 from gaphor import UML
 from gaphor.i18n import _
 
@@ -42,9 +42,15 @@ class Compartment(list):
         return s and s in local_elements
 
     def get_size(self):
+        """Get width, height of the compartment. pre_update should have
+        been called so widthand height have been calculated.
+        """
         return self.width, self.height
 
     def pre_update(self, context):
+        """Pre update, determine width and height of the compartment.
+        """
+        self.width = self.height = 0
         cr = context.cairo
         for item in self:
             item.pre_update(context)
@@ -53,7 +59,7 @@ class Compartment(list):
             self.width = max(map(lambda p: p[0], sizes))
             self.height = sum(map(lambda p: p[1], sizes))
         self.width += 2 * self.MARGIN_X
-        self.height += 2*self.MARGIN_Y
+        self.height += 2 * self.MARGIN_Y
 
     def update(self, context):
         for item in self:
@@ -238,18 +244,18 @@ class ClassifierItem(NamedItem):
             sizes = [comp.get_size() for comp in self._compartments]
 
             self.min_width = max(s_w, n_w, f_w)
-            self.min_height = 30
-
-            if self.stereotype:
-                min_height += 10
+            self.min_height = 35
 
             if sizes:
-                width = max(map(lambda p: p[0], sizes))
+                w = max(map(lambda p: p[0], sizes))
 
-                height = sum(map(lambda p: p[1], sizes))
-                #height += len(self._compartments) * Compartment.MARGIN_Y * 2
-                self.min_width = max(self.min_width, width)
-                self.min_height += height
+                h = sum(map(lambda p: p[1], sizes))
+                self.min_width = max(self.min_width, w)
+                self.min_height += h
+            if self.width < self.min_width:
+                self.width = self.min_width
+            if self.height < self.min_height:
+                self.height = self.min_height
 
     def pre_update_compartment_icon(self, context):
         self.pre_update_compartment(context)
@@ -264,6 +270,8 @@ class ClassifierItem(NamedItem):
             self.pre_update_compartment_icon(context)
         elif self._drawing_style == self.DRAW_ICON:
             self.pre_update_icon(context)
+
+        super(ClassifierItem, self).pre_update(context)
 
     def update_compartment(self, context):
         """Update state for box-style presentation.
@@ -296,37 +304,45 @@ class ClassifierItem(NamedItem):
         elif self._drawing_style == self.DRAW_ICON:
             self.update_icon(context)
 
-        NamedItem.update(self, context)
+        super(ClassifierItem, self).update(context)
 
     def draw_compartment(self, context):
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
+        cr.stroke()
         y = 0
 
         # draw stereotype
+        y += 10
         if self.stereotype:
-            y += 10
+            text_set_font(cr, self.FONT_NAME)
             text_center(cr, self.width / 2, y, self.stereotype)
 
         # draw name
         y += 10
+        text_set_font(cr, self.FONT_FROM)
         text_center(cr, self.width / 2, y, self.subject.name)
 
-        # draw 'from ... '
-        if self.subject.namespace and self.canvas.diagram.namespace:
-            y += 10
-            text_center(cr, self.width / 2, y, 'from: ' + self.subject.namespace.name)
-
         y += 10
+        # draw 'from ... '
+        if self._from:
+            text_set_font(cr, self.FONT_FROM)
+            text_center(cr, self.width / 2, y, self._from)
+
+        y += 5
         cr.translate(0, y)
 
         # draw compartments
         for comp in self._compartments:
             cr.save()
+            cr.move_to(0, 0)
+            cr.line_to(self.width, 0)
+            cr.stroke()
             try:
                 comp.draw(context)
             finally:
                 cr.restore()
+            cr.translate(0, comp.height)
 
     def draw(self, context):
         if self._drawing_style == self.DRAW_COMPARTMENT:

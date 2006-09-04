@@ -24,8 +24,8 @@ class ClassTestCase(unittest.TestCase):
         diagram.canvas.update()
 
         self.assertEqual((10, 10), klass._compartments[0].get_size())
-        self.assertEqual(40, float(klass.min_height))
-        self.assertEqual(20, float(klass.min_width))
+        self.assertEqual(55, float(klass.min_height)) # 35 + 2 * 10
+        self.assertEqual(10, float(klass.min_width))
 
         attr = UML.create(UML.Property)
         attr.name = "blah"

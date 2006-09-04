@@ -180,11 +180,11 @@ from gaphor.interfaces import INamedItemView
 class Named(object):
     interface.implements(INamedItemView)
 
-    NAME_FONT = 'sans bold 10'
+    FONT_NAME = 'sans bold 10'
 
     #def __init__(self):
         #self._name = diacanvas.shape.Text()
-        #self._name.set_font_description(pango.FontDescription(self.NAME_FONT))
+        #self._name.set_font_description(pango.FontDescription(self._FONT))
         #self._name.set_alignment(pango.ALIGN_CENTER)
         #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
         #self._name.set_markup(False)
