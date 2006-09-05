@@ -9,7 +9,7 @@ from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
 from gaphor.diagram import comment, commentline
-from gaphor.diagram import usecase, klass, actor
+from gaphor.diagram import actor, usecase, klass, package
 from gaphor.diagram.tool import DefaultTool, PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
@@ -263,28 +263,28 @@ class InterfacePlacementTool(gaphas.tool.PlacementTool):
 #register_action(StereotypePlacementAction)
 
 
-#class ProfilePlacementAction(NamespacePlacementAction):
-#    id = 'InsertProfile'
-#    label = '_Profile'
-#    tooltip = 'Create a new profile'
-#    stock_id = 'gaphor-profile'
-#    name = 'Profile'
-#    type = diagram.PackageItem
-#    subject_type = UML.Profile
-#
-#register_action(ProfilePlacementAction)
+class ProfilePlacementAction(NamespacePlacementAction):
+    id = 'InsertProfile'
+    label = '_Profile'
+    tooltip = 'Create a new profile'
+    stock_id = 'gaphor-profile'
+    name = 'Profile'
+    type = diagram.package.PackageItem
+    subject_type = UML.Profile
+
+register_action(ProfilePlacementAction)
 
 
-#class PackagePlacementAction(NamespacePlacementAction):
-#    id = 'InsertPackage'
-#    label = '_Package'
-#    tooltip = 'Create a new package item'
-#    stock_id = 'gaphor-package'
-#    name = 'Package'
-#    type = diagram.PackageItem
-#    subject_type = UML.Package
-#
-#register_action(PackagePlacementAction)
+class PackagePlacementAction(NamespacePlacementAction):
+    id = 'InsertPackage'
+    label = '_Package'
+    tooltip = 'Create a new package item'
+    stock_id = 'gaphor-package'
+    name = 'Package'
+    type = diagram.package.PackageItem
+    subject_type = UML.Package
+
+register_action(PackagePlacementAction)
 
 
 #class InitialNodePlacementAction(PlacementAction):

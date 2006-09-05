@@ -41,6 +41,7 @@ class IEditor(interface.Interface):
     def is_editable(self, x, y):
         """Is this item editable in it's current state.
         x, y represent the cursors (x, y) position.
+        (this method should be called before get_text() is called.
         """
 
     def get_text(self):

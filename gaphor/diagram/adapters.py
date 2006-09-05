@@ -11,6 +11,7 @@ from gaphor import UML
 from interfaces import IConnect, IEditor
 from elementitem import ElementItem
 from nameditem import NamedItem
+from classifier import ClassifierItem
 from comment import CommentItem
 from commentline import CommentLineItem
 
@@ -68,6 +69,54 @@ class NamedItemEditor(object):
 
 component.provideAdapter(NamedItemEditor)
 
+
+class ClassifierItemEditor(object):
+    interface.implements(IEditor)
+    component.adapts(ClassifierItem)
+
+    def __init__(self, item):
+	self._item = item
+        self._edit = None
+
+    def is_editable(self, x, y):
+        """Find out what's located at point (x, y), is it in the
+        name part or is it text in some compartment
+        """
+        self._edit = None
+        if y < ClassifierItem.NAME_COMPARTMENT_HEIGHT:
+            self._edit = self._item
+            return True
+        y -= ClassifierItem.NAME_COMPARTMENT_HEIGHT
+        for comp in self._item.compartments:
+            y -= comp.MARGIN_Y
+            for item in comp:
+                if y < item.height:
+                    self._edit = item
+                    return True
+                y -= item.height
+            y -= comp.MARGIN_Y
+	return False
+
+    def get_text(self):
+        if hasattr(self._edit.subject, 'render'):
+            return self._edit.subject.render()
+	return self._edit.subject.name
+
+    def get_bounds(self):
+	return None
+
+    def update_text(self, text):
+        if hasattr(self._edit.subject, 'parse'):
+            return self._edit.subject.parse(text)
+        else:
+            self._item.subject.name = text
+
+
+    def key_pressed(self, pos, key):
+	pass
+
+component.provideAdapter(ClassifierItemEditor)
+    
 
 class SimpleConnect(object):
     interface.implements(IConnect)

@@ -9,7 +9,6 @@ from gaphor.i18n import _
 
 from gaphor.diagram.nameditem import NamedItem, NamedItemMeta
 from gaphor.diagram.feature import FeatureItem
-from gaphor.diagram.align import MARGIN_TOP, MARGIN_RIGHT, MARGIN_BOTTOM, MARGIN_LEFT
 
 from gaphas.util import text_center
 
@@ -68,10 +67,11 @@ class Compartment(list):
 
     def draw(self, context):
         cr = context.cairo
+        cr.translate(self.MARGIN_X, self.MARGIN_Y)
         for item in self:
             cr.save()
-            # TODO: translate text offset
             try:
+                cr.translate(0, item.height)
                 item.draw(context)
             finally:
                 cr.restore()
@@ -111,6 +111,7 @@ class ClassifierItem(NamedItem):
     ICON_HEIGHT   = 25
     ICON_MARGIN_X = 10
     ICON_MARGIN_Y = 10
+    NAME_COMPARTMENT_HEIGHT = 35
 
     FONT_ABSTRACT   = 'sans bold italic 10'
     FONT_FROM       = 'sans 8'
@@ -155,6 +156,8 @@ class ClassifierItem(NamedItem):
         c = Compartment(name, self)
         self._compartments.append(c)
         return c
+
+    compartments = property(lambda s: s._compartments)
 
     def sync_uml_elements(self, elements, compartment, creator=None):
         """This method synchronized a list of elements with the items
@@ -244,7 +247,7 @@ class ClassifierItem(NamedItem):
             sizes = [comp.get_size() for comp in self._compartments]
 
             self.min_width = max(s_w, n_w, f_w)
-            self.min_height = 35
+            self.min_height = self.NAME_COMPARTMENT_HEIGHT
 
             if sizes:
                 w = max(map(lambda p: p[0], sizes))
@@ -252,10 +255,7 @@ class ClassifierItem(NamedItem):
                 h = sum(map(lambda p: p[1], sizes))
                 self.min_width = max(self.min_width, w)
                 self.min_height += h
-            if self.width < self.min_width:
-                self.width = self.min_width
-            if self.height < self.min_height:
-                self.height = self.min_height
+            super(ClassifierItem, self).pre_update(context)
 
     def pre_update_compartment_icon(self, context):
         self.pre_update_compartment(context)
@@ -315,12 +315,12 @@ class ClassifierItem(NamedItem):
         # draw stereotype
         y += 10
         if self.stereotype:
-            text_set_font(cr, self.FONT_NAME)
+            text_set_font(cr, self.FONT)
             text_center(cr, self.width / 2, y, self.stereotype)
 
         # draw name
         y += 10
-        text_set_font(cr, self.FONT_FROM)
+        text_set_font(cr, self.FONT_NAME)
         text_center(cr, self.width / 2, y, self.subject.name)
 
         y += 10

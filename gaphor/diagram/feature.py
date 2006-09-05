@@ -140,14 +140,14 @@ class AttributeItem(FeatureItem):
         self.request_update()
 
     def pre_update(self, context):
-        if self.need_sync_attributes and content.parent:
+        if self.need_sync_attributes and context.parent:
             context.parent.sync_attributes()
         self.need_sync_attributes = False
         self.update_size(self.subject.render(), context)
         #super(AttributeItem, self).pre_update(context)
 
     def draw(self, context):
-        cr = content.cairo
+        cr = context.cairo
         cr.show_text(self.subject.render() or '')
 
 
@@ -192,14 +192,14 @@ class OperationItem(FeatureItem):
     on_subject_notify__taggedValue = on_subject_notify__name
 
     def pre_update(self, context):
-        if self.need_sync_operations and content.parent:
+        if self.need_sync_operations and context.parent:
             context.parent.sync_operations()
         self.need_sync_operations = False
         self.update_size(self.subject.render(), context)
         #super(OperationItem, self).pre_update(context)
 
     def draw(self, context):
-        cr = content.cairo
+        cr = context.cairo
         cr.show_text(self.subject.render() or '')
 
 

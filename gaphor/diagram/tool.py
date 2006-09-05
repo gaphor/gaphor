@@ -107,13 +107,14 @@ class TextEditTool(Tool):
     def create_edit_window(self, view, x, y, text, *args):
         """Create a popup window with some editable text.
         """
-        print 'Double click'
         window = gtk.Window()
         window.set_property('decorated', False)
         window.set_resize_mode(gtk.RESIZE_IMMEDIATE)
         #window.set_modal(True)
         window.set_parent_window(view.window)
         buffer = gtk.TextBuffer()
+        if text:
+            buffer.set_text(text)
         text_view = gtk.TextView()
         text_view.set_buffer(buffer)
         text_view.show()
@@ -132,6 +133,13 @@ class TextEditTool(Tool):
         #text_view.grab_focus()
         #window.set_uposition(event.x, event.y)
         #window.focus
+
+    def submit_text(self, widget, buffer, editor):
+        """Submit the final text to the edited item.
+        """
+        text = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
+        editor.update_text(text)
+        widget.destroy()
 
     def on_double_click(self, context, event):
         view = context.view
@@ -160,10 +168,7 @@ class TextEditTool(Tool):
             widget.get_toplevel().destroy()
 
     def _on_focus_out_event(self, widget, event, buffer, editor):
-        text = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
-        print 'focus out!', text
-        editor.update_text(text)
-        widget.destroy()
+        self.submit_text(widget, buffer, editor)
 
 
 class PlacementTool(gaphas.tool.PlacementTool):
