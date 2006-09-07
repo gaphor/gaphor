@@ -25,8 +25,6 @@ class InterfaceItem(ClassItem, SimpleRotation):
           handle. Stop drawing the line 'x' points earlier. 
     """
 
-    __metaclass__ = GObjectPropsMerge # merge properties from SimpleRotation
-
     __uml__        = UML.Interface
     __stereotype__ = {'interface': lambda self: self.drawing_style != self.DRAW_ICON}
 
@@ -39,20 +37,6 @@ class InterfaceItem(ClassItem, SimpleRotation):
         self._picon = ProvidedInterfaceIcon(self)
 
         self._icon = self._aicon
-
-
-    def do_set_property(self, pspec, value):
-        if pspec.name in SimpleRotation.__gproperties__:
-            SimpleRotation.do_set_property(self, pspec, value)
-        else:
-            ClassItem.do_set_property(self, pspec, value)
-
-
-    def do_get_property(self, pspec):
-        if pspec.name in SimpleRotation.__gproperties__:
-            return SimpleRotation.do_get_property(self, pspec)
-        else:
-            return ClassItem.do_get_property(self, pspec)
 
 
     def set_drawing_style(self, style):
@@ -122,6 +106,9 @@ class InterfaceItem(ClassItem, SimpleRotation):
 
 
     def is_folded(self):
+        """Returns True if the interface is drawn as a circle/dot.
+        Unfolded means it's drawn like a classifier.
+        """
         return self.drawing_style == self.DRAW_ICON
 
  
@@ -206,11 +193,11 @@ def gives_provided(handle):
 
 
 def gives_required(handle):
-    """
-    Check if an item connected to an interface changes semantics of this
+    """Check if an item connected to an interface changes semantics of this
     interface to be required.
 
     handle - handle of an item
+    TODO: check subject.clientDependency and subject.supplierDependency
     """
     item = handle.owner
     # check for dependency item, interfaces is required if

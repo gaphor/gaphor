@@ -165,8 +165,9 @@ class SimpleConnect(object):
 
         # Disconnect old model connection
         if handle.connected_to and handle.connected_to is not self.element:
-            adapter = component.queryMultiAdapter((handle.connected_to, self.line), IConnect)
-            adapter.disconnect(handle)
+            #adapter = component.queryMultiAdapter((handle.connected_to, self.line), IConnect)
+            #adapter.disconnect(handle)
+            handle.disconnect()
  
         # Stop here if no new connection should be established
         if not pos:

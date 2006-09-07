@@ -6,13 +6,16 @@ import unittest
 from gaphor import resource
 from gaphor import UML
 from gaphor.ui.mainwindow import MainWindow
-from gaphor.diagram import CommentItem, CommentLineItem
+from gaphor.diagram.comment import CommentItem
+from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.actor import ActorItem
 from gaphor.diagram.tool import ConnectHandleTool
 from gaphor.diagram.interfaces import IConnect
 from gaphas.canvas import Context
 from gaphas.tool import ToolChainContext
 
+# Make sure adapters are loaded
+import gaphor.diagram.adapters
 
 Event = Context
 
@@ -51,7 +54,7 @@ class HandleToolTestCase(unittest.TestCase):
         handle.x, handle.y = 0, 0
         tool.connect(view, line, handle, 45, 48)
         self.assertEquals((45, 50), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is comment
+        assert handle.connected_to is comment, handle.connected_to
         assert handle._connect_constraint is not None
 
         tool.disconnect(view, line, handle)
@@ -88,7 +91,7 @@ class HandleToolTestCase(unittest.TestCase):
         handle.x, handle.y = 0, 0
         tool.connect(view, line, handle, 45, 48)
         self.assertEquals((45, 50), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is comment
+        assert handle.connected_to is comment, handle.connected_to
         assert handle._connect_constraint is not None
 
         # Connect the other end to the actor:
@@ -158,7 +161,7 @@ class HandleToolTestCase(unittest.TestCase):
 
         handle = line.handles()[0]
         self.assertEquals((0, 0), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is comment
+        assert handle.connected_to is comment, 'c =' + str(handle.connected_to)
         assert handle._connect_constraint is not None
 
         # Grab the second handle and drag it to the actor

@@ -82,10 +82,22 @@ class ConnectHandleTool(HandleTool):
             x, y = view.canvas.get_matrix_w2i(glue_item).transform_point(wx, wy)
             print 'connecting:', adapter
             adapter.connect(handle, x, y)
+
+#            if not handle.connected_to is glue_item:
+#                return False
+
+            def _disconnect():
+                adapter = component.queryMultiAdapter(
+                                        (handle.connected_to, item), IConnect)
+                adapter.disconnect(handle)
+                handle.disconnect = lambda: 0
+
+            handle.disconnect = _disconnect
             return True
         elif handle.connected_to:
-            adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
-            adapter.disconnect(handle)
+            #adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
+            #adapter.disconnect(handle)
+            handle.disconnect()
         print 'done handle connect'
         return False
 
