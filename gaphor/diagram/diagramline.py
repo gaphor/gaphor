@@ -5,6 +5,7 @@ Basic functionality for canvas line based items on a diagram.
 import itertools
 
 import gaphas
+from gaphas.util import text_extents
 from diagramitem import DiagramItem
 from gaphor.diagram import LineItemMeta
 
@@ -17,98 +18,50 @@ class LineItem(gaphas.Line, DiagramItem):
     def __init__(self, id = None):
         gaphas.Line.__init__(self)
         DiagramItem.__init__(self, id)
+        self._stereotype_pos = (0, 0)
+        self._stereotype_width = 0
+        self._stereotype_height = 0
 
-    head = property(lambda self: self.handles[0])
-    tail = property(lambda self: self.handles[-1])
+    head = property(lambda self: self._handles[0])
+    tail = property(lambda self: self._handles[-1])
 
-
-    # Gaphor Connection Protocol
-    #
-    # The item a handle is connecting to is in charge of the connection
-    # cyclus. However it informs the item it is connecting to by means of
-    # the four methods defined below. The items that are trying to connect
-    # (mostly Relationship objects or CommentLines) know what kind of item
-    # they are allowed to connect to.
-    def allow_connect_handle(self, handle, connecting_to):
-        """This method is called by a canvas item if the user tries to
-        connect this object's handle. allow_connect_handle() checks if
-        the line is allowed to be connected. In this case that means
-        that one end of the line should be connected to a Relationship.
-        Returns: True if connection is allowed, False otherwise.
-        """
-        return False
-
-    def confirm_connect_handle (self, handle):
-        """This method is called after a connection is established.
-        This method sets the internal state of the line and updates
-        the data model. Returns nothing
-        """
-        pass
-
-    def allow_disconnect_handle (self, handle):
-        """ If a handle wants to disconnect, this method is called first.
-        This method is here mainly for the sake of completeness, since it
-        is quite unlikely that a handle is not allowed to disconnect.
-        """
-        return True
-
-    def confirm_disconnect_handle (self, handle, was_connected_to):
-        """This method is called to do some cleanup after 'self' has been
-        disconnected from 'was_connected_to'.
-        """
-        pass
-
-
-    # DiaCanvasItem callbacks
-    def on_glue(self, handle, wx, wy):
-        return self._on_glue(handle, wx, wy, diacanvas.CanvasLine)
-
-    def on_connect_handle (self, handle):
-        return self._on_connect_handle(handle, diacanvas.CanvasLine)
-
-    def on_disconnect_handle (self, handle):
-        return self._on_disconnect_handle(handle, diacanvas.CanvasLine)
-
-
-    def on_update (self, affine):
-        diacanvas.CanvasLine.on_update(self, affine)
+    def update(self, context):
+        super(LineItem, self).update(context)
+        cr = context.cairo
 
         # update stereotype
-        # fixme: use util function
-        sw, sh = self._stereotype.to_pango_layout(True).get_pixel_size()
+        self.update_stereotype()
 
-        handles = self.handles
+        sw, sh = text_extents(cr, self._stereotype)
+
+        handles = self._handles
         middle = len(handles)/2
-        p1 = handles[middle-1].get_pos_i()
-        p2 = handles[middle].get_pos_i()
+        p1 = handles[middle-1].pos
+        p2 = handles[middle].pos
 
         x = p1[0] > p2[0] and sw + 2 or -2
         x = (p1[0] + p2[0]) / 2.0 - x
         y = p1[1] <= p2[1] and sh or 0
         y = (p1[1] + p2[1]) / 2.0 - y
 
-        self._stereotype.set_pos((x, y))
-        self._stereotype.set_max_width(sw)
-        self._stereotype.set_max_height(sh)
+        self._stereotype_pos = (x, y)
+        self._stereotype_width = sw
+        self._stereotype_height = sh
 
-        b1 = x, y, sw, sh
-
-        b2 = self.bounds
-        self.set_bounds((min(b1[0], b2[0]), min(b1[1], b2[1]),
-                         max(b1[2] + b1[0], b2[2]), max(b1[3] + b1[1], b2[3])))
-
-        self.update_stereotype()
-
-
-    def on_shape_iter(self):
-        return itertools.chain(diacanvas.CanvasLine.on_shape_iter(self), self._shapes)
-
+    def draw(self, context):
+        super(LineItem, self).draw(context)
+        cr = context.cairo
+        if self._stereotype:
+            cr.move_to(*self._stereotype_pos)
+            cr.show_text(self._stereotype)
 
 
 class DiagramLine(LineItem):
     """
     Gaphor lines. This line is serializable and has a popup
     menu.
+
+    TODO: put serializability and popup in separate adapters.
     """
 
     popup_menu = LineItem.popup_menu + (
@@ -170,6 +123,8 @@ class DiagramLine(LineItem):
 
 class FreeLine(LineItem):
     """
+    TODO: get rid of this one.
+
     A line with disabled last handle. This allows to create diagram items,
     which have one or more additional lines.
 

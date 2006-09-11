@@ -53,7 +53,7 @@ class ConnectHandleTool(HandleTool):
                 if pos:
                     x, y = view.canvas.get_matrix_i2w(i).transform_point(*pos)
                     d = distance_point_point((wx, wy), (x, y)) 
-                    if d < min_dist:
+                    if d <= min_dist:
                         min_dist = d
                         glue_pos_w = (x, y)
                         glue_item = i

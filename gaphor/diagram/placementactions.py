@@ -10,6 +10,7 @@ from gaphor import UML
 from gaphor import diagram
 from gaphor.diagram import comment, commentline
 from gaphor.diagram import actor, usecase, klass, package
+from gaphor.diagram import dependency
 from gaphor.diagram.tool import DefaultTool, PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
@@ -422,15 +423,15 @@ register_action(CommentLinePlacementAction)
 #register_action(ExtensionPlacementAction)
 
 
-#class DependencyPlacementAction(PlacementAction):
-#    id = 'InsertDependency'
-#    label = '_Dependency'
-#    tooltip = 'Create a new dependency'
-#    stock_id = 'gaphor-dependency'
-#    name = 'Dependency'
-#    type = diagram.DependencyItem
-#
-#register_action(DependencyPlacementAction)
+class DependencyPlacementAction(PlacementAction):
+    id = 'InsertDependency'
+    label = '_Dependency'
+    tooltip = 'Create a new dependency'
+    stock_id = 'gaphor-dependency'
+    name = 'Dependency'
+    type = dependency.DependencyItem
+
+register_action(DependencyPlacementAction)
 
 
 #class GeneralizationPlacementAction(PlacementAction):

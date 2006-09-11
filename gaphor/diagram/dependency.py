@@ -71,14 +71,11 @@ class DependencyItem(DiagramLine):
     )
 
     def __init__(self, id=None):
-        self.dependency_type = UML.Dependency
-        self.auto_dependency = True
-
         DiagramLine.__init__(self, id)
 
-        self.set(head_fill_color=0, head_a=0.0, head_b=15.0, head_c=6.0, head_d=6.0)
-        self._set_line_style()
-
+        self.dependency_type = UML.Dependency
+        self.auto_dependency = True
+        self._dash_style = True
 
     def save(self, save_func):
         DiagramLine.save(self, save_func)
@@ -109,22 +106,35 @@ class DependencyItem(DiagramLine):
 
     def set_dependency_type(self, dependency_type):
         self.dependency_type = dependency_type
-        self._set_line_style()
+        self.request_update()
 
 
-    def _set_line_style(self, c1=None):
-        """Display a depenency as a dashed arrow, with optional stereotype.
-        """
+    def update(self, context):
+        super(DependencyItem, self).update(context)
+
         from interface import InterfaceItem
         dependency_type = self.dependency_type
-        c1 = c1 or self.handles[0].connected_to
-        if c1 and dependency_type is UML.Usage and isinstance(c1, InterfaceItem) and c1.is_folded():
-            if self.get_property('has_head'):
-                self.set(dash=None, has_head=0)
+        c1 = self.head.connected_to
+        if c1 and dependency_type is UML.Usage \
+           and isinstance(c1, InterfaceItem) and c1.is_folded():
+            self._dash_style = False
         else:
-            if not self.get_property('has_head'):
-                self.set(dash=(7.0, 5.0), has_head=1)
+            self._dash_style = True
 
+    def draw_head(self, context):
+        cr = context.cairo
+        if self._dash_style:
+            context.cairo.set_dash((), 0)
+            cr.move_to(15, -6)
+            cr.line_to(0, 0)
+            cr.line_to(15, 6)
+            cr.stroke()
+        cr.move_to(0, 0)
+    
+    def draw(self, context):
+        if self._dash_style:
+            context.cairo.set_dash((7.0, 5.0), 0)
+        super(DependencyItem, self).draw(context)
 
     #
     # Gaphor Connection Protocol
