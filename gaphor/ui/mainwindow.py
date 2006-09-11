@@ -13,8 +13,6 @@ from gaphor.ui.diagramtab import DiagramTab
 from gaphor.ui.toolbox import Toolbox
 from gaphor.ui.menufactory import toolbox_to_menu
 
-# Load actions
-from gaphor.ui import mainactions, diagramactions
 from gaphor.ui.objectinspector import ObjectInspector
 
 

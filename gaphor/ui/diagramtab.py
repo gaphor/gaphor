@@ -12,9 +12,6 @@ from gaphor.undomanager import get_undo_manager
 from gaphor.ui.diagramview import DiagramView
 from gaphor.ui.abstractwindow import AbstractWindow
 
-import gaphor.ui.diagramactions
-import gaphor.diagram.placementactions
-
 from gaphor.event import DiagramItemFocused
 from zope import component
 

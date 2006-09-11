@@ -46,10 +46,11 @@ def main(gaphor_file=None):
     """
     # Import GUI stuff here, since the user might not need all the GUI stuff
     import gtk
+    import ui
     import adapters
+    import actions
     # Load plugin definitions:
     import pluginmanager
-    import ui
     from ui.mainwindow import MainWindow
 
     resource('PluginManager').bootstrap()

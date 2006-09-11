@@ -166,7 +166,6 @@ class LineItemMeta(DiagramItemMeta):
 
         return item_class
 
-import itemactions
 
 #if __debug__: 
 #    # Keep track of all model elements that are created

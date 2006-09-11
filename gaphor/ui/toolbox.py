@@ -8,9 +8,6 @@ import gtk
 
 from gaphor import resource
 
-# Import this module to ensure actions refered to in the toolbox are loaded
-import gaphor.diagram.placementactions
-
 class Toolbox(gtk.VBox):
     """A toolbox is a widget that contains a set of buttons (a Wrapbox widget)
     with a name above it. When the user clicks on the name the box's content
