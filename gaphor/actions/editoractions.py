@@ -1,11 +1,11 @@
 """
 Commands related to the Editor
 """
-# vim: sw=4:et
+
+import gtk
 
 from gaphor import UML
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
-import gtk
 
 class RunAction(Action):
     id = 'EditorRun'
@@ -34,3 +34,5 @@ class ClearAction(Action):
         self._window.clear_results()
 
 register_action(ClearAction)
+
+# vim: sw=4:et

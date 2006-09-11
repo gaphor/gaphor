@@ -7,7 +7,6 @@ import sys
 import gobject
 import gtk
 import gc
-import traceback
 from threading import Thread
 
 from gaphor import resource

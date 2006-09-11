@@ -2,6 +2,7 @@
 
         * gaphor/adapters: moved adapters from gaphor.diagram to this
         separate package.
+        * gaphor/actions: collected all Action classes in one package.
 
 2006-09-05  arjan <arjan at yirdis dot nl>
 
