@@ -8,6 +8,9 @@ from gaphor import UML
 from gaphor.diagram.klass import ClassItem
 from gaphor.diagram.interfaces import IEditor
 
+import gaphor.adapters
+
+
 class ClassTestCase(unittest.TestCase):
 
     def test_compartments(self):

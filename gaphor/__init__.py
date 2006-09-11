@@ -46,7 +46,7 @@ def main(gaphor_file=None):
     """
     # Import GUI stuff here, since the user might not need all the GUI stuff
     import gtk
-    #import diagram
+    import adapters
     # Load plugin definitions:
     import pluginmanager
     import ui

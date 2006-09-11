@@ -166,11 +166,6 @@ class LineItemMeta(DiagramItemMeta):
 
         return item_class
 
-#
-# Register adapters:
-#
-import adapters
-
 import itemactions
 
 #if __debug__: 

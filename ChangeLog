@@ -1,3 +1,8 @@
+2006-09-11  arjan <arjan at yirdis dot nl>
+
+        * gaphor/adapters: moved adapters from gaphor.diagram to this
+        separate package.
+
 2006-09-05  arjan <arjan at yirdis dot nl>
 
         * gaphor/diagram/classifier.py, gaphor/diagram/klass.py: works

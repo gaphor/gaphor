@@ -7,11 +7,14 @@ from zope import component
 from gaphor import resource
 from gaphor import UML
 from gaphor.ui.mainwindow import MainWindow
-from gaphor.diagram import CommentItem, CommentLineItem
+from gaphor.diagram.comment import CommentItem
+from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.actor import ActorItem
 from gaphor.diagram.tool import ConnectHandleTool
 from gaphor.diagram.interfaces import IConnect
 
+# Ensure adapters are loaded
+import gaphor.adapters
 
 class HandleToolTestCase(unittest.TestCase):
 
@@ -59,7 +62,7 @@ class HandleToolTestCase(unittest.TestCase):
         # Same thing with another actor
         # (should disconnect the already connected actor):
 
-        handle = line.handles()[-1]
+        handle = line.tail
         adapter = component.queryMultiAdapter((actor2, line), IConnect)
         adapter.connect(handle, handle.x, handle.y)
 

@@ -15,7 +15,7 @@ from gaphas.canvas import Context
 from gaphas.tool import ToolChainContext
 
 # Make sure adapters are loaded
-import gaphor.diagram.adapters
+import gaphor.adapters
 
 Event = Context
 

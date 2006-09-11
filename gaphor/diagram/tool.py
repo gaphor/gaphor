@@ -73,32 +73,21 @@ class ConnectHandleTool(HandleTool):
         to glue (the handles are already positioned), the IConnect.connect
         is called for (glued_item, item).
         """
-        print 'handle connect'
+        #print 'handle connect'
         glue_item = self.glue(view, item, handle, wx, wy)
 
         if glue_item:
-            print 'handle connect', glue_item
+            #print 'handle connect', glue_item
             adapter = component.queryMultiAdapter((glue_item, item), IConnect)
             x, y = view.canvas.get_matrix_w2i(glue_item).transform_point(wx, wy)
-            print 'connecting:', adapter
+            #print 'connecting:', adapter
             adapter.connect(handle, x, y)
 
-#            if not handle.connected_to is glue_item:
-#                return False
-
-            def _disconnect():
-                adapter = component.queryMultiAdapter(
-                                        (handle.connected_to, item), IConnect)
-                adapter.disconnect(handle)
-                handle.disconnect = lambda: 0
-
-            handle.disconnect = _disconnect
             return True
         elif handle.connected_to:
             #adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
             #adapter.disconnect(handle)
             handle.disconnect()
-        print 'done handle connect'
         return False
 
     def disconnect(self, view, item, handle):
@@ -134,7 +123,7 @@ class TextEditTool(Tool):
         window.size_allocate(gtk.gdk.Rectangle(int(x), int(y), 50, 50))
         #window.move(int(x), int(y))
         cursor_pos = view.get_toplevel().get_screen().get_display().get_pointer()
-        print 'cursor_pos', cursor_pos
+        #print 'cursor_pos', cursor_pos
         window.move(cursor_pos[1], cursor_pos[2])
         window.connect('focus-out-event', self._on_focus_out_event,
                        buffer, *args)
