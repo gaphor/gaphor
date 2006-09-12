@@ -9,6 +9,7 @@ from zope import interface, component
 from gaphor import UML
 from elementitem import ElementItem
 from gaphas.item import NW
+from gaphas.util import text_multiline, text_extents
 
 from interfaces import ICommentItem, IEditor
 
@@ -57,7 +58,10 @@ class CommentItem(ElementItem):
     # DiaCanvasItem callbacks:
 
     def pre_update(self, context):
-        # TODO: calc comment box bounds based on self.subject.body
+        cr = context.cairo
+        w, h = text_extents(cr, self.subject.body, multiline=True, padding=2)
+        self.min_width = w + 10
+        self.min_height = h + 10
         ElementItem.pre_update(self, context)
 
     def update(self, context):
@@ -83,7 +87,8 @@ class CommentItem(ElementItem):
         c.stroke()
 	if self.subject.body:
 	    # Do not print empty string, since cairo-win32 can't handle it.
-	    c.move_to(10, 15)
-	    c.show_text(self.subject.body)
+            text_multiline(c, 5, 5, self.subject.body, padding=2)
+	    #c.move_to(10, 15)
+	    #c.show_text(self.subject.body)
 
 # vim:sw=4

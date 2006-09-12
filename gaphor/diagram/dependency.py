@@ -104,7 +104,9 @@ class DependencyItem(DiagramLine):
         return self.dependency_type
 
 
-    def set_dependency_type(self, dependency_type):
+    def set_dependency_type(self, dependency_type=None):
+        if not dependency_type and self.auto_dependency:
+            dependency_type = self.determine_dependency_type(self.head.connected_to, self.tail.connected_to)
         self.dependency_type = dependency_type
         self.request_update()
 
@@ -190,43 +192,43 @@ class DependencyItem(DiagramLine):
         """See DiagramLine.confirm_disconnect_handle().
         """
         #print 'confirm_disconnect_handle', handle
-        self._set_line_style()
+        #self._set_line_style()
         self.set_subject(None)
+        self.request_update()
 
 
-
-def is_usage(s):
-    """
-    Return true if dependency should be usage dependency.
-    """
-    return isinstance(s, UML.Interface)
-
-
-def is_realization(ts, hs):
-    """
-    Return true if dependency should be realization dependency.
-    """
-    return isinstance(ts, UML.Classifier) and isinstance(hs, UML.Component)
+    @staticmethod
+    def is_usage(s):
+        """Return true if dependency should be usage dependency.
+        """
+        return isinstance(s, UML.Interface)
 
 
-def determine_dependency_type(ts, hs):
-    """
-    Determine dependency type:
-    - check if it is usage
-    - check if it is realization
-    - if none of above, then it is normal dependency
+    @staticmethod
+    def is_realization(ts, hs):
+        """Return true if dependency should be realization dependency.
+        """
+        return isinstance(ts, UML.Classifier) and isinstance(hs, UML.Component)
 
-    The checks should be performed in above order. For example if ts and hs
-    are Interface and Component, then we have two choices:
-    - claim it is an usage (as ts is an Interface)
-    - or claim it is a realization (as Interface is Classifier, too)
-    In this case we want usage to win over realization.
-    """
-    dt = UML.Dependency
-    if is_usage(ts):
-        dt = UML.Usage
-    elif is_realization(ts, hs):
-        dt = UML.Realization
-    return dt
+
+    @staticmethod
+    def determine_dependency_type(ts, hs):
+        """Determine dependency type:
+        - check if it is usage
+        - check if it is realization
+        - if none of above, then it is normal dependency
+
+        The checks should be performed in above order. For example if ts and hs
+        are Interface and Component, then we have two choices:
+        - claim it is an usage (as ts is an Interface)
+        - or claim it is a realization (as Interface is Classifier, too)
+        In this case we want usage to win over realization.
+        """
+        dt = UML.Dependency
+        if DependencyItem.is_usage(ts):
+            dt = UML.Usage
+        elif DependencyItem.is_realization(ts, hs):
+            dt = UML.Realization
+        return dt
 
 # vim:sw=4:et

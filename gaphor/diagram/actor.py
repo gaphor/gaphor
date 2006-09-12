@@ -4,11 +4,12 @@ Actor diagram item classes.
 
 from math import pi
 
-from gaphas.util import text_center, text_set_font
+from gaphas.util import text_align, text_set_font
 
 from gaphor import UML
 #from gaphor.diagram.align import V_ALIGN_BOTTOM
 from gaphor.diagram.classifier import ClassifierItem
+import font
 
 class ActorItem(ClassifierItem):
     """Actor item is a classifier in icon mode.
@@ -75,13 +76,8 @@ class ActorItem(ClassifierItem):
         # So the update is trivial:
         text = self.subject.name
         if text:
-            #text_set_font(cr, self.FONT)
-            x_bear, y_bear, w, h, x_adv, y_adv = cr.text_extents(text)
-            x = 0.5 - (w / 2 + x_bear)
-            y = 0.5 - (h + y_bear)
-            cr.move_to(self.width / 2.0 + x, self.height + h * 1.5)
-            cr.show_text(text)
-            #text_center(cr, self.width, self.height, text)
+            text_set_font(cr, font.FONT_NAME)
+            text_align(cr, self.width/2.0, self.height + 10, text, align_y=0)
 
 
 # vim:sw=4:et

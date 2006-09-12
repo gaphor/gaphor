@@ -14,6 +14,7 @@ from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.classifier import ClassifierItem
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
+from gaphor.diagram.dependency import DependencyItem
 
 
 class SimpleConnect(object):
@@ -159,6 +160,62 @@ class CommentLineConnect(SimpleConnect):
         super(CommentLineConnect, self).disconnect(handle)
 
 component.provideAdapter(CommentLineConnect)
+
+
+class DependencyConnect(SimpleConnect):
+    """Connect two NamedItem elements using a Dependency
+    """
+    component.adapts(NamedItem, DependencyItem)
+
+    def glue(self, handle, x, y):
+        """In addition to the normal check, both line ends may not be connected
+        to the same element. Same goes for subjects.
+        """
+        opposite = self.line.opposite(handle)
+        element = self.element
+        connected_to = opposite.connected_to
+
+        # Element should be a NamedElement
+        if not element.subject or \
+           not isinstance(element.subject, UML.NamedElement):
+            return None
+
+        if connected_to is element:
+            #print 'item identical', connected_to, element
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            #print 'Subjects none or match:', connected_to.subject, element.subject
+            return None
+
+        return super(DependencyConnect, self).glue(handle, x, y)
+
+    def connect(self, handle, x, y):
+        if super(DependencyConnect, self).connect(handle, x, y):
+            dep = self.line
+            opposite = self.line.opposite(handle)
+            if opposite.connected_to:
+                if dep.auto_dependency:
+                    dep.set_dependency_type()
+                relation = UML.create(dep.dependency_type)
+                if dep.dependency_type is UML.Realization:
+                    relation.realizingClassifier = dep.head.connected_to.subject
+                    relation.abstraction = dep.tail.connected_to.subject
+                else:
+                    relation.supplier = dep.head.connected_to.subject
+                    relation.client = dep.tail.connected_to.subject
+                dep.subject = relation
+
+    def disconnect(self, handle):
+        opposite = self.line.opposite(handle)
+        if handle.connected_to and opposite.connected_to:
+            self.line.set_subject(None)
+        super(DependencyConnect, self).disconnect(handle)
+
+component.provideAdapter(DependencyConnect)
 
 
 # vim:sw=4:et:ai

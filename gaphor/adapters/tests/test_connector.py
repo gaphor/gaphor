@@ -10,13 +10,13 @@ from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.actor import ActorItem
-from gaphor.diagram.tool import ConnectHandleTool
+from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.interfaces import IConnect
 
 # Ensure adapters are loaded
 import gaphor.adapters
 
-class HandleToolTestCase(unittest.TestCase):
+class ConnectorTestCase(unittest.TestCase):
 
     def test_commentline(self):
         """Test CommentLineItem connecting to comment and Actor items.
@@ -31,7 +31,7 @@ class HandleToolTestCase(unittest.TestCase):
 
         adapter = component.queryMultiAdapter((comment, line), IConnect)
 
-        handle = line.handles()[0]
+        handle = line.head
         adapter.connect(handle, handle.x, handle.y)
 
         assert handle.connected_to is comment
@@ -40,14 +40,14 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Connecting two ends of the line to the same item is not allowed:
 
-        handle = line.handles()[-1]
+        handle = line.tail
         adapter.connect(handle, handle.x, handle.y)
 
         assert handle.connected_to is None
         assert not hasattr(handle,'_connect_constraint')
         assert not comment.subject.annotatedElement, comment.subject.annotatedElement
 
-        print '# now connect the actor'
+        #print '# now connect the actor'
 
         adapter = component.queryMultiAdapter((actor, line), IConnect)
 
@@ -81,4 +81,52 @@ class HandleToolTestCase(unittest.TestCase):
         assert not actor2.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
 
 
+    def test_dependency(self):
+        diagram = UML.create(UML.Diagram)
+        actor1 = diagram.create(ActorItem, subject=UML.create(UML.Actor))
+        actor2 = diagram.create(ActorItem, subject=UML.create(UML.Actor))
+        dep = diagram.create(DependencyItem)
 
+        adapter = component.queryMultiAdapter((actor1, dep), IConnect)
+
+        adapter.connect(dep.head, dep.head.x, dep.head.y)
+
+        assert dep.subject is None
+        assert dep.head.connected_to is actor1
+
+        adapter = component.queryMultiAdapter((actor2, dep), IConnect)
+
+        adapter.connect(dep.tail, dep.tail.x, dep.tail.y)
+
+        assert dep.subject is not None
+        assert isinstance(dep.subject, UML.Dependency), dep.subject
+        assert dep.subject in UML.select()
+        assert dep.head.connected_to is actor1
+        assert dep.tail.connected_to is actor2
+
+        assert actor1.subject in dep.subject.supplier
+        assert actor2.subject in dep.subject.client
+
+        # Disconnect client side
+        dep_subj = dep.subject
+        adapter.disconnect(dep.tail)
+
+        assert dep.subject is None
+        assert dep.tail.connected_to is None
+        assert dep_subj not in UML.select()
+        assert dep_subj not in actor1.subject.supplierDependency
+        assert dep_subj not in actor2.subject.clientDependency
+
+        #iface1 = diagram.create(InterfaceItem, subject=UML.Interface)
+
+        adapter.connect(dep.tail, dep.tail.x, dep.tail.y)
+
+        assert dep.subject is not None
+        assert dep.subject is not dep_subj # the old subject has been deleted
+        assert dep.subject in actor1.subject.supplierDependency
+        assert dep.subject in actor2.subject.clientDependency
+        
+        # TODO: test with interface (usage) and component (realization)
+
+
+#vi:sw=4:et:ai

@@ -101,6 +101,8 @@ class DiagramItem(Presentation, Element):
     def set_subject(self, subject=None):
         """Set the subject. In addition, if there are no more presentations
         on the subject, the subject is unlink()'ed.
+        Note that this function is different from setting the subject property
+        directly!
         """
         #log.debug('set_subject %s %s' % (self.subject, subject))
         old = self.subject
