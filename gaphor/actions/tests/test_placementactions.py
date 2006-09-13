@@ -3,7 +3,7 @@ import unittest
 from gaphor import resource
 from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram.tool import PlacementTool
-from gaphor.diagram import placementactions
+from gaphor.actions import placementactions
 from gaphor import UML
 from gaphas.canvas import Context
 from gaphas.view import ToolContext
@@ -48,6 +48,10 @@ class PlacementToolTestCase(unittest.TestCase):
 
     def test_class_placement(self):
         self.do_test_placement(placementactions.ClassPlacementAction())
+        self.do_test_placement(placementactions.StereotypePlacementAction())
+
+    def test_interface_placement(self):
+        self.do_test_placement(placementactions.InterfacePlacementAction())
 
     def test_package_placement(self):
         self.do_test_placement(placementactions.PackagePlacementAction())

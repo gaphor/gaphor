@@ -61,7 +61,7 @@ class CommentItem(ElementItem):
         cr = context.cairo
         w, h = text_extents(cr, self.subject.body, multiline=True, padding=2)
         self.min_width = w + 10
-        self.min_height = h + 10
+        self.min_height = h + 20
         ElementItem.pre_update(self, context)
 
     def update(self, context):

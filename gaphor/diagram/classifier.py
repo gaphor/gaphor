@@ -11,6 +11,7 @@ from gaphor.diagram.nameditem import NamedItem, NamedItemMeta
 from gaphor.diagram.feature import FeatureItem
 
 from gaphas.util import text_center
+import font
 
 class Compartment(list):
     """Specify a compartment in a class item.
@@ -112,9 +113,6 @@ class ClassifierItem(NamedItem):
     ICON_MARGIN_X = 10
     ICON_MARGIN_Y = 10
     NAME_COMPARTMENT_HEIGHT = 35
-
-    FONT_ABSTRACT   = 'sans bold italic 10'
-    FONT_FROM       = 'sans 8'
 
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
@@ -242,7 +240,7 @@ class ClassifierItem(NamedItem):
             n_w, n_h = text_extents(cr, self.subject.name)
             f_w, f_h = 0, 0
             if self.subject.namespace:
-                f_w, f_h = text_extents(cr, self._from, font=self.FONT_FROM)
+                f_w, f_h = text_extents(cr, self._from, font=font.FONT_SMALL)
 
             sizes = [comp.get_size() for comp in self._compartments]
 
@@ -315,18 +313,18 @@ class ClassifierItem(NamedItem):
         # draw stereotype
         y += 10
         if self.stereotype:
-            text_set_font(cr, self.FONT)
+            text_set_font(cr, font.FONT)
             text_center(cr, self.width / 2, y, self.stereotype)
 
         # draw name
         y += 10
-        text_set_font(cr, self.FONT_NAME)
+        text_set_font(cr, font.FONT_NAME)
         text_center(cr, self.width / 2, y, self.subject.name)
 
         y += 10
         # draw 'from ... '
         if self._from:
-            text_set_font(cr, self.FONT_FROM)
+            text_set_font(cr, font.FONT_SMALL)
             text_center(cr, self.width / 2, y, self._from)
 
         y += 5

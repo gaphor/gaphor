@@ -9,7 +9,7 @@ from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
 from gaphor.diagram import comment, commentline
-from gaphor.diagram import actor, usecase, klass, package
+from gaphor.diagram import actor, usecase, klass, package, interface
 from gaphor.diagram import dependency
 from gaphor.diagram.tool import DefaultTool, PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
@@ -102,16 +102,16 @@ class PlacementAction(RadioAction):
 
 
 class NamespacePlacementAction(PlacementAction):
-    __index = 1
+    index = 1
 
     def item_factory(self):
         """Create a new instance of the item and return it."""
         item = PlacementAction.item_factory(self)
         #log.debug('Setting namespace for new item %s: %s' % (item, self._window.get_current_diagram().namespace))
         item.subject.package = self._window.get_current_diagram().namespace
-        item.subject.name = '%s%d' % (self.name, self.__index)
+        item.subject.name = '%s%d' % (self.name, self.index)
         item.request_update()
-        self.__index += 1
+        self.index += 1
         return item
 
 
@@ -195,10 +195,10 @@ class InterfacePlacementTool(gaphas.tool.PlacementTool):
         diag = self._window.get_current_diagram()
         iface = factory.create(UML.Interface)
         iface.package = diag.namespace
-        iface_item = diag.create(diagram.InterfaceItem)
+        iface_item = diag.create(interface.InterfaceItem)
         iface_item.set_property('parent', view.canvas.root)
         iface_item.subject = iface
-        impl_item = diag.create(diagram.DependencyItem)
+        impl_item = diag.create(dependency.DependencyItem)
         impl_item.set_dependency_type(UML.Implementation)
         impl_item.set_property('parent', view.canvas.root)
 
@@ -212,17 +212,17 @@ class InterfacePlacementTool(gaphas.tool.PlacementTool):
         
         # Select the new items:
         view.unselect_all()
-        view.select(view.find_view_item(iface_item))
-        view.focus(view.find_view_item(impl_item))
+        view.select(iface_item)
+        view.focus(impl_item)
 
         # Attach the head handle to the interface item:
-        first = impl_item.handles[0]
+        first = impl_item.head
         iface_item.connect_handle(first)
 
         # Grab the last handle with the mouse cursor
-        last = impl_item.handles[-1]
+        last = impl_item.last
         last.set_pos_i(20,0)
-        self.handle_tool.set_grabbed_handle(last)
+        #self.handle_tool.set_grabbed_handle(last)
         return True
 
     def do_button_release_event(self, view, event):
@@ -235,33 +235,33 @@ class InterfacePlacementTool(gaphas.tool.PlacementTool):
 #import gobject
 #gobject.type_register(InterfacePlacementTool)
 
-#class InterfacePlacementAction(NamespacePlacementAction):
-#    id = 'InsertInterface'
-#    label = '_Interface'
-#    tooltip = 'Create a new interface item'
-#    stock_id = 'gaphor-interface'
-#    name = 'Interface'
-#    type = diagram.InterfaceItem
-#    subject_type = UML.Interface
-#
+class InterfacePlacementAction(NamespacePlacementAction):
+    id = 'InsertInterface'
+    label = '_Interface'
+    tooltip = 'Create a new interface item'
+    stock_id = 'gaphor-interface'
+    name = 'Interface'
+    type = interface.InterfaceItem
+    subject_type = UML.Interface
+
 #    def _execute(self):
 #        tool = InterfacePlacementTool(self._window, self.id)
 #        self._window.get_current_diagram_view().set_tool(tool)
 #        self._window.set_message('Create new %s' % self.name)
-#
-#register_action(InterfacePlacementAction)
+
+register_action(InterfacePlacementAction)
 
 
-#class StereotypePlacementAction(NamespacePlacementAction):
-#    id = 'InsertStereotype'
-#    label = '_Stereotype'
-#    tooltip = 'Create a new stereotype item'
-#    stock_id = 'gaphor-stereotype'
-#    name = 'Stereotype'
-#    type = diagram.ClassItem
-#    subject_type = UML.Stereotype
-#
-#register_action(StereotypePlacementAction)
+class StereotypePlacementAction(NamespacePlacementAction):
+    id = 'InsertStereotype'
+    label = '_Stereotype'
+    tooltip = 'Create a new stereotype item'
+    stock_id = 'gaphor-stereotype'
+    name = 'Stereotype'
+    type = klass.ClassItem
+    subject_type = UML.Stereotype
+
+register_action(StereotypePlacementAction)
 
 
 class ProfilePlacementAction(NamespacePlacementAction):

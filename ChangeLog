@@ -1,3 +1,8 @@
+2006-09-13  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/comment.py: fixed text rendering (mutiline)
+        * gaphor/diagram/interface.py: changed some code (box drawing now works)
+
 2006-09-11  arjan <arjan at yirdis dot nl>
 
         * gaphor/adapters: moved adapters from gaphor.diagram to this
