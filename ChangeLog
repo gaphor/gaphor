@@ -1,5 +1,10 @@
 2006-09-13  arjan <arjan at yirdis dot nl>
 
+        * updcl: New file. use this for easy updating of the changelog file.
+        Add a .developer to this directory with name and email.
+
+2006-09-13  arjan <arjan at yirdis dot nl>
+
         * gaphor/diagram/comment.py: fixed text rendering (mutiline)
         * gaphor/diagram/interface.py: changed some code (box drawing now works)
 
