@@ -5,6 +5,10 @@
  - associations
  - components and stuff
 
+ - lot's of tests are dependent on a decently initialized main window.
+   There is no need for these actions to depend on a main window, they only
+   need a gaphas.View instance.
+
 ======== stereotypes branch =========
 - namedelement.py: from NamedElement
 - items.tex: describe:

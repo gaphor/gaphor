@@ -18,6 +18,9 @@ import gaphor.adapters
 
 class ConnectorTestCase(unittest.TestCase):
 
+    def tearDown(self):
+        UML.flush()
+
     def test_commentline(self):
         """Test CommentLineItem connecting to comment and Actor items.
         """

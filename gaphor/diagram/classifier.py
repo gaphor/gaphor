@@ -262,6 +262,7 @@ class ClassifierItem(NamedItem):
         pass
 
     def pre_update(self, context):
+        if not self.subject: return
         if self._drawing_style == self.DRAW_COMPARTMENT:
             self.pre_update_compartment(context)
         elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
@@ -295,6 +296,7 @@ class ClassifierItem(NamedItem):
     def update(self, context):
         """Overrides update callback.
         """
+        if not self.subject: return
         if self._drawing_style == self.DRAW_COMPARTMENT:
             self.update_compartment(context)
         elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
@@ -305,6 +307,7 @@ class ClassifierItem(NamedItem):
         super(ClassifierItem, self).update(context)
 
     def draw_compartment(self, context):
+        if not self.subject: return
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()

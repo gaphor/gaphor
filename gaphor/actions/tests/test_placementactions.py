@@ -15,7 +15,10 @@ Event = Context
 class PlacementToolTestCase(unittest.TestCase):
 
     main_window = resource(MainWindow)
-    main_window.construct()
+    try:
+        main_window.construct()
+    except:
+        pass
 
     def setUp(self):
         pass

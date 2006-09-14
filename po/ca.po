@@ -1,11 +1,11 @@
 # Catalan Gaphor translation
 # Copyright (C) 2006
 # Jordi Vilalta Prat <jvprat@gmail.com>, 2006.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
-"POT-Creation-Date: Tue Apr 12 09:22:56 2005\n"
+"POT-Creation-Date: Thu Sep 14 09:55:12 2006\n"
 "PO-Revision-Date: 2006-02-13 16:11+0100\n"
 "Last-Translator: Jordi Vilalta Prat <jvprat@gmail.com>\n"
 "Language-Team: ca <ca@li.org>\n"
@@ -14,15 +14,108 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: gaphor\diagram\classifier.py:281
+#: gaphor/actions/mainactions.py:72
+msgid "_New"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:85
+msgid ""
+"Opening a new model will flush the currently loaded model.\n"
+"Any changes made will not be saved. Do you want to continue?"
+msgstr ""
+"L'obertura d'un nou model descartarà el model actualment carregat.\n"
+"Els darrers canvis no es desaran. Voleu continuar?"
+
+#: gaphor/actions/mainactions.py:101
+msgid "Created a new model"
+msgstr "S'ha creat un nou model"
+
+#: gaphor/actions/mainactions.py:113
+msgid "_Revert..."
+msgstr ""
+
+#: gaphor/actions/mainactions.py:135
+msgid "Loading model from %s"
+msgstr "Carregant el model de %s"
+
+#: gaphor/actions/mainactions.py:135
+msgid "Loading..."
+msgstr "Carregant"
+
+#: gaphor/actions/mainactions.py:166
+msgid "Could not load model file."
+msgstr "No s'ha pogut carregar el fitxer del model."
+
+#: gaphor/actions/mainactions.py:173
+msgid "_Open..."
+msgstr "_Obre..."
+
+#: gaphor/actions/mainactions.py:210
+msgid "Save the model to a new file"
+msgstr "Desa el model a un nou fitxer"
+
+#: gaphor/actions/mainactions.py:262
+msgid "Save Gaphor model as"
+msgstr "Desa el model de Gaphor com a"
+
+#: gaphor/actions/mainactions.py:327
+#, fuzzy
+msgid "_Editor"
+msgstr "_Edita"
+
+#: gaphor/actions/mainactions.py:346
+msgid "_Console"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:364
+msgid "_Manual"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:384
+msgid "_About"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:451
+#, fuzzy
+msgid "_New diagram"
+msgstr "_Diagrama"
+
+#: gaphor/actions/mainactions.py:477
+#, fuzzy
+msgid "_Delete diagram"
+msgstr "_Diagrama"
+
+#: gaphor/actions/mainactions.py:506
+#, fuzzy
+msgid "_Open"
+msgstr "_Obre..."
+
+#: gaphor/actions/mainactions.py:527
+msgid "_Rename"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:555
+msgid "_Refresh"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:570
+msgid "_Delete"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:615
+#, fuzzy
+msgid "_Undo"
+msgstr "_Finestra"
+
+#: gaphor/diagram/classifier.py:217
 msgid "(from %s)"
 msgstr "(des de %s)"
 
-#: gaphor\misc\errorhandler.py:22
+#: gaphor/misc/errorhandler.py:22
 msgid "An error occured."
 msgstr "S'ha produït un error."
 
-#: gaphor\misc\errorhandler.py:29
+#: gaphor/misc/errorhandler.py:29
 msgid ""
 "\n"
 "\n"
@@ -34,103 +127,80 @@ msgstr ""
 "Voleu depurar?\n"
 "(S'haurà d'haver engegat Gaphor des de la línia de comandes)"
 
-#: gaphor\storage.py:160
+#: gaphor/plugin.py:88
+msgid ""
+"The file %s already exists. Do you want to replace it with the file you are "
+"exporting to?"
+msgstr ""
+
+#: gaphor/storage.py:160
 msgid "Loading %d elements..."
 msgstr "Carregant %d elements..."
 
-#: gaphor\ui\mainactions.py:87
-msgid ""
-"Opening a new model will flush the currently loaded model.\n"
-"Any changes made will not be saved. Do you want to continue?"
+#: gaphor/ui/diagramtab.py:49
+msgid "<None>"
 msgstr ""
-"L'obertura d'un nou model descartarà el model actualment carregat.\n"
-"Els darrers canvis no es desaran. Voleu continuar?"
 
-#: gaphor\ui\mainactions.py:103
-msgid "Created a new model"
-msgstr "S'ha creat un nou model"
-
-#: gaphor\ui\mainactions.py:136
-msgid "Loading model from %s"
-msgstr "Carregant el model de %s"
-
-#: gaphor\ui\mainactions.py:136
-msgid "Loading..."
-msgstr "Carregant"
-
-#: gaphor\ui\mainactions.py:167
-msgid "Could not load model file."
-msgstr "No s'ha pogut carregar el fitxer del model."
-
-#: gaphor\ui\mainactions.py:174
-msgid "_Open..."
-msgstr "_Obre..."
-
-#: gaphor\ui\mainactions.py:211
-msgid "Save the model to a new file"
-msgstr "Desa el model a un nou fitxer"
-
-#: gaphor\ui\mainactions.py:263
-msgid "Save Gaphor model as"
-msgstr "Desa el model de Gaphor com a"
-
-#: gaphor\ui\mainwindow.py:29
+#: gaphor/ui/mainwindow.py:32
 msgid "Classes"
 msgstr "Classes"
 
-#: gaphor\ui\mainwindow.py:37
+#: gaphor/ui/mainwindow.py:40
 msgid "Components"
 msgstr "Components"
 
-#: gaphor\ui\mainwindow.py:41
+#: gaphor/ui/mainwindow.py:47
 msgid "Actions"
 msgstr "Accions"
 
-#: gaphor\ui\mainwindow.py:47
+#: gaphor/ui/mainwindow.py:56
 msgid "Interactions"
 msgstr "Interaccions"
 
-#: gaphor\ui\mainwindow.py:51
+#: gaphor/ui/mainwindow.py:60
 msgid "Use Cases"
 msgstr "Casos d'Ús"
 
-#: gaphor\ui\mainwindow.py:57
+#: gaphor/ui/mainwindow.py:66
 msgid "Profiles"
 msgstr "Perfils"
 
-#: gaphor\ui\mainwindow.py:64
+#: gaphor/ui/mainwindow.py:73
 msgid "_File"
 msgstr "_Fitxer"
 
-#: gaphor\ui\mainwindow.py:68
+#: gaphor/ui/mainwindow.py:77
 msgid "Recent files"
 msgstr "Fitxers recents"
 
-#: gaphor\ui\mainwindow.py:75
+#: gaphor/ui/mainwindow.py:84
 msgid "_Import"
 msgstr "_Importa"
 
-#: gaphor\ui\mainwindow.py:77
+#: gaphor/ui/mainwindow.py:86
 msgid "_Export"
 msgstr "_Exporta"
 
-#: gaphor\ui\mainwindow.py:84
+#: gaphor/ui/mainwindow.py:93
 msgid "_Edit"
 msgstr "_Edita"
 
-#: gaphor\ui\mainwindow.py:98
+#: gaphor/ui/mainwindow.py:107
 msgid "_Diagram"
 msgstr "_Diagrama"
 
-#: gaphor\ui\mainwindow.py:110
+#: gaphor/ui/mainwindow.py:119
 msgid "Tools"
 msgstr "Eines"
 
-#: gaphor\ui\mainwindow.py:114
+#: gaphor/ui/mainwindow.py:123
 msgid "_Window"
 msgstr "_Finestra"
 
-#: gaphor\ui\mainwindow.py:118
+#: gaphor/ui/mainwindow.py:127
 msgid "_Help"
 msgstr "_Ajuda"
 
+#: gaphor/ui/mainwindow.py:223
+msgid "Quit Gaphor?"
+msgstr ""

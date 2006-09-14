@@ -1,3 +1,13 @@
+2006-09-14  arjan <arjan at yirdis dot nl>
+
+        * gaphor/UML/tests/__init__.py: New file.
+        * gaphor/actions/tests/__init__.py: New file.
+        * gaphor/adapters/tests/__init__.py: New file.
+        * gaphor/diagram/tests/__init__.py: New file.
+        * gaphor/ui/tests/__init__.py: New file.
+        * setup.py: Implemented 'tests' target - runs all unit tests
+        * gaphor/*/tests/test_*.py: Updated to work well with overall test suite
+
 2006-09-13  arjan <arjan at yirdis dot nl>
 
         * updcl: New file. use this for easy updating of the changelog file.

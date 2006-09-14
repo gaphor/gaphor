@@ -16,6 +16,7 @@ from gaphas.tool import ToolChainContext
 
 # Make sure adapters are loaded
 import gaphor.adapters
+import gaphor.actions
 
 Event = Context
 
@@ -23,7 +24,10 @@ Event = Context
 class HandleToolTestCase(unittest.TestCase):
 
     main_window = resource(MainWindow)
-    main_window.construct()
+    try:
+        main_window.construct()
+    except:
+        pass
 
     def test_iconnect(self):
         """Test basic glue functionality using CommentItem and CommentLine

@@ -58,6 +58,7 @@ class CommentItem(ElementItem):
     # DiaCanvasItem callbacks:
 
     def pre_update(self, context):
+        if not self.subject: return
         cr = context.cairo
         w, h = text_extents(cr, self.subject.body, multiline=True, padding=2)
         self.min_width = w + 10
@@ -68,6 +69,7 @@ class CommentItem(ElementItem):
         ElementItem.update(self, context)
 
     def draw(self, context):
+        if not self.subject: return
         c = context.cairo
         # Width and height, adjusted for line width...
         ox = float(self._handles[NW].x)

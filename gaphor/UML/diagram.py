@@ -73,7 +73,7 @@ class Diagram(Namespace, PackageableElement):
 
     def unlink(self):
         # Make sure all canvas items are unlinked
-        for item in self.canvas.all_items():
+        for item in self.canvas.get_all_items():
             try:
                 item.unlink()
             except:

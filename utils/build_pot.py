@@ -185,7 +185,8 @@ class build_pot(Command):
 		  'pot': self.output
 	    }
 	    if self.verbose:
-		print 'Merging %(pot)s and %(po)s' % d
+		sys.stdout.write('Merging %(pot)s and %(po)s ' % d)
+                sys.stdout.flush()
 	    res = os.system('%(msgmerge)s %(po)s %(pot)s -o %(po)s' % d)
 	    if res:
 		SystemExit, 'error while running msgmerge.'

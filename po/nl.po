@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.6.0\n"
-"POT-Creation-Date: Sat May 14 17:29:44 2005\n"
+"POT-Creation-Date: Thu Sep 14 09:55:12 2006\n"
 "PO-Revision-Date: 2004-06-10 08:00+001\n"
 "Last-Translator: Arjan Molenaar <arjanmol_at_users.sourceforge.net>\n"
 "Language-Team: nl\n"
@@ -15,7 +15,97 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.4\n"
 
-#: gaphor/diagram/classifier.py:281
+#: gaphor/actions/mainactions.py:72
+msgid "_New"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:85
+msgid ""
+"Opening a new model will flush the currently loaded model.\n"
+"Any changes made will not be saved. Do you want to continue?"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:101
+msgid "Created a new model"
+msgstr "Maak een nieuw model"
+
+#: gaphor/actions/mainactions.py:113
+msgid "_Revert..."
+msgstr ""
+
+#: gaphor/actions/mainactions.py:135
+msgid "Loading model from %s"
+msgstr "Laden van model %s"
+
+#: gaphor/actions/mainactions.py:135
+msgid "Loading..."
+msgstr "Bezig met laden..."
+
+#: gaphor/actions/mainactions.py:166
+msgid "Could not load model file."
+msgstr ""
+
+#: gaphor/actions/mainactions.py:173
+msgid "_Open..."
+msgstr ""
+
+#: gaphor/actions/mainactions.py:210
+msgid "Save the model to a new file"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:262
+msgid "Save Gaphor model as"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:327
+#, fuzzy
+msgid "_Editor"
+msgstr "_Wijzig"
+
+#: gaphor/actions/mainactions.py:346
+msgid "_Console"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:364
+msgid "_Manual"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:384
+msgid "_About"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:451
+#, fuzzy
+msgid "_New diagram"
+msgstr "_Diagram"
+
+#: gaphor/actions/mainactions.py:477
+#, fuzzy
+msgid "_Delete diagram"
+msgstr "_Diagram"
+
+#: gaphor/actions/mainactions.py:506
+msgid "_Open"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:527
+msgid "_Rename"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:555
+msgid "_Refresh"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:570
+msgid "_Delete"
+msgstr ""
+
+#: gaphor/actions/mainactions.py:615
+#, fuzzy
+msgid "_Undo"
+msgstr "_Venster"
+
+#: gaphor/diagram/classifier.py:217
 msgid "(from %s)"
 msgstr "(van %s)"
 
@@ -31,161 +121,85 @@ msgid ""
 "(Gaphor should have been started from the command line)"
 msgstr ""
 
+#: gaphor/plugin.py:88
+msgid ""
+"The file %s already exists. Do you want to replace it with the file you are "
+"exporting to?"
+msgstr ""
+
 #: gaphor/storage.py:160
 msgid "Loading %d elements..."
 msgstr "Laden van %s elementen..."
 
-#: gaphor/ui/mainactions.py:74
-msgid "_New"
+#: gaphor/ui/diagramtab.py:49
+msgid "<None>"
 msgstr ""
 
-#: gaphor/ui/mainactions.py:87
-msgid ""
-"Opening a new model will flush the currently loaded model.\n"
-"Any changes made will not be saved. Do you want to continue?"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:103
-msgid "Created a new model"
-msgstr "Maak een nieuw model"
-
-#: gaphor/ui/mainactions.py:114
-msgid "_Revert..."
-msgstr ""
-
-#: gaphor/ui/mainactions.py:136
-msgid "Loading model from %s"
-msgstr "Laden van model %s"
-
-#: gaphor/ui/mainactions.py:136
-msgid "Loading..."
-msgstr "Bezig met laden..."
-
-#: gaphor/ui/mainactions.py:167
-msgid "Could not load model file."
-msgstr ""
-
-#: gaphor/ui/mainactions.py:174
-msgid "_Open..."
-msgstr ""
-
-#: gaphor/ui/mainactions.py:211
-msgid "Save the model to a new file"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:263
-msgid "Save Gaphor model as"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:327
-#, fuzzy
-msgid "_Editor"
-msgstr "_Wijzig"
-
-#: gaphor/ui/mainactions.py:346
-msgid "_Console"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:364
-msgid "_Manual"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:384
-msgid "_About"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:451
-#, fuzzy
-msgid "_New diagram"
-msgstr "_Diagram"
-
-#: gaphor/ui/mainactions.py:477
-#, fuzzy
-msgid "_Delete diagram"
-msgstr "_Diagram"
-
-#: gaphor/ui/mainactions.py:506
-msgid "_Open"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:527
-msgid "_Rename"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:555
-msgid "_Refresh"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:570
-msgid "_Delete"
-msgstr ""
-
-#: gaphor/ui/mainactions.py:615
-#, fuzzy
-msgid "_Undo"
-msgstr "_Venster"
-
-#: gaphor/ui/mainwindow.py:29
+#: gaphor/ui/mainwindow.py:32
 msgid "Classes"
 msgstr "Klassen"
 
-#: gaphor/ui/mainwindow.py:37
+#: gaphor/ui/mainwindow.py:40
 msgid "Components"
 msgstr "Componenten"
 
-#: gaphor/ui/mainwindow.py:41
+#: gaphor/ui/mainwindow.py:47
 msgid "Actions"
 msgstr "Akties"
 
-#: gaphor/ui/mainwindow.py:47
+#: gaphor/ui/mainwindow.py:56
 #, fuzzy
 msgid "Interactions"
 msgstr "Akties"
 
-#: gaphor/ui/mainwindow.py:51
+#: gaphor/ui/mainwindow.py:60
 msgid "Use Cases"
 msgstr "Use cases"
 
-#: gaphor/ui/mainwindow.py:57
+#: gaphor/ui/mainwindow.py:66
 msgid "Profiles"
 msgstr "Profilen"
 
-#: gaphor/ui/mainwindow.py:64
+#: gaphor/ui/mainwindow.py:73
 msgid "_File"
 msgstr "_Bestand"
 
-#: gaphor/ui/mainwindow.py:68
+#: gaphor/ui/mainwindow.py:77
 msgid "Recent files"
 msgstr "Recente bestanden"
 
-#: gaphor/ui/mainwindow.py:75
+#: gaphor/ui/mainwindow.py:84
 #, fuzzy
 msgid "_Import"
 msgstr "_Exporteer"
 
-#: gaphor/ui/mainwindow.py:77
+#: gaphor/ui/mainwindow.py:86
 msgid "_Export"
 msgstr "_Exporteer"
 
-#: gaphor/ui/mainwindow.py:84
+#: gaphor/ui/mainwindow.py:93
 msgid "_Edit"
 msgstr "_Wijzig"
 
-#: gaphor/ui/mainwindow.py:98
+#: gaphor/ui/mainwindow.py:107
 msgid "_Diagram"
 msgstr "_Diagram"
 
-#: gaphor/ui/mainwindow.py:110
+#: gaphor/ui/mainwindow.py:119
 msgid "Tools"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:114
+#: gaphor/ui/mainwindow.py:123
 msgid "_Window"
 msgstr "_Venster"
 
-#: gaphor/ui/mainwindow.py:118
+#: gaphor/ui/mainwindow.py:127
 msgid "_Help"
 msgstr "_Help"
+
+#: gaphor/ui/mainwindow.py:223
+msgid "Quit Gaphor?"
+msgstr ""
 
 #~ msgid "To be implemented"
 #~ msgstr "Not niet gemaakt"

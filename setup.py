@@ -12,6 +12,19 @@ MICRO_VERSION = 1
 
 VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 
+LINGUAS = [ 'ca', 'es', 'nl', 'sv' ]
+
+TESTS = [
+    'gaphor.UML.tests.test_elementfactory',
+    'gaphor.diagram.tests.test_class',
+    'gaphor.diagram.tests.test_handletool',
+    'gaphor.diagram.tests.test_interfaces',
+    'gaphor.ui.tests.test_mainwindow',
+    'gaphor.ui.tests.test_diagramtab',
+    'gaphor.adapters.tests.test_connector',
+    'gaphor.actions.tests.test_placementactions',
+    ]
+
 #GCONF_DOMAIN='/apps/gaphor/' # don't forget trailing slash
 
 import sys, os
@@ -337,6 +350,7 @@ class run_Gaphor(Command):
             fp = open(self.unittest)
             test_module = imp.load_source('gaphor_test', self.unittest, fp)
             test_suite = unittest.TestLoader().loadTestsFromModule(test_module)
+            #test_suite = unittest.TestLoader().loadTestsFromName(self.unittest)
             test_runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = test_runner.run(test_suite)
             if self.coverage:
@@ -355,7 +369,7 @@ class run_Gaphor(Command):
             print 'Launching Gaphor...'
             gaphor.main(self.model)
 
-class test_Gaphor(Command):
+class tests_Gaphor(Command):
 
     description = 'Run the Gaphor test suite.'
 
@@ -363,7 +377,7 @@ class test_Gaphor(Command):
     ]
 
     def initialize_options(self):
-        pass
+        self.verbosity = 9
 
     def finalize_options(self):
         pass
@@ -372,6 +386,14 @@ class test_Gaphor(Command):
         print 'Starting Gaphor test-suite...'
 
         self.run_command('build')
+
+        import unittest
+
+        test_suite = unittest.defaultTestLoader.loadTestsFromNames(TESTS)
+
+        test_runner = unittest.TextTestRunner(verbosity=self.verbosity)
+        result = test_runner.run(test_suite)
+        sys.exit(not result.wasSuccessful())
 
 def plugin_data(name):
     return 'plugins/%s' % name, glob('data/plugins/%s/*.*' % name)
@@ -389,11 +411,16 @@ setup(name='gaphor',
       platforms=['GNOME2'],
       packages=['gaphor',
                 'gaphor.UML',
+                'gaphor.UML.tests',
                 'gaphor.diagram',
+                'gaphor.diagram.tests',
                 'gaphor.ui',
+                'gaphor.ui.tests',
                 'gaphor.misc',
                 'gaphor.adapters',
+                'gaphor.adapters.tests',
                 'gaphor.actions',
+                'gaphor.actions.tests',
                 'zope',
                 'zope.interface',
                 'zope.component.bbb',
@@ -434,7 +461,7 @@ setup(name='gaphor',
                 'install_lib': install_lib_Gaphor,
                 'install_mo': install_mo,
                 'run': run_Gaphor,
-                'test': test_Gaphor
+                'tests': tests_Gaphor
       },
 #      app=['gaphor-osx.py'],
       options = dict(
@@ -444,10 +471,10 @@ setup(name='gaphor',
 #             CFBundleIdentifier='net.sourceforge.gaphor'
          ),
          build_pot = dict(
-             all_linguas = 'ca,es,nl,sv',
+             all_linguas = ','.join(LINGUAS),
          ),
          build_mo = dict(
-             all_linguas = 'ca,es,nl,sv',
+             all_linguas = ','.join(LINGUAS),
          ),
      )
 )
