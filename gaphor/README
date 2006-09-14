@@ -19,6 +19,8 @@ Packages:
   UML - The data model (UML 2.1 meta-model)
   diagram - presentation elements ("items"). This is what's actually drawn.
   ui - GUI code (GTK+)
+  actions - (menu) actions
+  adapters - all sort of adapters (adapting items to perform specific tasks)
   misc - utility and support modules
 
 

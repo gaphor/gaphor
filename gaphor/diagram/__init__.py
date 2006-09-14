@@ -11,6 +11,8 @@ import gobject
 from gaphor.misc import uniqueid
 from gaphor.diagram.align import ItemAlign
 
+# NOTE: have to import model elements anyway since model loading code depends on it..
+
 # Map UML elements to their (default) representation.
 _uml_to_item_map = { }
 
