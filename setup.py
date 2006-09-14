@@ -35,7 +35,6 @@ from distutils.dep_util import newer
 from utils.build_mo import build, build_mo
 from utils.build_pot import build_pot
 from utils.install_mo import install, install_mo
-from utils.dist_mo import Distribution
 
 str_version = sys.version[:3]
 version = map(int, str_version.split('.'))
@@ -68,6 +67,7 @@ class config_Gaphor(Command):
         pass
 
     def run(self):
+        self.module_check('pygtk')
         import pygtk
         pygtk.require('2.0')
 
@@ -290,7 +290,7 @@ class run_Gaphor(Command):
                                    ('build_lib', 'build_lib'))
 
     def run(self):
-        print 'Starting gaphor...'
+        print 'Starting Gaphor...'
         print 'Starting with model file', self.model
         self.run_command('build')
 
@@ -355,6 +355,23 @@ class run_Gaphor(Command):
             print 'Launching Gaphor...'
             gaphor.main(self.model)
 
+class test_Gaphor(Command):
+
+    description = 'Run the Gaphor test suite.'
+
+    user_options = [
+    ]
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        print 'Starting Gaphor test-suite...'
+
+        self.run_command('build')
 
 def plugin_data(name):
     return 'plugins/%s' % name, glob('data/plugins/%s/*.*' % name)
@@ -370,7 +387,6 @@ setup(name='gaphor',
       long_description="Gaphor is a UML modeling tool written in Python. "
       "It uses the GNOME2 environment for user interaction.",
       platforms=['GNOME2'],
-      all_linguas=['nl', 'es'],
       packages=['gaphor',
                 'gaphor.UML',
                 'gaphor.diagram',
@@ -406,7 +422,7 @@ setup(name='gaphor',
       ],
       scripts=['bin/gaphor', 'bin/gaphorconvert'],
 
-      distclass=Distribution,
+#      distclass=Distribution,
       cmdclass={'config': config_Gaphor,
                 'build_py': build_py_Gaphor,
                 #'install_schemas': install_schemas,
@@ -417,14 +433,21 @@ setup(name='gaphor',
                 'install': install,
                 'install_lib': install_lib_Gaphor,
                 'install_mo': install_mo,
-                'run': run_Gaphor
+                'run': run_Gaphor,
+                'test': test_Gaphor
       },
-      app=['gaphor-osx.py'],
+#      app=['gaphor-osx.py'],
       options = dict(
          py2app = dict(
              includes=['atk', 'pango', 'cairo', 'pangocairo'],
 #             CFBundleDisplayName='Gaphor',
 #             CFBundleIdentifier='net.sourceforge.gaphor'
-         )
+         ),
+         build_pot = dict(
+             all_linguas = 'ca,es,nl,sv',
+         ),
+         build_mo = dict(
+             all_linguas = 'ca,es,nl,sv',
+         ),
      )
 )

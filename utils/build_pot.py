@@ -46,6 +46,7 @@ class build_pot(Command):
 		    ('output-dir=', 'p', ''),
 		    ('width=', 'w', ''),
 		    ('exclude-file=', 'x', ''),
+		    ('all-linguas=', None, ''),
 		    #('no-docstrings=', 'X', ''),
     ]
 
@@ -77,6 +78,7 @@ class build_pot(Command):
         self.docstrings = 0
 	self.exclude_file = None
 	#self.no_docstrings = None
+        self.all_linguas = []
 
     def finalize_options(self):
 	options = self.options
@@ -114,6 +116,8 @@ class build_pot(Command):
 	    except IOError:
 		raise SystemExit, "Can't read --exclude-file: %s" % self.exclude_file
 	# skip: self.no_docstrings
+        if self.all_linguas:
+            self.all_linguas = self.all_linguas.split(',')
 
 	# calculate escapes
 	pygettext.make_escapes(self.escape)
@@ -125,7 +129,8 @@ class build_pot(Command):
 	    self.output = os.path.join(self.output_dir, self.output)
 
 	self.packages = self.distribution.packages
-	self.all_linguas = self.distribution.get_all_linguas()
+	#self.all_linguas = self.distribution.get_all_linguas()
+	#self.all_linguas = self.distribution.options['po']['all_linguas']
 
     def run(self):
 	self.create_pot_file()

@@ -33,6 +33,7 @@ class build_mo(Command):
     user_options = [('build-dir=', None,
                      'Directory to build locale files'),
                     ('force', 'f', 'Force creation of .mo files'),
+                    ('all-linguas', None, ''),
                    ]
 
     boolean_options = ['force']
@@ -46,10 +47,7 @@ class build_mo(Command):
         self.set_undefined_options('build',
                                    ('build_locales', 'build_dir'),
                                    ('force', 'force'))
-	try:
-	    self.all_linguas = self.distribution.get_all_linguas()
-	except:
-	    pass
+        self.all_linguas = self.all_linguas.split(',')
 
     def run (self):
 	"""Run msgfmt.make() on all_linguas."""
