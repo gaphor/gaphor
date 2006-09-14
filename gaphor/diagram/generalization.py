@@ -16,9 +16,15 @@ class GeneralizationItem(DiagramLine):
 
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
-        self.set(has_head=1, head_fill_color=0,
-                 head_a=15.0, head_b=15.0, head_c=10.0, head_d=10.0)
         
+    def draw_head(self, context):
+        cr = context.cairo
+        cr.move_to(0, 0)
+        cr.line_to(15, -10)
+        cr.line_to(15, 10)
+        cr.line_to(0, 0)
+        cr.move_to(15, 0)
+
     #
     # Gaphor Connection Protocol
     #

@@ -7,13 +7,13 @@ import itertools
 import gaphas
 from gaphas.util import text_extents
 from diagramitem import DiagramItem
-from gaphor.diagram import LineItemMeta
+#from gaphor.diagram import LineItemMeta
 
 class LineItem(gaphas.Line, DiagramItem):
     """Base class for diagram lines.
     """
 
-    __metaclass__ = LineItemMeta
+#    __metaclass__ = LineItemMeta
 
     def __init__(self, id = None):
         gaphas.Line.__init__(self)

@@ -15,6 +15,7 @@ from gaphor.diagram.classifier import ClassifierItem
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.dependency import DependencyItem
+from gaphor.diagram.implementation import ImplementationItem
 
 
 class SimpleConnect(object):
@@ -162,7 +163,87 @@ class CommentLineConnect(SimpleConnect):
 component.provideAdapter(CommentLineConnect)
 
 
-class DependencyConnect(SimpleConnect):
+class RelationshipConnect(SimpleConnect):
+    """Base class for relationship connections, such as Association,
+    dependencies and implementations.
+
+    This class introduces a new method: relationship() which is used to
+    find an existing relationship in the model that does not yet exist
+    on the canvas.
+    The subclasses should define HEAD and TAIL as the relationship that
+    should be established between head and tail of the connecting item.
+    """
+
+    def relationship(self, required_type, head, tail):
+        """Figure out what elements are used in a relationship.
+        type - the type of relationship we're looking for
+        head - tuple (association name on line, association name on element)
+        tail - tuple (association name on line, association name on element)
+        """
+        line = self.line
+
+        head_subject = line.head.connected_to.subject
+        tail_subject = line.tail.connected_to.subject
+
+        edge_head_name = head[0] or self.HEAD[0]
+        node_head_name = head[1] or self.HEAD[1]
+        edge_tail_name = tail[0] or self.TAIL[0]
+        node_tail_name = tail[1] or self.TAIL[1]
+
+        # First check if the right subject is already connected:
+        if line.subject \
+           and getattr(line.subject, edge_head_name) is head_subject \
+           and getattr(line.subject, edge_tail_name) is tail_subject:
+            return line.subject
+
+        # This is the type of the relationship we're looking for
+        #required_type = getattr(type(tail_subject), node_tail_name).type
+
+        # Try to find a relationship, that is already created, but not
+        # yet displayed in the diagram.
+        for gen in getattr(tail_subject, node_tail_name):
+            if not isinstance(gen, required_type):
+                continue
+                
+            gen_head = getattr(gen, edge_head_name)
+            try:
+                if not head_subject in gen_head:
+                    continue
+            except TypeError:
+                if not gen_head is head_subject:
+                    continue
+
+            # check for this entry on line.canvas
+            for item in gen.presentation:
+                # Allow line to be returned. Avoids strange
+                # behaviour during loading
+                if item.canvas is line.canvas and item is not line:
+                    break
+            else:
+                return gen
+        return None
+
+    def relationship_or_new(self, type, head, tail):
+        """Like relation(), but create a new instance of none was found.
+        """
+        relation = self.relationship(type, head, tail)
+        if not relation:
+            line = self.line
+            relation = UML.create(type)
+            setattr(relation, head[0], line.head.connected_to.subject)
+            setattr(relation, tail[0], line.tail.connected_to.subject)
+        return relation
+
+    def disconnect(self, handle):
+        """Disconnect model element.
+        """
+        opposite = self.line.opposite(handle)
+        if handle.connected_to and opposite.connected_to:
+            self.line.set_subject(None)
+        super(RelationshipConnect, self).disconnect(handle)
+
+
+class DependencyConnect(RelationshipConnect):
     """Connect two NamedItem elements using a Dependency
     """
     component.adapts(NamedItem, DependencyItem)
@@ -181,39 +262,77 @@ class DependencyConnect(SimpleConnect):
             return None
 
         if connected_to is element:
-            #print 'item identical', connected_to, element
             return None
 
         # Same goes for subjects:
         if connected_to and \
                 (not (connected_to.subject or element.subject)) \
                  and connected_to.subject is element.subject:
-            #print 'Subjects none or match:', connected_to.subject, element.subject
             return None
 
         return super(DependencyConnect, self).glue(handle, x, y)
 
     def connect(self, handle, x, y):
+        """
+        TODO: cleck for existing relationships (use self.relation())
+        """
         if super(DependencyConnect, self).connect(handle, x, y):
             dep = self.line
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 if dep.auto_dependency:
                     dep.set_dependency_type()
-                relation = UML.create(dep.dependency_type)
                 if dep.dependency_type is UML.Realization:
-                    relation.realizingClassifier = dep.head.connected_to.subject
-                    relation.abstraction = dep.tail.connected_to.subject
+                    relation = self.relationship_or_new(dep.dependency_type,
+                                        head=('realizingClassifier', None),
+                                        tail=('abstraction', 'realization'))
                 else:
-                    relation.supplier = dep.head.connected_to.subject
-                    relation.client = dep.tail.connected_to.subject
+                    relation = self.relationship_or_new(dep.dependency_type,
+                                        ('supplier', 'supplierDependency'),
+                                        ('client', 'clientDependency'))
                 dep.subject = relation
 
-    def disconnect(self, handle):
+component.provideAdapter(DependencyConnect)
+
+
+class ImplementationConnect(SimpleConnect):
+    """Connect Interface and a BehavioredClassifier using an Implementation
+    """
+    component.adapts(NamedItem, ImplementationItem)
+
+    HEAD = 'contract', None
+    TAIL = 'implementatingClassifier', 'implementation'
+
+    def glue(self, handle, x, y):
+        """In addition to the normal check, both line ends may not be connected
+        to the same element. Same goes for subjects.
+        """
         opposite = self.line.opposite(handle)
-        if handle.connected_to and opposite.connected_to:
-            self.line.set_subject(None)
-        super(DependencyConnect, self).disconnect(handle)
+        line = self.line
+        element = self.element
+        connected_to = opposite.connected_to
+
+        # Element at the head should be an Interface
+        if handle is line.head and \
+           not isinstance(element.subject, UML.Interface):
+            return None
+
+        # Element at the tail should be a BehavioredClassifier
+        if handle is line.tail and \
+           not isinstance(element.subject, UML.BehavioredClassifier):
+            return None
+
+        return super(ImplementationConnect, self).glue(handle, x, y)
+
+    def connect(self, handle, x, y):
+        if super(ImplementationConnect, self).connect(handle, x, y):
+            line = self.line
+            opposite = self.line.opposite(handle)
+            if opposite.connected_to:
+                relation = self.relationship_or_new(
+                            head=('contract', None),
+                            tail=('implementatingClassifier', 'implementation'))
+                line.subject = relation
 
 component.provideAdapter(DependencyConnect)
 

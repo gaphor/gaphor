@@ -10,7 +10,7 @@ from gaphor import UML
 from gaphor import diagram
 from gaphor.diagram import comment, commentline
 from gaphor.diagram import actor, usecase, klass, package, interface
-from gaphor.diagram import dependency
+from gaphor.diagram import dependency, generalization, implementation
 from gaphor.diagram.tool import DefaultTool, PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
@@ -434,26 +434,26 @@ class DependencyPlacementAction(PlacementAction):
 register_action(DependencyPlacementAction)
 
 
-#class GeneralizationPlacementAction(PlacementAction):
-#    id = 'InsertGeneralization'
-#    label = '_Generalization'
-#    tooltip = 'Create a new generalization'
-#    stock_id = 'gaphor-generalization'
-#    name = 'Generalization'
-#    type = diagram.GeneralizationItem
-#
-#register_action(GeneralizationPlacementAction)
+class GeneralizationPlacementAction(PlacementAction):
+    id = 'InsertGeneralization'
+    label = '_Generalization'
+    tooltip = 'Create a new generalization'
+    stock_id = 'gaphor-generalization'
+    name = 'Generalization'
+    type = generalization.GeneralizationItem
+
+register_action(GeneralizationPlacementAction)
 
 
-#class ImplementationPlacementAction(PlacementAction):
-#    id = 'InsertImplementation'
-#    label = '_Implementation'
-#    tooltip = 'Create a new implementation'
-#    stock_id = 'gaphor-implementation'
-#    name = 'Implementation'
-#    type = diagram.ImplementationItem
-#
-#register_action(ImplementationPlacementAction)
+class ImplementationPlacementAction(PlacementAction):
+    id = 'InsertImplementation'
+    label = '_Implementation'
+    tooltip = 'Create a new implementation'
+    stock_id = 'gaphor-implementation'
+    name = 'Implementation'
+    type = implementation.ImplementationItem
+
+register_action(ImplementationPlacementAction)
 
 
 #class FlowPlacementAction(PlacementAction):

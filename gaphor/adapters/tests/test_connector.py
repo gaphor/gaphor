@@ -128,5 +128,9 @@ class ConnectorTestCase(unittest.TestCase):
         
         # TODO: test with interface (usage) and component (realization)
 
+        # TODO: test with multiple diagrams (should reuse existing relationships first)
+
+    def test_implementation(self):
+        pass
 
 #vi:sw=4:et:ai

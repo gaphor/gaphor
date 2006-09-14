@@ -4,22 +4,22 @@ Common dependencies likeq dependency, usage, realization and implementation.
 
 from gaphor import resource, UML
 
-from gaphor.diagram import Relationship
+#from gaphor.diagram.relationship import Relationship
 from gaphor.diagram.diagramline import DiagramLine
 
 
-class DependencyRelationship(Relationship):
-    """
-    Relationship for dependencies including realization dependency between
-    classifiers and components.
-    """
-    def relationship(self, line, head_subject = None, tail_subject = None):
-        if line.get_dependency_type() == UML.Realization:
-            args = ('realizingClassifier', None), ('abstraction', 'realization')
-        else:
-            args = ('supplier', 'supplierDependency'), ('client', 'clientDependency')
-        args +=  head_subject, tail_subject
-        return self.find(line, *args)
+#class DependencyRelationship(Relationship):
+#    """
+#    Relationship for dependencies including realization dependency between
+#    classifiers and components.
+#    """
+#    def relationship(self, line, head_subject = None, tail_subject = None):
+#        if line.get_dependency_type() == UML.Realization:
+#            args = ('realizingClassifier', None), ('abstraction', 'realization')
+#        else:
+#            args = ('supplier', 'supplierDependency'), ('client', 'clientDependency')
+#        args +=  head_subject, tail_subject
+#        return self.find(line, *args)
 
 
 
@@ -58,7 +58,7 @@ class DependencyItem(DiagramLine):
         'implements': lambda self: self.dependency_type == UML.Implementation,
     }
 
-    relationship = DependencyRelationship()
+#    relationship = DependencyRelationship()
 
     dependency_popup_menu = (
         'separator',
@@ -126,7 +126,7 @@ class DependencyItem(DiagramLine):
     def draw_head(self, context):
         cr = context.cairo
         if self._dash_style:
-            context.cairo.set_dash((), 0)
+            cr.set_dash((), 0)
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
