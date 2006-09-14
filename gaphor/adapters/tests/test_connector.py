@@ -10,7 +10,10 @@ from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.actor import ActorItem
+from gaphor.diagram.klass import ClassItem
+from gaphor.diagram.interface import InterfaceItem
 from gaphor.diagram.dependency import DependencyItem
+from gaphor.diagram.implementation import ImplementationItem
 from gaphor.diagram.interfaces import IConnect
 
 # Ensure adapters are loaded
@@ -133,7 +136,80 @@ class ConnectorTestCase(unittest.TestCase):
 
         # TODO: test with multiple diagrams (should reuse existing relationships first)
 
+    def test_multi_dependency(self):
+        """Dependency should appear in a new diagram, bound on a new
+        DependencyItem.
+        """
+        diagram = UML.create(UML.Diagram)
+        actor1 = UML.create(UML.Actor)
+        actor2 = UML.create(UML.Actor)
+        actoritem1 = diagram.create(ActorItem, subject=actor1)
+        actoritem2 = diagram.create(ActorItem, subject=actor2)
+        dep = diagram.create(DependencyItem)
+        
+        adapter = component.queryMultiAdapter((actoritem1, dep), IConnect)
+
+        adapter.connect(dep.head, dep.head.x, dep.head.y)
+
+        adapter = component.queryMultiAdapter((actoritem2, dep), IConnect)
+
+        adapter.connect(dep.tail, dep.tail.x, dep.tail.y)
+
+        assert dep.subject
+        assert len(actor1.supplierDependency) == 1
+        assert actor1.supplierDependency[0] is dep.subject
+        assert len(actor2.clientDependency) == 1
+        assert actor2.clientDependency[0] is dep.subject
+
+        # Do the same thing, but now on a new diagram:
+
+        diagram2 = UML.create(UML.Diagram)
+        actoritem3 = diagram2.create(ActorItem, subject=actor1)
+        actoritem4 = diagram2.create(ActorItem, subject=actor2)
+        dep2 = diagram2.create(DependencyItem)
+
+        adapter = component.queryMultiAdapter((actoritem3, dep2), IConnect)
+
+        adapter.connect(dep2.head, dep2.head.x, dep2.head.y)
+
+        adapter = component.queryMultiAdapter((actoritem4, dep2), IConnect)
+
+        adapter.connect(dep2.tail, dep2.tail.x, dep2.tail.y)
+
+        assert dep2.subject
+        assert len(actor1.supplierDependency) == 1
+        assert actor1.supplierDependency[0] is dep.subject
+        assert len(actor2.clientDependency) == 1
+        assert actor2.clientDependency[0] is dep.subject
+
+        assert dep.subject is dep2.subject
+
     def test_implementation(self):
-        pass
+        diagram = UML.create(UML.Diagram)
+        impl = diagram.create(ImplementationItem)
+        clazz = diagram.create(ClassItem, subject=UML.create(UML.Class))
+        iface = diagram.create(InterfaceItem, subject=UML.create(UML.Interface))
+
+        adapter = component.queryMultiAdapter((clazz, impl), IConnect)
+
+        adapter.connect(impl.head, impl.head.x, impl.head.y)
+
+        # Should not be allowed to connect to anything but Interfaces
+
+        assert impl.head.connected_to is None
+
+        adapter.connect(impl.tail, impl.tail.x, impl.tail.y)
+        assert impl.tail.connected_to is clazz
+        assert impl.subject is None
+
+        adapter = component.queryMultiAdapter((iface, impl), IConnect)
+
+        adapter.connect(impl.head, impl.head.x, impl.head.y)
+
+        assert impl.head.connected_to is iface
+        assert impl.subject is not None
+        assert impl.subject.contract[0] is iface.subject
+        assert impl.subject.implementatingClassifier[0] is clazz.subject
+
 
 #vi:sw=4:et:ai

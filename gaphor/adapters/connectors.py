@@ -295,7 +295,7 @@ class DependencyConnect(RelationshipConnect):
 component.provideAdapter(DependencyConnect)
 
 
-class ImplementationConnect(SimpleConnect):
+class ImplementationConnect(RelationshipConnect):
     """Connect Interface and a BehavioredClassifier using an Implementation
     """
     component.adapts(NamedItem, ImplementationItem)
@@ -329,12 +329,12 @@ class ImplementationConnect(SimpleConnect):
             line = self.line
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
-                relation = self.relationship_or_new(
-                            head=('contract', None),
-                            tail=('implementatingClassifier', 'implementation'))
+                relation = self.relationship_or_new(UML.Implementation,
+                            ('contract', None),
+                            ('implementatingClassifier', 'implementation'))
                 line.subject = relation
 
-component.provideAdapter(DependencyConnect)
+component.provideAdapter(ImplementationConnect)
 
 
 # vim:sw=4:et:ai
