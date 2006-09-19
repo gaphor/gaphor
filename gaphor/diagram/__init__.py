@@ -1,5 +1,8 @@
-# All model items...
-# vim:sw=4
+"""
+The diagram package contains items (to be drawn on the diagram), tools
+(used for interacting with the diagram) and interfaces (used for adapting the
+diagram).
+"""
 
 __version__ = '$revision$'
 __author__ = 'Arjan J. Molenaar'
@@ -10,8 +13,6 @@ import gobject
 
 from gaphor.misc import uniqueid
 from gaphor.diagram.align import ItemAlign
-
-# NOTE: have to import model elements anyway since model loading code depends on it..
 
 # Map UML elements to their (default) representation.
 _uml_to_item_map = { }
@@ -174,3 +175,5 @@ class DiagramItemMeta(type):
 #    from gaphor.misc.aspects import ReferenceAspect, weave_method
 #    from gaphor import refs
 #    weave_method(create_as, ReferenceAspect, refs)
+
+# vim:sw=4:et

@@ -9,13 +9,7 @@ from gaphas import geometry
 from gaphas import constraint
 from gaphor import UML
 from gaphor.diagram.interfaces import IConnect
-from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.classifier import ClassifierItem
-from gaphor.diagram.comment import CommentItem
-from gaphor.diagram.commentline import CommentLineItem
-from gaphor.diagram.dependency import DependencyItem
-from gaphor.diagram.implementation import ImplementationItem
+from gaphor.diagram import items
 
 
 class SimpleConnect(object):
@@ -113,7 +107,7 @@ class CommentLineConnect(SimpleConnect):
     """Connect a comment line to a comment item.
     Connect Comment.annotatedElement to any element
     """
-    component.adapts(ElementItem, CommentLineItem)
+    component.adapts(items.ElementItem, items.CommentLineItem)
 
     def glue(self, handle, x, y):
         """In addition to the normal check, both line ends may not be connected
@@ -136,8 +130,8 @@ class CommentLineConnect(SimpleConnect):
 
         # One end should be connected to a CommentItem:
         if connected_to and \
-                ((isinstance(connected_to, CommentItem) and isinstance(self.element, CommentItem)) or \
-                 (not isinstance(connected_to, CommentItem) and not isinstance(self.element, CommentItem))):
+                ((isinstance(connected_to, items.CommentItem) and isinstance(self.element, items.CommentItem)) or \
+                 (not isinstance(connected_to, items.CommentItem) and not isinstance(self.element, items.CommentItem))):
             return None
 
         return super(CommentLineConnect, self).glue(handle, x, y)
@@ -170,12 +164,13 @@ class RelationshipConnect(SimpleConnect):
     This class introduces a new method: relationship() which is used to
     find an existing relationship in the model that does not yet exist
     on the canvas.
-    The subclasses should define HEAD and TAIL as the relationship that
-    should be established between head and tail of the connecting item.
     """
 
     def relationship(self, required_type, head, tail):
-        """Figure out what elements are used in a relationship.
+        """ Find an existing relationship in the model that meets the
+        required type and is connected to the same model element the head
+        and tail of the line are conncted to.
+
         type - the type of relationship we're looking for
         head - tuple (association name on line, association name on element)
         tail - tuple (association name on line, association name on element)
@@ -185,10 +180,10 @@ class RelationshipConnect(SimpleConnect):
         head_subject = line.head.connected_to.subject
         tail_subject = line.tail.connected_to.subject
 
-        edge_head_name = head[0] or self.HEAD[0]
-        node_head_name = head[1] or self.HEAD[1]
-        edge_tail_name = tail[0] or self.TAIL[0]
-        node_tail_name = tail[1] or self.TAIL[1]
+        edge_head_name = head[0]
+        node_head_name = head[1]
+        edge_tail_name = tail[0]
+        node_tail_name = tail[1]
 
         # First check if the right subject is already connected:
         if line.subject \
@@ -234,6 +229,24 @@ class RelationshipConnect(SimpleConnect):
             setattr(relation, tail[0], line.tail.connected_to.subject)
         return relation
 
+    def glue(self, handle, x, y):
+        opposite = self.line.opposite(handle)
+        line = self.line
+        element = self.element
+        connected_to = opposite.connected_to
+
+        # Element can not be a parent for itself.
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
+
+        return super(RelationshipConnect, self).glue(handle, x, y)
+
     def disconnect(self, handle):
         """Disconnect model element.
         """
@@ -246,7 +259,7 @@ class RelationshipConnect(SimpleConnect):
 class DependencyConnect(RelationshipConnect):
     """Connect two NamedItem elements using a Dependency
     """
-    component.adapts(NamedItem, DependencyItem)
+    component.adapts(items.NamedItem, items.DependencyItem)
 
     def glue(self, handle, x, y):
         """In addition to the normal check, both line ends may not be connected
@@ -259,15 +272,6 @@ class DependencyConnect(RelationshipConnect):
         # Element should be a NamedElement
         if not element.subject or \
            not isinstance(element.subject, UML.NamedElement):
-            return None
-
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
             return None
 
         return super(DependencyConnect, self).glue(handle, x, y)
@@ -298,10 +302,7 @@ component.provideAdapter(DependencyConnect)
 class ImplementationConnect(RelationshipConnect):
     """Connect Interface and a BehavioredClassifier using an Implementation
     """
-    component.adapts(NamedItem, ImplementationItem)
-
-    HEAD = 'contract', None
-    TAIL = 'implementatingClassifier', 'implementation'
+    component.adapts(items.NamedItem, items.ImplementationItem)
 
     def glue(self, handle, x, y):
         """In addition to the normal check, both line ends may not be connected
@@ -335,6 +336,95 @@ class ImplementationConnect(RelationshipConnect):
                 line.subject = relation
 
 component.provideAdapter(ImplementationConnect)
+
+
+class GeneralizationConnect(RelationshipConnect):
+    """Connect Classifiers with a Generalization relationship.
+    """
+    component.adapts(items.ClassifierItem, items.GeneralizationItem)
+
+#    # FixMe: Both ends of the generalization should be of the same  type?
+#    def glue(self, handle, x, y):
+#        """In addition to the normal check, both line ends may not be connected
+#        to the same element. Same goes for subjects.
+#        """
+#        opposite = self.line.opposite(handle)
+#        line = self.line
+#        element = self.element
+#        connected_to = opposite.connected_to
+#
+#
+#        return super(GeneralizationConnect, self).glue(handle, x, y)
+
+    def connect(self, handle, x, y):
+        if super(GeneralizationConnect, self).connect(handle, x, y):
+            line = self.line
+            opposite = self.line.opposite(handle)
+            if opposite.connected_to:
+                relation = self.relationship_or_new(UML.Generalization,
+                            ('general', None),
+                            ('specific', 'generalization'))
+                line.subject = relation
+
+component.provideAdapter(GeneralizationConnect)
+
+
+class IncludeConnect(RelationshipConnect):
+    """Connect Usecases with a Include relationship.
+    """
+    component.adapts(items.UseCaseItem, items.IncludeItem)
+
+    def glue(self, handle, x, y):
+        """In addition to the normal check, both line ends may not be connected
+        to the same element. Same goes for subjects.
+        """
+        element = self.element
+        
+        if not (element.subject and isinstance(element.subject, UML.UseCase)):
+            return None
+
+        return super(IncludeConnect, self).glue(handle, x, y)
+
+    def connect(self, handle, x, y):
+        if super(IncludeConnect, self).connect(handle, x, y):
+            line = self.line
+            opposite = self.line.opposite(handle)
+            if opposite.connected_to:
+                relation = self.relationship_or_new(UML.Include,
+                            ('addition', None),
+                            ('includingCase', 'include'))
+                line.subject = relation
+
+component.provideAdapter(IncludeConnect)
+
+
+class ExtendConnect(RelationshipConnect):
+    """Connect Usecases with a Extend relationship.
+    """
+    component.adapts(items.UseCaseItem, items.ExtendItem)
+
+    def glue(self, handle, x, y):
+        """In addition to the normal check, both line ends may not be connected
+        to the same element. Same goes for subjects.
+        """
+        element = self.element
+        
+        if not (element.subject and isinstance(element.subject, UML.UseCase)):
+            return None
+
+        return super(ExtendConnect, self).glue(handle, x, y)
+
+    def connect(self, handle, x, y):
+        if super(ExtendConnect, self).connect(handle, x, y):
+            line = self.line
+            opposite = self.line.opposite(handle)
+            if opposite.connected_to:
+                relation = self.relationship_or_new(UML.Extend,
+                            ('extendedCase', None),
+                            ('extension', 'extend'))
+                line.subject = relation
+
+component.provideAdapter(ExtendConnect)
 
 
 # vim:sw=4:et:ai

@@ -9,7 +9,6 @@ from gaphor.diagram.diagramline import DiagramLine
 class ImplementationItem(DiagramLine):
 
     __uml__          = UML.Implementation
-#    __relationship__ = 'contract', None, 'implementatingClassifier', 'implementation'
 
     def __init__(self, id = None):
         DiagramLine.__init__(self, id)
@@ -34,8 +33,8 @@ class ImplementationItem(DiagramLine):
             cr.line_to(15, -10)
             cr.line_to(15, 10)
             cr.line_to(0, 0)
-            cr.move_to(15, 0)
             cr.stroke()
+            cr.move_to(15, 0)
 
     def draw(self, context):
         if not self._solid:

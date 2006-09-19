@@ -136,66 +136,8 @@ class DependencyItem(DiagramLine):
     def draw(self, context):
         if self._dash_style:
             context.cairo.set_dash((7.0, 5.0), 0)
+        # TODO: draw stereotype
         super(DependencyItem, self).draw(context)
-
-    #
-    # Gaphor Connection Protocol
-    #
-    def allow_connect_handle(self, handle, connecting_to):
-        """See DiagramLine.allow_connect_handle().
-        """
-        try:
-            return isinstance(connecting_to.subject, UML.NamedElement)
-        except AttributeError:
-            return 0
-
-    def confirm_connect_handle(self, handle):
-        """See DiagramLine.confirm_connect_handle().
-
-        In case of an Implementation, the head should be connected to an
-        Interface and the tail to a BehavioredClassifier.
-
-        TODO: Should Class also inherit from BehavioredClassifier?
-        """
-        #print 'confirm_connect_handle', handle, self.subject
-        c1 = self.head.connected_to
-        c2 = self.tail.connected_to
-
-        self._set_line_style(c1)
-
-
-        s1 = s2 = None
-        if c1:
-            s1 = c1.subject
-        if c2:
-            s2 = c2.subject
-
-        if self.auto_dependency:
-            # when one handle is connected then it is possible to determe
-            # the dependency type
-            self.set_dependency_type(determine_dependency_type(s1, s2))
-
-        if c1 and c2:
-            relation = self.relationship
-            if not relation:
-                relation = resource(UML.ElementFactory).create(self.dependency_type)
-                if self.get_dependency_type() == UML.Realization:
-                    relation.realizingClassifier = s1
-                    relation.abstraction = s2
-                else:
-                    relation.supplier = s1
-                    relation.client = s2
-            self.subject = relation
-
-
-    def confirm_disconnect_handle(self, handle, was_connected_to):
-        """See DiagramLine.confirm_disconnect_handle().
-        """
-        #print 'confirm_disconnect_handle', handle
-        #self._set_line_style()
-        self.set_subject(None)
-        self.request_update()
-
 
     @staticmethod
     def is_usage(s):

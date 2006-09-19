@@ -11,7 +11,6 @@ class ExtendItem(IncludeItem):
     Use case extension relationship.
     """
     __uml__ = UML.Extend
-    __relationship__ = 'extendedCase', None, 'extension', 'extend'
     __stereotype__ = 'extend'
 
 

@@ -1,3 +1,17 @@
+2006-09-19  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/items.py: New file. Gathered all *Item imports here
+        (used to be in gaphor/diagram/__init__.py)
+        * gaphor/actions/placementactions.py: Added actions for Include/Extends
+        * gaphor/actions/tests/test_placementactions.py: .. and tests
+        * gaphor/adapters/connectors.py: added connectors for Generalization,
+        Inlcude, Extend.
+        * gaphor/diagram/dependency.py: Cleanup
+        * gaphor/diagram/extend.py: Converted to new canvas
+        * gaphor/diagram/generalization.py: idem
+        * gaphor/diagram/implementation.py: idem
+        * gaphor/diagram/include.py: idem
+
 2006-09-14  arjan <arjan at yirdis dot nl>
 
         * gaphor/UML/tests/__init__.py: New file.

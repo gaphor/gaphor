@@ -63,11 +63,17 @@ class PlacementToolTestCase(unittest.TestCase):
     def test_dependency_placement(self):
         self.do_test_placement(placementactions.DependencyPlacementAction())
 
+    def test_extend_placement(self):
+        self.do_test_placement(placementactions.ExtendPlacementAction())
+
     def test_generalization_placement(self):
         self.do_test_placement(placementactions.GeneralizationPlacementAction())
 
     def test_implementation_placement(self):
         self.do_test_placement(placementactions.ImplementationPlacementAction())
+
+    def test_include_placement(self):
+        self.do_test_placement(placementactions.IncludePlacementAction())
 
 
 # vim:sw=4:et:ai

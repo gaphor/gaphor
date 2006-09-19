@@ -7,13 +7,7 @@ from zope import component
 from gaphor import resource
 from gaphor import UML
 from gaphor.ui.mainwindow import MainWindow
-from gaphor.diagram.comment import CommentItem
-from gaphor.diagram.commentline import CommentLineItem
-from gaphor.diagram.actor import ActorItem
-from gaphor.diagram.klass import ClassItem
-from gaphor.diagram.interface import InterfaceItem
-from gaphor.diagram.dependency import DependencyItem
-from gaphor.diagram.implementation import ImplementationItem
+from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
 # Ensure adapters are loaded
@@ -28,10 +22,10 @@ class ConnectorTestCase(unittest.TestCase):
         """Test CommentLineItem connecting to comment and Actor items.
         """
         diagram = UML.create(UML.Diagram)
-        comment = diagram.create(CommentItem, subject=UML.create(UML.Comment))
-        line = diagram.create(CommentLineItem)
-        actor = diagram.create(ActorItem, subject=UML.create(UML.Actor))
-        actor2 = diagram.create(ActorItem, subject=UML.create(UML.Actor))
+        comment = diagram.create(items.CommentItem, subject=UML.create(UML.Comment))
+        line = diagram.create(items.CommentLineItem)
+        actor = diagram.create(items.ActorItem, subject=UML.create(UML.Actor))
+        actor2 = diagram.create(items.ActorItem, subject=UML.create(UML.Actor))
 
         # Connect the comment item to the head of the line:
 
@@ -89,9 +83,9 @@ class ConnectorTestCase(unittest.TestCase):
 
     def test_dependency(self):
         diagram = UML.create(UML.Diagram)
-        actor1 = diagram.create(ActorItem, subject=UML.create(UML.Actor))
-        actor2 = diagram.create(ActorItem, subject=UML.create(UML.Actor))
-        dep = diagram.create(DependencyItem)
+        actor1 = diagram.create(items.ActorItem, subject=UML.create(UML.Actor))
+        actor2 = diagram.create(items.ActorItem, subject=UML.create(UML.Actor))
+        dep = diagram.create(items.DependencyItem)
 
         adapter = component.queryMultiAdapter((actor1, dep), IConnect)
 
@@ -123,7 +117,7 @@ class ConnectorTestCase(unittest.TestCase):
         assert dep_subj not in actor1.subject.supplierDependency
         assert dep_subj not in actor2.subject.clientDependency
 
-        #iface1 = diagram.create(InterfaceItem, subject=UML.Interface)
+        #iface1 = diagram.create(items.InterfaceItem, subject=UML.Interface)
 
         adapter.connect(dep.tail, dep.tail.x, dep.tail.y)
 
@@ -143,9 +137,9 @@ class ConnectorTestCase(unittest.TestCase):
         diagram = UML.create(UML.Diagram)
         actor1 = UML.create(UML.Actor)
         actor2 = UML.create(UML.Actor)
-        actoritem1 = diagram.create(ActorItem, subject=actor1)
-        actoritem2 = diagram.create(ActorItem, subject=actor2)
-        dep = diagram.create(DependencyItem)
+        actoritem1 = diagram.create(items.ActorItem, subject=actor1)
+        actoritem2 = diagram.create(items.ActorItem, subject=actor2)
+        dep = diagram.create(items.DependencyItem)
         
         adapter = component.queryMultiAdapter((actoritem1, dep), IConnect)
 
@@ -164,9 +158,9 @@ class ConnectorTestCase(unittest.TestCase):
         # Do the same thing, but now on a new diagram:
 
         diagram2 = UML.create(UML.Diagram)
-        actoritem3 = diagram2.create(ActorItem, subject=actor1)
-        actoritem4 = diagram2.create(ActorItem, subject=actor2)
-        dep2 = diagram2.create(DependencyItem)
+        actoritem3 = diagram2.create(items.ActorItem, subject=actor1)
+        actoritem4 = diagram2.create(items.ActorItem, subject=actor2)
+        dep2 = diagram2.create(items.DependencyItem)
 
         adapter = component.queryMultiAdapter((actoritem3, dep2), IConnect)
 
@@ -186,9 +180,9 @@ class ConnectorTestCase(unittest.TestCase):
 
     def test_implementation(self):
         diagram = UML.create(UML.Diagram)
-        impl = diagram.create(ImplementationItem)
-        clazz = diagram.create(ClassItem, subject=UML.create(UML.Class))
-        iface = diagram.create(InterfaceItem, subject=UML.create(UML.Interface))
+        impl = diagram.create(items.ImplementationItem)
+        clazz = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        iface = diagram.create(items.InterfaceItem, subject=UML.create(UML.Interface))
 
         adapter = component.queryMultiAdapter((clazz, impl), IConnect)
 
@@ -210,6 +204,28 @@ class ConnectorTestCase(unittest.TestCase):
         assert impl.subject is not None
         assert impl.subject.contract[0] is iface.subject
         assert impl.subject.implementatingClassifier[0] is clazz.subject
+
+    def test_generalization(self):
+        diagram = UML.create(UML.Diagram)
+        gen = diagram.create(items.GeneralizationItem)
+        c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        c2 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+
+        adapter = component.queryMultiAdapter((c1, gen), IConnect)
+
+        adapter.connect(gen.tail, gen.tail.x, gen.tail.y)
+
+        assert gen.tail.connected_to is c1
+        assert gen.subject is None
+
+        adapter = component.queryMultiAdapter((c2, gen), IConnect)
+
+        adapter.connect(gen.head, gen.head.x, gen.head.y)
+
+        assert gen.head.connected_to is c2
+        assert gen.subject is not None
+        assert gen.subject.general is c2.subject
+        assert gen.subject.specific is c1.subject
 
 
 #vi:sw=4:et:ai

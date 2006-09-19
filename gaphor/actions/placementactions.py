@@ -8,9 +8,7 @@ import gaphas
 from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
-from gaphor.diagram import comment, commentline
-from gaphor.diagram import actor, usecase, klass, package, interface
-from gaphor.diagram import dependency, generalization, implementation
+from gaphor.diagram import items
 from gaphor.diagram.tool import DefaultTool, PlacementTool
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
@@ -121,7 +119,7 @@ class ActorPlacementAction(NamespacePlacementAction):
     stock_id = 'gaphor-actor'
     tooltip = 'Create a new actor item'
     name = 'Actor'
-    type = diagram.actor.ActorItem
+    type = items.ActorItem
     subject_type = UML.Actor
 
 register_action(ActorPlacementAction)
@@ -133,32 +131,32 @@ class UseCasePlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new use case item'
     stock_id = 'gaphor-usecase'
     name = 'UseCase'
-    type = diagram.usecase.UseCaseItem
+    type = items.UseCaseItem
     subject_type = UML.UseCase
 
 register_action(UseCasePlacementAction)
 
 
-#class IncludePlacementAction(PlacementAction):
-#    id = 'InsertInclude'
-#    label = '_Include'
-#    tooltip = 'Create a new include'
-#    stock_id = 'gaphor-include'
-#    name = 'Include'
-#    type = diagram.IncludeItem
-#
-#register_action(IncludePlacementAction)
+class IncludePlacementAction(PlacementAction):
+    id = 'InsertInclude'
+    label = '_Include'
+    tooltip = 'Create a new include'
+    stock_id = 'gaphor-include'
+    name = 'Include'
+    type = items.IncludeItem
+
+register_action(IncludePlacementAction)
 
 
-#class ExtendPlacementAction(PlacementAction):
-#    id = 'InsertExtend'
-#    label = '_Extend'
-#    tooltip = 'Create a new extend'
-#    stock_id = 'gaphor-extend'
-#    name = 'Extend'
-#    type = diagram.ExtendItem
-#
-#register_action(ExtendPlacementAction)
+class ExtendPlacementAction(PlacementAction):
+    id = 'InsertExtend'
+    label = '_Extend'
+    tooltip = 'Create a new extend'
+    stock_id = 'gaphor-extend'
+    name = 'Extend'
+    type = items.ExtendItem
+
+register_action(ExtendPlacementAction)
 
 
 class ClassPlacementAction(NamespacePlacementAction):
@@ -167,7 +165,7 @@ class ClassPlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new class item'
     stock_id = 'gaphor-class'
     name = 'Class'
-    type = diagram.klass.ClassItem
+    type = items.ClassItem
     subject_type = UML.Class
 
 register_action(ClassPlacementAction)
@@ -241,7 +239,7 @@ class InterfacePlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new interface item'
     stock_id = 'gaphor-interface'
     name = 'Interface'
-    type = interface.InterfaceItem
+    type = items.InterfaceItem
     subject_type = UML.Interface
 
 #    def _execute(self):
@@ -258,7 +256,7 @@ class StereotypePlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new stereotype item'
     stock_id = 'gaphor-stereotype'
     name = 'Stereotype'
-    type = klass.ClassItem
+    type = items.ClassItem
     subject_type = UML.Stereotype
 
 register_action(StereotypePlacementAction)
@@ -270,7 +268,7 @@ class ProfilePlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new profile'
     stock_id = 'gaphor-profile'
     name = 'Profile'
-    type = diagram.package.PackageItem
+    type = items.PackageItem
     subject_type = UML.Profile
 
 register_action(ProfilePlacementAction)
@@ -282,7 +280,7 @@ class PackagePlacementAction(NamespacePlacementAction):
     tooltip = 'Create a new package item'
     stock_id = 'gaphor-package'
     name = 'Package'
-    type = diagram.package.PackageItem
+    type = items.PackageItem
     subject_type = UML.Package
 
 register_action(PackagePlacementAction)
@@ -294,7 +292,7 @@ register_action(PackagePlacementAction)
 #    tooltip = 'Create a new initial node'
 #    stock_id = 'gaphor-initial-node'
 #    name = 'InitialNode'
-#    type = diagram.InitialNodeItem
+#    type = items.InitialNodeItem
 #    subject_type = UML.InitialNode
 #
 #register_action(InitialNodePlacementAction)
@@ -378,7 +376,7 @@ class CommentPlacementAction(PlacementAction):
     tooltip = 'Create a new comment item'
     stock_id = 'gaphor-comment'
     name = 'Comment'
-    type = comment.CommentItem
+    type = items.CommentItem
     subject_type = UML.Comment
 
 register_action(CommentPlacementAction)
@@ -390,7 +388,7 @@ class CommentLinePlacementAction(PlacementAction):
     tooltip = 'Create a new comment line'
     stock_id = 'gaphor-comment-line'
     name = 'Comment line'
-    type = commentline.CommentLineItem
+    type = items.CommentLineItem
 
 register_action(CommentLinePlacementAction)
 
@@ -429,7 +427,7 @@ class DependencyPlacementAction(PlacementAction):
     tooltip = 'Create a new dependency'
     stock_id = 'gaphor-dependency'
     name = 'Dependency'
-    type = dependency.DependencyItem
+    type = items.DependencyItem
 
 register_action(DependencyPlacementAction)
 
@@ -440,7 +438,7 @@ class GeneralizationPlacementAction(PlacementAction):
     tooltip = 'Create a new generalization'
     stock_id = 'gaphor-generalization'
     name = 'Generalization'
-    type = generalization.GeneralizationItem
+    type = items.GeneralizationItem
 
 register_action(GeneralizationPlacementAction)
 
@@ -451,7 +449,7 @@ class ImplementationPlacementAction(PlacementAction):
     tooltip = 'Create a new implementation'
     stock_id = 'gaphor-implementation'
     name = 'Implementation'
-    type = implementation.ImplementationItem
+    type = items.ImplementationItem
 
 register_action(ImplementationPlacementAction)
 
