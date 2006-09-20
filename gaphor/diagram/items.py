@@ -10,7 +10,7 @@ from gaphor.diagram.usecase import UseCaseItem
 from gaphor.diagram.include import IncludeItem
 from gaphor.diagram.extend import ExtendItem
 from gaphor.diagram.classifier import ClassifierItem
-from gaphor.diagram.feature import AttributeItem
+from gaphor.diagram.feature import AttributeItem, OperationItem
 from gaphor.diagram.klass import ClassItem
 from gaphor.diagram.interface import InterfaceItem
 from gaphor.diagram.package import PackageItem

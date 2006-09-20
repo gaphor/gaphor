@@ -19,7 +19,7 @@ def undoable(func):
             func(*args, **kwargs)
         finally:
             undo_manager.commit_transaction()
-
+    return wrapper
 
 class TransactionError(Exception):
 
@@ -135,7 +135,7 @@ class UndoManager(gobject.GObject):
             if self._current_transaction.can_undo():
                 self._undo_stack.append(self._current_transaction)
             else:
-                log.debug('nothing to commit')
+                pass #log.debug('nothing to commit')
 
             self._current_transaction = None
 

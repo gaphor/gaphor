@@ -40,8 +40,8 @@ def get_focused_item(window):
 
 def get_pointer(view):
     x, y = view.get_pointer()
-    x = x + view.get_hadjustment().value
-    y = y + view.get_vadjustment().value
+    x = x + view.hadjustment.value
+    y = y + view.vadjustment.value
     return x, y
 
 class ItemNewSubjectAction(Action):
@@ -116,33 +116,30 @@ class AbstractClassAction(CheckAction):
 register_action(AbstractClassAction, 'ItemFocus')
 
 
-class AbstractOperationAction(CheckAction):
-    id = 'AbstractOperation'
-    label = 'Abstract Operation'
-    tooltip='Abstract operation'
-
-    def init(self, window):
-        self._window = window
-
-    def update(self):
-        try:
-            get_parent_focus_item(self._window)
-            item = self._window.get_current_diagram_view() \
-                .focus_item.item
-        except NoFocusItemError:
-            pass
-        else:
-            if isinstance(item, items.OperationItem):
-                self.active = item.subject and item.subject.isAbstract
-
-    @undoable
-    def execute(self):
-        item = self._window.get_current_diagram_view() \
-            .focus_item.item
-        if item and item.subject:
-            item.subject.isAbstract = self.active
-
-register_action(AbstractOperationAction, 'ItemFocus')
+#class AbstractOperationAction(CheckAction):
+#    id = 'AbstractOperation'
+#    label = 'Abstract Operation'
+#    tooltip='Abstract operation'
+#
+#    def init(self, window):
+#        self._window = window
+#
+#    def update(self):
+#        try:
+#            item = self._window.get_current_diagram_view().focused_item
+#        except NoFocusItemError:
+#            pass
+#        else:
+#            if isinstance(item, items.OperationItem):
+#                self.active = item.subject and item.subject.isAbstract
+#
+#    @undoable
+#    def execute(self):
+#        item = self._window.get_current_diagram_view().focused_item
+#        if item and item.subject:
+#            item.subject.isAbstract = self.active
+#
+#register_action(AbstractOperationAction, 'ItemFocus')
 
 
 # NOTE: attributes and operations can now only be created on classes,
@@ -164,7 +161,7 @@ class CreateAttributeAction(Action):
             pass
         else:
             if isinstance(item, items.ClassItem):
-                self.sensitive = item.get_property('show-attributes')
+                self.sensitive = item.show_attributes
 
     @undoable
     def execute(self):
@@ -180,14 +177,14 @@ class CreateAttributeAction(Action):
 
         # Select this item for editing
         presentation = attribute.presentation
-        focus_item.update_now()
+        focus_item.request_update()
 
-        wx, wy = view.window_to_world(*get_pointer(view))
-        for f in focus_item.groupable_iter():
-            if f in presentation:
-                vf = view.find_view_item(f)
-                view.start_editing(vf, wx, wy)
-                break
+        wx, wy = view.transform_point_c2w(*get_pointer(view))
+        #for f in focus_item._attributes:
+        #    if f in presentation:
+        #        vf = view.find_view_item(f)
+        #        view.start_editing(vf, wx, wy)
+        #        break
 
 register_action(CreateAttributeAction, 'ShowAttributes', 'ItemFocus')
 
@@ -207,7 +204,7 @@ class CreateOperationAction(Action):
             pass
         else:
             if isinstance(item, items.ClassItem):
-                self.sensitive = item.get_property('show-operations')
+                self.sensitive = item.show_operations
 
     @undoable
     def execute(self):
@@ -222,45 +219,45 @@ class CreateOperationAction(Action):
         subject.ownedOperation = operation
         # Select this item for editing
         presentation = operation.presentation
-        focus_item.update_now()
+        focus_item.request_update()
 
-        wx, wy = view.window_to_world(*get_pointer(view))
-        for f in focus_item.groupable_iter():
-            if f in presentation:
-                vf = view.find_view_item(f)
-                view.start_editing(vf, wx, wy)
-                break
+#        wx, wy = view.window_to_world(*get_pointer(view))
+#        for f in focus_item.groupable_iter():
+#            if f in presentation:
+#                vf = view.find_view_item(f)
+#                view.start_editing(vf, wx, wy)
+#                break
 
 register_action(CreateOperationAction, 'ShowOperations', 'ItemFocus')
 
 
-class DeleteFeatureAction(Action):
-
-    def init(self, window):
-        self._window = window
-
-    @undoable
-    def execute(self):
-        #subject = get_parent_focus_item(self._window).subject
-        item = self._window.get_current_diagram_view().focus_item.item
-        #assert isinstance(subject, (UML.Property, UML.Operation))
-        item.subject.unlink()
-
-
-class DeleteAttributeAction(DeleteFeatureAction):
-    id = 'DeleteAttribute'
-    label = 'Delete A_ttribute'
-    tooltip='Delete the selected attribute'
-
-register_action(DeleteAttributeAction, 'ShowAttributes', 'CreateAttribute', 'ItemFocus')
+#class DeleteFeatureAction(Action):
+#
+#    def init(self, window):
+#        self._window = window
+#
+#    @undoable
+#    def execute(self):
+#        #subject = get_parent_focus_item(self._window).subject
+#        item = self._window.get_current_diagram_view().focus_item.item
+#        #assert isinstance(subject, (UML.Property, UML.Operation))
+#        item.subject.unlink()
 
 
-class DeleteOperationAction(DeleteFeatureAction):
-    id = 'DeleteOperation'
-    label = 'Delete O_peration'
-    tooltip = 'Delete the selected operation'
+#class DeleteAttributeAction(DeleteFeatureAction):
+#    id = 'DeleteAttribute'
+#    label = 'Delete A_ttribute'
+#    tooltip='Delete the selected attribute'
+#
+#register_action(DeleteAttributeAction, 'ShowAttributes', 'CreateAttribute', 'ItemFocus')
 
-register_action(DeleteOperationAction, 'ShowOperations', 'CreateOperation', 'ItemFocus')
+
+#class DeleteOperationAction(DeleteFeatureAction):
+#    id = 'DeleteOperation'
+#    label = 'Delete O_peration'
+#    tooltip = 'Delete the selected operation'
+#
+#register_action(DeleteOperationAction, 'ShowOperations', 'CreateOperation', 'ItemFocus')
 
 
 class ShowAttributesAction(CheckAction):
@@ -278,12 +275,12 @@ class ShowAttributesAction(CheckAction):
             pass
         else:
             if isinstance(item, items.ClassItem):
-                self.active = item.get_property('show-attributes')
+                self.active = item.show_attributes
 
     @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
-        item.set_property('show-attributes', self.active)
+        item.show_attributes = self.active
 
 register_action(ShowAttributesAction, 'ItemFocus')
 
@@ -303,12 +300,12 @@ class ShowOperationsAction(CheckAction):
             pass
         else:
             if isinstance(item, items.ClassItem):
-                self.active = item.get_property('show-operations')
+                self.active = item.show_operations
 
     @undoable
     def execute(self):
         item = get_parent_focus_item(self._window)
-        item.set_property('show-operations', self.active)
+        item.show_operations = self.active
 
 register_action(ShowOperationsAction, 'ItemFocus')
 
@@ -357,7 +354,7 @@ class DeleteSegmentAction(SegmentAction):
         try:
             fi = get_parent_focus_item(self._window)
             if fi and isinstance(fi, gaphas.Line):
-                self.sensitive = len(fi.handles) > 2
+                self.sensitive = len(fi.handles()) > 2
         except NoFocusItemError:
             pass
 
@@ -696,7 +693,7 @@ class DependencyTypeAction(RadioAction):
     def update(self):
         try:
             item = get_parent_focus_item(self._window)
-            if isinstance(item, DependencyItem):
+            if isinstance(item, items.DependencyItem):
                 self.active = (item.get_dependency_type() == self.dependency_type)
         except NoFocusItemError:
             pass
