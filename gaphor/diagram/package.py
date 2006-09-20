@@ -6,6 +6,7 @@ from gaphas.util import text_center, text_extents, text_set_font
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.align import MARGIN_TOP
+import font
 
 class PackageItem(NamedItem):
 
@@ -61,7 +62,7 @@ class PackageItem(NamedItem):
         if self.stereotype:
             text_center(cr, w / 2, y + 10, self.stereotype)
 
-        text_set_font(cr, self.FONT_NAME)
+        text_set_font(cr, font.FONT_NAME)
         text_center(cr, w/2, y + (h-y)/2, self.subject.name)
 
 

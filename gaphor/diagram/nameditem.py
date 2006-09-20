@@ -4,9 +4,6 @@
 
 import itertools
 
-from zope import interface
-from gaphor.interfaces import INamedItemView
-
 from gaphor.undomanager import get_undo_manager
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.align import ItemAlign
@@ -16,16 +13,6 @@ from gaphor.diagram.groupable import GroupBase
 
 
 class Named(object):
-    interface.implements(INamedItemView)
-
-    FONT_NAME = 'sans bold 10'
-
-    #def __init__(self):
-        #self._name = diacanvas.shape.Text()
-        #self._name.set_font_description(pango.FontDescription(self._FONT))
-        #self._name.set_alignment(pango.ALIGN_CENTER)
-        #self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
-        #self._name.set_markup(False)
 
     #
     # DiagramItem subject notification methods
@@ -70,7 +57,7 @@ class NamedItemMeta(DiagramItemMeta):
 
 
 class NamedItem(ElementItem, Named):
-    __metaclass__ = NamedItemMeta
+    #__metaclass__ = NamedItemMeta
 
     popup_menu = ElementItem.popup_menu + (
         'RenameItem',

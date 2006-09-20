@@ -29,8 +29,6 @@ class DiagramItem(Presentation, Element):
             ...
     """
 
-    FONT_STEREOTYPE = 'sans 10'
-
     stereotype_list = []
     popup_menu = ('Stereotype', stereotype_list)
 
@@ -132,7 +130,7 @@ class DiagramItem(Presentation, Element):
             # look for stereotypes to put them into context menu of an item
             # this can be only done when subject exists
 
-            from itemactions import ApplyStereotypeAction, register_action
+            from gaphor.actions.itemactions import ApplyStereotypeAction, register_action
 
             cls = type(subject)
 

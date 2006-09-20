@@ -170,11 +170,12 @@ class ClassPlacementAction(NamespacePlacementAction):
 
 register_action(ClassPlacementAction)
 
-#class MetaClassPlacementAction(ClassPlacementAction):
-#    id = 'InsertMetaClass'
-#    label = '_Metaclass'
-#
-#register_action(MetaClassPlacementAction)
+
+class MetaClassPlacementAction(ClassPlacementAction):
+    id = 'InsertMetaClass'
+    label = '_Metaclass'
+
+register_action(MetaClassPlacementAction)
 
 
 class InterfacePlacementTool(gaphas.tool.PlacementTool):

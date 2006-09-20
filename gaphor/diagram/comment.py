@@ -4,23 +4,21 @@ CommentItem diagram item
 
 import gobject
 import pango
-from zope import interface, component
+from zope import component
 
 from gaphor import UML
 from elementitem import ElementItem
 from gaphas.item import NW
 from gaphas.util import text_multiline, text_extents
 
-from interfaces import ICommentItem, IEditor
+from interfaces import IEditor
 
 class CommentItem(ElementItem):
-    interface.implements(ICommentItem)
 
     __uml__ = UML.Comment
 
     EAR=15
     OFFSET=5
-    FONT='sans 10'
 
     popup_menu = (
         'EditItem',

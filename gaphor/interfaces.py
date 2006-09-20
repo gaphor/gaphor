@@ -41,11 +41,3 @@ class IWidget(interface.Interface):
 class IDetailsPage(IWidget):
     """A property page which can display itself in a notebook"""
     
-###
-# Depricated
-#
-from diagram.interfaces import IDiagramItem as IDiagramElement
-from diagram.interfaces import INamedItem as INamedItemView
-from diagram.interfaces import IClassItem as IClassView
-from diagram.interfaces import IAttributeItem as IAttributeView
-

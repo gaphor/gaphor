@@ -529,8 +529,6 @@ class AssociationEnd(gaphas.Item, DiagramItem):
 #    }
 #    __gproperties__.update(DiagramItem.__gproperties__)
 
-    FONT='sans 10'
-
     head_popup_menu = (
         'Head_unknownNavigation',
         'Head_isNotNavigable',

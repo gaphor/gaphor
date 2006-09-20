@@ -12,27 +12,6 @@ These interfaces are:
 
 from zope import interface
 
-# Should be removed
-
-class IDiagramItem(interface.Interface):
-    """A diagram element"""
-    subject = interface.Attribute("The model element connect to this view")    
-
-class ICommentItem(IDiagramItem):
-    """A view on a Comment item."""
-
-class INamedItem(IDiagramItem):
-    """A view on an attribute (part of a class, interface etc.)."""
-    
-
-class IClassItem(INamedItem):
-    """The graphical view on a class."""
-    
-
-class IAttributeItem(INamedItem):
-    """A view on an attribute (part of a class, interface etc.)."""
-
-# until here..
 
 class IEditor(interface.Interface):
     """Provide an interface for editing text. with the TextEditTool.
@@ -97,5 +76,14 @@ class IConnect(interface.Interface):
         Returns a tuple (x, y) if the line and element may connect, None
         otherwise.
         """
+
+class IPopupMenu(interface.Interface):
+    """Interface for providing popup menus for diagram items.
+    """
+
+    def get_popup_menu(self):
+        """Return the popup menu for the adapted diagram item.
+        """
+
 
 # vim: sw=4:et:ai

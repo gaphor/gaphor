@@ -11,8 +11,6 @@ from gaphor.i18n import _
 from classifier import ClassifierItem
 from feature import AttributeItem, OperationItem
 
-from gaphor.interfaces import IClassView
-from zope import interface
         
 class ClassItem(ClassifierItem):
     """This item visualizes a Class instance.
@@ -23,7 +21,6 @@ class ClassItem(ClassifierItem):
     Items can be added by callling class.add() and class.remove().
     This is used to handle CanvasItems, not UML objects!
     """
-    interface.implements(IClassView)
 
     __uml__ = UML.Class, UML.Stereotype
     __stereotype__ = {

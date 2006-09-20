@@ -1,3 +1,12 @@
+2006-09-20  arjan <arjan at yirdis dot nl>
+
+        * utils/genUML.py: Removed.
+        * gaphor/ui/objectinspector.py: Use classes for adaption, in stead
+        of interfaces. Also removed interfaces from
+        gaphor/diagram/interfaces.py.
+        * gaphor/diagram/interfaces.py: cleaned up IDiagramElement interfaces.
+        * gaphor/ui/objectinspector.py: Updated to use classes iso interfaces
+
 2006-09-19  arjan <arjan at yirdis dot nl>
 
         * gaphor/diagram/items.py: New file. Gathered all *Item imports here

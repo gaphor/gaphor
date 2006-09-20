@@ -6,7 +6,7 @@ import gtk
 from gaphor import UML
 from gaphor import resource
 from gaphor.i18n import _
-#from gaphor.diagram.itemtool import ItemTool
+from gaphor.diagram.interfaces import IPopupMenu
 from gaphor.diagram import get_diagram_item
 from gaphor.undomanager import get_undo_manager
 from gaphor.ui.diagramview import DiagramView
@@ -116,9 +116,8 @@ class DiagramTab(object):
             #view.canvas.push_undo(None)
             pass
         if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
-            vitem = view.focus_item
-            if vitem:
-                item = vitem.item
+            item = view.focused_item
+            if item:
                 popup_menu = item.get_popup_menu()
                 if popup_menu:
                     self.owning_window._construct_popup_menu(menu_def=popup_menu,

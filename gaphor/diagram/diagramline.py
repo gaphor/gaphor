@@ -41,7 +41,7 @@ class LineItem(gaphas.Line, DiagramItem):
 
         x = p1[0] > p2[0] and sw + 2 or -2
         x = (p1[0] + p2[0]) / 2.0 - x
-        y = p1[1] <= p2[1] and sh or 0
+        y = p1[1] > p2[1] and -sh or 0
         y = (p1[1] + p2[1]) / 2.0 - y
 
         self._stereotype_pos = (x, y)

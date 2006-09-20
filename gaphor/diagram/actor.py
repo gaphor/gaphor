@@ -32,7 +32,6 @@ class ActorItem(ClassifierItem):
 #        'min_height' : (HEAD + NECK + BODY + ARM),
 #        'min_width'  : (ARM * 2)
 #    }
-    FONT = 'sans 10'
 
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)

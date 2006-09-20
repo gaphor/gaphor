@@ -17,8 +17,6 @@ class FeatureItem(DiagramItem):
     Note that features can also be used inside objects.
     """
 
-    FONT='sans 10'
-
     def __init__(self, id=None):
         DiagramItem.__init__(self, id)
         self.width = 0
@@ -81,13 +79,7 @@ class FeatureItem(DiagramItem):
         self.request_update()
 
 
-
-
-from zope import interface
-from gaphor.interfaces import IAttributeView
-
 class AttributeItem(FeatureItem):
-    interface.implements(IAttributeView)
 
     popup_menu = FeatureItem.popup_menu + (
         'EditItem',
@@ -165,8 +157,6 @@ class OperationItem(FeatureItem):
         'separator',
         'CreateOperation'
     )
-
-    FONT_ABSTRACT='sans italic 10'
 
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)

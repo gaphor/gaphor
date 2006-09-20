@@ -84,7 +84,7 @@ class ConnectHandleTool(HandleTool):
             adapter.connect(handle, x, y)
 
             return True
-        elif handle.connected_to:
+        elif handle and handle.connected_to:
             #adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
             #adapter.disconnect(handle)
             handle.disconnect()

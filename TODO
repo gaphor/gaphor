@@ -9,6 +9,9 @@
    There is no need for these actions to depend on a main window, they only
    need a gaphas.View instance.
 
+ - Use actions only for action definitions. use Events for notification
+   between actions.
+
 ======== stereotypes branch =========
 - namedelement.py: from NamedElement
 - items.tex: describe:
