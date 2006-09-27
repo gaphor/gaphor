@@ -387,7 +387,7 @@ class OrthogonalAction(CheckAction):
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, gaphas.Line)
-        if self.active and len(fi.handles) < 3:
+        if self.active and len(fi.handles()) < 3:
             fi.split_segment(0)
         fi.orthogonal = self.active
 
@@ -1015,8 +1015,7 @@ class CreateLinksAction(Action):
     def execute(self):
         diagram_tab = self._window.get_current_diagram_tab()
         diagram = diagram_tab.get_diagram()
-        for view_item in diagram_tab.get_view().selected_items:
-            item = view_item.item
+        for item in diagram_tab.get_view().selected_items:
             if isinstance(item, items.ClassItem):
                 self.create_missing_relationships(item, diagram,
                                                   items.AssociationItem)
@@ -1190,8 +1189,8 @@ class SplitFlowAction(Action):
         fb = view.canvas._diagram.create(items.CFlowItemB)
         fa._opposite = fb
         fb._opposite = fa
-        fa.set_subject(item.subject)
-        fb.set_subject(item.subject)
+        fa.subject = item.subject
+        fb.subject = item.subject
 
         fa_ha = fa.get_active_handle()
         fa_hi = fa.get_inactive_handle()
@@ -1279,7 +1278,7 @@ class MergeFlowAction(Action):
 
         # recreate flow and set subject and connection info
         f = view.canvas._diagram.create(items.FlowItem)
-        f.set_subject(fa.subject)
+        f.subject = fa.subject
         f.handles[0].set_pos_w(xa, ya)
         f.handles[-1].set_pos_w(xb, yb)
 
@@ -1346,7 +1345,10 @@ class ApplyInterfaceAction(RadioAction, ObjectAction):
         if self.active:
             item.subject = self.interface
         else:
-            item.set_subject(None)
+            old = item.subject
+            del item.subject
+            if old and len(old.presentation) == 0:
+                old.unlink()
 
 
 class LifelineHasLifetimeAction(CheckAction):

@@ -227,5 +227,35 @@ class ConnectorTestCase(unittest.TestCase):
         assert gen.subject.general is c2.subject
         assert gen.subject.specific is c1.subject
 
+    def test_extension(self):
+        assert len(list(UML.select())) == 0
+
+        diagram = UML.create(UML.Diagram)
+        gen = diagram.create(items.ExtensionItem)
+        c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Stereotype))
+        c2 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+
+        assert len(list(UML.select())) == 3
+
+        adapter = component.queryMultiAdapter((c1, gen), IConnect)
+
+        adapter.connect(gen.tail, gen.tail.x, gen.tail.y)
+
+        assert gen.tail.connected_to is c1
+        assert gen.subject is None
+
+        adapter = component.queryMultiAdapter((c2, gen), IConnect)
+
+        adapter.connect(gen.head, gen.head.x, gen.head.y)
+
+        assert gen.head.connected_to is c2
+        assert gen.subject is not None
+        
+        assert len(list(UML.select())) == 6
+
+        adapter.disconnect(gen.head)
+
+        assert len(list(UML.select())) == 3, list(UML.select())
+
 
 #vi:sw=4:et:ai

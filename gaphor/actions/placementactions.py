@@ -411,15 +411,15 @@ register_action(CommentLinePlacementAction)
 #register_action(UseCaseAssociationPlacementAction)
 
 
-#class ExtensionPlacementAction(PlacementAction):
-#    id = 'InsertExtension'
-#    label = '_Extension'
-#    tooltip = 'Create a new extension line'
-#    stock_id = 'gaphor-extension'
-#    name = 'Extension'
-#    type = diagram.ExtensionItem
-#
-#register_action(ExtensionPlacementAction)
+class ExtensionPlacementAction(PlacementAction):
+    id = 'InsertExtension'
+    label = '_Extension'
+    tooltip = 'Create a new extension line'
+    stock_id = 'gaphor-extension'
+    name = 'Extension'
+    type = items.ExtensionItem
+
+register_action(ExtensionPlacementAction)
 
 
 class DependencyPlacementAction(PlacementAction):
@@ -466,16 +466,16 @@ register_action(ImplementationPlacementAction)
 #register_action(FlowPlacementAction)
 
 
-#class ComponentPlacementAction(NamespacePlacementAction):
-#    id = 'InsertComponent'
-#    label = '_Component'
-#    tooltip = 'Create a new component item'
-#    stock_id = 'gaphor-component'
-#    name = 'Component'
-#    type = diagram.ComponentItem
-#    subject_type = UML.Component
-#
-#register_action(ComponentPlacementAction)
+class ComponentPlacementAction(NamespacePlacementAction):
+    id = 'InsertComponent'
+    label = '_Component'
+    tooltip = 'Create a new component item'
+    stock_id = 'gaphor-component'
+    name = 'Component'
+    type = items.ComponentItem
+    subject_type = UML.Component
+
+register_action(ComponentPlacementAction)
 
 
 #class ConnectorPlacementAction(PlacementAction):
@@ -501,28 +501,28 @@ register_action(ImplementationPlacementAction)
 #register_action(AssemblyConnectorPlacementAction)
 
 
-#class ArtifactPlacementAction(NamespacePlacementAction):
-#    id = 'InsertArtifact'
-#    label = '_Artifact'
-#    tooltip = 'Create a new artifact item'
-#    stock_id = 'gaphor-artifact'
-#    name = 'Artifact'
-#    type = diagram.ArtifactItem
-#    subject_type = UML.Artifact
-#
-#register_action(ArtifactPlacementAction)
+class ArtifactPlacementAction(NamespacePlacementAction):
+    id = 'InsertArtifact'
+    label = '_Artifact'
+    tooltip = 'Create a new artifact item'
+    stock_id = 'gaphor-artifact'
+    name = 'Artifact'
+    type = items.ArtifactItem
+    subject_type = UML.Artifact
+
+register_action(ArtifactPlacementAction)
 
 
-#class NodePlacementAction(NamespacePlacementAction):
-#    id = 'InsertNode'
-#    label = '_Node'
-#    tooltip = 'Create a new node item'
-#    stock_id = 'gaphor-node'
-#    name = 'Node'
-#    type = diagram.NodeItem
-#    subject_type = UML.Node
-#
-#register_action(NodePlacementAction)
+class NodePlacementAction(NamespacePlacementAction):
+    id = 'InsertNode'
+    label = '_Node'
+    tooltip = 'Create a new node item'
+    stock_id = 'gaphor-node'
+    name = 'Node'
+    type = items.NodeItem
+    subject_type = UML.Node
+
+register_action(NodePlacementAction)
 
 #class InteractionPlacementAction(NamespacePlacementAction):
 #    id = 'InsertInteraction'

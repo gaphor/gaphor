@@ -96,15 +96,16 @@ class ElementFactory(object):
     __getitem__ = lookup
 
     def select(self, expression=None):
-        """Create a list of elements that comply with expression.
+        """Iterate elements that comply with expression.
         """
         if expression is None:
-            return self.values()
-        l = []
-        for e in self._elements.itervalues():
-            if expression(e):
-                l.append(e)
-        return l
+            for e in self._elements.itervalues():
+                yield e
+        else:
+            for e in self._elements.itervalues():
+                if expression(e):
+                    yield e #l.append(e)
+        #return l
 
     def keys(self):
         """Return a list with all id's in the factory.
@@ -138,7 +139,7 @@ class ElementFactory(object):
         self.notify(None, 'flush')
         component.handle(FlushFactoryEvent(self))
         # First flush all diagrams:
-        for value in self.select(lambda e: isinstance(e, Diagram)):
+        for value in list(self.select(lambda e: isinstance(e, Diagram))):
             value.unlink()
 
         for key, value in self._elements.items():

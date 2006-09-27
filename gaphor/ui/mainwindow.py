@@ -152,8 +152,8 @@ class MainWindow(AbstractWindow):
 
     def __init__(self):
         AbstractWindow.__init__(self)
-        self.__filename = None
-        #self.__transient_windows = []
+        self._filename = None
+        #self._transient_windows = []
         self.notebook_map = {}
 
     def get_model(self):
@@ -172,7 +172,7 @@ class MainWindow(AbstractWindow):
     def set_filename(self, filename):
         """Set the file name of the currently opened model.
         """
-        self.__filename = filename
+        self._filename = filename
 
         # Add to recent files list
         if filename:
@@ -185,12 +185,12 @@ class MainWindow(AbstractWindow):
     def get_filename(self):
         """Return the file name of the currently opened model.
         """
-        return self.__filename
+        return self._filename
 
 #    def get_transient_windows(self):
 #        """Get the windows that act as child windows of the main window.
 #        """
-#        return self.__transient_windows
+#        return self._transient_windows
 
     def get_current_diagram_tab(self):
         """Get the currently opened and viewed DiagramTab, shown on the right
@@ -323,7 +323,7 @@ class MainWindow(AbstractWindow):
         """
         # Assign the window the accelerators od the main window too
         pass #window.get_window().add_accel_group(self.accel_group)
-        #self.__transient_windows.append(window)
+        #self._transient_windows.append(window)
         #window.connect(self.on_transient_window_closed)
 
     # Notebook methods:
@@ -458,15 +458,15 @@ class MainWindow(AbstractWindow):
         self.execute_action('UndoStack')
 
 #    def on_transient_window_closed(self, window):
-#        assert window in self.__transient_windows
+#        assert window in self._transient_windows
 #        log.debug('%s closed.' % window)
-#        self.__transient_windows.remove(window)
+#        self._transient_windows.remove(window)
 
-    def __on_transient_window_notify_title(self, window):
+    def _on_transient_window_notify_title(self, window):
         pass
 
-    #def __on_element_factory_signal(self, obj, key):
-        #print '__on_element_factory_signal', key
+    #def _on_element_factory_signal(self, obj, key):
+        #print '_on_element_factory_signal', key
         #factory = resource(UML.ElementFactory)
         #self.set_capability('model', not factory.is_empty())
 

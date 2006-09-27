@@ -1,3 +1,21 @@
+2006-09-27  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/artifact.py: works now
+        * gaphor/diagram/component.py: works now
+        * gaphor/diagram/node.py: works now
+
+2006-09-26  arjan <arjan at yirdis dot nl>
+
+        * gaphor/UML/elementfactory.py: select() now returns an iterator
+        * gaphor/actions/itemactions.py:
+        * gaphor/actions/placementactions.py: placement for ExtensionItem
+        * gaphor/actions/tests/test_placementactions.py: ... and tests
+        * gaphor/adapters/connectors.py: Connector for ExtensionItem
+        * gaphor/adapters/tests/test_connector.py:
+        * gaphor/diagram/diagramitem.py: removed set_subject()
+        * gaphor/diagram/extension.py: works
+        * setup.py: added unittest
+
 2006-09-20  arjan <arjan at yirdis dot nl>
 
         * utils/genUML.py: Removed.

@@ -66,6 +66,9 @@ class PlacementToolTestCase(unittest.TestCase):
     def test_extend_placement(self):
         self.do_test_placement(placementactions.ExtendPlacementAction())
 
+    def test_extension_placement(self):
+        self.do_test_placement(placementactions.ExtensionPlacementAction())
+
     def test_generalization_placement(self):
         self.do_test_placement(placementactions.GeneralizationPlacementAction())
 
@@ -74,6 +77,16 @@ class PlacementToolTestCase(unittest.TestCase):
 
     def test_include_placement(self):
         self.do_test_placement(placementactions.IncludePlacementAction())
+
+
+    def test_artifact_placement(self):
+        self.do_test_placement(placementactions.ArtifactPlacementAction())
+
+    def test_component_placement(self):
+        self.do_test_placement(placementactions.ComponentPlacementAction())
+
+    def test_node_placement(self):
+        self.do_test_placement(placementactions.NodePlacementAction())
 
 
 # vim:sw=4:et:ai

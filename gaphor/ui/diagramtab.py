@@ -33,12 +33,12 @@ class DiagramTab(object):
 
     def set_diagram(self, diagram):
         if self.diagram:
-            self.diagram.disconnect(self.__on_diagram_event)
+            self.diagram.disconnect(self._on_diagram_event)
             #self.diagram.canvas.disconnect(self.__undo_id)
             #self.diagram.canvas.disconnect(self.__snap_to_grid_id)
         self.diagram = diagram
         if diagram:
-            diagram.connect(('name', '__unlink__'), self.__on_diagram_event)
+            diagram.connect(('name', '__unlink__'), self._on_diagram_event)
 
             if hasattr(self, 'view'):
                 self.view.hadjustment.set_value(0.0)
@@ -71,13 +71,13 @@ class DiagramTab(object):
         table.attach(sbar, 0, 1, 1, 2, gtk.EXPAND | gtk.FILL | gtk.SHRINK,
                      gtk.FILL)
 
-        #view.connect('notify::tool', self.__on_view_notify_tool)
-        view.connect_after('event-after', self.__on_view_event_after)
-        view.connect('focus-changed', self.__on_view_focus_changed)
-        view.connect('selection-changed', self.__on_view_selection_changed)
-        #view.connect('unselect-item', self.__on_view_selection_changed)
-        view.connect_after('key-press-event', self.__on_key_press_event)
-        view.connect('drag-data-received', self.__on_drag_data_received)
+        #view.connect('notify::tool', self._on_view_notify_tool)
+        view.connect_after('event-after', self._on_view_event_after)
+        view.connect('focus-changed', self._on_view_focus_changed)
+        view.connect('selection-changed', self._on_view_selection_changed)
+        #view.connect('unselect-item', self._on_view_selection_changed)
+        view.connect_after('key-press-event', self._on_key_press_event)
+        view.connect('drag-data-received', self._on_drag_data_received)
 
         #item_tool = ItemTool(self.owning_window.get_action_pool())
         #view.get_default_tool().set_item_tool(item_tool)
@@ -99,7 +99,7 @@ class DiagramTab(object):
         del self.view
         del self.diagram
 
-    def __on_key_press_event(self, view, event):
+    def _on_key_press_event(self, view, event):
         """Handle the 'Delete' key. This can not be handled directly (through
         GTK's accelerators) since otherwise this key will confuse the text
         edit stuff.
@@ -109,7 +109,7 @@ class DiagramTab(object):
                 self.owning_window.execute_action('EditDelete')
 
 
-    def __on_view_event_after(self, view, event):
+    def _on_view_event_after(self, view, event):
         # handle mouse button 3 (popup menu):
         if event.type == gtk.gdk.BUTTON_PRESS:
             # First push the undo stack...
@@ -125,17 +125,17 @@ class DiagramTab(object):
                     return True
         return False
 
-    def __on_view_focus_changed(self, view, focus_item):
+    def _on_view_focus_changed(self, view, focus_item):
         self.owning_window.execute_action('ItemFocus')
         component.handle(DiagramItemFocused(focus_item))
 
-    def __on_view_selection_changed(self, view, selection):
+    def _on_view_selection_changed(self, view, selection):
         self.owning_window.execute_action('ItemSelect')
 
-    def __on_view_notify_tool(self, view, pspec):
+    def _on_view_notify_tool(self, view, pspec):
         self.owning_window.execute_action('ToolChange')
 
-    def __on_diagram_event(self, element, pspec):
+    def _on_diagram_event(self, element, pspec):
         if pspec == '__unlink__':
             self.close()
         elif pspec.name == 'name':
@@ -143,7 +143,9 @@ class DiagramTab(object):
             self.owning_window.set_tab_label(self, element.name)
             #self.get_window().set_title(self.diagram.name or '<None>')
 
-    def __on_drag_data_received(self, view, context, x, y, data, info, time):
+    def _on_drag_data_received(self, view, context, x, y, data, info, time):
+        """Handle data dropped on the canvas.
+        """
         #print 'drag_data_received'
         if data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
             #print 'drag_data_received:', data.data, info
@@ -160,15 +162,15 @@ class DiagramTab(object):
                 get_undo_manager().begin_transaction()
                 item = self.diagram.create(item_class)
                 assert item
-                wx, wy = view.window_to_world(x + view.get_hadjustment().value,
-                                              y + view.get_vadjustment().value)
+                wx, wy = view.transform_point_c2w(x + view.hadjustment.value,
+                                              y + view.vadjustment.value)
 
-                ix, iy = item.affine_point_w2i(max(0, wx), max(0, wy))
-                item.move(ix, iy)
+                ix, iy = view.canvas.get_matrix_w2i(item, calculate=True).transform_point(max(0, wx), max(0, wy))
+                item.matrix.translate(ix, iy)
                 item.subject = element
                 get_undo_manager().commit_transaction()
                 view.unselect_all()
-                view.focus(view.find_view_item(item))
+                view.focused_item = item
 
                 self.owning_window.execute_action('ItemDiagramDrop')
 

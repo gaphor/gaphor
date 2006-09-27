@@ -15,14 +15,15 @@ VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 LINGUAS = [ 'ca', 'es', 'nl', 'sv' ]
 
 TESTS = [
-    'gaphor.UML.tests.test_elementfactory',
+    'gaphor.actions.tests.test_itemactions',
+    'gaphor.actions.tests.test_placementactions',
+    'gaphor.adapters.tests.test_connector',
     'gaphor.diagram.tests.test_class',
     'gaphor.diagram.tests.test_handletool',
     'gaphor.diagram.tests.test_interfaces',
-    'gaphor.ui.tests.test_mainwindow',
     'gaphor.ui.tests.test_diagramtab',
-    'gaphor.adapters.tests.test_connector',
-    'gaphor.actions.tests.test_placementactions',
+    'gaphor.ui.tests.test_mainwindow',
+    'gaphor.UML.tests.test_elementfactory',
     ]
 
 #GCONF_DOMAIN='/apps/gaphor/' # don't forget trailing slash

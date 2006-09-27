@@ -313,22 +313,27 @@ class ClassifierItem(NamedItem):
         cr.stroke()
         y = 0
 
+        if self._drawing_style == self.DRAW_COMPARTMENT_ICON:
+            width = self.width - self.ICON_WIDTH
+        else:
+            width = self.width
+
         # draw stereotype
         y += 10
         if self.stereotype:
             text_set_font(cr, font.FONT)
-            text_center(cr, self.width / 2, y, self.stereotype)
+            text_center(cr, width / 2, y, self.stereotype)
 
         # draw name
         y += 10
         text_set_font(cr, font.FONT_NAME)
-        text_center(cr, self.width / 2, y, self.subject.name)
+        text_center(cr, width / 2, y, self.subject.name)
 
         y += 10
         # draw 'from ... '
         if self._from:
             text_set_font(cr, font.FONT_SMALL)
-            text_center(cr, self.width / 2, y, self._from)
+            text_center(cr, width / 2, y, self._from)
 
         y += 5
         cr.translate(0, y)
