@@ -1,33 +1,35 @@
-# vim:sw=4:et
 
 """AssociationItem -- Graphical representation of an association.
+
+Plan:
+ - transform AssociationEnd in a (dumb) data class
+ - for assocation name and direction tag, use the same trick as is used
+   for line ends.
+ - 
+
 """
 
 # TODO: for Association.postload(): in some cases where the association ends
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
-from __future__ import generators
-
 from math import atan, pi, sin, cos
 
-import gobject
-import pango
-import gaphas
-import diacanvas
-import diacanvas.shape
-import diacanvas.geometry
+from gaphas.util import text_extents
+from gaphas import Item
+from gaphas.geometry import Rectangle
+from gaphas.geometry import distance_rectangle_point, distance_line_point
 
 from gaphor import resource, UML
 from gaphor.undomanager import undoable
-from gaphor.diagram import Relationship
+#from gaphor.diagram import Relationship
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.diagramline import DiagramLine
 
-class AssociationRelationship(Relationship):
-    """
-    Relationship for associations.
-    """
+#class AssociationRelationship(Relationship):
+#    """Relationship for associations.
+#    """
+def xxx():
     def relationship(self, line, head_subject = None, tail_subject = None):
         # First check if we do not already contain the right subject:
         if line.subject:
@@ -66,28 +68,6 @@ class AssociationItem(DiagramLine):
 
     __uml__ = UML.Association
 
-    __gproperties__ = {
-        'show-direction': (gobject.TYPE_BOOLEAN, 'show direction',
-                            '',
-                            1, gobject.PARAM_READWRITE),
-        'head':         (gobject.TYPE_OBJECT, 'head',
-                         'AssociationEnd held by the head end of the association',
-                         gobject.PARAM_READABLE),
-        'tail':         (gobject.TYPE_OBJECT, 'tail',
-                         'AssociationEnd held by the tail end of the association',
-                         gobject.PARAM_READABLE),
-        'head-subject': (gobject.TYPE_PYOBJECT, 'head-subject',
-                         'subject held by the head end of the association',
-                         gobject.PARAM_READWRITE),
-        'tail-subject': (gobject.TYPE_PYOBJECT, 'tail-subject',
-                         'subject held by the tail end of the association',
-                         gobject.PARAM_READWRITE),
-    }
-
-    relationship = AssociationRelationship()
-
-    FONT='sans bold 10'
-
     association_popup_menu = (
         'separator',
         'AssociationShowDirection',
@@ -112,38 +92,39 @@ class AssociationItem(DiagramLine):
 
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.
+        self._label_pos = (0, 0)
         self._head_end = AssociationEnd(end="head")
-        self._head_end.set_child_of(self)
+#        self._head_end.set_child_of(self)
         self._tail_end = AssociationEnd(end="tail")
-        self._tail_end.set_child_of(self)
+#        self._tail_end.set_child_of(self)
 
-        self._label = diacanvas.shape.Text()
-        self._label.set_font_description(pango.FontDescription(AssociationItem.FONT))
+#        self._label = diacanvas.shape.Text()
+#        self._label.set_font_description(pango.FontDescription(AssociationItem.FONT))
         #self._label.set_alignment(pango.ALIGN_CENTER)
-        self._label.set_markup(False)
+#        self._label.set_markup(False)
         #self._label.set_max_width(100)
         #self._label.set_max_height(100)
 
         # Direction depends on the ends that hold the ownedEnd attributes.
         self._show_direction = False
-        self._dir = diacanvas.shape.Path()
-        self._dir.set_line_width(2.0)
-        self._dir.line(((10, 0), (10, 10), (0, 5)))
-        self._dir.set_fill_color(diacanvas.color(0,0,0))
-        self._dir.set_fill(diacanvas.shape.FILL_SOLID)
-        self._dir.set_cyclic(True)
+#        self._dir = diacanvas.shape.Path()
+#        self._dir.set_line_width(2.0)
+#        self._dir.line(((10, 0), (10, 10), (0, 5)))
+#        self._dir.set_fill_color(diacanvas.color(0,0,0))
+#        self._dir.set_fill(diacanvas.shape.FILL_SOLID)
+#        self._dir.set_cyclic(True)
 
-        self._head_xa = diacanvas.shape.Path()
-        self._head_xa.set_line_width(2.0)
+#        self._head_xa = diacanvas.shape.Path()
+#        self._head_xa.set_line_width(2.0)
 
-        self._head_xb = diacanvas.shape.Path()
-        self._head_xb.set_line_width(2.0)
+#        self._head_xb = diacanvas.shape.Path()
+#        self._head_xb.set_line_width(2.0)
 
-        self._tail_xa = diacanvas.shape.Path()
-        self._tail_xa.set_line_width(2.0)
+#        self._tail_xa = diacanvas.shape.Path()
+#        self._tail_xa.set_line_width(2.0)
 
-        self._tail_xb = diacanvas.shape.Path()
-        self._tail_xb.set_line_width(2.0)
+#        self._tail_xb = diacanvas.shape.Path()
+#        self._tail_xb.set_line_width(2.0)
 
 
     def save(self, save_func):
@@ -170,31 +151,31 @@ class AssociationItem(DiagramLine):
         self._head_end.postload()
         self._tail_end.postload()
 
-    def do_set_property(self, pspec, value):
-        if pspec.name == 'head-subject':
-            self._head_end.subject = value
-        elif pspec.name == 'tail-subject':
-            self._tail_end.subject = value
-        elif pspec.name == 'show-direction':
-            self.preserve_property('show-direction')
-            self._show_direction = value
-            self.request_update()
-        else:
-            DiagramLine.do_set_property(self, pspec, value)
+#    def do_set_property(self, pspec, value):
+#        if pspec.name == 'head-subject':
+#            self._head_end.subject = value
+#        elif pspec.name == 'tail-subject':
+#            self._tail_end.subject = value
+#        elif pspec.name == 'show-direction':
+#            self.preserve_property('show-direction')
+#            self._show_direction = value
+#            self.request_update()
+#        else:
+#            DiagramLine.do_set_property(self, pspec, value)
 
-    def do_get_property(self, pspec):
-        if pspec.name == 'head':
-            return self._head_end
-        if pspec.name == 'tail':
-            return self._tail_end
-        elif pspec.name == 'head-subject':
-            return self._head_end.subject
-        elif pspec.name == 'tail-subject':
-            return self._tail_end.subject
-        elif pspec.name == 'show-direction':
-            return self._show_direction
-        else:
-            return DiagramLine.do_get_property(self, pspec)
+#    def do_get_property(self, pspec):
+#        if pspec.name == 'head':
+#            return self._head_end
+#        if pspec.name == 'tail':
+#            return self._tail_end
+#        elif pspec.name == 'head-subject':
+#            return self._head_end.subject
+#        elif pspec.name == 'tail-subject':
+#            return self._tail_end.subject
+#        elif pspec.name == 'show-direction':
+#            return self._show_direction
+#        else:
+#            return DiagramLine.do_get_property(self, pspec)
 
     head_end = property(lambda self: self._head_end)
 
@@ -240,17 +221,18 @@ class AssociationItem(DiagramLine):
     def on_subject_notify__memberEnd(self, subject, pspec):
         self.request_update()
 
-    def update_label(self, p1, p2):
+    def update_label(self, context, p1, p2):
         """Update the name label near the middle of the association.
         """
-        w, h = self._label.to_pango_layout(True).get_pixel_size()
+        cr = context.cairo
+        w, h = text_extents(cr, self.subject and self.subject.name)
 
         x = p1[0] > p2[0] and w + 2 or -2
         x = (p1[0] + p2[0]) / 2.0 - x
         y = p1[1] <= p2[1] and h or 0
         y = (p1[1] + p2[1]) / 2.0 - y
 
-        self._label.set_pos((x, y))
+        self._label_pos = (x, y)
         #log.debug('label pos = (%d, %d)' % (x, y))
         #return x, y, max(x + 10, x + w), max(y + 10, y + h)
         return x, y, x + w, y + h
@@ -295,94 +277,182 @@ class AssociationItem(DiagramLine):
 
         return x, y, x + 12, y + 10
 
-    def on_update(self, affine):
+    def update(self, context):
         """Update the shapes and sub-items of the association."""
 
-        handles = self.handles
+        handles = self.handles()
 
         # Update line endings:
         head_subject = self._head_end.subject
         tail_subject = self._tail_end.subject
+        
+        # Update line ends using the aggregation and isNavigable values:
         if head_subject and tail_subject:
-            # Update line ends using the aggregation and isNavigable values:
-
             if tail_subject.aggregation == intern('composite'):
-                self.set(has_head=1, head_a=20, head_b=10, head_c=6, head_d=6,
-                         head_fill_color=diacanvas.color(0,0,0,255))
+                self.draw_head = self.draw_head_composite
             elif tail_subject.aggregation == intern('shared'):
-                self.set(has_head=1, head_a=20, head_b=10, head_c=6, head_d=6,
-                         head_fill_color=diacanvas.color(255,255,255,255))
+                self.draw_head = self.draw_head_shared
             elif self._head_end.get_navigability():
-                # This side is navigable:
-                self.set(has_head=1, head_a=0, head_b=15, head_c=6, head_d=6)
+                self.draw_head = self.draw_head_navigable
+            if self._head_end.get_navigability() == False:
+                self.draw_head = self.draw_head_none
             else:
-                self.set(has_head=0)
-                if self._head_end.get_navigability() == False:
-                    xs(self, handles[0].get_pos_i(), handles[1].get_pos_i(), 'head')
+                self.draw_head = self.draw_head_undefined
 
             if head_subject.aggregation == intern('composite'):
-                self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
-                         tail_fill_color=diacanvas.color(0,0,0,255))
+                self.draw_tail = self.draw_tail_composite
             elif head_subject.aggregation == intern('shared'):
-                self.set(has_tail=1, tail_a=20, tail_b=10, tail_c=6, tail_d=6,
-                         tail_fill_color=diacanvas.color(255,255,255,255))
+                self.draw_tail = self.draw_tail_shared
             elif self._tail_end.get_navigability():
                 # This side is navigable:
-                self.set(has_tail=1, tail_a=0, tail_b=15, tail_c=6, tail_d=6)
+                self.draw_tail = draw_tail_navigable
+            elif self._tail_end.get_navigability() == False:
+                self.draw_tail = draw_tail_none
             else:
-                self.set(has_tail=0)
-                if self._tail_end.get_navigability() == False:
-                    xs(self, handles[-1].get_pos_i(), handles[-2].get_pos_i(), 'tail')
+                self.draw_tail = self.draw_tail_undefined
 
         # update relationship after self.set calls to avoid circural updates
-        DiagramLine.on_update(self, affine)
+        DiagramLine.update(self, context)
 
         # Calculate alignment of the head name and multiplicity
-        self._head_end.update_labels(handles[0].get_pos_i(),
-                                     handles[1].get_pos_i())
+        self._head_end.update(context, handles[0].pos,
+                                     handles[1].pos)
 
         # Calculate alignment of the tail name and multiplicity
-        self._tail_end.update_labels(handles[-1].get_pos_i(),
-                                     handles[-2].get_pos_i())
+        self._tail_end.update(context, handles[-1].pos,
+                                     handles[-2].pos)
         
-        self.update_child(self._head_end, affine)
-        self.update_child(self._tail_end, affine)
+        #self.update_child(self._head_end, affine)
+        #self.update_child(self._tail_end, affine)
 
         # update name label:
         middle = len(handles)/2
-        self._label_bounds = self.update_label(handles[middle-1].get_pos_i(),
-                                               handles[middle].get_pos_i())
+        self._label_bounds = self.update_label(context, handles[middle-1].pos,
+                                               handles[middle].pos)
 
-        if self._show_direction and self.subject and self.subject.memberEnd:
-            b0 = self.update_dir(handles[middle-1].get_pos_i(),
-                                 handles[middle].get_pos_i())
-        else:
-            b0 = self.bounds
+#        if self._show_direction and self.subject and self.subject.memberEnd:
+#            b0 = self.update_dir(handles[middle-1].pos,
+#                                 handles[middle].pos)
+#        else:
+#            b0 = self.bounds
 
         # bounds calculation
-        b1 = self.bounds
-        b2 = self._head_end.get_bounds(self._head_end.affine)
-        b3 = self._tail_end.get_bounds(self._tail_end.affine)
-        bv = zip(self._label_bounds, b0, b1, b2, b3)
-        self.set_bounds((min(bv[0]), min(bv[1]), max(bv[2]), max(bv[3])))
+#        b1 = self.bounds
+#        b2 = self._head_end.get_bounds(self._head_end.affine)
+#        b3 = self._tail_end.get_bounds(self._tail_end.affine)
+#        bv = zip(self._label_bounds, b0, b1, b2, b3)
+#        self.set_bounds((min(bv[0]), min(bv[1]), max(bv[2]), max(bv[3])))
                     
-    def on_shape_iter(self):
-        for s in DiagramLine.on_shape_iter(self):
-            yield s
-        yield self._label
-        if self._show_direction:
-            yield self._dir
+#    def on_shape_iter(self):
+#        for s in DiagramLine.on_shape_iter(self):
+#            yield s
+#        yield self._label
+#        if self._show_direction:
+#            yield self._dir
+#
+#        if self._head_end.subject and self._tail_end.subject:
+#            if self._tail_end.subject.aggregation == intern('none') \
+#                    and self._head_end.get_navigability() == False:
+#                yield self._head_xa
+#                yield self._head_xb
+#
+#            if self._head_end.subject.aggregation == intern('none') \
+#                    and self._tail_end.get_navigability() == False:
+#                yield self._tail_xa
+#                yield self._tail_xb
 
-        if self._head_end.subject and self._tail_end.subject:
-            if self._tail_end.subject.aggregation == intern('none') \
-                    and self._head_end.get_navigability() == False:
-                yield self._head_xa
-                yield self._head_xb
+    def draw_head_none(self, context):
+        """Draw an 'x' on the line end, indicating no traversing.
+        """
+        cr = context.cairo
+        cr.move_to(6, -4)
+        cr.rel_line_to(8, 8)
+        cr.rel_move_to(0, -8)
+        cr.rel_line_to(-8, 8)
+        cr.stroke()
+        cr.move_to(0, 0)
 
-            if self._head_end.subject.aggregation == intern('none') \
-                    and self._tail_end.get_navigability() == False:
-                yield self._tail_xa
-                yield self._tail_xb
+    def draw_tail_none(self, context):
+        """Draw an 'x' on the line end, indicating no traversing.
+        """
+        cr = context.cairo
+        cr.line_to(0, 0)
+        cr.move_to(-14, -4)
+        cr.rel_line_to(8, 8)
+        cr.rel_move_to(0, -8)
+        cr.rel_line_to(-8, 8)
+        cr.stroke()
+
+    def draw_head_composite(self, context):
+        """Draw a closed diamond on the line end.
+        """
+        self.draw_head_shared(context)
+        context.cairo.fill_preserve()
+
+    def draw_tail_composite(self, context):
+        """Draw a closed diamond on the line end.
+        """
+        self.draw_tail_shared(context)
+        context.cairo.fill_preserve()
+        cr.stroke()
+
+    def draw_head_shared(self, context):
+        """Draw an open diamond on the line end.
+        """
+        cr = context.cairo
+        cr.move_to(20, 0)
+        cr.line_to(10, -6)
+        cr.line_to(0, 0)
+        cr.line_to(10, 6)
+        cr.line_to(20, 0)
+
+    def draw_tail_shared(self, context):
+        """Draw an open diamond on the line end.
+        """
+        cr = context.cairo
+        cr.line_to(-20, 0)
+        cr.stroke()
+        cr.line_to(-10, -6)
+        cr.line_to(0, 0)
+        cr.line_to(-10, 6)
+        cr.line_to(-20, 0)
+
+    def draw_head_navigable(self, context):
+        """Draw a normal arrow.
+        """
+        cr = context.cairo
+        cr.move_to(15, -6)
+        cr.line_to(0, 0)
+        cr.line_to(15, 6)
+        cr.stroke()
+        cr.move_to(0, 0)
+
+    def draw_tail_navigable(self, context):
+        """Draw a normal arrow.
+        """
+        cr = context.cairo
+        cr.line_to(0, 0)
+        cr.move_to(-15, -6)
+        cr.line_to(0, 0)
+        cr.line_to(-15, 6)
+        cr.stroke()
+
+    def draw_head_undefined(self, context):
+        """Draw nothing. undefined.
+        """
+        context.cairo.move_to(0, 0)
+
+    def draw_tail_undefined(self, context):
+        """Draw nothing. undefined.
+        """
+        context.cairo.line_to(0, 0)
+
+    def draw(self, context):
+        super(AssociationItem, self).draw(context)
+        self._head_end.draw(context)
+        self._tail_end.draw(context)
+        # TODO: draw direction and association name
+
 
     #
     # Gaphor Connection Protocol
@@ -482,36 +552,8 @@ class AssociationItem(DiagramLine):
             self._tail_end.set_subject(None)
             self.set_subject(None)
 
-    # Groupable
 
-    def on_groupable_add(self, item):
-        return 0
-
-    def on_groupable_remove(self, item):
-        '''Do not allow the name to be removed.'''
-        return 1
-
-    def on_groupable_iter(self):
-        return iter([self._head_end, self._tail_end])
-
-    # Editable
-
-    def on_editable_get_editable_shape(self, x, y):
-        log.debug('association edit on (%d,%d)' % (x, y))
-        #p = (x, y)
-        #drp = diacanvas.geometry.distance_rectangle_point
-        #if drp(self._label_bounds, p) < 1.0:
-        return self._label
-
-    def on_editable_start_editing(self, shape):
-        pass
-
-    def on_editable_editing_done(self, shape, new_text):
-        if self.subject and self.subject.name != new_text:
-            self.subject.name = new_text
-
-
-class AssociationEnd(gaphas.Item, DiagramItem):
+class AssociationEnd(Item, DiagramItem):
     """An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and
     one for the multiplicity (and maybe one for tagged values in the future).
@@ -550,35 +592,15 @@ class AssociationEnd(gaphas.Item, DiagramItem):
     )
 
     def __init__(self, id=None, end=None):
-        self.__gobject_init__()
         DiagramItem.__init__(self, id)
         self._end = end
-        self.set_flags(diacanvas.COMPOSITE)
         
-        font = pango.FontDescription(AssociationEnd.FONT)
-        self._name = diacanvas.shape.Text()
-        self._name.set_font_description(font)
-        self._name.set_wrap_mode(diacanvas.shape.WRAP_NONE)
-        self._name.set_markup(False)
-        self._name_border = diacanvas.shape.Path()
-        self._name_border.set_color(diacanvas.color(128,128,128))
-        self._name_border.set_line_width(1.0)
+        self._name = None
 
-        self._mult = diacanvas.shape.Text()
-        self._mult.set_font_description(font)
-        self._mult.set_wrap_mode(diacanvas.shape.WRAP_NONE)
-        self._mult.set_markup(False)
-        self._mult_border = diacanvas.shape.Path()
-        self._mult_border.set_color(diacanvas.color(128,128,128))
-        self._mult_border.set_line_width(1.0)
+        self._mult = None
 
         self._name_bounds = self._mult_bounds = (0, 0, 0, 0)
         self._point1 = self._point2 = (0, 0)
-
-    # Ensure we call the right connect functions:
-    connect = DiagramItem.connect
-    disconnect = DiagramItem.disconnect
-    notify = DiagramItem.notify
 
     def postload(self):
         DiagramItem.postload(self)
@@ -604,8 +626,8 @@ class AssociationEnd(gaphas.Item, DiagramItem):
                 # attribute while in a UNDO action for example.
                 pass
             else:
-                self._name.set_text(n)
-                self._mult.set_text(m)
+                self._name = n
+                self._mult = m
                 self.request_update()
 
 
@@ -690,12 +712,12 @@ class AssociationEnd(gaphas.Item, DiagramItem):
 
     def point_name(self, x, y):
         p = (x, y)
-        drp = diacanvas.geometry.distance_rectangle_point
+        drp = distance_rectangle_point
         return drp(self._name_bounds, p)
 
     def point_mult(self, x, y):
         p = (x, y)
-        drp = diacanvas.geometry.distance_rectangle_point
+        drp = distance_rectangle_point
         return drp(self._mult_bounds, p)
 
     def edit_name(self):
@@ -704,11 +726,12 @@ class AssociationEnd(gaphas.Item, DiagramItem):
     def edit_mult(self):
         self.start_editing(self._mult)
 
-    def update_labels(self, p1, p2):
+    def update(self, context, p1, p2):
         """Update label placement for association's name and
         multiplicity label. p1 is the line end and p2 is the last
         but one point of the line.
         """
+        cr = context.cairo
         ofs = 5
 
         name_dx = 0.0
@@ -719,8 +742,8 @@ class AssociationEnd(gaphas.Item, DiagramItem):
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
         
-        name_w, name_h = map(max, self._name.to_pango_layout(True).get_pixel_size(), (10, 10))
-        mult_w, mult_h = map(max, self._mult.to_pango_layout(True).get_pixel_size(), (10, 10))
+        name_w, name_h = map(max, text_extents(cr, self._name), (10, 10))
+        mult_w, mult_h = map(max, text_extents(cr, self._mult), (10, 10))
 
         if dy == 0:
             rc = 1000.0 # quite a lot...
@@ -771,17 +794,17 @@ class AssociationEnd(gaphas.Item, DiagramItem):
                 name_dy = ofs 
                 mult_dy = ofs + mult_h # + height
 
-        self._name_bounds = (p1[0] + name_dx,
-                             p1[1] + name_dy,
-                             p1[0] + name_dx + name_w,
-                             p1[1] + name_dy + name_h)
-        self._name.set_pos((p1[0] + name_dx, p1[1] + name_dy))
+        self._name_bounds = Rectangle(p1[0] + name_dx,
+                                      p1[1] + name_dy,
+                                      width=name_w,
+                                      height=name_h)
+        #self._name.set_pos((p1[0] + name_dx, p1[1] + name_dy))
 
-        self._mult_bounds = (p1[0] + mult_dx,
-                             p1[1] + mult_dy,
-                             p1[0] + mult_dx + mult_w,
-                             p1[1] + mult_dy + mult_h)
-        self._mult.set_pos((p1[0] + mult_dx, p1[1] + mult_dy))
+        self._mult_bounds = Rectangle(p1[0] + mult_dx,
+                                      p1[1] + mult_dy,
+                                      width=mult_w,
+                                      height=mult_h)
+        #self._mult.set_pos((p1[0] + mult_dx, p1[1] + mult_dy))
 
         self._point1 = p1
         self._point2 = p2
@@ -833,43 +856,51 @@ class AssociationEnd(gaphas.Item, DiagramItem):
         diacanvas.CanvasItem.on_update(self, affine)
 
         # bounds calculation
-        b1 = self._name_bounds
-        b2 = self._mult_bounds
-        self._name_border.rectangle((b1[0], b1[1]), (b1[2], b1[3]))
-        self._mult_border.rectangle((b2[0], b2[1]), (b2[2], b2[3]))
-        self.set_bounds((min(b1[0], b2[0]), min(b1[1], b2[1]),
-                         max(b1[2], b2[2]), max(b1[3], b2[3])))
+#        b1 = self._name_bounds
+#        b2 = self._mult_bounds
+#        self._name_border.rectangle((b1[0], b1[1]), (b1[2], b1[3]))
+#        self._mult_border.rectangle((b2[0], b2[1]), (b2[2], b2[3]))
+#        self.set_bounds((min(b1[0], b2[0]), min(b1[1], b2[1]),
+#                         max(b1[2], b2[2]), max(b1[3], b2[3])))
 
     def on_point(self, x, y):
         """Given a point (x, y) return the distance to the canvas item.
         """
         p = (x, y)
-        drp = diacanvas.geometry.distance_rectangle_point
+        drp = distance_rectangle_point
         d1 = drp(self._name_bounds, p)
         d2 = drp(self._mult_bounds, p)
-        try:
-            d3 = diacanvas.geometry.distance_point_point(self._point1, p)
-            d4, dummy = diacanvas.geometry.distance_line_point(self._point1, self._point2, p, 1.0, 0) #diacanvas.shape.CAP_ROUND)
-            if d3 < 15 and d4 < 5:
-                d3 = 0.0
-        except Exception, e:
-            log.error("Could not determine distance", e)
-            d3 = 1000.0
+#        try:
+#            d3 = geometry.distance_point_point(self._point1, p)
+#            d4, dummy = distance_line_point(self._point1, self._point2, p, 1.0, 0) #diacanvas.shape.CAP_ROUND)
+#            if d3 < 15 and d4 < 5:
+#                d3 = 0.0
+#        except Exception, e:
+#            log.error("Could not determine distance", e)
+        d3 = 1000.0
         return min(d1, d2, d3)
 
-    def on_shape_iter(self):
-        if self.subject:
-            yield self._name
-            yield self._mult
-            if self.is_selected():
-                yield self._name_border
-                yield self._mult_border
+    def draw(self, context):
+        """Draw name and multiplicity of the line end.
+        """
+        if not self.subject:
+            return
 
-    def on_connect(self, handle):
-        return False
+        cr = context.cairo
+        cr.move_to(self._name_border[0], self._name_border[1])
+        cr.show_text(self._name)
+        cr.move_to(self._mult_border[0], self._mult_border[1])
+        cr.show_text(self._mult)
 
-    def on_disconnect(self, handle):
-        return False
+        if context.hovered:
+            cr.set_line_width(1.0)
+            b = self._name_border
+            cr.rectangle(b.x0, b.y0, b.width, b.height)
+            cr.stroke()
+            b = self._mult_border
+            cr.rectangle(b.x0, b.y0, b.width, b.height)
+            cr.stroke()
+    
 
     # Editable
 
@@ -923,10 +954,4 @@ def rotate(p1, p2, points):
     return [ r(x, y, x0, y0) for x, y in points ]
 
 
-def xs(self, p0, p1, name):
-    """
-    Utility function to draw xs (unknown navigability).
-    """
-    points = rotate(p0, p1, ((-4, -4), (4, 4), (4, -4), (-4, 4)))
-    getattr(self, '_%s_xa' % name).line(points[0:2])
-    getattr(self, '_%s_xb' % name).line(points[2:])
+# vim:sw=4:et

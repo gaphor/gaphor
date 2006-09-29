@@ -17,6 +17,7 @@ from gaphor.diagram.feature import AttributeItem, OperationItem
 from gaphor.diagram.klass import ClassItem
 from gaphor.diagram.interface import InterfaceItem
 from gaphor.diagram.package import PackageItem
+from gaphor.diagram.association import AssociationItem
 from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.generalization import GeneralizationItem
 from gaphor.diagram.implementation import ImplementationItem

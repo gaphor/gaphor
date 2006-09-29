@@ -1,5 +1,7 @@
 
 !!! Create some example diagrams,
+ - split DiagramItem in a stereotype support, SubjectSupport and some
+   other support classes.
 
  - using stereotypes
  - associations

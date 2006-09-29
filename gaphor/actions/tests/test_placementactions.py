@@ -60,6 +60,9 @@ class PlacementToolTestCase(unittest.TestCase):
         self.do_test_placement(placementactions.PackagePlacementAction())
         self.do_test_placement(placementactions.ProfilePlacementAction())
 
+    def test_association_placement(self):
+        self.do_test_placement(placementactions.AssociationPlacementAction())
+
     def test_dependency_placement(self):
         self.do_test_placement(placementactions.DependencyPlacementAction())
 

@@ -394,15 +394,15 @@ class CommentLinePlacementAction(PlacementAction):
 register_action(CommentLinePlacementAction)
 
 
-#class AssociationPlacementAction(PlacementAction):
-#    id = 'InsertAssociation'
-#    label = '_Association'
-#    tooltip = 'Create a new association line'
-#    stock_id = 'gaphor-association'
-#    name = 'Association'
-#    type = diagram.AssociationItem
-#
-#register_action(AssociationPlacementAction)
+class AssociationPlacementAction(PlacementAction):
+    id = 'InsertAssociation'
+    label = '_Association'
+    tooltip = 'Create a new association line'
+    stock_id = 'gaphor-association'
+    name = 'Association'
+    type = items.AssociationItem
+
+register_action(AssociationPlacementAction)
 
 
 #class UseCaseAssociationPlacementAction(AssociationPlacementAction):

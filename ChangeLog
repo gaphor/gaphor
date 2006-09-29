@@ -1,3 +1,9 @@
+2006-09-29  arjan <arjan at yirdis dot nl>
+
+        * gaphor/actions/placementactions.py: enabled Association
+        * gaphor/diagram/association.py: partly works w/ gaphas
+        * gaphor/diagram/items.py: added association
+
 2006-09-27  arjan <arjan at yirdis dot nl>
 
         * gaphor/diagram/artifact.py: works now
