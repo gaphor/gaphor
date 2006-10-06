@@ -93,9 +93,9 @@ class AssociationItem(DiagramLine):
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.
         self._label_pos = (0, 0)
-        self._head_end = AssociationEnd(end="head")
+        self._head_end = AssociationEnd(owner=self, end="head")
 #        self._head_end.set_child_of(self)
-        self._tail_end = AssociationEnd(end="tail")
+        self._tail_end = AssociationEnd(owner=self, end="tail")
 #        self._tail_end.set_child_of(self)
 
 #        self._label = diacanvas.shape.Text()
@@ -126,6 +126,15 @@ class AssociationItem(DiagramLine):
 #        self._tail_xb = diacanvas.shape.Path()
 #        self._tail_xb.set_line_width(2.0)
 
+    def setup_canvas(self):
+        super(AssociationItem, self).setup_canvas()
+        self._head_end._canvas = self.canvas
+        self._tail_end._canvas = self.canvas
+
+    def teardown_canvas(self):
+        super(AssociationItem, self).teardown_canvas()
+        del self._head_end._canvas
+        del self._tail_end._canvas
 
     def save(self, save_func):
         DiagramLine.save(self, save_func)
@@ -209,10 +218,10 @@ class AssociationItem(DiagramLine):
 
     def on_subject_notify__name(self, subject, pspec):
         #log.debug('Association name = %s' % (subject and subject.name))
-        if subject:
-            self._label.set_text(subject.name or '')
-        else:
-            self._label.set_text('')
+        #if subject:
+        #    self._label.set_text(subject.name or '')
+        #else:
+        #    self._label.set_text('')
         self.request_update()
 
     def on_subject_notify__ownedEnd(self, subject, pspec):
@@ -360,6 +369,13 @@ class AssociationItem(DiagramLine):
 #                    and self._tail_end.get_navigability() == False:
 #                yield self._tail_xa
 #                yield self._tail_xb
+
+    def point(self, x, y):
+        """Returns the distance from the Association to the (mouse) cursor.
+        """
+        return min(super(AssociationItem, self).point(x, y),
+                   self._head_end.point(x, y),
+                   self._tail_end.point(x, y))
 
     def draw_head_none(self, context):
         """Draw an 'x' on the line end, indicating no traversing.
@@ -553,7 +569,7 @@ class AssociationItem(DiagramLine):
             self.set_subject(None)
 
 
-class AssociationEnd(Item, DiagramItem):
+class AssociationEnd(DiagramItem):
     """An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and
     one for the multiplicity (and maybe one for tagged values in the future).
@@ -591,15 +607,17 @@ class AssociationEnd(Item, DiagramItem):
         'Tail_AggregationComposite'
     )
 
-    def __init__(self, id=None, end=None):
+    def __init__(self, owner, id=None, end=None):
         DiagramItem.__init__(self, id)
+        self._owner = owner
         self._end = end
         
+        # Rendered text for name and multiplicity
         self._name = None
-
         self._mult = None
 
-        self._name_bounds = self._mult_bounds = (0, 0, 0, 0)
+        self._name_bounds = Rectangle()
+        self._mult_bounds = Rectangle()
         self._point1 = self._point2 = (0, 0)
 
     def postload(self):
@@ -614,6 +632,9 @@ class AssociationEnd(Item, DiagramItem):
                 return self.tail_popup_menu
         elif self.parent:
             return self.parent.get_popup_menu()
+
+    def request_update(self):
+        self._owner.request_update()
 
     def set_text(self):
         """Set the text on the association end.
@@ -720,6 +741,9 @@ class AssociationEnd(Item, DiagramItem):
         drp = distance_rectangle_point
         return drp(self._mult_bounds, p)
 
+    def point(self, x, y):
+        return min(self.point_name(x, y), self.point_mult(x, y))
+
     def edit_name(self):
         self.start_editing(self._name)
 
@@ -798,13 +822,11 @@ class AssociationEnd(Item, DiagramItem):
                                       p1[1] + name_dy,
                                       width=name_w,
                                       height=name_h)
-        #self._name.set_pos((p1[0] + name_dx, p1[1] + name_dy))
 
         self._mult_bounds = Rectangle(p1[0] + mult_dx,
                                       p1[1] + mult_dy,
                                       width=mult_w,
                                       height=mult_h)
-        #self._mult.set_pos((p1[0] + mult_dx, p1[1] + mult_dy))
 
         self._point1 = p1
         self._point2 = p2
@@ -831,39 +853,27 @@ class AssociationEnd(Item, DiagramItem):
     def on_subject_notify__lowerValue_value(self, lower_value, pspec):
         log.debug('New value for lowerValue.value: %s' % lower_value and lower_value.value)
         self.set_text()
-        self.parent.request_update()
+        self.request_update()
 
     def on_subject_notify__upperValue_value(self, upper_value, pspec):
         log.debug('New value for upperValue.value: %s' %  upper_value and upper_value.value)
         self.set_text()
-        self.parent.request_update()
+        self.request_update()
 
     def on_subject_notify__taggedValue(self, tagged_value, pspec):
-        #log.debug('New value for taggedValue.value: %s' % tagged_value and self.subject.taggedValue.value)
         self.set_text()
-        self.parent.request_update()
+        self.request_update()
 
     def on_subject_notify__owningAssociation(self, upper_value, pspec):
-        self.parent.request_update()
+        self.request_update()
 
     def on_subject_notify__class_(self, upper_value, pspec):
-        self.parent.request_update()
+        self.request_update()
 
     def on_subject_notify__interface_(self, upper_value, pspec):
-        self.parent.request_update()
+        self.request_update()
 
-    def on_update(self, affine):
-        diacanvas.CanvasItem.on_update(self, affine)
-
-        # bounds calculation
-#        b1 = self._name_bounds
-#        b2 = self._mult_bounds
-#        self._name_border.rectangle((b1[0], b1[1]), (b1[2], b1[3]))
-#        self._mult_border.rectangle((b2[0], b2[1]), (b2[2], b2[3]))
-#        self.set_bounds((min(b1[0], b2[0]), min(b1[1], b2[1]),
-#                         max(b1[2], b2[2]), max(b1[3], b2[3])))
-
-    def on_point(self, x, y):
+    def point(self, x, y):
         """Given a point (x, y) return the distance to the canvas item.
         """
         p = (x, y)
@@ -887,17 +897,17 @@ class AssociationEnd(Item, DiagramItem):
             return
 
         cr = context.cairo
-        cr.move_to(self._name_border[0], self._name_border[1])
+        cr.move_to(self._name_bounds[0], self._name_bounds[1])
         cr.show_text(self._name)
-        cr.move_to(self._mult_border[0], self._mult_border[1])
+        cr.move_to(self._mult_bounds[0], self._mult_bounds[1])
         cr.show_text(self._mult)
 
         if context.hovered:
             cr.set_line_width(1.0)
-            b = self._name_border
+            b = self._name_bounds
             cr.rectangle(b.x0, b.y0, b.width, b.height)
             cr.stroke()
-            b = self._mult_border
+            b = self._mult_bounds
             cr.rectangle(b.x0, b.y0, b.width, b.height)
             cr.stroke()
     

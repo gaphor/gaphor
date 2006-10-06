@@ -257,5 +257,44 @@ class ConnectorTestCase(unittest.TestCase):
 
         assert len(list(UML.select())) == 3, list(UML.select())
 
+    def test_association(self):
+        assert len(list(UML.select())) == 0
+
+        diagram = UML.create(UML.Diagram)
+        gen = diagram.create(items.AssociationItem)
+        c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        c2 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+
+        assert len(list(UML.select())) == 3
+
+        adapter = component.queryMultiAdapter((c1, gen), IConnect)
+
+        adapter.connect(gen.tail, gen.tail.x, gen.tail.y)
+
+        assert gen.tail.connected_to is c1
+        assert gen.subject is None
+
+        adapter = component.queryMultiAdapter((c2, gen), IConnect)
+
+        adapter.connect(gen.head, gen.head.x, gen.head.y)
+
+        assert gen.head.connected_to is c2
+        assert gen.subject is not None
+        
+        # Diagram, Class x2, Property *2, Association, LiteralSpec *2
+        assert len(list(UML.select())) == 8, list(UML.select())
+        assert gen.head_end.subject is not None
+        assert gen.tail_end.subject is not None
+        assert gen.head_end._name_bounds.width == 10
+        assert gen.tail_end._name_bounds.width == 10
+
+        gen.head_end.subject.name = 'cheese'
+        assert gen.head_end._name_bounds.width > 10, gen.head_end._name_bounds.width
+
+        adapter.disconnect(gen.head)
+
+        assert len(list(UML.select())) == 3, list(UML.select())
+
+
 
 #vi:sw=4:et:ai
