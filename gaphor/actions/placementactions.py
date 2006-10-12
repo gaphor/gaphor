@@ -347,16 +347,16 @@ register_action(PackagePlacementAction)
 #register_action(ForkNodePlacementAction)
 
 
-#class ActionPlacementAction(NamespacePlacementAction):
-#    id = 'InsertAction'
-#    label = 'Action'
-#    tooltip = 'Create a new action'
-#    stock_id = 'gaphor-action'
-#    name = 'Action'
-#    type = diagram.ActionItem
-#    subject_type = UML.Action
-#
-#register_action(ActionPlacementAction)
+class ActionPlacementAction(NamespacePlacementAction):
+    id = 'InsertAction'
+    label = 'Action'
+    tooltip = 'Create a new action'
+    stock_id = 'gaphor-action'
+    name = 'Action'
+    type = items.ActionItem
+    subject_type = UML.Action
+
+register_action(ActionPlacementAction)
 
 
 #class ObjectNodePlacementAction(NamespacePlacementAction):

@@ -28,6 +28,7 @@ from gaphor.diagram.component import ComponentItem
 from gaphor.diagram.node import NodeItem
 
 # Actions:
+from gaphor.diagram.action import ActionItem
 
 # Use Cases:
 from gaphor.diagram.actor import ActorItem
