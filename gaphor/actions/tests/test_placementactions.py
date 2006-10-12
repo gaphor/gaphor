@@ -91,5 +91,7 @@ class PlacementToolTestCase(unittest.TestCase):
     def test_node_placement(self):
         self.do_test_placement(placementactions.NodePlacementAction())
 
+    def test_action_placement(self):
+        self.do_test_placement(placementactions.ActionPlacementAction())
 
 # vim:sw=4:et:ai
