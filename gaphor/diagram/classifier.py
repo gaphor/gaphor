@@ -114,10 +114,8 @@ class ClassifierItem(NamedItem):
     ICON_MARGIN_Y = 10
     NAME_COMPARTMENT_HEIGHT = 35
 
-    def __init__(self, id=None):
-        NamedItem.__init__(self, id)
-        self.height = 50
-        self.width = 100
+    def __init__(self, id = None, width = 100, height = 50):
+        NamedItem.__init__(self, id, width, height)
         self._compartments = []
         self._from = None # (from ...) text
         self._drawing_style = ClassifierItem.DRAW_NONE

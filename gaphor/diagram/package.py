@@ -18,10 +18,9 @@ class PackageItem(NamedItem):
     TAB_X = 50
     TAB_Y = 20
 
-    def __init__(self, id=None):
-        NamedItem.__init__(self, id)
-        self.width = 100
-        self.height = 50
+    def __init__(self, id):
+        NamedItem.__init__(self, id, 120, 60)
+
 
     def pre_update(self, context):
         cr = context.cairo
@@ -34,14 +33,6 @@ class PackageItem(NamedItem):
             self.min_height += s_h
 
         super(PackageItem, self).pre_update(context)
-        #self.n_align.margin = self.TAB_Y + 15, 30, 15, 30
-        #self.s_align.margin = self.TAB_Y + 5, 30, 5, 30
-
-        #self._border = diacanvas.shape.Path()
-        #self._border.set_line_width(2.0)
-        #self._shapes.add(self._border)
-
-        #self.set(height = 50, width = 100)
 
 
     def draw(self, context):
@@ -62,8 +53,7 @@ class PackageItem(NamedItem):
         if self.stereotype:
             text_center(cr, w / 2, y + 10, self.stereotype)
 
-        text_set_font(cr, font.FONT_NAME)
-        text_center(cr, w/2, y + (h-y)/2, self.subject.name)
+        super(PackageItem, self).draw(context)
 
 
 # vim:sw=4:et

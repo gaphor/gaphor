@@ -12,26 +12,11 @@ class ActionItem(NamedItem):
     __uml__      = UML.Action
 #    __s_valign__ = V_ALIGN_MIDDLE
 
-    def __init__(self, id):
-        super(ActionItem, self).__init__(id)
-        self.min_width = 50
-        self.min_height = 30
-        self.width = self.min_width
-        self.height = self.min_height
-
-    def pre_update(self, context):
-        cr = context.cairo
-        text = self.subject.name
-        if text:
-            width, height = text_extents(cr, text)
-            self.min_width, self.min_height = width + 10, height + 20
-        super(ActionItem, self).pre_update(context)
-
     def draw(self, context):
+        """
+        Draw action symbol.
+        """
         c = context.cairo
-
-        rx = self.width / 2.0
-        ry = self.height / 2.0
 
         d = 15
 
@@ -47,9 +32,7 @@ class ActionItem(NamedItem):
 
         c.stroke()
 
-        text = self.subject.name
-        if text:
-            text_align(c, rx, ry, text, align_x=0)
+        super(ActionItem, self).draw(context)
 
 
 

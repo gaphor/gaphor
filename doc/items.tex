@@ -282,22 +282,41 @@ centered under stereotype.
 \warning{What about FeatureItem stereotype?}
 
 \chapter{Named Items}
-\section{Introduction}
-Named items represent these UML classes, which derive from NamedElement.
+\section{Problem Description}
+Named items represent those UML classes, which derive from NamedElement.
+
 All named items are editable, so user can double click on an item and
 change or enter name of UML object.
 
-We have to distinguish between two kind of named elements. One is related
-to canvas elements and second is related to canvas lines. For example, name
-of UML object can be positioned inside or outside canvas element (class vs.
-initial node), also name can be centered or on left/right side of canvas
-element. In case of canvas line based items name can be near head, tail
-or centre of a line and name can be put horizontaly or along line path.
+There should be minimal size (which is default, initial one) of named
+items. Every named item can have its own minimal size. Size of named item
+can be changed by an user. There are some cases, when size cannot be
+changed, i.e. initial node item.
 
-\section{Problem Description}
-\subsection{Canvas Element Named Items}
+%fixme: there can be items with initial name and without initial name
 
-\subsection{Canvas Line Named Items}
+\section{Classes}
+Class NamedItem is a base class for all named items.
+
+\begin{class}{NamedItem}
+\begin{entitydesc}
+Calculates minimal size based on name size. Draws UML object's name.
+\end{entitydesc}
+\end{class}
+
+%%%
+%We have to distinguish between two kind of named elements. One is related
+%to canvas elements and second is related to canvas lines. For example, name
+%of UML object can be positioned inside or outside canvas element (class vs.
+%initial node), also name can be centered or on left/right side of canvas
+%element. In case of canvas line based items name can be near head, tail
+%or centre of a line and name can be put horizontaly or along line path.
+%%%
+
+
+%\subsection{Canvas Element Named Items}
+
+%\subsection{Canvas Line Named Items}
 
 \chapter{Relationships}
 

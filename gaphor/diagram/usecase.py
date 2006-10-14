@@ -14,11 +14,7 @@ class UseCaseItem(ClassifierItem):
     __uml__      = UML.UseCase
 
     def __init__(self, id):
-        ClassifierItem.__init__(self, id)
-        self.min_width = 50
-        self.min_height = 30
-        self.width = self.min_width
-        self.height = self.min_height
+        ClassifierItem.__init__(self, id, 50, 30)
         self.drawing_style = -1
 
     def pre_update(self, context):
