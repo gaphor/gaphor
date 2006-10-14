@@ -1,5 +1,5 @@
 """
-Actor diagram item classes.
+Actor item classes.
 """
 
 from math import pi
@@ -26,14 +26,7 @@ class ActorItem(ClassifierItem):
     NECK = 10
     BODY = 20
 
-#    DEFAULT_SIZE= {
-#        'height'     : (HEAD + NECK + BODY + ARM),
-#        'width'      : (ARM * 2),
-#        'min_height' : (HEAD + NECK + BODY + ARM),
-#        'min_width'  : (ARM * 2)
-#    }
-
-    def __init__(self, id=None):
+    def __init__(self, id = None):
         ClassifierItem.__init__(self, id)
 
         self.drawing_style = self.DRAW_ICON
@@ -58,7 +51,7 @@ class ActorItem(ClassifierItem):
         cy = head * fy
 
         cr.move_to(x + head * fy / 2.0, y)
-        cr.arc(x, y, head * fy / 2.0, 0, 2*pi)
+        cr.arc(x, y, head * fy / 2.0, 0, 2 * pi)
 
         cr.move_to(x, y + cy / 2)
         cr.line_to(arm * fx, (head + neck + body) * fy)
