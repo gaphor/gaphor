@@ -140,7 +140,24 @@ class ClassifierItem(NamedItem):
             self._drawing_style = style
             self.request_update()
 
+        if self._drawing_style == self.DRAW_COMPARTMENT:
+            self.draw       = self.draw_compartment
+            self.pre_update = self.pre_update_compartment
+            self.update     = self.update_compartment
+
+        elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
+            self.draw       = self.draw_compartment_icon
+            self.pre_update = self.pre_update_compartment_icon
+            self.update     = self.update_compartment_icon
+
+        elif self._drawing_style == self.DRAW_ICON:
+            self.draw       = self.draw_icon
+            self.pre_update = self.pre_update_icon
+            self.update     = self.update_icon
+
+
     drawing_style = property(lambda self: self._drawing_style, set_drawing_style)
+
 
     def create_compartment(self, name):
         """Create a new compartment. Compartments contain data such as
@@ -259,17 +276,6 @@ class ClassifierItem(NamedItem):
     def pre_update_icon(self, context):
         pass
 
-    def pre_update(self, context):
-        if not self.subject: return
-        if self._drawing_style == self.DRAW_COMPARTMENT:
-            self.pre_update_compartment(context)
-        elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
-            self.pre_update_compartment_icon(context)
-        elif self._drawing_style == self.DRAW_ICON:
-            self.pre_update_icon(context)
-
-        super(ClassifierItem, self).pre_update(context)
-
     def update_compartment(self, context):
         """Update state for box-style presentation.
         """
@@ -291,18 +297,6 @@ class ClassifierItem(NamedItem):
         return self.width - self.ICON_MARGIN_X - self.ICON_WIDTH, \
             self.ICON_MARGIN_Y
 
-    def update(self, context):
-        """Overrides update callback.
-        """
-        if not self.subject: return
-        if self._drawing_style == self.DRAW_COMPARTMENT:
-            self.update_compartment(context)
-        elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
-            self.update_compartment_icon(context)
-        elif self._drawing_style == self.DRAW_ICON:
-            self.update_icon(context)
-
-        super(ClassifierItem, self).update(context)
 
     def draw_compartment(self, context):
         if not self.subject: return
@@ -347,14 +341,6 @@ class ClassifierItem(NamedItem):
             finally:
                 cr.restore()
             cr.translate(0, comp.height)
-
-    def draw(self, context):
-        if self._drawing_style == self.DRAW_COMPARTMENT:
-            self.draw_compartment(context)
-        elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
-            self.draw_compartment_icon(context)
-        elif self._drawing_style == self.DRAW_ICON:
-            self.draw_icon(context)
 
 
 # vim:sw=4:et
