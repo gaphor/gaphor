@@ -744,11 +744,11 @@ class AssociationEnd(DiagramItem):
     def point(self, x, y):
         return min(self.point_name(x, y), self.point_mult(x, y))
 
-    def edit_name(self):
-        self.start_editing(self._name)
+    def get_name(self):
+        return self._name
 
-    def edit_mult(self):
-        self.start_editing(self._mult)
+    def get_mult(self):
+        return self._mult
 
     def update(self, context, p1, p2):
         """Update label placement for association's name and
@@ -897,41 +897,20 @@ class AssociationEnd(DiagramItem):
             return
 
         cr = context.cairo
-        cr.move_to(self._name_bounds[0], self._name_bounds[1])
+        cr.move_to(self._name_bounds[0], self._name_bounds[3])
         cr.show_text(self._name)
-        cr.move_to(self._mult_bounds[0], self._mult_bounds[1])
+        cr.move_to(self._mult_bounds[0], self._mult_bounds[3])
         cr.show_text(self._mult)
 
-        if context.hovered:
-            cr.set_line_width(1.0)
+        if context.hovered or context.focused:
+            cr.set_line_width(0.5)
             b = self._name_bounds
             cr.rectangle(b.x0, b.y0, b.width, b.height)
             cr.stroke()
-            b = self._mult_bounds
-            cr.rectangle(b.x0, b.y0, b.width, b.height)
-            cr.stroke()
+            #b = self._mult_bounds
+            #cr.rectangle(b.x0, b.y0, b.width, b.height)
+            #cr.stroke()
     
-
-    # Editable
-
-    def on_editable_get_editable_shape(self, x, y):
-        log.debug('association end edit on (%d,%d)' % (x, y))
-        if self.point_name(x, y) < 1.0:
-            return self._name 
-        elif self.point_mult(x,y) < 1.0:
-            return self._mult
-
-    def on_editable_start_editing(self, shape):
-        pass
-
-    @undoable
-    def on_editable_editing_done(self, shape, new_text):
-        if shape in (self._name, self._mult):
-            if self.subject and (shape == self._name or new_text != ''):
-                self.subject.parse(new_text)
-            #self.set_text()
-            #log.info('editing done')
-
 
 def rotate(p1, p2, points):
     """
