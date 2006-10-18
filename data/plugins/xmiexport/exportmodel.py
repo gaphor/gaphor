@@ -191,7 +191,7 @@ class XMIExport(object):
             attributes['isSpecification']='false'
             attributes['ownerScope']='instance'
             attributes['isQuery']='false'
-            attributes['concurrency']='seqeuntial'
+            attributes['concurrency']='sequential'
             attributes['isRoot']='false'
             attributes['isLeaf']='false'
             attributes['isAbstract']='false'
