@@ -2,16 +2,11 @@
 CommentItem diagram item
 """
 
-import gobject
-import pango
-from zope import component
-
 from gaphor import UML
 from elementitem import ElementItem
 from gaphas.item import NW
 from gaphas.util import text_multiline, text_extents
 
-from interfaces import IEditor
 
 class CommentItem(ElementItem):
 
