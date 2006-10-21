@@ -144,6 +144,23 @@ Head and tail concepts are also used in diacanvas in case of canvas line.
 Head of line item is at the same end as head of canvas line. The same
 applies for tail.
 
+\subsection{Item Styles}
+All the items are going to contain different parts.
+Many of such parts can be shared by other items, for example
+\begin{itemize}
+\item UML named elements (see named items) have names, which should be
+    can be displayed in different places, i.e. class --- top--center,
+    use case --- middle--center
+\item every UML class can have stereotypes, which should be displayed
+    over items' name
+\end{itemize}
+
+Above can be described as styles (i.e.\ similar to CSS).
+
+It should be possible to implement common behaviour in basic item classes,
+which should be parametrized by item's style information. For example,
+named element item should set position of name depending on styles.
+
 \section{Classes}
 \rclass{DiagramItem} class is a basic, abstract class for all items. Every
 item class is created using \rclass{DiagramItemMeta} metaclass. It
