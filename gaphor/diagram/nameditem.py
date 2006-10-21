@@ -14,32 +14,7 @@ from gaphor.diagram.elementitem import ElementItem
 from gaphas.util import text_align, text_extents
 
 
-class NamedItemMeta(DiagramItemMeta):
-
-    def __init__(self, name, bases, data):
-        super(NamedItemMeta, self).__init__(name, bases, data)
-        align = ItemAlign() # center, top
-        align.outside = self.s_align.outside
-        if align.outside:
-            align.margin = (2, ) * 4
-        if data.get('__icon__', False):
-            align.margin = (30, 35, 10, 35) 
-            self.s_align.margin = (30, 35, 10, 35) 
-        else:
-            align.margin = (15, 30) * 2
-        self.set_cls_align('n', align, data)
-
-        if not hasattr(self, '__n_align__'):
-            align.align = self.s_align.align
-
-        if not hasattr(self, '__n_valign__'):
-            align.valign = self.s_align.valign
-
-
-
 class NamedItem(ElementItem):
-    #__metaclass__ = NamedItemMeta
-
     popup_menu = ElementItem.popup_menu + (
         'RenameItem',
         'separator',
