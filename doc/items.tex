@@ -161,11 +161,10 @@ It should be possible to implement common behaviour in basic item classes,
 which should be parametrized by item's style information. For example,
 named element item should set position of name depending on styles.
 
+
 \section{Classes}
 \rclass{DiagramItem} class is a basic, abstract class for all items. Every
-item class is created using \rclass{DiagramItemMeta} metaclass. It
-assigns information about UML class, stereotypes,
-etc.\ to every item class.
+item class is created using \rclass{DiagramItemMeta} metaclass.
 
 Different canvas elements (see~\ref{gaphor:basic:itemsandcanvas}) are
 supported with classes
@@ -180,11 +179,11 @@ supported with classes
 \begin{attrs}
 \iattr{\_\_uml\_\_}{UML class associated with item}
 \iattr{\_\_stereotype\_\_}{item static stereotype}
-\iattr{s\_align}{stereotype align}
+\iattr{\_\_style\_\_}{item styles information}
 \end{attrs}
 \begin{entitydesc}
-Basic metaclass for all items. Stereotypes are aligned according to
-\rattr{s\_align} attribute.
+Metaclass for all items. Assigns information about UML class, stereotypes,
+styles, etc.\ to every item class.
 \end{entitydesc}
 \end{class}
 
