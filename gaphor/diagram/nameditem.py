@@ -1,14 +1,8 @@
 """
-Base classes related to items, which represent those UML classes deriving
+Base classes related to items, which represent UML classes deriving
 from NamedElement.
 """
 
-import itertools
-
-from gaphor.undomanager import get_undo_manager
-from gaphor.diagram import DiagramItemMeta
-from gaphor.diagram.align import ItemAlign
-from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.elementitem import ElementItem
 
 from gaphas.util import text_align, text_extents
