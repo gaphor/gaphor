@@ -116,9 +116,10 @@ Diacanvas library supports different canvas objects
 \item canvas line
 \end{itemize}
 
-Because of differences between them, DiagramItem class cannot be directly
-associated with canvas line or canvas element. Connection between diacanvas
-classes and items has to be established by different abstract classes.
+Because of differences between them, Basic diagram item class cannot be
+directly associated with canvas line or canvas element. Connection between
+diacanvas classes and items has to be established by different abstract
+classes.
 
 \subsection{Items and UML Model Classes}
 Generaly there is one to one association between an item and UML class
@@ -160,7 +161,6 @@ Above can be described as styles (i.e.\ similar to CSS).
 It should be possible to implement common behaviour in basic item classes,
 which should be parametrized by item's style information. For example,
 named element item should set position of name depending on styles.
-
 
 \section{Classes}
 \rclass{DiagramItem} class is a basic, abstract class for all items. Every
