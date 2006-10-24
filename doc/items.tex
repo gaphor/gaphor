@@ -95,17 +95,20 @@
 \chapter{Basic Classes of Diagram Items}
 \section{Introduction}
 UML specification defines UML data model, which is used by Gaphor to store
-information about modeled system. UML data model is visualized with
-Diacanvas library used as canvas library. Notation
-of UML diagram items is also specified by UML specification.
+information about a modeled system. The UML data model is visualized by
+the Gaphas library, a general purpose diagram drawing library. Notation
+of UML diagram items is also specified by the UML specification.
 
-Diacanvas library supports basic drawing operations but there are many
+The Gaphas library supports basic drawing operations but there are many
 entities and behaviors, which are common to many or all diagram items, i.e.
-stereotypes, items' name, popup menu, positioning of associated items, etc.
+stereotypes, item name, popup menu, positioning of associated items, etc.
 
 We have to identify common elements and behaviors of UML diagram items
 and define basic diagram items classes, which will be used
 by Gaphor to provide modeling functionality.
+
+Note that, the diagram item hierarchy does not have to follow the hierarchy
+defined in the UML model. 
 
 \section{Problem Description}
 
@@ -117,13 +120,13 @@ Diacanvas library supports different canvas objects
 \end{itemize}
 
 Because of differences between them, Basic diagram item class cannot be
-directly associated with canvas line or canvas element. Connection between
-diacanvas classes and items has to be established by different abstract
+directly associated with canvas lines or canvas elements. Connection between
+canvas classes and items has to be established by different abstract
 classes.
 
 \subsection{Items and UML Model Classes}
-Generaly there is one to one association between an item and UML class
-but it is not always so simple. 
+Generaly there is a one to one association between an item and an UML class,
+but it is not always that simple. 
 For example one diagram item can visualize more than one UML class
 \begin{itemize}
 \item decision node item can represent combined decision and merge nodes
@@ -131,17 +134,17 @@ For example one diagram item can visualize more than one UML class
 \end{itemize}
 
 Also, there can be situation, when there is no UML class visualized, i.e.
-in case of CommentLine.
+in case of a CommentLine.
 
 \subsection{Line Items}
-Line has at least two handles. These handles are reffered as head (first
-handle) and tail (second handle) of line.
+Lines have at least two handles. These handles are reffered to as head (first
+handle) and tail (last handle) of line.
 
-When user puts an item on a diagram, then last handle can be moved to
-desired point. The same applies to line items. User puts line on diagram,
+When a user puts an item on a diagram, then the last handle can be moved to
+a desired point. The same applies to line items. User puts a line on diagram,
 head is set in mouse cursor point and tail is moved to desired point.
 
-Head and tail concepts are also used in diacanvas in case of canvas line.
+Head and tail concepts are also used in Gaphas in case of canvas lines.
 Head of line item is at the same end as head of canvas line. The same
 applies for tail.
 
@@ -149,7 +152,7 @@ applies for tail.
 All the items are going to contain different parts.
 Many of such parts can be shared by other items, for example
 \begin{itemize}
-\item UML named elements (see named items) have names, which should be
+\item UML named elements (see named items) have names, which
     can be displayed in different places, i.e. class --- top--center,
     use case --- middle--center
 \item every UML class can have stereotypes, which should be displayed
@@ -279,7 +282,7 @@ See figure~\ref{items:align} for more examples.
 
 Align constants and classes are defined in \rmodule{gaphor::diagram::align} module.
 
-\subsection{Stereotype and Name Align}
+\subsection{Stereotype and Name Alignment}
 
 There are two important elements of items
 \begin{itemize}
