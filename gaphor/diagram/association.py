@@ -13,7 +13,7 @@ Plan:
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
-from math import atan, pi, sin, cos
+from math import atan2, atan, pi, sin, cos
 
 from gaphas.util import text_extents
 from gaphas import Item
@@ -92,39 +92,19 @@ class AssociationItem(DiagramLine):
 
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.
-        self._label_pos = (0, 0)
         self._head_end = AssociationEnd(owner=self, end="head")
-#        self._head_end.set_child_of(self)
         self._tail_end = AssociationEnd(owner=self, end="tail")
-#        self._tail_end.set_child_of(self)
-
-#        self._label = diacanvas.shape.Text()
-#        self._label.set_font_description(pango.FontDescription(AssociationItem.FONT))
-        #self._label.set_alignment(pango.ALIGN_CENTER)
-#        self._label.set_markup(False)
-        #self._label.set_max_width(100)
-        #self._label.set_max_height(100)
 
         # Direction depends on the ends that hold the ownedEnd attributes.
         self._show_direction = False
-#        self._dir = diacanvas.shape.Path()
-#        self._dir.set_line_width(2.0)
-#        self._dir.line(((10, 0), (10, 10), (0, 5)))
-#        self._dir.set_fill_color(diacanvas.color(0,0,0))
-#        self._dir.set_fill(diacanvas.shape.FILL_SOLID)
-#        self._dir.set_cyclic(True)
+        self._dir_angle = 0
+        self._dir_pos = 0, 0
 
-#        self._head_xa = diacanvas.shape.Path()
-#        self._head_xa.set_line_width(2.0)
+    def set_show_direction(self, dir):
+        self._show_direction = dir
+        self.request_update()
 
-#        self._head_xb = diacanvas.shape.Path()
-#        self._head_xb.set_line_width(2.0)
-
-#        self._tail_xa = diacanvas.shape.Path()
-#        self._tail_xa.set_line_width(2.0)
-
-#        self._tail_xb = diacanvas.shape.Path()
-#        self._tail_xb.set_line_width(2.0)
+    show_direction = property(lambda s: s._show_direction, set_show_direction)
 
     def setup_canvas(self):
         super(AssociationItem, self).setup_canvas()
@@ -209,6 +189,7 @@ class AssociationItem(DiagramLine):
             return
 
         self.subject.memberEnd.moveDown(self.subject.memberEnd[0])
+        self.request_update()
 
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramLine.on_subject_notify(self, pspec,
@@ -217,11 +198,6 @@ class AssociationItem(DiagramLine):
         self.on_subject_notify__name(self.subject, pspec)
 
     def on_subject_notify__name(self, subject, pspec):
-        #log.debug('Association name = %s' % (subject and subject.name))
-        #if subject:
-        #    self._label.set_text(subject.name or '')
-        #else:
-        #    self._label.set_text('')
         self.request_update()
 
     def on_subject_notify__ownedEnd(self, subject, pspec):
@@ -241,50 +217,10 @@ class AssociationItem(DiagramLine):
         y = p1[1] <= p2[1] and h or 0
         y = (p1[1] + p2[1]) / 2.0 - y
 
-        self._label_pos = (x, y)
         #log.debug('label pos = (%d, %d)' % (x, y))
         #return x, y, max(x + 10, x + w), max(y + 10, y + h)
         return x, y, x + w, y + h
 
-
-    def update_dir(self, p1, p2):
-        """Create a small arrow near the middle of the association line and
-        let it point in the direction of self.subject.memberEnd[0].
-        Keep in mind that self.subject.memberEnd[0].class_ points to the class
-        *not* pointed to by the arrow.
-        """
-        x = p1[0] < p2[0] and -8 or 8
-        y = p1[1] >= p2[1] and -8 or 8
-        x = (p1[0] + p2[0]) / 2.0 + x
-        y = (p1[1] + p2[1]) / 2.0 + y
-        
-        try:
-            angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0])) #/ pi * 180.0
-        except ZeroDivisionError:
-            angle = pi * 1.5
-
-        # Invert angle if member ends are inverted
-        if self.subject.memberEnd[0] is self._tail_end.subject:
-            angle += pi
-
-        if p1[0] < p2[0]:
-            angle += pi
-        elif p1[0] == p2[0] and p1[1] > p2[1]:
-            angle += pi
-        #log.debug('rotation angle is %s' % (angle/pi * 180.0))
-
-        sin_angle = sin(angle)
-        cos_angle = cos(angle)
-
-        def r(a, b):
-            return (cos_angle * a - sin_angle * b + x, \
-                    sin_angle * a + cos_angle * b + y)
-
-        # Create an arrow around (0, 0), so it can be easely rotated:
-        self._dir.line((r(-6, 0), r(6, -5), r(6, 5)))
-        self._dir.set_cyclic(True)
-
-        return x, y, x + 12, y + 10
 
     def update(self, context):
         """Update the shapes and sub-items of the association."""
@@ -320,6 +256,14 @@ class AssociationItem(DiagramLine):
             else:
                 self.draw_tail = self.draw_tail_undefined
 
+            if self._show_direction:
+                m = len(self._handles) / 2
+                h0, h1 = self._handles[m - 1], self._handles[m]
+                self._dir_angle = atan2(h1.y - h0.y, h1.x - h0.x)
+                self._dir_pos = (h0.x + h1.x) / 2, (h0.y + h1.y) / 2
+                if self.tail_end.subject is self.subject.memberEnd[0]:
+                    self._dir_angle += pi
+
         # update relationship after self.set calls to avoid circural updates
         DiagramLine.update(self, context)
 
@@ -331,44 +275,11 @@ class AssociationItem(DiagramLine):
         self._tail_end.update(context, handles[-1].pos,
                                      handles[-2].pos)
         
-        #self.update_child(self._head_end, affine)
-        #self.update_child(self._tail_end, affine)
-
         # update name label:
         middle = len(handles)/2
         self._label_bounds = self.update_label(context, handles[middle-1].pos,
                                                handles[middle].pos)
 
-#        if self._show_direction and self.subject and self.subject.memberEnd:
-#            b0 = self.update_dir(handles[middle-1].pos,
-#                                 handles[middle].pos)
-#        else:
-#            b0 = self.bounds
-
-        # bounds calculation
-#        b1 = self.bounds
-#        b2 = self._head_end.get_bounds(self._head_end.affine)
-#        b3 = self._tail_end.get_bounds(self._tail_end.affine)
-#        bv = zip(self._label_bounds, b0, b1, b2, b3)
-#        self.set_bounds((min(bv[0]), min(bv[1]), max(bv[2]), max(bv[3])))
-                    
-#    def on_shape_iter(self):
-#        for s in DiagramLine.on_shape_iter(self):
-#            yield s
-#        yield self._label
-#        if self._show_direction:
-#            yield self._dir
-#
-#        if self._head_end.subject and self._tail_end.subject:
-#            if self._tail_end.subject.aggregation == intern('none') \
-#                    and self._head_end.get_navigability() == False:
-#                yield self._head_xa
-#                yield self._head_xb
-#
-#            if self._head_end.subject.aggregation == intern('none') \
-#                    and self._tail_end.get_navigability() == False:
-#                yield self._tail_xa
-#                yield self._tail_xb
 
     def point(self, x, y):
         """Returns the distance from the Association to the (mouse) cursor.
@@ -464,109 +375,25 @@ class AssociationItem(DiagramLine):
         context.cairo.line_to(0, 0)
 
     def draw(self, context):
+        cr = context.cairo
         super(AssociationItem, self).draw(context)
         self._head_end.draw(context)
         self._tail_end.draw(context)
-        # TODO: draw direction and association name
+        if self._show_direction:
+            cr.save()
+            try:
+                cr.translate(*self._dir_pos)
+                cr.rotate(self._dir_angle)
+                cr.move_to(0, 0)
+                cr.line_to(6, 5)
+                cr.line_to(0, 10)
+                cr.fill()
+            finally:
+                cr.restore()
 
-
-    #
-    # Gaphor Connection Protocol
-    #
-
-    def allow_connect_handle(self, handle, connecting_to):
-        """This method is called by a canvas item if the user tries to connect
-        this object's handle. allow_connect_handle() checks if the line is
-        allowed to be connected. In this case that means that one end of the
-        line should be connected to a Classifier.
-        Returns: TRUE if connection is allowed, FALSE otherwise.
-        """
-        #log.debug('AssociationItem.allow_connect_handle')
-        if isinstance(connecting_to.subject, UML.Classifier):
-            return True
-        return False
-
-    def confirm_connect_handle(self, handle):
-        """This method is called after a connection is established. This method
-        sets the internal state of the line and updates the data model.
-        """
-        #log.debug('AssociationItem.confirm_connect_handle')
-
-        c1 = self.handles[0].connected_to
-        c2 = self.handles[-1].connected_to
-        if c1 and c2:
-            head_type = c1.subject
-            tail_type = c2.subject
-
-            # First check if we do not already contain the right subject:
-            if self.subject:
-                end1 = self.subject.memberEnd[0]
-                end2 = self.subject.memberEnd[1]
-                if (end1.type is head_type and end2.type is tail_type) \
-                   or (end2.type is head_type and end1.type is tail_type):
-                    return
-                    
-            # Find all associations and determine if the properties on the
-            # association ends have a type that points to the class.
-            Association = UML.Association
-            for assoc in resource(UML.ElementFactory).itervalues():
-                if isinstance(assoc, Association):
-                    #print 'assoc.memberEnd', assoc.memberEnd
-                    end1 = assoc.memberEnd[0]
-                    end2 = assoc.memberEnd[1]
-                    if (end1.type is head_type and end2.type is tail_type) \
-                       or (end2.type is head_type and end1.type is tail_type):
-                        # check if this entry is not yet in the diagram
-                        # Return if the association is not (yet) on the canvas
-                        for item in assoc.presentation:
-                            if item.canvas is self.canvas:
-                                break
-                        else:
-                            #return end1, end2, assoc
-                            self.subject = assoc
-                            if (end1.type is head_type and end2.type is tail_type):
-                                self._head_end.subject = end1
-                                self._tail_end.subject = end2
-                            else:
-                                self._head_end.subject = end2
-                                self._tail_end.subject = end1
-                            return
-            else:
-                # TODO: How should we handle other types than Class???
-
-                element_factory = resource(UML.ElementFactory)
-                relation = element_factory.create(UML.Association)
-                head_end = element_factory.create(UML.Property)
-                head_end.lowerValue = element_factory.create(UML.LiteralSpecification)
-                tail_end = element_factory.create(UML.Property)
-                tail_end.lowerValue = element_factory.create(UML.LiteralSpecification)
-                relation.package = self.canvas.diagram.namespace
-                relation.memberEnd = head_end
-                relation.memberEnd = tail_end
-                #head_end.type = tail_end.class_ = head_type
-                #tail_end.type = head_end.class_ = tail_type
-                head_end.type = head_type
-                tail_end.type = tail_type
-                head_type.ownedAttribute = tail_end
-                tail_type.ownedAttribute = head_end
-                # copy text from ends to AssociationEnds:
-                #head_end.name = self._head_end._name.get_property('text')
-                #head_end.multiplicity = self._head__end._mult.get_property('text')
-                #tail_end.name = self._tail_end._name.get_property('text')
-                #tail_end.multiplicity = self._tail_end._mult.get_property('text')
-
-                self.subject = relation
-                self._head_end.subject = head_end
-                self._tail_end.subject = tail_end
-
-    def confirm_disconnect_handle(self, handle, was_connected_to):
-        #log.debug('AssociationItem.confirm_disconnect_handle')
-        if self.subject:
-            # First delete the Property's at the ends, otherwise they will
-            # be interpreted as attributes.
-            self._head_end.set_subject(None)
-            self._tail_end.set_subject(None)
-            self.set_subject(None)
+        if self.subject and self.subject.name:
+            cr.move_to(self._label_bounds[0], self._label_bounds[1])
+            cr.show_text(self.subject.name)
 
 
 class AssociationEnd(DiagramItem):

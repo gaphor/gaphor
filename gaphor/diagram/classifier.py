@@ -7,7 +7,7 @@ from gaphas.util import text_extents, text_center, text_set_font
 from gaphor import UML
 from gaphor.i18n import _
 
-from gaphor.diagram.nameditem import NamedItem, NamedItemMeta
+from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.feature import FeatureItem
 
 from gaphas.util import text_center

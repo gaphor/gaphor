@@ -138,6 +138,7 @@ class ElementFactory(object):
         """Flush all elements (remove them from the factory)."""
         self.notify(None, 'flush')
         component.handle(FlushFactoryEvent(self))
+
         # First flush all diagrams:
         for value in list(self.select(lambda e: isinstance(e, Diagram))):
             value.unlink()
@@ -149,6 +150,7 @@ class ElementFactory(object):
 
         assert len(self._elements) == 0, 'Still items in the factory: %s' % str(self._elements.values())
 
+        # Force Garbage collection, so memory allocated by items is freed.
         import gc
         for i in range(4): gc.collect()
 

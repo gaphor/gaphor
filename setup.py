@@ -18,6 +18,7 @@ TESTS = [
     'gaphor.actions.tests.test_itemactions',
     'gaphor.actions.tests.test_placementactions',
     'gaphor.adapters.tests.test_connector',
+    'gaphor.adapters.tests.test_editor',
     'gaphor.diagram.tests.test_class',
     'gaphor.diagram.tests.test_action',
     'gaphor.diagram.tests.test_handletool',

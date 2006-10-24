@@ -18,6 +18,7 @@ class LineItem(gaphas.Line, DiagramItem):
     def __init__(self, id = None):
         gaphas.Line.__init__(self)
         DiagramItem.__init__(self, id)
+        self.fuzzyness = 2
         self._stereotype_pos = (0, 0)
         self._stereotype_width = 0
         self._stereotype_height = 0

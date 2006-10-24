@@ -327,7 +327,7 @@ class SegmentAction(Action):
         #print 'event =', event
         wx, wy = view.transform_point_c2w(*get_pointer(view))
         x, y = view.canvas.get_matrix_w2i(fi).transform_point(wx, wy)
-        segment = fi.closest_segment(x, y)
+        distance, point, segment = fi.closest_segment(x, y)
         return fi, segment
 
 
@@ -436,15 +436,15 @@ class AssociationShowDirectionAction(CheckAction):
         try:
             item = get_parent_focus_item(self._window)
             if isinstance(item, items.AssociationItem):
-                self.active = item.get_property('show-direction')
+                self.active = item.show_direction
         except NoFocusItemError:
             pass
 
     @undoable
     def execute(self):
         fi = get_parent_focus_item(self._window)
-        assert isinstance(fi, AssociationItem)
-        fi.set_property('show-direction', self.active)
+        assert isinstance(fi, items.AssociationItem)
+        fi.show_direction = self.active
 
 register_action(AssociationShowDirectionAction, 'ItemFocus')
 
