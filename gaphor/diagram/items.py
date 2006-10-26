@@ -29,6 +29,8 @@ from gaphor.diagram.node import NodeItem
 
 # Actions:
 from gaphor.diagram.action import ActionItem
+from gaphor.diagram.activitynodes import InitialNodeItem, ActivityFinalNodeItem
+from gaphor.diagram.activitynodes import FlowFinalNodeItem
 
 # Use Cases:
 from gaphor.diagram.actor import ActorItem

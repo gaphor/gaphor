@@ -11,7 +11,7 @@ from gaphas.util import text_align, text_extents, path_ellipse
 class UseCaseItem(ClassifierItem):
     """Presentation of gaphor.UML.UseCase.
     """
-    __uml__      = UML.UseCase
+    __uml__ = UML.UseCase
 
     def __init__(self, id):
         ClassifierItem.__init__(self, id, 50, 30)

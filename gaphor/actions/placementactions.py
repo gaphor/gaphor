@@ -178,62 +178,6 @@ class MetaClassPlacementAction(ClassPlacementAction):
 register_action(MetaClassPlacementAction)
 
 
-class InterfacePlacementTool(gaphas.tool.PlacementTool):
-    """The Interface placement tool creates an InterfaceItem and a
-    DependencyItem (for the Implementation relationship) on the diagram.
-    """
-
-    def __init__(self, window, action_id):
-        gaphas.tool.PlacementTool.__init__(self, None)
-        self._window = window
-        self.action_id = action_id
-        self.handle_tool = diacanvas.view.HandleTool()
-
-    def do_button_press_event(self, view, event):
-        factory = resource(UML.ElementFactory)
-        diag = self._window.get_current_diagram()
-        iface = factory.create(UML.Interface)
-        iface.package = diag.namespace
-        iface_item = diag.create(interface.InterfaceItem)
-        iface_item.set_property('parent', view.canvas.root)
-        iface_item.subject = iface
-        impl_item = diag.create(dependency.DependencyItem)
-        impl_item.set_dependency_type(UML.Implementation)
-        impl_item.set_property('parent', view.canvas.root)
-
-        wx, wy = view.window_to_world(event.x, event.y)
-        ix, iy = iface_item.affine_point_w2i(wx, wy)
-        iface_item.move(ix, iy)
-        
-        ix += iface_item.RADIUS * 2
-        iy += iface_item.RADIUS
-        impl_item.move(ix, iy)
-        
-        # Select the new items:
-        view.unselect_all()
-        view.select(iface_item)
-        view.focus(impl_item)
-
-        # Attach the head handle to the interface item:
-        first = impl_item.head
-        iface_item.connect_handle(first)
-
-        # Grab the last handle with the mouse cursor
-        last = impl_item.last
-        last.set_pos_i(20,0)
-        #self.handle_tool.set_grabbed_handle(last)
-        return True
-
-    def do_button_release_event(self, view, event):
-        view.set_tool(None)
-        return self.handle_tool.button_release(view, event)
-
-    def do_motion_notify_event(self, view, event):
-        return self.handle_tool.motion_notify(view, event)
-
-#import gobject
-#gobject.type_register(InterfacePlacementTool)
-
 class InterfacePlacementAction(NamespacePlacementAction):
     id = 'InsertInterface'
     label = '_Interface'
@@ -242,11 +186,6 @@ class InterfacePlacementAction(NamespacePlacementAction):
     name = 'Interface'
     type = items.InterfaceItem
     subject_type = UML.Interface
-
-#    def _execute(self):
-#        tool = InterfacePlacementTool(self._window, self.id)
-#        self._window.get_current_diagram_view().set_tool(tool)
-#        self._window.set_message('Create new %s' % self.name)
 
 register_action(InterfacePlacementAction)
 
@@ -287,40 +226,40 @@ class PackagePlacementAction(NamespacePlacementAction):
 register_action(PackagePlacementAction)
 
 
-#class InitialNodePlacementAction(PlacementAction):
-#    id = 'InsertInitialNode'
-#    label = 'Initial Node'
-#    tooltip = 'Create a new initial node'
-#    stock_id = 'gaphor-initial-node'
-#    name = 'InitialNode'
-#    type = items.InitialNodeItem
-#    subject_type = UML.InitialNode
-#
-#register_action(InitialNodePlacementAction)
+class InitialNodePlacementAction(PlacementAction):
+    id = 'InsertInitialNode'
+    label = 'Initial Node'
+    tooltip = 'Create a new initial node'
+    stock_id = 'gaphor-initial-node'
+    name = 'InitialNode'
+    type = items.InitialNodeItem
+    subject_type = UML.InitialNode
+
+register_action(InitialNodePlacementAction)
 
 
-#class ActivityFinalNodePlacementAction(PlacementAction):
-#    id = 'InsertActivityFinalNode'
-#    label = 'Activity Final Node'
-#    tooltip = 'Create a new activity final node'
-#    stock_id = 'gaphor-activity-final-node'
-#    name = 'ActivityFinalNode'
-#    type = diagram.ActivityFinalNodeItem
-#    subject_type = UML.ActivityFinalNode
-#
-#register_action(ActivityFinalNodePlacementAction)
+class ActivityFinalNodePlacementAction(PlacementAction):
+    id = 'InsertActivityFinalNode'
+    label = 'Activity Final Node'
+    tooltip = 'Create a new activity final node'
+    stock_id = 'gaphor-activity-final-node'
+    name = 'ActivityFinalNode'
+    type = items.ActivityFinalNodeItem
+    subject_type = UML.ActivityFinalNode
+
+register_action(ActivityFinalNodePlacementAction)
 
 
-#class FlowFinalNodePlacementAction(PlacementAction):
-#    id = 'InsertFlowFinalNode'
-#    label = 'Flow Final Node'
-#    tooltip = 'Create a new flow final node'
-#    stock_id = 'gaphor-flow-final-node'
-#    name = 'FlowFinalNode'
-#    type = diagram.FlowFinalNodeItem
-#    subject_type = UML.FlowFinalNode
-#
-#register_action(FlowFinalNodePlacementAction)
+class FlowFinalNodePlacementAction(PlacementAction):
+    id = 'InsertFlowFinalNode'
+    label = 'Flow Final Node'
+    tooltip = 'Create a new flow final node'
+    stock_id = 'gaphor-flow-final-node'
+    name = 'FlowFinalNode'
+    type = items.FlowFinalNodeItem
+    subject_type = UML.FlowFinalNode
+
+register_action(FlowFinalNodePlacementAction)
 
 
 #class DecisionNodePlacementAction(PlacementAction):
@@ -405,10 +344,10 @@ class AssociationPlacementAction(PlacementAction):
 register_action(AssociationPlacementAction)
 
 
-#class UseCaseAssociationPlacementAction(AssociationPlacementAction):
-#    id = 'InsertUseCaseAssociation'
-#
-#register_action(UseCaseAssociationPlacementAction)
+class UseCaseAssociationPlacementAction(AssociationPlacementAction):
+    id = 'InsertUseCaseAssociation'
+
+register_action(UseCaseAssociationPlacementAction)
 
 
 class ExtensionPlacementAction(PlacementAction):
@@ -524,6 +463,7 @@ class NodePlacementAction(NamespacePlacementAction):
 
 register_action(NodePlacementAction)
 
+
 #class InteractionPlacementAction(NamespacePlacementAction):
 #    id = 'InsertInteraction'
 #    label = '_Interaction'
@@ -534,6 +474,7 @@ register_action(NodePlacementAction)
 #    subject_type = UML.Interaction
 #
 #register_action(InteractionPlacementAction)
+
 
 #class LifelinePlacementAction(PlacementAction):
 #    id = 'InsertLifeline'

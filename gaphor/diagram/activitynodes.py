@@ -6,102 +6,81 @@ Activity control nodes.
 import math
 import itertools
 
-import gobject
-import pango
+from gaphas.util import path_ellipse, text_align, text_extents
 
-import diacanvas
 from gaphor import UML
 from gaphor import resource
-from gaphor.diagram import TextElement
-from gaphor.diagram.groupable import GroupBase
+#from gaphor.diagram import TextElement
+#from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.align import H_ALIGN_LEFT, H_ALIGN_RIGHT, V_ALIGN_BOTTOM
 
 
 class ActivityNodeItem(NamedItem):
+    """Basic class for simple activity nodes.
+    Simple activity node is not resizable.
     """
-    Basic class for simple activity nodes. Simple activity node is not
-    resizable.
-    """
-    __o_align__ = True
 
-    def __init__(self, id = None):
-        NamedItem.__init__(self, id)
+    def __init__(self, id=None, width=0, height=0):
+        NamedItem.__init__(self, id, width, height)
         # Do not allow resizing of the node
-        for h in self.handles:
-            h.props.movable = False
+        for h in self._handles:
+            h.movable = False
 
-
+        
 class InitialNodeItem(ActivityNodeItem):
     """
     Representation of initial node. Initial node has name which is put near
     top-left side of node.
     """
     __uml__     = UML.InitialNode
-    __s_align__ = H_ALIGN_LEFT
     
     RADIUS = 10
 
-    def create_border(self):
+    def __init__(self, id=None, width=20, height=20):
+        ActivityNodeItem.__init__(self, id, width, height)
+
+    def draw(self, context):
+        cr = context.cairo
         r = self.RADIUS
         d = r * 2
-        circle = diacanvas.shape.Ellipse()
-        circle.ellipse((r, r), d, d)
-        circle.set_line_width(0.01)
-        circle.set_fill(diacanvas.shape.FILL_SOLID)
-        circle.set_fill_color(diacanvas.color(0, 0, 0, 255))
-        self.set(width = d, height = d)
-        return circle
-
-
-    def draw_border(self):
-        """
-        Draw nothing as initial node does not change.
-        """
-        pass
+        path_ellipse(cr, r, r, d, d)
+        cr.set_line_width(0.01)
+        cr.fill()
+        
+        cr.move_to(d, r)
+        cr.show_text(self.subject.name or '')
 
 
 class ActivityFinalNodeItem(ActivityNodeItem):
-    """
-    Representation of activity final node. Activity final node has name
+    """Representation of activity final node. Activity final node has name
     which is put near right-bottom side of node.
     """
 
-    __uml__      = UML.ActivityFinalNode
-    __s_align__  = H_ALIGN_RIGHT
-    __s_valign__ = V_ALIGN_BOTTOM
+    __uml__ = UML.ActivityFinalNode
 
     RADIUS_1 = 10
     RADIUS_2 = 15
 
-    def create_border(self):
-        r = self.RADIUS_2
+    def __init__(self, id=None, width=30, height=30):
+        ActivityNodeItem.__init__(self, id, width, height)
+
+    def draw(self, context):
+        cr = context.cairo
+        r = self.RADIUS_2 + 1
         d = self.RADIUS_1 * 2
-        self._inner = diacanvas.shape.Ellipse()
-        self._inner.ellipse((r + 1, r + 1), d, d)
-        self._inner.set_line_width(0.01)
-        self._inner.set_fill(diacanvas.shape.FILL_SOLID)
-        self._inner.set_fill_color(diacanvas.color(0, 0, 0, 255))
+        path_ellipse(cr, r, r, d, d)
+        cr.set_line_width(0.01)
+        cr.fill()
 
         d = r * 2
-        border = diacanvas.shape.Ellipse()
-        border.ellipse((r + 1, r + 1), d, d)
-        border.set_line_width(2)
-        border.set_color(diacanvas.color(0, 0, 0, 255))
-
-        self.set(width = d + 2, height = d + 2)
-        return border
-
-
-    def draw_border(self):
-        """
-        Draw nothing as activity final node does not change.
-        """
-        pass
-
-
-    def on_shape_iter(self):
-        return itertools.chain([self._inner], ActivityNodeItem.on_shape_iter(self))
+        path_ellipse(cr, r, r, d, d)
+        cr.set_line_width(0.01)
+        cr.set_line_width(2)
+        cr.stroke()
+        
+        cr.move_to(d, r)
+        cr.show_text(self.subject.name or '')
 
 
 class FlowFinalNodeItem(ActivityNodeItem):
@@ -110,60 +89,38 @@ class FlowFinalNodeItem(ActivityNodeItem):
     put near right-bottom side of node.
     """
 
-    __uml__      = UML.FlowFinalNode
-    __s_align__  = H_ALIGN_RIGHT
-    __s_valign__ = V_ALIGN_BOTTOM
+    __uml__ = UML.FlowFinalNode
 
     RADIUS = 10
 
-    def create_border(self):
+    def __init__(self, id=None, width=20, height=20):
+        ActivityNodeItem.__init__(self, id, width, height)
+
+    def draw(self, context):
+        cr = context.cairo
         r = self.RADIUS
         d = r * 2
-        border = diacanvas.shape.Ellipse()
-        border.ellipse((r, r), d, d)
-        border.set_line_width(2)
+        path_ellipse(cr, r, r, d, d)
+        cr.stroke()
 
-        def get_line(p1, p2):
-            line = diacanvas.shape.Path()
-            line.line((p1, p2))
-            line.set_line_width(2)
-            return line
+        cr.move_to(d, r)
+        cr.show_text(self.subject.name or '')
 
         dr = (1 - math.sin(math.pi / 4)) * r
-        self._line1 = get_line((dr, dr), (d - dr, d - dr))
-        self._line2 = get_line((dr, d - dr), (d - dr, dr))
-
-        self.set(width = d, height = d)
-
-        return border
-
-
-    def draw_border(self):
-        """
-        Draw nothing as flow final node does not change.
-        """
-        pass
-
-
-    def on_shape_iter(self):
-        return itertools.chain(ActivityNodeItem.on_shape_iter(self), [self._line1, self._line2])
-
+        cr.move_to(dr, dr)
+        cr.line_to(d - dr, d - dr)
+        cr.move_to(dr, d - dr)
+        cr.line_to(d - dr, dr)
+        cr.stroke()
+        
 
 
 class FDNode(ActivityNodeItem):
-    """
-    Abstract class for fork and decision UI nodes. These nodes contain
+    """Abstract class for fork and decision UI nodes. These nodes contain
     combined property, which determines if the they represent combination
     of fork/join or decision/merge nodes as described in UML
     specification.
-
     """
-    __gproperties__ = {
-        'combined': (gobject.TYPE_BOOLEAN, 'combined',
-            'check if node item is combination of fork/join or decision/merge nodes',
-            False,
-            gobject.PARAM_READWRITE),
-    }
 
     def __init__(self, id):
         ActivityNodeItem.__init__(self, id)
@@ -219,7 +176,7 @@ class DecisionNodeItem(FDNode):
 
 
 
-class ForkNodeItem(FDNode, GroupBase):
+class ForkNodeItem(FDNode):
     """
     Representation of fork or join node.
     """

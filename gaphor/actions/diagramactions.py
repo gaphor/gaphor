@@ -195,7 +195,7 @@ class DeleteAction(Action):
         view = self._window.get_current_diagram_view()
         # Confirm deletion of last views to model objects
         # They will be deleted along with their last view
-        if not self.mayRemoveFromModal(view):
+        if not self.mayRemoveFromModel(view):
             return
 
         if view.is_focus():
@@ -203,11 +203,11 @@ class DeleteAction(Action):
             try:
                 items = view.selected_items
                 for i in items:
-                    i.item.unlink()
+                    i.unlink()
             finally:
                 get_undo_manager().commit_transaction()
     
-    def mayRemoveFromModal(self, view):
+    def mayRemoveFromModel(self, view):
         ''' Check if there are items which will be deleted from the model (when their last views are deleted). If so request user confirmation before deletion. '''
         items = view.selected_items
         for i in items:
@@ -217,7 +217,7 @@ class DeleteAction(Action):
 
     def isLastView(self, item):
         ''' Check if the current view is the last view to its object '''
-        if item.item.subject and len(item.item.subject.presentation)==1:
+        if item.subject and len(item.subject.presentation)==1:
             return True
         return False
 
@@ -273,8 +273,8 @@ class CopyAction(Action):
             items = view.selected_items
             copy_items = []
             for i in items:
-                copy_items.append(i.item)
-                #i.item.save(save_func)
+                copy_items.append(i)
+                #i.save(save_func)
             if copy_items:
                 resource.set('copy-buffer', copy_items)
         tab = self._window.get_current_diagram_tab()

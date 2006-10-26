@@ -3,9 +3,6 @@
 Commands related to the Diagram (DiaCanvas)
 """
 
-from __future__ import generators
-
-
 from gaphor import GaphorError, resource
 from gaphor import UML
 from gaphor.diagram import items
