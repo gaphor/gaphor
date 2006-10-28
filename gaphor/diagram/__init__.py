@@ -68,80 +68,6 @@ class Styles(object):
         return self.__dict__.iteritems()
 
 
-#class Relationship(object):
-#    """Help! What does this class do?
-#    """
-#
-#    def __init__(self, head_a = None, head_b = None, tail_a = None, tail_b = None):
-#        super(Relationship, self).__init__()
-#        self.head_relation = head_a, head_b
-#        self.tail_relation = tail_a, tail_b
-#
-#    # python descriptor protol
-#    def __get__(self, line, cls):
-#        if not line:
-#            return self
-#
-#        return self.relationship(line)
-#        
-#    def __set__(self, line, value):
-#        pass
-#
-#    def __delete__(self, line):
-#        pass
-#
-#    def relationship(self, line, head_subject = None, tail_subject = None):
-#        return self.find(line, self.head_relation, self.tail_relation,
-#                head_subject, tail_subject)
-#
-#    def find(self, line, head_relation, tail_relation,
-#            head_subject = None, tail_subject = None):
-#        """
-#        Figure out what elements are used in a relationship.
-#        """
-#
-#        if not head_subject and not tail_subject:
-#            head_subject = line.head.connected_to.subject
-#            tail_subject = line.tail.connected_to.subject
-#
-#        edge_head_name = head_relation[0]
-#        node_head_name = head_relation[1]
-#        edge_tail_name = tail_relation[0]
-#        node_tail_name = tail_relation[1]
-#
-#        # First check if the right subject is already connected:
-#        if line.subject \
-#                and getattr(line.subject, edge_head_name) is head_subject \
-#                and getattr(line.subject, edge_tail_name) is tail_subject:
-#            return line.subject
-#
-#        # This is the type of the relationship we're looking for
-#        required_type = getattr(type(tail_subject), node_tail_name).type
-#
-#        # Try to find a relationship, that is already created, but not
-#        # yet displayed in the diagram.
-#        for gen in getattr(tail_subject, node_tail_name):
-#            if not isinstance(gen, required_type):
-#                continue
-#                
-#            gen_head = getattr(gen, edge_head_name)
-#            try:
-#                if not head_subject in gen_head:
-#                    continue
-#            except TypeError:
-#                if not gen_head is head_subject:
-#                    continue
-#
-#            # check for this entry on line.canvas
-#            for item in gen.presentation:
-#                # Allow line to be returned. Avoids strange
-#                # behaviour during loading
-#                if item.canvas is line.canvas and item is not line:
-#                    break
-#            else:
-#                return gen
-#        return None
-
 
 class DiagramItemMeta(type):
     """Initialize a new diagram item.
@@ -153,11 +79,11 @@ class DiagramItemMeta(type):
     """
 
     def __init__(self, name, bases, data):
-#        cls = type.__new__(self, name, bases, data)
         type.__init__(self, name, bases, data)
 
         self.mapUMLClass(data)
-        self.setStyles(bases, data)
+        self.setStyles(data)
+
 
     def mapUMLClass(self, data):
         """
@@ -176,7 +102,7 @@ class DiagramItemMeta(type):
                 set_diagram_item(obj, self)
 
 
-    def setStyles(self, bases, data):
+    def setStyles(self, data):
         """
         Set item styles information by merging provided information with
         style information from base classes.
@@ -186,7 +112,7 @@ class DiagramItemMeta(type):
         data  - metaclass data with styles information
         """
         styles = Styles()
-        for c in bases:
+        for c in self.__bases__:
             if hasattr(c, 'styles'):
                 for (name, value) in c.styles.items():
                     styles.add(name, value)
@@ -196,32 +122,5 @@ class DiagramItemMeta(type):
                 styles.add(name, value)
 
         self.styles = styles
-
-
-
-
-#class LineItemMeta(DiagramItemMeta):
-#    """Add support for __relationship__ (what does it do?) 
-#    """
-#    def __new__(cls, name, bases, data):
-#        item_class = DiagramItemMeta.__new__(cls, name, bases, data)
-#
-#        # set line relationship
-#        if '__relationship__' in data:
-#            rel = data['__relationship__']
-#            if isinstance(rel, (tuple, set, list)):
-#                rel = Relationship(*rel)
-#                item_class.relationship = rel
-#
-#        # set head and tail handles
-#
-#        return item_class
-
-
-#if __debug__: 
-#    # Keep track of all model elements that are created
-#    from gaphor.misc.aspects import ReferenceAspect, weave_method
-#    from gaphor import refs
-#    weave_method(create_as, ReferenceAspect, refs)
 
 # vim:sw=4:et
