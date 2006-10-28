@@ -1,10 +1,16 @@
-\documentclass[draft]{book}
+\documentclass{book}
 \usepackage[papername = a4paper, margin = 3cm]{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{listings}
+\usepackage{float}
 
 \title{Gaphor Diagram Item Model}
 \author{wrobell@pld-linux.org}
+
+\newfloat{code}{th}{code}
+
+\lstnewenvironment{pylst}{\lstset{language=Python}}{}
 
 \newcommand{\rmodule}[1]{\texttt{#1}}
 \newcommand{\rclass}[1]{\texttt{#1}}
@@ -148,7 +154,7 @@ Head and tail concepts are also used in Gaphas in case of canvas lines.
 Head of line item is at the same end as head of canvas line. The same
 applies for tail.
 
-\subsection{Item Styles}
+\subsection{Item Styles}\label{itemstyles}
 All the items are going to contain different parts.
 Many of such parts can be shared by other items, for example
 \begin{itemize}
@@ -183,6 +189,7 @@ supported with classes
 \iattr{\_\_uml\_\_}{UML class associated with item}
 \iattr{\_\_stereotype\_\_}{item static stereotype}
 \iattr{\_\_style\_\_}{item styles information}
+\iattr{style}{item style information}
 \end{attrs}
 \begin{entitydesc}
 Metaclass for all items. Assigns information about UML class, stereotypes,
@@ -312,14 +319,71 @@ items. Every named item can have its own minimal size. Size of named item
 can be changed by an user. There are some cases, when size cannot be
 changed, i.e. initial node item.
 
+It should be possible to align name of named element with styles
+(see~\ref{itemstyles}) as depending on an element, the name can be
+displayed in different places related to an item, i.e.
+\begin{itemize}
+\item class               --- top center
+\item use case            --- middle center
+\item object node         --- middle center
+\item actor               --- bottom center, outside item bounduaries
+\item initial action node --- top left, outside item bounduaries
+\item decision node       --- bottom center, outside item bounduaries
+\end{itemize}
+
 %fixme: there can be items with initial name and without initial name
+
+\section{Styles}
+Kind of information we need to align the name
+\begin{itemize}
+\item horizontal align information (left, center or right)
+\item vertical align information (top, middle or bottom)
+\item padding specified as in CSS (top right bottom left)
+\item is name outside an item?
+\end{itemize}
+
+Styles for name align are defined in table~\ref{nameditems:styles:spec}
+(see diagram~\ref{nameditems:styles:example} for example).
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Name           & Default value     & Description \\
+\hline
+name--align    & ('center', 'top') & align information \\
+name--padding  & (5, 5, 5, 5)      & name padding \\
+name--outside  & False             & name outside/inside item bounduaries \\
+\hline
+\end{tabular}
+\caption{Specification of name align styles}\label{nameditems:styles:spec}
+\end{center}
+\end{table}
+
+%\item vertical align information (top, middle or bottom)
+%\item padding specified as in CSS (top right bottom left)
+%\item is name outside an item?
+
+\begin{code}
+\lstset{language={Python}}
+\begin{pylst}
+class NamedItem(DiagramItem):
+    __style__ = {
+        'name-align' : ('center', 'top'),
+        'name-padding': (5, 5, 5, 5),
+        'name-outside': False,
+    }
+\end{pylst}
+\caption{Named items style example}\label{nameditems:styles:example}
+\end{code}
 
 \section{Classes}
 Class NamedItem is a base class for all named items.
 
 \begin{class}{NamedItem}
 \begin{entitydesc}
-Calculates minimal size based on name size. Draws UML object's name.
+Calculates minimal size based on name size. Draws UML object's name using
+style information.
 \end{entitydesc}
 \end{class}
 
