@@ -7,13 +7,10 @@ Abstract base class for element-like Diagram items.
 import gobject
 import gaphas
 from diagramitem import DiagramItem
-from gaphor.diagram import DiagramItemMeta
 
 __version__ = '$Revision$'
 
 class ElementItem(gaphas.Element, DiagramItem):
-    __metaclass__ = DiagramItemMeta
-
     def __init__(self, id=None):
         gaphas.Element.__init__(self)
         DiagramItem.__init__(self, id)

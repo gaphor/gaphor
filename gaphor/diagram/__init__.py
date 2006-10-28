@@ -32,6 +32,42 @@ def set_diagram_item(element, item):
     _uml_to_item_map[element] = item
 
 
+
+class Styles(object):
+    """
+    Item style information. Style information is provided through object's
+    attributes, i.e.
+
+        __style__ = {
+            'name-align': ('center', 'top'),
+        }
+
+    is translated to
+
+        >>> print style.name_align
+        ('center', 'top')
+    """
+    def add(self, name, value):
+        """
+        Add style variable.
+
+        Variable name can contain hyphens, which is converted to
+        underscode, i.e. 'name-align' -> 'name_align'.
+
+        name  - style variable name
+        value - style variable value
+        """
+        name = name.replace('-', '_')
+        setattr(self, name, value)
+
+
+    def items(self):
+        """
+        Return iterator of (name, value) style information items.
+        """
+        return self.__dict__.iteritems()
+
+
 #class Relationship(object):
 #    """Help! What does this class do?
 #    """
@@ -109,46 +145,58 @@ def set_diagram_item(element, item):
 
 class DiagramItemMeta(type):
     """Initialize a new diagram item.
-    1. Register UML.Elements by means of the __uml__ attribute.
+    1. Register UML.Elements by means of the __uml__ attribute (see
+       mapUMLClass method).
+    1. Set items styles information.
+
+    styles - style information
     """
 
-    def __new__(self, name, bases, data):
-        # map uml classes to diagram items
-        cls = type.__new__(self, name, bases, data)
+    def __init__(self, name, bases, data):
+#        cls = type.__new__(self, name, bases, data)
+        type.__init__(self, name, bases, data)
+
+        self.mapUMLClass(data)
+        self.setStyles(bases, data)
+
+    def mapUMLClass(self, data):
+        """
+        Map UML class to diagram item.
+
+        cls  - new instance of item class
+        data - metaclass data with UML class information 
+
+        """
         if '__uml__' in data:
             obj = data['__uml__']
             if isinstance(obj, (tuple, set, list)):
                 for c in obj:
-                    set_diagram_item(c, cls)
+                    set_diagram_item(c, self)
             else:
-                set_diagram_item(obj, cls)
-
-        return cls
+                set_diagram_item(obj, self)
 
 
-    def __init__(self, name, bases, data):
-        # stereotype align information
-        align = ItemAlign() # center, top
-        align.outside = getattr(self, '__o_align__', False)
-        if align.outside:
-            align.margin = (0, 2) * 4
-        else:
-            align.margin = (5, 30) * 2
-        self.set_cls_align('s', align, data)
+    def setStyles(self, bases, data):
+        """
+        Set item styles information by merging provided information with
+        style information from base classes.
 
+        cls   - new instance of diagram item class
+        bases - base classes of an item
+        data  - metaclass data with styles information
+        """
+        styles = Styles()
+        for c in bases:
+            if hasattr(c, 'styles'):
+                for (name, value) in c.styles.items():
+                    styles.add(name, value)
 
-    def set_cls_align(self, kind, align, data):
-        assert kind in ('s', 'n')
+        if '__style__' in data:
+            for (name, value) in data['__style__'].iteritems():
+                styles.add(name, value)
 
-        hn = '__%s_align__' % kind
-        vn = '__%s_valign__' % kind
+        self.styles = styles
 
-        if hn in data:
-            align.align = data[hn]
-        if vn in data:
-            align.valign = data[vn]
-
-        setattr(self, '%s_align' % kind, align)
 
 
 

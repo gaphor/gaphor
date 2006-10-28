@@ -7,6 +7,7 @@ from gaphor import resource
 from gaphor import UML
 from gaphor.misc import uniqueid
 from gaphor.UML import Element, Presentation
+from gaphor.diagram import DiagramItemMeta
 
 STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
@@ -28,6 +29,8 @@ class DiagramItem(Presentation, Element):
             disconnect = DiagramItem.disconnect
             ...
     """
+
+    __metaclass__ = DiagramItemMeta
 
     stereotype_list = []
     popup_menu = ('Stereotype', stereotype_list)
