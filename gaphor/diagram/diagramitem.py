@@ -28,6 +28,8 @@ class DiagramItem(Presentation, Element):
             connect = DiagramItem.connect
             disconnect = DiagramItem.disconnect
             ...
+
+    @cvar style: styles information (derived from DiagramItemMeta)
     """
 
     __metaclass__ = DiagramItemMeta

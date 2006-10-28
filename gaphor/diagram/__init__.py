@@ -36,13 +36,14 @@ def set_diagram_item(element, item):
 class Styles(object):
     """
     Item style information. Style information is provided through object's
-    attributes, i.e.
+    attributes, i.e.::
 
-        __style__ = {
-            'name-align': ('center', 'top'),
-        }
+        class InitialNodeItem
+            __style__ = {
+                'name-align': ('center', 'top'),
+            }
 
-    is translated to
+    is translated to::
 
         >>> print style.name_align
         ('center', 'top')
@@ -54,8 +55,8 @@ class Styles(object):
         Variable name can contain hyphens, which is converted to
         underscode, i.e. 'name-align' -> 'name_align'.
 
-        name  - style variable name
-        value - style variable value
+        @param name:  style variable name
+        @param value: style variable value
         """
         name = name.replace('-', '_')
         setattr(self, name, value)
@@ -70,12 +71,13 @@ class Styles(object):
 
 
 class DiagramItemMeta(type):
-    """Initialize a new diagram item.
+    """
+    Initialize a new diagram item.
     1. Register UML.Elements by means of the __uml__ attribute (see
        mapUMLClass method).
-    1. Set items styles information.
+    2. Set items styles information.
 
-    styles - style information
+    @ivar styles: style information
     """
 
     def __init__(self, name, bases, data):
@@ -89,8 +91,8 @@ class DiagramItemMeta(type):
         """
         Map UML class to diagram item.
 
-        cls  - new instance of item class
-        data - metaclass data with UML class information 
+        @param cls:  new instance of item class
+        @param data: metaclass data with UML class information 
 
         """
         if '__uml__' in data:
@@ -107,9 +109,9 @@ class DiagramItemMeta(type):
         Set item styles information by merging provided information with
         style information from base classes.
 
-        cls   - new instance of diagram item class
-        bases - base classes of an item
-        data  - metaclass data with styles information
+        @param cls:   new instance of diagram item class
+        @param bases: base classes of an item
+        @param data:  metaclass data with styles information
         """
         styles = Styles()
         for c in self.__bases__:
