@@ -19,10 +19,10 @@ class ItemTestCase(unittest.TestCase):
         Test style assign
         """
         item_a = self.ItemA()
-        self.assertEqual(self.ItemA.styles.a_01, 1)
-        self.assertEqual(self.ItemA.styles.a_02, 2)
-        self.assertEqual(item_a.styles.a_01, 1)
-        self.assertEqual(item_a.styles.a_02, 2)
+        self.assertEqual(self.ItemA.style.a_01, 1)
+        self.assertEqual(self.ItemA.style.a_02, 2)
+        self.assertEqual(item_a.style.a_01, 1)
+        self.assertEqual(item_a.style.a_02, 2)
 
 
     def test_style_override(self):
@@ -37,11 +37,11 @@ class ItemTestCase(unittest.TestCase):
                 'a-01': 5,
             }
         item_b = ItemB()
-        self.assertEqual(ItemB.styles.b_01, 3)
-        self.assertEqual(ItemB.styles.b_02, 4)
-        self.assertEqual(ItemB.styles.a_01, 5)
-        self.assertEqual(ItemB.styles.a_02, 2)
-        self.assertEqual(item_b.styles.b_01, 3)
-        self.assertEqual(item_b.styles.b_02, 4)
-        self.assertEqual(item_b.styles.a_01, 5)
-        self.assertEqual(item_b.styles.a_02, 2)
+        self.assertEqual(ItemB.style.b_01, 3)
+        self.assertEqual(ItemB.style.b_02, 4)
+        self.assertEqual(ItemB.style.a_01, 5)
+        self.assertEqual(ItemB.style.a_02, 2)
+        self.assertEqual(item_b.style.b_01, 3)
+        self.assertEqual(item_b.style.b_02, 4)
+        self.assertEqual(item_b.style.a_01, 5)
+        self.assertEqual(item_b.style.a_02, 2)

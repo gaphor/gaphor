@@ -33,7 +33,7 @@ def set_diagram_item(element, item):
 
 
 
-class Styles(object):
+class Style(object):
     """
     Item style information. Style information is provided through object's
     attributes, i.e.::
@@ -75,16 +75,16 @@ class DiagramItemMeta(type):
     Initialize a new diagram item.
     1. Register UML.Elements by means of the __uml__ attribute (see
        mapUMLClass method).
-    2. Set items styles information.
+    2. Set items style information.
 
-    @ivar styles: style information
+    @ivar style: style information
     """
 
     def __init__(self, name, bases, data):
         type.__init__(self, name, bases, data)
 
         self.mapUMLClass(data)
-        self.setStyles(data)
+        self.setStyle(data)
 
 
     def mapUMLClass(self, data):
@@ -104,25 +104,25 @@ class DiagramItemMeta(type):
                 set_diagram_item(obj, self)
 
 
-    def setStyles(self, data):
+    def setStyle(self, data):
         """
-        Set item styles information by merging provided information with
+        Set item style information by merging provided information with
         style information from base classes.
 
         @param cls:   new instance of diagram item class
         @param bases: base classes of an item
-        @param data:  metaclass data with styles information
+        @param data:  metaclass data with style information
         """
-        styles = Styles()
+        style = Style()
         for c in self.__bases__:
-            if hasattr(c, 'styles'):
-                for (name, value) in c.styles.items():
-                    styles.add(name, value)
+            if hasattr(c, 'style'):
+                for (name, value) in c.style.items():
+                    style.add(name, value)
 
         if '__style__' in data:
             for (name, value) in data['__style__'].iteritems():
-                styles.add(name, value)
+                style.add(name, value)
 
-        self.styles = styles
+        self.style = style
 
 # vim:sw=4:et
