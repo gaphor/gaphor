@@ -74,7 +74,7 @@ class DiagramItemMeta(type):
     """
     Initialize a new diagram item.
     1. Register UML.Elements by means of the __uml__ attribute (see
-       mapUMLClass method).
+       map_uml_class method).
     2. Set items style information.
 
     @ivar style: style information
@@ -83,11 +83,11 @@ class DiagramItemMeta(type):
     def __init__(self, name, bases, data):
         type.__init__(self, name, bases, data)
 
-        self.mapUMLClass(data)
-        self.setStyle(data)
+        self.map_uml_class(data)
+        self.set_style(data)
 
 
-    def mapUMLClass(self, data):
+    def map_uml_class(self, data):
         """
         Map UML class to diagram item.
 
@@ -104,7 +104,7 @@ class DiagramItemMeta(type):
                 set_diagram_item(obj, self)
 
 
-    def setStyle(self, data):
+    def set_style(self, data):
         """
         Set item style information by merging provided information with
         style information from base classes.
