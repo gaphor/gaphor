@@ -45,3 +45,8 @@ class ItemTestCase(unittest.TestCase):
         self.assertEqual(item_b.style.b_02, 4)
         self.assertEqual(item_b.style.a_01, 5)
         self.assertEqual(item_b.style.a_02, 2)
+
+        # check ItemA style, it should remaing unaffected by ItemB style
+        # changes
+        self.assertEqual(self.ItemA.style.a_01, 1)
+        self.assertEqual(self.ItemA.style.a_02, 2)
