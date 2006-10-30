@@ -1,5 +1,8 @@
 
-!!! Create some example diagrams,
+ - Undo functionality
+ - Load / save regression testing
+   !!! Create some example diagrams,
+
  - split DiagramItem in a stereotype support, SubjectSupport and some
    other support classes.
 

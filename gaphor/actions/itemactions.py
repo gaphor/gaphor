@@ -41,6 +41,33 @@ def get_pointer(view):
     y = y + view.vadjustment.value
     return x, y
 
+class ItemActionSupport(object):
+
+    def init(self, window):
+        self._window = window
+
+    def get_pointer(self):
+        view = self._window.get_current_diagram_view()
+        x, y = view.get_pointer()
+        x = x + view.hadjustment.value
+        y = y + view.vadjustment.value
+        return x, y
+
+    pointer = property(get_pointer)
+
+    def get_focused_item(self):
+        """Get the focused item in the current diagram view.
+        """
+        view = self._window.get_current_diagram_view()
+        if view:
+            item = view.focused_item
+            if item:
+                return item
+        raise NoFocusItemError, 'No item has focus.'
+
+    focused_item = property(get_focused_item)
+
+
 class ItemNewSubjectAction(Action):
     id = 'ItemNewSubject'
 
@@ -1290,17 +1317,17 @@ class MergeFlowAction(Action):
 register_action(MergeFlowAction, 'ItemFocus')
 
 
-class DisconnectConnector(Action):
+class DisconnectConnector(Action, ItemActionSupport):
     id = 'DisconnectConnector'
     label = '_Disconnect Connector'
     tooltip = 'Disconnect connected item'
 
-    def init(self, window):
-        self._window = window
+#    def init(self, window):
+#        self._window = window
 
     def update(self):
         try:
-            item = get_focused_item(self._window)
+            item = self.focused_item
         except NoFocusItemError:
             pass
         else:
@@ -1308,7 +1335,7 @@ class DisconnectConnector(Action):
 
     @undoable
     def execute(self):
-        item = get_focused_item(self._window)
+        item = self.focused_item
         assembly = item.parent
         item.unlink()
         assembly.request_update()
@@ -1316,7 +1343,7 @@ class DisconnectConnector(Action):
 register_action(DisconnectConnector, 'ItemFocus')
 
 
-class ApplyInterfaceAction(RadioAction, ObjectAction):
+class ApplyInterfaceAction(RadioAction, ObjectAction, ItemActionSupport):
 
     def __init__(self, interface):
         RadioAction.__init__(self)
@@ -1329,7 +1356,7 @@ class ApplyInterfaceAction(RadioAction, ObjectAction):
 
     def update(self):
         try:
-            item = get_focused_item(self._window)
+            item = self.focused_item
         except NoFocusItemError:
             pass
         else:
@@ -1338,7 +1365,7 @@ class ApplyInterfaceAction(RadioAction, ObjectAction):
 
     @undoable
     def execute(self):
-        item = get_focused_item(self._window)
+        item = self.focused_item
         if self.active:
             item.subject = self.interface
         else:

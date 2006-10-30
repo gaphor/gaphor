@@ -17,6 +17,7 @@ def register_action(action, *args):
     _register_action(action, *args)
     _action_dependencies(action, 'TabChange')
 
+
 class CloseTabAction(Action):
     id = 'FileCloseTab'
     stock_id = 'gtk-close'
@@ -45,6 +46,7 @@ class UndoStackAction(Action):
         pass
 
 register_action(UndoStackAction)
+
 
 class UndoAction(Action):
     id = 'EditUndo'
@@ -89,6 +91,7 @@ class RedoAction(Action):
         self._window.execute_action('EditUndoStack')
 
 register_action(RedoAction, 'EditUndoStack')
+
 
 class ToolChangeAction(Action):
     """Dummy, triggered when a new tool is selected.
@@ -195,7 +198,7 @@ class DeleteAction(Action):
         view = self._window.get_current_diagram_view()
         # Confirm deletion of last views to model objects
         # They will be deleted along with their last view
-        if not self.mayRemoveFromModel(view):
+        if not self.may_remove_from_model(view):
             return
 
         if view.is_focus():
@@ -207,21 +210,23 @@ class DeleteAction(Action):
             finally:
                 get_undo_manager().commit_transaction()
     
-    def mayRemoveFromModel(self, view):
-        ''' Check if there are items which will be deleted from the model (when their last views are deleted). If so request user confirmation before deletion. '''
+    def may_remove_from_model(self, view):
+        ''' Check if there are items which will be deleted from the model
+            (when their last views are deleted). If so request user
+            confirmation before deletion. '''
         items = view.selected_items
         for i in items:
-            if self.isLastView(i):
-                return self.requestConfirmation()
+            if self.is_last_view(i):
+                return self.request_confirmation()
         return True
 
-    def isLastView(self, item):
+    def is_last_view(self, item):
         ''' Check if the current view is the last view to its object '''
         if item.subject and len(item.subject.presentation)==1:
             return True
         return False
 
-    def requestConfirmation(self):
+    def request_confirmation(self):
         ''' Request user confirmation on deleting the item from the model '''
         dialog = gtk.MessageDialog(
                 None,
@@ -310,7 +315,7 @@ class PasteAction(Action):
 
     def _load_element(self, name, value):
         """Copy an element, preferbly from the list of new items,
-        otherwise from the elementFactory.
+        otherwise from the element factory.
         If it does not exist there, do not copy it!
         """
         item = self._new_items.get(value.id)
@@ -415,7 +420,6 @@ class ZoomOutAction(Action):
 
     def execute(self):
         view = self._window.get_current_diagram_view()
-        #view.set_zoom(view.get_zoom() - 0.1)
         view.zoom(1 / 1.2)
 
 register_action(ZoomOutAction)
@@ -435,7 +439,10 @@ class Zoom100Action(Action):
         self.sensitive = bool(diagram_tab)
 
     def execute(self):
-        self._window.get_current_diagram_view().set_zoom(1.0)
+        view = self._window.get_current_diagram_view()
+        # Fetch zoom factor from transformation matrix:
+        zx = view.matrix[0]
+        self._window.get_current_diagram_view().zoom(1 / zx)
 
 register_action(Zoom100Action)
 
