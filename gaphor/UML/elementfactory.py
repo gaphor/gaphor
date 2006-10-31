@@ -107,6 +107,11 @@ class ElementFactory(object):
                     yield e #l.append(e)
         #return l
 
+    def lselect(self, expression=None):
+        """Like select(), but returns a list.
+        """
+        return list(self.select(expression))
+
     def keys(self):
         """Return a list with all id's in the factory.
         """

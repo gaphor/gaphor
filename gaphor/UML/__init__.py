@@ -22,8 +22,15 @@ def lookup(id):
 
 def select(expression=None):
     """Query the default ElementFactory for items that comply with expression.
+    Returns an iterator.
     """
     return _default_element_factory.select(expression)
+
+def lselect(expression=None):
+    """Query the default ElementFactory for items that comply with expression.
+    Returns a list of elements.
+    """
+    return _default_element_factory.lselect(expression)
 
 def flush():
     _default_element_factory.flush()

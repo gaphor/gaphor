@@ -25,6 +25,7 @@ import gaphas
 from gaphor import UML
 from gaphor import parser
 from gaphor import diagram
+from gaphor.diagram import items
 from gaphor import resource
 from gaphor.i18n import _
 #from gaphor.misc.xmlwriter import XMLWriter
@@ -112,7 +113,7 @@ def save_generator(writer=None, factory=None):
         The extra attribute reference can be used to force UML 
         """
         #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
-        if reference or isinstance(value, UML.Element):
+        if reference:
             save_reference(name, value)
         elif isinstance(value, UML.collection):
             save_collection(name, value)
@@ -121,6 +122,8 @@ def save_generator(writer=None, factory=None):
                                           'type': value.__class__.__name__ })
             value.save(save_canvasitem)
             writer.endElement('item')
+        elif isinstance(value, UML.Element):
+            save_reference(name, value)
         else:
             save_value(name, value)
 
@@ -184,7 +187,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
             except:
                 raise
         elif isinstance(elem, parser.canvasitem):
-            cls = getattr(diagram, elem.type)
+            cls = getattr(items, elem.type)
             #log.debug('Creating canvas item for %s' % elem)
             elem.element = diagram.create_as(cls, id)
         else:
@@ -202,11 +205,11 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         if isinstance(elem, parser.element) and elem.canvas:
             for item in elem.canvas.canvasitems:
                 assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
-                item.element.set_property('parent', elem.element.canvas.root)
+                #item.element.set_property('parent', elem.element.canvas.root)
         if isinstance(elem, parser.canvasitem):
             for item in elem.canvasitems:
                 assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
-                item.element.set_property('parent', elem.element)
+                #item.element.set_property('parent', elem.element)
 
         # load attributes and references:
         for name, value in elem.values.items():

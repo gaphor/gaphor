@@ -13,7 +13,7 @@ Plan:
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
-from math import atan2, atan, pi, sin, cos
+from math import atan2, pi
 
 from gaphas.util import text_extents
 from gaphas import Item
@@ -118,7 +118,7 @@ class AssociationItem(DiagramLine):
 
     def save(self, save_func):
         DiagramLine.save(self, save_func)
-        self.save_property(save_func, 'show-direction')
+        save_func('show-direction', self._show_direction)
         if self._head_end.subject:
             save_func('head-subject', self._head_end.subject)
         if self._tail_end.subject:
@@ -738,36 +738,5 @@ class AssociationEnd(DiagramItem):
             #cr.rectangle(b.x0, b.y0, b.width, b.height)
             #cr.stroke()
     
-
-def rotate(p1, p2, points):
-    """
-    Rotate points around p1. Rotation angle is determined by line (p0, p1).
-    Every point is moved into p1 + (10, 0) after rotation.
-    """
-    try:
-        angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0]))
-    except ZeroDivisionError:
-        angle = pi * 1.5
-        
-
-    sin_angle = sin(angle)
-    cos_angle = cos(angle)
-
-    def r(a, b, x, y):
-        return (cos_angle * a - sin_angle * b + x,
-                sin_angle * a + cos_angle * b + y)
-
-    x0 = p1[0] < p2[0] and 10 or -10
-    y0 = 0
-
-    # rotate around the (10, 0)
-    x0, y0 = r(x0, y0, 0, 0)
-
-    # move to the destination point
-    x0 += p1[0]
-    y0 += p1[1]
-
-    return [ r(x, y, x0, y0) for x, y in points ]
-
 
 # vim:sw=4:et

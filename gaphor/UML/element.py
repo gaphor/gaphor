@@ -57,11 +57,12 @@ class Element(object):
     def save(self, save_func):
         """Save the state by calling save_func(name, value)."""
         umlprop = umlproperty
-        clazz = type(self)
-        for propname in dir(clazz):
-            prop = getattr(clazz, propname)
-            if isinstance(prop, umlprop):
-                prop.save(self, save_func)
+        class_ = type(self)
+        for propname in dir(class_):
+            if not propname.startswith('_'):
+                prop = getattr(class_, propname)
+                if isinstance(prop, umlprop):
+                    prop.save(self, save_func)
 
     def load(self, name, value):
         """Loads value in name. Make sure that for every load postload()
@@ -143,7 +144,7 @@ class Element(object):
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
     def isKindOf(self, class_):
-        """Returns true if the object is an instance of clazz."""
+        """Returns true if the object is an instance of class_."""
         return isinstance(self, class_)
 
     def isTypeOf(self, other):

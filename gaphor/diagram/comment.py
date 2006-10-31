@@ -27,10 +27,6 @@ class CommentItem(ElementItem):
         self.height = 50
         self.width = 100
 
-    def postload(self):
-        #self._body.set_text(self.subject.body or '')
-        pass
-
     def edit(self):
         #self.start_editing(self._body)
         pass

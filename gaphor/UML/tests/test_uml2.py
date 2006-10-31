@@ -10,7 +10,8 @@ class TestUML2(unittest.TestCase):
         a = UML.Element()
         b = UML.Element()
         def cb_func(name, *args):
-            print '  cb_func:', name, args
+            #print '  cb_func:', name, args
+            pass
 
         a.connect('ev1', cb_func, a)
         a.connect('ev1', cb_func, a)

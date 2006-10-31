@@ -72,7 +72,7 @@ class DiagramItem(Presentation, Element):
 
         # save persistent properties
         for p in self._persistent_props:
-            save_func(p, getattr(self.props, p))
+            save_func(p, getattr(self, p.replace('-', '_')))
 
 
     def load(self, name, value):
@@ -93,7 +93,7 @@ class DiagramItem(Presentation, Element):
     def save_property(self, save_func, name):
         """Save a property, this is a shorthand method.
         """
-        save_func(name, self.get_property(name))
+        save_func(name, getattr(self, name.replace('-', '_')))
 
     def save_properties(self, save_func, *names):
         """Save a property, this is a shorthand method.
