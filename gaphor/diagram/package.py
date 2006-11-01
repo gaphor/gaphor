@@ -5,7 +5,6 @@ Package diagram item.
 from gaphas.util import text_center, text_extents, text_set_font
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.align import MARGIN_TOP
 import font
 
 class PackageItem(NamedItem):
@@ -13,6 +12,9 @@ class PackageItem(NamedItem):
     __uml__ = UML.Package, UML.Profile
     __stereotype__ = {
         'profile': UML.Profile,
+    }
+    __style__ = {
+        'name-padding': (35, 10, 5, 10),
     }
 
     TAB_X = 50

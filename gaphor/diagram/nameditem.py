@@ -3,12 +3,26 @@ Base classes related to items, which represent UML classes deriving
 from NamedElement.
 """
 
-from gaphor.diagram.elementitem import ElementItem
+# padding
+PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = range(4)
+# horizontal align
+ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = range(3)
+# vertical align
+ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = range(3)
 
+
+from gaphor.diagram.elementitem import ElementItem
 from gaphas.util import text_align, text_extents
 
 
 class NamedItem(ElementItem):
+
+    __style__ = {
+        'name-align'  : (ALIGN_CENTER, ALIGN_TOP),
+        'name-padding': (5, 10, 5, 10),
+        'name-outside': False,
+    }
+
     popup_menu = ElementItem.popup_menu + (
         'RenameItem',
         'separator',
@@ -39,7 +53,8 @@ class NamedItem(ElementItem):
         text = self.subject.name
         if text:
             width, height = text_extents(cr, text)
-            self.min_width, self.min_height = width + 10, height + 20
+            self.min_width, self.min_height = \
+                get_min_size(width, height, self.style.name_padding)
         super(NamedItem, self).pre_update(context)
 
 
@@ -47,13 +62,96 @@ class NamedItem(ElementItem):
         """
         Draw item's name.
         """
-        c = context.cairo
-        rx = self.width / 2.0
-        ry = self.height / 2.0
+        cr = context.cairo
 
         text = self.subject.name
         if text:
-            text_align(c, rx, ry, text, align_x = 0)
+            x, y = get_pos(cr, text, self.width, self.height,
+                    self.style.name_align, self.style.name_padding,
+                    self.style.name_outside)
+            cr.move_to(x, y)
+            cr.show_text(text)
+        super(NamedItem, self).draw(context)
+
+
+        
+
+def get_min_size(width, height, padding):
+    """
+    Get minimum size of an object using padding information.
+
+    @param width: object width
+    @param height: object height
+    @param padding: padding information as a tuple
+        (top, right, bottom, left)
+
+    fixme: move this method outside the class some utility function to
+        other package?
+    """
+    return width + padding[PADDING_LEFT] + padding[PADDING_RIGHT], \
+        height + padding[PADDING_TOP] + padding[PADDING_BOTTOM]
+
+
+def get_pos(cr, text, width, height, align, padding, outside):
+    """
+    Calculate position of the text relative to containing box defined by
+    tuple (0, 0, width, height).  Text is aligned using align and padding
+    information. It can be also placed outside the box if @C{outside}
+    parameter is set to @C{True}.
+
+    @param width:   width of the containing box
+    @param height:  height of the containing box
+    @param align:   text align information (center, top, etc.)
+    @param padding: text padding
+    @param outside: should text be put outside containing box
+
+    fixme: move this method outside the class some utility function to
+        other package?
+    """
+    assert text
+
+    x_bear, y_bear, w, h, x_adv, y_adv = cr.text_extents(text)
+
+    halign, valign = align
+
+    if outside:
+        if halign == ALIGN_LEFT:
+            x = -w - padding[PADDING_LEFT]
+        elif halign == ALIGN_CENTER:
+            x = (width - w) / 2
+        elif halign == ALIGN_RIGHT:
+            x = width + padding[PADDING_RIGHT]
+        else:
+            assert False
+
+        if valign == ALIGN_TOP:
+            y = -h - padding[PADDING_TOP]
+        elif valign == ALIGN_MIDDLE:
+            y = (height - h) / 2
+        elif valign == ALIGN_BOTTOM:
+            y = height + padding[PADDING_BOTTOM]
+        else:
+            assert False
+
+    else:
+        if halign == ALIGN_LEFT:
+            x = padding[PADDING_LEFT]
+        elif halign == ALIGN_CENTER:
+            x = (width - w) / 2
+        elif halign == ALIGN_RIGHT:
+            x = width - w - padding[PADDING_RIGHT]
+        else:
+            assert False
+
+        if valign == ALIGN_TOP:
+            y = h + padding[PADDING_TOP]
+        elif valign == ALIGN_MIDDLE:
+            y = (height + h) / 2
+        elif valign == ALIGN_BOTTOM:
+            y = height - h - padding[PADDING_BOTTOM]
+        else:
+            assert False
+    return x, y
 
 
 # maybe useful for align routines, we will see

@@ -5,12 +5,14 @@ Action diagram item.
 from math import pi
 
 from gaphor import UML
-from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.nameditem import NamedItem, ALIGN_CENTER, ALIGN_MIDDLE
 from gaphas.util import text_align, text_extents
 
 class ActionItem(NamedItem):
-    __uml__      = UML.Action
-#    __s_valign__ = V_ALIGN_MIDDLE
+    __uml__   = UML.Action
+    __style__ = {
+        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
+    }
 
     def draw(self, context):
         """
