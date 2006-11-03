@@ -6,7 +6,7 @@ Use case diagram item
 from math import pi
 from gaphor import UML
 from gaphor.diagram.classifier import ClassifierItem
-from gaphor.diagram.nameditem import ALIGN_CENTER, ALIGN_MIDDLE
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 from gaphas.util import text_align, text_extents, path_ellipse
 
 class UseCaseItem(ClassifierItem):

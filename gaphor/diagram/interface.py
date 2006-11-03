@@ -5,7 +5,6 @@ Interface item.
 import itertools
 from gaphas.item import NW, SE
 from gaphor import UML
-from gaphor.diagram.align import V_ALIGN_BOTTOM
 from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.implementation import ImplementationItem
 #from gaphor.diagram.interfaceicon import AssembledInterfaceIcon, \

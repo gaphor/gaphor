@@ -12,7 +12,7 @@ import inspect
 import gobject
 
 from gaphor.misc import uniqueid
-from gaphor.diagram.align import ItemAlign
+from gaphor.diagram.style import Style
 
 # Map UML elements to their (default) representation.
 _uml_to_item_map = { }
@@ -30,43 +30,6 @@ def get_diagram_item(element):
 def set_diagram_item(element, item):
     global _uml_to_item_map
     _uml_to_item_map[element] = item
-
-
-
-class Style(object):
-    """
-    Item style information. Style information is provided through object's
-    attributes, i.e.::
-
-        class InitialNodeItem
-            __style__ = {
-                'name-align': ('center', 'top'),
-            }
-
-    is translated to::
-
-        >>> print style.name_align
-        ('center', 'top')
-    """
-    def add(self, name, value):
-        """
-        Add style variable.
-
-        Variable name can contain hyphens, which is converted to
-        underscode, i.e. 'name-align' -> 'name_align'.
-
-        @param name:  style variable name
-        @param value: style variable value
-        """
-        name = name.replace('-', '_')
-        setattr(self, name, value)
-
-
-    def items(self):
-        """
-        Return iterator of (name, value) style information items.
-        """
-        return self.__dict__.iteritems()
 
 
 

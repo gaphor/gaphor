@@ -13,7 +13,6 @@ from gaphor import resource
 #from gaphor.diagram import TextElement
 #from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.align import H_ALIGN_LEFT, H_ALIGN_RIGHT, V_ALIGN_BOTTOM
 
 
 class ActivityNodeItem(NamedItem):
@@ -150,7 +149,7 @@ class DecisionNodeItem(FDNode):
     """
 
     __uml__   = UML.DecisionNode
-    __s_align__ = H_ALIGN_LEFT
+#__s_align__ = H_ALIGN_LEFT
 
     RADIUS = 15
 
@@ -181,7 +180,7 @@ class ForkNodeItem(FDNode):
     Representation of fork or join node.
     """
     __uml__      = UML.ForkNode
-    __s_valign__ = V_ALIGN_BOTTOM
+#__s_valign__ = V_ALIGN_BOTTOM
 
     WIDTH  =  6.0
     HEIGHT = 45.0

@@ -14,15 +14,11 @@ class PackageItem(NamedItem):
         'profile': UML.Profile,
     }
     __style__ = {
-        'name-padding': (35, 10, 5, 10),
+        'name-padding': (25, 10, 5, 10),
     }
 
     TAB_X = 50
     TAB_Y = 20
-
-    def __init__(self, id):
-        NamedItem.__init__(self, id, 120, 60)
-
 
     def pre_update(self, context):
         cr = context.cairo

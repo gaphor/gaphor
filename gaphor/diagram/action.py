@@ -5,7 +5,8 @@ Action diagram item.
 from math import pi
 
 from gaphor import UML
-from gaphor.diagram.nameditem import NamedItem, ALIGN_CENTER, ALIGN_MIDDLE
+from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 from gaphas.util import text_align, text_extents
 
 class ActionItem(NamedItem):

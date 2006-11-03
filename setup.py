@@ -24,6 +24,7 @@ TESTS = [
     'gaphor.diagram.tests.test_action',
     'gaphor.diagram.tests.test_handletool',
     'gaphor.diagram.tests.test_interfaces',
+    'gaphor.diagram.tests.test_style',
     'gaphor.ui.tests.test_diagramtab',
     'gaphor.ui.tests.test_mainwindow',
     'gaphor.UML.tests.test_elementfactory',
