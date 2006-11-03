@@ -13,12 +13,18 @@ from gaphor import resource
 #from gaphor.diagram import TextElement
 #from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP, \
+        ALIGN_RIGHT, ALIGN_BOTTOM
 
 
 class ActivityNodeItem(NamedItem):
     """Basic class for simple activity nodes.
     Simple activity node is not resizable.
     """
+    __style__   = {
+        'name-outside': True,
+        'name-padding': (2, 2, 2, 2),
+    }
 
     def __init__(self, id=None, width=0, height=0):
         NamedItem.__init__(self, id, width, height)
@@ -33,10 +39,13 @@ class InitialNodeItem(ActivityNodeItem):
     top-left side of node.
     """
     __uml__     = UML.InitialNode
+    __style__   = {
+        'name-align': (ALIGN_LEFT, ALIGN_TOP),
+    }
     
     RADIUS = 10
 
-    def __init__(self, id=None, width=20, height=20):
+    def __init__(self, id = None, width = 20, height = 20):
         ActivityNodeItem.__init__(self, id, width, height)
 
     def draw(self, context):
@@ -47,8 +56,7 @@ class InitialNodeItem(ActivityNodeItem):
         cr.set_line_width(0.01)
         cr.fill()
         
-        cr.move_to(d, r)
-        cr.show_text(self.subject.name or '')
+        super(InitialNodeItem, self).draw(context)
 
 
 class ActivityFinalNodeItem(ActivityNodeItem):
@@ -57,6 +65,9 @@ class ActivityFinalNodeItem(ActivityNodeItem):
     """
 
     __uml__ = UML.ActivityFinalNode
+    __style__   = {
+        'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
+    }
 
     RADIUS_1 = 10
     RADIUS_2 = 15
@@ -78,8 +89,7 @@ class ActivityFinalNodeItem(ActivityNodeItem):
         cr.set_line_width(2)
         cr.stroke()
         
-        cr.move_to(d, r)
-        cr.show_text(self.subject.name or '')
+        super(ActivityFinalNodeItem, self).draw(context)
 
 
 class FlowFinalNodeItem(ActivityNodeItem):
@@ -89,6 +99,9 @@ class FlowFinalNodeItem(ActivityNodeItem):
     """
 
     __uml__ = UML.FlowFinalNode
+    __style__   = {
+        'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
+    }
 
     RADIUS = 10
 
@@ -102,15 +115,14 @@ class FlowFinalNodeItem(ActivityNodeItem):
         path_ellipse(cr, r, r, d, d)
         cr.stroke()
 
-        cr.move_to(d, r)
-        cr.show_text(self.subject.name or '')
-
         dr = (1 - math.sin(math.pi / 4)) * r
         cr.move_to(dr, dr)
         cr.line_to(d - dr, d - dr)
         cr.move_to(dr, d - dr)
         cr.line_to(d - dr, dr)
         cr.stroke()
+        
+        super(FlowFinalNodeItem, self).draw(context)
         
 
 
@@ -149,7 +161,9 @@ class DecisionNodeItem(FDNode):
     """
 
     __uml__   = UML.DecisionNode
-#__s_align__ = H_ALIGN_LEFT
+    __style__   = {
+        'name-align': (ALIGN_LEFT, ALIGN_TOP),
+    }
 
     RADIUS = 15
 
@@ -179,8 +193,10 @@ class ForkNodeItem(FDNode):
     """
     Representation of fork or join node.
     """
-    __uml__      = UML.ForkNode
-#__s_valign__ = V_ALIGN_BOTTOM
+    __uml__   = UML.ForkNode
+    __style__ = {
+        'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
+    }
 
     WIDTH  =  6.0
     HEIGHT = 45.0

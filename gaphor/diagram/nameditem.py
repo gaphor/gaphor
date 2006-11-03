@@ -48,7 +48,7 @@ class NamedItem(ElementItem):
         """
         cr = context.cairo
         text = self.subject.name
-        if text:
+        if text and not self.style.name_outside:
             width, height = text_extents(cr, text)
             self.min_width, self.min_height = get_min_size(width, height,
                     self.style.name_padding)
