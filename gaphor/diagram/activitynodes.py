@@ -1,17 +1,13 @@
 """
 Activity control nodes.
 """
-# vim:sw=4:et
 
 import math
-import itertools
 
-from gaphas.util import path_ellipse, text_align, text_extents
+from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor import resource
-#from gaphor.diagram import TextElement
-#from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP, \
         ALIGN_RIGHT, ALIGN_BOTTOM
@@ -133,8 +129,8 @@ class FDNode(ActivityNodeItem):
     specification.
     """
 
-    def __init__(self, id):
-        ActivityNodeItem.__init__(self, id)
+    def __init__(self, id, width, height):
+        ActivityNodeItem.__init__(self, id, width, height)
         self._combined = False
         self.set_prop_persistent('combined')
 
@@ -167,25 +163,25 @@ class DecisionNodeItem(FDNode):
 
     RADIUS = 15
 
-    def create_border(self):
+    def __init__(self, id=None, width = 20, height = 30):
+        FDNode.__init__(self, id, width, height)
+
+    def draw(self, context):
+        """
+        Draw diamond shape, which represents decision and merge nodes.
+        """
+        cr = context.cairo
         r = self.RADIUS
         r2 = r * 2/3
 
-        diamond = diacanvas.shape.Path()
-        diamond.line(((r2,0), (r2*2, r), (r2, r*2), (0, r)))
-        diamond.set_cyclic(True)
-        diamond.set_line_width(2.0)
+        cr.move_to(r2, 0)
+        cr.line_to(r2 * 2, r)
+        cr.line_to(r2, r * 2)
+        cr.line_to(0, r)
+        cr.close_path()
+        cr.stroke()
 
-        self.set(width = r2 * 2, height = r * 2)
-
-        return diamond
-
-
-    def draw_border(self):
-        """
-        Draw nothing as decision node does not change.
-        """
-        pass
+        super(FDNode, self).draw(context)
 
 
 
@@ -267,3 +263,5 @@ class ForkNodeItem(FDNode):
         else:
             self._join_spec.subject = None
         self.request_update()
+
+# vim:sw=4:et

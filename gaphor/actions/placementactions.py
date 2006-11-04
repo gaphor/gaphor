@@ -262,16 +262,16 @@ class FlowFinalNodePlacementAction(PlacementAction):
 register_action(FlowFinalNodePlacementAction)
 
 
-#class DecisionNodePlacementAction(PlacementAction):
-#    id = 'InsertDecisionNode'
-#    label = 'Decision/Merge Node'
-#    tooltip = 'Create a new decision/merge node'
-#    stock_id = 'gaphor-decision-node'
-#    name = 'DecisionNode'
-#    type = diagram.DecisionNodeItem
-#    subject_type = UML.DecisionNode
-#
-#register_action(DecisionNodePlacementAction)
+class DecisionNodePlacementAction(PlacementAction):
+    id = 'InsertDecisionNode'
+    label = 'Decision/Merge Node'
+    tooltip = 'Create a new decision/merge node'
+    stock_id = 'gaphor-decision-node'
+    name = 'DecisionNode'
+    type = items.DecisionNodeItem
+    subject_type = UML.DecisionNode
+
+register_action(DecisionNodePlacementAction)
 
 
 #class ForkNodePlacementAction(PlacementAction):
