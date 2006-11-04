@@ -19,22 +19,22 @@ class CommentItemEditor(object):
     component.adapts(items.CommentItem)
 
     def __init__(self, item):
-	self._item = item
+        self._item = item
 
     def is_editable(self, x, y):
-	return True
+        return True
 
     def get_text(self):
-	return self._item.subject.body
+        return self._item.subject.body
 
     def get_bounds(self):
-	return None
+        return None
 
     def update_text(self, text):
-	self._item.subject.body = text
+        self._item.subject.body = text
 
     def key_pressed(self, pos, key):
-	pass
+        pass
 
 component.provideAdapter(CommentItemEditor)
 
@@ -46,22 +46,22 @@ class NamedItemEditor(object):
     component.adapts(items.NamedItem)
 
     def __init__(self, item):
-	self._item = item
+        self._item = item
 
     def is_editable(self, x, y):
-	return True
+        return True
 
     def get_text(self):
-	return self._item.subject.name
+        return self._item.subject.name
 
     def get_bounds(self):
-	return None
+        return None
 
     def update_text(self, text):
-	self._item.subject.name = text
+        self._item.subject.name = text
 
     def key_pressed(self, pos, key):
-	pass
+        pass
 
 component.provideAdapter(NamedItemEditor)
 
@@ -71,7 +71,7 @@ class ClassifierItemEditor(object):
     component.adapts(items.ClassifierItem)
 
     def __init__(self, item):
-	self._item = item
+        self._item = item
         self._edit = None
 
     def is_editable(self, x, y):
@@ -91,15 +91,15 @@ class ClassifierItemEditor(object):
                     return True
                 y -= item.height
             y -= comp.MARGIN_Y
-	return False
+        return False
 
     def get_text(self):
         if hasattr(self._edit.subject, 'render'):
             return self._edit.subject.render()
-	return self._edit.subject.name
+        return self._edit.subject.name
 
     def get_bounds(self):
-	return None
+        return None
 
     def update_text(self, text):
         if hasattr(self._edit.subject, 'parse'):
@@ -108,7 +108,7 @@ class ClassifierItemEditor(object):
             self._item.subject.name = text
 
     def key_pressed(self, pos, key):
-	pass
+        pass
 
 component.provideAdapter(ClassifierItemEditor)
  
@@ -118,7 +118,7 @@ class AssociationItemEditor(object):
     component.adapts(items.AssociationItem)
 
     def __init__(self, item):
-	self._item = item
+        self._item = item
         self._edit = None
 
     def is_editable(self, x, y):
@@ -134,17 +134,17 @@ class AssociationItemEditor(object):
             self._edit = item.tail_end
         else:
             self._edit = item
-	return True
+        return True
 
     def get_text(self):
         if self._edit is self._item:
             return self._edit.subject.name
         if self._edit.get_mult():
             return self._edit.get_name() + '[' + self._edit.get_mult() + ']'
-	return self._edit.get_name()
+        return self._edit.get_name()
 
     def get_bounds(self):
-	return None
+        return None
 
     def update_text(self, text):
         if hasattr(self._edit.subject, 'parse'):
@@ -153,7 +153,7 @@ class AssociationItemEditor(object):
             self._item.subject.name = text
 
     def key_pressed(self, pos, key):
-	pass
+        pass
 
 component.provideAdapter(AssociationItemEditor)
     
