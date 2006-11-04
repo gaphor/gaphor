@@ -274,16 +274,17 @@ class DecisionNodePlacementAction(PlacementAction):
 register_action(DecisionNodePlacementAction)
 
 
-#class ForkNodePlacementAction(PlacementAction):
-#    id = 'InsertForkNode'
-#    label = 'Fork/Join Node'
-#    tooltip = 'Create a new fork/join node'
-#    stock_id = 'gaphor-fork-node'
-#    name = 'ForkNode'
-#    type = diagram.ForkNodeItem
+class ForkNodePlacementAction(PlacementAction):
+    id = 'InsertForkNode'
+    label = 'Fork/Join Node'
+    tooltip = 'Create a new fork/join node'
+    stock_id = 'gaphor-fork-node'
+    name = 'ForkNode'
+    type = items.ForkNodeItem
 #    subject_type = UML.ForkNode
-#
-#register_action(ForkNodePlacementAction)
+    subject_type = UML.JoinNode
+
+register_action(ForkNodePlacementAction)
 
 
 class ActionPlacementAction(NamespacePlacementAction):

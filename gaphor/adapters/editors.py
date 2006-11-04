@@ -158,4 +158,45 @@ class AssociationItemEditor(object):
 component.provideAdapter(AssociationItemEditor)
     
 
+
+class ForkNodeItemEditor(object):
+    """Text edit support for fork node join specification.
+    """
+    interface.implements(IEditor)
+    component.adapts(items.ForkNodeItem)
+
+    def __init__(self, item):
+        self._item = item
+
+    def is_editable(self, x, y):
+        return True
+
+    def get_text(self):
+        """
+        Get join specification text.
+        """
+        if self._item.subject.joinSpec:
+            return self._item.subject.joinSpec.value
+        else:
+            return ''
+
+    def get_bounds(self):
+        return None
+
+    def update_text(self, text):
+        """
+        Set join specification text.
+        """
+        spec = self._item.subject.joinSpec
+        if not spec:
+            from gaphor import resource
+            factory = resource(UML.ElementFactory)
+            spec = self._item.subject.joinSpec = factory.create(UML.LiteralSpecification)
+            spec.value = text
+
+    def key_pressed(self, pos, key):
+        pass
+
+component.provideAdapter(ForkNodeItemEditor)
+
 # vim:sw=4:et:ai

@@ -11,6 +11,8 @@ from gaphor import resource
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP, \
         ALIGN_RIGHT, ALIGN_BOTTOM
+from gaphor.diagram.style import get_text_point
+from gaphas.util import text_extents
 
 
 class ActivityNodeItem(NamedItem):
@@ -187,81 +189,91 @@ class DecisionNodeItem(FDNode):
 
 class ForkNodeItem(FDNode):
     """
-    Representation of fork or join node.
+    Representation of fork and join node.
     """
-    __uml__   = UML.ForkNode
+    __uml__   = UML.JoinNode
+    #__uml__   = UML.ForkNode
     __style__ = {
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
     }
 
-    WIDTH  =  6.0
-    HEIGHT = 45.0
-    MARGIN = 10
+    def __init__(self, id = None, width = 6.0, height = 45.0):
+#        GroupBase.__init__(self)
+        FDNode.__init__(self, id, width, height)
 
-    def __init__(self, id=None):
-        GroupBase.__init__(self)
-        FDNode.__init__(self, id)
+        self._join_spec = 'join spec test'
+        self._join_spec_x = 0
+        self._join_spec_y = 0
 
-        self._join_spec = TextElement('value', '{ joinSpec = %s }', 'and')
-        self.add(self._join_spec)
+#        for h in self.handles:
+#            h.props.movable = False
+#            h.props.visible = False
+#        self.handles[diacanvas.HANDLE_N].props.visible = True
+#        self.handles[diacanvas.HANDLE_S].props.visible = True
+#        self.handles[diacanvas.HANDLE_N].props.movable = True
+#        self.handles[diacanvas.HANDLE_S].props.movable = True
 
-        for h in self.handles:
-            h.props.movable = False
-            h.props.visible = False
-        self.handles[diacanvas.HANDLE_N].props.visible = True
-        self.handles[diacanvas.HANDLE_S].props.visible = True
-        self.handles[diacanvas.HANDLE_N].props.movable = True
-        self.handles[diacanvas.HANDLE_S].props.movable = True
-
-
-    def create_border(self):
-        line = diacanvas.shape.Path()
-        line.set_line_width(self.WIDTH)
-
-        self.set(width = self.WIDTH, height = self.HEIGHT)
-        return line
-
-
-    def draw_border(self):
+    def update(self, context):
         """
-        Draw line between central handles.
+        Update join specification position.
         """
-        p1 = self.handles[diacanvas.HANDLE_N].get_pos_i()
-        p2 = self.handles[diacanvas.HANDLE_S].get_pos_i()
-        self._border.line((p1, p2))
+        self._join_spec_x, self._join_spec_y = get_text_point(
+                text_extents(context.cairo, self._join_spec),
+                self.width, self.height,
+                (ALIGN_CENTER, ALIGN_TOP),
+                (10, 0, 0, 0),
+                True)
 
 
-    def on_update(self, affine):
+    def draw(self, context):
         """
-        Update fork/join node.
-
-        If node is join node then update also join specification.
+        Draw vertical line - symbol of fork and join nodes. Join
+        specification is also drawn above the item.
         """
-        FDNode.on_update(self, affine)
+        cr = context.cairo
+        cr.set_line_width(self.width)
+        cr.move_to(0, 0)
+        cr.line_to(0, self.height)
+        cr.move_to(self.name_x, self.name_y)
 
-        w, h = self._join_spec.get_size()
-        self._join_spec.update_label((self.width - w) / 2, 
-            -h - self.MARGIN)
+        cr.move_to(self._join_spec_x, self._join_spec_y)
+        cr.show_text(self._join_spec)
 
-        GroupBase.on_update(self, affine)
+        cr.stroke()
+        super(ForkNodeItem, self).draw(context)
 
 
-    def on_subject_notify(self, pspec, notifiers = ()):
-        """
-        Detect changes of subject.
-
-        If subject is join node, then set subject of join specification
-        text element.
-        """
-        FDNode.on_subject_notify(self, pspec, notifiers)
-        if self.subject and isinstance(self.subject, UML.JoinNode):
-            factory = resource(UML.ElementFactory)
-            if not self.subject.joinSpec:
-                self.subject.joinSpec = factory.create(UML.LiteralSpecification)
-                self.subject.joinSpec.value = 'and'
-            self._join_spec.subject = self.subject.joinSpec
-        else:
-            self._join_spec.subject = None
-        self.request_update()
+###    def on_update(self, affine):
+###        """
+###        Update fork/join node.
+###
+###        If node is join node then update also join specification.
+###        """
+###        FDNode.on_update(self, affine)
+###
+###        w, h = self._join_spec.get_size()
+###        self._join_spec.update_label((self.width - w) / 2, 
+###            -h - self.MARGIN)
+###
+###        GroupBase.on_update(self, affine)
+###
+###
+###    def on_subject_notify(self, pspec, notifiers = ()):
+###        """
+###        Detect changes of subject.
+###
+###        If subject is join node, then set subject of join specification
+###        text element.
+###        """
+###        FDNode.on_subject_notify(self, pspec, notifiers)
+###        if self.subject and isinstance(self.subject, UML.JoinNode):
+###            factory = resource(UML.ElementFactory)
+###            if not self.subject.joinSpec:
+###                self.subject.joinSpec = factory.create(UML.LiteralSpecification)
+###                self.subject.joinSpec.value = 'and'
+###            self._join_spec.subject = self.subject.joinSpec
+###        else:
+###            self._join_spec.subject = None
+###        self.request_update()
 
 # vim:sw=4:et
