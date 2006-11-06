@@ -68,7 +68,7 @@ class StorageTestCase(unittest.TestCase):
         UML.create(UML.Diagram)
         UML.create(UML.Comment)
         UML.create(UML.Class)
-
+ 
         fd = open(filename, 'w')
         storage.save(XMLWriter(fd))
         fd.close()
@@ -84,4 +84,34 @@ class StorageTestCase(unittest.TestCase):
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Comment))) == 1
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Class))) == 1
         
+
+    def test_load_uml(self):
+        """Test loading of a freshly saved model.
+        """
+        filename = os.tmpnam()
+
+        UML.create(UML.Package)
+        diagram = UML.create(UML.Diagram)
+        diagram.create(items.CommentItem, subject=UML.create(UML.Comment))
+        diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+ 
+        fd = open(filename, 'w')
+        storage.save(XMLWriter(fd))
+        fd.close()
+
+        UML.flush()
+        assert not list(UML.select())
+
+        storage.load(filename)
+
+        assert len(UML.lselect()) == 4
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Package))) == 1
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Comment))) == 1
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Class))) == 1
+        
+        # TODO: check load/save of other canvas items.
+
+    def load_x_gaphor(self):
+        storage.load('x.gaphor')
 
