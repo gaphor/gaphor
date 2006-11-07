@@ -97,6 +97,7 @@ def save_generator(writer=None, factory=None):
         (which contains a list of references to other UML elements) or a
         gaphas.Canvas (which contains canvas items).
         """
+        log.debug('saving element: %s|%s %s' % (name, value, type(value)))
         if isinstance (value, (UML.Element, gaphas.Item)):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
@@ -112,7 +113,7 @@ def save_generator(writer=None, factory=None):
         """Save attributes and references in a gaphor.diagram.* object.
         The extra attribute reference can be used to force UML 
         """
-        #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
+        log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
         if reference:
             save_reference(name, value)
         elif isinstance(value, UML.collection):
@@ -161,6 +162,8 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     """
 
     log.debug(_('Loading %d elements...') % len(elements))
+    from pprint import pprint
+    pprint(elements)
 
     # The elements are iterated three times:
     size = len(elements) * 3
@@ -175,25 +178,26 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     version_0_6_2(elements, factory, gaphor_version)
     version_0_7_2(elements, factory, gaphor_version)
 
+    log.debug("Still have %d elements" % len(elements))
+
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     for id, elem in elements.items():
         yield update_status_queue()
         if isinstance(elem, parser.element):
-            try:
-                cls = getattr(UML, elem.type)
-                #log.debug('Creating UML element for %s' % elem)
-                elem.element = factory.create_as(cls, id)
-            except:
-                raise
+            cls = getattr(UML, elem.type)
+            log.debug('Creating UML element for %s (%s)' % (elem, elem.id))
+            elem.element = factory.create_as(cls, id)
         elif isinstance(elem, parser.canvasitem):
             cls = getattr(items, elem.type)
-            #log.debug('Creating canvas item for %s' % elem)
+            log.debug('Creating canvas item for %s (%s)' % (elem, elem.id))
             elem.element = diagram.create_as(cls, id)
         else:
             raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
 
     #log.info('0% ... 33%')
+
+    log.debug("Still have %d elements" % len(elements))
 
     # load attributes and create references:
     for id, elem in elements.items():
@@ -289,10 +293,11 @@ def load_generator(filename, factory=None):
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
         for percentage in parser.parse_generator(filename, loader):
-            if percentage:
-                yield percentage / 2
-            else:
-                yield percentage
+            pass
+##            if percentage:
+##                yield percentage / 2
+##            else:
+##                yield percentage
         elements = loader.elements
         gaphor_version = loader.gaphor_version
         #elements = parser.parse(filename)
@@ -306,12 +311,15 @@ def load_generator(filename, factory=None):
             factory = resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
+        log.info("Read %d elements from file" % len(elements))
         for percentage in load_elements_generator(elements, factory, gaphor_version):
-            if percentage:
-                yield percentage / 2 + 50
-            else:
-                yield percentage
+            pass
+##            if percentage:
+##                yield percentage / 2 + 50
+##            else:
+##                yield percentage
         gc.collect()
+        yield 100
     except Exception, e:
         log.info('file %s could not be loaded' % filename, e)
         import traceback

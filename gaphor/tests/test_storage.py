@@ -112,6 +112,6 @@ class StorageTestCase(unittest.TestCase):
         
         # TODO: check load/save of other canvas items.
 
-    def load_x_gaphor(self):
+    def test_load_x_gaphor(self):
         storage.load('x.gaphor')
 

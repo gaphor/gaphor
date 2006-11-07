@@ -80,14 +80,15 @@ class Element(object):
         """Fix up the odds and ends.
         """
         for name in dir(type(self)):
-            try:
-                prop = getattr(type(self), name)
-            except AttributeError, e:
-                raise AttributeError, "'%s' has no property '%s'" % \
-                                            (type(self).__name__, name)
-            else:
-                if isinstance(prop, umlproperty):
-                    prop.postload(self)
+            if not name.startswith('_'):
+                try:
+                    prop = getattr(type(self), name)
+                except AttributeError, e:
+                    raise AttributeError, "'%s' has no property '%s'" % \
+                                                (type(self).__name__, name)
+                else:
+                    if isinstance(prop, umlproperty):
+                        prop.postload(self)
 
     def unlink(self):
         """Unlink the element.

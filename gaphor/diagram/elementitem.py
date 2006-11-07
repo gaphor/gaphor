@@ -25,7 +25,7 @@ class ElementItem(gaphas.Element, DiagramItem):
 
     def load(self, name, value):
         if name == 'matrix':
-            self.matrix(*eval(value))
+            self.matrix = eval(value)
         else:
             DiagramItem.load(self, name, value)
 
