@@ -431,6 +431,8 @@ class MainWindow(AbstractWindow):
         """
         self._check_state(AbstractWindow.STATE_ACTIVE)
         self.execute_action('OpenModelElement')
+        # Set the pointer tool as default tool.
+        self.execute_action('Pointer')
 
     def on_view_cursor_changed(self, view):
         """Another row is selected, execute a dummy action.

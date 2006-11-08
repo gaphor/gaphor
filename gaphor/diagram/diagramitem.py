@@ -77,12 +77,13 @@ class DiagramItem(Presentation, Element):
 
     def load(self, name, value):
         if name == 'subject':
-            #print 'loading subject', value
+            print self, 'loading subject', value
             type(self).subject.load(self, value)
+            print self, 'subject =', self.subject
         else:
             #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
             try:
-                self.set_property(name, eval(value))
+                setattr(self, name, eval(value))
             except:
                 log.warning('%s has no property named %s (value %s)' % (self, name, value))
 

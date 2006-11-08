@@ -8,6 +8,8 @@ from gaphor import storage
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.diagram import items
 
+__module__ = 'test_storage'
+
 class PseudoFile(object):
 
     def __init__(self):
@@ -62,7 +64,7 @@ class StorageTestCase(unittest.TestCase):
     def test_load_uml(self):
         """Test loading of a freshly saved model.
         """
-        filename = os.tmpnam()
+        filename = '%s.gaphor' % __module__
 
         UML.create(UML.Package)
         UML.create(UML.Diagram)
@@ -88,13 +90,16 @@ class StorageTestCase(unittest.TestCase):
     def test_load_uml(self):
         """Test loading of a freshly saved model.
         """
-        filename = os.tmpnam()
+        filename = '%s.gaphor' % __module__
 
         UML.create(UML.Package)
         diagram = UML.create(UML.Diagram)
         diagram.create(items.CommentItem, subject=UML.create(UML.Comment))
         diagram.create(items.ClassItem, subject=UML.create(UML.Class))
- 
+        iface = diagram.create(items.InterfaceItem, subject=UML.create(UML.Interface))
+        iface.subject.name = 'Circus'
+        iface.matrix.translate(10, 10)
+
         fd = open(filename, 'w')
         storage.save(XMLWriter(fd))
         fd.close()
@@ -104,14 +109,25 @@ class StorageTestCase(unittest.TestCase):
 
         storage.load(filename)
 
-        assert len(UML.lselect()) == 4
+        assert len(UML.lselect()) == 5
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Package))) == 1
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
+        d = UML.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Comment))) == 1
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Class))) == 1
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Interface))) == 1
+
+        iface = UML.lselect(lambda e: e.isKindOf(UML.Interface))[0]
+        assert iface.name == 'Circus'
+        assert len(iface.presentation) == 1
+        assert tuple(iface.presentation[0].matrix) == (1, 0, 0, 1, 10, 10), tuple(iface.presentation[0].matrix)
         
-        # TODO: check load/save of other canvas items.
+        # Check load/save of other canvas items.
+        assert len(d.canvas.get_all_items()) == 3
+        for item in d.canvas.get_all_items():
+            assert item.subject, 'No subject for %s' % item 
+        d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
+        assert d1
+        print d1, d1.subject
 
-    def test_load_x_gaphor(self):
-        storage.load('x.gaphor')
-
+# vim:sw=4:et:ai

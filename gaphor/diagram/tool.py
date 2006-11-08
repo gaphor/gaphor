@@ -73,14 +73,11 @@ class ConnectHandleTool(HandleTool):
         to glue (the handles are already positioned), the IConnect.connect
         is called for (glued_item, item).
         """
-        #print 'handle connect'
         glue_item = self.glue(view, item, handle, wx, wy)
 
         if glue_item:
-            #print 'handle connect', glue_item
             adapter = component.queryMultiAdapter((glue_item, item), IConnect)
             x, y = view.canvas.get_matrix_w2i(glue_item).transform_point(wx, wy)
-            #print 'connecting:', adapter
             adapter.connect(handle, x, y)
 
             return True
@@ -123,7 +120,6 @@ class TextEditTool(Tool):
         window.size_allocate(gtk.gdk.Rectangle(int(x), int(y), 50, 50))
         #window.move(int(x), int(y))
         cursor_pos = view.get_toplevel().get_screen().get_display().get_pointer()
-        #print 'cursor_pos', cursor_pos
         window.move(cursor_pos[1], cursor_pos[2])
         window.connect('focus-out-event', self._on_focus_out_event,
                        buffer, *args)
@@ -162,10 +158,9 @@ class TextEditTool(Tool):
     def _on_key_press_event(self, widget, event, buffer, editor):
         #self.
         if event.keyval == gtk.keysyms.Return:
-            print 'Enter!'
+            pass
             #widget.get_toplevel().destroy()
         elif event.keyval == gtk.keysyms.Escape:
-            print 'Escape!'
             widget.get_toplevel().destroy()
 
     def _on_focus_out_event(self, widget, event, buffer, editor):
@@ -190,7 +185,6 @@ class PlacementTool(gaphas.tool.PlacementTool):
         self.is_released = False
         view = context.view #resource('MainWindow').get_current_diagram_view()
         view.unselect_all()
-        #print 'Gaphor: on_button_press event: %s' % self.__dict__
         get_undo_manager().begin_transaction()
         if gaphas.tool.PlacementTool.on_button_press(self, context, event):
             try:
@@ -211,7 +205,6 @@ class PlacementTool(gaphas.tool.PlacementTool):
             pool = resource('MainWindow').get_action_pool()
             pool.get_action('Pointer').active = True
         get_undo_manager().commit_transaction()
-        #print 'Gaphor: do_button_release event: %s' % self.__dict__
         return gaphas.tool.PlacementTool.on_button_release(self, context, event)
 
 
