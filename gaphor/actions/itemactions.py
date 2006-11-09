@@ -910,7 +910,7 @@ class FoldAction(Action):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
 
-        item.set_property('drawing-style', items.InterfaceItem.DRAW_ICON)
+        item.drawing_style = items.InterfaceItem.DRAW_ICON
 
 register_action(FoldAction, 'ItemFocus')
 
@@ -925,10 +925,10 @@ class UnfoldAction(FoldAction):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
 
-        item.set_property('drawing-style', items.InterfaceItem.DRAW_COMPARTMENT)
+        item.drawing_style = items.InterfaceItem.DRAW_COMPARTMENT
         # Make sure lines are updated properly:
-        item.canvas.update_now()
-        item.canvas.update_now()
+        #item.canvas.update_now()
+        #item.canvas.update_now()
 
 register_action(UnfoldAction, 'ItemFocus')
 
@@ -1002,7 +1002,7 @@ class CreateLinksAction(Action):
 
     def create_missing_relationships(self, item, diagram, item_type):
         new_rel = diagram.create(item_type)
-        for other_item in diagram.canvas.root.children:
+        for other_item in diagram.canvas.get_all_items():
             if not other_item.subject:
                 continue
                 
@@ -1037,6 +1037,8 @@ class CreateLinksAction(Action):
 
     @undoable
     def execute(self):
+        # TODO: AJM: disabled action
+        return
         diagram_tab = self._window.get_current_diagram_tab()
         diagram = diagram_tab.get_diagram()
         for item in diagram_tab.get_view().selected_items:

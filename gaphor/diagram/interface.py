@@ -3,6 +3,7 @@ Interface item.
 """
 
 import itertools
+from math import pi
 from gaphas.item import NW, SE
 from gaphor import UML
 from gaphor.diagram.dependency import DependencyItem
@@ -25,7 +26,12 @@ class InterfaceItem(ClassItem, SimpleRotation):
 
     __uml__        = UML.Interface
     __stereotype__ = {'interface': lambda self: self.drawing_style != self.DRAW_ICON}
-
+    __style__ = {
+        'icon-size': (20, 20),
+        'icon-size-provided': (20, 20),
+        'icon-size-required': (28, 28),
+        'name-outside': False,
+        }
     RADIUS_PROVIDED = 10
     RADIUS_REQUIRED = 14
 
@@ -115,39 +121,47 @@ class InterfaceItem(ClassItem, SimpleRotation):
         return self.drawing_style == self.DRAW_ICON
 
  
-    def update_icon(self, context):
+    def pre_update_icon(self, context):
         """Figure out if this interface represents a required, provided,
         assembled (wired) or dotted (minimal) look.
         """
+        for h in self._handles: h.movable = False
+        self.style.name_outside = True
+
         h_nw = self._handles[NW]
-        cx, xy = h_nw.x + self.width/2, h_nw.y + self.height/2
+        cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
         self._draw_required = self._draw_provided = False
         for item, handle in self.canvas.get_connected_items(self):
             if gives_required(handle):
                 self._draw_required = True
             elif gives_provided(handle):
                 self._draw_provided = True
-        radius = RADIUS_PROVIDED
+        radius = self.RADIUS_PROVIDED
+        self.style.icon_size = self.style.icon_size_provided
         if self._draw_required:
-            radius = RADIUS_REQUIRED
+            radius = self.RADIUS_REQUIRED
+            self.style.icon_size = self.style.icon_size_required
+        self.min_width, self.min_height = self.style.icon_size
+        self.width, self.height = self.style.icon_size
 
-        h_nw.x, h_nw.y = cx - radius, cy - radius
+        #h_nw.x, h_nw.y = cx - radius, cy - radius
         h_se = self._handles[SE]
-        h_se.x, h_se.y = cx + radius, cy + radius
-
+        #h_se.x, h_se.y = cx + radius, cy + radius
+        super(InterfaceItem, self).pre_update(context)
 
     def draw_icon(self, context):
         cr = context.cairo
         h_nw = self._handles[NW]
         cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
         if self._draw_required:
-            cr.move_to(cx, cy + RADIUS_REQUIRED)
-            cr.arc_negative(cx, cy, RADIUS_REQUIRED, pi/2, pi*1.5)
+            cr.move_to(cx, cy + self.RADIUS_REQUIRED)
+            cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, pi/2, pi*1.5)
             cr.stroke()
         if self._draw_provided or not self._draw_required:
-            cr.move_to(cx + RADIUS_PROVIDED, cy)
-            cr.arc(cx, cy, RADIUS_PROVIDED, 0, pi*2)
+            cr.move_to(cx + self.RADIUS_PROVIDED, cy)
+            cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi*2)
             cr.stroke()
+        super(InterfaceItem, self).draw(context)
 
     def on_glue(self, handle, wx, wy):
         """Allow connect only to provided/required points in case

@@ -18,9 +18,6 @@ class Compartment(list):
     A compartment has a line on top and a list of FeatureItems.
     """
 
-    MARGIN_X = 5 
-    MARGIN_Y = 5
-
     def __init__(self, name, owner):
         self.name = name
         self.owner = owner
@@ -58,8 +55,9 @@ class Compartment(list):
             sizes = [f.get_size(True) for f in self]
             self.width = max(map(lambda p: p[0], sizes))
             self.height = sum(map(lambda p: p[1], sizes))
-        self.width += 2 * self.MARGIN_X
-        self.height += 2 * self.MARGIN_Y
+        margin = self.owner.style.compartment_margin
+        self.width += margin[1] + margin[3]
+        self.height += margin[0] + margin[2]
 
     def update(self, context):
         for item in self:
@@ -68,7 +66,8 @@ class Compartment(list):
 
     def draw(self, context):
         cr = context.cairo
-        cr.translate(self.MARGIN_X, self.MARGIN_Y)
+        margin = self.owner.style.compartment_margin
+        cr.translate(margin[1], margin[0])
         for item in self:
             cr.save()
             try:
@@ -107,6 +106,10 @@ class ClassifierItem(NamedItem):
     # Draw as icon
     DRAW_ICON = 3
 
+    __style__ = {
+        'icon-size': (20, 20),
+        'compartment-margin': (5, 5, 5, 5), # (top, right, bottom, left)
+        }
     # Default size for small icons
     ICON_WIDTH    = 15
     ICON_HEIGHT   = 25
@@ -247,34 +250,33 @@ class ClassifierItem(NamedItem):
         for comp in self._compartments:
             comp.pre_update(context)
 
-        if self._drawing_style == self.DRAW_COMPARTMENT:
-            cr = context.cairo
-            s_w = s_h = 0
-            if self.stereotype:
-                s_w, s_h = text_extents(cr, self.stereotype)
-            n_w, n_h = text_extents(cr, self.subject.name)
-            f_w, f_h = 0, 0
-            if self.subject.namespace:
-                f_w, f_h = text_extents(cr, self._from, font=font.FONT_SMALL)
+        cr = context.cairo
+        s_w = s_h = 0
+        if self.stereotype:
+            s_w, s_h = text_extents(cr, self.stereotype)
+        n_w, n_h = text_extents(cr, self.subject.name)
+        f_w, f_h = 0, 0
+        if self.subject.namespace:
+            f_w, f_h = text_extents(cr, self._from, font=font.FONT_SMALL)
 
-            sizes = [comp.get_size() for comp in self._compartments]
+        sizes = [comp.get_size() for comp in self._compartments]
 
-            self.min_width = max(s_w, n_w, f_w)
-            self.min_height = self.NAME_COMPARTMENT_HEIGHT
+        self.min_width = max(s_w, n_w, f_w)
+        self.min_height = self.NAME_COMPARTMENT_HEIGHT
 
-            if sizes:
-                w = max(map(lambda p: p[0], sizes))
+        if sizes:
+            w = max(map(lambda p: p[0], sizes))
 
-                h = sum(map(lambda p: p[1], sizes))
-                self.min_width = max(self.min_width, w)
-                self.min_height += h
-            super(ClassifierItem, self).pre_update(context)
+            h = sum(map(lambda p: p[1], sizes))
+            self.min_width = max(self.min_width, w)
+            self.min_height += h
+        super(ClassifierItem, self).pre_update(context)
 
     def pre_update_compartment_icon(self, context):
         self.pre_update_compartment(context)
 
     def pre_update_icon(self, context):
-        pass
+        super(ClassifierItem, self).pre_update(context)
 
     def update_compartment(self, context):
         """Update state for box-style presentation.
@@ -287,7 +289,7 @@ class ClassifierItem(NamedItem):
         pass
 
     def update_icon(self, context):
-        """Update state to draw as one big icon.
+        """
         """
         pass
 

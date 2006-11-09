@@ -81,9 +81,9 @@ class DiagramItem(Presentation, Element):
             type(self).subject.load(self, value)
             print self, 'subject =', self.subject
         else:
-            #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
+            log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
             try:
-                setattr(self, name, eval(value))
+                setattr(self, name.replace('-', '_'), eval(value))
             except:
                 log.warning('%s has no property named %s (value %s)' % (self, name, value))
 
