@@ -119,7 +119,7 @@ class ClassifierItem(NamedItem):
     ICON_MARGIN_Y = 10
     NAME_COMPARTMENT_HEIGHT = 35
 
-    def __init__(self, id = None):
+    def __init__(self, id=None):
         NamedItem.__init__(self, id)
         self._compartments = []
         self._from = None # (from ...) text
