@@ -1,7 +1,6 @@
-'''
-Use case diagram item
-'''
-# vim:sw=4
+"""
+Use case diagram item.
+"""
 
 from math import pi
 from gaphor import UML
@@ -10,15 +9,17 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 from gaphas.util import text_align, text_extents, path_ellipse
 
 class UseCaseItem(ClassifierItem):
-    """Presentation of gaphor.UML.UseCase.
+    """
+    Presentation of gaphor.UML.UseCase.
     """
     __uml__ = UML.UseCase
     __style__ = {
-        'name-align'  : (ALIGN_CENTER, ALIGN_MIDDLE),
+        'min-size':   (50, 30),
+        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
     }
 
-    def __init__(self, id):
-        ClassifierItem.__init__(self, id, 50, 30)
+    def __init__(self, id=None):
+        ClassifierItem.__init__(self, id)
         self.drawing_style = -1
 
 

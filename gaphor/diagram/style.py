@@ -48,17 +48,24 @@ class Style(object):
         return self.__dict__.iteritems()
 
 
-def get_min_size(width, height, padding):
+def get_min_size(width, height, min_size, padding):
     """
-    Get minimum size of an object using padding information.
+    Get minimal size of an object using padding information. Calculated
+    size cannot be smaller than specified minimal size.
 
-    @param width: object width
-    @param height: object height
-    @param padding: padding information as a tuple
+    @param width:    object width
+    @param height:   object height
+    @param min_size: minimal size
+    @param padding:  padding information as a tuple
         (top, right, bottom, left)
     """
-    return width + padding[PADDING_LEFT] + padding[PADDING_RIGHT], \
-        height + padding[PADDING_TOP] + padding[PADDING_BOTTOM]
+    width  += padding[PADDING_LEFT] + padding[PADDING_RIGHT]
+    height += padding[PADDING_TOP]  + padding[PADDING_BOTTOM]
+    if width < min_size[0]:
+        width = min_size[0]
+    if height < min_size[1]:
+        height = min_size[1]
+    return width, height
 
 
 def get_text_point(extents, width, height, align, padding, outside):

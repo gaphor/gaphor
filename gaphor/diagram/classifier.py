@@ -78,7 +78,8 @@ class Compartment(list):
 
 
 class ClassifierItem(NamedItem):
-    """This item visualizes a Class instance.
+    """
+    This item visualizes a Class instance.
 
     A ClassifierItem is a superclass for (all) Classifier like objects,
     such as Class, Interface, Component and Actor.
@@ -107,9 +108,10 @@ class ClassifierItem(NamedItem):
     DRAW_ICON = 3
 
     __style__ = {
-        'icon-size': (20, 20),
+        'min-size':           (100, 50),
+        'icon-size':          (20, 20),
         'compartment-margin': (5, 5, 5, 5), # (top, right, bottom, left)
-        }
+    }
     # Default size for small icons
     ICON_WIDTH    = 15
     ICON_HEIGHT   = 25
@@ -117,8 +119,8 @@ class ClassifierItem(NamedItem):
     ICON_MARGIN_Y = 10
     NAME_COMPARTMENT_HEIGHT = 35
 
-    def __init__(self, id = None, width = 100, height = 50):
-        NamedItem.__init__(self, id, width, height)
+    def __init__(self, id = None):
+        NamedItem.__init__(self, id)
         self._compartments = []
         self._from = None # (from ...) text
         self._drawing_style = ClassifierItem.DRAW_NONE

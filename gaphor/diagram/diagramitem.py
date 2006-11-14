@@ -13,7 +13,8 @@ STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
 
 class DiagramItem(Presentation, Element):
-    """Basic functionality for all model elements (lines and elements!).
+    """
+    Basic functionality for all model elements (lines and elements!).
 
     This class contains common functionallity for model elements and
     relationships.

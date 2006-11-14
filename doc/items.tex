@@ -171,6 +171,13 @@ It should be possible to implement common behaviour in basic item classes,
 which should be parametrized by item's style information. For example,
 named element item should set position of name depending on styles.
 
+\section{Styles}
+Class \rclass{ElementItem} defined below should define following styles
+\begin{description}
+\item[min--size] minimal size of an item; minimal width and height are
+    initialized using this style information
+\end{description}
+
 \section{Classes}
 \rclass{DiagramItem} class is a basic, abstract class for all items. Every
 item class is created using \rclass{DiagramItemMeta} metaclass.
@@ -188,8 +195,8 @@ supported with classes
 \begin{attrs}
 \iattr{\_\_uml\_\_}{UML class associated with item}
 \iattr{\_\_stereotype\_\_}{item static stereotype}
-\iattr{\_\_style\_\_}{item styles information}
-\iattr{style}{item style information}
+\iattr{\_\_style\_\_}{used to define new and override item style information}
+\iattr{style}{used to obtain item style information, also information derived from base classes}
 \end{attrs}
 \begin{entitydesc}
 Metaclass for all items. Assigns information about UML class, stereotypes,
@@ -211,7 +218,6 @@ Basic class for all diagram items.
 \begin{attrs}
 \iattr{head}{reference to head handle of a line}
 \iattr{tail}{reference to tail handle of a line}
-\iattr{s\_align}{stereotype align}
 \end{attrs}
 \begin{entitydesc}
 Canvas line based items like dependencies, association, flows, message, etc.
@@ -219,9 +225,18 @@ Canvas line based items like dependencies, association, flows, message, etc.
 \end{class}
 
 \begin{class}{ElementItem}
+\begin{attrs}
+\iattr{min\_width}{minimal item width}
+\iattr{min\_height}{minimal item height}
+\end{attrs}
 \begin{entitydesc}
 Canvas element based items like class, component, lifeline,
 comment, activity nodes, etc.
+
+Minimal width and height are initialized from minimal size style
+information. These two values can change during item lifecycle (i.e.\ name
+can be expanded or shrinked), therefore minimal size style information
+guards initial minimal dimensions of element item.
 \end{entitydesc}
 \end{class}
 

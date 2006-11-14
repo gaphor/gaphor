@@ -13,6 +13,7 @@ from gaphor.diagram.style import get_min_size, get_text_point, \
 class NamedItem(ElementItem):
 
     __style__ = {
+        'min-size'    : (120, 60),
         'name-align'  : (ALIGN_CENTER, ALIGN_TOP),
         'name-padding': (5, 10, 5, 10),
         'name-outside': False,
@@ -25,21 +26,16 @@ class NamedItem(ElementItem):
         'ShowElementInTreeView'
     )
 
-    def __init__(self, id = None, width = 120, height = 60):
+    def __init__(self, id=None):
         """
         Create named item.
-
-        Width, height and minimum size is set to default values determined
-        by class level @C{WIDTH} and @C{HEIGHT} variables.
         """
         ElementItem.__init__(self, id)
 
-        self.min_width  = width
-        self.min_height = height
-        self.width      = self.min_width
-        self.height     = self.min_height
-        self.name_x     = 0
-        self.name_y     = 0
+        self.width  = self.min_width
+        self.height = self.min_height
+        self.name_x = 0
+        self.name_y = 0
 
 
     def pre_update(self, context):
@@ -50,8 +46,11 @@ class NamedItem(ElementItem):
         text = self.subject.name
         if text and not self.style.name_outside:
             width, height = text_extents(cr, text)
+
             self.min_width, self.min_height = get_min_size(width, height,
+                    self.style.min_size,
                     self.style.name_padding)
+
         super(NamedItem, self).pre_update(context)
 
 
@@ -63,10 +62,12 @@ class NamedItem(ElementItem):
         text = self.subject.name
         if text:
             width, height = text_extents(cr, text)
+
             self.name_x, self.name_y = get_text_point(text_extents(cr, text),
                     self.width, self.height,
                     self.style.name_align, self.style.name_padding,
                     self.style.name_outside)
+
         super(NamedItem, self).update(context)
 
 

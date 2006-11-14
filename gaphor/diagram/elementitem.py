@@ -11,10 +11,16 @@ from diagramitem import DiagramItem
 __version__ = '$Revision$'
 
 class ElementItem(gaphas.Element, DiagramItem):
+    __style__ = {
+        'min-size': (0, 0),
+    }
 
     def __init__(self, id=None):
         gaphas.Element.__init__(self)
         DiagramItem.__init__(self, id)
+
+        self.min_width   = self.style.min_size[0]
+        self.min_height  = self.style.min_size[1]
         self.auto_resize = 0
 
     def save(self, save_func):
