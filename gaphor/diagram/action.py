@@ -12,6 +12,7 @@ from gaphas.util import text_align, text_extents
 class ActionItem(NamedItem):
     __uml__   = UML.Action
     __style__ = {
+        'min-size':   (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
     }
 

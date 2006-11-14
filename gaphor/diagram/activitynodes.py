@@ -24,8 +24,8 @@ class ActivityNodeItem(NamedItem):
         'name-padding': (2, 2, 2, 2),
     }
 
-    def __init__(self, id=None, width=0, height=0):
-        NamedItem.__init__(self, id, width, height)
+    def __init__(self, id=None):
+        NamedItem.__init__(self, id)
         # Do not allow resizing of the node
         for h in self._handles:
             h.movable = False
@@ -38,13 +38,11 @@ class InitialNodeItem(ActivityNodeItem):
     """
     __uml__     = UML.InitialNode
     __style__   = {
+        'min-size':   (20, 20),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
     }
     
     RADIUS = 10
-
-    def __init__(self, id = None, width = 20, height = 20):
-        ActivityNodeItem.__init__(self, id, width, height)
 
     def draw(self, context):
         cr = context.cairo
@@ -64,14 +62,12 @@ class ActivityFinalNodeItem(ActivityNodeItem):
 
     __uml__ = UML.ActivityFinalNode
     __style__   = {
+        'min-size':   (30, 30),
         'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
     }
 
     RADIUS_1 = 10
     RADIUS_2 = 15
-
-    def __init__(self, id=None, width=30, height=30):
-        ActivityNodeItem.__init__(self, id, width, height)
 
     def draw(self, context):
         cr = context.cairo
@@ -98,13 +94,11 @@ class FlowFinalNodeItem(ActivityNodeItem):
 
     __uml__ = UML.FlowFinalNode
     __style__   = {
+        'min-size':   (20, 20),
         'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
     }
 
     RADIUS = 10
-
-    def __init__(self, id=None, width=20, height=20):
-        ActivityNodeItem.__init__(self, id, width, height)
 
     def draw(self, context):
         cr = context.cairo
@@ -131,8 +125,8 @@ class FDNode(ActivityNodeItem):
     specification.
     """
 
-    def __init__(self, id, width, height):
-        ActivityNodeItem.__init__(self, id, width, height)
+    def __init__(self, id=None):
+        ActivityNodeItem.__init__(self, id)
         self._combined = False
         self.set_prop_persistent('combined')
 
@@ -160,13 +154,11 @@ class DecisionNodeItem(FDNode):
 
     __uml__   = UML.DecisionNode
     __style__   = {
+        'min-size':   (20, 30),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
     }
 
     RADIUS = 15
-
-    def __init__(self, id=None, width = 20, height = 30):
-        FDNode.__init__(self, id, width, height)
 
     def draw(self, context):
         """
@@ -194,12 +186,12 @@ class ForkNodeItem(FDNode):
     __uml__   = UML.JoinNode
     #__uml__   = UML.ForkNode
     __style__ = {
+        'min-size':   (6, 45),
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
     }
 
-    def __init__(self, id = None, width = 6.0, height = 45.0):
-#        GroupBase.__init__(self)
-        FDNode.__init__(self, id, width, height)
+    def __init__(self, id=None):
+        FDNode.__init__(self, id)
 
         self._join_spec = 'join spec test'
         self._join_spec_x = 0
