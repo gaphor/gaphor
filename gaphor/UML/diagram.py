@@ -34,7 +34,7 @@ class DiagramCanvas(gaphas.Canvas):
 
     def update_now(self):
         if self._block_updates:
-            log.debug('Update blocked for canvas %s' % self)
+            #log.debug('Update blocked for canvas %s' % self)
             return
         super(DiagramCanvas, self).update_now()
 
@@ -47,7 +47,7 @@ class DiagramCanvas(gaphas.Canvas):
             save_func(None, item)
 
     def postload(self):
-        self.block_updates = False
+        pass #self.block_updates = False
 
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression.

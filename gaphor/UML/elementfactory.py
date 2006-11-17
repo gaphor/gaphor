@@ -146,6 +146,8 @@ class ElementFactory(object):
 
         # First flush all diagrams:
         for value in list(self.select(lambda e: isinstance(e, Diagram))):
+            # Make sure no updates happen while destroying the canvas
+            value.canvas.block_updates = True
             value.unlink()
 
         for key, value in self._elements.items():

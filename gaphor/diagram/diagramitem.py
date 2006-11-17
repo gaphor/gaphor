@@ -184,7 +184,8 @@ class DiagramItem(Presentation, Element):
                 pass
 
     def _subject_disconnect_helper(self, element, callback_prefix, prop_list):
-        """Disconnect a previously connected signal handler.
+        """
+        Disconnect a previously connected signal handler.
 
         See: DiagramItem.on_subject_notify()
         """
@@ -208,7 +209,8 @@ class DiagramItem(Presentation, Element):
                 pass
 
     def _on_subject_notify_helper(self, element, pspec, callback_name, prop_list, old):
-        """This signal handler handles signals that are not direct properties
+        """
+        This signal handler handles signals that are not direct properties
         of self.subject (e.g. 'subject.lowerValue.value'). This way the
         presentation class is not bothered with the details of keeping track
         of those properties.
@@ -231,7 +233,8 @@ class DiagramItem(Presentation, Element):
         old[0] = prop
 
     def on_subject_notify(self, pspec, notifiers=()):
-        """A new subject is set on this model element.
+        """
+        A new subject is set on this model element.
         notifiers is an optional tuple of elements that also need a
         callback function. Callbacks have the signature
         on_subject_notify__<notifier>(self, subject, pspec).
@@ -239,7 +242,7 @@ class DiagramItem(Presentation, Element):
         A notifier can be a property of subject (e.g. 'name') or a property
         of a property of subject (e.g. 'lowerValue.value').
         """
-        #log.info('DiagramItem.on_subject_notify: %s' % self.__subject_notifier_ids)
+        #log.info('Setting subject from %s to %s' % (self.__the_subject, self.subject))
         # First, split all notifiers on '.'
         callback_prefix = 'on_subject_notify_'
         notifiers = map(str.split, notifiers + ('appliedStereotype',), ['.'] * len(notifiers))

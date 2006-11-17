@@ -175,6 +175,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # Fix version inconsistencies
     version_0_6_2(elements, factory, gaphor_version)
     version_0_7_2(elements, factory, gaphor_version)
+    version_0_9_0(elements, factory, gaphor_version)
 
     #log.debug("Still have %d elements" % len(elements))
 
@@ -209,14 +210,12 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         if isinstance(elem, parser.element) and elem.canvas:
             for item in elem.canvas.canvasitems:
                 assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
-                #item.element.set_property('parent', elem.element.canvas.root)
                 elem.element.canvas.add(item.element)
 
         # Also create nested canvas items:
         if isinstance(elem, parser.canvasitem):
             for item in elem.canvasitems:
                 assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
-                #item.element.set_property('parent', elem.element)
                 elem.element.canvas.add(item.element, parent=elem.element)
 
         # load attributes and references:
@@ -255,6 +254,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # Fix version inconsistencies
     version_0_5_2(elements, factory, gaphor_version)
     version_0_7_1(elements, factory, gaphor_version)
+
     # Before version 0.7.2 there was only decision node (no merge nodes).
     # This node could have many incoming and outgoing flows (edges).
     # According to UML specification decision node has no more than one
@@ -271,6 +271,11 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     for id, elem in elements.items():
         yield update_status_queue()
         elem.element.postload()
+
+    # Unlock canvas's for updates
+    for id, elem in elements.items():
+        if elem.canvas:
+            elem.element.canvas.block_updates = False
 
     factory.notify_model()
 
@@ -326,13 +331,35 @@ def load_generator(filename, factory=None):
         yield 100
     except Exception, e:
         log.info('file %s could not be loaded' % filename, e)
-        import traceback
-        traceback.print_exc()
         raise
 
 
+def version_0_9_0(elements, factory, gaphor_version):
+    """
+    Before 0.9.0, we used DiaCanvas2 as diagram widget in the GUI. As of 0.9.0
+    Gaphas was introduced. Some properties of <item /> elements have changed,
+    renamed or been removed at all.
+
+    This function is called before the actual elements are constructed.
+    """
+    if tuple(map(int, gaphor_version.split('.'))) < (0, 9, 0):
+        for elem in elements.values():
+            try:
+                if type(elem) is parser.canvasitem:
+                    # Rename affine to matrix
+                    if elem.values.get('affine'):
+                        elem.values['matrix'] = elem.values['affine']
+                        del elem.values['affine']
+                    # No more 'color' attribute:
+                    if elem.values.get('color'):
+                        del elem.values['color']
+
+            except Exception, e:
+                log.error('Error while updating taggedValues', e)
+
 def version_0_7_2(elements, factory, gaphor_version):
-    """Before 0.7.2, only Property and Parameter elements had taggedValues.
+    """
+    Before 0.7.2, only Property and Parameter elements had taggedValues.
     Since 0.7.2 all NamedElements are able to have taggedValues. However,
     the multiplicity of taggedValue has changed from 0..1 to *, so all elements
     should be converted to a list.
@@ -361,7 +388,8 @@ def version_0_7_2(elements, factory, gaphor_version):
 
 
 def version_0_7_1(elements, factory, gaphor_version):
-    """Before version 0.7.1, there were two states for association
+    """
+    Before version 0.7.1, there were two states for association
     navigability (in terms of UML 2.0): unknown and navigable.
     In case of unknown navigability Property.owningAssociation was set.
 
@@ -396,7 +424,8 @@ def version_0_7_1(elements, factory, gaphor_version):
 
 
 def version_0_6_2(elements, factory, gaphor_version):
-    """Before 0.6.2 an Interface could be represented by a ClassItem and
+    """
+    Before 0.6.2 an Interface could be represented by a ClassItem and
     a InterfaceItem. Now only InterfaceItems are used.
     """
     if tuple(map(int, gaphor_version.split('.'))) < (0, 6, 2):
@@ -415,7 +444,8 @@ def version_0_6_2(elements, factory, gaphor_version):
 
 
 def version_0_5_2(elements, factory, gaphor_version):
-    """Before version 0.5.2, the wrong memberEnd of the association was
+    """
+    Before version 0.5.2, the wrong memberEnd of the association was
     holding the aggregation information.
     """
     if tuple(map(int, gaphor_version.split('.'))) < (0, 5, 2):

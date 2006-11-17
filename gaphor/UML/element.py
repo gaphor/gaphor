@@ -77,7 +77,8 @@ class Element(object):
             prop.load(self, value)
 
     def postload(self):
-        """Fix up the odds and ends.
+        """
+        Fix up the odds and ends.
         """
         for name in dir(type(self)):
             if not name.startswith('_'):

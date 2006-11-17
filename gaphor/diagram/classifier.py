@@ -257,6 +257,7 @@ class ClassifierItem(NamedItem):
         if self.stereotype:
             s_w, s_h = text_extents(cr, self.stereotype)
         n_w, n_h = text_extents(cr, self.subject.name)
+
         f_w, f_h = 0, 0
         if self.subject.namespace:
             f_w, f_h = text_extents(cr, self._from, font=font.FONT_SMALL)
@@ -272,6 +273,7 @@ class ClassifierItem(NamedItem):
             h = sum(map(lambda p: p[1], sizes))
             self.min_width = max(self.min_width, w)
             self.min_height += h
+
         super(ClassifierItem, self).pre_update(context)
 
     def pre_update_compartment_icon(self, context):
@@ -303,7 +305,7 @@ class ClassifierItem(NamedItem):
 
 
     def draw_compartment(self, context):
-        if not self.subject: return
+        #if not self.subject: return
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()

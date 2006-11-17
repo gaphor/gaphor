@@ -62,7 +62,8 @@ class StorageTestCase(unittest.TestCase):
 
 
     def test_load_uml(self):
-        """Test loading of a freshly saved model.
+        """
+        Test loading of a freshly saved model.
         """
         filename = '%s.gaphor' % __module__
 
@@ -87,8 +88,9 @@ class StorageTestCase(unittest.TestCase):
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Class))) == 1
         
 
-    def test_load_uml(self):
-        """Test loading of a freshly saved model.
+    def test_load_uml_2(self):
+        """
+        Test loading of a freshly saved model.
         """
         filename = '%s.gaphor' % __module__
 
@@ -117,6 +119,11 @@ class StorageTestCase(unittest.TestCase):
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Class))) == 1
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Interface))) == 1
 
+        c = UML.lselect(lambda e: e.isKindOf(UML.Class))[0]
+        assert c.presentation
+        assert c.presentation[0].subject is c
+        #assert c.presentation[0].subject.name.startwith('Class')
+
         iface = UML.lselect(lambda e: e.isKindOf(UML.Interface))[0]
         assert iface.name == 'Circus'
         assert len(iface.presentation) == 1
@@ -126,6 +133,44 @@ class StorageTestCase(unittest.TestCase):
         assert len(d.canvas.get_all_items()) == 3
         for item in d.canvas.get_all_items():
             assert item.subject, 'No subject for %s' % item 
+        d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
+        assert d1
+        #print d1, d1.subject
+
+
+    def test_load_uml_relationships(self):
+        """
+        Test loading of a freshly saved model with relationship objects.
+        """
+        filename = '%s.gaphor' % __module__
+
+        UML.create(UML.Package)
+        diagram = UML.create(UML.Diagram)
+        diagram.create(items.CommentItem, subject=UML.create(UML.Comment))
+        c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        diagram.create(items.AssociationItem)
+
+        fd = open(filename, 'w')
+        storage.save(XMLWriter(fd))
+        fd.close()
+
+        UML.flush()
+        assert not list(UML.select())
+
+        storage.load(filename)
+
+        assert len(UML.lselect()) == 4
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Package))) == 1
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
+        d = UML.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Comment))) == 1
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Class))) == 1
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Association))) == 0
+
+        # Check load/save of other canvas items.
+        assert len(d.canvas.get_all_items()) == 3
+        #for item in d.canvas.get_all_items():
+        #    assert item.subject, 'No subject for %s' % item 
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
         print d1, d1.subject

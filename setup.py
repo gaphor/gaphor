@@ -2,13 +2,13 @@
 #
 # setup.py for Gaphor
 #
-# vim:sw=4:et
-"""Gaphor
+"""
+Gaphor
 """
 
 MAJOR_VERSION = 0
-MINOR_VERSION = 8
-MICRO_VERSION = 1
+MINOR_VERSION = 9
+MICRO_VERSION = 0
 
 VERSION = '%d.%d.%d' % ( MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION )
 
@@ -483,3 +483,5 @@ setup(name='gaphor',
          ),
      )
 )
+
+# vim:sw=4:et

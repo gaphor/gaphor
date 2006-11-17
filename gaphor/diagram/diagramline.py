@@ -7,7 +7,8 @@ import itertools
 import gaphas
 from gaphas.util import text_extents
 from diagramitem import DiagramItem
-#from gaphor.diagram import LineItemMeta
+from interfaces import IConnect
+
 
 class LineItem(gaphas.Line, DiagramItem):
     """Base class for diagram lines.
@@ -75,35 +76,31 @@ class DiagramLine(LineItem):
         'EditDelete'
     )
 
-    def do_set_property (self, pspec, value):
-        pass
-
-    def do_get_property(self, pspec):
-        pass
-
     def save (self, save_func):
         LineItem.save(self, save_func)
-        for prop in ('affine', 'color', 'orthogonal', 'horizontal'):
-            save_func(prop, self.get_property(prop))
+        save_func('matrix', tuple(self.matrix))
+        for prop in ('orthogonal', 'horizontal'):
+            save_func(prop, getattr(self, prop))
         points = [ ]
-        for h in self.handles:
-            pos = h.get_pos_i ()
-            points.append (pos)
+        for h in self.handles():
+            points.append(tuple(map(float, h.pos)))
         save_func('points', points)
-        c = self.handles[0].connected_to
+        c = self.handles()[0].connected_to
         if c:
             save_func('head-connection', c, reference=True)
-        c = self.handles[-1].connected_to
+        c = self.handles()[-1].connected_to
         if c:
             save_func('tail-connection', c, reference=True)
 
     def load (self, name, value):
         if name == 'points':
             points = eval(value)
-            self.set_property('head_pos', points[0])
-            self.set_property('tail_pos', points[1])
-            for p in points[2:]:
-                self.set_property ('add_point', p)
+            for x in xrange(len(points) - 2):
+                self.split_segment(0)
+            #self.set_property('head_pos', points[0])
+            #self.set_property('tail_pos', points[1])
+            for i, p in enumerate(points):
+                self.handles()[i].pos = p
         elif name in ('head_connection', 'head-connection'):
             self._load_head_connection = value
         elif name in ('tail_connection', 'tail-connection'):
@@ -112,11 +109,25 @@ class DiagramLine(LineItem):
             LineItem.load(self, name, value)
 
     def postload(self):
+        # Ohoh, need the IConnect adapters here
+        from zope import component
         if hasattr(self, '_load_head_connection'):
-            self._load_head_connection.connect_handle(self.handles[0])
+            adapter = component.queryMultiAdapter((self._load_head_connection, self), IConnect)
+            #self._load_head_connection.connect_handle(self.handles[0])
+            h = self.handles()[0]
+
+            x, y = self.canvas.get_matrix_i2w(self, calculate=True).transform_point(h.x, h.y)
+            x, y = self.canvas.get_matrix_w2i(self._load_head_connection, calculate=True).transform_point(x, y)
+            adapter.connect(self.handles()[0], x, y)
             del self._load_head_connection
         if hasattr(self, '_load_tail_connection'):
-            self._load_tail_connection.connect_handle(self.handles[-1])
+            #self._load_tail_connection.connect_handle(self.handles[-1])
+            adapter = component.queryMultiAdapter((self._load_tail_connection, self), IConnect)
+            h = self.handles()[0]
+
+            x, y = self.canvas.get_matrix_i2w(self, calculate=True).transform_point(h.x, h.y)
+            x, y = self.canvas.get_matrix_w2i(self._load_tail_connection, calculate=True).transform_point(x, y)
+            adapter.connect(self.handles()[0], x, y)
             del self._load_tail_connection
         LineItem.postload(self)
 
