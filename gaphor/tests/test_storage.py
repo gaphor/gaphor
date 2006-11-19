@@ -7,6 +7,11 @@ from gaphor import UML
 from gaphor import storage
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
+from zope import component
+
+# ensure adapters are loaded:
+import gaphor.adapters
 
 __module__ = 'test_storage'
 
@@ -148,7 +153,13 @@ class StorageTestCase(unittest.TestCase):
         diagram = UML.create(UML.Diagram)
         diagram.create(items.CommentItem, subject=UML.create(UML.Comment))
         c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
-        diagram.create(items.AssociationItem)
+
+        a = diagram.create(items.AssociationItem)
+        a.handles()[0].pos = (10, 20)
+        a.handles()[1].pos = (50, 60)
+        assert 10 == a.handles()[0].x, a.handles()[0].pos
+        assert a.handles()[0].y == 20, a.handles()[0].pos
+        assert a.handles()[1].pos == (50, 60), a.handles()[1].pos
 
         fd = open(filename, 'w')
         storage.save(XMLWriter(fd))
@@ -169,10 +180,59 @@ class StorageTestCase(unittest.TestCase):
 
         # Check load/save of other canvas items.
         assert len(d.canvas.get_all_items()) == 3
-        #for item in d.canvas.get_all_items():
-        #    assert item.subject, 'No subject for %s' % item 
+        for item in d.canvas.get_all_items():
+            if isinstance(item, items.AssociationItem):
+                aa = item
+        assert aa
+        assert aa.handles()[0].pos == (10, 20), aa.handles()[0].pos
+        assert aa.handles()[1].pos == (50, 60), aa.handles()[1].pos
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
         print d1, d1.subject
 
+    def test_connection(self):
+        """
+        Test connection loading of an association and two classes.
+        (Should count for all line-like objects alike if this works).
+        """
+        filename = '%s.gaphor' % __module__
+
+        diagram = UML.create(UML.Diagram)
+        c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        c2 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        c2.matrix.translate(200, 200)
+        c2.request_update()
+        diagram.canvas.update_now()
+
+        a = diagram.create(items.AssociationItem)
+
+        adapter = component.queryMultiAdapter((c1, a), IConnect)
+        assert adapter
+        h = a.head
+        adapter.connect(h, h.x, h.y)
+        head_pos = h.pos
+
+        adapter = component.queryMultiAdapter((c2, a), IConnect)
+        assert adapter
+        h = a.tail
+        adapter.connect(h, h.x, h.y)
+        tail_pos = h.pos
+
+        diagram.canvas.update_now()
+
+        assert a.head.y == 0, a.head.pos
+        assert a.tail.x == 200, a.tail.pos
+
+        fd = open(filename, 'w')
+        storage.save(XMLWriter(fd))
+        fd.close()
+
+        UML.flush()
+        assert not list(UML.select())
+
+        storage.load(filename)
+
+        assert len(UML.select(lambda e: e.isKindOf(UML.Diagram))) == 1
+        d = UML.select(lambda e: e.isKindOf(UML.Diagram))[0]
+        
 # vim:sw=4:et:ai
