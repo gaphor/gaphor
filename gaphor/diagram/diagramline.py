@@ -93,7 +93,9 @@ class DiagramLine(LineItem):
             save_func('tail-connection', c, reference=True)
 
     def load (self, name, value):
-        if name == 'points':
+        if name == 'matrix':
+            self.matrix = eval(value)
+        elif name == 'points':
             points = eval(value)
             for x in xrange(len(points) - 2):
                 self.split_segment(0)
