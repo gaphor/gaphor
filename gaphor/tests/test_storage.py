@@ -203,6 +203,7 @@ class StorageTestCase(unittest.TestCase):
         c2.matrix.translate(200, 200)
         c2.request_update()
         diagram.canvas.update_now()
+        assert tuple(diagram.canvas.get_matrix_i2w(c2)) == (1, 0, 0, 1, 200, 200)
 
         a = diagram.create(items.AssociationItem)
 
@@ -222,6 +223,7 @@ class StorageTestCase(unittest.TestCase):
 
         assert a.head.y == 0, a.head.pos
         assert a.tail.x == 200, a.tail.pos
+        #assert a.tail.y == 200, a.tail.pos
 
         fd = open(filename, 'w')
         storage.save(XMLWriter(fd))
@@ -232,7 +234,12 @@ class StorageTestCase(unittest.TestCase):
 
         storage.load(filename)
 
-        assert len(UML.select(lambda e: e.isKindOf(UML.Diagram))) == 1
-        d = UML.select(lambda e: e.isKindOf(UML.Diagram))[0]
-        
+        assert len(UML.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
+        d = UML.select(lambda e: e.isKindOf(UML.Diagram)).next()
+        assert len(d.canvas.select(lambda i: isinstance(i, items.AssociationItem))) == 1
+        a = d.canvas.select(lambda i: isinstance(i, items.AssociationItem))[0]
+        print a.head.connected_to, a.tail.connected_to
+        assert not a.head.connected_to is a.tail.connected_to
+
+
 # vim:sw=4:et:ai

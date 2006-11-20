@@ -728,12 +728,13 @@ class AssociationEnd(DiagramItem):
         cr.show_text(self._name)
         cr.move_to(self._mult_bounds[0], self._mult_bounds[3])
         cr.show_text(self._mult)
+        cr.stroke()
 
-        if context.hovered or context.focused:
-            cr.set_line_width(0.5)
-            b = self._name_bounds
-            cr.rectangle(b.x0, b.y0, b.width, b.height)
-            cr.stroke()
+#        if context.hovered or context.focused:
+#            cr.set_line_width(0.5)
+#            b = self._name_bounds
+#            cr.rectangle(b.x0, b.y0, b.width, b.height)
+#            cr.stroke()
             #b = self._mult_bounds
             #cr.rectangle(b.x0, b.y0, b.width, b.height)
             #cr.stroke()
