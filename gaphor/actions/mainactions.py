@@ -91,7 +91,7 @@ class NewAction(Action):
         factory.flush()
         gc.collect()
         model = factory.create(UML.Package)
-        model.name = 'New model'
+        model.name = _('New model')
         diagram = factory.create(UML.Diagram)
         diagram.package = model
         diagram.name='main'

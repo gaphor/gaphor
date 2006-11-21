@@ -115,21 +115,21 @@ class DiagramLine(LineItem):
         from zope import component
         if hasattr(self, '_load_head_connection'):
             adapter = component.queryMultiAdapter((self._load_head_connection, self), IConnect)
-            #self._load_head_connection.connect_handle(self.handles[0])
-            h = self.handles()[0]
+            assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_head_connection, self)
+            h = self.head
 
             x, y = self.canvas.get_matrix_i2w(self, calculate=True).transform_point(h.x, h.y)
             x, y = self.canvas.get_matrix_w2i(self._load_head_connection, calculate=True).transform_point(x, y)
-            adapter.connect(self.handles()[0], x, y)
+            adapter.connect(h, x, y)
             del self._load_head_connection
         if hasattr(self, '_load_tail_connection'):
-            #self._load_tail_connection.connect_handle(self.handles[-1])
             adapter = component.queryMultiAdapter((self._load_tail_connection, self), IConnect)
-            h = self.handles()[0]
+            assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_tail_connection, self)
+            h = self.tail
 
             x, y = self.canvas.get_matrix_i2w(self, calculate=True).transform_point(h.x, h.y)
             x, y = self.canvas.get_matrix_w2i(self._load_tail_connection, calculate=True).transform_point(x, y)
-            adapter.connect(self.handles()[0], x, y)
+            adapter.connect(h, x, y)
             del self._load_tail_connection
         LineItem.postload(self)
 

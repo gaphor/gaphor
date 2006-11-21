@@ -188,14 +188,14 @@ class StorageTestCase(unittest.TestCase):
         assert aa.handles()[1].pos == (50, 60), aa.handles()[1].pos
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
-        print d1, d1.subject
+        #print d1, d1.subject
 
     def test_connection(self):
         """
         Test connection loading of an association and two classes.
         (Should count for all line-like objects alike if this works).
         """
-        filename = '%s.gaphor' % __module__
+        filename = '%s_c.gaphor' % __module__
 
         diagram = UML.create(UML.Diagram)
         c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
@@ -235,10 +235,10 @@ class StorageTestCase(unittest.TestCase):
         storage.load(filename)
 
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
-        d = UML.select(lambda e: e.isKindOf(UML.Diagram)).next()
-        assert len(d.canvas.select(lambda i: isinstance(i, items.AssociationItem))) == 1
-        a = d.canvas.select(lambda i: isinstance(i, items.AssociationItem))[0]
-        print a.head.connected_to, a.tail.connected_to
+        d = UML.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
+        a = d.canvas.select(lambda e: isinstance(e, items.AssociationItem))[0]
+        assert a.head.connected_to
+        assert a.tail.connected_to
         assert not a.head.connected_to is a.tail.connected_to
 
 

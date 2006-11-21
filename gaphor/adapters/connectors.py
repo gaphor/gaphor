@@ -106,8 +106,12 @@ class SimpleConnect(object):
 class CommentLineConnect(SimpleConnect):
     """Connect a comment line to a comment item.
     Connect Comment.annotatedElement to any element
+    
+    TODO: adapt both ElementItem and DiagramLine
+    use component.provideAdapter?
     """
     component.adapts(items.ElementItem, items.CommentLineItem)
+    component.adapts(items.DiagramLine, items.CommentLineItem)
 
     def glue(self, handle, x, y):
         """In addition to the normal check, both line ends may not be connected

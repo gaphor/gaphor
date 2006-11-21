@@ -78,11 +78,9 @@ class DiagramItem(Presentation, Element):
 
     def load(self, name, value):
         if name == 'subject':
-            print self, 'loading subject', value
             type(self).subject.load(self, value)
-            print self, 'subject =', self.subject
         else:
-            log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
+            #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
             try:
                 setattr(self, name.replace('-', '_'), eval(value))
             except:
