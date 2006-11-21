@@ -101,24 +101,12 @@ class DiagramItem(Presentation, Element):
         for name in names:
             self.save_property(save_func, name)
 
-#    def set_subject(self, subject=None):
-#        """Set the subject. In addition, if there are no more presentations
-#        on the subject, the subject is unlink()'ed.
-#        Note that this function is different from setting the subject property
-#        directly!
-#        """
-#        #log.debug('set_subject %s %s' % (self.subject, subject))
-#        old = self.subject
-#
-#        # remove the subject if we have one
-#        if self.subject:
-#            del self.subject
-#
-#        if old and len(old.presentation) == 0:
-#            #log.debug('diagramitem.unlink: No more presentations: unlinking')
-#            old.unlink()
-#         
-#        self.subject = subject
+    def unlink(self):
+        print 'DiagramItem.unlink', self, self.canvas
+        if self.canvas:
+            self.canvas.remove(self)
+        self.subject = None
+        super(DiagramItem, self).unlink()
 
     def get_popup_menu(self):
         """In the popup menu a submenu is created with Stereotypes than can be

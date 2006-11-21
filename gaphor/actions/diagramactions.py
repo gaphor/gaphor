@@ -206,6 +206,9 @@ class DeleteAction(Action):
             try:
                 items = view.selected_items
                 for i in items:
+                    s = i.subject
+                    if s and len(s.presentation) == 1:
+                        s.unlink()
                     i.unlink()
             finally:
                 get_undo_manager().commit_transaction()
@@ -222,7 +225,7 @@ class DeleteAction(Action):
 
     def is_last_view(self, item):
         ''' Check if the current view is the last view to its object '''
-        if item.subject and len(item.subject.presentation)==1:
+        if item.subject and len(item.subject.presentation) == 1:
             return True
         return False
 
@@ -238,7 +241,7 @@ class DeleteAction(Action):
         dialog.set_transient_for(self._window.window)
         value = dialog.run()
         dialog.destroy()
-        if value==gtk.RESPONSE_YES:
+        if value == gtk.RESPONSE_YES:
             return True
         return False
 

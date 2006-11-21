@@ -1,3 +1,10 @@
+2006-11-20  arjan <arjan at yirdis dot nl>
+
+        * gaphor/storage.py: loading/saving works
+        * gaphor/adapters/connector.py: added connector for
+          commentline-diagramline.
+        * gaphor/diaram/diagramitem.py: made delete operation work.
+
 2006-11-14  arjan <arjan at yirdis dot nl>
 
         * setup.py: incremented version to 0.9.0

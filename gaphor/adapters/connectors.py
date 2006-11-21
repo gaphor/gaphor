@@ -84,7 +84,7 @@ class AbstractConnect(object):
         Disconnect() takes care of disconnecting the handle from the
         element it's attached to, by removing the constraints.
         """
-        solver = self.element.canvas.solver
+        solver = self.line.canvas.solver
         try:
             solver.remove_constraint(handle._connect_constraint)
         except AttributeError:
@@ -152,7 +152,7 @@ class LineConnect(AbstractConnect):
         Return the segment and  point on the element (DiagramLine)
         closest to (x, y).
         """
-        h = self.line.handles()
+        h = self.element.handles()
         pos = (x, y)
         min_d = None
         segment = -1
@@ -206,7 +206,6 @@ class CommentLineElementConnect(ElementConnect):
         element = self.element
         connected_to = opposite.connected_to
         if connected_to is element:
-            #print 'item identical', connected_to, element
             return None
 
         # Same goes for subjects:

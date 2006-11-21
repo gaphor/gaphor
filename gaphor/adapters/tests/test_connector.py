@@ -81,13 +81,23 @@ class ConnectorTestCase(unittest.TestCase):
         assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
         assert not actor2.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
 
+
     def test_commentline_association(self):
         """
         Test CommentLineItem with AssociationItem.
+
+        # TODO: check behaviour if:
+          1. comment line is connected to association + comment and after that
+             association is connected to two classes.
+             -> association should be connected to comment.annotatedElement
+          2. association is disconnected while a comment is connected:
+             -> association should be removed from comment.annotatedElement
         """
         diagram = UML.create(UML.Diagram)
         comment = diagram.create(items.CommentItem, subject=UML.create(UML.Comment))
         line = diagram.create(items.CommentLineItem)
+        line.head.pos = 100, 100
+        line.tail.pos = 100, 100
         c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
         c2 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
         assoc = diagram.create(items.AssociationItem)
@@ -110,6 +120,8 @@ class ConnectorTestCase(unittest.TestCase):
         assert adapter
         assert type(adapter) is gaphor.adapters.connectors.CommentLineLineConnect
         handle = line.head
+        pos = adapter.glue(handle, handle.x, handle.y)
+        assert pos == (0, 10), pos
         adapter.connect(handle, handle.x, handle.y)
 
         assert handle.connected_to is assoc
