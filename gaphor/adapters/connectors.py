@@ -20,7 +20,8 @@ class SimpleConnect(object):
         self.line = line
 
     def side(self, handle_pos, glued):
-        """Determine the side on which the handle is connecting.
+        """
+        Determine the side on which the handle is connecting.
         This is done by determining the proximity to the nearest edge.
         """
         hx, hy = handle_pos
@@ -37,7 +38,8 @@ class SimpleConnect(object):
         return side
 
     def glue(self, handle, x, y):
-        """Return the point the handle could connect to. None if no connection
+        """
+        Return the point the handle could connect to. None if no connection
         is allowed.
         """
         h = self.element.handles()
@@ -45,7 +47,8 @@ class SimpleConnect(object):
         return geometry.point_on_rectangle(bounds, (x, y), border=True)
 
     def connect(self, handle, x, y):
-        """Connect to an element. Note that at this point the line may
+        """
+        Connect to an element. Note that at this point the line may
         be connected to some other, or the same element by means of the
         handle.connected_to property. Also the connection at UML level
         still exists.
@@ -85,7 +88,8 @@ class SimpleConnect(object):
         return True
 
     def disconnect_constraints(self, handle):
-        """Disconnect() takes care of disconnecting the handle from the
+        """
+        Disconnect() takes care of disconnecting the handle from the
         element it's attached to, by removing the constraints.
         """
         solver = self.element.canvas.solver
@@ -96,7 +100,8 @@ class SimpleConnect(object):
         handle._connect_constraint = None
 
     def disconnect(self, handle):
-        """Do a full disconnect, also disconnect at UML model level.
+        """
+        Do a full disconnect, also disconnect at UML model level.
         Subclasses should disconnect model-level connections.
         """
         self.disconnect_constraints(handle)
@@ -104,17 +109,18 @@ class SimpleConnect(object):
 
 
 class CommentLineConnect(SimpleConnect):
-    """Connect a comment line to a comment item.
+    """
+    Connect a comment line to a comment item.
     Connect Comment.annotatedElement to any element
     
     TODO: adapt both ElementItem and DiagramLine
     use component.provideAdapter?
     """
     component.adapts(items.ElementItem, items.CommentLineItem)
-    component.adapts(items.DiagramLine, items.CommentLineItem)
 
     def glue(self, handle, x, y):
-        """In addition to the normal check, both line ends may not be connected
+        """
+        In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
         One of the ends should be connected to a UML.Comment element.
         """
@@ -162,7 +168,8 @@ component.provideAdapter(CommentLineConnect)
 
 
 class RelationshipConnect(SimpleConnect):
-    """Base class for relationship connections, such as Association,
+    """
+    Base class for relationship connections, such as Association,
     dependencies and implementations.
 
     This class introduces a new method: relationship() which is used to
@@ -171,7 +178,8 @@ class RelationshipConnect(SimpleConnect):
     """
 
     def relationship(self, required_type, head, tail):
-        """ Find an existing relationship in the model that meets the
+        """
+        Find an existing relationship in the model that meets the
         required type and is connected to the same model element the head
         and tail of the line are conncted to.
 
@@ -223,7 +231,8 @@ class RelationshipConnect(SimpleConnect):
         return None
 
     def relationship_or_new(self, type, head, tail):
-        """Like relation(), but create a new instance of none was found.
+        """
+        Like relation(), but create a new instance of none was found.
         """
         relation = self.relationship(type, head, tail)
         if not relation:
@@ -252,7 +261,8 @@ class RelationshipConnect(SimpleConnect):
         return super(RelationshipConnect, self).glue(handle, x, y)
 
     def disconnect(self, handle):
-        """Disconnect model element.
+        """
+        Disconnect model element.
         """
         opposite = self.line.opposite(handle)
         if handle.connected_to and opposite.connected_to:
@@ -265,12 +275,14 @@ class RelationshipConnect(SimpleConnect):
 
 
 class DependencyConnect(RelationshipConnect):
-    """Connect two NamedItem elements using a Dependency
+    """
+    Connect two NamedItem elements using a Dependency
     """
     component.adapts(items.NamedItem, items.DependencyItem)
 
     def glue(self, handle, x, y):
-        """In addition to the normal check, both line ends may not be connected
+        """
+        In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
         """
         opposite = self.line.opposite(handle)
@@ -308,12 +320,14 @@ component.provideAdapter(DependencyConnect)
 
 
 class ImplementationConnect(RelationshipConnect):
-    """Connect Interface and a BehavioredClassifier using an Implementation
+    """
+    Connect Interface and a BehavioredClassifier using an Implementation
     """
     component.adapts(items.NamedItem, items.ImplementationItem)
 
     def glue(self, handle, x, y):
-        """In addition to the normal check, both line ends may not be connected
+        """
+        In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
         """
         opposite = self.line.opposite(handle)
@@ -347,7 +361,8 @@ component.provideAdapter(ImplementationConnect)
 
 
 class GeneralizationConnect(RelationshipConnect):
-    """Connect Classifiers with a Generalization relationship.
+    """
+    Connect Classifiers with a Generalization relationship.
     """
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
@@ -378,12 +393,14 @@ component.provideAdapter(GeneralizationConnect)
 
 
 class IncludeConnect(RelationshipConnect):
-    """Connect Usecases with a Include relationship.
+    """
+    Connect Usecases with a Include relationship.
     """
     component.adapts(items.UseCaseItem, items.IncludeItem)
 
     def glue(self, handle, x, y):
-        """In addition to the normal check, both line ends may not be connected
+        """
+        In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
         """
         element = self.element
@@ -407,12 +424,14 @@ component.provideAdapter(IncludeConnect)
 
 
 class ExtendConnect(RelationshipConnect):
-    """Connect Usecases with a Extend relationship.
+    """
+    Connect Usecases with a Extend relationship.
     """
     component.adapts(items.UseCaseItem, items.ExtendItem)
 
     def glue(self, handle, x, y):
-        """In addition to the normal check, both line ends may not be connected
+        """
+        In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
         """
         element = self.element
@@ -436,12 +455,14 @@ component.provideAdapter(ExtendConnect)
 
 
 class ExtensionConnect(RelationshipConnect):
-    """Connect Class and a Stereotype using an Extension
+    """
+    Connect Class and a Stereotype using an Extension
     """
     component.adapts(items.ClassifierItem, items.ExtensionItem)
 
     def glue(self, handle, x, y):
-        """In addition to the normal check, both line ends may not be connected
+        """
+        In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
         """
         opposite = self.line.opposite(handle)
@@ -520,7 +541,8 @@ class ExtensionConnect(RelationshipConnect):
                 line.subject = relation
 
     def disconnect(self, handle):
-        """Disconnect model element.
+        """
+        Disconnect model element.
         Disconnect property (memberEnd) too, in case of end of life for
         Extension
         """
@@ -540,12 +562,14 @@ component.provideAdapter(ExtensionConnect)
 
 
 class AssociationConnect(RelationshipConnect):
-    """Connect Class and a Stereotype using an Extension
+    """
+    Connect Class and a Stereotype using an Extension
     """
     component.adapts(items.ClassifierItem, items.AssociationItem)
 
     def glue(self, handle, x, y):
-        """In addition to the normal check, both line ends may not be connected
+        """
+        In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
         """
         opposite = self.line.opposite(handle)
@@ -621,7 +645,8 @@ class AssociationConnect(RelationshipConnect):
                         line.tail_end.subject = tail_end
 
     def disconnect(self, handle):
-        """Disconnect model element.
+        """
+        Disconnect model element.
         Disconnect property (memberEnd) too, in case of end of life for
         Extension
         """
