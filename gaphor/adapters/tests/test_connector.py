@@ -18,8 +18,9 @@ class ConnectorTestCase(unittest.TestCase):
     def tearDown(self):
         UML.flush()
 
-    def test_commentline(self):
-        """Test CommentLineItem connecting to comment and Actor items.
+    def test_commentline_element(self):
+        """
+	Test CommentLineItem connecting to comment and Actor items.
         """
         diagram = UML.create(UML.Diagram)
         comment = diagram.create(items.CommentItem, subject=UML.create(UML.Comment))
@@ -79,6 +80,71 @@ class ConnectorTestCase(unittest.TestCase):
         assert handle._connect_constraint is None
         assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
         assert not actor2.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
+
+    def test_commentline_association(self):
+        """
+        Test CommentLineItem with AssociationItem.
+        """
+        diagram = UML.create(UML.Diagram)
+        comment = diagram.create(items.CommentItem, subject=UML.create(UML.Comment))
+        line = diagram.create(items.CommentLineItem)
+        c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        c2 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        assoc = diagram.create(items.AssociationItem)
+
+        adapter = component.queryMultiAdapter((c1, assoc), IConnect)
+        handle = assoc.head
+        adapter.connect(handle, handle.x, handle.y)
+
+        adapter = component.queryMultiAdapter((c2, assoc), IConnect)
+        handle = assoc.tail
+        adapter.connect(handle, handle.x, handle.y)
+
+        assert assoc.head.connected_to is c1
+        assert assoc.tail.connected_to is c2
+        assert assoc.subject
+
+        # Connect the association item to the head of the line:
+
+        adapter = component.queryMultiAdapter((assoc, line), IConnect)
+        assert adapter
+        assert type(adapter) is gaphor.adapters.connectors.CommentLineLineConnect
+        handle = line.head
+        adapter.connect(handle, handle.x, handle.y)
+
+        assert handle.connected_to is assoc
+        assert handle._connect_constraint is not None
+        assert not comment.subject.annotatedElement
+
+        # Connecting two ends of the line to the same item is not allowed:
+
+        handle = line.tail
+        adapter.connect(handle, handle.x, handle.y)
+
+        assert handle.connected_to is None
+        assert not hasattr(handle,'_connect_constraint')
+        assert not comment.subject.annotatedElement, comment.subject.annotatedElement
+
+        # now connect the comment
+
+        adapter = component.queryMultiAdapter((comment, line), IConnect)
+
+        handle = line.tail
+        adapter.connect(handle, handle.x, handle.y)
+
+        assert handle.connected_to is comment
+        assert handle._connect_constraint is not None
+        assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
+        assert assoc.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
+
+        # Disconnect actor:
+
+        adapter.disconnect(handle)
+
+        assert handle.connected_to is None, handle.connected_to
+        assert handle._connect_constraint is None
+        assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
+        assert not assoc.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
 
 
     def test_dependency(self):
@@ -297,4 +363,4 @@ class ConnectorTestCase(unittest.TestCase):
 
 
 
-#vi:sw=4:et:ai
+# vim:sw=4:et:ai

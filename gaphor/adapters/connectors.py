@@ -12,13 +12,91 @@ from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
 
 
-class SimpleConnect(object):
+class AbstractConnect(object):
+    """
+    Connection code, used by both ElementConnect and LineConnect.
+    """
     interface.implements(IConnect)
 
     def __init__(self, element, line):
         self.element = element
         self.line = line
 
+    def glue(self, handle, x, y):
+        """
+        Return the point the handle could connect to. None if no connection
+        is allowed.
+        """
+        raise NotImplemented, 'Implement glue() in the subclass'
+
+    def connect(self, handle, x, y):
+        """
+        Connect to an element. Note that at this point the line may
+        be connected to some other, or the same element by means of the
+        handle.connected_to property. Also the connection at UML level
+        still exists.
+        
+        Returns True if a connection is established.
+        """
+        element = self.element
+        canvas = element.canvas
+        solver = canvas.solver
+
+        pos = self.glue(handle, x, y)
+
+        # Disconnect old model connection
+        if handle.connected_to and handle.connected_to is not self.element:
+            handle.disconnect()
+ 
+        # Stop here if no new connection should be established
+        if not pos:
+            return False
+        
+        self.connect_constraint(handle, pos[0], pos[1])
+
+        # Set disconnect handler in the adapter, so it will also wotk if
+        # connections are created programmatically.
+        def _disconnect():
+            self.disconnect(handle)
+            handle.disconnect = lambda: 0
+        handle.disconnect = _disconnect
+
+        return True
+
+    def disconnect(self, handle):
+        """
+        Do a full disconnect, also disconnect at UML model level.
+        Subclasses should disconnect model-level connections.
+        """
+        self.disconnect_constraints(handle)
+        handle.connected_to = None
+
+    def connect_constraint(self, handle, x, y):
+        """
+        Create the actual constraint. The handle should be positioned before
+        this method is called.
+        x, y is the position the handle should have on the line.
+        """
+        raise NotImplemented, 'Implement connect_constraint() in a subclass'
+
+    def disconnect_constraints(self, handle):
+        """
+        Disconnect() takes care of disconnecting the handle from the
+        element it's attached to, by removing the constraints.
+        """
+        solver = self.element.canvas.solver
+        try:
+            solver.remove_constraint(handle._connect_constraint)
+        except AttributeError:
+            pass # No _connect_constraint property yet
+        handle._connect_constraint = None
+
+
+class ElementConnect(AbstractConnect):
+    """
+    Base class for connecting a line to an ElementItem class.
+    """
+    
     def side(self, handle_pos, glued):
         """
         Determine the side on which the handle is connecting.
@@ -46,69 +124,72 @@ class SimpleConnect(object):
         bounds = (h[NW].pos + h[SE].pos)
         return geometry.point_on_rectangle(bounds, (x, y), border=True)
 
-    def connect(self, handle, x, y):
+    def connect_constraint(self, handle, x, y):
         """
-        Connect to an element. Note that at this point the line may
-        be connected to some other, or the same element by means of the
-        handle.connected_to property. Also the connection at UML level
-        still exists.
-        
-        Returns True if a connection is established.
+        Create the actual constraint. The handle should be positioned before
+        this method is called.
         """
         element = self.element
         canvas = element.canvas
         solver = canvas.solver
-        pos = self.glue(handle, x, y)
 
-        # Disconnect old model connection
-        if handle.connected_to and handle.connected_to is not self.element:
-            #adapter = component.queryMultiAdapter((handle.connected_to, self.line), IConnect)
-            #adapter.disconnect(handle)
-            #print 'disconnect is', handle.disconnect
-            handle.disconnect()
- 
-        # Stop here if no new connection should be established
-        if not pos:
-            return False
-
-        s = self.side(pos, element)
+        s = self.side((x, y), element)
         handle._connect_constraint = \
             constraint.LineConstraint(canvas, element, element.handles()[s],
                                 element.handles()[(s+1)%4], self.line, handle)
         solver.add_constraint(handle._connect_constraint)
         handle.connected_to = element
-        
-        # Set disconnect handler in the adapter, so it will also wotk if
-        # connections are created programmatically.
-        def _disconnect():
-            self.disconnect(handle)
-            handle.disconnect = lambda: 0
-        handle.disconnect = _disconnect
 
-        return True
 
-    def disconnect_constraints(self, handle):
+class LineConnect(AbstractConnect):
+    """
+    Base class for connecting two lines to each other.
+    The line that is conencted to is called 'element', as in ElementConnect.
+    """
+
+    def _glue(self, handle, x, y):
         """
-        Disconnect() takes care of disconnecting the handle from the
-        element it's attached to, by removing the constraints.
+        Return the point on the element (DiagramLine) closest to (x, y)
         """
-        solver = self.element.canvas.solver
-        try:
-            solver.remove_constraint(handle._connect_constraint)
-        except AttributeError:
-            pass # No _connect_constraint property yet
-        handle._connect_constraint = None
+        h = self.line.handles()
+        pos = (x, y)
+        h0 = h[0]
+        min_d = None
+        segment = -1
+        min_p = None
+        dlp = geometry.distance_line_point
+        for s, h1 in enumerate(h[1:]):
+            d, p = dlp(h0.pos, h1.pos, pos)
+            if not s or d < min_d:
+                min_d = d
+                segment = s
+                min_p = p
+        return s, min_p
 
-    def disconnect(self, handle):
+    def glue(self, handle, x, y):
         """
-        Do a full disconnect, also disconnect at UML model level.
-        Subclasses should disconnect model-level connections.
+        Return the point on the element (DiagramLine) closest to (x, y)
         """
-        self.disconnect_constraints(handle)
-        handle.connected_to = None
+        return self._glue(handle, x, y)[1]
+
+    def connect_constraint(self, handle, x, y):
+        """
+        Create the actual constraint. The handle should be positioned before
+        this method is called.
+        """
+        element = self.element
+        canvas = element.canvas
+        solver = canvas.solver
+
+        s, pos = self._glue(handle, x, y)
+        handle._connect_constraint = \
+            constraint.LineConstraint(canvas, element, element.handles()[s],
+                                element.handles()[s+1], self.line, handle)
+        solver.add_constraint(handle._connect_constraint)
+        handle.connected_to = element
 
 
-class CommentLineConnect(SimpleConnect):
+class CommentLineElementConnect(ElementConnect):
     """
     Connect a comment line to a comment item.
     Connect Comment.annotatedElement to any element
@@ -144,10 +225,10 @@ class CommentLineConnect(SimpleConnect):
                  (not isinstance(connected_to, items.CommentItem) and not isinstance(self.element, items.CommentItem))):
             return None
 
-        return super(CommentLineConnect, self).glue(handle, x, y)
+        return super(CommentLineElementConnect, self).glue(handle, x, y)
 
     def connect(self, handle, x, y):
-        if super(CommentLineConnect, self).connect(handle, x, y):
+        if super(CommentLineElementConnect, self).connect(handle, x, y):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -162,12 +243,70 @@ class CommentLineConnect(SimpleConnect):
                 del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
             else:
                 del handle.connected_to.subject.annotatedElement[opposite.connected_to.subject]
-        super(CommentLineConnect, self).disconnect(handle)
+        super(CommentLineElementConnect, self).disconnect(handle)
 
-component.provideAdapter(CommentLineConnect)
+component.provideAdapter(CommentLineElementConnect)
+
+class CommentLineLineConnect(LineConnect):
+    """
+    Connect a comment line to a comment item.
+    Connect Comment.annotatedElement to any element
+    
+    TODO: adapt both ElementItem and DiagramLine
+    use component.provideAdapter?
+    """
+    component.adapts(items.DiagramLine, items.CommentLineItem)
+
+    def glue(self, handle, x, y):
+        """
+        In addition to the normal check, both line ends may not be connected
+        to the same element. Same goes for subjects.
+        One of the ends should be connected to a UML.Comment element.
+        """
+        opposite = self.line.opposite(handle)
+        element = self.element
+        connected_to = opposite.connected_to
+        if connected_to is element:
+            #print 'item identical', connected_to, element
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            #print 'Subjects none or match:', connected_to.subject, element.subject
+            return None
+
+        # One end should be connected to a CommentItem:
+        if connected_to and \
+                ((isinstance(connected_to, items.CommentItem) and isinstance(self.element, items.CommentItem)) or \
+                 (not isinstance(connected_to, items.CommentItem) and not isinstance(self.element, items.CommentItem))):
+            return None
+
+        return super(CommentLineLineConnect, self).glue(handle, x, y)
+
+    def connect(self, handle, x, y):
+        if super(CommentLineLineConnect, self).connect(handle, x, y):
+            opposite = self.line.opposite(handle)
+            if opposite.connected_to:
+                if isinstance(opposite.connected_to.subject, UML.Comment):
+                    opposite.connected_to.subject.annotatedElement = self.element.subject
+                else:
+                    self.element.subject.annotatedElement = opposite.connected_to.subject
+
+    def disconnect(self, handle):
+        opposite = self.line.opposite(handle)
+        if handle.connected_to and opposite.connected_to:
+            if isinstance(opposite.connected_to.subject, UML.Comment):
+                del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
+            else:
+                del handle.connected_to.subject.annotatedElement[opposite.connected_to.subject]
+        super(CommentLineLineConnect, self).disconnect(handle)
+
+component.provideAdapter(CommentLineLineConnect)
 
 
-class RelationshipConnect(SimpleConnect):
+class RelationshipConnect(ElementConnect):
     """
     Base class for relationship connections, such as Association,
     dependencies and implementations.

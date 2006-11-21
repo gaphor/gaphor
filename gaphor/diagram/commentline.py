@@ -15,7 +15,6 @@ class CommentLineItem(DiagramLine):
     def __init__(self, id=None):
         #diacanvas.CanvasLine.__init__(self)
         DiagramLine.__init__(self, id)
-        self.__notify_id = None
 
     #id = property(lambda self: self._id, doc='Id')
 
