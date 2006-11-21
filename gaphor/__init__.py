@@ -10,7 +10,6 @@ __all__ = [ 'main', 'resource', 'GaphorError' ]
 #pygtk.require('2.0')
 #del pygtk
 
-import misc.singleton
 import misc.logger
 
 import version

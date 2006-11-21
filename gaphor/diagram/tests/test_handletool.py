@@ -205,3 +205,4 @@ class HandleToolTestCase(unittest.TestCase):
         assert len(comment.subject.annotatedElement) == 0
 
 
+# vim:sw=4:et:ai

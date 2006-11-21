@@ -201,8 +201,7 @@ class StorageTestCase(unittest.TestCase):
         c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
         c2 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
         c2.matrix.translate(200, 200)
-        c2.request_update()
-        diagram.canvas.update_now()
+        diagram.canvas.update_matrix(c2)
         assert tuple(diagram.canvas.get_matrix_i2w(c2)) == (1, 0, 0, 1, 200, 200)
 
         a = diagram.create(items.AssociationItem)

@@ -10,7 +10,7 @@ from gaphas import constraint
 from gaphor import UML
 from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
-
+from gaphor.misc.ipair import ipair
 
 class AbstractConnect(object):
     """
@@ -149,16 +149,16 @@ class LineConnect(AbstractConnect):
 
     def _glue(self, handle, x, y):
         """
-        Return the point on the element (DiagramLine) closest to (x, y)
+        Return the segment and  point on the element (DiagramLine)
+        closest to (x, y).
         """
         h = self.line.handles()
         pos = (x, y)
-        h0 = h[0]
         min_d = None
         segment = -1
         min_p = None
         dlp = geometry.distance_line_point
-        for s, h1 in enumerate(h[1:]):
+        for s, (h0, h1) in enumerate(ipair(h)):
             d, p = dlp(h0.pos, h1.pos, pos)
             if not s or d < min_d:
                 min_d = d
@@ -193,9 +193,6 @@ class CommentLineElementConnect(ElementConnect):
     """
     Connect a comment line to a comment item.
     Connect Comment.annotatedElement to any element
-    
-    TODO: adapt both ElementItem and DiagramLine
-    use component.provideAdapter?
     """
     component.adapts(items.ElementItem, items.CommentLineItem)
 
@@ -247,13 +244,11 @@ class CommentLineElementConnect(ElementConnect):
 
 component.provideAdapter(CommentLineElementConnect)
 
+
 class CommentLineLineConnect(LineConnect):
     """
     Connect a comment line to a comment item.
     Connect Comment.annotatedElement to any element
-    
-    TODO: adapt both ElementItem and DiagramLine
-    use component.provideAdapter?
     """
     component.adapts(items.DiagramLine, items.CommentLineItem)
 
@@ -267,14 +262,12 @@ class CommentLineLineConnect(LineConnect):
         element = self.element
         connected_to = opposite.connected_to
         if connected_to is element:
-            #print 'item identical', connected_to, element
             return None
 
         # Same goes for subjects:
         if connected_to and \
                 (not (connected_to.subject or element.subject)) \
                  and connected_to.subject is element.subject:
-            #print 'Subjects none or match:', connected_to.subject, element.subject
             return None
 
         # One end should be connected to a CommentItem:
