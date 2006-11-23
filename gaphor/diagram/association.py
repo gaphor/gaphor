@@ -23,7 +23,7 @@ from gaphas.geometry import distance_rectangle_point, distance_line_point
 from gaphor import resource, UML
 from gaphor.undomanager import undoable
 #from gaphor.diagram import Relationship
-from gaphor.diagram.diagramitem import DiagramItem
+from gaphor.diagram.diagramitem import SubjectSupport
 from gaphor.diagram.diagramline import DiagramLine
 
 #class AssociationRelationship(Relationship):
@@ -73,18 +73,22 @@ class AssociationItem(DiagramLine):
         'AssociationShowDirection',
         'AssociationInvertDirection',
         'separator',
-#        'Side _A', (
-#            'Head_isNavigable',
-#            'separator',
-#            'Head_AggregationNone',
-#            'Head_AggregationShared',
-#            'Head_AggregationComposite'),
-#        'Side _B', (
-#            'Tail_isNavigable',
-#            'separator',
-#            'Tail_AggregationNone',
-#            'Tail_AggregationShared',
-#            'Tail_AggregationComposite')
+        'Head', (
+            'Head_unknownNavigation',
+            'Head_isNotNavigable',
+            'Head_isNavigable',
+            'separator',
+            'Head_AggregationNone',
+            'Head_AggregationShared',
+            'Head_AggregationComposite'),
+        'Tail', (
+            'Tail_unknownNavigation',
+            'Tail_isNotNavigable',
+            'Tail_isNavigable',
+            'separator',
+            'Tail_AggregationNone',
+            'Tail_AggregationShared',
+            'Tail_AggregationComposite'),
     )
 
     def __init__(self, id=None):
@@ -139,32 +143,6 @@ class AssociationItem(DiagramLine):
         DiagramLine.postload(self)
         self._head_end.postload()
         self._tail_end.postload()
-
-#    def do_set_property(self, pspec, value):
-#        if pspec.name == 'head-subject':
-#            self._head_end.subject = value
-#        elif pspec.name == 'tail-subject':
-#            self._tail_end.subject = value
-#        elif pspec.name == 'show-direction':
-#            self.preserve_property('show-direction')
-#            self._show_direction = value
-#            self.request_update()
-#        else:
-#            DiagramLine.do_set_property(self, pspec, value)
-
-#    def do_get_property(self, pspec):
-#        if pspec.name == 'head':
-#            return self._head_end
-#        if pspec.name == 'tail':
-#            return self._tail_end
-#        elif pspec.name == 'head-subject':
-#            return self._head_end.subject
-#        elif pspec.name == 'tail-subject':
-#            return self._tail_end.subject
-#        elif pspec.name == 'show-direction':
-#            return self._show_direction
-#        else:
-#            return DiagramLine.do_get_property(self, pspec)
 
     head_end = property(lambda self: self._head_end)
 
@@ -223,7 +201,9 @@ class AssociationItem(DiagramLine):
 
 
     def update(self, context):
-        """Update the shapes and sub-items of the association."""
+        """
+        Update the shapes and sub-items of the association.
+        """
 
         handles = self.handles()
 
@@ -239,7 +219,7 @@ class AssociationItem(DiagramLine):
                 self.draw_head = self.draw_head_shared
             elif self._head_end.get_navigability():
                 self.draw_head = self.draw_head_navigable
-            if self._head_end.get_navigability() == False:
+            elif self._head_end.get_navigability() == False:
                 self.draw_head = self.draw_head_none
             else:
                 self.draw_head = self.draw_head_undefined
@@ -249,10 +229,9 @@ class AssociationItem(DiagramLine):
             elif head_subject.aggregation == intern('shared'):
                 self.draw_tail = self.draw_tail_shared
             elif self._tail_end.get_navigability():
-                # This side is navigable:
-                self.draw_tail = draw_tail_navigable
+                self.draw_tail = self.draw_tail_navigable
             elif self._tail_end.get_navigability() == False:
-                self.draw_tail = draw_tail_none
+                self.draw_tail = self.draw_tail_none
             else:
                 self.draw_tail = self.draw_tail_undefined
 
@@ -304,7 +283,7 @@ class AssociationItem(DiagramLine):
         """
         cr = context.cairo
         cr.line_to(0, 0)
-        cr.move_to(-14, -4)
+        cr.move_to(6, -4)
         cr.rel_line_to(8, 8)
         cr.rel_move_to(0, -8)
         cr.rel_line_to(-8, 8)
@@ -320,7 +299,8 @@ class AssociationItem(DiagramLine):
         """Draw a closed diamond on the line end.
         """
         self.draw_tail_shared(context)
-        context.cairo.fill_preserve()
+        cr = context.cairo
+        cr.fill_preserve()
         cr.stroke()
 
     def draw_head_shared(self, context):
@@ -337,12 +317,12 @@ class AssociationItem(DiagramLine):
         """Draw an open diamond on the line end.
         """
         cr = context.cairo
-        cr.line_to(-20, 0)
-        cr.stroke()
-        cr.line_to(-10, -6)
+        cr.line_to(20, 0)
+        #cr.stroke()
+        cr.line_to(10, -6)
         cr.line_to(0, 0)
-        cr.line_to(-10, 6)
-        cr.line_to(-20, 0)
+        cr.line_to(10, 6)
+        cr.line_to(20, 0)
 
     def draw_head_navigable(self, context):
         """Draw a normal arrow.
@@ -359,9 +339,9 @@ class AssociationItem(DiagramLine):
         """
         cr = context.cairo
         cr.line_to(0, 0)
-        cr.move_to(-15, -6)
+        cr.move_to(15, -6)
         cr.line_to(0, 0)
-        cr.line_to(-15, 6)
+        cr.line_to(15, 6)
         cr.stroke()
 
     def draw_head_undefined(self, context):
@@ -396,8 +376,9 @@ class AssociationItem(DiagramLine):
             cr.show_text(self.subject.name)
 
 
-class AssociationEnd(DiagramItem):
-    """An association end represents one end of an association. An association
+class AssociationEnd(SubjectSupport):
+    """
+    An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and
     one for the multiplicity (and maybe one for tagged values in the future).
 
@@ -408,11 +389,6 @@ class AssociationEnd(DiagramItem):
     - add on_point() and let it return min(distance(_name), distance(_mult)) or
       the first 20-30 units of the line, for association end popup menu.
     """
-#    __gproperties__ = {
-#        'name': (gobject.TYPE_STRING, 'name', '', '', gobject.PARAM_READWRITE),
-#        'mult': (gobject.TYPE_STRING, 'mult', '', '', gobject.PARAM_READWRITE)
-#    }
-#    __gproperties__.update(DiagramItem.__gproperties__)
 
     head_popup_menu = (
         'Head_unknownNavigation',
@@ -435,7 +411,7 @@ class AssociationEnd(DiagramItem):
     )
 
     def __init__(self, owner, id=None, end=None):
-        DiagramItem.__init__(self, id)
+        SubjectSupport.__init__(self)
         self._owner = owner
         self._end = end
         
@@ -446,10 +422,6 @@ class AssociationEnd(DiagramItem):
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
         self._point1 = self._point2 = (0, 0)
-
-    def postload(self):
-        DiagramItem.postload(self)
-        #self.set_text()
 
     def get_popup_menu(self):
         if self.subject:
@@ -477,7 +449,6 @@ class AssociationEnd(DiagramItem):
                 self._name = n
                 self._mult = m
                 self.request_update()
-
 
     def get_navigability(self):
         """
@@ -659,7 +630,7 @@ class AssociationEnd(DiagramItem):
         self._point2 = p2
 
     def on_subject_notify(self, pspec, notifiers=()):
-        DiagramItem.on_subject_notify(self, pspec,
+        SubjectSupport.on_subject_notify(self, pspec,
                         notifiers + ('aggregation', 'visibility',
                         'name', 'lowerValue.value',
                         'upperValue.value', 'taggedValue',
@@ -683,7 +654,7 @@ class AssociationEnd(DiagramItem):
         self.request_update()
 
     def on_subject_notify__upperValue_value(self, upper_value, pspec):
-        log.debug('New value for upperValue.value: %s' %  upper_value and upper_value.value)
+        #log.debug('New value for upperValue.value: %s' %  upper_value and upper_value.value)
         self.set_text()
         self.request_update()
 

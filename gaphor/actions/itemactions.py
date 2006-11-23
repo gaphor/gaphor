@@ -496,13 +496,13 @@ class NavigableAction(RadioAction):
         self._window = window
 
     def get_association_end(self):
-        return get_parent_focus_item(self._window).get_property(self.end_name)
+        return getattr(get_parent_focus_item(self._window), self.end_name)
 
     def update(self):
         try:
             item = get_parent_focus_item(self._window)
             if isinstance(item, items.AssociationItem):
-                end = item.get_property(self.end_name)
+                end = getattr(item, self.end_name)
                 if end.subject:
                     self.active = (end.get_navigability() == self.navigable)
         except NoFocusItemError:
@@ -519,7 +519,8 @@ class NavigableAction(RadioAction):
 class HeadNavigableAction(NavigableAction):
     id = 'Head_isNavigable'
     label = 'Navigable'
-    end_name = 'head'
+    end_name = 'head_end'
+    group = 'head_navigable'
     navigable = True
 
 register_action(HeadNavigableAction, 'ItemFocus')
@@ -528,7 +529,8 @@ register_action(HeadNavigableAction, 'ItemFocus')
 class HeadNotNavigableAction(NavigableAction):
     id = 'Head_isNotNavigable'
     label = 'Non-Navigable'
-    end_name = 'head'
+    end_name = 'head_end'
+    group = 'head_navigable'
     navigable = False
 
 register_action(HeadNotNavigableAction, 'ItemFocus')
@@ -537,7 +539,8 @@ register_action(HeadNotNavigableAction, 'ItemFocus')
 class HeadUnknownNavigationAction(NavigableAction):
     id = 'Head_unknownNavigation'
     label = 'Unknown'
-    end_name = 'head'
+    end_name = 'head_end'
+    group = 'head_navigable'
     navigable = None
 
 register_action(HeadUnknownNavigationAction, 'ItemFocus')
@@ -546,7 +549,8 @@ register_action(HeadUnknownNavigationAction, 'ItemFocus')
 class TailNavigableAction(NavigableAction):
     id = 'Tail_isNavigable'
     label = 'Navigable'
-    end_name = 'tail'
+    end_name = 'tail_end'
+    group = 'tail_navigable'
     navigable = True
 
 register_action(TailNavigableAction, 'ItemFocus')
@@ -555,7 +559,8 @@ register_action(TailNavigableAction, 'ItemFocus')
 class TailNotNavigableAction(NavigableAction):
     id = 'Tail_isNotNavigable'
     label = 'Non-Navigable'
-    end_name = 'tail'
+    end_name = 'tail_end'
+    group = 'tail_navigable'
     navigable = False
 
 register_action(TailNotNavigableAction, 'ItemFocus')
@@ -564,7 +569,8 @@ register_action(TailNotNavigableAction, 'ItemFocus')
 class TailUnknownNavigationAction(NavigableAction):
     id = 'Tail_unknownNavigation'
     label = 'Unknown'
-    end_name = 'tail'
+    end_name = 'tail_end'
+    group = 'tail_navigable'
     navigable = None
 
 register_action(TailUnknownNavigationAction, 'ItemFocus')
@@ -578,8 +584,8 @@ class AggregationAction(RadioAction):
     def update(self):
         try:
             item = get_parent_focus_item(self._window)
-            if isinstance(item, AssociationItem):
-                end = item.get_property(self.end_name)
+            if isinstance(item, items.AssociationItem):
+                end = getattr(item, self.end_name)
                 if end.subject:
                     self.active = (end.subject.aggregation == self.aggregation)
         except NoFocusItemError:
@@ -588,7 +594,7 @@ class AggregationAction(RadioAction):
     @undoable
     def execute(self):
         if self.active:
-            subject = get_parent_focus_item(self._window).get_property(self.end_name).subject
+            subject = getattr(get_parent_focus_item(self._window), self.end_name).subject
             assert isinstance(subject, UML.Property)
             subject.aggregation = self.aggregation
 
@@ -597,7 +603,7 @@ class HeadNoneAction(AggregationAction):
     id = 'Head_AggregationNone'
     label = 'None'
     group = 'head_aggregation'
-    end_name = 'head'
+    end_name = 'head_end'
     aggregation = 'none'
 
 register_action(HeadNoneAction, 'ItemFocus')
@@ -607,7 +613,7 @@ class HeadSharedAction(AggregationAction):
     id = 'Head_AggregationShared'
     label = 'Shared'
     group = 'head_aggregation'
-    end_name = 'head'
+    end_name = 'head_end'
     aggregation = 'shared'
 
 register_action(HeadSharedAction, 'ItemFocus')
@@ -617,7 +623,7 @@ class HeadCompositeAction(AggregationAction):
     id = 'Head_AggregationComposite'
     label = 'Composite'
     group = 'head_aggregation'
-    end_name = 'head'
+    end_name = 'head_end'
     aggregation = 'composite'
 
 register_action(HeadCompositeAction, 'ItemFocus')
@@ -627,7 +633,7 @@ class TailNoneAction(AggregationAction):
     id = 'Tail_AggregationNone'
     label = 'None'
     group = 'tail_aggregation'
-    end_name = 'tail'
+    end_name = 'tail_end'
     aggregation = 'none'
 
 register_action(TailNoneAction, 'ItemFocus')
@@ -637,7 +643,7 @@ class TailSharedAction(AggregationAction):
     id = 'Tail_AggregationShared'
     label = 'Shared'
     group = 'tail_aggregation'
-    end_name = 'tail'
+    end_name = 'tail_end'
     aggregation = 'shared'
 
 register_action(TailSharedAction, 'ItemFocus')
@@ -647,7 +653,7 @@ class TailCompositeAction(AggregationAction):
     id = 'Tail_AggregationComposite'
     label = 'Composite'
     group = 'tail_aggregation'
-    end_name = 'tail'
+    end_name = 'tail_end'
     aggregation = 'composite'
 
 register_action(TailCompositeAction, 'ItemFocus')

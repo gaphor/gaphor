@@ -145,6 +145,11 @@ class LineConnect(AbstractConnect):
     """
     Base class for connecting two lines to each other.
     The line that is conencted to is called 'element', as in ElementConnect.
+
+    Once a line has been connected at both ends, and a model element is
+    assigned to it, all items connectedt to this line (e.g. Comments)
+    receive a connect() call. This allows already connected lines to set
+    up relationships at model level too.
     """
 
     def _glue(self, handle, x, y):
@@ -280,7 +285,7 @@ class CommentLineLineConnect(LineConnect):
     def connect(self, handle, x, y):
         if super(CommentLineLineConnect, self).connect(handle, x, y):
             opposite = self.line.opposite(handle)
-            if opposite.connected_to:
+            if opposite.connected_to and self.element.subject:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
                     opposite.connected_to.subject.annotatedElement = self.element.subject
                 else:
@@ -300,7 +305,7 @@ component.provideAdapter(CommentLineLineConnect)
 
 class RelationshipConnect(ElementConnect):
     """
-    Base class for relationship connections, such as Association,
+    Base class for relationship connections, such as associations,
     dependencies and implementations.
 
     This class introduces a new method: relationship() which is used to
@@ -373,6 +378,21 @@ class RelationshipConnect(ElementConnect):
             setattr(relation, tail[0], line.tail.connected_to.subject)
         return relation
 
+    def trigger_connected_items(self, line):
+        """
+        Cause items connected to @line to reconnect, allowing them to
+        establish or destroy relationships at model level.
+        """
+        canvas = line.canvas
+        solver = canvas.solver
+
+        # First make sure coordinates match
+        solver.solve()
+        for item, handle in self.line.canvas.get_connected_items(line):
+            adapter = component.queryMultiAdapter((line, item), IConnect)
+            assert adapter
+            adapter.connect(handle, handle.x, handle.y)
+        
     def glue(self, handle, x, y):
         opposite = self.line.opposite(handle)
         line = self.line
@@ -391,6 +411,25 @@ class RelationshipConnect(ElementConnect):
 
         return super(RelationshipConnect, self).glue(handle, x, y)
 
+    def connect_subject(self):
+        """
+        Establish the relationship at model level.
+        """
+        raise NotImplemented, 'Implement connect_subject() in a subclass'
+
+    def connect(self, handle, x, y):
+        """
+        Connect the items to each other. The model level relationship
+        is created by create_subject()
+        """
+        if super(RelationshipConnect, self).connect(handle, x, y):
+            opposite = self.line.opposite(handle)
+            if opposite.connected_to:
+                self.connect_subject()
+                line = self.line
+                if line.subject:
+                    self.trigger_connected_items(line)
+
     def disconnect(self, handle):
         """
         Disconnect model element.
@@ -399,6 +438,8 @@ class RelationshipConnect(ElementConnect):
         if handle.connected_to and opposite.connected_to:
             old = self.line.subject
             del self.line.subject
+            if old:
+                self.trigger_connected_items(self.line)
             if old and len(old.presentation) == 0:
                 old.unlink()
 
@@ -427,25 +468,22 @@ class DependencyConnect(RelationshipConnect):
 
         return super(DependencyConnect, self).glue(handle, x, y)
 
-    def connect(self, handle, x, y):
+    def connect_subject(self):
         """
         TODO: cleck for existing relationships (use self.relation())
         """
-        if super(DependencyConnect, self).connect(handle, x, y):
-            dep = self.line
-            opposite = self.line.opposite(handle)
-            if opposite.connected_to:
-                if dep.auto_dependency:
-                    dep.set_dependency_type()
-                if dep.dependency_type is UML.Realization:
-                    relation = self.relationship_or_new(dep.dependency_type,
-                                        head=('realizingClassifier', None),
-                                        tail=('abstraction', 'realization'))
-                else:
-                    relation = self.relationship_or_new(dep.dependency_type,
-                                        ('supplier', 'supplierDependency'),
-                                        ('client', 'clientDependency'))
-                dep.subject = relation
+        line = self.line
+        if line.auto_dependency:
+            line.set_dependency_type()
+        if line.dependency_type is UML.Realization:
+            relation = self.relationship_or_new(line.dependency_type,
+                                head=('realizingClassifier', None),
+                                tail=('abstraction', 'realization'))
+        else:
+            relation = self.relationship_or_new(line.dependency_type,
+                                ('supplier', 'supplierDependency'),
+                                ('client', 'clientDependency'))
+        line.subject = relation
 
 component.provideAdapter(DependencyConnect)
 
@@ -478,15 +516,11 @@ class ImplementationConnect(RelationshipConnect):
 
         return super(ImplementationConnect, self).glue(handle, x, y)
 
-    def connect(self, handle, x, y):
-        if super(ImplementationConnect, self).connect(handle, x, y):
-            line = self.line
-            opposite = self.line.opposite(handle)
-            if opposite.connected_to:
-                relation = self.relationship_or_new(UML.Implementation,
-                            ('contract', None),
-                            ('implementatingClassifier', 'implementation'))
-                line.subject = relation
+    def connect_subject(self):
+        relation = self.relationship_or_new(UML.Implementation,
+                    ('contract', None),
+                    ('implementatingClassifier', 'implementation'))
+        self.line.subject = relation
 
 component.provideAdapter(ImplementationConnect)
 
@@ -510,15 +544,11 @@ class GeneralizationConnect(RelationshipConnect):
 #
 #        return super(GeneralizationConnect, self).glue(handle, x, y)
 
-    def connect(self, handle, x, y):
-        if super(GeneralizationConnect, self).connect(handle, x, y):
-            line = self.line
-            opposite = self.line.opposite(handle)
-            if opposite.connected_to:
-                relation = self.relationship_or_new(UML.Generalization,
-                            ('general', None),
-                            ('specific', 'generalization'))
-                line.subject = relation
+    def connect_subject(self):
+        relation = self.relationship_or_new(UML.Generalization,
+                    ('general', None),
+                    ('specific', 'generalization'))
+        self.line.subject = relation
 
 component.provideAdapter(GeneralizationConnect)
 
@@ -541,15 +571,11 @@ class IncludeConnect(RelationshipConnect):
 
         return super(IncludeConnect, self).glue(handle, x, y)
 
-    def connect(self, handle, x, y):
-        if super(IncludeConnect, self).connect(handle, x, y):
-            line = self.line
-            opposite = self.line.opposite(handle)
-            if opposite.connected_to:
-                relation = self.relationship_or_new(UML.Include,
-                            ('addition', None),
-                            ('includingCase', 'include'))
-                line.subject = relation
+    def connect_subject(self):
+        relation = self.relationship_or_new(UML.Include,
+                    ('addition', None),
+                    ('includingCase', 'include'))
+        line.subject = relation
 
 component.provideAdapter(IncludeConnect)
 
@@ -572,15 +598,11 @@ class ExtendConnect(RelationshipConnect):
 
         return super(ExtendConnect, self).glue(handle, x, y)
 
-    def connect(self, handle, x, y):
-        if super(ExtendConnect, self).connect(handle, x, y):
-            line = self.line
-            opposite = self.line.opposite(handle)
-            if opposite.connected_to:
-                relation = self.relationship_or_new(UML.Extend,
-                            ('extendedCase', None),
-                            ('extension', 'extend'))
-                line.subject = relation
+    def connect_subject(self):
+        relation = self.relationship_or_new(UML.Extend,
+                    ('extendedCase', None),
+                    ('extension', 'extend'))
+        line.subject = relation
 
 component.provideAdapter(ExtendConnect)
 
@@ -613,63 +635,61 @@ class ExtensionConnect(RelationshipConnect):
 
         return super(ExtensionConnect, self).glue(handle, x, y)
 
-    def connect(self, handle, x, y):
-        if super(ExtensionConnect, self).connect(handle, x, y):
-            element = self.element
-            line = self.line
-            opposite = self.line.opposite(handle)
-            if opposite.connected_to:
-                c1 = line.head.connected_to
-                c2 = line.tail.connected_to
-                if c1 and c2:
-                    head_type = c1.subject
-                    tail_type = c2.subject
+    def connect_subject(self):
+        element = self.element
+        line = self.line
 
-                    # First check if we do not already contain the right subject:
-                    if line.subject:
-                        end1 = line.subject.memberEnd[0]
-                        end2 = line.subject.memberEnd[1]
-                        if (end1.type is head_type and end2.type is tail_type) \
-                           or (end2.type is head_type and end1.type is tail_type):
-                            return
-                            
-                    # Find all associations and determine if the properties on
-                    # the association ends have a type that points to the class.
-                    for assoc in UML.select():
-                        if isinstance(assoc, UML.Extension):
-                            end1 = assoc.memberEnd[0]
-                            end2 = assoc.memberEnd[1]
-                            if (end1.type is head_type and end2.type is tail_type) \
-                               or (end2.type is head_type and end1.type is tail_type):
-                                # check if this entry is not yet in the diagram
-                                # Return if the association is not (yet) on the canvas
-                                for item in assoc.presentation:
-                                    if item.canvas is element.canvas:
-                                        break
-                                else:
-                                    line.subject = assoc
+        c1 = line.head.connected_to
+        c2 = line.tail.connected_to
+        if c1 and c2:
+            head_type = c1.subject
+            tail_type = c2.subject
+
+            # First check if we do not already contain the right subject:
+            if line.subject:
+                end1 = line.subject.memberEnd[0]
+                end2 = line.subject.memberEnd[1]
+                if (end1.type is head_type and end2.type is tail_type) \
+                   or (end2.type is head_type and end1.type is tail_type):
+                    return
+                    
+            # Find all associations and determine if the properties on
+            # the association ends have a type that points to the class.
+            for assoc in UML.select():
+                if isinstance(assoc, UML.Extension):
+                    end1 = assoc.memberEnd[0]
+                    end2 = assoc.memberEnd[1]
+                    if (end1.type is head_type and end2.type is tail_type) \
+                       or (end2.type is head_type and end1.type is tail_type):
+                        # check if this entry is not yet in the diagram
+                        # Return if the association is not (yet) on the canvas
+                        for item in assoc.presentation:
+                            if item.canvas is element.canvas:
+                                break
+                        else:
+                            line.subject = assoc
 #                                    if (end1.type is head_type and end2.type is tail_type):
 #                                        line.head_subject = end1
 #                                        line.tail_subject = end2
 #                                    else:
 #                                        line.head_subject = end2
 #                                        line.tail_subject = end1
-                                    return
-                    else:
-                        # Create a new Extension relationship
-                        relation = UML.create(UML.Extension)
-                        head_end = UML.create(UML.Property)
-                        tail_end = UML.create(UML.ExtensionEnd)
-                        relation.package = element.canvas.diagram.namespace
-                        relation.memberEnd = head_end
-                        relation.memberEnd = tail_end
-                        relation.ownedEnd = tail_end
-                        head_end.type = head_type
-                        tail_end.type = tail_type
-                        tail_type.ownedAttribute = head_end
-                        head_end.name = 'baseClass'
+                            return
+            else:
+                # Create a new Extension relationship
+                relation = UML.create(UML.Extension)
+                head_end = UML.create(UML.Property)
+                tail_end = UML.create(UML.ExtensionEnd)
+                relation.package = element.canvas.diagram.namespace
+                relation.memberEnd = head_end
+                relation.memberEnd = tail_end
+                relation.ownedEnd = tail_end
+                head_end.type = head_type
+                tail_end.type = tail_type
+                tail_type.ownedAttribute = head_end
+                head_end.name = 'baseClass'
 
-                line.subject = relation
+        line.subject = relation
 
     def disconnect(self, handle):
         """
@@ -714,66 +734,64 @@ class AssociationConnect(RelationshipConnect):
 
         return super(AssociationConnect, self).glue(handle, x, y)
 
-    def connect(self, handle, x, y):
-        if super(AssociationConnect, self).connect(handle, x, y):
-            element = self.element
-            line = self.line
-            opposite = self.line.opposite(handle)
-            if opposite.connected_to:
-                c1 = line.head.connected_to
-                c2 = line.tail.connected_to
-                if c1 and c2:
-                    head_type = c1.subject
-                    tail_type = c2.subject
+    def connect_subject(self):
+        element = self.element
+        line = self.line
 
-                    # First check if we do not already contain the right subject:
-                    if line.subject:
-                        end1 = line.subject.memberEnd[0]
-                        end2 = line.subject.memberEnd[1]
-                        if (end1.type is head_type and end2.type is tail_type) \
-                           or (end2.type is head_type and end1.type is tail_type):
+        c1 = line.head.connected_to
+        c2 = line.tail.connected_to
+        if c1 and c2:
+            head_type = c1.subject
+            tail_type = c2.subject
+
+            # First check if we do not already contain the right subject:
+            if line.subject:
+                end1 = line.subject.memberEnd[0]
+                end2 = line.subject.memberEnd[1]
+                if (end1.type is head_type and end2.type is tail_type) \
+                   or (end2.type is head_type and end1.type is tail_type):
+                    return
+                    
+            # Find all associations and determine if the properties on
+            # the association ends have a type that points to the class.
+            for assoc in UML.select():
+                if isinstance(assoc, UML.Association):
+                    end1 = assoc.memberEnd[0]
+                    end2 = assoc.memberEnd[1]
+                    if (end1.type is head_type and end2.type is tail_type) \
+                       or (end2.type is head_type and end1.type is tail_type):
+                        # check if this entry is not yet in the diagram
+                        # Return if the association is not (yet) on the canvas
+                        for item in assoc.presentation:
+                            if item.canvas is element.canvas:
+                                break
+                        else:
+                            line.subject = assoc
+                            if (end1.type is head_type and end2.type is tail_type):
+                                line.head_end.subject = end1
+                                line.tail_end.subject = end2
+                            else:
+                                line.head_end.subject = end2
+                                line.tail_end.subject = end1
                             return
-                            
-                    # Find all associations and determine if the properties on
-                    # the association ends have a type that points to the class.
-                    for assoc in UML.select():
-                        if isinstance(assoc, UML.Association):
-                            end1 = assoc.memberEnd[0]
-                            end2 = assoc.memberEnd[1]
-                            if (end1.type is head_type and end2.type is tail_type) \
-                               or (end2.type is head_type and end1.type is tail_type):
-                                # check if this entry is not yet in the diagram
-                                # Return if the association is not (yet) on the canvas
-                                for item in assoc.presentation:
-                                    if item.canvas is element.canvas:
-                                        break
-                                else:
-                                    line.subject = assoc
-                                    if (end1.type is head_type and end2.type is tail_type):
-                                        line.head_end.subject = end1
-                                        line.tail_end.subject = end2
-                                    else:
-                                        line.head_end.subject = end2
-                                        line.tail_end.subject = end1
-                                    return
-                    else:
-                        # Create a new Extension relationship
-                        relation = UML.create(UML.Association)
-                        head_end = UML.create(UML.Property)
-                        head_end.lowerValue = UML.create(UML.LiteralSpecification)
-                        tail_end = UML.create(UML.Property)
-                        tail_end.lowerValue = UML.create(UML.LiteralSpecification)
-                        relation.package = element.canvas.diagram.namespace
-                        relation.memberEnd = head_end
-                        relation.memberEnd = tail_end
-                        head_end.type = head_type
-                        tail_end.type = tail_type
-                        head_type.ownedAttribute = head_end
-                        tail_type.ownedAttribute = head_end
+            else:
+                # Create a new Extension relationship
+                relation = UML.create(UML.Association)
+                head_end = UML.create(UML.Property)
+                head_end.lowerValue = UML.create(UML.LiteralSpecification)
+                tail_end = UML.create(UML.Property)
+                tail_end.lowerValue = UML.create(UML.LiteralSpecification)
+                relation.package = element.canvas.diagram.namespace
+                relation.memberEnd = head_end
+                relation.memberEnd = tail_end
+                head_end.type = head_type
+                tail_end.type = tail_type
+                head_type.ownedAttribute = tail_end
+                tail_type.ownedAttribute = head_end
 
-                        line.subject = relation
-                        line.head_end.subject = head_end
-                        line.tail_end.subject = tail_end
+                line.subject = relation
+                line.head_end.subject = head_end
+                line.tail_end.subject = tail_end
 
     def disconnect(self, handle):
         """

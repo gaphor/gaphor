@@ -149,7 +149,7 @@ class ConnectorTestCase(unittest.TestCase):
         assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
         assert assoc.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
 
-        # Disconnect actor:
+        # Disconnect comment:
 
         adapter.disconnect(handle)
 
@@ -157,6 +157,81 @@ class ConnectorTestCase(unittest.TestCase):
         assert handle._connect_constraint is None
         assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
         assert not assoc.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
+
+        # Connect again:
+
+        adapter.connect(handle, handle.x, handle.y)
+        assert handle.connected_to is not None, handle.connected_to
+
+
+    def test_connector_association_connect(self):
+        """
+        Test behaviour when the CommentLine's subject (association) is
+        connected after the comment line is connected.
+        """
+        diagram = UML.create(UML.Diagram)
+        comment = diagram.create(items.CommentItem, subject=UML.create(UML.Comment))
+        line = diagram.create(items.CommentLineItem)
+        line.head.pos = 100, 100
+        line.tail.pos = 100, 100
+        c1 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        c2 = diagram.create(items.ClassItem, subject=UML.create(UML.Class))
+        assoc = diagram.create(items.AssociationItem)
+
+        # connect the comment
+
+        adapter = component.queryMultiAdapter((comment, line), IConnect)
+
+        handle = line.tail
+        adapter.connect(handle, handle.x, handle.y)
+
+        assert handle.connected_to is comment
+        assert handle._connect_constraint is not None
+        assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
+
+        # connect opposite end to the association:
+
+        adapter = component.queryMultiAdapter((assoc, line), IConnect)
+        handle = line.head
+        adapter.connect(handle, handle.x, handle.y)
+
+        assert handle.connected_to is assoc
+        assert handle._connect_constraint is not None
+        assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
+        assert assoc.subject is None
+
+        # Now connect the association to the classes:
+
+        adapter = component.queryMultiAdapter((c1, assoc), IConnect)
+        handle = assoc.head
+        adapter.connect(handle, handle.x, handle.y)
+
+        assert handle.connected_to is c1
+        assert handle._connect_constraint is not None
+        assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
+        assert assoc.subject is None
+
+        adapter = component.queryMultiAdapter((c2, assoc), IConnect)
+        handle = assoc.tail
+        adapter.connect(handle, handle.x, handle.y)
+
+        assert assoc.head.connected_to is c1
+        assert assoc.tail.connected_to is c2
+        assert assoc.subject
+        assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
+        assert assoc.subject in comment.subject.annotatedElement
+
+        # And now disconnect again:
+
+        adapter.disconnect(handle)
+        assert assoc.tail.connected_to is None
+        assert assoc.subject is None
+        assert comment.subject is not None
+        assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
+
+        # TODO: add test
+        # What happens when an association is displayed in two diagrams and
+        # the comment is connected in one diagram. That assoc. is broken.
 
 
     def test_dependency(self):

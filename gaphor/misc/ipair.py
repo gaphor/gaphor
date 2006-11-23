@@ -15,11 +15,12 @@ def ipair(l):
     4 5
     5 6
     """
-    i1 = iter(l)
-    i2 = iter(l)
-    i2.next()
-    while 1:
-        yield i1.next(), i2.next()
+    i = iter(l)
+    last = i.next()
+    while True:
+        new = i.next()
+        yield last, new
+        last = new
 
 if __name__ == '__main__':
     import doctest
