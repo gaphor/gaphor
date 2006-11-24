@@ -6,20 +6,7 @@
  - split DiagramItem in a stereotype support, SubjectSupport and some
    other support classes.
 
- - Currently (r1085) relations (association, dependency) can be created between
-   model elements. Some items (e.g. comment lines) can be connected to the
-   relationship at the time it realizes a relation at model level (both ends
-   get connected). This should result in a trigger to the attached
-   (comment-)line so it can also establish it's relationship at model level.
-   This can be solved in two places:
-   1. handle it in the DiagramItem. This will ensure such relationship is
-      always up to date, but may result in weird behavior in the loading code.
-   2. handle it in the IConnect adapters. That's the only place where
-      relationship are established so doing some extra work there won't hurt
-   Hmm.. Option 2 I guess..
-
  - using stereotypes
- - associations
  - components and stuff
 
  - lot's of tests are dependent on a decently initialized main window.

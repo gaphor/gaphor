@@ -221,7 +221,8 @@ class ConnectorTestCase(unittest.TestCase):
         assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
         assert assoc.subject in comment.subject.annotatedElement
 
-        # And now disconnect again:
+        # And now disconnect the association (comment.annotatedElement should
+        # also become empty:
 
         adapter.disconnect(handle)
         assert assoc.tail.connected_to is None

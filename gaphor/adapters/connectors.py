@@ -294,10 +294,10 @@ class CommentLineLineConnect(LineConnect):
     def disconnect(self, handle):
         opposite = self.line.opposite(handle)
         if handle.connected_to and opposite.connected_to:
-            if isinstance(opposite.connected_to.subject, UML.Comment):
-                del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
-            else:
+            if isinstance(handle.connected_to.subject, UML.Comment):
                 del handle.connected_to.subject.annotatedElement[opposite.connected_to.subject]
+            else:
+                del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
         super(CommentLineLineConnect, self).disconnect(handle)
 
 component.provideAdapter(CommentLineLineConnect)
@@ -378,21 +378,43 @@ class RelationshipConnect(ElementConnect):
             setattr(relation, tail[0], line.tail.connected_to.subject)
         return relation
 
-    def trigger_connected_items(self, line):
+    def connect_connected_items(self, connected_items=None):
         """
         Cause items connected to @line to reconnect, allowing them to
         establish or destroy relationships at model level.
         """
+        line = self.line
         canvas = line.canvas
         solver = canvas.solver
 
         # First make sure coordinates match
         solver.solve()
-        for item, handle in self.line.canvas.get_connected_items(line):
+        for item, handle in connected_items or line.canvas.get_connected_items(line):
             adapter = component.queryMultiAdapter((line, item), IConnect)
             assert adapter
             adapter.connect(handle, handle.x, handle.y)
         
+    def disconnect_connected_items(self):
+        """
+        Cause items connected to @line to be disconnected.
+        This is nessesary if the subject of the @line is to be removed.
+
+        Returns a list of (item, handle) pairs that were connected (this
+        list can be used to connect items again with connect_connected_items()).
+        """
+        line = self.line
+        canvas = line.canvas
+        solver = canvas.solver
+
+        # First make sure coordinates match
+        solver.solve()
+        connected_items = list(line.canvas.get_connected_items(line))
+        for item, handle in connected_items:
+            adapter = component.queryMultiAdapter((line, item), IConnect)
+            assert adapter
+            adapter.disconnect(handle)
+        return connected_items
+
     def glue(self, handle, x, y):
         opposite = self.line.opposite(handle)
         line = self.line
@@ -417,6 +439,18 @@ class RelationshipConnect(ElementConnect):
         """
         raise NotImplemented, 'Implement connect_subject() in a subclass'
 
+    def disconnect_subject(self, handle):
+        """
+        Disconnect the diagram item from its model element. If there are
+        no more presentations(diagram items) connected to the model element,
+        unlink() it too.
+        """
+        line = self.line
+        old = line.subject
+        del line.subject
+        if old and len(old.presentation) == 0:
+            old.unlink()
+
     def connect(self, handle, x, y):
         """
         Connect the items to each other. The model level relationship
@@ -428,20 +462,22 @@ class RelationshipConnect(ElementConnect):
                 self.connect_subject()
                 line = self.line
                 if line.subject:
-                    self.trigger_connected_items(line)
+                    self.connect_connected_items()
 
     def disconnect(self, handle):
         """
         Disconnect model element.
         """
-        opposite = self.line.opposite(handle)
+        line = self.line
+        opposite = line.opposite(handle)
         if handle.connected_to and opposite.connected_to:
-            old = self.line.subject
-            del self.line.subject
+            old = line.subject
+             
+            connected_items = self.disconnect_connected_items()
+            
+            self.disconnect_subject(handle)
             if old:
-                self.trigger_connected_items(self.line)
-            if old and len(old.presentation) == 0:
-                old.unlink()
+                self.connect_connected_items(connected_items)
 
         super(RelationshipConnect, self).disconnect(handle)
 
@@ -691,7 +727,7 @@ class ExtensionConnect(RelationshipConnect):
 
         line.subject = relation
 
-    def disconnect(self, handle):
+    def disconnect_subject(self, handle):
         """
         Disconnect model element.
         Disconnect property (memberEnd) too, in case of end of life for
@@ -705,8 +741,6 @@ class ExtensionConnect(RelationshipConnect):
                 for e in old.memberEnd:
                     e.unlink()
                 old.unlink()
-
-        super(ExtensionConnect, self).disconnect(handle)
 
 
 component.provideAdapter(ExtensionConnect)
@@ -793,7 +827,7 @@ class AssociationConnect(RelationshipConnect):
                 line.head_end.subject = head_end
                 line.tail_end.subject = tail_end
 
-    def disconnect(self, handle):
+    def disconnect_subject(self, handle):
         """
         Disconnect model element.
         Disconnect property (memberEnd) too, in case of end of life for
@@ -809,8 +843,6 @@ class AssociationConnect(RelationshipConnect):
                 for e in list(old.memberEnd):
                     e.unlink()
                 old.unlink()
-
-        super(AssociationConnect, self).disconnect(handle)
 
 
 component.provideAdapter(AssociationConnect)
