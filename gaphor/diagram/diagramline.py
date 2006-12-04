@@ -103,6 +103,8 @@ class DiagramLine(LineItem):
             #self.set_property('tail_pos', points[1])
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
+        elif name == 'orthogonal':
+            self._load_orthogonal = eval(value)
         elif name in ('head_connection', 'head-connection'):
             self._load_head_connection = value
         elif name in ('tail_connection', 'tail-connection'):
@@ -113,6 +115,9 @@ class DiagramLine(LineItem):
     def postload(self):
         # Ohoh, need the IConnect adapters here
         from zope import component
+        if hasattr(self, '_load_orthogonal'):
+            self.orthogonal = self._load_orthogonal
+            del self._load_orthogonal
         if hasattr(self, '_load_head_connection'):
             adapter = component.queryMultiAdapter((self._load_head_connection, self), IConnect)
             assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_head_connection, self)

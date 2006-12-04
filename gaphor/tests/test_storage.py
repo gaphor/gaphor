@@ -223,10 +223,13 @@ class StorageTestCase(unittest.TestCase):
         assert a.head.y == 0, a.head.pos
         assert a.tail.x == 200, a.tail.pos
         #assert a.tail.y == 200, a.tail.pos
+        assert a.subject
 
         fd = open(filename, 'w')
         storage.save(XMLWriter(fd))
         fd.close()
+
+        old_a_subject_id = a.subject.id
 
         UML.flush()
         assert not list(UML.select())
@@ -236,9 +239,12 @@ class StorageTestCase(unittest.TestCase):
         assert len(UML.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
         d = UML.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
         a = d.canvas.select(lambda e: isinstance(e, items.AssociationItem))[0]
+        assert a.subject
+        assert old_a_subject_id == a.subject.id
         assert a.head.connected_to
         assert a.tail.connected_to
         assert not a.head.connected_to is a.tail.connected_to
+        #assert a.head_end._name
 
 
 # vim:sw=4:et:ai

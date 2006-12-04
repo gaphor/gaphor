@@ -415,24 +415,6 @@ class RelationshipConnect(ElementConnect):
             adapter.disconnect(handle)
         return connected_items
 
-    def glue(self, handle, x, y):
-        opposite = self.line.opposite(handle)
-        line = self.line
-        element = self.element
-        connected_to = opposite.connected_to
-
-        # Element can not be a parent for itself.
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
-
-        return super(RelationshipConnect, self).glue(handle, x, y)
-
     def connect_subject(self):
         """
         Establish the relationship at model level.
@@ -494,8 +476,19 @@ class DependencyConnect(RelationshipConnect):
         to the same element. Same goes for subjects.
         """
         opposite = self.line.opposite(handle)
+        line = self.line
         element = self.element
         connected_to = opposite.connected_to
+
+        # Element can not be a parent for itself.
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
 
         # Element should be a NamedElement
         if not element.subject or \
@@ -540,6 +533,16 @@ class ImplementationConnect(RelationshipConnect):
         element = self.element
         connected_to = opposite.connected_to
 
+        # Element can not be a parent for itself.
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
+
         # Element at the head should be an Interface
         if handle is line.head and \
            not isinstance(element.subject, UML.Interface):
@@ -568,17 +571,27 @@ class GeneralizationConnect(RelationshipConnect):
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
 #    # FixMe: Both ends of the generalization should be of the same  type?
-#    def glue(self, handle, x, y):
-#        """In addition to the normal check, both line ends may not be connected
-#        to the same element. Same goes for subjects.
-#        """
-#        opposite = self.line.opposite(handle)
-#        line = self.line
-#        element = self.element
-#        connected_to = opposite.connected_to
-#
-#
-#        return super(GeneralizationConnect, self).glue(handle, x, y)
+    def glue(self, handle, x, y):
+        """
+        In addition to the normal check, both line ends may not be connected
+        to the same element. Same goes for subjects.
+        """
+        opposite = self.line.opposite(handle)
+        line = self.line
+        element = self.element
+        connected_to = opposite.connected_to
+
+        # Element can not be a parent for itself.
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
+
+        return super(GeneralizationConnect, self).glue(handle, x, y)
 
     def connect_subject(self):
         relation = self.relationship_or_new(UML.Generalization,
@@ -600,8 +613,21 @@ class IncludeConnect(RelationshipConnect):
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
         """
+        opposite = self.line.opposite(handle)
+        line = self.line
         element = self.element
+        connected_to = opposite.connected_to
         
+        # Element can not be a parent for itself.
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
+
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
@@ -627,8 +653,21 @@ class ExtendConnect(RelationshipConnect):
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
         """
+        opposite = self.line.opposite(handle)
+        line = self.line
         element = self.element
+        connected_to = opposite.connected_to
         
+        # Element can not be a parent for itself.
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
+
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
@@ -658,6 +697,16 @@ class ExtensionConnect(RelationshipConnect):
         line = self.line
         element = self.element
         connected_to = opposite.connected_to
+
+        # Element can not be a parent for itself.
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
 
         # Element at the head should be a Class
         if handle is line.head and \

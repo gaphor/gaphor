@@ -15,7 +15,7 @@ Plan:
 
 from math import atan2, pi
 
-from gaphas.util import text_extents
+from gaphas.util import text_extents, text_multiline
 from gaphas import Item
 from gaphas.geometry import Rectangle
 from gaphas.geometry import distance_rectangle_point, distance_line_point
@@ -132,17 +132,19 @@ class AssociationItem(DiagramLine):
         # end_head and end_tail were used in an older Gaphor version
         if name in ( 'head_end', 'head_subject', 'head-subject' ):
             #type(self._head_end).subject.load(self._head_end, value)
-            self._head_end.load('subject', value)
+            #self._head_end.load('subject', value)
+            self._head_end.subject = value
         elif name in ( 'tail_end', 'tail_subject', 'tail-subject' ):
             #type(self._tail_end).subject.load(self._tail_end, value)
-            self._tail_end.load('subject', value)
+            #self._tail_end.load('subject', value)
+            self._tail_end.subject = value
         else:
             DiagramLine.load(self, name, value)
 
     def postload(self):
         DiagramLine.postload(self)
-        self._head_end.postload()
-        self._tail_end.postload()
+        self._head_end.set_text()
+        self._tail_end.set_text()
 
     head_end = property(lambda self: self._head_end)
 
@@ -373,7 +375,7 @@ class AssociationItem(DiagramLine):
 
         if self.subject and self.subject.name:
             cr.move_to(self._label_bounds[0], self._label_bounds[1])
-            cr.show_text(self.subject.name)
+            cr.show_text(self.subject.name or '')
 
 
 class AssociationEnd(SubjectSupport):
@@ -422,6 +424,22 @@ class AssociationEnd(SubjectSupport):
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
         self._point1 = self._point2 = (0, 0)
+
+        self._subject = None
+
+    def _set_subject(self, value):
+        self._subject = value
+        class pspec:
+            name = 'subject'
+        self.on_subject_notify(pspec)
+
+    def _del_subject(self):
+        self._subject = None
+        class pspec:
+            name = 'subject'
+        self.on_subject_notify(pspec)
+
+    subject = property(lambda s: s._subject, _set_subject, _del_subject)
 
     def get_popup_menu(self):
         if self.subject:
@@ -564,8 +582,8 @@ class AssociationEnd(SubjectSupport):
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
         
-        name_w, name_h = map(max, text_extents(cr, self._name), (10, 10))
-        mult_w, mult_h = map(max, text_extents(cr, self._mult), (10, 10))
+        name_w, name_h = map(max, text_extents(cr, self._name, multiline=True), (10, 10))
+        mult_w, mult_h = map(max, text_extents(cr, self._mult, multiline=True), (10, 10))
 
         if dy == 0:
             rc = 1000.0 # quite a lot...
@@ -695,20 +713,22 @@ class AssociationEnd(SubjectSupport):
             return
 
         cr = context.cairo
-        cr.move_to(self._name_bounds[0], self._name_bounds[3])
-        cr.show_text(self._name)
-        cr.move_to(self._mult_bounds[0], self._mult_bounds[3])
-        cr.show_text(self._mult)
+        #cr.move_to(self._name_bounds[0], self._name_bounds[3])
+        #cr.show_text(self._name or '')
+        text_multiline(cr, self._name_bounds[0], self._name_bounds[3], self._name)
+        #cr.move_to(self._mult_bounds[0], self._mult_bounds[3])
+        #cr.show_text(self._mult or '')
+        text_multiline(cr, self._mult_bounds[0], self._mult_bounds[3], self._mult)
         cr.stroke()
 
-#        if context.hovered or context.focused:
-#            cr.set_line_width(0.5)
-#            b = self._name_bounds
-#            cr.rectangle(b.x0, b.y0, b.width, b.height)
-#            cr.stroke()
-            #b = self._mult_bounds
-            #cr.rectangle(b.x0, b.y0, b.width, b.height)
-            #cr.stroke()
+        if context.hovered or context.focused or context.draw_all:
+            cr.set_line_width(0.5)
+            b = self._name_bounds
+            cr.rectangle(b.x0, b.y0, b.width, b.height)
+            cr.stroke()
+            b = self._mult_bounds
+            cr.rectangle(b.x0, b.y0, b.width, b.height)
+            cr.stroke()
     
 
 # vim:sw=4:et

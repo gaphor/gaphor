@@ -2,6 +2,7 @@
  - Undo functionality
  - Load / save regression testing
    !!! Create some example diagrams,
+ - translate afifne matrices to new format.
 
  - split DiagramItem in a stereotype support, SubjectSupport and some
    other support classes.

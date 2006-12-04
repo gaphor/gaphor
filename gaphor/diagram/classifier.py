@@ -55,6 +55,8 @@ class Compartment(list):
             sizes = [f.get_size(True) for f in self]
             self.width = max(map(lambda p: p[0], sizes))
             self.height = sum(map(lambda p: p[1], sizes))
+            vspacing = self.owner.style.compartment_vspacing
+            self.height += vspacing * len(sizes)
         margin = self.owner.style.compartment_margin
         self.width += margin[1] + margin[3]
         self.height += margin[0] + margin[2]
@@ -67,11 +69,14 @@ class Compartment(list):
     def draw(self, context):
         cr = context.cairo
         margin = self.owner.style.compartment_margin
+        vspacing = self.owner.style.compartment_vspacing
         cr.translate(margin[1], margin[0])
+        offset = 0
         for item in self:
             cr.save()
             try:
-                cr.translate(0, item.height)
+                offset += item.height + vspacing
+                cr.move_to(0, offset)
                 item.draw(context)
             finally:
                 cr.restore()
@@ -111,13 +116,13 @@ class ClassifierItem(NamedItem):
         'min-size':           (100, 50),
         'icon-size':          (20, 20),
         'compartment-margin': (5, 5, 5, 5), # (top, right, bottom, left)
+        'compartment-vspacing': 2,
     }
     # Default size for small icons
     ICON_WIDTH    = 15
     ICON_HEIGHT   = 25
     ICON_MARGIN_X = 10
     ICON_MARGIN_Y = 10
-    NAME_COMPARTMENT_HEIGHT = 35
 
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
@@ -265,7 +270,9 @@ class ClassifierItem(NamedItem):
         sizes = [comp.get_size() for comp in self._compartments]
 
         self.min_width = max(s_w, n_w, f_w)
-        self.min_height = self.NAME_COMPARTMENT_HEIGHT
+        self.min_height = 0
+
+        super(ClassifierItem, self).pre_update(context)
 
         if sizes:
             w = max(map(lambda p: p[0], sizes))
@@ -274,7 +281,6 @@ class ClassifierItem(NamedItem):
             self.min_width = max(self.min_width, w)
             self.min_height += h
 
-        super(ClassifierItem, self).pre_update(context)
 
     def pre_update_compartment_icon(self, context):
         self.pre_update_compartment(context)
