@@ -8,7 +8,8 @@ from gaphas.item import Item
 from diagramitem import DiagramItem
 from gaphor.undomanager import undoable
 from gaphor.diagram import DiagramItemMeta
-from gaphas.util import text_extents
+from gaphas.util import text_extents, text_set_font
+import font
 
 class FeatureItem(DiagramItem):
     """FeatureItems are model elements who recide inside a ClassifierItem, such
@@ -123,6 +124,7 @@ class AttributeItem(FeatureItem):
 
     def draw(self, context):
         cr = context.cairo
+        text_set_font(cr, font.FONT)
         cr.show_text(self.subject.render() or '')
 
 
@@ -173,6 +175,7 @@ class OperationItem(FeatureItem):
 
     def draw(self, context):
         cr = context.cairo
+        text_set_font(cr, font.FONT)
         cr.show_text(self.subject.render() or '')
 
 

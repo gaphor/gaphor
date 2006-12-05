@@ -8,6 +8,7 @@ from gaphas.item import NW, SE
 from gaphas import geometry
 from gaphas import constraint
 from gaphor import UML
+from gaphor.UML.umllex import render_attribute
 from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
 
@@ -143,9 +144,7 @@ class AssociationItemEditor(object):
     def get_text(self):
         if self._edit is self._item:
             return self._edit.subject.name
-        if self._edit.get_mult():
-            return self._edit.get_name() + '[' + self._edit.get_mult() + ']'
-        return self._edit.get_name()
+        return render_attribute(self._edit.subject)
 
     def get_bounds(self):
         return None

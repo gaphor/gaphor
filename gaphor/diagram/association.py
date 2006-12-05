@@ -244,6 +244,9 @@ class AssociationItem(DiagramLine):
                 self._dir_pos = (h0.x + h1.x) / 2, (h0.y + h1.y) / 2
                 if self.tail_end.subject is self.subject.memberEnd[0]:
                     self._dir_angle += pi
+        else:
+            self.draw_head = self.draw_head_undefined
+            self.draw_tail = self.draw_tail_undefined
 
         # update relationship after self.set calls to avoid circural updates
         DiagramLine.update(self, context)
@@ -291,17 +294,30 @@ class AssociationItem(DiagramLine):
         cr.rel_line_to(-8, 8)
         cr.stroke()
 
+    def _draw_diamond(self, cr):
+        cr.move_to(20, 0)
+        cr.line_to(10, -6)
+        cr.line_to(0, 0)
+        cr.line_to(10, 6)
+        #cr.line_to(20, 0)
+        cr.close_path()
+
     def draw_head_composite(self, context):
         """Draw a closed diamond on the line end.
         """
-        self.draw_head_shared(context)
+        cr = context.cairo
+        self._draw_diamond(cr)
         context.cairo.fill_preserve()
+        cr.stroke()
+        cr.move_to(20, 0)
 
     def draw_tail_composite(self, context):
         """Draw a closed diamond on the line end.
         """
-        self.draw_tail_shared(context)
         cr = context.cairo
+        cr.line_to(20, 0)
+        cr.stroke()
+        self._draw_diamond(cr)
         cr.fill_preserve()
         cr.stroke()
 
@@ -309,22 +325,17 @@ class AssociationItem(DiagramLine):
         """Draw an open diamond on the line end.
         """
         cr = context.cairo
+        self._draw_diamond(cr)
         cr.move_to(20, 0)
-        cr.line_to(10, -6)
-        cr.line_to(0, 0)
-        cr.line_to(10, 6)
-        cr.line_to(20, 0)
 
     def draw_tail_shared(self, context):
         """Draw an open diamond on the line end.
         """
         cr = context.cairo
         cr.line_to(20, 0)
-        #cr.stroke()
-        cr.line_to(10, -6)
-        cr.line_to(0, 0)
-        cr.line_to(10, 6)
-        cr.line_to(20, 0)
+        cr.stroke()
+        self._draw_diamond(cr)
+        cr.stroke()
 
     def draw_head_navigable(self, context):
         """Draw a normal arrow.
@@ -341,10 +352,10 @@ class AssociationItem(DiagramLine):
         """
         cr = context.cairo
         cr.line_to(0, 0)
+        cr.stroke()
         cr.move_to(15, -6)
         cr.line_to(0, 0)
         cr.line_to(15, 6)
-        cr.stroke()
 
     def draw_head_undefined(self, context):
         """Draw nothing. undefined.

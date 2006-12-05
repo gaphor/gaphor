@@ -4,20 +4,14 @@ Object node item.
 
 import itertools
 
-import gobject
-import pango
-
-#import diacanvas
 from gaphor import UML
-from gaphor import resource
 
-from gaphor.diagram import TextElement
-from gaphor.diagram.align import V_ALIGN_MIDDLE
+#from gaphor.diagram import TextElement
+#from gaphor.diagram.align import V_ALIGN_MIDDLE
 #from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
 
 
-#class ObjectNodeItem(NamedItem, GroupBase):
 class ObjectNodeItem(NamedItem):
     """
     Representation of object node. Object node is ordered and has upper bound
@@ -28,10 +22,9 @@ class ObjectNodeItem(NamedItem):
 
     __uml__      = UML.ObjectNode
 
-    __s_valign__ = V_ALIGN_MIDDLE
-
-    FONT = 'sans 10'
-    MARGIN = 10
+    __style__ = {
+        'margin': (10, 10, 10, 10)
+    }
 
     popup_menu = NamedItem.popup_menu + (
         'separator',
@@ -43,27 +36,28 @@ class ObjectNodeItem(NamedItem):
             'ObjectNodeOrderingFIFO')
     )
 
-    __gproperties__ = {
-        'show-ordering': (gobject.TYPE_BOOLEAN, 'show ordering',
-            'show ordering of object node', False,
-            gobject.PARAM_READWRITE),
-    }
-
     def __init__(self, id = None):
-        GroupBase.__init__(self)
         NamedItem.__init__(self, id)
 
         self._upper_bound = TextElement('value', '{ upperBound = %s }', '*')
         self.add(self._upper_bound)
 
         self._ordering = diacanvas.shape.Text()
-        self._ordering.set_font_description(pango.FontDescription(self.FONT))
+        self._ordering.set_font_description(pango.FontDescription(font.FONT))
         self._ordering.set_alignment(pango.ALIGN_CENTER)
         self._ordering.set_markup(False)
 
         self._show_ordering = False
-        self.set_prop_persistent('show-ordering')
 
+    def save(self, save_func):
+        save_func('show-ordering', self._show_ordering)
+        super(ObjectNodeItem, self).save(save_func)
+
+    def load(self, name, value):
+        if name == 'show-ordering':
+            self._show_ordering = eval(value)
+        else:
+            super(ObjectNodeItem, self).load(name, value)
 
     def on_subject_notify(self, pspec, notifiers = ()):
         """
@@ -72,7 +66,7 @@ class ObjectNodeItem(NamedItem):
         """
         NamedItem.on_subject_notify(self, pspec, notifiers)
         if self.subject:
-            factory = resource(UML.ElementFactory)
+            factory = UML
             if not self.subject.upperBound:
                 self.subject.upperBound = factory.create(UML.LiteralSpecification)
                 self.subject.upperBound.value = '*'
@@ -101,7 +95,7 @@ class ObjectNodeItem(NamedItem):
             return NamedItem.do_get_property(self, pspec)
 
 
-    def set_ordering(self, ordering):
+    def _set_ordering(self, ordering):
         """
         Set ordering of object node.
         """
@@ -109,18 +103,13 @@ class ObjectNodeItem(NamedItem):
         self.request_update()
 
 
-    def get_ordering(self):
-        """
-        Determine ordering of object node.
-        """
-        return self.subject.ordering
+    ordering = property(lambda s: s.subject.ordering, _set_ordering)
 
-
-    def on_update(self, affine):
+    def update(self, context):
         """
         Update object node, its ordering and upper bound specification.
         """
-        NamedItem.on_update(self, affine)
+        NamedItem.update(self, context)
 
         if self.subject:
             self._ordering.set_text('{ ordering = %s }' % self.subject.ordering)
@@ -134,13 +123,13 @@ class ObjectNodeItem(NamedItem):
             # center ordering below border
             ord_width, ord_height = self._ordering.to_pango_layout(True).get_pixel_size()
             x = (self.width - ord_width) / 2
-            self._ordering.set_pos((x, self.height + self.MARGIN))
+            self._ordering.set_pos((x, self.height + self.style.margin[0]))
 
             self._ordering.set_max_width(ord_width)
             self._ordering.set_max_height(ord_height)
 
             self.set_bounds((min(0, x), 0,
-                max(self.width, ord_width), self.height + self.MARGIN + ord_height))
+                max(self.width, ord_width), self.height + self.style.margin[0] + ord_height))
         else:
             ord_width, ord_height = 0, 0
 
@@ -149,11 +138,13 @@ class ObjectNodeItem(NamedItem):
         #
         ub_width, ub_height = self._upper_bound.get_size()
         x = (self.width - ub_width) / 2
-        y = self.height + ord_height + self.MARGIN
+        y = self.height + ord_height + self.style.margin[0]
         self._upper_bound.update_label(x, y)
 
-        GroupBase.on_update(self, affine)
 
+
+    def draw(self, context):
+        super(ObjectNodeItem, self).draw(context)
 
     def on_shape_iter(self):
         it = NamedItem.on_shape_iter(self)
@@ -161,3 +152,6 @@ class ObjectNodeItem(NamedItem):
             return itertools.chain(it, iter([self._ordering]))
         else:
             return it
+
+
+# vim:sw=4:et:ai
