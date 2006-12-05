@@ -36,9 +36,16 @@ class NamedItem(ElementItem):
         self.height = self.min_height
         self.name_x = 0
         self.name_y = 0
+        self._name_size = (0, 0)
 
 
-    def pre_update(self, context):
+    def get_name_size(self):
+        """
+        Return width, height of the text (including padding)
+        """
+        return self._name_size
+
+    def update_name_size(self, context):
         """
         Calculate minimal size of named item.
         """
@@ -46,12 +53,13 @@ class NamedItem(ElementItem):
         text = self.subject.name
         if text and not self.style.name_outside:
             width, height = text_extents(cr, text)
-
-            self.min_width, self.min_height = get_min_size(width, height,
-                    self.style.min_size,
-                    self.style.name_padding)
-
-        super(NamedItem, self).pre_update(context)
+            padding = self.style.name_padding
+            self._name_size = width + padding[0] + padding[2], height + padding[1] + padding[3]
+#            self.min_width, self.min_height = get_min_size(width, height,
+#                    self.style.min_size,
+#                    self.style.name_padding)
+#
+#        super(NamedItem, self).pre_update(context)
 
 
     def update(self, context):

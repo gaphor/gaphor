@@ -79,18 +79,22 @@ class ClassifierItemEditor(object):
         name part or is it text in some compartment
         """
         self._edit = None
-        if y < items.ClassifierItem.NAME_COMPARTMENT_HEIGHT:
+        name_comp_height = self._item.get_name_size()[1]
+        if y < name_comp_height:
             self._edit = self._item
             return True
-        y -= items.ClassifierItem.NAME_COMPARTMENT_HEIGHT
+        y -= name_comp_height
+        margin = self._item.style.compartment_margin[0]
+        vspacing = self._item.style.compartment_vspacing
         for comp in self._item.compartments:
-            y -= comp.MARGIN_Y
+            y -= margin
             for item in comp:
+                y -= vspacing
+                y -= item.height
                 if y < item.height:
                     self._edit = item
                     return True
-                y -= item.height
-            y -= comp.MARGIN_Y
+            y -= margin
         return False
 
     def get_text(self):

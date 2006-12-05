@@ -118,6 +118,13 @@ class DiagramLine(LineItem):
         if hasattr(self, '_load_orthogonal'):
             self.orthogonal = self._load_orthogonal
             del self._load_orthogonal
+
+        # First update matrix and solve constraints (NE and SW handle are
+        # lazy and are resolved by the constraint solver rather than set
+        # directly.
+        self.canvas.update_matrix(self)
+        self.canvas.solver.solve()
+
         if hasattr(self, '_load_head_connection'):
             adapter = component.queryMultiAdapter((self._load_head_connection, self), IConnect)
             assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_head_connection, self)

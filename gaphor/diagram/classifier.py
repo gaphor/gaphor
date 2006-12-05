@@ -75,9 +75,10 @@ class Compartment(list):
         for item in self:
             cr.save()
             try:
-                offset += item.height + vspacing
+                offset += item.height
                 cr.move_to(0, offset)
                 item.draw(context)
+                offset += vspacing
             finally:
                 cr.restore()
 
@@ -268,11 +269,10 @@ class ClassifierItem(NamedItem):
             f_w, f_h = text_extents(cr, self._from, font=font.FONT_SMALL)
 
         sizes = [comp.get_size() for comp in self._compartments]
-
+        self.update_name_size(context)
+        sizes.append(self.get_name_size())
         self.min_width = max(s_w, n_w, f_w)
         self.min_height = 0
-
-        super(ClassifierItem, self).pre_update(context)
 
         if sizes:
             w = max(map(lambda p: p[0], sizes))
@@ -280,6 +280,8 @@ class ClassifierItem(NamedItem):
             h = sum(map(lambda p: p[1], sizes))
             self.min_width = max(self.min_width, w)
             self.min_height += h
+
+        super(ClassifierItem, self).pre_update(context)
 
 
     def pre_update_compartment_icon(self, context):

@@ -40,6 +40,8 @@ class ConnectHandleTool(HandleTool):
         wx, wy: handle position in world coordinates
         """
         canvas = view.canvas
+        i2w = view.canvas.get_matrix_i2w
+        w2i = view.canvas.get_matrix_w2i
         min_dist, dummy = view.transform_distance_c2w(10, 0)
         glue_pos_w = (0, 0)
         glue_item = None
@@ -48,20 +50,21 @@ class ConnectHandleTool(HandleTool):
                 continue
             adapter = component.queryMultiAdapter((i, item), IConnect)
             if adapter:
-                x, y = view.canvas.get_matrix_w2i(i).transform_point(wx, wy)
+                x, y = w2i(i).transform_point(wx, wy)
                 pos = adapter.glue(handle, x, y)
                 if pos:
-                    x, y = view.canvas.get_matrix_i2w(i).transform_point(*pos)
-                    d = distance_point_point((wx, wy), (x, y)) 
+                    d = i.point(x, y)
                     if d <= min_dist:
                         min_dist = d
-                        glue_pos_w = (x, y)
+                        glue_pos_w = i2w(i).transform_point(*pos)
                         glue_item = i
+
         dist, _ = view.transform_distance_c2w(10, 0)
         if min_dist < dist:
-            x, y = view.canvas.get_matrix_w2i(item).transform_point(*glue_pos_w)
+            x, y = w2i(item).transform_point(*glue_pos_w)
             handle.x = x
             handle.y = y
+
         # Return the glued item, this can be used by connect() to
         # determine which item it should connect to
         return glue_item

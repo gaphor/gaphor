@@ -15,16 +15,15 @@ class PackageItem(NamedItem):
     }
     __style__ = {
         'name-padding': (25, 10, 5, 10),
+        'tab-x': 50,
+        'tab-y': 20,
     }
-
-    TAB_X = 50
-    TAB_Y = 20
 
     def pre_update(self, context):
         cr = context.cairo
         w, h = text_extents(cr, self.subject.name)
         self.min_width = w + 60
-        self.min_height = h + 30 + self.TAB_Y
+        self.min_height = h + 30 + self.style.tab_y
         if self.stereotype:
             s_w, s_h = text_extents(cr, self.stereotype)
             self.min_width = max(self.min_width, s_w)
@@ -38,8 +37,8 @@ class PackageItem(NamedItem):
         o = 0.0
         h = self.height
         w = self.width
-        x = PackageItem.TAB_X
-        y = PackageItem.TAB_Y
+        x = self.style.tab_x
+        y = self.style.tab_y
         cr.move_to(x, y)
         cr.line_to(x, o)
         cr.line_to(o, o)

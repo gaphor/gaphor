@@ -105,15 +105,8 @@ class ElementConnect(AbstractConnect):
         hx, hy = handle_pos
         ax, ay = glued.handles()[NW].pos
         bx, by = glued.handles()[SE].pos
-        if abs(hx - ax) < 0.01:
-            side = 3
-        elif abs(hy - ay) < 0.01:
-            side = 0
-        elif abs(hx - bx) < 0.01:
-            side = 1
-        else:
-            side = 2
-        return side
+        return min((abs(hy - ay), 0), (abs(hx - bx), 1),
+                   (abs(hy - by), 2),  (abs(hx - ax), 3))[1]
 
     def glue(self, handle, x, y):
         """
@@ -121,7 +114,7 @@ class ElementConnect(AbstractConnect):
         is allowed.
         """
         h = self.element.handles()
-        bounds = (h[NW].pos + h[SE].pos)
+        bounds = map(float, (h[NW].pos + h[SE].pos))
         return geometry.point_on_rectangle(bounds, (x, y), border=True)
 
     def connect_constraint(self, handle, x, y):

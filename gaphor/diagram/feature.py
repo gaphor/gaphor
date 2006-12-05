@@ -8,7 +8,7 @@ from gaphas.item import Item
 from diagramitem import DiagramItem
 from gaphor.undomanager import undoable
 from gaphor.diagram import DiagramItemMeta
-
+from gaphas.util import text_extents
 
 class FeatureItem(DiagramItem):
     """FeatureItems are model elements who recide inside a ClassifierItem, such
@@ -49,34 +49,17 @@ class FeatureItem(DiagramItem):
 
     def update_size(self, text, context):
         cr = context.cairo
-        x_bear, y_bear, self.width, self.height, x_adv, y_adv = cr.text_extents(text)
+        self.width, self.height = text_extents(cr, text)
 
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec, notifiers)
         #log.debug('setting text %s' % self.subject.render() or '')
         self.text = self.subject and self.subject.render() or ''
 
-    # CanvasItem callbacks:
-
     def point(self, x, y):
         """
         """
         return distance_rectangle_point((0, 0, self.width, self.height), (x, y))
-
-    # Editable
-
-    def on_editable_get_editable_shape(self, x,y):
-        return self._expression
-
-    def on_editable_start_editing(self, shape):
-        #self.preserve_property('expression')
-        pass
-
-    def on_editable_editing_done(self, shape, new_text):
-        self.set_property('expression', new_text)
-        #if new_text != self.subject.name:
-        #    self.subject.name = new_text
-        self.request_update()
 
 
 class AttributeItem(FeatureItem):
