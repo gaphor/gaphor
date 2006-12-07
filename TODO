@@ -1,4 +1,9 @@
 
+ - text position of folded InterfaceItem (should be below circle)
+ - extra margin around operations in ClassItem
+ - join/fork node text editing
+ - text placement for action nodes.
+
  - Undo functionality
  - Load / save regression testing
    !!! Create some example diagrams,

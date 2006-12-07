@@ -21,7 +21,8 @@ class GeneralizationItem(DiagramLine):
         cr.move_to(0, 0)
         cr.line_to(15, -10)
         cr.line_to(15, 10)
-        cr.line_to(0, 0)
+        cr.close_path()
+        cr.stroke()
         cr.move_to(15, 0)
 
 # vim:sw=4:et:ai

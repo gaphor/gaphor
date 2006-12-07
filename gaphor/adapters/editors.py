@@ -79,6 +79,10 @@ class ClassifierItemEditor(object):
         """Find out what's located at point (x, y), is it in the
         name part or is it text in some compartment
         """
+        if self._item.drawing_style not in (items.ClassifierItem.DRAW_COMPARTMENT, items.ClassifierItem.DRAW_COMPARTMENT_ICON):
+            self._edit = self._item
+            return True
+
         self._edit = None
         name_comp_height = self._item.get_name_size()[1]
         if y < name_comp_height:
