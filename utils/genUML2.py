@@ -283,7 +283,7 @@ def parse_association_tags(tag):
     elif tag:
         tag = tag.value
 
-    print 'scanning tags: %s' % tag
+    #print 'scanning tags: %s' % tag
 
     if tag and tag.find('subsets') != -1:
         # find the text after 'subsets':

@@ -4,16 +4,11 @@ Relationship -- Base class for dependencies and associations.
 
 import itertools
 
-import gobject
-import pango
-import diacanvas
-
 from gaphor import resource, UML
 
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.lifeline import LifelineItem, LifetimeItem
-from gaphor.diagram import TextElement
-from gaphor.diagram.groupable import GroupBase
+#from gaphor.diagram import TextElement
 
 #
 # TODO: asynch message has open arrow head

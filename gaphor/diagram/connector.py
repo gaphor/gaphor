@@ -49,7 +49,6 @@ This is subject to change in the future when UML specification clarifies in
 this area.
 """
 
-import diacanvas
 from gaphor import resource, UML
 from diagramline import DiagramLine, FreeLine
 from elementitem import ElementItem

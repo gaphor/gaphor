@@ -608,26 +608,26 @@ class AssociationEnd(SubjectSupport):
             #print 'horizontal line'
             if h:
                 name_dx = ofs
-                name_dy = -ofs - name_h # - height
+                name_dy = -ofs - name_h
                 mult_dx = ofs
                 mult_dy = ofs
             else:
                 name_dx = -ofs - name_w
-                name_dy = -ofs - name_h # - height
+                name_dy = -ofs - name_h
                 mult_dx = -ofs - mult_w
                 mult_dy = ofs
         elif 0 <= abs_rc <= 0.2:
             #print 'vertical line'
             if v:
-                name_dx = -ofs - name_w # - width
+                name_dx = -ofs - name_w
                 name_dy = ofs
                 mult_dx = ofs
                 mult_dy = ofs
             else:
-                name_dx = -ofs - name_w # - width
-                name_dy = -ofs - name_h # - height
+                name_dx = -ofs - name_w
+                name_dy = -ofs - name_h
                 mult_dx = ofs
-                mult_dy = -ofs - mult_h # - height
+                mult_dy = -ofs - mult_h
         else:
             r = abs_rc < 1.0
             align_left = (h and not r) or (r and not h)
@@ -636,11 +636,11 @@ class AssociationEnd(SubjectSupport):
                 name_dx = ofs
                 mult_dx = ofs
             else:
-                name_dx = -ofs - name_w # - width
-                mult_dx = -ofs - mult_w # - width
+                name_dx = -ofs - name_w
+                mult_dx = -ofs - mult_w
             if align_bottom:
-                name_dy = -ofs - name_h # - height
-                mult_dy = -ofs - name_h - mult_h # - height
+                name_dy = -ofs - name_h
+                mult_dy = -ofs - name_h - mult_h
             else:
                 name_dy = ofs 
                 mult_dy = ofs + mult_h # + height

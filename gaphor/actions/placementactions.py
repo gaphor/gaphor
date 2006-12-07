@@ -299,16 +299,16 @@ class ActionPlacementAction(NamespacePlacementAction):
 register_action(ActionPlacementAction)
 
 
-#class ObjectNodePlacementAction(NamespacePlacementAction):
-#    id = 'InsertObjectNode'
-#    label = 'Object Node'
-#    tooltip = 'Create a new object node'
-#    stock_id = 'gaphor-object-node'
-#    name = 'Object'
-#    type = diagram.ObjectNodeItem
-#    subject_type = UML.ObjectNode
-#
-#register_action(ObjectNodePlacementAction)
+class ObjectNodePlacementAction(NamespacePlacementAction):
+    id = 'InsertObjectNode'
+    label = 'Object Node'
+    tooltip = 'Create a new object node'
+    stock_id = 'gaphor-object-node'
+    name = 'Object'
+    type = items.ObjectNodeItem
+    subject_type = UML.ObjectNode
+
+register_action(ObjectNodePlacementAction)
 
 
 class CommentPlacementAction(PlacementAction):
@@ -395,15 +395,15 @@ class ImplementationPlacementAction(PlacementAction):
 register_action(ImplementationPlacementAction)
 
 
-#class FlowPlacementAction(PlacementAction):
-#    id = 'InsertFlow'
-#    label = 'Control/Object _Flow'
-#    tooltip = 'Create a new control/object flow'
-#    stock_id = 'gaphor-control-flow'
-#    name = 'Flow'
-#    type = diagram.FlowItem
-#
-#register_action(FlowPlacementAction)
+class FlowPlacementAction(PlacementAction):
+    id = 'InsertFlow'
+    label = 'Control/Object _Flow'
+    tooltip = 'Create a new control/object flow'
+    stock_id = 'gaphor-control-flow'
+    name = 'Flow'
+    type = items.FlowItem
+
+register_action(FlowPlacementAction)
 
 
 class ComponentPlacementAction(NamespacePlacementAction):

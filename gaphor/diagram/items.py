@@ -35,6 +35,7 @@ from gaphor.diagram.activitynodes import InitialNodeItem, ActivityFinalNodeItem
 from gaphor.diagram.activitynodes import FlowFinalNodeItem
 from gaphor.diagram.activitynodes import DecisionNodeItem
 from gaphor.diagram.activitynodes import ForkNodeItem
+from gaphor.diagram.flow import FlowItem
 
 # Use Cases:
 from gaphor.diagram.actor import ActorItem
