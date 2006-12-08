@@ -67,6 +67,29 @@ class NamedItemEditor(object):
 component.provideAdapter(NamedItemEditor)
 
 
+class ObjectNodeItemEditor(NamedItemEditor):
+    component.adapts(items.ObjectNodeItem)
+
+    def is_editable(self, x, y):
+        self.edit_tag = (x, y) in self._item.tag_bounds
+        return True
+
+    def get_text(self):
+        if self.edit_tag:
+            return self._item.subject.upperBound.value
+        else:
+            return super(ObjectNodeItemEditor, self).get_text()
+
+    def update_text(self, text):
+        if self.edit_tag:
+            self._item.subject.upperBound.value = text
+        else:
+            return super(ObjectNodeItemEditor, self).update_text(text)
+        self._item.request_update()
+
+component.provideAdapter(ObjectNodeItemEditor)
+
+
 class ClassifierItemEditor(object):
     interface.implements(IEditor)
     component.adapts(items.ClassifierItem)

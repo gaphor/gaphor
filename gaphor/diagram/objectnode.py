@@ -10,6 +10,8 @@ from gaphor import UML
 #from gaphor.diagram.align import V_ALIGN_MIDDLE
 #from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
+from gaphas.util import text_extents, text_multiline
+from gaphas.geometry import Rectangle, distance_rectangle_point
 
 
 class ObjectNodeItem(NamedItem):
@@ -20,7 +22,7 @@ class ObjectNodeItem(NamedItem):
     Ordering information can be hidden by user.
     """
 
-    __uml__      = UML.ObjectNode
+    __uml__ = UML.ObjectNode
 
     __style__ = {
         'margin': (10, 10, 10, 10)
@@ -41,12 +43,6 @@ class ObjectNodeItem(NamedItem):
 
         self._tag = '' #TextElement('value', '{ upperBound = %s }', '*')
         self._tag_bounds = None
-        #self.add(self._upper_bound)
-
-        #self._ordering = diacanvas.shape.Text()
-        #self._ordering.set_font_description(pango.FontDescription(font.FONT))
-        #self._ordering.set_alignment(pango.ALIGN_CENTER)
-        #self._ordering.set_markup(False)
 
         self._show_ordering = False
 
@@ -58,6 +54,8 @@ class ObjectNodeItem(NamedItem):
         self.request_update()
 
     ordering = property(lambda s: s.subject.ordering, _set_ordering)
+
+    tag_bounds = property(lambda s: s._tag_bounds)
 
     def _set_show_ordering(self, value):
         #self.preserve_property(pspec.name)
@@ -99,14 +97,22 @@ class ObjectNodeItem(NamedItem):
 
         # TODO: format tag properly:
         if self.subject.upperBound:
-            self._tag = '{ upperBound = %s }' % self.subject.upperBound.value
+            self._tag = '{ upperBound = %s }\n' % self.subject.upperBound.value
 
         self._tag += '{ ordering = %s }' % self.subject.ordering
 
-        w, h = text_extents(self._tag)
+        w, h = text_extents(context.cairo, self._tag, multiline=True)
         x = (self.width - w) / 2
-        y = self.height + self.style.margin[0]
+        y = self.height + self.style.margin[2]
         self._tag_bounds = Rectangle(x, y, width=w, height=h)
+
+    def point(self, x, y):
+        """
+        Return the distance from (x, y) to the item.
+        """
+        d1 = super(ObjectNodeItem, self).point(x, y)
+        d2 = distance_rectangle_point(self._tag_bounds, (x, y))
+        return min(d1, d2)
 
     def draw(self, context):
         cr = context.cairo

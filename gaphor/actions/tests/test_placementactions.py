@@ -103,6 +103,9 @@ class PlacementToolTestCase(unittest.TestCase):
     def test_flowfinalnode_placement(self):
         self.do_test_placement(placementactions.FlowFinalNodePlacementAction())
 
+    def test_objectnode_placement(self):
+        self.do_test_placement(placementactions.ObjectNodePlacementAction())
+
     def test_flow_placement(self):
         self.do_test_placement(placementactions.FlowPlacementAction())
 
