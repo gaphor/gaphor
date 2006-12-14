@@ -35,6 +35,11 @@ def lselect(expression=None):
 def flush():
     _default_element_factory.flush()
 
+def swap_element(element, new_class):
+    """Swap the class for an element
+    """
+    _default_element_factory.swap_element(element, new_class)
+
 if 0 and __debug__: 
     # Keep track of all model elements that are created
     from gaphor.misc.aspects import ReferenceAspect, LoggerAspect, weave_method

@@ -587,41 +587,141 @@ class ConnectorTestCase(unittest.TestCase):
         assert flow1.subject in a2.subject.outgoing
         assert flow1.subject.source is a2.subject
 
-    def test_flow_fork_decision(self):
+    def test_flow_fork_decision(self, itemClass=items.ForkNodeItem, forkNodeClass=UML.ForkNode, joinNodeClass=UML.JoinNode):
         """
         Test fork/decision behaviour.
+         [1] A join node has one outgoing edge.
+             self.outgoing->size() = 1
+         [2] If a join node has an incoming object flow, it must have an
+             outgoing object flow, otherwise, it must have an outgoing control
+             flow.
+
+         [1] A fork node has one incoming edge.
+         [2] The edges coming into and out of a fork node must be either all
+             object flows or all control flows.
         """
         assert len(list(UML.select())) == 0
 
         diagram = UML.create(UML.Diagram)
         flow1 = diagram.create(items.FlowItem)
         flow2 = diagram.create(items.FlowItem)
+        flow3 = diagram.create(items.FlowItem)
+        flow4 = diagram.create(items.FlowItem)
         a1 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
         a2 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
-        f1 = diagram.create(items.ForkNodeItem, subject=UML.create(UML.JoinNode))
+        a3 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
+        f1 = diagram.create(itemClass, subject=UML.create(joinNodeClass))
 
-        assert len(UML.lselect()) == 5, UML.lselect()
+        #assert len(UML.lselect()) == 6, UML.lselect()
 
         # Connect between two actions (ControlFlow)
+        # Connecting line this:
+        #                  |--flow2-->[ a2 ]
+        # [ a1 ] --flow1-->|
+        #                  |--flow3-->[ a3 ]
+
+        # First connect the Actions:
+
         adapter = component.queryMultiAdapter((a1, flow1), IConnect)
         assert adapter
         adapter.connect(flow1.head, flow1.head.x, flow1.head.y)
 
+        adapter = component.queryMultiAdapter((a2, flow2), IConnect)
+        assert adapter
+        adapter.connect(flow2.tail, flow2.tail.x, flow2.tail.y)
+
+        adapter = component.queryMultiAdapter((a3, flow3), IConnect)
+        assert adapter
+        adapter.connect(flow3.tail, flow3.tail.x, flow3.tail.y)
+
+        # Now connect to ForkNode:
+
         adapter = component.queryMultiAdapter((f1, flow1), IConnect)
         assert adapter
         adapter.connect(flow1.tail, flow1.tail.x, flow1.tail.y)
+        assert flow1.tail.connected_to is f1
         assert flow1.subject
         assert flow1.subject.target is f1.subject
-        assert type(f1.subject) is UML.JoinNode
+        assert flow1.subject in f1.subject.incoming
+        assert type(f1.subject) is joinNodeClass
 
-        # [1] A join node has one outgoing edge.
-        #     self.outgoing->size() = 1
-        # [2] If a join node has an incoming object flow, it must have an
-        #     outgoing object flow, otherwise, it must have an outgoing control
-        #     flow.
+        adapter = component.queryMultiAdapter((f1, flow2), IConnect)
+        assert adapter
+        adapter.connect(flow2.head, flow2.head.x, flow2.head.y)
+        assert flow2.head.connected_to is f1
+        assert flow2.subject.source is f1.subject
+        assert flow2.subject in f1.subject.outgoing
+        assert type(f1.subject) is joinNodeClass
 
-        # [1] A fork node has one incoming edge.
-        # [2] The edges coming into and out of a fork node must be either all
-        #     object flows or all control flows.
+        adapter = component.queryMultiAdapter((f1, flow3), IConnect)
+        assert adapter
+        adapter.connect(flow3.head, flow3.head.x, flow3.head.y)
+        assert flow3.head.connected_to is f1
+        assert flow3.subject.source is f1.subject
+        assert flow3.subject in f1.subject.outgoing
+
+        assert type(f1.subject) is forkNodeClass, f1.subject
+
+        # flow4 can't be an incoming flow:
+
+        adapter = component.queryMultiAdapter((f1, flow4), IConnect)
+        assert adapter
+        adapter.connect(flow4.tail, flow4.tail.x, flow4.tail.y)
+        assert flow4.tail.connected_to is None
+
+        # flow4 can be connected as outgoing flow though:
+
+        adapter = component.queryMultiAdapter((f1, flow4), IConnect)
+        assert adapter
+        adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
+        assert flow4.head.connected_to is f1
+
+        adapter.disconnect(flow4.head)
+        assert flow4.head.connected_to is None
+
+        # Now change the ForkNode back into a JoinNode by moving flow2
+        # to the opposite side:
+        # [ a1 ]--flow1-->|
+        #                 |--flow3-->[ a3 ]
+        # [ a2 ]--flow2-->|
+
+        adapter = component.queryMultiAdapter((a2, flow2), IConnect)
+        adapter.disconnect(flow2.tail)
+        assert len(a2.subject.incoming) == 0
+
+        # Let's try if we can connect both ends of flow2 to the ForkNode:
+        adapter = component.queryMultiAdapter((f1, flow2), IConnect)
+        adapter.connect(flow2.tail, flow2.tail.x, flow2.tail.y)
+        assert flow2.tail.connected_to is None, flow2.tail.connected_to
+
+        adapter.disconnect(flow2.head)
+        assert len(f1.subject.incoming) == 1
+        assert len(f1.subject.outgoing) == 1
+
+        adapter = component.queryMultiAdapter((a2, flow2), IConnect)
+        adapter.connect(flow2.head, flow2.head.x, flow2.head.y)
+        assert len(a2.subject.outgoing) == 0
+
+        adapter = component.queryMultiAdapter((f1, flow2), IConnect)
+        adapter.connect(flow2.tail, flow2.tail.x, flow2.tail.y)
+        assert len(a2.subject.outgoing) == 1
+        assert len(f1.subject.incoming) == 2
+        assert len(f1.subject.outgoing) == 1
+        assert type(f1.subject) is joinNodeClass, f1.subject
+
+        # And of course I can't add another outgoing edge:
+        adapter = component.queryMultiAdapter((f1, flow4), IConnect)
+        assert adapter
+        adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
+        assert flow4.head.connected_to is None
+
+
+    def test_flow_decision_merge(self):
+        """
+        Decision/Merge node is basically the same as Fork/Join node.
+        """
+        self.test_flow_fork_decision(itemClass=items.DecisionNodeItem,
+                                     forkNodeClass=UML.DecisionNode,
+                                     joinNodeClass=UML.MergeNode)
 
 # vim:sw=4:et:ai

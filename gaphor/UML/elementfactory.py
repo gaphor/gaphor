@@ -10,9 +10,6 @@ from gaphor.UML.diagram import Diagram
 from gaphor.UML.event import CreateElementEvent, RemoveElementEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
 
-# TODO: create an ElementFactory method that allows to swap instances of
-#       one type to another (e.g. ForkNode <-> DescisionNode)
-
 
 class _UndoCreateAction(object):
 
@@ -166,8 +163,9 @@ class ElementFactory(object):
 
     def swap_element(self, element, new_class):
 	assert element in self._elements.values()
-	element.__class__ = new_class
-	self.notify(element, '__class__')
+        if element.__class__ is not new_class:
+            element.__class__ = new_class
+            self.notify(element, '__class__')
 
     def connect(self, callback, *data):
         """Attach 'callback'."""

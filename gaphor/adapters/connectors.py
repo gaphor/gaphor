@@ -965,28 +965,99 @@ class FlowForkNodeConnect(FlowConnect):
         In addition to the normal check, one end should have at most one
         edge (incoming or outgoing).
         """
+        opposite = self.line.opposite(handle)
         line = self.line
         element = self.element
         subject = element.subject
+        connected_to = opposite.connected_to
+
+        # Element can not connect back to itself
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
 
         # If one side of self.element has more than one edge, the
         # type of node is determined (either join or fork).
         if handle is line.head and len(subject.incoming) > 1 and len(subject.outgoing) > 0:
-            print 'head: type determined'
             return None
 
         if handle is line.tail and len(subject.incoming) > 0 and len(subject.outgoing) > 1:
-            print 'tail: type determined'
             return None
 
         return super(FlowForkNodeConnect, self).glue(handle, x, y)
 
     def connect_subject(self):
         super(FlowForkNodeConnect, self).connect_subject()
+
         # Switch class for self.element Join/Fork depending on the number
         # of incoming/outgoing edges.
+        subject = self.element.subject
+        if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
+            UML.swap_element(subject, UML.JoinNode)
+        elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
+            UML.swap_element(subject, UML.ForkNode)
+        elif len(subject.incoming) > 1 and len(subject.outgoing) > 1:
+            raise RuntimeError, 'Inconsistent state'
 
 component.provideAdapter(FlowForkNodeConnect)
+
+
+class FlowDecisionNodeConnect(FlowConnect):
+    """
+    Connect Flow to a ForkNode
+    """
+    component.adapts(items.DecisionNodeItem, items.FlowItem)
+
+    def glue(self, handle, x, y):
+        """
+        In addition to the normal check, one end should have at most one
+        edge (incoming or outgoing).
+        """
+        opposite = self.line.opposite(handle)
+        line = self.line
+        element = self.element
+        subject = element.subject
+        connected_to = opposite.connected_to
+
+        # Element can not connect back to itself
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
+
+        # If one side of self.element has more than one edge, the
+        # type of node is determined (either join or fork).
+        if handle is line.head and len(subject.incoming) > 1 and len(subject.outgoing) > 0:
+            return None
+
+        if handle is line.tail and len(subject.incoming) > 0 and len(subject.outgoing) > 1:
+            return None
+
+        return super(FlowDecisionNodeConnect, self).glue(handle, x, y)
+
+    def connect_subject(self):
+        super(FlowDecisionNodeConnect, self).connect_subject()
+
+        # Switch class for self.element Join/Fork depending on the number
+        # of incoming/outgoing edges.
+        subject = self.element.subject
+        if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
+            UML.swap_element(subject, UML.MergeNode)
+        elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
+            UML.swap_element(subject, UML.DecisionNode)
+        elif len(subject.incoming) > 1 and len(subject.outgoing) > 1:
+            raise RuntimeError, 'Inconsistent state'
+
+component.provideAdapter(FlowDecisionNodeConnect)
 
 
 # vim:sw=4:et:ai
