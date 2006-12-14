@@ -1,51 +1,41 @@
-# vim:sw=4
 """
 Logger
 
 Logger is a simple entry point for writing log messages.
+
+It wraps the logging module and adds some basic configuration.
 """
-import sys
-import traceback
+
+import logging
+
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(levelname)s %(message)s')
+                    #format='%(asctime)s %(module)s:%(lineno)s %(levelname)s %(message)s')
+                    #filename='/tmp/myapp.log',
+                    #filemode='w')
+
 
 class Logger(object):
-    DEBUG = 1
-    INFO = 2
-    WARNING = 3
-    ERROR = 4
-    CRITICAL = 5
+    DEBUG = logging.DEBUG
+    INFO = logging.INFO
+    WARNING = logging.WARNING
+    ERROR = logging.ERROR
+    CRITICAL = logging.CRITICAL
 
     def __init__(self):
-        self.__log_level = Logger.DEBUG
-        self.__loggers = list()
-
-    def add_logger(self, logger):
-        self.__loggers.append(logger)
-
-    def remove_logger(self, logger):
-        try:
-            self.__loggers.remove(logger)
-        except:
-            pass
+        self.logger = logging.getLogger('')
 
     def set_log_level(self, level):
-        assert level >= Logger.DEBUG and level <= Logger.CRITICAL
-        self.__log_level = level
+        self.logger.setLevel(level)
         
     def get_log_level(self, level):
-        return self.__log_level
+        return self.logger.getEffectiveLevel()
 
     log_level = property(get_log_level, get_log_level, None, 'Log level')
 
     def log(self, level, message, exc=None):
-        assert level >= Logger.DEBUG and level <= Logger.CRITICAL
-        for logger in self.__loggers:
-            try:
-                if logger(level, message, exc):
-		    return
-            except Exception, e:
-                self.default_logger(Logger.ERROR,
-                            'Could not write to logger %s: %s' % (logger, e))
-	self.default_logger(level, message, exc)
+	self.logger.log(level, message, exc_info=exc)
 
     def debug(self, message, exc=None):
         self.log(Logger.DEBUG, message, exc)
@@ -62,11 +52,5 @@ class Logger(object):
     def critical(self, message, exc=None):
         self.log(Logger.CRITICAL, message, exc)
 
-    def default_logger(self, level, message, exc=None):
-        """The default logger sends log information to stdout.
-        """
-        if level >= self.__log_level:
-            print '[Gaphor-%s] %s' % (('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL' )[level - 1], message)
-            if exc:
-                print '[Gaphor-Exception]', exc
-                print traceback.print_exc()
+
+# vim:sw=4
