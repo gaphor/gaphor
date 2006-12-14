@@ -164,6 +164,11 @@ class ElementFactory(object):
         import gc
         for i in range(4): gc.collect()
 
+    def swap_element(self, element, new_class):
+	assert element in self._elements.values()
+	element.__class__ = new_class
+	self.notify(element, '__class__')
+
     def connect(self, callback, *data):
         """Attach 'callback'."""
         self._observers.append((callback,) + data)
