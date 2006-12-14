@@ -6,6 +6,7 @@ For 0.9.0:
  - join/fork node text editing
  - text placement for action nodes.
  - implement ObjectNode and flow items
+ - create a generic method to swap class types
 
 For 0.10.0 and later:
 ---------------------

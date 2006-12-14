@@ -70,6 +70,10 @@ component.provideAdapter(NamedItemEditor)
 class ObjectNodeItemEditor(NamedItemEditor):
     component.adapts(items.ObjectNodeItem)
 
+    def __init__(self, item):
+        super(ObjectNodeItemEditor, self).__init__(item)
+        self.edit_tag = False
+
     def is_editable(self, x, y):
         self.edit_tag = (x, y) in self._item.tag_bounds
         return True
@@ -88,6 +92,47 @@ class ObjectNodeItemEditor(NamedItemEditor):
         self._item.request_update()
 
 component.provideAdapter(ObjectNodeItemEditor)
+
+
+class FlowItemEditor(object):
+    """Text edit support for Named items.
+    """
+    interface.implements(IEditor)
+    component.adapts(items.FlowItem)
+
+    def __init__(self, item):
+        self._item = item
+        self.edit_name = False
+        self.edit_guard = False
+
+    def is_editable(self, x, y):
+        if not self._item.subject:
+            return False
+        if (x, y) in self._item.name_bounds:
+            self.edit_name = True
+        elif (x, y) in self._item.guard_bounds:
+            self.edit_guard = True
+        return self.edit_name or self.edit_guard
+
+    def get_text(self):
+        if self.edit_name:
+            return self._item.subject.name
+        elif self.edit_guard:
+            return self._item.subject.guard.value
+
+    def get_bounds(self):
+        return None
+
+    def update_text(self, text):
+        if self.edit_name:
+            self._item.subject.name = text
+        elif self.edit_guard:
+            self._item.subject.guard.value = text
+
+    def key_pressed(self, pos, key):
+        pass
+
+component.provideAdapter(FlowItemEditor)
 
 
 class ClassifierItemEditor(object):

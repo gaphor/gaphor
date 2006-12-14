@@ -12,8 +12,7 @@ from gaphor import UML
 from gaphor.diagram.diagramline import DiagramLine
 from gaphas.geometry import Rectangle
 from gaphas.util import text_extents, text_multiline
-
-import itertools
+from gaphas.geometry import distance_rectangle_point
 
 
 node_classes = {
@@ -45,6 +44,8 @@ class FlowItem(DiagramLine):
         #self.set(has_tail=1, tail_fill_color=0,
         #         tail_a=0.0, tail_b=15.0, tail_c=6.0, tail_d=6.0)
 
+    name_bounds = property(lambda s: s._name_bounds)
+    guard_bounds = property(lambda s: s._guard_bounds)
 
     def on_subject_notify(self, pspec, notifiers = ()):
         DiagramLine.on_subject_notify(self, pspec, ('guard', 'guard.value',) + notifiers)
@@ -96,6 +97,12 @@ class FlowItem(DiagramLine):
         self.update_name(context)
         self.update_guard(context)
 
+    def point(self, x, y):
+        d1 = super(FlowItem, self).point(x, y)
+        drp = distance_rectangle_point
+        d2 = drp(self._name_bounds, (x, y))
+        d3 = drp(self._guard_bounds, (x, y))
+        return min(d1, d2, d3)
 
     def draw_tail(self, context):
         cr = context.cairo
@@ -110,7 +117,7 @@ class FlowItem(DiagramLine):
         cr= context.cairo
         if self.subject:
             text_multiline(cr, self._name_bounds[0], self._name_bounds[3], self.subject.name)
-            text_multiline(cr, self._guartd_bounds[0], self._guard_bounds[3], self.subject.guard and self.subject.guard.value)
+            text_multiline(cr, self._guard_bounds[0], self._guard_bounds[3], self.subject.guard and self.subject.guard.value)
 
         if context.hovered or context.focused or context.draw_all:
             cr.set_line_width(0.5)
@@ -184,15 +191,6 @@ class ACItem(object):
         Do nothing, use move_center method.
         """
         pass
-
-
-    def on_shape_iter(self):
-        """
-        Return activity edge name and circle.
-        """
-        it = TextElement.on_shape_iter(self)
-        return itertools.chain([self._circle], it)
-
 
 
 class CFlowItem(FlowItem):

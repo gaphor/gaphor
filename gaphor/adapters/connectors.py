@@ -890,4 +890,103 @@ class AssociationConnect(RelationshipConnect):
 component.provideAdapter(AssociationConnect)
 
 
+class FlowConnect(RelationshipConnect):
+    """
+    Connect FlowItem and Action/ObjectNode, initial/final nodes.
+    """
+
+    def glue(self, handle, x, y):
+        """
+        In addition to the normal check, both line ends may not be connected
+        to the same element. Same goes for subjects.
+        """
+        opposite = self.line.opposite(handle)
+        line = self.line
+        element = self.element
+        subject = element.subject
+        connected_to = opposite.connected_to
+
+        if handle is line.head and isinstance(subject, UML.FinalNode) \
+           or handle is line.tail and isinstance(subject, UML.InitialNode):
+            return None
+
+        # Another flow may not be connected:
+        #connected = line.canvas.get_connected_items(element)
+        #if handle is line.head:
+        #    for i, h in connected:
+        #        if isinstance(i, items.FlowItem) and h is i.head:
+        #            return None
+
+        #if handle is line.tail:
+        #    for i, h in connected:
+        #        if isinstance(i, items.FlowItem) and h is i.tail:
+        #            return None
+
+        #if handle is line.head and subject.outgoing and subject.outgoing is not line.subject:
+        #    return None
+
+        #if handle is line.tail and subject.incoming and subject.incoming is not line.subject:
+        #    return None
+
+        return super(FlowConnect, self).glue(handle, x, y)
+
+    def connect_subject(self):
+        line = self.line
+        element = self.element
+        if isinstance(line.head.connected_to, items.ObjectNodeItem) \
+           or isinstance(line.tail.connected_to, items.ObjectNodeItem):
+            relation = self.relationship_or_new(UML.ObjectFlow,
+                        ('source', 'outgoing'),
+                        ('target', 'incoming'))
+        else:
+            relation = self.relationship_or_new(UML.ControlFlow,
+                        ('source', 'outgoing'),
+                        ('target', 'incoming'))
+        if not relation.guard:
+            relation.guard = UML.create(UML.LiteralSpecification)
+        self.line.subject = relation
+
+component.provideAdapter(factory=FlowConnect,
+                         adapts=(items.ActionItem, items.FlowItem))
+component.provideAdapter(factory=FlowConnect,
+                         adapts=(items.ActivityNodeItem, items.FlowItem))
+component.provideAdapter(factory=FlowConnect,
+                         adapts=(items.ObjectNodeItem, items.FlowItem))
+
+
+class FlowForkNodeConnect(FlowConnect):
+    """
+    Connect Flow to a ForkNode
+    """
+    component.adapts(items.ForkNodeItem, items.FlowItem)
+
+    def glue(self, handle, x, y):
+        """
+        In addition to the normal check, one end should have at most one
+        edge (incoming or outgoing).
+        """
+        line = self.line
+        element = self.element
+        subject = element.subject
+
+        # If one side of self.element has more than one edge, the
+        # type of node is determined (either join or fork).
+        if handle is line.head and len(subject.incoming) > 1 and len(subject.outgoing) > 0:
+            print 'head: type determined'
+            return None
+
+        if handle is line.tail and len(subject.incoming) > 0 and len(subject.outgoing) > 1:
+            print 'tail: type determined'
+            return None
+
+        return super(FlowForkNodeConnect, self).glue(handle, x, y)
+
+    def connect_subject(self):
+        super(FlowForkNodeConnect, self).connect_subject()
+        # Switch class for self.element Join/Fork depending on the number
+        # of incoming/outgoing edges.
+
+component.provideAdapter(FlowForkNodeConnect)
+
+
 # vim:sw=4:et:ai

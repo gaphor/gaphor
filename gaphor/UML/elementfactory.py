@@ -10,6 +10,9 @@ from gaphor.UML.diagram import Diagram
 from gaphor.UML.event import CreateElementEvent, RemoveElementEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
 
+# TODO: create an ElementFactory method that allows to swap instances of
+#       one type to another (e.g. ForkNode <-> DescisionNode)
+
 
 class _UndoCreateAction(object):
 

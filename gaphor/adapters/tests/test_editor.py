@@ -43,3 +43,16 @@ class EditorTestCase(TestCase):
         assert adapter.is_editable(x, y)
         assert adapter._edit is assoc.tail_end
         
+    def test_objectnode_editor(self):
+        diagram = UML.create(UML.Diagram)
+        node = diagram.create(items.ObjectNodeItem, subject=UML.create(UML.ObjectNode))
+        diagram.canvas.update_now()
+
+        adapter = IEditor(node)
+        assert adapter.is_editable(10, 10)
+        assert not adapter.edit_tag
+
+        assert adapter.is_editable(*node.tag_bounds[:2])
+        assert adapter.edit_tag
+
+

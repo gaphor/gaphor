@@ -119,7 +119,8 @@ class FlowFinalNodeItem(ActivityNodeItem):
 
 
 class FDNode(ActivityNodeItem):
-    """Abstract class for fork and decision UI nodes. These nodes contain
+    """
+    Abstract class for fork and decision UI nodes. These nodes contain
     combined property, which determines if the they represent combination
     of fork/join or decision/merge nodes as described in UML
     specification.
@@ -175,7 +176,7 @@ class DecisionNodeItem(FDNode):
         cr.close_path()
         cr.stroke()
 
-        super(FDNode, self).draw(context)
+        super(DecisionNodeItem, self).draw(context)
 
 
 
@@ -197,25 +198,17 @@ class ForkNodeItem(FDNode):
         self._join_spec_x = 0
         self._join_spec_y = 0
 
-#        for h in self.handles:
-#            h.props.movable = False
-#            h.props.visible = False
-#        self.handles[diacanvas.HANDLE_N].props.visible = True
-#        self.handles[diacanvas.HANDLE_S].props.visible = True
-#        self.handles[diacanvas.HANDLE_N].props.movable = True
-#        self.handles[diacanvas.HANDLE_S].props.movable = True
-
     def update(self, context):
         """
         Update join specification position.
         """
         self._join_spec_x, self._join_spec_y = get_text_point(
-                text_extents(context.cairo, self._join_spec),
+                text_extents(context.cairo, self.subject.joinSpec.value),
                 self.width, self.height,
                 (ALIGN_CENTER, ALIGN_TOP),
                 (10, 0, 0, 0),
                 True)
-
+        super(ForkNodeItem, self).update(context)
 
     def draw(self, context):
         """
@@ -224,48 +217,32 @@ class ForkNodeItem(FDNode):
         """
         cr = context.cairo
         cr.set_line_width(self.width)
-        cr.move_to(0, 0)
-        cr.line_to(0, self.height)
+        x = self.width / 2.
+        cr.move_to(x, 0)
+        cr.line_to(x, self.height)
         cr.move_to(self.name_x, self.name_y)
 
         cr.move_to(self._join_spec_x, self._join_spec_y)
-        cr.show_text(self._join_spec)
+        cr.show_text(self.subject.joinSpec.value)
 
         cr.stroke()
         super(ForkNodeItem, self).draw(context)
 
+    def on_subject_notify(self, pspec, notifiers = ()):
+        """
+        Detect changes of subject.
 
-###    def on_update(self, affine):
-###        """
-###        Update fork/join node.
-###
-###        If node is join node then update also join specification.
-###        """
-###        FDNode.on_update(self, affine)
-###
-###        w, h = self._join_spec.get_size()
-###        self._join_spec.update_label((self.width - w) / 2, 
-###            -h - self.MARGIN)
-###
-###        GroupBase.on_update(self, affine)
-###
-###
-###    def on_subject_notify(self, pspec, notifiers = ()):
-###        """
-###        Detect changes of subject.
-###
-###        If subject is join node, then set subject of join specification
-###        text element.
-###        """
-###        FDNode.on_subject_notify(self, pspec, notifiers)
-###        if self.subject and isinstance(self.subject, UML.JoinNode):
-###            factory = resource(UML.ElementFactory)
-###            if not self.subject.joinSpec:
-###                self.subject.joinSpec = factory.create(UML.LiteralSpecification)
-###                self.subject.joinSpec.value = 'and'
-###            self._join_spec.subject = self.subject.joinSpec
-###        else:
-###            self._join_spec.subject = None
-###        self.request_update()
+        If subject is join node, then set subject of join specification
+        text element.
+        """
+        FDNode.on_subject_notify(self, pspec, notifiers)
+        if self.subject and isinstance(self.subject, UML.JoinNode):
+            if not self.subject.joinSpec:
+                self.subject.joinSpec = UML.create(UML.LiteralSpecification)
+                self.subject.joinSpec.value = 'and'
+            #self._join_spec.subject = self.subject.joinSpec
+        #else:
+        #    self._join_spec.subject = None
+        self.request_update()
 
 # vim:sw=4:et

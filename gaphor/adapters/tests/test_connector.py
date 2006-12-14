@@ -449,6 +449,179 @@ class ConnectorTestCase(unittest.TestCase):
 
         assert len(list(UML.select())) == 3, list(UML.select())
 
+    def test_flow_activitynodes(self):
+        assert len(list(UML.select())) == 0
 
+        diagram = UML.create(UML.Diagram)
+        flow = diagram.create(items.FlowItem)
+        i1 = diagram.create(items.InitialNodeItem, subject=UML.create(UML.InitialNode))
+        f1 = diagram.create(items.ActivityFinalNodeItem, subject=UML.create(UML.ActivityFinalNode))
+        f2 = diagram.create(items.FlowFinalNodeItem, subject=UML.create(UML.FlowFinalNode))
+
+        assert len(UML.lselect()) == 4
+
+        # head may not connect to FinalNode
+
+        adapter = component.queryMultiAdapter((f1, flow), IConnect)
+        assert adapter
+        adapter.connect(flow.head, flow.head.x, flow.head.y)
+        assert flow.head.connected_to is None
+
+        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+        assert flow.head.connected_to is None
+        assert flow.tail.connected_to is f1
+
+        adapter.disconnect(flow.tail)
+        assert flow.head.connected_to is None
+        assert flow.tail.connected_to is None
+
+        adapter = component.queryMultiAdapter((f2, flow), IConnect)
+        assert adapter
+        adapter.connect(flow.head, flow.head.x, flow.head.y)
+        assert flow.head.connected_to is None
+
+        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+        assert flow.head.connected_to is None
+        assert flow.tail.connected_to is f2
+
+        adapter.disconnect(flow.tail)
+        assert flow.head.connected_to is None
+        assert flow.tail.connected_to is None
+
+        # tail may not connect to InitialNode
+
+        adapter = component.queryMultiAdapter((i1, flow), IConnect)
+        assert adapter
+        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+        assert flow.head.connected_to is None
+        assert flow.tail.connected_to is None
+
+        adapter.connect(flow.head, flow.head.x, flow.head.y)
+        assert flow.tail.connected_to is None
+        assert flow.head.connected_to is i1
+
+    
+    def test_flow_action(self):
+        assert len(list(UML.select())) == 0
+
+        diagram = UML.create(UML.Diagram)
+        flow = diagram.create(items.FlowItem)
+        a1 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
+        a2 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
+        o1 = diagram.create(items.ObjectNodeItem, subject=UML.create(UML.ObjectNode))
+
+        assert len(UML.lselect()) == 5, UML.lselect()
+
+        # Connect between two actions (ControlFlow)
+        adapter = component.queryMultiAdapter((a1, flow), IConnect)
+        assert adapter
+        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+
+        assert flow.tail.connected_to is a1
+        assert flow.subject is None
+
+        adapter = component.queryMultiAdapter((a2, flow), IConnect)
+        adapter.connect(flow.head, flow.head.x, flow.head.y)
+
+        assert flow.head.connected_to is a2
+        assert flow.tail.connected_to is a1
+        assert not flow.subject is None
+        assert isinstance(flow.subject, UML.ControlFlow)
+
+        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+
+        assert flow.head.connected_to is a2
+        assert flow.tail.connected_to is a2
+        assert not flow.subject is None
+        assert isinstance(flow.subject, UML.ControlFlow)
+
+        # Connection between action and objectNode (ObjectFlow)
+
+        adapter = component.queryMultiAdapter((o1, flow), IConnect)
+        adapter.connect(flow.head, flow.head.x, flow.head.y)
+
+        assert flow.head.connected_to is o1
+        assert flow.tail.connected_to is a2
+        assert not flow.subject is None
+        assert isinstance(flow.subject, UML.ObjectFlow)
+
+        adapter.disconnect(flow.head)
+
+        assert flow.head.connected_to is None
+        assert flow.tail.connected_to is a2
+        assert flow.subject is None
+
+    def test_flow_connect(self):
+        assert len(list(UML.select())) == 0
+
+        diagram = UML.create(UML.Diagram)
+        flow1 = diagram.create(items.FlowItem)
+        flow2 = diagram.create(items.FlowItem)
+        a1 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
+        a2 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
+        o1 = diagram.create(items.ObjectNodeItem, subject=UML.create(UML.ObjectNode))
+
+        assert len(UML.lselect()) == 5, UML.lselect()
+
+        adapter = component.queryMultiAdapter((a1, flow1), IConnect)
+        assert adapter
+        adapter.connect(flow1.tail, flow1.tail.x, flow1.tail.y)
+        assert flow1.tail.connected_to is a1
+        assert not a1.subject.incoming, a1.subject.incoming
+
+        # More than one edge may be connected to an action:
+
+        adapter = component.queryMultiAdapter((a1, flow2), IConnect)
+        assert adapter
+        adapter.connect(flow2.tail, flow2.tail.x, flow2.tail.y)
+        assert flow1.tail.connected_to is a1
+        assert flow2.tail.connected_to is a1
+
+        adapter = component.queryMultiAdapter((a2, flow1), IConnect)
+        assert adapter
+        adapter.connect(flow1.head, flow1.head.x, flow1.head.y)
+        assert flow1.head.connected_to is a2
+        assert flow1.tail.connected_to is a1
+        assert flow1.subject in a1.subject.incoming
+        assert flow1.subject.target is a1.subject
+        assert flow1.subject in a2.subject.outgoing
+        assert flow1.subject.source is a2.subject
+
+    def test_flow_fork_decision(self):
+        """
+        Test fork/decision behaviour.
+        """
+        assert len(list(UML.select())) == 0
+
+        diagram = UML.create(UML.Diagram)
+        flow1 = diagram.create(items.FlowItem)
+        flow2 = diagram.create(items.FlowItem)
+        a1 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
+        a2 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
+        f1 = diagram.create(items.ForkNodeItem, subject=UML.create(UML.JoinNode))
+
+        assert len(UML.lselect()) == 5, UML.lselect()
+
+        # Connect between two actions (ControlFlow)
+        adapter = component.queryMultiAdapter((a1, flow1), IConnect)
+        assert adapter
+        adapter.connect(flow1.head, flow1.head.x, flow1.head.y)
+
+        adapter = component.queryMultiAdapter((f1, flow1), IConnect)
+        assert adapter
+        adapter.connect(flow1.tail, flow1.tail.x, flow1.tail.y)
+        assert flow1.subject
+        assert flow1.subject.target is f1.subject
+        assert type(f1.subject) is UML.JoinNode
+
+        # [1] A join node has one outgoing edge.
+        #     self.outgoing->size() = 1
+        # [2] If a join node has an incoming object flow, it must have an
+        #     outgoing object flow, otherwise, it must have an outgoing control
+        #     flow.
+
+        # [1] A fork node has one incoming edge.
+        # [2] The edges coming into and out of a fork node must be either all
+        #     object flows or all control flows.
 
 # vim:sw=4:et:ai
