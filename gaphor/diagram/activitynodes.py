@@ -202,12 +202,13 @@ class ForkNodeItem(FDNode):
         """
         Update join specification position.
         """
-        self._join_spec_x, self._join_spec_y = get_text_point(
-                text_extents(context.cairo, self.subject.joinSpec.value),
-                self.width, self.height,
-                (ALIGN_CENTER, ALIGN_TOP),
-                (10, 0, 0, 0),
-                True)
+        if isinstance(self.subject, UML.JoinNode):
+            self._join_spec_x, self._join_spec_y = get_text_point(
+                    text_extents(context.cairo, self.subject.joinSpec.value),
+                    self.width, self.height,
+                    (ALIGN_CENTER, ALIGN_TOP),
+                    (10, 0, 0, 0),
+                    True)
         super(ForkNodeItem, self).update(context)
 
     def draw(self, context):
@@ -222,8 +223,9 @@ class ForkNodeItem(FDNode):
         cr.line_to(x, self.height)
         cr.move_to(self.name_x, self.name_y)
 
-        cr.move_to(self._join_spec_x, self._join_spec_y)
-        cr.show_text(self.subject.joinSpec.value)
+        if isinstance(self.subject, UML.JoinNode):
+            cr.move_to(self._join_spec_x, self._join_spec_y)
+            cr.show_text(self.subject.joinSpec.value)
 
         cr.stroke()
         super(ForkNodeItem, self).draw(context)
