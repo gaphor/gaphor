@@ -746,12 +746,6 @@ class ExtensionConnect(RelationshipConnect):
                                 break
                         else:
                             line.subject = assoc
-#                                    if (end1.type is head_type and end2.type is tail_type):
-#                                        line.head_subject = end1
-#                                        line.tail_subject = end2
-#                                    else:
-#                                        line.head_subject = end2
-#                                        line.tail_subject = end1
                             return
             else:
                 # Create a new Extension relationship
@@ -767,7 +761,7 @@ class ExtensionConnect(RelationshipConnect):
                 tail_type.ownedAttribute = head_end
                 head_end.name = 'baseClass'
 
-        line.subject = relation
+                line.subject = relation
 
     def disconnect_subject(self, handle):
         """
@@ -910,24 +904,6 @@ class FlowConnect(RelationshipConnect):
            or handle is line.tail and isinstance(subject, UML.InitialNode):
             return None
 
-        # Another flow may not be connected:
-        #connected = line.canvas.get_connected_items(element)
-        #if handle is line.head:
-        #    for i, h in connected:
-        #        if isinstance(i, items.FlowItem) and h is i.head:
-        #            return None
-
-        #if handle is line.tail:
-        #    for i, h in connected:
-        #        if isinstance(i, items.FlowItem) and h is i.tail:
-        #            return None
-
-        #if handle is line.head and subject.outgoing and subject.outgoing is not line.subject:
-        #    return None
-
-        #if handle is line.tail and subject.incoming and subject.incoming is not line.subject:
-        #    return None
-
         return super(FlowConnect, self).glue(handle, x, y)
 
     def connect_subject(self, handle):
@@ -1008,10 +984,12 @@ class FlowForkDecisionNodeConnect(FlowConnect):
 
         return super(FlowForkDecisionNodeConnect, self).glue(handle, x, y)
 
-    def combine_nodes(self, fork_node_class, join_node_class):
+    def combine_nodes(self):
         """
         Combine join/fork or decision/methe nodes into one diagram item.
         """
+        fork_node_class = self.fork_node_class
+        join_node_class = self.join_node_class
         line = self.line
         element = self.element
         subject = element.subject
@@ -1040,10 +1018,12 @@ class FlowForkDecisionNodeConnect(FlowConnect):
 
             element.combined = fork_node
 
-    def decombine_nodes(self, fork_node_class, join_node_class):
+    def decombine_nodes(self):
         """
         Decombine join/fork or decision/merge nodes.
         """
+        fork_node_class = self.fork_node_class
+        join_node_class = self.join_node_class
         line = self.line
         element = self.element
         if element.combined:
@@ -1092,13 +1072,8 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     """
     component.adapts(items.ForkNodeItem, items.FlowItem)
 
-    def combine_nodes(self, fork_node_class=UML.ForkNode,
-                      join_node_class=UML.JoinNode):
-        super(FlowForkNodeConnect, self).combine_nodes(fork_node_class=fork_node_class, join_node_class=join_node_class)
-
-    def decombine_nodes(self, fork_node_class=UML.ForkNode,
-                        join_node_class=UML.JoinNode):
-        super(FlowForkNodeConnect, self).decombine_nodes(fork_node_class=fork_node_class, join_node_class=join_node_class)
+    fork_node_class=UML.ForkNode
+    join_node_class=UML.JoinNode
 
 component.provideAdapter(FlowForkNodeConnect)
 
@@ -1109,13 +1084,8 @@ class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
     """
     component.adapts(items.DecisionNodeItem, items.FlowItem)
 
-    def combine_nodes(self, fork_node_class=UML.DecisionNode,
-                      join_node_class=UML.MergeNode):
-        super(FlowDecisionNodeConnect, self).combine_nodes(fork_node_class=fork_node_class, join_node_class=join_node_class)
-
-    def decombine_nodes(self, fork_node_class=UML.DecisionNode,
-                        join_node_class=UML.MergeNode):
-        super(FlowDecisionNodeConnect, self).decombine_nodes(fork_node_class=fork_node_class, join_node_class=join_node_class)
+    fork_node_class = UML.DecisionNode
+    join_node_class = UML.MergeNode
 
 component.provideAdapter(FlowDecisionNodeConnect)
 
