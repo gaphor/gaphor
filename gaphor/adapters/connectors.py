@@ -408,7 +408,7 @@ class RelationshipConnect(ElementConnect):
             adapter.disconnect(handle)
         return connected_items
 
-    def connect_subject(self):
+    def connect_subject(self, handle):
         """
         Establish the relationship at model level.
         """
@@ -434,7 +434,7 @@ class RelationshipConnect(ElementConnect):
         if super(RelationshipConnect, self).connect(handle, x, y):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
-                self.connect_subject()
+                self.connect_subject(handle)
                 line = self.line
                 if line.subject:
                     self.connect_connected_items()
@@ -490,7 +490,7 @@ class DependencyConnect(RelationshipConnect):
 
         return super(DependencyConnect, self).glue(handle, x, y)
 
-    def connect_subject(self):
+    def connect_subject(self, handle):
         """
         TODO: cleck for existing relationships (use self.relation())
         """
@@ -548,7 +548,7 @@ class ImplementationConnect(RelationshipConnect):
 
         return super(ImplementationConnect, self).glue(handle, x, y)
 
-    def connect_subject(self):
+    def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Implementation,
                     ('contract', None),
                     ('implementatingClassifier', 'implementation'))
@@ -586,7 +586,7 @@ class GeneralizationConnect(RelationshipConnect):
 
         return super(GeneralizationConnect, self).glue(handle, x, y)
 
-    def connect_subject(self):
+    def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Generalization,
                     ('general', None),
                     ('specific', 'generalization'))
@@ -626,7 +626,7 @@ class IncludeConnect(RelationshipConnect):
 
         return super(IncludeConnect, self).glue(handle, x, y)
 
-    def connect_subject(self):
+    def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Include,
                     ('addition', None),
                     ('includingCase', 'include'))
@@ -666,7 +666,7 @@ class ExtendConnect(RelationshipConnect):
 
         return super(ExtendConnect, self).glue(handle, x, y)
 
-    def connect_subject(self):
+    def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Extend,
                     ('extendedCase', None),
                     ('extension', 'extend'))
@@ -713,7 +713,7 @@ class ExtensionConnect(RelationshipConnect):
 
         return super(ExtensionConnect, self).glue(handle, x, y)
 
-    def connect_subject(self):
+    def connect_subject(self, handle):
         element = self.element
         line = self.line
 
@@ -810,7 +810,7 @@ class AssociationConnect(RelationshipConnect):
 
         return super(AssociationConnect, self).glue(handle, x, y)
 
-    def connect_subject(self):
+    def connect_subject(self, handle):
         element = self.element
         line = self.line
 
@@ -930,7 +930,7 @@ class FlowConnect(RelationshipConnect):
 
         return super(FlowConnect, self).glue(handle, x, y)
 
-    def connect_subject(self):
+    def connect_subject(self, handle):
         line = self.line
         element = self.element
         # TODO: connect opposite side again (in case it's a join/fork or
@@ -946,7 +946,19 @@ class FlowConnect(RelationshipConnect):
                         ('target', 'incoming'))
         if not relation.guard:
             relation.guard = UML.create(UML.LiteralSpecification)
-        self.line.subject = relation
+        line.subject = relation
+        opposite = line.opposite(handle)
+        if opposite and isinstance(opposite.connected_to, (items.ForkNodeItem, items.DecisionNodeItem)):
+            adapter = component.queryMultiAdapter((opposite.connected_to, line), IConnect)
+            adapter.combine_nodes()
+
+    def disconnect_subject(self, handle):
+        super(FlowConnect, self).disconnect_subject(handle)
+        line = self.line
+        opposite = line.opposite(handle)
+        if opposite and isinstance(opposite.connected_to, (items.ForkNodeItem, items.DecisionNodeItem)):
+            adapter = component.queryMultiAdapter((opposite.connected_to, line), IConnect)
+            adapter.decombine_nodes()
 
 component.provideAdapter(factory=FlowConnect,
                          adapts=(items.ActionItem, items.FlowItem))
@@ -1002,25 +1014,31 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         """
         line = self.line
         element = self.element
-        join_node = element.subject
-        if element.combined:
-            return
+        subject = element.subject
+        if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
+            UML.swap_element(subject, join_node_class)
+            element.request_update()
+        elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
+            UML.swap_element(subject, fork_node_class)
+            element.request_update()
+        elif not element.combined and len(subject.incoming) > 1 and len(subject.outgoing) > 1:
+            join_node = subject
 
-        # determine flow class:
-        if [ f for f in join_node.incoming if isinstance(f, UML.ObjectFlow) ]:
-            flow_class = UML.ObjectFlow
-        else:
-            flow_class = UML.ControlFlow
-        
-        UML.swap_element(join_node, join_node_class)
-        fork_node = UML.create(UML.ForkNode)
-        for flow in join_node.outgoing:
-            flow.source = fork_node
-        flow = UML.create(flow_class)
-        flow.source = join_node
-        flow.target = fork_node
+            # determine flow class:
+            if [ f for f in join_node.incoming if isinstance(f, UML.ObjectFlow) ]:
+                flow_class = UML.ObjectFlow
+            else:
+                flow_class = UML.ControlFlow
+            
+            UML.swap_element(join_node, join_node_class)
+            fork_node = UML.create(fork_node_class)
+            for flow in list(join_node.outgoing):
+                flow.source = fork_node
+            flow = UML.create(flow_class)
+            flow.source = join_node
+            flow.target = fork_node
 
-        element.combined = fork_node
+            element.combined = fork_node
 
     def decombine_nodes(self, fork_node_class, join_node_class):
         """
@@ -1030,7 +1048,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         element = self.element
         if element.combined:
             join_node = element.subject
-            flow = subject.outgoing[0]
+            flow = join_node.outgoing[0]
             fork_node = flow.target
             assert fork_node is element.combined
             assert isinstance(join_node, join_node_class)
@@ -1038,48 +1056,34 @@ class FlowForkDecisionNodeConnect(FlowConnect):
 
             if len(join_node.incoming) < 2 or len(fork_node.outgoing) < 2:
                 # Move all outgoing edges to the first node (the join node):
-                for flow in fork_node.outgoing:
+                for flow in list(fork_node.outgoing):
                     flow.source = join_node
                 flow.unlink()
                 fork_node.unlink()
 
                 # swap subject to fork node if outgoing > 1
-                if len(subject.outgoing) > 1:
-                    assert len(subject.incoming) < 2
-                    UML.swap_element(subject, fork_node_class)
-            else:
-                # Illegal state!
-                pass
-            element.combined = None
+                if len(join_node.outgoing) > 1:
+                    assert len(join_node.incoming) < 2
+                    UML.swap_element(join_node, fork_node_class)
+                element.combined = None
 
-    def connect_subject(self, fork_node_class, join_node_class):
+    def connect_subject(self, handle):
         """
         In addition to a subject connect, the subject of the element may 
         be changed.
         For readability, parameters are named afther the classes used by
         Join/Fork nodes.
         """
-        super(FlowForkDecisionNodeConnect, self).connect_subject()
+        super(FlowForkDecisionNodeConnect, self).connect_subject(handle)
 
         # Switch class for self.element Join/Fork depending on the number
         # of incoming/outgoing edges.
-        element = self.element
-        subject = element.subject
-        if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
-            UML.swap_element(subject, join_node_class)
-            element.request_update()
-        elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
-            UML.swap_element(subject, fork_node_class)
-            element.request_update()
-        elif len(subject.incoming) > 1 and len(subject.outgoing) > 1:
-            self.combine_nodes(fork_node_class, join_node_class)
+        self.combine_nodes()
 
-    def disconnect_subject(self, fork_node_class=None, join_node_class=None):
+    def disconnect_subject(self):
         super(FlowForkDecisionNodeConnect, self).disconnect_subject()
         if self.element.combined:
-            self.decombine_nodes(fork_node_class, join_node_class)
-        # TODO: if combined node: un-combine if only one incoming or outgoing
-        #       egde on one side.
+            self.decombine_nodes()
 
 
 class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
@@ -1088,8 +1092,13 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     """
     component.adapts(items.ForkNodeItem, items.FlowItem)
 
-    def connect_subject(self):
-        super(FlowForkNodeConnect, self).connect_subject(join_node_class=UML.JoinNode, fork_node_class=UML.ForkNode)
+    def combine_nodes(self, fork_node_class=UML.ForkNode,
+                      join_node_class=UML.JoinNode):
+        super(FlowForkNodeConnect, self).combine_nodes(fork_node_class=fork_node_class, join_node_class=join_node_class)
+
+    def decombine_nodes(self, fork_node_class=UML.ForkNode,
+                        join_node_class=UML.JoinNode):
+        super(FlowForkNodeConnect, self).decombine_nodes(fork_node_class=fork_node_class, join_node_class=join_node_class)
 
 component.provideAdapter(FlowForkNodeConnect)
 
@@ -1100,8 +1109,13 @@ class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
     """
     component.adapts(items.DecisionNodeItem, items.FlowItem)
 
-    def connect_subject(self):
-        super(FlowDecisionNodeConnect, self).connect_subject(join_node_class=UML.MergeNode, fork_node_class=UML.DecisionNode)
+    def combine_nodes(self, fork_node_class=UML.DecisionNode,
+                      join_node_class=UML.MergeNode):
+        super(FlowDecisionNodeConnect, self).combine_nodes(fork_node_class=fork_node_class, join_node_class=join_node_class)
+
+    def decombine_nodes(self, fork_node_class=UML.DecisionNode,
+                        join_node_class=UML.MergeNode):
+        super(FlowDecisionNodeConnect, self).decombine_nodes(fork_node_class=fork_node_class, join_node_class=join_node_class)
 
 component.provideAdapter(FlowDecisionNodeConnect)
 

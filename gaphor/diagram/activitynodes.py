@@ -132,7 +132,7 @@ class ForkDecisionNodeItem(ActivityNodeItem):
         self.set_prop_persistent('combined')
 
     def _set_combined(self, value):
-        self.preserve_property('combined')
+        #self.preserve_property('combined')
         self._combined = value
 
     combined = property(lambda s: s._combined, _set_combined)

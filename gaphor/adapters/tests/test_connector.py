@@ -610,13 +610,14 @@ class ConnectorTestCase(unittest.TestCase):
         a1 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
         a2 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
         a3 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
+        a4 = diagram.create(items.ActionItem, subject=UML.create(UML.Action))
         f1 = diagram.create(itemClass, subject=UML.create(joinNodeClass))
 
         #assert len(UML.lselect()) == 6, UML.lselect()
 
         # Connect between two actions (ControlFlow)
         # Connecting line this:
-        #                  |--flow2-->[ a2 ]
+        #        head  tail|--flow2-->[ a2 ]
         # [ a1 ] --flow1-->|
         #                  |--flow3-->[ a3 ]
 
@@ -652,6 +653,7 @@ class ConnectorTestCase(unittest.TestCase):
         assert flow2.subject.source is f1.subject
         assert flow2.subject in f1.subject.outgoing
         assert type(f1.subject) is joinNodeClass
+        assert flow2.canvas
 
         adapter = component.queryMultiAdapter((f1, flow3), IConnect)
         assert adapter
@@ -659,25 +661,46 @@ class ConnectorTestCase(unittest.TestCase):
         assert flow3.head.connected_to is f1
         assert flow3.subject.source is f1.subject
         assert flow3.subject in f1.subject.outgoing
+        assert len(f1.subject.outgoing) == 2
 
         assert type(f1.subject) is forkNodeClass, f1.subject
 
-        # flow4 can't be an incoming flow:
+        # flow4 will force the forknode to become a combined node:
 
         adapter = component.queryMultiAdapter((f1, flow4), IConnect)
         assert adapter
         adapter.connect(flow4.tail, flow4.tail.x, flow4.tail.y)
-        assert flow4.tail.connected_to is None
+        assert type(f1.subject) is forkNodeClass
+
+        adapter = component.queryMultiAdapter((a4, flow4), IConnect)
+        adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
+        assert type(f1.subject) is joinNodeClass
+        assert f1.combined
+        assert flow4.tail.connected_to is f1
+        assert flow4.subject.target is f1.subject
+        assert type(f1.combined) is forkNodeClass, f1.combined
+        assert flow1.subject in f1.subject.incoming
+        assert flow4.subject in f1.subject.incoming
+        assert flow2.subject in f1.combined.outgoing, f1.combined.outgoing
+        assert flow3.subject in f1.combined.outgoing, f1.combined.outgoing
+        assert len(f1.subject.outgoing) == 1
+        assert len(f1.combined.incoming) == 1
+        assert f1.subject.outgoing[0] is f1.combined.incoming[0]
 
         # flow4 can be connected as outgoing flow though:
-
-        adapter = component.queryMultiAdapter((f1, flow4), IConnect)
-        assert adapter
-        adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
-        assert flow4.head.connected_to is f1
+        #adapter = component.queryMultiAdapter((f1, flow4), IConnect)
+        #assert adapter
+        #adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
+        #assert flow4.head.connected_to is f1
 
         adapter.disconnect(flow4.head)
         assert flow4.head.connected_to is None
+        adapter = component.queryMultiAdapter((f1, flow4), IConnect)
+        adapter.disconnect(flow4.tail)
+        assert not f1.combined
+        
+        assert flow2.canvas
+        assert flow2.canvas.solver
 
         # Now change the ForkNode back into a JoinNode by moving flow2
         # to the opposite side:
@@ -710,10 +733,10 @@ class ConnectorTestCase(unittest.TestCase):
         assert type(f1.subject) is joinNodeClass, f1.subject
 
         # And of course I can't add another outgoing edge:
-        adapter = component.queryMultiAdapter((f1, flow4), IConnect)
-        assert adapter
-        adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
-        assert flow4.head.connected_to is None
+        #adapter = component.queryMultiAdapter((f1, flow4), IConnect)
+        #assert adapter
+        #adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
+        #assert flow4.head.connected_to is None
 
 
     def test_flow_decision_merge(self):
