@@ -933,6 +933,8 @@ class FlowConnect(RelationshipConnect):
     def connect_subject(self):
         line = self.line
         element = self.element
+        # TODO: connect opposite side again (in case it's a join/fork or
+        #       decision/merge node)
         if isinstance(line.head.connected_to, items.ObjectNodeItem) \
            or isinstance(line.tail.connected_to, items.ObjectNodeItem):
             relation = self.relationship_or_new(UML.ObjectFlow,
@@ -954,108 +956,152 @@ component.provideAdapter(factory=FlowConnect,
                          adapts=(items.ObjectNodeItem, items.FlowItem))
 
 
-class FlowForkNodeConnect(FlowConnect):
+class FlowForkDecisionNodeConnect(FlowConnect):
+    """
+    Abstract class with common behaviour for Fork/Join node and
+    Decision/Merge node.
+    """
+
+    def glue(self, handle, x, y):
+        """
+        In addition to the normal check, one end should have at most one
+        edge (incoming or outgoing).
+        """
+        opposite = self.line.opposite(handle)
+        line = self.line
+        element = self.element
+        subject = element.subject
+        connected_to = opposite.connected_to
+
+        # Element can not connect back to itself
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
+
+        # If one side of self.element has more than one edge, the
+        # type of node is determined (either join or fork).
+        #
+        # TODO: remove these restrictions and create a combined join/fork or
+        #       decision/merge node 
+        #if handle is line.head and len(subject.incoming) > 1 and len(subject.outgoing) > 0:
+        #    return None
+        #
+        #if handle is line.tail and len(subject.incoming) > 0 and len(subject.outgoing) > 1:
+        #    return None
+
+        return super(FlowForkDecisionNodeConnect, self).glue(handle, x, y)
+
+    def combine_nodes(self, fork_node_class, join_node_class):
+        """
+        Combine join/fork or decision/methe nodes into one diagram item.
+        """
+        line = self.line
+        element = self.element
+        join_node = element.subject
+        if element.combined:
+            return
+
+        # determine flow class:
+        if [ f for f in join_node.incoming if isinstance(f, UML.ObjectFlow) ]:
+            flow_class = UML.ObjectFlow
+        else:
+            flow_class = UML.ControlFlow
+        
+        UML.swap_element(join_node, join_node_class)
+        fork_node = UML.create(UML.ForkNode)
+        for flow in join_node.outgoing:
+            flow.source = fork_node
+        flow = UML.create(flow_class)
+        flow.source = join_node
+        flow.target = fork_node
+
+        element.combined = fork_node
+
+    def decombine_nodes(self, fork_node_class, join_node_class):
+        """
+        Decombine join/fork or decision/merge nodes.
+        """
+        line = self.line
+        element = self.element
+        if element.combined:
+            join_node = element.subject
+            flow = subject.outgoing[0]
+            fork_node = flow.target
+            assert fork_node is element.combined
+            assert isinstance(join_node, join_node_class)
+            assert isinstance(fork_node, fork_node_class)
+
+            if len(join_node.incoming) < 2 or len(fork_node.outgoing) < 2:
+                # Move all outgoing edges to the first node (the join node):
+                for flow in fork_node.outgoing:
+                    flow.source = join_node
+                flow.unlink()
+                fork_node.unlink()
+
+                # swap subject to fork node if outgoing > 1
+                if len(subject.outgoing) > 1:
+                    assert len(subject.incoming) < 2
+                    UML.swap_element(subject, fork_node_class)
+            else:
+                # Illegal state!
+                pass
+            element.combined = None
+
+    def connect_subject(self, fork_node_class, join_node_class):
+        """
+        In addition to a subject connect, the subject of the element may 
+        be changed.
+        For readability, parameters are named afther the classes used by
+        Join/Fork nodes.
+        """
+        super(FlowForkDecisionNodeConnect, self).connect_subject()
+
+        # Switch class for self.element Join/Fork depending on the number
+        # of incoming/outgoing edges.
+        element = self.element
+        subject = element.subject
+        if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
+            UML.swap_element(subject, join_node_class)
+            element.request_update()
+        elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
+            UML.swap_element(subject, fork_node_class)
+            element.request_update()
+        elif len(subject.incoming) > 1 and len(subject.outgoing) > 1:
+            self.combine_nodes(fork_node_class, join_node_class)
+
+    def disconnect_subject(self, fork_node_class=None, join_node_class=None):
+        super(FlowForkDecisionNodeConnect, self).disconnect_subject()
+        if self.element.combined:
+            self.decombine_nodes(fork_node_class, join_node_class)
+        # TODO: if combined node: un-combine if only one incoming or outgoing
+        #       egde on one side.
+
+
+class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     """
     Connect Flow to a ForkNode
     """
     component.adapts(items.ForkNodeItem, items.FlowItem)
 
-    def glue(self, handle, x, y):
-        """
-        In addition to the normal check, one end should have at most one
-        edge (incoming or outgoing).
-        """
-        opposite = self.line.opposite(handle)
-        line = self.line
-        element = self.element
-        subject = element.subject
-        connected_to = opposite.connected_to
-
-        # Element can not connect back to itself
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
-
-        # If one side of self.element has more than one edge, the
-        # type of node is determined (either join or fork).
-        if handle is line.head and len(subject.incoming) > 1 and len(subject.outgoing) > 0:
-            return None
-
-        if handle is line.tail and len(subject.incoming) > 0 and len(subject.outgoing) > 1:
-            return None
-
-        return super(FlowForkNodeConnect, self).glue(handle, x, y)
-
     def connect_subject(self):
-        super(FlowForkNodeConnect, self).connect_subject()
-
-        # Switch class for self.element Join/Fork depending on the number
-        # of incoming/outgoing edges.
-        subject = self.element.subject
-        if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
-            UML.swap_element(subject, UML.JoinNode)
-        elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
-            UML.swap_element(subject, UML.ForkNode)
-        elif len(subject.incoming) > 1 and len(subject.outgoing) > 1:
-            raise RuntimeError, 'Inconsistent state'
+        super(FlowForkNodeConnect, self).connect_subject(join_node_class=UML.JoinNode, fork_node_class=UML.ForkNode)
 
 component.provideAdapter(FlowForkNodeConnect)
 
 
-class FlowDecisionNodeConnect(FlowConnect):
+class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
     """
-    Connect Flow to a ForkNode
+    Connect Flow to a DecisionNode
     """
     component.adapts(items.DecisionNodeItem, items.FlowItem)
 
-    def glue(self, handle, x, y):
-        """
-        In addition to the normal check, one end should have at most one
-        edge (incoming or outgoing).
-        """
-        opposite = self.line.opposite(handle)
-        line = self.line
-        element = self.element
-        subject = element.subject
-        connected_to = opposite.connected_to
-
-        # Element can not connect back to itself
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
-
-        # If one side of self.element has more than one edge, the
-        # type of node is determined (either join or fork).
-        if handle is line.head and len(subject.incoming) > 1 and len(subject.outgoing) > 0:
-            return None
-
-        if handle is line.tail and len(subject.incoming) > 0 and len(subject.outgoing) > 1:
-            return None
-
-        return super(FlowDecisionNodeConnect, self).glue(handle, x, y)
-
     def connect_subject(self):
-        super(FlowDecisionNodeConnect, self).connect_subject()
-
-        # Switch class for self.element Join/Fork depending on the number
-        # of incoming/outgoing edges.
-        subject = self.element.subject
-        if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
-            UML.swap_element(subject, UML.MergeNode)
-        elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
-            UML.swap_element(subject, UML.DecisionNode)
-        elif len(subject.incoming) > 1 and len(subject.outgoing) > 1:
-            raise RuntimeError, 'Inconsistent state'
+        super(FlowDecisionNodeConnect, self).connect_subject(join_node_class=UML.MergeNode, fork_node_class=UML.DecisionNode)
 
 component.provideAdapter(FlowDecisionNodeConnect)
 

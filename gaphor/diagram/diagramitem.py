@@ -199,7 +199,7 @@ class DiagramItem(SubjectSupport):
 
         # save persistent properties
         for p in self._persistent_props:
-            save_func(p, getattr(self, p.replace('-', '_')))
+            save_func(p, getattr(self, p.replace('-', '_')), reference=True)
 
 
     def load(self, name, value):

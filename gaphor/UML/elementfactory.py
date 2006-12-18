@@ -165,7 +165,7 @@ class ElementFactory(object):
 	assert element in self._elements.values()
         if element.__class__ is not new_class:
             element.__class__ = new_class
-            self.notify(element, '__class__')
+            element.notify('__class__')
 
     def connect(self, callback, *data):
         """Attach 'callback'."""

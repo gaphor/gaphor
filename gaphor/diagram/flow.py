@@ -444,16 +444,16 @@ def combine_nodes(node):
     source = node
     if is_fd(node):
         source = target
-        move_collection(node, source, 'incoming')
+        move_collection(node, target, 'incoming')
 
         # create new fork node
-        cls = node_classes[source.__class__]
+        cls = node_classes[target.__class__]
         log.debug('creating %s' % cls)
         target = factory.create(cls)
         move_collection(node, target, 'outgoing')
     else:
         # fork node is created, referenced by target
-        move_collection(source, target, 'outgoing')
+        move_collection(node, target, 'outgoing')
 
     assert not is_fd(source)
     assert is_fd(target)

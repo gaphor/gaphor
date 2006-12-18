@@ -118,7 +118,7 @@ class FlowFinalNodeItem(ActivityNodeItem):
         
 
 
-class FDNode(ActivityNodeItem):
+class ForkDecisionNodeItem(ActivityNodeItem):
     """
     Abstract class for fork and decision UI nodes. These nodes contain
     combined property, which determines if the they represent combination
@@ -128,27 +128,17 @@ class FDNode(ActivityNodeItem):
 
     def __init__(self, id=None):
         ActivityNodeItem.__init__(self, id)
-        self._combined = False
+        self._combined = None
         self.set_prop_persistent('combined')
 
+    def _set_combined(self, value):
+        self.preserve_property('combined')
+        self._combined = value
 
-    def do_set_property(self, pspec, value):
-        if pspec.name == 'combined':
-            self.preserve_property('combined')
-            self._combined = value
-        else:
-            ActivityNodeItem.do_set_property(self, pspec, value)
+    combined = property(lambda s: s._combined, _set_combined)
+        
 
-
-    def do_get_property(self, pspec):
-        if pspec.name == 'combined':
-            return self._combined
-        else:
-            return ActivityNodeItem.do_get_property(self, pspec)
-
-
-
-class DecisionNodeItem(FDNode):
+class DecisionNodeItem(ForkDecisionNodeItem):
     """
     Representation of decision or merge node.
     """
@@ -180,7 +170,7 @@ class DecisionNodeItem(FDNode):
 
 
 
-class ForkNodeItem(FDNode):
+class ForkNodeItem(ForkDecisionNodeItem):
     """
     Representation of fork and join node.
     """
@@ -192,7 +182,7 @@ class ForkNodeItem(FDNode):
     }
 
     def __init__(self, id=None):
-        FDNode.__init__(self, id)
+        ForkDecisionNodeItem.__init__(self, id)
 
         self._join_spec = 'join spec test'
         self._join_spec_x = 0
@@ -237,7 +227,7 @@ class ForkNodeItem(FDNode):
         If subject is join node, then set subject of join specification
         text element.
         """
-        FDNode.on_subject_notify(self, pspec, notifiers)
+        ForkDecisionNodeItem.on_subject_notify(self, pspec, notifiers)
         if self.subject and isinstance(self.subject, UML.JoinNode):
             if not self.subject.joinSpec:
                 self.subject.joinSpec = UML.create(UML.LiteralSpecification)
