@@ -434,7 +434,6 @@ class AssociationEnd(SubjectSupport):
 
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
-        self._point1 = self._point2 = (0, 0)
 
         self._subject = None
 
@@ -578,7 +577,8 @@ class AssociationEnd(SubjectSupport):
         return self._mult
 
     def update(self, context, p1, p2):
-        """Update label placement for association's name and
+        """
+        Update label placement for association's name and
         multiplicity label. p1 is the line end and p2 is the last
         but one point of the line.
         """
@@ -605,7 +605,7 @@ class AssociationEnd(SubjectSupport):
         v = dy > 0 # bottom side
 
         if abs_rc > 6:
-            #print 'horizontal line'
+            # horizontal line
             if h:
                 name_dx = ofs
                 name_dy = -ofs - name_h
@@ -617,7 +617,7 @@ class AssociationEnd(SubjectSupport):
                 mult_dx = -ofs - mult_w
                 mult_dy = ofs
         elif 0 <= abs_rc <= 0.2:
-            #print 'vertical line'
+            # vertical line
             if v:
                 name_dx = -ofs - name_w
                 name_dy = ofs
@@ -629,7 +629,10 @@ class AssociationEnd(SubjectSupport):
                 mult_dx = ofs
                 mult_dy = -ofs - mult_h
         else:
+            # Should both items be placed on the same side of the line?
             r = abs_rc < 1.0
+
+            # Find out alignment of text (depends on the direction of the line)
             align_left = (h and not r) or (r and not h)
             align_bottom = (v and not r) or (r and not v)
             if align_left:
@@ -643,7 +646,7 @@ class AssociationEnd(SubjectSupport):
                 mult_dy = -ofs - name_h - mult_h
             else:
                 name_dy = ofs 
-                mult_dy = ofs + mult_h # + height
+                mult_dy = ofs + mult_h
 
         self._name_bounds = Rectangle(p1[0] + name_dx,
                                       p1[1] + name_dy,
@@ -654,9 +657,6 @@ class AssociationEnd(SubjectSupport):
                                       p1[1] + mult_dy,
                                       width=mult_w,
                                       height=mult_h)
-
-        self._point1 = p1
-        self._point2 = p2
 
     def on_subject_notify(self, pspec, notifiers=()):
         SubjectSupport.on_subject_notify(self, pspec,

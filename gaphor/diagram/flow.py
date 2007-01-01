@@ -64,7 +64,7 @@ class FlowItem(DiagramLine):
         def get_pos(p1, p2, width, height):
             x = p1[0] > p2[0] and -10 or width + 10
             x = p2[0] - x
-            y = p1[1] <= p2[1] and height + 15 or -15
+            y = p1[1] <= p2[1] and height + 5 or -15
             y = p2[1] - y
             return x, y
 
@@ -93,7 +93,8 @@ class FlowItem(DiagramLine):
         self._guard_bounds = Rectangle(x, y, width=max(10, w), height=max(10, h))
 
 
-    def pre_update(self, context):
+    def update(self, context):
+        super(FlowItem, self).update(context)
         self.update_name(context)
         self.update_guard(context)
 
