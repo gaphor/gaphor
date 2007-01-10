@@ -730,7 +730,9 @@ class ExtensionConnect(RelationshipConnect):
                 if (end1.type is head_type and end2.type is tail_type) \
                    or (end2.type is head_type and end1.type is tail_type):
                     return
-                    
+             
+            # TODO: make element at head end update!
+
             # Find all associations and determine if the properties on
             # the association ends have a type that points to the class.
             for assoc in UML.select():

@@ -146,7 +146,100 @@ class SubjectSupport(Presentation, Element):
         self.request_update()
 
 
-class DiagramItem(SubjectSupport):
+class StereotypeSupport(object):
+    """
+    Support methods for stereotypes.
+    """
+
+    def __init__(self):
+        self._stereotype = None
+
+    def set_stereotype(self, text=None):
+        """
+        Set the stereotype text for the diagram item.
+
+        Note, that text is not Stereotype object.
+
+        @arg text: stereotype text
+        """
+        if text:
+            self._stereotype = STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE
+        else:
+            self._stereotype = None
+        self.request_update()
+
+    stereotype = property(lambda s: s._stereotype, set_stereotype)
+
+    def update_stereotype(self):
+        """
+        Update the stereotype definitions (text) of this item.
+
+        Note, that this method is also called from
+        ExtensionItem.confirm_connect_handle method.
+        """
+        if self.subject:
+            applied_stereotype = self.subject.appliedStereotype
+        else:
+            applied_stereotype = None
+
+        def stereotype_name(name):
+            """
+            Return a nice name to display as stereotype. First will be
+            character lowercase unless the second character is uppercase.
+            """
+            if len(name) > 1 and name[1].isupper():
+                return name
+            else:
+                return name[0].lower() + name[1:]
+
+        # by default no stereotype, however check for __stereotype__
+        # attribute to assign some static stereotype see interfaces,
+        # use case relationships, package or class for examples
+        stereotype = getattr(self, '__stereotype__', None)
+        if stereotype:
+            stereotype = self.parse_stereotype(stereotype)
+
+        if applied_stereotype:
+            # generate string with stereotype names separated by coma
+            sl = ', '.join(stereotype_name(s.name) for s in applied_stereotype)
+            if stereotype:
+                stereotype = '%s, %s' % (stereotype, sl)
+            else:
+                stereotype = sl
+
+        # Phew! :]
+        self.set_stereotype(stereotype)
+
+    def parse_stereotype(self, data):
+        if isinstance(data, str): # return data as stereotype if it is a string
+            return data
+
+        subject = self.subject
+
+        for stereotype, condition in data.items():
+            if isinstance(condition, tuple):
+                cls, predicate = condition
+            elif isinstance(condition, type):
+                cls = condition
+                predicate = None
+            elif callable(condition):
+                cls = None
+                predicate = condition
+            else:
+                assert False, 'wrong conditional %s' % condition
+
+            ok = True
+            if cls:
+                ok = type(subject) is cls #isinstance(subject, cls)
+            if predicate:
+                ok = predicate(self)
+
+            if ok:
+                return stereotype
+        return None
+
+
+class DiagramItem(SubjectSupport, StereotypeSupport):
     """
     Basic functionality for all model elements (lines and elements!).
 
@@ -174,13 +267,12 @@ class DiagramItem(SubjectSupport):
 
     def __init__(self, id=None):
         SubjectSupport.__init__(self)
-        self._id = id # or uniqueid.generate_id()
+        StereotypeSupport.__init__(self)
+
+        self._id = id
 
         # properties, which should be saved in file
         self._persistent_props = set()
-
-        # stereotype
-        self._stereotype = None
 
     id = property(lambda self: self._id, doc='Id')
 
@@ -273,107 +365,14 @@ class DiagramItem(SubjectSupport):
 
     def on_subject_notify__appliedStereotype(self, subject, pspec=None):
         if self.subject:
-            self.update_stereotype()
+            self.request_update()
 
     def request_update(self):
+        """Placeholder for gaphor.Item's request_update() method.
+        """
         pass
 
     def on_subject_notify(self, pspec, notifiers=()):
         SubjectSupport.on_subject_notify(self, pspec, notifiers + ('appliedStereotype',))
-        if self.subject:
-            self.update_stereotype()
 
-    #
-    # Stereotypes
-    #
-    def get_stereotype(self):
-        if self._stereotype:
-            return self._stereotype
-
-    def set_stereotype(self, text=None):
-        """
-        Set the stereotype text for the diagram item.
-
-        Note, that text is not Stereotype object.
-
-        @arg text: stereotype text
-        """
-        if text:
-            self._stereotype = STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE
-        else:
-            self._stereotype = None
-        self.request_update()
-
-    stereotype = property(get_stereotype, set_stereotype)
-
-    def update_stereotype(self):
-        """
-        Update the stereotype definitions (text) of this item.
-
-        Note, that this method is also called from
-        ExtensionItem.confirm_connect_handle method.
-        """
-        if self.subject:
-            applied_stereotype = self.subject.appliedStereotype
-        else:
-            applied_stereotype = None
-
-        def stereotype_name(name):
-            """
-            Return a nice name to display as stereotype. First will be
-            character lowercase unless the second character is uppercase.
-            """
-            if len(name) > 1 and name[1].isupper():
-                return name
-            else:
-                return name[0].lower() + name[1:]
-
-        # by default no stereotype, however check for __stereotype__
-        # attribute to assign some static stereotype see interfaces,
-        # use case relationships, package or class for examples
-        stereotype = getattr(self, '__stereotype__', None)
-        if stereotype:
-            stereotype = self.parse_stereotype(stereotype)
-
-        if applied_stereotype:
-            # generate string with stereotype names separated by coma
-            sl = ', '.join(stereotype_name(s.name) for s in applied_stereotype)
-            if stereotype:
-                stereotype = '%s, %s' % (stereotype, sl)
-            else:
-                stereotype = sl
-
-        # Phew! :]
-        self.set_stereotype(stereotype)
-
-    #
-    # utility methods
-    #
-
-    def parse_stereotype(self, data):
-        if isinstance(data, str): # return data as stereotype if it is a string
-            return data
-
-        subject = self.subject
-
-        for stereotype, condition in data.items():
-            if isinstance(condition, tuple):
-                cls, predicate = condition
-            elif isinstance(condition, type):
-                cls = condition
-                predicate = None
-            elif callable(condition):
-                cls = None
-                predicate = condition
-            else:
-                assert False, 'wrong conditional %s' % condition
-
-            ok = True
-            if cls:
-                ok = isinstance(subject, cls)
-            if predicate:
-                ok = predicate(self)
-
-            if ok:
-                return stereotype
-        return None
+# vim:sw=4:et:ai

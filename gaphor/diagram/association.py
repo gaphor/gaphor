@@ -186,22 +186,6 @@ class AssociationItem(DiagramLine):
     def on_subject_notify__memberEnd(self, subject, pspec):
         self.request_update()
 
-    def update_label(self, context, p1, p2):
-        """Update the name label near the middle of the association.
-        """
-        cr = context.cairo
-        w, h = text_extents(cr, self.subject and self.subject.name)
-
-        x = p1[0] > p2[0] and w + 2 or -2
-        x = (p1[0] + p2[0]) / 2.0 - x
-        y = p1[1] <= p2[1] and h or 0
-        y = (p1[1] + p2[1]) / 2.0 - y
-
-        #log.debug('label pos = (%d, %d)' % (x, y))
-        #return x, y, max(x + 10, x + w), max(y + 10, y + h)
-        return x, y, x + w, y + h
-
-
     def update(self, context):
         """
         Update the shapes and sub-items of the association.
@@ -260,9 +244,7 @@ class AssociationItem(DiagramLine):
                                      handles[-2].pos)
         
         # update name label:
-        middle = len(handles)/2
-        self._label_bounds = self.update_label(context, handles[middle-1].pos,
-                                               handles[middle].pos)
+        self._label_bounds = self.update_label(context, self.subject and self.subject.name)
 
 
     def point(self, x, y):

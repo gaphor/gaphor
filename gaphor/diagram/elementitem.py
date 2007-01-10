@@ -35,5 +35,8 @@ class ElementItem(gaphas.Element, DiagramItem):
         else:
             DiagramItem.load(self, name, value)
 
+    def pre_update(self, context):
+	super(ElementItem, self).pre_update(context)
+	self.update_stereotype()
 
 # vim:sw=4

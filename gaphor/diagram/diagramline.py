@@ -6,6 +6,7 @@ import itertools
 
 import gaphas
 from gaphas.util import text_extents
+from gaphas.geometry import Rectangle
 from diagramitem import DiagramItem
 from interfaces import IConnect
 
@@ -20,21 +21,38 @@ class LineItem(gaphas.Line, DiagramItem):
         gaphas.Line.__init__(self)
         DiagramItem.__init__(self, id)
         self.fuzzyness = 2
-        self._stereotype_pos = (0, 0)
-        self._stereotype_width = 0
-        self._stereotype_height = 0
+        self._stereotype_bounds = None
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
-    def update(self, context):
-        super(LineItem, self).update(context)
+    def update_label(self, context, text):
+        """
+        Update the name label near the middle of the association.
+
+        Returns a geometry.Rectangle object with the boundig box for the label text.
+        """
         cr = context.cairo
+        handles = self._handles
+        middle = len(handles)/2
+        p1 = handles[middle].pos
+        p2 = handles[middle-1].pos
 
-        # update stereotype
-        self.update_stereotype()
+        w, h = text_extents(cr, text)
 
-        sw, sh = text_extents(cr, self._stereotype)
+        x = p1[0] > p2[0] and w + 5 or -2
+        x = (p1[0] + p2[0]) / 2.0 - x
+        y = p1[1] <= p2[1] and h + 2 or 0
+        y = (p1[1] + p2[1]) / 2.0 - y
+
+        #log.debug('label pos = (%d, %d)' % (x, y))
+        #return x, y, max(x + 10, x + w), max(y + 10, y + h)
+        return Rectangle(x, y, x + max(10, w), y + max(10, h))
+
+    def update_stereotype(self, context):
+        super(LineItem, self).update_stereotype()
+
+        sw, sh = text_extents(context.cairo, self._stereotype)
 
         handles = self._handles
         middle = len(handles)/2
@@ -46,15 +64,20 @@ class LineItem(gaphas.Line, DiagramItem):
         y = p1[1] > p2[1] and -sh or 0
         y = (p1[1] + p2[1]) / 2.0 - y
 
-        self._stereotype_pos = (x, y)
-        self._stereotype_width = sw
-        self._stereotype_height = sh
+        self._stereotype_bounds = Rectangle(x, y, width=sw, height=sh)
+
+    def update(self, context):
+        super(LineItem, self).update(context)
+        cr = context.cairo
+
+        # update stereotype
+        self.update_stereotype(context)
 
     def draw(self, context):
         super(LineItem, self).draw(context)
         cr = context.cairo
         if self._stereotype:
-            cr.move_to(*self._stereotype_pos)
+            cr.move_to(self._stereotype_bounds[0], self._stereotype_bounds[1])
             cr.show_text(self._stereotype)
 
 

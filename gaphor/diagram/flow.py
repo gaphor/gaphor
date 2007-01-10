@@ -59,44 +59,71 @@ class FlowItem(DiagramLine):
         self.request_update()
 
     def update_name(self, context):
+        cr = context.cairo
+        ofs = 5
+
         handles = self._handles
+        p1 = handles[-1].pos
+        p2 = handles[-2].pos
 
-        def get_pos(p1, p2, width, height):
-            x = p1[0] > p2[0] and -10 or width + 10
-            x = p2[0] - x
-            y = p1[1] <= p2[1] and height + 5 or -15
-            y = p2[1] - y
-            return x, y
+        name_w, name_h = map(max, text_extents(cr, self.subject and self.subject.name, multiline=True), (10, 10))
 
-        p1 = handles[-2].pos
-        p2 = handles[-1].pos
-        w, h = text_extents(context.cairo, self.subject and self.subject.name)
-        x, y = get_pos(p1, p2, w, h)
-        self._name_bounds = Rectangle(x, y, width=max(10, w), height=max(10, h))
+        name_dx = 0.0
+        name_dy = 0.0
 
+        dx = float(p2[0]) - float(p1[0])
+        dy = float(p2[1]) - float(p1[1])
+        
+        if dy == 0:
+            rc = 1000.0 # quite a lot...
+        else:
+            rc = dx / dy
+        abs_rc = abs(rc)
+        h = dx > 0 # right side of the box
+        v = dy > 0 # bottom side
 
-    def update_guard(self, context):
-        handles = self._handles
-        middle = len(handles)/2
+        if abs_rc > 6:
+            # horizontal line
+            if h:
+                name_dx = ofs
+                name_dy = -ofs - name_h
+            else:
+                name_dx = -ofs - name_w
+                name_dy = -ofs - name_h
+        elif 0 <= abs_rc <= 0.2:
+            # vertical line
+            if v:
+                name_dx = -ofs - name_w
+                name_dy = ofs
+            else:
+                name_dx = -ofs - name_w
+                name_dy = -ofs - name_h
+        else:
+            # Should both items be placed on the same side of the line?
+            r = abs_rc < 1.0
 
-        def get_pos_centered(p1, p2, width, height):
-            x = p1[0] > p2[0] and width + 2 or -2
-            x = (p1[0] + p2[0]) / 2.0 - x
-            y = p1[1] <= p2[1] and height or 0
-            y = (p1[1] + p2[1]) / 2.0 - y
-            return x, y
+            # Find out alignment of text (depends on the direction of the line)
+            align_left = (h and not r) or (r and not h)
+            align_bottom = (v and not r) or (r and not v)
+            if align_left:
+                name_dx = ofs
+            else:
+                name_dx = -ofs - name_w
+            if align_bottom:
+                name_dy = -ofs - name_h
+            else:
+                name_dy = ofs 
 
-        p1 = handles[middle-1].pos
-        p2 = handles[middle].pos
-        w, h = text_extents(context.cairo, self.subject and self.subject.guard and self.subject.guard.value)
-        x, y = get_pos_centered(p1, p2, w, h)
-        self._guard_bounds = Rectangle(x, y, width=max(10, w), height=max(10, h))
-
+        self._name_bounds = Rectangle(p1[0] + name_dx,
+                                      p1[1] + name_dy,
+                                      width=name_w,
+                                      height=name_h)
 
     def update(self, context):
         super(FlowItem, self).update(context)
         self.update_name(context)
-        self.update_guard(context)
+        # update guard label:
+        self._guard_bounds = self.update_label(context, self.subject and self.subject.guard and self.subject.guard.value)
 
     def point(self, x, y):
         d1 = super(FlowItem, self).point(x, y)
