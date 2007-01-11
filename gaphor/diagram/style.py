@@ -40,6 +40,9 @@ class Style(object):
         name = name.replace('-', '_')
         setattr(self, name, value)
 
+    def update(self, style):
+        for name, value in style.items():
+            self.add(name, value)
 
     def items(self):
         """

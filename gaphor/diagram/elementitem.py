@@ -13,6 +13,7 @@ __version__ = '$Revision$'
 class ElementItem(gaphas.Element, DiagramItem):
     __style__ = {
         'min-size': (0, 0),
+	'stereotype-padding': (5, 10, 5, 10),
     }
 
     def __init__(self, id=None):

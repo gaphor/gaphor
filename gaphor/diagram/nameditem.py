@@ -75,7 +75,6 @@ class NamedItem(ElementItem):
                     self.width, self.height,
                     self.style.name_align, self.style.name_padding,
                     self.style.name_outside)
-
         super(NamedItem, self).update(context)
 
 

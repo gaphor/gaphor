@@ -60,6 +60,7 @@ class NamedItemEditor(object):
 
     def update_text(self, text):
         self._item.subject.name = text
+        self._item.request_update()
 
     def key_pressed(self, pos, key):
         pass

@@ -82,7 +82,7 @@ class ActivityFinalNodeItem(ActivityNodeItem):
         cr.set_line_width(0.01)
         cr.set_line_width(2)
         cr.stroke()
-        
+
         super(ActivityFinalNodeItem, self).draw(context)
 
 

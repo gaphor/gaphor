@@ -732,6 +732,7 @@ class ExtensionConnect(RelationshipConnect):
                     return
              
             # TODO: make element at head end update!
+            c1.request_update()
 
             # Find all associations and determine if the properties on
             # the association ends have a type that points to the class.

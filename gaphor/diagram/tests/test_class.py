@@ -87,3 +87,5 @@ class ClassTestCase(unittest.TestCase):
         self.assertEqual(oper, edit._edit.subject)
         self.assertEqual('+ method()', edit.get_text())
 
+
+# vim:sw=4:et:ai

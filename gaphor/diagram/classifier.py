@@ -57,9 +57,9 @@ class Compartment(list):
             self.height = sum(map(lambda p: p[1], sizes))
             vspacing = self.owner.style.compartment_vspacing
             self.height += vspacing * len(sizes)
-        margin = self.owner.style.compartment_margin
-        self.width += margin[1] + margin[3]
-        self.height += margin[0] + margin[2]
+        padding = self.owner.style.compartment_padding
+        self.width += padding[1] + padding[3]
+        self.height += padding[0] + padding[2]
 
     def update(self, context):
         for item in self:
@@ -68,9 +68,9 @@ class Compartment(list):
 
     def draw(self, context):
         cr = context.cairo
-        margin = self.owner.style.compartment_margin
+        padding = self.owner.style.compartment_padding
         vspacing = self.owner.style.compartment_vspacing
-        cr.translate(margin[1], margin[0])
+        cr.translate(padding[1], padding[0])
         offset = 0
         for item in self:
             cr.save()
@@ -116,8 +116,12 @@ class ClassifierItem(NamedItem):
     __style__ = {
         'min-size':           (100, 50),
         'icon-size':          (20, 20),
-        'compartment-margin': (5, 5, 5, 5), # (top, right, bottom, left)
+        'from-padding': (7, 2, 7, 2),
+        'compartment-padding': (5, 5, 5, 5), # (top, right, bottom, left)
         'compartment-vspacing': 2,
+# Fix name, stereotype and from drawing!
+        'name-padding': (10, 10, 10, 10),
+        'stereotype-padding': (10, 10, 2, 10),
     }
     # Default size for small icons
     ICON_WIDTH    = 15
@@ -261,16 +265,28 @@ class ClassifierItem(NamedItem):
         cr = context.cairo
         s_w = s_h = 0
         if self.stereotype:
-            s_w, s_h = text_extents(cr, self.stereotype)
-        n_w, n_h = text_extents(cr, self.subject.name)
+            s_w, s_h = 0, 0 #text_extents(cr, self.stereotype)
+            padding = self.style.stereotype_padding
+            s_w += padding[1] + padding[3]
+            s_h += padding[0] + padding[2]
+
+        n_w, n_h = 0, 0 #text_extents(cr, self.subject.name)
+        padding = self.style.name_padding
+        n_w += padding[1] + padding[3]
+        n_h += padding[0] + padding[2]
 
         f_w, f_h = 0, 0
-        if self.subject.namespace:
-            f_w, f_h = text_extents(cr, self._from, font=font.FONT_SMALL)
+        if self._from: #self.subject.namespace:
+            f_w, f_h = 0, 0 #text_extents(cr, self._from, font=font.FONT_SMALL)
+            padding = self.style.from_padding
+            f_w += padding[1] + padding[3]
+            f_h += padding[0] + padding[2]
 
         sizes = [comp.get_size() for comp in self._compartments]
         self.update_name_size(context)
         sizes.append(self.get_name_size())
+        sizes.append((s_w, s_h))
+        sizes.append((f_w, f_h))
         self.min_width = max(s_w, n_w, f_w)
         self.min_height = 0
 
@@ -291,19 +307,22 @@ class ClassifierItem(NamedItem):
         super(ClassifierItem, self).pre_update(context)
 
     def update_compartment(self, context):
-        """Update state for box-style presentation.
         """
-        pass
+        Update state for box-style presentation.
+        """
+        super(ClassifierItem, self).update(context)
 
     def update_compartment_icon(self, context):
-        """Update state for box-style w/ small icon.
         """
-        pass
+        Update state for box-style w/ small icon.
+        """
+        super(ClassifierItem, self).update(context)
 
     def update_icon(self, context):
         """
+        Update state for icon-only presentation.
         """
-        pass
+        super(ClassifierItem, self).update(context)
 
     def get_icon_pos(self):
         """Get icon position.
@@ -325,23 +344,29 @@ class ClassifierItem(NamedItem):
             width = self.width
 
         # draw stereotype
-        y += 10
         if self.stereotype:
+            padding = self.style.stereotype_padding
+            y += padding[0]
             text_set_font(cr, font.FONT)
             text_center(cr, width / 2, y, self.stereotype)
+            y += padding[2]
 
         # draw name
-        y += 10
+        padding = self.style.name_padding
+        y += padding[0]
+        n_w, n_h = text_extents(cr, self.subject.name)
         text_set_font(cr, font.FONT_NAME)
-        text_center(cr, width / 2, y, self.subject.name)
+        text_center(cr, width / 2, y + n_h/2, self.subject.name)
+        y += padding[2] + n_h/2
 
-        y += 10
         # draw 'from ... '
         if self._from:
+            padding = self.style.from_padding
+            y += padding[0]
             text_set_font(cr, font.FONT_SMALL)
             text_center(cr, width / 2, y, self._from)
+            y += padding[2]
 
-        y += 5
         cr.translate(0, y)
 
         # draw compartments

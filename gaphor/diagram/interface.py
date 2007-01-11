@@ -8,14 +8,14 @@ from gaphas.item import NW, SE
 from gaphor import UML
 from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.implementation import ImplementationItem
-#from gaphor.diagram.interfaceicon import AssembledInterfaceIcon, \
-#    ProvidedInterfaceIcon, RequiredInterfaceIcon
 from gaphor.diagram.klass import ClassItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.rotatable import SimpleRotation
+from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 
 class InterfaceItem(ClassItem, SimpleRotation):
-    """This item represents an interface drawn as a dot. The class-like
+    """
+    This item represents an interface drawn as a dot. The class-like
     representation is provided by ClassItem. These representations can be
     switched by using the Fold and Unfold actions.
 
@@ -32,6 +32,17 @@ class InterfaceItem(ClassItem, SimpleRotation):
         'icon-size-required': (28, 28),
         'name-outside': False,
         }
+
+    UNFOLDED_STYLE = {
+        'name-align': (ALIGN_CENTER, ALIGN_TOP),
+        'name-outside': False,
+        }
+
+    FOLDED_STYLE = {
+        'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
+        'name-outside': True,
+        }
+
     RADIUS_PROVIDED = 10
     RADIUS_REQUIRED = 14
 
@@ -41,88 +52,38 @@ class InterfaceItem(ClassItem, SimpleRotation):
         self._draw_required = False
         self._draw_provided = False
 
-#        self._ricon = RequiredInterfaceIcon(self)
-#        self._aicon = AssembledInterfaceIcon(self)
-#        self._picon = ProvidedInterfaceIcon(self)
-#
-#        self._icon = self._aicon
+    def set_drawing_style(self, style):
+        """
+        In addition to setting the drawing style, the handles are
+        make non-movable if the icon (folded) style is used.
+        """
+        ClassItem.set_drawing_style(self, style)
+        # TODO: adjust offsets so the center point is the same
+        if self._drawing_style == self.DRAW_ICON:
+            self.style.update(self.FOLDED_STYLE)
+            self.request_update()
+        else:
+            self.style.update(self.UNFOLDED_STYLE)
+            self.request_update()
 
+    drawing_style = property(lambda self: self._drawing_style, set_drawing_style)
 
-#    def set_drawing_style(self, style):
-#        """In addition to setting the drawing style, the handles are
-#        make non-movable if the icon (folded) style is used.
-#        """
-#        ClassItem.set_drawing_style(self, style)
-#        # TODO: adjust offsets so the center point is the same
-#        if self.drawing_style == self.DRAW_ICON:
-#            self.set(width = self._icon.width, height = self._icon.height)
-#            # Do not allow resizing of the node
-#            for h in self.handles:
-#                h.props.movable = False
-#
-#            # copy align data from class to item instance, we need this because
-#            # interface align data can change because of folding/unfolding
-#            # interface
-#            self.s_align = self.s_align.copy()
-#            self.n_align = self.n_align.copy()
-#
-#            self.s_align.valign = V_ALIGN_BOTTOM
-#            self.s_align.outside = True
-#            self.s_align.margin = (0, 2) * 4
-#            self.n_align.valign = V_ALIGN_BOTTOM
-#            self.n_align.outside = True
-#            self.n_align.margin = (2, ) * 4
-#
-#            self._shapes.remove(self._border)
-#
-#            # update connected handles
-#            self.update_handle_pos()
-#        else:
-#            # Do allow resizing of the node
-#            for h in self.handles:
-#                h.props.movable = True
-#
-#            # back to default InterfaceItem class align
-#            del self.s_align
-#            del self.n_align
-#
-#            self._shapes.add(self._border)
-#
-#        self.update_stereotype()
-
-
-#    def update_handle_pos(self):
-#        """
-#        Update connected lines position.
-#        """
-#        for h in self.connected_handles:
-#            f = None
-#            if gives_provided(h):
-#                f = self._icon.get_provided_pos_w
-#            elif gives_required(h):
-#                f = self._icon.get_required_pos_w
-#            if f:
-#                x, y = f()
-#                h.set_pos_w(x, y)
-#                self.connect_handle(h)
-
-
-#    def get_popup_menu(self):
-#        if self.drawing_style == self.DRAW_ICON:
-#            return NamedItem.popup_menu + ('separator', 'Rotate', 'Unfold',)
-#        else:
-#            return ClassItem.get_popup_menu(self)
-
+    def get_popup_menu(self):
+        if self.drawing_style == self.DRAW_ICON:
+            return NamedItem.popup_menu + ('separator', 'Rotate', 'Unfold',)
+        else:
+            return ClassItem.get_popup_menu(self)
 
     def is_folded(self):
-        """Returns True if the interface is drawn as a circle/dot.
+        """
+        Returns True if the interface is drawn as a circle/dot.
         Unfolded means it's drawn like a classifier.
         """
         return self.drawing_style == self.DRAW_ICON
 
- 
     def pre_update_icon(self, context):
-        """Figure out if this interface represents a required, provided,
+        """
+        Figure out if this interface represents a required, provided,
         assembled (wired) or dotted (minimal) look.
         """
         for h in self._handles: h.movable = False
@@ -162,26 +123,6 @@ class InterfaceItem(ClassItem, SimpleRotation):
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi*2)
             cr.stroke()
         super(InterfaceItem, self).draw(context)
-
-    def on_glue(self, handle, wx, wy):
-        """Allow connect only to provided/required points in case
-        of interface icon.
-        In folded mode, only allow connections from Implementation and
-        Realization dependencies.
-        """
-        if self.drawing_style == self.DRAW_ICON:
-            if d < 15:
-                f = None
-                if gives_provided(handle):
-                    f = self._icon.get_provided_pos_w
-                elif gives_required(handle):
-                    f = self._icon.get_required_pos_w
-
-                if f:
-                    p2 = f()
-                    p1 = p2
-        return d, p1
-
 
     def rotate(self, step = 1):
         """

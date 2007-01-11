@@ -916,7 +916,7 @@ class FoldAction(Action):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
 
-        item.drawing_style = items.InterfaceItem.DRAW_ICON
+        item.drawing_style = item.DRAW_ICON
 
 register_action(FoldAction, 'ItemFocus')
 
@@ -931,7 +931,7 @@ class UnfoldAction(FoldAction):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
 
-        item.drawing_style = items.InterfaceItem.DRAW_COMPARTMENT
+        item.drawing_style = item.DRAW_COMPARTMENT
         # Make sure lines are updated properly:
         #item.canvas.update_now()
         #item.canvas.update_now()
@@ -1161,8 +1161,9 @@ class RotateAction(Action):
     def update(self):
         try:
             item = get_parent_focus_item(self._window)
-            self.active = isinstance(item, items.AssemblyConnectorItem) \
-                or isinstance(item, items.InterfaceItem) and item.is_folded()
+            #self.active = isinstance(item, items.AssemblyConnectorItem) \
+
+            self.active = isinstance(item, items.InterfaceItem) and item.is_folded()
         except NoFocusItemError:
             pass
 
