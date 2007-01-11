@@ -54,7 +54,7 @@ class Toolbox(gtk.VBox):
         resource.set('ui.toolbox.%s' % button.toggle_id,
                      content.get_property('visible'), persistent=True)
 
-    def old_make_wrapbox_decorator(self, title, content):
+    def make_wrapbox_decorator(self, title, content):
         """
         Create a gtk.VBox with in the top compartment a label that can be
         clicked to show/hide the lower compartment.
@@ -95,7 +95,7 @@ class Toolbox(gtk.VBox):
 
         return vbox
 
-    def make_wrapbox_decorator(self, title, content):
+    def new_make_wrapbox_decorator(self, title, content):
         """
         Create a gtk.VBox with in the top compartment a label that can be
         clicked to show/hide the lower compartment.

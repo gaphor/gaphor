@@ -53,10 +53,10 @@ class MainWindow(AbstractWindow):
                 'InsertForkNode',
                 'InsertObjectNode',
                 'InsertFlow')),
-        (_('Interactions'), (
+#        (_('Interactions'), (
 #                'InsertInteraction',
-                'InsertLifeline',
-                'InsertMessage')),
+#                'InsertLifeline',
+#                'InsertMessage')),
         (_('Use Cases'), (
                 'InsertUseCase',
                 'InsertActor',
