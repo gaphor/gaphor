@@ -227,7 +227,10 @@ class install_lib_Gaphor(install_lib, version_py):
     def run(self):
         # install a new version.py with install_data as data_dir;
         # get rid of install root directory
-        skip = len(self.get_finalized_command('install').root)
+        print 'self', dir(self)
+        print 'self.get_finalized_command("install")', dir(self.get_finalized_command('install'))
+        
+        skip = len(self.get_finalized_command('install').root or '')
 
         self.generate_version(self.install_dir, self.install_data[skip:])
         install_lib.run(self)
@@ -426,6 +429,7 @@ setup(name='gaphor',
                 'gaphor.adapters.tests',
                 'gaphor.actions',
                 'gaphor.actions.tests',
+                'gaphas',
                 'zope',
                 'zope.interface',
                 'zope.component.bbb',
@@ -479,6 +483,9 @@ setup(name='gaphor',
              all_linguas = ','.join(LINGUAS),
          ),
          build_mo = dict(
+             all_linguas = ','.join(LINGUAS),
+         ),
+         install_mo = dict(
              all_linguas = ','.join(LINGUAS),
          ),
      )
