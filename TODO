@@ -1,18 +1,13 @@
 
-For 0.9.0:
-----------
- - extra margin around operations in ClassItem (workaround)
-
 For 0.10.0 and later:
 ---------------------
+
+ - use easysetup tools, move gaphas to a separate package and use
+   zope.interface in stead of our included zope tree.
 
  - Undo functionality
  - Load / save regression testing
    !!! Create some example diagrams,
- - translate afifne matrices to new format.
-
- - split DiagramItem in a stereotype support, SubjectSupport and some
-   other support classes.
 
  - using stereotypes
  - components and stuff
