@@ -33,7 +33,7 @@ class Wrapbox(gtk.Table):
             size_request = c.size_request()
             #print size_request
             max_width = max(max_width, size_request[0])
-        cols = allocation.width / max_width
+        cols = allocation.width / (max_width or 1)
         if cols == 0:
             cols = 1
         rows = len(children) / cols
@@ -45,6 +45,8 @@ class Wrapbox(gtk.Table):
         #table = self.table
         table = self
         children = self.children
+        if not children:
+            return
         rows = self.rows
         cols = self.cols
         for c in children:
@@ -74,6 +76,7 @@ class Wrapbox(gtk.Table):
         self.cols = cols
 
     def add(self, widget):
+        assert widget, 'No widget supplied: %s' % widget
         self.cols += 1
         row = self.rows
         col = self.cols

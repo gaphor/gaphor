@@ -1,38 +1,29 @@
 """ClassifierItem diagram item
 """
-# vim:sw=4:et
-
-# TODO: make loading of features work (adjust on_groupable_add)
-#       probably best to do is subclass Feature in OperationItem and A.Item
 
 import itertools
 
-import gobject
-import pango
-import diacanvas
-
+from gaphas.util import text_extents, text_center, text_set_font
 from gaphor import UML
 from gaphor.i18n import _
 
-from gaphor.diagram.nameditem import NamedItem, NamedItemMeta
+from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.feature import FeatureItem
-from gaphor.diagram.align import MARGIN_TOP, MARGIN_RIGHT, MARGIN_BOTTOM, MARGIN_LEFT
 
+from gaphas.util import text_center
+import font
 
 class Compartment(list):
     """Specify a compartment in a class item.
     A compartment has a line on top and a list of FeatureItems.
     """
 
-    MARGIN_X = 5 
-    MARGIN_Y = 5
-
     def __init__(self, name, owner):
         self.name = name
         self.owner = owner
         self.visible = True
-        self.separator = diacanvas.shape.Path()
-        self.separator.set_line_width(2.0)
+        self.width = 0
+        self.height = 0
 
     def save(self, save_func):
         #log.debug('Compartment.save: %s' % self)
@@ -47,41 +38,54 @@ class Compartment(list):
         local_elements = [f.subject for f in self]
         return s and s in local_elements
 
-
     def get_size(self):
-        # fixme: kill True argument of Feature.get_size method
-        if len(self) > 0:
+        """Get width, height of the compartment. pre_update should have
+        been called so widthand height have been calculated.
+        """
+        return self.width, self.height
+
+    def pre_update(self, context):
+        """Pre update, determine width and height of the compartment.
+        """
+        self.width = self.height = 0
+        cr = context.cairo
+        for item in self:
+            item.pre_update(context)
+        if self:
             sizes = [f.get_size(True) for f in self]
-            width = max(map(lambda p: p[0], sizes))
-            height = sum(map(lambda p: p[1], sizes))
-            return width, height
-        else:
-            return 0, 0
+            self.width = max(map(lambda p: p[0], sizes))
+            self.height = sum(map(lambda p: p[1], sizes))
+            vspacing = self.owner.style.compartment_vspacing
+            self.height += vspacing * len(sizes)
+        padding = self.owner.style.compartment_padding
+        self.width += padding[1] + padding[3]
+        self.height += padding[0] + padding[2]
+
+    def update(self, context):
+        for item in self:
+            item.update(context)
 
 
-    def update(self, affine, width, y):
-        if self.visible:
-            self.separator.line(((0, y), (width, y)))
+    def draw(self, context):
+        cr = context.cairo
+        padding = self.owner.style.compartment_padding
+        vspacing = self.owner.style.compartment_vspacing
+        cr.translate(padding[1], padding[0])
+        offset = 0
+        for item in self:
+            cr.save()
+            try:
+                offset += item.height
+                cr.move_to(0, offset)
+                item.draw(context)
+                offset += vspacing
+            finally:
+                cr.restore()
 
-            y += self.MARGIN_Y
-            for f in self:
-                w, h = f.get_size(update = True)
-                f.set_pos(self.MARGIN_X, y)
-                y += h
 
-                f.props.visible = True
-                self.owner.update_child(f, affine)
-            y += self.MARGIN_Y
-
-            return y
-        else:
-            for f in self:
-                f.props.visible = False
-            return 0
-
-        
 class ClassifierItem(NamedItem):
-    """This item visualizes a Class instance.
+    """
+    This item visualizes a Class instance.
 
     A ClassifierItem is a superclass for (all) Classifier like objects,
     such as Class, Interface, Component and Actor.
@@ -99,41 +103,37 @@ class ClassifierItem(NamedItem):
      - update_icon (does nothing by default, an impl. should be provided by
                     subclasses (see ActorItem))
     """
+
+    # Do not use preset drawing style
+    DRAW_NONE = 0
     # Draw the famous box style
-    DRAW_COMPARTMENT = 0
+    DRAW_COMPARTMENT = 1
     # Draw compartment with little icon in upper right corner
-    DRAW_COMPARTMENT_ICON = 1
+    DRAW_COMPARTMENT_ICON = 2
     # Draw as icon
-    DRAW_ICON = 2
+    DRAW_ICON = 3
 
-    __gproperties__ = {
-        'drawing-style':   (gobject.TYPE_INT, 'Drawing style',
-                            'set the drawing style for the classifier',
-                            0, 2, 0, gobject.PARAM_READWRITE),
+    __style__ = {
+        'min-size':           (100, 50),
+        'icon-size':          (20, 20),
+        'from-padding': (7, 2, 7, 2),
+        'compartment-padding': (5, 5, 5, 5), # (top, right, bottom, left)
+        'compartment-vspacing': 2,
+# Fix name, stereotype and from drawing!
+        'name-padding': (10, 10, 10, 10),
+        'stereotype-padding': (10, 10, 2, 10),
     }
-
     # Default size for small icons
     ICON_WIDTH    = 15
     ICON_HEIGHT   = 25
     ICON_MARGIN_X = 10
     ICON_MARGIN_Y = 10
 
-    FONT_ABSTRACT   = 'sans bold italic 10'
-    FONT_FROM       = 'sans 8'
-
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
-        self.set(height=50, width=100)
         self._compartments = []
-        self._drawing_style = ClassifierItem.DRAW_COMPARTMENT
-
-        self._border = diacanvas.shape.Path()
-        self._border.set_line_width(2.0)
-
-        self._from = diacanvas.shape.Text()
-        self._from.set_font_description(pango.FontDescription(ClassifierItem.FONT_FROM))
-        self._from.set_alignment(pango.ALIGN_CENTER)
-        self._from.set_markup(False)
+        self._from = None # (from ...) text
+        self._drawing_style = ClassifierItem.DRAW_NONE
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -146,27 +146,33 @@ class ClassifierItem(NamedItem):
         NamedItem.postload(self)
         self.on_subject_notify__isAbstract(self.subject)
 
-    def do_set_property(self, pspec, value):
-        if pspec.name == 'drawing-style':
-            self.set_drawing_style(value)
-        else:
-            NamedItem.do_set_property(self, pspec, value)
-
-    def do_get_property(self, pspec):
-        if pspec.name == 'drawing-style':
-            return self._drawing_style
-        return NamedItem.do_get_property(self, pspec)
-
     def set_drawing_style(self, style):
         """Set the drawing style for this classifier: DRAW_COMPARTMENT,
         DRAW_COMPARTMENT_ICON or DRAW_ICON.
         """
         if style != self._drawing_style:
-            self.preserve_property('drawing-style')
+            #self.preserve_property('drawing-style')
             self._drawing_style = style
             self.request_update()
 
+        if self._drawing_style == self.DRAW_COMPARTMENT:
+            self.draw       = self.draw_compartment
+            self.pre_update = self.pre_update_compartment
+            self.update     = self.update_compartment
+
+        elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
+            self.draw       = self.draw_compartment_icon
+            self.pre_update = self.pre_update_compartment_icon
+            self.update     = self.update_compartment_icon
+
+        elif self._drawing_style == self.DRAW_ICON:
+            self.draw       = self.draw_icon
+            self.pre_update = self.pre_update_icon
+            self.update     = self.update_icon
+
+
     drawing_style = property(lambda self: self._drawing_style, set_drawing_style)
+
 
     def create_compartment(self, name):
         """Create a new compartment. Compartments contain data such as
@@ -178,6 +184,8 @@ class ClassifierItem(NamedItem):
         c = Compartment(name, self)
         self._compartments.append(c)
         return c
+
+    compartments = property(lambda s: s._compartments)
 
     def sync_uml_elements(self, elements, compartment, creator=None):
         """This method synchronized a list of elements with the items
@@ -234,106 +242,144 @@ class ClassifierItem(NamedItem):
         """Add a line '(from ...)' to the class item if subject's namespace
         is not the same as the namespace of this diagram.
         """
-        #print 'on_subject_notify__namespace', self, subject
         if self.subject and self.subject.namespace and self.canvas and \
            self.canvas.diagram.namespace is not self.subject.namespace:
-            self._from.set_text(_('(from %s)') % self.subject.namespace.name)
+            self._from = _('(from %s)') % self.subject.namespace.name
         else:
-            self._from.set_text('')
+           self._from = None
+
         self.request_update()
 
     def on_subject_notify__namespace_name(self, subject, pspec=None):
         """Change the '(from ...)' line if the namespace's name changes.
         """
-        print 'on_subject_notify__namespace_name', self, subject
         self.on_subject_notify__namespace(subject, pspec)
 
     def on_subject_notify__isAbstract(self, subject, pspec=None):
-        subject = self.subject
-        if subject.isAbstract:
-            self._name.set_font_description(pango.FontDescription(self.FONT_ABSTRACT))
-        else:
-            self._name.set_font_description(pango.FontDescription(self.NAME_FONT))
         self.request_update()
 
+    def pre_update_compartment(self, context):
+        for comp in self._compartments:
+            comp.pre_update(context)
 
-    def update_name(self, affine):
+        cr = context.cairo
+        s_w = s_h = 0
+        if self.stereotype:
+            s_w, s_h = 0, 0 #text_extents(cr, self.stereotype)
+            padding = self.style.stereotype_padding
+            s_w += padding[1] + padding[3]
+            s_h += padding[0] + padding[2]
 
-        # determine width and height of comparments
-        if self._drawing_style == self.DRAW_COMPARTMENT:
-            sizes = [comp.get_size() for comp in self._compartments]
+        n_w, n_h = 0, 0 #text_extents(cr, self.subject.name)
+        padding = self.style.name_padding
+        n_w += padding[1] + padding[3]
+        n_h += padding[0] + padding[2]
 
-            if sizes:
-                width = max(map(lambda p: p[0], sizes)) + Compartment.MARGIN_X * 2
+        f_w, f_h = 0, 0
+        if self._from: #self.subject.namespace:
+            f_w, f_h = 0, 0 #text_extents(cr, self._from, font=font.FONT_SMALL)
+            padding = self.style.from_padding
+            f_w += padding[1] + padding[3]
+            f_h += padding[0] + padding[2]
 
-                height = sum(map(lambda p: p[1], sizes))
-                height += len(self._compartments) * Compartment.MARGIN_Y * 2
-            else:
-                width = height = 0
+        sizes = [comp.get_size() for comp in self._compartments]
+        self.update_name_size(context)
+        sizes.append(self.get_name_size())
+        sizes.append((s_w, s_h))
+        sizes.append((f_w, f_h))
+        self.min_width = max(s_w, n_w, f_w)
+        self.min_height = 0
 
-        align, nx, ny, name_width, name_height = NamedItem.update_name(self, affine)
+        if sizes:
+            w = max(map(lambda p: p[0], sizes))
 
-        if self._drawing_style == self.DRAW_COMPARTMENT:
-            y = self.props.min_height # first compartment position
+            h = sum(map(lambda p: p[1], sizes))
+            self.min_width = max(self.min_width, w)
+            self.min_height += h
 
-            # update minimum dimensions
-            min_width = max(width, self.props.min_width)
-            min_height = self.props.min_height + height
-            self.set(min_width = min_width, min_height = min_height)
-
-        #self._from.set_pos((0, name_y + name_height-2))
-        #self._from.set_max_width(width)
-        #self._from.set_max_height(name_height)
-
-            # determine current width of item
-            width = self.width
-            for comp in self._compartments:
-                y = comp.update(affine, width, y)
-
-            self._border.rectangle((0, 0), (width, height))
-
-        return align, nx, ny, name_width, name_height
+        super(ClassifierItem, self).pre_update(context)
 
 
-    def update_compartment_icon(self, affine):
-        """Update state for box-style w/ small icon.
+    def pre_update_compartment_icon(self, context):
+        self.pre_update_compartment(context)
+
+    def pre_update_icon(self, context):
+        super(ClassifierItem, self).pre_update(context)
+
+    def update_compartment(self, context):
         """
-        pass
-
-
-    def update_icon(self, affine):
-        """Update state to draw as one bug icon.
+        Update state for box-style presentation.
         """
-        pass
+        super(ClassifierItem, self).update(context)
 
+    def update_compartment_icon(self, context):
+        """
+        Update state for box-style w/ small icon.
+        """
+        super(ClassifierItem, self).update(context)
+
+    def update_icon(self, context):
+        """
+        Update state for icon-only presentation.
+        """
+        super(ClassifierItem, self).update(context)
 
     def get_icon_pos(self):
-        """
-        Get icon position.
+        """Get icon position.
         """
         return self.width - self.ICON_MARGIN_X - self.ICON_WIDTH, \
             self.ICON_MARGIN_Y
 
 
-    def on_update(self, affine):
-        """Overrides update callback.
-        """
+    def draw_compartment(self, context):
+        #if not self.subject: return
+        cr = context.cairo
+        cr.rectangle(0, 0, self.width, self.height)
+        cr.stroke()
+        y = 0
+
         if self._drawing_style == self.DRAW_COMPARTMENT_ICON:
-            self.update_compartment_icon(affine)
-        elif self._drawing_style == self.DRAW_ICON:
-            self.update_icon(affine)
+            width = self.width - self.ICON_WIDTH
+        else:
+            width = self.width
 
-        NamedItem.on_update(self, affine)
+        # draw stereotype
+        if self.stereotype:
+            padding = self.style.stereotype_padding
+            y += padding[0]
+            text_set_font(cr, font.FONT)
+            text_center(cr, width / 2, y, self.stereotype)
+            y += padding[2]
+
+        # draw name
+        padding = self.style.name_padding
+        y += padding[0]
+        n_w, n_h = text_extents(cr, self.subject.name)
+        text_set_font(cr, font.FONT_NAME)
+        text_center(cr, width / 2, y + n_h/2, self.subject.name)
+        y += padding[2] + n_h/2
+
+        # draw 'from ... '
+        if self._from:
+            padding = self.style.from_padding
+            y += padding[0]
+            text_set_font(cr, font.FONT_SMALL)
+            text_center(cr, width / 2, y, self._from)
+            y += padding[2]
+
+        cr.translate(0, y)
+
+        # draw compartments
+        for comp in self._compartments:
+            cr.save()
+            cr.move_to(0, 0)
+            cr.line_to(self.width, 0)
+            cr.stroke()
+            try:
+                comp.draw(context)
+            finally:
+                cr.restore()
+            cr.translate(0, comp.height)
 
 
-    def on_shape_iter(self):
-        if self._drawing_style in (self.DRAW_COMPARTMENT, self.DRAW_COMPARTMENT_ICON):
-            yield self._border
-            yield self._from
-
-            for c in self._compartments:
-                if c.visible:
-                    yield c.separator
-
-        for s in NamedItem.on_shape_iter(self):
-            yield s
+# vim:sw=4:et

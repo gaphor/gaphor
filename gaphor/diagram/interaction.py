@@ -1,13 +1,7 @@
 '''
 InteractionItem diagram item
 '''
-# vim:sw=4:et
 
-from __future__ import generators
-
-import gobject
-import pango
-import diacanvas
 from gaphor import UML
 from nameditem import NamedItem
 
@@ -133,3 +127,5 @@ class InteractionItem(NamedItem, diacanvas.CanvasGroupable):
 
     def on_groupable_iter(self):
         return iter(self._children)
+
+# vim:sw=4:et

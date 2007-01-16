@@ -3,253 +3,32 @@
 Such as a modifier 'subject' property and a unique id.
 """
 
-import gobject
-import pango
-import diacanvas
-from diacanvas import CanvasItem
-
 from gaphor import resource
 from gaphor import UML
 from gaphor.misc import uniqueid
 from gaphor.UML import Element, Presentation
+from gaphor.diagram import DiagramItemMeta
 
 STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
 
-class DiagramItem(Presentation):
-    """Basic functionality for all model elements (lines and elements!).
+class SubjectSupport(Presentation, Element):
+    """
+    Support class that adds support methods for Presentation.subject.
 
-    This class contains common functionallity for model elements and
-    relationships.
-    It provides an interface similar to UML.Element for connecting and
-    disconnecting signals.
-
-    This class is not very useful on its own. It contains some glue-code for
-    diacanvas.DiaCanvasItem and gaphor.UML.Element.
-
-    Example:
-        class ElementItem(diacanvas.CanvasElement, DiagramItem):
-            connect = DiagramItem.connect
-            disconnect = DiagramItem.disconnect
-            ...
+    This is a support class that should could be added to subclasses of
+    UML.Presentation.
     """
 
-    FONT_STEREOTYPE = 'sans 10'
-
-    __gproperties__ = {
-        'subject':        (gobject.TYPE_PYOBJECT, 'subject',
-                         'subject held by the diagram item',
-                         gobject.PARAM_READWRITE),
-    }
-
-    __gsignals__ = {
-        '__unlink__': (gobject.SIGNAL_RUN_FIRST,
-                       gobject.TYPE_NONE, (gobject.TYPE_STRING,))
-    }
-
-    stereotype_list = []
-    popup_menu = ('Stereotype', stereotype_list)
-
-    def __init__(self, id=None):
+    def __init__(self):
         Presentation.__init__(self)
-        self._id = id # or uniqueid.generate_id()
-
-        # Mapping to convert handlers to GObject signal ids.
-        self.__handler_to_id = { }
-
+        Element.__init__(self)
         # Add the class' on_subject_notify() as handler:
-        self.connect('notify::subject', type(self).on_subject_notify)
+        self.connect('subject', type(self).on_subject_notify)
 
         # __the_subject is a backup that is used to disconnect signals when a
         # new subject is set (or the original one is removed)
         self.__the_subject = None
-
-        # properties, which should be saved in file
-        self._persistent_props = set()
-
-        # stereotype
-        self._has_stereotype = False
-        self._stereotype = diacanvas.shape.Text()
-        self._stereotype.set_font_description(pango.FontDescription(self.FONT_STEREOTYPE))
-        self._stereotype.set_alignment(pango.ALIGN_CENTER)
-        self._stereotype.set_markup(False)
-
-        # parts of items to be drawn on diagram
-        # can contain stereotype, etc.
-        self._shapes = set()
-
-
-    id = property(lambda self: self._id, doc='Id')
-
-
-    def set_prop_persistent(self, name):
-        """
-        Specify property of diagram item, which should be saved in file.
-        """
-        self._persistent_props.add(name)
-
-
-    def do_set_property(self, pspec, value):
-        if pspec.name == 'subject':
-            self.set_subject(value)
-        else:
-            raise AttributeError, 'Unknown property %s' % pspec.name
-
-
-    def do_get_property(self, pspec):
-        if pspec.name == 'subject':
-            return self.subject
-        else:
-            raise AttributeError, 'Unknown property %s' % pspec.name
-
-
-    # UML.Element interface used by properties:
-
-    # TODO: Use adapters for load/save functionality
-    def save(self, save_func):
-        if self.subject:
-            save_func('subject', self.subject)
-
-        # save persistent properties
-        for p in self._persistent_props:
-            save_func(p, getattr(self.props, p))
-
-
-    def load(self, name, value):
-        if name == 'subject':
-            #print 'loading subject', value
-            type(self).subject.load(self, value)
-        else:
-            #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
-            try:
-                self.set_property(name, eval(value))
-            except:
-                log.warning('%s has no property named %s (value %s)' % (self, name, value))
-
-    def postload(self):
-        if self.subject:
-            self.on_subject_notify(type(self).subject)
-
-    # TODO: remove, use signaling from gaphor.UML.Element
-    def unlink(self):
-        """Send the unlink signal and remove itself from the canvas.
-        """
-        #log.debug('DiagramItem.unlink(%s)' % self)
-        # emit the __unlink__ signal the way UML.Element would have done:
-        self.set_subject(None)
-
-        self.emit('__unlink__', '__unlink__')
-
-
-        self.set_property('parent', None)
-
-    # gaphor.UML.Element like signal interface:
-
-    # TODO: remove, use signaling from gaphor.UML.Element
-    def connect(self, name, handler, *args):
-        """Connect a handler to signal name with args.
-        Note that in order to connect to the subject property, you have
-        to use "notify::subject".
-        A signal handler id is returned.
-        """
-        id = CanvasItem.connect(self, name, handler, *args)
-        key = (handler,) + args
-        try:
-            self.__handler_to_id[key].append(id)
-        except:
-            # it's a new entry:
-            self.__handler_to_id[key] = [id]
-        return id
-
-    # TODO: remove, use signaling from gaphor.UML.Element
-    def disconnect(self, handler_or_id, *args):
-        """Disconnect a signal handler. If handler_or_id is an integer (int)
-        it is expected to be the signal handler id. Otherwise
-        handler_or_id + *args are the same arguments passed to the connect()
-        method (except the signal name). The latter form is used by
-        gaphor.UML.Element.
-        """
-        if isinstance(handler_or_id, int):
-            CanvasItem.disconnect(self, handler_or_id)
-            for v in self.__handler_to_id.itervalues():
-                if handler_or_id in v:
-                    v.remove(handler_or_id)
-                    break
-        else:
-            try:
-                key = (handler_or_id,) + args
-                ids = self.__handler_to_id[key]
-            except KeyError, e:
-                log.error("Couldn't retrieve connection handle ids", e)
-            else:
-                for id in ids:
-                    CanvasItem.disconnect(self, id)
-                del self.__handler_to_id[key]
-
-    def notify(self, name, pspec=None):
-        CanvasItem.notify(self, name)
-
-    def save_property(self, save_func, name):
-        """Save a property, this is a shorthand method.
-        """
-        save_func(name, self.get_property(name))
-
-    def save_properties(self, save_func, *names):
-        """Save a property, this is a shorthand method.
-        """
-        for name in names:
-            self.save_property(save_func, name)
-
-    def set_subject(self, subject=None):
-        """Set the subject. In addition, if there are no more presentations
-        on the subject, the subject is unlink()'ed.
-        """
-        #log.debug('set_subject %s %s' % (self.subject, subject))
-        old = self.subject
-
-        # remove the subject if we have one
-        if self.subject:
-            del self.subject
-
-        if old and len(old.presentation) == 0:
-            #log.debug('diagramitem.unlink: No more presentations: unlinking')
-            old.unlink()
-         
-        self.subject = subject
-
-    def get_popup_menu(self):
-        """In the popup menu a submenu is created with Stereotypes than can be
-        applied to this classifier (Class, Interface).
-        If the class itself is a metaclass, an option is added to check if the class
-        exists.
-        """
-        subject = self.subject
-        stereotype_list = self.stereotype_list
-        stereotype_list[:] = []
-
-        # UML specs does not allow to extend stereotypes with stereotypes
-        if subject and not isinstance(subject, UML.Stereotype):
-            # look for stereotypes to put them into context menu of an item
-            # this can be only done when subject exists
-
-            from itemactions import ApplyStereotypeAction, register_action
-
-            cls = type(subject)
-
-            # find out names of classes, which are superclasses of our
-            # subject
-            names = set(c.__name__ for c in cls.__mro__ if issubclass(c, Element))
-
-            # find stereotypes that extend out metaclass
-            classes = subject._factory.select(lambda e: e.isKindOf(UML.Class) and e.name in names)
-
-            for class_ in classes:
-                for extension in class_.extension:
-                    stereotype = extension.ownedEnd.type
-                    stereotype_action = ApplyStereotypeAction(stereotype)
-                    register_action(stereotype_action, 'ItemFocus')
-                    stereotype_list.append(stereotype_action.id)
-        return self.popup_menu
 
     def _subject_connect_helper(self, element, callback_prefix, prop_list):
         """Connect a signal notifier. The notifier can be just the name of
@@ -279,7 +58,8 @@ class DiagramItem(Presentation):
                 pass
 
     def _subject_disconnect_helper(self, element, callback_prefix, prop_list):
-        """Disconnect a previously connected signal handler.
+        """
+        Disconnect a previously connected signal handler.
 
         See: DiagramItem.on_subject_notify()
         """
@@ -303,7 +83,8 @@ class DiagramItem(Presentation):
                 pass
 
     def _on_subject_notify_helper(self, element, pspec, callback_name, prop_list, old):
-        """This signal handler handles signals that are not direct properties
+        """
+        This signal handler handles signals that are not direct properties
         of self.subject (e.g. 'subject.lowerValue.value'). This way the
         presentation class is not bothered with the details of keeping track
         of those properties.
@@ -326,7 +107,8 @@ class DiagramItem(Presentation):
         old[0] = prop
 
     def on_subject_notify(self, pspec, notifiers=()):
-        """A new subject is set on this model element.
+        """
+        A new subject is set on this model element.
         notifiers is an optional tuple of elements that also need a
         callback function. Callbacks have the signature
         on_subject_notify__<notifier>(self, subject, pspec).
@@ -334,10 +116,10 @@ class DiagramItem(Presentation):
         A notifier can be a property of subject (e.g. 'name') or a property
         of a property of subject (e.g. 'lowerValue.value').
         """
-        #log.info('DiagramItem.on_subject_notify: %s' % self.__subject_notifier_ids)
+        #log.info('Setting subject from %s to %s' % (self.__the_subject, self.subject))
         # First, split all notifiers on '.'
         callback_prefix = 'on_subject_notify_'
-        notifiers = map(str.split, notifiers + ('appliedStereotype',), ['.'] * len(notifiers))
+        notifiers = map(str.split, notifiers, ['.'] * len(notifiers))
         old_subject = self.__the_subject
         subject_connect_helper = self._subject_connect_helper
         subject_disconnect_helper = self._subject_disconnect_helper
@@ -353,7 +135,6 @@ class DiagramItem(Presentation):
                 #log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
                 #self._subject_connect(self.subject, n)
                 subject_connect_helper(subject, callback_prefix, n)
-                self.update_stereotype()
 
         # Execute some sort of ItemNewSubject action
         try:
@@ -365,65 +146,15 @@ class DiagramItem(Presentation):
         self.request_update()
 
 
-    def on_subject_notify__appliedStereotype(self, subject, pspec=None):
-        if self.subject:
-            self.update_stereotype()
+class StereotypeSupport(object):
+    """
+    Support methods for stereotypes.
+    """
 
-    # DiaCanvasItem callbacks
+    def __init__(self):
+        self._stereotype = None
 
-    # TODO: use connectable adapter here.
-    def _on_glue(self, handle, wx, wy, parent_class):
-        """This function is used to notify the connecting item
-        about being connected. handle.owner.allow_connect_handle() is
-        called to determine if a connection is allowed.
-        """
-        if handle.owner.allow_connect_handle(handle, self):
-            #print self.__class__.__name__, 'Glueing allowed.'
-            return parent_class.on_glue(self, handle, wx, wy)
-        #else:
-            #print self.__class__.__name__, 'Glueing NOT allowed.'
-        # Dummy value with large distance value
-        return 10000.0, (0, 0)
-
-    def _on_connect_handle(self, handle, parent_class):
-        """This function is used to notify the connecting item
-        about being connected. handle.owner.allow_connect_handle() is
-        called to determine if a connection is allowed. If the connection
-        succeeded handle.owner.confirm_connect_handle() is called.
-        """
-        if handle.owner.allow_connect_handle(handle, self):
-            #print self.__class__.__name__, 'Connection allowed.'
-            ret = parent_class.on_connect_handle(self, handle)
-            if ret != 0:
-                handle.owner.confirm_connect_handle(handle)
-                return ret
-        #else:
-            #print self.__class__.__name__, 'Connection NOT allowed.'
-        return 0
-
-    def _on_disconnect_handle(self, handle, parent_class):
-        """Use this function to disconnect handles. It notifies
-        the connected item about being disconnected.
-        handle.owner.allow_disconnect_handle() is
-        called to determine if a connection is allowed to be removed.
-        If the disconnect succeeded handle.owner.confirm_connect_handle()
-        is called.
-        """
-        if handle.owner.allow_disconnect_handle(handle):
-            #print self.__class__.__name__, 'Disconnecting allowed.'
-            ret = parent_class.on_disconnect_handle(self, handle)
-            if ret != 0:
-                handle.owner.confirm_disconnect_handle(handle, self)
-                # TODO: call ConnectAction
-                return ret
-        #else:
-            #print self.__class__.__name__, 'Disconnecting NOT allowed.'
-        return 0
-
-    #
-    # Stereotypes
-    #
-    def set_stereotype(self, text = None):
+    def set_stereotype(self, text=None):
         """
         Set the stereotype text for the diagram item.
 
@@ -432,15 +163,12 @@ class DiagramItem(Presentation):
         @arg text: stereotype text
         """
         if text:
-            self._stereotype.set_text(STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE)
-            self._has_stereotype = True
-            self._shapes.add(self._stereotype)
+            self._stereotype = STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE
         else:
-            self._has_stereotype = False
-            if self._stereotype in self._shapes:
-                self._shapes.remove(self._stereotype)
+            self._stereotype = None
         self.request_update()
 
+    stereotype = property(lambda s: s._stereotype, set_stereotype)
 
     def update_stereotype(self):
         """
@@ -482,17 +210,6 @@ class DiagramItem(Presentation):
         # Phew! :]
         self.set_stereotype(stereotype)
 
-        self.request_update()
-
-
-    #
-    # utility methods
-    #
-    @staticmethod
-    def get_text_size(text):
-        return text.to_pango_layout(True).get_pixel_size()
-
-
     def parse_stereotype(self, data):
         if isinstance(data, str): # return data as stereotype if it is a string
             return data
@@ -513,10 +230,149 @@ class DiagramItem(Presentation):
 
             ok = True
             if cls:
-                ok = isinstance(subject, cls)
+                ok = type(subject) is cls #isinstance(subject, cls)
             if predicate:
                 ok = predicate(self)
 
             if ok:
                 return stereotype
         return None
+
+
+class DiagramItem(SubjectSupport, StereotypeSupport):
+    """
+    Basic functionality for all model elements (lines and elements!).
+
+    This class contains common functionallity for model elements and
+    relationships.
+    It provides an interface similar to UML.Element for connecting and
+    disconnecting signals.
+
+    This class is not very useful on its own. It contains some glue-code for
+    diacanvas.DiaCanvasItem and gaphor.UML.Element.
+
+    Example:
+        class ElementItem(diacanvas.CanvasElement, DiagramItem):
+            connect = DiagramItem.connect
+            disconnect = DiagramItem.disconnect
+            ...
+
+    @cvar style: styles information (derived from DiagramItemMeta)
+    """
+
+    __metaclass__ = DiagramItemMeta
+
+    stereotype_list = []
+    popup_menu = ('Stereotype', stereotype_list)
+
+    def __init__(self, id=None):
+        SubjectSupport.__init__(self)
+        StereotypeSupport.__init__(self)
+
+        self._id = id
+
+        # properties, which should be saved in file
+        self._persistent_props = set()
+
+    id = property(lambda self: self._id, doc='Id')
+
+    def set_prop_persistent(self, name):
+        """Specify property of diagram item, which should be saved in file.
+        """
+        self._persistent_props.add(name)
+
+
+    # UML.Element interface used by properties:
+
+    # TODO: Use adapters for load/save functionality
+    def save(self, save_func):
+        if self.subject:
+            save_func('subject', self.subject)
+
+        # save persistent properties
+        for p in self._persistent_props:
+            save_func(p, getattr(self, p.replace('-', '_')), reference=True)
+
+
+    def load(self, name, value):
+        if name == 'subject':
+            type(self).subject.load(self, value)
+        else:
+            #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
+            try:
+                setattr(self, name.replace('-', '_'), eval(value))
+            except:
+                log.warning('%s has no property named %s (value %s)' % (self, name, value))
+
+    def postload(self):
+        if self.subject:
+            self.on_subject_notify(type(self).subject)
+
+    def save_property(self, save_func, name):
+        """Save a property, this is a shorthand method.
+        """
+        save_func(name, getattr(self, name.replace('-', '_')))
+
+    def save_properties(self, save_func, *names):
+        """Save a property, this is a shorthand method.
+        """
+        for name in names:
+            self.save_property(save_func, name)
+
+    def unlink(self):
+        """
+        Remove the item from the canvas and set subject to None.
+        """
+        if self.canvas:
+            self.canvas.remove(self)
+        self.subject = None
+        super(DiagramItem, self).unlink()
+
+    def get_popup_menu(self):
+        """In the popup menu a submenu is created with Stereotypes than can be
+        applied to this classifier (Class, Interface).
+        If the class itself is a metaclass, an option is added to check if the class
+        exists.
+        """
+        subject = self.subject
+        stereotype_list = self.stereotype_list
+        stereotype_list[:] = []
+
+        # UML specs does not allow to extend stereotypes with stereotypes
+        if subject and not isinstance(subject, UML.Stereotype):
+            # look for stereotypes to put them into context menu of an item
+            # this can be only done when subject exists
+
+            from gaphor.actions.itemactions import ApplyStereotypeAction, register_action
+
+            cls = type(subject)
+
+            # find out names of classes, which are superclasses of our
+            # subject
+            names = set(c.__name__ for c in cls.__mro__ if issubclass(c, Element))
+
+            # find stereotypes that extend out metaclass
+            classes = subject._factory.select(lambda e: e.isKindOf(UML.Class) and e.name in names)
+
+            for class_ in classes:
+                for extension in class_.extension:
+                    stereotype = extension.ownedEnd.type
+                    stereotype_action = ApplyStereotypeAction(stereotype)
+                    register_action(stereotype_action, 'ItemFocus')
+                    stereotype_list.append(stereotype_action.id)
+        return self.popup_menu
+
+
+    def on_subject_notify__appliedStereotype(self, subject, pspec=None):
+        if self.subject:
+            self.request_update()
+
+    def request_update(self):
+        """Placeholder for gaphor.Item's request_update() method.
+        """
+        pass
+
+    def on_subject_notify(self, pspec, notifiers=()):
+        SubjectSupport.on_subject_notify(self, pspec, notifiers + ('appliedStereotype',))
+
+# vim:sw=4:et:ai

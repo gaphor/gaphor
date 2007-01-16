@@ -2,13 +2,9 @@
 LifelineItem diagram item
 """
 
-import gobject
-import pango
-import diacanvas
 from gaphor import UML
 from gaphor.diagram.align import V_ALIGN_MIDDLE
 from gaphor.diagram.diagramline import FreeLine
-from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
 
 class LifetimeItem(FreeLine):

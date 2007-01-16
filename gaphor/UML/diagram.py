@@ -1,7 +1,8 @@
 # vim: sw=4
-'''diagram.py
+"""
 This module contains a model elements (!) Diagram which is the abstract
-representation of a UML diagram. Diagrams can be visualized and edited.'''
+representation of a UML diagram. Diagrams can be visualized and edited.
+"""
 
 __author__ = 'Arjan Molenaar'
 __version__ = '$revision$'
@@ -16,16 +17,26 @@ class DiagramCanvas(gaphas.Canvas):
     """Some additions to gaphas.Canvas class.
     Esp. load and save functionallity.
     """
-    # TODO: save or ignore properties coming from diacanvas.Canvas
-    #_savable_canvas_properties = [ 'extents', 'static_extents',
-    #        'snap_to_grid', 'grid_int_x', 'grid_int_y', 'grid_ofs_x',
-    #        'grid_ofs_y', 'grid_color', 'grid_bg' ]
 
     def __init__(self, diagram):
         super(DiagramCanvas, self).__init__()
         self._diagram = diagram
+        self._block_updates = False
 
-    diagram = property(lambda d: d._diagram)
+    diagram = property(lambda s: s._diagram)
+
+    def _set_block_updates(self, block):
+        self._block_updates = block
+        if not block:
+            self.update_now()
+
+    block_updates = property(lambda s: s._block_updates, _set_block_updates)
+
+    def update_now(self):
+        if self._block_updates:
+            #log.debug('Update blocked for canvas %s' % self)
+            return
+        super(DiagramCanvas, self).update_now()
 
     def save(self, save_func):
         #for prop in DiagramCanvas._savable_canvas_properties:
@@ -36,7 +47,7 @@ class DiagramCanvas(gaphas.Canvas):
             save_func(None, item)
 
     def postload(self):
-        self.update_now()
+        pass #self.block_updates = False
 
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression.
@@ -60,18 +71,20 @@ class Diagram(Namespace, PackageableElement):
         super(Diagram, self).postload()
         self.canvas.postload()
 
-    def create(self, type, parent=None):
+    def create(self, type, parent=None, subject=None):
         """Create a new canvas item on the canvas. It is created with
         a unique ID and it is attached to the diagram's root item.
         """
         assert issubclass(type, gaphas.Item)
         obj = type(uniqueid.generate_id())
-        self.canvas.root.add(obj, parent)
+        if subject:
+            obj.subject = subject
+        self.canvas.add(obj, parent)
         return obj
 
     def unlink(self):
         # Make sure all canvas items are unlinked
-        for item in self.canvas.select():
+        for item in self.canvas.get_all_items():
             try:
                 item.unlink()
             except:

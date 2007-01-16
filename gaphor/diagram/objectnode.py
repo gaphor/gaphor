@@ -4,20 +4,17 @@ Object node item.
 
 import itertools
 
-import gobject
-import pango
-
-import diacanvas
 from gaphor import UML
-from gaphor import resource
 
-from gaphor.diagram import TextElement
-from gaphor.diagram.align import V_ALIGN_MIDDLE
-from gaphor.diagram.groupable import GroupBase
+#from gaphor.diagram import TextElement
+#from gaphor.diagram.align import V_ALIGN_MIDDLE
+#from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
+from gaphas.util import text_extents, text_multiline
+from gaphas.geometry import Rectangle, distance_rectangle_point
 
 
-class ObjectNodeItem(NamedItem, GroupBase):
+class ObjectNodeItem(NamedItem):
     """
     Representation of object node. Object node is ordered and has upper bound
     specification.
@@ -25,12 +22,11 @@ class ObjectNodeItem(NamedItem, GroupBase):
     Ordering information can be hidden by user.
     """
 
-    __uml__      = UML.ObjectNode
+    __uml__ = UML.ObjectNode
 
-    __s_valign__ = V_ALIGN_MIDDLE
-
-    FONT = 'sans 10'
-    MARGIN = 10
+    __style__ = {
+        'margin': (10, 10, 10, 10)
+    }
 
     popup_menu = NamedItem.popup_menu + (
         'separator',
@@ -42,27 +38,41 @@ class ObjectNodeItem(NamedItem, GroupBase):
             'ObjectNodeOrderingFIFO')
     )
 
-    __gproperties__ = {
-        'show-ordering': (gobject.TYPE_BOOLEAN, 'show ordering',
-            'show ordering of object node', False,
-            gobject.PARAM_READWRITE),
-    }
-
     def __init__(self, id = None):
-        GroupBase.__init__(self)
         NamedItem.__init__(self, id)
 
-        self._upper_bound = TextElement('value', '{ upperBound = %s }', '*')
-        self.add(self._upper_bound)
-
-        self._ordering = diacanvas.shape.Text()
-        self._ordering.set_font_description(pango.FontDescription(self.FONT))
-        self._ordering.set_alignment(pango.ALIGN_CENTER)
-        self._ordering.set_markup(False)
+        self._tag = '' #TextElement('value', '{ upperBound = %s }', '*')
+        self._tag_bounds = None
 
         self._show_ordering = False
-        self.set_prop_persistent('show-ordering')
 
+    def _set_ordering(self, ordering):
+        """
+        Set ordering of object node.
+        """
+        self.subject.ordering = ordering
+        self.request_update()
+
+    ordering = property(lambda s: s.subject.ordering, _set_ordering)
+
+    tag_bounds = property(lambda s: s._tag_bounds)
+
+    def _set_show_ordering(self, value):
+        #self.preserve_property(pspec.name)
+        self._show_ordering = value
+        self.request_update()
+
+    show_ordering = property(lambda s: s._show_ordering, _set_show_ordering)
+
+    def save(self, save_func):
+        save_func('show-ordering', self._show_ordering)
+        super(ObjectNodeItem, self).save(save_func)
+
+    def load(self, name, value):
+        if name == 'show-ordering':
+            self._show_ordering = eval(value)
+        else:
+            super(ObjectNodeItem, self).load(name, value)
 
     def on_subject_notify(self, pspec, notifiers = ()):
         """
@@ -71,92 +81,53 @@ class ObjectNodeItem(NamedItem, GroupBase):
         """
         NamedItem.on_subject_notify(self, pspec, notifiers)
         if self.subject:
-            factory = resource(UML.ElementFactory)
             if not self.subject.upperBound:
-                self.subject.upperBound = factory.create(UML.LiteralSpecification)
+                self.subject.upperBound = UML.create(UML.LiteralSpecification)
                 self.subject.upperBound.value = '*'
-            self._upper_bound.subject = self.subject.upperBound
-        else:
-            self._upper_bound.subject = None
+            #self._upper_bound.subject = self.subject.upperBound
+        #else:
+        #    self._upper_bound.subject = None
         self.request_update()
 
-
-    def do_set_property(self, pspec, value):
-        """
-        Request update of item in case of ordering visibility.
-        """
-        if pspec.name == 'show-ordering':
-            self.preserve_property(pspec.name)
-            self._show_ordering = value
-            self.request_update()
-        else:
-            NamedItem.do_set_property(self, pspec, value)
-
-
-    def do_get_property(self, pspec):
-        if pspec.name == 'show-ordering':
-            return self._show_ordering
-        else:
-            return NamedItem.do_get_property(self, pspec)
-
-
-    def set_ordering(self, ordering):
-        """
-        Set ordering of object node.
-        """
-        self.subject.ordering = ordering
-        self.request_update()
-
-
-    def get_ordering(self):
-        """
-        Determine ordering of object node.
-        """
-        return self.subject.ordering
-
-
-    def on_update(self, affine):
+    def pre_update(self, context):
         """
         Update object node, its ordering and upper bound specification.
         """
-        NamedItem.on_update(self, affine)
+        NamedItem.update(self, context)
 
-        if self.subject:
-            self._ordering.set_text('{ ordering = %s }' % self.subject.ordering)
-        else:
-            self._ordering.set_text('')
+        # TODO: format tag properly:
+        if self.subject.upperBound:
+            self._tag = '{ upperBound = %s }\n' % self.subject.upperBound.value
 
-        # 
-        # object ordering
-        #
-        if self.props.show_ordering:
-            # center ordering below border
-            ord_width, ord_height = self._ordering.to_pango_layout(True).get_pixel_size()
-            x = (self.width - ord_width) / 2
-            self._ordering.set_pos((x, self.height + self.MARGIN))
+        self._tag += '{ ordering = %s }' % self.subject.ordering
 
-            self._ordering.set_max_width(ord_width)
-            self._ordering.set_max_height(ord_height)
+        w, h = text_extents(context.cairo, self._tag, multiline=True)
+        x = (self.width - w) / 2
+        y = self.height + self.style.margin[2]
+        self._tag_bounds = Rectangle(x, y, width=w, height=h)
 
-            self.set_bounds((min(0, x), 0,
-                max(self.width, ord_width), self.height + self.MARGIN + ord_height))
-        else:
-            ord_width, ord_height = 0, 0
+    def point(self, x, y):
+        """
+        Return the distance from (x, y) to the item.
+        """
+        d1 = super(ObjectNodeItem, self).point(x, y)
+        d2 = distance_rectangle_point(self._tag_bounds, (x, y))
+        return min(d1, d2)
 
-        #
-        # upper bound
-        #
-        ub_width, ub_height = self._upper_bound.get_size()
-        x = (self.width - ub_width) / 2
-        y = self.height + ord_height + self.MARGIN
-        self._upper_bound.update_label(x, y)
+    def draw(self, context):
+        cr = context.cairo
+        cr.rectangle(0, 0, self.width, self.height)
+        cr.stroke()
 
-        GroupBase.on_update(self, affine)
+        super(ObjectNodeItem, self).draw(context)
+
+        if self._tag:
+            text_multiline(cr, self._tag_bounds[0], self._tag_bounds[1], self._tag)
+        if context.hovered or context.focused or context.draw_all:
+            cr.set_line_width(0.5)
+            b = self._tag_bounds
+            cr.rectangle(b.x0, b.y0, b.width, b.height)
+            cr.stroke()
 
 
-    def on_shape_iter(self):
-        it = NamedItem.on_shape_iter(self)
-        if self.props.show_ordering:
-            return itertools.chain(it, iter([self._ordering]))
-        else:
-            return it
+# vim:sw=4:et:ai

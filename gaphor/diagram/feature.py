@@ -4,45 +4,26 @@ Feature diagram item. Feature is a super class of both Attribute, Operations and
 Methods.
 '''
 
-import gobject
-import pango
-import diacanvas
-import diacanvas.shape
-from diacanvas import CanvasItem, CanvasEditable
-from diacanvas.geometry import distance_rectangle_point
+from gaphas.item import Item
 from diagramitem import DiagramItem
 from gaphor.undomanager import undoable
 from gaphor.diagram import DiagramItemMeta
+from gaphas.util import text_extents, text_set_font
+import font
 
-
-class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
-    """FeatureItems are model elements who recide inside a ClassItem, such as
-    methods and attributes. Those items can have comments attached, but only on
-    the left and right side.
+class FeatureItem(DiagramItem):
+    """FeatureItems are model elements who recide inside a ClassifierItem, such
+    as methods and attributes. Those items can have comments attached, but only
+    on the left and right side.
     Note that features can also be used inside objects.
     """
-    __metaclass__ = DiagramItemMeta
-
-    # Properties, also add the DiagramItem properties here.
-    __gproperties__ = {
-        'expression':  (gobject.TYPE_STRING, 'expression',
-                         'The expression represented by this Feature',
-                         '', gobject.PARAM_READWRITE)
-    }
-    __gproperties__.update(DiagramItem.__gproperties__)
-
-    __gsignals__ = DiagramItem.__gsignals__
-
-    FONT='sans 10'
 
     def __init__(self, id=None):
-        self.__gobject_init__()
         DiagramItem.__init__(self, id)
-        self._expression = diacanvas.shape.Text()
-        self._expression.set_font_description(pango.FontDescription(FeatureItem.FONT))
-        self._expression.set_wrap_mode(diacanvas.shape.WRAP_NONE)
-        self._expression.set_markup(False)
-        self.set_flags(diacanvas.COMPOSITE)
+        self.width = 0
+        self.height = 0
+        self.text = ''
+
 
     # Ensure we call the right connect functions:
     connect = DiagramItem.connect
@@ -58,74 +39,144 @@ class FeatureItem(CanvasItem, CanvasEditable, DiagramItem):
         if self.subject:
             self._expression.set_text(self.subject.render())
 
-    @undoable
-    def do_set_property(self, pspec, value):
-        if pspec.name == 'expression':
-            if self.subject:
-                #self.preserve_property('expression')
-                self.subject.parse(value)
-
-                self._expression.set_text(self.subject.render())
-                self.request_update()
-        else:
-            DiagramItem.do_set_property(self, pspec, value)
-
-    def do_get_property(self, pspec):
-        if pspec.name == 'expression':
-            return self.subject and self.subject.render() or ''
-        else:
-            return DiagramItem.do_get_property(self, pspec)
-
     def get_size(self, update=False):
         """Return the size of the feature. If update == True the item is
         directly updated.
         """
-        w, h = self._expression.to_pango_layout(True).get_pixel_size()
-        if update:
-            self.set_bounds((0, 0, max(10, w), h))
-        return w, h
+        return self.width, self.height
 
-    def set_pos(self, x, y):
-        a = self.get_property('affine')
-        a = (a[0], a[1], a[2], a[3], x, y)
-        self.set(affine=a)
+    def get_text(self):
+        return ''
 
-    def edit(self):
-        self.start_editing(self._expression)
+    def update_size(self, text, context):
+        cr = context.cairo
+        self.width, self.height = text_extents(cr, text)
 
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramItem.on_subject_notify(self, pspec, notifiers)
         #log.debug('setting text %s' % self.subject.render() or '')
-        self._expression.set_text(self.subject and self.subject.render() or '')
+        self.text = self.subject and self.subject.render() or ''
 
-    # CanvasItem callbacks:
+    def point(self, x, y):
+        """
+        """
+        return distance_rectangle_point((0, 0, self.width, self.height), (x, y))
 
-    def on_update(self, affine):
-        #self._expression.set_text(self.subject and self.subject.render() or '')
-        CanvasItem.on_update(self, affine)
-        #log.debug('FeatureItem.on_update: %f, %f' % self.get_size(True))
 
-    def on_point(self, x, y):
-        return distance_rectangle_point(self.get_bounds(), (x, y))
+class AttributeItem(FeatureItem):
 
-    def on_shape_iter(self):
-        from classifier import ClassifierItem
-        if self.parent and self.parent.drawing_style != ClassifierItem.DRAW_ICON:
-            return iter([self._expression])
-        else:
-            return iter([])
+    popup_menu = FeatureItem.popup_menu + (
+        'EditItem',
+        'DeleteAttribute',
+        'MoveUp',
+        'MoveDown',
+        'separator',
+        'CreateAttribute',
+    )
 
-    # Editable
+    def __init__(self, id=None):
+        FeatureItem.__init__(self, id)
+        self.need_sync_attributes = False
 
-    def on_editable_get_editable_shape(self, x,y):
-        return self._expression
+    def on_subject_notify(self, pspec, notifiers=()):
+        FeatureItem.on_subject_notify(self, pspec, ('name',
+                                                    'isDerived',
+                                                    'visibility',
+                                                    'lowerValue.value',
+                                                    'upperValue.value',
+                                                    'defaultValue.value',
+                                                    'typeValue.value',
+                                                    'taggedValue',
+                                                    'association')
+                                                    + notifiers)
+        #self._expression.set_text(self.subject.render() or '')
+        #self.request_update()
 
-    def on_editable_start_editing(self, shape):
-        #self.preserve_property('expression')
-        pass
-
-    def on_editable_editing_done(self, shape, new_text):
-        self.set_property('expression', new_text)
-        #if new_text != self.subject.name:
-        #    self.subject.name = new_text
+    def on_subject_notify__name(self, subject, pspec):
+        #log.debug('setting text %s' % self.subject.render() or '')
+        #self._expression.set_text(self.subject.render() or '')
         self.request_update()
+
+    on_subject_notify__isDerived = on_subject_notify__name
+    on_subject_notify__visibility = on_subject_notify__name
+    on_subject_notify__lowerValue_value = on_subject_notify__name
+    on_subject_notify__upperValue_value = on_subject_notify__name
+    on_subject_notify__defaultValue_value = on_subject_notify__name
+    on_subject_notify__typeValue_value = on_subject_notify__name
+    on_subject_notify__taggedValue = on_subject_notify__name
+
+    def on_subject_notify__association(self, subject, pspec):
+        """Make sure we update the attribute compartment (in case
+        the class_ property was defined before it is connected to
+        an association.
+        """
+        #if self.parent:
+        #    self.parent.sync_attributes()
+        self.need_sync_attributes = True
+        self.request_update()
+
+    def pre_update(self, context):
+        if self.need_sync_attributes and context.parent:
+            context.parent.sync_attributes()
+        self.need_sync_attributes = False
+        self.update_size(self.subject.render(), context)
+        #super(AttributeItem, self).pre_update(context)
+
+    def draw(self, context):
+        cr = context.cairo
+        text_set_font(cr, font.FONT)
+        cr.show_text(self.subject.render() or '')
+
+
+
+# TODO: handle Parameter's
+
+class OperationItem(FeatureItem):
+
+    popup_menu = FeatureItem.popup_menu + (
+        'AbstractOperation',
+        'EditItem',
+        'DeleteOperation',
+        'MoveUp',
+        'MoveDown',
+        'separator',
+        'CreateOperation'
+    )
+
+    def __init__(self, id=None):
+        FeatureItem.__init__(self, id)
+        self.need_sync_operations = False
+
+    def on_subject_notify(self, pspec, notifiers=()):
+        FeatureItem.on_subject_notify(self, pspec,
+                        ('name', 'visibility', 'isAbstract')
+                        + notifiers)
+
+        # TODO: Handle subject.returnResult[*] and subject.formalParameter[*]
+
+    def postload(self):
+        FeatureItem.postload(self)
+        self.need_sync_operations = False
+
+    def on_subject_notify__name(self, subject, pspec):
+        #log.debug('setting text %s' % self.subject.render() or '')
+        self.request_update()
+
+    on_subject_notify__isAbstract = on_subject_notify__name
+    on_subject_notify__visibility = on_subject_notify__name
+    on_subject_notify__taggedValue = on_subject_notify__name
+
+    def pre_update(self, context):
+        if self.need_sync_operations and context.parent:
+            context.parent.sync_operations()
+        self.need_sync_operations = False
+        self.update_size(self.subject.render(), context)
+        #super(OperationItem, self).pre_update(context)
+
+    def draw(self, context):
+        cr = context.cairo
+        text_set_font(cr, font.FONT)
+        cr.show_text(self.subject.render() or '')
+
+
+# vim:sw=4:et

@@ -1,6 +1,5 @@
-# vim:sw=4:et
-
-"""Toolbox.
+"""
+Toolbox.
 """
 
 import gobject
@@ -8,11 +7,9 @@ import gtk
 
 from gaphor import resource
 
-# Import this module to ensure actions refered to in the toolbox are loaded
-import gaphor.diagram.placementactions
-
 class Toolbox(gtk.VBox):
-    """A toolbox is a widget that contains a set of buttons (a Wrapbox widget)
+    """
+    A toolbox is a widget that contains a set of buttons (a Wrapbox widget)
     with a name above it. When the user clicks on the name the box's content
     shows/hides.
 
@@ -28,7 +25,8 @@ class Toolbox(gtk.VBox):
     }
 
     def __init__(self, menu_factory, toolboxdef):
-        """Create a new Toolbox instance. Wrapbox objects are generated
+        """
+        Create a new Toolbox instance. Wrapbox objects are generated
         using the menu_factory and based on the toolboxdef definition.
         """
         self.__gobject_init__()
@@ -37,7 +35,8 @@ class Toolbox(gtk.VBox):
         self.boxes = []
 
     def on_wrapbox_decorator_toggled(self, button, content):
-        """This function is called when the Wrapbox decorator is clicked. It
+        """
+        This function is called when the Wrapbox decorator is clicked. It
         changes the visibility of the content and the arrow in front of the
         button label.
         """
@@ -55,8 +54,9 @@ class Toolbox(gtk.VBox):
         resource.set('ui.toolbox.%s' % button.toggle_id,
                      content.get_property('visible'), persistent=True)
 
-    def old_make_wrapbox_decorator(self, title, content):
-        """Create a gtk.VBox with in the top compartment a label that can be
+    def make_wrapbox_decorator(self, title, content):
+        """
+        Create a gtk.VBox with in the top compartment a label that can be
         clicked to show/hide the lower compartment.
         """
         vbox = gtk.VBox()
@@ -95,8 +95,9 @@ class Toolbox(gtk.VBox):
 
         return vbox
 
-    def make_wrapbox_decorator(self, title, content):
-        """Create a gtk.VBox with in the top compartment a label that can be
+    def new_make_wrapbox_decorator(self, title, content):
+        """
+        Create a gtk.VBox with in the top compartment a label that can be
         clicked to show/hide the lower compartment.
         """
         expander = gtk.Expander()
@@ -136,5 +137,4 @@ class Toolbox(gtk.VBox):
                 wrapbox.show()
                 self.boxes.append(wrapbox)
 
-gobject.type_register(Toolbox)
-
+# vim:sw=4:et:ai

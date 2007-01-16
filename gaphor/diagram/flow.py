@@ -3,177 +3,33 @@ Control flow and object flow implementation.
 
 Contains also implementation to split flows using activity edge connectors.
 """
-# vim:sw=4:et:ai
 
-from __future__ import generators
-
-import diacanvas
+from math import atan, pi, sin, cos
 
 from gaphor import resource
+
 from gaphor import UML
-from gaphor.diagram import TextElement
 from gaphor.diagram.diagramline import DiagramLine
-
-from gaphor.diagram.groupable import GroupBase
-import gaphor.diagram.util
-
-import itertools
+from gaphas.geometry import Rectangle
+from gaphas.util import text_extents, text_multiline
+from gaphas.geometry import distance_rectangle_point
 
 
-class FlowBase(DiagramLine, GroupBase):
-    """
-    Control flow and object flow abstract class. Allows to create flows
-    with name and guard.
-    """
-
-    __uml__ = UML.ControlFlow
-    __relationship__ = 'source', 'outgoing', 'target', 'incoming'
-
-    def __init__(self, id = None):
-        GroupBase.__init__(self)
-        DiagramLine.__init__(self, id)
-
-        self.set(has_tail=1, tail_fill_color=0,
-                 tail_a=0.0, tail_b=15.0, tail_c=6.0, tail_d=6.0)
+node_classes = {
+    UML.ForkNode:     UML.JoinNode,
+    UML.DecisionNode: UML.MergeNode,
+    UML.JoinNode:     UML.ForkNode,
+    UML.MergeNode:    UML.DecisionNode,
+}
 
 
-    def create_name(self):
-        self._name  = TextElement('name')
-        self.add(self._name)
-
-
-    def create_guard(self):
-        self._guard = TextElement('value')
-        self.add(self._guard)
-
-
-    def on_subject_notify(self, pspec, notifiers = ()):
-        DiagramLine.on_subject_notify(self, pspec, notifiers)
-
-        if hasattr(self, '_guard'):
-            if self.subject:
-                self._guard.subject = self.subject.guard
-            else:
-                self._guard.subject = None
-
-        if hasattr(self, '_name'):
-            self._name.subject = self.subject
-
-        self.request_update()
-
-
-    def update_name(self, affine):
-        handles = self.handles
-
-        def get_pos(p1, p2, width, height):
-            x = p1[0] > p2[0] and -10 or width + 10
-            x = p2[0] - x
-            y = p1[1] <= p2[1] and height + 15 or -15
-            y = p2[1] - y
-            return x, y
-
-        p1 = handles[-2].get_pos_i()
-        p2 = handles[-1].get_pos_i()
-        w, h = self._name.get_size()
-        x, y = get_pos(p1, p2, w, h)
-        self._name.update_label(x, y)
-
-
-    def update_guard(self, affine):
-        handles = self.handles
-        middle = len(handles)/2
-
-        def get_pos_centered(p1, p2, width, height):
-            x = p1[0] > p2[0] and width + 2 or -2
-            x = (p1[0] + p2[0]) / 2.0 - x
-            y = p1[1] <= p2[1] and height or 0
-            y = (p1[1] + p2[1]) / 2.0 - y
-            return x, y
-
-        p1 = handles[middle-1].get_pos_i()
-        p2 = handles[middle].get_pos_i()
-        w, h = self._guard.get_size()
-        x, y = get_pos_centered(p1, p2, w, h)
-        self._guard.update_label(x, y)
-
-
-    def on_update(self, affine):
-        DiagramLine.on_update(self, affine)
-        GroupBase.on_update(self, affine)
-
-
-    def allow_connect_handle(self, handle, connecting_to):
-        """See DiagramLine.allow_connect_handle().
-        """
-        can_connect = False
-
-        subject = connecting_to.subject
-        if isinstance(subject, UML.ActivityNode):
-            source = self.handles[0] 
-            target = self.handles[-1]
-
-            # forbid flow source to connect to final node
-            # forbid flow target to connect to initial nodes
-            can_connect = True
-            if source is handle and isinstance(subject, UML.FinalNode) \
-                    or target is handle and isinstance(subject, UML.InitialNode):
-                can_connect = False
-
-        return can_connect
-
-
-    def connect_items(self, c1, c2):
-        if c1 and c2:
-            s1 = c1.subject
-            if isinstance(s1, tuple(gaphor.diagram.util.node_classes.keys())) \
-                    and c1.props.combined:
-                log.debug('getting combined node for flow source')
-                s1 = s1.outgoing[0].target
-
-            s2 = c2.subject
-            relation = self.relationship
-            if not relation:
-                factory = resource(UML.ElementFactory)
-
-                # if we connect to object node than flow uml class should
-                # be ObjectFlow
-                if isinstance(s1, UML.ObjectNode) \
-                        or isinstance(s2, UML.ObjectNode):
-                    relcls = UML.ObjectFlow
-                else:
-                    relcls = UML.ControlFlow
-                assert relcls == UML.ObjectFlow or relcls == UML.ControlFlow
-
-                relation = factory.create(relcls)
-                relation.source = s1
-                relation.target = s2
-                relation.guard = factory.create(UML.LiteralSpecification)
-            self.subject = relation
-
-            gaphor.diagram.util.determine_node_on_connect(c1)
-            gaphor.diagram.util.determine_node_on_connect(c2)
-
-
-    def disconnect_items(self, c1, c2, was_connected_to):
-        if not c1:
-            c1 = was_connected_to
-        if not c2:
-            c2 = was_connected_to
-
-        self.set_subject(None)
-
-        if c1:
-            gaphor.diagram.util.determine_node_on_disconnect(c1)
-        if c2:
-            gaphor.diagram.util.determine_node_on_disconnect(c2)
-
-
-
-class FlowItem(FlowBase):
+class FlowItem(DiagramLine):
     """
     Representation of control flow and object flow. Flow item has name and
     guard. It can be splitted into two flows with activity edge connectors.
     """
+
+    __uml__ = UML.ControlFlow
 
     popup_menu = DiagramLine.popup_menu + (
         'separator',
@@ -181,50 +37,140 @@ class FlowItem(FlowBase):
     )
 
     def __init__(self, id = None):
-        FlowBase.__init__(self, id)
+        DiagramLine.__init__(self, id)
+        self._name_bounds = None
+        self._guard_bounds = None
 
-        self.create_name()
-        self.create_guard()
+        #self.set(has_tail=1, tail_fill_color=0,
+        #         tail_a=0.0, tail_b=15.0, tail_c=6.0, tail_d=6.0)
 
+    name_bounds = property(lambda s: s._name_bounds)
+    guard_bounds = property(lambda s: s._guard_bounds)
 
-    def on_update(self, affine):
-        self.update_name(affine)
-        self.update_guard(affine)
-        FlowBase.on_update(self, affine)
+    def on_subject_notify(self, pspec, notifiers = ()):
+        DiagramLine.on_subject_notify(self, pspec, ('guard', 'guard.value',) + notifiers)
 
+        self.request_update()
 
-    # Gaphor Connection Protocol
+    def on_subject_notify__guard(self, subject, pspec=None):
+        self.request_update()
 
-    def confirm_connect_handle (self, handle):
-        """See DiagramLine.confirm_connect_handle().
-        """
-        c1 = self.handles[0].connected_to   # source
-        c2 = self.handles[-1].connected_to  # target
-        self.connect_items(c1, c2)
+    def on_subject_notify__guard_value(self, subject, pspec=None):
+        self.request_update()
 
+    def update_name(self, context):
+        cr = context.cairo
+        ofs = 5
 
-    def confirm_disconnect_handle (self, handle, was_connected_to):
-        """See DiagramLine.confirm_disconnect_handle().
-        """
-        c1 = self.handles[0].connected_to   # source
-        c2 = self.handles[-1].connected_to  # target
-        self.disconnect_items(c1, c2, was_connected_to)
+        handles = self._handles
+        p1 = handles[-1].pos
+        p2 = handles[-2].pos
 
+        name_w, name_h = map(max, text_extents(cr, self.subject and self.subject.name, multiline=True), (10, 10))
 
+        name_dx = 0.0
+        name_dy = 0.0
 
-class ACItem(TextElement):
+        dx = float(p2[0]) - float(p1[0])
+        dy = float(p2[1]) - float(p1[1])
+        
+        if dy == 0:
+            rc = 1000.0 # quite a lot...
+        else:
+            rc = dx / dy
+        abs_rc = abs(rc)
+        h = dx > 0 # right side of the box
+        v = dy > 0 # bottom side
+
+        if abs_rc > 6:
+            # horizontal line
+            if h:
+                name_dx = ofs
+                name_dy = -ofs - name_h
+            else:
+                name_dx = -ofs - name_w
+                name_dy = -ofs - name_h
+        elif 0 <= abs_rc <= 0.2:
+            # vertical line
+            if v:
+                name_dx = -ofs - name_w
+                name_dy = ofs
+            else:
+                name_dx = -ofs - name_w
+                name_dy = -ofs - name_h
+        else:
+            # Should both items be placed on the same side of the line?
+            r = abs_rc < 1.0
+
+            # Find out alignment of text (depends on the direction of the line)
+            align_left = (h and not r) or (r and not h)
+            align_bottom = (v and not r) or (r and not v)
+            if align_left:
+                name_dx = ofs
+            else:
+                name_dx = -ofs - name_w
+            if align_bottom:
+                name_dy = -ofs - name_h
+            else:
+                name_dy = ofs 
+
+        self._name_bounds = Rectangle(p1[0] + name_dx,
+                                      p1[1] + name_dy,
+                                      width=name_w,
+                                      height=name_h)
+
+    def update(self, context):
+        super(FlowItem, self).update(context)
+        self.update_name(context)
+        # update guard label:
+        self._guard_bounds = self.update_label(context, self.subject and self.subject.guard and self.subject.guard.value)
+
+    def point(self, x, y):
+        d1 = super(FlowItem, self).point(x, y)
+        drp = distance_rectangle_point
+        d2 = drp(self._name_bounds, (x, y))
+        d3 = drp(self._guard_bounds, (x, y))
+        return min(d1, d2, d3)
+
+    def draw_tail(self, context):
+        cr = context.cairo
+        cr.line_to(0, 0)
+        cr.stroke()
+        cr.move_to(15, -6)
+        cr.line_to(0, 0)
+        cr.line_to(15, 6)
+
+    def draw(self, context):
+        super(FlowItem, self).draw(context)
+        cr= context.cairo
+        if self.subject:
+            text_multiline(cr, self._name_bounds[0], self._name_bounds[3], self.subject.name)
+            text_multiline(cr, self._guard_bounds[0], self._guard_bounds[3], self.subject.guard and self.subject.guard.value)
+
+        if context.hovered or context.focused or context.draw_all:
+            cr.set_line_width(0.5)
+            b = self._name_bounds
+            cr.rectangle(b.x0, b.y0, b.width, b.height)
+            cr.stroke()
+            b = self._guard_bounds
+            cr.rectangle(b.x0, b.y0, b.width, b.height)
+            cr.stroke()
+
+        
+#class ACItem(TextElement):
+class ACItem(object):
     """
     Activity edge connector. It is a circle with name inside.
     """
 
     RADIUS = 10
     def __init__(self, id):
-        TextElement.__init__(self, id)
-        self._circle = diacanvas.shape.Ellipse()
-        self._circle.set_line_width(2.0)
-        self._circle.set_fill_color(diacanvas.color(255, 255, 255))
-        self._circle.set_fill(diacanvas.shape.FILL_SOLID)
-        self.show_border = False
+        #TextElement.__init__(self, id)
+        #self._circle = diacanvas.shape.Ellipse()
+        #self._circle.set_line_width(2.0)
+        #self._circle.set_fill_color(diacanvas.color(255, 255, 255))
+        #self._circle.set_fill(diacanvas.shape.FILL_SOLID)
+        #self.show_border = False
 
         # set new value notification function to change activity edge
         # connector name globally
@@ -275,16 +221,7 @@ class ACItem(TextElement):
         pass
 
 
-    def on_shape_iter(self):
-        """
-        Return activity edge name and circle.
-        """
-        it = TextElement.on_shape_iter(self)
-        return itertools.chain([self._circle], it)
-
-
-
-class CFlowItem(FlowBase):
+class CFlowItem(FlowItem):
     """
     Abstract class for flows with activity edge connector. Flow with
     activity edge connector references other one, which has activity edge
@@ -300,7 +237,7 @@ class CFlowItem(FlowBase):
     )
 
     def __init__(self, id = None):
-        FlowBase.__init__(self, id)
+        FlowItem.__init__(self, id)
 
         self._connector = ACItem('value')
 
@@ -324,7 +261,7 @@ class CFlowItem(FlowBase):
         """
         Save connector name and opposite flow with activity edge connector.
         """
-        FlowBase.save(self, save_func)
+        FlowItem.save(self, save_func)
         save_func('opposite', self._opposite, True)
         save_func('connector-name', self._connector.subject.value)
 
@@ -338,7 +275,7 @@ class CFlowItem(FlowBase):
         elif name == 'opposite':
             self._opposite = value
         else:
-            FlowBase.load(self, name, value)
+            FlowItem.load(self, name, value)
 
 
     def on_update(self, affine):
@@ -354,11 +291,11 @@ class CFlowItem(FlowBase):
         #x = p1[0] < p2[0] and r or -r
         x = p1[0] < p2[0] and -r or r
         y = 0
-        x, y = gaphor.diagram.util.rotate(p1, p2, x, y, p1[0], p1[1])
+        x, y = rotate(p1, p2, x, y, p1[0], p1[1])
 
         self._connector.move_center(x, y)
 
-        FlowBase.on_update(self, affine)
+        FlowItem.on_update(self, affine)
 
 
     def confirm_connect_handle(self, handle):
@@ -380,7 +317,7 @@ class CFlowItem(FlowBase):
     def allow_connect_handle(self, handle, connecting_to):
         if handle == self.get_inactive_handle():
             return False
-        return FlowBase.allow_connect_handle(self, handle, connecting_to)
+        return FlowItem.allow_connect_handle(self, handle, connecting_to)
 
 
     def confirm_disconnect_handle (self, handle, was_connected_to):
@@ -395,6 +332,8 @@ class CFlowItem(FlowBase):
 
 class CFlowItemA(CFlowItem):
     """
+    * Is used for split flows, as is CFlowItemB *
+
     Flow with activity edge connector, which starts from node and points to
     activity edge connector.
     """
@@ -462,3 +401,292 @@ class CFlowItemB(CFlowItem):
         Return source handle as inactive one.
         """
         return self.handles[0]
+
+
+
+
+def move_collection(src, target, name):
+    """
+    Copy collection from one object to another.
+
+    src    - source object
+    target - target object
+    name   - name of attribute, which is collection to copy
+    """
+    # first make of copy of collection, because assigning
+    # element to target collection moves this element
+    for flow in list(getattr(src, name)):
+        getattr(target, name).append(flow)
+
+
+def is_fd(node):
+    """
+    Check if node is fork or decision node.
+    """
+    return isinstance(node, (UML.ForkNode, UML.DecisionNode))
+
+
+def change_node_class(node):
+    """
+    If UML constraints for fork, join, decision and merge nodes are not
+    met, then create new node depending on input node class, i.e. create
+    fork node from join node or merge node from decision node.
+
+    If constraints are met, then return node itself.
+    """
+    if is_fd(node) and len(node.incoming) > 1 \
+            or not is_fd(node) and len(node.incoming) < 2:
+
+        factory = resource(UML.ElementFactory)
+        cls = node_classes[node.__class__]
+        log.debug('creating %s' % cls)
+        nn = factory.create(cls)
+        move_collection(node, nn, 'incoming')
+        move_collection(node, nn, 'outgoing')
+    else:
+        nn = node
+
+    assert nn is not None
+
+    # we have to accept zero of outgoing edges in case of fork/descision
+    # nodes
+    assert is_fd(nn) and len(nn.incoming) <= 1 \
+        or not is_fd(nn) and len(nn.incoming) >= 1, '%s' % nn
+    assert is_fd(nn) and len(nn.outgoing) >= 0 \
+        or not is_fd(nn) and len(nn.outgoing) <= 1, '%s' % nn
+    return nn
+
+
+def combine_nodes(node):
+    """
+    Create fork/join (decision/merge) nodes combination as described in UML
+    specification.
+    """
+    log.debug('combining nodes')
+
+    cls = node_classes[node.__class__]
+    log.debug('creating %s' % cls)
+    factory = resource(UML.ElementFactory)
+    target = factory.create(cls)
+
+    source = node
+    if is_fd(node):
+        source = target
+        move_collection(node, target, 'incoming')
+
+        # create new fork node
+        cls = node_classes[target.__class__]
+        log.debug('creating %s' % cls)
+        target = factory.create(cls)
+        move_collection(node, target, 'outgoing')
+    else:
+        # fork node is created, referenced by target
+        move_collection(node, target, 'outgoing')
+
+    assert not is_fd(source)
+    assert is_fd(target)
+
+    # create flow
+    c1 = count_object_flows(source, 'incoming')
+    c2 = count_object_flows(target, 'outgoing')
+
+    if c1 > 0 or c2 > 0:
+        flow = factory.create(UML.ControlFlow)
+    else:
+        flow = factory.create(UML.ObjectFlow)
+    flow.source = source
+    flow.target = target
+
+    assert len(source.incoming) > 1
+    assert len(source.outgoing) == 1
+
+    assert len(target.incoming) == 1
+    assert len(target.outgoing) > 1
+
+    return source
+
+
+def decombine_nodes(source):
+    """
+    Create node depending on source argument which denotes combination of
+    fork/join (decision/merge) nodes as described in UML specification.
+
+    Combination of nodes is destroyed.
+    """
+    log.debug('decombining nodes')
+    flow = source.outgoing[0]
+    target = flow.target
+
+    if len(source.incoming) < 2:
+        # create fork or decision
+        cls = target.__class__
+    else:
+        # create join or merge
+        cls = source.__class__
+
+    factory = resource(UML.ElementFactory)
+    node = factory.create(cls)
+
+    move_collection(source, node, 'incoming')
+    move_collection(target, node, 'outgoing')
+
+    assert source != node
+
+    # delete target and combining flow
+    # source should be deleted by caller
+    target.unlink()
+    flow.unlink()
+
+    # return new node
+    return node
+
+
+def determine_node_on_connect(el):
+    """
+    Determine classes of nodes depending on amount of incoming
+    and outgoing edges. This method is called when flow is attached
+    to node.
+
+    If there is more than one incoming edge and more than one
+    outgoing edge, then create two nodes and combine them with
+    flow as described in UML specification.
+    """
+    subject = el.subject
+    if not isinstance(subject, tuple(node_classes.keys())):
+        return
+
+    new_subject = subject
+
+    if len(subject.incoming) > 1 and len(subject.outgoing) > 1:
+        new_subject = combine_nodes(subject)
+        el.props.combined = True
+
+    else:
+        new_subject = change_node_class(subject)
+
+    change_node_subject(el, new_subject)
+
+    if el.props.combined:
+        check_combining_flow(el)
+
+
+def determine_node_on_disconnect(el):
+    """
+    Determine classes of nodes depending on amount of incoming
+    and outgoing edges. This method is called when flow is dettached
+    from node.
+
+    If there are combined nodes and there is no need for them, then replace
+    combination with appropriate node (i.e. replace with fork node when
+    there are less than two incoming edges). This way data model is kept as
+    simple as possible.
+    """
+    subject = el.subject
+    if not isinstance(subject, tuple(node_classes.keys())):
+        return
+
+    new_subject = subject
+
+    if el.props.combined:
+        cs = subject.outgoing[0].target
+        # decombine node when there is no more than one incoming
+        # and no more than one outgoing flow
+        if len(subject.incoming) < 2 or len(cs.outgoing) < 2:
+            new_subject = decombine_nodes(subject)
+            el.props.combined = False
+        else:
+            check_combining_flow(el)
+
+    else: 
+        new_subject = change_node_class(subject)
+
+    change_node_subject(el, new_subject)
+
+
+def change_node_subject(el, new_subject):
+    """
+    Change element's subject if new subject is different than element's
+    subject. If subject is changed, then old subject is destroyed.
+    """
+    subject = el.subject
+    if new_subject != subject:
+        log.debug('changing subject of ui node %s' % el)
+        el.set_subject(new_subject)
+
+        log.debug('deleting node %s' % subject)
+        subject.unlink()
+
+
+def create_flow(cls, flow):
+    """
+    Create new flow of class cls. Flow data from flow argument are copied
+    to new created flow. Old flow is destroyed.
+    """
+    factory = resource(UML.ElementFactory)
+    f = factory.create(cls)
+    f.source = flow.source
+    f.target = flow.target
+    flow.unlink()
+    return f
+
+
+def count_object_flows(node, attr):
+    """
+    Count incoming or outgoing object flows.
+    """
+    return len(getattr(node, attr)
+        .select(lambda flow: isinstance(flow, UML.ObjectFlow)))
+
+
+def check_combining_flow(el):
+    """
+    Set object flow as combining flow when incoming or outgoing flow count
+    is greater than zero. Otherwise change combining flow to control flow.
+    """
+    subject = el.subject
+    flow = subject.outgoing[0] # combining flow
+    combined = flow.target     # combined node
+
+    c1 = count_object_flows(subject, 'incoming')
+    c2 = count_object_flows(combined, 'outgoing')
+
+    log.debug('combined incoming and outgoing object flow count: (%d, %d)' % (c1, c2))
+
+    if (c1 > 0 or c2 > 0) and isinstance(flow, UML.ControlFlow):
+        log.debug('changing combing flow to object flow')
+        create_flow(UML.ObjectFlow, flow)
+    elif c1 == 0 and c2 == 0 and isinstance(flow, UML.ObjectFlow):
+        log.debug('changing combing flow to control flow')
+        create_flow(UML.ControlFlow, flow)
+
+
+def create_connector_end(connector, role):
+    """
+    Create Connector End, set role and attach created end to
+    connector.
+    """
+    end = resource(UML.ElementFactory).create(UML.ConnectorEnd)
+    end.role = role
+    connector.end = end
+    assert end in role.end
+    return end
+
+
+def rotate(p1, p2, a, b, x, y):
+    """
+    Rotate point (a, b) by angle, which is determined by line (p1, p2).
+
+    Rotated point is moved by vector (x, y).
+    """
+    try:
+        angle = atan((p1[1] - p2[1]) / (p1[0] - p2[0]))
+    except ZeroDivisionError:
+        da = p1[1] < p2[1] and 1.5 or -1.5
+        angle = pi * da
+
+    sin_angle = sin(angle)
+    cos_angle = cos(angle)
+    return (cos_angle * a - sin_angle * b + x,
+            sin_angle * a + cos_angle * b + y)
+
+# vim:sw=4:et:ai

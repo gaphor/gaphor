@@ -1,10 +1,11 @@
 import gtk
 from gaphor.interfaces import *
+from gaphor.diagram import items
 from zope import component
 from gaphor.UML.uml2 import LiteralSpecification
 
-class TestDiagramElement(object):
-    interface.implements(IDiagramElement)
+#class TestDiagramElement(object):
+    #interface.implements(DiagramItem)
     
 class NamedItemPropertyPage(gtk.Table):
     """An adapter which works for any named item view.
@@ -26,7 +27,7 @@ class NamedItemPropertyPage(gtk.Table):
         
 component.provideAdapter(
     factory=NamedItemPropertyPage,
-    adapts=[INamedItemView],
+    adapts=[items.NamedItem],
     provides=IDetailsPage,
     name='Properties')
     
@@ -37,7 +38,7 @@ class PropertyPropertyPage(NamedItemPropertyPage):
         
 component.provideAdapter(
     factory=PropertyPropertyPage,
-    adapts=[IAttributeView],
+    adapts=[items.AttributeItem],
     provides=IDetailsPage,
     name='Properties')
 
@@ -77,7 +78,7 @@ class ClassPropertyPage(NamedItemPropertyPage):
         
 component.provideAdapter(
     factory=ClassPropertyPage,
-    adapts=[IClassView],
+    adapts=[items.ClassItem],
     provides=IDetailsPage,
     name='Properties')
 
@@ -146,7 +147,7 @@ class TaggedValuePage(gtk.VBox):
         
 component.provideAdapter(
     factory=TaggedValuePage,
-    adapts=[INamedItemView],
+    adapts=[items.NamedItem],
     provides=IDetailsPage,
     name='Tagged values')
     
@@ -176,5 +177,5 @@ class ObjectInspector(gtk.Notebook):
         self.clearAllTabs()
         if diagramItem is None:
             return
-        self.loadTabsForCurrentItem(diagramItem.item)
+        self.loadTabsForCurrentItem(diagramItem)
         

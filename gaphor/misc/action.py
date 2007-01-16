@@ -74,8 +74,6 @@ class Action(gobject.GObject):
     def execute(self):
         pass
 
-gobject.type_register(Action)
-
 
 class CheckAction(Action):
     """CheckActions can be turned on and off.
@@ -106,8 +104,6 @@ class CheckAction(Action):
         else:
             return Action.do_get_property(self, pspec)
 
-gobject.type_register(CheckAction)
-
 
 class RadioAction(CheckAction):
     """RadioAction is a CheckAction, of which only one action is activated at
@@ -115,8 +111,6 @@ class RadioAction(CheckAction):
     """
     group = None
     
-
-gobject.type_register(RadioAction)
 
 
 class ObjectAction(Action):
@@ -172,8 +166,6 @@ class DynamicMenu(gobject.GObject):
         """
         return ()
 
-gobject.type_register(DynamicMenu)
-
 
 class SlotMenu(DynamicMenu):
 
@@ -190,8 +182,6 @@ class SlotMenu(DynamicMenu):
             self._menu = get_actions_for_slot(self.slot_id)
         #print 'menu = ', self._menu
         return self._menu
-
-gobject.type_register(SlotMenu)
 
 
 _no_default = object()

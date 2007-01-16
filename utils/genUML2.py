@@ -34,11 +34,32 @@ base.__getitem__ = base__getitem__
 if map(int, sys.version[:3].split('.')) < [2, 3]:
     header = header + "bool = int\n"
 
+
+import re
+
+pattern = r'([A-Z])'
+sub = r'_\1'
+
+def camelCase_to_underscore(str):
+    """
+    >>> camelCase_to_underscore('camelcase')
+    'camelcase'
+    >>> camelCase_to_underscore('camelCase')
+    'camel_case'
+    >>> camelCase_to_underscore('camelCamelCase')
+    'camel_camel_case'
+    """
+    return re.sub(pattern, sub, str).lower()
+
+_ = camelCase_to_underscore
+
+
 def msg(s):
     sys.stderr.write('  ')
     sys.stderr.write(s)
     sys.stderr.write('\n')
     sys.stderr.flush()
+
 
 class Writer:
 
@@ -262,7 +283,7 @@ def parse_association_tags(tag):
     elif tag:
         tag = tag.value
 
-    print 'scanning tags: %s' % tag
+    #print 'scanning tags: %s' % tag
 
     if tag and tag.find('subsets') != -1:
         # find the text after 'subsets':
@@ -425,4 +446,6 @@ def generate(filename, outfile=None, overridesfile=None):
     writer.close()
 
 if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
     generate('uml2.gaphor')

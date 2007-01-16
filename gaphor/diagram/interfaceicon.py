@@ -9,7 +9,6 @@ This module contains several interface icon shape implementation::
 import itertools
 import math
 
-import diacanvas
 from gaphor.diagram import rotatable
 
 class Base(object):
@@ -56,8 +55,8 @@ class PRBase(Base):
         Base.__init__(self, parent)
         self.show_bar = True
 
-        self._bar = diacanvas.shape.Path()
-        self._bar.set_line_width(2.0)
+        #self._bar = diacanvas.shape.Path()
+        #self._bar.set_line_width(2.0)
 
         self._circle = self.get_circle()
         self._circle.set_line_width(2.0)
@@ -96,7 +95,8 @@ class ProvidedInterfaceIcon(PRBase):
     BAR_WIDTH = 8
 
     def get_circle(self):
-        return diacanvas.shape.Ellipse()
+        #return diacanvas.shape.Ellipse()
+        pass
 
 
     def draw_circle(self):
@@ -121,7 +121,8 @@ class RequiredInterfaceIcon(PRBase):
     dir = property(lambda self: self.parent.props.dir)
 
     def get_circle(self): # todo: change to arc
-        return diacanvas.shape.Path()
+        #return diacanvas.shape.Path()
+        pass
 
 
     def draw_circle(self):

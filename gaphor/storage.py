@@ -25,6 +25,7 @@ import gaphas
 from gaphor import UML
 from gaphor import parser
 from gaphor import diagram
+from gaphor.diagram import items
 from gaphor import resource
 from gaphor.i18n import _
 #from gaphor.misc.xmlwriter import XMLWriter
@@ -96,6 +97,7 @@ def save_generator(writer=None, factory=None):
         (which contains a list of references to other UML elements) or a
         gaphas.Canvas (which contains canvas items).
         """
+        #log.debug('saving element: %s|%s %s' % (name, value, type(value)))
         if isinstance (value, (UML.Element, gaphas.Item)):
             save_reference(name, value)
         elif isinstance(value, UML.collection):
@@ -112,7 +114,7 @@ def save_generator(writer=None, factory=None):
         The extra attribute reference can be used to force UML 
         """
         #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
-        if reference or isinstance(value, UML.Element):
+        if reference:
             save_reference(name, value)
         elif isinstance(value, UML.collection):
             save_collection(name, value)
@@ -121,6 +123,8 @@ def save_generator(writer=None, factory=None):
                                           'type': value.__class__.__name__ })
             value.save(save_canvasitem)
             writer.endElement('item')
+        elif isinstance(value, UML.Element):
+            save_reference(name, value)
         else:
             save_value(name, value)
 
@@ -156,7 +160,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     """Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
-
+    # TODO: restructure loading code, first load model, then add canvas items
     log.debug(_('Loading %d elements...') % len(elements))
 
     # The elements are iterated three times:
@@ -171,26 +175,30 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # Fix version inconsistencies
     version_0_6_2(elements, factory, gaphor_version)
     version_0_7_2(elements, factory, gaphor_version)
+    version_0_9_0(elements, factory, gaphor_version)
+
+    #log.debug("Still have %d elements" % len(elements))
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     for id, elem in elements.items():
         yield update_status_queue()
         if isinstance(elem, parser.element):
-            try:
-                cls = getattr(UML, elem.type)
-                #log.debug('Creating UML element for %s' % elem)
-                elem.element = factory.create_as(cls, id)
-            except:
-                raise
+            cls = getattr(UML, elem.type)
+            #log.debug('Creating UML element for %s (%s)' % (elem, elem.id))
+            elem.element = factory.create_as(cls, id)
+            if elem.canvas:
+                elem.element.canvas.block_updates = True
         elif isinstance(elem, parser.canvasitem):
-            cls = getattr(diagram, elem.type)
-            #log.debug('Creating canvas item for %s' % elem)
+            cls = getattr(items, elem.type)
+            #log.debug('Creating canvas item for %s (%s)' % (elem, elem.id))
             elem.element = diagram.create_as(cls, id)
         else:
             raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
 
     #log.info('0% ... 33%')
+
+    #log.debug("Still have %d elements" % len(elements))
 
     # load attributes and create references:
     for id, elem in elements.items():
@@ -202,11 +210,13 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         if isinstance(elem, parser.element) and elem.canvas:
             for item in elem.canvas.canvasitems:
                 assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
-                item.element.set_property('parent', elem.element.canvas.root)
+                elem.element.canvas.add(item.element)
+
+        # Also create nested canvas items:
         if isinstance(elem, parser.canvasitem):
             for item in elem.canvasitems:
                 assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
-                item.element.set_property('parent', elem.element)
+                elem.element.canvas.add(item.element, parent=elem.element)
 
         # load attributes and references:
         for name, value in elem.values.items():
@@ -244,6 +254,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # Fix version inconsistencies
     version_0_5_2(elements, factory, gaphor_version)
     version_0_7_1(elements, factory, gaphor_version)
+
     # Before version 0.7.2 there was only decision node (no merge nodes).
     # This node could have many incoming and outgoing flows (edges).
     # According to UML specification decision node has no more than one
@@ -260,6 +271,11 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     for id, elem in elements.items():
         yield update_status_queue()
         elem.element.postload()
+
+    # Unlock canvas's for updates
+    for id, elem in elements.items():
+        if elem.canvas:
+            elem.element.canvas.block_updates = False
 
     factory.notify_model()
 
@@ -286,6 +302,7 @@ def load_generator(filename, factory=None):
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
         for percentage in parser.parse_generator(filename, loader):
+            pass
             if percentage:
                 yield percentage / 2
             else:
@@ -303,21 +320,46 @@ def load_generator(filename, factory=None):
             factory = resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
+        log.info("Read %d elements from file" % len(elements))
         for percentage in load_elements_generator(elements, factory, gaphor_version):
+            pass
             if percentage:
                 yield percentage / 2 + 50
             else:
                 yield percentage
         gc.collect()
+        yield 100
     except Exception, e:
         log.info('file %s could not be loaded' % filename, e)
-        import traceback
-        traceback.print_exc()
         raise
 
 
+def version_0_9_0(elements, factory, gaphor_version):
+    """
+    Before 0.9.0, we used DiaCanvas2 as diagram widget in the GUI. As of 0.9.0
+    Gaphas was introduced. Some properties of <item /> elements have changed,
+    renamed or been removed at all.
+
+    This function is called before the actual elements are constructed.
+    """
+    if tuple(map(int, gaphor_version.split('.'))) < (0, 9, 0):
+        for elem in elements.values():
+            try:
+                if type(elem) is parser.canvasitem:
+                    # Rename affine to matrix
+                    if elem.values.get('affine'):
+                        elem.values['matrix'] = elem.values['affine']
+                        del elem.values['affine']
+                    # No more 'color' attribute:
+                    if elem.values.get('color'):
+                        del elem.values['color']
+
+            except Exception, e:
+                log.error('Error while updating taggedValues', e)
+
 def version_0_7_2(elements, factory, gaphor_version):
-    """Before 0.7.2, only Property and Parameter elements had taggedValues.
+    """
+    Before 0.7.2, only Property and Parameter elements had taggedValues.
     Since 0.7.2 all NamedElements are able to have taggedValues. However,
     the multiplicity of taggedValue has changed from 0..1 to *, so all elements
     should be converted to a list.
@@ -334,7 +376,7 @@ def version_0_7_2(elements, factory, gaphor_version):
                     tv = elements[elem.taggedValue]
                     if tv.value:
                         for t in map(str.strip, str(tv.value).split(',')):
-                            log.debug("Tagged value: %s" % t)
+                            #log.debug("Tagged value: %s" % t)
                             newtv = parser.element(generate_id(),
                                                    'LiteralSpecification')
                             newtv.values['value'] = t
@@ -346,7 +388,8 @@ def version_0_7_2(elements, factory, gaphor_version):
 
 
 def version_0_7_1(elements, factory, gaphor_version):
-    """Before version 0.7.1, there were two states for association
+    """
+    Before version 0.7.1, there were two states for association
     navigability (in terms of UML 2.0): unknown and navigable.
     In case of unknown navigability Property.owningAssociation was set.
 
@@ -381,7 +424,8 @@ def version_0_7_1(elements, factory, gaphor_version):
 
 
 def version_0_6_2(elements, factory, gaphor_version):
-    """Before 0.6.2 an Interface could be represented by a ClassItem and
+    """
+    Before 0.6.2 an Interface could be represented by a ClassItem and
     a InterfaceItem. Now only InterfaceItems are used.
     """
     if tuple(map(int, gaphor_version.split('.'))) < (0, 6, 2):
@@ -400,7 +444,8 @@ def version_0_6_2(elements, factory, gaphor_version):
 
 
 def version_0_5_2(elements, factory, gaphor_version):
-    """Before version 0.5.2, the wrong memberEnd of the association was
+    """
+    Before version 0.5.2, the wrong memberEnd of the association was
     holding the aggregation information.
     """
     if tuple(map(int, gaphor_version.split('.'))) < (0, 5, 2):

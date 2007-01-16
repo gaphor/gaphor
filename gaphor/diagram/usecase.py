@@ -1,26 +1,48 @@
-'''
-Use case diagram item
-'''
-# vim:sw=4
+"""
+Use case diagram item.
+"""
 
-from __future__ import generators
-
-import diacanvas
+from math import pi
 from gaphor import UML
-from gaphor.diagram.align import V_ALIGN_MIDDLE
-from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.classifier import ClassifierItem
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
+from gaphas.util import text_align, text_extents, path_ellipse
 
-class UseCaseItem(NamedItem):
-    __uml__      = UML.UseCase
-    __s_valign__ = V_ALIGN_MIDDLE
+class UseCaseItem(ClassifierItem):
+    """
+    Presentation of gaphor.UML.UseCase.
+    """
+    __uml__ = UML.UseCase
+    __style__ = {
+        'min-size':   (50, 30),
+        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
+    }
 
-    def create_border(self):
-        border = diacanvas.shape.Ellipse()
-        return NamedItem.create_border(self, border)
+    def __init__(self, id=None):
+        ClassifierItem.__init__(self, id)
+        self.drawing_style = -1
 
 
-    def draw_border(self):
-        self._border.ellipse(center = (self.width / 2, self.height / 2),
-            width = self.width, height = self.height)
+    def pre_update(self, context):
+        cr = context.cairo
+        text = self.subject.name
+        if text:
+            width, height = text_extents(cr, text)
+            self.min_width, self.min_height = width + 10, height + 20
+        super(UseCaseItem, self).pre_update(context)
 
 
+    def draw(self, context):
+        c = context.cairo
+
+        rx = self.width / 2. 
+        ry = self.height / 2.
+
+        c.move_to(self.width, ry)
+        path_ellipse(c, rx, ry, self.width, self.height)
+        c.stroke()
+
+        super(UseCaseItem, self).draw(context)
+
+
+# vim:sw=4:et

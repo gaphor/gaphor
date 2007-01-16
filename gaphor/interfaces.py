@@ -41,17 +41,3 @@ class IWidget(interface.Interface):
 class IDetailsPage(IWidget):
     """A property page which can display itself in a notebook"""
     
-class IDiagramElement(interface.Interface):
-    """A diagram element"""
-    subject = interface.Attribute("The model element connect to this view")    
-
-class INamedItemView(IDiagramElement):
-    """A view on an attribute (part of a class, interface etc.)."""
-    
-
-class IClassView(INamedItemView):
-    """The graphical view on a class."""
-    
-class IAttributeView(INamedItemView):
-    """A view on an attribute (part of a class, interface etc.)."""
-

@@ -49,12 +49,10 @@ This is subject to change in the future when UML specification clarifies in
 this area.
 """
 
-import diacanvas
 from gaphor import resource, UML
 from diagramline import DiagramLine, FreeLine
 from elementitem import ElementItem
 from component import ComponentItem
-from util import create_connector_end
 
 from gaphor.diagram.interfaceicon import AssembledInterfaceIcon
 from gaphor.diagram.rotatable import SimpleRotation
@@ -585,5 +583,16 @@ class ConnectorItem(DiagramLine):
 #            return iter([self._assembly])
 #        else:
 #            return DiagramLine.on_shape_iter(self)
+
+def create_connector_end(connector, role):
+    """
+    Create Connector End, set role and attach created end to
+    connector.
+    """
+    end = resource(UML.ElementFactory).create(UML.ConnectorEnd)
+    end.role = role
+    connector.end = end
+    assert end in role.end
+    return end 
 
 # vim:sw=4:et

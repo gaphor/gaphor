@@ -450,7 +450,7 @@ class NamespaceView(gtk.TreeView):
         """
         value = model.get_value(iter, 0)
         #print 'set_name:', value
-        text = value and (value.name or '').replace('\n', ' ') or '<None>'
+        text = value and (value.name or '').replace('\n', ' ') or '&lt;None&gt;'
 
         if isinstance(value, UML.Diagram):
             text = '<b>%s</b>' % text

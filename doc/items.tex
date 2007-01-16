@@ -1,10 +1,16 @@
-\documentclass[draft]{book}
+\documentclass{book}
 \usepackage[papername = a4paper, margin = 3cm]{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{listings}
+\usepackage{float}
 
 \title{Gaphor Diagram Item Model}
 \author{wrobell@pld-linux.org}
+
+\newfloat{code}{th}{code}
+
+\lstnewenvironment{pylst}{\lstset{language=Python}}{}
 
 \newcommand{\rmodule}[1]{\texttt{#1}}
 \newcommand{\rclass}[1]{\texttt{#1}}
@@ -95,17 +101,20 @@
 \chapter{Basic Classes of Diagram Items}
 \section{Introduction}
 UML specification defines UML data model, which is used by Gaphor to store
-information about modeled system. UML data model is visualized with
-Diacanvas library used as canvas library. Notation
-of UML diagram items is also specified by UML specification.
+information about a modeled system. The UML data model is visualized by
+the Gaphas library, a general purpose diagram drawing library. Notation
+of UML diagram items is also specified by the UML specification.
 
-Diacanvas library supports basic drawing operations but there are many
+The Gaphas library supports basic drawing operations but there are many
 entities and behaviors, which are common to many or all diagram items, i.e.
-stereotypes, items' name, popup menu, positioning of associated items, etc.
+stereotypes, item name, popup menu, positioning of associated items, etc.
 
 We have to identify common elements and behaviors of UML diagram items
 and define basic diagram items classes, which will be used
 by Gaphor to provide modeling functionality.
+
+Note that, the diagram item hierarchy does not have to follow the hierarchy
+defined in the UML model. 
 
 \section{Problem Description}
 
@@ -116,13 +125,14 @@ Diacanvas library supports different canvas objects
 \item canvas line
 \end{itemize}
 
-Because of differences between them, DiagramItem class cannot be directly
-associated with canvas line or canvas element. Connection between diacanvas
-classes and items has to be established by different abstract classes.
+Because of differences between them, Basic diagram item class cannot be
+directly associated with canvas lines or canvas elements. Connection between
+canvas classes and items has to be established by different abstract
+classes.
 
 \subsection{Items and UML Model Classes}
-Generaly there is one to one association between an item and UML class
-but it is not always so simple. 
+Generaly there is a one to one association between an item and an UML class,
+but it is not always that simple. 
 For example one diagram item can visualize more than one UML class
 \begin{itemize}
 \item decision node item can represent combined decision and merge nodes
@@ -130,25 +140,47 @@ For example one diagram item can visualize more than one UML class
 \end{itemize}
 
 Also, there can be situation, when there is no UML class visualized, i.e.
-in case of CommentLine.
+in case of a CommentLine.
 
 \subsection{Line Items}
-Line has at least two handles. These handles are reffered as head (first
-handle) and tail (second handle) of line.
+Lines have at least two handles. These handles are reffered to as head (first
+handle) and tail (last handle) of line.
 
-When user puts an item on a diagram, then last handle can be moved to
-desired point. The same applies to line items. User puts line on diagram,
+When a user puts an item on a diagram, then the last handle can be moved to
+a desired point. The same applies to line items. User puts a line on diagram,
 head is set in mouse cursor point and tail is moved to desired point.
 
-Head and tail concepts are also used in diacanvas in case of canvas line.
+Head and tail concepts are also used in Gaphas in case of canvas lines.
 Head of line item is at the same end as head of canvas line. The same
 applies for tail.
 
+\subsection{Item Styles}\label{itemstyles}
+All the items are going to contain different parts.
+Many of such parts can be shared by other items, for example
+\begin{itemize}
+\item UML named elements (see named items) have names, which
+    can be displayed in different places, i.e. class --- top--center,
+    use case --- middle--center
+\item every UML class can have stereotypes, which should be displayed
+    over items' name
+\end{itemize}
+
+Above can be described as styles (i.e.\ similar to CSS).
+
+It should be possible to implement common behaviour in basic item classes,
+which should be parametrized by item's style information. For example,
+named element item should set position of name depending on styles.
+
+\section{Styles}
+Class \rclass{ElementItem} defined below should define following styles
+\begin{description}
+\item[min--size] minimal size of an item; minimal width and height are
+    initialized using this style information
+\end{description}
+
 \section{Classes}
 \rclass{DiagramItem} class is a basic, abstract class for all items. Every
-item class is created using \rclass{DiagramItemMeta} metaclass. It
-assigns information about UML class, stereotypes,
-etc.\ to every item class.
+item class is created using \rclass{DiagramItemMeta} metaclass.
 
 Different canvas elements (see~\ref{gaphor:basic:itemsandcanvas}) are
 supported with classes
@@ -163,11 +195,12 @@ supported with classes
 \begin{attrs}
 \iattr{\_\_uml\_\_}{UML class associated with item}
 \iattr{\_\_stereotype\_\_}{item static stereotype}
-\iattr{s\_align}{stereotype align}
+\iattr{\_\_style\_\_}{used to define new and override item style information}
+\iattr{style}{used to obtain item style information, also information derived from base classes}
 \end{attrs}
 \begin{entitydesc}
-Basic metaclass for all items. Stereotypes are aligned according to
-\rattr{s\_align} attribute.
+Metaclass for all items. Assigns information about UML class, stereotypes,
+styles, etc.\ to every item class.
 \end{entitydesc}
 \end{class}
 
@@ -185,7 +218,6 @@ Basic class for all diagram items.
 \begin{attrs}
 \iattr{head}{reference to head handle of a line}
 \iattr{tail}{reference to tail handle of a line}
-\iattr{s\_align}{stereotype align}
 \end{attrs}
 \begin{entitydesc}
 Canvas line based items like dependencies, association, flows, message, etc.
@@ -193,9 +225,18 @@ Canvas line based items like dependencies, association, flows, message, etc.
 \end{class}
 
 \begin{class}{ElementItem}
+\begin{attrs}
+\iattr{min\_width}{minimal item width}
+\iattr{min\_height}{minimal item height}
+\end{attrs}
 \begin{entitydesc}
 Canvas element based items like class, component, lifeline,
 comment, activity nodes, etc.
+
+Minimal width and height are initialized from minimal size style
+information. These two values can change during item lifecycle (i.e.\ name
+can be expanded or shrinked), therefore minimal size style information
+guards initial minimal dimensions of element item.
 \end{entitydesc}
 \end{class}
 
@@ -263,7 +304,7 @@ See figure~\ref{items:align} for more examples.
 
 Align constants and classes are defined in \rmodule{gaphor::diagram::align} module.
 
-\subsection{Stereotype and Name Align}
+\subsection{Stereotype and Name Alignment}
 
 There are two important elements of items
 \begin{itemize}
@@ -282,22 +323,94 @@ centered under stereotype.
 \warning{What about FeatureItem stereotype?}
 
 \chapter{Named Items}
-\section{Introduction}
-Named items represent these UML classes, which derive from NamedElement.
+\section{Problem Description}
+Named items represent those UML classes, which derive from NamedElement.
+
 All named items are editable, so user can double click on an item and
 change or enter name of UML object.
 
-We have to distinguish between two kind of named elements. One is related
-to canvas elements and second is related to canvas lines. For example, name
-of UML object can be positioned inside or outside canvas element (class vs.
-initial node), also name can be centered or on left/right side of canvas
-element. In case of canvas line based items name can be near head, tail
-or centre of a line and name can be put horizontaly or along line path.
+There should be minimal size (which is default, initial one) of named
+items. Every named item can have its own minimal size. Size of named item
+can be changed by an user. There are some cases, when size cannot be
+changed, i.e. initial node item.
 
-\section{Problem Description}
-\subsection{Canvas Element Named Items}
+It should be possible to align name of named element with styles
+(see~\ref{itemstyles}) as depending on an element, the name can be
+displayed in different places related to an item, i.e.
+\begin{itemize}
+\item class               --- top center
+\item use case            --- middle center
+\item object node         --- middle center
+\item actor               --- bottom center, outside item bounduaries
+\item initial action node --- top left, outside item bounduaries
+\item decision node       --- bottom center, outside item bounduaries
+\end{itemize}
 
-\subsection{Canvas Line Named Items}
+%fixme: there can be items with initial name and without initial name
+
+\section{Styles}
+Kind of information we need to align the name
+\begin{itemize}
+\item horizontal align information (left, center or right)
+\item vertical align information (top, middle or bottom)
+\item padding specified as in CSS (top right bottom left)
+\item is name outside an item?
+\end{itemize}
+
+Styles for name align are defined in table~\ref{nameditems:styles:spec}
+(see diagram~\ref{nameditems:styles:example} for example).
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Name           & Default value     & Description \\
+\hline
+name--align    & ('center', 'top') & align information \\
+name--padding  & (5, 5, 5, 5)      & name padding \\
+name--outside  & False             & name outside/inside item bounduaries \\
+\hline
+\end{tabular}
+\caption{Specification of name align styles}\label{nameditems:styles:spec}
+\end{center}
+\end{table}
+
+\begin{code}
+\lstset{language={Python}}
+\begin{pylst}
+class NamedItem(DiagramItem):
+    __style__ = {
+        'name-align' : ('center', 'top'),
+        'name-padding': (5, 5, 5, 5),
+        'name-outside': False,
+    }
+\end{pylst}
+\caption{Named items style example}\label{nameditems:styles:example}
+\end{code}
+
+\section{Classes}
+Class NamedItem is a base class for all named items.
+
+\begin{class}{NamedItem}
+\begin{entitydesc}
+Calculates minimal size based on name size. Draws UML object's name using
+style information.
+\end{entitydesc}
+\end{class}
+
+%%%
+%We have to distinguish between two kind of named elements. One is related
+%to canvas elements and second is related to canvas lines. For example, name
+%of UML object can be positioned inside or outside canvas element (class vs.
+%initial node), also name can be centered or on left/right side of canvas
+%element. In case of canvas line based items name can be near head, tail
+%or centre of a line and name can be put horizontaly or along line path.
+%%%
+
+
+%\subsection{Canvas Element Named Items}
+
+%\subsection{Canvas Line Named Items}
 
 \chapter{Relationships}
 

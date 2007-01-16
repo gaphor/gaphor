@@ -42,11 +42,13 @@ class Element(object):
     """Base class for UML data classes."""
 
     def __init__(self, id=None, factory=None):
-        self.id = id or uniqueid.generate_id()
+        self._id = id or uniqueid.generate_id()
         # The factory this element belongs to.
         self._factory = factory
         self._observers = dict()
         self.__in_unlink = mutex.mutex()
+
+    id = property(lambda self: self._id, doc='Id')
 
     factory = property(lambda self: self._factory,
                        doc="The factory that created this element")
@@ -55,11 +57,12 @@ class Element(object):
     def save(self, save_func):
         """Save the state by calling save_func(name, value)."""
         umlprop = umlproperty
-        clazz = type(self)
-        for propname in dir(clazz):
-            prop = getattr(clazz, propname)
-            if isinstance(prop, umlprop):
-                prop.save(self, save_func)
+        class_ = type(self)
+        for propname in dir(class_):
+            if not propname.startswith('_'):
+                prop = getattr(class_, propname)
+                if isinstance(prop, umlprop):
+                    prop.save(self, save_func)
 
     def load(self, name, value):
         """Loads value in name. Make sure that for every load postload()
@@ -74,17 +77,19 @@ class Element(object):
             prop.load(self, value)
 
     def postload(self):
-        """Fix up the odds and ends.
+        """
+        Fix up the odds and ends.
         """
         for name in dir(type(self)):
-            try:
-                prop = getattr(type(self), name)
-            except AttributeError, e:
-                raise AttributeError, "'%s' has no property '%s'" % \
-                                            (type(self).__name__, name)
-            else:
-                if isinstance(prop, umlproperty):
-                    prop.postload(self)
+            if not name.startswith('_'):
+                try:
+                    prop = getattr(type(self), name)
+                except AttributeError, e:
+                    raise AttributeError, "'%s' has no property '%s'" % \
+                                                (type(self).__name__, name)
+                else:
+                    if isinstance(prop, umlproperty):
+                        prop.postload(self)
 
     def unlink(self):
         """Unlink the element.
@@ -141,18 +146,13 @@ class Element(object):
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
     def isKindOf(self, class_):
-        """Returns true if the object is an instance of clazz."""
+        """Returns true if the object is an instance of class_."""
         return isinstance(self, class_)
 
     def isTypeOf(self, other):
         """Returns true if the object is of the same type as other."""
         return type(self) == type(other)
 
-#    def __setattr__(self, key, value):
-#        if key.startswith('_') or key == 'id':
-#            object.__setattr__(self, key, value)
-#        else:
-#            raise AttributeError, 'Invalid attribute "%s"' % key
 
 try:
     import psyco

@@ -31,9 +31,9 @@ The generator parse_generator(filename, loader) may be used if the loading
 takes a long time. The yielded values are the percentage of the file read.
 """
 
-__all__ = [ 'parse', 'ParserException' ]
-
 from __future__ import generators
+
+__all__ = [ 'parse', 'ParserException' ]
 
 import os
 from xml.sax import handler
@@ -177,6 +177,7 @@ class GaphorLoader(handler.ContentHandler):
         if state == GAPHOR:
             id = attrs['id']
             e = element(id, name)
+            assert id not in self.elements.keys(), '%s already defined' % (id)#, self.elements[id])
             self.elements[id] = e
             self.push(e, name == 'Diagram' and DIAGRAM or ELEMENT)
 
@@ -190,6 +191,7 @@ class GaphorLoader(handler.ContentHandler):
         elif state in (CANVAS, ITEM) and name == 'item':
             id = attrs['id']
             c = canvasitem(id, attrs['type'])
+            assert id not in self.elements.keys(), '%s already defined' % (id) #, self.elements[id])
             self.elements[id] = c
             self.peek().canvasitems.append(c)
             self.push(c, ITEM)

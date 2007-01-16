@@ -4,120 +4,89 @@ Basic functionality for canvas line based items on a diagram.
 
 import itertools
 
-import diacanvas
+import gaphas
+from gaphas.util import text_extents
+from gaphas.geometry import Rectangle
 from diagramitem import DiagramItem
-from gaphor.diagram import LineItemMeta
+from interfaces import IConnect
 
-class LineItem(diacanvas.CanvasLine, DiagramItem):
+
+class LineItem(gaphas.Line, DiagramItem):
+    """Base class for diagram lines.
     """
-    Base class for diagram lines.
-    """
 
-    __metaclass__ = LineItemMeta
-
-    __gproperties__ = DiagramItem.__gproperties__
-    __gsignals__ = DiagramItem.__gsignals__
-
-    # Ensure we call the right connect functions:
-    connect = DiagramItem.connect
-    disconnect = DiagramItem.disconnect
-    notify = DiagramItem.notify
+#    __metaclass__ = LineItemMeta
 
     def __init__(self, id = None):
-        #diacanvas.CanvasLine.__init__(self)
-        self.__gobject_init__()
+        gaphas.Line.__init__(self)
         DiagramItem.__init__(self, id)
-        #super(LineItem, self).__init__(id)
-        self.props.horizontal = False
+        self.fuzzyness = 2
+        self._stereotype_bounds = None
 
+    head = property(lambda self: self._handles[0])
+    tail = property(lambda self: self._handles[-1])
 
-    # Gaphor Connection Protocol
-    #
-    # The item a handle is connecting to is in charge of the connection
-    # cyclus. However it informs the item it is connecting to by means of
-    # the four methods defined below. The items that are trying to connect
-    # (mostly Relationship objects or CommentLines) know what kind of item
-    # they are allowed to connect to.
-    def allow_connect_handle(self, handle, connecting_to):
-        """This method is called by a canvas item if the user tries to
-        connect this object's handle. allow_connect_handle() checks if
-        the line is allowed to be connected. In this case that means
-        that one end of the line should be connected to a Relationship.
-        Returns: True if connection is allowed, False otherwise.
+    def update_label(self, context, text):
         """
-        return False
+        Update the name label near the middle of the association.
 
-    def confirm_connect_handle (self, handle):
-        """This method is called after a connection is established.
-        This method sets the internal state of the line and updates
-        the data model. Returns nothing
+        Returns a geometry.Rectangle object with the boundig box for the label text.
         """
-        pass
-
-    def allow_disconnect_handle (self, handle):
-        """ If a handle wants to disconnect, this method is called first.
-        This method is here mainly for the sake of completeness, since it
-        is quite unlikely that a handle is not allowed to disconnect.
-        """
-        return True
-
-    def confirm_disconnect_handle (self, handle, was_connected_to):
-        """This method is called to do some cleanup after 'self' has been
-        disconnected from 'was_connected_to'.
-        """
-        pass
-
-
-    # DiaCanvasItem callbacks
-    def on_glue(self, handle, wx, wy):
-        return self._on_glue(handle, wx, wy, diacanvas.CanvasLine)
-
-    def on_connect_handle (self, handle):
-        return self._on_connect_handle(handle, diacanvas.CanvasLine)
-
-    def on_disconnect_handle (self, handle):
-        return self._on_disconnect_handle(handle, diacanvas.CanvasLine)
-
-
-    def on_update (self, affine):
-        diacanvas.CanvasLine.on_update(self, affine)
-
-        # update stereotype
-        # fixme: use util function
-        sw, sh = self._stereotype.to_pango_layout(True).get_pixel_size()
-
-        handles = self.handles
+        cr = context.cairo
+        handles = self._handles
         middle = len(handles)/2
-        p1 = handles[middle-1].get_pos_i()
-        p2 = handles[middle].get_pos_i()
+        p1 = handles[middle].pos
+        p2 = handles[middle-1].pos
+
+        w, h = text_extents(cr, text)
+
+        x = p1[0] > p2[0] and w + 5 or -2
+        x = (p1[0] + p2[0]) / 2.0 - x
+        y = p1[1] <= p2[1] and h + 2 or 0
+        y = (p1[1] + p2[1]) / 2.0 - y
+
+        #log.debug('label pos = (%d, %d)' % (x, y))
+        #return x, y, max(x + 10, x + w), max(y + 10, y + h)
+        return Rectangle(x, y, x + max(10, w), y + max(10, h))
+
+    def update_stereotype(self, context):
+        super(LineItem, self).update_stereotype()
+
+        sw, sh = text_extents(context.cairo, self._stereotype)
+
+        handles = self._handles
+        middle = len(handles)/2
+        p1 = handles[middle-1].pos
+        p2 = handles[middle].pos
 
         x = p1[0] > p2[0] and sw + 2 or -2
         x = (p1[0] + p2[0]) / 2.0 - x
-        y = p1[1] <= p2[1] and sh or 0
+        y = p1[1] > p2[1] and -sh or 0
         y = (p1[1] + p2[1]) / 2.0 - y
 
-        self._stereotype.set_pos((x, y))
-        self._stereotype.set_max_width(sw)
-        self._stereotype.set_max_height(sh)
+        self._stereotype_bounds = Rectangle(x, y, width=sw, height=sh)
 
-        b1 = x, y, sw, sh
+    def update(self, context):
+        super(LineItem, self).update(context)
+        cr = context.cairo
 
-        b2 = self.bounds
-        self.set_bounds((min(b1[0], b2[0]), min(b1[1], b2[1]),
-                         max(b1[2] + b1[0], b2[2]), max(b1[3] + b1[1], b2[3])))
+        # update stereotype
+        self.update_stereotype(context)
 
-        self.update_stereotype()
-
-
-    def on_shape_iter(self):
-        return itertools.chain(diacanvas.CanvasLine.on_shape_iter(self), self._shapes)
-
+    def draw(self, context):
+        super(LineItem, self).draw(context)
+        cr = context.cairo
+        if self._stereotype:
+            cr.move_to(self._stereotype_bounds[0], self._stereotype_bounds[1])
+            cr.show_text(self._stereotype)
 
 
 class DiagramLine(LineItem):
     """
     Gaphor lines. This line is serializable and has a popup
     menu.
+
+    TODO: put serializability and popup in separate adapters.
     """
 
     popup_menu = LineItem.popup_menu + (
@@ -130,35 +99,35 @@ class DiagramLine(LineItem):
         'EditDelete'
     )
 
-    def do_set_property (self, pspec, value):
-        pass
-
-    def do_get_property(self, pspec):
-        pass
-
     def save (self, save_func):
         LineItem.save(self, save_func)
-        for prop in ('affine', 'color', 'orthogonal', 'horizontal'):
-            save_func(prop, self.get_property(prop))
+        save_func('matrix', tuple(self.matrix))
+        for prop in ('orthogonal', 'horizontal'):
+            save_func(prop, getattr(self, prop))
         points = [ ]
-        for h in self.handles:
-            pos = h.get_pos_i ()
-            points.append (pos)
+        for h in self.handles():
+            points.append(tuple(map(float, h.pos)))
         save_func('points', points)
-        c = self.handles[0].connected_to
+        c = self.head.connected_to
         if c:
             save_func('head-connection', c, reference=True)
-        c = self.handles[-1].connected_to
+        c = self.tail.connected_to
         if c:
             save_func('tail-connection', c, reference=True)
 
     def load (self, name, value):
-        if name == 'points':
+        if name == 'matrix':
+            self.matrix = eval(value)
+        elif name == 'points':
             points = eval(value)
-            self.set_property('head_pos', points[0])
-            self.set_property('tail_pos', points[1])
-            for p in points[2:]:
-                self.set_property ('add_point', p)
+            for x in xrange(len(points) - 2):
+                self.split_segment(0)
+            #self.set_property('head_pos', points[0])
+            #self.set_property('tail_pos', points[1])
+            for i, p in enumerate(points):
+                self.handles()[i].pos = p
+        elif name == 'orthogonal':
+            self._load_orthogonal = eval(value)
         elif name in ('head_connection', 'head-connection'):
             self._load_head_connection = value
         elif name in ('tail_connection', 'tail-connection'):
@@ -167,11 +136,35 @@ class DiagramLine(LineItem):
             LineItem.load(self, name, value)
 
     def postload(self):
+        # Ohoh, need the IConnect adapters here
+        from zope import component
+        if hasattr(self, '_load_orthogonal'):
+            self.orthogonal = self._load_orthogonal
+            del self._load_orthogonal
+
+        # First update matrix and solve constraints (NE and SW handle are
+        # lazy and are resolved by the constraint solver rather than set
+        # directly.
+        self.canvas.update_matrix(self)
+        self.canvas.solver.solve()
+
         if hasattr(self, '_load_head_connection'):
-            self._load_head_connection.connect_handle(self.handles[0])
+            adapter = component.queryMultiAdapter((self._load_head_connection, self), IConnect)
+            assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_head_connection, self)
+            h = self.head
+
+            x, y = self.canvas.get_matrix_i2w(self, calculate=True).transform_point(h.x, h.y)
+            x, y = self.canvas.get_matrix_w2i(self._load_head_connection, calculate=True).transform_point(x, y)
+            adapter.connect(h, x, y)
             del self._load_head_connection
         if hasattr(self, '_load_tail_connection'):
-            self._load_tail_connection.connect_handle(self.handles[-1])
+            adapter = component.queryMultiAdapter((self._load_tail_connection, self), IConnect)
+            assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_tail_connection, self)
+            h = self.tail
+
+            x, y = self.canvas.get_matrix_i2w(self, calculate=True).transform_point(h.x, h.y)
+            x, y = self.canvas.get_matrix_w2i(self._load_tail_connection, calculate=True).transform_point(x, y)
+            adapter.connect(h, x, y)
             del self._load_tail_connection
         LineItem.postload(self)
 
@@ -179,6 +172,8 @@ class DiagramLine(LineItem):
 
 class FreeLine(LineItem):
     """
+    TODO: get rid of this one.
+
     A line with disabled last handle. This allows to create diagram items,
     which have one or more additional lines.
 

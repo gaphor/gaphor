@@ -22,11 +22,23 @@ def lookup(id):
 
 def select(expression=None):
     """Query the default ElementFactory for items that comply with expression.
+    Returns an iterator.
     """
     return _default_element_factory.select(expression)
 
+def lselect(expression=None):
+    """Query the default ElementFactory for items that comply with expression.
+    Returns a list of elements.
+    """
+    return _default_element_factory.lselect(expression)
+
 def flush():
     _default_element_factory.flush()
+
+def swap_element(element, new_class):
+    """Swap the class for an element
+    """
+    _default_element_factory.swap_element(element, new_class)
 
 if 0 and __debug__: 
     # Keep track of all model elements that are created

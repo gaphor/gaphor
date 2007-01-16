@@ -4,22 +4,22 @@ Common dependencies likeq dependency, usage, realization and implementation.
 
 from gaphor import resource, UML
 
-from gaphor.diagram import Relationship
+#from gaphor.diagram.relationship import Relationship
 from gaphor.diagram.diagramline import DiagramLine
 
 
-class DependencyRelationship(Relationship):
-    """
-    Relationship for dependencies including realization dependency between
-    classifiers and components.
-    """
-    def relationship(self, line, head_subject = None, tail_subject = None):
-        if line.get_dependency_type() == UML.Realization:
-            args = ('realizingClassifier', None), ('abstraction', 'realization')
-        else:
-            args = ('supplier', 'supplierDependency'), ('client', 'clientDependency')
-        args +=  head_subject, tail_subject
-        return self.find(line, *args)
+#class DependencyRelationship(Relationship):
+#    """
+#    Relationship for dependencies including realization dependency between
+#    classifiers and components.
+#    """
+#    def relationship(self, line, head_subject = None, tail_subject = None):
+#        if line.get_dependency_type() == UML.Realization:
+#            args = ('realizingClassifier', None), ('abstraction', 'realization')
+#        else:
+#            args = ('supplier', 'supplierDependency'), ('client', 'clientDependency')
+#        args +=  head_subject, tail_subject
+#        return self.find(line, *args)
 
 
 
@@ -58,7 +58,7 @@ class DependencyItem(DiagramLine):
         'implements': lambda self: self.dependency_type == UML.Implementation,
     }
 
-    relationship = DependencyRelationship()
+#    relationship = DependencyRelationship()
 
     dependency_popup_menu = (
         'separator',
@@ -71,14 +71,11 @@ class DependencyItem(DiagramLine):
     )
 
     def __init__(self, id=None):
-        self.dependency_type = UML.Dependency
-        self.auto_dependency = True
-
         DiagramLine.__init__(self, id)
 
-        self.set(head_fill_color=0, head_a=0.0, head_b=15.0, head_c=6.0, head_d=6.0)
-        self._set_line_style()
-
+        self.dependency_type = UML.Dependency
+        self.auto_dependency = True
+        self._dash_style = True
 
     def save(self, save_func):
         DiagramLine.save(self, save_func)
@@ -107,116 +104,73 @@ class DependencyItem(DiagramLine):
         return self.dependency_type
 
 
-    def set_dependency_type(self, dependency_type):
+    def set_dependency_type(self, dependency_type=None):
+        if not dependency_type and self.auto_dependency:
+            dependency_type = self.determine_dependency_type(self.head.connected_to, self.tail.connected_to)
         self.dependency_type = dependency_type
-        self._set_line_style()
+        self.request_update()
 
 
-    def _set_line_style(self, c1=None):
-        """Display a depenency as a dashed arrow, with optional stereotype.
-        """
+    def update(self, context):
+        super(DependencyItem, self).update(context)
+
         from interface import InterfaceItem
         dependency_type = self.dependency_type
-        c1 = c1 or self.handles[0].connected_to
-        if c1 and dependency_type is UML.Usage and isinstance(c1, InterfaceItem) and c1.is_folded():
-            if self.get_property('has_head'):
-                self.set(dash=None, has_head=0)
-        else:
-            if not self.get_property('has_head'):
-                self.set(dash=(7.0, 5.0), has_head=1)
-
-
-    #
-    # Gaphor Connection Protocol
-    #
-    def allow_connect_handle(self, handle, connecting_to):
-        """See DiagramLine.allow_connect_handle().
-        """
-        try:
-            return isinstance(connecting_to.subject, UML.NamedElement)
-        except AttributeError:
-            return 0
-
-    def confirm_connect_handle(self, handle):
-        """See DiagramLine.confirm_connect_handle().
-
-        In case of an Implementation, the head should be connected to an
-        Interface and the tail to a BehavioredClassifier.
-
-        TODO: Should Class also inherit from BehavioredClassifier?
-        """
-        #print 'confirm_connect_handle', handle, self.subject
         c1 = self.head.connected_to
-        c2 = self.tail.connected_to
+        if c1 and dependency_type is UML.Usage \
+           and isinstance(c1, InterfaceItem) and c1.is_folded():
+            self._dash_style = False
+        else:
+            self._dash_style = True
 
-        self._set_line_style(c1)
+    def draw_head(self, context):
+        cr = context.cairo
+        if self._dash_style:
+            cr.set_dash((), 0)
+            cr.move_to(15, -6)
+            cr.line_to(0, 0)
+            cr.line_to(15, 6)
+            cr.stroke()
+        cr.move_to(0, 0)
+    
+    def draw(self, context):
+        if self._dash_style:
+            context.cairo.set_dash((7.0, 5.0), 0)
+        # TODO: draw stereotype
+        super(DependencyItem, self).draw(context)
 
-
-        s1 = s2 = None
-        if c1:
-            s1 = c1.subject
-        if c2:
-            s2 = c2.subject
-
-        if self.auto_dependency:
-            # when one handle is connected then it is possible to determe
-            # the dependency type
-            self.set_dependency_type(determine_dependency_type(s1, s2))
-
-        if c1 and c2:
-            relation = self.relationship
-            if not relation:
-                relation = resource(UML.ElementFactory).create(self.dependency_type)
-                if self.get_dependency_type() == UML.Realization:
-                    relation.realizingClassifier = s1
-                    relation.abstraction = s2
-                else:
-                    relation.supplier = s1
-                    relation.client = s2
-            self.subject = relation
-
-
-    def confirm_disconnect_handle(self, handle, was_connected_to):
-        """See DiagramLine.confirm_disconnect_handle().
+    @staticmethod
+    def is_usage(s):
+        """Return true if dependency should be usage dependency.
         """
-        #print 'confirm_disconnect_handle', handle
-        self._set_line_style()
-        self.set_subject(None)
+        return isinstance(s, UML.Interface)
 
 
-
-def is_usage(s):
-    """
-    Return true if dependency should be usage dependency.
-    """
-    return isinstance(s, UML.Interface)
-
-
-def is_realization(ts, hs):
-    """
-    Return true if dependency should be realization dependency.
-    """
-    return isinstance(ts, UML.Classifier) and isinstance(hs, UML.Component)
+    @staticmethod
+    def is_realization(ts, hs):
+        """Return true if dependency should be realization dependency.
+        """
+        return isinstance(ts, UML.Classifier) and isinstance(hs, UML.Component)
 
 
-def determine_dependency_type(ts, hs):
-    """
-    Determine dependency type:
-    - check if it is usage
-    - check if it is realization
-    - if none of above, then it is normal dependency
+    @staticmethod
+    def determine_dependency_type(ts, hs):
+        """Determine dependency type:
+        - check if it is usage
+        - check if it is realization
+        - if none of above, then it is normal dependency
 
-    The checks should be performed in above order. For example if ts and hs
-    are Interface and Component, then we have two choices:
-    - claim it is an usage (as ts is an Interface)
-    - or claim it is a realization (as Interface is Classifier, too)
-    In this case we want usage to win over realization.
-    """
-    dt = UML.Dependency
-    if is_usage(ts):
-        dt = UML.Usage
-    elif is_realization(ts, hs):
-        dt = UML.Realization
-    return dt
+        The checks should be performed in above order. For example if ts and hs
+        are Interface and Component, then we have two choices:
+        - claim it is an usage (as ts is an Interface)
+        - or claim it is a realization (as Interface is Classifier, too)
+        In this case we want usage to win over realization.
+        """
+        dt = UML.Dependency
+        if DependencyItem.is_usage(ts):
+            dt = UML.Usage
+        elif DependencyItem.is_realization(ts, hs):
+            dt = UML.Realization
+        return dt
 
 # vim:sw=4:et

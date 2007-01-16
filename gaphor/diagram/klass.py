@@ -5,20 +5,14 @@
 # TODO: make loading of features work (adjust on_groupable_add)
 #       probably best to do is subclass Feature in OperationItem and A.Item
 
-import gobject
-import diacanvas
-
 from gaphor import UML
 from gaphor.i18n import _
 
 from classifier import ClassifierItem
-from attribute import AttributeItem
-from operation import OperationItem
+from feature import AttributeItem, OperationItem
 
-from gaphor.interfaces import IClassView
-from zope import interface
         
-class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
+class ClassItem(ClassifierItem):
     """This item visualizes a Class instance.
 
     A ClassItem contains two compartments (Compartment): one for
@@ -27,23 +21,13 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
     Items can be added by callling class.add() and class.remove().
     This is used to handle CanvasItems, not UML objects!
     """
-    interface.implements(IClassView)
 
     __uml__ = UML.Class, UML.Stereotype
     __stereotype__ = {
         'stereotype': UML.Stereotype,
-         'metaclass': (UML.Class, lambda self: hasattr(self.subject, 'extension') and self.subject.extension),
+         'metaclass': lambda self: (not isinstance(self.subject, UML.Stereotype)) and hasattr(self.subject, 'extension') and self.subject.extension,
     }
     
-    __gproperties__ = {
-        'show-attributes': (gobject.TYPE_BOOLEAN, 'show attributes',
-                            '',
-                            1, gobject.PARAM_READWRITE),
-        'show-operations': (gobject.TYPE_BOOLEAN, 'show operations',
-                            '',
-                            1, gobject.PARAM_READWRITE),
-    }
-
     popup_menu = ClassifierItem.popup_menu + (
         'separator',
         'AbstractClass',
@@ -61,6 +45,7 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
 
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
+        self.drawing_style = self.DRAW_COMPARTMENT
         self._attributes = self.create_compartment('attributes')
         self._operations = self.create_compartment('operations')
 
@@ -77,39 +62,31 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         self.sync_attributes()
         self.sync_operations()
 
-
-    def do_set_property(self, pspec, value):
-        if pspec.name == 'show-attributes':
-            self.preserve_property('show-attributes')
-            self._attributes.visible = value
-            self.request_update()
-        elif pspec.name == 'show-operations':
-            self.preserve_property('show-operations')
+    def _set_show_operations(self, value):
             self._operations.visible = value
-            self.request_update()
-        else:
-            ClassifierItem.do_set_property(self, pspec, value)
 
-    def do_get_property(self, pspec):
-        if pspec.name == 'show-attributes':
-            return self._attributes.visible
-        elif pspec.name == 'show-operations':
-            return self._operations.visible
-        return ClassifierItem.do_get_property(self, pspec)
+    show_operations = property(fget=lambda s: s._operations.visible,
+                               fset=_set_show_operations)
+
+    def _set_show_attributes(self, value):
+        self._attributes.visible = value
+
+    show_attributes = property(fget=lambda s: s._attributes.visible,
+                               fset=_set_show_attributes)
 
     def _create_attribute(self, attribute):
         """Create a new attribute item.
         """
         new = AttributeItem()
         new.subject = attribute
-        self.add(new)
+        self._attributes.append(new)
 
     def _create_operation(self, operation):
         """Create a new operation item.
         """
         new = OperationItem()
         new.subject = operation
-        self.add(new)
+        self._operations.append(new)
 
     def sync_attributes(self):
         """Sync the contents of the attributes compartment with the data
@@ -143,62 +120,15 @@ class ClassItem(ClassifierItem, diacanvas.CanvasGroupable):
         """
         #log.debug('on_subject_notify__ownedAttribute')
         # Filter attributes that are connected to an association:
-        self.preserve_property('width')
-        self.preserve_property('height')
+        #self.preserve_property('width')
+        #self.preserve_property('height')
         self.sync_attributes()
 
     def on_subject_notify__ownedOperation(self, subject, pspec=None):
         """Called when the ownedOperation property of our subject changes.
         """
         #log.debug('on_subject_notify__ownedOperation')
-        self.preserve_property('width')
-        self.preserve_property('height')
+        #self.preserve_property('width')
+        #self.preserve_property('height')
         self.sync_operations()
 
-    # Groupable
-
-    def on_groupable_add(self, item):
-        """Add an attribute or operation.
-        """
-        #if isinstance(item.subject, UML.Property):
-        if isinstance(item, AttributeItem):
-            # TODO: check if property not already in attribute list
-            #log.debug('Adding attribute %s' % item)
-            if not self._attributes.has_item(item):
-                #log.debug('Adding attribute really %s' % item)
-                self._attributes.append(item)
-                item.set_child_of(self)
-        #elif isinstance(item.subject, UML.Operation):
-        elif isinstance(item, OperationItem):
-            #log.debug('Adding operation %s' % item)
-            if not self._operations.has_item(item):
-                self._operations.append(item)
-                item.set_child_of(self)
-        else:
-            log.warning('feature %s is not a Feature' % item)
-            return 0
-        self.request_update()
-        return 1
-
-    def on_groupable_remove(self, item):
-        """Remove a feature subitem.
-        """
-        if item in self._attributes:
-            #print 'remove attr:', item
-            self._attributes.remove(item)
-            item.set_child_of(None)
-        elif item in self._operations:
-            self._operations.remove(item)
-            item.set_child_of(None)
-        else:
-            log.warning('feature %s not found in feature list' % item)
-            return 0
-        self.request_update()
-        #log.debug('Feature removed: %s' % item)
-        return 1
-
-    def on_groupable_iter(self):
-        for i in self._attributes:
-            yield i
-        for i in self._operations:
-            yield i

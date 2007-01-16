@@ -91,7 +91,8 @@ def _set_visibility(self, vis):
             pass
 
 def parse_attribute(self, s):
-    """Parse string s in the property. Tagged values, multiplicity and stuff
+    """
+    Parse string s in the property. Tagged values, multiplicity and stuff
     like that is altered to reflect the data in the property string.
     """
     m = attribute_pat.match(s)
@@ -130,9 +131,6 @@ def parse_attribute(self, s):
         if not self.defaultValue:
             self.defaultValue = create(LiteralSpecification)
         self.defaultValue.value = g('default')
-        #if not self.taggedValue:
-        #    self.taggedValue = create(LiteralSpecification)
-        #self.taggedValue.value = g('tags')
         while self.taggedValue:
             self.taggedValue[0].unlink()
         tags = g('tags')
@@ -141,10 +139,11 @@ def parse_attribute(self, s):
                 tv = create(LiteralSpecification)
                 tv.value = t
                 self.taggedValue = tv
-        #print g('vis'), g('derived'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('default'), g('tags')
+
 
 def parse_association_end(self, s):
-    """Parse the text at one end of an association. The association end holds
+    """
+    Parse the text at one end of an association. The association end holds
     two strings. It is automattically figured out which string is fed to the
     parser.
     """
@@ -152,7 +151,6 @@ def parse_association_end(self, s):
     create = self._factory.create
     m = association_end_mult_pat.match(s)
     if m and m.group('mult_u') or m.group('tags'):
-        #print 'multmatch'
         g = m.group
         if not self.lowerValue:
             self.lowerValue = create(LiteralSpecification)
@@ -160,9 +158,6 @@ def parse_association_end(self, s):
         if not self.upperValue:
             self.upperValue = create(LiteralSpecification)
         self.upperValue.value = g('mult_u')
-        #if not self.taggedValue:
-        #    self.taggedValue = create(LiteralSpecification)
-        #self.taggedValue.value = g('tags')
         while self.taggedValue:
             self.taggedValue[0].unlink()
         tags = g('tags')
@@ -171,9 +166,7 @@ def parse_association_end(self, s):
                 tv = create(LiteralSpecification)
                 tv.value = t
                 self.taggedValue = tv
-        # We have multiplicity
     else:
-        #print 'namematch'
         m = association_end_name_pat.match(s)
         g = m.group
         if g('garbage'):
@@ -195,10 +188,6 @@ def parse_association_end(self, s):
                 if not self.upperValue:
                     self.upperValue = create(LiteralSpecification)
                 self.upperValue.value = g('mult_u')
-            #if g('tags'):
-            #    if not self.taggedValue:
-            #        self.taggedValue = create(LiteralSpecification)
-            #    self.taggedValue.value = g('tags')
             tags = g('tags')
             if tags:
                 while self.taggedValue:
@@ -215,7 +204,8 @@ def parse_property(self, s):
         parse_attribute(self, s)
 
 def parse_operation(self, s):
-    """Parse string s in the operation. Tagged values, parameters and
+    """
+    Parse string s in the operation. Tagged values, parameters and
     visibility is altered to reflect the data in the operation string.
     """
     from uml2 import Parameter, LiteralSpecification
@@ -281,9 +271,6 @@ def parse_operation(self, s):
             if not p.defaultValue:
                 p.defaultValue = create(LiteralSpecification)
             p.defaultValue.value = g('default')
-            #if not p.taggedValue:
-            #    p.taggedValue = create(LiteralSpecification)
-            #p.taggedValue.value = g('tags')
             while self.taggedValue:
                 self.taggedValue[0].unlink()
             if tags:
@@ -292,8 +279,6 @@ def parse_operation(self, s):
                     tv.value = t
                     p.taggedValue = tv
             self.formalParameter = p
-
-            #print ' ', g('dir') or 'in', g('name'), g('type'), g('mult_l'), g('mult_u'), g('default'), g('tags')
 
             # Do the next parameter:
             params = g('rest')
@@ -304,9 +289,11 @@ def parse_operation(self, s):
             fp.unlink()
 
 def parse_lifeline(self, s):
-    """Parse string s in a lifeline. If a class is defined and can be found
+    """
+    Parse string s in a lifeline. If a class is defined and can be found
     in the datamodel, then a class is connected to the lifelines 'represents'
-    property."""
+    property.
+    """
     m = lifeline_pat.match(s)
     g = m.group
     if not m or g('garbage'):
@@ -331,9 +318,11 @@ vis_map = {
     'private': '-'
 }
 
+
 def render_attribute(self, visibility=False, is_derived=False, type=False,
                            multiplicity=False, default=False, tags=False):
-    """Create a OCL representation of the attribute,
+    """
+    Create a OCL representation of the attribute,
     Returns the attribute as a string.
     If one or more of the parameters (visibility, is_derived, type,
     multiplicity, default and/or tags) is set, only that field is rendered.
@@ -377,8 +366,6 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
     if default and self.defaultValue and self.defaultValue.value:
         s.write(' = %s' % self.defaultValue.value)
 
-    #if tags and self.taggedValue and self.taggedValue.value:
-    #    s.write(' { %s }' % self.taggedValue.value)
     if self.taggedValue:
         tvs = ', '.join(filter(None, map(getattr, self.taggedValue,
                                           ['value'] * len(self.taggedValue))))
@@ -386,6 +373,7 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
             s.write(' { %s }' % tvs)
     s.reset()
     return s.read()
+
 
 def render_association_end(self):
     """
@@ -405,12 +393,9 @@ def render_association_end(self):
     m = StringIO()
     if self.upperValue and self.upperValue.value:  
         if self.lowerValue and self.lowerValue.value:
-            #print 'render_association_end:', self.lowerValue.value, self.upperValue.value
             m.write('%s..%s' % (self.lowerValue.value, self.upperValue.value))
         else:
             m.write('%s' % self.upperValue.value)
-    #if self.taggedValue and self.taggedValue.value:
-    #    m.write(' {%s}' % self.taggedValue.value)
     if self.taggedValue:
         tvs = ',\n '.join(filter(None, map(getattr, self.taggedValue,
                                      ['value'] * len(self.taggedValue))))
@@ -419,11 +404,12 @@ def render_association_end(self):
     m.reset()
     mult = m.read()
 
-    #print 'render_association_end', name, mult
     return name, mult
 
+
 def render_property(self, *args, **kwargs):
-    """Render a gaphor.UML.Property either as an attribute or as a
+    """
+    Render a gaphor.UML.Property either as an attribute or as a
     (name, multiplicity) tuple for association ends.
 
     See also: render_attribute, render_association_end
@@ -433,9 +419,11 @@ def render_property(self, *args, **kwargs):
     else:
         return render_attribute(self, *args, **kwargs)
 
+
 def render_operation(self, visibility=False, type=False, multiplicity=False,
                            default=False, tags=False, direction=False):
-    """Create a OCL representation of the operation,
+    """
+    Create a OCL representation of the operation,
     Returns the operation as a string.
     """
     name = self.name
@@ -457,7 +445,6 @@ def render_operation(self, visibility=False, type=False, multiplicity=False,
     s.write('(')
 
     for p in self.formalParameter:
-        #print p # direction, name, type, mult, default, tags
         if direction:
             s.write(p.direction)
             s.write(' ')
@@ -471,8 +458,6 @@ def render_operation(self, visibility=False, type=False, multiplicity=False,
                 s.write('[%s]' % p.upperValue.value)
         if default and p.defaultValue and p.defaultValue.value:
             s.write(' = %s' % p.defaultValue.value)
-        #if tags and  p.taggedValue and p.taggedValue.value:
-        #    s.write(' { %s }' % p.taggedValue.value)
         if p.taggedValue:
              tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
                                               ['value'] * len(p.taggedValue))))
@@ -491,8 +476,6 @@ def render_operation(self, visibility=False, type=False, multiplicity=False,
                 s.write('[%s..%s]' % (rr.lowerValue.value, rr.upperValue.value))
             else:
                 s.write('[%s]' % rr.upperValue.value)
-        #if tags and rr.taggedValue and rr.taggedValue.value:
-        #    s.write(' { %s }' % rr.taggedValue.value)
         if rr.taggedValue:
             tvs = ', '.join(filter(None, map(getattr, rr.taggedValue,
                                              ['value'] * len(rr.taggedValue))))
@@ -500,6 +483,7 @@ def render_operation(self, visibility=False, type=False, multiplicity=False,
                 s.write(' { %s }' % tvs)
     s.reset()
     return s.read()
+
 
 def render_lifeline(self):
     """

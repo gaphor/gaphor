@@ -1,3 +1,141 @@
+2006-11-20  arjan <arjan at yirdis dot nl>
+
+        * gaphor/storage.py: loading/saving works
+        * gaphor/adapters/connector.py: added connector for
+          commentline-diagramline.
+        * gaphor/diaram/diagramitem.py: made delete operation work.
+
+2006-11-14  arjan <arjan at yirdis dot nl>
+
+        * setup.py: incremented version to 0.9.0
+
+2006-10-30  arjan <arjan at yirdis dot nl>
+
+        * gaphor/storage.py: some updates, time to get it working again.
+        * gaphor/tests/test_storage.py: unit tests for storage.py
+        * tests/*: moved several tests to gaphor/*/tests directory
+
+2006-10-24  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/association.py: Made direction and name drawing work.
+        * gaphor/diagram/diagramline.py: make lines easier to select (fuzzyness)
+
+2006-10-17  arjan <arjan at yirdis dot nl>
+
+        * gaphor/adapters/editor.py: Added Association editor.
+
+2006-09-29  arjan <arjan at yirdis dot nl>
+
+        * gaphor/actions/placementactions.py: enabled Association
+        * gaphor/diagram/association.py: partly works w/ gaphas
+        * gaphor/diagram/items.py: added association
+
+2006-09-27  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/artifact.py: works now
+        * gaphor/diagram/component.py: works now
+        * gaphor/diagram/node.py: works now
+
+2006-09-26  arjan <arjan at yirdis dot nl>
+
+        * gaphor/UML/elementfactory.py: select() now returns an iterator
+        * gaphor/actions/itemactions.py:
+        * gaphor/actions/placementactions.py: placement for ExtensionItem
+        * gaphor/actions/tests/test_placementactions.py: ... and tests
+        * gaphor/adapters/connectors.py: Connector for ExtensionItem
+        * gaphor/adapters/tests/test_connector.py:
+        * gaphor/diagram/diagramitem.py: removed set_subject()
+        * gaphor/diagram/extension.py: works
+        * setup.py: added unittest
+
+2006-09-20  arjan <arjan at yirdis dot nl>
+
+        * utils/genUML.py: Removed.
+        * gaphor/ui/objectinspector.py: Use classes for adaption, in stead
+        of interfaces. Also removed interfaces from
+        gaphor/diagram/interfaces.py.
+        * gaphor/diagram/interfaces.py: cleaned up IDiagramElement interfaces.
+        * gaphor/ui/objectinspector.py: Updated to use classes iso interfaces
+
+2006-09-19  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/items.py: New file. Gathered all *Item imports here
+        (used to be in gaphor/diagram/__init__.py)
+        * gaphor/actions/placementactions.py: Added actions for Include/Extends
+        * gaphor/actions/tests/test_placementactions.py: .. and tests
+        * gaphor/adapters/connectors.py: added connectors for Generalization,
+        Inlcude, Extend.
+        * gaphor/diagram/dependency.py: Cleanup
+        * gaphor/diagram/extend.py: Converted to new canvas
+        * gaphor/diagram/generalization.py: idem
+        * gaphor/diagram/implementation.py: idem
+        * gaphor/diagram/include.py: idem
+
+2006-09-14  arjan <arjan at yirdis dot nl>
+
+        * gaphor/UML/tests/__init__.py: New file.
+        * gaphor/actions/tests/__init__.py: New file.
+        * gaphor/adapters/tests/__init__.py: New file.
+        * gaphor/diagram/tests/__init__.py: New file.
+        * gaphor/ui/tests/__init__.py: New file.
+        * setup.py: Implemented 'tests' target - runs all unit tests
+        * gaphor/*/tests/test_*.py: Updated to work well with overall test suite
+
+2006-09-13  arjan <arjan at yirdis dot nl>
+
+        * updcl: New file. use this for easy updating of the changelog file.
+        Add a .developer to this directory with name and email.
+
+2006-09-13  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/comment.py: fixed text rendering (mutiline)
+        * gaphor/diagram/interface.py: changed some code (box drawing now works)
+
+2006-09-11  arjan <arjan at yirdis dot nl>
+
+        * gaphor/adapters: moved adapters from gaphor.diagram to this
+        separate package.
+        * gaphor/actions: collected all Action classes in one package.
+
+2006-09-05  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/classifier.py, gaphor/diagram/klass.py: works
+        * gaphor/diagram/package.py: works
+
+2006-09-03  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/classifier.py: cleanup
+        * gaphor.diagram/klass.py: is now placeable
+        * several fixes, cleanup and improved unit tests
+
+2006-08-21  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/usecase.py: drawing works
+
+2006-07-27  arjan <arjan at yirdis dot nl>
+
+        * Connect/disconnect works for comment-commentline
+        * gaphor/diagram/tool.py: Handle tool in place
+        * gaphor/diagram/interfaces.py: IConnect interface
+        * gaphor/diagram/actor.py: works
+
+2006-07-21  arjan <arjan at yirdis dot nl>
+
+        * gaphor/diagram/comment.py: text editining working
+        * gaphor/diagram/actor.py: draws
+
+2006-07-19  arjan <arjan at yirdis dot nl>
+
+	* gaphor/diagram/placementtool.py: works with Gaphas
+	* gaphor/diagram/comment.py: can be placed on new canvas
+	* gaphor/ui/*, gaphor/UML/*: use gaphas instead of diacanvas
+
+2006-07-07  arjan <arjan at yirdis dot nl>
+
+	* utils/coverage.py: new module for code coverage.
+	* setup.py: added --coverage option ro the run command, allowing for
+	code coverage output.
+
 2006-06-07  arjan <arjan at yirdis dot nl>
 
         * Changed Canvas and View to Gaphas. Items should still be converted.

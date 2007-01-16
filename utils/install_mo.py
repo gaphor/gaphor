@@ -33,12 +33,14 @@ class install_mo(Command):
 
     user_options = [('install-dir=', None,
                      'Directory to install locales into (default: <prefix>/share/locale/<lang>/LC_MESSAGES'),
+                    ('all-linguas', None, ''),
     ]
 
     def initialize_options(self):
         self.install_dir = None
         self.build_dir = None
         self.root = None
+        self.all_linguas = None
 
     def finalize_options(self):
         self.set_undefined_options('build',
@@ -47,8 +49,8 @@ class install_mo(Command):
                                    ('install_locales', 'install_dir'),
                                    ('root', 'root'))
 
-        self.all_linguas = self.distribution.get_all_linguas()
         self.name = self.distribution.get_name()
+        self.all_linguas = self.all_linguas.split(',')
 
         if self.root:
             self.install_dir = change_root(self.root, self.install_dir)

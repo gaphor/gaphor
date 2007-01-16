@@ -2,7 +2,7 @@
 
 from gaphor.plugin import DiagramExportAction
 
-import diacanvas
+#import diacanvas
 import gtk
 
 class PNGExport(DiagramExportAction):

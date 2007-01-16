@@ -1,76 +1,43 @@
-# vim:sw=4
-'''
+"""
 ElementItem
 
 Abstract base class for element-like Diagram items.
-'''
+"""
 
 import gobject
-import diacanvas
+import gaphas
 from diagramitem import DiagramItem
-from gaphor.diagram import DiagramItemMeta
 
-__revision__ = '$revision$'
-__author__ = 'Arjan J. Molenaar'
-__date__ = '$date$'
+__version__ = '$Revision$'
 
-
-class ElementItem(diacanvas.CanvasElement, DiagramItem):
-    __metaclass__ = DiagramItemMeta
-
-    __gproperties__ = {
-        'auto-resize':  (gobject.TYPE_BOOLEAN, 'auto resize',
-                         'Set auto-resize for the diagram item',
-                         1, gobject.PARAM_READWRITE)
+class ElementItem(gaphas.Element, DiagramItem):
+    __style__ = {
+        'min-size': (0, 0),
+	'stereotype-padding': (5, 10, 5, 10),
     }
-    __gproperties__.update(DiagramItem.__gproperties__)
-
-    __gsignals__ = DiagramItem.__gsignals__
 
     def __init__(self, id=None):
-        self.__gobject_init__()
+        gaphas.Element.__init__(self)
         DiagramItem.__init__(self, id)
+
+        self.min_width   = self.style.min_size[0]
+        self.min_height  = self.style.min_size[1]
         self.auto_resize = 0
 
-    # Ensure we call the right connect functions:
-    connect = DiagramItem.connect
-    disconnect = DiagramItem.disconnect
-    notify = DiagramItem.notify
-
     def save(self, save_func):
-        for prop in ('affine', 'width', 'height', 'auto-resize'):
+        save_func('matrix', tuple(self.matrix))
+        for prop in ('width', 'height'):
             self.save_property(save_func, prop)
         DiagramItem.save(self, save_func)
 
     def load(self, name, value):
-        DiagramItem.load(self, name, value)
-
-    def do_set_property(self, pspec, value):
-        if pspec.name == 'auto-resize':
-            self.preserve_property('auto-resize')
-            self.auto_resize = value
+        if name == 'matrix':
+            self.matrix = eval(value)
         else:
-            DiagramItem.do_set_property(self, pspec, value)
+            DiagramItem.load(self, name, value)
 
-    def do_get_property(self, pspec):
-        if pspec.name == 'auto-resize':
-            return self.auto_resize
-        else:
-            return DiagramItem.do_get_property(self, pspec)
+    def pre_update(self, context):
+	super(ElementItem, self).pre_update(context)
+	self.update_stereotype()
 
-    # DiaCanvasItem callbacks:
-
-    def on_glue(self, handle, wx, wy):
-        #import sys
-        #print self, handle, '=>', sys.getrefcount(self), sys.getrefcount(handle)
-        return self._on_glue(handle, wx, wy, diacanvas.CanvasElement)
-
-    def on_connect_handle(self, handle):
-        return self._on_connect_handle(handle, diacanvas.CanvasElement)
-
-    def on_disconnect_handle(self, handle):
-        return self._on_disconnect_handle(handle, diacanvas.CanvasElement)
-
-
-    def on_shape_iter(self):
-        return iter(self._shapes)
+# vim:sw=4
