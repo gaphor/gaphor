@@ -4,7 +4,10 @@
 Generate .mo files from po files.
 """
 
-from distutils.core import Command
+try:
+    from setuptools import Command
+except ImportError:
+    from distutils.core import Command
 from distutils.dep_util import newer
 from distutils.command.build import build as _build
 import os.path

@@ -9,7 +9,10 @@ where install_locales should default to:
     <install_base>/share/locale
 """
 
-from distutils.core import Command
+try:
+    from setuptools import Command
+except ImportError:
+    from distutils.core import Command
 from distutils.command.install import install as _install
 from distutils.util import change_root
 import os.path
