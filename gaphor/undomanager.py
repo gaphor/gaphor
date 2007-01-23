@@ -28,7 +28,8 @@ class TransactionError(Exception):
 
 
 class Transaction(object):
-    """A transaction. Every action that is added between a begin_transaction()
+    """
+    A transaction. Every action that is added between a begin_transaction()
     and a commit_transaction() call is recorded in a transaction, do it can
     be played back when a transaction is undone.
     """
@@ -61,13 +62,13 @@ class Transaction(object):
                 log.error('Error while redoing action %s' % action, e)
 
 
-class UndoManager(gobject.GObject):
-    """Simple transaction manager for Gaphor.
+class UndoManager(object):
+    """
+    Simple transaction manager for Gaphor.
     This transaction manager supports nested transactions.
     """
 
     def __init__(self):
-        self.__gobject_init__()
         self._in_undo = False
         self._undo_stack = []
         self._redo_stack = []
@@ -82,14 +83,6 @@ class UndoManager(gobject.GObject):
 
     def clear_redo_stack(self):
         self._redo_stack = []
-
-#    def add_undo_action(self, action):
-#        try:
-#            self._short_circuit = True
-#            diacanvas.UndoManager.add_undo_action(self, action)
-#            self.on_add_undo_action(action)
-#        finally:
-#            self._short_circuit = False
 
     def begin_transaction(self):
         """Add an action to the current transaction
