@@ -630,7 +630,7 @@ class IncludeConnect(RelationshipConnect):
         relation = self.relationship_or_new(UML.Include,
                     ('addition', None),
                     ('includingCase', 'include'))
-        line.subject = relation
+        self.line.subject = relation
 
 component.provideAdapter(IncludeConnect)
 
