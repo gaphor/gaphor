@@ -4,7 +4,7 @@
 import gtk
 import gaphas
 
-class DiagramView(gaphas.View):
+class DiagramView(gaphas.GtkView):
     """Displays a diagram (canvas) in a widget.
 
     See also: DiagramTab

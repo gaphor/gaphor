@@ -1,43 +1,36 @@
-# vim:sw=4:et:
-
-import gtk
-#import diacanvas
 
 import cairo
-import cairo.svg
-
 from gaphor.plugin import DiagramExportAction
-
-import os
-import tempfile
-
+from gaphas.view import View
+from gaphas.painter import ItemPainter
+from gaphas.geometry import Rectangle
 
 class PDFExportAction(DiagramExportAction):
     title = 'Export diagram to PDF file'
     ext = '.pdf'
 
-    def save(self, filename):
+    def save(self, filename, canvas=None):
         log.debug('Exporting PDF image to: %s' % filename)
-        canvas = self.get_window().get_current_diagram_tab().get_canvas()
-        #svg = diacanvas.ExportSVG()
-        try:
-            # first, export to svg
-            fd, svg_name = tempfile.mkstemp()
-            #svg = diacanvas.ExportSVG()
-            svg.render(canvas)
-            svg.save(svg_name)
+        canvas = canvas or self.get_window().get_current_diagram_tab().get_canvas()
+        view = View(canvas)
+        view.painter = ItemPainter()
 
-            # second, convert svg to pdf
-            svg = cairo.svg.Context()
-            svg.parse(svg_name)
-            width, height = svg.get_size()
+        # Update bounding boxes with a temporaly CairoContext
+        # (used for stuff like calculating font metrics)
+        tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
+        tmpcr = cairo.Context(tmpsurface)
+        view.update_bounding_box(tmpcr)
+        tmpcr.show_page()
+        tmpsurface.flush()
 
-            ctx = cairo.Context(cairo.PDFSurface(filename, width, height))
-            svg.render(ctx)
-            ctx.show_page()
+        w, h = view.bounding_box.width, view.bounding_box.height
+        surface = cairo.PDFSurface(filename, w, h)
+        cr = cairo.Context(surface)
+        view.matrix.translate(-view.bounding_box.x0, -view.bounding_box.y0)
+        view.paint(cr)
+        cr.show_page()
+        surface.flush()
+        surface.finish()
 
-            # svg file is no longer necessary
-            os.unlink(svg_name)
-        except Exception, e:
-            log.error('Error while saving model to file %s: %s' % (filename, e))
 
+# vim:sw=4:et:

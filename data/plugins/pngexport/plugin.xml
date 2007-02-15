@@ -2,10 +2,10 @@
 <!-- vim:sw=2:et:
 -->
 <gaphor-plugin name="PNG Export"
-        version="0.1"
-        author="Jeroen Vloothuis">
+        version="0.2"
+        author="Jeroen Vloothuis, Arjan Molenaar">
   <description>
-        This plugin extends Gaphor with XMI export functionality.
+        This plugin extends Gaphor with PNG export functionality.
   </description>
 
   <require>
@@ -22,9 +22,9 @@
       Actions should be defined on the module's toplevel (like in __init__.py).
     -->
     <action id="PNGExport"
-            label="PNG Export (experimental)"
+            label="PNG Export"
             tooltip="Export the model to PNG"
-            class="PNGExport" slot="FileExportSlot">
+            class="PNGExportAction" slot="FileExportSlot">
       <!--
         Add optional dependencies to this action. The action is then updated
         when actions defined in the depends tag are executed.

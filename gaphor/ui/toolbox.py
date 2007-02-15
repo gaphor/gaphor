@@ -84,7 +84,7 @@ class Toolbox(gtk.VBox):
 
         button.connect('clicked', self.on_wrapbox_decorator_toggled, content)
 
-        vbox.pack_start(content, True, True)
+        #AJM: vbox.pack_start(content, True, True)
         
         vbox.label = label
         vbox.content = content
