@@ -1,6 +1,17 @@
 # vim:sw=4:et:
+"""
+Undo management for Gaphor.
 
-import gobject
+Undoing and redoing actions is managed through the UndoManager.
+
+An undo action should be a callable object (called with no arguments).
+
+An undo action should return a callable object that acts as redo function.
+If None is returned the undo action is considered to be the redo action as well.
+
+NOTE: it would be nice to use actions in conjunction with functools.partial,
+      but that's Python2.5 stuff..
+"""
 
 
 def get_undo_manager():
@@ -9,8 +20,12 @@ def get_undo_manager():
     return _default_undo_manager
 
 
-def undoable(func):
-    """Descriptor. Enables an undo transaction around the method/function.
+def transactional(func):
+    """
+    Descriptor. Begins a transaction around the method/function.
+
+    TODO: In casse of an exception, roll back the transaction if the transaction
+    level == 1.
     """
     def wrapper(*args, **kwargs):
         undo_manager = get_undo_manager()
@@ -21,6 +36,7 @@ def undoable(func):
             undo_manager.commit_transaction()
     return wrapper
 
+
 class TransactionError(Exception):
 
     def __init__(self, msg):
@@ -30,8 +46,10 @@ class TransactionError(Exception):
 class Transaction(object):
     """
     A transaction. Every action that is added between a begin_transaction()
-    and a commit_transaction() call is recorded in a transaction, do it can
-    be played back when a transaction is undone.
+    and a commit_transaction() call is recorded in a transaction, so it can
+    be played back when a transaction is executed. This executing a
+    transaction has the effect of performing the actions recorded, which will
+    typically undo actions performed by the user.
     """
 
     def __init__(self):
@@ -40,32 +58,29 @@ class Transaction(object):
     def add(self, action):
         self._actions.append(action)
 
-    def can_undo(self):
+    def can_execute(self):
         return self._actions and True or False
 
-    def undo(self):
+    def execute(self):
         self._actions.reverse()
+        contra_transaction = Transaction()
         for action in self._actions:
             try:
-                #log.debug('Undoing action %s' % action)
-                action.undo()
+                contra_action = action()
+                contra_transaction.add(contra_action or action)
             except Exception, e:
                 log.error('Error while undoing action %s' % action, e)
-
-    def redo(self):
-        self._actions.reverse()
-        for action in self._actions:
-            try:
-                #log.debug('Redoing action %s' % action)
-                action.redo()
-            except Exception, e:
-                log.error('Error while redoing action %s' % action, e)
-
+        return contra_transaction
 
 class UndoManager(object):
     """
     Simple transaction manager for Gaphor.
     This transaction manager supports nested transactions.
+    
+    The Undo manager sports an undo and a redo stack. Each stack contains
+    a set of actions that can be executed, just by calling them (e.i action())
+    If something is returned by an action, that is considered the callable
+    to be used to undo or redo the last performed action.
     """
 
     def __init__(self):
@@ -125,7 +140,7 @@ class UndoManager(object):
 
         self._transaction_depth -= 1
         if self._transaction_depth == 0:
-            if self._current_transaction.can_undo():
+            if self._current_transaction.can_execute():
                 self._undo_stack.append(self._current_transaction)
             else:
                 pass #log.debug('nothing to commit')
@@ -153,10 +168,10 @@ class UndoManager(object):
         transaction = self._undo_stack.pop()
         try:
             self._in_undo = True
-            transaction.undo()
+            redo_transaction = transaction.execute()
         finally:
             self._in_undo = False
-        self._redo_stack.append(transaction)
+        self._redo_stack.append(redo_transaction)
 
     def redo_transaction(self):
         if not self._redo_stack:
@@ -165,10 +180,10 @@ class UndoManager(object):
         transaction = self._redo_stack.pop()
         try:
             self._in_undo = True
-            transaction.redo()
+            undo_transaction = transaction.execute()
         finally:
             self._in_undo = False
-        self._undo_stack.append(transaction)
+        self._undo_stack.append(undo_transaction)
 
     def in_transaction(self):
         return self._current_transaction is not None

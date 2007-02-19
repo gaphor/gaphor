@@ -6,7 +6,7 @@ Commands related to the Diagram (DiaCanvas)
 from gaphor import GaphorError, resource
 from gaphor import UML
 from gaphor.diagram import items
-from gaphor.undomanager import undoable
+from gaphor.undomanager import transactional
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 import gaphas
@@ -131,7 +131,7 @@ class AbstractClassAction(CheckAction):
             if isinstance(item, items.ClassItem):
                 self.active = item.subject and item.subject.isAbstract
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         if item and item.subject:
@@ -157,7 +157,7 @@ register_action(AbstractClassAction, 'ItemFocus')
 #            if isinstance(item, items.OperationItem):
 #                self.active = item.subject and item.subject.isAbstract
 #
-#    @undoable
+#    @transactional
 #    def execute(self):
 #        item = self._window.get_current_diagram_view().focused_item
 #        if item and item.subject:
@@ -187,7 +187,7 @@ class CreateAttributeAction(Action):
             if isinstance(item, items.ClassItem):
                 self.sensitive = item.show_attributes
 
-    @undoable
+    @transactional
     def execute(self):
         view = self._window.get_current_diagram_view()
         focus_item = get_parent_focus_item(self._window)
@@ -230,7 +230,7 @@ class CreateOperationAction(Action):
             if isinstance(item, items.ClassItem):
                 self.sensitive = item.show_operations
 
-    @undoable
+    @transactional
     def execute(self):
         view = self._window.get_current_diagram_view()
         focus_item = get_parent_focus_item(self._window)
@@ -260,7 +260,7 @@ register_action(CreateOperationAction, 'ShowOperations', 'ItemFocus')
 #    def init(self, window):
 #        self._window = window
 #
-#    @undoable
+#    @transactional
 #    def execute(self):
 #        #subject = get_parent_focus_item(self._window).subject
 #        item = self._window.get_current_diagram_view().focus_item.item
@@ -301,7 +301,7 @@ class ShowAttributesAction(CheckAction):
             if isinstance(item, items.ClassItem):
                 self.active = item.show_attributes
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.show_attributes = self.active
@@ -326,7 +326,7 @@ class ShowOperationsAction(CheckAction):
             if isinstance(item, items.ClassItem):
                 self.active = item.show_operations
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.show_operations = self.active
@@ -360,7 +360,7 @@ class AddSegmentAction(SegmentAction):
     label = 'Add _Segment'
     tooltip='Add a segment to the line'
 
-    @undoable
+    @transactional
     def execute(self):
         item, segment = self.get_item_and_segment()
         if item:
@@ -382,7 +382,7 @@ class DeleteSegmentAction(SegmentAction):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         item, segment = self.get_item_and_segment()
         if item:
@@ -407,7 +407,7 @@ class OrthogonalAction(CheckAction):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, gaphas.Line)
@@ -435,7 +435,7 @@ register_action(OrthogonalAction, 'ItemFocus', 'AddSegment', 'DeleteSegment')
 #        except NoFocusItemError:
 #            pass
 #
-#    @undoable
+#    @transactional
 #    def execute(self):
 #        fi = get_parent_focus_item(self._window)
 #        assert isinstance(fi, gaphas.Line)
@@ -464,7 +464,7 @@ class AssociationShowDirectionAction(CheckAction):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, items.AssociationItem)
@@ -481,7 +481,7 @@ class AssociationInvertDirectionAction(Action):
     def init(self, window):
         self._window = window
 
-    @undoable
+    @transactional
     def execute(self):
         fi = get_parent_focus_item(self._window)
         assert isinstance(fi, items.AssociationItem)
@@ -508,7 +508,7 @@ class NavigableAction(RadioAction):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         item = self.get_association_end()
         assert item.subject
@@ -591,7 +591,7 @@ class AggregationAction(RadioAction):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         if self.active:
             subject = getattr(get_parent_focus_item(self._window), self.end_name).subject
@@ -728,7 +728,7 @@ class DependencyTypeAction(RadioAction):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         if self.active:
             item = get_parent_focus_item(self._window)
@@ -789,7 +789,7 @@ class AutoDependencyAction(CheckAction):
             if isinstance(item, items.DependencyItem):
                 self.active = item.auto_dependency
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.auto_dependency = self.active
@@ -814,7 +814,7 @@ class IndirectlyInstantiatedComponentAction(CheckAction):
             if isinstance(item, items.ComponentItem):
                 self.active = item.subject and item.subject.isIndirectlyInstantiated
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         if item.subject:
@@ -855,7 +855,7 @@ class MoveAction(Action):
                 self.active = item.subject 
                 self.sensitive = self._isSensitive(cls_item.subject, item)
 
-    @undoable
+    @transactional
     def execute(self):
         cls = self._getParent().subject
         item = self._getItem()
@@ -911,7 +911,7 @@ class FoldAction(Action):
         else:
             self.sensitive = isinstance(item, items.InterfaceItem)
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
@@ -926,7 +926,7 @@ class UnfoldAction(FoldAction):
     label = '_Unfold'
     tooltip = 'View details'
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         #log.debug('Action %s: %s' % (self.id, item.subject.name))
@@ -961,7 +961,7 @@ class ApplyStereotypeAction(CheckAction, ObjectAction):
             else:
                 self.active = False
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         if self.active:
@@ -1041,7 +1041,7 @@ class CreateLinksAction(Action):
         # We always create one relationship to much. Remove it.
         new_rel.unlink()
 
-    @undoable
+    @transactional
     def execute(self):
         # TODO: AJM: disabled action
         return
@@ -1081,7 +1081,7 @@ class ObjectNodeOrderingAction(RadioAction):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         if self.active:
             item = get_parent_focus_item(self._window)
@@ -1141,7 +1141,7 @@ class ObjectNodeOrderingVisibiltyAction(CheckAction):
             if isinstance(item, items.ObjectNodeItem):
                 self.active = item.props.show_ordering
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.props.show_ordering = self.active
@@ -1167,7 +1167,7 @@ class RotateAction(Action):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.rotate()
@@ -1191,7 +1191,7 @@ class SplitFlowAction(Action):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         """
         Split flow using activity edge connector. Two flows are created,
@@ -1287,7 +1287,7 @@ class MergeFlowAction(Action):
         except NoFocusItemError:
             pass
 
-    @undoable
+    @transactional
     def execute(self):
         """
         Merge flows with activity edge connectors.
@@ -1342,7 +1342,7 @@ class DisconnectConnector(Action, ItemActionSupport):
         else:
             self.active = isinstance(item, items.ConnectorEndItem)
 
-    @undoable
+    @transactional
     def execute(self):
         item = self.focused_item
         assembly = item.parent
@@ -1372,7 +1372,7 @@ class ApplyInterfaceAction(RadioAction, ObjectAction, ItemActionSupport):
             if isinstance(item, items.ConnectorEndItem):
                 self.active = (self.interface == item.subject)
 
-    @undoable
+    @transactional
     def execute(self):
         item = self.focused_item
         if self.active:
@@ -1401,7 +1401,7 @@ class LifelineHasLifetimeAction(CheckAction):
             if isinstance(item, items.LifelineItem):
                 self.active = item.props.has_lifetime
 
-    @undoable
+    @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.props.has_lifetime = self.active

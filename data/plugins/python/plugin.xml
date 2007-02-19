@@ -14,6 +14,7 @@
       properly.
       -->
     <module name="logilab.common"/>
+    <module name="logilab.common.astng"/>
   </require>
 
   <provide>

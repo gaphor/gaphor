@@ -6,7 +6,6 @@ Methods.
 
 from gaphas.item import Item
 from diagramitem import DiagramItem
-from gaphor.undomanager import undoable
 from gaphor.diagram import DiagramItemMeta
 from gaphas.util import text_extents, text_set_font
 import font

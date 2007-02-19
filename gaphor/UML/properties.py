@@ -35,8 +35,14 @@ from gaphor.undomanager import get_undo_manager
 #infinite = 100000
 
 class undoaction(object):
-    """This undo action contains one undo action for an attribute
-    property.
+    """
+    Base class for undo actions.
+
+    This is an abstract class. The subclasses should implement an undo()
+    and a redo() method.
+    The undo() method should return a pointer to the redo() method and
+    visa-versa.
+
     """
 
     def __init__(self, prop, obj, value):
@@ -44,8 +50,7 @@ class undoaction(object):
         self.obj = obj
         self.value = value
         #print 'adding new property', prop.name, obj, value
-        get_undo_manager().add_undo_action(self)
-
+        get_undo_manager().add_undo_action(self.undo)
 
 class umlproperty(object):
     """Superclass for attribute, enumeration and association.
@@ -122,10 +127,12 @@ class undoattributeaction(undoaction):
         self.redo_value = self.prop._get(self.obj)
         setattr(self.obj, self.prop._name, self.value)
         self.prop.notify(self.obj)
+        return self.redo
 
     def redo(self):
         setattr(self.obj, self.prop._name, self.redo_value)
         self.prop.notify(self.obj)
+        return self.undo
 
 
 class attribute(umlproperty):
@@ -238,10 +245,12 @@ class undosetassociationaction(undoaction):
     def undo(self):
         #log.debug('undosetassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
         self.prop._del(self.obj, self.value)
+        return self.redo
 
     def redo(self):
         #log.debug('undosetassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
         self.prop._set(self.obj, self.value)
+        return self.undo
 
 
 class undodelassociationaction(undoaction):
@@ -251,10 +260,12 @@ class undodelassociationaction(undoaction):
     def undo(self):
         #log.debug('undodelassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
         self.prop._set(self.obj, self.value)
+        return self.redo
 
     def redo(self):
         #log.debug('undodelassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
         self.prop._del(self.obj, self.value)
+        return self.undo
 
 
 class association(umlproperty):

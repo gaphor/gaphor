@@ -8,7 +8,7 @@ import gaphas
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.undomanager import get_undo_manager, undoable
+from gaphor.undomanager import get_undo_manager, transactional
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
@@ -341,7 +341,7 @@ class PasteAction(Action):
             # Plain attribute
             self._item.load(name, str(value))
 
-    @undoable
+    @transactional
     def execute(self):
         view = self._window.get_current_diagram_view()
         diagram = self._window.get_current_diagram()

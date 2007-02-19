@@ -1,10 +1,9 @@
 Gaphor
 ~~~~~~
 
-Gaphor is a UML CASE tool aiming for symplicity. It is written in Python and
-C. The goal is to write as much as possible in Python (easy scriptable for
-code generators) and only some elementary parts are written in C (this involves
-mainly the graphical items).
+Gaphor is a UML CASE tool aiming for symplicity. It is written in Python.
+The goal is to write as much as possible in Python (easy scriptable for
+code generators).
 
 So here's what has to be created:
 - A main window containing a tree-like representation of the classes
@@ -39,9 +38,6 @@ not violated.
 Graphical items
 ~~~~~~~~~~~~~~~
 Of course we need something to draw. The items that are to be placed on the
-diagrams need to be created. Since graphical stuff can take up a lot of time
-I think it is wise to create those things in C, instead of Python.
-We will however create hooks for the graphical items, so we can at least move
-them around and place them on a diagram from within Python.
+diagrams need to be created.
 
 
