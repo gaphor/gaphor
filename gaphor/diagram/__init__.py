@@ -88,4 +88,5 @@ class DiagramItemMeta(type):
 
         self.style = style
 
+
 # vim:sw=4:et

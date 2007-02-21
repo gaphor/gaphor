@@ -66,9 +66,9 @@ class umlproperty(object):
             self.deriviates = [ deriviate ]
 
     def __get__(self, obj, class_=None):
-        if not obj:
-            return self
-        return self._get(obj)
+        if obj:
+            return self._get(obj)
+        return self
 
     def __set__(self, obj, value):
         self._set(obj, value)

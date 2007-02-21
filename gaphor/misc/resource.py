@@ -15,10 +15,10 @@ class Resource(object):
     """
     _resources = {}
 
-    def __init__(self, initial_resources={}):
+    def __init__(self, backend=None, initial_resources={}):
         self._resources.update(initial_resources)
         self._persistent = []
-        self._backend = FileBackend()
+        self._backend = backend or FileBackend()
         self._backend.load(self)
 
     def __call__(self, r, default=_no_default):

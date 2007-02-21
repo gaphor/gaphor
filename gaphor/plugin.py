@@ -28,7 +28,8 @@ from gaphor.i18n import _
 import gtk
 
 def import_plugin(name):
-    """A normal 'import gaphor._plugins.<name>' doesn't work.
+    """
+    A normal 'import gaphor._plugins.<name>' doesn't work.
     Use this function instead.
     """
     from gaphor.pluginmanager import MODULENS
@@ -36,7 +37,8 @@ def import_plugin(name):
     return mod
 
 class _ActionMixIn(object):
-    """Handle initialization of actions in a way that the main window
+    """
+    Handle initialization of actions in a way that the main window
     can properly initialize the action.
     """
 

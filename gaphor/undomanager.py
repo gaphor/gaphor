@@ -11,6 +11,7 @@ If None is returned the undo action is considered to be the redo action as well.
 
 NOTE: it would be nice to use actions in conjunction with functools.partial,
       but that's Python2.5 stuff..
+      A replacement is available in gaphor.misc.partial.
 """
 
 
@@ -32,9 +33,62 @@ def transactional(func):
         undo_manager.begin_transaction()
         try:
             func(*args, **kwargs)
-        finally:
+        except:
+            undo_manager.rollback_transaction()
+        else:
             undo_manager.commit_transaction()
     return wrapper
+
+
+class undoableproperty(object):
+    """
+    Property with state preservation.
+    Set and del statements preserve the original value before the operation
+    is performed
+    """
+
+    def __init__(self, fget=None, fset=None, fdel=None, doc=None,
+                 property=None, undo_manager=None):
+        if property:
+            self.fget = property.fget
+            self.fset = property.fset
+            self.fdel = property.fdel
+            self.__doc__ = property.__doc__
+        else:
+            self.fget = fget
+            self.fset = fset
+            self.fdel = fdel
+            self.__doc__ = doc
+        self._undo_manager = undo_manager or get_undo_manager()
+
+    def _preserve_state(self, obj):
+        try:
+            val = self.__get__(obj)
+        except AttributeError:
+            def _del_action():
+                action = self._preserve_state(obj)
+                self.__delete__(obj)
+                return action
+            return _del_action
+        else:
+            def _set_action():
+                action = self._preserve_state(obj)
+                self.__set__(obj, val)
+                return action
+            return _set_action
+
+    def __get__(self, obj, class_=None):
+        if obj:
+            return self.fget(obj)
+        return self.fget
+
+    def __set__(self, obj, value):
+        self._undo_manager.add_undo_action(self._preserve_state(obj))
+        return self.fset(obj, value)
+
+    def __delete__(self, obj):
+        self._undo_manager.add_undo_action(self._preserve_state(obj))
+        return self.fdel(obj)
 
 
 class TransactionError(Exception):
@@ -90,7 +144,6 @@ class UndoManager(object):
         self._stack_depth = 20
         self._current_transaction = None
         self._transaction_depth = 0
-        self._short_circuit = False
 
     def clear_undo_stack(self):
         self._undo_stack = []
@@ -100,7 +153,8 @@ class UndoManager(object):
         self._redo_stack = []
 
     def begin_transaction(self):
-        """Add an action to the current transaction
+        """
+        Add an action to the current transaction
         """
         if self._in_undo:
             return
@@ -116,11 +170,9 @@ class UndoManager(object):
         self._transaction_depth += 1
 
     def add_undo_action(self, action):
-        """Add an action to undo. An action
         """
-        if self._short_circuit:
-            return
-
+        Add an action to undo. An action
+        """
         #log.debug('add_undo_action: %s %s' % (self._current_transaction, action))
         if not self._current_transaction:
             return
@@ -146,6 +198,22 @@ class UndoManager(object):
                 pass #log.debug('nothing to commit')
 
             self._current_transaction = None
+
+    def rollback_transaction(self):
+        """
+        Roll back the transaction we're in.
+        """
+        if self._in_undo:
+            return
+
+        if not self._current_transaction:
+            raise TransactionError, 'No transaction to rollback'
+
+        self._transaction_depth -= 1
+        if self._transaction_depth == 0:
+            self._current_transaction.execute()
+            self._current_transaction = None
+        # else: mark for rollback?
 
     def discard_transaction(self):
         if self._in_undo:

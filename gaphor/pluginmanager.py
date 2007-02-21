@@ -1,5 +1,5 @@
-# vim:sw=4:et
-"""Plugin Manager.
+"""
+Plugin Manager.
 
 The plugin manager is used to manage (register/unregister) plugins.
 
@@ -45,7 +45,8 @@ DEFAULT_PLUGIN_DIRS = [os.path.join(resource('DataDir'), 'plugins'),
 #log.debug('DEFAULT_PLUGIN_DIRS=' + str(DEFAULT_PLUGIN_DIRS))
 
 class Plugin(object):
-    """A plugin represents one plugin loaded from the file system.
+    """
+    A plugin represents one plugin loaded from the file system.
     """
 
     def __init__(self):
@@ -60,7 +61,8 @@ class Plugin(object):
         self.status = ''
 
     def requirements_met(self, manager):
-        """Check if all <require>-ments are met to load the plugin.
+        """
+        Check if all <require>-ments are met to load the plugin.
         """
         if self.initialized:
             return False
@@ -71,7 +73,7 @@ class Plugin(object):
                 __import__(mod, globals(), locals(), [])
             except ImportError:
                 self.initialized = True
-                self.status = 'Could not initialize plugin: module %s could not be imported' % mod
+                self.status = 'Could not initialize plugin: required module %s could not be imported' % mod
                 log.debug(self.status)
                 return False
 
@@ -87,7 +89,8 @@ class Plugin(object):
         return True
 
     def import_plugin(self):
-        """Do the actual import of the plugin module.
+        """
+        Do the actual import of the plugin module.
         """
         #mod = __import__(self.path.split(os.sep)[-1], globals(), locals(), [])
         name = os.path.split(self.path)[1]
@@ -109,7 +112,8 @@ class Plugin(object):
 
 
 class PluginAction(object):
-    """Each action within a Plugin is represented by a PluginAction.
+    """
+    Each action within a Plugin is represented by a PluginAction.
     """
 
     def __init__(self, class_, slot):
@@ -124,7 +128,8 @@ class PluginAction(object):
         self.depends = []
 
     def import_action(self, plugin):
-        """Import and register one action in the plugin.
+        """
+        Import and register one action in the plugin.
         """
         # Create an icon for the plugin
         if self.icon_file:
@@ -145,7 +150,8 @@ class PluginAction(object):
         log.debug('Providing action %s for slot %s' % (action_class, self.slot))
 
 class PluginLoader(handler.ContentHandler):
-    """Load a Plugin definition file (plugin.xml).
+    """
+    Load a Plugin definition file (plugin.xml).
     """
 
     # A typical plugin.xml file might look like this:
@@ -187,7 +193,8 @@ class PluginLoader(handler.ContentHandler):
         pass
 
     def startDocument(self):
-        """Start of document: all our attributes are initialized.
+        """
+        Start of document: all our attributes are initialized.
         """
         self.plugin = Plugin()
         self.mode = self.TOPLEVEL
@@ -281,7 +288,8 @@ class PluginLoader(handler.ContentHandler):
 
 
 class PluginManager(object):
-    """The PluginManager is the main point where plugins are managed.
+    """
+    The PluginManager is the main point where plugins are managed.
     """
 
     def __init__(self):
@@ -295,7 +303,8 @@ class PluginManager(object):
         self.parser.setContentHandler(self.loader)
 
     def bootstrap(self):
-        """Do the normal plugin loading.
+        """
+        Do the normal plugin loading.
         """
         if self.bootstrapped:
             return
@@ -322,7 +331,8 @@ class PluginManager(object):
         self.bootstrapped = True
 
     def load_plugin(self, plugin_xml):
-        """Load a plugin definition and store the plugin in the manager.
+        """
+        Load a plugin definition and store the plugin in the manager.
         """
         assert not self.plugins.has_key(os.path.dirname(plugin_xml))
         log.debug('Loading definitions from %s' % plugin_xml)
@@ -349,3 +359,4 @@ import gaphor
 _default_plugin_manager = gaphor.resource(PluginManager)
 del gaphor
 
+# vim:sw=4:et
