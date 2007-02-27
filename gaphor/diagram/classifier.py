@@ -297,6 +297,11 @@ class ClassifierItem(NamedItem):
             self.min_width = max(self.min_width, w)
             self.min_height += h
 
+#        if self.width < self.min_width:
+#            self.width = self.min_width
+#        if self.height < self.min_height:
+#            self.height = self.min_height
+
         super(ClassifierItem, self).pre_update(context)
 
 
@@ -355,7 +360,8 @@ class ClassifierItem(NamedItem):
         padding = self.style.name_padding
         y += padding[0]
         n_w, n_h = text_extents(cr, self.subject.name)
-        text_set_font(cr, font.FONT_NAME)
+        text_set_font(cr, self.subject.isAbstract and \
+                          font.FONT_ABSTRACT_NAME or font.FONT_NAME)
         text_center(cr, width / 2, y + n_h/2, self.subject.name)
         y += padding[2] + n_h/2
 

@@ -10,10 +10,9 @@ from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.implementation import ImplementationItem
 from gaphor.diagram.klass import ClassItem
 from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.rotatable import SimpleRotation
 from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 
-class InterfaceItem(ClassItem, SimpleRotation):
+class InterfaceItem(ClassItem):
     """
     This item represents an interface drawn as a dot. The class-like
     representation is provided by ClassItem. These representations can be
@@ -48,7 +47,6 @@ class InterfaceItem(ClassItem, SimpleRotation):
 
     def __init__(self, id=None):
         ClassItem.__init__(self, id)
-        SimpleRotation.__init__(self)
         self._draw_required = False
         self._draw_provided = False
 
@@ -93,9 +91,9 @@ class InterfaceItem(ClassItem, SimpleRotation):
         cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
         self._draw_required = self._draw_provided = False
         for item, handle in self.canvas.get_connected_items(self):
-            if gives_required(handle):
+            if gives_required(item, handle):
                 self._draw_required = True
-            elif gives_provided(handle):
+            elif gives_provided(item, handle):
                 self._draw_provided = True
         radius = self.RADIUS_PROVIDED
         self.style.icon_size = self.style.icon_size_provided
@@ -124,38 +122,30 @@ class InterfaceItem(ClassItem, SimpleRotation):
             cr.stroke()
         super(InterfaceItem, self).draw(context)
 
-    def rotate(self, step = 1):
-        """
-        Update connected handle positions after rotation.
-        """
-        SimpleRotation.rotate(self, step)
-        self.update_handle_pos()
 
-
-
-def gives_provided(handle):
+def gives_provided(item, handle):
     """
     Check if an item connected to an interface changes semantics of this
     interface to be provided.
 
     handle - handle of an item
     """
-    return isinstance(handle.owner, ImplementationItem)
+    return isinstance(item, ImplementationItem)
 
 
-def gives_required(handle):
-    """Check if an item connected to an interface changes semantics of this
+def gives_required(item, handle):
+    """
+    Check if an item connected to an interface changes semantics of this
     interface to be required.
 
     handle - handle of an item
     TODO: check subject.clientDependency and subject.supplierDependency
     """
-    item = handle.owner
     # check for dependency item, interfaces is required if
     # - connecting handle is head one
     # - is in auto dependency
     # - if is not in auto dependency then its UML type is Usage
-    return isinstance(item, DependencyItem) and item.handles[0] == handle \
+    return isinstance(item, DependencyItem) and item.handles()[0] == handle \
         and (not item.auto_dependency and item.dependency_type is UML.Usage
             or item.auto_dependency)
 

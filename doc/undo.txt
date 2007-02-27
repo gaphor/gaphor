@@ -1,0 +1,86 @@
+
+
+UndoManager
+==========
+
+Fine grained undo: undo specific properties.
+
+Add undo-operation, e.g. Item.request_update() should be executed as
+part of an undo action. Such actions are normally called after the properties
+have been set right though. This is not a problem for idle tasks, but for
+directly executed tasks it is.
+
+Should only need to save the originals, values calculated, e.g. during an
+update shouldn't have to be calculated -> use undo-operations to trigger
+updates.
+
+To update:
+
+  Handle:
+    x, y (solvable)
+    connectable (attr)
+    visible (attr)
+    movable (attr)
+    connection status (solver?)
+
+  Item:
+    matrix
+    canvas is managed from Canvas
+
+    Element:
+      handles
+      width, height
+      min_width, min_height (solvable?)
+
+    Line:
+      handles
+      line_width
+      fuzzyness (attr)
+      orthogonal (boolean)
+      horizontal (boolean)
+      split_segment()
+      merge_segment()
+
+  Canvas:
+    add()
+    remove()
+    request_update() (should be performed as part of undo action when called)
+
+  Solver (?):
+    adding and removing constraints
+
+  In Gaphor, connecting two diagram items is considered an atomic task,
+  performed by a IConnect adapter. This operation results in a set of primitive
+  tasks (properties set and a constraint created).
+
+We have three options:
+
+ 1. Add a StateManager to gaphas. All changed are send to the statemanager.
+    Gaphor should implement it's own state manager.
+     + all state changes can easely be recorded
+     + fix it in one place
+     + reusable thoughout Gaphas and subtypes.
+     ? does this solve undo-problems for other applications too?
+
+ 2. Override all attrs and properties, decorate the method from a special
+    update script at runtime.
+     + keeps Gaphas' code clean, less complicated
+     - it's not clear what happens
+     - users require some sort of state recording/undo mechanism anyway
+
+ 3. Why not use Tools?
+     - Lot's of interaction can be achieved though menu items or other
+       programmatic actions.
+
+
+References:
+
+A Framework for Undoing Actions in Collaborative Systems
+  http://www.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf
+Undoing Actions in Collaborative Work: Framework and Experience
+  https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf
+
+Implementing a Selective Undo Framework in Python
+  http://www.python.org/workshops/1997-10/proceedings/zukowski.html
+
+

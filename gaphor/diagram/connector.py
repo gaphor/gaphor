@@ -54,7 +54,7 @@ from diagramline import DiagramLine, FreeLine
 from elementitem import ElementItem
 from component import ComponentItem
 
-from gaphor.diagram.interfaceicon import AssembledInterfaceIcon
+#from gaphor.diagram.interfaceicon import AssembledInterfaceIcon
 from gaphor.diagram.rotatable import SimpleRotation
 from gaphor.diagram import TextElement
 from gaphor.misc import uniqueid
@@ -344,7 +344,7 @@ class AssemblyConnectorItem(ElementItem, SimpleRotation, GroupBase):
         ElementItem.__init__(self, id)
         SimpleRotation.__init__(self)
 
-        self._assembly = AssembledInterfaceIcon(self)
+        #self._assembly = AssembledInterfaceIcon(self)
 
         for h in self.handles:
             h.props.movable = False

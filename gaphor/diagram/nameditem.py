@@ -55,6 +55,10 @@ class NamedItem(ElementItem):
             width, height = text_extents(cr, text)
             padding = self.style.name_padding
             self._name_size = width + padding[0] + padding[2], height + padding[1] + padding[3]
+#            if self.min_width < self._name_size[0]:
+#                self.min_width = self._name_size[0]
+#            if self.min_height < self._name_size[1]:
+#                self.min_height = self._name_size[1]
 #            self.min_width, self.min_height = get_min_size(width, height,
 #                    self.style.min_size,
 #                    self.style.name_padding)
