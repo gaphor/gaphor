@@ -9,23 +9,9 @@ try:
 except ImportError:
     from distutils.core import Command
 from distutils.dep_util import newer
-from distutils.command.build import build as _build
 import os.path
 import msgfmt
 
-class build(_build):
-    description = "New build class, which adds the property to add locales."
-
-    def initialize_options(self):
-        _build.initialize_options(self)
-        self.build_locales = None
-
-    def finalize_options(self):
-        _build.finalize_options(self)
-        if not self.build_locales:
-            self.build_locales = os.path.join(self.build_base, 'locale')
-
-build.sub_commands.append(('build_mo', None))
 
 class build_mo(Command):
 
@@ -48,8 +34,12 @@ class build_mo(Command):
 
     def finalize_options (self):
         self.set_undefined_options('build',
-                                   ('build_locales', 'build_dir'),
                                    ('force', 'force'))
+        if self.build_dir is None:
+            self.set_undefined_options('build',
+                                       ('build_base', 'build_dir'))
+            self.build_dir = os.path.join(self.build_dir, 'linguas')
+
         self.all_linguas = self.all_linguas.split(',')
 
     def run (self):
@@ -66,4 +56,9 @@ class build_mo(Command):
 		msgfmt.make(pofile, outfile)
             else:
                 print 'not converting %s (output up-to-date)' % pofile
+
+from distutils.command.build import build
+build.sub_commands.append(('build_mo', None))
+
+
 

@@ -42,7 +42,7 @@ setup(
     install_requires=[
         # 'PyGTK >= 2.8.0', - Exclude, since it will not build anyway
         'gaphas >= 0.1.0',
-        'zope.interface >= 3.3.0', # - won't compile on windows.
+        'zope.component >= 3.3.0', # - won't compile on windows.
     ],
 
     zip_safe=False,

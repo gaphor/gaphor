@@ -301,7 +301,7 @@ def parse_association_tags(tag):
         assert len(l) == 1
         redefines = l[0]
 
-    print 'found', subsets, redefines
+    #print 'found', subsets, redefines
     return subsets, redefines
 
 def generate(filename, outfile=None, overridesfile=None):

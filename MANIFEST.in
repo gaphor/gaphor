@@ -1,6 +1,5 @@
 include COPYING INSTALL NEWS README TODO AUTHORS run-gaphor.sh
 include bin/gaphor
-recursive-include doc usecases.txt ui-design.txt diagram-in-python.txt
 recursive-include gaphor *.py
 include gaphor/UML/uml2.gaphor
 include gaphor/UML/uml2.override

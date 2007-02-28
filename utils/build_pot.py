@@ -140,7 +140,8 @@ class build_pot(Command):
 	self.merge_files()
 
     def create_pot_file(self):
-	"""Create a new .pot file. This is basically a rework of the
+	"""
+        Create a new .pot file. This is basically a rework of the
 	main function of pygettext.
         """
 	import glob
