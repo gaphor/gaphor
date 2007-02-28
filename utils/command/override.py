@@ -1,5 +1,6 @@
 # vim:sw=4:et
-"""This file contains code for loading up an override file.  The override file
+"""
+This file contains code for loading up an override file.  The override file
 provides implementations of functions where the code generator could not
 do its job correctly.
 

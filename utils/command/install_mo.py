@@ -13,7 +13,7 @@ try:
     from setuptools import Command
 except ImportError:
     from distutils.core import Command
-from distutils.util import change_root
+#from distutils.util import change_root
 import os.path
 
 
@@ -36,8 +36,8 @@ class install_mo(Command):
                                    ('build_dir', 'build_dir'))
         if self.install_dir is None:
             self.set_undefined_options('install',
-                                       ('prefix', 'install_dir'))
-            self.install_dir = os.path.join(self.install_dir, 'share')
+                                       ('install_base', 'install_dir'))
+            self.install_dir = os.path.join(self.install_dir, 'share', 'locale')
 
         self.name = self.distribution.get_name()
         self.all_linguas = self.all_linguas.split(',')
