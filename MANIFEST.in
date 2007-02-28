@@ -13,3 +13,4 @@ recursive-include tests *.py *.sh
 recursive-include utils *.py
 global-exclude */CVS/*
 global-exclude */.xvpics/*
+global-exclude */.svn/*

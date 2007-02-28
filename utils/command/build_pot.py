@@ -5,10 +5,7 @@ Build a PO template (for i18n) and update the .po files to reflect
 the last changes.
 """
 
-try:
-    from setuptools import Command
-except ImportError:
-    from distutils.core import Command
+from distutils.core import Command
 from commands import getstatus
 import sys, os.path
 import pygettext
