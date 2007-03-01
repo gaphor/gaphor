@@ -24,7 +24,7 @@ def plugin_data(name):
 
 setup(
     name='gaphor',
-    version='0.9.1',
+    version='0.9.2',
     url='http://gaphor.sourceforge.net',
     author='Arjan J. Molenaar',
     author_email='arjanmol@users.sourceforge.net',
