@@ -42,17 +42,37 @@ To update:
       merge_segment()
 
   Canvas:
-    add()
-    remove()
+    tree:
+      add()
+      remove()
     request_update() (should be performed as part of undo action when called)
 
   Solver (?):
-    adding and removing constraints
+    add_constraint()
+    remove_constraint()
+    Variable state
 
   In Gaphor, connecting two diagram items is considered an atomic task,
   performed by a IConnect adapter. This operation results in a set of primitive
   tasks (properties set and a constraint created).
 
+  For methods, it should be possible to create a decorator (@reversable) that
+  schedules a method with the same signature as the calling operation, but with
+  the inverse effect (e.g. the gaphas.tree module):
+
+  Tree(object):
+
+    @reversable(lambda s, n, p: s.remove(n))
+    def add(self, node, parent=None):
+        ... add 
+
+    @reversable(add, self='self', node='node', parent='self.get_parent(node)')
+    def remove(self, node):
+        ... remove
+
+ Okay, so the second case is toucher...
+ 
+ 
 We have three options:
 
  1. Add a StateManager to gaphas. All changed are send to the statemanager.

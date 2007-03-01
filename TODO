@@ -23,6 +23,10 @@ For 0.10.0 and later:
  - Load / save regression testing
    !!! Create some example diagrams,
 
+ - get rid of resource(). Create an Application instance instead (should
+   make unit testing easier too).
+   This should get rid of the pseudo singletons (_default* instances per module)
+   
  - using stereotypes
  - components and stuff
 
@@ -32,6 +36,16 @@ For 0.10.0 and later:
 
  - Use actions only for action definitions. use Events for notification
    between actions.
+    * use zope.component.event for centralized event notification.
+ 
+ - use GTK's UIManager for menu management.
+    * figure out naming conventions, also for diagram item popup menus.
+    * 
+
+- Copy/Paste for diagramitems
+  - How to do a copy/paste? shallow copy or deep copy? -> just create a diagram
+    item item referening the same model element or also copy the model element?
+    I think we should stick with shallow copy for now.
 
  - namedelement.py: from NamedElement
  - items.tex: describe:
@@ -41,6 +55,9 @@ For 0.10.0 and later:
 
  - Use setuptools (pkg_resources) to load plugins.
    Maybe define stuff in terms of services, like PIDA does (pida.org?)
+
+ - In some cases (like when editing attributes) Enter should be used to
+   complete the edit action.
 
 Older (long term ;) todo items:
 -------------------------------
@@ -56,15 +73,13 @@ Older (long term ;) todo items:
    with the GTK+ menu manager classes.
    Zope classes are quite optimized. However, mainly provides the same
    functionality as Actions, but not as fine grained.
+   Use zope.component.events for all notification!
 
 - Add meta data (such as text alignment) to the model file (add a meta:
   namespace?)
 .
 - Fix namespace relations between Lifeline and Interaction and Message and
   Interaction
-
-- Allow to make Action objects, instead of defining classes.
-  Should use meta-classes for registration too (define __abstract__ or\something to prevent registration).
 
 - disable actions when editing.
 
@@ -75,51 +90,15 @@ Older (long term ;) todo items:
 - Stereotype export and import function. Allow to export packages and import
   them into other models.
 
-- How to figure out if a module exists without loading it?
+- How to figure out if a module exists without loading it? Solved by setuptools
 
 - Exporting diagrams to UML XMI (work in progress),
   code, images (SVG/png), etc. - make a plugin!
 
-- fix accelarators (HOW?), partially done, accelerators on items in popup menus
-  does not work.
-  Accelerators should be activated by the (Abstract)Window, should not depend
-  on menu items. Intercept Window::key_pressed_event and let it handle
-  popup menu actions.
-
-- In some cases (like when editing attributes) Enter should be used to
-  complete the edit action.
-
 - Create a good algorithm for placement of lines and maybe nodes too.
-
-- Use default GTK+ menu classes, in stead of the home-brew one.
-
-- Use GTK+ 2.4 UIManager and ActionGroups (?):
-  * Reconsider since GTK+ 2.8 bindings are fairly better than the 2.4 bindings
-  . We have to keep the gaphor.misc.action module intact.
-  . As far as I can see, cross action updates, are not supported.
-  . Properties can be mapped in a straightforward way.
-  . Should actions be split up: one for the main window, one group per
-    diagram and one group per item type?
-  . GtkUIManager looks useful, some structures in Gaphor may have to be
-    reconsidered. What to do with AccelMaps for example. (I really have
-    to read the tutorial some day ;-).
-  . The current structure is simple and quite Pythonic. It should be this way.
-  . Stuff like a recent-file box will be easier to create (I guess).
-  Previous conclusion: keep using the gaphor.misc.action code
 
 - Automatically draw relations when an item is DND-ed from the tree-view
   to the diagram.
-
-- Copy/Paste for diagramitems
-  - in order to make copy/paste work, the load/save functions should be
-    generatlised to allow a subset to be saved/loaded (which is needed
-    anyway for exporting/importing stereotype Profiles).
-  - How many data should be saved? (e.g. we copy a diagram item, remove it
-    (the underlaying UML element is removed) and the paste the copied item.
-    The diagram should act as if we have placed a copy of the removed item
-    on the canvas and make the uml element visible again.
-
-- Undo/redo functionality
 
 #- Stereotypes: check documentation page 581 (597 absolute). Fixed. An extra
    association has been created between Stereotype and Class, Interface and
@@ -130,10 +109,6 @@ Diagram Items
 Gaphor does not need to support *all* diagram types, but at least some
 functinality should be provided for those.
 
-- Deployment diagram:
-  . Node
-  . Artifact
-  . some relations
 - Sequence diagram:
   . Life line
   . different message types

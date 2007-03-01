@@ -35,7 +35,7 @@ class build_mo(Command):
         if self.build_dir is None:
             self.set_undefined_options('build',
                                        ('build_base', 'build_dir'))
-            self.build_dir = os.path.join(self.build_dir, 'linguas')
+            self.build_dir = os.path.join(self.build_dir, 'locale')
 
         self.all_linguas = self.all_linguas.split(',')
 
