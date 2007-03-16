@@ -274,7 +274,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     # Unlock canvas's for updates
     for id, elem in elements.items():
-        if elem.canvas:
+        if isinstance(elem, parser.element) and elem.canvas:
             elem.element.canvas.block_updates = False
 
     factory.notify_model()
