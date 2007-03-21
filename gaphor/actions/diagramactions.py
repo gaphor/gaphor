@@ -35,64 +35,6 @@ class CloseTabAction(Action):
 
 register_action(CloseTabAction)
 
-
-class UndoStackAction(Action):
-    """Dummy action that triggers the undo and redo actions to update
-    themselves.
-    """
-    id = 'EditUndoStack'
-    
-    def init(self, window):
-        pass
-
-register_action(UndoStackAction)
-
-
-class UndoAction(Action):
-    id = 'EditUndo'
-    stock_id = 'gtk-undo'
-    label = '_Undo'
-    tooltip = 'Undo the most recent changes'
-    accel = 'C-z'
-
-    # TODO: check if the diagram can undo.
-
-    def init(self, window):
-        self._window = window
-
-    def update(self):
-        diagram_tab = self._window.get_current_diagram_tab()
-        self.sensitive = diagram_tab and get_undo_manager().can_undo()
-
-    def execute(self):
-        get_undo_manager().undo_transaction()
-        self.update()
-        self._window.execute_action('EditUndoStack')
-
-register_action(UndoAction, 'EditUndoStack')
-
-
-class RedoAction(Action):
-    id = 'EditRedo'
-    stock_id = 'gtk-redo'
-    tooltip = 'Redo the undone changes'
-    accel = 'C-r'
-
-    def init(self, window):
-        self._window = window
-
-    def update(self):
-        diagram_tab = self._window.get_current_diagram_tab()
-        self.sensitive = diagram_tab and get_undo_manager().can_redo()
-
-    def execute(self):
-        get_undo_manager().redo_transaction()
-        self.update()
-        self._window.execute_action('EditUndoStack')
-
-register_action(RedoAction, 'EditUndoStack')
-
-
 class ToolChangeAction(Action):
     """Dummy, triggered when a new tool is selected.
     """

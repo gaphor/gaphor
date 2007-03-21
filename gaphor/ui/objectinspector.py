@@ -1,5 +1,5 @@
 import gtk
-from gaphor.interfaces import *
+from interfaces import *
 from gaphor.diagram import items
 from zope import component
 from gaphor.UML.uml2 import LiteralSpecification

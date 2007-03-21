@@ -13,7 +13,7 @@ handled = False
 events = []
 last_event = None
 
-@component.adapter(IFactoryEvent)
+@component.adapter(IServiceEvent)
 def handler(event):
     global handled, events, last_event
     handled = True
@@ -109,4 +109,20 @@ class ElementFactoryTestCase(unittest.TestCase):
         global handled
         ef.flush()
         self.assertTrue(IFlushFactoryEvent.providedBy(last_event) )
+
+    def testUndo(self):
+        pass
+        # TODO: implement
+        from gaphor.services.undomanager import get_undo_manager
+        get_undo_manager().begin_transaction()
+        ef = self.factory
+        p = ef.create(Parameter)
+
+        assert get_undo_manager().can_undo()
+        get_undo_manager().commit_transaction()
+        assert get_undo_manager().can_undo()
+        assert ef.size() == 1
+        get_undo_manager().undo_transaction()
+        assert not get_undo_manager().can_undo()
+        assert get_undo_manager().can_redo()
 

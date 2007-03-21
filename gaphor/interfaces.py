@@ -1,43 +1,27 @@
+"""
+Top level interface definitions for Gaphor.
+"""
+
 from zope import interface
-from zope import component
-class IGaphorAction(interface.Interface):
-    """Action interface for use in Gaphor"""
 
-class IMenuAction(interface.Interface):
-    """An interface to hook up items to."""
-    
 
-class TestAdapter(object):
-    def __init__(self, context):
-        self.context = context
+class IService(interface.Interface):
+    """
+    Base interface for all services in Gaphor.
+    """
 
-#component.provideAdapter(
-    #factory=TestAdapter,
-    #adapts=[IGaphorAction],
-    #provides=IZopeMenu,
-    #name="Test adapter name")
+    def init(self, application):
+        """
+        Initialize the service, this method is called after all services
+        are instantiated.
+        """
 
-#class TestAdapter2(object):
-    #def __init__(self, context):
-        #self.context = context
 
-#component.provideAdapter(
-    #factory=TestAdapter2,
-    #adapts=[IGaphorAction],
-    #provides=IZopeMenu,
-    #name="Test adapter 2 name")
+class IServiceEvent(interface.Interface):
+    """
+    An event emitted by a service.
+    """
+    service = interface.Attribute("The service that emits the event")
 
-#class TestAction(object):
-    #interface.implements(IGaphorAction)
-    
-class IDiagramElementReceivedFocus(interface.Interface):
-    """A diagram item received focus"""
-    diagramItem = interface.Attribute("The diagram item that received focus")
-    
-    
-class IWidget(interface.Interface):
-    """A GTK widget"""
-    
-class IDetailsPage(IWidget):
-    """A property page which can display itself in a notebook"""
-    
+
+# vim:sw=4:et

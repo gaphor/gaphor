@@ -14,6 +14,9 @@ NOTE: it would be nice to use actions in conjunction with functools.partial,
       A replacement is available in gaphor.misc.partial.
 """
 
+from zope import interface
+from zope import component
+from gaphor.interfaces import IService, IServiceEvent
 
 def get_undo_manager():
     """Return the default undo manager.
@@ -40,57 +43,6 @@ def transactional(func):
     return wrapper
 
 
-class undoableproperty(object):
-    """
-    Property with state preservation.
-    Set and del statements preserve the original value before the operation
-    is performed
-    """
-
-    def __init__(self, fget=None, fset=None, fdel=None, doc=None,
-                 property=None, undo_manager=None):
-        if property:
-            self.fget = property.fget
-            self.fset = property.fset
-            self.fdel = property.fdel
-            self.__doc__ = property.__doc__
-        else:
-            self.fget = fget
-            self.fset = fset
-            self.fdel = fdel
-            self.__doc__ = doc
-        self._undo_manager = undo_manager or get_undo_manager()
-
-    def _preserve_state(self, obj):
-        try:
-            val = self.__get__(obj)
-        except AttributeError:
-            def _del_action():
-                action = self._preserve_state(obj)
-                self.__delete__(obj)
-                return action
-            return _del_action
-        else:
-            def _set_action():
-                action = self._preserve_state(obj)
-                self.__set__(obj, val)
-                return action
-            return _set_action
-
-    def __get__(self, obj, class_=None):
-        if obj:
-            return self.fget(obj)
-        return self.fget
-
-    def __set__(self, obj, value):
-        self._undo_manager.add_undo_action(self._preserve_state(obj))
-        return self.fset(obj, value)
-
-    def __delete__(self, obj):
-        self._undo_manager.add_undo_action(self._preserve_state(obj))
-        return self.fdel(obj)
-
-
 class TransactionError(Exception):
 
     def __init__(self, msg):
@@ -115,16 +67,25 @@ class Transaction(object):
     def can_execute(self):
         return self._actions and True or False
 
+    @transactional
     def execute(self):
         self._actions.reverse()
-        contra_transaction = Transaction()
         for action in self._actions:
             try:
-                contra_action = action()
-                contra_transaction.add(contra_action or action)
+                action()
             except Exception, e:
                 log.error('Error while undoing action %s' % action, e)
-        return contra_transaction
+
+
+class UndoManagerStateChanged(object):
+    """
+    Event class used to send state changes on the ndo Manager.
+    """
+    interface.implements(IServiceEvent)
+
+    def __init__(self, service):
+        self.service = service
+
 
 class UndoManager(object):
     """
@@ -137,13 +98,17 @@ class UndoManager(object):
     to be used to undo or redo the last performed action.
     """
 
+    interface.implements(IService)
+
     def __init__(self):
-        self._in_undo = False
         self._undo_stack = []
         self._redo_stack = []
         self._stack_depth = 20
         self._current_transaction = None
         self._transaction_depth = 0
+
+    def init(self, app):
+        self._app = app
 
     def clear_undo_stack(self):
         self._undo_stack = []
@@ -156,10 +121,6 @@ class UndoManager(object):
         """
         Add an action to the current transaction
         """
-        if self._in_undo:
-            return
-
-        #log.debug('begin_transaction')
         if self._current_transaction:
             self._transaction_depth += 1
             #raise TransactionError, 'Already in a transaction'
@@ -181,11 +142,9 @@ class UndoManager(object):
             self.clear_redo_stack()
 
         self._current_transaction.add(action)
+        component.handle(UndoManagerStateChanged(self))
 
     def commit_transaction(self):
-        if self._in_undo:
-            return
-
         #log.debug('commit_transaction')
         if not self._current_transaction:
             return #raise TransactionError, 'No transaction to commit'
@@ -203,9 +162,6 @@ class UndoManager(object):
         """
         Roll back the transaction we're in.
         """
-        if self._in_undo:
-            return
-
         if not self._current_transaction:
             raise TransactionError, 'No transaction to rollback'
 
@@ -214,10 +170,9 @@ class UndoManager(object):
             self._current_transaction.execute()
             self._current_transaction = None
         # else: mark for rollback?
+        component.handle(UndoManagerStateChanged(self))
 
     def discard_transaction(self):
-        if self._in_undo:
-            return
 
         if not self._current_transaction:
             raise TransactionError, 'No transaction to discard'
@@ -225,6 +180,7 @@ class UndoManager(object):
         self._transaction_depth -= 1
         if self._transaction_depth == 0:
             self._current_transaction = None
+        component.handle(UndoManagerStateChanged(self))
 
     def undo_transaction(self):
         if not self._undo_stack:
@@ -234,24 +190,18 @@ class UndoManager(object):
             log.warning('Trying to undo a transaction, while in a transaction')
             self.commit_transaction()
         transaction = self._undo_stack.pop()
-        try:
-            self._in_undo = True
-            redo_transaction = transaction.execute()
-        finally:
-            self._in_undo = False
-        self._redo_stack.append(redo_transaction)
+
+        transaction.execute()
+        component.handle(UndoManagerStateChanged(self))
 
     def redo_transaction(self):
         if not self._redo_stack:
             return
 
         transaction = self._redo_stack.pop()
-        try:
-            self._in_undo = True
-            undo_transaction = transaction.execute()
-        finally:
-            self._in_undo = False
-        self._undo_stack.append(undo_transaction)
+
+        transaction.execute()
+        component.handle(UndoManagerStateChanged(self))
 
     def in_transaction(self):
         return self._current_transaction is not None
@@ -263,8 +213,6 @@ class UndoManager(object):
         return bool(self._redo_stack)
 
 
-# Register as resource:
-import gaphor
-_default_undo_manager = gaphor.resource(UndoManager)
-del gaphor
+from gaphor import resource
+_default_undo_manager = resource(UndoManager)
 

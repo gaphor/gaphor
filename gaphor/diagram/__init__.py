@@ -89,4 +89,19 @@ class DiagramItemMeta(type):
         self.style = style
 
 
+##
+## Direct revert-statements from gaphas to the undomanager
+###
+
+from gaphas import state
+from gaphor.undomanager import get_undo_manager, transactional
+
+print 'state', state
+state.observers.add(state.revert_handler)
+
+def _undo_handler(event):
+    get_undo_manager().add_undo_action(lambda: state.saveapply(*event));
+
+state.subscribers.add(_undo_handler)
+
 # vim:sw=4:et

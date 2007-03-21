@@ -25,29 +25,29 @@ class AssociationChangedEvent(object):
 class CreateElementEvent(object):
     interface.implements(ICreateElementEvent)
 
-    def __init__(self, factory, element):
-        self.factory = factory
+    def __init__(self, service, element):
+        self.service = service
         self.element = element
 
 
 class RemoveElementEvent(object):
     interface.implements(IRemoveElementEvent)
 
-    def __init__(self, factory, element):
-        self.factory = factory
+    def __init__(self, service, element):
+        self.service = service
         self.element = element
 
 
 class ModelFactoryEvent(object):
     interface.implements(IModelFactoryEvent)
 
-    def __init__(self, factory):
-        self.factory = factory
+    def __init__(self, service):
+        self.service = service
 
 
 class FlushFactoryEvent(object):
     interface.implements(IFlushFactoryEvent)
 
-    def __init__(self, factory):
-        self.factory = factory
+    def __init__(self, service):
+        self.service = service
 

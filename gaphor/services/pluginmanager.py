@@ -21,17 +21,21 @@ PluginLoader - SAX parser used to read the plugin.xml file of a plugin. This
 
 User provided plugins overrule the system provided plugins.
 """
-import os
 import imp
+import os
 import os.path
 import glob
 import sys
 from xml.sax import handler, make_parser
-from gaphor import resource
 
+from zope import interface
+from gaphor.interfaces import IService
+
+from gaphor import resource
 from gaphor.parser import ParserException
 from gaphor.misc.action import register_action_for_slot
 from gaphor.misc.odict import odict
+
 
 XMLNS='http://gaphor.sourceforge.net/gaphor/plugin'
 MODULENS='gaphor._plugins.'
@@ -48,6 +52,7 @@ class Plugin(object):
     """
     A plugin represents one plugin loaded from the file system.
     """
+    interface.implements(IService)
 
     def __init__(self):
         self.required_modules = []
@@ -59,6 +64,9 @@ class Plugin(object):
         self.path = ''
         self.module = None
         self.status = ''
+
+    def init(self, app):
+        self._app = app
 
     def requirements_met(self, manager):
         """

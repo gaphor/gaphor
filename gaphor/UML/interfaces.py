@@ -3,7 +3,7 @@ UML events emited on a change in the data model.
 """
 
 from zope import interface
-
+from gaphor.interfaces import IService, IServiceEvent
 
 class IElementChangedEvent(interface.Interface):
     """Generic event fired when element state changes.
@@ -24,23 +24,17 @@ class IAssociationChangedEvent(IElementChangedEvent):
     association = interface.Attribute("The association")
 
 
-class IFactoryEvent(interface.Interface):
-    """Events related to creation/deletion of model elements.
-    """
-    factory = interface.Attribute("The ElementFactory emiting the event")
-
-
-class IModelFactoryEvent(IFactoryEvent):
+class IModelFactoryEvent(IServiceEvent):
     """A new model is loaded into the ElementFactory.
     """
 
 
-class IFlushFactoryEvent(IFactoryEvent):
+class IFlushFactoryEvent(IServiceEvent):
     """All elements are removed from the ElementFactory.
     """
 
 
-class IFactoryElementEvent(IFactoryEvent):
+class IFactoryElementEvent(IServiceEvent):
     """Events related to individual model elements.
     """
     element = interface.Attribute("The element")

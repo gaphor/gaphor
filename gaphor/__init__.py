@@ -30,6 +30,7 @@ resource = Resource(initial_resources={
                         'ui.toolbox.classes': True,
                     })
 
+
 class GaphorError(Exception):
     """
     Gaphor specific exception class
@@ -49,7 +50,9 @@ def main(gaphor_file=None):
     import adapters
     import actions
     # Load plugin definitions:
-    import pluginmanager
+    import services.pluginmanager
+    import services.undomanager
+
     from ui.mainwindow import MainWindow
 
     resource('PluginManager').bootstrap()

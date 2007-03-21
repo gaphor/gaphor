@@ -599,7 +599,8 @@ class TabChangeAction(Action):
 register_action(TabChangeAction)
 
 class UndoStackAction(Action):
-    """Dummy action that triggers the undo and redo actions to update
+    """
+    Dummy action that triggers the undo and redo actions to update
     themselves.
     """
     id = 'UndoStack'
@@ -626,7 +627,7 @@ class UndoAction(Action):
 
     def execute(self):
         get_undo_manager().undo_transaction()
-        #self.update()
+        self.update()
         self._window.execute_action('UndoStack')
 
 register_action(UndoAction, 'UndoStack')

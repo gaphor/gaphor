@@ -16,7 +16,8 @@ from gaphor.ui.menufactory import toolbox_to_menu
 from gaphor.ui.objectinspector import ObjectInspector
 
 
-from gaphor.interfaces import *
+from interfaces import IDiagramElementReceivedFocus
+from gaphor.interfaces import IServiceEvent
 from zope import component
 
 class MainWindow(AbstractWindow):
@@ -456,9 +457,6 @@ class MainWindow(AbstractWindow):
 #        print 'Box', box_name, 'is visible:', visible
 #        #resource.set('ui.toolbox.%s' % box_name, visible, persistent=True)
 
-    def on_undo(self, *args):
-        self.execute_action('UndoStack')
-
 #    def on_transient_window_closed(self, window):
 #        assert window in self._transient_windows
 #        log.debug('%s closed.' % window)
@@ -473,3 +471,10 @@ class MainWindow(AbstractWindow):
         #self.set_capability('model', not factory.is_empty())
 
 gtk.accel_map_add_filter('gaphor')
+
+@component.adapter(IServiceEvent)
+def on_undo(*args):
+    resource(MainWindow).execute_action('UndoStack')
+
+component.provideHandler(on_undo)
+

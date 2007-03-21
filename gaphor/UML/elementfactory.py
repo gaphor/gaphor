@@ -2,16 +2,20 @@
 """elementfactory.py
 """
 
+from zope import interface
 from zope import component
 from gaphor.misc import uniqueid, odict
 from gaphor.undomanager import get_undo_manager
 from gaphor.UML.element import Element
 from gaphor.UML.diagram import Diagram
+from gaphor.UML.interfaces import ICreateElementEvent, IRemoveElementEvent, \
+                                  IFlushFactoryEvent, IModelFactoryEvent, \
+                                  IService
 from gaphor.UML.event import CreateElementEvent, RemoveElementEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
 
 
-class _UndoCreateAction(object):
+class _xxUndoCreateAction(object):
 
     def __init__(self, factory, element):
         self.factory = factory
@@ -31,7 +35,7 @@ class _UndoCreateAction(object):
         component.handle(CreateElementEvent(self.factory, self.element))
 
 
-class _UndoRemoveAction(object):
+class _xxUndoRemoveAction(object):
 
     def __init__(self, factory, element):
         self.factory = factory
@@ -60,6 +64,7 @@ class ElementFactory(object):
     flush - model is flushed: all element are removed from the factory
             (element is None)
     """
+    interface.implements(IService)
 
     def __init__(self):
         self._elements = odict.odict()
@@ -77,8 +82,8 @@ class ElementFactory(object):
         assert issubclass(type, Element)
         obj = type(id, self)
         self._elements[id] = obj
-        get_undo_manager().add_undo_action(_UndoCreateAction(self, obj))
-        obj.connect('__unlink__', self.__element_signal)
+        #get_undo_manager().add_undo_action(_UndoCreateAction(self, obj))
+        obj.connect('__unlink__', self._element_signal)
         self.notify(obj, 'create')
         component.handle(CreateElementEvent(self, obj))
         return obj
@@ -196,14 +201,14 @@ class ElementFactory(object):
         self.notify(None, 'model')
         component.handle(ModelFactoryEvent(self))
 
-    def __element_signal(self, element, pspec):
+    def _element_signal(self, element, pspec):
         """Remove an element from the factory """
         #log.debug('element %s send signal %s' % (element, name))
         if pspec == '__unlink__' and self._elements.has_key(element.id):
             #log.debug('Unlinking element: %s' % element)
             # TODO: make undo action
             del self._elements[element.id]
-            get_undo_manager().add_undo_action(_UndoRemoveAction(self, element))
+            #get_undo_manager().add_undo_action(_UndoRemoveAction(self, element))
             self.notify(element, 'remove')
             component.handle(RemoveElementEvent(self, element))
 #        elif pspec == '__relink__' and not self._elements.has_key(element.id):
@@ -211,3 +216,36 @@ class ElementFactory(object):
 #            self._elements[element.id] = element
 #            self.notify(element, 'create')
 
+component.provideUtility(ElementFactory(), IService, "element_factory")
+
+
+@component.adapter(ICreateElementEvent)
+def undo_create_event(event):
+    factory = event.service
+    element = event.element
+    def _undo_create_event():
+        try:
+            del factory._elements[element.id]
+        except KeyError:
+            pass # Key was probably already removed in an unlink call
+        factory.notify(element, 'remove')
+        component.handle(RemoveElementEvent(factory, element))
+    get_undo_manager().add_undo_action(_undo_create_event)
+
+component.provideHandler(undo_create_event)
+
+
+@component.adapter(IRemoveElementEvent)
+def undo_remove_event(event):
+    factory = event.service
+    element = event.element
+    def _undo_remove_event():
+        factory._elements[element.id] = element
+        factory.notify(element, 'create')
+        component.handle(CreateElementEvent(factory, element))
+    get_undo_manager().add_undo_action(_undo_remove_event)
+
+component.provideHandler(undo_remove_event)
+
+
+# vim:sw=4:et

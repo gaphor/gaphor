@@ -12,7 +12,7 @@ from gaphor.undomanager import get_undo_manager
 from gaphor.ui.diagramview import DiagramView
 from gaphor.ui.abstractwindow import AbstractWindow
 
-from gaphor.event import DiagramItemFocused
+from event import DiagramItemFocused
 from zope import component
 
 class DiagramTab(object):
