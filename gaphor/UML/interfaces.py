@@ -5,48 +5,56 @@ UML events emited on a change in the data model.
 from zope import interface
 from gaphor.interfaces import IService, IServiceEvent
 
-class IElementChangedEvent(interface.Interface):
+class IElementEvent(interface.Interface):
     """Generic event fired when element state changes.
     """
     element = interface.Attribute("The changed element")
 
 
-class IAttributeChangedEvent(IElementChangedEvent):
-    """An attribute has changed.
-    """
-    attribute = interface.Attribute("The attribute")
-
-
-class IAssociationChangedEvent(IElementChangedEvent):
-    """An association hs changed.
-    This event may be fired for both ends of the association.
-    """
-    association = interface.Attribute("The association")
-
-
-class IModelFactoryEvent(IServiceEvent):
-    """A new model is loaded into the ElementFactory.
-    """
-
-
-class IFlushFactoryEvent(IServiceEvent):
-    """All elements are removed from the ElementFactory.
-    """
-
-
-class IFactoryElementEvent(IServiceEvent):
-    """Events related to individual model elements.
-    """
-    element = interface.Attribute("The element")
-
-
-class ICreateElementEvent(IFactoryElementEvent):
+class IElementCreateEvent(IElementEvent):
     """A new element has been created.
     """
 
 
-class IRemoveElementEvent(IFactoryElementEvent):
+class IElementDeleteEvent(IElementEvent):
     """An element is deleted from the model.
+    """
+
+
+class IElementChangeEvent(IElementEvent):
+    """Generic event fired when element state changes.
+    """
+    property = interface.Attribute("The property that changed")
+    old_value = interface.Attribute("The property value before the change")
+    new_value = interface.Attribute("The property value after the change")
+
+
+class IAttributeChangeEvent(IElementChangeEvent):
+    """
+    An attribute has changed.
+    """
+
+
+class IAssociationChangeEvent(IElementChangeEvent):
+    """
+    An association hs changed.
+    This event may be fired for both ends of the association.
+    """
+
+class IElementFactoryEvent(IServiceEvent):
+    """
+    Events related to individual model elements.
+    """
+
+class IModelFactoryEvent(IElementFactoryEvent):
+    """
+    A new model is loaded into the ElementFactory.
+    """
+
+
+class IFlushFactoryEvent(IElementFactoryEvent):
+    """
+    All elements are removed from the ElementFactory.
     """
 
 

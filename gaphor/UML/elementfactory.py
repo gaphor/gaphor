@@ -8,48 +8,11 @@ from gaphor.misc import uniqueid, odict
 from gaphor.undomanager import get_undo_manager
 from gaphor.UML.element import Element
 from gaphor.UML.diagram import Diagram
-from gaphor.UML.interfaces import ICreateElementEvent, IRemoveElementEvent, \
+from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
                                   IFlushFactoryEvent, IModelFactoryEvent, \
                                   IService
-from gaphor.UML.event import CreateElementEvent, RemoveElementEvent, \
+from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
-
-
-class _xxUndoCreateAction(object):
-
-    def __init__(self, factory, element):
-        self.factory = factory
-        self.element = element
-
-    def undo(self):
-        try:
-            del self.factory._elements[self.element.id]
-        except KeyError:
-            pass # Key was probably already removed in an unlink call
-        self.factory.notify(self.element, 'remove')
-        component.handle(RemoveElementEvent(self.factory, self.element))
-
-    def redo(self):
-        self.factory._elements[self.element.id] = self.element
-        self.factory.notify(self.element, 'create')
-        component.handle(CreateElementEvent(self.factory, self.element))
-
-
-class _xxUndoRemoveAction(object):
-
-    def __init__(self, factory, element):
-        self.factory = factory
-        self.element = element
-
-    def undo(self):
-        self.factory._elements[self.element.id] = self.element
-        self.factory.notify(self.element, 'create')
-        component.handle(CreateElementEvent(self.factory, self.element))
-
-    def redo(self):
-        del self.factory._elements[self.element.id]
-        self.factory.notify(self.element, 'remove')
-        component.handle(RemoveElementEvent(self.factory, self.element))
 
 
 class ElementFactory(object):
@@ -85,7 +48,7 @@ class ElementFactory(object):
         #get_undo_manager().add_undo_action(_UndoCreateAction(self, obj))
         obj.connect('__unlink__', self._element_signal)
         self.notify(obj, 'create')
-        component.handle(CreateElementEvent(self, obj))
+        component.handle(ElementCreateEvent(self, obj))
         return obj
 
     def size(self):
@@ -210,16 +173,16 @@ class ElementFactory(object):
             del self._elements[element.id]
             #get_undo_manager().add_undo_action(_UndoRemoveAction(self, element))
             self.notify(element, 'remove')
-            component.handle(RemoveElementEvent(self, element))
+            component.handle(ElementDeleteEvent(self, element))
 #        elif pspec == '__relink__' and not self._elements.has_key(element.id):
 #            log.debug('Relinking element: %s' % element)
 #            self._elements[element.id] = element
 #            self.notify(element, 'create')
 
-component.provideUtility(ElementFactory(), IService, "element_factory")
+component.provideUtility(ElementFactory(), IService, "ElementFactory")
 
 
-@component.adapter(ICreateElementEvent)
+@component.adapter(IElementCreateEvent)
 def undo_create_event(event):
     factory = event.service
     element = event.element
@@ -229,20 +192,20 @@ def undo_create_event(event):
         except KeyError:
             pass # Key was probably already removed in an unlink call
         factory.notify(element, 'remove')
-        component.handle(RemoveElementEvent(factory, element))
+        component.handle(ElementDeleteEvent(factory, element))
     get_undo_manager().add_undo_action(_undo_create_event)
 
 component.provideHandler(undo_create_event)
 
 
-@component.adapter(IRemoveElementEvent)
+@component.adapter(IElementDeleteEvent)
 def undo_remove_event(event):
     factory = event.service
     element = event.element
     def _undo_remove_event():
         factory._elements[element.id] = element
         factory.notify(element, 'create')
-        component.handle(CreateElementEvent(factory, element))
+        component.handle(ElementCreateEvent(factory, element))
     get_undo_manager().add_undo_action(_undo_remove_event)
 
 component.provideHandler(undo_remove_event)

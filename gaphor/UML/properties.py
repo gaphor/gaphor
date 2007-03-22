@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # vim:sw=4:et
-"""Properties used to create the UML 2.0 data model.
+"""
+Properties used to create the UML 2.0 data model.
 
 The logic for creating and destroying connections between UML objects is
 implemented in Python property classes. These classes are simply instantiated
@@ -23,16 +24,17 @@ methods:
                       multiplicity > 1).
     load(value):      load 'value' as the current value for this property
     save(save_func):  send the value of the property to save_func(name, value)
-    #unlink():         remove references to other elements.
 """
 
 __all__ = [ 'attribute', 'enumeration', 'association', 'derivedunion', 'redefine' ]
 
+from zope import component
 from collection import collection
+from event import AttributeChangeEvent, AssociationSetEvent, \
+                  AssociationAddEvent, AssociationDeleteEvent
 import operator
 from gaphor.undomanager import get_undo_manager
 
-#infinite = 100000
 
 class undoaction(object):
     """
@@ -52,8 +54,10 @@ class undoaction(object):
         #print 'adding new property', prop.name, obj, value
         get_undo_manager().add_undo_action(self.undo)
 
+
 class umlproperty(object):
-    """Superclass for attribute, enumeration and association.
+    """
+    Superclass for attribute, enumeration and association.
     The subclasses should define a 'name' attribute that contains the name
     of the property. Derived properties (derivedunion and redefine) can be
     connected, they will be notified when the value changes.
@@ -86,12 +90,9 @@ class umlproperty(object):
     def postload(self, obj):
         pass
 
-#    def unlink(self, obj):
-#        if hasattr(obj, self._name):
-#            self.__delete__(obj)
-
     def notify(self, obj):
-        """Notify obj that the property's value has been changed.
+        """
+        Notify obj that the property's value has been changed.
         Deriviates are also triggered to send a notify signal.
         """
         try:
@@ -119,7 +120,8 @@ class umlproperty(object):
 
 
 class undoattributeaction(undoaction):
-    """This undo action contains one undo action for an attribute
+    """
+    This undo action contains one undo action for an attribute
     property.
     """
 
@@ -174,28 +176,33 @@ class attribute(umlproperty):
         if value == self._get(obj):
             return
 
-        undoattributeaction(self, obj, self._get(obj))
+        #undoattributeaction(self, obj, self._get(obj))
 
+        old = self._get(obj)
         if value == self.default and hasattr(obj, self._name):
             delattr(obj, self._name)
         else:
             setattr(obj, self._name, value)
+        component.handle(AttributeChangeEvent(obj, self, old, value))
         self.notify(obj)
 
     def _del(self, obj, value=None):
-        #self.old = self._get(obj)
+        old = self._get(obj)
         try:
-            undoattributeaction(self, obj, self._get(obj))
+            #undoattributeaction(self, obj, self._get(obj))
             delattr(obj, self._name)
         except AttributeError:
             pass
         else:
+            component.handle(AttributeChangeEvent(obj, self, old, self.default))
             self.notify(obj)
 
 
 class enumeration(umlproperty):
-    """Enumeration.
-    Element.enum = enumeration('enum', ('one', 'two', 'three'), 'one')"""
+    """
+    Enumeration.
+    Element.enum = enumeration('enum', ('one', 'two', 'three'), 'one')
+    """
 
     def __init__(self, name, values, default):
         self.name = intern(name)
@@ -220,26 +227,33 @@ class enumeration(umlproperty):
     def _set(self, obj, value):
         if not value in self.values:
             raise AttributeError, 'Value should be one of %s' % str(self.values)
-        if value != self._get(obj):
-            undoattributeaction(self, obj, self._get(obj))
-            if value == self.default:
-                delattr(obj, self._name)
-            else:
-                setattr(obj, self._name, value)
-            self.notify(obj)
+        if value == self._get(obj):
+            return
+
+        #undoattributeaction(self, obj, self._get(obj))
+        old = self._get(obj)
+        if value == self.default:
+            delattr(obj, self._name)
+        else:
+            setattr(obj, self._name, value)
+        component.handle(AttributeChangeEvent(obj, self, old, value))
+        self.notify(obj)
 
     def _del(self, obj, value=None):
+        old = self._get(obj)
         try:
-            undoattributeaction(self, obj, self._get(obj))
+            #undoattributeaction(self, obj, self._get(obj))
             delattr(obj, self._name)
         except AttributeError:
             pass
         else:
+            component.handle(AttributeChangeEvent(obj, self, old, self.default))
             self.notify(obj)
 
 
 class undosetassociationaction(undoaction):
-    """Undo a 'set' action in an association.
+    """
+    Undo a 'set' action in an association.
     """
 
     def undo(self):
@@ -269,12 +283,15 @@ class undodelassociationaction(undoaction):
 
 
 class association(umlproperty):
-    """Association, both uni- and bi-directional.
+    """
+    Association, both uni- and bi-directional.
+
     Element.assoc = association('assoc', Element, opposite='other')
     
     A listerer is connected to the value added to the association. This
     will cause the association to be ended if the element on the other end
     of the association is unlinked.
+
     If the association is a composite relationship, the value is connected to
     the elements __unlink__ signal too. This will cause the value to be
     unlinked as soon as the element is unlinked.
@@ -292,7 +309,6 @@ class association(umlproperty):
     def load(self, obj, value):
         if not isinstance(value, self.type):
             raise AttributeError, 'Value for %s should be of type %s (%s)' % (self.name, self.type.__name__, type(value).__name__)
-        # TODO: avoid sending notifications:
         self._set(obj, value, do_notify=False)
 
     def postload(self, obj):
@@ -326,8 +342,6 @@ class association(umlproperty):
             if self.upper > 1:
                 # Create the empty collection here since it might be used to
                 # add 
-                #c = collection(self, obj, self.type)
-                #setattr(obj, self._name, c)
                 c = collection(self, obj, self.type)
                 setattr(obj, self._name, c)
                 return c
@@ -335,7 +349,8 @@ class association(umlproperty):
                 return None
 
     def _set(self, obj, value, from_opposite=False, do_notify=True):
-        """Set a new value for our attribute. If this is a collection, append
+        """
+        Set a new value for our attribute. If this is a collection, append
         to the existing collection.
 
         This method is called from the opposite association property.
@@ -347,22 +362,27 @@ class association(umlproperty):
         # Remove old value only for uni-directional associations
         if self.upper == 1:
             old = self._get(obj)
+
             # do nothing if we are assigned our current value:
             if value is old:
                 return
 
-            # is done is _del(): undoassociationaction(self, obj, old)
+            # is done in _del(): undoassociationaction(self, obj, old)
             if old:
                 self._del(obj, old)
+
             if value is None:
                 return
-            if value is self._get(obj):
-                #log.debug('association: value already in obj: %s' % value)
-                return
 
-            if not from_opposite:
-                undosetassociationaction(self, obj, value)
+            #if value is self._get(obj):
+            #    #log.debug('association: value already in obj: %s' % value)
+            #    return
+
+            #if not from_opposite:
+            #    undosetassociationaction(self, obj, value)
             setattr(obj, self._name, value)
+            if do_notify:
+                component.handle(AssociationSetEvent(obj, self, old, value))
         else:
             # Set the actual value
             c = self._get(obj)
@@ -373,9 +393,11 @@ class association(umlproperty):
                 #log.debug('association: value already in obj: %s' % value)
                 return
 
-            if not from_opposite:
-                undosetassociationaction(self, obj, value)
+            #if not from_opposite:
+            #    undosetassociationaction(self, obj, value)
             c.items.append(value)
+            if do_notify:
+                component.handle(AssociationAddEvent(obj, self, value))
 
         # Callbacks are only connected if a new relationship has
         # been established.
@@ -390,8 +412,8 @@ class association(umlproperty):
             self.notify(obj)
 
     def _del(self, obj, value, from_opposite=False):
-        # TODO: move code to _del
-        """Delete is used for element deletion and for removal of
+        """
+        Delete is used for element deletion and for removal of
         elements from a list.
         """
         #print '__delete__', self, obj, value
@@ -399,12 +421,12 @@ class association(umlproperty):
         if not value:
             if self.upper > 1:
                 raise Exception, 'Can not delete collections'
-            value = self._get(obj)
+            old = value = self._get(obj)
             if value is None:
                 return
 
-        if not from_opposite:
-            undodelassociationaction(self, obj, value)
+        #if not from_opposite:
+        #    undodelassociationaction(self, obj, value)
 
         if not from_opposite and self.opposite:
             getattr(type(value), self.opposite)._del(value, obj, from_opposite=True)
@@ -417,6 +439,9 @@ class association(umlproperty):
                     items.remove(value)
                 except:
                     pass
+                else:
+                    component.handle(AssociationDeleteEvent(obj, self, value))
+                # Remove items collection if empty
                 if not items:
                     delattr(obj, self._name)
         else:
@@ -425,22 +450,17 @@ class association(umlproperty):
             except:
                 pass
                 #print 'association._del: delattr failed for %s' % self.name
+            else:
+                component.handle(AssociationSetEvent(obj, self, value, None))
 
         value.disconnect(self.__on_unlink, obj)
         if self.composite:
             obj.disconnect(self.__on_composite_unlink, value)
         self.notify(obj)
 
-#    def unlink(self, obj):
-#        #print 'unlink', self, obj
-#        lst = getattr(obj, self._name)
-#        while lst:
-#            self.__delete__(obj, lst[0])
-#            # re-establish unlink handler:
-#            value.connect('__unlink__', self.__on_unlink, obj)
-
     def __on_unlink(self, value, pspec, obj):
-        """Disconnect when the element on the other end of the association
+        """
+        Disconnect when the element on the other end of the association
         (value) sends the '__unlink__' signal. This is especially important
         for uni-directional associations.
         """
@@ -451,7 +471,8 @@ class association(umlproperty):
             value.connect('__unlink__', self.__on_unlink, obj)
 
     def __on_composite_unlink(self, obj, pspec, value):
-        """Unlink value if we have a part-whole (composite) relationship
+        """
+        Unlink value if we have a part-whole (composite) relationship
         (value is a composite of obj).
         The implementation of value.unlink() should ensure that no deadlocks
         occur.
@@ -489,9 +510,6 @@ class derivedunion(umlproperty):
     def save(self, obj, save_func):
         pass
 
-#    def unlink(self, obj):
-#        pass
-
     def __str__(self):
         return '<derivedunion %s: %s>' % (self.name, str(map(str, self.subsets))[1:-1])
 
@@ -527,7 +545,8 @@ class derivedunion(umlproperty):
 
 
 class redefine(umlproperty):
-    """Redefined association
+    """
+    Redefined association
     Element.x = redefine('x', Class, Element.assoc)
     If the redefine eclipses the original property (it has the same name)
     it ensures that the original values are saved and restored.
@@ -552,9 +571,6 @@ class redefine(umlproperty):
     def save(self, obj, save_func):
         if self.original.name == self.name:
             self.original.save(obj, save_func)
-
-#    def unlink(self, obj):
-#        self.original.unlink(obj)
 
     def __str__(self):
         return '<redefine %s: %s = %s>' % (self.name, self.type.__name__, str(self.original))

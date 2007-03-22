@@ -38,6 +38,7 @@ def transactional(func):
             func(*args, **kwargs)
         except:
             undo_manager.rollback_transaction()
+            raise
         else:
             undo_manager.commit_transaction()
     return wrapper
@@ -115,7 +116,7 @@ class UndoManager(object):
         self._current_transaction = None
 
     def clear_redo_stack(self):
-        self._redo_stack = []
+        del self._redo_stack[:]
 
     def begin_transaction(self):
         """
@@ -127,7 +128,6 @@ class UndoManager(object):
             return
 
         self._current_transaction = Transaction()
-        self.clear_redo_stack()
         self._transaction_depth += 1
 
     def add_undo_action(self, action):
@@ -137,9 +137,6 @@ class UndoManager(object):
         #log.debug('add_undo_action: %s %s' % (self._current_transaction, action))
         if not self._current_transaction:
             return
-
-        if self._redo_stack:
-            self.clear_redo_stack()
 
         self._current_transaction.add(action)
         component.handle(UndoManagerStateChanged(self))
@@ -152,6 +149,7 @@ class UndoManager(object):
         self._transaction_depth -= 1
         if self._transaction_depth == 0:
             if self._current_transaction.can_execute():
+                self.clear_redo_stack()
                 self._undo_stack.append(self._current_transaction)
             else:
                 pass #log.debug('nothing to commit')
@@ -191,7 +189,15 @@ class UndoManager(object):
             self.commit_transaction()
         transaction = self._undo_stack.pop()
 
+        self._current_transaction = Transaction()
+        self._transaction_depth += 1
+
         transaction.execute()
+
+        assert self._transaction_depth == 1
+        self._redo_stack.append(self._current_transaction)
+        self._current_transaction = None
+        self._transaction_depth = 0
         component.handle(UndoManagerStateChanged(self))
 
     def redo_transaction(self):
@@ -200,7 +206,16 @@ class UndoManager(object):
 
         transaction = self._redo_stack.pop()
 
+        self._current_transaction = Transaction()
+        self._transaction_depth += 1
+
         transaction.execute()
+
+        assert self._transaction_depth == 1
+        self._undo_stack.append(self._current_transaction)
+        self._current_transaction = None
+        self._transaction_depth = 0
+
         component.handle(UndoManagerStateChanged(self))
 
     def in_transaction(self):

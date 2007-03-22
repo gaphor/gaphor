@@ -85,18 +85,18 @@ class ElementFactoryTestCase(unittest.TestCase):
         ef = self.factory
         global handled
         p = ef.create(Parameter)
-        self.assertTrue(ICreateElementEvent.providedBy(last_event) )
+        self.assertTrue(IElementCreateEvent.providedBy(last_event) )
         self.assertTrue(handled)
 
     def testRemoveEvent(self):
         ef = self.factory
         global handled
         p = ef.create(Parameter)
-        self.assertTrue(ICreateElementEvent.providedBy(last_event) )
+        self.assertTrue(IElementCreateEvent.providedBy(last_event) )
         self.assertTrue(handled)
         self.clearEvents()
         p.unlink()
-        self.assertTrue(IRemoveElementEvent.providedBy(last_event) )
+        self.assertTrue(IElementDeleteEvent.providedBy(last_event) )
 
     def testModelEvent(self):
         ef = self.factory
@@ -111,18 +111,27 @@ class ElementFactoryTestCase(unittest.TestCase):
         self.assertTrue(IFlushFactoryEvent.providedBy(last_event) )
 
     def testUndo(self):
-        pass
-        # TODO: implement
         from gaphor.services.undomanager import get_undo_manager
         get_undo_manager().begin_transaction()
         ef = self.factory
         p = ef.create(Parameter)
 
         assert get_undo_manager().can_undo()
+
         get_undo_manager().commit_transaction()
         assert get_undo_manager().can_undo()
         assert ef.size() == 1
+
         get_undo_manager().undo_transaction()
         assert not get_undo_manager().can_undo()
         assert get_undo_manager().can_redo()
+        assert ef.size() == 0
 
+        get_undo_manager().redo_transaction()
+        assert get_undo_manager().can_undo()
+        assert not get_undo_manager().can_redo()
+        assert ef.size() == 1
+        assert ef.lselect()[0] is p
+        
+
+# vim:sw=4:et
