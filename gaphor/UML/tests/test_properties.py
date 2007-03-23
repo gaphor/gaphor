@@ -7,13 +7,12 @@ from gaphor.UML.element import Element
 
 class PropertiesTestCase(unittest.TestCase):
 
-    def test_associations(self):
+    def test_association_1_x(self):
         #
         # 1:-
         #
         class A(Element): pass
         class B(Element): pass
-        class C(Element): pass
 
         A.one = association('one', B, 0, 1, opposite='two')
         B.two = association('two', A, 0, 1)
@@ -23,6 +22,7 @@ class PropertiesTestCase(unittest.TestCase):
         assert a.one is b
         assert b.two is a
 
+    def test_association_n_x(self):
         #
         # n:-
         #
@@ -39,6 +39,7 @@ class PropertiesTestCase(unittest.TestCase):
         assert b in a.one
         assert b.two is a
 
+    def test_association_1_1(self):
         #
         # 1:1
         #
@@ -79,6 +80,7 @@ class PropertiesTestCase(unittest.TestCase):
         assert len(a._observers.get('__unlink__')) == 0
         assert len(b._observers.get('__unlink__')) == 0
 
+    def test_association_1_n(self):
         #
         # 1:n
         #
@@ -148,6 +150,8 @@ class PropertiesTestCase(unittest.TestCase):
             pass #ok
         else:
             assert 0, 'should not be removed'
+
+    def test_association_n_n(self):
         #
         # n:n
         #
@@ -204,6 +208,7 @@ class PropertiesTestCase(unittest.TestCase):
         assert len(a1._observers.get('__unlink__')) == 1
         assert len(b1._observers.get('__unlink__')) == 1
 
+    def test_association_unlink(self):
         #
         # unlink
         #
@@ -368,4 +373,58 @@ class PropertiesTestCase(unittest.TestCase):
         a.unlink()
         assert a.is_unlinked
         assert b.is_unlinked
+
+    def test_undo_attribute(self):
+        import types
+        from gaphor.services.undomanager import get_undo_manager
+        undo_manager = get_undo_manager()
+
+        class A(Element):
+            attr = attribute('attr', types.StringType, default='default')
+
+        a = A()
+        assert a.attr == 'default', a.attr
+        undo_manager.begin_transaction()
+        a.attr = 'five'
+
+        undo_manager.commit_transaction()
+        assert a.attr == 'five'
+
+        undo_manager.undo_transaction()
+        assert a.attr == 'default', a.attr
+
+        undo_manager.redo_transaction()
+        assert a.attr == 'five'
+
+    def test_undo_attribute(self):
+        import types
+        from gaphor.services.undomanager import get_undo_manager
+        undo_manager = get_undo_manager()
+
+        class A(Element): pass
+        class B(Element): pass
+
+        A.one = association('one', B, 0, 1, opposite='two')
+        B.two = association('two', A, 0, 1)
+
+        a = A()
+        b = B()
+
+        assert a.one is None
+        assert b.two is None
+
+        undo_manager.begin_transaction()
+        a.one = b
+
+        undo_manager.commit_transaction()
+        assert a.one is b
+        assert b.two is a
+
+        undo_manager.undo_transaction()
+        assert a.one is None
+        assert b.two is None
+
+        undo_manager.redo_transaction()
+        assert a.one is b
+        assert b.two is a
 

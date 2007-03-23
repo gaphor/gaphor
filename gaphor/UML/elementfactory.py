@@ -199,16 +199,16 @@ component.provideHandler(undo_create_event)
 
 
 @component.adapter(IElementDeleteEvent)
-def undo_remove_event(event):
+def undo_delete_event(event):
     factory = event.service
     element = event.element
-    def _undo_remove_event():
+    def _undo_delete_event():
         factory._elements[element.id] = element
         factory.notify(element, 'create')
         component.handle(ElementCreateEvent(factory, element))
-    get_undo_manager().add_undo_action(_undo_remove_event)
+    get_undo_manager().add_undo_action(_undo_delete_event)
 
-component.provideHandler(undo_remove_event)
+component.provideHandler(undo_delete_event)
 
 
 # vim:sw=4:et

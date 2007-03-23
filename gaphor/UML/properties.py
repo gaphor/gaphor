@@ -32,27 +32,9 @@ from zope import component
 from collection import collection
 from event import AttributeChangeEvent, AssociationSetEvent, \
                   AssociationAddEvent, AssociationDeleteEvent
+from interfaces import IAttributeChangeEvent, IAssociationChangeEvent
 import operator
 from gaphor.undomanager import get_undo_manager
-
-
-class undoaction(object):
-    """
-    Base class for undo actions.
-
-    This is an abstract class. The subclasses should implement an undo()
-    and a redo() method.
-    The undo() method should return a pointer to the redo() method and
-    visa-versa.
-
-    """
-
-    def __init__(self, prop, obj, value):
-        self.prop = prop
-        self.obj = obj
-        self.value = value
-        #print 'adding new property', prop.name, obj, value
-        get_undo_manager().add_undo_action(self.undo)
 
 
 class umlproperty(object):
@@ -119,27 +101,30 @@ class umlproperty(object):
                         log.error(e, e)
 
 
-class undoattributeaction(undoaction):
-    """
-    This undo action contains one undo action for an attribute
-    property.
-    """
-
-    def undo(self):
-        self.redo_value = self.prop._get(self.obj)
-        setattr(self.obj, self.prop._name, self.value)
-        self.prop.notify(self.obj)
-        return self.redo
-
-    def redo(self):
-        setattr(self.obj, self.prop._name, self.redo_value)
-        self.prop.notify(self.obj)
-        return self.undo
+#class undoattributeaction(undoaction):
+#    """
+#    This undo action contains one undo action for an attribute
+#    property.
+#    """
+#
+#    def undo(self):
+#        self.redo_value = self.prop._get(self.obj)
+#        setattr(self.obj, self.prop._name, self.value)
+#        self.prop.notify(self.obj)
+#        return self.redo
+#
+#    def redo(self):
+#        setattr(self.obj, self.prop._name, self.redo_value)
+#        self.prop.notify(self.obj)
+#        return self.undo
 
 
 class attribute(umlproperty):
-    """Attribute.
-    Element.attr = attribute('attr', types.StringType, '')"""
+    """
+    Attribute.
+
+    Element.attr = attribute('attr', types.StringType, '')
+    """
 
     # TODO: check if lower and upper are actually needed for attributes
     def __init__(self, name, type, default=None, lower=0, upper=1):
@@ -227,11 +212,11 @@ class enumeration(umlproperty):
     def _set(self, obj, value):
         if not value in self.values:
             raise AttributeError, 'Value should be one of %s' % str(self.values)
-        if value == self._get(obj):
+        old = self._get(obj)
+        if value == old:
             return
 
         #undoattributeaction(self, obj, self._get(obj))
-        old = self._get(obj)
         if value == self.default:
             delattr(obj, self._name)
         else:
@@ -251,35 +236,35 @@ class enumeration(umlproperty):
             self.notify(obj)
 
 
-class undosetassociationaction(undoaction):
-    """
-    Undo a 'set' action in an association.
-    """
+#class undosetassociationaction(undoaction):
+#    """
+#    Undo a 'set' action in an association.
+#    """
+#
+#    def undo(self):
+#        #log.debug('undosetassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
+#        self.prop._del(self.obj, self.value)
+#        return self.redo
+#
+#    def redo(self):
+#        #log.debug('undosetassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
+#        self.prop._set(self.obj, self.value)
+##        return self.undo
 
-    def undo(self):
-        #log.debug('undosetassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
-        self.prop._del(self.obj, self.value)
-        return self.redo
 
-    def redo(self):
-        #log.debug('undosetassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
-        self.prop._set(self.obj, self.value)
-        return self.undo
-
-
-class undodelassociationaction(undoaction):
-    """Undo a 'del' action in an association.
-    """
-
-    def undo(self):
-        #log.debug('undodelassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
-        self.prop._set(self.obj, self.value)
-        return self.redo
-
-    def redo(self):
-        #log.debug('undodelassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
-        self.prop._del(self.obj, self.value)
-        return self.undo
+#class undodelassociationaction(undoaction):
+#    """Undo a 'del' action in an association.
+#    """
+#
+#    def undo(self):
+#        #log.debug('undodelassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
+#        self.prop._set(self.obj, self.value)
+#        return self.redo
+#
+#    def redo(self):
+#        #log.debug('undodelassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
+#        self.prop._del(self.obj, self.value)
+#        return self.undo
 
 
 class association(umlproperty):
@@ -599,6 +584,48 @@ class redefine(umlproperty):
 
     def _del(self, obj, value, from_opposite=False):
         return self.original._del(obj, value, from_opposite)
+
+
+@component.adapter(IAttributeChangeEvent)
+def undo_attribute_change_event(event):
+    attribute = event.property
+    obj = event.element
+    value = event.old_value
+    def _undo_attribute_change_event():
+        attribute._set(obj, value)
+    get_undo_manager().add_undo_action(_undo_attribute_change_event)
+
+component.provideHandler(undo_attribute_change_event)
+
+
+@component.adapter(AssociationSetEvent)
+def undo_association_set_event(event):
+    association = event.property
+    obj = event.element
+    value = event.old_value
+    def _undo_association_set_event():
+        #print 'undoing action', obj, value
+        # Tell the assoctaion it should not need to let the opposite
+        # side connect (it has it's own signal)
+        association._set(obj, value, from_opposite=True)
+    get_undo_manager().add_undo_action(_undo_association_set_event)
+
+component.provideHandler(undo_association_set_event)
+
+
+@component.adapter(AssociationAddEvent)
+def undo_association_add_event(event):
+    association = event.property
+    obj = event.element
+    value = event.new_value
+    def _undo_association_add_event():
+        #print 'undoing action', obj, value
+        # Tell the assoctaion it should not need to let the opposite
+        # side connect (it has it's own signal)
+        association._del(obj, value, from_opposite=True)
+    get_undo_manager().add_undo_action(_undo_association_add_event)
+
+component.provideHandler(undo_association_add_event)
 
 
 try:
