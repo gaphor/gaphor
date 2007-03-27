@@ -255,9 +255,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
 
         for t in toplevel:
-            #print 'factory::model toplevel', t, t.name
             self.new_node_from_element(t, self.root)
-        #print 'self.root', self.root
 
     def refresh(self):
         self.flush()
@@ -276,46 +274,49 @@ class NamespaceModel(gtk.GenericTreeModel):
     # TreeModel methods:
 
     def on_get_flags(self):
-        """Returns the GtkTreeModelFlags for this particular type of model.
+        """
+        Returns the GtkTreeModelFlags for this particular type of model.
         """
         return 0
 
     def on_get_n_columns(self):
-        """Returns the number of columns in the model.
+        """
+        Returns the number of columns in the model.
         """
         return 1
 
     def on_get_column_type(self, index):
-        """Returns the type of a column in the model.
+        """
+        Returns the type of a column in the model.
         """
         return gobject.TYPE_PYOBJECT
 
     def on_get_path (self, node):
-        """Returns the path for a node as a tuple (0, 1, 1).
         """
-        #print 'on_get_path', node
+        Returns the path for a node as a tuple (0, 1, 1).
+        """
         return self.path_from_element(node[0])
 
     def on_get_iter(self, path):
-        """Returns the node corresponding to the given path.
+        """
+        Returns the node corresponding to the given path.
         The path is a tuple of values, like (0 1 1). Returns None if no
         iterator can be created.
         """
-        #print 'on_get_iter', path
         return self.node_from_path(path)
 
     def on_get_value(self, node, column):
-        """Returns the model element that matches 'node'.
+        """
+        Returns the model element that matches 'node'.
         """
         assert column == 0, 'column can only be 0'
-        #print 'on_get_value', node, column
         return node[0]
 
     def on_iter_next(self, node):
-        """Returns the next node at this level of the tree (None if no
+        """
+        Returns the next node at this level of the tree (None if no
         next element).
         """
-        #print 'on_iter_next:', node
         try:
             parent = self.node_from_element(node[0].namespace)
             #print 'on_iter_next: parent', parent
@@ -328,27 +329,27 @@ class NamespaceModel(gtk.GenericTreeModel):
             return None
         
     def on_iter_has_child(self, node):
-        """Returns true if this node has children, or None.
         """
-        #print 'on_iter_has_child', node
+        Returns true if this node has children, or None.
+        """
         return len(node[1]) > 0
 
     def on_iter_children(self, node):
-        """Returns the first child of this node, or None.
         """
-        #print 'on_iter_children'
+        Returns the first child of this node, or None.
+        """
         return node[1][0]
 
     def on_iter_n_children(self, node):
-        """Returns the number of children of this node.
         """
-        #print 'on_iter_n_children'
+        Returns the number of children of this node.
+        """
         return len (node[1])
 
     def on_iter_nth_child(self, node, n):
-        """Returns the nth child of this node.
         """
-        #print "on_iter_nth_child", node, n
+        Returns the nth child of this node.
+        """
         try:
             if node is None:
                 node = self.root

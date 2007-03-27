@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:sw=4:et:ai
 
 import unittest
 from gaphor.UML.properties import *
@@ -396,8 +395,7 @@ class PropertiesTestCase(unittest.TestCase):
         undo_manager.redo_transaction()
         assert a.attr == 'five'
 
-    def test_undo_attribute(self):
-        import types
+    def test_undo_aassociation_1_x(self):
         from gaphor.services.undomanager import get_undo_manager
         undo_manager = get_undo_manager()
 
@@ -428,3 +426,45 @@ class PropertiesTestCase(unittest.TestCase):
         assert a.one is b
         assert b.two is a
 
+    def test_undo_association_1_n(self):
+        from gaphor.services.undomanager import get_undo_manager
+        undo_manager = get_undo_manager()
+ 
+        class A(Element): pass
+        class B(Element): pass
+
+        A.one = association('one', B, lower=0, upper=1, opposite='two')
+        B.two = association('two', A, lower=0, upper='*', opposite='one')
+
+        a1 = A()
+        a2 = A()
+        b1 = B()
+        b2 = B()
+
+
+        undo_manager.begin_transaction()
+        b1.two = a1
+        
+        undo_manager.commit_transaction()
+        assert a1 in b1.two
+        assert b1 is a1.one
+
+        undo_manager.undo_transaction()
+        assert len(b1.two) == 0
+        assert a1.one is None
+
+        undo_manager.redo_transaction()
+        assert a1 in b1.two
+        assert b1 is a1.one
+
+        undo_manager.begin_transaction()
+        b1.two = a2
+
+        undo_manager.commit_transaction()
+        assert a1 in b1.two
+        assert a2 in b1.two
+        assert b1 is a1.one
+        assert b1 is a2.one
+
+
+# vim:sw=4:et:ai

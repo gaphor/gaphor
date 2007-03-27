@@ -16,7 +16,7 @@ import pango
 import __builtin__
 import __main__
 
-banner = """GTK Interactive Python Console
+banner = """Gaphor Interactive Python Console
 %s
 """ % sys.version
 

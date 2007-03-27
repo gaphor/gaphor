@@ -7,6 +7,7 @@ For 0.10.0 and later:
 
 
  - Undo functionality
+    - make canvas events transactional.
 
  - use easysetup tools, move gaphas to a separate package and use
    zope.interface in stead of our included zope tree.

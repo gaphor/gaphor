@@ -628,6 +628,21 @@ def undo_association_add_event(event):
 component.provideHandler(undo_association_add_event)
 
 
+@component.adapter(AssociationDeleteEvent)
+def undo_association_delete_event(event):
+    association = event.property
+    obj = event.element
+    value = event.old_value
+    def _undo_association_delete_event():
+        #print 'undoing action', obj, value
+        # Tell the assoctaion it should not need to let the opposite
+        # side connect (it has it's own signal)
+        association._set(obj, value, from_opposite=True)
+    get_undo_manager().add_undo_action(_undo_association_delete_event)
+
+component.provideHandler(undo_association_delete_event)
+
+
 try:
     import psyco
 except ImportError:
