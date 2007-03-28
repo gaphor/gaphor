@@ -12,22 +12,25 @@ from zope import component
 
 import gaphas
 from gaphas.geometry import distance_point_point
-from gaphas.tool import Tool, HandleTool
+from gaphas.tool import Tool, HandleTool, ToolChain
 
 from gaphor import resource
-from gaphor.undomanager import get_undo_manager
+from gaphor.services.undomanager import get_undo_manager, transactional
 
 from interfaces import IEditor, IConnect
 
 __version__ = '$Revision$'
 
+
 class ConnectHandleTool(HandleTool):
-    """Handle Tool (acts on item handles) that uses the IConnect protocol
+    """
+    Handle Tool (acts on item handles) that uses the IConnect protocol
     to connect items to one-another.
     """
 
     def glue(self, view, item, handle, wx, wy):
-        """Find the nearest item that the handle may connect to.
+        """
+        Find the nearest item that the handle may connect to.
 
         This is done by iterating over all items and query for an IConnect
         adapter for (itered_item, @item). If such an adapter exists, the
@@ -70,7 +73,8 @@ class ConnectHandleTool(HandleTool):
         return glue_item
 
     def connect(self, view, item, handle, wx, wy):
-        """Find an item near @handle that @item can connect to and connect.
+        """
+        Find an item near @handle that @item can connect to and connect.
         
         This is done by attempting a glue() operation. If there is something
         to glue (the handles are already positioned), the IConnect.connect
@@ -91,7 +95,8 @@ class ConnectHandleTool(HandleTool):
         return False
 
     def disconnect(self, view, item, handle):
-        """Disconnect the handle from the element by removing constraints.
+        """
+        Disconnect the handle from the element by removing constraints.
         Do not yet release the connection on model level, since the handle
         may be connected to the same item on some other place.
         """
@@ -101,12 +106,14 @@ class ConnectHandleTool(HandleTool):
         
 
 class TextEditTool(Tool):
-    """Text edit tool. Allows for elements that can adapt to the 
+    """
+    Text edit tool. Allows for elements that can adapt to the 
     IEditable interface to be edited.
     """
 
     def create_edit_window(self, view, x, y, text, *args):
-        """Create a popup window with some editable text.
+        """
+        Create a popup window with some editable text.
         """
         window = gtk.Window()
         window.set_property('decorated', False)
@@ -134,8 +141,10 @@ class TextEditTool(Tool):
         #window.set_uposition(event.x, event.y)
         #window.focus
 
+    @transactional
     def submit_text(self, widget, buffer, editor):
-        """Submit the final text to the edited item.
+        """
+        Submit the final text to the edited item.
         """
         text = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
         editor.update_text(text)
@@ -171,11 +180,13 @@ class TextEditTool(Tool):
 
 
 class PlacementTool(gaphas.tool.PlacementTool):
-    """PlacementTool is used to place items on the canvas.
+    """
+    PlacementTool is used to place items on the canvas.
     """
 
     def __init__(self, item_factory, action_id, handle_index=-1):
-        """item_factory is a callable. It is used to create a CanvasItem
+        """
+        item_factory is a callable. It is used to create a CanvasItem
         that is displayed on the diagram.
         """
         gaphas.tool.PlacementTool.__init__(self, factory=item_factory,
@@ -185,10 +196,10 @@ class PlacementTool(gaphas.tool.PlacementTool):
         self.is_released = False
 
     def on_button_press(self, context, event):
-        self.is_released = False
-        view = context.view #resource('MainWindow').get_current_diagram_view()
-        view.unselect_all()
         get_undo_manager().begin_transaction()
+        self.is_released = False
+        view = context.view
+        view.unselect_all()
         if gaphas.tool.PlacementTool.on_button_press(self, context, event):
             try:
                 opposite = self.new_item.opposite(self.new_item.handles()[self._handle_index])
@@ -204,19 +215,54 @@ class PlacementTool(gaphas.tool.PlacementTool):
             
     def on_button_release(self, context, event):
         self.is_released = True
-        if resource('reset-tool-after-create', False):
-            pool = resource('MainWindow').get_action_pool()
-            pool.get_action('Pointer').active = True
-        get_undo_manager().commit_transaction()
-        return gaphas.tool.PlacementTool.on_button_release(self, context, event)
+        try:
+            if resource('reset-tool-after-create', False):
+                pool = resource('MainWindow').get_action_pool()
+                pool.get_action('Pointer').active = True
+            return gaphas.tool.PlacementTool.on_button_release(self, context, event)
+        finally:
+            get_undo_manager().commit_transaction()
+
+
+class TransactionalToolChain(ToolChain):
+    """
+    In addition to a normal toolchain, this chain begins an undo-transaction
+    at button-press and commits the transaction at button-release.
+    """
+
+    def on_button_press(self, context, event):
+        get_undo_manager().begin_transaction()
+        return ToolChain.on_button_press(self, context, event)
+
+    def on_button_release(self, context, event):
+        try:
+            return ToolChain.on_button_release(self, context, event)
+        finally:
+            get_undo_manager().commit_transaction()
+
+    def on_double_click(self, context, event):
+        get_undo_manager().begin_transaction()
+        try:
+            return ToolChain.on_double_click(self, context, event)
+        finally:
+            get_undo_manager().commit_transaction()
+
+    def on_triple_click(self, context, event):
+        get_undo_manager().begin_transaction()
+        try:
+            return ToolChain.on_triple_click(self, context, event)
+        finally:
+            get_undo_manager().commit_transaction()
 
 
 from gaphas.tool import ToolChain, HoverTool, ItemTool, RubberbandTool
 
+
 def DefaultTool():
-    """The default tool chain build from HoverTool, ItemTool and HandleTool.
     """
-    chain = ToolChain()
+    The default tool chain build from HoverTool, ItemTool and HandleTool.
+    """
+    chain = TransactionalToolChain()
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
     chain.append(ItemTool())

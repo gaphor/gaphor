@@ -19,7 +19,8 @@ from zope import component
 from gaphor.interfaces import IService, IServiceEvent
 
 def get_undo_manager():
-    """Return the default undo manager.
+    """
+    Return the default undo manager.
     """
     return _default_undo_manager
 
@@ -155,6 +156,7 @@ class UndoManager(object):
                 pass #log.debug('nothing to commit')
 
             self._current_transaction = None
+        component.handle(UndoManagerStateChanged(self))
 
     def rollback_transaction(self):
         """
