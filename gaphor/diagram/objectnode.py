@@ -4,11 +4,9 @@ Object node item.
 
 import itertools
 
+from gaphas.state import observed, reversible_property
 from gaphor import UML
 
-#from gaphor.diagram import TextElement
-#from gaphor.diagram.align import V_ALIGN_MIDDLE
-#from gaphor.diagram.groupable import GroupBase
 from gaphor.diagram.nameditem import NamedItem
 from gaphas.util import text_extents, text_multiline
 from gaphas.geometry import Rectangle, distance_rectangle_point
@@ -46,6 +44,7 @@ class ObjectNodeItem(NamedItem):
 
         self._show_ordering = False
 
+    @observed
     def _set_ordering(self, ordering):
         """
         Set ordering of object node.
@@ -53,16 +52,17 @@ class ObjectNodeItem(NamedItem):
         self.subject.ordering = ordering
         self.request_update()
 
-    ordering = property(lambda s: s.subject.ordering, _set_ordering)
+    ordering = reversible_property(lambda s: s.subject.ordering, _set_ordering)
 
     tag_bounds = property(lambda s: s._tag_bounds)
 
+    @observed
     def _set_show_ordering(self, value):
         #self.preserve_property(pspec.name)
         self._show_ordering = value
         self.request_update()
 
-    show_ordering = property(lambda s: s._show_ordering, _set_show_ordering)
+    show_ordering = reversible_property(lambda s: s._show_ordering, _set_show_ordering)
 
     def save(self, save_func):
         save_func('show-ordering', self._show_ordering)

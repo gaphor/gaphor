@@ -11,7 +11,8 @@ from gaphas.util import text_extents, text_set_font
 import font
 
 class FeatureItem(DiagramItem):
-    """FeatureItems are model elements who recide inside a ClassifierItem, such
+    """
+    FeatureItems are model elements who recide inside a ClassifierItem, such
     as methods and attributes. Those items can have comments attached, but only
     on the left and right side.
     Note that features can also be used inside objects.
@@ -30,8 +31,8 @@ class FeatureItem(DiagramItem):
     notify = DiagramItem.notify
 
     def save(self, save_func):
-        for prop in ('affine',):
-            self.save_property(save_func, prop)
+#        for prop in ('affine',):
+#            self.save_property(save_func, prop)
         DiagramItem.save(self, save_func)
         
     def postload(self):
@@ -105,7 +106,8 @@ class AttributeItem(FeatureItem):
     on_subject_notify__taggedValue = on_subject_notify__name
 
     def on_subject_notify__association(self, subject, pspec):
-        """Make sure we update the attribute compartment (in case
+        """
+        Make sure we update the attribute compartment (in case
         the class_ property was defined before it is connected to
         an association.
         """

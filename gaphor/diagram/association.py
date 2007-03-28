@@ -16,6 +16,7 @@ Plan:
 from math import atan2, pi
 
 from gaphas.util import text_extents, text_multiline
+from gaphas.state import reversible_property
 from gaphas import Item
 from gaphas.geometry import Rectangle
 from gaphas.geometry import distance_rectangle_point, distance_line_point
@@ -107,7 +108,7 @@ class AssociationItem(DiagramLine):
         self._show_direction = dir
         self.request_update()
 
-    show_direction = property(lambda s: s._show_direction, set_show_direction)
+    show_direction = reversible_property(lambda s: s._show_direction, set_show_direction)
 
     def setup_canvas(self):
         super(AssociationItem, self).setup_canvas()

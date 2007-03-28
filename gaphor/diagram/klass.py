@@ -5,6 +5,8 @@
 # TODO: make loading of features work (adjust on_groupable_add)
 #       probably best to do is subclass Feature in OperationItem and A.Item
 
+from gaphas.state import observed, reversible_property
+
 from gaphor import UML
 from gaphor.i18n import _
 
@@ -62,16 +64,18 @@ class ClassItem(ClassifierItem):
         self.sync_attributes()
         self.sync_operations()
 
+    @observed
     def _set_show_operations(self, value):
             self._operations.visible = value
 
-    show_operations = property(fget=lambda s: s._operations.visible,
+    show_operations = reversible_property(fget=lambda s: s._operations.visible,
                                fset=_set_show_operations)
 
+    @observed
     def _set_show_attributes(self, value):
         self._attributes.visible = value
 
-    show_attributes = property(fget=lambda s: s._attributes.visible,
+    show_attributes = reversible_property(fget=lambda s: s._attributes.visible,
                                fset=_set_show_attributes)
 
     def _create_attribute(self, attribute):
@@ -116,19 +120,15 @@ class ClassItem(ClassifierItem):
         self.request_update()
 
     def on_subject_notify__ownedAttribute(self, subject, pspec=None):
-        """Called when the ownedAttribute property of our subject changes.
+        """
+        Called when the ownedAttribute property of our subject changes.
         """
         #log.debug('on_subject_notify__ownedAttribute')
-        # Filter attributes that are connected to an association:
-        #self.preserve_property('width')
-        #self.preserve_property('height')
         self.sync_attributes()
 
     def on_subject_notify__ownedOperation(self, subject, pspec=None):
         """Called when the ownedOperation property of our subject changes.
         """
         #log.debug('on_subject_notify__ownedOperation')
-        #self.preserve_property('width')
-        #self.preserve_property('height')
         self.sync_operations()
 

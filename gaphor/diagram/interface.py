@@ -5,6 +5,8 @@ Interface item.
 import itertools
 from math import pi
 from gaphas.item import NW, SE
+from gaphas.state import observed, reversible_property
+
 from gaphor import UML
 from gaphor.diagram.dependency import DependencyItem
 from gaphor.diagram.implementation import ImplementationItem
@@ -50,6 +52,7 @@ class InterfaceItem(ClassItem):
         self._draw_required = False
         self._draw_provided = False
 
+    @observed
     def set_drawing_style(self, style):
         """
         In addition to setting the drawing style, the handles are
@@ -64,7 +67,7 @@ class InterfaceItem(ClassItem):
             self.style.update(self.UNFOLDED_STYLE)
             self.request_update()
 
-    drawing_style = property(lambda self: self._drawing_style, set_drawing_style)
+    drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
 
     def get_popup_menu(self):
         if self.drawing_style == self.DRAW_ICON:

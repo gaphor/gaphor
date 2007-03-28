@@ -5,6 +5,7 @@ Activity control nodes.
 import math
 
 from gaphas.util import path_ellipse
+from gaphas.state import observed, reversible_property
 
 from gaphor import UML
 from gaphor import resource
@@ -131,11 +132,12 @@ class ForkDecisionNodeItem(ActivityNodeItem):
         self._combined = None
         self.set_prop_persistent('combined')
 
+    @observed
     def _set_combined(self, value):
         #self.preserve_property('combined')
         self._combined = value
 
-    combined = property(lambda s: s._combined, _set_combined)
+    combined = reversible_property(lambda s: s._combined, _set_combined)
         
 
 class DecisionNodeItem(ForkDecisionNodeItem):

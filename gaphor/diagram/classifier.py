@@ -4,6 +4,7 @@
 import itertools
 
 from gaphas.util import text_extents, text_center, text_set_font
+from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.i18n import _
 
@@ -146,12 +147,12 @@ class ClassifierItem(NamedItem):
         NamedItem.postload(self)
         self.on_subject_notify__isAbstract(self.subject)
 
+    @observed
     def set_drawing_style(self, style):
         """Set the drawing style for this classifier: DRAW_COMPARTMENT,
         DRAW_COMPARTMENT_ICON or DRAW_ICON.
         """
         if style != self._drawing_style:
-            #self.preserve_property('drawing-style')
             self._drawing_style = style
             self.request_update()
 
@@ -171,7 +172,7 @@ class ClassifierItem(NamedItem):
             self.update     = self.update_icon
 
 
-    drawing_style = property(lambda self: self._drawing_style, set_drawing_style)
+    drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
 
 
     def create_compartment(self, name):

@@ -122,8 +122,6 @@ class DiagramLine(LineItem):
             points = eval(value)
             for x in xrange(len(points) - 2):
                 self.split_segment(0)
-            #self.set_property('head_pos', points[0])
-            #self.set_property('tail_pos', points[1])
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
         elif name == 'orthogonal':
