@@ -19,6 +19,8 @@ from gaphor.ui import mainwindow, load_accel_map, save_accel_map
 
 class _Application(object):
 
+    # interface.implements(IApplication)
+    
     def __init__(self):
         self.services = {
             'main_window': mainwindow.MainWindow(),

@@ -1,3 +1,11 @@
+"""
+Setup script for Gaphor.
+
+Run 'python setup.py develop' to set up a development environment, including
+dependencies.
+
+Run 'python setup.py run' to start Gaphor directly (without install).
+"""
 
 import sys
 sys.path.insert(0, '.')
@@ -83,17 +91,12 @@ setup(
     #test_suite = 'nose.collector',
 
     entry_points = {
-#        'distutils.commands': [
-#            'build_uml = utils.command.build_uml:build_uml',
-#            'build_pot = utils.command.build_pot:build_pot',
-#            'build_mo = utils.command.build_mo:build_mo',
-#            'install_mo = utils.command.install_mo:install_mo',
-#            'build_version = utils.command.build_version:build_version',
-#            'install_version = utils.command.install_version:install_version',
-#            'run  = utils.command.run :run ',
-#        ],
         'console_scripts': [
             'gaphor = gaphor:main',
+        ],
+        'gaphor.services': [
+            'undo_manager = gaphor.services.undomanager:UndoManager',
+            'plugin_manager = gaphor.services.pluginmanager:PluginManager',
         ],
     },
 

@@ -52,7 +52,6 @@ class Plugin(object):
     """
     A plugin represents one plugin loaded from the file system.
     """
-    interface.implements(IService)
 
     def __init__(self):
         self.required_modules = []
@@ -64,9 +63,6 @@ class Plugin(object):
         self.path = ''
         self.module = None
         self.status = ''
-
-    def init(self, app):
-        self._app = app
 
     def requirements_met(self, manager):
         """
@@ -300,6 +296,8 @@ class PluginManager(object):
     The PluginManager is the main point where plugins are managed.
     """
 
+    interface.implements(IService)
+
     def __init__(self):
         self.plugins = odict()
         self.bootstrapped = False
@@ -309,6 +307,10 @@ class PluginManager(object):
         self.loader = PluginLoader()
         self.parser.setFeature(handler.feature_namespaces, 1)
         self.parser.setContentHandler(self.loader)
+
+    def init(self, app):
+        self._app = app
+        self.bootstrap()
 
     def bootstrap(self):
         """

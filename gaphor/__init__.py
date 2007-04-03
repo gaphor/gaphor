@@ -39,8 +39,29 @@ class GaphorError(Exception):
             Exception.__init__(self)
             self.args = args
 
+
+def new_main(gaphor_file=None):
+    """
+    Not yet used. see main() below.
+    """
+    from gaphor.application import Application
+    Application.init()
+
+    # backwards compatible
+    main_window = resource("MainWindow", Application.main_window)
+
+    if gaphor_file:
+        main_window.set_filename(gaphor_file)
+        main_window.execute_action('FileRevert')
+    else:
+        main_window.execute_action('FileNew')
+    Application.run()
+    Application.shutdown()
+
+
 def main(gaphor_file=None):
-    """Start the interactive application.
+    """
+    Start the interactive application.
 
     This involves importing plugins and creating the main window.
     """
@@ -55,7 +76,7 @@ def main(gaphor_file=None):
 
     from ui.mainwindow import MainWindow
 
-    resource('PluginManager').bootstrap()
+    resource('PluginManager').init(None)
 
     ui.load_accel_map()
 
