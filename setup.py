@@ -7,6 +7,8 @@ dependencies.
 Run 'python setup.py run' to start Gaphor directly (without install).
 """
 
+VERSION = '0.10.0'
+
 import sys
 sys.path.insert(0, '.')
 
@@ -32,7 +34,7 @@ def plugin_data(name):
 
 setup(
     name='gaphor',
-    version='0.9.2',
+    version=VERSION,
     url='http://gaphor.sourceforge.net',
     author='Arjan J. Molenaar',
     author_email='arjanmol@users.sourceforge.net',
@@ -82,7 +84,7 @@ setup(
     install_requires = [
         # 'PyGTK >= 2.8.0', - Exclude, since it will not build anyway
         'decorator >= 2.0.1',
-        'gaphas >= 0.1.0',
+        'gaphas >= 0.1.3',
         'zope.component >= 3.3.0', # - won't compile on windows.
     ],
 
