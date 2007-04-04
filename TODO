@@ -4,21 +4,7 @@ For 0.10.0 and later:
 
  === zope.component-3.4dev_r72749-py2.4.egg ===
  - bug in zope.component package: in zope.component.globalregistry.py zope.testing is included.  This package is only a dependency for the [test] setting. zope.testing is not mandatory.
-
-
- - Undo functionality
-
- - use easysetup tools, move gaphas to a separate package and use
-   zope.interface in stead of our included zope tree.
-   current implementation in esetup.py.
-   open issues:
-    - can't build a proper egg (where to put images)
-    - how should plugins be handles? Added to code base and initiated through
-      pkg_resources (egg_info)
-    - installing locales
-    - sdist target includes too much files (strip MANIFEST.in?)
-    - remove zope/ folders
-    - remove gaphas xref. upload a development snapshot
+ Use a more recent version
 
  - Load / save regression testing
    !!! Create some example diagrams,

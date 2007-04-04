@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gaphor\n"
-"POT-Creation-Date: Thu Sep 14 09:55:12 2006\n"
+"POT-Creation-Date: Wed Apr  4 07:15:29 2007\n"
 "PO-Revision-Date: 2006-05-11 16:34+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -27,6 +27,10 @@ msgstr ""
 "Att öppna en ny modell kommer att ta bort den för närvarande\n"
 "inlästa modellen. Eventuella ändringar kommer inte att sparas.\n"
 "Vill du fortsätta?"
+
+#: gaphor/actions/mainactions.py:94
+msgid "New model"
+msgstr ""
 
 #: gaphor/actions/mainactions.py:101
 msgid "Created a new model"
@@ -100,11 +104,11 @@ msgstr "_Uppdatera"
 msgid "_Delete"
 msgstr "_Ta bort"
 
-#: gaphor/actions/mainactions.py:615
+#: gaphor/actions/mainactions.py:616
 msgid "_Undo"
 msgstr "_Ångra"
 
-#: gaphor/diagram/classifier.py:217
+#: gaphor/diagram/classifier.py:248
 msgid "(from %s)"
 msgstr "(från %s)"
 
@@ -124,13 +128,13 @@ msgstr ""
 "Vill du felsöka?\n"
 "(Gaphor bör ha startats från kommandoraden)"
 
-#: gaphor/plugin.py:88
+#: gaphor/plugin.py:90
 msgid ""
 "The file %s already exists. Do you want to replace it with the file you are "
 "exporting to?"
 msgstr ""
 
-#: gaphor/storage.py:160
+#: gaphor/storage.py:164
 msgid "Loading %d elements..."
 msgstr "Läser in %d element..."
 
@@ -138,70 +142,69 @@ msgstr "Läser in %d element..."
 msgid "<None>"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:32
+#: gaphor/ui/mainwindow.py:33
 msgid "Classes"
 msgstr "Klasser"
 
-#: gaphor/ui/mainwindow.py:40
+#: gaphor/ui/mainwindow.py:41
 msgid "Components"
 msgstr "Komponenter"
 
-#: gaphor/ui/mainwindow.py:47
+#: gaphor/ui/mainwindow.py:48
 msgid "Actions"
 msgstr "Åtgärder"
 
-#: gaphor/ui/mainwindow.py:56
-msgid "Interactions"
-msgstr "Interaktioner"
-
 # Osäker på denna
-#: gaphor/ui/mainwindow.py:60
+#: gaphor/ui/mainwindow.py:61
 msgid "Use Cases"
 msgstr "Använd lådor"
 
-#: gaphor/ui/mainwindow.py:66
+#: gaphor/ui/mainwindow.py:67
 msgid "Profiles"
 msgstr "Profiler"
 
-#: gaphor/ui/mainwindow.py:73
+#: gaphor/ui/mainwindow.py:74
 msgid "_File"
 msgstr "_Arkiv"
 
-#: gaphor/ui/mainwindow.py:77
+#: gaphor/ui/mainwindow.py:78
 msgid "Recent files"
 msgstr "Tidigare filer"
 
-#: gaphor/ui/mainwindow.py:84
+#: gaphor/ui/mainwindow.py:85
 msgid "_Import"
 msgstr "_Importera"
 
-#: gaphor/ui/mainwindow.py:86
+#: gaphor/ui/mainwindow.py:87
 msgid "_Export"
 msgstr "_Exportera"
 
-#: gaphor/ui/mainwindow.py:93
+#: gaphor/ui/mainwindow.py:94
 msgid "_Edit"
 msgstr "R_edigera"
 
-#: gaphor/ui/mainwindow.py:107
+#: gaphor/ui/mainwindow.py:108
 msgid "_Diagram"
 msgstr "_Diagram"
 
-#: gaphor/ui/mainwindow.py:119
+#: gaphor/ui/mainwindow.py:120
 msgid "Tools"
 msgstr "Verktyg"
 
-#: gaphor/ui/mainwindow.py:123
+#: gaphor/ui/mainwindow.py:124
 msgid "_Window"
 msgstr "_Fönster"
 
-#: gaphor/ui/mainwindow.py:127
+#: gaphor/ui/mainwindow.py:128
 msgid "_Help"
 msgstr "_Hjälp"
 
-#: gaphor/ui/mainwindow.py:223
+#: gaphor/ui/mainwindow.py:224
 msgid "Quit Gaphor?"
 msgstr ""
+
+#~ msgid "Interactions"
+#~ msgstr "Interaktioner"
 
 #~ msgid "To be implemented"
 #~ msgstr "Not niet gemaakt"

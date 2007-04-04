@@ -5,16 +5,21 @@
 
 __all__ = [ 'main', 'resource', 'GaphorError' ]
 
-# Check for GTK-2.0, since we need it anyway...
-#import pygtk
-#pygtk.require('2.0')
-#del pygtk
+import os
 
 import misc.logger
 
-import version
+import pkg_resources
 
 from misc.resource import Resource
+
+if os.name == 'nt':
+    home = 'USERPROFILE'
+else:
+    home = 'HOME'
+
+user_data_dir = os.path.join(os.getenv(home), '.gaphor')
+
 
 # Application wide resources can be stored in the 'resource' like this
 #
@@ -24,9 +29,9 @@ from misc.resource import Resource
 # resource is returned.
 resource = Resource(initial_resources={
                         'Name': 'gaphor',
-                        'Version': version.VERSION,
-                        'DataDir': version.DATA_DIR,
-                        'UserDataDir': version.USER_DATA_DIR,
+                        'Version': pkg_resources.get_distribution('gaphor').version,
+                        'DataDir': os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'data'),
+                        'UserDataDir': user_data_dir,
                         'ui.toolbox.classes': True,
                     })
 

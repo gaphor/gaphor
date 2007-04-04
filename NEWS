@@ -1,3 +1,10 @@
+0.10.0
+------
+ - New undo management system
+ - Setuptools is used for installation and also within Gaphor
+ - Depends on zope.component 3.4 and gaphas 0.1.3 (installed on as-needed basis)
+ - Installable as Python Egg
+
 0.9.0
 -----
 - New pure-python canvas implementation (gaphas)

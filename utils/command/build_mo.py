@@ -34,8 +34,8 @@ class build_mo(Command):
                                    ('force', 'force'))
         if self.build_dir is None:
             self.set_undefined_options('build',
-                                       ('build_base', 'build_dir'))
-            self.build_dir = os.path.join(self.build_dir, 'locale')
+                                       ('build_lib', 'build_dir'))
+            self.build_dir = os.path.join(self.build_dir, 'gaphor', 'data', 'locale')
 
         self.all_linguas = self.all_linguas.split(',')
 
@@ -44,10 +44,11 @@ class build_mo(Command):
 	if not self.all_linguas:
 	    return
 
-	self.mkpath(self.build_dir)
 	for lingua in self.all_linguas:
 	    pofile = os.path.join('po', lingua + '.po')
-	    outfile = os.path.join(self.build_dir, lingua + '.mo')
+	    outdir = os.path.join(self.build_dir, lingua, 'LC_MESSAGES')
+            self.mkpath(outdir)
+	    outfile = os.path.join(outdir, 'gaphor.mo')
 	    if self.force or newer(pofile, outfile):
                 print 'converting %s -> %s' % (pofile, outfile)
 		msgfmt.make(pofile, outfile)

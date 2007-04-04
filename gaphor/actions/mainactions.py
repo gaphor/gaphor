@@ -418,7 +418,7 @@ class AboutAction(Action):
         #add_label('<span size="xx-large" weight="bold">Gaphor</span>')
         add_label('<span weight="bold">version %s</span>' % version)
         add_label('<span variant="smallcaps">UML Modeling tool for GNOME</span>', 8, 8)
-        add_label('<span size="small">Copyright (c) 2001-2006 Arjan J. Molenaar</span>', 8, 8)
+        add_label('<span size="small">Copyright (c) 2001-2007 Arjan J. Molenaar</span>', 8, 8)
         #vbox.pack_start(gtk.HSeparator())
         notebook.append_page(tab_vbox, gtk.Label('About'))
 

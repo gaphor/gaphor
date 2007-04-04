@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
-"POT-Creation-Date: Thu Sep 14 09:55:12 2006\n"
+"POT-Creation-Date: Wed Apr  4 07:15:29 2007\n"
 "PO-Revision-Date: 2006-02-13 16:11+0100\n"
 "Last-Translator: Jordi Vilalta Prat <jvprat@gmail.com>\n"
 "Language-Team: ca <ca@li.org>\n"
@@ -25,6 +25,10 @@ msgid ""
 msgstr ""
 "L'obertura d'un nou model descartarà el model actualment carregat.\n"
 "Els darrers canvis no es desaran. Voleu continuar?"
+
+#: gaphor/actions/mainactions.py:94
+msgid "New model"
+msgstr ""
 
 #: gaphor/actions/mainactions.py:101
 msgid "Created a new model"
@@ -102,12 +106,12 @@ msgstr ""
 msgid "_Delete"
 msgstr ""
 
-#: gaphor/actions/mainactions.py:615
+#: gaphor/actions/mainactions.py:616
 #, fuzzy
 msgid "_Undo"
 msgstr "_Finestra"
 
-#: gaphor/diagram/classifier.py:217
+#: gaphor/diagram/classifier.py:248
 msgid "(from %s)"
 msgstr "(des de %s)"
 
@@ -127,13 +131,13 @@ msgstr ""
 "Voleu depurar?\n"
 "(S'haurà d'haver engegat Gaphor des de la línia de comandes)"
 
-#: gaphor/plugin.py:88
+#: gaphor/plugin.py:90
 msgid ""
 "The file %s already exists. Do you want to replace it with the file you are "
 "exporting to?"
 msgstr ""
 
-#: gaphor/storage.py:160
+#: gaphor/storage.py:164
 msgid "Loading %d elements..."
 msgstr "Carregant %d elements..."
 
@@ -141,66 +145,65 @@ msgstr "Carregant %d elements..."
 msgid "<None>"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:32
+#: gaphor/ui/mainwindow.py:33
 msgid "Classes"
 msgstr "Classes"
 
-#: gaphor/ui/mainwindow.py:40
+#: gaphor/ui/mainwindow.py:41
 msgid "Components"
 msgstr "Components"
 
-#: gaphor/ui/mainwindow.py:47
+#: gaphor/ui/mainwindow.py:48
 msgid "Actions"
 msgstr "Accions"
 
-#: gaphor/ui/mainwindow.py:56
-msgid "Interactions"
-msgstr "Interaccions"
-
-#: gaphor/ui/mainwindow.py:60
+#: gaphor/ui/mainwindow.py:61
 msgid "Use Cases"
 msgstr "Casos d'Ús"
 
-#: gaphor/ui/mainwindow.py:66
+#: gaphor/ui/mainwindow.py:67
 msgid "Profiles"
 msgstr "Perfils"
 
-#: gaphor/ui/mainwindow.py:73
+#: gaphor/ui/mainwindow.py:74
 msgid "_File"
 msgstr "_Fitxer"
 
-#: gaphor/ui/mainwindow.py:77
+#: gaphor/ui/mainwindow.py:78
 msgid "Recent files"
 msgstr "Fitxers recents"
 
-#: gaphor/ui/mainwindow.py:84
+#: gaphor/ui/mainwindow.py:85
 msgid "_Import"
 msgstr "_Importa"
 
-#: gaphor/ui/mainwindow.py:86
+#: gaphor/ui/mainwindow.py:87
 msgid "_Export"
 msgstr "_Exporta"
 
-#: gaphor/ui/mainwindow.py:93
+#: gaphor/ui/mainwindow.py:94
 msgid "_Edit"
 msgstr "_Edita"
 
-#: gaphor/ui/mainwindow.py:107
+#: gaphor/ui/mainwindow.py:108
 msgid "_Diagram"
 msgstr "_Diagrama"
 
-#: gaphor/ui/mainwindow.py:119
+#: gaphor/ui/mainwindow.py:120
 msgid "Tools"
 msgstr "Eines"
 
-#: gaphor/ui/mainwindow.py:123
+#: gaphor/ui/mainwindow.py:124
 msgid "_Window"
 msgstr "_Finestra"
 
-#: gaphor/ui/mainwindow.py:127
+#: gaphor/ui/mainwindow.py:128
 msgid "_Help"
 msgstr "_Ajuda"
 
-#: gaphor/ui/mainwindow.py:223
+#: gaphor/ui/mainwindow.py:224
 msgid "Quit Gaphor?"
 msgstr ""
+
+#~ msgid "Interactions"
+#~ msgstr "Interaccions"

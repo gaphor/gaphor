@@ -20,22 +20,16 @@ from setuptools import setup, find_packages
 
 from utils.command.build_mo import build_mo
 from utils.command.build_pot import build_pot
-from utils.command.install_mo import install_mo
 from utils.command.build_uml import build_uml
-from utils.command.build_version import build_version
-from utils.command.install_version import install_version
 from utils.command.run import run
 
 LINGUAS = [ 'ca', 'es', 'nl', 'sv' ]
 
-from glob import glob
-def plugin_data(name):
-    return 'plugins/%s' % name, glob('data/plugins/%s/*.*' % name)
 
 setup(
     name='gaphor',
     version=VERSION,
-    url='http://gaphor.sourceforge.net',
+    url='http://gaphor.devjavu.com',
     author='Arjan J. Molenaar',
     author_email='arjanmol@users.sourceforge.net',
     license='GNU General Public License',
@@ -58,28 +52,11 @@ setup(
         'Topic :: Software Development :: Documentation',
     ],
 
-    keywords = 'model modeling modelling uml diagram python',
+    keywords = 'model modeling modelling uml diagram python tool',
 
-    packages = find_packages(exclude=['ez_setup', 'gaphas', 'utils*', 'zope_old*']),
+    packages = find_packages(exclude=['ez_setup', 'utils*']),
 
-    package_data = {
-        'data': [ 'icons.xml' ],
-        'data/pixmaps': [ '*.png' ],
-        'data/plugins': [ '*/plugin.xml', '*/*.txt', '*/*.py' ]
-    },
-    data_files=[('', ['data/icons.xml']),
-                ('pixmaps', glob('data/pixmaps/*.png')),
-                plugin_data('plugineditor'),
-                plugin_data('alignment'),
-                plugin_data('checkmetamodel'),
-                plugin_data('diagramlayout'),
-                plugin_data('liveobjectbrowser'),
-                plugin_data('pngexport'),
-                plugin_data('pynsource'),
-                plugin_data('svgexport'),
-                plugin_data('pdfexport'),
-                plugin_data('xmiexport')
-    ],
+    include_package_data = True,
 
     install_requires = [
         # 'PyGTK >= 2.8.0', - Exclude, since it will not build anyway
@@ -104,8 +81,6 @@ setup(
 
     cmdclass = {
               'build_uml': build_uml,
-              'build_version': build_version,
-              'install_version': install_version,
               'build_mo': build_mo,
               'build_pot': build_pot,
               'install_mo': install_mo,
