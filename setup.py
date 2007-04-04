@@ -83,7 +83,6 @@ setup(
               'build_uml': build_uml,
               'build_mo': build_mo,
               'build_pot': build_pot,
-              'install_mo': install_mo,
               'run': run,
     },
     options = dict(
