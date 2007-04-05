@@ -21,6 +21,7 @@ from setuptools import setup, find_packages
 from utils.command.build_mo import build_mo
 from utils.command.build_pot import build_pot
 from utils.command.build_uml import build_uml
+from utils.command.install_lib import install_lib
 from utils.command.run import run
 
 LINGUAS = [ 'ca', 'es', 'nl', 'sv' ]
@@ -83,6 +84,7 @@ setup(
               'build_uml': build_uml,
               'build_mo': build_mo,
               'build_pot': build_pot,
+	      'install_lib': install_lib,
               'run': run,
     },
     options = dict(
