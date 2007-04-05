@@ -6,10 +6,10 @@ Style classes and constants.
 PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = range(4)
 
 # horizontal align
-ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = range(3)
+ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = -1, 0, 1
 
 # vertical align
-ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = range(3)
+ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = -1, 0, 1
 
 
 class Style(object):

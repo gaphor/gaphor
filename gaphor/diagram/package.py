@@ -2,7 +2,7 @@
 Package diagram item.
 """
 
-from gaphas.util import text_center, text_extents, text_set_font
+from gaphas.util import text_align, text_extents, text_set_font
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 import font
@@ -48,7 +48,7 @@ class PackageItem(NamedItem):
         cr.line_to(o, y)
         cr.stroke()
         if self.stereotype:
-            text_center(cr, w / 2, y + 10, self.stereotype)
+            text_align(cr, w / 2, y + 10, self.stereotype)
 
         super(PackageItem, self).draw(context)
 

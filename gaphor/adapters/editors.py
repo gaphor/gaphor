@@ -153,22 +153,29 @@ class ClassifierItemEditor(object):
             return True
 
         self._edit = None
+        # Edit is in name compartment -> edit name
         name_comp_height = self._item.get_name_size()[1]
         if y < name_comp_height:
             self._edit = self._item
             return True
-        y -= name_comp_height
-        margin = self._item.style.compartment_margin[0]
+
+        padding = self._item.style.compartment_padding
         vspacing = self._item.style.compartment_vspacing
+        
+        # place offset at top of first comparement
+        y -= name_comp_height
+        y += vspacing / 2.0
         for comp in self._item.compartments:
-            y -= margin
+            y -= padding[0]
             for item in comp:
-                y -= vspacing
-                y -= item.height
                 if y < item.height:
                     self._edit = item
                     return True
-            y -= margin
+                y -= item.height
+                y -= vspacing
+            y -= padding[2]
+            # Compensate for last substraction action
+            y += vspacing
         return False
 
     def get_text(self):

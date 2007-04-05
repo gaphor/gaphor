@@ -4,7 +4,7 @@ Activity control nodes.
 
 import math
 
-from gaphas.util import path_ellipse
+from gaphas.util import path_ellipse, text_align
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
@@ -216,8 +216,8 @@ class ForkNodeItem(ForkDecisionNodeItem):
         cr.move_to(self.name_x, self.name_y)
 
         if isinstance(self.subject, UML.JoinNode):
-            cr.move_to(self._join_spec_x, self._join_spec_y)
-            cr.show_text(self.subject.joinSpec.value)
+            text_align(cr, self._join_spec_x, self._join_spec_y,
+                       self.subject.joinSpec.value, align_x=1, align_y=1)
 
         cr.stroke()
         super(ForkNodeItem, self).draw(context)

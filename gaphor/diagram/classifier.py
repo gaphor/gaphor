@@ -3,7 +3,7 @@
 
 import itertools
 
-from gaphas.util import text_extents, text_center, text_set_font
+from gaphas.util import text_extents, text_align, text_set_font
 from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.i18n import _
@@ -11,7 +11,6 @@ from gaphor.i18n import _
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.feature import FeatureItem
 
-from gaphas.util import text_center
 import font
 
 class Compartment(list):
@@ -46,7 +45,8 @@ class Compartment(list):
         return self.width, self.height
 
     def pre_update(self, context):
-        """Pre update, determine width and height of the compartment.
+        """
+        Pre update, determine width and height of the compartment.
         """
         self.width = self.height = 0
         cr = context.cairo
@@ -57,7 +57,7 @@ class Compartment(list):
             self.width = max(map(lambda p: p[0], sizes))
             self.height = sum(map(lambda p: p[1], sizes))
             vspacing = self.owner.style.compartment_vspacing
-            self.height += vspacing * len(sizes)
+            self.height += vspacing * (len(sizes) - 1)
         padding = self.owner.style.compartment_padding
         self.width += padding[1] + padding[3]
         self.height += padding[0] + padding[2]
@@ -76,10 +76,10 @@ class Compartment(list):
         for item in self:
             cr.save()
             try:
-                offset += item.height
-                cr.move_to(0, offset)
+                cr.translate(0, offset)
+                #cr.move_to(0, offset)
                 item.draw(context)
-                offset += vspacing
+                offset += vspacing + item.height
             finally:
                 cr.restore()
 
@@ -119,7 +119,7 @@ class ClassifierItem(NamedItem):
         'icon-size':          (20, 20),
         'from-padding': (7, 2, 7, 2),
         'compartment-padding': (5, 5, 5, 5), # (top, right, bottom, left)
-        'compartment-vspacing': 2,
+        'compartment-vspacing': 3,
 # Fix name, stereotype and from drawing!
         'name-padding': (10, 10, 10, 10),
         'stereotype-padding': (10, 10, 2, 10),
@@ -354,7 +354,7 @@ class ClassifierItem(NamedItem):
             padding = self.style.stereotype_padding
             y += padding[0]
             text_set_font(cr, font.FONT)
-            text_center(cr, width / 2, y, self.stereotype)
+            text_align(cr, width / 2, y, self.stereotype)
             y += padding[2]
 
         # draw name
@@ -363,7 +363,7 @@ class ClassifierItem(NamedItem):
         n_w, n_h = text_extents(cr, self.subject.name)
         text_set_font(cr, self.subject.isAbstract and \
                           font.FONT_ABSTRACT_NAME or font.FONT_NAME)
-        text_center(cr, width / 2, y + n_h/2, self.subject.name)
+        text_align(cr, width / 2, y + n_h/2, self.subject.name)
         y += padding[2] + n_h/2
 
         # draw 'from ... '
@@ -371,7 +371,7 @@ class ClassifierItem(NamedItem):
             padding = self.style.from_padding
             y += padding[0]
             text_set_font(cr, font.FONT_SMALL)
-            text_center(cr, width / 2, y, self._from)
+            text_align(cr, width / 2, y, self._from)
             y += padding[2]
 
         cr.translate(0, y)

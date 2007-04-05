@@ -96,7 +96,6 @@ class DiagramItemMeta(type):
 from gaphas import state
 from gaphor.undomanager import get_undo_manager, transactional
 
-print 'state', state
 state.observers.add(state.revert_handler)
 
 def _undo_handler(event):

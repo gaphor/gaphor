@@ -7,7 +7,7 @@ Methods.
 from gaphas.item import Item
 from diagramitem import DiagramItem
 from gaphor.diagram import DiagramItemMeta
-from gaphas.util import text_extents, text_set_font
+from gaphas.util import text_extents, text_set_font, text_align
 import font
 
 class FeatureItem(DiagramItem):
@@ -40,7 +40,8 @@ class FeatureItem(DiagramItem):
             self._expression.set_text(self.subject.render())
 
     def get_size(self, update=False):
-        """Return the size of the feature. If update == True the item is
+        """
+        Return the size of the feature. If update == True the item is
         directly updated.
         """
         return self.width, self.height
@@ -126,7 +127,8 @@ class AttributeItem(FeatureItem):
     def draw(self, context):
         cr = context.cairo
         text_set_font(cr, font.FONT)
-        cr.show_text(self.subject.render() or '')
+        text_align(cr, 0, 0, self.subject.render() or '', align_x=1, align_y=1)
+        #cr.show_text(self.subject.render() or '')
 
 
 
@@ -177,7 +179,8 @@ class OperationItem(FeatureItem):
     def draw(self, context):
         cr = context.cairo
         text_set_font(cr, font.FONT)
-        cr.show_text(self.subject.render() or '')
+        text_align(cr, 0, 0, self.subject.render() or '', align_x=1, align_y=1)
+        #cr.show_text(self.subject.render() or '')
 
 
 # vim:sw=4:et

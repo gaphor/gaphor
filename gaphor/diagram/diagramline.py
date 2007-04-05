@@ -5,7 +5,7 @@ Basic functionality for canvas line based items on a diagram.
 import itertools
 
 import gaphas
-from gaphas.util import text_extents
+from gaphas.util import text_extents, text_align
 from gaphas.geometry import Rectangle
 from diagramitem import DiagramItem
 from interfaces import IConnect
@@ -77,8 +77,8 @@ class LineItem(gaphas.Line, DiagramItem):
         super(LineItem, self).draw(context)
         cr = context.cairo
         if self._stereotype:
-            cr.move_to(self._stereotype_bounds[0], self._stereotype_bounds[1])
-            cr.show_text(self._stereotype)
+            text_align(cr, self._stereotype_bounds[0], self._stereotype_bounds[1],
+                       self._stereotype, align_x=1, align_y=1)
 
 
 class DiagramLine(LineItem):

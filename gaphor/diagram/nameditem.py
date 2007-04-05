@@ -3,7 +3,7 @@ Base classes related to items, which represent UML classes deriving
 from NamedElement.
 """
 
-from gaphas.util import text_extents
+from gaphas.util import text_extents, text_align
 
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.style import get_min_size, get_text_point, \
@@ -90,6 +90,7 @@ class NamedItem(ElementItem):
 
         text = self.subject.name
         if text:
-            cr.move_to(self.name_x, self.name_y)
-            cr.show_text(text)
+            #cr.move_to(self.name_x, self.name_y)
+            #cr.show_text(text)
+            text_align(cr, self.name_x, self.name_y, text, *self.style.name_align)
         super(NamedItem, self).draw(context)

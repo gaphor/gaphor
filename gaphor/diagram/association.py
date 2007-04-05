@@ -15,7 +15,7 @@ Plan:
 
 from math import atan2, pi
 
-from gaphas.util import text_extents, text_multiline
+from gaphas.util import text_extents, text_align, text_multiline
 from gaphas.state import reversible_property
 from gaphas import Item
 from gaphas.geometry import Rectangle
@@ -367,8 +367,10 @@ class AssociationItem(DiagramLine):
                 cr.restore()
 
         if self.subject and self.subject.name:
-            cr.move_to(self._label_bounds[0], self._label_bounds[1])
-            cr.show_text(self.subject.name or '')
+            #cr.move_to(self._label_bounds[0], self._label_bounds[1])
+            #cr.show_text(self.subject.name or '')
+            text_align(cr, self._label_bounds[0], self._label_bounds[1],
+                       self.subject.name or '', align_x=1, align_y=1)
 
 
 class AssociationEnd(SubjectSupport):
@@ -706,12 +708,8 @@ class AssociationEnd(SubjectSupport):
             return
 
         cr = context.cairo
-        #cr.move_to(self._name_bounds[0], self._name_bounds[3])
-        #cr.show_text(self._name or '')
-        text_multiline(cr, self._name_bounds[0], self._name_bounds[3], self._name)
-        #cr.move_to(self._mult_bounds[0], self._mult_bounds[3])
-        #cr.show_text(self._mult or '')
-        text_multiline(cr, self._mult_bounds[0], self._mult_bounds[3], self._mult)
+        text_multiline(cr, self._name_bounds[0], self._name_bounds[1], self._name)
+        text_multiline(cr, self._mult_bounds[0], self._mult_bounds[1], self._mult)
         cr.stroke()
 
         if context.hovered or context.focused or context.draw_all:
