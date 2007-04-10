@@ -104,8 +104,8 @@ class FileBackend(object):
     def __init__(self):
         pass
 
-    def get_filename(self, datadir):
-        if not os.path.exists(datadir):
+    def get_filename(self, datadir, create=False):
+        if create and not os.path.exists(datadir):
             os.mkdir(datadir)
         return os.path.join(datadir, self.RESOURCE_FILE)
 
@@ -123,7 +123,7 @@ class FileBackend(object):
         @resource is the Resource instance
         @persistent is a list of persistent resource names.
         """
-        filename = self.get_filename(resource('UserDataDir'))
+        filename = self.get_filename(resource('UserDataDir'), create=True)
         f = open(filename, 'w')
         persist = dict([(k, v) for k, v in resource._items() if k in persistent])
         pprint.pprint(persist, f)

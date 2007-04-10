@@ -7,7 +7,7 @@ dependencies.
 Run 'python setup.py run' to start Gaphor directly (without install).
 """
 
-VERSION = '0.10.2'
+VERSION = '0.10.3'
 
 import sys
 sys.path.insert(0, '.')
