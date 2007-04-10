@@ -24,4 +24,27 @@ class IServiceEvent(interface.Interface):
     service = interface.Attribute("The service that emits the event")
 
 
+class ITransaction(interface.Interface):
+    """
+    The methods each transaction should adhere.
+    """
+
+    def commit(self):
+        """
+        Commit the transaction.
+        """
+
+    def rollback(self):
+        """
+        Roll back the transaction.
+        """
+
+
+class ITransactionEvent(interface.Interface):
+    """
+    Events related to transaction workflow (begin/commit/rollback) implements
+    this interface.
+    """
+
+
 # vim:sw=4:et

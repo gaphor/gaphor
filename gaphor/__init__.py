@@ -9,8 +9,6 @@ import os
 
 import misc.logger
 
-import pkg_resources
-
 from misc.resource import Resource
 
 if os.name == 'nt':
@@ -29,8 +27,6 @@ user_data_dir = os.path.join(os.getenv(home), '.gaphor')
 # resource is returned.
 resource = Resource(initial_resources={
                         'Name': 'gaphor',
-                        'Version': pkg_resources.get_distribution('gaphor').version,
-                        'DataDir': os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'data'),
                         'UserDataDir': user_data_dir,
                         'ui.toolbox.classes': True,
                     })
@@ -70,6 +66,11 @@ def main(gaphor_file=None):
 
     This involves importing plugins and creating the main window.
     """
+    import pkg_resources
+
+    resource('Version', pkg_resources.get_distribution('gaphor').version)
+    resource('DataDir', os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'data'))
+
     # Import GUI stuff here, since the user might not need all the GUI stuff
     import gtk
     import ui

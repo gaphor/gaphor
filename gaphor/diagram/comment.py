@@ -78,7 +78,7 @@ class CommentItem(ElementItem):
         c.stroke()
 	if self.subject.body:
 	    # Do not print empty string, since cairo-win32 can't handle it.
-            text_multiline(c, 5, 15, self.subject.body, padding=2)
+            text_multiline(c, 5, 5, self.subject.body, padding=2)
 	    #c.move_to(10, 15)
 	    #c.show_text(self.subject.body)
 

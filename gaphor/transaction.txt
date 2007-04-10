@@ -1,0 +1,108 @@
+Transaction support for Gaphor
+==============================
+
+Transaction support is located in module gaphor.transaction:
+
+    >>> from gaphor import transaction
+
+The Transaction class is used mainly to signal the begin and end of a transaction. This is done by the TransactionBegin, TransactionCommit and TransactionRollback events:
+
+    >>> from zope import component
+    >>> @component.adapter(transaction.TransactionBegin)
+    ... def transaction_begin_handler(event):
+    ...     print 'tx begin'
+    >>> component.provideHandler(transaction_begin_handler)
+
+Same goes for commit and rollback events:
+
+    >>> @component.adapter(transaction.TransactionCommit)
+    ... def transaction_commit_handler(event):
+    ...     print 'tx commit'
+    >>> component.provideHandler(transaction_commit_handler)
+    >>> @component.adapter(transaction.TransactionRollback)
+    ... def transaction_rollback_handler(event):
+    ...     print 'tx rollback'
+    >>> component.provideHandler(transaction_rollback_handler)
+
+
+A Transaction is started by initiating a Transaction instance:
+
+    >>> tx = transaction.Transaction()
+    tx begin
+
+On success, a transaction can be committed:
+
+    >>> tx.commit()
+    tx commit
+
+After a commit, a rollback is no longer allowed (the transaction is closed):
+
+    >>> tx.rollback()
+    ... # doctest: +ELLIPSIS
+    Traceback (most recent call last):
+    ...
+    TransactionError: No Transaction on stack.
+
+
+Transactions may be nested:
+
+    >>> tx = transaction.Transaction()
+    tx begin
+    >>> tx2 = transaction.Transaction()
+    >>> tx2.commit()
+    >>> tx.commit()
+    tx commit
+
+Transactions should be closed in the right order (subtransactions first):
+
+    >>> tx = transaction.Transaction()
+    tx begin
+    >>> tx2 = transaction.Transaction()
+    >>> tx.commit()
+    ... # doctest: +ELLIPSIS
+    Traceback (most recent call last):
+    ...
+    TransactionError: Transaction on stack is not the transaction being closed.
+    >>> tx2.commit()
+    >>> tx.commit()
+    tx commit
+
+
+The transactional decorator can be used to mark functions as transactional:
+
+    >>> @transaction.transactional
+    ... def a():
+    ...     print 'do something'
+    >>> a()
+    tx begin
+    do something
+    tx commit
+
+If an exception is raised from within the decorated function a rollback is
+performed:
+
+    >>> @transaction.transactional
+    ... def a():
+    ...     raise IndexError, 'bla'
+    >>> a()
+    ... # doctest: +ELLIPSIS
+    Traceback (most recent call last):
+    ...
+    IndexError: bla
+    >>> transaction.Transaction._stack
+    []
+
+All transactions are marked for rollback once an exception is raised:
+
+    >>> tx = transaction.Transaction()
+    tx begin
+    >>> a()
+    ... # doctest: +ELLIPSIS
+    Traceback (most recent call last):
+    ...
+    IndexError: bla
+    >>> tx._need_rollback
+    True
+    >>> tx.commit()
+    tx rollback
+

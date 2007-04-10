@@ -338,7 +338,6 @@ class ClassifierItem(NamedItem):
 
 
     def draw_compartment(self, context):
-        #if not self.subject: return
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
