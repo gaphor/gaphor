@@ -16,6 +16,11 @@ class ActionItem(NamedItem):
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
     }
 
+    def pre_update(self, context):
+        self.update_name_size(context)
+        self.min_width, self.min_height = self.get_name_size()
+        super(ActionItem, self).pre_update(context)
+
     def draw(self, context):
         """
         Draw action symbol.
@@ -37,7 +42,6 @@ class ActionItem(NamedItem):
         c.stroke()
 
         super(ActionItem, self).draw(context)
-
 
 
 # vim:sw=4:et

@@ -80,22 +80,17 @@ class ObjectNodeItem(NamedItem):
         element subject.
         """
         NamedItem.on_subject_notify(self, pspec, notifiers)
-        if self.subject:
-            if not self.subject.upperBound:
-                self.subject.upperBound = UML.create(UML.LiteralSpecification)
-                self.subject.upperBound.value = '*'
-            #self._upper_bound.subject = self.subject.upperBound
-        #else:
-        #    self._upper_bound.subject = None
+        if self.subject and not self.subject.upperBound:
+            self.subject.upperBound = UML.create(UML.LiteralSpecification)
+            self.subject.upperBound.value = '*'
         self.request_update()
 
     def pre_update(self, context):
         """
         Update object node, its ordering and upper bound specification.
         """
-        NamedItem.update(self, context)
+        NamedItem.pre_update(self, context)
 
-        # TODO: format tag properly:
         if self.subject.upperBound:
             self._tag = '{ upperBound = %s }\n' % self.subject.upperBound.value
 

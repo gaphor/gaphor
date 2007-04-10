@@ -14,7 +14,8 @@ from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.diagramline import DiagramLine
 
 class ExtensionItem(DiagramLine):
-    """ExtensionItem represents associations. 
+    """
+    ExtensionItem represents associations. 
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item
     represents a Property (with Property.association == my association).
     """
@@ -23,29 +24,6 @@ class ExtensionItem(DiagramLine):
 
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
-
-    def save (self, save_func):
-        DiagramLine.save(self, save_func)
-        if self._head_end.subject:
-            save_func('head_subject', self._head_end.subject)
-        if self._tail_end.subject:
-            save_func('tail_subject', self._tail_end.subject)
-
-    def load (self, name, value):
-        # end_head and end_tail were used in an older Gaphor version
-        if name in ( 'head_end', 'head_subject' ):
-            #type(self._head_end).subject.load(self._head_end, value)
-            self._head_end.load('subject', value)
-        elif name in ( 'tail_end', 'tail_subject' ):
-            #type(self._tail_end).subject.load(self._tail_end, value)
-            self._tail_end.load('subject', value)
-        else:
-            DiagramLine.load(self, name, value)
-
-    def postload(self):
-        DiagramLine.postload(self)
-        self._head_end.postload()
-        self._tail_end.postload()
 
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramLine.on_subject_notify(self, pspec,

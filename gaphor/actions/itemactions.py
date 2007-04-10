@@ -1077,7 +1077,7 @@ class ObjectNodeOrderingAction(RadioAction):
         try:
             item = get_parent_focus_item(self._window)
             if isinstance(item, items.ObjectNodeItem):
-                self.active = (item.get_ordering() == self.ordering)
+                self.active = (item.ordering == self.ordering)
         except NoFocusItemError:
             pass
 
@@ -1085,7 +1085,7 @@ class ObjectNodeOrderingAction(RadioAction):
     def execute(self):
         if self.active:
             item = get_parent_focus_item(self._window)
-            item.set_ordering(self.ordering)
+            item.ordering = self.ordering
 
 
 class ObjectNodeOrderingUnorderedAction(ObjectNodeOrderingAction):
@@ -1139,12 +1139,12 @@ class ObjectNodeOrderingVisibiltyAction(CheckAction):
             pass
         else:
             if isinstance(item, items.ObjectNodeItem):
-                self.active = item.props.show_ordering
+                self.active = item.show_ordering
 
     @transactional
     def execute(self):
         item = get_parent_focus_item(self._window)
-        item.props.show_ordering = self.active
+        item.show_ordering = self.active
 
 register_action(ObjectNodeOrderingVisibiltyAction, 'ItemFocus')
 

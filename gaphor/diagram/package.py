@@ -31,7 +31,6 @@ class PackageItem(NamedItem):
 
         super(PackageItem, self).pre_update(context)
 
-
     def draw(self, context):
         cr = context.cairo
         o = 0.0
@@ -48,9 +47,12 @@ class PackageItem(NamedItem):
         cr.line_to(o, y)
         cr.stroke()
         if self.stereotype:
-            text_align(cr, w / 2, y + 10, self.stereotype)
+            y += 10
+            text_align(cr, w / 2, y, self.stereotype)
+            y += 10
 
-        super(PackageItem, self).draw(context)
+        if self.subject and self.subject.name:
+            text_align(cr, w / 2, y + 10, self.subject.name)
 
 
 # vim:sw=4:et

@@ -130,7 +130,18 @@ class ForkDecisionNodeItem(ActivityNodeItem):
     def __init__(self, id=None):
         ActivityNodeItem.__init__(self, id)
         self._combined = None
-        self.set_prop_persistent('combined')
+        #self.set_prop_persistent('combined')
+
+    def save(self, save_func):
+        if self._combined:
+            save_func('combined', self._combined, reference=True)
+        super(ForkDecisionNodeItem, self).save(save_func)
+
+    def load(self, name, value):
+        if name == 'combined':
+            self._combined = value
+        else:
+            super(ForkDecisionNodeItem, self).load(name, value)
 
     @observed
     def _set_combined(self, value):
