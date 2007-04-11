@@ -166,6 +166,8 @@ class ClassifierItemEditor(object):
         y -= name_comp_height
         y += vspacing / 2.0
         for comp in self._item.compartments:
+            if not comp.visible:
+                continue
             y -= padding[0]
             for item in comp:
                 if y < item.height:
