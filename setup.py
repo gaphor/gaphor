@@ -7,7 +7,7 @@ dependencies.
 Run 'python setup.py run' to start Gaphor directly (without install).
 """
 
-VERSION = '0.10.3'
+VERSION = '0.10.4'
 
 import sys
 sys.path.insert(0, '.')
@@ -64,6 +64,8 @@ setup(
         'decorator >= 2.0.1',
         'gaphas >= 0.1.4',
         'zope.component >= 3.3.0', # - won't compile on windows.
+        # Add dependency on zope.testing to work around bug in zope.component
+        'zope.testing >= 3.3.0',
     ],
 
     zip_safe = False,
