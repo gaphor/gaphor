@@ -64,6 +64,8 @@ setup(
         'decorator >= 2.0.1',
         'gaphas >= 0.1.4',
         'zope.component >= 3.3.0', # - won't compile on windows.
+        # Add dependency on zope.testing to work around bug in zope.component
+        'zope.testing >= 3.3.0',
     ],
 
     zip_safe = False,
@@ -76,7 +78,13 @@ setup(
         ],
         'gaphor.services': [
             'undo_manager = gaphor.services.undomanager:UndoManager',
-            'plugin_manager = gaphor.services.pluginmanager:PluginManager',
+            #'plugin_manager = gaphor.services.pluginmanager:PluginManager',
+            'gui_manager = gaphor.services.guimanager:GUIManager',
+            'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
+        ],
+        'gaphor.adapters': [
+            'connectors = gaphor.adapters.connectors',
+            'editors = gaphor.adapters.editors',
         ],
     },
 
