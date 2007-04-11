@@ -14,7 +14,8 @@ from gaphor.diagram.feature import FeatureItem
 import font
 
 class Compartment(list):
-    """Specify a compartment in a class item.
+    """
+    Specify a compartment in a class item.
     A compartment has a line on top and a list of FeatureItems.
     """
 
@@ -31,7 +32,8 @@ class Compartment(list):
             save_func(None, item)
 
     def has_item(self, item):
-        """Check if the compartment already contains an item with the
+        """
+        Check if the compartment already contains an item with the
         same subject as item.
         """
         s = item.subject
@@ -39,10 +41,14 @@ class Compartment(list):
         return s and s in local_elements
 
     def get_size(self):
-        """Get width, height of the compartment. pre_update should have
+        """
+        Get width, height of the compartment. pre_update should have
         been called so widthand height have been calculated.
         """
-        return self.width, self.height
+        if self.visible:
+            return self.width, self.height
+        else:
+            return 0, 0
 
     def pre_update(self, context):
         """
@@ -377,6 +383,8 @@ class ClassifierItem(NamedItem):
 
         # draw compartments
         for comp in self._compartments:
+            if not comp.visible:
+                continue
             cr.save()
             cr.move_to(0, 0)
             cr.line_to(self.width, 0)

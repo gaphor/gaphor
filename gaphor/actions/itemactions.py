@@ -305,6 +305,7 @@ class ShowAttributesAction(CheckAction):
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.show_attributes = self.active
+        item.request_update()
 
 register_action(ShowAttributesAction, 'ItemFocus')
 
@@ -330,6 +331,7 @@ class ShowOperationsAction(CheckAction):
     def execute(self):
         item = get_parent_focus_item(self._window)
         item.show_operations = self.active
+        item.request_update()
 
 register_action(ShowOperationsAction, 'ItemFocus')
 
