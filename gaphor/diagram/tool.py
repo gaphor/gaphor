@@ -15,7 +15,7 @@ from gaphas.geometry import distance_point_point
 from gaphas.tool import Tool, HandleTool, ToolChain
 
 from gaphor import resource
-from gaphor.services.undomanager import get_undo_manager, transactional
+from gaphor.transaction import Transaction, transactional
 
 from interfaces import IEditor, IConnect
 
@@ -194,9 +194,10 @@ class PlacementTool(gaphas.tool.PlacementTool):
                                            handle_index=handle_index)
         self.action_id = action_id
         self.is_released = False
+        self._tx = None
 
     def on_button_press(self, context, event):
-        get_undo_manager().begin_transaction()
+        self._tx = Transaction()
         self.is_released = False
         view = context.view
         view.unselect_all()
@@ -221,7 +222,8 @@ class PlacementTool(gaphas.tool.PlacementTool):
                 pool.get_action('Pointer').active = True
             return gaphas.tool.PlacementTool.on_button_release(self, context, event)
         finally:
-            get_undo_manager().commit_transaction()
+            self._tx.commit()
+            self._tx = None
 
 
 class TransactionalToolChain(ToolChain):
@@ -230,33 +232,39 @@ class TransactionalToolChain(ToolChain):
     at button-press and commits the transaction at button-release.
     """
 
+    def __init__(self):
+        ToolChain.__init__(self)
+        self._tx = None
+
     def on_button_press(self, context, event):
-        get_undo_manager().begin_transaction()
+        self._tx = Transaction()
         return ToolChain.on_button_press(self, context, event)
 
     def on_button_release(self, context, event):
         try:
             return ToolChain.on_button_release(self, context, event)
         finally:
-            get_undo_manager().commit_transaction()
+            self._tx.commit()
+            self._tx = None
 
     def on_double_click(self, context, event):
-        get_undo_manager().begin_transaction()
+        tx = Transaction()
         try:
             return ToolChain.on_double_click(self, context, event)
         finally:
-            get_undo_manager().commit_transaction()
+            tx.commit()
 
     def on_triple_click(self, context, event):
-        get_undo_manager().begin_transaction()
+        tx = Transaction()
         try:
             return ToolChain.on_triple_click(self, context, event)
         finally:
-            get_undo_manager().commit_transaction()
+            tx.commit()
 
 
 from gaphas.tool import ToolChain, HoverTool, ItemTool, RubberbandTool
 
+ItemTool.SELECT_BUTTON = (1, 3)
 
 def DefaultTool():
     """
