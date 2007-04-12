@@ -1,7 +1,4 @@
-# vim:sw=4:et
 
-import pygtk
-pygtk.require('2.0')
 import gobject
 import gtk
 
@@ -154,3 +151,6 @@ if __name__ == '__main__':
     win.show_all()
 
     gtk.main()
+
+
+# vim:sw=4:et

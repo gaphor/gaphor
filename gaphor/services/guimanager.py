@@ -12,10 +12,12 @@ class GUIManager(object):
     def __init__(self):
         pass
 
+    main_window = property(lambda s: s._main_window)
+
     def init(self, app):
         self._app = app
 
-        self.init_pygtk()
+        #self.init_pygtk()
         self.init_stock_icons()
         self.init_actions()
         self.init_main_window()

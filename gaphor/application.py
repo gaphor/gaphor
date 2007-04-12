@@ -9,7 +9,6 @@ All important services are present in the application object:
  - action sets
 """
 
-import gtk
 import pkg_resources
 from zope import component
 from gaphor.interfaces import IService
@@ -68,6 +67,7 @@ class _Application(object):
         return component.getUtility(IService, name)
 
     def run(self):
+        import gtk
         gtk.main()
 
     def shutdown(self):

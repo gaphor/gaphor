@@ -6,7 +6,7 @@ Commands related to the Diagram (DiaCanvas)
 from gaphor import GaphorError, resource
 from gaphor import UML
 from gaphor.diagram import items
-from gaphor.undomanager import transactional
+from gaphor.transaction import transactional
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 import gaphas
