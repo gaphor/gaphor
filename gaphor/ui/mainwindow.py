@@ -5,7 +5,6 @@ import gtk
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.undomanager import get_undo_manager
 from gaphor.i18n import _
 from gaphor.ui import namespace
 from gaphor.ui.abstractwindow import AbstractWindow
@@ -314,10 +313,6 @@ class MainWindow(AbstractWindow):
         # We want to store the window size, so it can be reloaded on startup
         self.window.set_property('allow-shrink', True)
         self.window.connect('size-allocate', self.on_window_size_allocate)
-
-        # Set some handles for the undo manager
-        #get_undo_manager().connect('begin_transaction', self.on_undo)
-        #get_undo_manager().connect('add_undo_action', self.on_undo)
 
     def add_transient_window(self, window):
         """Add a window as a sub-window of the main application.

@@ -34,7 +34,7 @@ class Engineer(object):
         print p
         
         try:
-            self._root_package = UML.select(lambda e: isinstance(e, UML.Package) and not e.namespace)[0]
+            self._root_package = UML.lselect(lambda e: isinstance(e, UML.Package) and not e.namespace)[0]
         except IndexError:
             pass # running as test?
 
@@ -90,7 +90,7 @@ class Engineer(object):
                     superclass_item = self.parser.classlist[superclassname].gaphor_class_item
                 except KeyError, e:
                     print 'No class found named', superclassname
-                    others = UML.select(lambda e: isinstance(e, UML.Class) and e.name == superclassname)
+                    others = UML.lselect(lambda e: isinstance(e, UML.Class) and e.name == superclassname)
                     if others:
                         superclass = others[0]
                         print 'Found class in factory: %s' % superclass.name
@@ -126,7 +126,7 @@ class Engineer(object):
             superclass_item = self.parser.classlist[classname].gaphor_class_item
         except KeyError, e:
             print 'No class found named', classname
-            others = UML.select(lambda e: isinstance(e, UML.Class) and e.name == classname)
+            others = UML.lselect(lambda e: isinstance(e, UML.Class) and e.name == classname)
             if others:
                 superclass = others[0]
                 print 'Found class in factory: %s' % superclass.name

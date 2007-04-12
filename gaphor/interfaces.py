@@ -16,6 +16,11 @@ class IService(interface.Interface):
         are instantiated.
         """
 
+    def shutdown(self):
+        """
+        Shutdown the services, free resources.
+        """
+
 
 class IServiceEvent(interface.Interface):
     """

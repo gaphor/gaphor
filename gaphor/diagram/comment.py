@@ -32,7 +32,9 @@ class CommentItem(ElementItem):
         pass
 
     def on_subject_notify(self, pspec):
-        """See DiagramItem.on_subject_notify()."""
+        """
+        See DiagramItem.on_subject_notify().
+        """
         ElementItem.on_subject_notify(self, pspec, ('body',))
 
         ##if self.subject:
@@ -40,7 +42,6 @@ class CommentItem(ElementItem):
         self.request_update()
 
     def on_subject_notify__body(self, subject, pspec):
-        print 'on_subject_notify__body: %s' % self.subject.body
         #self.sbody.set_text(self.subject.body or '')
         self.request_update()
 

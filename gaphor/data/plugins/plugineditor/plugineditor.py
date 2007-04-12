@@ -7,7 +7,9 @@ import sys
 import gobject
 import pango
 import gtk
+from zope import component
 import gaphor
+from gaphor.interfaces import IService
 from gaphor.ui.abstractwindow import AbstractWindow
 from gaphor.plugin import resource
 
@@ -84,7 +86,7 @@ class PluginEditorWindow(AbstractWindow):
         self.update()
 
     def update(self):
-        manager = resource('PluginManager')
+        manager = component.getUtility(IService, 'plugin_manager')
         model = self.model
 
         for plugin in manager.get_plugins():

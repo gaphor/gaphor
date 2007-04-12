@@ -25,6 +25,7 @@ import gaphas
 from gaphor import UML
 from gaphor import parser
 from gaphor import diagram
+from gaphor.application import Application
 from gaphor.diagram import items
 from gaphor import resource
 from gaphor.i18n import _
@@ -133,7 +134,7 @@ def save_generator(writer=None, factory=None):
 
     writer.startDocument()
     writer.startElement('gaphor', { 'version': FILE_FORMAT_VERSION,
-                                    'gaphor-version': resource('Version') })
+                                    'gaphor-version': Application.distribution.version })
 
     size = factory.size()
     n = 0

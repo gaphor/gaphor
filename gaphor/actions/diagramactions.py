@@ -8,7 +8,7 @@ import gaphas
 
 from gaphor import resource
 from gaphor import UML
-from gaphor.undomanager import get_undo_manager, transactional
+from gaphor.transaction import Transaction, transactional
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
 from gaphor.misc.action import action_dependencies as _action_dependencies
@@ -144,7 +144,7 @@ class DeleteAction(Action):
             return
 
         if view.is_focus():
-            get_undo_manager().begin_transaction()
+            tx = Transaction()
             try:
                 items = view.selected_items
                 for i in items:
@@ -153,7 +153,7 @@ class DeleteAction(Action):
                         s.unlink()
                     i.unlink()
             finally:
-                get_undo_manager().commit_transaction()
+                tx.commit()
     
     def may_remove_from_model(self, view):
         ''' Check if there are items which will be deleted from the model

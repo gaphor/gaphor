@@ -5,7 +5,6 @@
 from zope import interface
 from zope import component
 from gaphor.misc import uniqueid, odict
-from gaphor.undomanager import get_undo_manager
 from gaphor.UML.element import Element
 from gaphor.UML.diagram import Diagram
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
@@ -45,7 +44,6 @@ class ElementFactory(object):
         assert issubclass(type, Element)
         obj = type(id, self)
         self._elements[id] = obj
-        #get_undo_manager().add_undo_action(_UndoCreateAction(self, obj))
         obj.connect('__unlink__', self._element_signal)
         self.notify(obj, 'create')
         component.handle(ElementCreateEvent(self, obj))
@@ -171,7 +169,6 @@ class ElementFactory(object):
             #log.debug('Unlinking element: %s' % element)
             # TODO: make undo action
             del self._elements[element.id]
-            #get_undo_manager().add_undo_action(_UndoRemoveAction(self, element))
             self.notify(element, 'remove')
             component.handle(ElementDeleteEvent(self, element))
 #        elif pspec == '__relink__' and not self._elements.has_key(element.id):
@@ -181,34 +178,6 @@ class ElementFactory(object):
 
 component.provideUtility(ElementFactory(), IService, "ElementFactory")
 
-
-@component.adapter(IElementCreateEvent)
-def undo_create_event(event):
-    factory = event.service
-    element = event.element
-    def _undo_create_event():
-        try:
-            del factory._elements[element.id]
-        except KeyError:
-            pass # Key was probably already removed in an unlink call
-        factory.notify(element, 'remove')
-        component.handle(ElementDeleteEvent(factory, element))
-    get_undo_manager().add_undo_action(_undo_create_event)
-
-component.provideHandler(undo_create_event)
-
-
-@component.adapter(IElementDeleteEvent)
-def undo_delete_event(event):
-    factory = event.service
-    element = event.element
-    def _undo_delete_event():
-        factory._elements[element.id] = element
-        factory.notify(element, 'create')
-        component.handle(ElementCreateEvent(factory, element))
-    get_undo_manager().add_undo_action(_undo_delete_event)
-
-component.provideHandler(undo_delete_event)
 
 
 # vim:sw=4:et

@@ -17,38 +17,15 @@ NOTE: it would be nice to use actions in conjunction with functools.partial,
 from zope import interface
 from zope import component
 from gaphor.interfaces import IService, IServiceEvent
+from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
+from gaphor.transaction import TransactionError, transactional
 
-def get_undo_manager():
-    """
-    Return the default undo manager.
-    """
-    return _default_undo_manager
-
-
-def transactional(func):
-    """
-    Descriptor. Begins a transaction around the method/function.
-
-    TODO: In casse of an exception, roll back the transaction if the transaction
-    level == 1.
-    """
-    def wrapper(*args, **kwargs):
-        undo_manager = get_undo_manager()
-        undo_manager.begin_transaction()
-        try:
-            func(*args, **kwargs)
-        except:
-            undo_manager.rollback_transaction()
-            raise
-        else:
-            undo_manager.commit_transaction()
-    return wrapper
-
-
-class TransactionError(Exception):
-
-    def __init__(self, msg):
-        self.args = msg
+from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
+                             FlushFactoryEvent, ModelFactoryEvent, \
+                             AttributeChangeEvent, AssociationSetEvent, \
+                             AssociationAddEvent, AssociationDeleteEvent
+from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
+                                  IAttributeChangeEvent, IAssociationChangeEvent
 
 
 class Transaction(object):
@@ -111,6 +88,13 @@ class UndoManager(object):
 
     def init(self, app):
         self._app = app
+        component.provideHandler(self.begin_transaction)
+        component.provideHandler(self.commit_transaction)
+        component.provideHandler(self.rollback_transaction)
+        self._provide_undo_handlers()
+
+    def shutdown(self):
+        pass
 
     def clear_undo_stack(self):
         self._undo_stack = []
@@ -119,7 +103,8 @@ class UndoManager(object):
     def clear_redo_stack(self):
         del self._redo_stack[:]
 
-    def begin_transaction(self):
+    @component.adapter(TransactionBegin)
+    def begin_transaction(self, event=None):
         """
         Add an action to the current transaction
         """
@@ -142,7 +127,8 @@ class UndoManager(object):
         self._current_transaction.add(action)
         component.handle(UndoManagerStateChanged(self))
 
-    def commit_transaction(self):
+    @component.adapter(TransactionCommit)
+    def commit_transaction(self, event=None):
         #log.debug('commit_transaction')
         if not self._current_transaction:
             return #raise TransactionError, 'No transaction to commit'
@@ -158,7 +144,8 @@ class UndoManager(object):
             self._current_transaction = None
         component.handle(UndoManagerStateChanged(self))
 
-    def rollback_transaction(self):
+    @component.adapter(TransactionRollback)
+    def rollback_transaction(self, event=None):
         """
         Roll back the transaction we're in.
         """
@@ -229,7 +216,101 @@ class UndoManager(object):
     def can_redo(self):
         return bool(self._redo_stack)
 
+    ##
+    ## Undo Handlers
+    ##
 
-from gaphor import resource
-_default_undo_manager = resource(UndoManager)
+    def _provide_undo_handlers(self):
+        component.provideHandler(self.undo_create_event)
+        component.provideHandler(self.undo_delete_event)
+        component.provideHandler(self.undo_attribute_change_event)
+        component.provideHandler(self.undo_association_set_event)
+        component.provideHandler(self.undo_association_add_event)
+        component.provideHandler(self.undo_association_delete_event)
 
+        #
+        # Direct revert-statements from gaphas to the undomanager
+        from gaphas import state
+        state.observers.add(state.revert_handler)
+
+        def _undo_handler(event):
+            self.add_undo_action(lambda: state.saveapply(*event));
+
+        state.subscribers.add(_undo_handler)
+
+
+    @component.adapter(IElementCreateEvent)
+    def undo_create_event(self, event):
+        factory = event.service
+        element = event.element
+        def _undo_create_event():
+            try:
+                del factory._elements[element.id]
+            except KeyError:
+                pass # Key was probably already removed in an unlink call
+            factory.notify(element, 'remove')
+            component.handle(ElementDeleteEvent(factory, element))
+        self.add_undo_action(_undo_create_event)
+
+
+    @component.adapter(IElementDeleteEvent)
+    def undo_delete_event(self, event):
+        factory = event.service
+        element = event.element
+        def _undo_delete_event():
+            factory._elements[element.id] = element
+            factory.notify(element, 'create')
+            component.handle(ElementCreateEvent(factory, element))
+        self.add_undo_action(_undo_delete_event)
+
+
+    @component.adapter(IAttributeChangeEvent)
+    def undo_attribute_change_event(self, event):
+        attribute = event.property
+        obj = event.element
+        value = event.old_value
+        def _undo_attribute_change_event():
+            attribute._set(obj, value)
+        self.add_undo_action(_undo_attribute_change_event)
+
+
+    @component.adapter(AssociationSetEvent)
+    def undo_association_set_event(self, event):
+        association = event.property
+        obj = event.element
+        value = event.old_value
+        def _undo_association_set_event():
+            #print 'undoing action', obj, value
+            # Tell the assoctaion it should not need to let the opposite
+            # side connect (it has it's own signal)
+            association._set(obj, value, from_opposite=True)
+        self.add_undo_action(_undo_association_set_event)
+
+
+    @component.adapter(AssociationAddEvent)
+    def undo_association_add_event(self, event):
+        association = event.property
+        obj = event.element
+        value = event.new_value
+        def _undo_association_add_event():
+            #print 'undoing action', obj, value
+            # Tell the assoctaion it should not need to let the opposite
+            # side connect (it has it's own signal)
+            association._del(obj, value, from_opposite=True)
+        self.add_undo_action(_undo_association_add_event)
+
+
+    @component.adapter(AssociationDeleteEvent)
+    def undo_association_delete_event(self, event):
+        association = event.property
+        obj = event.element
+        value = event.old_value
+        def _undo_association_delete_event():
+            #print 'undoing action', obj, value
+            # Tell the assoctaion it should not need to let the opposite
+            # side connect (it has it's own signal)
+            association._set(obj, value, from_opposite=True)
+        self.add_undo_action(_undo_association_delete_event)
+
+
+# vim:sw=4:et:ai

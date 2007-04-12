@@ -11,7 +11,7 @@ import stock
 
 from gaphor import UML
 from gaphor import resource
-from gaphor.undomanager import get_undo_manager
+from gaphor.transaction import Transaction
 
 
 # The following items will not be shown in the treeview, although they
@@ -471,9 +471,9 @@ class NamespaceView(gtk.TreeView):
             model = self.get_property('model')
             iter = model.get_iter_from_string(path_str)
             element = model.get_value(iter, 0)
-            get_undo_manager().begin_transaction()
+            tx = Transaction()
             element.name = new_text
-            get_undo_manager().commit_transaction()
+            tx.commit()
         except Exception, e:
             log.error('Could not create path from string "%s"' % path_str)
 
@@ -532,9 +532,9 @@ class NamespaceView(gtk.TreeView):
 
                 # Set package. This only works for classifiers, packages and
                 # diagrams. Properties and operations should not be moved.
-                get_undo_manager().begin_transaction()
+                tx = Transaction()
                 element.package = dest_element
-                get_undo_manager().commit_transaction()
+                tx.commit()
 
             except AttributeError:
                 #print dir(context)

@@ -34,7 +34,6 @@ from event import AttributeChangeEvent, AssociationSetEvent, \
                   AssociationAddEvent, AssociationDeleteEvent
 from interfaces import IAttributeChangeEvent, IAssociationChangeEvent
 import operator
-from gaphor.undomanager import get_undo_manager
 
 
 class umlproperty(object):
@@ -584,63 +583,6 @@ class redefine(umlproperty):
 
     def _del(self, obj, value, from_opposite=False):
         return self.original._del(obj, value, from_opposite)
-
-
-@component.adapter(IAttributeChangeEvent)
-def undo_attribute_change_event(event):
-    attribute = event.property
-    obj = event.element
-    value = event.old_value
-    def _undo_attribute_change_event():
-        attribute._set(obj, value)
-    get_undo_manager().add_undo_action(_undo_attribute_change_event)
-
-component.provideHandler(undo_attribute_change_event)
-
-
-@component.adapter(AssociationSetEvent)
-def undo_association_set_event(event):
-    association = event.property
-    obj = event.element
-    value = event.old_value
-    def _undo_association_set_event():
-        #print 'undoing action', obj, value
-        # Tell the assoctaion it should not need to let the opposite
-        # side connect (it has it's own signal)
-        association._set(obj, value, from_opposite=True)
-    get_undo_manager().add_undo_action(_undo_association_set_event)
-
-component.provideHandler(undo_association_set_event)
-
-
-@component.adapter(AssociationAddEvent)
-def undo_association_add_event(event):
-    association = event.property
-    obj = event.element
-    value = event.new_value
-    def _undo_association_add_event():
-        #print 'undoing action', obj, value
-        # Tell the assoctaion it should not need to let the opposite
-        # side connect (it has it's own signal)
-        association._del(obj, value, from_opposite=True)
-    get_undo_manager().add_undo_action(_undo_association_add_event)
-
-component.provideHandler(undo_association_add_event)
-
-
-@component.adapter(AssociationDeleteEvent)
-def undo_association_delete_event(event):
-    association = event.property
-    obj = event.element
-    value = event.old_value
-    def _undo_association_delete_event():
-        #print 'undoing action', obj, value
-        # Tell the assoctaion it should not need to let the opposite
-        # side connect (it has it's own signal)
-        association._set(obj, value, from_opposite=True)
-    get_undo_manager().add_undo_action(_undo_association_delete_event)
-
-component.provideHandler(undo_association_delete_event)
 
 
 try:

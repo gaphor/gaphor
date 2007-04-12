@@ -41,16 +41,19 @@ class GaphorError(Exception):
             self.args = args
 
 
-def new_main(gaphor_file=None):
+def main(gaphor_file=None):
     """
-    Not yet used. see main() below.
+    Start the main application by initiating and running
+    gaphor.application.Application. 
     """
+    import pkg_resources
+
+    resource('DataDir', os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'data'))
+
     from gaphor.application import Application
     Application.init()
 
-    # backwards compatible
-    main_window = resource("MainWindow", Application.main_window)
-
+    main_window = resource('MainWindow')
     if gaphor_file:
         main_window.set_filename(gaphor_file)
         main_window.execute_action('FileRevert')
@@ -58,55 +61,6 @@ def new_main(gaphor_file=None):
         main_window.execute_action('FileNew')
     Application.run()
     Application.shutdown()
-
-
-def main(gaphor_file=None):
-    """
-    Start the interactive application.
-
-    This involves importing plugins and creating the main window.
-    """
-    import pkg_resources
-
-    resource('Version', pkg_resources.get_distribution('gaphor').version)
-    resource('DataDir', os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'data'))
-
-    # Import GUI stuff here, since the user might not need all the GUI stuff
-    import gtk
-    import ui
-    import adapters
-    import actions
-    # Load plugin definitions:
-    import services.pluginmanager
-    import services.undomanager
-
-    from ui.mainwindow import MainWindow
-
-    resource('PluginManager').init(None)
-
-    ui.load_accel_map()
-
-    # should we set a default icon here or something?
-    main_window = resource(MainWindow)
-    main_window.construct()
-
-    # When the state changes to CLOSED, quit the application
-    main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and gtk.main_quit())
-
-    if gaphor_file:
-        main_window.set_filename(gaphor_file)
-        main_window.execute_action('FileRevert')
-    else:
-        main_window.execute_action('FileNew')
-
-    gtk.main()
-    #gtk.threads_leave()
-
-    resource.save()
-
-    ui.save_accel_map()
-
-    log.info('Bye!')
 
 
 # TODO: Remove this

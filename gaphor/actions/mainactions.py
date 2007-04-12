@@ -7,12 +7,10 @@ import sys
 import gobject
 import gtk
 import gc
-from threading import Thread
-
+from gaphor.application import Application
 from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
-from gaphor.undomanager import get_undo_manager
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
 from gaphor.misc.action import DynamicMenu, ObjectAction, register_slot
 from gaphor.misc.action import ActionError
@@ -22,6 +20,9 @@ from gaphor.misc.errorhandler import error_handler, ErrorHandlerAspect, weave_me
 from gaphor.i18n import _
 
 DEFAULT_EXT='.gaphor'
+
+def get_undo_manager():
+    return Application.get_service('undo_manager')
 
 def show_status_window(title, message, parent=None, queue=None):
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -390,7 +391,7 @@ class AboutAction(Action):
 
     def execute(self):
         logo = gtk.gdk.pixbuf_new_from_file (resource('DataDir') + '/pixmaps/logo.png')
-        version = resource('Version')
+        version = Application.distribution.version
         about = gtk.Dialog("About Gaphor", self._window.get_window(), gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
         about.set_default_response(gtk.RESPONSE_OK)
         vbox = about.vbox

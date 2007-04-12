@@ -1,2 +1,2 @@
 
-python setup.py run "$@"
+python setup.py develop run "$@"
