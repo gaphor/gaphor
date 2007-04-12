@@ -8,7 +8,7 @@ from gaphor import resource
 from gaphor.i18n import _
 from gaphor.diagram.interfaces import IPopupMenu
 from gaphor.diagram import get_diagram_item
-from gaphor.undomanager import get_undo_manager
+from gaphor.transaction import Transaction
 from gaphor.ui.diagramview import DiagramView
 from gaphor.ui.abstractwindow import AbstractWindow
 
@@ -72,7 +72,6 @@ class DiagramTab(object):
                      gtk.FILL)
 
         #view.connect('notify::tool', self._on_view_notify_tool)
-        view.connect_after('event-after', self._on_view_event_after)
         view.connect('focus-changed', self._on_view_focus_changed)
         view.connect('selection-changed', self._on_view_selection_changed)
         #view.connect('unselect-item', self._on_view_selection_changed)
@@ -109,22 +108,6 @@ class DiagramTab(object):
                 self.owning_window.execute_action('EditDelete')
 
 
-    def _on_view_event_after(self, view, event):
-        # handle mouse button 3 (popup menu):
-        if event.type == gtk.gdk.BUTTON_PRESS:
-            # First push the undo stack...
-            #view.canvas.push_undo(None)
-            pass
-        if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
-            item = view.focused_item
-            if item:
-                popup_menu = item.get_popup_menu()
-                if popup_menu:
-                    self.owning_window._construct_popup_menu(menu_def=popup_menu,
-                                           event=event)
-                    return True
-        return False
-
     def _on_view_focus_changed(self, view, focus_item):
         self.owning_window.execute_action('ItemFocus')
         component.handle(DiagramItemFocused(focus_item))
@@ -159,7 +142,7 @@ class DiagramTab(object):
             if isinstance(element, UML.Diagram):
                 self.owning_window.execute_action('OpenModelElement')
             elif item_class:
-                get_undo_manager().begin_transaction()
+                tx = Transaction()
                 item = self.diagram.create(item_class)
                 assert item
                 wx, wy = view.transform_point_c2w(x + view.hadjustment.value,
@@ -168,7 +151,7 @@ class DiagramTab(object):
                 ix, iy = view.canvas.get_matrix_w2i(item, calculate=True).transform_point(max(0, wx), max(0, wy))
                 item.matrix.translate(ix, iy)
                 item.subject = element
-                get_undo_manager().commit_transaction()
+                tx.commit()
                 view.unselect_all()
                 view.focused_item = item
 

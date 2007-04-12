@@ -12,9 +12,10 @@ from zope import component
 
 import gaphas
 from gaphas.geometry import distance_point_point
-from gaphas.tool import Tool, HandleTool, ToolChain
+from gaphas.tool import Tool, HandleTool, ItemTool, ToolChain
 
 from gaphor import resource
+from gaphor.application import Application
 from gaphor.transaction import Transaction, transactional
 
 from interfaces import IEditor, IConnect
@@ -104,6 +105,32 @@ class ConnectHandleTool(HandleTool):
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
             adapter.disconnect_constraints(handle)
         
+
+class PopupItemTool(ItemTool):
+    """
+    An item tool with the extended ability to display a popup menu on
+    a right mouse click.
+    """
+
+    def __init__(self):
+        ItemTool.__init__(self, buttons=(1, 3))
+
+    def on_button_press(self, context, event):
+        if not ItemTool.on_button_press(self, context, event):
+            return False
+        if event.button == 3:
+            view = context.view
+            item = view.focused_item
+            context.ungrab()
+            # Display popup menu using after-event signal
+            if item:
+                popup_menu = item.get_popup_menu()
+                if popup_menu:
+                    mainwin = Application.get_service('gui_manager').main_window
+                    mainwin._construct_popup_menu(menu_def=popup_menu,
+                                                  event=event)
+        return True
+
 
 class TextEditTool(Tool):
     """
@@ -236,14 +263,13 @@ class TransactionalToolChain(ToolChain):
         ToolChain.__init__(self)
         self._tx = None
 
-    def on_button_press(self, context, event):
+    def grab(self, tool):
+        ToolChain.grab(self, tool)
         self._tx = Transaction()
-        return ToolChain.on_button_press(self, context, event)
 
-    def on_button_release(self, context, event):
-        try:
-            return ToolChain.on_button_release(self, context, event)
-        finally:
+    def ungrab(self, tool):
+        ToolChain.ungrab(self, tool)
+        if self._tx:
             self._tx.commit()
             self._tx = None
 
@@ -264,7 +290,6 @@ class TransactionalToolChain(ToolChain):
 
 from gaphas.tool import ToolChain, HoverTool, ItemTool, RubberbandTool
 
-ItemTool.SELECT_BUTTON = (1, 3)
 
 def DefaultTool():
     """
@@ -273,7 +298,7 @@ def DefaultTool():
     chain = TransactionalToolChain()
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
-    chain.append(ItemTool())
+    chain.append(PopupItemTool())
     chain.append(TextEditTool())
     chain.append(RubberbandTool())
     return chain
