@@ -312,6 +312,9 @@ class PluginManager(object):
         self._app = app
         self.bootstrap()
 
+    def shutdown(self):
+        pass
+
     def bootstrap(self):
         """
         Do the normal plugin loading.
