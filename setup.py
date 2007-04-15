@@ -77,6 +77,7 @@ setup(
             'gaphor = gaphor:main',
         ],
         'gaphor.services': [
+            'properties = gaphor.services.properties:Properties',
             'undo_manager = gaphor.services.undomanager:UndoManager',
             #'plugin_manager = gaphor.services.pluginmanager:PluginManager',
             'gui_manager = gaphor.services.guimanager:GUIManager',

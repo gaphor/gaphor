@@ -8,7 +8,7 @@ import gobject
 import gtk
 import gaphor
 from gaphor.ui.abstractwindow import AbstractWindow
-from gaphor.plugin import resource
+from gaphor.plugin import Application
 import checkmodel
 
 PYELEMENT_COLUMN = 0
@@ -78,7 +78,7 @@ class CheckModelWindow(AbstractWindow):
         element = self.model.get_value(iter, PYELEMENT_COLUMN)
         print 'Looking for element', element
         if element.presentation:
-            main_window = resource('MainWindow')
+            main_window = Application.get_service('gui_manager').main_window
             presentation = element.presentation[0]
             diagram = presentation.canvas.diagram
             diagram_tab = main_window.show_diagram(diagram)

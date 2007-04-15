@@ -1,7 +1,7 @@
 # vim:sw=4:et
 """This module provides everything needed to create a plugin.
 
-resource - Get/set application wide resources
+Application - Get/set application wide resources
 import_plugin - The save way to import other plugins into your plugin.
 
 Classes to construct Actions:
@@ -18,6 +18,7 @@ by the 'window' property.
 import sys
 import os.path
 from gaphor import resource
+from gaphor.application import Application
 
 from gaphor.misc.action import Action as _Action
 from gaphor.misc.action import CheckAction as _CheckAction

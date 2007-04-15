@@ -680,7 +680,7 @@ class RecentFilesSlot(DynamicMenu):
 
     def get_menu(self):
         recent_files = resource('recent-files', [])
-        window = resource('MainWindow')
+        window = Application.get_service('gui_manager').main_window
         file_list = []
         for f, i in zip(recent_files, xrange(len(recent_files))):
             id = 'RecentFile_%d' % i
