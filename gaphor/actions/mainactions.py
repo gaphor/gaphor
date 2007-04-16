@@ -7,6 +7,7 @@ import sys
 import gobject
 import gtk
 import gc
+from gaphor.core import inject
 from gaphor.application import Application
 from gaphor import resource
 from gaphor import UML
@@ -675,12 +676,14 @@ class RecentFilesSlot(DynamicMenu):
     model files.
     """
 
+    gui_manager = inject('gui_manager')
+    
     def __init__(self, slot_id):
         DynamicMenu.__init__(self, slot_id)
 
     def get_menu(self):
         recent_files = resource('recent-files', [])
-        window = Application.get_service('gui_manager').main_window
+        window = self.gui_manager.main_window
         file_list = []
         for f, i in zip(recent_files, xrange(len(recent_files))):
             id = 'RecentFile_%d' % i

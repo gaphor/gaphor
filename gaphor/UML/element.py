@@ -125,7 +125,8 @@ class Element(object):
                 pass
 
     def notify(self, name, cb_name=None, pspec=None):
-        """Send notification to attached callbacks that a property
+        """
+        Send notification to attached callbacks that a property
         has changed.
         """
         cb_list = self._observers.get(cb_name or name, ())

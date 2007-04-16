@@ -57,8 +57,8 @@ class _Application(object):
 
         for name, srv in services:
             log.debug('initializing service.%s' % name)
-            srv.init(self)
             component.provideUtility(srv, IService, name)
+            srv.init(self)
 
     distribution = property(lambda s: pkg_resources.get_distribution('gaphor'),
                             doc='Get the PkgResources distribution for Gaphor')

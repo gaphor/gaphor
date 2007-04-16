@@ -5,8 +5,8 @@
 #  See www.python.org/2.2/license.html for
 #  license details.
 #
-import pygtk
-pygtk.require('2.0')
+#import pygtk
+#pygtk.require('2.0')
 import gtk
 import gtk.gdk
 import code

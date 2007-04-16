@@ -6,7 +6,7 @@ An average module should only need to import this module.
 
 from gaphor.application import Application as _Application
 #from gaphor.interfaces import IService
-
+from gaphor.transaction import Transaction, transactional
 
 class inject(object):
     """
