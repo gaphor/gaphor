@@ -8,6 +8,7 @@ import gobject
 import gtk
 import operator
 import stock
+from gaphas.decorators import async
 
 from gaphor import UML
 from gaphor import resource
@@ -44,7 +45,9 @@ class NamespaceModel(gtk.GenericTreeModel):
         self.exclude = _default_exclude_list
 
     def new_node_from_element(self, element, parent_node):
-        """Create a new node for an element. Owned members are also created."""
+        """
+        Create a new node for an element. Owned members are also created.
+        """
         if isinstance(element, self.exclude):
             return
         node = (element, [])
@@ -84,7 +87,8 @@ class NamespaceModel(gtk.GenericTreeModel):
                 self.detach_notifiers_from_node(child)
 
     def node_and_path_from_element(self, element):
-        """Return (node, path) of an element.
+        """
+        Return (node, path) of an element.
         """
         #assert isinstance(element, UML.NamedElement)
         if element:
@@ -184,7 +188,8 @@ class NamespaceModel(gtk.GenericTreeModel):
             self.row_changed(path, self.get_iter(path))
 
     def on_name_changed(self, element, pspec):
-        """the name of element has changed, update the tree model
+        """
+        The name of element has changed, update the tree model
         """
         path = self.path_from_element(element)
         if path:
@@ -199,8 +204,10 @@ class NamespaceModel(gtk.GenericTreeModel):
                                     map(list.index,
                                         [original] * len(children), children))
 
+    @async()
     def on_ownedmember_changed(self, element, pspec):
-        """update the tree model when the ownedMember list changes.
+        """
+        Update the tree model when the ownedMember list changes.
         Element is the object whose ownedMember property has changed.
         """
         node = self.node_from_element(element)
@@ -214,6 +221,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             #print 'NamespaceModel: element added'
             for om in owned_members:
                 if om not in node_members:
+                    log.debug('Trying to add %s to %s' % (om, node))
                     # we have found the newly added element
                     self.new_node_from_element(om, node)
                     assert len(node[1]) == len(owned_members)
@@ -495,13 +503,15 @@ class NamespaceView(gtk.TreeView):
                 selection_data.set(selection_data.target, 8, element.name)
 
     def on_drag_data_delete (self, context):
-        """DnD magic. do not touch
+        """
+        DnD magic. do not touch.
         """
         self.emit_stop_by_name('drag-data-delete')
 
     # Drop
     def on_drag_data_received(self, context, x, y, selection, info, time):
-        """Drop the data send by on_drag_data_get().
+        """
+        Drop the data send by on_drag_data_get().
         """
         self.emit_stop_by_name('drag-data-received')
         #print 'drag_data_received'
