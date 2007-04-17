@@ -5,6 +5,7 @@ import gtk
 
 from gaphor import resource
 from gaphor import UML
+from gaphor.core import inject
 from gaphor.i18n import _
 from gaphor.ui import namespace
 from gaphor.ui.abstractwindow import AbstractWindow
@@ -23,6 +24,7 @@ class MainWindow(AbstractWindow):
     """The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
+    properties = inject('properties')
 
     toolbox = (
         ('', (
@@ -176,10 +178,10 @@ class MainWindow(AbstractWindow):
 
         # Add to recent files list
         if filename:
-            recent_files = resource('recent-files', []) 
+            recent_files = self.properties.get('recent-files', []) 
             if filename not in recent_files:
                 recent_files = [filename] + recent_files[:8]
-                resource.set('recent-files', recent_files, persistent=True)
+                self.properties.set('recent-files', recent_files)
                 self.get_action_pool().get_slot('RecentFiles').rebuild()
 
     def get_filename(self):
@@ -278,7 +280,7 @@ class MainWindow(AbstractWindow):
         
         secondPaned = gtk.VPaned()
         secondPaned.set_property('position',
-                                 int(resource('ui.object-inspector-position', 600)))
+                                 int(self.properties.get('ui.object-inspector-position', 600)))
         secondPaned.pack1(notebook)
         secondPaned.pack2(self.objectInspector)
         secondPaned.show_all()
@@ -292,7 +294,7 @@ class MainWindow(AbstractWindow):
         self.model = model
         self.view = view
 
-        window_size = resource('ui.window-size', (760, 580))
+        window_size = self.properties.get('ui.window-size', (760, 580))
         self._construct_window(name='main',
                                title='Gaphor',
                                size=window_size,
@@ -442,15 +444,15 @@ class MainWindow(AbstractWindow):
         self.execute_action('TabChange')
 
     def on_window_size_allocate(self, window, allocation):
-        resource.set('ui.window-size', (allocation.width, allocation.height), persistent=True)
+        self.properties.set('ui.window-size', (allocation.width, allocation.height))
 
     def on_object_inspector_notify_position(self, paned, arg):
-        resource.set('ui.object-inspector-position',
-                     paned.get_position(), persistent=True)
+        self.properties.set('ui.object-inspector-position',
+                     paned.get_position())
 
 #    def on_toolbox_toggled(self, toolbox, box_name, visible):
 #        print 'Box', box_name, 'is visible:', visible
-#        #resource.set('ui.toolbox.%s' % box_name, visible, persistent=True)
+#        #resource.set('ui.toolbox.%s' % box_name, visible)
 
 #    def on_transient_window_closed(self, window):
 #        assert window in self._transient_windows

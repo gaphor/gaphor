@@ -677,12 +677,13 @@ class RecentFilesSlot(DynamicMenu):
     """
 
     gui_manager = inject('gui_manager')
+    properties = inject('properties')
     
     def __init__(self, slot_id):
         DynamicMenu.__init__(self, slot_id)
 
     def get_menu(self):
-        recent_files = resource('recent-files', [])
+        recent_files = self.properties('recent-files', [])
         window = self.gui_manager.main_window
         file_list = []
         for f, i in zip(recent_files, xrange(len(recent_files))):

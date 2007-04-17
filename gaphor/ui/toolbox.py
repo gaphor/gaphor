@@ -5,7 +5,7 @@ Toolbox.
 import gobject
 import gtk
 
-from gaphor import resource
+from gaphor.core import inject
 
 class Toolbox(gtk.VBox):
     """
@@ -23,6 +23,8 @@ class Toolbox(gtk.VBox):
         'toggled': (gobject.SIGNAL_RUN_FIRST,
                     gobject.TYPE_NONE, (gobject.TYPE_STRING, gobject.TYPE_INT))
     }
+
+    properties = inject('properties')
 
     def __init__(self, menu_factory, toolboxdef):
         """
@@ -51,8 +53,8 @@ class Toolbox(gtk.VBox):
             arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
             self.emit('toggled', button.toggle_id, False)
         # Save the property:
-        resource.set('ui.toolbox.%s' % button.toggle_id,
-                     content.get_property('visible'), persistent=True)
+        self.properties.set('ui.toolbox.%s' % button.toggle_id,
+                            content.get_property('visible'))
 
     def make_wrapbox_decorator(self, title, content):
         """
@@ -89,7 +91,7 @@ class Toolbox(gtk.VBox):
         vbox.label = label
         vbox.content = content
 
-        expanded = resource('ui.toolbox.%s' % button.toggle_id, False)
+        expanded = self.properties.get('ui.toolbox.%s' % button.toggle_id, False)
         content.set_property('visible', not expanded)
         self.on_wrapbox_decorator_toggled(button, content)
 
@@ -113,7 +115,7 @@ class Toolbox(gtk.VBox):
 
         expander.add(content)
         
-        expanded = resource('ui.toolbox.%s' % title.replace(' ', '-').lower(), False)
+        expanded = self.properties.get('ui.toolbox.%s' % title.replace(' ', '-').lower(), False)
         expander.set_expanded(expanded)
 
         expander.show_all()

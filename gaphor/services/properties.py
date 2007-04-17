@@ -29,7 +29,6 @@ class Properties(object):
 
     def __init__(self, backend=None):
         self._resources = {}
-        self._persistent = []
         self._backend = backend or FileBackend()
 
     def init(self, app):
@@ -88,8 +87,6 @@ class Properties(object):
         """
         Save the property to a persistent storage.
         """
-        if r not in self._persistent:
-            self._persistent.append(r)
         self._backend.update(r, value)
 
 
@@ -125,7 +122,7 @@ class FileBackend(object):
         """
         filename = self.get_filename(user_data_dir, create=True)
         f = open(filename, 'w')
-        pprint.pprint(resource._items(), f)
+        pprint.pprint(resource._resources, f)
 
     def update(self, r, value):
         pass

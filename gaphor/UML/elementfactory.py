@@ -32,6 +32,12 @@ class ElementFactory(object):
         self._elements = odict.odict()
         self._observers = list()
 
+    def init(self, app):
+        pass
+
+    def shutdown(self):
+        pass
+
     def create(self, type):
         """Create a new model element of type type.
         """

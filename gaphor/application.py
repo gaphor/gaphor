@@ -71,7 +71,9 @@ class _Application(object):
         gtk.main()
 
     def shutdown(self):
-        pass # for each IService: shutdown
+        for u in component.getAllUtilitiesRegisteredFor(IService):
+            u.shutdown()
+
 
 # Make sure there is only one!
 Application = _Application()
