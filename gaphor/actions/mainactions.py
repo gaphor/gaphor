@@ -81,8 +81,8 @@ class NewAction(Action):
         self._window = window
 
     def execute(self):
-        factory = self.element_factory
-        if factory.size():
+        element_factory = self.element_factory
+        if element_factory.size():
             dialog = gtk.MessageDialog(self._window.get_window(),
                 gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
                 gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
@@ -92,18 +92,18 @@ class NewAction(Action):
             if answer != gtk.RESPONSE_YES:
                 return
 
-        factory.flush()
+        element_factory.flush()
         gc.collect()
-        model = factory.create(UML.Package)
+        model = element_factory.create(UML.Package)
         model.name = _('New model')
-        diagram = factory.create(UML.Diagram)
+        diagram = element_factory.create(UML.Diagram)
         diagram.package = model
         diagram.name='main'
-        #stereotypes = factory.create(UML.Profile)
+        #stereotypes = element_factory.create(UML.Profile)
         #stereotypes.name = 'Stereotypes'
         self._window.set_filename(None)
         self._window.set_message(_('Created a new model'))
-        factory.notify_model()
+        element_factory.notify_model()
 
         self._window.select_element(diagram)
         self._window.execute_action('OpenModelElement')
@@ -215,26 +215,26 @@ class SaveAsAction(Action):
     stock_id = 'gtk-save-as'
     tooltip = _('Save the model to a new file')
 
-    factory = inject('element_factory')
+    element_factory = inject('element_factory')
 
     def init(self, window):
         self._window = window
-        #self.factory = self.element_factory
-        #self.factory.connect(self.on_element_factory)
+        #self.element_factory = self.element_factory
+        #self.element_factory.connect(self.on_element_factory)
         #self.on_element_factory(self)
         # Disconnect when the window is closed:
         #window.connect(self.on_window_closed)
 
     def on_element_factory(self, *args):
-        #factory = resource(UML.ElementFactory)
-        if self.factory.values():
+        #element_factory = resource(UML.ElementFactory)
+        if self.element_factory.values():
             self.sensitive = True
         else:
             self.sensitive = False
 
     def on_window_closed(self, window):
         if self._window.get_state() == self._window.STATE_CLOSED:
-            self.factory.disconnect(self.on_element_factory)
+            self.element_factory.disconnect(self.on_element_factory)
 
     def save(self, filename):
         if filename and len(filename) > 0:

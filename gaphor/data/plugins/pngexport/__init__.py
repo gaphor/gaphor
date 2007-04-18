@@ -19,7 +19,7 @@ class PNGExportAction(DiagramExportAction):
         # (used for stuff like calculating font metrics)
         tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
         tmpcr = cairo.Context(tmpsurface)
-        view.update_bounding_box(tmpcr)
+        view.update_bounding_box(tmpcr, items=canvas.get_root_items())
         tmpcr.show_page()
         tmpsurface.flush()
 
