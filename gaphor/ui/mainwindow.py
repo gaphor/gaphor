@@ -21,10 +21,12 @@ from gaphor.interfaces import IServiceEvent
 from zope import component
 
 class MainWindow(AbstractWindow):
-    """The main window for the application.
+    """
+    The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
     properties = inject('properties')
+    element_factory = inject('element_factory')
 
     toolbox = (
         ('', (
@@ -159,20 +161,23 @@ class MainWindow(AbstractWindow):
         self.notebook_map = {}
 
     def get_model(self):
-        """Return the gtk.TreeModel associated with the main window
+        """
+        Return the gtk.TreeModel associated with the main window
         (shown on the left side in a TreeView).
         """
         self._check_state(AbstractWindow.STATE_ACTIVE)
         return self.model
 
     def get_tree_view(self):
-        """Get the gtk.TreeView widget that visualized the TreeModel.
+        """
+        Get the gtk.TreeView widget that visualized the TreeModel.
         See also get_model().
         """
         return self.view
 
     def set_filename(self, filename):
-        """Set the file name of the currently opened model.
+        """
+        Set the file name of the currently opened model.
         """
         self._filename = filename
 
@@ -185,7 +190,8 @@ class MainWindow(AbstractWindow):
                 self.get_action_pool().get_slot('RecentFiles').rebuild()
 
     def get_filename(self):
-        """Return the file name of the currently opened model.
+        """
+        Return the file name of the currently opened model.
         """
         return self._filename
 
@@ -195,14 +201,16 @@ class MainWindow(AbstractWindow):
 #        return self._transient_windows
 
     def get_current_diagram_tab(self):
-        """Get the currently opened and viewed DiagramTab, shown on the right
+        """
+        Get the currently opened and viewed DiagramTab, shown on the right
         side of the main window.
         See also: get_current_diagram(), get_current_diagram_view().
         """
         return self.get_current_tab()
 
     def get_current_diagram(self):
-        """Return the Diagram associated with the viewed DiagramTab.
+        """
+        Return the Diagram associated with the viewed DiagramTab.
         See also: get_current_diagram_tab(), get_current_diagram_view().
         """
         tab = self.get_current_diagram_tab()
@@ -245,8 +253,8 @@ class MainWindow(AbstractWindow):
     def construct(self):
         """Create the widgets that make up the main window.
         """
-        model = namespace.NamespaceModel(resource(UML.ElementFactory))
-        view = namespace.NamespaceView(model)
+        model = namespace.NamespaceModel(self.element_factory)
+        view = namespace.NamespaceView(model, self.element_factory)
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
@@ -377,7 +385,8 @@ class MainWindow(AbstractWindow):
         return self.notebook_map.values()
 
     def remove_tab(self, tab):
-        """Remove the tab from the notebook. Tab is such a thing as
+        """
+        Remove the tab from the notebook. Tab is such a thing as
         a DiagramTab.
         """
         for p, t in self.notebook_map.iteritems():
@@ -450,10 +459,6 @@ class MainWindow(AbstractWindow):
         self.properties.set('ui.object-inspector-position',
                      paned.get_position())
 
-#    def on_toolbox_toggled(self, toolbox, box_name, visible):
-#        print 'Box', box_name, 'is visible:', visible
-#        #resource.set('ui.toolbox.%s' % box_name, visible)
-
 #    def on_transient_window_closed(self, window):
 #        assert window in self._transient_windows
 #        log.debug('%s closed.' % window)
@@ -461,11 +466,6 @@ class MainWindow(AbstractWindow):
 
     def _on_transient_window_notify_title(self, window):
         pass
-
-    #def _on_element_factory_signal(self, obj, key):
-        #print '_on_element_factory_signal', key
-        #factory = resource(UML.ElementFactory)
-        #self.set_capability('model', not factory.is_empty())
 
 gtk.accel_map_add_filter('gaphor')
 

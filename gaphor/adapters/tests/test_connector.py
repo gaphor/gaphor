@@ -4,9 +4,7 @@ Test Item connections.
 
 import unittest
 from zope import component
-from gaphor import resource
 from gaphor import UML
-from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 

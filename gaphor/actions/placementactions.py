@@ -5,7 +5,7 @@ This module is initialized from gaphor.ui.diagramwindow
 """
 
 import gaphas
-from gaphor import resource
+from gaphor.core import inject
 from gaphor import UML
 from gaphor import diagram
 from gaphor.diagram import items
@@ -39,12 +39,13 @@ class ResetToolAfterCreateAction(CheckAction):
     label = 'Reset _Tool'
     tooltip = 'Reset the tool to the pointer tool after creation of an item'
 
+    properties = inject('properties')
     def init(self, window):
         self._window = window
-        self.active = resource('reset-tool-after-create', True)
+        self.active = self.properties('reset-tool-after-create', True)
 
     def execute(self):
-        resource.set('reset-tool-after-create', self.active, persistent=True)
+        self.properties.set('reset-tool-after-create', self.active)
 
 register_action(ResetToolAfterCreateAction)
 
@@ -88,7 +89,7 @@ class PlacementAction(RadioAction):
         """Create a new instance of the item and return it."""
         subject = None
         if self.subject_type:
-            subject = resource(UML.ElementFactory).create(self.subject_type)
+            subject = UML.create(self.subject_type)
         diagram = self._window.get_current_diagram()
         return diagram.create(self.type, subject=subject)
 

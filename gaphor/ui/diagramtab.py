@@ -5,18 +5,20 @@ import gtk
 
 from gaphor import UML
 from gaphor import resource
+from gaphor.core import inject
 from gaphor.i18n import _
 from gaphor.diagram.interfaces import IPopupMenu
 from gaphor.diagram import get_diagram_item
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramview import DiagramView
 from gaphor.ui.abstractwindow import AbstractWindow
-
 from event import DiagramItemFocused
 from zope import component
 
 class DiagramTab(object):
     
+    element_factory = inject('element_factory')
+
     def __init__(self, owning_window):
         self.diagram = None
         #self.view = None
@@ -99,7 +101,8 @@ class DiagramTab(object):
         del self.diagram
 
     def _on_key_press_event(self, view, event):
-        """Handle the 'Delete' key. This can not be handled directly (through
+        """
+        Handle the 'Delete' key. This can not be handled directly (through
         GTK's accelerators) since otherwise this key will confuse the text
         edit stuff.
         """
@@ -127,13 +130,13 @@ class DiagramTab(object):
             #self.get_window().set_title(self.diagram.name or '<None>')
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
-        """Handle data dropped on the canvas.
+        """
+        Handle data dropped on the canvas.
         """
         #print 'drag_data_received'
         if data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
             #print 'drag_data_received:', data.data, info
-            elemfact = resource(UML.ElementFactory)
-            element = elemfact.lookup(data.data)
+            element = self.element_factory.lookup(data.data)
             assert element
 
             # TODO: use adapters to execute code below

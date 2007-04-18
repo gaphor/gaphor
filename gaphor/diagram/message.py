@@ -1,6 +1,6 @@
-'''
-Relationship -- Base class for dependencies and associations.
-'''
+"""
+Message - sequence diagram messages.
+"""
 
 import itertools
 

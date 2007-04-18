@@ -75,11 +75,13 @@ class NewAction(Action):
     tooltip = 'Create a new Gaphor project'
     stock_id = 'gtk-new'
 
+    element_factory = inject('element_factory')
+
     def init(self, window):
         self._window = window
 
     def execute(self):
-        factory = resource(UML.ElementFactory)
+        factory = self.element_factory
         if factory.size():
             dialog = gtk.MessageDialog(self._window.get_window(),
                 gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -116,6 +118,8 @@ class RevertAction(Action):
     stock_id='gtk-revert'
     tooltip = 'Reload the loaded Gaphor project from file'
 
+    element_factory = inject('element_factory')
+
     def init(self, window):
         # The filename of the last file loaded
         self.filename = None
@@ -137,7 +141,7 @@ class RevertAction(Action):
             win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, self._window.get_window(), queue)
             self.filename = filename
             gc.collect()
-            worker = GIdleThread(storage.load_generator(filename), queue)
+            worker = GIdleThread(storage.load_generator(filename, self.element_factory), queue)
             self._window.action_pool.insensivate_actions()
             get_undo_manager().clear_undo_stack()
             get_undo_manager().clear_redo_stack()
@@ -211,9 +215,11 @@ class SaveAsAction(Action):
     stock_id = 'gtk-save-as'
     tooltip = _('Save the model to a new file')
 
+    factory = inject('element_factory')
+
     def init(self, window):
         self._window = window
-        self.factory = resource(UML.ElementFactory)
+        #self.factory = self.element_factory
         #self.factory.connect(self.on_element_factory)
         #self.on_element_factory(self)
         # Disconnect when the window is closed:
@@ -242,7 +248,7 @@ class SaveAsAction(Action):
             try:
                 out = open(filename, 'w')
 
-                worker = GIdleThread(storage.save_generator(XMLWriter(out)), queue)
+                worker = GIdleThread(storage.save_generator(XMLWriter(out), self.element_factory), queue)
                 action_states = self._window.action_pool.get_action_states()
                 self._window.action_pool.insensivate_actions()
                 worker.start()

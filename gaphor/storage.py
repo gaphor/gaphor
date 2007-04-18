@@ -40,7 +40,7 @@ def save(writer=None, factory=None, status_queue=None):
         if status_queue:
             status_queue(status)
 
-def save_generator(writer=None, factory=None):
+def save_generator(writer, factory):
     """Save the current model using @writer, which is a
     gaphor.misc.xmlwriter.XMLWriter instance (or at least a SAX serializer
     with CDATA support).
@@ -128,9 +128,6 @@ def save_generator(writer=None, factory=None):
             save_reference(name, value)
         else:
             save_value(name, value)
-
-    if not factory:
-        factory = resource(UML.ElementFactory)
 
     writer.startDocument()
     writer.startElement('gaphor', { 'version': FILE_FORMAT_VERSION,
@@ -281,7 +278,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     factory.notify_model()
 
 
-def load(filename, factory=None, status_queue=None):
+def load(filename, factory, status_queue=None):
     """Load a file and create a model if possible.
     Optionally, a status queue function can be given, to which the
     progress is written (as status_queue(progress)).
@@ -291,7 +288,7 @@ def load(filename, factory=None, status_queue=None):
         if status_queue:
             status_queue(status)
 
-def load_generator(filename, factory=None):
+def load_generator(filename, factory):
     """Load a file and create a model if possible.
     This function is a generator. It will yield values from 0 to 100 (%)
     to indicate its progression.
@@ -317,8 +314,6 @@ def load_generator(filename, factory=None):
         raise
 
     try:
-        if not factory:
-            factory = resource(UML.ElementFactory)
         factory.flush()
         gc.collect()
         log.info("Read %d elements from file" % len(elements))

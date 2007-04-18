@@ -4,7 +4,7 @@
 import sys
 import gtk
 
-from gaphor import resource
+from gaphor.application import Application
 from gaphor.ui.abstractwindow import AbstractWindow
 
 _WELCOME_TEXT = """Welcome in Gaphor's Editor!
@@ -18,7 +18,7 @@ ui - User interface stuff (gaphor.ui)
 diagram - Diagram items (gaphor.diagram)
 misc - utility package (gaphor.misc)
 
-For convenience, the ElementFactory resource
+For convenience, the ElementFactory
 has been added as 'element_factory'.
 ---
 """
@@ -48,7 +48,7 @@ class EditorWindow(AbstractWindow):
             'ui': gaphor.ui,
             'misc': gaphor.misc,
             'diagram': gaphor.diagram,
-            'element_factory': resource(gaphor.UML.ElementFactory),
+            'element_factory': Application.get_service('element_factory'),
             'clear': self.clear_results
         }
 

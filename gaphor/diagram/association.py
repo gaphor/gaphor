@@ -22,46 +22,13 @@ from gaphas.geometry import Rectangle
 from gaphas.geometry import distance_rectangle_point, distance_line_point
 
 from gaphor import resource, UML
-#from gaphor.diagram import Relationship
 from gaphor.diagram.diagramitem import SubjectSupport
 from gaphor.diagram.diagramline import DiagramLine
 
-#class AssociationRelationship(Relationship):
-#    """Relationship for associations.
-#    """
-def xxx():
-    def relationship(self, line, head_subject = None, tail_subject = None):
-        # First check if we do not already contain the right subject:
-        if line.subject:
-            end1 = line.subject.memberEnd[0]
-            end2 = line.subject.memberEnd[1]
-            if (end1.type is head_type and end2.type is tail_type) \
-               or (end2.type is head_type and end1.type is tail_type):
-                return
-                
-        # Find all associations and determine if the properties on the
-        # association ends have a type that points to the class.
-        Association = UML.Association
-        for assoc in resource(UML.ElementFactory).itervalues():
-            if isinstance(assoc, Association):
-                #print 'assoc.memberEnd', assoc.memberEnd
-                end1 = assoc.memberEnd[0]
-                end2 = assoc.memberEnd[1]
-                if (end1.type is head_type and end2.type is tail_type) \
-                   or (end2.type is head_type and end1.type is tail_type):
-                    # check if this entry is not yet in the diagram
-                    # Return if the association is not (yet) on the canvas
-                    for item in assoc.presentation:
-                        if item.canvas is line.canvas:
-                            break
-                    else:
-                        return assoc
-        return None
-
-
 
 class AssociationItem(DiagramLine):
-    """AssociationItem represents associations. 
+    """
+    AssociationItem represents associations. 
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
     """

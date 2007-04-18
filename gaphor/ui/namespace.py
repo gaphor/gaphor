@@ -27,8 +27,6 @@ class NamespaceModel(gtk.GenericTreeModel):
     """
 
     def __init__(self, factory):
-        if not isinstance (factory, UML.ElementFactory):
-            raise AttributeError, 'factory should be a %s' % UML.ElementFactory.__name__
         # Init parent:
         #self.__gobject_init__()
         gtk.GenericTreeModel.__init__(self)
@@ -388,10 +386,11 @@ class NamespaceView(gtk.TreeView):
     #                 'drag-data-delete': 'override',
     #                 'drag-data-received': 'override' }
 
-    def __init__(self, model):
+    def __init__(self, model, factory):
         assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
         self.__gobject_init__()
         gtk.TreeView.__init__(self, model)
+        self.factory = factory
         self.icon_cache = {}
 
         self.set_property('headers-visible', 0)
@@ -520,8 +519,7 @@ class NamespaceView(gtk.TreeView):
         if drop_info:
             #print 'drop_info', drop_info
             model = self.get_model()
-            factory = resource(UML.ElementFactory)
-            element = factory.lookup(data)
+            element = self.factory.lookup(data)
             path, position = drop_info
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)

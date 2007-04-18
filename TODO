@@ -12,8 +12,14 @@ For 0.10.0 and later:
  - get rid of resource(). Create an Application instance instead (should
    make unit testing easier too).
    This should get rid of the pseudo singletons (_default* instances per module)
-   
+    - replace DataDir code with pkg_resources (ui.stock)
+    - copy-buffer (separate copy service?)
+    - make a service of ElementFactory
+    
  - using stereotypes
+ - reimplement the mechanism that adds already existing relationships to the
+   diagram if an item is copied to that diagram.
+
  - components and stuff
 
  - lot's of tests are dependent on a decently initialized main window.
