@@ -14,7 +14,6 @@ import gaphas
 from gaphas.geometry import distance_point_point
 from gaphas.tool import Tool, HandleTool, ItemTool, ToolChain
 
-from gaphor import resource
 from gaphor.application import Application
 from gaphor.transaction import Transaction, transactional
 

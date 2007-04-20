@@ -3,7 +3,6 @@
 Such as a modifier 'subject' property and a unique id.
 """
 
-from gaphor import resource
 from gaphor import UML
 from gaphor.misc import uniqueid
 from gaphor.UML import Element, Presentation
@@ -136,13 +135,6 @@ class SubjectSupport(Presentation, Element):
                 #self._subject_connect(self.subject, n)
                 subject_connect_helper(subject, callback_prefix, n)
 
-        # Execute some sort of ItemNewSubject action
-        try:
-            main_window = resource('MainWindow')
-        except KeyError:
-            pass
-        else:
-            main_window.execute_action('ItemNewSubject')
         self.request_update()
 
 

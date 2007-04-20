@@ -11,8 +11,6 @@ verify(filename)
     we have a valid model, just a valid file).
 """
 
-from __future__ import generators
-
 from cStringIO import StringIO
 from xml.sax.saxutils import escape
 import types

@@ -49,7 +49,7 @@ This is subject to change in the future when UML specification clarifies in
 this area.
 """
 
-from gaphor import resource, UML
+from gaphor import UML
 from diagramline import DiagramLine, FreeLine
 from elementitem import ElementItem
 from component import ComponentItem

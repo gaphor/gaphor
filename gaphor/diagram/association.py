@@ -21,7 +21,7 @@ from gaphas import Item
 from gaphas.geometry import Rectangle
 from gaphas.geometry import distance_rectangle_point, distance_line_point
 
-from gaphor import resource, UML
+from gaphor import UML
 from gaphor.diagram.diagramitem import SubjectSupport
 from gaphor.diagram.diagramline import DiagramLine
 

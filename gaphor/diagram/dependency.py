@@ -2,7 +2,7 @@
 Common dependencies likeq dependency, usage, realization and implementation.
 """
 
-from gaphor import resource, UML
+from gaphor import UML
 
 #from gaphor.diagram.relationship import Relationship
 from gaphor.diagram.diagramline import DiagramLine

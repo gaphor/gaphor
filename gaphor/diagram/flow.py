@@ -6,8 +6,6 @@ Contains also implementation to split flows using activity edge connectors.
 
 from math import atan, pi, sin, cos
 
-from gaphor import resource
-
 from gaphor import UML
 from gaphor.diagram.diagramline import DiagramLine
 from gaphas.geometry import Rectangle

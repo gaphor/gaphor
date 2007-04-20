@@ -4,7 +4,7 @@ Message - sequence diagram messages.
 
 import itertools
 
-from gaphor import resource, UML
+from gaphor import UML
 
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.lifeline import LifelineItem, LifetimeItem

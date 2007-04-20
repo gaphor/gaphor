@@ -4,7 +4,6 @@ Generalization --
 
 import gobject
 
-from gaphor import resource
 from gaphor import UML
 from gaphor.diagram.diagramline import DiagramLine
 

@@ -6,9 +6,6 @@ ExtensionItem -- Graphical representation of an association.
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
-from __future__ import generators
-
-from gaphor import resource
 from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.diagramline import DiagramLine

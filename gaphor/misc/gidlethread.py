@@ -12,8 +12,6 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
 
-from __future__ import generators
-
 import sys
 import gobject
 import time

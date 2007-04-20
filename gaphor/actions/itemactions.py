@@ -68,17 +68,6 @@ class ItemActionSupport(object):
     focused_item = property(get_focused_item)
 
 
-class ItemNewSubjectAction(Action):
-    id = 'ItemNewSubject'
-
-    def init(self, window):
-        self._window = window
-
-    def execute(self):
-        self._window.execute_action('ItemFocus')
-
-register_action(ItemNewSubjectAction)
-
 #class EditItemAction(Action):
 #    id = 'EditItem'
 #    label = 'Edit'

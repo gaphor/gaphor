@@ -8,7 +8,6 @@ from gaphas.util import path_ellipse, text_align
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
-from gaphor import resource
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP, \
         ALIGN_RIGHT, ALIGN_BOTTOM
