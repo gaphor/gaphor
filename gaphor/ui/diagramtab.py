@@ -4,7 +4,6 @@
 import gtk
 
 from gaphor import UML
-from gaphor import resource
 from gaphor.core import inject
 from gaphor.i18n import _
 from gaphor.diagram.interfaces import IPopupMenu

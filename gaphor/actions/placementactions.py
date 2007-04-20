@@ -79,6 +79,8 @@ class PlacementAction(RadioAction):
     subject_type = None
     group = 'placementtools'
 
+    element_factory = inject('element_factory')
+
     def init(self, window):
         self._window = window
 
@@ -89,7 +91,7 @@ class PlacementAction(RadioAction):
         """Create a new instance of the item and return it."""
         subject = None
         if self.subject_type:
-            subject = UML.create(self.subject_type)
+            subject = self.element_factory.create(self.subject_type)
         diagram = self._window.get_current_diagram()
         return diagram.create(self.type, subject=subject)
 

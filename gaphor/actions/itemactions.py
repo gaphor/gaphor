@@ -3,15 +3,15 @@
 Commands related to the Diagram (DiaCanvas)
 """
 
-from gaphor import GaphorError, resource
 from gaphor import UML
+from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.transaction import transactional
 from gaphor.misc.action import Action, CheckAction, RadioAction, ObjectAction
 from gaphor.misc.action import register_action
 import gaphas
 
-class NoFocusItemError(GaphorError):
+class NoFocusItemError(Exception):
     pass
 
 
@@ -175,6 +175,8 @@ class CreateAttributeAction(Action):
     label = 'New _Attribute'
     tooltip = 'Create a new attribute'
 
+    element_factory = inject('element_factory')
+
     def init(self, window):
         self._window = window
 
@@ -193,9 +195,8 @@ class CreateAttributeAction(Action):
         focus_item = get_parent_focus_item(self._window)
         subject = focus_item.subject
         assert isinstance(subject, (UML.Class, UML.Interface))
-        elemfact = resource(UML.ElementFactory)
         
-        attribute = elemfact.create(UML.Property)
+        attribute = self.element_factory.create(UML.Property)
         attribute.parse('new')
         subject.ownedAttribute = attribute
 
@@ -218,6 +219,8 @@ class CreateOperationAction(Action):
     label = 'New _Operation'
     tooltip = 'Create a new operation'
 
+    element_factory = inject('element_factory')
+
     def init(self, window):
         self._window = window
 
@@ -236,9 +239,8 @@ class CreateOperationAction(Action):
         focus_item = get_parent_focus_item(self._window)
         subject = focus_item.subject
         assert isinstance(subject, UML.Classifier)
-        elemfact = resource(UML.ElementFactory)
 
-        operation = elemfact.create(UML.Operation)
+        operation = self.element_factory.create(UML.Operation)
         operation.parse('new()')
         subject.ownedOperation = operation
         # Select this item for editing

@@ -82,6 +82,7 @@ setup(
             'plugin_manager = gaphor.services.pluginmanager:PluginManager',
             'gui_manager = gaphor.services.guimanager:GUIManager',
             'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
+            'element_factory = gaphor.UML.elementfactory:ElementFactory',
         ],
         'gaphor.adapters': [
             'connectors = gaphor.adapters.connectors',

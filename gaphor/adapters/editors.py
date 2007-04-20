@@ -8,6 +8,7 @@ from gaphas.item import NW, SE
 from gaphas import geometry
 from gaphas import constraint
 from gaphor import UML
+from gaphor.core import inject
 from gaphor.UML.umllex import render_attribute
 from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
@@ -250,6 +251,8 @@ class ForkNodeItemEditor(object):
     interface.implements(IEditor)
     component.adapts(items.ForkNodeItem)
 
+    element_factory = inject('element_factory')
+
     def __init__(self, item):
         self._item = item
 
@@ -275,8 +278,7 @@ class ForkNodeItemEditor(object):
         spec = self._item.subject.joinSpec
         if not spec:
             from gaphor import resource
-            factory = resource(UML.ElementFactory)
-            spec = self._item.subject.joinSpec = factory.create(UML.LiteralSpecification)
+            spec = self._item.subject.joinSpec = self.element_factory.create(UML.LiteralSpecification)
             spec.value = text
 
     def key_pressed(self, pos, key):

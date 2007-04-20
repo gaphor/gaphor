@@ -226,7 +226,6 @@ class SaveAsAction(Action):
         #window.connect(self.on_window_closed)
 
     def on_element_factory(self, *args):
-        #element_factory = resource(UML.ElementFactory)
         if self.element_factory.values():
             self.sensitive = True
         else:
@@ -459,6 +458,8 @@ class CreateDiagramAction(Action):
     label = _('_New diagram')
     stock_id = 'gaphor-diagram'
 
+    element_factory = inject('element_factory')
+
     def init(self, window):
         self._window = window
 
@@ -468,7 +469,7 @@ class CreateDiagramAction(Action):
 
     def execute(self):
         element = self._window.get_tree_view().get_selected_element()
-        diagram = resource(UML.ElementFactory).create(UML.Diagram)
+        diagram = self.element_factory.create(UML.Diagram)
         diagram.package = element
 
         diagram.name = '%s diagram' % element.name

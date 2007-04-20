@@ -1,7 +1,9 @@
 
 import unittest
 from gaphor import resource
-from gaphor.ui.mainwindow import MainWindow
+resource('DataDir', '')
+from gaphor.application import Application
+#from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram.tool import PlacementTool
 from gaphor.actions import placementactions
 from gaphor import UML
@@ -11,20 +13,20 @@ from gaphas.view import ToolContext
 
 Event = Context
 
-
 class PlacementToolTestCase(unittest.TestCase):
 
-    main_window = resource(MainWindow)
-    try:
-        main_window.construct()
-    except:
-        pass
+#    main_window = MainWindow()
+#    try:
+#        main_window.construct()
+#    except:
+#        pass
 
     def setUp(self):
-        pass
+        Application.init()
+        self.main_window = Application.get_service('gui_manager').main_window
 
     def tearDown(self):
-        pass
+        Application.shutdown()
 
     def do_test_placement(self, action):
         diagram = UML.create(UML.Diagram)

@@ -3,7 +3,6 @@
 
 import gtk
 
-from gaphor import resource
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.i18n import _
@@ -471,7 +470,8 @@ gtk.accel_map_add_filter('gaphor')
 
 @component.adapter(IServiceEvent)
 def on_undo(*args):
-    resource(MainWindow).execute_action('UndoStack')
+    from gaphor.application import Application
+    Application.get_service('gui_manager').main_window.execute_action('UndoStack')
 
 component.provideHandler(on_undo)
 

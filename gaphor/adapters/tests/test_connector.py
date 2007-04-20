@@ -5,11 +5,14 @@ Test Item connections.
 import unittest
 from zope import component
 from gaphor import UML
+from gaphor.application import Application
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
 # Ensure adapters are loaded
 import gaphor.adapters
+
+Application.load_services()
 
 class ConnectorTestCase(unittest.TestCase):
 

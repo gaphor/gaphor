@@ -2,6 +2,7 @@
 import unittest
 
 from gaphor import resource, UML
+from gaphor.application import Application
 from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram import items
 
@@ -10,15 +11,18 @@ from gaphor.actions.itemactions import *
 
 class ItemActionTestCase(unittest.TestCase):
 
-    main_window = resource(MainWindow)
-    try:
-        main_window.construct()
-    except:
-        pass
+#    main_window = resource(MainWindow)
+#    try:
+#        main_window.construct()
+#    except:
+#        pass
 
     def setUp(self):
         self.diagram = UML.create(UML.Diagram)
         self.main_window.show_diagram(self.diagram)
+        Application.init()
+        self.main_window = Application.get_service('gui_manager').main_window
+
         self.class_ = self.diagram.create(items.ClassItem, subject=UML.create(UML.Class))
 
     def tearDown(self):

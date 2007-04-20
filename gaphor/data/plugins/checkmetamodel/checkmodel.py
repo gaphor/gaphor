@@ -3,6 +3,7 @@
 from gaphor import resource
 from gaphor import storage
 from gaphor import UML
+from gaphor.core import inject
 from os import path
 
 def report(element, message):

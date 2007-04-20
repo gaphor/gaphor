@@ -33,6 +33,7 @@ class GUIManager(object):
     def init_stock_icons(self):
         # Load stock items
         import gaphor.ui.stock
+        gaphor.ui.stock.load_stock_icons()
 
     def init_main_window(self):
         from gaphor.ui.accelmap import load_accel_map
@@ -40,11 +41,12 @@ class GUIManager(object):
         import gtk
 
         load_accel_map()
-        #self._main_window = MainWindow()
+        self._main_window = MainWindow()
         # Backwards compat
         # TODO: remove
         from gaphor import resource
-        self._main_window = resource(MainWindow)
+        resource.set(MainWindow, self._main_window)
+        resource.set('MainWindow', self._main_window)
         self._main_window.construct()
 
         # When the state changes to CLOSED, quit the application
@@ -55,6 +57,7 @@ class GUIManager(object):
         from gaphor.actions import itemactions, placementactions
 
     def shutdown(self):
+        #self._main_window.close()
         from gaphor.ui.accelmap import save_accel_map
         save_accel_map()
 

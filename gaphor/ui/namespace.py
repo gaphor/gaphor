@@ -11,7 +11,6 @@ import stock
 from gaphas.decorators import async
 
 from gaphor import UML
-from gaphor import resource
 from gaphor.transaction import Transaction
 
 

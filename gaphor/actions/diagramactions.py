@@ -6,8 +6,8 @@ Commands related to the Diagram (DiaCanvas)
 import gtk
 import gaphas
 
-from gaphor import resource
 from gaphor import UML
+from gaphor.core import inject
 from gaphor.transaction import Transaction, transactional
 from gaphor.misc.action import Action, CheckAction, RadioAction
 from gaphor.misc.action import register_action as _register_action
@@ -191,10 +191,12 @@ class DeleteAction(Action):
 register_action(DeleteAction, 'ItemSelect')
 
 
+copy_buffer = []
+
 class CopyAction(Action):
     """Copy/Cut/Paste functionality required a lot of thinking:
 
-    Store a list of DiagramItems that have to be copied in resource
+    Store a list of DiagramItems that have to be copied in a global
     'copy-buffer'.
 
       - in order to make copy/paste work, the load/save functions should be
@@ -226,7 +228,8 @@ class CopyAction(Action):
                 copy_items.append(i)
                 #i.save(save_func)
             if copy_items:
-                resource.set('copy-buffer', copy_items)
+                global copy_buffer
+                copy_buffer = copy_items
         tab = self._window.get_current_diagram_tab()
 
 register_action(CopyAction, 'ItemFocus', 'ItemSelect', 'ItemSelectAll', 'EditDelete')
@@ -235,7 +238,7 @@ register_action(CopyAction, 'ItemFocus', 'ItemSelect', 'ItemSelectAll', 'EditDel
 class PasteAction(Action):
     """Copy/Cut/Paste functionality required a lot of thinking:
 
-    Create a copy of DiagramItems that have to be copied in resource
+    Create a copy of DiagramItems that have to be copied in a global
     'copy-buffer'.
 
       - in order to make copy/paste work, the load/save functions should be
@@ -251,12 +254,15 @@ class PasteAction(Action):
     accel = 'C-v'
     stock_id = 'gtk-paste'
 
+    element_factory = inject('element_factory')
+
     def init(self, window):
         self._window = window
 
     def update(self):
+        global copy_buffer
         diagram_tab = self._window.get_current_diagram_tab()
-        self.sensitive = diagram_tab and resource('copy-buffer', [])
+        self.sensitive = diagram_tab and copy_buffer
 
     def _load_element(self, name, value):
         """Copy an element, preferbly from the list of new items,
@@ -267,7 +273,7 @@ class PasteAction(Action):
         if item:
             self._item.load(name, item)
         else:
-            item = self._factory.lookup(value.id)
+            item = self.element_factory.lookup(value.id)
             if item:
                 self._item.load(name, item)
 
@@ -285,6 +291,7 @@ class PasteAction(Action):
 
     @transactional
     def execute(self):
+        global copy_buffer
         view = self._window.get_current_diagram_view()
         diagram = self._window.get_current_diagram()
         if not view:
@@ -295,11 +302,10 @@ class PasteAction(Action):
         if not canvas:
             return
 
-        copy_items = [ c for c in resource('copy-buffer', []) if c.canvas ]
+        copy_items = [ c for c in copy_buffer if c.canvas ]
 
         # Mapping original id -> new item
         self._new_items = {}
-        self._factory = resource(UML.ElementFactory)
 
         # Create new id's that have to be used to create the items:
         for ci in copy_items:

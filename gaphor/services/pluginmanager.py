@@ -26,6 +26,7 @@ import os
 import os.path
 import glob
 import sys
+import pkg_resources
 from xml.sax import handler, make_parser
 
 from zope import interface
@@ -42,8 +43,9 @@ MODULENS='gaphor._plugins.'
 
 # Directories to look for plugins. These sirectories are added to the
 # search path. User provided plugins overrule system plugins.
-DEFAULT_PLUGIN_DIRS = [os.path.join(resource('DataDir'), 'plugins'),
-                       os.path.join(resource('UserDataDir'), 'plugins')]
+# TODO: fix:
+#DEFAULT_PLUGIN_DIRS = [os.path.join(resource('DataDir'), 'plugins'),
+#                       os.path.join(resource('UserDataDir'), 'plugins')]
 
 #log.debug('sys.path=' + str(sys.path))
 #log.debug('DEFAULT_PLUGIN_DIRS=' + str(DEFAULT_PLUGIN_DIRS))
@@ -92,14 +94,14 @@ class Plugin(object):
 
         return True
 
-    def import_plugin(self):
+    def import_plugin(self, importer):
         """
         Do the actual import of the plugin module.
         """
         #mod = __import__(self.path.split(os.sep)[-1], globals(), locals(), [])
         name = os.path.split(self.path)[1]
-        f, n, d = imp.find_module(name, DEFAULT_PLUGIN_DIRS)
-        mod = imp.load_module(MODULENS + name, f, n, d)
+
+        mod = importer(name)
         self.module = mod
         self.initialized = True
         if mod:
@@ -322,11 +324,17 @@ class PluginManager(object):
         if self.bootstrapped:
             return
 
+        plugin_dir = pkg_resources.resource_filename('gaphor', 'data/plugins')
+
         # Load the plugins in reverse order, so the user plugins will
         # overwrite the default plugins. (they are imported in sys.path as
         # [user plugins, default plugins]).
-        for plugin_dir in DEFAULT_PLUGIN_DIRS:
-            self.load_plugins_from_dir(plugin_dir)
+        #for plugin_dir in plugin_dir:
+        self.load_plugins_from_dir(plugin_dir)
+
+        def plugin_importer(name):
+            f, n, d = imp.find_module(name, [plugin_dir])
+            return imp.load_module(MODULENS + name, f, n, d)
 
         import_done = True
         while import_done:
@@ -334,7 +342,7 @@ class PluginManager(object):
             for plugin in self.plugins.itervalues():
                 if plugin.requirements_met(self):
                     try:
-                        plugin.import_plugin()
+                        plugin.import_plugin(plugin_importer)
                     except Exception, e:
                         plugin.status = 'Failed to load plugin %s: %s' % (plugin.name, e)
                         log.error('Failed to load plugin %s' % plugin.name, e)

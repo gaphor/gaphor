@@ -8,6 +8,7 @@ from gaphas.item import NW, SE
 from gaphas import geometry
 from gaphas import constraint
 from gaphor import UML
+from gaphor.core import inject
 from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
 from gaphor.misc.ipair import ipair
@@ -306,6 +307,8 @@ class RelationshipConnect(ElementConnect):
     on the canvas.
     """
 
+    element_factory = inject('element_factory')
+
     def relationship(self, required_type, head, tail):
         """
         Find an existing relationship in the model that meets the
@@ -366,7 +369,7 @@ class RelationshipConnect(ElementConnect):
         relation = self.relationship(type, head, tail)
         if not relation:
             line = self.line
-            relation = UML.create(type)
+            relation = self.element_factory.create(type)
             setattr(relation, head[0], line.head.connected_to.subject)
             setattr(relation, tail[0], line.tail.connected_to.subject)
         return relation
@@ -736,7 +739,7 @@ class ExtensionConnect(RelationshipConnect):
 
             # Find all associations and determine if the properties on
             # the association ends have a type that points to the class.
-            for assoc in UML.select():
+            for assoc in self.element_factory.select():
                 if isinstance(assoc, UML.Extension):
                     end1 = assoc.memberEnd[0]
                     end2 = assoc.memberEnd[1]
@@ -752,9 +755,9 @@ class ExtensionConnect(RelationshipConnect):
                             return
             else:
                 # Create a new Extension relationship
-                relation = UML.create(UML.Extension)
-                head_end = UML.create(UML.Property)
-                tail_end = UML.create(UML.ExtensionEnd)
+                relation = self.element_factory.create(UML.Extension)
+                head_end = self.element_factory.create(UML.Property)
+                tail_end = self.element_factory.create(UML.ExtensionEnd)
                 relation.package = element.canvas.diagram.namespace
                 relation.memberEnd = head_end
                 relation.memberEnd = tail_end
@@ -827,7 +830,7 @@ class AssociationConnect(RelationshipConnect):
                     
             # Find all associations and determine if the properties on
             # the association ends have a type that points to the class.
-            for assoc in UML.select():
+            for assoc in self.element_factory.select():
                 if isinstance(assoc, UML.Association):
                     end1 = assoc.memberEnd[0]
                     end2 = assoc.memberEnd[1]
@@ -849,11 +852,11 @@ class AssociationConnect(RelationshipConnect):
                             return
             else:
                 # Create a new Extension relationship
-                relation = UML.create(UML.Association)
-                head_end = UML.create(UML.Property)
-                head_end.lowerValue = UML.create(UML.LiteralSpecification)
-                tail_end = UML.create(UML.Property)
-                tail_end.lowerValue = UML.create(UML.LiteralSpecification)
+                relation = self.element_factory.create(UML.Association)
+                head_end = self.element_factory.create(UML.Property)
+                head_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
+                tail_end = self.element_factory.create(UML.Property)
+                tail_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
                 relation.package = element.canvas.diagram.namespace
                 relation.memberEnd = head_end
                 relation.memberEnd = tail_end
@@ -924,7 +927,7 @@ class FlowConnect(RelationshipConnect):
                         ('source', 'outgoing'),
                         ('target', 'incoming'))
         if not relation.guard:
-            relation.guard = UML.create(UML.LiteralSpecification)
+            relation.guard = self.element_factory.create(UML.LiteralSpecification)
         line.subject = relation
         opposite = line.opposite(handle)
         if opposite and isinstance(opposite.connected_to, (items.ForkNodeItem, items.DecisionNodeItem)):
@@ -997,10 +1000,10 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         element = self.element
         subject = element.subject
         if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
-            UML.swap_element(subject, join_node_class)
+            self.element_factory.swap_element(subject, join_node_class)
             element.request_update()
         elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
-            UML.swap_element(subject, fork_node_class)
+            self.element_factory.swap_element(subject, fork_node_class)
             element.request_update()
         elif not element.combined and len(subject.incoming) > 1 and len(subject.outgoing) > 1:
             join_node = subject
@@ -1011,11 +1014,11 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             else:
                 flow_class = UML.ControlFlow
             
-            UML.swap_element(join_node, join_node_class)
-            fork_node = UML.create(fork_node_class)
+            self.element_factory.swap_element(join_node, join_node_class)
+            fork_node = self.element_factory.create(fork_node_class)
             for flow in list(join_node.outgoing):
                 flow.source = fork_node
-            flow = UML.create(flow_class)
+            flow = self.element_factory.create(flow_class)
             flow.source = join_node
             flow.target = fork_node
 
@@ -1047,7 +1050,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
                 # swap subject to fork node if outgoing > 1
                 if len(join_node.outgoing) > 1:
                     assert len(join_node.incoming) < 2
-                    UML.swap_element(join_node, fork_node_class)
+                    self.element_factory.swap_element(join_node, fork_node_class)
                 element.combined = None
 
     def connect_subject(self, handle):

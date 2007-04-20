@@ -2,10 +2,10 @@
 """
 
 import os.path
+import pkg_resources
 from xml.sax import handler
 import gtk
 
-from gaphor import resource
 from gaphor import UML
 from gaphor.parser import ParserException
 
@@ -116,19 +116,23 @@ def load_stock_icons():
     """
     from xml.sax import make_parser
     parser = make_parser()
-    data_dir = resource('DataDir')
-    icon_dir = os.path.join(data_dir, 'pixmaps')
+    icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor', 'data/pixmaps'))
+    log.info('Icon dir: %s' % icon_dir)
+    #icon_dir = 'gaphor/data/pixmaps'
     loader = StockIconLoader(icon_dir)
 
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    filename = os.path.join(data_dir, 'icons.xml')
+    filename = pkg_resources.resource_filename('gaphor', 'data/icons.xml')
     if os.name == 'nt' and data_dir[1] == ':':
         # Make the filename a full URL
         filename = 'file:' + filename.replace('\\\\', '/')
+    #try:
     parser.parse(filename)
+    #except IOError, e:
+    #    log.error('Unable to load icons', e)
 
-load_stock_icons()
+#load_stock_icons()
 
 # vim:sw=4:et
