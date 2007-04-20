@@ -6,15 +6,21 @@ main screen and diagram windows.
 import os, os.path
 import gtk
 
+if os.name == 'nt':
+    home = 'USERPROFILE'
+else:
+    home = 'HOME'
+
+user_data_dir = os.path.join(os.getenv(home), '.gaphor')
+
+
 def _get_accel_map_filename():
     """
     The Gaphor accelMap file ($HOME/.gaphor/accelmap).
     """
-    from gaphor import resource
-    datadir = resource('UserDataDir')
-    if not os.path.exists(datadir):
-        os.mkdir(datadir)
-    return os.path.join(datadir, 'accelmap')
+    if not os.path.exists(user_data_dir):
+        os.mkdir(user_data_dir)
+    return os.path.join(user_data_dir, 'accelmap')
 
 
 def load_accel_map():
