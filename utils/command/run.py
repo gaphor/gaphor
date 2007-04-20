@@ -4,7 +4,7 @@ Command for running gaphor and tests directly from setup.py.
 
 import sys, os.path
 from distutils.core import Command
-
+from pkg_resources import load_entry_point
 
 class run(Command):
 
@@ -41,8 +41,8 @@ class run(Command):
 
         for cmd_name in self.get_sub_commands():
             self.run_command(cmd_name)
-        if self.build_lib not in sys.path:
-            sys.path.insert(0, self.build_lib)
+        #if self.build_lib not in sys.path:
+            #sys.path.insert(0, self.build_lib)
         
         import gaphor
         #os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
@@ -65,9 +65,9 @@ class run(Command):
             fp = open(f)
             # Prepend module's package path to sys.path
             pkg = os.path.join(self.build_lib, *self.doctest.split('.')[:-1])
-            if pkg:
-                sys.path.insert(0, pkg)
-                print 'Added', pkg, 'to sys.path'
+            #if pkg:
+            #    sys.path.insert(0, pkg)
+            #    print 'Added', pkg, 'to sys.path'
             # Load the module as local module (without package)
             test_module = imp.load_source(self.doctest.split('.')[-1], f, fp)
             failure, tests = doctest.testmod(test_module, name=self.doctest,
@@ -99,11 +99,12 @@ class run(Command):
             print 'Executing file: %s...' % self.file
             dir, f = os.path.split(self.file)
             print 'Extending PYTHONPATH with %s' % dir
-            sys.path.append(dir)
+            #sys.path.append(dir)
             execfile(self.file, {})
         else:
             print 'Launching Gaphor...'
-            gaphor.main(self.model)
+            #gaphor.main(self.model)
+            load_entry_point('gaphor==0.10.5', 'console_scripts', 'gaphor')()
 
     sub_commands = [('build', None)]
 

@@ -29,18 +29,18 @@ class build_uml(Command):
     boolean_options = [ 'force' ]
 
     def initialize_options(self):
-        self.build_lib = None
+        #self.build_lib = None
         self.force = 0
         self.data_dir = None
 
     def finalize_options(self):
             self.set_undefined_options('build',
-                                       ('build_lib', 'build_lib'),
+                                       #('build_lib', 'build_lib'),
                                        ('force', 'force'))
 
     def run(self):
         import sys
-        sys.path.insert(0, self.build_lib)
+        #sys.path.insert(0, self.build_lib)
         self.generate_uml2()
 
     def generate_uml2(self):
@@ -51,7 +51,7 @@ class build_uml(Command):
         overrides = os.path.join('gaphor', 'UML', 'uml2.override')
         model = os.path.join('gaphor', 'UML', 'uml2.gaphor')
         py_model = os.path.join('gaphor', 'UML', 'uml2.py')
-        outfile = os.path.join(self.build_lib, py_model)
+        outfile = py_model #os.path.join(self.build_lib, py_model)
         self.mkpath(os.path.dirname(outfile))
         if self.force or newer(model, outfile) \
                       or newer(overrides, outfile) \
