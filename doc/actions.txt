@@ -26,7 +26,7 @@ Actions, menu items, toolbars and toolboxes
     ? Actions should be modeled as functions (methods) with action as
       first (sec) parameter.
  * filename should not be part of the main window
- * some sort of factory mechanism.
+ * some sort of factory mechanism (MultiAction?).
      - RecentFiles will manage up to 10 recent files entries.
      - same for stereotypes: should be managed by one "ObjectAction".
      - can Placeholders play a role here?
