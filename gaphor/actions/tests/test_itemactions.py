@@ -1,7 +1,7 @@
 
 import unittest
 
-from gaphor import resource, UML
+from gaphor import UML
 from gaphor.application import Application
 from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram import items
@@ -18,10 +18,11 @@ class ItemActionTestCase(unittest.TestCase):
 #        pass
 
     def setUp(self):
-        self.diagram = UML.create(UML.Diagram)
-        self.main_window.show_diagram(self.diagram)
         Application.init()
         self.main_window = Application.get_service('gui_manager').main_window
+        self.action_manager = Application.get_service('action_manager')
+        self.diagram = UML.create(UML.Diagram)
+        self.main_window.show_diagram(self.diagram)
 
         self.class_ = self.diagram.create(items.ClassItem, subject=UML.create(UML.Class))
 
@@ -31,7 +32,7 @@ class ItemActionTestCase(unittest.TestCase):
         del self.class_
 
     def _test_action(self, action_id):
-        action = self.main_window.get_action_pool().get_action(action_id)
+        action = self.action_manager.get_action(action_id)
         assert action is not None
         action.update()
         action.execute()

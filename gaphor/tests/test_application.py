@@ -20,6 +20,10 @@ class StorageTestCase(unittest.TestCase):
         """
         
         Application.load_services()
+        assert Application.get_service('undo_manager')
+        assert Application.get_service('plugin_manager')
+
+        # After that, services are also available as Utilities:
         assert component.queryUtility(IService, 'undo_manager')
         assert component.queryUtility(IService, 'plugin_manager')
 

@@ -1,8 +1,6 @@
 
 import unittest
-from gaphor import resource
 from gaphor.application import Application
-#from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram.tool import PlacementTool
 from gaphor.actions import placementactions
 from gaphor import UML
@@ -14,18 +12,17 @@ Event = Context
 
 class PlacementToolTestCase(unittest.TestCase):
 
-#    main_window = MainWindow()
-#    try:
-#        main_window.construct()
-#    except:
-#        pass
-
-    def setUp(self):
+    def __init__(self, arg2):
+        unittest.TestCase.__init__(self, arg2)
         Application.init()
         self.main_window = Application.get_service('gui_manager').main_window
 
-    def tearDown(self):
-        Application.shutdown()
+#    def setUp(self):
+#       Application.init()
+#       self.main_window = Application.get_service('gui_manager').main_window
+
+#   def tearDown(self):
+#       Application.shutdown()
 
     def do_test_placement(self, action):
         diagram = UML.create(UML.Diagram)
@@ -81,7 +78,6 @@ class PlacementToolTestCase(unittest.TestCase):
 
     def test_include_placement(self):
         self.do_test_placement(placementactions.IncludePlacementAction())
-
 
     def test_artifact_placement(self):
         self.do_test_placement(placementactions.ArtifactPlacementAction())

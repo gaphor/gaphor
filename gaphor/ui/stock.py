@@ -125,7 +125,7 @@ def load_stock_icons():
     parser.setContentHandler(loader)
 
     filename = pkg_resources.resource_filename('gaphor', 'data/icons.xml')
-    if os.name == 'nt' and data_dir[1] == ':':
+    if os.name == 'nt':
         # Make the filename a full URL
         filename = 'file:' + filename.replace('\\\\', '/')
     #try:
