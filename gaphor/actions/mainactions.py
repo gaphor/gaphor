@@ -3,13 +3,14 @@
 Main window actions.
 """
 
+import os.path
 import sys
+import pkg_resources
 import gobject
 import gtk
 import gc
 from gaphor.core import inject
 from gaphor.application import Application
-from gaphor import resource
 from gaphor import UML
 from gaphor import diagram
 from gaphor.misc.action import Action, CheckAction, RadioAction, register_action
@@ -399,7 +400,7 @@ class AboutAction(Action):
 
     def execute(self):
         data_dir =  os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'data')
-        logo = gtk.gdk.pixbuf_new_from_file(os.path.join(data_dir, 'pixmaps', 'logo.png')
+        logo = gtk.gdk.pixbuf_new_from_file(os.path.join(data_dir, 'pixmaps', 'logo.png'))
         version = Application.distribution.version
         about = gtk.Dialog("About Gaphor", self._window.get_window(), gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
         about.set_default_response(gtk.RESPONSE_OK)

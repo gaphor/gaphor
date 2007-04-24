@@ -11,7 +11,7 @@ from zope import component
 import gaphor
 from gaphor.interfaces import IService
 from gaphor.ui.abstractwindow import AbstractWindow
-from gaphor.plugin import resource
+
 
 PLUGIN_COLUMN = 0
 NAME_COLUMN = 1

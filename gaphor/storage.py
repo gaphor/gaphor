@@ -25,7 +25,6 @@ from gaphor import parser
 from gaphor import diagram
 from gaphor.application import Application
 from gaphor.diagram import items
-from gaphor import resource
 from gaphor.i18n import _
 #from gaphor.misc.xmlwriter import XMLWriter
 

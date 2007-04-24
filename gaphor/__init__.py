@@ -3,13 +3,11 @@
 """This is Gaphor, a Python based UML editor.
 """
 
-__all__ = [ 'main', 'resource', 'GaphorError' ]
+__all__ = [ 'main', 'GaphorError' ]
 
 import os
 
 import misc.logger
-
-from misc.resource import Resource
 
 if os.name == 'nt':
     home = 'USERPROFILE'
@@ -17,15 +15,6 @@ else:
     home = 'HOME'
 
 user_data_dir = os.path.join(os.getenv(home), '.gaphor')
-
-
-# Application wide resources can be stored in the 'resource' like this
-#
-# >>> resource('myResource', some_value)
-#
-# If the resource doesn't already exist, it is created, otherwise the existing
-# resource is returned.
-resource = Resource(initial_resources={ })
 
 
 class GaphorError(Exception):
@@ -43,8 +32,6 @@ def main(gaphor_file=None):
     gaphor.application.Application. 
     """
     import pkg_resources
-
-    resource('DataDir', os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'data'))
 
     from gaphor.application import Application
     Application.init()

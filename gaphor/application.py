@@ -15,8 +15,6 @@ from gaphor.interfaces import IService
 
 import gaphor.UML
 
-# Backwards compat
-from gaphor import resource
 
 class _Application(object):
 
@@ -47,11 +45,6 @@ class _Application(object):
                 raise 'MisConfigurationException', 'Entry point %s doesn''t provide IService' % ep.name
             srv = cls()
             self._uninitialized_services[ep.name] = srv
-
-        # HACK: implicitly add UML.ElementFactory for now.
-#        from gaphor import UML
-#        self._uninitialized_services['element_factory'] = resource(UML.ElementFactory)
-        # /HACK
 
     def init_all_services(self):
         while self._uninitialized_services:

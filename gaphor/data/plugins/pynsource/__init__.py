@@ -10,7 +10,6 @@ import gaphor
 from gaphor.ui.abstractwindow import AbstractWindow
 from gaphor.core import inject
 import gaphor.plugin
-from gaphor.plugin import resource
 from pynsource import PySourceAsText
 from engineer import Engineer
 

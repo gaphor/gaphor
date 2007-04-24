@@ -17,7 +17,6 @@ by the 'window' property.
 
 import sys
 import os.path
-from gaphor import resource
 from gaphor.application import Application
 
 from gaphor.misc.action import Action as _Action

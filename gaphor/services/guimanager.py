@@ -44,9 +44,9 @@ class GUIManager(object):
         self._main_window = MainWindow()
         # Backwards compat
         # TODO: remove
-        from gaphor import resource
-        resource.set(MainWindow, self._main_window)
-        resource.set('MainWindow', self._main_window)
+        #from gaphor import resource
+        #resource.set(MainWindow, self._main_window)
+        #resource.set('MainWindow', self._main_window)
         self._main_window.construct()
 
         # When the state changes to CLOSED, quit the application

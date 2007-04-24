@@ -277,7 +277,6 @@ class ForkNodeItemEditor(object):
         """
         spec = self._item.subject.joinSpec
         if not spec:
-            from gaphor import resource
             spec = self._item.subject.joinSpec = self.element_factory.create(UML.LiteralSpecification)
             spec.value = text
 
