@@ -244,7 +244,7 @@ class PlacementTool(gaphas.tool.PlacementTool):
         self.is_released = True
         try:
             if Application.get_service('properties')('reset-tool-after-create', False):
-                pool = Application.get_service('gui_manager').main_window.get_action_pool()
+                pool = Application.get_service('action_manager')
                 pool.get_action('Pointer').active = True
             return gaphas.tool.PlacementTool.on_button_release(self, context, event)
         finally:

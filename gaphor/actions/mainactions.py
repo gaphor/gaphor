@@ -76,6 +76,7 @@ class NewAction(Action):
     stock_id = 'gtk-new'
 
     element_factory = inject('element_factory')
+    action_manager = inject('action_manager')
 
     def init(self, window):
         self._window = window
@@ -106,7 +107,7 @@ class NewAction(Action):
         element_factory.notify_model()
 
         self._window.select_element(diagram)
-        self._window.execute_action('OpenModelElement')
+        self.action_manager.execute('OpenModelElement')
 
 weave_method(NewAction.execute, ErrorHandlerAspect, message='Could not create a new model.')
 register_action(NewAction)
@@ -119,6 +120,7 @@ class RevertAction(Action):
     tooltip = 'Reload the loaded Gaphor project from file'
 
     element_factory = inject('element_factory')
+    action_manager = inject('action_manager')
 
     def init(self, window):
         # The filename of the last file loaded
@@ -133,7 +135,7 @@ class RevertAction(Action):
         self.load(filename)
 
     def load(self, filename):
-        action_states = self._window.action_pool.get_action_states()
+        #action_states = self._window.action_pool.get_action_states()
         try:
             from gaphor import storage
             log.debug('Loading from: %s' % filename)
@@ -142,7 +144,7 @@ class RevertAction(Action):
             self.filename = filename
             gc.collect()
             worker = GIdleThread(storage.load_generator(filename, self.element_factory), queue)
-            self._window.action_pool.insensivate_actions()
+            #self._window.action_pool.insensivate_actions()
             get_undo_manager().clear_undo_stack()
             get_undo_manager().clear_redo_stack()
             worker.start()
@@ -162,8 +164,8 @@ class RevertAction(Action):
                 view.expand_row(model.path_from_element(node[0]), False)
 
         finally:
-            self._window.action_pool.set_action_states(action_states)
-            self._window.action_pool.update_actions()
+            #self._window.action_pool.set_action_states(action_states)
+            self.action_manager.update_actions()
             try:
                 win.destroy()
             except:
@@ -248,8 +250,8 @@ class SaveAsAction(Action):
                 out = open(filename, 'w')
 
                 worker = GIdleThread(storage.save_generator(XMLWriter(out), self.element_factory), queue)
-                action_states = self._window.action_pool.get_action_states()
-                self._window.action_pool.insensivate_actions()
+                #action_states = self._window.action_pool.get_action_states()
+                #self._window.action_pool.insensivate_actions()
                 worker.start()
                 worker.wait()
                 if worker.error:
@@ -260,7 +262,7 @@ class SaveAsAction(Action):
                 self._window.set_filename(filename)
 
                 # Restore states of actions
-                self._window.action_pool.set_action_states(action_states)
+                #self._window.action_pool.set_action_states(action_states)
             finally:
                 win.destroy()
 
@@ -396,7 +398,8 @@ class AboutAction(Action):
         self._window = window
 
     def execute(self):
-        logo = gtk.gdk.pixbuf_new_from_file (resource('DataDir') + '/pixmaps/logo.png')
+        data_dir =  os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'data')
+        logo = gtk.gdk.pixbuf_new_from_file(os.path.join(data_dir, 'pixmaps', 'logo.png')
         version = Application.distribution.version
         about = gtk.Dialog("About Gaphor", self._window.get_window(), gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
         about.set_default_response(gtk.RESPONSE_OK)
@@ -459,6 +462,7 @@ class CreateDiagramAction(Action):
     stock_id = 'gaphor-diagram'
 
     element_factory = inject('element_factory')
+    action_manager = inject('action_manager')
 
     def init(self, window):
         self._window = window
@@ -475,8 +479,8 @@ class CreateDiagramAction(Action):
         diagram.name = '%s diagram' % element.name
 
         self._window.select_element(diagram)
-        self._window.execute_action('OpenModelElement')
-        self._window.execute_action('RenameModelElement')
+        self.action_manager.execute('OpenModelElement')
+        self.action_manager.execute('RenameModelElement')
 
 register_action(CreateDiagramAction, 'SelectRow')
 
@@ -627,6 +631,7 @@ class UndoAction(Action):
     accel = 'C-z'
 
     # TODO: check if the diagram can undo.
+    action_manager = inject('action_manager')
 
     def init(self, window):
         self._window = window
@@ -637,7 +642,7 @@ class UndoAction(Action):
     def execute(self):
         get_undo_manager().undo_transaction()
         self.update()
-        self._window.execute_action('UndoStack')
+        self.action_manager.execute('UndoStack')
 
 register_action(UndoAction, 'UndoStack')
 
@@ -648,6 +653,8 @@ class RedoAction(Action):
     tooltip = 'Redo the undone changes'
     accel = 'C-r'
 
+    action_manager = inject('action_manager')
+
     def init(self, window):
         self._window = window
 
@@ -657,7 +664,7 @@ class RedoAction(Action):
     def execute(self):
         get_undo_manager().redo_transaction()
         #self.update()
-        self._window.execute_action('UndoStack')
+        self.action_manager.execute('UndoStack')
 
 register_action(RedoAction, 'UndoStack')
 
@@ -665,6 +672,8 @@ register_action(RedoAction, 'UndoStack')
 class RecentFileAction(ObjectAction):
     """Objects created by the RecentFilesSlot are of this kind.
     """
+
+    action_manager = inject('action_manager')
 
     def init(self, window, filename):
         self._window = window
@@ -674,7 +683,7 @@ class RecentFileAction(ObjectAction):
         pass
 
     def execute(self):
-        revert_action = self._window.get_action_pool().get_action('FileRevert')
+        revert_action = self.action_manager.get_action('FileRevert')
         revert_action.load(self._filename)
 
 
@@ -685,7 +694,8 @@ class RecentFilesSlot(DynamicMenu):
 
     gui_manager = inject('gui_manager')
     properties = inject('properties')
-    
+    action_manager = inject('action_manager')
+
     def __init__(self, slot_id):
         DynamicMenu.__init__(self, slot_id)
 
@@ -696,7 +706,7 @@ class RecentFilesSlot(DynamicMenu):
         for f, i in zip(recent_files, xrange(len(recent_files))):
             id = 'RecentFile_%d' % i
             try:
-                action = window.get_action_pool().get_action(id)
+                action = self.action_manager.get_action(id)
                 action._label='_%d. %s' % (i+1, f)
                 action._tooltip='Load %s.' % f
             except ActionError:
@@ -704,7 +714,7 @@ class RecentFilesSlot(DynamicMenu):
                 action = RecentFileAction(id,
                                           label='_%d. %s' % (i+1, f),
                                           tooltip='Load %s.' % f)
-                window.get_action_pool().set_action(action)
+                self.action_manager.set_action(action)
             action.init(window, f)
             file_list.append(id)
         return file_list

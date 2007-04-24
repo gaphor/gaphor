@@ -8,6 +8,7 @@ import pango
 import gtk
 import gaphor
 from gaphor.ui.abstractwindow import AbstractWindow
+from gaphor.core import inject
 import gaphor.plugin
 from gaphor.plugin import resource
 from pynsource import PySourceAsText
@@ -17,6 +18,8 @@ NAME_COLUMN = 0
 
 
 class PyNSourceAction(gaphor.plugin.Action):
+
+    action_manager = inject('action_manager')
 
     def __init__(self):
         gaphor.plugin.Action.__init__(self)
@@ -49,7 +52,7 @@ class PyNSourceAction(gaphor.plugin.Action):
         main_window = self.get_window()
         # Open and select the new diagram in the main window:
         main_window.select_element(engineer.diagram)
-        main_window.execute_action('OpenModelElement')
+        self.action_manager.execute('OpenModelElement')
 
     def create_dialog(self):
         dialog = gtk.Dialog("Import Python files",

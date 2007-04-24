@@ -2,7 +2,7 @@
 
 #from xml.sax.saxutils import XMLGenerator
 import time
-import gaphor
+from gaphor.core import inject
 from gaphor import UML
 from gaphor.misc.xmlwriter import XMLWriter
 
@@ -26,6 +26,8 @@ class XMLAttributes(dict):
 
 class XMIExport(object):
     
+    element_factory = inject('element_factory')
+
     # State diagram specific
     # ======================
     def handleInitialNode(self, xmi, node):
@@ -71,7 +73,7 @@ class XMIExport(object):
         attributes['isActive']='false'
         xmi.startElement('UML:Package', attrs=attributes)
         xmi.startElement('UML:Namespace.ownedElement', attrs=XMLAttributes())
-        classes = [element for element in gaphor.resource('ElementFactory').select()]
+        classes = [element for element in self.element_factory.select()]
         for item in classes:
             try:
                 package = item.package==node
@@ -394,7 +396,7 @@ class XMIExport(object):
         attributes['isAbstract'] = 'false'
         xmi.startElement('UML:Model', attrs=attributes)
         xmi.startElement('UML:Namespace.ownedElement', attrs=XMLAttributes())
-        for element in gaphor.resource('ElementFactory').select():
+        for element in self.element_factory.select():
             #print element.__class__.__name__
             try:
                 handler=getattr(self, 'handle%s'%element.__class__.__name__)

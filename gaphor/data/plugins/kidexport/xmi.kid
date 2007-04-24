@@ -1,13 +1,13 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
 
 <?python
-import gaphor
+from gaphor.application import Application
 import time
+import
 
+element_factory = Application.get_service('element_factory')
 
-elements = gaphor.resource('ElementFactory').select()
-
-topLevelPackage = [element for element in elements if not getattr(element, 'package', True)][0]
+topLevelPackage = [element for element in element_factory.select() if not getattr(element, 'package', True)][0]
 
 def modelProcessNode(node):
     className = type(node).__name__
@@ -17,7 +17,7 @@ def modelProcessNode(node):
         return ''
     
 def getPackageChildNodes(package):
-    return [node for node in gaphor.resource('ElementFactory').select() if 
+    return [node for node in element_factory.select() if 
             hasattr(node, 'package') and node.package==package]
             
 def getLowerAndUpperValuesFromAssociationEnd(end):

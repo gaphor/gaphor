@@ -10,7 +10,8 @@ from os.path import join, exists, isdir
 
 from gtk import FileSelection
 
-from gaphor import resource, plugin, UML
+from gaphor import plugin, UML
+from gaphor.core import inject
 
 from logilab.common.astng import astng, raw_building as builder, inspector, \
      utils, manager
@@ -18,15 +19,19 @@ from logilab.common.astng import astng, raw_building as builder, inspector, \
 
 class PythonReloadAction(plugin.Action):
     
+    plugin_manager = inject('plugin_manager')
+
     def execute(self):
         reload(astng)
         reload(builder)
         reload(manager)
         reload(inspector)
-        resource('PluginManager').plugins['Python generator'].import_plugin()
+        self.plugin_manager.plugins['Python generator'].import_plugin()
 
 
 class PythonExportAction(plugin.Action):
+
+    element_factory = inject('element_factory')
 
     def __init__(self):
         plugin.Action.__init__(self)
@@ -51,12 +56,14 @@ class PythonExportAction(plugin.Action):
         print '**** generating to python code in %s' % directory
         pyconverter.reset(directory)
         # FIXME: should we export the root package ?
-        pyconverter.visit(root(resource(UML.ElementFactory)))
+        pyconverter.visit(root(self.element_factory))
         print '**** done'
 
 
 class PythonImportAction(plugin.Action):
     
+    element_factory = inject('element_factory')
+
     def execute(self):
         """gaphor's plugin main callback"""
         dlg = FileSelection()
@@ -78,7 +85,7 @@ class PythonImportAction(plugin.Action):
             module = astng_manager.astng_from_file(filepath)
         linker = inspector.Linker(module, tag=1)
         linker.visit(module)
-        fact = resource(UML.ElementFactory)
+        fact = self.element_factory
         root_package = root(fact)
         gapconverter.reset(fact, module)
         root_package.nestedPackage = gapconverter.visit(module)

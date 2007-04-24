@@ -25,11 +25,7 @@ user_data_dir = os.path.join(os.getenv(home), '.gaphor')
 #
 # If the resource doesn't already exist, it is created, otherwise the existing
 # resource is returned.
-resource = Resource(initial_resources={
-                        'Name': 'gaphor',
-                        'UserDataDir': user_data_dir,
-                        'ui.toolbox.classes': True,
-                    })
+resource = Resource(initial_resources={ })
 
 
 class GaphorError(Exception):
@@ -53,12 +49,13 @@ def main(gaphor_file=None):
     from gaphor.application import Application
     Application.init()
 
-    main_window = resource('MainWindow')
+    main_window = Application.get_service('gui_manager').main_window
+    action_manager = Application.get_service('action_manager')
     if gaphor_file:
         main_window.set_filename(gaphor_file)
-        main_window.execute_action('FileRevert')
+        action_manager.execute('FileRevert')
     else:
-        main_window.execute_action('FileNew')
+        action_manager.execute('FileNew')
     Application.run()
     Application.shutdown()
 

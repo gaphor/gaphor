@@ -1,6 +1,5 @@
 # vim:sw=4:et
 
-from gaphor import resource
 from gaphor import storage
 from gaphor import UML
 from gaphor.core import inject

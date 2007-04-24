@@ -710,6 +710,8 @@ class DependencyTypeAction(RadioAction):
     group = 'dependency_type'
     dependency_type = None
 
+    action_manager = inject('action_manager')
+
     def init(self, window):
         self._window = window
 
@@ -727,7 +729,7 @@ class DependencyTypeAction(RadioAction):
             item = get_parent_focus_item(self._window)
             item.set_dependency_type(self.dependency_type)
             #item.auto_dependency = False
-            self._window.get_action_pool().execute('AutoDependency', active=False)
+            self.action_manager.execute('AutoDependency', active=False)
         
 
 class DependencyTypeDependencyAction(DependencyTypeAction):
@@ -820,6 +822,8 @@ class MoveAction(Action):
     """
     Move attribute/operation down or up on the list.
     """
+    action_manager = inject('action_manager')
+
     def _getItem(self):
         return self._window.get_current_diagram_view() \
             .focus_item.item
@@ -859,7 +863,7 @@ class MoveAction(Action):
         # get method to move the element: moveUp or moveDown
         move = getattr(self._getElements(cls, item), self.move_action)
         move(item.subject)
-        self._window.execute_action('ItemFocus')
+        self.action_manager.execute('ItemFocus')
 
 
 class MoveUpAction(MoveAction):

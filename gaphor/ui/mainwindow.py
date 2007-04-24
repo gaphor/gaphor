@@ -186,7 +186,7 @@ class MainWindow(AbstractWindow):
             if filename not in recent_files:
                 recent_files = [filename] + recent_files[:8]
                 self.properties.set('recent-files', recent_files)
-                self.get_action_pool().get_slot('RecentFiles').rebuild()
+                self.action_manager.get_slot('RecentFiles').rebuild()
 
     def get_filename(self):
         """
@@ -353,7 +353,7 @@ class MainWindow(AbstractWindow):
         page_num = self.notebook.page_num(contents)
         self.notebook.set_current_page(page_num)
         self.notebook_map[contents] = window
-        self.execute_action('TabChange')
+        self.action_manager.execute('TabChange')
         return page_num
 
     def get_current_tab(self):
@@ -393,7 +393,7 @@ class MainWindow(AbstractWindow):
                 num = self.notebook.page_num(p)
                 self.notebook.remove_page(num)
                 del self.notebook_map[p]
-                self.execute_action('TabChange')
+                self.action_manager.execute('TabChange')
                 return
 
     def select_element(self, element):
@@ -409,7 +409,7 @@ class MainWindow(AbstractWindow):
         # Select the diagram, so it can be opened by the OpenModelElement action
         selection = self.get_tree_view().get_selection()
         selection.select_path(path)
-        self.execute_action('SelectRow')
+        self.action_manager.execute('SelectRow')
 
     # Signal callbacks:
 
@@ -436,20 +436,20 @@ class MainWindow(AbstractWindow):
         """Double click on an element in the tree view.
         """
         self._check_state(AbstractWindow.STATE_ACTIVE)
-        self.execute_action('OpenModelElement')
+        self.action_manager.execute('OpenModelElement')
         # Set the pointer tool as default tool.
-        self.execute_action('Pointer')
+        self.action_manager.execute('Pointer')
 
     def on_view_cursor_changed(self, view):
         """Another row is selected, execute a dummy action.
         """
-        self.execute_action('SelectRow')
+        self.action_manager.execute('SelectRow')
 
     def on_notebook_switch_page(self, notebook, tab, page_num):
         """Another page (tab) is put on the front of the diagram notebook.
         A dummy action is executed.
         """
-        self.execute_action('TabChange')
+        self.action_manager.execute('TabChange')
 
     def on_window_size_allocate(self, window, allocation):
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
@@ -471,7 +471,7 @@ gtk.accel_map_add_filter('gaphor')
 @component.adapter(IServiceEvent)
 def on_undo(*args):
     from gaphor.application import Application
-    Application.get_service('gui_manager').main_window.execute_action('UndoStack')
+    Application.get_service('action_manager').execute('UndoStack')
 
 component.provideHandler(on_undo)
 

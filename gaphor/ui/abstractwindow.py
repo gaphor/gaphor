@@ -2,19 +2,12 @@
 
 import gobject, gtk
 import gaphor
+from gaphor.core import inject
 from gaphor.misc.signal import Signal
-from gaphor.misc.logger import Logger
-#from commandregistry import CommandRegistry
-from gaphor.misc.action import Action, ActionPool, register_action
+#from gaphor.misc.logger import Logger
+from gaphor.misc.action import ActionPool
 from menufactory import MenuFactory
 
-class CloseAction(Action):
-    id = 'WindowClose'
-
-    def init(self, window):
-        pass
-
-register_action(CloseAction)
 
 class AbstractWindow(object):
     """
@@ -36,6 +29,8 @@ class AbstractWindow(object):
     menu = ()
     toolbar = ()
 
+    action_manager = inject('action_manager')
+
     def __init__(self):
         self.__state = AbstractWindow.STATE_INIT
         self.__signal = Signal()
@@ -44,7 +39,6 @@ class AbstractWindow(object):
         self.window = None
         self.statusbar = None
         self.accel_group = None
-        self.action_pool = ActionPool(self._action_initializer)
         self.menu_factory = None
 
         # The page can also be constructed as a notebook page
@@ -55,8 +49,8 @@ class AbstractWindow(object):
         self._check_state(AbstractWindow.STATE_ACTIVE)
         return self.window
 
-    def get_action_pool(self):
-        return self.action_pool
+#    def get_action_pool(self):
+#        return self.action_manager
 
     def get_state(self):
         return self.__state
@@ -67,8 +61,8 @@ class AbstractWindow(object):
     def construct(self):
         raise NotImplementedError, 'construct() should create GUI components.'
 
-    def execute_action(self, action_id):
-        self.action_pool.execute(action_id)
+#    def execute_action(self, action_id):
+#        self.action_manager.execute(action_id)
 
     def set_message(self, message):
         """Set a message in the window's status bar."""
@@ -117,12 +111,6 @@ class AbstractWindow(object):
 #                    main.iteration(False)
 #            #return True
 
-    def _action_initializer(self, action):
-        try:
-            action.init(self)
-        except Exception, e:
-            log.warning(str(e), e)
-
 
     def _construct_window(self, name, title, size, contents):
         """Construct a Window.
@@ -161,7 +149,7 @@ class AbstractWindow(object):
         vbox.pack_end(contents, expand=True)
 
         self.menu_factory = MenuFactory(type(self).__name__,
-                                        self.action_pool,
+                                        self.action_manager,
                                         accel_group=accel_group,
                                         statusbar=statusbar,
                                         statusbar_context=0)

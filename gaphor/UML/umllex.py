@@ -234,9 +234,6 @@ def parse_operation(self, s):
             p.upperValue = create(LiteralSpecification)
         p.upperValue.value = g('mult_u')
         # FIXME: Maybe add to Operation.ownedRule?
-        #if not p.taggedValue:
-        #    p.taggedValue = create(LiteralSpecification)
-        #p.taggedValue.value = g('tags')
         while self.taggedValue:
             self.taggedValue[0].unlink()
         tags = g('tags')
@@ -271,8 +268,9 @@ def parse_operation(self, s):
             if not p.defaultValue:
                 p.defaultValue = create(LiteralSpecification)
             p.defaultValue.value = g('default')
-            while self.taggedValue:
-                self.taggedValue[0].unlink()
+            while p.taggedValue:
+                p.taggedValue[0].unlink()
+            tags = g('tags')
             if tags:
                 for t in map(str.strip, tags.split(',')):
                     tv = create(LiteralSpecification)

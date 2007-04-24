@@ -1,7 +1,6 @@
 
 import unittest
 from gaphor import resource
-resource('DataDir', '')
 from gaphor.application import Application
 #from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram.tool import PlacementTool

@@ -17,6 +17,7 @@ from zope import component
 class DiagramTab(object):
     
     element_factory = inject('element_factory')
+    action_manager = inject('action_manager')
 
     def __init__(self, owning_window):
         self.diagram = None
@@ -107,18 +108,18 @@ class DiagramTab(object):
         """
         if view.is_focus():
             if event.keyval == 0xFFFF and event.state == 0: # Delete
-                self.owning_window.execute_action('EditDelete')
+                self.action_manager.execute('EditDelete')
 
 
     def _on_view_focus_changed(self, view, focus_item):
-        self.owning_window.execute_action('ItemFocus')
+        self.action_manager.execute('ItemFocus')
         component.handle(DiagramItemFocused(focus_item))
 
     def _on_view_selection_changed(self, view, selection):
-        self.owning_window.execute_action('ItemSelect')
+        self.action_manager.execute('ItemSelect')
 
     def _on_view_notify_tool(self, view, pspec):
-        self.owning_window.execute_action('ToolChange')
+        self.action_manager.execute('ToolChange')
 
     def _on_diagram_event(self, element, pspec):
         if pspec == '__unlink__':
@@ -142,7 +143,7 @@ class DiagramTab(object):
 
             item_class = get_diagram_item(type(element))
             if isinstance(element, UML.Diagram):
-                self.owning_window.execute_action('OpenModelElement')
+                self.action_manager.execute('OpenModelElement')
             elif item_class:
                 tx = Transaction()
                 item = self.diagram.create(item_class)
@@ -157,7 +158,7 @@ class DiagramTab(object):
                 view.unselect_all()
                 view.focused_item = item
 
-                self.owning_window.execute_action('ItemDiagramDrop')
+                self.action_manager.execute('ItemDiagramDrop')
 
             else:
                 log.warning('No graphical representation for UML element %s' % type(element).__name__)

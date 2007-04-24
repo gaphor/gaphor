@@ -76,11 +76,13 @@ class DiagramDropAction(Action):
     """
     id = 'ItemDiagramDrop'
 
+    action_manager = inject('action_manager')
+
     def init(self, window):
         self._window = window
  
     def execute(self):
-	self._window.execute_action('CreateLinks')
+	self.action_manager.execute('CreateLinks')
 
 register_action(DiagramDropAction)
 

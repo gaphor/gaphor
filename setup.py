@@ -80,6 +80,7 @@ setup(
             'properties = gaphor.services.properties:Properties',
             'undo_manager = gaphor.services.undomanager:UndoManager',
             'plugin_manager = gaphor.services.pluginmanager:PluginManager',
+            'action_manager = gaphor.services.actionmanager:ActionManager',
             'gui_manager = gaphor.services.guimanager:GUIManager',
             'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
             'element_factory = gaphor.UML.elementfactory:ElementFactory',

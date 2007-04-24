@@ -5,7 +5,8 @@ import gtk
 import gaphas
 
 class DiagramView(gaphas.GtkView):
-    """Displays a diagram (canvas) in a widget.
+    """
+    Displays a diagram (canvas) in a widget.
 
     See also: DiagramTab
     """
@@ -26,9 +27,5 @@ class DiagramView(gaphas.GtkView):
         self.drag_dest_set (gtk.DEST_DEFAULT_ALL, DiagramView.DND_TARGETS,
                             gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
 
-#    def set_tool(self, tool):
-#        print 'setting tool', tool
-#        resource('MainWindow').get_action_pool().executeself.tool.grab(tool)
-#        pass
 
 # vim: sw=4:et

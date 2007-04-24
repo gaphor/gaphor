@@ -32,7 +32,6 @@ from xml.sax import handler, make_parser
 from zope import interface
 from gaphor.interfaces import IService
 
-from gaphor import resource
 from gaphor.parser import ParserException
 from gaphor.misc.action import register_action_for_slot
 from gaphor.misc.odict import odict
@@ -375,9 +374,5 @@ class PluginManager(object):
     def get_plugins(self):
         return self.plugins.values()
 
-# Make one default plugin manager
-import gaphor
-_default_plugin_manager = gaphor.resource(PluginManager)
-del gaphor
 
 # vim:sw=4:et
