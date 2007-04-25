@@ -246,6 +246,7 @@ class PlacementTool(gaphas.tool.PlacementTool):
             if Application.get_service('properties')('reset-tool-after-create', False):
                 pool = Application.get_service('action_manager')
                 pool.get_action('Pointer').active = True
+                log.debug('button-release pointer set to %s' % pool.get_action('Pointer').active)
             return gaphas.tool.PlacementTool.on_button_release(self, context, event)
         finally:
             self._tx.commit()

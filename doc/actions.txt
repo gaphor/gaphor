@@ -1,33 +1,48 @@
 Actions, menu items, toolbars and toolboxes
 ===========================================
 
+The GTK+ structure is like this::
 
- UIManager
-   |
- ActionGroup
-   |
- Action
-   | on_activate
- perform action
+    UIManager
+        |
+   ActionGroup
+        |
+     Action
 
- * Where it should lead:
-    * Actions should be coded closer to the object their working on
-       - main actions - not dependent on GUI components (load/save/new/quit)
-       - main actions dependent on GUI component (sub-windows, console)
-       - Item actions, act either on a diagram, the selected or focused item
-         or no item.
-       - diagram actions (zoom, grid) work on active diagram (tab)
-       - menus and actions for diagram items through adapters
+The do_activate signal is emitted when an action is activated.
 
-    * Each window has it's own action group / every item with a menu!
-    * One action group for the application/gui_manager
-    * One toplevel UIManager per window or one per application/gui_manager?
-    ? Actions should inherit from gtk.Action
-    ? Actions should be modeled as functions (methods) with action as
-      first (sec) parameter.
- * filename should not be part of the main window
+Where it should lead:
+ * Actions should be coded closer to the object their working on
+    - main actions - not dependent on GUI components (load/save/new/quit)
+    - main actions dependent on GUI component (sub-windows, console)
+    - Item actions, act either on a diagram, the selected or focused item
+      or no item.
+    - diagram actions (zoom, grid) work on active diagram (tab)
+    - menus and actions for diagram items through adapters
+ 
+ * Actions should behave more like adapters. E.g. when a popup menu is created
+   for an Association item, the menu actions should present themselves in the
+   context of that menu item (with toggles set right)
+    - Could be registered as adapters with a name.
+
+ * Each window has it's own action group (every item with a menu?)
+ * One action group for the application/gui_manager (new/load/save/quit)
+ * One toplevel UIManager per window or one per application/gui_manager?
+ ? Actions should inherit from gtk.Action.
+   Depends on the structure. Preferbly not, since it ties actions to GTK+
+   (which is not a good thing for testing)
+ ? Actions should be modeled as functions (methods) with action as
+   first (sec) parameter.
+   Normal actions can be modeled as functions. If an action is sensitive or
+   visible depends on the state in the action. Hence we require the update()
+   method.
+
  * some sort of factory mechanism (MultiAction?).
-     - RecentFiles will manage up to 10 recent files entries.
-     - same for stereotypes: should be managed by one "ObjectAction".
-     - can Placeholders play a role here?
-
+    - contains an ActionGroup and menu-XML.
+    - RecentFiles will manage up to 10 recent files entries.
+    - same for stereotypes: should be managed by one "ObjectAction".
+    - can Placeholders play a role here? Yes, they can be used to identify the
+      section where the actions should be put.
+    - In some cases multiple menu items may refer to the same action:
+      radio actions may (but this is not always the case) and the Recent files
+      functionality.

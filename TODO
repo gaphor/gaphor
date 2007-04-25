@@ -6,6 +6,9 @@ For 0.10.0 and later:
  - bug in zope.component package: in zope.component.globalregistry.py zope.testing is included.  This package is only a dependency for the [test] setting. zope.testing is not mandatory.
  Use a more recent version
 
+ - filename should not be part of the main window
+   Is it a transient property?
+
  - Load / save regression testing
    !!! Create some example diagrams,
 

@@ -366,7 +366,7 @@ class association(umlproperty):
             #    undosetassociationaction(self, obj, value)
             setattr(obj, self._name, value)
             if do_notify:
-                component.handle(AssociationSetEvent(obj, self, old, value))
+                event = AssociationSetEvent(obj, self, old, value)
         else:
             # Set the actual value
             c = self._get(obj)
@@ -381,7 +381,7 @@ class association(umlproperty):
             #    undosetassociationaction(self, obj, value)
             c.items.append(value)
             if do_notify:
-                component.handle(AssociationAddEvent(obj, self, value))
+                event = AssociationAddEvent(obj, self, value)
 
         # Callbacks are only connected if a new relationship has
         # been established.
@@ -394,6 +394,7 @@ class association(umlproperty):
 
         if do_notify:
             self.notify(obj)
+            component.handle(event)
 
     def _del(self, obj, value, from_opposite=False):
         """

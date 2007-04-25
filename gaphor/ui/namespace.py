@@ -8,7 +8,6 @@ import gobject
 import gtk
 import operator
 import stock
-from gaphas.decorators import async
 
 from gaphor import UML
 from gaphor.transaction import Transaction
@@ -201,7 +200,6 @@ class NamespaceModel(gtk.GenericTreeModel):
                                     map(list.index,
                                         [original] * len(children), children))
 
-    @async()
     def on_ownedmember_changed(self, element, pspec):
         """
         Update the tree model when the ownedMember list changes.
