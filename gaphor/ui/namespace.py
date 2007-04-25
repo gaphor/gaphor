@@ -216,7 +216,6 @@ class NamespaceModel(gtk.GenericTreeModel):
             #print 'NamespaceModel: element added'
             for om in owned_members:
                 if om not in node_members:
-                    log.debug('Trying to add %s to %s' % (om, node))
                     # we have found the newly added element
                     self.new_node_from_element(om, node)
                     assert len(node[1]) == len(owned_members)
