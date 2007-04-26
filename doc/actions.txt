@@ -46,3 +46,49 @@ Where it should lead:
     - In some cases multiple menu items may refer to the same action:
       radio actions may (but this is not always the case) and the Recent files
       functionality.
+
+
+Solution for simple actions
+===========================
+
+For an action to actually be useful a piece of menu xml is needed.
+
+Hence an interface IActionProvider has to be defined::
+
+    class IActionProvider(interface.Interface):
+	menu_xml = interface.Attribute("The menu XML")
+	action_group = interface.Attribute("The accompanying ActionGroup")
+	def update(self)?
+
+Support for actions can be arranged by decorating actions with an @action
+decorator and let the class create an ActionGroup using some
+actionGroup factory function (no inheritance needed here). 
+
+Note that ActionGroup is a GTK class and should technically only be used in the
+gaphor.ui package.
+
+Autonom controllers can be defined, which provide a piece of functionality.
+They can register handlers in order to update their state.
+
+Maybe it's nice to configure those through the egg-info system. I suppose
+gaphor.service will serve well (as they need to be initialized anyway)
+ ==> also inherit IActionProvider from IService?
+
+    [gaphor.services]
+    xx = gaphor.actions.whatever:SomeActionProviderClass
+
+
+Solution for context sensitive menus
+====================================
+
+Context sensitive menus, such as popup menus, should be generated and switched
+on and off on demand.
+
+Technically they should be enabled through services/action-providers.
+
+It becomes even tougher when popup menu's should act on parts of a diagram item
+(such as association ends). This should be avoided. It may be a good idea to
+provide such functionality through a special layer on the canvas, by means of
+some easy clickable buttons around the "hot spot" (we already have something
+like that for text around association ends).
+
