@@ -5,6 +5,27 @@ Application wide events are managed here.
 from zope import interface
 from gaphor.interfaces import *
 
+
+class ServiceInitializedEvent(object):
+    """
+    This event is emitted every time a new service has been initialized.
+    """
+    interface.implements(IServiceEvent)
+
+    def __init__(self, service):
+        self.service = service
+
+
+class ServiceShutdownEvent(object):
+    """
+    This event is emitted every time a service has been shut down.
+    """
+    interface.implements(IServiceEvent)
+
+    def __init__(self, service):
+        self.service = service
+
+
 class TransactionBegin(object):
     """
     This event denotes the beginning of an transaction.
