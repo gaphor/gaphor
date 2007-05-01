@@ -12,7 +12,7 @@ All important services are present in the application object:
 import pkg_resources
 from zope import component
 from gaphor.interfaces import IService
-
+from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 import gaphor.UML
 
 
@@ -65,6 +65,7 @@ class _Application(object):
             # TODO: do init() before provideUtility!
             component.provideUtility(srv, IService, name)
             srv.init(self)
+            component.handle(ServiceInitializedEvent(srv))
             return srv
 
     distribution = property(lambda s: pkg_resources.get_distribution('gaphor'),
@@ -83,6 +84,7 @@ class _Application(object):
     def shutdown(self):
         for u in component.getAllUtilitiesRegisteredFor(IService):
             u.shutdown()
+            component.handle(ServiceShutdownEvent(srv))
 
 
 # Make sure there is only one!
