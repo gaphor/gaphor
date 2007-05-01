@@ -82,8 +82,8 @@ class _Application(object):
         gtk.main()
 
     def shutdown(self):
-        for u in component.getAllUtilitiesRegisteredFor(IService):
-            u.shutdown()
+        for srv in component.getAllUtilitiesRegisteredFor(IService):
+            srv.shutdown()
             component.handle(ServiceShutdownEvent(srv))
 
 
