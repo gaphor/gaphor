@@ -3,6 +3,9 @@
 
 import gtk
 
+from zope import interface
+from gaphor.interfaces import IService, IActionProvider
+
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.i18n import _
@@ -24,6 +27,8 @@ class MainWindow(AbstractWindow):
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
+    interface.implements(IService, IActionProvider)
+
     properties = inject('properties')
     element_factory = inject('element_factory')
 
@@ -152,6 +157,62 @@ class MainWindow(AbstractWindow):
                 'separator',
                 'RefreshNamespaceModel',
                 '<NamespacePopupSlot>')
+
+    menu_xml = """
+      <ui>
+        <menubar action="mainmenu">
+          <menu name="FileMenu" action="FileMenu">
+            <menuitem name="New" action="FileNew" />
+            <menuitem name="Open" action="FileOpen" />
+            <menuitem name="Revert" action="FileRevert" />
+            <menu name="Recent files" action="FileRecent">
+              <placeholder action="RecentFiles" />
+            </menu>
+            <separator />
+            <menuitem action="FileSave" />
+            <menuitem action="FileSaveAs" />
+            <placeholder action="SaveSlot" />
+            <separator />
+            <menu action="Import">
+              <placeholder action="FileImportSlot" />
+            </menu>
+            <menu action="Export">
+              <placeholder action="FileExportSlot" />
+            </menu>
+            <separator />
+            <menuitem action="FileCloseTab" />
+            <placeholder action="FileSlot" />
+            <separator>
+            <menuitem action="FileQuit" />
+          </menu>
+        </menubar>
+        <toolbar>
+          <toolitem action="FileOpen" />
+          <toolitem action="separator" />
+          <toolitem action="FileSave" />
+          <toolitem action="FileSaveAs" />
+          <separator />
+          <toolitem action="Undo" />
+          <toolitem action="Redo" />
+          <separator />
+          <toolitem action="ViewZoomIn" />
+          <toolitem action="ViewZoomOut" />
+          <toolitem action="ViewZoom100" />
+        </toolbar>
+        <toolbar action="tools">
+        </toolbar>
+        <popup action="NamespacePopup">
+          <menuitem action="RenameModelElement" />
+          <menuitem action="OpenModelElement" />
+          <separator />
+          <menuitem action="CreateDiagram" />
+          <menuitem action="DeleteDiagram" />
+          <separator />
+          <menuitem action="RefreshNamespaceModel" />
+          <placeholder action="namespacePopupSlot" />
+        </popup>
+      </ui>
+    """"
 
     def __init__(self):
         AbstractWindow.__init__(self)
