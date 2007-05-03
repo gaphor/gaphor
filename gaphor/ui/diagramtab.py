@@ -10,7 +10,6 @@ from gaphor.diagram.interfaces import IPopupMenu
 from gaphor.diagram import get_diagram_item
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramview import DiagramView
-from gaphor.ui.abstractwindow import AbstractWindow
 from event import DiagramItemFocused
 from zope import component
 

@@ -95,7 +95,10 @@ def build_action_group(obj, name=None):
     group = gtk.ActionGroup(name)
 
     for attrname in dir(obj):
-        method = getattr(obj, attrname)
+        try:
+            method = getattr(obj, attrname)
+        except:
+            continue
         act = getattr(method, '__action__', None)
         if isinstance(act, radio_action):
             actgroup = None
