@@ -212,7 +212,7 @@ class MainWindow(AbstractWindow):
           <placeholder action="namespacePopupSlot" />
         </popup>
       </ui>
-    """"
+    """
 
     def __init__(self):
         AbstractWindow.__init__(self)
