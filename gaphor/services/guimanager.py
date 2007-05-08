@@ -1,6 +1,7 @@
 """
 """
 
+import pkg_resources
 from zope import interface
 from gaphor.interfaces import IService
 
@@ -18,8 +19,10 @@ class GUIManager(object):
         self._app = app
 
         #self.init_pygtk()
+        self.init_ui_manager()
         self.init_stock_icons()
         self.init_actions()
+        self.init_ui_components()
         self.init_main_window()
 
     def init_pygtk(self):
@@ -30,10 +33,25 @@ class GUIManager(object):
         pygtk.require('2.0')
         del pygtk
 
+    def init_ui_manager(self):
+        import gtk
+        self.ui_manager = gtk.UIManager()
+
     def init_stock_icons(self):
         # Load stock items
         import gaphor.ui.stock
         gaphor.ui.stock.load_stock_icons()
+
+    def init_ui_components(self):
+        from gaphor.ui.interfaces import IUIComponent
+        for ep in pkg_resources.iter_entry_points('gaphor.uicomponents'):
+            log.debug('found entry point uicomponent.%s' % ep.name)
+            cls = ep.load()
+            if not IUIComponent.implementedBy(cls):
+                raise 'MisConfigurationException', 'Entry point %s doesn''t provide IUIComponent' % ep.name
+            uicomp = cls()
+            uicomp.ui_manager = self.ui_manager
+            self._ui_components[ep.name] = uicomp
 
     def init_main_window(self):
         from gaphor.ui.accelmap import load_accel_map

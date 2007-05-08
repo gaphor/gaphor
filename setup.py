@@ -85,9 +85,9 @@ setup(
             'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
             'element_factory = gaphor.UML.elementfactory:ElementFactory',
         ],
-        'gaphor.adapters': [
-            'connectors = gaphor.adapters.connectors',
-            'editors = gaphor.adapters.editors',
+        'gaphor.uicomponents': [
+            'mainwindow = gaphor.ui.mainwindow:MainWindow',
+            'consolewindow = gaphor.ui.consolewindow:ConsoleWindow',
         ],
     },
 
