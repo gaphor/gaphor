@@ -18,7 +18,7 @@ from gaphor.ui.menufactory import toolbox_to_menu
 from gaphor.ui.objectinspector import ObjectInspector
 
 
-from interfaces import IDiagramElementReceivedFocus
+from interfaces import IUIComponent, IDiagramElementReceivedFocus
 from gaphor.interfaces import IServiceEvent
 from zope import component
 
@@ -27,7 +27,7 @@ class MainWindow(AbstractWindow):
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
-    interface.implements(IService, IActionProvider)
+    interface.implements(IUIComponent, IActionProvider)
 
     properties = inject('properties')
     element_factory = inject('element_factory')

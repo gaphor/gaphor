@@ -11,7 +11,7 @@ class GUIManager(object):
     interface.implements(IService)
 
     def __init__(self):
-        pass
+        self._ui_components = dict()
 
     main_window = property(lambda s: s._main_window)
 
