@@ -22,7 +22,7 @@ from toplevelwindow import ToplevelWindow
 from gaphor.ui.objectinspector import ObjectInspector
 
 
-from interfaces import IUIComponent, IDiagramElementReceivedFocus
+from interfaces import IDiagramElementReceivedFocus
 from gaphor.interfaces import IServiceEvent
 
 
@@ -31,7 +31,7 @@ class MainWindow(ToplevelWindow):
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
-    interface.implements(IUIComponent, IActionProvider)
+    interface.implements(IActionProvider)
 
     properties = inject('properties')
     element_factory = inject('element_factory')
