@@ -16,7 +16,7 @@ NOTE: it would be nice to use actions in conjunction with functools.partial,
 
 from zope import interface
 from zope import component
-from gaphor.interfaces import IService, IServiceEvent
+from gaphor.interfaces import IService, IServiceEvent, IActionProvider
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 from gaphor.transaction import TransactionError, transactional
 
@@ -26,6 +26,9 @@ from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
                              AssociationAddEvent, AssociationDeleteEvent
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
                                   IAttributeChangeEvent, IAssociationChangeEvent
+
+from gaphor.action import action, build_action_group
+from gaphor.event import ActionExecuted
 
 
 class Transaction(object):
@@ -77,7 +80,19 @@ class UndoManager(object):
     to be used to undo or redo the last performed action.
     """
 
-    interface.implements(IService)
+    interface.implements(IService, IActionProvider)
+
+    menu_xml = """
+      <ui>
+        <menubar name="mainwindow">
+          <menu name="edit">
+            <menuitem action="edit-undo" />
+            <menuitem action="edit-redo" />
+            <separator />
+          </menu>
+        </menubar>
+      </ui>
+    """
 
     def __init__(self):
         self._undo_stack = []
@@ -91,7 +106,10 @@ class UndoManager(object):
         component.provideHandler(self.begin_transaction)
         component.provideHandler(self.commit_transaction)
         component.provideHandler(self.rollback_transaction)
+        component.provideHandler(self._action_executed)
         self._provide_undo_handlers()
+        self.action_group = build_action_group(self)
+        self._action_executed(None)
 
     def shutdown(self):
         pass
@@ -169,6 +187,7 @@ class UndoManager(object):
             self._current_transaction = None
         component.handle(UndoManagerStateChanged(self))
 
+    @action(name='edit-undo', stock_id='gtk-undo')
     def undo_transaction(self):
         if not self._undo_stack:
             return
@@ -189,6 +208,7 @@ class UndoManager(object):
         self._transaction_depth = 0
         component.handle(UndoManagerStateChanged(self))
 
+    @action(name='edit-redo', stock_id='gtk-redo')
     def redo_transaction(self):
         if not self._redo_stack:
             return
@@ -215,6 +235,12 @@ class UndoManager(object):
 
     def can_redo(self):
         return bool(self._redo_stack)
+
+
+    @component.adapter(ActionExecuted)
+    def _action_executed(self, event):
+        self.action_group.get_action('edit-undo').set_sensitive(self.can_undo())
+        self.action_group.get_action('edit-redo').set_sensitive(self.can_redo())
 
     ##
     ## Undo Handlers

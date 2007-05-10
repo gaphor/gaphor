@@ -84,6 +84,7 @@ setup(
             'gui_manager = gaphor.services.guimanager:GUIManager',
             'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
             'element_factory = gaphor.UML.elementfactory:ElementFactory',
+            'file_manager = gaphor.services.filemanager:FileManager',
         ],
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',

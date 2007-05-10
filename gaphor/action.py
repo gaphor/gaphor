@@ -1,7 +1,8 @@
 """
 Support for actions in generic files.
-"""
 
+See also gaphor/service/actionmanager.py for the management module.
+"""
 
 class action(object):
     """
@@ -74,7 +75,7 @@ def build_action_group(obj, name=None):
     ...     @action(name='bar')
     ...     def bar(self): print 'Say bar'
     ...     @toggle_action(name='foo')
-    ...     def foo(self): print 'Say foo'
+    ...     def foo(self, active): print 'Say foo', active
     ...     @radio_action(names=('baz', 'beer'))
     ...     def baz(self, value):
     ...         print 'Say', value, (value and 'beer' or 'baz')
@@ -85,7 +86,7 @@ def build_action_group(obj, name=None):
     >>> a.activate()
     Say bar
     >>> group.get_action('foo').activate()
-    Say foo
+    Say foo True
     >>> group.get_action('beer').activate()
     Say 1 beer
     >>> group.get_action('baz').activate()
@@ -116,7 +117,7 @@ def build_action_group(obj, name=None):
         elif isinstance(act, toggle_action):
             gtkact = gtk.ToggleAction(act.name, act.label, act.tooltip, act.stock_id)
             gtkact.set_property('active', act.active)
-            gtkact.connect('activate', _action_activate, obj, attrname)
+            gtkact.connect('activate', _toggle_action_activate, obj, attrname)
             group.add_action(gtkact)
         elif isinstance(act, action):
             gtkact = gtk.Action(act.name, act.label, act.tooltip, act.stock_id)
@@ -130,6 +131,11 @@ def build_action_group(obj, name=None):
 def _action_activate(action, obj, name):
     method = getattr(obj, name)
     method()
+
+
+def _toggle_action_activate(action, obj, name):
+    method = getattr(obj, name)
+    method(action.props.active)
 
 
 def _radio_action_changed(action, current_action, obj, name):

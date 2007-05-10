@@ -172,13 +172,34 @@ class MainWindow(ToplevelWindow):
 
     menu_xml = """
       <ui>
-        <menubar action="mainwindow">
-          <menu name="FileMenu" action="FileMenu">
-            <menuitem action="FileQuit" />
+        <menubar name="mainwindow">
+          <menu name="file" action="file" >
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+            <separator />
+            <menuitem action="file-quit" />
           </menu>
-          <menu name="EditMenu" action="EditMenu"/>
-          <menu name="DiagramMenu" action="DiagramMenu"/>
-          <menu name="WindowMenu" action="WindowMenu"/>
+          <menu name="edit" action="edit">
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+          </menu>
+          <menu name="diagram" action="diagram">
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+          </menu>
+          <menu name="window" action="window">
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+          </menu>
+          <menu name="help" action="help">
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+          </menu>
         </menubar>
         <toolbar name='mainwindow_toolbar'>
         </toolbar>
@@ -229,6 +250,8 @@ class MainWindow(ToplevelWindow):
 #          <toolitem action="ViewZoomIn" />
 #          <toolitem action="ViewZoomOut" />
 #          <toolitem action="ViewZoom100" />
+
+
     def __init__(self):
         ToplevelWindow.__init__(self)
         self._filename = None
@@ -238,11 +261,14 @@ class MainWindow(ToplevelWindow):
         self._view = None 
 
         self.action_group = build_action_group(self)
-        for name, label in (('FileMenu', '_File'),
-                             ('EditMenu', '_Edit'),
-                             ('DiagramMenu', '_Diagram'),
-                             ('WindowMenu', '_Window')):
-            self.action_group.add_action(gtk.Action(name, label, None, None))
+        for name, label in (('file', '_File'),
+                             ('edit', '_Edit'),
+                             ('diagram', '_Diagram'),
+                             ('window', '_Window'),
+                             ('help', '_Help')):
+            a = gtk.Action(name, label, None, None)
+            a.set_property('is-important', True)
+            self.action_group.add_action(a)
 
     def get_model(self):
         """
@@ -552,9 +578,9 @@ class MainWindow(ToplevelWindow):
 
     # Actions:
 
-    @action(name='FileQuit', stock_id='gtk-quit')
+    @action(name='file-quit', stock_id='gtk-quit')
     def quit(self):
-        gtk.main_quit()
+        self.ask_to_close() and gtk.main_quit()
 
 gtk.accel_map_add_filter('gaphor')
 

@@ -5,8 +5,10 @@ An average module should only need to import this module.
 """
 
 from gaphor.application import Application as _Application
-#from gaphor.interfaces import IService
 from gaphor.transaction import Transaction, transactional
+from gaphor.action import action, toggle_action, radio_action, build_action_group
+from gaphor.i18n import _
+
 
 class inject(object):
     """

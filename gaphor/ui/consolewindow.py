@@ -19,13 +19,13 @@ class ConsoleWindow(ToplevelWindow):
     menu_xml = """
         <ui>
           <menubar name="mainwindow">
-            <menu name="WindowMenu">
-              <menuitem name='_Console' action="ConsoleWindow:open" />
+            <menu name="window">
+              <menuitem action="ConsoleWindow:open" />
             </menu>
           </menubar>
           <menubar name="consolewindow">
-            <menu name="_File" action="FileMenu">
-              <menuitem name='_Close' action="ConsoleWindow:close" />
+            <menu name="file" action="file">
+              <menuitem action="ConsoleWindow:close" />
             </menu>
           </menubar>
         </ui>
@@ -46,7 +46,7 @@ class ConsoleWindow(ToplevelWindow):
         console.show()
         return console
 
-    @action(name='ConsoleWindow:open', label='Console')
+    @action(name='ConsoleWindow:open', label='_Console')
     def open(self):
         if not self.window:
             self.construct()

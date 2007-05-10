@@ -12,7 +12,8 @@ class ServiceInitializedEvent(object):
     """
     interface.implements(IServiceEvent)
 
-    def __init__(self, service):
+    def __init__(self, name, service):
+        self.name = name
         self.service = service
 
 
@@ -22,7 +23,8 @@ class ServiceShutdownEvent(object):
     """
     interface.implements(IServiceEvent)
 
-    def __init__(self, service):
+    def __init__(self, name, service):
+        self.name = name
         self.service = service
 
 
@@ -41,6 +43,7 @@ class TransactionCommit(object):
     """
     interface.implements(ITransactionEvent)
 
+
 class TransactionRollback(object):
     """
     If a set of operations fail (e.i. due to an exception) the transaction
@@ -48,6 +51,17 @@ class TransactionRollback(object):
     has failed.
     """
     interface.implements(ITransactionEvent)
+
+
+class ActionExecuted(object):
+    """
+    Once an operation has succesfully been executed this event is raised.
+    """
+    interface.implements(IActionExecutedEvent)
+
+    def __init__(self, name, action):
+        self.name = name
+        self.action = action
 
 
 # vim:sw=4:et:ai

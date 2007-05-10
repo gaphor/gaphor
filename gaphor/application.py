@@ -66,7 +66,7 @@ class _Application(object):
             # TODO: do init() before provideUtility!
             component.provideUtility(srv, IService, name)
             srv.init(self)
-            component.handle(ServiceInitializedEvent(srv))
+            component.handle(ServiceInitializedEvent(name, srv))
             return srv
 
     distribution = property(lambda s: pkg_resources.get_distribution('gaphor'),
@@ -83,9 +83,9 @@ class _Application(object):
         gtk.main()
 
     def shutdown(self):
-        for srv in component.getAllUtilitiesRegisteredFor(IService):
+        for name, srv in component.getUtilitiesFor(IService):
             srv.shutdown()
-            component.handle(ServiceShutdownEvent(srv))
+            component.handle(ServiceShutdownEvent(name, srv))
 
 
 # Make sure there is only one!

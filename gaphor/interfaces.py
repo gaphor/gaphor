@@ -63,4 +63,12 @@ class IActionProvider(interface.Interface):
     action_group = interface.Attribute("The accompanying ActionGroup")
 
 
+class IActionExecutedEvent(interface.Interface):
+    """
+    An event emited when an action has been performed.
+    """
+    name = interface.Attribute("Name of the action performed, if any")
+    action = interface.Attribute("The performed action")
+
+
 # vim:sw=4:et
