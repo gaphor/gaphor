@@ -88,7 +88,9 @@ class PlacementAction(RadioAction):
         tool_changed(self, self._window)
 
     def item_factory(self):
-        """Create a new instance of the item and return it."""
+        """
+        Create a new instance of the item and return it.
+        """
         subject = None
         if self.subject_type:
             subject = self.element_factory.create(self.subject_type)

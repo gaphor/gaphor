@@ -23,14 +23,14 @@ class _Application(object):
     def __init__(self):
         self._uninitialized_services = {}
 
-    def init(self):
+    def init(self, services=None):
         """
         Initialize the application.
         """
-        self.load_services()
+        self.load_services(services)
         self.init_all_services()
 
-    def load_services(self):
+    def load_services(self, services=None):
         """
         Load services from resources.
 
@@ -43,8 +43,9 @@ class _Application(object):
             cls = ep.load()
             if not IService.implementedBy(cls):
                 raise 'MisConfigurationException', 'Entry point %s doesn''t provide IService' % ep.name
-            srv = cls()
-            self._uninitialized_services[ep.name] = srv
+            if services is None or ep.name in services:
+                srv = cls()
+                self._uninitialized_services[ep.name] = srv
 
     def init_all_services(self):
         while self._uninitialized_services:
@@ -91,6 +92,7 @@ class _Application(object):
 Application = _Application()
 
 def restart():
+    global Application
     Application.shutdown()
     Application = _Application()
 

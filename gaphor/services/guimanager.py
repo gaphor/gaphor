@@ -3,7 +3,7 @@
 
 import pkg_resources
 from zope import interface
-from gaphor.interfaces import IService
+from gaphor.interfaces import IService, IActionProvider
 
 
 class GUIManager(object):
@@ -52,24 +52,21 @@ class GUIManager(object):
             uicomp = cls()
             uicomp.ui_manager = self.ui_manager
             self._ui_components[ep.name] = uicomp
-
+            if IActionProvider.providedBy(uicomp):
+                uicomp.__ui_merge_id = self.ui_manager.add_ui_from_string(uicomp.menu_xml)
+                self.ui_manager.insert_action_group(uicomp.action_group, -1)
+                
     def init_main_window(self):
         from gaphor.ui.accelmap import load_accel_map
         from gaphor.ui.mainwindow import MainWindow
         import gtk
 
         load_accel_map()
-        self._main_window = MainWindow()
-        # Backwards compat
-        # TODO: remove
-        #from gaphor import resource
-        #resource.set(MainWindow, self._main_window)
-        #resource.set('MainWindow', self._main_window)
+        self._main_window = self._ui_components['mainwindow']
         self._main_window.construct()
 
         # When the state changes to CLOSED, quit the application
-        self._main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and gtk.main_quit())
-
+        #self._main_window.connect(lambda win: win.get_state() == MainWindow.STATE_CLOSED and gtk.main_quit()) 
     def init_actions(self):
         from gaphor.actions import diagramactions, editoractions, mainactions
         from gaphor.actions import itemactions, placementactions

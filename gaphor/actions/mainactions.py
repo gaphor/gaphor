@@ -1,4 +1,3 @@
-# vim: sw=4:et
 """
 Main window actions.
 """
@@ -104,7 +103,7 @@ class NewAction(Action):
         #stereotypes = element_factory.create(UML.Profile)
         #stereotypes.name = 'Stereotypes'
         self._window.set_filename(None)
-        self._window.set_message(_('Created a new model'))
+        #self._window.set_message(_('Created a new model'))
         element_factory.notify_model()
 
         self._window.select_element(diagram)
@@ -154,7 +153,7 @@ class RevertAction(Action):
                 log.error('Error while loading model from file %s: %s' % (filename, worker.error))
                 error_handler(message='Error while loading model from file %s' % filename, exc_info=worker.exc_info)
 
-            self._window.set_message('Model loaded successfully')
+            #self._window.set_message('Model loaded successfully')
             model = self._window.get_model()
             view = self._window.get_tree_view()
 
@@ -346,7 +345,7 @@ class OpenEditorWindowAction(Action):
         ew = EditorWindow()
         ew.construct()
         self._window.add_transient_window(ew)
-        self._window.set_message('Editor launched')
+        #self._window.set_message('Editor launched')
 
 register_action(OpenEditorWindowAction)
 
@@ -365,7 +364,7 @@ class OpenConsoleWindowAction(Action):
         ew = ConsoleWindow()
         ew.construct()
         self._window.add_transient_window(ew)
-        self._window.set_message('Console launched')
+        #self._window.set_message('Console launched')
 
 register_action(OpenConsoleWindowAction)
 
@@ -722,3 +721,4 @@ class RecentFilesSlot(DynamicMenu):
 
 register_slot('RecentFiles', RecentFilesSlot)
 
+# vim: sw=4:et

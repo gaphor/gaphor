@@ -7,6 +7,9 @@ import gtk
 
 from gaphor.core import inject
 
+#from gaphor.ui.wrapbox import WrapBox
+
+
 class Toolbox(gtk.VBox):
     """
     A toolbox is a widget that contains a set of buttons (a Wrapbox widget)
@@ -17,6 +20,10 @@ class Toolbox(gtk.VBox):
 
     The toolbox is generated based on a definition with the form:
     ('name', ('boxAction1', 'boxAction2',...), 'name2', ('BoxActionN',...))
+
+    1 Create action pool for placement actions
+    2 Create gtk.RadioButtons for each item.
+    3 connect to action
     """
 
     __gsignals__ = {
@@ -86,8 +93,6 @@ class Toolbox(gtk.VBox):
 
         button.connect('clicked', self.on_wrapbox_decorator_toggled, content)
 
-        #AJM: vbox.pack_start(content, True, True)
-        
         vbox.label = label
         vbox.content = content
 
@@ -138,5 +143,6 @@ class Toolbox(gtk.VBox):
                 vbox.pack_start(wrapbox, expand=False)
                 wrapbox.show()
                 self.boxes.append(wrapbox)
+
 
 # vim:sw=4:et:ai
