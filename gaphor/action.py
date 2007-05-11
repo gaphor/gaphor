@@ -28,11 +28,12 @@ class action(object):
     'my action'
     """
 
-    def __init__(self, name, label=None, tooltip=None, stock_id=None, **kwargs):
+    def __init__(self, name, label=None, tooltip=None, stock_id=None, accel=None, **kwargs):
         self.name = name
         self.label = label
         self.tooltip = tooltip
         self.stock_id = stock_id
+        self.accel = accel
         self.__dict__.update(kwargs)
 
     def __call__(self, func):
@@ -47,8 +48,8 @@ class toggle_action(action):
     A toggle button can be switched on and off.
     An extra 'active' attribute is provided than gives the initial status.
     """
-    def __init__(self, name, label=None, active=False):
-        super(toggle_action, self).__init__(name, label, active=active)
+    def __init__(self, name, label=None, accel=None, active=False):
+        super(toggle_action, self).__init__(name, label, accel=accel, active=active)
 
 
 class radio_action(action):
@@ -58,8 +59,8 @@ class radio_action(action):
     The callback function should have an extra value property, which is
     given the index number of the activated radio button action.
     """
-    def __init__(self, names, labels=None, tooltips=None, stock_ids=None, active=0):
-        super(radio_action, self).__init__(names[0], labels, active=active, names=names, labels=labels)
+    def __init__(self, names, labels=None, tooltips=None, stock_ids=None, accels=None, active=0):
+        super(radio_action, self).__init__(names[0], names=names, labels=labels, tooltips=tooltips, stock_ids=stock_ids, accels=accels, active=active)
 
 
 def is_action(func):
@@ -103,8 +104,18 @@ def build_action_group(obj, name=None):
         act = getattr(method, '__action__', None)
         if isinstance(act, radio_action):
             actgroup = None
+            if not act.labels: act.labels = [None] * len(act.names)
+            if not act.tooltips: act.tooltips = [None] * len(act.names)
+            if not act.stock_ids: act.stock_ids = [None] * len(act.names)
+            if not act.accels: act.accels = [None] * len(act.names)
+            assert len(act.names) == len(act.labels)
+            assert len(act.names) == len(act.tooltips)
+            assert len(act.names) == len(act.stock_ids)
+            assert len(act.names) == len(act.accels)
             for i, n in enumerate(act.names):
-                gtkact = gtk.RadioAction(n, act.label, act.tooltip, act.stock_id, value=i)
+                # TODO: fix radio buttons
+                
+                gtkact = gtk.RadioAction(n, act.labels[i], act.tooltips[i], act.stock_ids[i], value=i)
                 if act.active == i:
                     gtkact.props.active = True
 
@@ -113,16 +124,16 @@ def build_action_group(obj, name=None):
                     gtkact.connect('changed', _radio_action_changed, obj, attrname)
                 else:
                     gtkact.props.group = actgroup
-                group.add_action(gtkact)
+                group.add_action_with_accel(gtkact, act.accels[i])
         elif isinstance(act, toggle_action):
             gtkact = gtk.ToggleAction(act.name, act.label, act.tooltip, act.stock_id)
             gtkact.set_property('active', act.active)
             gtkact.connect('activate', _toggle_action_activate, obj, attrname)
-            group.add_action(gtkact)
+            group.add_action_with_accel(gtkact, act.accel)
         elif isinstance(act, action):
             gtkact = gtk.Action(act.name, act.label, act.tooltip, act.stock_id)
             gtkact.connect('activate', _action_activate, obj, attrname)
-            group.add_action(gtkact)
+            group.add_action_with_accel(gtkact, act.accel)
         elif act is not None:
             raise TypeError, 'Invalid action type: %s' % action
     return group

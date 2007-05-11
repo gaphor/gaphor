@@ -428,14 +428,6 @@ class MainWindow(ToplevelWindow):
     def construct(self):
         super(MainWindow, self).construct()
 
-        # Add accelerators from ui manager:
-
-        # Does not work:
-        # ./gaphor/ui/mainwindow.py:437: GtkWarning: _gtk_accel_group_attach: assertion `g_slist_find (accel_group->acceleratables, object) == NULL' failed
-        #  self.window.add_accel_group(self.ui_manager.get_accel_group())
-
-        self.window.add_accel_group(self.ui_manager.get_accel_group())
-
         self.window.connect('delete-event', self._on_window_delete)
 
         # We want to store the window size, so it can be reloaded on startup
@@ -465,7 +457,7 @@ class MainWindow(ToplevelWindow):
         page_num = self.notebook.page_num(contents)
         self.notebook.set_current_page(page_num)
         self.notebook_map[contents] = window
-        self.action_manager.execute('TabChange')
+        #self.action_manager.execute('TabChange')
         return page_num
 
     def get_current_tab(self):
@@ -507,7 +499,7 @@ class MainWindow(ToplevelWindow):
                 num = self.notebook.page_num(p)
                 self.notebook.remove_page(num)
                 del self.notebook_map[p]
-                self.action_manager.execute('TabChange')
+                #self.action_manager.execute('TabChange')
                 return
 
     def select_element(self, element):
@@ -547,7 +539,9 @@ class MainWindow(ToplevelWindow):
         """
         # handle mouse button 3:
         if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
-            self._construct_popup_menu(menu_def=self.ns_popup, event=event)
+            menu = self.ui_manager.get_widget('namespace-popup')
+            menu.popup(None, None, None, event.button, event.time)
+
 
     def on_view_row_activated(self, view, path, column):
         """
@@ -568,7 +562,8 @@ class MainWindow(ToplevelWindow):
         Another page (tab) is put on the front of the diagram notebook.
         A dummy action is executed.
         """
-        self.action_manager.execute('TabChange')
+        #self.action_manager.execute('TabChange')
+        pass
 
     def on_window_size_allocate(self, window, allocation):
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
@@ -590,6 +585,15 @@ class MainWindow(ToplevelWindow):
     @action(name='file-quit', stock_id='gtk-quit')
     def quit(self):
         self.ask_to_close() and gtk.main_quit()
+
+    @action(name='tree-view-open', label='_Open')
+    def open_selected_element(self):
+        element = self._view.get_selected_element()
+        if isinstance(element, UML.Diagram):
+            self.show_diagram(element)
+        else:
+            log.debug('No action defined for element %s' % type(element).__name__)
+
 
 gtk.accel_map_add_filter('gaphor')
 

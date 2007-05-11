@@ -24,6 +24,8 @@ class ToplevelWindow(object):
         self.window.set_size_request(*self.size)
         self.window.set_resizable(True)
 
+        self.window.add_accel_group(self.ui_manager.get_accel_group())
+
         vbox = gtk.VBox()
         self.window.add(vbox)
         vbox.show()
@@ -31,14 +33,14 @@ class ToplevelWindow(object):
         #self.ui_manager.insert_action_group(self.action_group, 0)
         #self.ui_manager.add_ui_from_string(self.menu_xml)
 
-        self.window.add_accel_group(self.ui_manager.get_accel_group())
-
         menubar = self.ui_manager.get_widget(self.menubar_path)
-        vbox.pack_start(menubar, expand=False)
+        if menubar:
+            vbox.pack_start(menubar, expand=False)
         
         if self.toolbar_path:
             toolbar = self.ui_manager.get_widget(self.toolbar_path)
-            vbox.pack_start(toolbar, expand=False)
+            if toolbar:
+                vbox.pack_start(toolbar, expand=False)
 
         vbox.pack_end(self.ui_component(), expand=True)
 

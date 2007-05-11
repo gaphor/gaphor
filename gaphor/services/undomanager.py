@@ -189,7 +189,7 @@ class UndoManager(object):
             self._current_transaction = None
         component.handle(UndoManagerStateChanged(self))
 
-    @action(name='edit-undo', stock_id='gtk-undo')
+    @action(name='edit-undo', stock_id='gtk-undo', accel='<Control>z')
     def undo_transaction(self):
         if not self._undo_stack:
             return
@@ -210,7 +210,7 @@ class UndoManager(object):
         self._transaction_depth = 0
         component.handle(UndoManagerStateChanged(self))
 
-    @action(name='edit-redo', stock_id='gtk-redo')
+    @action(name='edit-redo', stock_id='gtk-redo', accel='<Control>y')
     def redo_transaction(self):
         if not self._redo_stack:
             return

@@ -61,7 +61,6 @@ class ActionManager(object):
                 action_provider.__ui_merge_id = \
                         self.ui_manager.add_ui_from_string(action_provider.menu_xml)
                 log.debug('Added menu xml %d' % action_provider.__ui_merge_id)
-            self.update_actions()
 
     @component.adapter(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
