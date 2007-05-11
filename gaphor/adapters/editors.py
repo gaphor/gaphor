@@ -12,7 +12,7 @@ from gaphor.core import inject
 from gaphor.UML.umllex import render_attribute
 from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
-from gaphor.util import rgetattr, rsetattr
+from gaphor.misc.rattr import rgetattr, rsetattr
 
 
 class CommentItemEditor(object):

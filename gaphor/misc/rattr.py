@@ -1,5 +1,5 @@
 """
-Gaphor utility functions, which support Python programming.
+Recursive attribute access functions.
 """
 
 def rgetattr(obj, attr):
