@@ -18,6 +18,7 @@ class run(Command):
         ('unittest=', 'u', 'execute unittest file (e.g. tests/test-ns.py)'),
         ('model=', 'm', 'load a model file'),
         ('coverage', None, 'Calculate coverage (utils/coverage.py)'),
+        ('profile', 'p', 'Run with profiling enabled'),
     ]
 
     def initialize_options(self):
@@ -29,6 +30,7 @@ class run(Command):
         self.model = None
         self.coverage = None
         self.verbosity = 2
+        self.profile = None
 
     def finalize_options(self):
         self.set_undefined_options('build',
@@ -36,6 +38,7 @@ class run(Command):
 
     def run(self):
         print 'Starting Gaphor...'
+
         if self.model:
             print 'Starting with model file', self.model
 
@@ -104,7 +107,20 @@ class run(Command):
         else:
             print 'Launching Gaphor...'
             #gaphor.main(self.model)
-            load_entry_point('gaphor==0.10.5', 'console_scripts', 'gaphor')()
+            starter = load_entry_point('gaphor==0.10.5', 'console_scripts', 'gaphor')
+
+            if self.profile:
+                print 'Enabling profiling...'
+                import hotshot, hotshot.stats
+                prof = hotshot.Profile('gaphor.prof')
+                prof.runcall(starter)
+                prof.close()
+                stats = hotshot.stats.load('gaphor.prof')
+                stats.strip_dirs()
+                stats.sort_stats('time', 'calls')
+                stats.print_stats(20)
+            else:
+                starter()
 
     sub_commands = [('build', None)]
 
