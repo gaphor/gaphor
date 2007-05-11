@@ -56,11 +56,11 @@ class ActionManager(object):
             log.debug('Registering actions for %s' % str(action_provider))
             
             assert action_provider.action_group
+            self.ui_manager.insert_action_group(action_provider.action_group, -1)
             if action_provider.menu_xml:
                 action_provider.__ui_merge_id = \
                         self.ui_manager.add_ui_from_string(action_provider.menu_xml)
                 log.debug('Added menu xml %d' % action_provider.__ui_merge_id)
-            self.ui_manager.insert_action_group(action_provider.action_group, -1)
             self.update_actions()
 
     @component.adapter(ServiceInitializedEvent)

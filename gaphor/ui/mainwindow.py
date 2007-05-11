@@ -428,6 +428,14 @@ class MainWindow(ToplevelWindow):
     def construct(self):
         super(MainWindow, self).construct()
 
+        # Add accelerators from ui manager:
+
+        # Does not work:
+        # ./gaphor/ui/mainwindow.py:437: GtkWarning: _gtk_accel_group_attach: assertion `g_slist_find (accel_group->acceleratables, object) == NULL' failed
+        #  self.window.add_accel_group(self.ui_manager.get_accel_group())
+
+        self.window.add_accel_group(self.ui_manager.get_accel_group())
+
         self.window.connect('delete-event', self._on_window_delete)
 
         # We want to store the window size, so it can be reloaded on startup

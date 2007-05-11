@@ -3,11 +3,16 @@ The file service is responsible for loading and saving the user data.
 """
 
 import gc
+import gobject, gtk
 from zope import interface, component
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.core import _, inject, action, build_action_group
 from gaphor import UML
+from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
+from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.misc.errorhandler import error_handler, ErrorHandlerAspect, weave_method
 
+DEFAULT_EXT='.gaphor'
 
 class FileManager(object):
     """
@@ -42,6 +47,7 @@ class FileManager(object):
         self.filename = None
 
     def init(self, app):
+        self._app = app
         self.action_group = build_action_group(self)
 
     def shutdown(self):
@@ -76,19 +82,164 @@ class FileManager(object):
 
     @action(name='file-open', stock_id='gtk-open')
     def open(self):
-        pass
+        filesel = gtk.FileChooserDialog(title='Open Gaphor model',
+                                        action=gtk.FILE_CHOOSER_ACTION_OPEN,
+                                        buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
+
+        filter = gtk.FileFilter()
+        filter.set_name("Gaphor models")
+        filter.add_pattern("*.gaphor")
+        filesel.add_filter(filter)
+
+        filter = gtk.FileFilter()
+        filter.set_name("All files")
+        filter.add_pattern("*")
+        filesel.add_filter(filter)
+
+        if self.filename:
+            filesel.set_current_name(self.filename)
+
+        response = filesel.run()
+        filename = filesel.get_filename()
+        filesel.destroy()
+        if not filename or response != gtk.RESPONSE_OK:
+            return
+
+        try:
+            from gaphor import storage
+            log.debug('Loading from: %s' % filename)
+            main_window = self.gui_manager.main_window
+            queue = Queue()
+            win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, main_window.window, queue)
+            self.filename = filename
+            gc.collect()
+            worker = GIdleThread(storage.load_generator(filename, self.element_factory), queue)
+            #self._window.action_pool.insensivate_actions()
+            #undo_manager.clear_undo_stack()
+            #get_undo_manager().clear_redo_stack()
+            worker.start()
+            worker.wait()
+            if worker.error:
+                log.error('Error while loading model from file %s: %s' % (filename, worker.error))
+                error_handler(message='Error while loading model from file %s' % filename, exc_info=worker.exc_info)
+
+            # Let this be handled by the main window itself:
+            #self._window.set_message('Model loaded successfully')
+            model = main_window.get_model()
+            view = main_window.get_tree_view()
+
+            main_window.set_filename(filename)
+
+            # Expand all root elements:
+            for node in model.root[1]:
+                view.expand_row(model.path_from_element(node[0]), False)
+
+        finally:
+            try:
+                win.destroy()
+            except:
+                pass
+
+
+    def _save(self, filename):
+        if filename and len(filename) > 0:
+            from gaphor import storage
+            if not filename.endswith(DEFAULT_EXT):
+                filename = filename + DEFAULT_EXT
+
+            queue = Queue()
+            log.debug('Saving to: %s' % filename)
+            win = show_status_window('Saving...', 'Saving model to %s' % filename, self.gui_manager.main_window.window, queue)
+            try:
+                out = open(filename, 'w')
+
+                worker = GIdleThread(storage.save_generator(XMLWriter(out), self.element_factory), queue)
+                #action_states = self._window.action_pool.get_action_states()
+                #self._window.action_pool.insensivate_actions()
+                worker.start()
+                worker.wait()
+                if worker.error:
+                    log.error('Error while saving model to file %s: %s' % (filename, worker.error))
+                    error_handler(message='Error while saving model to file %s' % filename, exc_info=worker.exc_info)
+                out.close()
+
+                self.gui_manager.main_window.set_filename(filename)
+
+                # Restore states of actions
+                #self._window.action_pool.set_action_states(action_states)
+            finally:
+                win.destroy()
 
     @action(name='file-save', stock_id='gtk-save')
     def save(self):
-        pass
+        filename = self.gui_manager.main_window.get_filename()
+        if filename:
+            self._save(filename)
+        else:
+            self.save_as()
 
     @action(name='file-save-as', stock_id='gtk-save-as')
     def save_as(self):
-        pass
+        filename = self.gui_manager.main_window.get_filename()
+        filesel = gtk.FileChooserDialog(title=_('Save Gaphor model as'),
+                                        action=gtk.FILE_CHOOSER_ACTION_SAVE,
+                                        buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
+        if filename:
+            filesel.set_current_name(filename)
+        response = filesel.run()
+        filename = None
+        if response == gtk.RESPONSE_OK:
+            filename = filesel.get_filename()
+        filesel.destroy()
+        self._save(filename)
 
     @action(name='file-recent-files', label=_('Recent files'), stock_id='gtk-recent')
     def recent_files(self):
         pass
 
+
+def show_status_window(title, message, parent=None, queue=None):
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    win.set_title(title)
+    win.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
+    win.set_transient_for(parent)
+    win.set_modal(True)
+    win.set_resizable(False)
+    win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
+    #win.set_skip_taskbar_hint(True)
+    #win.set_skip_pager_hint(True)
+    win.set_border_width(24)
+    vbox = gtk.VBox(spacing=24)
+    win.add(vbox)
+    label = gtk.Label(message)
+    label.set_padding(8,8)
+    vbox.pack_start(label)
+    progress_bar = gtk.ProgressBar()
+    vbox.pack_start(progress_bar, expand=False, fill=False, padding=0)
+
+    def progress_idle_handler(progress_bar, queue):
+        #print '.',
+        percentage = 0
+        try:
+            while True:
+                percentage = queue.get()
+        except QueueEmpty:
+            pass
+        if percentage:
+            progress_bar.set_fraction(min(percentage / 100.0, 100.0))
+        return True
+
+    if queue:
+        idle_id = gobject.idle_add(progress_idle_handler, progress_bar, queue,
+                                   priority=gobject.PRIORITY_LOW)
+        # Make sure the idle fucntion is removed as soon as the window
+        # is destroyed.
+        def remove_progress_idle_handler(window, idle_id):
+            #print 'remove_progress_idle_handler', idle_id
+            gobject.source_remove(idle_id)
+        win.connect('destroy', remove_progress_idle_handler, idle_id)
+
+    win.show_all()
+    return win
 
 #vim:sw=4:et:ai
