@@ -77,14 +77,14 @@ setup(
             'gaphor = gaphor:main',
         ],
         'gaphor.services': [
+            'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
             'properties = gaphor.services.properties:Properties',
             'undo_manager = gaphor.services.undomanager:UndoManager',
-            'plugin_manager = gaphor.services.pluginmanager:PluginManager',
+#            'plugin_manager = gaphor.services.pluginmanager:PluginManager',
             'action_manager = gaphor.services.actionmanager:ActionManager',
-            'gui_manager = gaphor.services.guimanager:GUIManager',
-            'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
             'element_factory = gaphor.UML.elementfactory:ElementFactory',
             'file_manager = gaphor.services.filemanager:FileManager',
+            'gui_manager = gaphor.services.guimanager:GUIManager',
         ],
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',

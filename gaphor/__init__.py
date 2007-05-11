@@ -40,9 +40,9 @@ def main(gaphor_file=None):
     action_manager = Application.get_service('action_manager')
     if gaphor_file:
         main_window.set_filename(gaphor_file)
-        action_manager.execute('FileRevert')
+        action_manager.execute('file-revert')
     else:
-        action_manager.execute('FileNew')
+        action_manager.execute('file-new')
     Application.run()
     Application.shutdown()
 

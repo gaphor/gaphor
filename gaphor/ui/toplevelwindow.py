@@ -28,8 +28,8 @@ class ToplevelWindow(object):
         self.window.add(vbox)
         vbox.show()
 
-        self.ui_manager.insert_action_group(self.action_group, 0)
-        self.ui_manager.add_ui_from_string(self.menu_xml)
+        #self.ui_manager.insert_action_group(self.action_group, 0)
+        #self.ui_manager.add_ui_from_string(self.menu_xml)
 
         self.window.add_accel_group(self.ui_manager.get_accel_group())
 

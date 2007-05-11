@@ -518,6 +518,7 @@ class MainWindow(ToplevelWindow):
         selection.select_path(path)
         self.action_manager.execute('SelectRow')
 
+
     # Signal callbacks:
 
     def _on_window_destroy(self, window):

@@ -19,7 +19,7 @@ class ConsoleWindow(ToplevelWindow):
     menu_xml = """
         <ui>
           <menubar name="mainwindow">
-            <menu name="window">
+            <menu name="window" action="window">
               <menuitem action="ConsoleWindow:open" />
             </menu>
           </menubar>

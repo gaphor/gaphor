@@ -50,7 +50,7 @@ class GUIManager(object):
             uicomp.ui_manager = ui_manager
             self._ui_components[ep.name] = uicomp
             if IActionProvider.providedBy(uicomp):
-                self.action_manager.register_action_provider(uicomp, priority=0)
+                self.action_manager.register_action_provider(uicomp)
                 
     def init_main_window(self):
         from gaphor.ui.accelmap import load_accel_map

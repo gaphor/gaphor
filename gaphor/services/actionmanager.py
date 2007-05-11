@@ -5,8 +5,8 @@ import gtk
 from zope import interface, component
 from gaphor.core import inject
 from gaphor.interfaces import IService, IActionProvider
-from gaphor.event import ServiceInitializedEvent
-from gaphor.misc.action import ActionPool
+from gaphor.event import ServiceInitializedEvent, ActionExecuted
+
 
 class ActionManager(object):
     """
@@ -29,6 +29,7 @@ class ActionManager(object):
         a = self.get_action(action_id)
         if a:
             a.activate()
+            component.handle(ActionExecuted(action_id, a))
         else:
             log.warning('Unknown action: %s' % action_id)
 
@@ -40,18 +41,19 @@ class ActionManager(object):
             a = g.get_action(action_id)
             if a: return a
 
-    def register_action_provider(self, action_provider, priority=-1):
-        log.debug('Registring actions for %s' % str(action_provider))
+    def register_action_provider(self, action_provider):
+        log.debug('Registering actions for %s' % str(action_provider))
         action_provider = IActionProvider(action_provider)
         try:
             # Check if the action provider is not already registered
             action_provider.__ui_merge_id
         except AttributeError:
             
+            assert action_provider.action_group
+            self.ui_manager.insert_action_group(action_provider.action_group, -1)
             if action_provider.menu_xml:
                 action_provider.__ui_merge_id = \
                         self.ui_manager.add_ui_from_string(action_provider.menu_xml)
-            self.ui_manager.insert_action_group(action_provider.action_group, priority)
 
     @component.adapter(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
@@ -60,6 +62,7 @@ class ActionManager(object):
         # Only start registring already registered services once the GUI
         # is in order (e.i. menu structure is correctly set up)
         if event.name == 'gui_manager':
+            log.info('Loading not yet registered action provider services')
             for name, service in component.getUtilitiesFor(IService):
                 if IActionProvider.providedBy(service):
                     self.register_action_provider(service)
