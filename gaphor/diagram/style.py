@@ -75,15 +75,16 @@ def get_text_point(extents, width, height, align, padding, outside):
     """
     Calculate position of the text relative to containing box defined by
     tuple (0, 0, width, height).  Text is aligned using align and padding
-    information. It can be also placed outside the box if @C{outside}
-    parameter is set to @C{True}.
+    information. It can be also placed outside the box if ``outside''
+    parameter is set to ``True''.
 
-    @param extents: text extents like width, height, etc.
-    @param width:   width of the containing box
-    @param height:  height of the containing box
-    @param align:   text align information (center, top, etc.)
-    @param padding: text padding
-    @param outside: should text be put outside containing box
+    Parameters:
+     - extents: text extents like width, height, etc.
+     - width:   width of the containing box
+     - height:  height of the containing box
+     - align:   text align information (center, top, etc.)
+     - padding: text padding
+     - outside: should text be put outside containing box
     """
     #x_bear, y_bear, w, h, x_adv, y_adv = extents
     w, h = extents
@@ -127,6 +128,44 @@ def get_text_point(extents, width, height, align, padding, outside):
             y = height - padding[PADDING_BOTTOM]
         else:
             assert False
+    return x, y
+
+
+def get_text_point_at_line(extents, p1, p2, align, padding):
+    """
+    Calculate position of the text relative to a line defined by points
+    (p1, p2). Text is aligned using align and padding information. 
+
+    Parameters:
+     - extents: text extents like width, height, etc.
+     - p1:      beginning of line
+     - p2:      end of line
+     - align:   text align information (center, top, etc.)
+     - padding: text padding
+    """
+    w, h = extents
+
+    halign, valign = align
+
+    if halign == ALIGN_LEFT:
+        x = p2[0] + padding[PADDING_LEFT]
+        y = p2[1]
+    elif halign == ALIGN_CENTER:
+        x = (p1[0] - p2[0] - w) / 2
+        y = (p1[1] - p2[1] - h) / 2
+    elif halign == ALIGN_RIGHT:
+        x = p1[0] - padding[PADDING_RIGHT]
+        y = p1[1]
+    else:
+        assert False
+
+    if valign == ALIGN_TOP:
+        y = y + padding[PADDING_TOP]
+    elif valign == ALIGN_BOTTOM:
+        y = y - padding[PADDING_BOTTOM]
+    else:
+        assert False
+
     return x, y
 
 

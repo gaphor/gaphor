@@ -7,6 +7,7 @@ from gaphor import UML
 from gaphor.misc import uniqueid
 from gaphor.UML import Element, Presentation
 from gaphor.diagram import DiagramItemMeta
+from gaphor.diagram.textelement import EditableTextSupport
 
 STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
@@ -231,7 +232,7 @@ class StereotypeSupport(object):
         return None
 
 
-class DiagramItem(SubjectSupport, StereotypeSupport):
+class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
     """
     Basic functionality for all model elements (lines and elements!).
 
@@ -260,6 +261,7 @@ class DiagramItem(SubjectSupport, StereotypeSupport):
     def __init__(self, id=None):
         SubjectSupport.__init__(self)
         StereotypeSupport.__init__(self)
+        EditableTextSupport.__init__(self)
 
         self._id = id
 
@@ -366,5 +368,7 @@ class DiagramItem(SubjectSupport, StereotypeSupport):
 
     def on_subject_notify(self, pspec, notifiers=()):
         SubjectSupport.on_subject_notify(self, pspec, notifiers + ('appliedStereotype',))
+
+
 
 # vim:sw=4:et:ai

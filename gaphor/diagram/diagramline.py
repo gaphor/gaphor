@@ -12,7 +12,8 @@ from interfaces import IConnect
 
 
 class LineItem(gaphas.Line, DiagramItem):
-    """Base class for diagram lines.
+    """
+    Base class for diagram lines.
     """
 
 #    __metaclass__ = LineItemMeta
@@ -67,18 +68,28 @@ class LineItem(gaphas.Line, DiagramItem):
         self._stereotype_bounds = Rectangle(x, y, width=sw, height=sh)
 
     def update(self, context):
-        super(LineItem, self).update(context)
+        #super(LineItem, self).update(context)
+        gaphas.Line.update(self, context)
+        DiagramItem.update(self, context)
         cr = context.cairo
 
         # update stereotype
         self.update_stereotype(context)
 
     def draw(self, context):
-        super(LineItem, self).draw(context)
+        #super(LineItem, self).draw(context)
+        gaphas.Line.draw(self, context)
+        DiagramItem.draw(self, context)
         cr = context.cairo
         if self._stereotype:
             text_align(cr, self._stereotype_bounds[0], self._stereotype_bounds[1],
                        self._stereotype, align_x=1, align_y=1)
+
+
+    def point(self, x, y):
+        d1 = gaphas.Line.point(self, x, y)
+        d2 = DiagramItem.point(self, x, y)
+        return min(d1, d2)
 
 
 class DiagramLine(LineItem):

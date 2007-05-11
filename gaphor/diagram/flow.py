@@ -8,9 +8,7 @@ from math import atan, pi, sin, cos
 
 from gaphor import UML
 from gaphor.diagram.diagramline import DiagramLine
-from gaphas.geometry import Rectangle
-from gaphas.util import text_extents, text_multiline
-from gaphas.geometry import distance_rectangle_point
+from gaphor.diagram.style import ALIGN_RIGHT, ALIGN_TOP
 
 
 node_classes = {
@@ -19,6 +17,7 @@ node_classes = {
     UML.JoinNode:     UML.ForkNode,
     UML.MergeNode:    UML.DecisionNode,
 }
+
 
 
 class FlowItem(DiagramLine):
@@ -34,101 +33,24 @@ class FlowItem(DiagramLine):
         'SplitFlow',
     )
 
+    name_align = { 'text-align': (ALIGN_RIGHT, ALIGN_TOP) }
+
     def __init__(self, id = None):
         DiagramLine.__init__(self, id)
-        self._name_bounds = None
-        self._guard_bounds = None
+        self.add_text('name', self.name_align)
+        self.add_text('guard.value')
 
-        #self.set(has_tail=1, tail_fill_color=0,
-        #         tail_a=0.0, tail_b=15.0, tail_c=6.0, tail_d=6.0)
-
-    name_bounds = property(lambda s: s._name_bounds)
-    guard_bounds = property(lambda s: s._guard_bounds)
 
     def on_subject_notify(self, pspec, notifiers = ()):
         DiagramLine.on_subject_notify(self, pspec, ('guard', 'guard.value',) + notifiers)
-
         self.request_update()
+
 
     def on_subject_notify__guard(self, subject, pspec=None):
         self.request_update()
 
     def on_subject_notify__guard_value(self, subject, pspec=None):
         self.request_update()
-
-    def update_name(self, context):
-        cr = context.cairo
-        ofs = 5
-
-        handles = self._handles
-        p1 = handles[-1].pos
-        p2 = handles[-2].pos
-
-        name_w, name_h = map(max, text_extents(cr, self.subject and self.subject.name, multiline=True), (10, 10))
-
-        name_dx = 0.0
-        name_dy = 0.0
-
-        dx = float(p2[0]) - float(p1[0])
-        dy = float(p2[1]) - float(p1[1])
-        
-        if dy == 0:
-            rc = 1000.0 # quite a lot...
-        else:
-            rc = dx / dy
-        abs_rc = abs(rc)
-        h = dx > 0 # right side of the box
-        v = dy > 0 # bottom side
-
-        if abs_rc > 6:
-            # horizontal line
-            if h:
-                name_dx = ofs
-                name_dy = -ofs - name_h
-            else:
-                name_dx = -ofs - name_w
-                name_dy = -ofs - name_h
-        elif 0 <= abs_rc <= 0.2:
-            # vertical line
-            if v:
-                name_dx = -ofs - name_w
-                name_dy = ofs
-            else:
-                name_dx = -ofs - name_w
-                name_dy = -ofs - name_h
-        else:
-            # Should both items be placed on the same side of the line?
-            r = abs_rc < 1.0
-
-            # Find out alignment of text (depends on the direction of the line)
-            align_left = (h and not r) or (r and not h)
-            align_bottom = (v and not r) or (r and not v)
-            if align_left:
-                name_dx = ofs
-            else:
-                name_dx = -ofs - name_w
-            if align_bottom:
-                name_dy = -ofs - name_h
-            else:
-                name_dy = ofs 
-
-        self._name_bounds = Rectangle(p1[0] + name_dx,
-                                      p1[1] + name_dy,
-                                      width=name_w,
-                                      height=name_h)
-
-    def update(self, context):
-        super(FlowItem, self).update(context)
-        self.update_name(context)
-        # update guard label:
-        self._guard_bounds = self.update_label(context, self.subject and self.subject.guard and self.subject.guard.value)
-
-    def point(self, x, y):
-        d1 = super(FlowItem, self).point(x, y)
-        drp = distance_rectangle_point
-        d2 = drp(self._name_bounds, (x, y))
-        d3 = drp(self._guard_bounds, (x, y))
-        return min(d1, d2, d3)
 
     def draw_tail(self, context):
         cr = context.cairo
@@ -137,22 +59,6 @@ class FlowItem(DiagramLine):
         cr.move_to(15, -6)
         cr.line_to(0, 0)
         cr.line_to(15, 6)
-
-    def draw(self, context):
-        super(FlowItem, self).draw(context)
-        cr= context.cairo
-        if self.subject:
-            text_multiline(cr, self._name_bounds[0], self._name_bounds[3], self.subject.name)
-            text_multiline(cr, self._guard_bounds[0], self._guard_bounds[3], self.subject.guard and self.subject.guard.value)
-
-        if context.hovered or context.focused or context.draw_all:
-            cr.set_line_width(0.5)
-            b = self._name_bounds
-            cr.rectangle(b.x0, b.y0, b.width, b.height)
-            cr.stroke()
-            b = self._guard_bounds
-            cr.rectangle(b.x0, b.y0, b.width, b.height)
-            cr.stroke()
 
         
 #class ACItem(TextElement):

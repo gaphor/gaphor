@@ -12,6 +12,7 @@ from gaphor.core import inject
 from gaphor.UML.umllex import render_attribute
 from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
+from gaphor.util import rgetattr, rsetattr
 
 
 class CommentItemEditor(object):
@@ -96,45 +97,43 @@ class ObjectNodeItemEditor(NamedItemEditor):
 component.provideAdapter(ObjectNodeItemEditor)
 
 
-class FlowItemEditor(object):
-    """Text edit support for Named items.
+class DiagramItemTextEditor(object):
+    """
+    Text edit support for diagram items containing text elements.
     """
     interface.implements(IEditor)
-    component.adapts(items.FlowItem)
+    component.adapts(items.DiagramItem)
 
     def __init__(self, item):
         self._item = item
-        self.edit_name = False
-        self.edit_guard = False
+        self._text_element = None
 
     def is_editable(self, x, y):
         if not self._item.subject:
             return False
-        if (x, y) in self._item.name_bounds:
-            self.edit_name = True
-        elif (x, y) in self._item.guard_bounds:
-            self.edit_guard = True
-        return self.edit_name or self.edit_guard
+
+        for txt in self._item.texts():
+            if (x, y) in txt.bounds:
+                self._text_element = txt
+                break
+        return self._text_element is not None
 
     def get_text(self):
-        if self.edit_name:
-            return self._item.subject.name
-        elif self.edit_guard:
-            return self._item.subject.guard.value
+        if self._text_element:
+            return rgetattr(self._item.subject, self._text_element.attr)
 
     def get_bounds(self):
         return None
 
     def update_text(self, text):
-        if self.edit_name:
-            self._item.subject.name = text
-        elif self.edit_guard:
-            self._item.subject.guard.value = text
+        if self._text_element:
+            self._text_element.text = text
+            rsetattr(self._item.subject, self._text_element.attr, text)
 
     def key_pressed(self, pos, key):
         pass
 
-component.provideAdapter(FlowItemEditor)
+component.provideAdapter(DiagramItemTextEditor)
 
 
 class ClassifierItemEditor(object):
