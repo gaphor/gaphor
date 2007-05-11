@@ -173,7 +173,7 @@ class MainWindow(ToplevelWindow):
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
-          <menu name="file" action="file" >
+          <menu name="file" action="file">
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
@@ -205,16 +205,6 @@ class MainWindow(ToplevelWindow):
         </toolbar>
         <toolbar action="tools">
         </toolbar>
-        <popup action="NamespacePopup">
-          <menuitem action="RenameModelElement" />
-          <menuitem action="OpenModelElement" />
-          <separator />
-          <menuitem action="CreateDiagram" />
-          <menuitem action="DeleteDiagram" />
-          <separator />
-          <menuitem action="RefreshNamespaceModel" />
-          <placeholder action="namespacePopupSlot" />
-        </popup>
       </ui>
     """
 #            <menuitem name="New" action="FileNew" />
@@ -251,6 +241,16 @@ class MainWindow(ToplevelWindow):
 #          <toolitem action="ViewZoomOut" />
 #          <toolitem action="ViewZoom100" />
 
+#        <popup action="NamespacePopup">
+#          <menuitem action="RenameModelElement" />
+#          <menuitem action="OpenModelElement" />
+#          <separator />
+#          <menuitem action="CreateDiagram" />
+#          <menuitem action="DeleteDiagram" />
+#          <separator />
+#          <menuitem action="RefreshNamespaceModel" />
+#          <placeholder action="namespacePopupSlot" />
+#        </popup>
 
     def __init__(self):
         ToplevelWindow.__init__(self)

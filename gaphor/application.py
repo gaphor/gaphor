@@ -64,8 +64,8 @@ class _Application(object):
         else:
             log.info('initializing service service.%s' % name)
             # TODO: do init() before provideUtility!
-            component.provideUtility(srv, IService, name)
             srv.init(self)
+            component.provideUtility(srv, IService, name)
             component.handle(ServiceInitializedEvent(name, srv))
             return srv
 

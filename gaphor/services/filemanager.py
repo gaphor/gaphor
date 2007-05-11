@@ -22,21 +22,21 @@ class FileManager(object):
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
-          <menu name="file">
-	    <placeholder name="primary">
+          <menu action="file">
+            <placeholder name="primary">
               <menuitem action="file-new" />
               <menuitem action="file-open" />
-              <menu name="recent" action="file-recent-files">
-	      </menu>
               <separator />
               <menuitem action="file-save" />
               <menuitem action="file-save-as" />
               <separator />
-	    </placeholder>
+            </placeholder>
           </menu>
         </menubar>
       </ui>
     """
+#              <menu name="recent" action="file-recent-files">
+#              </menu>
 
     def __init__(self):
         self.filename = None
@@ -46,11 +46,11 @@ class FileManager(object):
 
     def shutdown(self):
         pass
-	
+
     @action(name='file-new', stock_id='gtk-new')
     def new(self):
         element_factory = self.element_factory
-	main_window = self.gui_manager.main_window
+        main_window = self.gui_manager.main_window
         if element_factory.size():
             dialog = gtk.MessageDialog(main_window.window,
                 gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -88,7 +88,7 @@ class FileManager(object):
 
     @action(name='file-recent-files', label=_('Recent files'), stock_id='gtk-recent')
     def recent_files(self):
-	pass
+        pass
 
 
 #vim:sw=4:et:ai

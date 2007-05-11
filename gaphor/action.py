@@ -93,7 +93,7 @@ def build_action_group(obj, name=None):
     Say 0 baz
     """
     import gtk
-    group = gtk.ActionGroup(name)
+    group = gtk.ActionGroup(name or obj)
 
     for attrname in dir(obj):
         try:

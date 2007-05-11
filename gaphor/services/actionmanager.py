@@ -20,6 +20,12 @@ class ActionManager(object):
 
     def init(self, app):
         self.ui_manager = gtk.UIManager()
+        log.info('Loading not yet registered action provider services')
+        for name, service in component.getUtilitiesFor(IService):
+            if IActionProvider.providedBy(service):
+                log.debug('Loading already registered service %s' % str(service))
+                self.register_action_provider(service)
+
         component.provideHandler(self._service_initialized_handler)
 
     def shutdown(self):
@@ -42,29 +48,33 @@ class ActionManager(object):
             if a: return a
 
     def register_action_provider(self, action_provider):
-        log.debug('Registering actions for %s' % str(action_provider))
         action_provider = IActionProvider(action_provider)
         try:
             # Check if the action provider is not already registered
             action_provider.__ui_merge_id
         except AttributeError:
+            log.debug('Registering actions for %s' % str(action_provider))
             
             assert action_provider.action_group
-            self.ui_manager.insert_action_group(action_provider.action_group, -1)
             if action_provider.menu_xml:
                 action_provider.__ui_merge_id = \
                         self.ui_manager.add_ui_from_string(action_provider.menu_xml)
+                log.debug('Added menu xml %d' % action_provider.__ui_merge_id)
+            self.ui_manager.insert_action_group(action_provider.action_group, -1)
+            self.update_actions()
 
     @component.adapter(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
         if IActionProvider.providedBy(event.service):
+            log.debug('Loading registered service %s' % str(event.service))
             self.register_action_provider(event.service)
         # Only start registring already registered services once the GUI
         # is in order (e.i. menu structure is correctly set up)
-        if event.name == 'gui_manager':
-            log.info('Loading not yet registered action provider services')
-            for name, service in component.getUtilitiesFor(IService):
-                if IActionProvider.providedBy(service):
-                    self.register_action_provider(service)
+#        if event.name == 'gui_manager':
+#            log.info('Loading not yet registered action provider services')
+#            for name, service in component.getUtilitiesFor(IService):
+#                if IActionProvider.providedBy(service):
+#                    log.debug('Loading already registered service %s' % str(service))
+#                    self.register_action_provider(service)
 
 # vim:sw=4:et:ai

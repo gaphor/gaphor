@@ -85,10 +85,12 @@ class UndoManager(object):
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
-          <menu name="edit">
-            <menuitem action="edit-undo" />
-            <menuitem action="edit-redo" />
-            <separator />
+          <menu action="edit">
+            <placeholder name="primary">
+              <menuitem action="edit-undo" />
+              <menuitem action="edit-redo" />
+              <separator />
+            </placeholder>
           </menu>
         </menubar>
       </ui>
