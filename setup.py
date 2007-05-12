@@ -111,9 +111,6 @@ setup(
         build_mo = dict(
             all_linguas = ','.join(LINGUAS),
         ),
-        install_mo = dict(
-            all_linguas = ','.join(LINGUAS),
-        ),
     )
 )
       

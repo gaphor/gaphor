@@ -9,18 +9,13 @@ from gaphor.interfaces import IActionProvider
 from interfaces import IUIComponent
 
 from gaphor import UML
-from gaphor.core import inject
-from gaphor.action import action, build_action_group
-from gaphor.i18n import _
+from gaphor.core import _, inject, action, build_action_group
 from gaphor.ui import namespace
-#from gaphor.ui.abstractwindow import AbstractWindow
 from gaphor.ui.diagramtab import DiagramTab
 from gaphor.ui.toolbox import Toolbox
-from gaphor.ui.menufactory import toolbox_to_menu
 from toplevelwindow import ToplevelWindow
 
 from gaphor.ui.objectinspector import ObjectInspector
-
 
 from interfaces import IDiagramElementReceivedFocus
 from gaphor.interfaces import IServiceEvent
@@ -131,7 +126,7 @@ class MainWindow(ToplevelWindow):
                 'separator',
                 # Copy the tool box:
                 _('Tools'),
-                    toolbox_to_menu(toolbox),
+                    #toolbox_to_menu(toolbox),
                 'separator',
                 '<DiagramSlot>'),
             _('_Window'), (
@@ -205,6 +200,10 @@ class MainWindow(ToplevelWindow):
         </toolbar>
         <toolbar action="tools">
         </toolbar>
+        <popup action="namespace-popup">
+          <menuitem action="tree-view-open" />
+          <menuitem action="tree-view-rename" />
+        </popup>
       </ui>
     """
 #            <menuitem name="New" action="FileNew" />
@@ -516,7 +515,7 @@ class MainWindow(ToplevelWindow):
         # Select the diagram, so it can be opened by the OpenModelElement action
         selection = self.get_tree_view().get_selection()
         selection.select_path(path)
-        self.action_manager.execute('SelectRow')
+        #self.action_manager.execute('SelectRow')
 
 
     # Signal callbacks:
@@ -539,7 +538,7 @@ class MainWindow(ToplevelWindow):
         """
         # handle mouse button 3:
         if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
-            menu = self.ui_manager.get_widget('namespace-popup')
+            menu = self.ui_manager.get_widget('/namespace-popup')
             menu.popup(None, None, None, event.button, event.time)
 
 
@@ -547,15 +546,17 @@ class MainWindow(ToplevelWindow):
         """
         Double click on an element in the tree view.
         """
-        self.action_manager.execute('OpenModelElement')
+        #self.action_manager.execute('OpenModelElement')
         # Set the pointer tool as default tool.
-        self.action_manager.execute('Pointer')
+        #self.action_manager.execute('Pointer')
+        pass
 
     def on_view_cursor_changed(self, view):
         """
         Another row is selected, execute a dummy action.
         """
-        self.action_manager.execute('SelectRow')
+        #self.action_manager.execute('SelectRow')
+        pass
 
     def on_notebook_switch_page(self, notebook, tab, page_num):
         """
@@ -587,12 +588,24 @@ class MainWindow(ToplevelWindow):
         self.ask_to_close() and gtk.main_quit()
 
     @action(name='tree-view-open', label='_Open')
-    def open_selected_element(self):
+    def tree_view_open_selected(self):
         element = self._view.get_selected_element()
         if isinstance(element, UML.Diagram):
             self.show_diagram(element)
         else:
             log.debug('No action defined for element %s' % type(element).__name__)
+
+    @action(name='tree-view-rename', label=_('Rename'))
+    def tree_view_rename_selected(self):
+        view = self.get_tree_view()
+        element = view.get_selected_element()
+        path = view.get_model().path_from_element(element)
+        column = view.get_column(0)
+        cell = column.get_cell_renderers()[1]
+        cell.set_property('editable', 1)
+        cell.set_property('text', element.name)
+        view.set_cursor(path, column, True)
+        cell.set_property('editable', 0)
 
 
 gtk.accel_map_add_filter('gaphor')
