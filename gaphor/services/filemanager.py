@@ -38,6 +38,12 @@ class FileManager(object):
             </placeholder>
           </menu>
         </menubar>
+        <toolbar action="mainwindow-toolbar">
+          <toolitem action="file-open" />
+          <separator />
+          <toolitem action="file-save" />
+          <toolitem action="file-save-as" />
+        </toolbar>
       </ui>
     """
 #              <menu name="recent" action="file-recent-files">

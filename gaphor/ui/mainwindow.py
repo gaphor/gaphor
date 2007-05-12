@@ -163,7 +163,7 @@ class MainWindow(ToplevelWindow):
     title = 'Gaphor'
     size = property(lambda s: s.properties.get('ui.window-size', (760, 580)))
     menubar_path = '/mainwindow'
-    toolbar_path = '/mainwindow_toolbar'
+    toolbar_path = '/mainwindow-toolbar'
 
     menu_xml = """
       <ui>
@@ -196,7 +196,7 @@ class MainWindow(ToplevelWindow):
             <placeholder name="ternary" />
           </menu>
         </menubar>
-        <toolbar name='mainwindow_toolbar'>
+        <toolbar name='mainwindow-toolbar'>
         </toolbar>
         <toolbar action="tools">
         </toolbar>
