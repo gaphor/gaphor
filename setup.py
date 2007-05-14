@@ -90,15 +90,23 @@ setup(
             'mainwindow = gaphor.ui.mainwindow:MainWindow',
             'consolewindow = gaphor.ui.consolewindow:ConsoleWindow',
         ],
+        'distutils.commands': [
+            'nosetests = nose.commands:nosetests',
+        ],
     },
 
     cmdclass = {
               'build_uml': build_uml,
               'build_mo': build_mo,
               'build_pot': build_pot,
-	      'install_lib': install_lib,
+              'install_lib': install_lib,
               'run': run,
     },
+
+    setup_requires = 'nose >= 0.9.2',
+
+    test_suite = 'nose.collector',
+
     options = dict(
         py2app = dict(
             includes=['atk', 'pango', 'cairo', 'pangocairo'],
@@ -113,4 +121,5 @@ setup(
         ),
     )
 )
-      
+ 
+# vim:se=4:et:ai
