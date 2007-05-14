@@ -63,7 +63,6 @@ class _Application(object):
             raise component.ComponentLookupError(IService, name)
         else:
             log.info('initializing service service.%s' % name)
-            # TODO: do init() before provideUtility!
             srv.init(self)
             component.provideUtility(srv, IService, name)
             component.handle(ServiceInitializedEvent(name, srv))

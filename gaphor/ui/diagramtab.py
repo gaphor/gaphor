@@ -4,8 +4,7 @@
 import gtk
 
 from gaphor import UML
-from gaphor.core import inject
-from gaphor.i18n import _
+from gaphor.core import _, inject, action, build_action_group
 from gaphor.diagram.interfaces import IPopupMenu
 from gaphor.diagram import get_diagram_item
 from gaphor.transaction import Transaction
@@ -18,10 +17,33 @@ class DiagramTab(object):
     element_factory = inject('element_factory')
     action_manager = inject('action_manager')
 
+    menu_xml = """
+      <ui>
+        <menubar action="mainwindow">
+          <menu name="diagram" action="diagram">
+            <menuitem action="diagram-zoom-in" />
+            <menuitem action="diagram-zoom-out" />
+            <menuitem action="diagram-zoom-100" />
+            <separator />
+            <menuitem action="diagram-close" />
+          </menu>
+        </menubar>
+        <toolbar name='mainwindow-toolbar'>
+          <separator />
+          <toolitem action="diagram-zoom-in" />
+          <toolitem action="diagram-zoom-out" />
+          <toolitem action="diagram-zoom-100" />
+        </toolbar>
+      </ui>
+    """
+
     def __init__(self, owning_window):
         self.diagram = None
         #self.view = None
         self.owning_window = owning_window
+        self.action_group = build_action_group(self)
+
+    title = property(lambda s: s.diagram and s.diagram.name or _('<None>'))
 
     def get_diagram(self):
         return self.diagram
@@ -47,7 +69,7 @@ class DiagramTab(object):
 
 
     def construct(self):
-        title = self.diagram and self.diagram.name or _('<None>')
+        #title = self.diagram and self.diagram.name or _('<None>')
 
         table = gtk.Table(2,2, False)
         #table.set_row_spacings(4)
@@ -72,23 +94,21 @@ class DiagramTab(object):
         table.attach(sbar, 0, 1, 1, 2, gtk.EXPAND | gtk.FILL | gtk.SHRINK,
                      gtk.FILL)
 
-        #view.connect('notify::tool', self._on_view_notify_tool)
         view.connect('focus-changed', self._on_view_focus_changed)
         view.connect('selection-changed', self._on_view_selection_changed)
-        #view.connect('unselect-item', self._on_view_selection_changed)
         view.connect_after('key-press-event', self._on_key_press_event)
         view.connect('drag-data-received', self._on_drag_data_received)
 
-        #item_tool = ItemTool(self.owning_window.get_action_pool())
-        #view.get_default_tool().set_item_tool(item_tool)
         self.view = view
 
         table.show_all()
 
-        self.owning_window.new_tab(self, table, title)
+        self.owning_window.add_tab(self, table, self.title)
 
+    @action(name='diagram-close', stock_id='gtk-close')
     def close(self):
-        """Tab is destroyed. Do the same thing that would
+        """
+        Tab is destroyed. Do the same thing that would
         be done if File->Close was pressed.
         """
         # Set diagram to None, so all refrences to the diagram are destroyed.
@@ -98,6 +118,20 @@ class DiagramTab(object):
         #del self.view.diagram
         del self.view
         del self.diagram
+
+    @action(name='diagram-zoom-in', stock_id='gtk-zoom-in')
+    def zoom_in(self):
+        self.view.zoom(1.2)
+
+    @action(name='diagram-zoom-out', stock_id='gtk-zoom-out')
+    def zoom_out(self):
+        self.view.zoom(1 / 1.2)
+
+    @action(name='diagram-zoom-100', stock_id='gtk-zoom-100')
+    def zoom_100(self):
+        zx = self.view.matrix[0]
+        self.view.zoom(1 / zx)
+
 
     def _on_key_press_event(self, view, event):
         """
@@ -111,14 +145,10 @@ class DiagramTab(object):
 
 
     def _on_view_focus_changed(self, view, focus_item):
-        self.action_manager.execute('ItemFocus')
         component.handle(DiagramItemFocused(focus_item))
 
     def _on_view_selection_changed(self, view, selection):
         self.action_manager.execute('ItemSelect')
-
-    def _on_view_notify_tool(self, view, pspec):
-        self.action_manager.execute('ToolChange')
 
     def _on_diagram_event(self, element, pspec):
         if pspec == '__unlink__':

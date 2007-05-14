@@ -43,6 +43,7 @@ class FileManager(object):
           <separator />
           <toolitem action="file-save" />
           <toolitem action="file-save-as" />
+          <separator />
         </toolbar>
       </ui>
     """

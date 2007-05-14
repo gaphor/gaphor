@@ -254,10 +254,10 @@ class MainWindow(ToplevelWindow):
     def __init__(self):
         ToplevelWindow.__init__(self)
         self._filename = None
+        # Map tab contents to DiagramTab
         self.notebook_map = {}
         # Tree view:
-        self._model = None
-        self._view = None 
+        self._tree_view = None 
 
         self.action_group = build_action_group(self)
         for name, label in (('file', '_File'),
@@ -268,24 +268,25 @@ class MainWindow(ToplevelWindow):
             a = gtk.Action(name, label, None, None)
             a.set_property('is-important', True)
             self.action_group.add_action(a)
+        self._tab_ui_settings = None
 
     def get_model(self):
         """
         Return the gtk.TreeModel associated with the main window
         (shown on the left side in a TreeView).
         """
-        return self._model
+        return self._tree_view.get_model()
 
-    tree_model = property(lambda s: s._model)
+    tree_model = property(lambda s: s.tree_view.get_model())
 
     def get_tree_view(self):
         """
         Get the gtk.TreeView widget that visualized the TreeModel.
         See also get_model().
         """
-        return self._view
+        return self._tree_view
 
-    tree_view = property(lambda s: s._view)
+    tree_view = property(lambda s: s._tree_view)
 
     def set_filename(self, filename):
         """
@@ -371,9 +372,9 @@ class MainWindow(ToplevelWindow):
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
         scrolled_window.add(view)
         
-        view.connect_after('event-after', self.on_view_event)
-        view.connect('row-activated', self.on_view_row_activated)
-        view.connect_after('cursor-changed', self.on_view_cursor_changed)
+        view.connect_after('event-after', self._on_view_event)
+        view.connect('row-activated', self._on_view_row_activated)
+        #view.connect_after('cursor-changed', self._on_view_cursor_changed)
 
         vbox = gtk.VBox()
         vbox.pack_start(scrolled_window, expand=True)
@@ -388,7 +389,7 @@ class MainWindow(ToplevelWindow):
         notebook.set_show_border(False)
         #notebook.set_size_request(-1, 10000)
 
-        notebook.connect_after('switch-page', self.on_notebook_switch_page)
+        notebook.connect_after('switch-page', self._on_notebook_switch_page)
 
         self.objectInspector = ObjectInspector()
         #self.objectInspector.set_size_request(-1, 50)
@@ -407,11 +408,10 @@ class MainWindow(ToplevelWindow):
         paned.show_all()
 
         second_paned.connect('notify::position',
-                            self.on_object_inspector_notify_position)
+                            self._on_object_inspector_notify_position)
 
         self.notebook = notebook
-        self._model = model
-        self._view = view
+        self._tree_view = view
 
         vbox.set_border_width(3)
 
@@ -431,8 +431,8 @@ class MainWindow(ToplevelWindow):
 
         # We want to store the window size, so it can be reloaded on startup
         self.window.set_property('allow-shrink', True)
-        self.window.connect('size-allocate', self.on_window_size_allocate)
-        self.window.connect('destroy', self.on_window_destroy)
+        self.window.connect('size-allocate', self._on_window_size_allocate)
+        self.window.connect('destroy', self._on_window_destroy)
 
         # TODO: add action_groups and menu_xml from NamespaceView
 
@@ -446,17 +446,17 @@ class MainWindow(ToplevelWindow):
 
     # Notebook methods:
 
-    def new_tab(self, window, contents, label):
+    def add_tab(self, tab_id, contents, label):
         """
         Create a new tab on the notebook with window as its contents.
         Returns: The page number of the tab.
         """
+        self.notebook_map[contents] = tab_id
         l = gtk.Label(label)
+        # Note: append_page() emits switch-page event
         self.notebook.append_page(contents, l)
         page_num = self.notebook.page_num(contents)
-        self.notebook.set_current_page(page_num)
-        self.notebook_map[contents] = window
-        #self.action_manager.execute('TabChange')
+        #self.notebook.set_current_page(page_num)
         return page_num
 
     def get_current_tab(self):
@@ -498,7 +498,10 @@ class MainWindow(ToplevelWindow):
                 num = self.notebook.page_num(p)
                 self.notebook.remove_page(num)
                 del self.notebook_map[p]
-                #self.action_manager.execute('TabChange')
+                if self._tab_ui_settings:
+                    action_group, ui_id = self._tab_ui_settings
+                    self.ui_manager.remove_action_group(action_group)
+                    self.ui_manager.remove_ui(ui_id)
                 return
 
     def select_element(self, element):
@@ -524,15 +527,14 @@ class MainWindow(ToplevelWindow):
         """
         Window is destroyed... Quit the application.
         """
-        self._model = None
-        self._view = None
+        self._tree_view = None
         self.window = None
         gtk.main_quit()
 
     def _on_window_delete(self, window = None, event = None):
         return not self.ask_to_close()
 
-    def on_view_event(self, view, event):
+    def _on_view_event(self, view, event):
         """
         Show a popup menu if button3 was pressed on the TreeView.
         """
@@ -542,37 +544,44 @@ class MainWindow(ToplevelWindow):
             menu.popup(None, None, None, event.button, event.time)
 
 
-    def on_view_row_activated(self, view, path, column):
+    def _on_view_row_activated(self, view, path, column):
         """
         Double click on an element in the tree view.
         """
-        #self.action_manager.execute('OpenModelElement')
-        # Set the pointer tool as default tool.
-        #self.action_manager.execute('Pointer')
-        pass
+        self.action_manager.execute('tree-view-open')
 
-    def on_view_cursor_changed(self, view):
-        """
-        Another row is selected, execute a dummy action.
-        """
-        #self.action_manager.execute('SelectRow')
-        pass
+    #def _on_view_cursor_changed(self, view):
+    #    """
+    #    Another row is selected, execute a dummy action.
+    #    """
+    #    #self.action_manager.execute('SelectRow')
+    #    pass
 
-    def on_notebook_switch_page(self, notebook, tab, page_num):
+    def _on_notebook_switch_page(self, notebook, tab, page_num):
         """
         Another page (tab) is put on the front of the diagram notebook.
         A dummy action is executed.
         """
-        #self.action_manager.execute('TabChange')
-        pass
+        if self._tab_ui_settings:
+            action_group, ui_id = self._tab_ui_settings
+            self.ui_manager.remove_action_group(action_group)
+            self.ui_manager.remove_ui(ui_id)
 
-    def on_window_size_allocate(self, window, allocation):
+        content = self.notebook.get_nth_page(page_num)
+        tab = self.notebook_map.get(content)
+        assert isinstance(tab, DiagramTab), str(tab)
+        
+        self.ui_manager.insert_action_group(tab.action_group, -1)
+        ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
+        self._tab_ui_settings = tab.action_group, ui_id
+
+    def _on_window_size_allocate(self, window, allocation):
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
 
-    def on_window_destroy(self, window):
+    def _on_window_destroy(self, window):
         self.quit()
 
-    def on_object_inspector_notify_position(self, paned, arg):
+    def _on_object_inspector_notify_position(self, paned, arg):
         self.properties.set('ui.object-inspector-position',
                      paned.get_position())
 
@@ -589,7 +598,7 @@ class MainWindow(ToplevelWindow):
 
     @action(name='tree-view-open', label='_Open')
     def tree_view_open_selected(self):
-        element = self._view.get_selected_element()
+        element = self._tree_view.get_selected_element()
         if isinstance(element, UML.Diagram):
             self.show_diagram(element)
         else:
