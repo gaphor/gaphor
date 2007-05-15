@@ -509,7 +509,7 @@ class MainWindow(ToplevelWindow):
             action_group, ui_id = self._tab_ui_settings
             self.ui_manager.remove_action_group(action_group)
             self.ui_manager.remove_ui(ui_id)
-            self.ui_manager.ensure_update()
+        #    self.ui_manager.ensure_update()
 
         content = self.notebook.get_nth_page(page_num)
         tab = self.notebook_map.get(content)
@@ -518,7 +518,7 @@ class MainWindow(ToplevelWindow):
         self.ui_manager.insert_action_group(tab.action_group, -1)
         ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
         self._tab_ui_settings = tab.action_group, ui_id
-        self.ui_manager.ensure_update()
+        #self.ui_manager.ensure_update()
         log.debug('Menus updated with %s, %d' % self._tab_ui_settings)
 
     def _on_window_size_allocate(self, window, allocation):

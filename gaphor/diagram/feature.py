@@ -23,6 +23,8 @@ class FeatureItem(DiagramItem):
         self.width = 0
         self.height = 0
         self.text = ''
+        # Fool unlink code:
+        self.canvas = None
 
 
     # Ensure we call the right connect functions:

@@ -4,7 +4,7 @@
 import gtk
 
 from gaphor import UML
-from gaphor.core import _, inject, action, build_action_group
+from gaphor.core import _, inject, transactional, action, build_action_group
 from gaphor.diagram.interfaces import IPopupMenu
 from gaphor.diagram import get_diagram_item
 from gaphor.transaction import Transaction
@@ -20,7 +20,13 @@ class DiagramTab(object):
     menu_xml = """
       <ui>
         <menubar action="mainwindow">
-          <menu name="diagram" action="diagram">
+          <menu action="edit">
+            <menuitem action="diagram-delete" />
+            <separator />
+            <menuitem action="diagram-select-all" />
+            <menuitem action="diagram-deselect-all" />
+          </menu>
+          <menu action="diagram">
             <menuitem action="diagram-zoom-in" />
             <menuitem action="diagram-zoom-out" />
             <menuitem action="diagram-zoom-100" />
@@ -136,6 +142,59 @@ class DiagramTab(object):
         zx = self.view.matrix[0]
         self.view.zoom(1 / zx)
 
+    @action(name='diagram-select-all', label='_Select all', accel='<Control>a')
+    def select_all(self):
+        self.view.select_all()
+
+    @action(name='diagram-deselect-all', label='Des_elect all',
+            accel='<Control><Shift>a')
+    def deselect_all(self):
+        self.view.deselect_all()
+        
+    @action(name='diagram-delete', stock_id='gtk-delete', accel='<Del>')
+    @transactional
+    def delete_selected_items(self):
+        items = self.view.selected_items
+        for i in items:
+            s = i.subject
+            if s and len(s.presentation) == 1:
+                s.unlink()
+            i.unlink()
+
+    def may_remove_from_model(self, view):
+        """
+        Check if there are items which will be deleted from the model
+        (when their last views are deleted). If so request user
+        confirmation before deletion.
+        """
+        items = self.view.selected_items
+        last_in_model = filter(lambda i: i.subject and len(i.subject.presentation) == 1, items)
+        log.debug('Last in model: %s' % str(last_in_model))
+        if last_in_model:
+            return self.confirm_deletion_of_items(last_in_model)
+        return True
+
+    def confirm_deletion_of_items(self, last_in_model):
+        """
+        Request user confirmation on deleting the item from the model.
+        """
+        s = ''
+        for item in last_in_model:
+            s += '%s\n' % str(item)
+
+        dialog = gtk.MessageDialog(
+                None,
+                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                gtk.MESSAGE_WARNING,
+                gtk.BUTTONS_YES_NO,
+                'This will remove the following selected items from the model:\n%s\nAre you sure?' % s
+                )
+        dialog.set_transient_for(self.owning_window.window)
+        value = dialog.run()
+        dialog.destroy()
+        if value == gtk.RESPONSE_YES:
+            return True
+        return False
 
     def _on_key_press_event(self, view, event):
         """
@@ -145,7 +204,8 @@ class DiagramTab(object):
         """
         if view.is_focus():
             if event.keyval == 0xFFFF and event.state == 0: # Delete
-                self.action_manager.execute('EditDelete')
+                self.delete_selected_items()
+                #self.action_manager.execute('diagram-delete')
 
 
     def _on_view_focus_changed(self, view, focus_item):
