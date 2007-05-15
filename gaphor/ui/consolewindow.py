@@ -19,7 +19,7 @@ class ConsoleWindow(ToplevelWindow):
     menu_xml = """
         <ui>
           <menubar name="mainwindow">
-            <menu action="window">
+            <menu action="tools">
               <menuitem action="ConsoleWindow:open" />
             </menu>
           </menubar>
@@ -53,7 +53,7 @@ class ConsoleWindow(ToplevelWindow):
         else:
             self.window.show_all()
 
-    @action(name='ConsoleWindow:close', stock_id='gtk-close')
+    @action(name='ConsoleWindow:close', stock_id='gtk-close', accel='<Control><Shift>w')
     def close(self):
         self.window.destroy()
         self.window = None

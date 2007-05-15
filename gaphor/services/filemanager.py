@@ -31,6 +31,8 @@ class FileManager(object):
             <placeholder name="primary">
               <menuitem action="file-new" />
               <menuitem action="file-open" />
+              <menu name="recent" action="file-recent-files">
+              </menu>
               <separator />
               <menuitem action="file-save" />
               <menuitem action="file-save-as" />
@@ -47,8 +49,6 @@ class FileManager(object):
         </toolbar>
       </ui>
     """
-#              <menu name="recent" action="file-recent-files">
-#              </menu>
 
     def __init__(self):
         self.filename = None
@@ -56,6 +56,11 @@ class FileManager(object):
     def init(self, app):
         self._app = app
         self.action_group = build_action_group(self)
+        for name, label in (('file-recent-files', '_Recent files'),):
+            a = gtk.Action(name, label, None, None)
+            # TODO: enable this line once we have a recent-files impl.
+            #a.set_property('hide-if-empty', False)
+            self.action_group.add_action(a)
 
     def shutdown(self):
         pass

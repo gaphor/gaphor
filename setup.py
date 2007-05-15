@@ -85,6 +85,7 @@ setup(
             'file_manager = gaphor.services.filemanager:FileManager',
             'gui_manager = gaphor.services.guimanager:GUIManager',
             'action_manager = gaphor.services.actionmanager:ActionManager',
+            'help = gaphor.services.helpservice:HelpService',
         ],
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',
@@ -122,4 +123,4 @@ setup(
     )
 )
  
-# vim:se=4:et:ai
+# vim:sw=4:et:ai

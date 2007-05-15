@@ -69,11 +69,13 @@ class DiagramTab(object):
 
 
     def construct(self):
-        #title = self.diagram and self.diagram.name or _('<None>')
+        """
+        Create the widget.
+        
+        Returns: the newly created widget.
+        """
 
         table = gtk.Table(2,2, False)
-        #table.set_row_spacings(4)
-        #table.set_col_spacings(4)
 
         frame = gtk.Frame()
         frame.set_shadow_type(gtk.SHADOW_IN)
@@ -102,8 +104,8 @@ class DiagramTab(object):
         self.view = view
 
         table.show_all()
-
-        self.owning_window.add_tab(self, table, self.title)
+        self.widget = table
+        return table
 
     @action(name='diagram-close', stock_id='gtk-close')
     def close(self):
@@ -112,6 +114,8 @@ class DiagramTab(object):
         be done if File->Close was pressed.
         """
         # Set diagram to None, so all refrences to the diagram are destroyed.
+        #self.widget.destroy()
+
         self.owning_window.remove_tab(self)
         self.set_diagram(None)
         # We need this to get the view deleted properly:

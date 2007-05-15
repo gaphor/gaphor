@@ -139,25 +139,6 @@ class MainWindow(ToplevelWindow):
                 '<HelpSlot>'),
             )
 
-    toolbar =  ('FileOpen',
-                'separator',
-                'FileSave',
-                'FileSaveAs',
-                'separator',
-                'Undo',
-                'Redo',
-                'separator',
-                'ViewZoomIn',
-                'ViewZoomOut',
-                'ViewZoom100')
-    ns_popup = ('RenameModelElement',
-                'OpenModelElement',
-                'separator',
-                'CreateDiagram',
-                'DeleteDiagram',
-                'separator',
-                'RefreshNamespaceModel',
-                '<NamespacePopupSlot>')
     # </old>
 
     title = 'Gaphor'
@@ -168,29 +149,34 @@ class MainWindow(ToplevelWindow):
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
-          <menu name="file" action="file">
+          <menu action="file">
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
             <separator />
             <menuitem action="file-quit" />
           </menu>
-          <menu name="edit" action="edit">
+          <menu action="edit">
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
           </menu>
-          <menu name="diagram" action="diagram">
+          <menu action="diagram">
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
           </menu>
-          <menu name="window" action="window">
+          <menu action="tools">
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
           </menu>
-          <menu name="help" action="help">
+          <menu action="window">
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+          </menu>
+          <menu action="help">
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
@@ -203,53 +189,14 @@ class MainWindow(ToplevelWindow):
         <popup action="namespace-popup">
           <menuitem action="tree-view-open" />
           <menuitem action="tree-view-rename" />
+          <separator />
+          <menuitem action="tree-view-create-diagram" />
+          <menuitem action="tree-view-delete-diagram" />
+          <separator />
+          <menuitem action="tree-view-refresh" />
         </popup>
       </ui>
     """
-#            <menuitem name="New" action="FileNew" />
-#            <menuitem name="Open" action="FileOpen" />
-#            <menuitem name="Revert" action="FileRevert" />
-#            <menu name="Recent files" action="FileRecent">
-#              <placeholder action="RecentFiles" />
-#            </menu>
-#            <separator />
-#            <menuitem action="FileSave" />
-#            <menuitem action="FileSaveAs" />
-#            <placeholder action="SaveSlot" />
-#            <separator />
-#            <menu action="Import">
-#              <placeholder action="FileImportSlot" />
-#            </menu>
-#            <menu action="Export">
-#              <placeholder action="FileExportSlot" />
-#            </menu>
-#            <separator />
-#            <menuitem action="FileCloseTab" />
-#            <placeholder action="FileSlot" />
-#            <separator />
-
-#          <toolitem action="FileOpen" />
-#          <toolitem action="separator" />
-#          <toolitem action="FileSave" />
-#          <toolitem action="FileSaveAs" />
-#          <separator />
-#          <toolitem action="Undo" />
-#          <toolitem action="Redo" />
-#          <separator />
-#          <toolitem action="ViewZoomIn" />
-#          <toolitem action="ViewZoomOut" />
-#          <toolitem action="ViewZoom100" />
-
-#        <popup action="NamespacePopup">
-#          <menuitem action="RenameModelElement" />
-#          <menuitem action="OpenModelElement" />
-#          <separator />
-#          <menuitem action="CreateDiagram" />
-#          <menuitem action="DeleteDiagram" />
-#          <separator />
-#          <menuitem action="RefreshNamespaceModel" />
-#          <placeholder action="namespacePopupSlot" />
-#        </popup>
 
     def __init__(self):
         ToplevelWindow.__init__(self)
@@ -263,10 +210,11 @@ class MainWindow(ToplevelWindow):
         for name, label in (('file', '_File'),
                              ('edit', '_Edit'),
                              ('diagram', '_Diagram'),
+                             ('tools', '_Tools'),
                              ('window', '_Window'),
                              ('help', '_Help')):
             a = gtk.Action(name, label, None, None)
-            a.set_property('is-important', True)
+            a.set_property('hide-if-empty', False)
             self.action_group.add_action(a)
         self._tab_ui_settings = None
 
@@ -358,7 +306,10 @@ class MainWindow(ToplevelWindow):
 
         tab = DiagramTab(self)
         tab.set_diagram(diagram)
-        tab.construct()
+        widget = tab.construct()
+        self.add_tab(tab, widget, tab.title)
+        self.set_current_page(tab)
+
         return tab
 
     def ui_component(self):
@@ -384,10 +335,8 @@ class MainWindow(ToplevelWindow):
         paned.pack1(vbox)
         
         notebook = gtk.Notebook()
-        #notebook.popup_enable()
         notebook.set_scrollable(True)
         notebook.set_show_border(False)
-        #notebook.set_size_request(-1, 10000)
 
         notebook.connect_after('switch-page', self._on_notebook_switch_page)
 
@@ -434,15 +383,6 @@ class MainWindow(ToplevelWindow):
         self.window.connect('size-allocate', self._on_window_size_allocate)
         self.window.connect('destroy', self._on_window_destroy)
 
-        # TODO: add action_groups and menu_xml from NamespaceView
-
-#    def add_transient_window(self, window):
-#        """Add a window as a sub-window of the main application.
-#        """
-#        # Assign the window the accelerators od the main window too
-#        pass #window.get_window().add_accel_group(self.accel_group)
-#        #self._transient_windows.append(window)
-#        #window.connect(self.on_transient_window_closed)
 
     # Notebook methods:
 
@@ -452,6 +392,7 @@ class MainWindow(ToplevelWindow):
         Returns: The page number of the tab.
         """
         self.notebook_map[contents] = tab_id
+        #contents.connect('destroy', self._on_tab_destroy)
         l = gtk.Label(label)
         # Note: append_page() emits switch-page event
         self.notebook.append_page(contents, l)
@@ -498,10 +439,6 @@ class MainWindow(ToplevelWindow):
                 num = self.notebook.page_num(p)
                 self.notebook.remove_page(num)
                 del self.notebook_map[p]
-                if self._tab_ui_settings:
-                    action_group, ui_id = self._tab_ui_settings
-                    self.ui_manager.remove_action_group(action_group)
-                    self.ui_manager.remove_ui(ui_id)
                 return
 
     def select_element(self, element):
@@ -530,6 +467,11 @@ class MainWindow(ToplevelWindow):
         self._tree_view = None
         self.window = None
         gtk.main_quit()
+
+    def _on_tab_destroy(self, widget):
+        tab = self.notebook_map[widget]
+        assert isinstance(tab, DiagramTab)
+        self.remove_tab(tab)
 
     def _on_window_delete(self, window = None, event = None):
         return not self.ask_to_close()
@@ -562,10 +504,12 @@ class MainWindow(ToplevelWindow):
         Another page (tab) is put on the front of the diagram notebook.
         A dummy action is executed.
         """
+        log.debug('Switching page to %d' % page_num)
         if self._tab_ui_settings:
             action_group, ui_id = self._tab_ui_settings
             self.ui_manager.remove_action_group(action_group)
             self.ui_manager.remove_ui(ui_id)
+            self.ui_manager.ensure_update()
 
         content = self.notebook.get_nth_page(page_num)
         tab = self.notebook_map.get(content)
@@ -574,21 +518,18 @@ class MainWindow(ToplevelWindow):
         self.ui_manager.insert_action_group(tab.action_group, -1)
         ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
         self._tab_ui_settings = tab.action_group, ui_id
+        self.ui_manager.ensure_update()
+        log.debug('Menus updated with %s, %d' % self._tab_ui_settings)
 
     def _on_window_size_allocate(self, window, allocation):
+        """
+        Store the window size in a property.
+        """
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
-
-    def _on_window_destroy(self, window):
-        self.quit()
 
     def _on_object_inspector_notify_position(self, paned, arg):
         self.properties.set('ui.object-inspector-position',
                      paned.get_position())
-
-#    def on_transient_window_closed(self, window):
-#        assert window in self._transient_windows
-#        log.debug('%s closed.' % window)
-#        self._transient_windows.remove(window)
 
     # Actions:
 
@@ -615,6 +556,37 @@ class MainWindow(ToplevelWindow):
         cell.set_property('text', element.name)
         view.set_cursor(path, column, True)
         cell.set_property('editable', 0)
+
+    @action(name='tree-view-create-diagram', label=_('_New diagram'), stock_id='gaphor-diagram')
+    def tree_view_create_diagram(self):
+        element = self._tree_view.get_selected_element()
+        diagram = self.element_factory.create(UML.Diagram)
+        diagram.package = element
+
+        diagram.name = '%s diagram' % element.name
+
+        self.select_element(diagram)
+        self.show_diagram(diagram)
+        self.tree_view_rename_selected()
+
+    @action(name='tree-view-delete-diagram', label=_('_Delete diagram'), stock_id='gtk-delete')
+    def tree_view_delete_diagram(self):
+        diagram = self._tree_view.get_selected_element()
+        assert isinstance(diagram, UML.Diagram)
+        m = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_QUESTION,
+                              gtk.BUTTONS_YES_NO,
+                              'Do you really want to delete diagram %s?\n\n'
+                              'This will possibly delete diagram items\n'
+                              'that are not shown in other diagrams.\n'
+                              'This operation is not undoable!' \
+                              % (diagram.name or '<None>'))
+        if (m.run() == gtk.RESPONSE_YES):
+            diagram.unlink()
+        m.destroy()
+
+    @action(name='tree-view-refresh', label=_('_Refresh'))
+    def tree_view_refresh(self):
+        self._tree_view.get_model().refresh()
 
 
 gtk.accel_map_add_filter('gaphor')
