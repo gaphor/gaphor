@@ -15,11 +15,13 @@ class MainWindowTestCase(unittest.TestCase):
     def test_creation(self):
         # MainWindow should be created as resource
         main_w = MainWindow()
+        assert main_w.action_group.get_action('toolbox-pointer')
+        assert main_w.action_group.get_action('toolbox-comment')
+        assert main_w.action_group.get_action('toolbox-comment-line')
         ui_manager = gtk.UIManager()
         main_w.ui_manager = ui_manager
         main_w.construct()
         self.assertEqual(main_w.get_current_diagram(), None)
-
 
     def test_show_diagram(self):
         main_w = MainWindow()

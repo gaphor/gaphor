@@ -7,8 +7,7 @@ import gtk
 
 from gaphor.core import inject
 
-#from gaphor.ui.wrapbox import WrapBox
-
+from wrapbox import Wrapbox
 
 class Toolbox(gtk.VBox):
     """
@@ -33,15 +32,16 @@ class Toolbox(gtk.VBox):
 
     properties = inject('properties')
 
-    def __init__(self, menu_factory, toolboxdef):
+    def __init__(self, toolboxdef, action_group=None):
         """
         Create a new Toolbox instance. Wrapbox objects are generated
         using the menu_factory and based on the toolboxdef definition.
         """
         self.__gobject_init__()
-        self.menu_factory = menu_factory
         self.toolboxdef = toolboxdef
-        self.boxes = []
+        #self.boxes = []
+        self.buttons = []
+        self._construct(action_group)
 
     def on_wrapbox_decorator_toggled(self, button, content):
         """
@@ -102,47 +102,47 @@ class Toolbox(gtk.VBox):
 
         return vbox
 
-    def new_make_wrapbox_decorator(self, title, content):
-        """
-        Create a gtk.VBox with in the top compartment a label that can be
-        clicked to show/hide the lower compartment.
-        """
-        expander = gtk.Expander()
-        hbox = gtk.HBox()
-        expander.set_label_widget(hbox)
+    def toolbox_button(self, action_name, icon_name,
+                       icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR):
+        button = gtk.ToggleButton()
+        if icon_name:
+            icon = gtk.Image()
+            icon.set_from_stock(icon_name, icon_size)
+            button.add(icon)
+            icon.show()
+        else:
+            button.props.label = action_name
+        button.action_name = action_name
+        return button
 
-        label = gtk.Label(title)
-        hbox.pack_start(label, expand=False, fill=False)
-
-        sep = gtk.HSeparator()
-        hbox.pack_start(sep, expand=True, fill=True)
-        hbox.set_spacing(3)
-
-        expander.add(content)
-        
-        expanded = self.properties.get('ui.toolbox.%s' % title.replace(' ', '-').lower(), False)
-        expander.set_expanded(expanded)
-
-        expander.show_all()
-        return expander
-
-    def construct(self):
+    def _construct(self, action_group=None):
 
         self.set_border_width(3)
         vbox = self
 
-        wrapbox_groups = { }
+        self.tooltips = gtk.Tooltips()
+
         for title, items in self.toolboxdef:
-            wrapbox = self.menu_factory.create_wrapbox(items,
-                                                       groups=wrapbox_groups)
+            wrapbox = Wrapbox()
+            action = None
+            for action_name in items:
+                if action_group:
+                    action = action_group.get_action(action_name)
+
+                button = self.toolbox_button(action_name, action and action.props.stock_id)
+                if action.props.tooltip:
+                    self.tooltips.set_tip(button, action.props.tooltip)
+                elif action.props.label:
+                    self.tooltips.set_tip(button, action.props.label.replace('_', ''))
+                self.buttons.append(button)
+                wrapbox.add(button)
             if title:
                 wrapbox_dec = self.make_wrapbox_decorator(title, wrapbox)
                 vbox.pack_start(wrapbox_dec, expand=False)
-                self.boxes.append(wrapbox_dec)
             else:
                 vbox.pack_start(wrapbox, expand=False)
                 wrapbox.show()
-                self.boxes.append(wrapbox)
 
+        self.tooltips.enable()
 
 # vim:sw=4:et:ai

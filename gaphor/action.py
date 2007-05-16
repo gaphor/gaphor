@@ -77,10 +77,11 @@ def build_action_group(obj, name=None):
     ...     def bar(self): print 'Say bar'
     ...     @toggle_action(name='foo')
     ...     def foo(self, active): print 'Say foo', active
-    ...     @radio_action(names=('baz', 'beer'))
+    ...     @radio_action(names=('baz', 'beer'), labels=('Baz', 'Beer'))
     ...     def baz(self, value):
     ...         print 'Say', value, (value and 'beer' or 'baz')
     >>> group = build_action_group(A())
+    Say 0 baz
     >>> len(group.list_actions())
     4
     >>> a = group.get_action('bar')
@@ -113,27 +114,28 @@ def build_action_group(obj, name=None):
             assert len(act.names) == len(act.stock_ids)
             assert len(act.names) == len(act.accels)
             for i, n in enumerate(act.names):
-                # TODO: fix radio buttons
-                
                 gtkact = gtk.RadioAction(n, act.labels[i], act.tooltips[i], act.stock_ids[i], value=i)
-                if act.active == i:
-                    gtkact.props.active = True
 
                 if not actgroup:
                     actgroup = gtkact
-                    gtkact.connect('changed', _radio_action_changed, obj, attrname)
                 else:
                     gtkact.props.group = actgroup
                 group.add_action_with_accel(gtkact, act.accels[i])
+
+            actgroup.connect('changed', _radio_action_changed, obj, attrname)
+            actgroup.set_current_value(act.active)
+
         elif isinstance(act, toggle_action):
             gtkact = gtk.ToggleAction(act.name, act.label, act.tooltip, act.stock_id)
             gtkact.set_property('active', act.active)
             gtkact.connect('activate', _toggle_action_activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
+
         elif isinstance(act, action):
             gtkact = gtk.Action(act.name, act.label, act.tooltip, act.stock_id)
             gtkact.connect('activate', _action_activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
+
         elif act is not None:
             raise TypeError, 'Invalid action type: %s' % action
     return group

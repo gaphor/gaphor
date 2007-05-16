@@ -17,7 +17,7 @@ from gaphas.tool import Tool, HandleTool, ItemTool, ToolChain
 from gaphor.application import Application
 from gaphor.transaction import Transaction, transactional
 
-from interfaces import IEditor, IConnect
+from gaphor.diagram.interfaces import IEditor, IConnect
 
 __version__ = '$Revision$'
 

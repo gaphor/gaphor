@@ -151,7 +151,7 @@ class DiagramTab(object):
     def deselect_all(self):
         self.view.deselect_all()
         
-    @action(name='diagram-delete', stock_id='gtk-delete', accel='<Del>')
+    @action(name='diagram-delete', stock_id='gtk-delete')
     @transactional
     def delete_selected_items(self):
         items = self.view.selected_items
