@@ -10,12 +10,6 @@ import gaphor.actions
 
 class DiagramTabTestCase(unittest.TestCase):
 
-    main_window = resource(MainWindow)
-    try:
-        main_window.construct()
-    except:
-        pass
-
     def setUp(self):
         UML.flush()
         self.diagram = UML.create(UML.Diagram)

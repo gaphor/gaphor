@@ -13,6 +13,7 @@ from gaphor.core import _, inject, action, radio_action, build_action_group
 from gaphor.ui import namespace
 from gaphor.ui.diagramtab import DiagramTab
 from gaphor.ui.toolbox import Toolbox
+from gaphor.ui.diagramtoolbox import DiagramToolbox
 from toplevelwindow import ToplevelWindow
 
 from gaphor.ui.objectinspector import ObjectInspector
@@ -39,14 +40,14 @@ class MainWindow(ToplevelWindow):
             'toolbox-pointer',
             'toolbox-comment',
             'toolbox-comment-line')),
-#        (_('Classes'), (
-#                'InsertClass',
+        (_('Classes'), (
+                'toolbox-class',
 #                'InsertInterface',
 #                'InsertPackage',
 #                'InsertAssociation',
 #                'InsertDependency',
 #                'InsertGeneralization',
-#                'InsertImplementation')),
+                'toolbox-implementation')),
 #        (_('Components'), (
 #                'InsertComponent',
 #                'InsertAssemblyConnector',
@@ -315,13 +316,11 @@ class MainWindow(ToplevelWindow):
 
         vbox.set_border_width(3)
 
-        toolbox = Toolbox(self.toolboxdef, self.action_group)
+        toolbox = Toolbox(self.toolboxdef, DiagramToolbox().action_group)
         vbox.pack_start(toolbox, expand=False)
         toolbox.show()
 
         self._toolbox = toolbox
-
-        self._update_toolbox()
 
         return paned
 
@@ -335,16 +334,17 @@ class MainWindow(ToplevelWindow):
         self.window.connect('size-allocate', self._on_window_size_allocate)
         self.window.connect('destroy', self._on_window_destroy)
 
-    def _update_toolbox(self):
+    def _update_toolbox(self, action_group):
         """
         Update the buttons in the toolbox. Each button should be connected
         by an action. Each button is assigned a special _action_name_
         attribute that can be used to fetch the action from the ui manager.
         """
         for button in self._toolbox.buttons:
+            
             action_name = button.action_name
             log.debug('action name: %s' % action_name)
-            action = self.action_group.get_action(action_name)
+            action = action_group.get_action(action_name)
             if action:
                 log.debug('name=%s, label=%s, icon=%s' % (action.props.name, action.props.label, action.props.stock_id))
                 action.connect_proxy(button)
@@ -464,6 +464,10 @@ class MainWindow(ToplevelWindow):
     #    #self.action_manager.execute('SelectRow')
     #    pass
 
+    def _insensivate_toolbox(self):
+        for button in self.toolbox.buttons:
+            button.set_property('sensitive', False)
+
     def _on_notebook_switch_page(self, notebook, tab, page_num):
         """
         Another page (tab) is put on the front of the diagram notebook.
@@ -474,6 +478,7 @@ class MainWindow(ToplevelWindow):
             action_group, ui_id = self._tab_ui_settings
             self.ui_manager.remove_action_group(action_group)
             self.ui_manager.remove_ui(ui_id)
+            self._insensivate_toolbox()
 
         content = self.notebook.get_nth_page(page_num)
         tab = self.notebook_map.get(content)
@@ -483,6 +488,7 @@ class MainWindow(ToplevelWindow):
         ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
         self._tab_ui_settings = tab.action_group, ui_id
         log.debug('Menus updated with %s, %d' % self._tab_ui_settings)
+        self._update_toolbox(tab.toolbox.action_group)
 
     def _on_window_size_allocate(self, window, allocation):
         """
@@ -551,16 +557,6 @@ class MainWindow(ToplevelWindow):
     def tree_view_refresh(self):
         self._tree_view.get_model().refresh()
 
-    toolbox_actions = (
-        ('toolbox-pointer', _('Pointer'), 'gaphor-pointer'),
-        ('toolbox-comment', _('Comment'), 'gaphor-comment'),
-        ('toolbox-comment-line', _('Comment line'), 'gaphor-comment-line'),)
-
-    @radio_action(names=zip(*toolbox_actions)[0],
-                  labels=zip(*toolbox_actions)[1],
-                  stock_ids=zip(*toolbox_actions)[2])
-    def toolbox_action(self, id):
-        log.info('Selected item %s' % id)
 
 gtk.accel_map_add_filter('gaphor')
 

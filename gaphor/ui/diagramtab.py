@@ -3,14 +3,15 @@
 
 import gtk
 
+from zope import component
 from gaphor import UML
 from gaphor.core import _, inject, transactional, action, build_action_group
 from gaphor.diagram.interfaces import IPopupMenu
 from gaphor.diagram import get_diagram_item
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramview import DiagramView
+from gaphor.ui.diagramtoolbox import DiagramToolbox
 from event import DiagramItemFocused
-from zope import component
 
 class DiagramTab(object):
     
@@ -45,9 +46,10 @@ class DiagramTab(object):
 
     def __init__(self, owning_window):
         self.diagram = None
-        #self.view = None
+        self.view = None
         self.owning_window = owning_window
         self.action_group = build_action_group(self)
+        self.toolbox = None
 
     title = property(lambda s: s.diagram and s.diagram.name or _('<None>'))
 
@@ -69,7 +71,7 @@ class DiagramTab(object):
         if diagram:
             diagram.connect(('name', '__unlink__'), self._on_diagram_event)
 
-            if hasattr(self, 'view'):
+            if self.view:
                 self.view.hadjustment.set_value(0.0)
                 self.view.vadjustment.set_value(0.0)
 
@@ -80,6 +82,7 @@ class DiagramTab(object):
         
         Returns: the newly created widget.
         """
+        assert self.diagram
 
         table = gtk.Table(2,2, False)
 
@@ -111,6 +114,9 @@ class DiagramTab(object):
 
         table.show_all()
         self.widget = table
+        
+        self.toolbox = DiagramToolbox(view)
+        
         return table
 
     @action(name='diagram-close', stock_id='gtk-close')

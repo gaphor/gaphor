@@ -14,8 +14,7 @@ import gaphas
 from gaphas.geometry import distance_point_point
 from gaphas.tool import Tool, HandleTool, ItemTool, ToolChain
 
-from gaphor.application import Application
-from gaphor.transaction import Transaction, transactional
+from gaphor.core import inject, Transaction, transactional
 
 from gaphor.diagram.interfaces import IEditor, IConnect
 
@@ -111,6 +110,8 @@ class PopupItemTool(ItemTool):
     a right mouse click.
     """
 
+    gui_manager = inject('gui_manager')
+
     def __init__(self):
         ItemTool.__init__(self, buttons=(1, 3))
 
@@ -125,7 +126,7 @@ class PopupItemTool(ItemTool):
             if item:
                 popup_menu = item.get_popup_menu()
                 if popup_menu:
-                    mainwin = Application.get_service('gui_manager').main_window
+                    mainwin = self.gui_manager.main_window
                     mainwin._construct_popup_menu(menu_def=popup_menu,
                                                   event=event)
         return True
@@ -210,7 +211,7 @@ class PlacementTool(gaphas.tool.PlacementTool):
     PlacementTool is used to place items on the canvas.
     """
 
-    def __init__(self, item_factory, action_id, handle_index=-1):
+    def __init__(self, item_factory, after_handler=None, handle_index=-1):
         """
         item_factory is a callable. It is used to create a CanvasItem
         that is displayed on the diagram.
@@ -218,7 +219,7 @@ class PlacementTool(gaphas.tool.PlacementTool):
         gaphas.tool.PlacementTool.__init__(self, factory=item_factory,
                                            handle_tool=ConnectHandleTool(),
                                            handle_index=handle_index)
-        self.action_id = action_id
+        self.after_handler = after_handler
         self.is_released = False
         self._tx = None
 
@@ -243,9 +244,8 @@ class PlacementTool(gaphas.tool.PlacementTool):
     def on_button_release(self, context, event):
         self.is_released = True
         try:
-            if Application.get_service('properties')('reset-tool-after-create', False):
-                pool = Application.get_service('action_manager')
-                pool.get_action('Pointer').active = True
+            if self.after_handler:
+                self.after_handler()
             return gaphas.tool.PlacementTool.on_button_release(self, context, event)
         finally:
             self._tx.commit()
