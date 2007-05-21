@@ -32,7 +32,7 @@ class Toolbox(gtk.VBox):
 
     properties = inject('properties')
 
-    def __init__(self, toolboxdef, action_group=None):
+    def __init__(self, toolboxdef):
         """
         Create a new Toolbox instance. Wrapbox objects are generated
         using the menu_factory and based on the toolboxdef definition.
@@ -41,7 +41,7 @@ class Toolbox(gtk.VBox):
         self.toolboxdef = toolboxdef
         #self.boxes = []
         self.buttons = []
-        self._construct(action_group)
+        self._construct()
 
     def on_wrapbox_decorator_toggled(self, button, content):
         """
@@ -102,12 +102,12 @@ class Toolbox(gtk.VBox):
 
         return vbox
 
-    def toolbox_button(self, action_name, icon_name,
+    def toolbox_button(self, action_name, stock_id,
                        icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR):
         button = gtk.ToggleButton()
-        if icon_name:
+        if stock_id:
             icon = gtk.Image()
-            icon.set_from_stock(icon_name, icon_size)
+            icon.set_from_stock(stock_id, icon_size)
             button.add(icon)
             icon.show()
         else:
@@ -115,7 +115,7 @@ class Toolbox(gtk.VBox):
         button.action_name = action_name
         return button
 
-    def _construct(self, action_group=None):
+    def _construct(self):
 
         self.set_border_width(3)
         vbox = self
@@ -125,15 +125,10 @@ class Toolbox(gtk.VBox):
         for title, items in self.toolboxdef:
             wrapbox = Wrapbox()
             action = None
-            for action_name in items:
-                if action_group:
-                    action = action_group.get_action(action_name)
-
-                button = self.toolbox_button(action_name, action and action.props.stock_id)
-                if action.props.tooltip:
-                    self.tooltips.set_tip(button, action.props.tooltip)
-                elif action.props.label:
-                    self.tooltips.set_tip(button, action.props.label.replace('_', ''))
+            for action_name, label, stock_id in items:
+                button = self.toolbox_button(action_name, stock_id)
+                if label:
+                    self.tooltips.set_tip(button, label)
                 self.buttons.append(button)
                 wrapbox.add(button)
             if title:

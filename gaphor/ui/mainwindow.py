@@ -13,7 +13,7 @@ from gaphor.core import _, inject, action, radio_action, build_action_group
 from gaphor.ui import namespace
 from gaphor.ui.diagramtab import DiagramTab
 from gaphor.ui.toolbox import Toolbox
-from gaphor.ui.diagramtoolbox import DiagramToolbox
+from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 from toplevelwindow import ToplevelWindow
 
 from gaphor.ui.objectinspector import ObjectInspector
@@ -32,54 +32,6 @@ class MainWindow(ToplevelWindow):
     properties = inject('properties')
     element_factory = inject('element_factory')
     action_manager = inject('action_manager')
-
-    # Toolbox definition:
-    # Per category tuples (action-name, icon-name) have to be defined.
-    toolboxdef = (
-        ('', (
-            'toolbox-pointer',
-            'toolbox-comment',
-            'toolbox-comment-line')),
-        (_('Classes'), (
-                'toolbox-class',
-#                'InsertInterface',
-#                'InsertPackage',
-#                'InsertAssociation',
-#                'InsertDependency',
-#                'InsertGeneralization',
-                'toolbox-implementation')),
-#        (_('Components'), (
-#                'InsertComponent',
-#                'InsertAssemblyConnector',
-#                'InsertNode',
-#                'InsertArtifact')),
-##        (_('Composite Structures'), (
-##                'InsertConnector',)),
-#        (_('Actions'), (
-#                'InsertAction',
-#                'InsertInitialNode',
-#                'InsertActivityFinalNode',
-#                'InsertFlowFinalNode',
-#                'InsertDecisionNode',
-#                'InsertForkNode',
-#                'InsertObjectNode',
-#                'InsertFlow')),
-##        (_('Interactions'), (
-##                'InsertInteraction',
-##                'InsertLifeline',
-##                'InsertMessage')),
-#        (_('Use Cases'), (
-#                'InsertUseCase',
-#                'InsertActor',
-#                'InsertUseCaseAssociation',
-#                'InsertInclude',
-#                'InsertExtend')),
-#        (_('Profiles'), (
-#                'InsertProfile',
-#                'InsertMetaClass',
-#                'InsertStereotype',
-#                'InsertExtension')),
-    )
 
     # <old>
 #            _('_Edit'), (
@@ -316,7 +268,7 @@ class MainWindow(ToplevelWindow):
 
         vbox.set_border_width(3)
 
-        toolbox = Toolbox(self.toolboxdef, DiagramToolbox().action_group)
+        toolbox = Toolbox(TOOLBOX_ACTIONS)
         vbox.pack_start(toolbox, expand=False)
         toolbox.show()
 
