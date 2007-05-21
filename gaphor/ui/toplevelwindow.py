@@ -36,16 +36,18 @@ class ToplevelWindow(object):
         menubar = self.ui_manager.get_widget(self.menubar_path)
         if menubar:
             vbox.pack_start(menubar, expand=False)
+            #menubar.show()
         
         if self.toolbar_path:
             toolbar = self.ui_manager.get_widget(self.toolbar_path)
             if toolbar:
                 vbox.pack_start(toolbar, expand=False)
+                #toolbar.show()
 
         vbox.pack_end(self.ui_component(), expand=True)
-
+        vbox.show()
         # TODO: add statusbar
-        self.window.show_all()
+        self.window.show()
 
 
 # vim:sw=4:et:ai

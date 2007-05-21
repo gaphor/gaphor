@@ -52,10 +52,12 @@ class Toolbox(gtk.VBox):
         # Fetch the arrow item:
         arrow = button.get_children()[0].get_children()[0]
         if not content.get_property('visible'):
+            log.debug('switched to visible: %s' % button.toggle_id)
             content.show()
             arrow.set(gtk.ARROW_DOWN, gtk.SHADOW_IN)
             self.emit('toggled', button.toggle_id, True)
         else:
+            log.debug('switched to hidden: %s' % button.toggle_id)
             content.hide()
             arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
             self.emit('toggled', button.toggle_id, False)
@@ -118,7 +120,6 @@ class Toolbox(gtk.VBox):
     def _construct(self):
 
         self.set_border_width(3)
-        vbox = self
 
         self.tooltips = gtk.Tooltips()
 
@@ -133,9 +134,9 @@ class Toolbox(gtk.VBox):
                 wrapbox.add(button)
             if title:
                 wrapbox_dec = self.make_wrapbox_decorator(title, wrapbox)
-                vbox.pack_start(wrapbox_dec, expand=False)
+                self.pack_start(wrapbox_dec, expand=False)
             else:
-                vbox.pack_start(wrapbox, expand=False)
+                self.pack_start(wrapbox, expand=False)
                 wrapbox.show()
 
         self.tooltips.enable()

@@ -31,34 +31,34 @@ TOOLBOX_ACTIONS = (
 #        ('toolbox-assembly-connector', _('Assembly connector'), 'gaphor-assembly-connector'),
         ('toolbox-node', _('Node'), 'gaphor-node'),
         ('toolbox-artifact', _('Artifact'), 'gaphor-artifact'),
-    )),
-    )
 ##        (_('Composite Structures'), (
 ##                'InsertConnector',)),
-#        (_('Actions'), (
-#                'InsertAction',
-#                'InsertInitialNode',
-#                'InsertActivityFinalNode',
-#                'InsertFlowFinalNode',
-#                'InsertDecisionNode',
-#                'InsertForkNode',
-#                'InsertObjectNode',
-#                'InsertFlow')),
-##        (_('Interactions'), (
-##                'InsertInteraction',
-##                'InsertLifeline',
-##                'InsertMessage')),
-#        (_('Use Cases'), (
-#                'InsertUseCase',
-#                'InsertActor',
-#                'InsertUseCaseAssociation',
-#                'InsertInclude',
-#                'InsertExtend')),
-#        (_('Profiles'), (
-#                'InsertProfile',
-#                'InsertMetaClass',
-#                'InsertStereotype',
-#                'InsertExtension')),
+    )), (_('Actions'), (
+        ('toolbox-action', _('Action'), 'gaphor-action'),
+        ('toolbox-initial-node', _('Initial node'), 'gaphor-initial-node'),
+        ('toolbox-activity-final-node', _('Activity final node'), 'gaphor-activity-final-node'),
+        ('toolbox-flow-final-node', _('Flow final node'), 'gaphor-flow-final-node'),
+        ('toolbox-decision-node', _('Decision/merge node'), 'gaphor-decision-node'),
+        ('toolbox-fork-node', _('Fork/join node'), 'gaphor-fork-node'),
+        ('toolbox-object-node', _('Object node'), 'gaphor-object-node'),
+        ('toolbox-flow', _('Control/object flow'), 'gaphor-control-flow'),
+#    )), (_('Interactions'), (
+#        ('toolbox-interaction', _('Interaction'), 'gaphor-interaction'),
+#        ('toolbox-lifeline', _('Lifeline'), 'gaphor-lifeline'),
+#        ('toolbox-message', _('Message'), 'gaphor-message'),
+    )), (_('Use Cases'), (
+        ('toolbox-usecase', _('Use case'), 'gaphor-usecase'),
+        ('toolbox-actor', _('Actor'), 'gaphor-actor'),
+        ('toolbox-usecase-association', _('Association'), 'gaphor-association'),
+        ('toolbox-include', _('Include'), 'gaphor-include'),
+        ('toolbox-extend', _('Extend'), 'gaphor-extend'),
+    )), (_('Profiles'), (
+        ('toolbox-profile', _('Profile'), 'gaphor-profile'),
+        ('toolbox-metaclass', _('Metaclass'), 'gaphor-class'),
+        ('toolbox-stereotype', _('Stereotype'), 'gaphor-stereotype'),
+        ('toolbox-extension', _('Extension'), 'gaphor-extension'),
+    )),
+    )
 
 
 def itemiter(toolbox_actions):
@@ -203,11 +203,112 @@ class DiagramToolbox(object):
 
     # Actions:
 
+    def toolbox_action(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._namespace_item_factory(items.ActionItem,
+                                                          UML.Action),
+                after_handler=self._after_handler)
+
+    def toolbox_initial_node(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.InitialNodeItem,
+                                                UML.InitialNode),
+                after_handler=self._after_handler)
+
+    def toolbox_activity_final_node(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.ActivityFinalNodeItem,
+                                                UML.ActivityFinalNode),
+                after_handler=self._after_handler)
+
+    def toolbox_flow_final_node(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.FlowFinalNodeItem,
+                                                UML.FlowFinalNode),
+                after_handler=self._after_handler)
+
+    def toolbox_decision_node(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.DecisionNodeItem,
+                                                UML.DecisionNode),
+                after_handler=self._after_handler)
+
+    def toolbox_fork_node(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.ForkNodeItem,
+                                                UML.JoinNode),
+                after_handler=self._after_handler)
+
+    def toolbox_object_node(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._namespace_item_factory(items.ObjectNodeItem,
+                                                          UML.ObjectNode),
+                after_handler=self._after_handler)
+
+    def toolbox_flow(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.FlowItem),
+                after_handler=self._after_handler)
+
     # Interactions:
 
     # Use cases:
 
+    def toolbox_usecase(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._namespace_item_factory(items.UseCaseItem,
+                                                          UML.UseCase),
+                after_handler=self._after_handler)
+
+    def toolbox_actor(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._namespace_item_factory(items.ActorItem,
+                                                          UML.Actor),
+                after_handler=self._after_handler)
+
+    def toolbox_usecase_association(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.AssociationItem),
+                after_handler=self._after_handler)
+
+    def toolbox_include(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.IncludeItem),
+                after_handler=self._after_handler)
+
+    def toolbox_extend(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.ExtendItem),
+                after_handler=self._after_handler)
+
     # Profiles:
+#                'InsertProfile',
+#                'InsertMetaClass',
+#                'InsertStereotype',
+#                'InsertExtension')),
+
+    def toolbox_profile(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._namespace_item_factory(items.PackageItem,
+                                                          UML.Profile),
+                after_handler=self._after_handler)
+
+    def toolbox_metaclass(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._namespace_item_factory(items.ClassItem,
+                                                          UML.Class),
+                after_handler=self._after_handler)
+
+    def toolbox_stereotype(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._namespace_item_factory(items.ClassItem,
+                                                          UML.Stereotype),
+                after_handler=self._after_handler)
+
+    def toolbox_extension(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.ExtensionItem),
+                after_handler=self._after_handler)
 
 
 # vim:sw=4:et:ai

@@ -226,6 +226,7 @@ class MainWindow(ToplevelWindow):
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
         scrolled_window.add(view)
+        view.show()
         
         view.connect_after('event-after', self._on_view_event)
         view.connect('row-activated', self._on_view_row_activated)
@@ -233,10 +234,12 @@ class MainWindow(ToplevelWindow):
 
         vbox = gtk.VBox()
         vbox.pack_start(scrolled_window, expand=True)
+        scrolled_window.show()
 
         paned = gtk.HPaned()
         paned.set_property('position', 160)
         paned.pack1(vbox)
+        vbox.show()
         
         notebook = gtk.Notebook()
         notebook.set_scrollable(True)
@@ -255,17 +258,20 @@ class MainWindow(ToplevelWindow):
         second_paned.set_property('position',
                                  int(self.properties.get('ui.object-inspector-position', 600)))
         second_paned.pack1(notebook)
+        notebook.show()
         second_paned.pack2(self.objectInspector)
-        second_paned.show_all()
+        self.objectInspector.show()
+        
         paned.pack2(second_paned)
-        paned.show_all()
+        second_paned.show()
+        paned.show()
 
         second_paned.connect('notify::position',
                             self._on_object_inspector_notify_position)
 
         self.notebook = notebook
         self._tree_view = view
-
+       
         vbox.set_border_width(3)
 
         toolbox = Toolbox(TOOLBOX_ACTIONS)
@@ -292,6 +298,7 @@ class MainWindow(ToplevelWindow):
         by an action. Each button is assigned a special _action_name_
         attribute that can be used to fetch the action from the ui manager.
         """
+        return
         for button in self._toolbox.buttons:
             
             action_name = button.action_name

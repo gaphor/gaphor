@@ -4,7 +4,8 @@ import gtk
 
 
 class Wrapbox(gtk.Table):
-    """A Wrapbox contains a set of items. A wrap box tries to optimize it's
+    """
+    A Wrapbox contains a set of items. A wrap box tries to optimize it's
     content by moving elements to a second row if the do not fit on the first.
     And a third and a fourth, depending on the given space.
 
@@ -83,74 +84,6 @@ class Wrapbox(gtk.Table):
         self.children.append(widget)
 
 gobject.type_register(Wrapbox)
-
-if __name__ == '__main__':
-    def make_wrapbox(button_labels):
-        wrapbox = Wrapbox()
-        for label in button_labels:
-            b = gtk.Button(label)
-            wrapbox.add(b)
-        return wrapbox
-
-        table = gtk.Table(len(button_labels), 1)
-        i = 0
-        for label in button_labels:
-            b = gtk.Button(label)
-            table.attach(b, left_attach=i, right_attach=i+1, top_attach=0, bottom_attach=1)
-            i += 1
-        table.connect('size_allocate', on_size_allocate)
-        #table.connect('size_request', on_size_allocate)
-        return table
-
-    def on_toggled(button, content):
-        arrow = button.get_children()[0]
-        if button.get_property('active'):
-            content.show()
-            arrow.set(gtk.ARROW_DOWN, gtk.SHADOW_IN)
-        else:
-            content.hide()
-            arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
-
-    def make(content, expanded=False):
-        hbox = gtk.HBox()
-        vbox = gtk.VBox()
-
-        vbox.add(hbox)
-
-        button = gtk.ToggleButton()
-
-        arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
-        button.add(arrow)
-        hbox.pack_start(button, False, False, 0)
-
-        label = gtk.Label('Classes')
-
-        hbox.pack_start(label, expand=False, fill=True)
-        vbox.show_all()
-
-        button.connect('toggled', on_toggled, content)
-
-        vbox.pack_start(content, True, True)
-        
-        vbox.label = label
-        vbox.content = content
-
-        button.set_property('active', expanded)
-        on_toggled(button, content)
-        return vbox
-    win = gtk.Window()
-    button_labels=('1','2','3','4','5','6','7')
-    content = make(make_wrapbox(button_labels))
-    paned = gtk.HPaned()
-    paned.pack1(content)
-    paned.pack2(gtk.Button('x'))
-    paned.show()
-    win.add(paned)
-
-    win.connect('destroy', lambda e: gtk.mainquit())
-    win.show_all()
-
-    gtk.main()
 
 
 # vim:sw=4:et
