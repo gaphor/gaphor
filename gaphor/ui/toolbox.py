@@ -132,6 +132,7 @@ class Toolbox(gtk.VBox):
                     self.tooltips.set_tip(button, label)
                 self.buttons.append(button)
                 wrapbox.add(button)
+                button.show()
             if title:
                 wrapbox_dec = self.make_wrapbox_decorator(title, wrapbox)
                 self.pack_start(wrapbox_dec, expand=False)

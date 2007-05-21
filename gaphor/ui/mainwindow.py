@@ -298,7 +298,6 @@ class MainWindow(ToplevelWindow):
         by an action. Each button is assigned a special _action_name_
         attribute that can be used to fetch the action from the ui manager.
         """
-        return
         for button in self._toolbox.buttons:
             
             action_name = button.action_name
@@ -422,7 +421,7 @@ class MainWindow(ToplevelWindow):
     #    pass
 
     def _insensivate_toolbox(self):
-        for button in self.toolbox.buttons:
+        for button in self._toolbox.buttons:
             button.set_property('sensitive', False)
 
     def _on_notebook_switch_page(self, notebook, tab, page_num):
