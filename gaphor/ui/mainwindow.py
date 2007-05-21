@@ -295,10 +295,8 @@ class MainWindow(ToplevelWindow):
         for button in self._toolbox.buttons:
             
             action_name = button.action_name
-            log.debug('action name: %s' % action_name)
             action = action_group.get_action(action_name)
             if action:
-                log.debug('name=%s, label=%s, icon=%s' % (action.props.name, action.props.label, action.props.stock_id))
                 action.connect_proxy(button)
 
     # Notebook methods:
