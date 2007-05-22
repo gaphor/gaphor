@@ -104,11 +104,11 @@ class ConnectHandleTool(HandleTool):
 
 class PopupItemTool(ItemTool):
     """
-    An item tool with the extended ability to display a popup menu on
+    An item tool with the ability to display a popup menu on
     a right mouse click.
     """
 
-    gui_manager = inject('gui_manager')
+    action_manager = inject('action_manager')
 
     def __init__(self):
         ItemTool.__init__(self, buttons=(1, 3))
@@ -117,16 +117,13 @@ class PopupItemTool(ItemTool):
         if not ItemTool.on_button_press(self, context, event):
             return False
         if event.button == 3:
-            view = context.view
-            item = view.focused_item
             context.ungrab()
-            # Display popup menu using after-event signal
+            item = context.view.focused_item
+
             if item:
-                popup_menu = item.get_popup_menu()
-                if popup_menu:
-                    mainwin = self.gui_manager.main_window
-                    mainwin._construct_popup_menu(menu_def=popup_menu,
-                                                  event=event)
+                menu = self.action_manager.ui_manager.get_widget('item-popup')
+                if menu:
+                    menu.popup(None, None, None, event.button, event.time)
         return True
 
 

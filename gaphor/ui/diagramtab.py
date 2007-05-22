@@ -25,7 +25,7 @@ class DiagramTab(object):
             <menuitem action="diagram-delete" />
             <separator />
             <menuitem action="diagram-select-all" />
-            <menuitem action="diagram-deselect-all" />
+            <menuitem action="diagram-unselect-all" />
           </menu>
           <menu action="diagram">
             <menuitem action="diagram-zoom-in" />
@@ -152,10 +152,10 @@ class DiagramTab(object):
     def select_all(self):
         self.view.select_all()
 
-    @action(name='diagram-deselect-all', label='Des_elect all',
+    @action(name='diagram-unselect-all', label='Des_elect all',
             accel='<Control><Shift>a')
-    def deselect_all(self):
-        self.view.deselect_all()
+    def unselect_all(self):
+        self.view.unselect_all()
         
     @action(name='diagram-delete', stock_id='gtk-delete')
     @transactional

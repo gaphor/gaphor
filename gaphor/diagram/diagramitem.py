@@ -341,8 +341,7 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
 
             cls = type(subject)
 
-            # find out names of classes, which are superclasses of our
-            # subject
+            # find out names of classes, which are superclasses of our subject
             names = set(c.__name__ for c in cls.__mro__ if issubclass(c, Element))
 
             # find stereotypes that extend out metaclass
