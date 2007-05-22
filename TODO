@@ -6,15 +6,13 @@ For 0.10.0 and later:
  - bug in zope.component package: in zope.component.globalregistry.py zope.testing is included.  This package is only a dependency for the [test] setting. zope.testing is not mandatory.
  Use a more recent version
 
- - Placement actions should be instantiated on a per-view basis. the view's
-   action_group should be added/removed when visible/hidden.
-
- - Toolbox should proxy gtk.Action in stead of using the Menu Factory.
-
- - fix settings for new actions (PlacementEvent?) by using subscribtions or handlers.
-
- - filename should not be part of the main window
-   Is it a transient property?
+ - Popups for diagram items should be aranged through
+   <popup action='<class>-item-popup'>..</>.
+     - popups is a UI thing. Create adapters?
+     - Separate service for stereotype handling 
+     - popups should be aware of the cursor position (e.g. near the end of a
+       line). (+1 for adapters)
+     - ...
 
  - Load / save regression testing
    !!! Create some example diagrams,

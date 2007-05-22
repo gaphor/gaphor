@@ -66,6 +66,9 @@ class MainWindow(ToplevelWindow):
             <placeholder name="ternary" />
           </menu>
           <menu action="diagram">
+            <menuitem action="tree-view-create-diagram" />
+            <menuitem action="tree-view-delete-diagram" />
+            <separator />
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
@@ -122,21 +125,7 @@ class MainWindow(ToplevelWindow):
             self.action_group.add_action(a)
         self._tab_ui_settings = None
 
-    def get_model(self):
-        """
-        Return the gtk.TreeModel associated with the main window
-        (shown on the left side in a TreeView).
-        """
-        return self._tree_view.get_model()
-
     tree_model = property(lambda s: s.tree_view.get_model())
-
-    def get_tree_view(self):
-        """
-        Get the gtk.TreeView widget that visualized the TreeModel.
-        See also get_model().
-        """
-        return self._tree_view
 
     tree_view = property(lambda s: s._tree_view)
 
@@ -230,7 +219,7 @@ class MainWindow(ToplevelWindow):
         
         view.connect_after('event-after', self._on_view_event)
         view.connect('row-activated', self._on_view_row_activated)
-        #view.connect_after('cursor-changed', self._on_view_cursor_changed)
+        view.connect_after('cursor-changed', self._on_view_cursor_changed)
 
         vbox = gtk.VBox()
         vbox.pack_start(scrolled_window, expand=True)
@@ -246,6 +235,7 @@ class MainWindow(ToplevelWindow):
         notebook.set_show_border(False)
 
         notebook.connect_after('switch-page', self._on_notebook_switch_page)
+        notebook.connect_after('page-removed', self._on_notebook_page_removed)
 
         self.objectInspector = ObjectInspector()
         #self.objectInspector.set_size_request(-1, 50)
@@ -369,15 +359,12 @@ class MainWindow(ToplevelWindow):
         such as OpenModelElement, which will try to open the element (if it's
         a Diagram).
         """
-        path = self.get_model().path_from_element(element)
-        #log.debug("PATH = %s" % path)
+        path = self.tree_model.path_from_element(element)
         # Expand the first row:
-        self.get_tree_view().expand_row(path[:-1], False)
-        # Select the diagram, so it can be opened by the OpenModelElement action
-        selection = self.get_tree_view().get_selection()
+        self._tree_view.expand_row(path[:-1], False)
+        selection = self._tree_view.get_selection()
         selection.select_path(path)
-        #self.action_manager.execute('SelectRow')
-
+        self._on_view_cursor_changed(self._tree_view)
 
     # Signal callbacks:
 
@@ -413,28 +400,36 @@ class MainWindow(ToplevelWindow):
         """
         self.action_manager.execute('tree-view-open')
 
-    #def _on_view_cursor_changed(self, view):
-    #    """
-    #    Another row is selected, execute a dummy action.
-    #    """
-    #    #self.action_manager.execute('SelectRow')
-    #    pass
+    def _on_view_cursor_changed(self, view):
+        """
+        Another row is selected, execute a dummy action.
+        """
+        element = view.get_selected_element()
+        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, UML.Package)
+        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
 
     def _insensivate_toolbox(self):
         for button in self._toolbox.buttons:
             button.set_property('sensitive', False)
+
+    def _on_notebook_page_removed(self, notebook, tab, page_num):
+        if self._tab_ui_settings:
+            action_group, ui_id = self._tab_ui_settings
+            self.ui_manager.remove_action_group(action_group)
+            self.ui_manager.remove_ui(ui_id)
+            self._insensivate_toolbox()
+            self._tab_ui_settings = None
 
     def _on_notebook_switch_page(self, notebook, tab, page_num):
         """
         Another page (tab) is put on the front of the diagram notebook.
         A dummy action is executed.
         """
-        log.debug('Switching page to %d' % page_num)
         if self._tab_ui_settings:
             action_group, ui_id = self._tab_ui_settings
             self.ui_manager.remove_action_group(action_group)
             self.ui_manager.remove_ui(ui_id)
-            self._insensivate_toolbox()
+            self._tab_ui_settings = None
 
         content = self.notebook.get_nth_page(page_num)
         tab = self.notebook_map.get(content)
@@ -472,9 +467,9 @@ class MainWindow(ToplevelWindow):
 
     @action(name='tree-view-rename', label=_('Rename'))
     def tree_view_rename_selected(self):
-        view = self.get_tree_view()
+        view = self._tree_view
         element = view.get_selected_element()
-        path = view.get_model().path_from_element(element)
+        path = view.tree_model.path_from_element(element)
         column = view.get_column(0)
         cell = column.get_cell_renderers()[1]
         cell.set_property('editable', 1)
@@ -511,7 +506,7 @@ class MainWindow(ToplevelWindow):
 
     @action(name='tree-view-refresh', label=_('_Refresh'))
     def tree_view_refresh(self):
-        self._tree_view.get_model().refresh()
+        self._tree_model.refresh()
 
 
 gtk.accel_map_add_filter('gaphor')

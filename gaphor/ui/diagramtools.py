@@ -88,8 +88,6 @@ class ConnectHandleTool(HandleTool):
 
             return True
         elif handle and handle.connected_to:
-            #adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
-            #adapter.disconnect(handle)
             handle.disconnect()
         return False
 
@@ -195,7 +193,6 @@ class TextEditTool(Tool):
                 return True
 
     def _on_key_press_event(self, widget, event, buffer, editor):
-        #self.
         if event.keyval == gtk.keysyms.Return:
             pass
             #widget.get_toplevel().destroy()
@@ -220,12 +217,10 @@ class PlacementTool(gaphas.tool.PlacementTool):
                                            handle_tool=ConnectHandleTool(),
                                            handle_index=handle_index)
         self.after_handler = after_handler
-        self.is_released = False
         self._tx = None
 
     def on_button_press(self, context, event):
         self._tx = Transaction()
-        self.is_released = False
         view = context.view
         view.unselect_all()
         if gaphas.tool.PlacementTool.on_button_press(self, context, event):
@@ -242,7 +237,6 @@ class PlacementTool(gaphas.tool.PlacementTool):
                     self.handle_tool.connect(view, self.new_item, opposite, wx, wy)
             
     def on_button_release(self, context, event):
-        self.is_released = True
         try:
             if self.after_handler:
                 self.after_handler()

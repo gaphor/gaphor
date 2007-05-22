@@ -159,8 +159,8 @@ class FileManager(object):
 
             # Let this be handled by the main window itself:
             #self._window.set_message('Model loaded successfully')
-            model = main_window.get_model()
-            view = main_window.get_tree_view()
+            model = main_window.tree_model
+            view = main_window.tree_view
 
             self.filename = filename
             main_window.set_filename(filename)
