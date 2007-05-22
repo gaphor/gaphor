@@ -9,6 +9,7 @@ Run 'python setup.py run' to start Gaphor directly (without install).
 
 VERSION = '0.10.5'
 
+import os
 import sys
 sys.path.insert(0, '.')
 
@@ -17,6 +18,7 @@ from ez_setup import use_setuptools
 use_setuptools()
 
 from setuptools import setup, find_packages
+from distutils.cmd import Command
 
 from utils.command.build_mo import build_mo
 from utils.command.build_pot import build_pot
@@ -26,6 +28,44 @@ from utils.command.run import run
 
 LINGUAS = [ 'ca', 'es', 'nl', 'sv' ]
 
+class build_doc(Command):
+    description = 'Builds the documentation'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+#        from docutils.core import publish_cmdline
+#        docutils_conf = os.path.join('doc', 'docutils.conf')
+        epydoc_conf = os.path.join('doc', 'epydoc.conf')
+
+#        for source in glob('doc/*.txt'):
+#            dest = os.path.splitext(source)[0] + '.html'
+#            if not os.path.exists(dest) or \
+#                   os.path.getmtime(dest) < os.path.getmtime(source):
+#                print 'building documentation file %s' % dest
+#                publish_cmdline(writer_name='html',
+#                                argv=['--config=%s' % docutils_conf, source,
+#                                      dest])
+
+        try:
+            from epydoc import cli
+            old_argv = sys.argv[1:]
+            sys.argv[1:] = [
+                '--config=%s' % epydoc_conf,
+                '--no-private', # epydoc bug, not read from config
+                '--simple-term',
+                '--verbose'
+            ]
+            cli.cli()
+            sys.argv[1:] = old_argv
+
+        except ImportError:
+            print 'epydoc not installed, skipping API documentation.'
 
 setup(
     name='gaphor',
@@ -100,6 +140,7 @@ setup(
               'build_uml': build_uml,
               'build_mo': build_mo,
               'build_pot': build_pot,
+              'build_doc': build_doc,
               'install_lib': install_lib,
               'run': run,
     },
