@@ -469,7 +469,7 @@ class MainWindow(ToplevelWindow):
     def tree_view_rename_selected(self):
         view = self._tree_view
         element = view.get_selected_element()
-        path = view.tree_model.path_from_element(element)
+        path = view.get_model().path_from_element(element)
         column = view.get_column(0)
         cell = column.get_cell_renderers()[1]
         cell.set_property('editable', 1)
