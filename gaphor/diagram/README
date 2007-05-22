@@ -1,5 +1,5 @@
 module: gaphor.diagram
-=============
+======================
 
 This module contains the items that can be placed in gaphor.UML.Diagram's.
 Each diagram item represents one or more gaphor.UML.Element's (subclasses

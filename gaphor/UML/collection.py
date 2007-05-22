@@ -1,4 +1,6 @@
-# vi:sw=4:et
+"""
+1:n and n:m relations in the data model are saved using a collection.
+"""
 
 import inspect
 
@@ -6,6 +8,9 @@ class CollectionError(Exception):
     pass
 
 class collection(object):
+    """
+    Collection (set-like) for model elements' 1:n and n:m relationships.
+    """
 
     def __init__(self, property, object, type):
         self.property = property
@@ -62,8 +67,10 @@ class collection(object):
 
 
     def index(self, key):
-        """Given an object, return the position of that object in the
-        collection."""
+        """
+        Given an object, return the position of that object in the
+        collection.
+        """
         return self.items.index(key)
 
 
@@ -192,7 +199,8 @@ class collection(object):
 
 
     def moveUp(self, value):
-        """Move element up. Owner is notified about the change.
+        """
+        Move element up. Owner is notified about the change.
         """
         i1 = self.items.index(value)
         i2 = i1 - 1
@@ -204,7 +212,8 @@ class collection(object):
 
 
     def moveDown(self, value):
-        """Move element down. Owner is notified about the change.
+        """
+        Move element down. Owner is notified about the change.
         """
         i1 = self.items.index(value)
         i2 = i1 + 1
@@ -213,3 +222,6 @@ class collection(object):
             self.property.notify(self.object) # send a notification that this list has changed
         else:
             log.warning('Cannot move down last element')
+
+
+# vi:sw=4:et

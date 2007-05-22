@@ -8,8 +8,10 @@ import gobject
 import gtk
 import operator
 import stock
+from zope import component
 
 from gaphor import UML
+from gaphor.UML.event import ModelFactoryEvent, FlushFactoryEvent
 from gaphor.transaction import Transaction
 
 
@@ -34,11 +36,13 @@ class NamespaceModel(gtk.GenericTreeModel):
 
         self.factory = factory
 
-        factory.connect(self.on_factory_signals)
-
+        #factory.connect(self.on_factory_signals)
         self.root = (None, [])
 
         self.exclude = _default_exclude_list
+
+        component.provideHandler(self.flush)
+        component.provideHandler(self._build_model)
 
     def new_node_from_element(self, element, parent_node):
         """
@@ -246,14 +250,16 @@ class NamespaceModel(gtk.GenericTreeModel):
         #else:
             #log.debug('model is in sync for "%s"' % element.name)
 
-    def flush(self):
+    @component.adapter(FlushFactoryEvent)
+    def flush(self, event=None):
         for i in self.root[1]:
             self.detach_notifiers_from_node(i)
             # remove the node, it is now the first in the list:
             self.row_deleted((0,))
         self.root = (None, [])
 
-    def _build_model(self):
+    @component.adapter(ModelFactoryEvent)
+    def _build_model(self, event=None):
         toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
 
         for t in toplevel:

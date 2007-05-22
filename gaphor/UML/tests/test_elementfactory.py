@@ -27,6 +27,7 @@ class ElementFactoryTestCase(unittest.TestCase):
 
     def setUp(self):
         self.factory = ElementFactory()
+        self.factory.init(None)
 
     def tearDown(self):
         del self.factory

@@ -1,6 +1,6 @@
 # vim: sw=4
 """
-This module contains a model elements (!) Diagram which is the abstract
+This module contains a model element Diagram which is the abstract
 representation of a UML diagram. Diagrams can be visualized and edited.
 """
 
@@ -14,7 +14,8 @@ from gaphor.misc import uniqueid
 from uml2 import Namespace, PackageableElement
 
 class DiagramCanvas(gaphas.Canvas):
-    """Some additions to gaphas.Canvas class.
+    """
+    Some additions to gaphas.Canvas class.
     Esp. load and save functionallity.
     """
 
@@ -50,13 +51,15 @@ class DiagramCanvas(gaphas.Canvas):
         pass #self.block_updates = False
 
     def select(self, expression=lambda e: True):
-        """Return a list of all canvas items that match expression.
+        """
+        Return a list of all canvas items that match expression.
         """
         return filter(expression, self.get_all_items())
 
 
 class Diagram(Namespace, PackageableElement):
-    """Diagrams may contain model elements and can be owned by a Package.
+    """
+    Diagrams may contain model elements and can be owned by a Package.
     """
 
     def __init__(self, id=None, factory=None):
@@ -72,7 +75,8 @@ class Diagram(Namespace, PackageableElement):
         self.canvas.postload()
 
     def create(self, type, parent=None, subject=None):
-        """Create a new canvas item on the canvas. It is created with
+        """
+        Create a new canvas item on the canvas. It is created with
         a unique ID and it is attached to the diagram's root item.
         """
         assert issubclass(type, gaphas.Item)

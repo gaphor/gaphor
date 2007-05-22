@@ -1,45 +1,21 @@
 #!/usr/bin/env python
 # vim:sw=4:et
-"""Element:
-
-Method names have changed on some places to emphasize that we deal
-with a completely new data model here.
-
-save(save_func)
-load(name, value)
-postload()
-    Load/save the element.
-
-unlink()
-     Remove all references to the element. This is done by emiting the
-     '__unlink__' signal to all attached signals. unlink() can not be called
-     recursively.
-
-connect ('name', callback, *data) or
-connect (('name', 'other_property'), callback, *data)
-    Connect 'callback' to recieve notifications if one of the properties
-    change (the latter being more memory efficient if you want to listen on
-    more properties). The listener will recieve the property name as
-    first argument, followed by *data.
-
-disconnect (callback, *data)
-    Disconnect callback as listener.
-
-notify (name)
-    Notify all listeners the property 'name' has changed.
-    The notifier calls callbacks registered by connect() by sending
-    callback(self, pspec, *data)
-    where self is the data object (Element) and pspec is the property spec.
+"""
+Base class for UML model elements.
 """
 
 __all__ = [ 'Element' ]
 
 import types, mutex
+from zope import component
+from event import ElementDeleteEvent
 from gaphor.misc import uniqueid
 from properties import umlproperty, association
 
 class Element(object):
-    """Base class for UML data classes."""
+    """
+    Base class for UML data classes.
+    """
 
     def __init__(self, id=None, factory=None):
         self._id = id or uniqueid.generate_id()
@@ -55,7 +31,9 @@ class Element(object):
 
     # TODO: move save/load code to adapters
     def save(self, save_func):
-        """Save the state by calling save_func(name, value)."""
+        """
+        Save the state by calling save_func(name, value).
+        """
         umlprop = umlproperty
         class_ = type(self)
         for propname in dir(class_):
@@ -65,7 +43,8 @@ class Element(object):
                     prop.save(self, save_func)
 
     def load(self, name, value):
-        """Loads value in name. Make sure that for every load postload()
+        """
+        Loads value in name. Make sure that for every load postload()
         should be called.
         """
         try:
@@ -92,18 +71,23 @@ class Element(object):
                         prop.postload(self)
 
     def unlink(self):
-        """Unlink the element.
+        """
+        Unlink the element. All the elements references are destroyed.
         """
         # Uses a mutex to make sure it is not called recursively
         if self.__in_unlink.testandset():
+            component.handle(ElementDeleteEvent(self._factory, self))
             try:
                 self.notify('__unlink__', '__unlink__')
             finally:
                 self.__in_unlink.unlock()
 
     def connect(self, names, callback, *data):
-        """Attach 'callback' to a list of names. Names may also be a string.
+        """
+        Attach 'callback' to a list of names. Names may also be a string.
         A name is the name of a property of the object or '__unlink__'.
+
+        Obsolete. Connect to the appropriate change event (see event.py)
         """
         #log.debug('Element.connect(%s, %s, %s)' % (names, callback, data))
         if type(names) is types.StringType:
@@ -113,7 +97,11 @@ class Element(object):
             self._observers.setdefault(name, []).append(cb)
 
     def disconnect(self, callback, *data):
-        """Detach a callback identified by it's data."""
+        """
+        Detach a callback identified by it's data.
+
+        Obsolete. Connect to the appropriate change event (see event.py)
+        """
         cb = (callback,) + data
         for values in self._observers.values():
             # Remove all occurences of 'cb' from values
@@ -128,6 +116,8 @@ class Element(object):
         """
         Send notification to attached callbacks that a property
         has changed.
+
+        Obsolete. Connect to the appropriate change event (see event.py)
         """
         cb_list = self._observers.get(cb_name or name, ())
         #log.debug('Element.notify: %s' % cb_list)
@@ -147,11 +137,15 @@ class Element(object):
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
     def isKindOf(self, class_):
-        """Returns true if the object is an instance of class_."""
+        """
+        Returns true if the object is an instance of class_.
+        """
         return isinstance(self, class_)
 
     def isTypeOf(self, other):
-        """Returns true if the object is of the same type as other."""
+        """
+        Returns true if the object is of the same type as other.
+        """
         return type(self) == type(other)
 
 
