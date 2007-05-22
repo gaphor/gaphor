@@ -31,8 +31,8 @@ TOOLBOX_ACTIONS = (
 #        ('toolbox-assembly-connector', _('Assembly connector'), 'gaphor-assembly-connector'),
         ('toolbox-node', _('Node'), 'gaphor-node'),
         ('toolbox-artifact', _('Artifact'), 'gaphor-artifact'),
-##        (_('Composite Structures'), (
-##                'InsertConnector',)),
+#        (_('Composite Structures'), (
+#                'InsertConnector',)),
     )), (_('Actions'), (
         ('toolbox-action', _('Action'), 'gaphor-action'),
         ('toolbox-initial-node', _('Initial node'), 'gaphor-initial-node'),
@@ -282,10 +282,6 @@ class DiagramToolbox(object):
                 after_handler=self._after_handler)
 
     # Profiles:
-#                'InsertProfile',
-#                'InsertMetaClass',
-#                'InsertStereotype',
-#                'InsertExtension')),
 
     def toolbox_profile(self):
         self.view.tool = PlacementTool(
