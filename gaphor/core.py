@@ -26,6 +26,11 @@ class inject(object):
         self._inj = None
         
     def __get__(self, obj, class_=None):
+        """
+        Resolve a dependency, but only if we're called from an object instance.
+        """
+        if not obj:
+            return self
         if self._inj is None:
             self._inj = _Application.get_service(self._name)
         return self._inj

@@ -33,18 +33,6 @@ class MainWindow(ToplevelWindow):
     element_factory = inject('element_factory')
     action_manager = inject('action_manager')
 
-    # <old>
-#            _('_Edit'), (
-#                'Undo',
-#                'Redo',
-#                'separator',
-#                'EditCopy',
-#                'EditPaste',
-#                'separator',
-#                'ResetToolAfterCreate',
-
-    # </old>
-
     title = 'Gaphor'
     size = property(lambda s: s.properties.get('ui.window-size', (760, 580)))
     menubar_path = '/mainwindow'
@@ -55,6 +43,10 @@ class MainWindow(ToplevelWindow):
         <menubar name="mainwindow">
           <menu action="file">
             <placeholder name="primary" />
+            <separator />
+            <menu action="file-export" />
+            <menu action="file-import" />
+            <separator />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
             <separator />
@@ -115,6 +107,8 @@ class MainWindow(ToplevelWindow):
 
         self.action_group = build_action_group(self)
         for name, label in (('file', '_File'),
+                             ('file-export', '_Export'),
+                             ('file-import', '_Import'),
                              ('edit', '_Edit'),
                              ('diagram', '_Diagram'),
                              ('tools', '_Tools'),

@@ -96,10 +96,16 @@ def build_action_group(obj, name=None):
     """
     import gtk
     group = gtk.ActionGroup(name or obj)
+    objtype = type(obj)
 
     for attrname in dir(obj):
         try:
-            method = getattr(obj, attrname)
+            # Fetch the methods from the object's type instead of the object
+            # itself. This prevents some desciptors (mainly gaphor.core.inject)
+            # from executing.
+            # Otherwise stuff like dependency resolving (=inject) may kick in
+            # too early.
+            method = getattr(objtype, attrname)
         except:
             continue
         act = getattr(method, '__action__', None)
