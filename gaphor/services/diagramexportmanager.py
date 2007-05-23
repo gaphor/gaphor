@@ -17,7 +17,6 @@ class DiagramExportManager(object):
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
 
-    #interface.implements(IService)
     interface.implements(IService, IActionProvider)
 
     gui_manager = inject('gui_manager')
@@ -28,6 +27,8 @@ class DiagramExportManager(object):
           <menu action="file">
             <menu action="file-export">
               <menuitem action="file-export-svg" />
+              <menuitem action="file-export-png" />
+              <menuitem action="file-export-pdf" />
             </menu>
           </menu>
         </menubar>
@@ -109,15 +110,80 @@ class DiagramExportManager(object):
         surface.finish()
 
 
+    def save_png(self, filename, canvas):
+        log.debug('Exporting PNG image to: %s' % filename)
+        view = View(canvas)
+        view.painter = ItemPainter()
+
+        # Update bounding boxes with a temporaly CairoContext
+        # (used for stuff like calculating font metrics)
+        tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
+        tmpcr = cairo.Context(tmpsurface)
+        view.update_bounding_box(tmpcr, items=canvas.get_root_items())
+        tmpcr.show_page()
+        tmpsurface.flush()
+
+        w, h = view.bounding_box.width, view.bounding_box.height
+        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w+1), int(h+1))
+        cr = cairo.Context(surface)
+        view.matrix.translate(-view.bounding_box.x0, -view.bounding_box.y0)
+        view.paint(cr)
+        cr.show_page()
+        surface.write_to_png(filename)
+
+    def save_pdf(self, filename, canvas):
+        log.debug('Exporting PDF image to: %s' % filename)
+        view = View(canvas)
+        view.painter = ItemPainter()
+
+        # Update bounding boxes with a temporaly CairoContext
+        # (used for stuff like calculating font metrics)
+        tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
+        tmpcr = cairo.Context(tmpsurface)
+        view.update_bounding_box(tmpcr)
+        tmpcr.show_page()
+        tmpsurface.flush()
+
+        w, h = view.bounding_box.width, view.bounding_box.height
+        surface = cairo.PDFSurface(filename, w, h)
+        cr = cairo.Context(surface)
+        view.matrix.translate(-view.bounding_box.x0, -view.bounding_box.y0)
+        view.paint(cr)
+        cr.show_page()
+        surface.flush()
+        surface.finish()
+
     @action(name='file-export-svg', label='Export to SVG',
             tooltip='Export the diagram to SVG')
     def save_svg_action(self):
-        title = 'Export diagram to SVG file'
+        title = 'Export diagram to SVG'
         ext = '.svg'
         diagram = self.gui_manager.main_window.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_svg(filename, diagram.canvas)
+
+
+    @action(name='file-export-png', label='Export to PNG',
+            tooltip='Export the diagram to PNG')
+    def save_png_action(self):
+        title = 'Export diagram to PNG'
+        ext = '.png'
+        diagram = self.gui_manager.main_window.get_current_diagram()
+        filename = self.save_dialog(diagram, title, ext)
+        if filename:
+            self.save_png(filename, diagram.canvas)
+
+
+    @action(name='file-export-pdf', label='Export to PDF',
+            tooltip='Export the diagram to PDF')
+    def save_pdf_action(self):
+        title = 'Export diagram to PDF'
+        ext = '.pdf'
+        diagram = self.gui_manager.main_window.get_current_diagram()
+        filename = self.save_dialog(diagram, title, ext)
+        if filename:
+            self.save_pdf(filename, diagram.canvas)
 
 
 # vim:sw=4:et:
