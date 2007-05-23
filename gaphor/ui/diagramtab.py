@@ -11,7 +11,7 @@ from gaphor.diagram import get_diagram_item
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramview import DiagramView
 from gaphor.ui.diagramtoolbox import DiagramToolbox
-from event import DiagramItemFocused
+from event import DiagramSelectionChange
 
 class DiagramTab(object):
     
@@ -105,7 +105,7 @@ class DiagramTab(object):
         table.attach(sbar, 0, 1, 1, 2, gtk.EXPAND | gtk.FILL | gtk.SHRINK,
                      gtk.FILL)
 
-        view.connect('focus-changed', self._on_view_focus_changed)
+        view.connect('focus-changed', self._on_view_selection_changed)
         view.connect('selection-changed', self._on_view_selection_changed)
         view.connect_after('key-press-event', self._on_key_press_event)
         view.connect('drag-data-received', self._on_drag_data_received)
@@ -214,11 +214,8 @@ class DiagramTab(object):
                 #self.action_manager.execute('diagram-delete')
 
 
-    def _on_view_focus_changed(self, view, focus_item):
-        component.handle(DiagramItemFocused(focus_item))
-
-    def _on_view_selection_changed(self, view, selection):
-        self.action_manager.execute('ItemSelect')
+    def _on_view_selection_changed(self, view, selection_or_focus):
+        component.handle(DiagramSelectionChange(view, view.focused_item, view.selected_items))
 
     def _on_diagram_event(self, element, pspec):
         if pspec == '__unlink__':
@@ -256,8 +253,6 @@ class DiagramTab(object):
                 tx.commit()
                 view.unselect_all()
                 view.focused_item = item
-
-                self.action_manager.execute('ItemDiagramDrop')
 
             else:
                 log.warning('No graphical representation for UML element %s' % type(element).__name__)

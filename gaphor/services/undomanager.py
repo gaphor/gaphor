@@ -281,7 +281,6 @@ class UndoManager(object):
                 del factory._elements[element.id]
             except KeyError:
                 pass # Key was probably already removed in an unlink call
-            factory.notify(element, 'remove')
             component.handle(ElementDeleteEvent(factory, element))
         self.add_undo_action(_undo_create_event)
 
@@ -292,7 +291,6 @@ class UndoManager(object):
         element = event.element
         def _undo_delete_event():
             factory._elements[element.id] = element
-            factory.notify(element, 'create')
             component.handle(ElementCreateEvent(factory, element))
         self.add_undo_action(_undo_delete_event)
 

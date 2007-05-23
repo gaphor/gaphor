@@ -60,20 +60,12 @@ class ActionManager(object):
             if action_provider.menu_xml:
                 action_provider.__ui_merge_id = \
                         self.ui_manager.add_ui_from_string(action_provider.menu_xml)
-                log.debug('Added menu xml %d' % action_provider.__ui_merge_id)
 
     @component.adapter(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
         if IActionProvider.providedBy(event.service):
             log.debug('Loading registered service %s' % str(event.service))
             self.register_action_provider(event.service)
-        # Only start registring already registered services once the GUI
-        # is in order (e.i. menu structure is correctly set up)
-#        if event.name == 'gui_manager':
-#            log.info('Loading not yet registered action provider services')
-#            for name, service in component.getUtilitiesFor(IService):
-#                if IActionProvider.providedBy(service):
-#                    log.debug('Loading already registered service %s' % str(service))
-#                    self.register_action_provider(service)
+
 
 # vim:sw=4:et:ai

@@ -120,12 +120,12 @@ setup(
             'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
             'properties = gaphor.services.properties:Properties',
             'undo_manager = gaphor.services.undomanager:UndoManager',
-#            'plugin_manager = gaphor.services.pluginmanager:PluginManager',
             'element_factory = gaphor.UML.elementfactory:ElementFactory',
             'file_manager = gaphor.services.filemanager:FileManager',
             'gui_manager = gaphor.services.guimanager:GUIManager',
             'action_manager = gaphor.services.actionmanager:ActionManager',
             'help = gaphor.services.helpservice:HelpService',
+            'copy = gaphor.services.copyservice:CopyService',
         ],
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',

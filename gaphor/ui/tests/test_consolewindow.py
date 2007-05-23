@@ -9,7 +9,7 @@ class ConsoleWindowTestCase(unittest.TestCase):
         ui_manager = gtk.UIManager()
         window = ConsoleWindow()
         window.ui_manager = ui_manager
-        assert len(window.action_group.list_actions()) == 3
+        assert len(window.action_group.list_actions()) == 2, window.action_group.list_actions()
         window.construct()
         window.close()
 

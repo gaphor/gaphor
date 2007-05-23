@@ -86,14 +86,17 @@ class _Application(object):
             srv.shutdown()
             component.handle(ServiceShutdownEvent(name, srv))
 
+        # Re-initialize Zope's global site manager
+        # (cleanup adapters and utilities):
+        try:
+            from zope.component import globalSiteManager
+            globalSiteManager.__init__('base')
+        except Exception, e:
+            log.error('Re-initialization of the Zope SiteManager failed', e)
+        self.__init__()
 
 # Make sure there is only one!
 Application = _Application()
-
-def restart():
-    global Application
-    Application.shutdown()
-    Application = _Application()
 
 
 # vim:sw=4:et:ai

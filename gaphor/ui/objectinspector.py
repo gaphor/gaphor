@@ -173,7 +173,7 @@ class ObjectInspector(gtk.Notebook):
         """Called when a diagram item receives focus.
         
         This reloads all tabs based on the current selection."""
-        diagramItem = event.diagramItem
+        diagramItem = event.focused_item
         self.clearAllTabs()
         if diagramItem is None:
             return

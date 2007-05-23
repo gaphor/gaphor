@@ -52,12 +52,10 @@ class Toolbox(gtk.VBox):
         # Fetch the arrow item:
         arrow = button.get_children()[0].get_children()[0]
         if not content.get_property('visible'):
-            log.debug('switched to visible: %s' % button.toggle_id)
             content.show()
             arrow.set(gtk.ARROW_DOWN, gtk.SHADOW_IN)
             self.emit('toggled', button.toggle_id, True)
         else:
-            log.debug('switched to hidden: %s' % button.toggle_id)
             content.hide()
             arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
             self.emit('toggled', button.toggle_id, False)

@@ -1,11 +1,14 @@
 """
-TODO: fix this code.
+Copy / Paste functionality
 """
 
 from zope import interface, component
+import gaphas
 from gaphor import UML
 from gaphor.interfaces import IService, IActionProvider
-from gaphor.core import _, inject, action, build_action_group
+from gaphor.ui.interfaces import IDiagramSelectionChange
+from gaphor.core import _, inject, action, build_action_group, transactional
+
 
 class CopyService(object):
     """
@@ -42,32 +45,27 @@ class CopyService(object):
     """
 
     def __init__(self):
-        self.copy_buffer = []
+        self.copy_buffer = set()
         self.action_group = build_action_group(self)
 
     def init(self, app):
-        pass
+        self.action_group.get_action('edit-copy').props.sensitive = False
+        self.action_group.get_action('edit-paste').props.sensitive = False
+        
+        component.provideHandler(self._update)
 
-    def _update_copy(self):
-        diagram_tab = self._window.get_current_diagram_tab()
-        self.sensitive = diagram_tab and len(diagram_tab.get_view().selected_items) > 0
+    def shutdown(self):
+        self.copy_buffer = set()
 
-    def _update_paste(self):
-        global copy_buffer
-        diagram_tab = self._window.get_current_diagram_tab()
-        self.sensitive = diagram_tab and copy_buffer
+    @component.adapter(IDiagramSelectionChange)
+    def _update(self, event):
+        diagram_view = event.diagram_view
+        self.action_group.get_action('edit-copy').props.sensitive = bool(diagram_view.selected_items)
 
-
-    @action(name='edit-copy', stock_id='gtk-copy')
-    def copy(self):
-        view = self.gui_manager.main_window.get_current_diagram_view()
-        if view.is_focus():
-            items = view.selected_items
-            copy_items = []
-            for i in items:
-                copy_items.append(i)
-            if copy_items:
-                self.copy_buffer = copy_items
+    def copy(self, items):
+        if items:
+            self.copy_buffer = set(items)
+            self.action_group.get_action('edit-paste').props.sensitive = True
 
     def _load_element(self, name, value):
         """
@@ -95,15 +93,11 @@ class CopyService(object):
             # Plain attribute
             self._item.load(name, str(value))
 
-    @action(name='edit-paste', stock_id='gtk-paste')
     @transactional
-    def paste(self):
-        view = self._window.get_current_diagram_view()
-        diagram = self._window.get_current_diagram()
-        if not view:
-            return
-
-        #diagram = view.get_diagram()
+    def paste(self, diagram):
+        """
+        Paste items in the copy-buffer to the diagram
+        """
         canvas = diagram.canvas
         if not canvas:
             return
@@ -126,15 +120,35 @@ class CopyService(object):
             ci.save(self.copy_func)
 
         for item in self._new_items.values():
-            item.move(10, 10)
+            item.matrix.translate(10, 10)
 
         for item in self._new_items.values():
             item.postload()
 
+
+    @action(name='edit-copy', stock_id='gtk-copy')
+    def _copy(self):
+        view = self.gui_manager.main_window.get_current_diagram_view()
+        if view.is_focus():
+            items = view.selected_items
+            copy_items = []
+            for i in items:
+                copy_items.append(i)
+            self.copy(copy_items)
+
+    @action(name='edit-paste', stock_id='gtk-paste')
+    def paste_action(self):
+        view = self.gui_manager.main_window.get_current_diagram_view()
+        diagram = self.gui_manager.main_window.get_current_diagram()
+        if not view:
+            return
+
+        self.paste(diagram)
+
         view.unselect_all()
 
         for item in self._new_items.values():
-            view.select(view.find_view_item(item))
+            view.select_item(item)
 
-register_action(PasteAction, 'EditCopy')
 
+# vim:sw=4:et:ai

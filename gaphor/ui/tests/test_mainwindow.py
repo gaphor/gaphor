@@ -2,15 +2,17 @@
 import gtk
 import unittest
 
-from gaphor.application import restart, Application
+from gaphor.application import Application
 from gaphor.ui.mainwindow import MainWindow
 from gaphor import UML
 
 class MainWindowTestCase(unittest.TestCase):
 
     def setUp(self):
-        restart()
         Application.init(services=['element_factory', 'properties', 'action_manager'])
+
+    def tearDown(self):
+        Application.shutdown()
 
     def test_creation(self):
         # MainWindow should be created as resource

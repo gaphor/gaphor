@@ -38,7 +38,7 @@ class ElementFactory(object):
         component.provideHandler(self._element_unlinked)
 
     def shutdown(self):
-        pass
+        self.flush()
 
     def create(self, type):
         """

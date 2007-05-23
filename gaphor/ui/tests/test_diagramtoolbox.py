@@ -2,7 +2,7 @@
 import gtk
 import unittest
 
-from gaphor.application import restart, Application
+from gaphor.application import Application
 from gaphor.ui.diagramtab import DiagramTab
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from gaphor import UML
@@ -10,13 +10,15 @@ from gaphor import UML
 class DiagramToolboxTestCase(unittest.TestCase):
 
     def setUp(self):
-        restart()
         Application.init(services=['element_factory', 'properties'])
         diagram = UML.Diagram()
         tab = DiagramTab(None)
         tab.diagram = diagram
         tab.construct()
         self.tab = tab
+
+    def tearDown(self):
+        Application.shutdown()
 
     def test_standalone_construct_with_diagram(self):
         pass # is setUp()

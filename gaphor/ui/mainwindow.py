@@ -18,7 +18,7 @@ from toplevelwindow import ToplevelWindow
 
 from gaphor.ui.objectinspector import ObjectInspector
 
-from interfaces import IDiagramElementReceivedFocus
+from interfaces import IDiagramSelectionChange
 from gaphor.interfaces import IServiceEvent
 
 
@@ -240,7 +240,7 @@ class MainWindow(ToplevelWindow):
         self.objectInspector = ObjectInspector()
         #self.objectInspector.set_size_request(-1, 50)
 
-        diagramReceivedFocus = component.adapter(IDiagramElementReceivedFocus)(
+        diagramReceivedFocus = component.adapter(IDiagramSelectionChange)(
             self.objectInspector)
         component.provideHandler(diagramReceivedFocus)
         
