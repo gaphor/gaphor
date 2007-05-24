@@ -67,3 +67,46 @@ class EditorTestCase(TestCase):
         assert adapter.edit_tag
 
 
+    def test_classifier_editor(self):
+        """
+        Test classifier editor
+        """
+        diagram = self.factory.create(UML.Diagram)
+        klass = diagram.create(items.ClassItem, subject=self.factory.create(UML.Class))
+        klass.subject.name = 'Class1'
+
+        diagram.canvas.update()
+
+        attr = self.factory.create(UML.Property)
+        attr.name = "blah"
+        klass.subject.ownedAttribute = attr
+
+        oper = self.factory.create(UML.Operation)
+        oper.name = 'method'
+        klass.subject.ownedOperation = oper
+
+        diagram.canvas.update()
+
+        edit = IEditor(klass)
+
+        self.assertEqual('ClassifierItemEditor', edit.__class__.__name__)
+
+        self.assertEqual(True, edit.is_editable(10, 10))
+
+        # Test the inner working of the editor
+        self.assertEqual(klass, edit._edit)
+        self.assertEqual('Class1', edit.get_text())
+
+        # The attribute:
+        y = klass.get_name_size()[1] + klass.style.compartment_padding[0] + 3 
+        self.assertEqual(True, edit.is_editable(4, y))
+        self.assertEqual(attr, edit._edit.subject)
+        self.assertEqual('+ blah', edit.get_text())
+
+        y += klass.compartments[0].height
+        # The operation
+        self.assertEqual(True, edit.is_editable(3, y))
+        self.assertEqual(oper, edit._edit.subject)
+        self.assertEqual('+ method()', edit.get_text())
+
+

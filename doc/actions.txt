@@ -26,30 +26,16 @@ Where it should lead:
     - Could be registered as adapters with a name.
 
  * Each window has it's own action group (every item with a menu?)
- * One action group for the application/gui_manager (new/load/save/quit)
  * One toplevel UIManager per window or one per application/gui_manager?
- ? Actions should inherit from gtk.Action.
-   Depends on the structure. Preferbly not, since it ties actions to GTK+
-   (which is not a good thing for testing)
- ? Actions should be modeled as functions (methods) with action as
-   first (sec) parameter.
-   Normal actions can be modeled as functions. If an action is sensitive or
+ * Normal actions can be modeled as functions. If an action is sensitive or
    visible depends on the state in the action. Hence we require the update()
    method.
 
- * some sort of factory mechanism (MultiAction?).
-    - contains an ActionGroup and menu-XML.
-    - RecentFiles will manage up to 10 recent files entries.
-    - same for stereotypes: should be managed by one "ObjectAction".
-    - can Placeholders play a role here? Yes, they can be used to identify the
-      section where the actions should be put.
-    - In some cases multiple menu items may refer to the same action:
-      radio actions may (but this is not always the case) and the Recent files
-      functionality.
+ * create services for for "dynamic" menus (e.g. recent files/stereotypes)
 
 
 Solution for simple actions
-===========================
+---------------------------
 
 For an action to actually be useful a piece of menu xml is needed.
 
@@ -58,7 +44,6 @@ Hence an interface IActionProvider has to be defined::
     class IActionProvider(interface.Interface):
 	menu_xml = interface.Attribute("The menu XML")
 	action_group = interface.Attribute("The accompanying ActionGroup")
-	def update(self)?
 
 Support for actions can be arranged by decorating actions with an @action
 decorator and let the class create an ActionGroup using some
@@ -79,7 +64,7 @@ gaphor.service will serve well (as they need to be initialized anyway)
 
 
 Solution for context sensitive menus
-====================================
+------------------------------------
 
 Context sensitive menus, such as popup menus, should be generated and switched
 on and off on demand.
@@ -91,4 +76,13 @@ It becomes even tougher when popup menu's should act on parts of a diagram item
 provide such functionality through a special layer on the canvas, by means of
 some easy clickable buttons around the "hot spot" (we already have something
 like that for text around association ends).
+
+Scheme:
+1. User selects an item and presses the rigth mouse button: a popup menu
+   should be displayed.
+2. find the actual item (this may be a composite item of the element drawn).
+   Use an IItemPicker adapter for that (if no such interface is available,
+   use the item itself).
+2. Find a IActionProvider adapters for the selected (focused) item.
+3. update the popup menu context (actions) for the selected item.
 

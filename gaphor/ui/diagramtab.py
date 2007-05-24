@@ -6,7 +6,6 @@ import gtk
 from zope import component
 from gaphor import UML
 from gaphor.core import _, inject, transactional, action, build_action_group
-from gaphor.diagram.interfaces import IPopupMenu
 from gaphor.diagram import get_diagram_item
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramview import DiagramView

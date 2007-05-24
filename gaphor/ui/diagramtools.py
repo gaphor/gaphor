@@ -121,6 +121,8 @@ class PopupItemTool(ItemTool):
             item = context.view.focused_item
 
             if item:
+                x, y = context.view.transform_point_c2i(item, event.x, event.y)
+                log.debug('Item at cursor: %s' % item.item_at(x, y))
                 menu = self.action_manager.ui_manager.get_widget('item-popup')
                 if menu:
                     menu.popup(None, None, None, event.button, event.time)

@@ -93,15 +93,5 @@ class IConnect(interface.Interface):
         otherwise.
         """
 
-class IPopupMenu(interface.Interface):
-    """
-    Interface for providing popup menus for diagram items.
-    """
-
-    def get_popup_menu(self):
-        """
-        Return the popup menu for the adapted diagram item.
-        """
-
 
 # vim: sw=4:et:ai

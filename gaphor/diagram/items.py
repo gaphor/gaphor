@@ -15,7 +15,7 @@ from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
 
 # Classes:
-from gaphor.diagram.feature import AttributeItem, OperationItem
+from gaphor.diagram.feature import FeatureItem, AttributeItem, OperationItem
 from gaphor.diagram.klass import ClassItem
 from gaphor.diagram.interface import InterfaceItem
 from gaphor.diagram.package import PackageItem

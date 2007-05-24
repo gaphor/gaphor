@@ -58,12 +58,15 @@ class Compartment(list):
         cr = context.cairo
         for item in self:
             item.pre_update(context)
+        
         if self:
+            # self (=list) contains items
             sizes = [f.get_size(True) for f in self]
             self.width = max(map(lambda p: p[0], sizes))
             self.height = sum(map(lambda p: p[1], sizes))
             vspacing = self.owner.style.compartment_vspacing
             self.height += vspacing * (len(sizes) - 1)
+
         padding = self.owner.style.compartment_padding
         self.width += padding[1] + padding[3]
         self.height += padding[0] + padding[2]
@@ -71,7 +74,6 @@ class Compartment(list):
     def update(self, context):
         for item in self:
             item.update(context)
-
 
     def draw(self, context):
         cr = context.cairo
@@ -88,6 +90,23 @@ class Compartment(list):
                 offset += vspacing + item.height
             finally:
                 cr.restore()
+
+    def item_at(self, x, y):
+        if 0 > x > self.width:
+            return None
+        
+        padding = self.owner.style.compartment_padding
+        height = padding[0]
+        if y < height:
+            return None
+
+        vspacing = self.owner.style.compartment_vspacing
+        for f in self:
+            w, h = f.get_size(True)
+            height += h + vspacing
+            if y < height:
+                return f
+        return None
 
 
 class ClassifierItem(NamedItem):
@@ -395,5 +414,32 @@ class ClassifierItem(NamedItem):
                 cr.restore()
             cr.translate(0, comp.height)
 
+    def item_at(self, x, y):
+        """
+        Find the composite item (attribute or operation) for the classifier.
+        """
+
+        if self.drawing_style not in (ClassifierItem.DRAW_COMPARTMENT, ClassifierItem.DRAW_COMPARTMENT_ICON):
+            return self
+
+        # Edit is in name compartment -> edit name
+        name_comp_height = self.get_name_size()[1]
+        if y < name_comp_height:
+            return self
+
+        padding = self.style.compartment_padding
+        vspacing = self.style.compartment_vspacing
+        
+        # place offset at top of first comparement
+        y -= name_comp_height
+        y += vspacing / 2.0
+        for comp in self.compartments:
+            if not comp.visible:
+                continue
+            item = comp.item_at(x, y)
+            if item:
+                return item
+            y -= comp.height
+        return None
 
 # vim:sw=4:et

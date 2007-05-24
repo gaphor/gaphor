@@ -322,6 +322,9 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
         self.subject = None
         super(DiagramItem, self).unlink()
 
+    def item_at(self, x, y):
+        return self
+
     def get_popup_menu(self):
         """In the popup menu a submenu is created with Stereotypes than can be
         applied to this classifier (Class, Interface).

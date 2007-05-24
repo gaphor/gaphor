@@ -43,7 +43,8 @@ component.provideAdapter(CommentItemEditor)
 
 
 class NamedItemEditor(object):
-    """Text edit support for Named items.
+    """
+    Text edit support for Named items.
     """
     interface.implements(IEditor)
     component.adapts(items.NamedItem)
@@ -137,6 +138,10 @@ component.provideAdapter(DiagramItemTextEditor)
 
 
 class ClassifierItemEditor(object):
+    """
+    Text editor support for Classifiers. Also features contained in Classifiers'
+    compartments are edited through this interface.
+    """
     interface.implements(IEditor)
     component.adapts(items.ClassifierItem)
 
@@ -145,40 +150,12 @@ class ClassifierItemEditor(object):
         self._edit = None
 
     def is_editable(self, x, y):
-        """Find out what's located at point (x, y), is it in the
+        """
+        Find out what's located at point (x, y), is it in the
         name part or is it text in some compartment
         """
-        if self._item.drawing_style not in (items.ClassifierItem.DRAW_COMPARTMENT, items.ClassifierItem.DRAW_COMPARTMENT_ICON):
-            self._edit = self._item
-            return True
-
-        self._edit = None
-        # Edit is in name compartment -> edit name
-        name_comp_height = self._item.get_name_size()[1]
-        if y < name_comp_height:
-            self._edit = self._item
-            return True
-
-        padding = self._item.style.compartment_padding
-        vspacing = self._item.style.compartment_vspacing
-        
-        # place offset at top of first comparement
-        y -= name_comp_height
-        y += vspacing / 2.0
-        for comp in self._item.compartments:
-            if not comp.visible:
-                continue
-            y -= padding[0]
-            for item in comp:
-                if y < item.height:
-                    self._edit = item
-                    return True
-                y -= item.height
-                y -= vspacing
-            y -= padding[2]
-            # Compensate for last substraction action
-            y += vspacing
-        return False
+        self._edit = self._item.item_at(x, y)
+        return bool(self._edit and self._edit.subject)
 
     def get_text(self):
         if hasattr(self._edit.subject, 'render'):

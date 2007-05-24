@@ -18,7 +18,7 @@ from math import atan2, pi
 from gaphas.util import text_extents, text_align, text_multiline
 from gaphas.state import reversible_property
 from gaphas import Item
-from gaphas.geometry import Rectangle
+from gaphas.geometry import Rectangle, distance_point_point_fast
 from gaphas.geometry import distance_rectangle_point, distance_line_point
 
 from gaphor import UML
@@ -339,7 +339,14 @@ class AssociationItem(DiagramLine):
             text_align(cr, self._label_bounds[0], self._label_bounds[1],
                        self.subject.name or '', align_x=1, align_y=1)
 
-
+    def item_at(self, x, y):
+        if distance_point_point_fast(self._handles[0].pos, (x, y)) < 10:
+            return self._head_end
+        elif distance_point_point_fast(self._handles[-1].pos, (x, y)) < 10:
+            return self._tail_end
+        return self
+        
+        
 class AssociationEnd(SubjectSupport):
     """
     An association end represents one end of an association. An association
@@ -460,7 +467,8 @@ class AssociationEnd(SubjectSupport):
                 
 
     def set_navigable(self, navigable):
-        """Change the AssociationEnd's navigability.
+        """
+        Change the AssociationEnd's navigability.
 
         A warning is issued if the subject or opposite property is missing.
         """
