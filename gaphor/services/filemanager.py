@@ -242,7 +242,7 @@ class FileManager(object):
 
     @action(name='file-save-as', stock_id='gtk-save-as')
     def save_as(self):
-        filename = self.filename()
+        filename = self.filename
         filesel = gtk.FileChooserDialog(title=_('Save Gaphor model as'),
                                         action=gtk.FILE_CHOOSER_ACTION_SAVE,
                                         buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
