@@ -10,16 +10,17 @@ from interfaces import IUIComponent
 
 from gaphor import UML
 from gaphor.core import _, inject, action, radio_action, build_action_group
-from gaphor.ui import namespace
-from gaphor.ui.diagramtab import DiagramTab
-from gaphor.ui.toolbox import Toolbox
-from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
+from namespace import NamespaceModel, NamespaceView
+from diagramtab import DiagramTab
+from toolbox import Toolbox
+from diagramtoolbox import TOOLBOX_ACTIONS
+from propertyeditor import PropertyEditor
 from toplevelwindow import ToplevelWindow
 
-from gaphor.ui.objectinspector import ObjectInspector
 
 from interfaces import IDiagramSelectionChange
 from gaphor.interfaces import IServiceEvent
+from event import DiagramSelectionChange
 
 
 class MainWindow(ToplevelWindow):
@@ -203,8 +204,8 @@ class MainWindow(ToplevelWindow):
         """
         Create the widgets that make up the main window.
         """
-        model = namespace.NamespaceModel(self.element_factory)
-        view = namespace.NamespaceView(model, self.element_factory)
+        model = NamespaceModel(self.element_factory)
+        view = NamespaceView(model, self.element_factory)
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
@@ -231,27 +232,24 @@ class MainWindow(ToplevelWindow):
         notebook.connect_after('switch-page', self._on_notebook_switch_page)
         notebook.connect_after('page-removed', self._on_notebook_page_removed)
 
-        self.objectInspector = ObjectInspector()
-        #self.objectInspector.set_size_request(-1, 50)
+        self.property_editor = PropertyEditor()
+        pe_notebook = self.property_editor.construct()
+        pe_notebook.set_size_request(-1, 50)
 
-        diagramReceivedFocus = component.adapter(IDiagramSelectionChange)(
-            self.objectInspector)
-        component.provideHandler(diagramReceivedFocus)
-        
         second_paned = gtk.VPaned()
         second_paned.set_property('position',
-                                 int(self.properties.get('ui.object-inspector-position', 600)))
+                                 int(self.properties.get('ui.property-editor-position', 600)))
         second_paned.pack1(notebook)
         notebook.show()
-        second_paned.pack2(self.objectInspector)
-        self.objectInspector.show()
+        second_paned.pack2(pe_notebook)
+        pe_notebook.show()
         
         paned.pack2(second_paned)
         second_paned.show()
         paned.show()
 
         second_paned.connect('notify::position',
-                            self._on_object_inspector_notify_position)
+                            self._on_property_editor_notify_position)
 
         self.notebook = notebook
         self._tree_view = view
@@ -435,14 +433,17 @@ class MainWindow(ToplevelWindow):
         log.debug('Menus updated with %s, %d' % self._tab_ui_settings)
         self._update_toolbox(tab.toolbox.action_group)
 
+        # Make sure everyone knows the selection has changed.
+        component.handle(DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
+
     def _on_window_size_allocate(self, window, allocation):
         """
         Store the window size in a property.
         """
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
 
-    def _on_object_inspector_notify_position(self, paned, arg):
-        self.properties.set('ui.object-inspector-position',
+    def _on_property_editor_notify_position(self, paned, arg):
+        self.properties.set('ui.property-editor-position',
                      paned.get_position())
 
     # Actions:

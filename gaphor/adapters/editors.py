@@ -16,7 +16,8 @@ from gaphor.misc.rattr import rgetattr, rsetattr
 
 
 class CommentItemEditor(object):
-    """Text edit support for Comment item.
+    """
+    Text edit support for Comment item.
     """
     interface.implements(IEditor)
     component.adapts(items.CommentItem)

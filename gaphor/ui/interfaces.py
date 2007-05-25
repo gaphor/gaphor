@@ -28,10 +28,22 @@ class IUIComponent(interface.Interface):
         """
 
 
-class IDetailsPage(IUIComponent):
+class IPropertyPage(interface.Interface):
     """
     A property page which can display itself in a notebook
     """
     
+    def construct(self):
+        """
+        Create the page (gtk.Widget) that belongs to the Property page.
+
+        Returns the page's toplevel widget (gtk.Widget).
+        """
+
+    def destroy(self):
+        """
+        Destroy the page and clean up signal handlers and stuff.
+        """
+
 
 # vim:sw=4:et
