@@ -8,7 +8,7 @@ Adapters for the Property Editor
 """
 
 import gtk
-from gaphor.core import _
+from gaphor.core import _, inject
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
@@ -135,11 +135,15 @@ component.provideAdapter(ClassPropertyPage, name='Properties')
 class TaggedValuePage(object):
     """
     An editor for tagged values associated with elements.
+
+    Tagged values are stored in a ListSore: tag, value, taggedValue. taggedValue
+    is an UML model element (hidden).
     """
 
     interface.implements(IPropertyPage)
     component.adapts(items.NamedItem)
 
+    element_factory = inject('element_factory')
     def __init__(self, context):
         super(TaggedValuePage, self).__init__()
         self.context = context
@@ -147,12 +151,12 @@ class TaggedValuePage(object):
     def construct(self):
         page = gtk.VBox()
 
-        tagged_values = gtk.ListStore(str, str)
+        tagged_values = gtk.ListStore(str, str, object)
         
         for tagged_value in self.context.subject.taggedValue:
             tag, value = tagged_value.value.split("=")
-            tagged_values.append([tag, value])
-        tagged_values.append(['',''])
+            tagged_values.append([tag, value, tagged_value])
+        tagged_values.append(['','', None])
         
         self.tagged_values = tagged_values
         
@@ -180,18 +184,33 @@ class TaggedValuePage(object):
         """
         Update the model and UML element based on fresh user input.
         """
-        self.tagged_values[path][col] = new_text
+        tv = self.tagged_values[path]
 
-        iter = self.tagged_values.get_iter(path)
+        tv[col] = new_text
+
         
-        if not new_text and not self.tagged_values[path][1-col] and self.is_last_row(self.tagged_values, iter):
+        iter = self.tagged_values.get_iter(path)
+
+        #if not new_text and not self.tagged_values[path][1-col] and self.is_last_row(self.tagged_values, iter):
+
+        # Delete tagged value if both tag and value are empty
+        if not tv[0] and not tv[1] and tv[2]:
+            tv[2].unlink()
             self.tagged_values.remove(iter)
         
+        # Add a new tagged value:
+        elif (tv[0] or tv[1]) and not tv[2]:
+            tag = self.element_factory.create(LiteralSpecification)
+            tag.value = "%s=%s"%(tv[0], tv[1])
+            self.context.subject.taggedValue.append(tag)
+            tv[2] = tag
+            self.tagged_values.append(['','', None])
+        
         # Create a new row to enter next value
-        elif new_text and not self.is_last_row(self.tagged_values, iter):
-            self.tagged_values.append(['',''])
+        #elif new_text and not self.is_last_row(self.tagged_values, iter):
+        #    self.tagged_values.append(['','', None])
             
-        self.update_tagged_values_in_model()
+        #self.update_tagged_values_in_model()
     
     def update_tagged_values_in_model(self):
         """
