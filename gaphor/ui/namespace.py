@@ -1,5 +1,5 @@
-# vim: sw=4:et:ai
-"""This is the TreeView that is most common (for example: it is used
+"""
+This is the TreeView that is most common (for example: it is used
 in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 """
@@ -20,7 +20,8 @@ from gaphor.transaction import Transaction
 _default_exclude_list = ( UML.Parameter, UML.Association )
 
 class NamespaceModel(gtk.GenericTreeModel):
-    """The NamespaceModel holds a view on the data model based on namespace
+    """
+    The NamespaceModel holds a view on the data model based on namespace
     relationships (such as a Package containing a Class).
 
     NamedElement.namespace[1] -- Namespace.ownedMember[*]
@@ -36,7 +37,6 @@ class NamespaceModel(gtk.GenericTreeModel):
 
         self.factory = factory
 
-        #factory.connect(self.on_factory_signals)
         self.root = (None, [])
 
         self.exclude = _default_exclude_list
@@ -71,7 +71,8 @@ class NamespaceModel(gtk.GenericTreeModel):
         return node
 
     def detach_notifiers_from_node(self, node):
-        """Detach notifiers for node
+        """
+        Detach notifiers for node.
         """
         element = node[0]
 
@@ -100,23 +101,25 @@ class NamespaceModel(gtk.GenericTreeModel):
                 index += 1
             else:
                 raise AttributeError, 'Element %s is not part of the NamespaceModel' % element
-            #print 'parent_path', parent_node[1], parent_path + (index,)
             return child, parent_path + (index,)
         else:
             return self.root, ()
 
     def node_from_element(self, element):
-        """Get the node for an element.
+        """
+        Get the node for an element.
         """
         return self.node_and_path_from_element(element)[0]
 
     def path_from_element(self, element):
-        """Get the path to an element as a tuple (e.g. (0, 1, 1)).
+        """
+        Get the path to an element as a tuple (e.g. (0, 1, 1)).
         """
         return self.node_and_path_from_element(element)[1]
 
     def node_from_path(self, path):
-        """Get the node form a path. None is returned if no node is found.
+        """
+        Get the node form a path. None is returned if no node is found.
         """
         try:
             node = self.root
@@ -149,7 +152,8 @@ class NamespaceModel(gtk.GenericTreeModel):
             return 1
 
     def sort_node(self, node):
-        """Sort nodes based on their names.
+        """
+        Sort nodes based on their names.
         If path is set, the rows are "reordered".
         """
         # Do something like this (only a bit faster):
@@ -181,7 +185,8 @@ class NamespaceModel(gtk.GenericTreeModel):
         doit(self.root)
 
     def on_element_changed(self, element, pspec):
-        """element changed, update appropriate row
+        """
+        Element changed, update appropriate row.
         """
         path = self.path_from_element(element)
         if path:
@@ -268,16 +273,6 @@ class NamespaceModel(gtk.GenericTreeModel):
     def refresh(self):
         self.flush()
         self._build_model()
-
-    def on_factory_signals (self, obj, pspec):
-        if pspec == 'model':
-            self._build_model()
-        elif pspec == 'flush':
-            self.flush()
-
-        # TODO: add create (and remove?) signal so we can add 
-        #elif pspec == 'create':
-        #    self.new_node_from_element(obj, self.root)
 
     # TreeModel methods:
 
@@ -369,7 +364,9 @@ class NamespaceModel(gtk.GenericTreeModel):
             return None
 
     def on_iter_parent(self, node):
-        """Returns the parent of this node or None if no parent"""
+        """
+        Returns the parent of this node or None if no parent
+        """
         #print "on_iter_parent", node
         return self.node_from_element(node[0].namespace)
 
@@ -456,7 +453,8 @@ class NamespaceView(gtk.TreeView):
 
 
     def _set_text (self, column, cell, model, iter, data):
-        """set font and of model elements in tree view
+        """
+        Set font and of model elements in tree view.
         """
         value = model.get_value(iter, 0)
         #print 'set_name:', value
@@ -472,7 +470,8 @@ class NamespaceView(gtk.TreeView):
 
 
     def _text_edited(self, cell, path_str, new_text):
-        """The text has been edited. This method updates the data object.
+        """
+        The text has been edited. This method updates the data object.
         Note that 'path_str' is a string where the fields are separated by
         colons ':', like this: '0:1:1'. We first turn them into a tuple.
         """
@@ -490,7 +489,8 @@ class NamespaceView(gtk.TreeView):
 #        print 'do_drag_begin'
 
     def on_drag_data_get(self, context, selection_data, info, time):
-        """Get the data to be dropped by on_drag_data_received().
+        """
+        Get the data to be dropped by on_drag_data_received().
         We send the id of the dragged element.
         """
         #log.debug('on_drag_data_get')
@@ -558,7 +558,8 @@ class NamespaceView(gtk.TreeView):
                 selection.select_path(path)
 
     def on_drag_drop(self, context, x, y, time):
-        """DnD magic. do not touch
+        """
+        DnD magic. do not touch
         """
         self.emit_stop_by_name('drag-drop')
         #print 'drag_drop',context,x,y,time
@@ -568,43 +569,5 @@ class NamespaceView(gtk.TreeView):
 gobject.type_register(NamespaceModel)
 gobject.type_register(NamespaceView)
 
-#if __debug__:
-#    from gaphor.misc.aspects import weave_method, TimerAspect
-#    NamespaceModel.sort_node = weave_method(NamespaceModel.sort_node, TimerAspect)
 
-
-#class NamespaceViewRow(object):
-#
-#    def __init__(self, context):
-#        self.context = context
-#
-#    def get_icon_id(self):
-#        """Return the icon that matches the row."""
-#        return stock.get_stock_id(type(self.context))
-#
-#    def get_text(self):
-#        """Return the text to be set on the row."""
-#        return self.context and (self.context.name or '').replace('\n', ' ') or '<None>'
-#
-#    def set_text(self, new_text):
-#        """Set a new text that was entered while editing the row line."""
-#        self.context.name = new_text
-#
-#registerAdapterFactory(UML.Namespace, NamespaceViewRow, NamespaceViewRow)
-
-
-#class PropertyViewRow(NamespaceViewRow):
-#
-#    def get_text(self):
-#        context = self.context
-#        if context:
-#            name = context.name
-#            type = context.typeValue and context.typeValue.value or ''
-#            if type:
-#                return name + ': ' + type
-#            else:
-#                return name
-#        else:
-#            return '<None>'
-#
-#registerAdapterFactory(UML.Property, NamespaceViewRow, PropertyViewRow)
+# vim: sw=4:et:ai
