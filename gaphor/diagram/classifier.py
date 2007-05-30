@@ -1,4 +1,5 @@
-"""ClassifierItem diagram item
+"""
+ClassifierItem diagram item
 """
 
 import itertools
@@ -174,7 +175,8 @@ class ClassifierItem(NamedItem):
 
     @observed
     def set_drawing_style(self, style):
-        """Set the drawing style for this classifier: DRAW_COMPARTMENT,
+        """
+        Set the drawing style for this classifier: DRAW_COMPARTMENT,
         DRAW_COMPARTMENT_ICON or DRAW_ICON.
         """
         if style != self._drawing_style:
@@ -201,7 +203,8 @@ class ClassifierItem(NamedItem):
 
 
     def create_compartment(self, name):
-        """Create a new compartment. Compartments contain data such as
+        """
+        Create a new compartment. Compartments contain data such as
         attributes and operations.
 
         It is common to create compartments during the construction of the
@@ -214,7 +217,8 @@ class ClassifierItem(NamedItem):
     compartments = property(lambda s: s._compartments)
 
     def sync_uml_elements(self, elements, compartment, creator=None):
-        """This method synchronized a list of elements with the items
+        """
+        This method synchronized a list of elements with the items
         in a compartment. A creator-function should be passed which is used
         for creating new compartment items.
 
@@ -230,18 +234,11 @@ class ClassifierItem(NamedItem):
 
         to_add = [el for el in elements if el not in local_elements]
 
-        #print 'sync_elems:', elements, local_elements, to_add
-
-        # Remove no longer present elements:
-        for el in [el for el in local_elements if el not in elements]:
-            self.remove(mapping[el])
-
         # sync local elements with elements
         del compartment[:]
 
         for el in elements:
             if el in to_add:
-                #print 'sync_elems: creating', el
                 creator(el)
             else:
                 compartment.append(mapping[el])
@@ -265,7 +262,8 @@ class ClassifierItem(NamedItem):
         self.request_update()
 
     def on_subject_notify__namespace(self, subject, pspec=None):
-        """Add a line '(from ...)' to the class item if subject's namespace
+        """
+        Add a line '(from ...)' to the class item if subject's namespace
         is not the same as the namespace of this diagram.
         """
         if self.subject and self.subject.namespace and self.canvas and \
@@ -277,7 +275,8 @@ class ClassifierItem(NamedItem):
         self.request_update()
 
     def on_subject_notify__namespace_name(self, subject, pspec=None):
-        """Change the '(from ...)' line if the namespace's name changes.
+        """
+        Change the '(from ...)' line if the namespace's name changes.
         """
         self.on_subject_notify__namespace(subject, pspec)
 
@@ -356,7 +355,8 @@ class ClassifierItem(NamedItem):
         super(ClassifierItem, self).update(context)
 
     def get_icon_pos(self):
-        """Get icon position.
+        """
+        Get icon position.
         """
         return self.width - self.ICON_MARGIN_X - self.ICON_WIDTH, \
             self.ICON_MARGIN_Y

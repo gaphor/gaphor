@@ -14,7 +14,8 @@ import gaphor.adapters
 class ClassTestCase(unittest.TestCase):
 
     def test_compartments(self):
-        """Test creation of classes and working of compartments.
+        """
+        Test creation of classes and working of compartments.
         """
         element_factory = UML.ElementFactory()
         diagram = element_factory.create(UML.Diagram)
@@ -46,6 +47,34 @@ class ClassTestCase(unittest.TestCase):
         diagram.canvas.update()
         self.assertEqual(1, len(klass._compartments[1]))
         self.assertEqual((43.0, 18.0), klass._compartments[0].get_size())
+
+    def test_attribute_removal(self):
+
+        element_factory = UML.ElementFactory()
+        diagram = element_factory.create(UML.Diagram)
+        klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        diagram.canvas.update()
+
+        attr = element_factory.create(UML.Property)
+        attr.name = "blah1"
+        klass.subject.ownedAttribute = attr
+
+        attr2 = element_factory.create(UML.Property)
+        attr2.name = "blah2"
+        klass.subject.ownedAttribute = attr2
+
+        attr = element_factory.create(UML.Property)
+        attr.name = "blah3"
+        klass.subject.ownedAttribute = attr
+
+        diagram.canvas.update()
+        self.assertEqual(3, len(klass._compartments[0]))
+
+        attr2.unlink()
+
+        diagram.canvas.update()
+        self.assertEqual(2, len(klass._compartments[0]))
+
 
     def test_item_at(self):
         """

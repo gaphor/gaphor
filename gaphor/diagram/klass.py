@@ -15,7 +15,8 @@ from feature import AttributeItem, OperationItem
 
         
 class ClassItem(ClassifierItem):
-    """This item visualizes a Class instance.
+    """
+    This item visualizes a Class instance.
 
     A ClassItem contains two compartments (Compartment): one for
     attributes and one for operations. To add and remove such features
@@ -30,21 +31,6 @@ class ClassItem(ClassifierItem):
          'metaclass': lambda self: (not isinstance(self.subject, UML.Stereotype)) and hasattr(self.subject, 'extension') and self.subject.extension,
     }
     
-    popup_menu = ClassifierItem.popup_menu + (
-        'separator',
-        'AbstractClass',
-        'Fold',
-        'separator',
-        'CreateAttribute',
-        'CreateOperation',
-        'separator',
-        'ShowAttributes',
-        'ShowOperations',
-        'separator',
-        'CreateLinks',
-        '<ClassPopupSlot>'
-    )
-
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
         self.drawing_style = self.DRAW_COMPARTMENT
@@ -79,21 +65,24 @@ class ClassItem(ClassifierItem):
                                fset=_set_show_attributes)
 
     def _create_attribute(self, attribute):
-        """Create a new attribute item.
+        """
+        Create a new attribute item.
         """
         new = AttributeItem()
         new.subject = attribute
         self._attributes.append(new)
 
     def _create_operation(self, operation):
-        """Create a new operation item.
+        """
+        Create a new operation item.
         """
         new = OperationItem()
         new.subject = operation
         self._operations.append(new)
 
     def sync_attributes(self):
-        """Sync the contents of the attributes compartment with the data
+        """
+        Sync the contents of the attributes compartment with the data
         in self.subject.
         """
         owned_attributes = [a for a in self.subject.ownedAttribute if not a.association]
@@ -102,7 +91,8 @@ class ClassItem(ClassifierItem):
                            self._create_attribute)
 
     def sync_operations(self):
-        """Sync the contents of the operations compartment with the data
+        """
+        Sync the contents of the operations compartment with the data
         in self.subject.
         """
         self.sync_uml_elements(self.subject.ownedOperation, self._operations,
@@ -127,7 +117,8 @@ class ClassItem(ClassifierItem):
         self.sync_attributes()
 
     def on_subject_notify__ownedOperation(self, subject, pspec=None):
-        """Called when the ownedOperation property of our subject changes.
+        """
+        Called when the ownedOperation property of our subject changes.
         """
         #log.debug('on_subject_notify__ownedOperation')
         self.sync_operations()

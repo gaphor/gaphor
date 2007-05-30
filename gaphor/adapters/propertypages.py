@@ -12,7 +12,7 @@ from gaphor.core import _, inject
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
-from gaphor.UML import LiteralSpecification
+from gaphor import UML
 
 class NamedItemPropertyPage(object):
     """
@@ -77,32 +77,6 @@ class ClassPropertyPage(NamedItemPropertyPage):
         hbox.show_all()
         page.pack_start(hbox, expand=False)
 
-        # Attributes
-        hbox = gtk.HBox()
-        label = gtk.Label(_("Attributes"))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
-        attributes = gtk.ListStore(str)      
-        for attr in self.context.subject.ownedAttribute:
-            attributes.append([attr.render()])
-        attributes.append([''])
-        self.attributes = attributes
-
-        tree_view = gtk.TreeView(attributes)
-        tree_view.set_rules_hint(True)
-        
-        renderer = gtk.CellRendererText()
-        renderer.set_property('editable', True)
-        renderer.connect("edited", self._on_cell_edited, 1)
-        
-        # TODO: Use a hidden column that refers to the model element
-        # (like in namespace view)
-        attributes_column = gtk.TreeViewColumn('Attributes', renderer, text=0)
-        
-        tree_view.append_column(attributes_column)
-        #tree_view.set_headers_visible(False)
-        hbox.pack_start(tree_view, expand=True)
         hbox.show_all()
 
         page.pack_start(hbox, expand=True)
@@ -111,25 +85,184 @@ class ClassPropertyPage(NamedItemPropertyPage):
 
     def _on_abstract_change(self, button):
         self.context.subject.isAbstract = button.get_active()
+
+component.provideAdapter(ClassPropertyPage, name='Properties')
+
+
+class AttributesPropertyPage(object):
+    """
+    An editor for attributes associated with classes and interfaces
+
+    Tagged values are stored in a ListSore: tag, value, taggedValue. taggedValue
+    is an UML model element (hidden).
+    """
+
+    interface.implements(IPropertyPage)
+    component.adapts(items.ClassItem)
+
+    element_factory = inject('element_factory')
+
+    def __init__(self, context):
+        super(AttributesPropertyPage, self).__init__()
+        self.context = context
+        
+    def construct(self):
+        page = gtk.VBox()
+
+        # Show attributes toggle
+        hbox = gtk.HBox()
+        label = gtk.Label(_("Show attributes"))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        hbox.pack_start(label, expand=False)
+        button = gtk.CheckButton()
+        button.set_active(self.context.show_attributes)
+        button.connect('toggled', self._on_show_attributes_change)
+        hbox.pack_start(button)
+        hbox.show_all()
+        page.pack_start(hbox, expand=False)
+
+        # Attributes list store:
+        attributes = gtk.ListStore(str, object)
+        
+        for attribute in self.context.subject.ownedAttribute:
+            attributes.append([attribute.render(), attribute])
+        attributes.append(['', None])
+        
+        self.attributes = attributes
+        
+        tree_view = gtk.TreeView(attributes)
+        tree_view.set_rules_hint(True)
+        
+        renderer = gtk.CellRendererText()
+        renderer.set_property('editable', True)
+        renderer.connect("edited", self._on_cell_edited, 0)
+        tag_column = gtk.TreeViewColumn('Attribute', renderer, text=0)
+        tree_view.append_column(tag_column)
+        
+        page.pack_start(tree_view)
+        tree_view.show_all()
+
+        return page
+        
+    def _on_show_attributes_change(self, button):
+        self.context.show_attributes = button.get_active()
+        self.context.request_update()
         
     def _on_cell_edited(self, cellrenderertext, path, new_text, col):
         """
         Update the model and UML element based on fresh user input.
         """
-        self.tagged_values[path][col] = new_text
+        attr = self.attributes[path]
 
-        iter = self.tagged_values.get_iter(path)
-        
-        if not new_text and not self.tagged_values[path][1-col] and self.is_last_row(self.tagged_values, iter):
-            self.tagged_values.remove(iter)
-        
-        # Create a new row to enter next value
-        elif new_text and not self.is_last_row(self.tagged_values, iter):
-            self.tagged_values.append(['',''])
-            
-        self.update_tagged_values_in_model()
+        iter = self.attributes.get_iter(path)
 
-component.provideAdapter(ClassPropertyPage, name='Properties')
+        # Delete attribute if both tag and value are empty
+        if not new_text and attr[1]:
+            attr[1].unlink()
+            self.attributes.remove(iter)
+            return
+
+        # Add a new attribute:
+        if new_text and not attr[1]:
+            a = self.element_factory.create(UML.Property)
+            self.context.subject.ownedAttribute = a
+            attr[1] = a
+            self.attributes.append(['', None])
+
+        # Apply new_text to Attribute
+        if attr[1]:
+            attr[1].parse(new_text)
+            attr[0] = attr[1].render()
+
+component.provideAdapter(AttributesPropertyPage, name='Attributes')
+
+
+class OperationsPropertyPage(object):
+    """
+    An editor for operations associated with classes and interfaces
+
+    Tagged values are stored in a ListSore: tag, value, taggedValue. taggedValue
+    is an UML model element (hidden).
+    """
+
+    interface.implements(IPropertyPage)
+    component.adapts(items.ClassItem)
+
+    element_factory = inject('element_factory')
+
+    def __init__(self, context):
+        super(OperationsPropertyPage, self).__init__()
+        self.context = context
+        
+    def construct(self):
+        page = gtk.VBox()
+
+        # Show operations toggle
+        hbox = gtk.HBox()
+        label = gtk.Label(_("Show operations"))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        hbox.pack_start(label, expand=False)
+        button = gtk.CheckButton()
+        button.set_active(self.context.show_operations)
+        button.connect('toggled', self._on_show_operations_change)
+        hbox.pack_start(button)
+        hbox.show_all()
+        page.pack_start(hbox, expand=False)
+
+        # Operations list store:
+        operations = gtk.ListStore(str, object)
+        
+        for operation in self.context.subject.ownedOperation:
+            operations.append([operation.render(), operation])
+        operations.append(['', None])
+        
+        self.operations = operations
+        
+        tree_view = gtk.TreeView(operations)
+        tree_view.set_rules_hint(True)
+        
+        renderer = gtk.CellRendererText()
+        renderer.set_property('editable', True)
+        renderer.connect("edited", self._on_cell_edited, 0)
+        tag_column = gtk.TreeViewColumn('Operation', renderer, text=0)
+        tree_view.append_column(tag_column)
+        
+        page.pack_start(tree_view)
+        tree_view.show_all()
+
+        return page
+        
+    def _on_show_operations_change(self, button):
+        self.context.show_operations = button.get_active()
+        self.context.request_update()
+        
+    def _on_cell_edited(self, cellrenderertext, path, new_text, col):
+        """
+        Update the model and UML element based on fresh user input.
+        """
+        attr = self.operations[path]
+
+        iter = self.operations.get_iter(path)
+
+        # Delete operation if both tag and value are empty
+        if not new_text and attr[1]:
+            attr[1].unlink()
+            self.operations.remove(iter)
+            return
+
+        # Add a new operation:
+        if new_text and not attr[1]:
+            a = self.element_factory.create(UML.Operation)
+            self.context.subject.ownedOperation = a
+            attr[1] = a
+            self.operations.append(['', None])
+
+        # Apply new_text to Operation
+        if attr[1]:
+            attr[1].parse(new_text)
+            attr[0] = attr[1].render()
+
+component.provideAdapter(OperationsPropertyPage, name='Operations')
 
 
 class TaggedValuePage(object):
@@ -188,10 +321,7 @@ class TaggedValuePage(object):
 
         tv[col] = new_text
 
-        
         iter = self.tagged_values.get_iter(path)
-
-        #if not new_text and not self.tagged_values[path][1-col] and self.is_last_row(self.tagged_values, iter):
 
         # Delete tagged value if both tag and value are empty
         if not tv[0] and not tv[1] and tv[2]:
@@ -200,39 +330,13 @@ class TaggedValuePage(object):
         
         # Add a new tagged value:
         elif (tv[0] or tv[1]) and not tv[2]:
-            tag = self.element_factory.create(LiteralSpecification)
+            tag = self.element_factory.create(UML.LiteralSpecification)
             tag.value = "%s=%s"%(tv[0], tv[1])
             self.context.subject.taggedValue.append(tag)
             tv[2] = tag
             self.tagged_values.append(['','', None])
         
-        # Create a new row to enter next value
-        #elif new_text and not self.is_last_row(self.tagged_values, iter):
-        #    self.tagged_values.append(['','', None])
-            
-        #self.update_tagged_values_in_model()
-    
-    def update_tagged_values_in_model(self):
-        """
-        Write the current list out the model.
-        """
-        klass = self.context.subject
-        while klass.taggedValue:
-            klass.taggedValue[0].unlink()
-        for tag, value in self.tagged_values:
-            taggedValue = klass._factory.create(LiteralSpecification)
-            taggedValue.value = "%s=%s"%(tag, value)
-            klass.taggedValue.append(taggedValue)
-        
-    def is_last_row(self, model, iter):
-        return bool(model.iter_next(iter))
-        
-        
-        
-component.provideAdapter(
-    factory=TaggedValuePage,
-    adapts=[items.NamedItem],
-    provides=IPropertyPage,
-    name='Tagged values')
-    
+component.provideAdapter(TaggedValuePage, name='Tagged values')
+
+
 # vim:sw=4:et:ai

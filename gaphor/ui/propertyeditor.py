@@ -53,10 +53,11 @@ class PropertyEditor(object):
         if item is self._current_item:
             return
 
+        self._current_item = item
         self.clear_all_tabs()
+
         if item is None:
             return
         self.create_tabs_for_item(item)
-        self._current_item = item
 
-        
+# vim:sw=4:et:ai
