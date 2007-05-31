@@ -6,24 +6,13 @@ For 0.10.0 and later:
  - bug in zope.component package: in zope.component.globalregistry.py zope.testing is included.  This package is only a dependency for the [test] setting. zope.testing is not mandatory.
  Use a more recent version
 
- - Popups for diagram items should be aranged through
-   <popup action='<class>-item-popup'>..</>.
-     - popups is a UI thing. Create adapters?
-     - Separate service for stereotype handling 
-     - popups should be aware of the cursor position (e.g. near the end of a
-       line). (+1 for adapters)
-     - ...
+ - allow comments to render multi-line.
+
+ - add more property pages.
 
  - Load / save regression testing
    !!! Create some example diagrams,
 
- - get rid of resource(). Create an Application instance instead (should
-   make unit testing easier too).
-   This should get rid of the pseudo singletons (_default* instances per module)
-    - replace DataDir code with pkg_resources (ui.stock)
-    - copy-buffer (separate copy service?)
-    - make a service of ElementFactory
-    
  - using stereotypes
  - reimplement the mechanism that adds already existing relationships to the
    diagram if an item is copied to that diagram.

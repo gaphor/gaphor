@@ -5,6 +5,10 @@ Adapters for the Property Editor
 # Add hidden columns for list stores where i can put the actual object
 # being edited.
 
+TODO:
+ - stereotypes
+ - association / association ends.
+ - 
 """
 
 import gtk
@@ -87,6 +91,45 @@ class ClassPropertyPage(NamedItemPropertyPage):
         self.context.subject.isAbstract = button.get_active()
 
 component.provideAdapter(ClassPropertyPage, name='Properties')
+
+
+class InterfacePropertyPage(NamedItemPropertyPage):
+    """
+    Adapter which shows a property page for an interface view.
+    """
+
+    interface.implements(IPropertyPage)
+    component.adapts(items.InterfaceItem)
+
+    def __init__(self, context):
+        super(InterfacePropertyPage, self).__init__(context)
+        
+    def construct(self):
+        page = super(InterfacePropertyPage, self).construct()
+
+        # Fold toggle
+        hbox = gtk.HBox()
+        label = gtk.Label(_("Fold"))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+        button = gtk.CheckButton()
+        button.set_active(self.context.folded)
+        button.connect('toggled', self._on_fold_change)
+        hbox.pack_start(button)
+        hbox.show_all()
+        page.pack_start(hbox, expand=False)
+
+        hbox.show_all()
+
+        page.pack_start(hbox, expand=True)
+
+        return page
+
+    def _on_fold_change(self, button):
+        self.context.folded = button.get_active()
+
+component.provideAdapter(InterfacePropertyPage, name='Properties')
 
 
 class AttributesPropertyPage(object):

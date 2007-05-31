@@ -38,6 +38,12 @@ class NamedItem(ElementItem):
         self.name_y = 0
         self._name_size = (0, 0)
 
+    def on_subject_notify(self, pspec, notifiers=()):
+        #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
+        ElementItem.on_subject_notify(self, pspec, ('name',) + notifiers)
+
+    def on_subject_notify__name(self, subject, pspec=None):
+        self.request_update()
 
     def get_name_size(self):
         """

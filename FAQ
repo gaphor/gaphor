@@ -1,15 +1,10 @@
 Frequently Asked Questions
 ==========================
 
-Q: I have installed DiaCanvas2 and everything went okay, however when I do a
-   "python setup.py config" it complains that it can not find DiaCanvas.
+Q: Does Gaphor work on Windows
 
-A: There is a good chance the diacanvas-python module is installed correctly,
-   but in /usr/local/lib/python2.[23]/site-packages. The easiest solution is
-   to add this directory to your PYTHONPATH environment variable:
-
-     export PYTHONPATH=/usr/local/lib/python2.[23]/site-packages
-
-   As an alternative a setup.py script is provided in the python/ directory
-   in the diacanvas2 source distribution.
+A: Yes it does. Check out the gaphor-win32-libs package in Gaphor's subversion
+   repository. It contains all the libraries required to get Gaphor up and
+   running. All you need more is a Python 2.4 installation (the libraries are
+   compiled for Python 2.4, not 2.5).
 

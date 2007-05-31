@@ -82,14 +82,21 @@ class InterfaceItem(ClassItem):
         """
         return self.drawing_style == self.DRAW_ICON
 
+    def _set_folded(self, folded):
+        if folded:
+            self.drawing_style = self.DRAW_ICON
+            for h in self._handles: h.movable = False
+        else:
+            self.drawing_style = self.DRAW_COMPARTMENT
+            for h in self._handles: h.movable = True
+
+    folded = property(is_folded, _set_folded)
+
     def pre_update_icon(self, context):
         """
         Figure out if this interface represents a required, provided,
         assembled (wired) or dotted (minimal) look.
         """
-        for h in self._handles: h.movable = False
-        self.style.name_outside = True
-
         h_nw = self._handles[NW]
         cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
         self._draw_required = self._draw_provided = False
