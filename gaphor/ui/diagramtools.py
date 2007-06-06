@@ -11,7 +11,9 @@ import gtk
 from zope import component
 
 import gaphas
-from gaphas.geometry import distance_point_point
+from gaphas.geometry import distance_point_point, distance_point_point_fast, \
+                            distance_line_point
+from gaphas.item import Line
 from gaphas.tool import Tool, HandleTool, ItemTool, ToolChain
 
 from gaphor.core import inject, Transaction, transactional
@@ -25,6 +27,9 @@ class ConnectHandleTool(HandleTool):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
     to connect items to one-another.
+
+    It also adds handles to lines when a line is grabbed on the middle of
+    a line segment (points are drawn by the LineSegmentPainter).
     """
 
     def glue(self, view, item, handle, wx, wy):
@@ -101,6 +106,45 @@ class ConnectHandleTool(HandleTool):
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
             adapter.disconnect_constraints(handle)
         
+    def on_button_press(self, context, event):
+        """
+        In addition to the normal behavior, the button press event creates
+        new handles if it is activated on the middle of a line segment.
+        """
+        if super(ConnectHandleTool, self).on_button_press(context, event):
+            return True
+
+        view = context.view
+        item = view.hovered_item
+        if item and item is view.focused_item and isinstance(item, Line):
+            h = item.handles()
+            x, y = context.view.transform_point_c2i(item, event.x, event.y)
+            for h1, h2 in zip(h[:-1], h[1:]):
+                cx = (h1.x + h2.x) / 2
+                cy = (h1.y + h2.y) / 2
+                if distance_point_point_fast((x,y), (cx, cy)) <= 4:
+                    segment = h.index(h1)
+                    item.split_segment(segment)
+                    self.grab_handle(item, item.handles()[segment + 1])
+                    context.grab()
+                    self._grabbed = True
+                    return True
+
+    def on_button_release(self, context, event):
+        grabbed_handle = self._grabbed_handle
+        grabbed_item = self._grabbed_item
+        if super(ConnectHandleTool, self).on_button_release(context, event):
+            if grabbed_handle and grabbed_item:
+                h = grabbed_item.handles()
+                if h[0] is grabbed_handle or h[-1] is grabbed_handle:
+                    return True
+                segment = h.index(grabbed_handle)
+                before = h[segment - 1]
+                after = h[segment + 1]
+                d, p = distance_line_point(before.pos, after.pos, grabbed_handle.pos)
+                if d < 2:
+                    grabbed_item.merge_segment(segment)
+            return True
 
 class PopupItemTool(ItemTool):
     """
@@ -290,7 +334,7 @@ def DefaultTool():
     chain = TransactionalToolChain()
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
-    chain.append(PopupItemTool())
+    chain.append(ItemTool())
     chain.append(TextEditTool())
     chain.append(RubberbandTool())
     return chain
