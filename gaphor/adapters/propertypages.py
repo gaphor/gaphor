@@ -17,6 +17,7 @@ from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
 from gaphor import UML
+from gaphor.UML.umllex import parse_attribute, render_attribute
 import gaphas.item
 
 class NamedItemPropertyPage(object):
@@ -43,7 +44,7 @@ class NamedItemPropertyPage(object):
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
         entry = gtk.Entry()        
-        entry.set_text(self.context.subject.name or '')
+        entry.set_text(self.context.subject and self.context.subject.name or '')
         entry.connect('changed', self._on_name_change)
         hbox.pack_start(entry)
         page.show_all()
@@ -169,7 +170,8 @@ class AttributesPage(object):
         attributes = gtk.ListStore(str, object)
         
         for attribute in self.context.subject.ownedAttribute:
-            attributes.append([attribute.render(), attribute])
+            if not attribute.association:
+                attributes.append([attribute.render(), attribute])
         attributes.append(['', None])
         
         self.attributes = attributes
@@ -180,7 +182,7 @@ class AttributesPage(object):
         renderer = gtk.CellRendererText()
         renderer.set_property('editable', True)
         renderer.connect("edited", self._on_cell_edited, 0)
-        tag_column = gtk.TreeViewColumn('Attribute', renderer, text=0)
+        tag_column = gtk.TreeViewColumn('Attributes', renderer, text=0)
         tree_view.append_column(tag_column)
         
         page.pack_start(tree_view)
@@ -475,9 +477,9 @@ class AssociationPropertyPage(NamedItemPropertyPage):
     component.adapts(items.AssociationItem)
 
     def __init__(self, context):
-        super(AssociationPropertyPage, self).__init__()
-        self.context = context
-        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        super(AssociationPropertyPage, self).__init__(context)
+        #self.context = context
+        #self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
         
     def construct(self):
         page = super(AssociationPropertyPage, self).construct()
