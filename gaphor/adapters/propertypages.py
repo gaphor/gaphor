@@ -17,6 +17,7 @@ from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
 from gaphor import UML
+import gaphas.item
 
 class NamedItemPropertyPage(object):
     """
@@ -132,7 +133,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 component.provideAdapter(InterfacePropertyPage, name='Properties')
 
 
-class AttributesPropertyPage(object):
+class AttributesPage(object):
     """
     An editor for attributes associated with classes and interfaces
 
@@ -146,7 +147,7 @@ class AttributesPropertyPage(object):
     element_factory = inject('element_factory')
 
     def __init__(self, context):
-        super(AttributesPropertyPage, self).__init__()
+        super(AttributesPage, self).__init__()
         self.context = context
         
     def construct(self):
@@ -217,10 +218,10 @@ class AttributesPropertyPage(object):
             attr[1].parse(new_text)
             attr[0] = attr[1].render()
 
-component.provideAdapter(AttributesPropertyPage, name='Attributes')
+component.provideAdapter(AttributesPage, name='Attributes')
 
 
-class OperationsPropertyPage(object):
+class OperationsPage(object):
     """
     An editor for operations associated with classes and interfaces
 
@@ -234,7 +235,7 @@ class OperationsPropertyPage(object):
     element_factory = inject('element_factory')
 
     def __init__(self, context):
-        super(OperationsPropertyPage, self).__init__()
+        super(OperationsPage, self).__init__()
         self.context = context
         
     def construct(self):
@@ -305,7 +306,7 @@ class OperationsPropertyPage(object):
             attr[1].parse(new_text)
             attr[0] = attr[1].render()
 
-component.provideAdapter(OperationsPropertyPage, name='Operations')
+component.provideAdapter(OperationsPage, name='Operations')
 
 
 class TaggedValuePage(object):
@@ -380,6 +381,220 @@ class TaggedValuePage(object):
             self.tagged_values.append(['','', None])
         
 component.provideAdapter(TaggedValuePage, name='Tagged values')
+
+
+class DependencyPropertyPage(object):
+    """
+    An editor for tagged values associated with elements.
+
+    Tagged values are stored in a ListSore: tag, value, taggedValue. taggedValue
+    is an UML model element (hidden).
+    """
+
+    interface.implements(IPropertyPage)
+    component.adapts(items.DependencyItem)
+
+    dependency_types = (
+        (_('Dependency'), UML.Dependency),
+        (_('Usage'), UML.Usage),
+        (_('Realization'), UML.Realization))
+
+    def __init__(self, context):
+        super(DependencyPropertyPage, self).__init__()
+        self.context = context
+        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        
+    def construct(self):
+        page = gtk.VBox()
+
+        hbox = gtk.HBox()
+        label = gtk.Label(_('Dependency type'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+
+        dependency_type = gtk.ListStore(str)
+        
+        for t, l in self.dependency_types:
+            dependency_type.append([t])
+        
+        self.dependency_type = dependency_type
+        
+        combo = gtk.ComboBox(dependency_type)
+        cell = gtk.CellRendererText()
+        combo.pack_start(cell, True)
+        combo.add_attribute(cell, 'text', 0)
+        combo.connect('changed', self._on_dependency_type_change)
+        self.combo = combo
+
+        hbox.pack_start(combo, expand=False)
+
+        page.pack_start(hbox, expand=False)
+
+        hbox = gtk.HBox()
+
+        label = gtk.Label(_('Automatic'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+
+        button = gtk.CheckButton()
+        button.set_active(self.context.auto_dependency)
+        button.connect('toggled', self._on_auto_dependency_change)
+        hbox.pack_start(button)
+
+        page.pack_start(hbox, expand=False)
+
+        page.show_all()
+
+        self.update()
+
+        return page
+
+    def update(self):
+        for index, (_, dep_type) in enumerate(self.dependency_types):
+            if dep_type is self.context.dependency_type:
+                self.combo.set_active(index)
+                break
+
+    def _on_dependency_type_change(self, combo):
+        self.context.dependency_type = self.dependency_types[combo.get_active()][1]
+
+    def _on_auto_dependency_change(self, button):
+        self.context.auto_dependency = button.get_active()
+
+
+component.provideAdapter(DependencyPropertyPage, name='Properties')
+
+
+class AssociationPropertyPage(NamedItemPropertyPage):
+    """
+    """
+
+    interface.implements(IPropertyPage)
+    component.adapts(items.AssociationItem)
+
+    def __init__(self, context):
+        super(AssociationPropertyPage, self).__init__()
+        self.context = context
+        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        
+    def construct(self):
+        page = super(AssociationPropertyPage, self).construct()
+        return page
+
+        hbox = gtk.HBox()
+        label = gtk.Label(_('Dependency type'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+
+        dependency_type = gtk.ListStore(str)
+        
+        for t, l in self.dependency_types:
+            dependency_type.append([t])
+        
+        self.dependency_type = dependency_type
+        
+        combo = gtk.ComboBox(dependency_type)
+        cell = gtk.CellRendererText()
+        combo.pack_start(cell, True)
+        combo.add_attribute(cell, 'text', 0)
+        combo.connect('changed', self._on_dependency_type_change)
+        self.combo = combo
+
+        hbox.pack_start(combo, expand=False)
+
+        page.pack_start(hbox, expand=False)
+
+        hbox = gtk.HBox()
+
+        label = gtk.Label(_('Automatic'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+
+        button = gtk.CheckButton()
+        button.set_active(self.context.auto_dependency)
+        button.connect('toggled', self._on_auto_dependency_change)
+        hbox.pack_start(button)
+
+        page.pack_start(hbox, expand=False)
+
+        page.show_all()
+
+        self.update()
+
+        return page
+
+    def update(self):
+        for index, (_, dep_type) in enumerate(self.dependency_types):
+            if dep_type is self.context.dependency_type:
+                self.combo.set_active(index)
+                break
+
+    def _on_dependency_type_change(self, combo):
+        self.context.dependency_type = self.dependency_types[combo.get_active()][1]
+
+    def _on_auto_dependency_change(self, button):
+        self.context.auto_dependency = button.get_active()
+
+component.provideAdapter(AssociationPropertyPage, name='Properties')
+
+
+class LineStylePage(object):
+    """
+    Basic line style properties: color, orthogonal, etc.
+    """
+
+    interface.implements(IPropertyPage)
+    component.adapts(gaphas.item.Line)
+
+    def __init__(self, context):
+        super(LineStylePage, self).__init__()
+        self.context = context
+        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        
+    def construct(self):
+        page = gtk.VBox()
+
+        hbox = gtk.HBox()
+        label = gtk.Label(_('Orthogonal'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+
+        button = gtk.CheckButton()
+        button.set_active(self.context.orthogonal)
+        button.connect('toggled', self._on_orthogonal_change)
+        hbox.pack_start(button)
+
+        page.pack_start(hbox, expand=False)
+
+        hbox = gtk.HBox()
+        label = gtk.Label(_('horizontal'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+
+        button = gtk.CheckButton()
+        button.set_active(self.context.horizontal)
+        button.connect('toggled', self._on_horizontal_change)
+        hbox.pack_start(button)
+
+        page.pack_start(hbox, expand=False)
+
+        page.show_all()
+
+        return page
+
+    def _on_orthogonal_change(self, button):
+        self.context.orthogonal = button.get_active()
+
+    def _on_horizontal_change(self, button):
+        self.context.horizontal = button.get_active()
+
+component.provideAdapter(LineStylePage, name='Style')
 
 
 # vim:sw=4:et:ai

@@ -53,9 +53,9 @@ class DependencyItem(DiagramLine):
     # do not use issubclass, because issubclass(UML.Implementation, UML.Realization)
     # we need to be very strict here
     __stereotype__ = {
-        'use':        lambda self: self.dependency_type == UML.Usage,
-        'realize':    lambda self: self.dependency_type == UML.Realization,
-        'implements': lambda self: self.dependency_type == UML.Implementation,
+        'use':        lambda self: self._dependency_type == UML.Usage,
+        'realize':    lambda self: self._dependency_type == UML.Realization,
+        'implements': lambda self: self._dependency_type == UML.Implementation,
     }
 
 #    relationship = DependencyRelationship()
@@ -73,13 +73,13 @@ class DependencyItem(DiagramLine):
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
 
-        self.dependency_type = UML.Dependency
+        self._dependency_type = UML.Dependency
         self.auto_dependency = True
         self._dash_style = True
 
     def save(self, save_func):
         DiagramLine.save(self, save_func)
-        save_func('dependency_type', self.dependency_type.__name__)
+        save_func('dependency_type', self._dependency_type.__name__)
         save_func('auto_dependency', self.auto_dependency)
 
 
@@ -101,21 +101,23 @@ class DependencyItem(DiagramLine):
 
 
     def get_dependency_type(self):
-        return self.dependency_type
+        return self._dependency_type
 
 
     def set_dependency_type(self, dependency_type=None):
         if not dependency_type and self.auto_dependency:
             dependency_type = self.determine_dependency_type(self.head.connected_to, self.tail.connected_to)
-        self.dependency_type = dependency_type
+        self._dependency_type = dependency_type
         self.request_update()
 
+    dependency_type = property(lambda s: s._dependency_type,
+                               set_dependency_type, set_dependency_type)
 
     def update(self, context):
         super(DependencyItem, self).update(context)
 
         from interface import InterfaceItem
-        dependency_type = self.dependency_type
+        dependency_type = self._dependency_type
         c1 = self.head.connected_to
         if c1 and dependency_type is UML.Usage \
            and isinstance(c1, InterfaceItem) and c1.is_folded():
