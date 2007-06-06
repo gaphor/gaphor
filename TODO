@@ -6,11 +6,8 @@ For 0.10.0 and later:
  - bug in zope.component package: in zope.component.globalregistry.py zope.testing is included.  This package is only a dependency for the [test] setting. zope.testing is not mandatory.
  Use a more recent version
 
- - Figure out how to allow users to split segments.
-
- - allow comments to render multi-line.
-
  - add more property pages.
+    - Stereotype
 
  - Load / save regression testing
    !!! Create some example diagrams,
@@ -29,10 +26,6 @@ For 0.10.0 and later:
    between actions.
     * use zope.component.event for centralized event notification.
  
- - use GTK's UIManager for menu management.
-    * figure out naming conventions, also for diagram item popup menus.
-    * 
-
 - Copy/Paste for diagramitems
   - How to do a copy/paste? shallow copy or deep copy? -> just create a diagram
     item item referening the same model element or also copy the model element?
@@ -43,9 +36,6 @@ For 0.10.0 and later:
     - __uml__
     - __stereotype__
     - __fixed_stereotype__
-
- - Use setuptools (pkg_resources) to load plugins.
-   Maybe define stuff in terms of services, like PIDA does (pida.org?)
 
  - In some cases (like when editing attributes) Enter should be used to
    complete the edit action.

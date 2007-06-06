@@ -466,7 +466,7 @@ class AssociationEnd(SubjectSupport):
         return navigability
                 
 
-    def set_navigable(self, navigable):
+    def _set_navigability(self, navigable):
         """
         Change the AssociationEnd's navigability.
 
@@ -515,6 +515,7 @@ class AssociationEnd(SubjectSupport):
             log.warning('AssociationEnd.set_navigable: %s missing' % \
                         (subject and 'subject' or 'opposite Property'))
 
+    navigability = property(get_navigability, _set_navigability)
 
     def point_name(self, x, y):
         p = (x, y)

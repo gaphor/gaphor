@@ -481,46 +481,48 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         #self.context = context
         #self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
         
-    def construct(self):
-        page = super(AssociationPropertyPage, self).construct()
-        return page
-
+    def construct_end(self, title, end):
         hbox = gtk.HBox()
-        label = gtk.Label(_('Dependency type'))
+        label = gtk.Label(title)
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
-        dependency_type = gtk.ListStore(str)
-        
-        for t, l in self.dependency_types:
-            dependency_type.append([t])
-        
-        self.dependency_type = dependency_type
-        
-        combo = gtk.ComboBox(dependency_type)
-        cell = gtk.CellRendererText()
-        combo.pack_start(cell, True)
-        combo.add_attribute(cell, 'text', 0)
-        combo.connect('changed', self._on_dependency_type_change)
-        self.combo = combo
+        entry = gtk.Entry()        
+        entry.set_text(render_attribute(end.subject) or '')
+        entry.connect('changed', self._on_end_name_change, end)
+        hbox.pack_start(entry)
 
+        combo = gtk.combo_box_new_text()
+        for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
+            combo.append_text(t)
+        
+        combo.set_active([None, False, True].index(end.navigability))
+
+        combo.connect('changed', self._on_navigability_change, end)
         hbox.pack_start(combo, expand=False)
 
+        combo = gtk.combo_box_new_text()
+        for t in ('No aggregation', 'Shared', 'Composite'):
+            combo.append_text(t)
+        
+        combo.set_active(['none', 'shared', 'composite'].index(end.subject.aggregation))
+
+        combo.connect('changed', self._on_aggregation_change, end)
+        hbox.pack_start(combo, expand=False)
+        
+        return hbox
+
+    def construct(self):
+        page = super(AssociationPropertyPage, self).construct()
+        
+        if not self.context.subject:
+            return page
+
+        hbox = self.construct_end(_('Head'), self.context.head_end)
         page.pack_start(hbox, expand=False)
 
-        hbox = gtk.HBox()
-
-        label = gtk.Label(_('Automatic'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
-
-        button = gtk.CheckButton()
-        button.set_active(self.context.auto_dependency)
-        button.connect('toggled', self._on_auto_dependency_change)
-        hbox.pack_start(button)
-
+        hbox = self.construct_end(_('Tail'), self.context.tail_end)
         page.pack_start(hbox, expand=False)
 
         page.show_all()
@@ -530,16 +532,16 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         return page
 
     def update(self):
-        for index, (_, dep_type) in enumerate(self.dependency_types):
-            if dep_type is self.context.dependency_type:
-                self.combo.set_active(index)
-                break
+        pass
 
-    def _on_dependency_type_change(self, combo):
-        self.context.dependency_type = self.dependency_types[combo.get_active()][1]
+    def _on_end_name_change(self, entry, end):
+        end.subject.parse(entry.get_text())
 
-    def _on_auto_dependency_change(self, button):
-        self.context.auto_dependency = button.get_active()
+    def _on_navigability_change(self, combo, end):
+        end.navigability = (None, False, True)[combo.get_active()]
+
+    def _on_aggregation_change(self, combo, end):
+        end.subject.aggregation = ('none', 'shared', 'composite')[combo.get_active()]
 
 component.provideAdapter(AssociationPropertyPage, name='Properties')
 
