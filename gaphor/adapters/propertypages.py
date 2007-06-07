@@ -399,7 +399,8 @@ class DependencyPropertyPage(object):
     dependency_types = (
         (_('Dependency'), UML.Dependency),
         (_('Usage'), UML.Usage),
-        (_('Realization'), UML.Realization))
+        (_('Realization'), UML.Realization),
+        (_('Implementation'), UML.Implementation))
 
     def __init__(self, context):
         super(DependencyPropertyPage, self).__init__()
@@ -519,6 +520,23 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         if not self.context.subject:
             return page
 
+        hbox = gtk.HBox()
+        label = gtk.Label(_('Show direction'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+
+        button = gtk.CheckButton()
+        button.set_active(self.context.show_direction)
+        button.connect('toggled', self._on_show_direction_change)
+        hbox.pack_start(button)
+
+        button = gtk.Button(_('Invert direction'))
+        button.connect('clicked', self._on_invert_direction_change)
+        hbox.pack_start(button)
+
+        page.pack_start(hbox, expand=False)
+
         hbox = self.construct_end(_('Head'), self.context.head_end)
         page.pack_start(hbox, expand=False)
 
@@ -533,6 +551,12 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
     def update(self):
         pass
+
+    def _on_show_direction_change(self, button):
+        self.context.show_direction = button.get_active()
+
+    def _on_invert_direction_change(self, button):
+        self.context.invert_direction()
 
     def _on_end_name_change(self, entry, end):
         end.subject.parse(entry.get_text())
