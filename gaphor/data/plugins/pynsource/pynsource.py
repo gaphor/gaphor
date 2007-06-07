@@ -1,16 +1,15 @@
 """
 PyNSource
+Version 1.4c
+(c) Andy Bulka 2004-2006
+abulka@netspace.net.au
 http://www.atug.com/andypatterns/pynsource.htm
 
-A python code scanner that generates
+A python source code scanner that generates
  - UML pictures (as text)
  - Java code (which can be imported into UML modelling tools.)
+ - UML diagrams in wxpython (see associated module pyNsourceGui.py)
 
-(c) 2003, 2004 Andy Bulka
-abulka@netspace.net.au
-http://www.atug.com/andypatterns
-
-Version 1.4a
 
 GUI FRONT END
 -------------
@@ -68,24 +67,15 @@ then the command is
 """
 
 #import pychecker.checker
-import tokenize
+import tokenize, token
 import pprint
 import os
 from keywords import pythonbuiltinfunctions, javakeywords, delphikeywords
 
 
-class Dummy:
-    scenario = None
-    def setUp(self):
-        global diagnostics
-        diagnostics = 0
-        if not self.scenario:
-            self.__class__.scenario = Scenario('scenario46', RoleManager( TurnMgr() ))
+DEBUG_DUMPTOKENS = False
 
-"""
-(4, '\n'), (53, '\n'), (53, '\n'), (6, '
-'), (6, ''),
-"""
+
 class AndyBasicParseEngine(object):
     def __init__(self):
         self.meat = 0
@@ -96,40 +86,16 @@ class AndyBasicParseEngine(object):
     def _ReadAllTokensFromFile(self, file):
         fp = open(file, 'r')
         try:
-            #print [ x[0:2] for x in tokenize.generate_tokens(fp.readline) ]
-            #self.tokens = [ x[1] for x in tokenize.generate_tokens(fp.readline) if x[1] ]
-            #self.tokens = [ x[0:2] for x in tokenize.generate_tokens(fp.readline) if x[1] ]
             self.tokens = [ x[0:2] for x in tokenize.generate_tokens(fp.readline) ]
         finally:
             fp.close()
-        #pprint.pprint( self.tokens )
+        if DEBUG_DUMPTOKENS:
+            pprint.pprint( self.tokens )
 
     def Parse(self, file):
         self._ReadAllTokensFromFile(file)
         self.meat = 0
         self._ParseLoop()
-
-    def _ParseLoop_ORI(self):
-        for self.tokentype, self.token in self.tokens:
-            if self._Isblank():
-                continue
-            else:
-                self._Gotmeat()
-
-    def _ParseLoop_ORI2(self):
-        maxtokens = len(self.tokens)
-        for i in range(0, maxtokens):
-            self.tokentype, self.token = self.tokens[i]
-            if i+1 < maxtokens:
-                self.nexttokentype, self.nexttoken = self.tokens[i+1]
-            else:
-                self.nexttokentype, self.nexttoken = (0,None)
-
-            if self._Isblank():
-                continue
-            else:
-                print 'MEAT', self.token
-                self._Gotmeat()
 
     def _ParseLoop(self):
         maxtokens = len(self.tokens)
@@ -183,8 +149,8 @@ class AndyBasicParseEngine(object):
         return 0
 
     def _Isnewline(self):
-        if (self.token == '\n' or self.tokentype == 52):
-            if self.tokentype == 52:
+        if (self.token == '\n' or self.tokentype == token.N_TOKENS):
+            if self.tokentype == token.N_TOKENS:
                 assert '#' in self.token
             self.meat = 0
             self.isfreshline = 1
@@ -332,6 +298,7 @@ class HandleInheritedClasses(HandleClasses):
     def On_meat(self):
         HandleClasses.On_meat(self)
         if self.nexttokenisBracketOpenOrColon and self.token == '(':
+            assert self.tokentype == token.OP  # unecessary, just practicing refering to tokens via names not numbers
             self.nexttokenisBracketOpen = 0
             self.nexttokenisSuperclass = 1
 
@@ -342,8 +309,7 @@ class HandleInheritedClasses(HandleClasses):
             self._ClearwaitingInheriteClasses()
 
         elif self.nexttokenisSuperclass:
-            #self.currsuperclass += self.token
-            self.currsuperclass = self.token
+            self.currsuperclass += self.token
             if self.token == '.' or self.nexttoken == '.':
                 #print 'processing multi part superclass detected!', self.token, self.nexttoken
                 self.nexttokenisSuperclass = 1
@@ -521,6 +487,7 @@ class HandleComposites(HandleClassAttributes):
 
         elif self.waitingforclassname and self.token not in ( '(', '[' ) and \
           self.token not in pythonbuiltinfunctions and\
+          self.tokentype not in (token.NUMBER, token.STRING) and\
           self.token not in self.modulemethods:
             self.possibleclassname = self.token
             self.waitingforclassname = 0
@@ -532,7 +499,7 @@ class HandleComposites(HandleClassAttributes):
 
             dependency = (self.lastselfattrname, self.possibleclassname)
             self.classlist[self.currclass].classdependencytuples.append(dependency)
-            #print '*** created instance of', self.possibleclassname, 'assigned to', self.lastselfattrname
+            #print '*** dependency - created instance of', self.possibleclassname, 'assigned to', self.lastselfattrname
 
         elif self.waitingforOpenBracket and self.token == ')':
             """
@@ -547,7 +514,7 @@ class HandleComposites(HandleClassAttributes):
 
             # try to find a class with the same name.
             correspondingClassName = variablename[0].upper() + variablename[1:] # HACK
-            print 'correspondingClassName', correspondingClassName
+            #print 'correspondingClassName', correspondingClassName
 
             dependency = (self.lastselfattrname, correspondingClassName)
             self.classlist[self.currclass].classdependencytuples.append(dependency)
