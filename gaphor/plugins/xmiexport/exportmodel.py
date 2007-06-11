@@ -1,9 +1,6 @@
 # vim:sw=4:et
 
-#from xml.sax.saxutils import XMLGenerator
 import time
-from gaphor.core import inject
-from gaphor import UML
 from gaphor.misc.xmlwriter import XMLWriter
 
 class XMLAttributes(dict):
@@ -26,7 +23,8 @@ class XMLAttributes(dict):
 
 class XMIExport(object):
     
-    element_factory = inject('element_factory')
+    def __init__(self, element_factory):
+        self.element_factory = element_factory
 
     # State diagram specific
     # ======================

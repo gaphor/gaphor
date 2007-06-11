@@ -127,6 +127,7 @@ setup(
             'gui_manager = gaphor.services.guimanager:GUIManager',
             'help = gaphor.services.helpservice:HelpService',
             'copy = gaphor.services.copyservice:CopyService',
+            'xmi_export = gaphor.plugins.xmiexport:XMIExport',
         ],
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',

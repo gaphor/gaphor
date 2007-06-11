@@ -29,6 +29,7 @@ class DiagramExportManager(object):
               <menuitem action="file-export-svg" />
               <menuitem action="file-export-png" />
               <menuitem action="file-export-pdf" />
+              <separator />
             </menu>
           </menu>
         </menubar>
