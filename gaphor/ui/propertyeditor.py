@@ -64,7 +64,6 @@ class PropertyEditor(object):
         page = self.notebook.get_nth_page(page_num)
         label_text = self.notebook.get_tab_label_text(page)
         self._last_tab = label_text
-        log.debug('New last property page %s: %s' % (page, label_text))
 
     @component.adapter(IDiagramSelectionChange)
     def _selection_change(self, event):
