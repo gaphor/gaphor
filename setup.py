@@ -128,6 +128,8 @@ setup(
             'help = gaphor.services.helpservice:HelpService',
             'copy = gaphor.services.copyservice:CopyService',
             'xmi_export = gaphor.plugins.xmiexport:XMIExport',
+            'diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout',
+            'pynsource = gaphor.plugins.pynsource:PyNSource',
         ],
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',

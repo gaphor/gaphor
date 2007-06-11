@@ -5,7 +5,6 @@ This plugin extends Gaphor with XMI export functionality.
 __plugin__ = "XMI Export"
 __version__ = "0.1"
 __author__ = "Jeroen Vloothuis"
-__description__ = 'This plugin extends Gaphor with XMI export functionality.'
 
 import gtk
 from zope import interface, component

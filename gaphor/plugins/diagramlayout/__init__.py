@@ -1,5 +1,5 @@
-# vim:sw=4:et
-"""This module provides a means to automatocally layout diagrams.
+"""
+This module provides a means to automatocally layout diagrams.
 
 The layout is done like this:
  - First all nodes (Classes, packages, comments) on a digram are determined
@@ -9,26 +9,61 @@ The layout is done like this:
  - Lines are reconnected to the nodes, so everything looks pretty.
 """
 
-import gaphor.plugin
+__plugin__ = 'diagram_layout'
+__version__ = '0.1'
+__author__ = 'Arjan Molenaar'
+
+from zope import interface, component
+from gaphor.core import _, inject, action, build_action_group
+from gaphor.interfaces import IService, IActionProvider
+
 import random
-from gaphor import diagram
+from gaphor.diagram import items
 import toposort
 
-class DiagramLayoutAction(gaphor.plugin.Action):
+
+class DiagramLayout(object):
+
+    interface.implements(IService, IActionProvider)
+
+    gui_manager = inject('gui_manager')
+
+    menu_xml = """
+      <ui>
+        <menubar action="mainwindow">
+          <menu action="diagram">
+            <menuitem action="diagram-layout" />
+          </menu>
+        </menubar>
+      </ui>"""
+
+    def __init__(self):
+        self.action_group = build_action_group(self)
+
+    def init(self, app):
+        pass
+
+    def shutdown(self):
+        pass
 
     def update(self):
         self.sensitive = bool(self.get_window().get_current_diagram())
 
+    @action(name='diagram-layout', label='Layout diagram',
+            tooltip='simple diagram layout')
     def execute(self):
-        d = self.get_window().get_current_diagram()
-        if d:
-            layout_diagram(d)
+        d = self.gui_manager.main_window.get_current_diagram()
+        layout_diagram(d)
+
+    def layout_diagram(self, diag):
+        layout_diagram(diag)
 
 
 MARGIN = 100
 
 def layout_diagram(diag):
-    """So an attempt to layout (order) the items on a diagram. The items
+    """
+    So an attempt to layout (order) the items on a diagram. The items
     should already be placed on the diagram and the items should already be
     connected.
 
@@ -46,9 +81,9 @@ def layout_diagram(diag):
 
     # First extract data from the diagram (which ones are the nodes, and
     # the relationships).
-    for item in diag.canvas.root.children:
-        if isinstance(item, (diagram.GeneralizationItem,
-                             diagram.ImplementationItem)):
+    for item in diag.canvas.get_root_items():
+        if isinstance(item, (items.GeneralizationItem,
+                             items.ImplementationItem)):
             # Primary relationships, should be drawn top-down
             try:
                 relations.append((item.handles[0].connected_to,
@@ -56,7 +91,7 @@ def layout_diagram(diag):
                 primary_nodes.extend(relations[-1])
             except Exception, e:
                 log.error(e)
-        elif isinstance(item, diagram.diagramline.DiagramLine):
+        elif isinstance(item, items.DiagramLine):
             # Secondary (associations, dependencies) may be drawn top-down
             # or left-right
             try:
@@ -112,9 +147,10 @@ def layout_diagram(diag):
             if not item:
                 continue
             maxy = max(maxy, item.height)
-            a = item.get_property('affine')
+            a = item.matrix
             a = (a[0], a[1], a[2], a[3], x, y)
-            item.set_property('affine', a)
+            item.matrix = a
+            item.request_update()
             x += item.width + MARGIN
         y += maxy + MARGIN
 
@@ -123,7 +159,8 @@ def layout_diagram(diag):
 
 
 def simple_layout_lines(diag):
-    """Just do the layout of the lines in a diagram. The nodes (class, package)
+    """
+    Just do the layout of the lines in a diagram. The nodes (class, package)
     are left where they are (use layout_diagram() if you want to reorder
     everything).
 
@@ -131,8 +168,8 @@ def simple_layout_lines(diag):
     between nodes on the diagram.
     """
     lines = {}
-    for item in diag.canvas.root.children:
-        if isinstance(item, diagram.diagramline.DiagramLine):
+    for item in diag.canvas.get_root_items():
+        if isinstance(item, items.DiagramLine):
             # Secondary (associations, dependencies) may be drawn top-down
             # or left-right
             try:
@@ -171,7 +208,8 @@ def uniq(lst):
 
 
 def find_related_nodes(item, relations):
-    """Find related nodes of item, given a list of tuples.
+    """
+    Find related nodes of item, given a list of tuples.
     References to itself are ignored.
     """
     related = []
@@ -186,7 +224,8 @@ def find_related_nodes(item, relations):
 
 
 def find_row(item, related_items, sorted):
-    """Find the row that contains the most references to item.
+    """
+    Find the row that contains the most references to item.
     """
     max_refs = 0
     max_row = None
@@ -198,8 +237,11 @@ def find_row(item, related_items, sorted):
     return max_row
 
 def find_center(item):
-    """Find the center point of the item, in world coordinates
+    """
+    Find the center point of the item, in world coordinates
     """
     x = item.width / 2.0
     y = item.height / 2.0
-    return item.affine_point_i2w(x, y)
+    return item.canvas.get_matrix_i2w(item).transform_point(x, y)
+
+# vim:sw=4:et

@@ -1,29 +1,57 @@
-# vim:sw=4:et:
+"""
+Code reverse engineer plugin for Python source code.
 
+This plugin uses PyNSource, written by Andy Bulka
+[http://www.atug.com/andypatterns/pynsource.htm].
 
-import sys
-import os
+Depends on the Diagram Layout plugin.
+"""
+
+__plugin__ = 'PyNSource'
+__version__ = '0.1'
+__author__ = 'Arjan Molenaar'
+
 import gobject
-import pango
 import gtk
-import gaphor
-from gaphor.ui.abstractwindow import AbstractWindow
-from gaphor.core import inject
-import gaphor.plugin
-from pynsource import PySourceAsText
+from zope import interface, component
+from gaphor.core import _, inject, action, build_action_group
+from gaphor.interfaces import IService, IActionProvider
+
 from engineer import Engineer
+
 
 NAME_COLUMN = 0
 
 
-class PyNSourceAction(gaphor.plugin.Action):
+class PyNSource(object):
 
-    action_manager = inject('action_manager')
+    interface.implements(IService, IActionProvider)
+
+    gui_manager = inject('gui_manager')
+
+    menu_xml = """
+      <ui>
+        <menubar action="mainwindow">
+          <menu action="file">
+            <menu action="file-import">
+              <menuitem action="file-import-pynsource" />
+            </menu>
+          </menu>
+        </menubar>
+      </ui>"""
 
     def __init__(self):
-        gaphor.plugin.Action.__init__(self)
         self.win = None
+        self.action_group = build_action_group(self)
 
+    def init(self, app):
+        pass
+
+    def shutdown(self):
+        pass
+
+    @action(name='file-import-pynsource', label='Python source code',
+            tooltip='Import Python source code')
     def execute(self):
         dialog = self.create_dialog()
         response = dialog.run()
@@ -48,14 +76,14 @@ class PyNSourceAction(gaphor.plugin.Action):
         engineer = Engineer()
         engineer.process(files)
 
-        main_window = self.get_window()
+        main_window = self.gui_manager.main_window
         # Open and select the new diagram in the main window:
         main_window.select_element(engineer.diagram)
-        self.action_manager.execute('OpenModelElement')
+        main_window.show_diagram(engineer.diagram)
 
     def create_dialog(self):
         dialog = gtk.Dialog("Import Python files",
-                            self.get_window().get_window(),
+                            self.gui_manager.main_window.window,
                             gtk.DIALOG_MODAL,
                             (gtk.STOCK_OK, gtk.RESPONSE_OK,
                              gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
@@ -176,11 +204,4 @@ class PyNSourceAction(gaphor.plugin.Action):
         self.remove_button.set_property('sensitive', False)
 
 
-if __name__ in ('__main__', '__builtin__'):
-    print 'Loading...'
-    import gtk
-    win = PyNSourceWindow()
-    win.construct()
-    win.get_window().connect('destroy', lambda e: gtk.main_quit())
-    gtk.main()
-
+# vim:sw=4:et:ai
