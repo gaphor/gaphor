@@ -85,8 +85,6 @@ class ClassPropertyPage(NamedItemPropertyPage):
 
         hbox.show_all()
 
-        page.pack_start(hbox, expand=True)
-
         return page
 
     def _on_abstract_change(self, button):
