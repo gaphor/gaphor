@@ -1,15 +1,45 @@
-# vim:sw=4:et
+"""
+Plugin based on the Live Object browser
+(http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/300304).
+It shows the state of the data model at the time the browser is activated.
+"""
 
-import gaphor.plugin
-from gaphor.core import inject
+__version__ = '0.1'
+__author__ = 'Arjan Molenaar'
+
+from zope import interface
+from gaphor.core import _, inject, action, build_action_group
+from gaphor.interfaces import IService, IActionProvider
 from browser import Browser
-import gaphor
 
-class LiveObjectBrowserAction(gaphor.plugin.Action):
+
+class LiveObjectBrowser(object):
+
+    interface.implements(IService, IActionProvider)
 
     element_factory = inject('element_factory')
 
+    menu_xml = """
+      <ui>
+        <menubar action="mainwindow">
+          <menu action="tools">
+            <menuitem action="tools-life-object-browser" />
+          </menu>
+        </menubar>
+      </ui>"""
+
+    def __init__(self):
+        self.action_group = build_action_group(self)
+
+    def init(self, app):
+        pass
+
+    def shutdown(self):
+        pass
+
+    @action(name='tools-life-object-browser', label='Life object browser')
     def execute(self):
-        browser = Browser()
-        browser.construct("resource", element_factory.lselect())
-        self.window.add_transient_window(browser)
+        browser = Browser("resource", self.element_factory.lselect())
+
+
+# vim:sw=4:et
