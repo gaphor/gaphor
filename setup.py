@@ -130,6 +130,7 @@ setup(
             'xmi_export = gaphor.plugins.xmiexport:XMIExport',
             'diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout',
             'pynsource = gaphor.plugins.pynsource:PyNSource',
+            'check_metamodel = gaphor.plugins.checkmetamodel:CheckModelWindow',
         ],
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',

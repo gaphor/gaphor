@@ -1,8 +1,5 @@
-# vim:sw=4:et
 
-from gaphor import storage
 from gaphor import UML
-from gaphor.core import inject
 from os import path
 
 def report(element, message):
@@ -29,18 +26,18 @@ def get_superclasses(class_):
         gen = 1
 
 
-def check_classes():
-    classes = UML.select(lambda e: e.isKindOf(UML.Class))
+def check_classes(element_factory):
+    classes = element_factory.select(lambda e: e.isKindOf(UML.Class))
     names = [ c.name for c in classes ]
     for c in classes:
         if names.count(c.name) > 1:
             report(c, 'Class name %s used more than once' % c.name)
     
 
-def check_association_end_subsets(end):
-    subsets = get_subsets(end.taggedValue and end.taggedValue.value or '')
-    opposite_subsets = get_subsets(end.opposite.taggedValue and end.opposite.taggedValue.value or '')
-    subset_properties = UML.select(lambda e: e.isKindOf(UML.Property) and e.name in subsets)
+def check_association_end_subsets(element_factory, end):
+    subsets = get_subsets(end.taggedValue and end.taggedValue[0].value or '')
+    opposite_subsets = get_subsets(end.opposite.taggedValue and end.opposite.taggedValue[0].value or '')
+    subset_properties = element_factory.select(lambda e: e.isKindOf(UML.Property) and e.name in subsets)
 
     # TODO: check if properties belong to a superclass of the end's class
 
@@ -61,23 +58,23 @@ def check_association_end_subsets(end):
             elif p.upperValue.value < end.upperValue.value:
                 report(end, 'Association end %s has has a bigger upper value than subse %s' % (end.name, p.name))
 
-def check_association_end(end):
-    check_association_end_subsets(end)
+def check_association_end(element_factory, end):
+    check_association_end_subsets(element_factory, end)
 
-def check_associations():
-    for a in UML.select(lambda e: e.isKindOf(UML.Association)):
+def check_associations(element_factory):
+    for a in element_factory.select(lambda e: e.isKindOf(UML.Association)):
         assert len(a.memberEnd) == 2
         head = a.memberEnd[0]
         tail = a.memberEnd[1]
-        check_association_end(head)
-        check_association_end(tail)
+        check_association_end(element_factory, head)
+        check_association_end(element_factory, tail)
 
-def check_attributes():
-    for a in UML.select(lambda e: e.isKindOf(UML.Property) and not e.association):
+def check_attributes(element_factory):
+    for a in element_factory.select(lambda e: e.isKindOf(UML.Property) and not e.association):
         if not a.typeValue or not a.typeValue.value:
             report(a,'Attribute has no type: %s' % a.name)
         elif a.typeValue.value.lower() not in ('string', 'boolean', 'integer', 'unlimitednatural'):
-            report(a, 'Invalid attribute type: %s' % a.taggedValue.value)
+            report(a, 'Invalid attribute type: %s' % a.typeValue.value)
 
 # TODO: Check the sanity of the generated data model.
 def check_UML_module():
@@ -88,7 +85,13 @@ def check_UML_module():
         # TODO: check derived unions.
 
 if __name__ == '__main__':
-    storage.load(path.join('gaphor', 'UML', 'uml2.gaphor'))
-    check_associations()
-    check_attributes()
+    from gaphor.UML import ElementFactory
+    from gaphor import storage
 
+    element_factory = ElementFactory()
+    storage.load(path.join('gaphor', 'UML', 'uml2.gaphor'), factory=element_factory)
+    check_associations(element_factory)
+    check_attributes(element_factory)
+
+
+# vim:sw=4:et

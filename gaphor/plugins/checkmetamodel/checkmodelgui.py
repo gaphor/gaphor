@@ -1,28 +1,50 @@
-# vim:sw=4:et
-
-"""A GUI for the checkmodel plugin.
+"""
+A GUI for the checkmodel plugin.
 """
 
 import sys
 import gobject
 import gtk
-import gaphor
-from gaphor.ui.abstractwindow import AbstractWindow
-from gaphor.plugin import Application
+from zope import interface, component
+from gaphor.core import _, inject, action, build_action_group
+from gaphor.interfaces import IService, IActionProvider
 import checkmodel
 
 PYELEMENT_COLUMN = 0
 ELEMENT_COLUMN = 1
 REASON_COLUMN = 2
 
-class CheckModelWindow(AbstractWindow):
+class CheckModelWindow(object):
 
-    menu = ('_File', ('FileClose',))
+    interface.implements(IService, IActionProvider)
+
+    element_factory = inject('element_factory')
+    gui_manager = inject('gui_manager')
+
+    menu_xml = """
+      <ui>
+        <menubar action="mainwindow">
+          <menu action="tools">
+            <menuitem action="tools-open-check-model" />
+          </menu>
+        </menubar>
+      </ui>"""
 
     def __init__(self):
-        AbstractWindow.__init__(self)
         # Override the report method
         checkmodel.report = self.on_report
+        self.action_group = build_action_group(self)
+
+    def init(self, app):
+        pass
+
+    def shutdown(self):
+        pass
+
+    @action(name='tools-open-check-model', label='Check UML model')
+    def open(self):
+        self.construct()
+        self.run()
 
     def construct(self):
         model = gtk.ListStore(gobject.TYPE_PYOBJECT,
@@ -50,18 +72,26 @@ class CheckModelWindow(AbstractWindow):
         treeview.append_column(column)
         treeview.show()
 
-        self._construct_window(name='checkmodel',
-                               title='Check Model',
-                               size=(400, 400),
-                               contents=scrolled_window)
+        #self._construct_window(name='checkmodel',
+        #                       title='Check Model',
+        #                       size=(400, 400),
+        #                       contents=scrolled_window)
         self.model = model
         self.treeview = treeview
 
+        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.window.connect('destroy', self.on_destroy)
+        self.window.set_title('Gaphor - Check Model')
+        self.window.add(scrolled_window)
+        self.window.set_size_request(400, 400)
+        self.window.show()
+        
+        
     def run(self):
         # TODO: Let this run in a Thread(?)
-        checkmodel.check_classes()
-        checkmodel.check_attributes()
-        checkmodel.check_associations()
+        checkmodel.check_classes(self.element_factory)
+        checkmodel.check_attributes(self.element_factory)
+        checkmodel.check_associations(self.element_factory)
 
     def on_report(self, element, message):
         log.info('%s: %s' % (type(element).__name__, message))
@@ -78,11 +108,18 @@ class CheckModelWindow(AbstractWindow):
         element = self.model.get_value(iter, PYELEMENT_COLUMN)
         print 'Looking for element', element
         if element.presentation:
-            main_window = Application.get_service('gui_manager').main_window
+            main_window = self.gui_manager.main_window
             presentation = element.presentation[0]
-            diagram = presentation.canvas.diagram
+            try:
+                diagram = presentation.canvas.diagram
+            except AttributeError:
+                presentation = element.namespace.presentation[0]
+                diagram = presentation.canvas.diagram
             diagram_tab = main_window.show_diagram(diagram)
-            view = diagram_tab.get_view()
-            view_item = view.find_view_item(presentation)
-            diagram_tab.get_view().focus(view_item)
+            diagram_tab.view.focused_item = presentation
 
+    def on_destroy(self, window):
+        self.window = None
+        self.treeview = None
+
+# vim:sw=4:et
