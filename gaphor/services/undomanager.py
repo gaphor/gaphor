@@ -16,6 +16,8 @@ NOTE: it would be nice to use actions in conjunction with functools.partial,
 
 from zope import interface
 from zope import component
+
+from gaphas import state
 from gaphor.interfaces import IService, IServiceEvent, IActionProvider
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 from gaphor.transaction import TransactionError, transactional
@@ -116,7 +118,7 @@ class UndoManager(object):
         app.registerHandler(self.rollback_transaction)
         app.registerHandler(self._action_executed)
         self._register_undo_handlers()
-        self._action_executed(None)
+        self._action_executed()
 
     def shutdown(self):
         self._app.unregisterHandler(self.begin_transaction)
@@ -155,6 +157,9 @@ class UndoManager(object):
 
         self._current_transaction.add(action)
         component.handle(UndoManagerStateChanged(self))
+
+        # TODO: should this be placed here?
+        self._action_executed()
 
     @component.adapter(TransactionCommit)
     def commit_transaction(self, event=None):
@@ -249,7 +254,7 @@ class UndoManager(object):
 
 
     @component.adapter(ActionExecuted)
-    def _action_executed(self, event):
+    def _action_executed(self, event=None):
         self.action_group.get_action('edit-undo').set_sensitive(self.can_undo())
         self.action_group.get_action('edit-redo').set_sensitive(self.can_redo())
 
@@ -270,7 +275,6 @@ class UndoManager(object):
 
         #
         # Direct revert-statements from gaphas to the undomanager
-        from gaphas import state
         state.observers.add(state.revert_handler)
 
         state.subscribers.add(self._undo_handler)
