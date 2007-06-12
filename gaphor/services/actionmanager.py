@@ -19,6 +19,7 @@ class ActionManager(object):
         pass
 
     def init(self, app):
+        self._app = app
         self.ui_manager = gtk.UIManager()
         log.info('Loading not yet registered action provider services')
         for name, service in component.getUtilitiesFor(IService):
@@ -26,10 +27,10 @@ class ActionManager(object):
                 log.debug('Loading already registered service %s' % str(service))
                 self.register_action_provider(service)
 
-        component.provideHandler(self._service_initialized_handler)
+        app.registerHandler(self._service_initialized_handler)
 
     def shutdown(self):
-        pass
+        self._app.unregisterHandler(self._service_initialized_handler)
 
     def execute(self, action_id, active=None):
         a = self.get_action(action_id)

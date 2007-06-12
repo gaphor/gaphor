@@ -49,13 +49,15 @@ class CopyService(object):
         self.action_group = build_action_group(self)
 
     def init(self, app):
+        self._app = app
         self.action_group.get_action('edit-copy').props.sensitive = False
         self.action_group.get_action('edit-paste').props.sensitive = False
         
-        component.provideHandler(self._update)
+        app.registerHandler(self._update)
 
     def shutdown(self):
         self.copy_buffer = set()
+        self._app.unregisterHandler(self._update)
 
     @component.adapter(IDiagramSelectionChange)
     def _update(self, event):

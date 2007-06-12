@@ -17,11 +17,24 @@ import gaphor.UML
 
 
 class _Application(object):
+    """
+    The Gaphor application is started from the Application instance. It behaves
+    as a singleton in many ways.
+
+    The Application is responsible for loading services and plugins. Services
+    are registered as "utilities" in a global registry.
+
+    Methods are provided that wrap zope.component's handle, adapter and
+    subscription registrations. In addition to registration methods also
+    unregister methods are provided. This way services can be properly
+    unregistered on shutdown for example.
+    """
 
     # interface.implements(IApplication)
     
     def __init__(self):
         self._uninitialized_services = {}
+        self.globalSiteManager = component.getGlobalSiteManager()
 
     def init(self, services=None):
         """
@@ -64,8 +77,8 @@ class _Application(object):
         else:
             log.info('initializing service service.%s' % name)
             srv.init(self)
-            component.provideUtility(srv, IService, name)
-            component.handle(ServiceInitializedEvent(name, srv))
+            self.globalSiteManager.registerUtility(srv, IService, name)
+            self.handle(ServiceInitializedEvent(name, srv))
             return srv
 
     distribution = property(lambda s: pkg_resources.get_distribution('gaphor'),
@@ -73,7 +86,7 @@ class _Application(object):
 
     def get_service(self, name):
         try:
-            return component.getUtility(IService, name)
+            return self.globalSiteManager.getUtility(IService, name)
         except component.ComponentLookupError:
             return self.init_service(name)
 
@@ -82,18 +95,71 @@ class _Application(object):
         gtk.main()
 
     def shutdown(self):
-        for name, srv in component.getUtilitiesFor(IService):
+        for name, srv in self.globalSiteManager.getUtilitiesFor(IService):
             srv.shutdown()
-            component.handle(ServiceShutdownEvent(name, srv))
+            self.handle(ServiceShutdownEvent(name, srv))
+            self.globalSiteManager.unregisterUtility(srv, IService, name)
 
         # Re-initialize Zope's global site manager
         # (cleanup adapters and utilities):
         try:
-            from zope.component import globalSiteManager
-            globalSiteManager.__init__('base')
+            self.globalSiteManager.__init__('base')
         except Exception, e:
             log.error('Re-initialization of the Zope SiteManager failed', e)
         self.__init__()
+
+    # Wrap zope.component's SiteManager methods
+
+    def registerAdapter(self, factory, adapts=None, provides=None, name=''):
+        """
+        Register an adapter (factory) that adapts objects to a specific
+        interface. A name can be used to distinguish between different adapters
+        that adapt to the same interfaces.
+        """
+        self.globalSiteManager.registerAdapter(factory, adapts, provides,
+                              name, event=False)
+
+    def unregisterAdapter(self, factory=None,
+                          required=None, provided=None, name=u''):
+        """
+        Unregister a previously registered adapter.
+        """
+        self.globalSiteManager.unregisterAdapter(factory,
+                              required, provided, name)
+
+    def registerSubscriptionAdapter(self, factory, adapts=None, provides=None):
+        """
+        Register a subscription adapter. See registerAdapter().
+        """
+        self.globalSiteManager.registerSubscriptionAdapter(factory, adapts,
+                              provides, event=False)
+
+    def unregisterSubscriptionAdapter(self, factory=None,
+                          required=None, provided=None, name=u''):
+        """
+        Unregister a previously registered subscription adapter.
+        """
+        self.globalSiteManager.unregisterSubscriptionAdapter(factory,
+                              required, provided, name)
+
+    def registerHandler(self, factory, adapts=None):
+        """
+        Register a handler. Handlers are triggered (executed) when specific
+        events are emited through the handle() method.
+        """
+        self.globalSiteManager.registerHandler(factory, adapts, event=False)
+
+    def unregisterHandler(self, factory=None, required=None):
+        """
+        Unregister a previously registered handler.
+        """
+        self.globalSiteManager.unregisterHandler(factory, required)
+ 
+    def handle(self, *objects):
+        """
+        Send event notifications to registered handlers.
+        """
+        self.globalSiteManager.handle(*objects)
 
 # Make sure there is only one!
 Application = _Application()

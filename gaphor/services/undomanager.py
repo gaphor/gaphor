@@ -107,19 +107,23 @@ class UndoManager(object):
         self._stack_depth = 20
         self._current_transaction = None
         self._transaction_depth = 0
+        self.action_group = build_action_group(self)
 
     def init(self, app):
         self._app = app
-        component.provideHandler(self.begin_transaction)
-        component.provideHandler(self.commit_transaction)
-        component.provideHandler(self.rollback_transaction)
-        component.provideHandler(self._action_executed)
-        self._provide_undo_handlers()
-        self.action_group = build_action_group(self)
+        app.registerHandler(self.begin_transaction)
+        app.registerHandler(self.commit_transaction)
+        app.registerHandler(self.rollback_transaction)
+        app.registerHandler(self._action_executed)
+        self._register_undo_handlers()
         self._action_executed(None)
 
     def shutdown(self):
-        pass
+        self._app.unregisterHandler(self.begin_transaction)
+        self._app.unregisterHandler(self.commit_transaction)
+        self._app.unregisterHandler(self.rollback_transaction)
+        self._app.unregisterHandler(self._action_executed)
+        self._unregister_undo_handlers()
 
     def clear_undo_stack(self):
         self._undo_stack = []
@@ -253,24 +257,36 @@ class UndoManager(object):
     ## Undo Handlers
     ##
 
-    def _provide_undo_handlers(self):
-        component.provideHandler(self.undo_create_event)
-        component.provideHandler(self.undo_delete_event)
-        component.provideHandler(self.undo_attribute_change_event)
-        component.provideHandler(self.undo_association_set_event)
-        component.provideHandler(self.undo_association_add_event)
-        component.provideHandler(self.undo_association_delete_event)
+    def _undo_handler(self, event):
+        self.add_undo_action(lambda: state.saveapply(*event));
+
+    def _register_undo_handlers(self):
+        self._app.registerHandler(self.undo_create_event)
+        self._app.registerHandler(self.undo_delete_event)
+        self._app.registerHandler(self.undo_attribute_change_event)
+        self._app.registerHandler(self.undo_association_set_event)
+        self._app.registerHandler(self.undo_association_add_event)
+        self._app.registerHandler(self.undo_association_delete_event)
 
         #
         # Direct revert-statements from gaphas to the undomanager
         from gaphas import state
         state.observers.add(state.revert_handler)
 
-        def _undo_handler(event):
-            self.add_undo_action(lambda: state.saveapply(*event));
+        state.subscribers.add(self._undo_handler)
 
-        state.subscribers.add(_undo_handler)
+    def _unregister_undo_handlers(self):
+        self._app.unregisterHandler(self.undo_create_event)
+        self._app.unregisterHandler(self.undo_delete_event)
+        self._app.unregisterHandler(self.undo_attribute_change_event)
+        self._app.unregisterHandler(self.undo_association_set_event)
+        self._app.unregisterHandler(self.undo_association_add_event)
+        self._app.unregisterHandler(self.undo_association_delete_event)
 
+        from gaphas import state
+        state.observers.discard(state.revert_handler)
+
+        state.subscribers.discard(self._undo_handler)
 
     @component.adapter(IElementCreateEvent)
     def undo_create_event(self, event):

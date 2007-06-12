@@ -94,7 +94,6 @@ class DiagramToolbox(object):
         Activate a tool based on its index in the TOOLBOX_ACTIONS list.
         """
         tool = list(itemiter(TOOLBOX_ACTIONS))[id][0]
-        log.info('Selected item %d: %s' % (id, tool))
         getattr(self, tool.replace('-', '_'))()
 
     def _item_factory(self, item_class, subject_class=None):
