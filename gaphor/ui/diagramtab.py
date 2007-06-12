@@ -27,11 +27,13 @@ class DiagramTab(object):
             <menuitem action="diagram-unselect-all" />
           </menu>
           <menu action="diagram">
-            <menuitem action="diagram-zoom-in" />
-            <menuitem action="diagram-zoom-out" />
-            <menuitem action="diagram-zoom-100" />
-            <separator />
-            <menuitem action="diagram-close" />
+            <placeholder name="secondary">
+              <menuitem action="diagram-zoom-in" />
+              <menuitem action="diagram-zoom-out" />
+              <menuitem action="diagram-zoom-100" />
+              <separator />
+              <menuitem action="diagram-close" />
+            </placeholder>
           </menu>
         </menubar>
         <toolbar name='mainwindow-toolbar'>

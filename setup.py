@@ -132,6 +132,7 @@ setup(
             'pynsource = gaphor.plugins.pynsource:PyNSource',
             'check_metamodel = gaphor.plugins.checkmetamodel:CheckModelWindow',
             'live_object_browser = gaphor.plugins.liveobjectbrowser:LiveObjectBrowser',
+            'alignment = gaphor.plugins.alignment:Alignment',
         ],
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',
