@@ -140,7 +140,7 @@ class AssociationItem(DiagramLine):
 
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramLine.on_subject_notify(self, pspec,
-                                           notifiers + ('name', 'ownedEnd', 'memberEnd'))
+                notifiers + ('name', 'ownedEnd', 'memberEnd'))
 
         self.on_subject_notify__name(self.subject, pspec)
 
