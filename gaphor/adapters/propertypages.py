@@ -122,8 +122,6 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
         hbox.show_all()
 
-        page.pack_start(hbox, expand=True)
-
         return page
 
     def _on_fold_change(self, button):
