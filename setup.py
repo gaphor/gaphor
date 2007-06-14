@@ -125,7 +125,6 @@ setup(
             'diagram_export_manager = gaphor.services.diagramexportmanager:DiagramExportManager',
             'action_manager = gaphor.services.actionmanager:ActionManager',
             'gui_manager = gaphor.services.guimanager:GUIManager',
-            'help = gaphor.services.helpservice:HelpService',
             'copy = gaphor.services.copyservice:CopyService',
             'xmi_export = gaphor.plugins.xmiexport:XMIExport',
             'diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout',
@@ -133,6 +132,7 @@ setup(
             'check_metamodel = gaphor.plugins.checkmetamodel:CheckModelWindow',
             'live_object_browser = gaphor.plugins.liveobjectbrowser:LiveObjectBrowser',
             'alignment = gaphor.plugins.alignment:Alignment',
+            'help = gaphor.services.helpservice:HelpService',
         ],
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',

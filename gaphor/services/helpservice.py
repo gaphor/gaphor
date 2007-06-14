@@ -40,8 +40,8 @@ class HelpService(object):
 
     @action(name='help-about', stock_id='gtk-about')
     def about(self):
-        data_dir =  os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'data')
-        logo = gtk.gdk.pixbuf_new_from_file(os.path.join(data_dir, 'pixmaps', 'logo.png'))
+        logo_file =  os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'ui', 'pixmaps', 'logo.png')
+        logo = gtk.gdk.pixbuf_new_from_file(logo_file)
         version = Application.distribution.version
         about = gtk.Dialog("About Gaphor", self.gui_manager.main_window.window, gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
         about.set_default_response(gtk.RESPONSE_OK)
