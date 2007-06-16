@@ -11,6 +11,8 @@ from gaphor.diagram.nameditem import NamedItem
 from gaphas.util import text_extents, text_multiline
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
+DEFAULT_UPPER_BOUND = '*'
+
 
 class ObjectNodeItem(NamedItem):
     """
@@ -26,8 +28,6 @@ class ObjectNodeItem(NamedItem):
         'margin': (10, 10, 10, 10)
     }
 
-    DEFAULT_UPPER_BOUND = '*'
-
     popup_menu = NamedItem.popup_menu + (
         'separator',
         'Ordering', ('ObjectNodeOrderingVisibilty',
@@ -41,10 +41,9 @@ class ObjectNodeItem(NamedItem):
     def __init__(self, id = None):
         NamedItem.__init__(self, id)
 
-        self._tag = '' #TextElement('value', '{ upperBound = %s }', '*')
-        self._tag_bounds = None
-
+        self._upper_bound = self.add_text('upperBound.value')
         self._show_ordering = False
+
 
     @observed
     def _set_ordering(self, ordering):
@@ -55,8 +54,6 @@ class ObjectNodeItem(NamedItem):
         self.request_update()
 
     ordering = reversible_property(lambda s: s.subject.ordering, _set_ordering)
-
-    tag_bounds = property(lambda s: s._tag_bounds)
 
     @observed
     def _set_show_ordering(self, value):
@@ -81,35 +78,11 @@ class ObjectNodeItem(NamedItem):
         Detect subject changes. If subject is set then set upper bound text
         element subject.
         """
-        NamedItem.on_subject_notify(self, pspec, notifiers)
-        if self.subject and not self.subject.upperBound:
-            self.subject.upperBound = UML.create(UML.LiteralSpecification)
-            self.subject.upperBound.value = self.DEFAULT_UPPER_BOUND
+        NamedItem.on_subject_notify(self, pspec,
+                ('upperBound', 'upperBound.value') + notifiers)
+        self.set_upper_bound(DEFAULT_UPPER_BOUND)
         self.request_update()
 
-    def pre_update(self, context):
-        """
-        Update object node, its ordering and upper bound specification.
-        """
-        NamedItem.pre_update(self, context)
-
-        if self.subject.upperBound:
-            self._tag = '{ upperBound = %s }\n' % self.subject.upperBound.value
-
-        self._tag += '{ ordering = %s }' % self.subject.ordering
-
-        w, h = text_extents(context.cairo, self._tag, multiline=True)
-        x = (self.width - w) / 2
-        y = self.height + self.style.margin[2]
-        self._tag_bounds = Rectangle(x, y, width=w, height=h)
-
-    def point(self, x, y):
-        """
-        Return the distance from (x, y) to the item.
-        """
-        d1 = super(ObjectNodeItem, self).point(x, y)
-        d2 = distance_rectangle_point(self._tag_bounds, (x, y))
-        return min(d1, d2)
 
     def draw(self, context):
         cr = context.cairo
@@ -118,14 +91,32 @@ class ObjectNodeItem(NamedItem):
 
         super(ObjectNodeItem, self).draw(context)
 
-        if self.subject.upperBound.value != self.DEFAULT_UPPER_BOUND:
-            if self._tag:
-                text_multiline(cr, self._tag_bounds[0], self._tag_bounds[1], self._tag)
-        if context.hovered or context.focused or context.draw_all:
-            cr.set_line_width(0.5)
-            b = self._tag_bounds
-            cr.rectangle(b.x0, b.y0, b.width, b.height)
-            cr.stroke()
+        if self.subject.upperBound.value != DEFAULT_UPPER_BOUND:
+            pass
+
+
+    def set_upper_bound(self, value):
+        """
+        Set upper bound value of object node.
+        """
+        subject = self.subject
+        if subject:
+            if not subject.upperBound:
+                subject.upperBound = UML.create(UML.LiteralSpecification)
+
+            if not value:
+                value = DEFAULT_UPPER_BOUND
+
+            subject.upperBound.value = value
+            self._upper_bound.text = value
+
+
+    def on_subject_notify__upperBound(self, subject, pspec=None):
+        self.request_update()
+
+    def on_subject_notify__upperBound_value(self, subject, pspec=None):
+        self.request_update()
+
 
 
 # vim:sw=4:et:ai

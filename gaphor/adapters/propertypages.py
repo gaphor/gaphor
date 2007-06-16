@@ -656,12 +656,8 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
 
 
     def _on_upper_bound_changed(self, entry):
-        ub = entry.get_text().strip()
-        if not ub:
-            ub = items.ObjectNodeItem.DEFAULT_UPPER_BOUND
-            entry.set_text(ub)
-        self.context.subject.upperBound.value = ub
-        self.context.request_update()
+        value = entry.get_text().strip()
+        self.context.set_upper_bound(value)
 
 
 component.provideAdapter(ObjectNodePropertyPage, name='Properties')
