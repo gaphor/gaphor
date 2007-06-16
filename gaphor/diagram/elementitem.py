@@ -37,8 +37,26 @@ class ElementItem(gaphas.Element, DiagramItem):
             DiagramItem.load(self, name, value)
 
     def pre_update(self, context):
-        super(ElementItem, self).pre_update(context)
+        #super(ElementItem, self).pre_update(context)
+        gaphas.Element.pre_update(self, context)
+        #DiagramItem.pre_update(self, context)
         self.update_stereotype()
+
+
+    def point(self, x, y):
+        d1 = gaphas.Element.point(self, x, y)
+        d2 = DiagramItem.point(self, x, y)
+        return min(d1, d2)
+
+
+    def update(self, context):
+        gaphas.Element.update(self, context)
+        DiagramItem.update(self, context)
+
+
+    def draw(self, context):
+        gaphas.Element.draw(self, context)
+        DiagramItem.draw(self, context)
 
 
 # vim:sw=4
