@@ -33,11 +33,11 @@ class FlowItem(DiagramLine):
         'SplitFlow',
     )
 
-    name_align = { 'text-align': (ALIGN_RIGHT, ALIGN_TOP) }
+    NAME_ALIGN = { 'text-align': (ALIGN_RIGHT, ALIGN_TOP) }
 
     def __init__(self, id = None):
         DiagramLine.__init__(self, id)
-        self.add_text('name', self.name_align)
+        self.add_text('name', self.NAME_ALIGN)
         self.add_text('guard.value')
 
 
