@@ -26,6 +26,8 @@ class ObjectNodeItem(NamedItem):
         'margin': (10, 10, 10, 10)
     }
 
+    DEFAULT_UPPER_BOUND = '*'
+
     popup_menu = NamedItem.popup_menu + (
         'separator',
         'Ordering', ('ObjectNodeOrderingVisibilty',
@@ -82,7 +84,7 @@ class ObjectNodeItem(NamedItem):
         NamedItem.on_subject_notify(self, pspec, notifiers)
         if self.subject and not self.subject.upperBound:
             self.subject.upperBound = UML.create(UML.LiteralSpecification)
-            self.subject.upperBound.value = '*'
+            self.subject.upperBound.value = self.DEFAULT_UPPER_BOUND
         self.request_update()
 
     def pre_update(self, context):
@@ -116,8 +118,9 @@ class ObjectNodeItem(NamedItem):
 
         super(ObjectNodeItem, self).draw(context)
 
-        if self._tag:
-            text_multiline(cr, self._tag_bounds[0], self._tag_bounds[1], self._tag)
+        if self.subject.upperBound.value != self.DEFAULT_UPPER_BOUND:
+            if self._tag:
+                text_multiline(cr, self._tag_bounds[0], self._tag_bounds[1], self._tag)
         if context.hovered or context.focused or context.draw_all:
             cr.set_line_width(0.5)
             b = self._tag_bounds

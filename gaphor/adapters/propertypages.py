@@ -621,4 +621,49 @@ class LineStylePage(object):
 component.provideAdapter(LineStylePage, name='Style')
 
 
+class ObjectNodePropertyPage(NamedItemPropertyPage):
+    """
+    """
+
+    interface.implements(IPropertyPage)
+    component.adapts(items.ObjectNodeItem)
+
+    def construct(self):
+        page = super(ObjectNodePropertyPage, self).construct()
+
+        subject = self.context.subject
+        
+        if not subject:
+            return page
+
+        hbox = gtk.HBox()
+        page.pack_start(hbox, expand=False)
+
+        label = gtk.Label(_('Upper Bound'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+        entry = gtk.Entry()        
+        entry.set_text(subject and subject.upperBound.value or '')
+        entry.connect('changed', self._on_upper_bound_changed)
+        hbox.pack_start(entry)
+
+        return page
+
+
+    def update(self):
+        pass
+
+
+    def _on_upper_bound_changed(self, entry):
+        ub = entry.get_text().strip()
+        if not ub:
+            ub = items.ObjectNodeItem.DEFAULT_UPPER_BOUND
+            entry.set_text(ub)
+        self.context.subject.upperBound.value = ub
+        self.context.request_update()
+
+
+component.provideAdapter(ObjectNodePropertyPage, name='Properties')
+
 # vim:sw=4:et:ai
