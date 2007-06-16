@@ -13,7 +13,7 @@ __version__ = '$Revision$'
 class ElementItem(gaphas.Element, DiagramItem):
     __style__ = {
         'min-size': (0, 0),
-	'stereotype-padding': (5, 10, 5, 10),
+        'stereotype-padding': (5, 10, 5, 10),
     }
 
     def __init__(self, id=None):
@@ -37,8 +37,8 @@ class ElementItem(gaphas.Element, DiagramItem):
             DiagramItem.load(self, name, value)
 
     def pre_update(self, context):
-	super(ElementItem, self).pre_update(context)
-	self.update_stereotype()
+        super(ElementItem, self).pre_update(context)
+        self.update_stereotype()
 
 
 # vim:sw=4
