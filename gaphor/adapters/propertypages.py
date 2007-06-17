@@ -646,7 +646,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
         entry = gtk.Entry()        
-        entry.set_text(subject and subject.upperBound.value or '')
+        entry.set_text(subject.upperBound and subject.upperBound.value or '')
         entry.connect('changed', self._on_upper_bound_change)
         hbox.pack_start(entry)
 
@@ -668,7 +668,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         button = gtk.CheckButton()
         button.set_active(self.context.show_ordering)
         button.connect('toggled', self._on_ordering_show_change)
-        hbox.pack_start(button, expand = False)
+        hbox.pack_start(button, expand=False)
 
         label = gtk.Label('show')
         label.set_justify(gtk.JUSTIFY_LEFT)
@@ -697,5 +697,47 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
 
 
 component.provideAdapter(ObjectNodePropertyPage, name='Properties')
+
+
+class JoinNodePropertyPage(NamedItemPropertyPage):
+    """
+    """
+
+    interface.implements(IPropertyPage)
+    component.adapts(items.ForkNodeItem)
+
+    def construct(self):
+        page = super(JoinNodePropertyPage, self).construct()
+
+        subject = self.context.subject
+        
+        if not subject:
+            return page
+
+        hbox = gtk.HBox()
+        page.pack_start(hbox, expand=False)
+
+        label = gtk.Label(_('Join Specification'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+        entry = gtk.Entry()        
+        entry.set_text(subject.joinSpec and subject.joinSpec.value or '')
+        entry.connect('changed', self._on_join_spec_change)
+        hbox.pack_start(entry)
+
+        return page
+
+
+    def update(self):
+        pass
+
+
+    def _on_join_spec_change(self, entry):
+        value = entry.get_text().strip()
+        self.context.set_join_spec(value)
+
+
+component.provideAdapter(JoinNodePropertyPage, name='Properties')
 
 # vim:sw=4:et:ai

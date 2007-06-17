@@ -15,6 +15,9 @@ from gaphor.diagram.style import get_text_point
 from gaphas.util import text_extents
 
 
+DEFAULT_JOIN_SPEC = 'and'
+
+
 class ActivityNodeItem(NamedItem):
     """Basic class for simple activity nodes.
     Simple activity node is not resizable.
@@ -195,23 +198,17 @@ class ForkNodeItem(ForkDecisionNodeItem):
 
     def __init__(self, id=None):
         ForkDecisionNodeItem.__init__(self, id)
+        self._join_spec = self.add_text('joinSpec.value',
+            when = self.display_join_spec)
 
-        self._join_spec = 'join spec test'
-        self._join_spec_x = 0
-        self._join_spec_y = 0
 
-    def update(self, context):
+    def display_join_spec(self):
         """
-        Update join specification position.
+        Check if join specification should be displayed.
         """
-        if isinstance(self.subject, UML.JoinNode):
-            self._join_spec_x, self._join_spec_y = get_text_point(
-                    text_extents(context.cairo, self.subject.joinSpec.value),
-                    self.width, self.height,
-                    (ALIGN_CENTER, ALIGN_TOP),
-                    (10, 0, 0, 0),
-                    True)
-        super(ForkNodeItem, self).update(context)
+        return isinstance(self.subject, UML.JoinNode) \
+            and self.subject.joinSpec.value != DEFAULT_JOIN_SPEC
+
 
     def draw(self, context):
         """
@@ -220,17 +217,13 @@ class ForkNodeItem(ForkDecisionNodeItem):
         """
         cr = context.cairo
         cr.set_line_width(self.width)
-        x = self.width / 2.
+        x = self.width / 2.0
         cr.move_to(x, 0)
         cr.line_to(x, self.height)
-        cr.move_to(self.name_x, self.name_y)
-
-        if isinstance(self.subject, UML.JoinNode):
-            text_align(cr, self._join_spec_x, self._join_spec_y,
-                       self.subject.joinSpec.value, align_x=1, align_y=1)
 
         cr.stroke()
         super(ForkNodeItem, self).draw(context)
+
 
     def on_subject_notify(self, pspec, notifiers = ()):
         """
@@ -239,14 +232,36 @@ class ForkNodeItem(ForkDecisionNodeItem):
         If subject is join node, then set subject of join specification
         text element.
         """
-        ForkDecisionNodeItem.on_subject_notify(self, pspec, notifiers)
-        if self.subject and isinstance(self.subject, UML.JoinNode):
-            if not self.subject.joinSpec:
-                self.subject.joinSpec = UML.create(UML.LiteralSpecification)
-                self.subject.joinSpec.value = 'and'
-            #self._join_spec.subject = self.subject.joinSpec
-        #else:
-        #    self._join_spec.subject = None
+        ForkDecisionNodeItem.on_subject_notify(self, pspec,
+                ('joinSpec', 'joinSpec.value') + notifiers)
+        self.set_join_spec(DEFAULT_JOIN_SPEC)
         self.request_update()
+
+
+    def set_join_spec(self, value):
+        """
+        Set join specification.
+        """
+        subject = self.subject
+        if not subject or not isinstance(subject, UML.JoinNode):
+            return
+
+        if not subject.joinSpec:
+            subject.joinSpec = UML.create(UML.LiteralSpecification)
+
+        if not value:
+            value = DEFAULT_JOIN_SPEC
+
+        subject.joinSpec.value = value
+        self._join_spec.text = value
+
+
+    def on_subject_notify__joinSpec(self, subject, pspec=None):
+        self.request_update()
+
+
+    def on_subject_notify__joinSpec_value(self, subject, pspec=None):
+        self.request_update()
+
 
 # vim:sw=4:et
