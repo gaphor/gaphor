@@ -225,6 +225,9 @@ class TextElement(object):
 
 
     def _set_text(self, value):
+        """
+        Render text value using pattern.
+        """
         self._text = self._pattern % value
 
 
