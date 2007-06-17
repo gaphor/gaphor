@@ -41,9 +41,13 @@ class ObjectNodeItem(NamedItem):
     def __init__(self, id = None):
         NamedItem.__init__(self, id)
 
-        self._upper_bound = self.add_text('upperBound.value')
+        self._upper_bound = self.add_text('upperBound.value',
+            when = self.display_upper_bound)
         self._show_ordering = False
 
+
+    def display_upper_bound(self):
+        return self.subject.upperBound.value != DEFAULT_UPPER_BOUND
 
     @observed
     def _set_ordering(self, ordering):
@@ -90,9 +94,6 @@ class ObjectNodeItem(NamedItem):
         cr.stroke()
 
         super(ObjectNodeItem, self).draw(context)
-
-        if self.subject.upperBound.value != DEFAULT_UPPER_BOUND:
-            pass
 
 
     def set_upper_bound(self, value):
