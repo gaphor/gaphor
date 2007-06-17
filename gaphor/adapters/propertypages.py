@@ -694,6 +694,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
 
     def _on_ordering_show_change(self, button):
         self.context.show_ordering = button.get_active()
+        self.context.set_ordering(self.context.subject.ordering)
 
 
 component.provideAdapter(ObjectNodePropertyPage, name='Properties')
