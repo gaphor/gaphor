@@ -7,10 +7,9 @@ ExtensionItem -- Graphical representation of an association.
 # tail end and visa versa.
 
 from gaphor import UML
-from gaphor.diagram.diagramitem import DiagramItem
-from gaphor.diagram.diagramline import DiagramLine
+from gaphor.diagram.diagramline import NamedLine
 
-class ExtensionItem(DiagramLine):
+class ExtensionItem(NamedLine):
     """
     ExtensionItem represents associations. 
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item
@@ -20,11 +19,11 @@ class ExtensionItem(DiagramLine):
     __uml__ = UML.Extension
 
     def __init__(self, id=None):
-        DiagramLine.__init__(self, id)
+        NamedLine.__init__(self, id)
 
     def on_subject_notify(self, pspec, notifiers=()):
-        DiagramLine.on_subject_notify(self, pspec,
-                                           notifiers + ('ownedEnd',))
+        NamedLine.on_subject_notify(self, pspec,
+                notifiers + ('ownedEnd',))
 
     def on_subject_notify__ownedEnd(self, subject, pspec):
         self.request_update()
