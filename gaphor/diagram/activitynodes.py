@@ -199,6 +199,7 @@ class ForkNodeItem(ForkDecisionNodeItem):
     def __init__(self, id=None):
         ForkDecisionNodeItem.__init__(self, id)
         self._join_spec = self.add_text('joinSpec.value',
+            pattern = '{ joinSpec = %s }',
             when = self.display_join_spec)
 
 
