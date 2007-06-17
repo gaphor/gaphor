@@ -28,26 +28,20 @@ class ObjectNodeItem(NamedItem):
         'margin': (10, 10, 10, 10)
     }
 
-    popup_menu = NamedItem.popup_menu + (
-        'separator',
-        'Ordering', ('ObjectNodeOrderingVisibilty',
-            'separator',
-            'ObjectNodeOrderingUnordered',
-            'ObjectNodeOrderingOrdered',
-            'ObjectNodeOrderingLIFO',
-            'ObjectNodeOrderingFIFO')
-    )
-
     def __init__(self, id = None):
         NamedItem.__init__(self, id)
 
+        self._show_ordering = False
+
         self._upper_bound = self.add_text('upperBound.value',
             when = self.display_upper_bound)
-        self._show_ordering = False
+        self._ordering = self.add_text('ordering',
+            when = self._get_show_ordering)
 
 
     def display_upper_bound(self):
         return self.subject.upperBound.value != DEFAULT_UPPER_BOUND
+
 
     @observed
     def _set_ordering(self, ordering):
@@ -65,7 +59,11 @@ class ObjectNodeItem(NamedItem):
         self._show_ordering = value
         self.request_update()
 
-    show_ordering = reversible_property(lambda s: s._show_ordering, _set_show_ordering)
+
+    def _get_show_ordering(self):
+        return self._show_ordering
+
+    show_ordering = reversible_property(_get_show_ordering, _set_show_ordering)
 
     def save(self, save_func):
         save_func('show-ordering', self._show_ordering)
@@ -83,7 +81,7 @@ class ObjectNodeItem(NamedItem):
         element subject.
         """
         NamedItem.on_subject_notify(self, pspec,
-                ('upperBound', 'upperBound.value') + notifiers)
+                ('upperBound', 'upperBound.value', 'ordering') + notifiers)
         self.set_upper_bound(DEFAULT_UPPER_BOUND)
         self.request_update()
 
@@ -112,10 +110,24 @@ class ObjectNodeItem(NamedItem):
             self._upper_bound.text = value
 
 
+    def set_ordering(self, value):
+        """
+        Set object node ordering value.
+        """
+        subject = self.subject
+        subject.ordering = value
+        self._ordering.text = value
+
+
     def on_subject_notify__upperBound(self, subject, pspec=None):
         self.request_update()
 
+
     def on_subject_notify__upperBound_value(self, subject, pspec=None):
+        self.request_update()
+
+
+    def on_subject_notify__ordering(self, subject, pspec=None):
         self.request_update()
 
 

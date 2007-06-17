@@ -628,6 +628,8 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     interface.implements(IPropertyPage)
     component.adapts(items.ObjectNodeItem)
 
+    ORDERING_VALUES = ['unordered', 'ordered', 'LIFO', 'FIFO']
+
     def construct(self):
         page = super(ObjectNodePropertyPage, self).construct()
 
@@ -645,8 +647,33 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         hbox.pack_start(label, expand=False)
         entry = gtk.Entry()        
         entry.set_text(subject and subject.upperBound.value or '')
-        entry.connect('changed', self._on_upper_bound_changed)
+        entry.connect('changed', self._on_upper_bound_change)
         hbox.pack_start(entry)
+
+        hbox = gtk.HBox()
+        page.pack_start(hbox, expand=False)
+
+        label = gtk.Label('Ordering')
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+
+        combo = gtk.combo_box_new_text()
+        for v in self.ORDERING_VALUES:
+            combo.append_text(v)
+        combo.set_active(self.ORDERING_VALUES.index(subject.ordering))
+        combo.connect('changed', self._on_ordering_change)
+        hbox.pack_start(combo, expand=False)
+
+        button = gtk.CheckButton()
+        button.set_active(self.context.show_ordering)
+        button.connect('toggled', self._on_ordering_show_change)
+        hbox.pack_start(button, expand = False)
+
+        label = gtk.Label('show')
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
 
         return page
 
@@ -655,9 +682,18 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         pass
 
 
-    def _on_upper_bound_changed(self, entry):
+    def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
         self.context.set_upper_bound(value)
+
+
+    def _on_ordering_change(self, combo):
+        value = self.ORDERING_VALUES[combo.get_active()]
+        self.context.set_ordering(value)
+
+
+    def _on_ordering_show_change(self, button):
+        self.context.show_ordering = button.get_active()
 
 
 component.provideAdapter(ObjectNodePropertyPage, name='Properties')
