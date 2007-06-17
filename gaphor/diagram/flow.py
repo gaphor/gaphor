@@ -7,7 +7,7 @@ Contains also implementation to split flows using activity edge connectors.
 from math import atan, pi, sin, cos
 
 from gaphor import UML
-from gaphor.diagram.diagramline import DiagramLine
+from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 
@@ -20,7 +20,7 @@ node_classes = {
 
 
 
-class FlowItem(DiagramLine):
+class FlowItem(NamedLine):
     """
     Representation of control flow and object flow. Flow item has name and
     guard. It can be splitted into two flows with activity edge connectors.
@@ -28,24 +28,23 @@ class FlowItem(DiagramLine):
 
     __uml__ = UML.ControlFlow
 
-    popup_menu = DiagramLine.popup_menu + (
+    popup_menu = NamedLine.popup_menu + (
         'separator',
         'SplitFlow',
     )
 
-    NAME_ALIGN = {
-            'text-align': (ALIGN_RIGHT, ALIGN_TOP),
-            'text-padding': (5, 15, 5, 5),
+    __style__ = {
+            'name-align': (ALIGN_RIGHT, ALIGN_TOP),
+            'name-padding': (5, 15, 5, 5),
     }
 
     def __init__(self, id = None):
-        DiagramLine.__init__(self, id)
-        self.add_text('name', style=self.NAME_ALIGN)
+        NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.value')
 
 
     def on_subject_notify(self, pspec, notifiers = ()):
-        DiagramLine.on_subject_notify(self, pspec,
+        NamedLine.on_subject_notify(self, pspec,
             ('guard', 'guard.value',) + notifiers)
         self.request_update()
 
@@ -146,7 +145,7 @@ class ACItem(object):
 #    any node and inactive end is connected only to activity edge connector.
 #    """
 #
-#    popup_menu = DiagramLine.popup_menu + (
+#    popup_menu = NamedLine.popup_menu + (
 #        'separator',
 #        'MergeFlow',
 #    )
@@ -214,7 +213,7 @@ class ACItem(object):
 #
 #
 #    def confirm_connect_handle(self, handle):
-#        """See DiagramLine.confirm_connect_handle().
+#        """See NamedLine.confirm_connect_handle().
 #        """
 #        c1 = self.get_active_handle().connected_to            # source
 #        c2 = self._opposite.get_active_handle().connected_to  # target
@@ -236,7 +235,7 @@ class ACItem(object):
 #
 #
 #    def confirm_disconnect_handle (self, handle, was_connected_to):
-#        """See DiagramLine.confirm_disconnect_handle().
+#        """See NamedLine.confirm_disconnect_handle().
 #        """
 #        c1 = self.get_active_handle().connected_to             # source
 #        c2 = self._opposite.get_active_handle().connected_to   # target

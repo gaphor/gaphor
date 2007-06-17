@@ -181,12 +181,33 @@ class DiagramLine(LineItem):
 
     def text_align(self, extents, align, padding, outside):
         handles = self._handles
-        p1 = handles[-1].pos
-        p2 = handles[-2].pos
+        p1 = handles[0].pos
+        p2 = handles[-1].pos
         x, y = get_text_point_at_line(extents, p1, p2,
                 align, padding)
 
         return x, y
+
+
+
+class NamedLine(DiagramLine):
+    def __init__(self, id = None):
+        DiagramLine.__init__(self, id)
+        style = {
+                'text-align': self.__style__['name-align'],
+                'text-padding': self.__style__['name-padding'],
+        }
+        self._name = self.add_text('name', style=style)
+
+
+    def on_subject_notify(self, pspec, notifiers=()):
+        DiagramLine.on_subject_notify(self, pspec, ('name',) + notifiers)
+
+
+    def on_subject_notify__name(self, subject, pspec=None):
+        self._name.text = subject.name
+        self.request_update()
+
 
 
 class FreeLine(LineItem):
