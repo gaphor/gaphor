@@ -3,11 +3,8 @@ Base classes related to items, which represent UML classes deriving
 from NamedElement.
 """
 
-from gaphas.util import text_extents, text_align
-
 from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.style import get_min_size, get_text_point, \
-        ALIGN_CENTER, ALIGN_TOP
+from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 
 
 class NamedItem(ElementItem):
@@ -41,10 +38,6 @@ class NamedItem(ElementItem):
         }
         self._name = self.add_text('name', style=style)
 
-        self.name_x = 0
-        self.name_y = 0
-        self._name_size = (0, 0)
-
 
     def on_subject_notify(self, pspec, notifiers=()):
         #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
@@ -56,20 +49,16 @@ class NamedItem(ElementItem):
         self.request_update()
 
 
-    def get_name_size(self):
+    def pre_update(self, context):
         """
-        Return width, height of the text (including padding)
+        Update minimal size information using name bounds.
         """
-        return self._name_size
+        if not self.style.name_outside:
+            bounds = self._name.bounds
+            w, h = get_min_size(bounds.width, bounds.height,
+                    self.style.min_size, self.style.name_padding)
 
+            self.min_width = max(w, self.min_width)
+            self.min_height = max(h, self.min_height)
 
-    def update_name_size(self, context):
-        """
-        Calculate minimal size of named item.
-        """
-        cr = context.cairo
-        text = self.subject.name
-        if text and not self.style.name_outside:
-            width, height = text_extents(cr, text)
-            padding = self.style.name_padding
-            self._name_size = width + padding[0] + padding[2], height + padding[1] + padding[3]
+        super(NamedItem, self).pre_update(context)

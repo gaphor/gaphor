@@ -1,5 +1,5 @@
 """
-ClassifierItem diagram item
+Classifier diagram item.
 """
 
 import itertools
@@ -11,6 +11,7 @@ from gaphor.i18n import _
 
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.feature import FeatureItem
+from gaphor.diagram.style import get_min_size
 
 import font
 
@@ -308,8 +309,6 @@ class ClassifierItem(NamedItem):
             f_h += padding[0] + padding[2]
 
         sizes = [comp.get_size() for comp in self._compartments]
-        self.update_name_size(context)
-        sizes.append(self.get_name_size())
         sizes.append((s_w, s_h))
         sizes.append((f_w, f_h))
         self.min_width = max(s_w, n_w, f_w)
