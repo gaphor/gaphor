@@ -58,7 +58,7 @@ class EditableTextSupport(object):
             extents = text_extents(cr, txt.text, multiline=True)
             style = txt._style
             x, y = self.text_align(extents, style.text_align,
-                    style.text_padding, False)
+                    style.text_padding, style.text_outside)
 
             width, height = map(max, extents, (10, 10))
 
@@ -142,6 +142,7 @@ class TextElement(object):
         self._style = Style()
         self._style.add('text-padding', (2, 2, 2, 2))
         self._style.add('text-align', (ALIGN_CENTER, ALIGN_TOP))
+        self._style.add('text-outside', False)
         if style:
             self._style.update(style)
 
