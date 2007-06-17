@@ -11,8 +11,6 @@ from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP, \
         ALIGN_RIGHT, ALIGN_BOTTOM
-from gaphor.diagram.style import get_text_point
-from gaphas.util import text_extents
 
 
 DEFAULT_JOIN_SPEC = 'and'
@@ -196,10 +194,16 @@ class ForkNodeItem(ForkDecisionNodeItem):
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
     }
 
+    STYLE_TOP = {
+        'text-align': (ALIGN_CENTER, ALIGN_TOP),
+        'text-outside': True,
+    }
+
     def __init__(self, id=None):
         ForkDecisionNodeItem.__init__(self, id)
         self._join_spec = self.add_text('joinSpec.value',
             pattern = '{ joinSpec = %s }',
+            style = self.STYLE_TOP,
             when = self.display_join_spec)
 
 
