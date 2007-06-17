@@ -421,8 +421,8 @@ class ClassifierItem(NamedItem):
         if self.drawing_style not in (ClassifierItem.DRAW_COMPARTMENT, ClassifierItem.DRAW_COMPARTMENT_ICON):
             return self
 
+        name_comp_height = self._name.bounds.height
         # Edit is in name compartment -> edit name
-        name_comp_height = self.get_name_size()[1]
         if y < name_comp_height:
             return self
 

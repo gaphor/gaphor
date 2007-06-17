@@ -10,6 +10,10 @@ class ComponentItem(ClassifierItem):
     __uml__  = UML.Component
     __icon__ = True
 
+    __style__ = {
+            'name-padding': (10, 50, 10, 10),
+    }
+
     BAR_WIDTH     = 10
     BAR_HEIGHT    =  5
     BAR_PADDING   =  5
