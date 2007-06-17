@@ -56,11 +56,12 @@ class EditableTextSupport(object):
                 continue
 
             extents = text_extents(cr, txt.text, multiline=True)
+            width, height = map(max, extents, (15, 10))
+            extents = (width, height)
+
             style = txt._style
             x, y = self.text_align(extents, style.text_align,
                     style.text_padding, style.text_outside)
-
-            width, height = map(max, extents, (10, 10))
 
             txt.bounds.x0 = x
             txt.bounds.y0 = y
