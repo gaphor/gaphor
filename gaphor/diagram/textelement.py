@@ -16,10 +16,13 @@ class EditableTextSupport(object):
     item.
 
     Attributes:
-     - _texts: list of diagram item text elements
+     - _texts:       list of diagram item text elements
+     - _text_groups: grouping information of text elements (None -
+                     ungrouped) 
     """
     def __init__(self):
         self._texts = []
+        self._text_groups = { None: [] }
 
 
     def texts(self):
@@ -38,11 +41,67 @@ class EditableTextSupport(object):
          - attr:  attribute name of diagram item subject
          - style: align information
 
+        If style information contains 'text-align-group' data, then text
+        element is grouped.
+
         Returns created text element.
         """
-        txt = TextElement(attr, style = style, pattern = pattern, when = when)
+        txt = TextElement(attr, style=style, pattern=pattern, when=when)
         self._texts.append(txt)
+
+        # try to group text element
+        gname = style.get('text-align-group')
+        if gname not in self._text_groups:
+            self._text_groups[gname] = []
+        group = self._text_groups[gname]
+        group.append(txt)
+
         return txt
+
+
+    def _align_text_group(self, context, group):
+        """
+        Align group of text elements making vertical stack of strings.
+
+        Parameters:
+         - list of text elements to group
+        """
+        cr = context.cairo
+
+        # find displayable texts
+        texts = [ txt for txt in group if txt.display() ]
+
+        # nothing to stack
+        if len(texts) == 0:
+            return
+
+        # calculate text dimensions
+        dimensions = [ text_extents(cr, txt.text, multiline=True) \
+                for txt in texts ]
+
+        # find maximum width and total height
+        width = max(ext[0] for ext in dimensions)
+        height = sum(ext[1] for ext in dimensions)
+
+        extents = (width, height)
+        width, height = map(max, extents, (15, 10))
+
+        # align according to style of first text
+        style = texts[0]._style
+        x, y = self.text_align(extents, style.text_align,
+                style.text_padding, style.text_outside)
+
+        # stack all displayable texts
+        dy = 0
+        for i, txt in enumerate(texts):
+            dw, dh  = dimensions[i]
+
+            # center stacked texts
+            txt.bounds.x0 = x + (width - dw) / 2.0
+            txt.bounds.y0 = y + dy
+            txt.bounds.width = dw
+            txt.bounds.height = dh
+            dy += dh + 3
 
 
     def update(self, context):
@@ -51,7 +110,13 @@ class EditableTextSupport(object):
         item.
         """
         cr = context.cairo
-        for txt in self._texts:
+        for gname in self._text_groups:
+            if gname is not None:
+                group = self._text_groups[gname]
+                self._align_text_group(context, group)
+
+        # align ungrouped text elements
+        for txt in self._text_groups[None]:
             if not txt.display():
                 continue
 
