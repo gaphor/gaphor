@@ -4,7 +4,8 @@ Test item styles.
 
 import unittest
 
-from gaphor.diagram.style import get_text_point, get_min_size, \
+from gaphor.diagram.style import get_text_point, \
+        get_text_point_at_line, get_min_size, \
         ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT, \
         ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM
 
@@ -19,7 +20,7 @@ class StyleTestCase(unittest.TestCase):
         self.assertEqual(height, 14)
 
 
-    def test_align(self):
+    def test_align_box(self):
         """
         Test aligned text position calculation
         """
@@ -58,3 +59,34 @@ class StyleTestCase(unittest.TestCase):
                         '%s, %s -> %s' % (align, outside, point[0]))
                     self.assertEqual(point[1], point_expected[1], \
                         '%s, %s -> %s' % (align, outside, point[1]))
+
+
+    def test_align_line(self):
+        """
+        Test aligned at the line text position calculation
+        """
+        p1 = 0, 0
+        p2 = 20, 20
+
+        extents = 10, 5
+
+        x, y = get_text_point_at_line(extents, p1, p2,
+                (ALIGN_LEFT, ALIGN_TOP), (2, 2, 2, 2))
+        self.assertEqual(x, 2)
+        self.assertEqual(y, 2)
+
+        x, y = get_text_point_at_line(extents, p1, p2,
+                (ALIGN_RIGHT, ALIGN_TOP), (2, 2, 2, 2))
+        self.assertEqual(x, 8)
+        self.assertEqual(y, 13)
+
+        p2 = -20, 20
+        x, y = get_text_point_at_line(extents, p1, p2,
+                (ALIGN_LEFT, ALIGN_TOP), (2, 2, 2, 2))
+        self.assertEqual(x, -12)
+        self.assertEqual(y, 2)
+
+        x, y = get_text_point_at_line(extents, p1, p2,
+                (ALIGN_RIGHT, ALIGN_TOP), (2, 2, 2, 2))
+        self.assertEqual(x, -18)
+        self.assertEqual(y, 13)

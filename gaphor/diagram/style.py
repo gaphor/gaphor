@@ -147,22 +147,37 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
 
     halign, valign = align
 
-    if halign == ALIGN_LEFT:
-        x = p2[0] + padding[PADDING_LEFT]
-        y = p2[1]
-    elif halign == ALIGN_CENTER:
-        x = (p1[0] - p2[0] - w) / 2
-        y = (p1[1] - p2[1] - h) / 2
-    elif halign == ALIGN_RIGHT:
-        x = p1[0] - padding[PADDING_RIGHT]
-        y = p1[1]
-    else:
-        assert False
+    dx = p2[0] - p1[0]
+    dy = p2[1] - p1[1]
 
-    if valign == ALIGN_TOP:
-        y = y + padding[PADDING_TOP]
-    elif valign == ALIGN_BOTTOM:
-        y = y - padding[PADDING_BOTTOM]
+    if halign == ALIGN_LEFT:
+        if dx > 0:
+            x = p1[0] + padding[PADDING_LEFT]
+        else:
+            x = p1[0] - w - padding[PADDING_LEFT]
+
+        if dy >= 0:
+            y = p1[1] + padding[PADDING_TOP]
+        else:
+            y = p1[1] - padding[PADDING_TOP] - h
+
+    elif halign == ALIGN_RIGHT or halign == ALIGN_CENTER:
+        if halign == ALIGN_CENTER:
+            x0 = (p2[0] - p1[0]) / 2.0
+            y0 = (p2[1] - p1[1]) / 2.0
+        else:
+            x0 = p2[0]
+            y0 = p2[1]
+
+        if dx > 0:
+            x = x0 - w - padding[PADDING_RIGHT]# - h
+        else:
+            x = x0 + padding[PADDING_RIGHT]# + h
+
+        if dy >= 0:
+            y = y0 - padding[PADDING_TOP] - h
+        else:
+            y = y0 + padding[PADDING_TOP]
     else:
         assert False
 
