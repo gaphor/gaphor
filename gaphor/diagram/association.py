@@ -23,10 +23,10 @@ from gaphas.geometry import distance_rectangle_point, distance_line_point
 
 from gaphor import UML
 from gaphor.diagram.diagramitem import SubjectSupport
-from gaphor.diagram.diagramline import DiagramLine
+from gaphor.diagram.diagramline import NamedLine
 
 
-class AssociationItem(DiagramLine):
+class AssociationItem(NamedLine):
     """
     AssociationItem represents associations. 
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
@@ -59,7 +59,7 @@ class AssociationItem(DiagramLine):
     )
 
     def __init__(self, id=None):
-        DiagramLine.__init__(self, id)
+        NamedLine.__init__(self, id)
 
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.
@@ -88,7 +88,7 @@ class AssociationItem(DiagramLine):
         del self._tail_end._canvas
 
     def save(self, save_func):
-        DiagramLine.save(self, save_func)
+        NamedLine.save(self, save_func)
         save_func('show-direction', self._show_direction)
         if self._head_end.subject:
             save_func('head-subject', self._head_end.subject)
@@ -106,10 +106,10 @@ class AssociationItem(DiagramLine):
             #self._tail_end.load('subject', value)
             self._tail_end.subject = value
         else:
-            DiagramLine.load(self, name, value)
+            NamedLine.load(self, name, value)
 
     def postload(self):
-        DiagramLine.postload(self)
+        NamedLine.postload(self)
         self._head_end.set_text()
         self._tail_end.set_text()
 
@@ -120,7 +120,7 @@ class AssociationItem(DiagramLine):
     def unlink(self):
         self._head_end.unlink()
         self._tail_end.unlink()
-        DiagramLine.unlink(self)
+        NamedLine.unlink(self)
 
     def get_popup_menu(self):
         if self.subject:
@@ -139,13 +139,8 @@ class AssociationItem(DiagramLine):
         self.request_update()
 
     def on_subject_notify(self, pspec, notifiers=()):
-        DiagramLine.on_subject_notify(self, pspec,
-                notifiers + ('name', 'ownedEnd', 'memberEnd'))
-
-        self.on_subject_notify__name(self.subject, pspec)
-
-    def on_subject_notify__name(self, subject, pspec):
-        self.request_update()
+        NamedLine.on_subject_notify(self, pspec,
+                notifiers + ('ownedEnd', 'memberEnd'))
 
     def on_subject_notify__ownedEnd(self, subject, pspec):
         self.request_update()
@@ -200,7 +195,7 @@ class AssociationItem(DiagramLine):
             self.draw_tail = self.draw_tail_undefined
 
         # update relationship after self.set calls to avoid circural updates
-        DiagramLine.update(self, context)
+        NamedLine.update(self, context)
 
         # Calculate alignment of the head name and multiplicity
         self._head_end.update(context, handles[0].pos,
@@ -210,9 +205,6 @@ class AssociationItem(DiagramLine):
         self._tail_end.update(context, handles[-1].pos,
                                      handles[-2].pos)
         
-        # update name label:
-        self._label_bounds = self.update_label(context, self.subject and self.subject.name)
-
 
     def point(self, x, y):
         """Returns the distance from the Association to the (mouse) cursor.
@@ -333,11 +325,6 @@ class AssociationItem(DiagramLine):
             finally:
                 cr.restore()
 
-        if self.subject and self.subject.name:
-            #cr.move_to(self._label_bounds[0], self._label_bounds[1])
-            #cr.show_text(self.subject.name or '')
-            text_align(cr, self._label_bounds[0], self._label_bounds[1],
-                       self.subject.name or '', align_x=1, align_y=1)
 
     def item_at(self, x, y):
         if distance_point_point_fast(self._handles[0].pos, (x, y)) < 10:
