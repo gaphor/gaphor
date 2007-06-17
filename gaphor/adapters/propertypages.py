@@ -28,7 +28,7 @@ class NamedItemPropertyPage(object):
     """
 
     interface.implements(IPropertyPage)
-    component.adapts(items.NamedItem)
+    component.adapts(items.NamedItem, items.NamedLine)
 
     def __init__(self, context):
         self.context = context
