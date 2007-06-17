@@ -34,7 +34,12 @@ class NamedItem(ElementItem):
 
         self.width  = self.min_width
         self.height = self.min_height
-        self._name = self.add_text('name', style = self.__style__)
+        style = {
+                'text-align': self.style.name_align,
+                'text-padding': self.style.name_padding,
+                'text-outside': self.style.name_outside,
+        }
+        self._name = self.add_text('name', style=style)
 
         self.name_x = 0
         self.name_y = 0

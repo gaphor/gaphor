@@ -200,8 +200,8 @@ class NamedLine(DiagramLine):
     def __init__(self, id = None):
         DiagramLine.__init__(self, id)
         style = {
-                'text-align': self.__style__['name-align'],
-                'text-padding': self.__style__['name-padding'],
+                'text-align': self.style.name_align,
+                'text-padding': self.style.name_padding,
         }
         self._name = self.add_text('name', style=style)
 
