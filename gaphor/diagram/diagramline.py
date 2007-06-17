@@ -10,6 +10,7 @@ from gaphas.geometry import Rectangle
 from diagramitem import DiagramItem
 from interfaces import IConnect
 
+from gaphor.diagram.style import get_text_point_at_line
 
 class LineItem(gaphas.Line, DiagramItem):
     """
@@ -177,6 +178,15 @@ class DiagramLine(LineItem):
             del self._load_tail_connection
         LineItem.postload(self)
 
+
+    def text_align(self, extents, align, padding, outside):
+        handles = self._handles
+        p1 = handles[-1].pos
+        p2 = handles[-2].pos
+        x, y = get_text_point_at_line(extents, p1, p2,
+                align, padding)
+
+        return x, y
 
 
 class FreeLine(LineItem):

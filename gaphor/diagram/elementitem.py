@@ -1,12 +1,11 @@
 """
-ElementItem
-
-Abstract base class for element-like Diagram items.
+Abstract classes for element-like Diagram items.
 """
 
 import gobject
 import gaphas
 from diagramitem import DiagramItem
+from gaphor.diagram.style import get_text_point
 
 __version__ = '$Revision$'
 
@@ -57,6 +56,13 @@ class ElementItem(gaphas.Element, DiagramItem):
     def draw(self, context):
         gaphas.Element.draw(self, context)
         DiagramItem.draw(self, context)
+
+
+    def text_align(self, extents, align, padding, outside):
+        x, y = get_text_point(extents, self.width, self.height,
+                align, padding, outside)
+
+        return x, y
 
 
 # vim:sw=4

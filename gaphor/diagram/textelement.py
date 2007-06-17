@@ -3,7 +3,7 @@ Support for editable text, a part of a diagram item, i.e. name of named
 item, guard of flow item, etc.
 """
 
-from gaphor.diagram.style import get_text_point_at_line, Style
+from gaphor.diagram.style import Style
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 
 from gaphas.geometry import distance_rectangle_point, Rectangle
@@ -54,12 +54,12 @@ class EditableTextSupport(object):
         for txt in self._texts:
             if not txt.display():
                 continue
-            handles = self._handles
-            p1 = handles[-1].pos
-            p2 = handles[-2].pos
-            extents = text_extents(cr, txt.text, multiline=True)
 
-            x, y = get_text_point_at_line(extents, p1, p2, txt._style.text_align, txt._style.text_padding)
+            extents = text_extents(cr, txt.text, multiline=True)
+            style = txt._style
+            x, y = self.text_align(extents, style.text_align,
+                    style.text_padding, False)
+
             width, height = map(max, extents, (10, 10))
 
             txt.bounds.x0 = x
