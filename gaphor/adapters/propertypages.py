@@ -740,4 +740,46 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
 
 component.provideAdapter(JoinNodePropertyPage, name='Properties')
 
+
+class FlowPropertyPage(NamedItemPropertyPage):
+    """
+    """
+
+    interface.implements(IPropertyPage)
+    component.adapts(items.FlowItem)
+
+    def construct(self):
+        page = super(FlowPropertyPage, self).construct()
+
+        subject = self.context.subject
+        
+        if not subject:
+            return page
+
+        hbox = gtk.HBox()
+        page.pack_start(hbox, expand=False)
+
+        label = gtk.Label(_('Guard'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+        entry = gtk.Entry()        
+        entry.set_text(subject.guard and subject.guard.value or '')
+        entry.connect('changed', self._on_guard_change)
+        hbox.pack_start(entry)
+
+        return page
+
+
+    def update(self):
+        pass
+
+
+    def _on_guard_change(self, entry):
+        value = entry.get_text().strip()
+        self.context.set_guard(value)
+
+
+component.provideAdapter(FlowPropertyPage, name='Properties')
+
 # vim:sw=4:et:ai

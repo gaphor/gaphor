@@ -38,19 +38,27 @@ class FlowItem(DiagramLine):
     def __init__(self, id = None):
         DiagramLine.__init__(self, id)
         self.add_text('name', self.NAME_ALIGN)
-        self.add_text('guard.value')
+        self._guard = self.add_text('guard.value')
 
 
     def on_subject_notify(self, pspec, notifiers = ()):
-        DiagramLine.on_subject_notify(self, pspec, ('guard', 'guard.value',) + notifiers)
+        DiagramLine.on_subject_notify(self, pspec,
+            ('guard', 'guard.value',) + notifiers)
         self.request_update()
+
+
+    def set_guard(self, value):
+        self.subject.guard.value = value
+        self._guard.text = value
 
 
     def on_subject_notify__guard(self, subject, pspec=None):
         self.request_update()
 
+
     def on_subject_notify__guard_value(self, subject, pspec=None):
         self.request_update()
+
 
     def draw_tail(self, context):
         cr = context.cairo
