@@ -14,7 +14,7 @@ class StyleTestCase(unittest.TestCase):
         """
         Test minimum size calculation
         """
-        width, height = get_min_size(10, 10, (1, 2, 3, 4))
+        width, height = get_min_size(10, 10, (5, 5), (1, 2, 3, 4))
         self.assertEqual(width, 16)
         self.assertEqual(height, 14)
 
@@ -35,19 +35,19 @@ class StyleTestCase(unittest.TestCase):
                 (ALIGN_RIGHT,  ALIGN_TOP,    False): ( 78, 13),
                 (ALIGN_RIGHT,  ALIGN_MIDDLE, False): ( 78, 26),
                 (ALIGN_RIGHT,  ALIGN_BOTTOM, False): ( 78, 37),
-                (ALIGN_LEFT,   ALIGN_TOP,    True):  (-84, -1),
+                (ALIGN_LEFT,   ALIGN_TOP,    True):  (-84, -13),
                 (ALIGN_LEFT,   ALIGN_MIDDLE, True):  (-84, 26),
-                (ALIGN_LEFT,   ALIGN_BOTTOM, True):  (-84, 55),
-                (ALIGN_CENTER, ALIGN_TOP,    True):  ( 40, -1),
+                (ALIGN_LEFT,   ALIGN_BOTTOM, True):  (-84, 43),
+                (ALIGN_CENTER, ALIGN_TOP,    True):  ( 40, -13),
                 (ALIGN_CENTER, ALIGN_MIDDLE, True):  ( 40, 26),
-                (ALIGN_CENTER, ALIGN_BOTTOM, True):  ( 40, 55),
-                (ALIGN_RIGHT,  ALIGN_TOP,    True):  (162, -1),
+                (ALIGN_CENTER, ALIGN_BOTTOM, True):  ( 40, 43),
+                (ALIGN_RIGHT,  ALIGN_TOP,    True):  (162, -13),
                 (ALIGN_RIGHT,  ALIGN_MIDDLE, True):  (162, 26),
-                (ALIGN_RIGHT,  ALIGN_BOTTOM, True):  (162, 55),
+                (ALIGN_RIGHT,  ALIGN_BOTTOM, True):  (162, 43),
         }
 
-        for halign in range(3):
-            for valign in range(3):
+        for halign in range(-1, 2):
+            for valign in range(-1, 2):
                 for outside in (True, False):
                     align = (halign, valign)
                     point_expected = data[(halign, valign, outside)]
