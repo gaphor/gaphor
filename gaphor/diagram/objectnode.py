@@ -28,6 +28,7 @@ class ObjectNodeItem(NamedItem):
     STYLE_BOTTOM = {
         'text-align': (ALIGN_CENTER, ALIGN_BOTTOM),
         'text-outside': True,
+        'text-align-group': 'bottom',
     }
 
     def __init__(self, id = None):
