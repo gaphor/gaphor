@@ -29,7 +29,7 @@ class EditableTextSupport(object):
         return self._texts
 
 
-    def add_text(self, attr, style = None):
+    def add_text(self, attr, style = None, when = None):
         """
         Create and add a text element. See also TextElement class
         description.
@@ -40,7 +40,7 @@ class EditableTextSupport(object):
 
         Returns created text element.
         """
-        txt = TextElement(attr, style)
+        txt = TextElement(attr, style, when)
         self._texts.append(txt)
         return txt
 
@@ -52,6 +52,8 @@ class EditableTextSupport(object):
         """
         cr = context.cairo
         for txt in self._texts:
+            if not txt.display():
+                continue
             handles = self._handles
             p1 = handles[-1].pos
             p2 = handles[-2].pos
@@ -72,6 +74,8 @@ class EditableTextSupport(object):
         """
         distances = [10000.0]
         for txt in self._texts:
+            if not txt.display():
+                continue
             distances.append(distance_rectangle_point(txt.bounds, (x, y)))
         return min(distances)
 
@@ -82,6 +86,8 @@ class EditableTextSupport(object):
         """
         cr = context.cairo
         for txt in self._texts:
+            if not txt.display():
+                continue
             bounds = txt.bounds
             x, y = bounds.x0, bounds.y0
             width, height = bounds.width, bounds.height
@@ -119,9 +125,13 @@ class TextElement(object):
 
     bounds = property(lambda self: self._bounds)
 
-    def __init__(self, attr, style = None):
+    def __init__(self, attr, style = None, when = None):
         """
         Create new text element with bounds (0, 0, 10, 10) and empty text.
+
+        Parameters:
+         - when: function, which evaluates to True/False determining if text
+                 should be displayed
         """
         super(TextElement, self).__init__()
 
@@ -137,6 +147,15 @@ class TextElement(object):
         self.attr = attr
         self.text = ''
 
+        if when:
+            self.display = when
+
+
+    def display(self):
+        """
+        Display text by default.
+        """
+        return True
 
 
 # vim:sw=4:et:ai
