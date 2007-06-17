@@ -8,6 +8,7 @@ from gaphas.state import observed, reversible_property
 from gaphor import UML
 
 from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 from gaphas.util import text_extents, text_multiline
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
@@ -24,8 +25,9 @@ class ObjectNodeItem(NamedItem):
 
     __uml__ = UML.ObjectNode
 
-    __style__ = {
-        'margin': (10, 10, 10, 10)
+    STYLE_BOTTOM = {
+        'text-align': (ALIGN_CENTER, ALIGN_BOTTOM),
+        'text-outside': True,
     }
 
     def __init__(self, id = None):
@@ -35,9 +37,12 @@ class ObjectNodeItem(NamedItem):
 
         self._upper_bound = self.add_text('upperBound.value',
             pattern = '{ upperBound = %s }',
+            style = self.STYLE_BOTTOM,
             when = self.display_upper_bound)
+
         self._ordering = self.add_text('ordering',
             pattern = '{ ordering = %s }',
+            style = self.STYLE_BOTTOM,
             when = self._get_show_ordering)
 
 
