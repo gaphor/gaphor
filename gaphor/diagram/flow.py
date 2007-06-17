@@ -8,7 +8,7 @@ from math import atan, pi, sin, cos
 
 from gaphor import UML
 from gaphor.diagram.diagramline import DiagramLine
-from gaphor.diagram.style import ALIGN_RIGHT, ALIGN_TOP
+from gaphor.diagram.style import ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 
 node_classes = {
@@ -33,11 +33,14 @@ class FlowItem(DiagramLine):
         'SplitFlow',
     )
 
-    NAME_ALIGN = { 'text-align': (ALIGN_RIGHT, ALIGN_TOP) }
+    NAME_ALIGN = {
+            'text-align': (ALIGN_RIGHT, ALIGN_TOP),
+            'text-padding': (5, 15, 5, 5),
+    }
 
     def __init__(self, id = None):
         DiagramLine.__init__(self, id)
-        self.add_text('name', self.NAME_ALIGN)
+        self.add_text('name', style=self.NAME_ALIGN)
         self._guard = self.add_text('guard.value')
 
 
