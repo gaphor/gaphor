@@ -34,8 +34,10 @@ class ObjectNodeItem(NamedItem):
         self._show_ordering = False
 
         self._upper_bound = self.add_text('upperBound.value',
+            pattern = 'upperBound = %s',
             when = self.display_upper_bound)
         self._ordering = self.add_text('ordering',
+            pattern = 'ordering = %s',
             when = self._get_show_ordering)
 
 

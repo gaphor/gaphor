@@ -29,7 +29,7 @@ class EditableTextSupport(object):
         return self._texts
 
 
-    def add_text(self, attr, style = None, when = None):
+    def add_text(self, attr, style = None, pattern = None, when = None):
         """
         Create and add a text element. See also TextElement class
         description.
@@ -40,7 +40,7 @@ class EditableTextSupport(object):
 
         Returns created text element.
         """
-        txt = TextElement(attr, style, when)
+        txt = TextElement(attr, style = style, pattern = pattern, when = when)
         self._texts.append(txt)
         return txt
 
@@ -115,17 +115,18 @@ class TextElement(object):
      - guard.value (flow item guard)
 
     Attributes and properties:
-     - attr:   name of displayed and edited UML class attribute
-     - bounds: text bounds
-     - _style: text style (i.e. align information, padding)
-     - text:   rendered text to be displayed
+     - attr:    name of displayed and edited UML class attribute
+     - bounds:  text bounds
+     - _style:  text style (i.e. align information, padding)
+     - text:    rendered text to be displayed
+     - pattern: print pattern to display text
 
     See also EditableTextSupport.add_text.
     """
 
     bounds = property(lambda self: self._bounds)
 
-    def __init__(self, attr, style = None, when = None):
+    def __init__(self, attr, style = None, pattern = None, when = None):
         """
         Create new text element with bounds (0, 0, 10, 10) and empty text.
 
@@ -145,10 +146,22 @@ class TextElement(object):
             self._style.update(style)
 
         self.attr = attr
-        self.text = ''
+        self._text = ''
 
         if when:
             self.display = when
+
+        if pattern:
+            self._pattern = pattern
+        else:
+            self._pattern = '%s'
+
+
+    def _set_text(self, value):
+        self._text = self._pattern % value
+
+
+    text = property(lambda s: s._text, _set_text)
 
 
     def display(self):
