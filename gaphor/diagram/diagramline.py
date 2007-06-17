@@ -10,7 +10,8 @@ from gaphas.geometry import Rectangle
 from diagramitem import DiagramItem
 from interfaces import IConnect
 
-from gaphor.diagram.style import get_text_point_at_line
+from gaphor.diagram.style import get_text_point_at_line, \
+        ALIGN_CENTER, ALIGN_TOP
 
 class LineItem(gaphas.Line, DiagramItem):
     """
@@ -191,6 +192,11 @@ class DiagramLine(LineItem):
 
 
 class NamedLine(DiagramLine):
+    __style__ = {
+            'name-align': (ALIGN_CENTER, ALIGN_TOP),
+            'name-padding': (5, 5, 5, 5),
+    }
+
     def __init__(self, id = None):
         DiagramLine.__init__(self, id)
         style = {
