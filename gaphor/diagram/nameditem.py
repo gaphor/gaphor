@@ -61,6 +61,9 @@ class NamedItem(ElementItem):
         #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
         ElementItem.on_subject_notify(self, pspec,
                 ('name', 'namespace', 'namespace.name') + notifiers)
+        if self.subject:
+            self.on_subject_notify__name(self.subject)
+            self.on_subject_notify__namespace(self.subject)
                                     
 
     def on_subject_notify__namespace(self, subject, pspec=None):
@@ -76,6 +79,7 @@ class NamedItem(ElementItem):
         """
         Change the '(from ...)' line if the namespace's name changes.
         """
+        self._from.text = self.subject.namespace.name
         self.on_subject_notify__namespace(subject, pspec)
 
 

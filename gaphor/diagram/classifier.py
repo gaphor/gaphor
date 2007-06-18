@@ -257,7 +257,6 @@ class ClassifierItem(NamedItem):
         NamedItem.on_subject_notify(self, pspec, ('isAbstract',) + notifiers)
         # Create already existing attributes and operations:
         if self.subject:
-            self.on_subject_notify__namespace(self.subject)
             self.on_subject_notify__isAbstract(self.subject)
         self.request_update()
 
