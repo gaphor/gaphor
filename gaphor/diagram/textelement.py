@@ -162,9 +162,12 @@ class EditableTextSupport(object):
             if self.subject:
                 text_multiline(cr, x, y, txt.text)
 
-            if context.hovered or context.focused or context.draw_all:
+            if (context.hovered or context.focused or context.draw_all) \
+                    and txt.editable:
+                print txt, txt.editable
                 cr.set_line_width(0.5)
-                cr.rectangle(x, y, width, height)
+                cr.set_source_rgba(0.0, 1.0, 0.0, 0.5)
+                cr.rectangle(x - 2, y - 2, width + 2, height + 2)
                 cr.stroke()
 
 
@@ -193,7 +196,8 @@ class TextElement(object):
 
     bounds = property(lambda self: self._bounds)
 
-    def __init__(self, attr, style = None, pattern = None, when = None):
+    def __init__(self, attr, style = None, pattern = None, when = None,
+            editable = False):
         """
         Create new text element with bounds (0, 0, 10, 10) and empty text.
 
@@ -223,6 +227,8 @@ class TextElement(object):
             self._pattern = pattern
         else:
             self._pattern = '%s'
+
+        self.editable = editable
 
 
     def _set_text(self, value):
