@@ -24,18 +24,21 @@ class NamedItem(ElementItem):
 
         self.width  = self.min_width
         self.height = self.min_height
-        style = {
-                'text-align': self.style.name_align,
-                'text-padding': self.style.name_padding,
-                'text-outside': self.style.name_outside,
-                'text-align-group': 'stereotype',
-        }
+
+        # create (from ...) text to distinguish diagram items from
+        # different namespace
         self._from = self.add_text('from',
                 pattern='(from %s)',
                 style={ 'text-align-group': 'stereotype' },
                 when=self.display_namespace_info,
                 font=font.FONT_SMALL)
 
+        style = {
+                'text-align': self.style.name_align,
+                'text-padding': self.style.name_padding,
+                'text-outside': self.style.name_outside,
+                'text-align-group': 'stereotype',
+        }
         self._name = self.add_text('name', style=style, editable=True)
 
 

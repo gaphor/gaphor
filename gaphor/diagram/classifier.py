@@ -161,8 +161,6 @@ class ClassifierItem(NamedItem):
         NamedItem.__init__(self, id)
         self._compartments = []
 
-        # create (from ...) text to distinguish diagram items from
-        # different namespace
         self._drawing_style = ClassifierItem.DRAW_NONE
 
 
