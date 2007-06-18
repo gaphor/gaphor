@@ -282,6 +282,8 @@ class ClassifierItem(NamedItem):
         self.on_subject_notify__namespace(subject, pspec)
 
     def on_subject_notify__isAbstract(self, subject, pspec=None):
+        self._name.font = subject.isAbstract \
+                and font.FONT_ABSTRACT_NAME or font.FONT_NAME
         self.request_update()
 
     def pre_update_compartment(self, context):
