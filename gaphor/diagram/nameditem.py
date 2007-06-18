@@ -36,7 +36,7 @@ class NamedItem(ElementItem):
                 when=self.display_namespace_info,
                 font=font.FONT_SMALL)
 
-        self._name = self.add_text('name', style=style)
+        self._name = self.add_text('name', style=style, editable=True)
 
 
     def display_namespace_info(self):

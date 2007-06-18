@@ -167,7 +167,7 @@ class NamedLine(DiagramLine):
                 'text-align': self.style.name_align,
                 'text-padding': self.style.name_padding,
         }
-        self._name = self.add_text('name', style=style)
+        self._name = self.add_text('name', style=style, editable=True)
 
 
     def on_subject_notify(self, pspec, notifiers=()):
