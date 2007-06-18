@@ -69,12 +69,6 @@ class InterfaceItem(ClassItem):
 
     drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
 
-    def get_popup_menu(self):
-        if self.drawing_style == self.DRAW_ICON:
-            return NamedItem.popup_menu + ('separator', 'Rotate', 'Unfold',)
-        else:
-            return ClassItem.get_popup_menu(self)
-
     def is_folded(self):
         """
         Returns True if the interface is drawn as a circle/dot.

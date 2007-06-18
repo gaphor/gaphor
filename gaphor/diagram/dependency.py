@@ -60,16 +60,6 @@ class DependencyItem(DiagramLine):
 
 #    relationship = DependencyRelationship()
 
-    dependency_popup_menu = (
-        'separator',
-        'Dependency type', (
-            'AutoDependency',
-            'separator',
-            'DependencyTypeDependency',
-            'DependencyTypeUsage',
-            'DependencyTypeRealization')
-    )
-
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
 
@@ -90,14 +80,6 @@ class DependencyItem(DiagramLine):
             self.auto_dependency = eval(value)
         else:
             DiagramLine.load(self, name, value)
-
-
-    def get_popup_menu(self):
-        menu = DiagramLine.get_popup_menu(self)
-        if self.subject:
-            return menu
-        else:
-            return menu + self.dependency_popup_menu
 
 
     def get_dependency_type(self):

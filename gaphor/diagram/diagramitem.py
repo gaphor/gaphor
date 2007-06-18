@@ -255,9 +255,6 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
 
     __metaclass__ = DiagramItemMeta
 
-    stereotype_list = []
-    popup_menu = ('Stereotype', stereotype_list)
-
     def __init__(self, id=None):
         SubjectSupport.__init__(self)
         StereotypeSupport.__init__(self)
@@ -324,40 +321,6 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
 
     def item_at(self, x, y):
         return self
-
-    def get_popup_menu(self):
-        """In the popup menu a submenu is created with Stereotypes than can be
-        applied to this classifier (Class, Interface).
-        If the class itself is a metaclass, an option is added to check if the class
-        exists.
-        """
-        subject = self.subject
-        stereotype_list = self.stereotype_list
-        stereotype_list[:] = []
-
-        # UML specs does not allow to extend stereotypes with stereotypes
-        if subject and not isinstance(subject, UML.Stereotype):
-            # look for stereotypes to put them into context menu of an item
-            # this can be only done when subject exists
-
-            from gaphor.actions.itemactions import ApplyStereotypeAction, register_action
-
-            cls = type(subject)
-
-            # find out names of classes, which are superclasses of our subject
-            names = set(c.__name__ for c in cls.__mro__ if issubclass(c, Element))
-
-            # find stereotypes that extend out metaclass
-            classes = subject._factory.select(lambda e: e.isKindOf(UML.Class) and e.name in names)
-
-            for class_ in classes:
-                for extension in class_.extension:
-                    stereotype = extension.ownedEnd.type
-                    stereotype_action = ApplyStereotypeAction(stereotype)
-                    register_action(stereotype_action, 'ItemFocus')
-                    stereotype_list.append(stereotype_action.id)
-        return self.popup_menu
-
 
     def on_subject_notify__appliedStereotype(self, subject, pspec=None):
         if self.subject:

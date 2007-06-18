@@ -28,11 +28,6 @@ class FlowItem(NamedLine):
 
     __uml__ = UML.ControlFlow
 
-    popup_menu = NamedLine.popup_menu + (
-        'separator',
-        'SplitFlow',
-    )
-
     __style__ = {
             'name-align': (ALIGN_RIGHT, ALIGN_TOP),
             'name-padding': (5, 15, 5, 5),
@@ -144,11 +139,6 @@ class ACItem(object):
 #    Such flows have active and inactive ends. Active end is connected to
 #    any node and inactive end is connected only to activity edge connector.
 #    """
-#
-#    popup_menu = NamedLine.popup_menu + (
-#        'separator',
-#        'MergeFlow',
-#    )
 #
 #    def __init__(self, id = None):
 #        FlowItem.__init__(self, id)

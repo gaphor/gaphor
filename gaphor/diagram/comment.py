@@ -15,12 +15,6 @@ class CommentItem(ElementItem):
     EAR=15
     OFFSET=5
 
-    popup_menu = (
-        'EditItem',
-        'separator',
-        'EditDelete',
-    )
-
     def __init__(self, id=None):
         ElementItem.__init__(self, id)
         self.min_width = CommentItem.EAR + 2 * CommentItem.OFFSET

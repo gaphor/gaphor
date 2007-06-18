@@ -38,8 +38,5 @@ class ExtensionItem(NamedLine):
         cr.fill()
         cr.move_to(15, 0)
 
-    def get_popup_menu(self):
-        return self.popup_menu
-
 
 # vim:sw=4:et:ai

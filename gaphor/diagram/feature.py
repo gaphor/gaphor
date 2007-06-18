@@ -68,15 +68,6 @@ class FeatureItem(DiagramItem):
 
 class AttributeItem(FeatureItem):
 
-    popup_menu = FeatureItem.popup_menu + (
-        'EditItem',
-        'DeleteAttribute',
-        'MoveUp',
-        'MoveDown',
-        'separator',
-        'CreateAttribute',
-    )
-
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
         self.need_sync_attributes = False
@@ -137,16 +128,6 @@ class AttributeItem(FeatureItem):
 # TODO: handle Parameter's
 
 class OperationItem(FeatureItem):
-
-    popup_menu = FeatureItem.popup_menu + (
-        'AbstractOperation',
-        'EditItem',
-        'DeleteOperation',
-        'MoveUp',
-        'MoveDown',
-        'separator',
-        'CreateOperation'
-    )
 
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)

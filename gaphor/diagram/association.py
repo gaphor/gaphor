@@ -35,29 +35,6 @@ class AssociationItem(NamedLine):
 
     __uml__ = UML.Association
 
-    association_popup_menu = (
-        'separator',
-        'AssociationShowDirection',
-        'AssociationInvertDirection',
-        'separator',
-        'Head', (
-            'Head_unknownNavigation',
-            'Head_isNotNavigable',
-            'Head_isNavigable',
-            'separator',
-            'Head_AggregationNone',
-            'Head_AggregationShared',
-            'Head_AggregationComposite'),
-        'Tail', (
-            'Tail_unknownNavigation',
-            'Tail_isNotNavigable',
-            'Tail_isNavigable',
-            'separator',
-            'Tail_AggregationNone',
-            'Tail_AggregationShared',
-            'Tail_AggregationComposite'),
-    )
-
     def __init__(self, id=None):
         NamedLine.__init__(self, id)
 
@@ -121,12 +98,6 @@ class AssociationItem(NamedLine):
         self._head_end.unlink()
         self._tail_end.unlink()
         NamedLine.unlink(self)
-
-    def get_popup_menu(self):
-        if self.subject:
-            return self.popup_menu + self.association_popup_menu
-        else:
-            return self.popup_menu
 
     def invert_direction(self):
         """Invert the direction of the association, this is done by

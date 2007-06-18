@@ -10,18 +10,11 @@ from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 class NamedItem(ElementItem):
 
     __style__ = {
-            'min-size'    : (120, 60),
-            'name-align'  : (ALIGN_CENTER, ALIGN_TOP),
-            'name-padding': (5, 10, 5, 10),
-            'name-outside': False,
+        'min-size'    : (120, 60),
+        'name-align'  : (ALIGN_CENTER, ALIGN_TOP),
+        'name-padding': (5, 10, 5, 10),
+        'name-outside': False,
     }
-
-    popup_menu = ElementItem.popup_menu + (
-        'RenameItem',
-        'separator',
-        'EditDelete',
-        'ShowElementInTreeView'
-    )
 
     def __init__(self, id=None):
         """
@@ -62,3 +55,6 @@ class NamedItem(ElementItem):
             self.min_height = max(h, self.min_height)
 
         super(NamedItem, self).pre_update(context)
+
+
+# vim:sw=4:et:ai

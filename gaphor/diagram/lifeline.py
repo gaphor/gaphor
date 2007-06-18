@@ -58,11 +58,6 @@ class LifelineItem(NamedItem, GroupBase):
             gobject.PARAM_READWRITE),
     }
 
-    lifeline_popup_menu = (
-        'separator',
-        'LifelineHasLifetime',
-    )
-
     def __init__(self, id = None):
         GroupBase.__init__(self)
         NamedItem.__init__(self, id)
@@ -97,10 +92,6 @@ class LifelineItem(NamedItem, GroupBase):
             return self._has_lifetime
         else:
             return NamedItem.do_get_property(self, pspec)
-
-
-    def get_popup_menu(self):
-        return self.popup_menu + self.lifeline_popup_menu
 
 
     def on_update(self, affine):

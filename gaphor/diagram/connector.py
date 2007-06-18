@@ -83,12 +83,6 @@ class ConnectorEndItem(FreeLine, GroupBase):
 
     interface_actions = []
 
-    popup_menu = (
-        'DisconnectConnector',
-        'separator',
-        'Interface', interface_actions
-    )
-
     def __init__(self, id = None, mpt = None):
         """
         Create connector end item.
@@ -112,25 +106,6 @@ class ConnectorEndItem(FreeLine, GroupBase):
         if self._handle.connected_to:
             return self._handle.connected_to.subject
         return None
-
-
-    def get_popup_menu(self):
-        """
-        Return pop up menu for connector end item, so an user can
-        - disconnect from component
-        - choose an interface, which assembly connector should be connected
-          to
-        """
-        from itemactions import ApplyInterfaceAction, register_action
-        if self._handle.connected_to:
-            del self.interface_actions[:]
-            for interface in self.get_interfaces():
-                action = ApplyInterfaceAction(interface)
-                register_action(action, 'ItemFocus')
-                self.interface_actions.append(action.id)
-            return self.popup_menu
-        else:
-            return None
 
 
     def save(self, save_func):

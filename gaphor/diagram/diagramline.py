@@ -102,16 +102,6 @@ class DiagramLine(LineItem):
     TODO: put serializability and popup in separate adapters.
     """
 
-    popup_menu = LineItem.popup_menu + (
-        'separator', 
-        'AddSegment',
-        'DeleteSegment',
-        'Orthogonal',
-        'OrthogonalAlignment',
-        'separator',
-        'EditDelete'
-    )
-
     def save (self, save_func):
         LineItem.save(self, save_func)
         save_func('matrix', tuple(self.matrix))

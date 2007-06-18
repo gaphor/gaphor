@@ -18,9 +18,6 @@ class ComponentItem(ClassifierItem):
     BAR_HEIGHT    =  5
     BAR_PADDING   =  5
 
-    popup_menu = ClassifierItem.popup_menu \
-        + ('separator', 'IndirectlyInstantiated')
-
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
         # Set drawing style to compartment w// small icon
