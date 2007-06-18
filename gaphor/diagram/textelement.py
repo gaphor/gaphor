@@ -5,9 +5,11 @@ item, guard of flow item, etc.
 
 from gaphor.diagram.style import Style
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
+import gaphor.diagram.font as font
 
 from gaphas.geometry import distance_rectangle_point, Rectangle
-from gaphas.util import text_extents, text_align, text_multiline
+from gaphas.util import text_extents, text_align, text_multiline, \
+    text_set_font
 
 
 class EditableTextSupport(object):
@@ -32,21 +34,21 @@ class EditableTextSupport(object):
         return self._texts
 
 
-    def add_text(self, attr, style = None, pattern = None, when = None):
+    def add_text(self, attr, style = None, pattern = None, when = None,
+            editable = False, font = font.FONT_NAME):
         """
-        Create and add a text element. See also TextElement class
-        description.
+        Create and add a text element.
 
-        Parameters:
-         - attr:  attribute name of diagram item subject
-         - style: align information
+        For parameters description and more information see TextElement
+        class documentation.
 
         If style information contains 'text-align-group' data, then text
         element is grouped.
 
         Returns created text element.
         """
-        txt = TextElement(attr, style=style, pattern=pattern, when=when)
+        txt = TextElement(attr, style=style, pattern=pattern, when=when,
+                editable=editable, font=font)
         self._texts.append(txt)
 
         # try to group text element
@@ -160,6 +162,7 @@ class EditableTextSupport(object):
             width, height = bounds.width, bounds.height
 
             if self.subject:
+                text_set_font(cr, txt.font)
                 text_multiline(cr, x, y, txt.text)
 
             if (context.hovered or context.focused or context.draw_all) \
@@ -184,11 +187,13 @@ class TextElement(object):
      - guard.value (flow item guard)
 
     Attributes and properties:
-     - attr:    name of displayed and edited UML class attribute
-     - bounds:  text bounds
-     - _style:  text style (i.e. align information, padding)
-     - text:    rendered text to be displayed
-     - pattern: print pattern to display text
+     - attr:     name of displayed and edited UML class attribute
+     - bounds:   text bounds
+     - _style:   text style (i.e. align information, padding)
+     - text:     rendered text to be displayed
+     - pattern:  print pattern to display text
+     - editable: True if text should be editable
+     - font:     text font
 
     See also EditableTextSupport.add_text.
     """
@@ -196,7 +201,7 @@ class TextElement(object):
     bounds = property(lambda self: self._bounds)
 
     def __init__(self, attr, style = None, pattern = None, when = None,
-            editable = False):
+            editable = False, font = font.FONT_NAME):
         """
         Create new text element with bounds (0, 0, 10, 10) and empty text.
 
@@ -228,6 +233,7 @@ class TextElement(object):
             self._pattern = '%s'
 
         self.editable = editable
+        self.font = font
 
 
     def _set_text(self, value):
