@@ -104,7 +104,7 @@ def get_text_point(extents, width, height, align, padding, outside):
         if valign == ALIGN_TOP:
             y = -h -padding[PADDING_TOP]
         elif valign == ALIGN_MIDDLE:
-            y = (height + h) / 2
+            y = (height - h) / 2
         elif valign == ALIGN_BOTTOM:
             y = height + padding[PADDING_BOTTOM]
         else:
@@ -123,7 +123,7 @@ def get_text_point(extents, width, height, align, padding, outside):
         if valign == ALIGN_TOP:
             y = h + padding[PADDING_TOP]
         elif valign == ALIGN_MIDDLE:
-            y = (height + h) / 2
+            y = (height - h) / 2
         elif valign == ALIGN_BOTTOM:
             y = height - padding[PADDING_BOTTOM]
         else:
