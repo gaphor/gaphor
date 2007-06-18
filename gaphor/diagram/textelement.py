@@ -101,6 +101,7 @@ class EditableTextSupport(object):
         # stack all displayable texts
         dy = 0
         for i, txt in enumerate(texts):
+            # calculate minimal bounds
             dw, dh = map(max, sizes[i], (15, 10))
 
             # center stacked texts
