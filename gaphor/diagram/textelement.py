@@ -87,8 +87,8 @@ class EditableTextSupport(object):
         extents = (width, height)
         width, height = map(max, extents, (15, 10))
 
-        # align according to style of first text
-        style = texts[0]._style
+        # align according to style of last text in the group
+        style = texts[-1]._style
         x, y = self.text_align(extents, style.text_align,
                 style.text_padding, style.text_outside)
 
@@ -229,7 +229,7 @@ class TextElement(object):
         """
         Render text value using pattern.
         """
-        self._text = self._pattern % value
+        self._text = value and self._pattern % value or ''
 
 
     text = property(lambda s: s._text, _set_text)
