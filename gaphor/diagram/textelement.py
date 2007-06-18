@@ -154,6 +154,7 @@ class EditableTextSupport(object):
         Draw all text elements of a diagram item.
         """
         cr = context.cairo
+        cr.save()
         for txt in self._texts:
             if not txt.display():
                 continue
@@ -176,6 +177,7 @@ class EditableTextSupport(object):
                 cr.set_source_rgba(0.0, 1.0, 0.0, 0.9)
                 cr.rectangle(x, y, w, y)
                 cr.stroke()
+        cr.restore()
 
 
 
