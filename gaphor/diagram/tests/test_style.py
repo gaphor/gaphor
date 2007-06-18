@@ -27,15 +27,15 @@ class StyleTestCase(unittest.TestCase):
         extents = 80, 12
         padding = (1, 2, 3, 4)
         data = {
-                (ALIGN_LEFT,   ALIGN_TOP,    False): (  4, 13),
+                (ALIGN_LEFT,   ALIGN_TOP,    False): (  4, 1),
                 (ALIGN_LEFT,   ALIGN_MIDDLE, False): (  4, 14),
-                (ALIGN_LEFT,   ALIGN_BOTTOM, False): (  4, 37),
-                (ALIGN_CENTER, ALIGN_TOP,    False): ( 40, 13),
+                (ALIGN_LEFT,   ALIGN_BOTTOM, False): (  4, 25),
+                (ALIGN_CENTER, ALIGN_TOP,    False): ( 40, 1),
                 (ALIGN_CENTER, ALIGN_MIDDLE, False): ( 40, 14),
-                (ALIGN_CENTER, ALIGN_BOTTOM, False): ( 40, 37),
-                (ALIGN_RIGHT,  ALIGN_TOP,    False): ( 78, 13),
+                (ALIGN_CENTER, ALIGN_BOTTOM, False): ( 40, 25),
+                (ALIGN_RIGHT,  ALIGN_TOP,    False): ( 78, 1),
                 (ALIGN_RIGHT,  ALIGN_MIDDLE, False): ( 78, 14),
-                (ALIGN_RIGHT,  ALIGN_BOTTOM, False): ( 78, 37),
+                (ALIGN_RIGHT,  ALIGN_BOTTOM, False): ( 78, 25),
                 (ALIGN_LEFT,   ALIGN_TOP,    True):  (-84, -13),
                 (ALIGN_LEFT,   ALIGN_MIDDLE, True):  (-84, 14),
                 (ALIGN_LEFT,   ALIGN_BOTTOM, True):  (-84, 43),

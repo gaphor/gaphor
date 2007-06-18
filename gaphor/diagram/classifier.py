@@ -63,9 +63,10 @@ class Compartment(list):
         
         if self:
             # self (=list) contains items
-            sizes = [f.get_size(True) for f in self]
-            self.width = max(map(lambda p: p[0], sizes))
-            self.height = sum(map(lambda p: p[1], sizes))
+            sizes = [ (0, 0) ] # to not throw exceptions by max and sum
+            sizes.extend(f.get_size(True) for f in self)
+            self.width = max(size[0] for size in sizes)
+            self.height = sum(size[1] for size in sizes)
             vspacing = self.owner.style.compartment_vspacing
             self.height += vspacing * (len(sizes) - 1)
 
@@ -142,12 +143,11 @@ class ClassifierItem(NamedItem):
     DRAW_ICON = 3
 
     __style__ = {
-        'min-size':           (100, 50),
-        'icon-size':          (20, 20),
+        'min-size': (100, 50),
+        'icon-size': (20, 20),
         'from-padding': (7, 2, 7, 2),
         'compartment-padding': (5, 5, 5, 5), # (top, right, bottom, left)
         'compartment-vspacing': 3,
-# Fix name, stereotype and from drawing!
         'name-padding': (10, 10, 10, 10),
         'stereotype-padding': (10, 10, 2, 10),
     }
@@ -266,43 +266,23 @@ class ClassifierItem(NamedItem):
                 and font.FONT_ABSTRACT_NAME or font.FONT_NAME
         self.request_update()
 
+
     def pre_update_compartment(self, context):
+        """
+        Calculate minimal size, which is based on comparment sizes.
+        """
+        super(ClassifierItem, self).pre_update(context)
+
         for comp in self._compartments:
             comp.pre_update(context)
 
-        cr = context.cairo
-        s_w = s_h = 0
-#!#        if self.stereotype:
-#!#            s_w, s_h = 0, 0 #text_extents(cr, self.stereotype)
-#!#            padding = self.style.stereotype_padding
-#!#            s_w += padding[1] + padding[3]
-#!#            s_h += padding[0] + padding[2]
-#!#
-        n_w, n_h = 0, 0 #text_extents(cr, self.subject.name)
-        padding = self.style.name_padding
-        n_w += padding[1] + padding[3]
-        n_h += padding[0] + padding[2]
+        # take current minimal size into account
+        sizes = [ (self.min_width, 0) ]
+        sizes.extend(comp.get_size() for comp in self._compartments)
 
-        f_w, f_h = 0, 0
-        sizes = [comp.get_size() for comp in self._compartments]
-        sizes.append((s_w, s_h))
-        sizes.append((f_w, f_h))
-        self.min_width = max(s_w, n_w, f_w)
-        self.min_height = 0
-
-        if sizes:
-            w = max(map(lambda p: p[0], sizes))
-
-            h = sum(map(lambda p: p[1], sizes))
-            self.min_width = max(self.min_width, w)
-            self.min_height += h
-
-#        if self.width < self.min_width:
-#            self.width = self.min_width
-#        if self.height < self.min_height:
-#            self.height = self.min_height
-
-        super(ClassifierItem, self).pre_update(context)
+        self.min_width = max(size[0] for size in sizes)
+        h = sum(size[1] for size in sizes)
+        self.min_height = max(self.min_height, h)
 
 
     def pre_update_compartment_icon(self, context):
@@ -316,6 +296,7 @@ class ClassifierItem(NamedItem):
         Update state for box-style presentation.
         """
         super(ClassifierItem, self).update(context)
+
 
     def update_compartment_icon(self, context):
         """
@@ -343,14 +324,15 @@ class ClassifierItem(NamedItem):
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
-        y = 0
+
+        # make room for name, stereotype, etc.
+        y = self._header_size[1]
+        cr.translate(0, y)
 
         if self._drawing_style == self.DRAW_COMPARTMENT_ICON:
             width = self.width - self.ICON_WIDTH
         else:
             width = self.width
-
-        cr.translate(0, y)
 
         # draw compartments
         for comp in self._compartments:
@@ -365,6 +347,7 @@ class ClassifierItem(NamedItem):
             finally:
                 cr.restore()
             cr.translate(0, comp.height)
+
 
     def item_at(self, x, y):
         """

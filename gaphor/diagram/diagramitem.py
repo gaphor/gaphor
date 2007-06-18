@@ -154,8 +154,15 @@ class StereotypeSupport(object):
     def __init__(self):
         self._stereotype = self.add_text('stereotype',
                 style=self.STEREOTYPE_ALIGN,
-                pattern='%s%%s%s' % (STEREOTYPE_OPEN, STEREOTYPE_CLOSE))
-        self._stereotype.text = ''
+                pattern='%s%%s%s' % (STEREOTYPE_OPEN, STEREOTYPE_CLOSE),
+                when=self.display_stereotype)
+
+
+    def display_stereotype(self):
+        """
+        Display stereotype if it is not empty.
+        """
+        return self._stereotype.text
 
 
     def set_stereotype(self, text=None):

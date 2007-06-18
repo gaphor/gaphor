@@ -121,11 +121,11 @@ def get_text_point(extents, width, height, align, padding, outside):
             assert False
 
         if valign == ALIGN_TOP:
-            y = h + padding[PADDING_TOP]
+            y = padding[PADDING_TOP]
         elif valign == ALIGN_MIDDLE:
             y = (height - h) / 2
         elif valign == ALIGN_BOTTOM:
-            y = height - padding[PADDING_BOTTOM]
+            y = height - h - padding[PADDING_BOTTOM]
         else:
             assert False
     return x, y

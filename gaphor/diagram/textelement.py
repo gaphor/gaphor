@@ -25,6 +25,7 @@ class EditableTextSupport(object):
     def __init__(self):
         self._texts = []
         self._text_groups = { None: [] }
+        self._text_groups_sizes = {}
 
 
     def texts(self):
@@ -35,7 +36,7 @@ class EditableTextSupport(object):
 
 
     def add_text(self, attr, style = None, pattern = None, when = None,
-            editable = False, font = font.FONT_NAME):
+            editable = False, font = font.FONT):
         """
         Create and add a text element.
 
@@ -62,14 +63,16 @@ class EditableTextSupport(object):
         return txt
 
 
-    def _align_text_group(self, context, group):
+    def _align_text_group(self, context, name):
         """
         Align group of text elements making vertical stack of strings.
 
         Parameters:
-         - list of text elements to group
+         - name: group name
         """
         cr = context.cairo
+
+        group = self._text_groups[name]
 
         # find displayable texts
         texts = [ txt for txt in group if txt.display() ]
@@ -78,16 +81,17 @@ class EditableTextSupport(object):
         if len(texts) == 0:
             return
 
-        # calculate text dimensions
-        dimensions = [ text_extents(cr, txt.text, multiline=True) \
+        # calculate text sizes
+        sizes = [ text_extents(cr, txt.text, multiline=True) \
                 for txt in texts ]
 
         # find maximum width and total height
-        width = max(ext[0] for ext in dimensions)
-        height = sum(ext[1] for ext in dimensions)
+        width = max(size[0] for size in sizes)
+        height = sum(size[1] for size in sizes)
 
         extents = (width, height)
-        width, height = map(max, extents, (15, 10))
+        extents = width, height = map(max, extents, (15, 10))
+        self._text_groups_sizes[name] = extents
 
         # align according to style of last text in the group
         style = texts[-1]._style
@@ -97,26 +101,25 @@ class EditableTextSupport(object):
         # stack all displayable texts
         dy = 0
         for i, txt in enumerate(texts):
-            dw, dh  = dimensions[i]
+            dw, dh = map(max, sizes[i], (15, 10))
 
             # center stacked texts
             txt.bounds.x0 = x + (width - dw) / 2.0
             txt.bounds.y0 = y + dy
             txt.bounds.width = dw
             txt.bounds.height = dh
-            dy += dh + 3
+            dy += dh
 
 
     def update(self, context):
         """
-        Calculate position and dimensions of all text elements of a diagram
+        Calculate position and sizes of all text elements of a diagram
         item.
         """
         cr = context.cairo
-        for gname in self._text_groups:
-            if gname is not None:
-                group = self._text_groups[gname]
-                self._align_text_group(context, group)
+        for name in self._text_groups:
+            if name is not None:
+                self._align_text_group(context, name)
 
         # align ungrouped text elements
         for txt in self._text_groups[None]:
@@ -124,8 +127,7 @@ class EditableTextSupport(object):
                 continue
 
             extents = text_extents(cr, txt.text, multiline=True)
-            width, height = map(max, extents, (15, 10))
-            extents = (width, height)
+            extents = width, height = map(max, extents, (15, 10))
 
             style = txt._style
             x, y = self.text_align(extents, style.text_align,
@@ -168,14 +170,16 @@ class EditableTextSupport(object):
 
             if (context.hovered or context.focused or context.draw_all) \
                     and txt.editable:
+
                 x, y, w, h, = x - 2, y - 2, width + 4, height + 4
+
                 cr.set_line_width(0.5)
                 cr.set_source_rgba(1.0, 1.0, 0.0, 0.2)
-                cr.rectangle(x, y, w, y)
+                cr.rectangle(x, y, w, h)
                 cr.fill()
 
                 cr.set_source_rgba(0.0, 1.0, 0.0, 0.9)
-                cr.rectangle(x, y, w, y)
+                cr.rectangle(x, y, w, h)
                 cr.stroke()
         cr.restore()
 

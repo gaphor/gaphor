@@ -39,7 +39,13 @@ class NamedItem(ElementItem):
                 'text-outside': self.style.name_outside,
                 'text-align-group': 'stereotype',
         }
-        self._name = self.add_text('name', style=style, editable=True)
+        self._name = self.add_text('name',
+                style=style,
+                editable=True,
+                font=font.FONT_NAME)
+
+        # size of stereotype, namespace and name text
+        self._header_size = 0, 0
 
 
     def display_namespace_info(self):
@@ -47,7 +53,8 @@ class NamedItem(ElementItem):
         Display name space info when it is different, then diagram
         namespace.
         """
-        return self.canvas.diagram.namespace is not self.subject.namespace
+        return self._from.text and \
+                self.canvas.diagram.namespace is not self.subject.namespace
 
 
     def on_subject_notify(self, pspec, notifiers=()):
@@ -77,19 +84,23 @@ class NamedItem(ElementItem):
         self.request_update()
 
 
-    def pre_update(self, context):
+    def update(self, context):
         """
         Update minimal size information using name bounds.
         """
-        super(NamedItem, self).pre_update(context)
+        super(NamedItem, self).update(context)
+
+        w, h = self.style.min_size
 
         if not self.style.name_outside:
-            bounds = self._name.bounds
-            w, h = get_min_size(bounds.width, bounds.height,
-                    self.style.min_size, self.style.name_padding)
+            # at this stage stereotype text group should be already updated
+            assert 'stereotype' in self._text_groups_sizes
+            nw, nh = self._text_groups_sizes['stereotype']
+            self._header_size = get_min_size(nw, nh, (0, 0),
+                    self.style.name_padding)
 
-            self.min_width = max(w, self.min_width)
-            self.min_height = max(h, self.min_height)
+        self.min_width = max(w, self.min_width, self._header_size[0])
+        self.min_height = max(h, self.min_height, self._header_size[1])
 
 
 # vim:sw=4:et:ai

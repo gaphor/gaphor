@@ -20,6 +20,8 @@ class ActionItem(NamedItem):
         """
         Draw action symbol.
         """
+        super(ActionItem, self).draw(context)
+
         c = context.cairo
 
         d = 15
@@ -35,8 +37,6 @@ class ActionItem(NamedItem):
         c.close_path()
 
         c.stroke()
-
-        super(ActionItem, self).draw(context)
 
 
 # vim:sw=4:et
