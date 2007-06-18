@@ -28,7 +28,6 @@ class NamedItemPropertyPage(object):
     """
 
     interface.implements(IPropertyPage)
-    component.adapts(items.NamedItem, items.NamedLine)
 
     def __init__(self, context):
         self.context = context
@@ -53,9 +52,70 @@ class NamedItemPropertyPage(object):
     def _on_name_change(self, entry):
         self.context.subject.name = entry.get_text()
         
-component.provideAdapter(NamedItemPropertyPage, name='Properties')
+component.provideAdapter(NamedItemPropertyPage,
+                         adapts=[items.NamedItem], name='Properties')
+component.provideAdapter(NamedItemPropertyPage,
+                         adapts=[items.NamedLine], name='Properties')
+
+
+class StereotypePage(object):
+
+    interface.implements(IPropertyPage)
+
+    element_factory = inject('element_factory')
+
+    def __init__(self, context):
+        self.context = context
+        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        
+    def construct(self):
+        page = gtk.VBox()
+        for i, stereotype in enumerate(self.get_stereotypes()):
+            if (i % 3) == 0:
+                hbox = gtk.HBox()
+                page.pack_start(hbox, expand=False)
+            button = gtk.CheckButton()
+            button.set_active(stereotype in self.context.subject.appliedStereotype)
+            button.connect('toggled', self._on_stereotype_selected, stereotype)
+            hbox.pack_start(button, expand=False)
+            label = gtk.Label(stereotype.name)
+            label.set_justify(gtk.JUSTIFY_LEFT)
+            self.size_group.add_widget(label)
+            hbox.pack_start(label)
+        page.show_all()
+        return page
+
+    def get_stereotypes(self):
+        stereotype_list = []
+        subject = self.context.subject
+
+        # UML specs does not allow to extend stereotypes with stereotypes
+        if subject and not isinstance(subject, UML.Stereotype):
+            cls = type(subject)
+
+            # find out names of classes, which are superclasses of our subject
+            names = set(c.__name__ for c in cls.__mro__ if issubclass(c, UML.Element))
+
+            # find stereotypes that extend out metaclass
+            classes = self.element_factory.select(lambda e: e.isKindOf(UML.Class) and e.name in names)
+
+            for class_ in classes:
+                for extension in class_.extension:
+                    yield extension.ownedEnd.type
+
+    def _on_stereotype_selected(self, button, stereotype):
+        subject = self.context.subject
+        if button.get_active():
+            subject.appliedStereotype = stereotype
+        else:
+            del subject.appliedStereotype[stereotype]
+        
+component.provideAdapter(StereotypePage,
+                         adapts=[items.ClassifierItem], name='Stereotypes')
+component.provideAdapter(StereotypePage,
+                         adapts=[items.PackageItem], name='Stereotypes')
     
-    
+
 class ClassPropertyPage(NamedItemPropertyPage):
     """
     Adapter which shows a property page for a class view.
