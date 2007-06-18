@@ -362,6 +362,8 @@ class ClassifierItem(NamedItem):
 
 
     def draw_compartment(self, context):
+        super(ClassifierItem, self).draw(context)
+
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
@@ -371,23 +373,6 @@ class ClassifierItem(NamedItem):
             width = self.width - self.ICON_WIDTH
         else:
             width = self.width
-
-        # draw stereotype
-#!#        if self.stereotype:
-#!#            padding = self.style.stereotype_padding
-#!#            y += padding[0]
-#!#            text_set_font(cr, font.FONT)
-#!#            text_align(cr, width / 2, y, self.stereotype)
-#!#            y += padding[2]
-
-        # draw name
-        padding = self.style.name_padding
-        y += padding[0]
-        n_w, n_h = text_extents(cr, self.subject.name)
-        text_set_font(cr, self.subject.isAbstract and \
-                          font.FONT_ABSTRACT_NAME or font.FONT_NAME)
-        text_align(cr, width / 2, y + n_h/2, self.subject.name)
-        y += padding[2] + n_h/2
 
         # draw 'from ... '
         if self._from:
