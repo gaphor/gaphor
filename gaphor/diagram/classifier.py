@@ -160,8 +160,11 @@ class ClassifierItem(NamedItem):
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
         self._compartments = []
-        self._from = None # (from ...) text
+
+        # create (from ...) text to distinguish diagram items from
+        # different namespace
         self._drawing_style = ClassifierItem.DRAW_NONE
+
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -253,33 +256,12 @@ class ClassifierItem(NamedItem):
 
     def on_subject_notify(self, pspec, notifiers=()):
         #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        NamedItem.on_subject_notify(self, pspec,
-                                    ('namespace', 'namespace.name',
-                                     'isAbstract') + notifiers)
+        NamedItem.on_subject_notify(self, pspec, ('isAbstract',) + notifiers)
         # Create already existing attributes and operations:
         if self.subject:
             self.on_subject_notify__namespace(self.subject)
             self.on_subject_notify__isAbstract(self.subject)
         self.request_update()
-
-    def on_subject_notify__namespace(self, subject, pspec=None):
-        """
-        Add a line '(from ...)' to the class item if subject's namespace
-        is not the same as the namespace of this diagram.
-        """
-        if self.subject and self.subject.namespace and self.canvas and \
-           self.canvas.diagram.namespace is not self.subject.namespace:
-            self._from = _('(from %s)') % self.subject.namespace.name
-        else:
-           self._from = None
-
-        self.request_update()
-
-    def on_subject_notify__namespace_name(self, subject, pspec=None):
-        """
-        Change the '(from ...)' line if the namespace's name changes.
-        """
-        self.on_subject_notify__namespace(subject, pspec)
 
     def on_subject_notify__isAbstract(self, subject, pspec=None):
         self._name.font = subject.isAbstract \
@@ -304,12 +286,6 @@ class ClassifierItem(NamedItem):
         n_h += padding[0] + padding[2]
 
         f_w, f_h = 0, 0
-        if self._from: #self.subject.namespace:
-            f_w, f_h = 0, 0 #text_extents(cr, self._from, font=font.FONT_SMALL)
-            padding = self.style.from_padding
-            f_w += padding[1] + padding[3]
-            f_h += padding[0] + padding[2]
-
         sizes = [comp.get_size() for comp in self._compartments]
         sizes.append((s_w, s_h))
         sizes.append((f_w, f_h))
@@ -375,14 +351,6 @@ class ClassifierItem(NamedItem):
             width = self.width - self.ICON_WIDTH
         else:
             width = self.width
-
-        # draw 'from ... '
-        if self._from:
-            padding = self.style.from_padding
-            y += padding[0]
-            text_set_font(cr, font.FONT_SMALL)
-            text_align(cr, width / 2, y, self._from)
-            y += padding[2]
 
         cr.translate(0, y)
 
