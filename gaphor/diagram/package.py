@@ -19,18 +19,6 @@ class PackageItem(NamedItem):
         'tab-y': 20,
     }
 
-    def pre_update(self, context):
-        cr = context.cairo
-        w, h = text_extents(cr, self.subject.name)
-        self.min_width = w + 60
-        self.min_height = h + 30 + self.style.tab_y
-        if self.stereotype:
-            s_w, s_h = text_extents(cr, self.stereotype)
-            self.min_width = max(self.min_width, s_w)
-            self.min_height += s_h
-
-        super(PackageItem, self).pre_update(context)
-
     def draw(self, context):
         cr = context.cairo
         o = 0.0
@@ -46,13 +34,7 @@ class PackageItem(NamedItem):
         cr.line_to(w, y)
         cr.line_to(o, y)
         cr.stroke()
-        if self.stereotype:
-            y += 10
-            text_align(cr, w / 2, y, self.stereotype)
-            y += 10
-
-        if self.subject and self.subject.name:
-            text_align(cr, w / 2, y + 10, self.subject.name)
+        super(PackageItem, self).draw(context)
 
 
 # vim:sw=4:et
