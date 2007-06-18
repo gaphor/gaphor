@@ -28,7 +28,7 @@ class NamedItem(ElementItem):
         # create (from ...) text to distinguish diagram items from
         # different namespace
         self._from = self.add_text('from',
-                pattern='(from %s)',
+                pattern='(%saaaaaaaaaaaaaaaaaaa)',
                 style={ 'text-align-group': 'stereotype' },
                 when=self.display_namespace_info,
                 font=font.FONT_SMALL)
@@ -82,7 +82,6 @@ class NamedItem(ElementItem):
         """
         Change the '(from ...)' line if the namespace's name changes.
         """
-        self._from.text = self.subject.namespace.name
         self.on_subject_notify__namespace(subject, pspec)
 
 
