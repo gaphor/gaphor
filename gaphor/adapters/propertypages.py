@@ -111,9 +111,9 @@ class StereotypePage(object):
             del subject.appliedStereotype[stereotype]
         
 component.provideAdapter(StereotypePage,
-                         adapts=[items.ClassifierItem], name='Stereotypes')
+                         adapts=[items.ElementItem], name='Stereotypes')
 component.provideAdapter(StereotypePage,
-                         adapts=[items.PackageItem], name='Stereotypes')
+                         adapts=[items.LineItem], name='Stereotypes')
     
 
 class ClassPropertyPage(NamedItemPropertyPage):

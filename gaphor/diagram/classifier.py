@@ -290,12 +290,12 @@ class ClassifierItem(NamedItem):
 
         cr = context.cairo
         s_w = s_h = 0
-        if self.stereotype:
-            s_w, s_h = 0, 0 #text_extents(cr, self.stereotype)
-            padding = self.style.stereotype_padding
-            s_w += padding[1] + padding[3]
-            s_h += padding[0] + padding[2]
-
+#!#        if self.stereotype:
+#!#            s_w, s_h = 0, 0 #text_extents(cr, self.stereotype)
+#!#            padding = self.style.stereotype_padding
+#!#            s_w += padding[1] + padding[3]
+#!#            s_h += padding[0] + padding[2]
+#!#
         n_w, n_h = 0, 0 #text_extents(cr, self.subject.name)
         padding = self.style.name_padding
         n_w += padding[1] + padding[3]
@@ -373,12 +373,12 @@ class ClassifierItem(NamedItem):
             width = self.width
 
         # draw stereotype
-        if self.stereotype:
-            padding = self.style.stereotype_padding
-            y += padding[0]
-            text_set_font(cr, font.FONT)
-            text_align(cr, width / 2, y, self.stereotype)
-            y += padding[2]
+#!#        if self.stereotype:
+#!#            padding = self.style.stereotype_padding
+#!#            y += padding[0]
+#!#            text_set_font(cr, font.FONT)
+#!#            text_align(cr, width / 2, y, self.stereotype)
+#!#            y += padding[2]
 
         # draw name
         padding = self.style.name_padding

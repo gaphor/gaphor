@@ -54,20 +54,21 @@ class LineItem(gaphas.Line, DiagramItem):
 
     def update_stereotype(self, context):
         super(LineItem, self).update_stereotype()
-
-        sw, sh = text_extents(context.cairo, self._stereotype)
-
-        handles = self._handles
-        middle = len(handles)/2
-        p1 = handles[middle-1].pos
-        p2 = handles[middle].pos
-
-        x = p1[0] > p2[0] and sw + 2 or -2
-        x = (p1[0] + p2[0]) / 2.0 - x
-        y = p1[1] > p2[1] and -sh or 0
-        y = (p1[1] + p2[1]) / 2.0 - y
-
-        self._stereotype_bounds = Rectangle(x, y, width=sw, height=sh)
+        self._stereotype_bounds = Rectangle(0, 0, width=10, height=10)
+#!#
+#!#        sw, sh = text_extents(context.cairo, self._stereotype)
+#!#
+#!#        handles = self._handles
+#!#        middle = len(handles)/2
+#!#        p1 = handles[middle-1].pos
+#!#        p2 = handles[middle].pos
+#!#
+#!#        x = p1[0] > p2[0] and sw + 2 or -2
+#!#        x = (p1[0] + p2[0]) / 2.0 - x
+#!#        y = p1[1] > p2[1] and -sh or 0
+#!#        y = (p1[1] + p2[1]) / 2.0 - y
+#!#
+#!#        self._stereotype_bounds = Rectangle(x, y, width=sw, height=sh)
 
     def update(self, context):
         #super(LineItem, self).update(context)
@@ -83,10 +84,10 @@ class LineItem(gaphas.Line, DiagramItem):
         gaphas.Line.draw(self, context)
         DiagramItem.draw(self, context)
         cr = context.cairo
-        if self._stereotype:
-            text_align(cr, self._stereotype_bounds[0], self._stereotype_bounds[1],
-                       self._stereotype, align_x=1, align_y=1)
-
+#!#        if self._stereotype:
+#!#            text_align(cr, self._stereotype_bounds[0], self._stereotype_bounds[1],
+#!#                       self._stereotype, align_x=1, align_y=1)
+#!#
 
     def point(self, x, y):
         d1 = gaphas.Line.point(self, x, y)

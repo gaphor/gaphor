@@ -8,6 +8,7 @@ from gaphor.misc import uniqueid
 from gaphor.UML import Element, Presentation
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 
 STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
@@ -143,9 +144,19 @@ class StereotypeSupport(object):
     """
     Support methods for stereotypes.
     """
+    STEREOTYPE_ALIGN = {
+        'text-align'  : (ALIGN_CENTER, ALIGN_TOP),
+        'text-padding': (5, 10, 2, 10),
+        'text-outside': False,
+        'text-align-group': 'stereotype',
+    }
 
     def __init__(self):
-        self._stereotype = None
+        self._stereotype = self.add_text('stereotype',
+                style=self.STEREOTYPE_ALIGN,
+                pattern='%s%%s%s' % (STEREOTYPE_OPEN, STEREOTYPE_CLOSE))
+        self._stereotype.text = ''
+
 
     def set_stereotype(self, text=None):
         """
@@ -155,10 +166,7 @@ class StereotypeSupport(object):
 
         @arg text: stereotype text
         """
-        if text:
-            self._stereotype = STEREOTYPE_OPEN + text + STEREOTYPE_CLOSE
-        else:
-            self._stereotype = None
+        self._stereotype.text = text
         self.request_update()
 
     stereotype = property(lambda s: s._stereotype, set_stereotype)
@@ -257,8 +265,8 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
 
     def __init__(self, id=None):
         SubjectSupport.__init__(self)
-        StereotypeSupport.__init__(self)
         EditableTextSupport.__init__(self)
+        StereotypeSupport.__init__(self)
 
         self._id = id
 
