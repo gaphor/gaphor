@@ -26,29 +26,6 @@ class LineItem(gaphas.Line, DiagramItem):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
-    def update_label(self, context, text):
-        """
-        Update the name label near the middle of the association.
-
-        Returns a geometry.Rectangle object with the boundig box for the label text.
-        """
-        cr = context.cairo
-        handles = self._handles
-        middle = len(handles)/2
-        p1 = handles[middle].pos
-        p2 = handles[middle-1].pos
-
-        w, h = text_extents(cr, text)
-
-        x = p1[0] > p2[0] and w + 5 or -2
-        x = (p1[0] + p2[0]) / 2.0 - x
-        y = p1[1] <= p2[1] and h + 2 or 0
-        y = (p1[1] + p2[1]) / 2.0 - y
-
-        #log.debug('label pos = (%d, %d)' % (x, y))
-        #return x, y, max(x + 10, x + w), max(y + 10, y + h)
-        return Rectangle(x, y, x + max(10, w), y + max(10, h))
-
 
     def update(self, context):
         #super(LineItem, self).update(context)
@@ -151,6 +128,7 @@ class DiagramLine(LineItem):
         x, y = get_text_point_at_line(extents, p1, p2,
                 align, padding)
 
+        print x, y, align
         return x, y
 
 

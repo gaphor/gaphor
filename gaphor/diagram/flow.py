@@ -126,13 +126,6 @@ class ACItem(object):
         self.set_bounds((-1, -1, r + 1, r + 1))
 
 
-    def update_label(self, x, y):
-        """
-        Do nothing, use move_center method.
-        """
-        pass
-
-
 #class CFlowItem(FlowItem):
 #    """
 #    Abstract class for flows with activity edge connector. Flow with
