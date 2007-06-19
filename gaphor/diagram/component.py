@@ -26,6 +26,8 @@ class ComponentItem(ClassifierItem):
     def draw_compartment_icon(self, context):
         cr = context.cairo
         cr.save()
+        self.draw_compartment(context)
+        cr.restore()
 
         ix, iy = self.get_icon_pos()
 
@@ -50,8 +52,6 @@ class ComponentItem(ClassifierItem):
         cr.set_source(color)
         cr.stroke()
 
-        cr.restore()
-        self.draw_compartment(context)
 
 
 # vim:sw=4:et
