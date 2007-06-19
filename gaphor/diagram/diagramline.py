@@ -128,7 +128,6 @@ class DiagramLine(LineItem):
         x, y = get_text_point_at_line(extents, p1, p2,
                 align, padding)
 
-        print x, y, align
         return x, y
 
 
