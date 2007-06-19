@@ -35,18 +35,16 @@ class FlowItem(NamedLine):
 
     def __init__(self, id = None):
         NamedLine.__init__(self, id)
-        self._guard = self.add_text('guard.value')
+        self._guard = self.add_text('guard.value', editable=True)
 
 
     def on_subject_notify(self, pspec, notifiers = ()):
         NamedLine.on_subject_notify(self, pspec,
             ('guard', 'guard.value',) + notifiers)
+        if self.subject:
+            self.on_subject_notify__guard(self.subject)
+            self.on_subject_notify__guard_value(self.subject)
         self.request_update()
-
-
-    def set_guard(self, value):
-        self.subject.guard.value = value
-        self._guard.text = value
 
 
     def on_subject_notify__guard(self, subject, pspec=None):
@@ -55,6 +53,11 @@ class FlowItem(NamedLine):
 
     def on_subject_notify__guard_value(self, subject, pspec=None):
         self.request_update()
+
+
+    def set_guard(self, value):
+        self.subject.guard.value = value
+        self._guard.text = value
 
 
     def draw_tail(self, context):
