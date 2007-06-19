@@ -172,6 +172,9 @@ class NamedLine(DiagramLine):
 
     def on_subject_notify(self, pspec, notifiers=()):
         DiagramLine.on_subject_notify(self, pspec, ('name',) + notifiers)
+        if self.subject:
+            self.on_subject_notify__name(self.subject)
+        self.request_update()
 
 
     def on_subject_notify__name(self, subject, pspec=None):
