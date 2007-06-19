@@ -172,7 +172,7 @@ class EditableTextSupport(object):
             if (context.hovered or context.focused or context.draw_all) \
                     and txt.editable:
 
-                x, y, w, h, = x - 2, y - 2, width + 4, height + 4
+                x, y, w, h, = x - 4, y - 2, width + 8, height + 4
 
                 cr.set_line_width(0.5)
                 cr.set_source_rgba(1.0, 1.0, 0.0, 0.2)
