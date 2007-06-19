@@ -82,7 +82,7 @@ class EditableTextSupport(object):
             return
 
         # calculate text sizes
-        sizes = [ text_extents(cr, txt.text, multiline=True) \
+        sizes = [ text_extents(cr, txt.text, font=txt.font, multiline=True) \
                 for txt in texts ]
 
         # find maximum width and total height
@@ -127,7 +127,7 @@ class EditableTextSupport(object):
             if not txt.display():
                 continue
 
-            extents = text_extents(cr, txt.text, multiline=True)
+            extents = text_extents(cr, txt.text, font=txt.font, multiline=True)
             extents = width, height = map(max, extents, (15, 10))
 
             style = txt._style
