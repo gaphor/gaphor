@@ -143,6 +143,7 @@ class NamedLine(DiagramLine):
         style = {
                 'text-align': self.style.name_align,
                 'text-padding': self.style.name_padding,
+                'text-align-group': 'stereotype',
         }
         self._name = self.add_text('name', style=style, editable=True)
 

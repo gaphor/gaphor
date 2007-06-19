@@ -343,6 +343,7 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
 
     def on_subject_notify__appliedStereotype(self, subject, pspec=None):
         if self.subject:
+            self.update_stereotype()
             self.request_update()
 
     def request_update(self):
