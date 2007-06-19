@@ -53,12 +53,11 @@ class EditableTextSupport(object):
         self._texts.append(txt)
 
         # try to group text element
-        if style:
-            gname = style.get('text-align-group')
-            if gname not in self._text_groups:
-                self._text_groups[gname] = []
-            group = self._text_groups[gname]
-            group.append(txt)
+        gname = style and style.get('text-align-group') or None
+        if gname not in self._text_groups:
+            self._text_groups[gname] = []
+        group = self._text_groups[gname]
+        group.append(txt)
 
         return txt
 
