@@ -267,19 +267,7 @@ class ClassifierItem(NamedItem):
 
 
     def pre_update_compartment(self, context):
-        """
-        Calculate minimal size, which is based on comparment sizes.
-        """
         super(ClassifierItem, self).pre_update(context)
-
-        for comp in self._compartments:
-            comp.pre_update(context)
-
-        sizes = [ (0, 0) ]
-        sizes.extend(comp.get_size() for comp in self._compartments)
-
-        self.min_width = max(size[0] for size in sizes)
-        self.min_height = sum(size[1] for size in sizes)
 
 
     def pre_update_compartment_icon(self, context):
@@ -293,8 +281,21 @@ class ClassifierItem(NamedItem):
     def update_compartment(self, context):
         """
         Update state for box-style presentation.
+
+        Calculate minimal size, which is based on comparments size and size
+        of name.
         """
         super(ClassifierItem, self).update(context)
+
+        for comp in self._compartments:
+            comp.pre_update(context)
+
+        sizes = [ (self.min_width, self._header_size[1]) ]
+        sizes.extend(comp.get_size() for comp in self._compartments)
+
+        self.min_width = max(size[0] for size in sizes)
+        h = sum(size[1] for size in sizes)
+        self.min_height = max(self.min_height, h)
 
 
     def update_compartment_icon(self, context):
