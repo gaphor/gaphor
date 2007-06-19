@@ -6,6 +6,7 @@ import itertools
 
 from gaphas.state import observed, reversible_property
 from gaphor import UML
+from gaphor.core import inject
 
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
@@ -22,6 +23,8 @@ class ObjectNodeItem(NamedItem):
 
     Ordering information can be hidden by user.
     """
+    
+    element_factory = inject('element_factory')
 
     __uml__ = UML.ObjectNode
 
@@ -109,7 +112,7 @@ class ObjectNodeItem(NamedItem):
         subject = self.subject
         if subject:
             if not subject.upperBound:
-                subject.upperBound = UML.create(UML.LiteralSpecification)
+                subject.upperBound = self.element_factory.create(UML.LiteralSpecification)
 
             if not value:
                 value = DEFAULT_UPPER_BOUND

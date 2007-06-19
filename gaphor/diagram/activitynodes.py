@@ -8,6 +8,7 @@ from gaphas.util import path_ellipse, text_align
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
+from gaphor.core import inject
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP, \
         ALIGN_RIGHT, ALIGN_BOTTOM
@@ -187,8 +188,12 @@ class ForkNodeItem(ForkDecisionNodeItem):
     """
     Representation of fork and join node.
     """
+
+    element_factory = inject('element_factory')
+
     __uml__   = UML.JoinNode
     #__uml__   = UML.ForkNode
+
     __style__ = {
         'min-size':   (6, 45),
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
@@ -252,7 +257,7 @@ class ForkNodeItem(ForkDecisionNodeItem):
             return
 
         if not subject.joinSpec:
-            subject.joinSpec = UML.create(UML.LiteralSpecification)
+            subject.joinSpec = self.element_factory.create(UML.LiteralSpecification)
 
         if not value:
             value = DEFAULT_JOIN_SPEC
