@@ -3,14 +3,12 @@ Test handle tool functionality.
 """
 
 import unittest
-from gaphor import resource
 from gaphor import UML
 from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.actor import ActorItem
-from gaphor.diagram.tool import ConnectHandleTool
-from gaphor.diagram.interfaces import IConnect
+from gaphor.ui.diagramtools import ConnectHandleTool
 from gaphas.canvas import Context
 from gaphas.tool import ToolChainContext
 
@@ -23,27 +21,22 @@ Event = Context
 
 class HandleToolTestCase(unittest.TestCase):
 
-    main_window = resource(MainWindow)
-    try:
-        main_window.construct()
-    except:
-        pass
-
     def test_iconnect(self):
         """Test basic glue functionality using CommentItem and CommentLine
         items.
         """
-        diagram = UML.create(UML.Diagram)
-        self.main_window.show_diagram(diagram)
-        comment = diagram.create(CommentItem, subject=UML.create(UML.Comment))
+        element_factory = UML.ElementFactory()
+        diagram = element_factory.create(UML.Diagram)
+        #self.main_window.show_diagram(diagram)
+        comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
         assert comment.height == 50
         assert comment.width == 100
-        actor = diagram.create(ActorItem, subject=UML.create(UML.Actor))
+        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         line = diagram.create(CommentLineItem)
         tool = ConnectHandleTool()
 
-        view = self.main_window.get_current_diagram_view()
-        assert view, 'View should be available here'
+        #view = self.main_window.get_current_diagram_view()
+        #assert view, 'View should be available here'
 
         # select handle:
         handle = line.handles()[-1]
@@ -70,12 +63,13 @@ class HandleToolTestCase(unittest.TestCase):
     def test_iconnect_2(self):
         """Test connect/disconnect on comment and actor using comment-line.
         """
-        diagram = UML.create(UML.Diagram)
-        self.main_window.show_diagram(diagram)
-        comment = diagram.create(CommentItem, subject=UML.create(UML.Comment))
+        element_factory = UML.ElementFactory()
+        diagram = element_factory.create(UML.Diagram)
+        #self.main_window.show_diagram(diagram)
+        comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
         assert comment.height == 50
         assert comment.width == 100
-        actor = diagram.create(ActorItem, subject=UML.create(UML.Actor))
+        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
         print diagram.canvas.get_matrix_i2w(actor), actor.matrix
@@ -84,8 +78,8 @@ class HandleToolTestCase(unittest.TestCase):
         line = diagram.create(CommentLineItem)
         tool = ConnectHandleTool()
 
-        view = self.main_window.get_current_diagram_view()
-        assert view, 'View should be available here'
+        #view = self.main_window.get_current_diagram_view()
+        #assert view, 'View should be available here'
 
         # select handle:
         handle = line.handles()[0]
@@ -137,12 +131,13 @@ class HandleToolTestCase(unittest.TestCase):
     def test_connect_3(self):
         """Test connecting through events (button press/release, motion).
         """
-        diagram = UML.create(UML.Diagram)
-        self.main_window.show_diagram(diagram)
-        comment = diagram.create(CommentItem, subject=UML.create(UML.Comment))
+        element_factory = UML.ElementFactory()
+        diagram = element_factory.create(UML.Diagram)
+        #self.main_window.show_diagram(diagram)
+        comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
         assert comment.height == 50
         assert comment.width == 100
-        actor = diagram.create(ActorItem, subject=UML.create(UML.Actor))
+        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
         print diagram.canvas.get_matrix_i2w(actor), actor.matrix
@@ -153,8 +148,8 @@ class HandleToolTestCase(unittest.TestCase):
         assert line.handles()[-1].pos, (10.0, 10.0)
         tool = ConnectHandleTool()
 
-        view = self.main_window.get_current_diagram_view()
-        assert view, 'View should be available here'
+        #view = self.main_window.get_current_diagram_view()
+        #assert view, 'View should be available here'
 
         # Add extra methods so the Context can impersonate a ToolChainContext
         def dummy_grab(): pass

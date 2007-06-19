@@ -12,18 +12,22 @@ import gaphor.adapters
 
 class ClassTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.element_factory = UML.ElementFactory()
+
     def tearDown(self):
-        UML.flush()
-        assert len(UML.lselect()) == 0
+        #self.element_factory.flush()
+        #assert len(self.element_factory.lselect()) == 0
+        pass
 
     def test_interface(self):
-        diagram = UML.create(UML.Diagram)
-        klass = diagram.create(InterfaceItem, subject=UML.create(UML.Class))
+        diagram = self.element_factory.create(UML.Diagram)
+        klass = diagram.create(InterfaceItem, subject=self.element_factory.create(UML.Class))
         klass.subject.name = 'Interface1'
 
     def test_folding(self):
-        diagram = UML.create(UML.Diagram)
-        klass = diagram.create(InterfaceItem, subject=UML.create(UML.Class))
+        diagram = self.element_factory.create(UML.Diagram)
+        klass = diagram.create(InterfaceItem, subject=self.element_factory.create(UML.Class))
         klass.subject.name = 'Interface1'
         assert klass.style.name_outside == False
         klass.drawing_style = klass.DRAW_ICON

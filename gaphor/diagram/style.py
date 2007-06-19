@@ -27,6 +27,14 @@ class Style(object):
         >>> print style.name_align
         ('center', 'top')
     """
+
+    def __init__(self, *args, **kwargs):
+        super(Style, self).__init__()
+        for d in args:
+            self.update(d)
+        if kwargs:
+            self.update(kwargs)
+
     def add(self, name, value):
         """
         Add style variable.

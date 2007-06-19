@@ -19,7 +19,7 @@ class UseCaseItem(ClassifierItem):
     }
 
     def __init__(self, id=None):
-        ClassifierItem.__init__(self, id)
+        super(UseCaseItem, self).__init__(id)
         self.drawing_style = -1
 
 
@@ -33,14 +33,14 @@ class UseCaseItem(ClassifierItem):
 
 
     def draw(self, context):
-        c = context.cairo
+        cr = context.cairo
 
         rx = self.width / 2. 
         ry = self.height / 2.
 
-        c.move_to(self.width, ry)
-        path_ellipse(c, rx, ry, self.width, self.height)
-        c.stroke()
+        cr.move_to(self.width, ry)
+        path_ellipse(cr, rx, ry, self.width, self.height)
+        cr.stroke()
 
         super(UseCaseItem, self).draw(context)
 

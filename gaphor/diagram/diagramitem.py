@@ -1,5 +1,5 @@
-# vim:sw=4:et
-"""DiagramItem provides basic functionality for presentations.
+"""
+DiagramItem provides basic functionality for presentations.
 Such as a modifier 'subject' property and a unique id.
 """
 
@@ -32,7 +32,8 @@ class SubjectSupport(Presentation, Element):
         self.__the_subject = None
 
     def _subject_connect_helper(self, element, callback_prefix, prop_list):
-        """Connect a signal notifier. The notifier can be just the name of
+        """
+        Connect a signal notifier. The notifier can be just the name of
         one of the subjects properties.
 
         See: DiagramItem.on_subject_notify()
@@ -283,7 +284,8 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
     id = property(lambda self: self._id, doc='Id')
 
     def set_prop_persistent(self, name):
-        """Specify property of diagram item, which should be saved in file.
+        """
+        Specify property of diagram item, which should be saved in file.
         """
         self._persistent_props.add(name)
 
@@ -315,12 +317,14 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
             self.on_subject_notify(type(self).subject)
 
     def save_property(self, save_func, name):
-        """Save a property, this is a shorthand method.
+        """
+        Save a property, this is a shorthand method.
         """
         save_func(name, getattr(self, name.replace('-', '_')))
 
     def save_properties(self, save_func, *names):
-        """Save a property, this is a shorthand method.
+        """
+        Save a property, this is a shorthand method.
         """
         for name in names:
             self.save_property(save_func, name)
@@ -342,13 +346,13 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
             self.request_update()
 
     def request_update(self):
-        """Placeholder for gaphor.Item's request_update() method.
+        """
+        Placeholder for gaphor.Item's request_update() method.
         """
         pass
 
     def on_subject_notify(self, pspec, notifiers=()):
         SubjectSupport.on_subject_notify(self, pspec, notifiers + ('appliedStereotype',))
-
 
 
 # vim:sw=4:et:ai

@@ -13,7 +13,8 @@ class ActionTestCase(unittest.TestCase):
     def test_action(self):
         """Test creation of actions.
         """
-        diagram = UML.create(UML.Diagram)
-        klass = diagram.create(ActionItem, subject=UML.create(UML.Action))
+        element_factory = UML.ElementFactory()
+        diagram = element_factory.create(UML.Diagram)
+        klass = diagram.create(ActionItem, subject=element_factory.create(UML.Action))
 
         diagram.canvas.update()
