@@ -142,14 +142,15 @@ class EditableTextSupport(object):
 
     def point(self, x, y):
         """
-        Return the distance to the nearest text element.
+        Return the distance to the nearest editable and displayable text
+        element.
         """
-        distances = [10000.0]
-        for txt in self._texts:
-            if not txt.display():
-                continue
-            distances.append(distance_rectangle_point(txt.bounds, (x, y)))
-        return min(distances)
+        def distances():
+            yield 10000.0
+            for txt in self._texts:
+                if txt.display() and txt.editable:
+                    yield distance_rectangle_point(txt.bounds, (x, y))
+        return min(distances())
 
 
     def draw(self, context):
