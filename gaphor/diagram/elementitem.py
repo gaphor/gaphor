@@ -51,6 +51,7 @@ class ElementItem(gaphas.Element, DiagramItem):
     def update(self, context):
         gaphas.Element.update(self, context)
         DiagramItem.update(self, context)
+        self.update_stereotype()
 
 
     def draw(self, context):

@@ -31,6 +31,7 @@ class LineItem(gaphas.Line, DiagramItem):
         #super(LineItem, self).update(context)
         gaphas.Line.update(self, context)
         DiagramItem.update(self, context)
+        self.update_stereotype()
 
 
     def draw(self, context):
