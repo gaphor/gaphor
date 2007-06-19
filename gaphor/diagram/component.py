@@ -11,7 +11,7 @@ class ComponentItem(ClassifierItem):
     __icon__ = True
 
     __style__ = {
-            'name-padding': (10, 50, 10, 10),
+            'name-padding': (10, 25, 10, 10),
     }
 
     BAR_WIDTH     = 10

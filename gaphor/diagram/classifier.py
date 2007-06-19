@@ -275,8 +275,7 @@ class ClassifierItem(NamedItem):
         for comp in self._compartments:
             comp.pre_update(context)
 
-        # take current minimal size into account
-        sizes = [ (self.min_width, 0) ]
+        sizes = [ (0, 0) ]
         sizes.extend(comp.get_size() for comp in self._compartments)
 
         self.min_width = max(size[0] for size in sizes)
@@ -285,6 +284,8 @@ class ClassifierItem(NamedItem):
 
     def pre_update_compartment_icon(self, context):
         self.pre_update_compartment(context)
+        self.min_width = max(self.min_width,
+                self._header_size[0] + self.ICON_WIDTH + 10) # icon width plus right margin
 
     def pre_update_icon(self, context):
         super(ClassifierItem, self).pre_update(context)

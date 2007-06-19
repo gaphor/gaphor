@@ -114,7 +114,7 @@ def get_text_point(extents, width, height, align, padding, outside):
         if halign == ALIGN_LEFT:
             x = padding[PADDING_LEFT]
         elif halign == ALIGN_CENTER:
-            x = (width - w) / 2
+            x = (width - w) / 2 + padding[PADDING_LEFT] - padding[PADDING_RIGHT]
         elif halign == ALIGN_RIGHT:
             x = width - w - padding[PADDING_RIGHT]
         else:
