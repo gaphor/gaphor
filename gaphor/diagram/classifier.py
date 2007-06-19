@@ -280,8 +280,7 @@ class ClassifierItem(NamedItem):
         sizes.extend(comp.get_size() for comp in self._compartments)
 
         self.min_width = max(size[0] for size in sizes)
-        h = sum(size[1] for size in sizes)
-        self.min_height = max(self.min_height, h)
+        self.min_height = sum(size[1] for size in sizes)
 
 
     def pre_update_compartment_icon(self, context):

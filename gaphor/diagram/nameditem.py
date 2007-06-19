@@ -106,7 +106,7 @@ class NamedItem(ElementItem):
                     self.style.name_padding)
 
         self.min_width = max(w, self.min_width, self._header_size[0])
-        self.min_height = max(h, self.min_height, self._header_size[1])
+        self.min_height = max(h, self.min_height + self._header_size[1])
 
 
 # vim:sw=4:et:ai
