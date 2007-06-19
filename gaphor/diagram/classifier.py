@@ -351,26 +351,28 @@ class ClassifierItem(NamedItem):
 
     def item_at(self, x, y):
         """
-        Find the composite item (attribute or operation) for the classifier.
+        Find the composite item (attribute or operation) for the
+        classifier.
         """
 
-        if self.drawing_style not in (ClassifierItem.DRAW_COMPARTMENT, ClassifierItem.DRAW_COMPARTMENT_ICON):
+        if self.drawing_style not in (self.DRAW_COMPARTMENT, self.DRAW_COMPARTMENT_ICON):
             return self
 
-        name_comp_height = self._name.bounds.height
+        header_height = self._header_size[1]
+
+        compartments = [ comp for comp in self.compartments if comp.visible]
+
         # Edit is in name compartment -> edit name
-        if y < name_comp_height:
+        if y < header_height or not len(compartments):
             return self
 
         padding = self.style.compartment_padding
         vspacing = self.style.compartment_vspacing
         
         # place offset at top of first comparement
-        y -= name_comp_height
+        y -= header_height
         y += vspacing / 2.0
-        for comp in self.compartments:
-            if not comp.visible:
-                continue
+        for comp in compartments:
             item = comp.item_at(x, y)
             if item:
                 return item
