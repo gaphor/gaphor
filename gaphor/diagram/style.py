@@ -151,45 +151,55 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
      - align:   text align information (center, top, etc.)
      - padding: text padding
     """
-    w, h = extents
+    name_dx = 0.0
+    name_dy = 0.0
+    ofs = 5
 
-    halign, valign = align
+    dx = float(p2[0]) - float(p1[0])
+    dy = float(p2[1]) - float(p1[1])
+    
+    name_w, name_h = extents
 
-    dx = p2[0] - p1[0]
-    dy = p2[1] - p1[1]
-
-    if halign == ALIGN_LEFT:
-        if dx > 0:
-            x = p1[0] + padding[PADDING_LEFT]
-        else:
-            x = p1[0] - w - padding[PADDING_LEFT]
-
-        if dy >= 0:
-            y = p1[1] + padding[PADDING_TOP]
-        else:
-            y = p1[1] - padding[PADDING_TOP] - h
-
-    elif halign == ALIGN_RIGHT or halign == ALIGN_CENTER:
-        if halign == ALIGN_CENTER:
-            x0 = (p2[0] - p1[0]) / 2.0
-            y0 = (p2[1] - p1[1]) / 2.0
-        else:
-            x0 = p2[0]
-            y0 = p2[1]
-
-        if dx > 0:
-            x = x0 - w - padding[PADDING_RIGHT]# - h
-        else:
-            x = x0 + padding[PADDING_RIGHT]# + h
-
-        if dy >= 0:
-            y = y0 - padding[PADDING_TOP] - h
-        else:
-            y = y0 + padding[PADDING_TOP]
+    if dy == 0:
+        rc = 1000.0 # quite a lot...
     else:
-        assert False
+        rc = dx / dy
+    abs_rc = abs(rc)
+    h = dx > 0 # right side of the box
+    v = dy > 0 # bottom side
 
-    return x, y
+    if abs_rc > 6:
+        # horizontal line
+        if h:
+            name_dx = ofs
+            name_dy = -ofs - name_h
+        else:
+            name_dx = -ofs - name_w
+            name_dy = -ofs - name_h
+    elif 0 <= abs_rc <= 0.2:
+        # vertical line
+        if v:
+            name_dx = -ofs - name_w
+            name_dy = ofs
+        else:
+            name_dx = -ofs - name_w
+            name_dy = -ofs - name_h
+    else:
+        # Should both items be placed on the same side of the line?
+        r = abs_rc < 1.0
+
+        # Find out alignment of text (depends on the direction of the line)
+        align_left = (h and not r) or (r and not h)
+        align_bottom = (v and not r) or (r and not v)
+        if align_left:
+            name_dx = ofs
+        else:
+            name_dx = -ofs - name_w
+        if align_bottom:
+            name_dy = -ofs - name_h
+        else:
+            name_dy = ofs 
+    return p1[0] + name_dx, p1[1] + name_dy
 
 
 # vim:sw=4:et
