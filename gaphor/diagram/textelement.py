@@ -168,20 +168,15 @@ class EditableTextSupport(object):
             if self.subject:
                 text_set_font(cr, txt.font)
                 text_multiline(cr, x, y, txt.text)
+                cr.stroke()
 
             if (context.hovered or context.focused or context.draw_all) \
                     and txt.editable:
 
-                x, y, w, h, = x - 4, y - 2, width + 8, height + 4
-
                 cr.set_line_width(0.5)
-                cr.set_source_rgba(1.0, 1.0, 0.0, 0.2)
-                cr.rectangle(x, y, w, h)
-                cr.fill()
-
-                cr.set_source_rgba(0.0, 1.0, 0.0, 0.9)
-                cr.rectangle(x, y, w, h)
+                cr.rectangle(x, y, width, height)
                 cr.stroke()
+
         cr.restore()
 
 
