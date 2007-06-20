@@ -33,17 +33,17 @@ class InterfaceItem(ClassItem):
         'icon-size-provided': (20, 20),
         'icon-size-required': (28, 28),
         'name-outside': False,
-        }
+    }
 
     UNFOLDED_STYLE = {
         'text-align': (ALIGN_CENTER, ALIGN_TOP),
         'text-outside': False,
-        }
+    }
 
     FOLDED_STYLE = {
         'text-align': (ALIGN_CENTER, ALIGN_BOTTOM),
         'text-outside': True,
-        }
+    }
 
     RADIUS_PROVIDED = 10
     RADIUS_REQUIRED = 14
@@ -87,13 +87,12 @@ class InterfaceItem(ClassItem):
 
     folded = property(is_folded, _set_folded)
 
-    def pre_update_icon(self, context):
+    def update_icon(self, context):
         """
         Figure out if this interface represents a required, provided,
         assembled (wired) or dotted (minimal) look.
         """
-        h_nw = self._handles[NW]
-        cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
+
         self._draw_required = self._draw_provided = False
         for item, handle in self.canvas.get_connected_items(self):
             if gives_required(item, handle):
@@ -105,17 +104,26 @@ class InterfaceItem(ClassItem):
         if self._draw_required:
             radius = self.RADIUS_REQUIRED
             self.style.icon_size = self.style.icon_size_required
+
         self.min_width, self.min_height = self.style.icon_size
         self.width, self.height = self.style.icon_size
 
+        # update handles
+        h_nw = self._handles[NW]
+        cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
         h_nw.x, h_nw.y = cx - radius, cy - radius
-#        h_ne = self._handles[NE]
-#        h_ne.x, h_ne.y = cx + radius, cy - radius
+
+        h_ne = self._handles[NE]
+        h_ne.x, h_ne.y = cx + radius, cy - radius
+
         h_se = self._handles[SE]
         h_se.x, h_se.y = cx + radius, cy + radius
-#        h_sw = self._handles[SW]
-#        h_sw.x, h_sw.y = cx - radius, cy + radius
-        super(InterfaceItem, self).pre_update(context)
+
+        h_sw = self._handles[SW]
+        h_sw.x, h_sw.y = cx - radius, cy + radius
+
+        super(InterfaceItem, self).update(context)
+
 
     def draw_icon(self, context):
         cr = context.cairo

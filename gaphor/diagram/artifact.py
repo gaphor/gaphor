@@ -1,5 +1,5 @@
 """
-Artifact item
+Artifact item.
 """
 
 from gaphor import UML
@@ -9,6 +9,10 @@ class ArtifactItem(ClassifierItem):
 
     __uml__  = UML.Artifact
     __icon__ = True
+
+    __style__ = {
+            'name-padding': (10, 25, 10, 10),
+    }
 
     ICON_HEIGHT = 20
 
@@ -20,8 +24,8 @@ class ArtifactItem(ClassifierItem):
         self.drawing_style = self.DRAW_COMPARTMENT_ICON
         self._line = []
         
-    def update(self, context):
-        super(ArtifactItem, self).update(context)
+    def update_compartment_icon(self, context):
+        super(ArtifactItem, self).update_compartment_icon(context)
         w = self.ICON_WIDTH
         h = self.ICON_HEIGHT
         ix, iy = self.get_icon_pos()
@@ -34,6 +38,7 @@ class ArtifactItem(ClassifierItem):
                 (ix, iy + h),
                 (ix + w, iy + h),
                 (ix + w, iy + ear))
+
 
     def draw_compartment_icon(self, context):
         cr = context.cairo

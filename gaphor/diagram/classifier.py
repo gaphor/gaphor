@@ -2,16 +2,10 @@
 Classifier diagram item.
 """
 
-import itertools
-
-from gaphas.util import text_extents, text_align, text_set_font
 from gaphas.state import observed, reversible_property
-from gaphor import UML
-from gaphor.i18n import _
 
+from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.feature import FeatureItem
-from gaphor.diagram.style import get_min_size
 
 import font
 
