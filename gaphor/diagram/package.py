@@ -2,10 +2,8 @@
 Package diagram item.
 """
 
-from gaphas.util import text_align, text_extents, text_set_font
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
-import font
 
 class PackageItem(NamedItem):
 
@@ -20,6 +18,8 @@ class PackageItem(NamedItem):
     }
 
     def draw(self, context):
+        super(PackageItem, self).draw(context)
+
         cr = context.cairo
         o = 0.0
         h = self.height
@@ -34,7 +34,6 @@ class PackageItem(NamedItem):
         cr.line_to(w, y)
         cr.line_to(o, y)
         cr.stroke()
-        super(PackageItem, self).draw(context)
 
 
 # vim:sw=4:et
