@@ -10,7 +10,7 @@ import gaphor.diagram.font as font
 class NamedItem(ElementItem):
 
     __style__ = {
-        'min-size'    : (120, 60),
+        'min-size'    : (100, 50),
         'name-align'  : (ALIGN_CENTER, ALIGN_TOP),
         'name-padding': (5, 10, 5, 10),
         'name-outside': False,
@@ -21,9 +21,6 @@ class NamedItem(ElementItem):
         Create named item.
         """
         ElementItem.__init__(self, id)
-
-        self.width  = self.min_width
-        self.height = self.min_height
 
         # create (from ...) text to distinguish diagram items from
         # different namespace
@@ -98,19 +95,18 @@ class NamedItem(ElementItem):
 
         style = self._name.style
         if not style.text_outside:
-            w, h = self.style.min_size
-
             # at this stage stereotype text group should be already updated
             assert 'stereotype' in self._text_groups_sizes
 
             nw, nh = self._text_groups_sizes['stereotype']
-            self._header_size = get_min_size(nw, nh, (0, 0),
-                    self.style.name_padding)
+            self._header_size = get_min_size(nw, nh, self.style.name_padding)
 
-            self.min_width = max(w, self.min_width, self._header_size[0])
-            self.min_height = max(h, self.min_height, self._header_size[1])
-        else:
-            self.min_width, self.min_height = self.style.min_size
+            sw, sh = self.style.min_size
+            self.min_width = max(self._header_size[0], sw)
+            self.min_height = max(self._header_size[1], sh)
+#
+#        else: pass, leave decision to deriving class, we cannot determine
+#        minimal size because we do not know the shape of an item
 
 
 # vim:sw=4:et:ai
