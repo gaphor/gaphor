@@ -12,6 +12,7 @@ class PackageItem(NamedItem):
         'profile': UML.Profile,
     }
     __style__ = {
+        'min-size': (NamedItem.style.min_size[0], 70),
         'name-padding': (25, 10, 5, 10),
         'tab-x': 50,
         'tab-y': 20,
