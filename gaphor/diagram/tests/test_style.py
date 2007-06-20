@@ -15,7 +15,7 @@ class StyleTestCase(unittest.TestCase):
         """
         Test minimum size calculation
         """
-        width, height = get_min_size(10, 10, (5, 5), (1, 2, 3, 4))
+        width, height = get_min_size(10, 10, (1, 2, 3, 4))
         self.assertEqual(width, 16)
         self.assertEqual(height, 14)
 
