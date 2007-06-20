@@ -96,17 +96,21 @@ class NamedItem(ElementItem):
         """
         super(NamedItem, self).update(context)
 
-        w, h = self.style.min_size
+        style = self._name.style
+        if not style.text_outside:
+            w, h = self.style.min_size
 
-        if not self.style.name_outside:
             # at this stage stereotype text group should be already updated
             assert 'stereotype' in self._text_groups_sizes
+
             nw, nh = self._text_groups_sizes['stereotype']
             self._header_size = get_min_size(nw, nh, (0, 0),
                     self.style.name_padding)
 
-        self.min_width = max(w, self.min_width, self._header_size[0])
-        self.min_height = max(h, self.min_height, self._header_size[1])
+            self.min_width = max(w, self.min_width, self._header_size[0])
+            self.min_height = max(h, self.min_height, self._header_size[1])
+        else:
+            self.min_width, self.min_height = self.style.min_size
 
 
 # vim:sw=4:et:ai
