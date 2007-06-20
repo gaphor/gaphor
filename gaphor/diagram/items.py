@@ -13,6 +13,7 @@ from gaphor.diagram.classifier import ClassifierItem
 # General:
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
+from gaphor.diagram.simpleitem import Line, Box, Ellipse
 
 # Classes:
 from gaphor.diagram.feature import FeatureItem, AttributeItem, OperationItem

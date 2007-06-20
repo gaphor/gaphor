@@ -10,12 +10,16 @@ from gaphor import UML
 from gaphor.diagram import items
 from gaphor.core import _, inject, radio_action, build_action_group
 from diagramtools import PlacementTool, DefaultTool
+from gaphas.item import SE
 
 __all__ = [ 'DiagramToolbox', 'TOOLBOX_ACTIONS' ]
 
 TOOLBOX_ACTIONS = (
     ('', (
         ('toolbox-pointer', _('Pointer'), 'gaphor-pointer'),
+        ('toolbox-line', _('Line'), 'gaphor-line'),
+        ('toolbox-box', _('Box'), 'gaphor-box'),
+        ('toolbox-ellipse', _('Ellipse'), 'gaphor-ellipse'),
         ('toolbox-comment', _('Comment'), 'gaphor-comment'),
         ('toolbox-comment-line', _('Comment line'), 'gaphor-comment-line'),
     )), (_('Classes'), (
@@ -130,9 +134,27 @@ class DiagramToolbox(object):
         if self.view:
             self.view.tool = DefaultTool()
 
+    def toolbox_line(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.Line),
+                after_handler=self._after_handler)
+
+    def toolbox_box(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.Box),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_ellipse(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.Ellipse),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
     def toolbox_comment(self):
         self.view.tool = PlacementTool(
                 item_factory=self._item_factory(items.CommentItem, UML.Comment),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_comment_line(self):
@@ -146,18 +168,21 @@ class DiagramToolbox(object):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.ClassItem,
                                                           UML.Class),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_interface(self):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.InterfaceItem,
                                                           UML.Interface),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_package(self):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.PackageItem,
                                                           UML.Package),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_association(self):
@@ -186,18 +211,21 @@ class DiagramToolbox(object):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.ComponentItem,
                                                           UML.Component),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_node(self):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.NodeItem,
                                                           UML.Node),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_artifact(self):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.ArtifactItem,
                                                           UML.Artifact),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     # Actions:
@@ -206,42 +234,49 @@ class DiagramToolbox(object):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.ActionItem,
                                                           UML.Action),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_initial_node(self):
         self.view.tool = PlacementTool(
                 item_factory=self._item_factory(items.InitialNodeItem,
                                                 UML.InitialNode),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_activity_final_node(self):
         self.view.tool = PlacementTool(
                 item_factory=self._item_factory(items.ActivityFinalNodeItem,
                                                 UML.ActivityFinalNode),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_flow_final_node(self):
         self.view.tool = PlacementTool(
                 item_factory=self._item_factory(items.FlowFinalNodeItem,
                                                 UML.FlowFinalNode),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_decision_node(self):
         self.view.tool = PlacementTool(
                 item_factory=self._item_factory(items.DecisionNodeItem,
                                                 UML.DecisionNode),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_fork_node(self):
         self.view.tool = PlacementTool(
                 item_factory=self._item_factory(items.ForkNodeItem,
                                                 UML.JoinNode),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_object_node(self):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.ObjectNodeItem,
                                                           UML.ObjectNode),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_flow(self):
@@ -257,12 +292,14 @@ class DiagramToolbox(object):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.UseCaseItem,
                                                           UML.UseCase),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_actor(self):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.ActorItem,
                                                           UML.Actor),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_usecase_association(self):
@@ -286,18 +323,21 @@ class DiagramToolbox(object):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.PackageItem,
                                                           UML.Profile),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_metaclass(self):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.ClassItem,
                                                           UML.Class),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_stereotype(self):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.ClassItem,
                                                           UML.Stereotype),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_extension(self):

@@ -3,6 +3,15 @@
   <icon id="gaphor-pointer">
     <file>pointer24.png</file>
   </icon>
+  <icon id="gaphor-line">
+    <file>line24.png</file>
+  </icon>
+  <icon id="gaphor-box">
+    <file>box24.png</file>
+  </icon>
+  <icon id="gaphor-ellipse">
+    <file>ellipse24.png</file>
+  </icon>
   <icon id="gaphor-activity-final-node">
     <file>activityfinalnode24.png</file>
     <element>ActivityFinalNode</element>

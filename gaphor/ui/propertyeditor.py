@@ -5,6 +5,7 @@
 import gtk
 from zope import interface, component
 
+from gaphor.core import _
 from interfaces import IPropertyPage, IDiagramSelectionChange
 
 
@@ -16,7 +17,7 @@ class PropertyEditor(object):
     def __init__(self):
         super(PropertyEditor, self).__init__()
         self._current_item = None
-        self._last_tab = None
+        self._last_tab = _('Properties')
     
     def construct(self):
         self.notebook = gtk.Notebook()

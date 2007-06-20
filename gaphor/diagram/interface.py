@@ -4,7 +4,7 @@ Interface item.
 
 import itertools
 from math import pi
-from gaphas.item import NW, SE
+from gaphas.item import NW, SE, NE, SW
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
@@ -13,6 +13,7 @@ from gaphor.diagram.implementation import ImplementationItem
 from gaphor.diagram.klass import ClassItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
+
 
 class InterfaceItem(ClassItem):
     """
@@ -35,13 +36,13 @@ class InterfaceItem(ClassItem):
         }
 
     UNFOLDED_STYLE = {
-        'name-align': (ALIGN_CENTER, ALIGN_TOP),
-        'name-outside': False,
+        'text-align': (ALIGN_CENTER, ALIGN_TOP),
+        'text-outside': False,
         }
 
     FOLDED_STYLE = {
-        'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
-        'name-outside': True,
+        'text-align': (ALIGN_CENTER, ALIGN_BOTTOM),
+        'text-outside': True,
         }
 
     RADIUS_PROVIDED = 10
@@ -61,10 +62,12 @@ class InterfaceItem(ClassItem):
         ClassItem.set_drawing_style(self, style)
         # TODO: adjust offsets so the center point is the same
         if self._drawing_style == self.DRAW_ICON:
-            self.style.update(self.FOLDED_STYLE)
+            self._name.style.update(self.FOLDED_STYLE)
+            for h in self._handles: h.movable = False
             self.request_update()
         else:
-            self.style.update(self.UNFOLDED_STYLE)
+            self._name.style.update(self.UNFOLDED_STYLE)
+            for h in self._handles: h.movable = True
             self.request_update()
 
     drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
@@ -79,10 +82,8 @@ class InterfaceItem(ClassItem):
     def _set_folded(self, folded):
         if folded:
             self.drawing_style = self.DRAW_ICON
-            for h in self._handles: h.movable = False
         else:
             self.drawing_style = self.DRAW_COMPARTMENT
-            for h in self._handles: h.movable = True
 
     folded = property(is_folded, _set_folded)
 
@@ -107,9 +108,13 @@ class InterfaceItem(ClassItem):
         self.min_width, self.min_height = self.style.icon_size
         self.width, self.height = self.style.icon_size
 
-        #h_nw.x, h_nw.y = cx - radius, cy - radius
+        h_nw.x, h_nw.y = cx - radius, cy - radius
+#        h_ne = self._handles[NE]
+#        h_ne.x, h_ne.y = cx + radius, cy - radius
         h_se = self._handles[SE]
-        #h_se.x, h_se.y = cx + radius, cy + radius
+        h_se.x, h_se.y = cx + radius, cy + radius
+#        h_sw = self._handles[SW]
+#        h_sw.x, h_sw.y = cx - radius, cy + radius
         super(InterfaceItem, self).pre_update(context)
 
     def draw_icon(self, context):

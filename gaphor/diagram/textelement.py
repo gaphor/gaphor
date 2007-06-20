@@ -252,6 +252,8 @@ class TextElement(object):
 
     text = property(lambda s: s._text, _set_text)
 
+    style = property(lambda s: s._style)
+
 
     def display(self):
         """
