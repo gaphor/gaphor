@@ -37,9 +37,9 @@ class ElementItem(gaphas.Element, DiagramItem):
 
     def pre_update(self, context):
         #super(ElementItem, self).pre_update(context)
+        self.update_stereotype()
         DiagramItem.pre_update(self, context)
         gaphas.Element.pre_update(self, context)
-        self.update_stereotype()
 
 
     def point(self, x, y):
@@ -49,14 +49,13 @@ class ElementItem(gaphas.Element, DiagramItem):
 
 
     def update(self, context):
-        gaphas.Element.update(self, context)
         DiagramItem.update(self, context)
-        self.update_stereotype()
+        gaphas.Element.update(self, context)
 
 
     def draw(self, context):
-        gaphas.Element.draw(self, context)
         DiagramItem.draw(self, context)
+        gaphas.Element.draw(self, context)
 
 
     def text_align(self, extents, align, padding, outside):
