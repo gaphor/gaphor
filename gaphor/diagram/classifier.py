@@ -316,6 +316,10 @@ class ClassifierItem(NamedItem):
         super(ClassifierItem, self).draw(context)
 
         cr = context.cairo
+
+        assert self.width >= self.min_width, 'failed %s >= %s' % (self.width, self.min_width)
+        assert self.height >= self.min_height, 'failed %s >= %s' % (self.height, self.min_height)
+
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
 
