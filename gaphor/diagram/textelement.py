@@ -157,10 +157,16 @@ class EditableTextSupport(object):
         dy = 0
         dw = extents[0]
         for txt in texts:
+            bounds = txt.bounds # fixme: gaphor rectangle problem
+            width, height = bounds.width, bounds.height # fixme: gaphor rectangle problem
             # center stacked texts
-            txt.bounds.x0 = x + (dw - txt.bounds.width) / 2.0
+            txt.bounds.x0 = x + (dw - width) / 2.0
+            #txt.bounds.x0 = x + (dw - txt.bounds.width) / 2.0
             txt.bounds.y0 = y + dy
-            dy += txt.bounds.height
+            dy += height
+            #dy += txt.bounds.height
+            bounds.width = width # fixme: gaphor rectangle problem
+            bounds.height = height # fixme: gaphor rectangle problem
 
 
     def update(self, context):
@@ -183,8 +189,12 @@ class EditableTextSupport(object):
             x, y = self.text_align(extents, style.text_align,
                     style.text_padding, style.text_outside)
 
+            bounds = txt.bounds # fixme: gaphor rectangle problem
+            width, height = bounds.width, bounds.height # fixme: gaphor rectangle problem
             txt.bounds.x0 = x
             txt.bounds.y0 = y
+            bounds.width = width # fixme: gaphor rectangle problem
+            bounds.height = height # fixme: gaphor rectangle problem
 
 
     def point(self, x, y):
