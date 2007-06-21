@@ -27,7 +27,7 @@ class NamedItem(ElementItem):
         self._from = self.add_text('from',
                 pattern='(from %s)',
                 style={ 'text-align-group': 'stereotype' },
-                when=self.display_namespace_info,
+                visible=self.is_namespace_info_visible,
                 font=font.FONT_SMALL)
 
         style = {
@@ -45,7 +45,7 @@ class NamedItem(ElementItem):
         self._header_size = 0, 0
 
 
-    def display_namespace_info(self):
+    def is_namespace_info_visible(self):
         """
         Display name space info when it is different, then diagram
         namespace.
@@ -87,13 +87,16 @@ class NamedItem(ElementItem):
         self.request_update()
 
 
-    def update(self, context):
+    def pre_update(self, context):
         """
-        Update minimal size information using name bounds.
+        Calculate minimal size and header size.
         """
-        super(NamedItem, self).update(context)
+        super(NamedItem, self).pre_update(context)
 
         style = self._name.style
+
+        # we can determine minimal size and header size only
+        # when name is aligned inside an item
         if not style.text_outside:
             # at this stage stereotype text group should be already updated
             assert 'stereotype' in self._text_groups_sizes
@@ -101,12 +104,8 @@ class NamedItem(ElementItem):
             nw, nh = self._text_groups_sizes['stereotype']
             self._header_size = get_min_size(nw, nh, self.style.name_padding)
 
-            sw, sh = self.style.min_size
-            self.min_width = max(self._header_size[0], sw)
-            self.min_height = max(self._header_size[1], sh)
-#
-#        else: pass, leave decision to deriving class, we cannot determine
-#        minimal size because we do not know the shape of an item
+            self.min_width = max(self.style.min_size[0], self._header_size[0])
+            self.min_height = max(self.style.min_size[1], self._header_size[1])
 
 
 # vim:sw=4:et:ai

@@ -19,8 +19,7 @@ class EditableTextSupport(object):
 
     Attributes:
      - _texts:       list of diagram item text elements
-     - _text_groups: grouping information of text elements (None -
-                     ungrouped) 
+     - _text_groups: grouping information of text elements (None - ungrouped)
     """
     def __init__(self):
         self._texts = []
@@ -35,8 +34,8 @@ class EditableTextSupport(object):
         return self._texts
 
 
-    def add_text(self, attr, style = None, pattern = None, when = None,
-            editable = False, font = font.FONT):
+    def add_text(self, attr, style=None, pattern=None, visible=None,
+            editable=False, font=font.FONT):
         """
         Create and add a text element.
 
@@ -48,8 +47,8 @@ class EditableTextSupport(object):
 
         Returns created text element.
         """
-        txt = TextElement(attr, style=style, pattern=pattern, when=when,
-                editable=editable, font=font)
+        txt = TextElement(attr, style=style, pattern=pattern,
+                visible=visible, editable=editable, font=font)
         self._texts.append(txt)
 
         # try to group text element
@@ -62,53 +61,106 @@ class EditableTextSupport(object):
         return txt
 
 
-    def _align_text_group(self, context, name):
+    def _get_visible_texts(self, texts):
+        """
+        Get list of visible texts.
+        """
+        return [txt for txt in texts if txt.is_visible()]
+
+
+    def _get_text_groups(self):
+        """
+        Get text groups.
+        """
+        tg = self._text_groups
+        groups = self._text_groups
+        return ((name, tg[name]) for name in groups if name)
+
+
+    def _set_text_sizes(self, context, texts):
+        """
+        Calculate size for every text in the list.
+
+        Parameters:
+         - context: cairo context
+         - texts:   list of texts
+        """
+        cr = context.cairo
+        for txt in texts:
+            extents = text_extents(cr, txt.text, font=txt.font, multiline=True)
+            txt.bounds.width, txt.bounds.height = extents
+
+
+    def _set_text_group_size(self, context, name, texts):
+        """
+        Calculate size of a group.
+
+        Parameters:
+         - context: cairo context
+         - name:    group name
+         - texts:   list of group texts
+        """
+        cr = context.cairo
+
+        texts = self._get_visible_texts(texts)
+
+        if not texts:
+            self._text_groups_sizes[name] = (0, 0)
+            return
+
+        # find maximum width and total height
+        width = max(txt.bounds.width for txt in texts)
+        height = sum(txt.bounds.height for txt in texts)
+        self._text_groups_sizes[name] = width, height
+
+
+    def pre_update(self, context):
+        """
+        Calculate sizes of text elements and text groups.
+        """
+        cr = context.cairo
+
+        # calculate sizes of text groups
+        for name, texts in self._get_text_groups():
+            self._set_text_sizes(context, texts)
+            self._set_text_group_size(context, name, texts)
+
+        # calculate sizes of ungrouped texts
+        texts = self._text_groups[None]
+        texts = self._get_visible_texts(texts)
+        self._set_text_sizes(context, texts)
+
+
+    def _text_group_align(self, context, name, texts):
         """
         Align group of text elements making vertical stack of strings.
 
         Parameters:
-         - name: group name
+         - context: cairo context
+         - name:    group name
+         - texts:   list of group texts
         """
         cr = context.cairo
 
-        group = self._text_groups[name]
+        texts = self._get_visible_texts(texts)
 
-        # find displayable texts
-        texts = [ txt for txt in group if txt.display() ]
-
-        # nothing to stack
-        if len(texts) == 0:
+        if not texts:
             return
-
-        # calculate text sizes
-        sizes = [ text_extents(cr, txt.text, font=txt.font, multiline=True) \
-                for txt in texts ]
-
-        # find maximum width and total height
-        width = max(size[0] for size in sizes)
-        height = sum(size[1] for size in sizes)
-
-        extents = (width, height)
-        extents = width, height = map(max, extents, (15, 10))
-        self._text_groups_sizes[name] = extents
 
         # align according to style of last text in the group
         style = texts[-1]._style
+        extents = self._text_groups_sizes[name]
         x, y = self.text_align(extents, style.text_align,
                 style.text_padding, style.text_outside)
 
-        # stack all displayable texts
+        # stack texts
         dy = 0
-        for i, txt in enumerate(texts):
-            # calculate minimal bounds
-            dw, dh = map(max, sizes[i], (15, 10))
-
+        dw = extents[0]
+        for txt in texts:
             # center stacked texts
-            txt.bounds.x0 = x + (width - dw) / 2.0
+            txt.bounds.x0 = x + (dw - txt.bounds.width) / 2.0
             txt.bounds.y0 = y + dy
-            txt.bounds.width = dw
-            txt.bounds.height = dh
-            dy += dh
+            dy += txt.bounds.height
 
 
     def update(self, context):
@@ -117,37 +169,33 @@ class EditableTextSupport(object):
         item.
         """
         cr = context.cairo
-        for name in self._text_groups:
-            if name is not None:
-                self._align_text_group(context, name)
+
+        # align groups of text elements
+        for name, texts in self._get_text_groups():
+            assert name in self._text_groups_sizes, 'No text group "%s"' % name
+            self._text_group_align(context, name, texts)
 
         # align ungrouped text elements
-        for txt in self._text_groups[None]:
-            if not txt.display():
-                continue
-
-            extents = text_extents(cr, txt.text, font=txt.font, multiline=True)
-            extents = width, height = map(max, extents, (15, 10))
-
+        texts = self._get_visible_texts(self._text_groups[None])
+        for txt in texts:
             style = txt._style
+            extents = txt.bounds.width, txt.bounds.height
             x, y = self.text_align(extents, style.text_align,
                     style.text_padding, style.text_outside)
 
             txt.bounds.x0 = x
             txt.bounds.y0 = y
-            txt.bounds.width = width
-            txt.bounds.height = height
 
 
     def point(self, x, y):
         """
-        Return the distance to the nearest editable and displayable text
+        Return the distance to the nearest editable and visible text
         element.
         """
         def distances():
             yield 10000.0
             for txt in self._texts:
-                if txt.display() and txt.editable:
+                if txt.is_visible() and txt.editable:
                     yield distance_rectangle_point(txt.bounds, (x, y))
         return min(distances())
 
@@ -158,9 +206,7 @@ class EditableTextSupport(object):
         """
         cr = context.cairo
         cr.save()
-        for txt in self._texts:
-            if not txt.display():
-                continue
+        for txt in self._get_visible_texts(self._texts):
             bounds = txt.bounds
             x, y = bounds.x0, bounds.y0
             width, height = bounds.width, bounds.height
@@ -173,6 +219,8 @@ class EditableTextSupport(object):
             if (context.hovered or context.focused or context.draw_all) \
                     and txt.editable:
 
+                width = max(15, width)
+                height = max(10, height)
                 cr.set_line_width(0.5)
                 cr.rectangle(x, y, width, height)
                 cr.stroke()
@@ -197,8 +245,8 @@ class TextElement(object):
      - attr:     name of displayed and edited UML class attribute
      - bounds:   text bounds
      - _style:   text style (i.e. align information, padding)
-     - text:     rendered text to be displayed
-     - pattern:  print pattern to display text
+     - text:     rendered string to be displayed
+     - pattern:  print pattern of text
      - editable: True if text should be editable
      - font:     text font
 
@@ -207,14 +255,14 @@ class TextElement(object):
 
     bounds = property(lambda self: self._bounds)
 
-    def __init__(self, attr, style = None, pattern = None, when = None,
-            editable = False, font = font.FONT_NAME):
+    def __init__(self, attr, style=None, pattern=None, visible=None,
+            editable=False, font=font.FONT_NAME):
         """
         Create new text element with bounds (0, 0, 10, 10) and empty text.
 
         Parameters:
-         - when: function, which evaluates to True/False determining if text
-                 should be displayed
+         - visible: function, which evaluates to True/False if text should
+                    be visible
         """
         super(TextElement, self).__init__()
 
@@ -231,8 +279,8 @@ class TextElement(object):
         self.attr = attr
         self._text = ''
 
-        if when:
-            self.display = when
+        if visible:
+            self.is_visible = visible
 
         if pattern:
             self._pattern = pattern
@@ -255,7 +303,7 @@ class TextElement(object):
     style = property(lambda s: s._style)
 
 
-    def display(self):
+    def is_visible(self):
         """
         Display text by default.
         """

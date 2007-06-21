@@ -206,13 +206,14 @@ class ForkNodeItem(ForkDecisionNodeItem):
 
     def __init__(self, id=None):
         ForkDecisionNodeItem.__init__(self, id)
-        self._join_spec = self.add_text('joinSpec.value',
-            pattern = '{ joinSpec = %s }',
-            style = self.STYLE_TOP,
-            when = self.display_join_spec)
+
+        self._join_spec=self.add_text('joinSpec.value',
+            pattern='{ joinSpec = %s }',
+            style=self.STYLE_TOP,
+            visible=self.is_join_spec_visible)
 
 
-    def display_join_spec(self):
+    def is_join_spec_visible(self):
         """
         Check if join specification should be displayed.
         """

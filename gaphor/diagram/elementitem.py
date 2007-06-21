@@ -37,8 +37,8 @@ class ElementItem(gaphas.Element, DiagramItem):
 
     def pre_update(self, context):
         #super(ElementItem, self).pre_update(context)
+        DiagramItem.pre_update(self, context)
         gaphas.Element.pre_update(self, context)
-        #DiagramItem.pre_update(self, context)
         self.update_stereotype()
 
 

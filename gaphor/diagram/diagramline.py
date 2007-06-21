@@ -27,11 +27,19 @@ class LineItem(gaphas.Line, DiagramItem):
     tail = property(lambda self: self._handles[-1])
 
 
+    def pre_update(self, context):
+        # first, update stereotype to know its text
+        self.update_stereotype()
+
+        #super(LineItem, self).pre_update(context)
+        gaphas.Line.pre_update(self, context)
+        DiagramItem.pre_update(self, context)
+
+
     def update(self, context):
         #super(LineItem, self).update(context)
         gaphas.Line.update(self, context)
         DiagramItem.update(self, context)
-        self.update_stereotype()
 
 
     def draw(self, context):

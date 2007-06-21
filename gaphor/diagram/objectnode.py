@@ -40,17 +40,20 @@ class ObjectNodeItem(NamedItem):
         self._show_ordering = False
 
         self._upper_bound = self.add_text('upperBound.value',
-            pattern = '{ upperBound = %s }',
-            style = self.STYLE_BOTTOM,
-            when = self.display_upper_bound)
+            pattern='{ upperBound = %s }',
+            style=self.STYLE_BOTTOM,
+            visible=self.is_upper_bound_visible)
 
         self._ordering = self.add_text('ordering',
             pattern = '{ ordering = %s }',
             style = self.STYLE_BOTTOM,
-            when = self._get_show_ordering)
+            visible=self._get_show_ordering)
 
 
-    def display_upper_bound(self):
+    def is_upper_bound_visible(self):
+        """
+        Do not show upper bound, when it's set to default value.
+        """
         return self.subject.upperBound.value != DEFAULT_UPPER_BOUND
 
 
