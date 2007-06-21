@@ -49,13 +49,13 @@ class ElementItem(gaphas.Element, DiagramItem):
 
 
     def update(self, context):
-        DiagramItem.update(self, context)
         gaphas.Element.update(self, context)
+        DiagramItem.update(self, context)
 
 
     def draw(self, context):
-        DiagramItem.draw(self, context)
         gaphas.Element.draw(self, context)
+        DiagramItem.draw(self, context)
 
 
     def text_align(self, extents, align, padding, outside):
