@@ -12,7 +12,7 @@ from zope import component
 
 import gaphas
 from gaphas.geometry import distance_point_point, distance_point_point_fast, \
-                            distance_line_point
+                            distance_line_point, distance_rectangle_point
 from gaphas.item import Line
 from gaphas.tool import Tool, HandleTool, ItemTool, ToolChain
 
@@ -31,6 +31,7 @@ class ConnectHandleTool(HandleTool):
     It also adds handles to lines when a line is grabbed on the middle of
     a line segment (points are drawn by the LineSegmentPainter).
     """
+    GLUE_DISTANCE = 10
 
     def glue(self, view, item, handle, wx, wy):
         """
@@ -47,27 +48,39 @@ class ConnectHandleTool(HandleTool):
         wx, wy: handle position in world coordinates
         """
         canvas = view.canvas
+        cx, cy = view.transform_point_w2c(wx, wy)
+
+        # localize methods
         i2w = view.canvas.get_matrix_i2w
         w2i = view.canvas.get_matrix_w2i
-        min_dist, dummy = view.transform_distance_c2w(10, 0)
+        drp = distance_rectangle_point
+        get_item_bounding_box = view.get_item_bounding_box
+        query_adapter = component.queryMultiAdapter
+
+        dist, _ = view.transform_distance_c2w(self.GLUE_DISTANCE, 0)
+        max_dist = dist
         glue_pos_w = (0, 0)
         glue_item = None
         for i in canvas.get_all_items():
             if i is item:
                 continue
-            adapter = component.queryMultiAdapter((i, item), IConnect)
+            
+            b = get_item_bounding_box(i)
+            if drp(b, (cx, cy)) >= max_dist:
+                continue
+            
+            adapter = query_adapter((i, item), IConnect)
             if adapter:
                 x, y = w2i(i).transform_point(wx, wy)
                 pos = adapter.glue(handle, x, y)
                 if pos:
                     d = i.point(x, y)
-                    if d <= min_dist:
-                        min_dist = d
+                    if d <= dist:
+                        dist = d
                         glue_pos_w = i2w(i).transform_point(*pos)
                         glue_item = i
 
-        dist, _ = view.transform_distance_c2w(10, 0)
-        if min_dist < dist:
+        if dist < max_dist:
             x, y = w2i(item).transform_point(*glue_pos_w)
             handle.x = x
             handle.y = y
