@@ -3,100 +3,103 @@ LifelineItem diagram item
 """
 
 from gaphor import UML
-from gaphor.diagram.align import V_ALIGN_MIDDLE
-from gaphor.diagram.diagramline import FreeLine
 from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 
-class LifetimeItem(FreeLine):
+###class LifetimeItem(FreeLine):
+###
+###    def __init__(self, id = None):
+###        FreeLine.__init__(self, id)
+###
+###        self._height = 100
+###
+###        self.set_flags(diacanvas.COMPOSITE)
+###        self.set(dash = (7.0, 5.0))
+###
+###
+###    def on_update(self, affine):
+###        x = self.parent.props.width / 2.0
+###        y = self.parent.height
+###        self._main_point = x, y
+###
+###        self._handle.set_pos_i(x, y + self._height)
+###
+###        FreeLine.on_update(self, affine)
+###
+###
+###    def on_handle_motion(self, handle, x, y, event_mask):
+###        """
+###        Handle movements of the lifetime handle. Note that x and y are in
+###        world coordinates.
+###        """
+###        if handle is self._handle:
+###            x, y = self.affine_point_w2i(x, y)
+###            x, y0 = self._main_point
+###
+###            self._height = y - y0
+###            if self._height < 10.0:
+###                y = y0 + 10.0
+###                self._height = 10
+###
+###            return self.affine_point_i2w(x, y)
+###        else:
+###            return FreeLine.on_handle_motion(self, handle, x, y, event_mask)
+###
 
-    def __init__(self, id = None):
-        FreeLine.__init__(self, id)
 
-        self._height = 100
-
-        self.set_flags(diacanvas.COMPOSITE)
-        self.set(dash = (7.0, 5.0))
-
-
-    def on_update(self, affine):
-        x = self.parent.props.width / 2.0
-        y = self.parent.height
-        self._main_point = x, y
-
-        self._handle.set_pos_i(x, y + self._height)
-
-        FreeLine.on_update(self, affine)
-
-
-    def on_handle_motion(self, handle, x, y, event_mask):
-        """
-        Handle movements of the lifetime handle. Note that x and y are in
-        world coordinates.
-        """
-        if handle is self._handle:
-            x, y = self.affine_point_w2i(x, y)
-            x, y0 = self._main_point
-
-            self._height = y - y0
-            if self._height < 10.0:
-                y = y0 + 10.0
-                self._height = 10
-
-            return self.affine_point_i2w(x, y)
-        else:
-            return FreeLine.on_handle_motion(self, handle, x, y, event_mask)
-
-
-
-class LifelineItem(NamedItem, GroupBase):
+class LifelineItem(NamedItem):
     __uml__      = UML.Lifeline
-    __s_valign__ = V_ALIGN_MIDDLE
-
-    __gproperties__ = {
-        'has-lifetime': (gobject.TYPE_BOOLEAN, 'has lifetime',
-            'determines if lifeline has lifetime line', False,
-            gobject.PARAM_READWRITE),
+    __style__ = {
+        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
     }
 
+#    __gproperties__ = {
+#        'has-lifetime': (gobject.TYPE_BOOLEAN, 'has lifetime',
+#            'determines if lifeline has lifetime line', False,
+#            gobject.PARAM_READWRITE),
+#    }
+
     def __init__(self, id = None):
-        GroupBase.__init__(self)
         NamedItem.__init__(self, id)
 
         self._has_lifetime = False
-        self.set_prop_persistent('has-lifetime')
+#        self.set_prop_persistent('has-lifetime')
 
-        self._lifetime = LifetimeItem()
-
-
-    def do_set_property(self, pspec, value):
-        """
-        Request update of item in case of has-lifetime property change.
-        """
-        if pspec.name == 'has-lifetime':
-            self.preserve_property(pspec.name)
-            self._has_lifetime = value
-
-            if value:
-                self.add(self._lifetime)
-            else:
-                self.remove(self._lifetime)
-
-            self._lifetime.request_update()
-            self.request_update()
-        else:
-            NamedItem.do_set_property(self, pspec, value)
+#        self._lifetime = LifetimeItem()
 
 
-    def do_get_property(self, pspec):
-        if pspec.name == 'has-lifetime':
-            return self._has_lifetime
-        else:
-            return NamedItem.do_get_property(self, pspec)
+    def draw(self, context):
+        super(LifelineItem, self).draw(context)
+
+        cr = context.cairo
+        cr.rectangle(0, 0, self.width, self.height)
+        cr.stroke()
 
 
-    def on_update(self, affine):
-        NamedItem.on_update(self, affine)
-        GroupBase.on_update(self, affine)
+#    def do_set_property(self, pspec, value):
+#        """
+#        Request update of item in case of has-lifetime property change.
+#        """
+#        if pspec.name == 'has-lifetime':
+#            self.preserve_property(pspec.name)
+#            self._has_lifetime = value
+#
+#            if value:
+#                self.add(self._lifetime)
+#            else:
+#                self.remove(self._lifetime)
+#
+#            self._lifetime.request_update()
+#            self.request_update()
+#        else:
+#            NamedItem.do_set_property(self, pspec, value)
+
+
+#    def do_get_property(self, pspec):
+#        if pspec.name == 'has-lifetime':
+#            return self._has_lifetime
+#        else:
+#            return NamedItem.do_get_property(self, pspec)
 
 # TODO: Maybe use a separate canvasItem for the line, since it creates
 # some difficulty with the connect_handle() code of diacanvas.CanvasElement.
