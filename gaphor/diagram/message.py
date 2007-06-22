@@ -2,12 +2,11 @@
 Message - sequence diagram messages.
 """
 
-import itertools
+from gaphas.util import path_ellipse
 
 from gaphor import UML
-
 from gaphor.diagram.diagramline import NamedLine
-#from gaphor.diagram.lifeline import LifelineItem, LifetimeItem
+
 
 #
 # TODO: asynch message has open arrow head
@@ -44,98 +43,23 @@ class MessageItem(NamedLine):
 
     def draw(self, context):
         super(MessageItem, self).draw(context)
+        cr = context.cairo
+
         subject = self.subject
         if subject:
             if self.subject.messageKind == 'lost':
-                pass
-                #x, y = self.handles[-1].get_pos_i()
-            if self.subject.messageKind == 'found':
-                pass
-                #x, y = self.handles[0].get_pos_i()
-            #self._circle.ellipse((x, y), 10, 10)
-
-
-    #
-    # Gaphor Connection Protocol
-    #
-    def allow_connect_handle(self, handle, item):
-        """
-        """
-        if isinstance(item, (LifelineItem, LifetimeItem)):
-            if handle is self.handles[0]:
-                c = self.handles[-1].connected_to
+                pos = self.tail.pos
+            elif self.subject.messageKind == 'found':
+                pos = self.head.pos
             else:
-                c = self.handles[0].connected_to
-            return c is None or isinstance(item, c.__class__)
-        else:
-            return False
+                pos = None
 
+            if pos:
+                # draw circle for lost/found messages
+                r = 10
+                path_ellipse(cr, pos[0], pos[1], r, r)
+                cr.set_line_width(0.01)
+                cr.fill()
 
-    def confirm_connect_handle(self, handle):
-        """See RelationshipItem.confirm_connect_handle().
-
-        Always create a new Message with two EventOccurence instances.
-        """
-        #print 'confirm_connect_handle', handle, self.subject
-        send = self.handles[0].connected_to
-        received = self.handles[-1].connected_to
-        factory = resource(UML.ElementFactory)
-
-        def get_subject(c):
-            if not self.subject:
-                factory = resource(UML.ElementFactory)
-                message = factory.create(UML.Message)
-                self.set_subject(message)
-            return self.subject
-
-        if send:
-            message = get_subject(send)
-            if not message.sendEvent:
-                event = factory.create(UML.EventOccurrence)
-                event.sendMessage = message
-                event.covered = send.subject
-
-        if received:
-            message = get_subject(received)
-            if not message.receiveEvent:
-                event = factory.create(UML.EventOccurrence)
-                event.receiveMessage = message
-                event.covered = received.subject
-
-        if send and received:
-            assert send.__class__ == received.__class__
-            kind = 'complete'
-        elif send and not received:
-            kind = 'lost'
-        elif not send and received:
-            kind = 'found'
-
-        message.messageKind = kind
-
-
-    def confirm_disconnect_handle(self, handle, was_connected_to):
-        """See RelationshipItem.confirm_disconnect_handle().
-        """
-        send = self.handles[0].connected_to
-        received = self.handles[-1].connected_to
-
-        if send:
-            self.subject.messageKind = 'lost'
-            event = self.subject.receiveEvent
-            if event:
-                event.receiveMessage = None
-                event.covered = None
-                del event
-
-        if received:
-            self.subject.messageKind = 'found'
-            event = self.subject.sendEvent
-            if event:
-                event.sendMessage = None
-                event.covered = None
-                del event
-
-        if not send and not received:
-            self.set_subject(None)
 
 # vim:sw=4:et

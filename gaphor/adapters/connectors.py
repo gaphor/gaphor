@@ -1096,4 +1096,113 @@ class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
 component.provideAdapter(FlowDecisionNodeConnect)
 
 
+class MessageLifelineConnect(ElementConnect):
+    """
+    Connect lifelines with a message.
+    """
+    component.adapts(items.LifelineItem, items.MessageItem)
+
+    element_factory = inject('element_factory')
+
+    def glue(self, handle, x, y):
+        opposite = self.line.opposite(handle)
+        line = self.line
+        element = self.element
+        connected_to = opposite.connected_to
+
+        if connected_to is not None and element.__class__ != connected_to.__class__:
+            return None
+
+        if not (element.subject and isinstance(element.subject, UML.Lifeline)):
+            return None
+
+        return super(MessageLifelineConnect, self).glue(handle, x, y)
+
+    def connect(self, handle, x, y):
+        """
+        Always create a new Message with two EventOccurence instances.
+        """
+        if not super(MessageLifelineConnect, self).connect(handle, x, y):
+            return
+
+        line = self.line
+        send = line.head.connected_to
+        received = line.tail.connected_to
+
+        def get_subject(c):
+            if not line.subject:
+                message = self.element_factory.create(UML.Message)
+                line.subject = message
+            return line.subject
+
+        if send:
+            message = get_subject(send)
+            if not message.sendEvent:
+                event = self.element_factory.create(UML.EventOccurrence)
+                event.sendMessage = message
+                event.covered = send.subject
+
+        if received:
+            message = get_subject(received)
+            if not message.receiveEvent:
+                event = self.element_factory.create(UML.EventOccurrence)
+                event.receiveMessage = message
+                event.covered = received.subject
+
+        if send and received:
+            assert send.__class__ == received.__class__
+            kind = 'complete'
+        elif send and not received:
+            kind = 'lost'
+        elif not send and received:
+            kind = 'found'
+
+        message.messageKind = kind
+
+
+    def disconnect(self, handle):
+        """
+        Disconnect lifeline and set appropriate kind of message item. If
+        there are no lifelines connected on both ends, then set UML object
+        (subject) to None.
+        """
+        # first disconnect
+        super(MessageLifelineConnect, self).disconnect(handle)
+
+        line = self.line
+        send = line.head.connected_to
+        received = line.tail.connected_to
+
+        if send:
+            line.subject.messageKind = 'lost'
+            event = line.subject.receiveEvent
+            if event:
+                event.receiveMessage = None
+                event.covered = None
+                del event
+
+        if received:
+            line.subject.messageKind = 'found'
+            event = line.subject.sendEvent
+            if event:
+                event.sendMessage = None
+                event.covered = None
+                del event
+
+        if not send and not received:
+            line.subject = None
+
+        if __debug__:
+            m = line.subject
+
+            # see semantics of message in UML specs
+            assert not m or m and \
+                (m.sendEvent and m.receiveEvent and m.messageKind == 'complete' \
+                 or m.sendEvent and not m.receiveEvent and m.messageKind == 'lost' \
+                 or not m.sendEvent and m.receiveEvent and m.messageKind == 'found')
+
+
+component.provideAdapter(MessageLifelineConnect)
+
+
 # vim:sw=4:et:ai
