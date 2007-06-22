@@ -1105,10 +1105,7 @@ class MessageLifelineConnect(ElementConnect):
     element_factory = inject('element_factory')
 
     def glue(self, handle, x, y):
-        opposite = self.line.opposite(handle)
-        line = self.line
         element = self.element
-        connected_to = opposite.connected_to
 
         if connected_to is not None and element.__class__ != connected_to.__class__:
             return None
@@ -1117,6 +1114,7 @@ class MessageLifelineConnect(ElementConnect):
             return None
 
         return super(MessageLifelineConnect, self).glue(handle, x, y)
+
 
     def connect(self, handle, x, y):
         """
