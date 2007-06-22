@@ -40,6 +40,9 @@ from gaphor.diagram.activitynodes import ForkNodeItem
 from gaphor.diagram.flow import FlowItem
 from gaphor.diagram.objectnode import ObjectNodeItem
 
+# Interactions
+from gaphor.diagram.message import MessageItem
+
 # Use Cases:
 from gaphor.diagram.actor import ActorItem
 from gaphor.diagram.usecase import UseCaseItem

@@ -46,10 +46,10 @@ TOOLBOX_ACTIONS = (
         ('toolbox-fork-node', _('Fork/join node'), 'gaphor-fork-node'),
         ('toolbox-object-node', _('Object node'), 'gaphor-object-node'),
         ('toolbox-flow', _('Control/object flow'), 'gaphor-control-flow'),
-#    )), (_('Interactions'), (
+    )), (_('Interactions'), (
 #        ('toolbox-interaction', _('Interaction'), 'gaphor-interaction'),
 #        ('toolbox-lifeline', _('Lifeline'), 'gaphor-lifeline'),
-#        ('toolbox-message', _('Message'), 'gaphor-message'),
+        ('toolbox-message', _('Message'), 'gaphor-message'),
     )), (_('Use Cases'), (
         ('toolbox-usecase', _('Use case'), 'gaphor-usecase'),
         ('toolbox-actor', _('Actor'), 'gaphor-actor'),
@@ -285,6 +285,10 @@ class DiagramToolbox(object):
                 after_handler=self._after_handler)
 
     # Interactions:
+    def toolbox_message(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.MessageItem),
+                after_handler=self._after_handler)
 
     # Use cases:
 

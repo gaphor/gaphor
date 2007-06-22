@@ -6,9 +6,8 @@ import itertools
 
 from gaphor import UML
 
-from gaphor.diagram.diagramline import DiagramLine
-from gaphor.diagram.lifeline import LifelineItem, LifetimeItem
-#from gaphor.diagram import TextElement
+from gaphor.diagram.diagramline import NamedLine
+#from gaphor.diagram.lifeline import LifelineItem, LifetimeItem
 
 #
 # TODO: asynch message has open arrow head
@@ -23,71 +22,37 @@ from gaphor.diagram.lifeline import LifelineItem, LifetimeItem
 # Message.signature points to the operation or signal that is executed
 # Message.arguments provides a list of arguments for the operation.
 #
-class MessageItem(DiagramLine, GroupBase):
+class MessageItem(NamedLine):
     
-    FONT='sans 10'
-
     def __init__(self, id=None):
-        GroupBase.__init__(self)
-        DiagramLine.__init__(self, id)
+        NamedLine.__init__(self, id)
 
-        self._name  = TextElement('name')
-        self.add(self._name)
-
-        self._circle = diacanvas.shape.Ellipse()
+        #self._circle = diacanvas.shape.Ellipse()
         #self._circle.set_line_width(2.0)
-        self._circle.set_fill_color(diacanvas.color(0, 0, 0))
-        self._circle.set_fill(diacanvas.shape.FILL_SOLID)
-
-        self.set(has_tail = 1, tail_fill_color = 0, tail_a = 0.0,
-            tail_b = 15.0, tail_c = 6.0, tail_d = 6.0)
+        #self._circle.set_fill_color(diacanvas.color(0, 0, 0))
+        #self._circle.set_fill(diacanvas.shape.FILL_SOLID)
 
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        DiagramLine.on_subject_notify(self, pspec, notifiers)
-        if self.subject:
-            self._name.subject = self.subject
-        self.request_update()
+    def draw_tail(self, context):
+        cr = context.cairo
+        cr.line_to(0, 0)
+        cr.stroke()
+        cr.move_to(15, -6)
+        cr.line_to(0, 0)
+        cr.line_to(15, 6)
 
 
-    def on_update(self, affine):
-        handles = self.handles
-        middle = len(handles)/2
-
-        def get_pos_centered(p1, p2, width, height):
-            x = p1[0] > p2[0] and width + 2 or -2
-            x = (p1[0] + p2[0]) / 2.0 - x
-            y = p1[1] <= p2[1] and height or 0
-            y = (p1[1] + p2[1]) / 2.0 - y
-            return x, y
-
-        p1 = handles[middle-1].get_pos_i()
-        p2 = handles[middle].get_pos_i()
-
-        w, h = self._name.get_size()
-        x, y = get_pos_centered(p1, p2, w, h)
-        self._name.update_label(x, y)
-
-        if self.subject:
+    def draw(self, context):
+        super(MessageItem, self).draw(context)
+        subject = self.subject
+        if subject:
             if self.subject.messageKind == 'lost':
-                x, y = self.handles[-1].get_pos_i()
+                pass
+                #x, y = self.handles[-1].get_pos_i()
             if self.subject.messageKind == 'found':
-                x, y = self.handles[0].get_pos_i()
-            self._circle.ellipse((x, y), 10, 10)
-
-        DiagramLine.on_update(self, affine)
-        GroupBase.on_update(self, affine)
-        
-
-    def on_shape_iter(self):
-        """
-        Return activity edge name and circle.
-        """
-        it = DiagramLine.on_shape_iter(self)
-        if self.subject and self.subject.messageKind in ('lost', 'found'):
-            return itertools.chain(it, [self._circle])
-        else:
-            return it
+                pass
+                #x, y = self.handles[0].get_pos_i()
+            #self._circle.ellipse((x, y), 10, 10)
 
 
     #
