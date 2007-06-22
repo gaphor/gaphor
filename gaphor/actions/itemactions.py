@@ -792,32 +792,6 @@ class AutoDependencyAction(CheckAction):
 register_action(AutoDependencyAction, 'ItemFocus')
 
 
-class IndirectlyInstantiatedComponentAction(CheckAction):
-    id = 'IndirectlyInstantiated'
-    label = 'Indirectly Instantiated'
-    tooltip = 'Indirectly instantiated component'
-
-    def init(self, window):
-        self._window = window
-
-    def update(self):
-        try:
-            item = get_parent_focus_item(self._window)
-        except NoFocusItemError:
-            pass
-        else:
-            if isinstance(item, items.ComponentItem):
-                self.active = item.subject and item.subject.isIndirectlyInstantiated
-
-    @transactional
-    def execute(self):
-        item = get_parent_focus_item(self._window)
-        if item.subject:
-            item.subject.isIndirectlyInstantiated = self.active
-
-register_action(IndirectlyInstantiatedComponentAction, 'ItemFocus')
-
-
 class MoveAction(Action):
     """
     Move attribute/operation down or up on the list.
