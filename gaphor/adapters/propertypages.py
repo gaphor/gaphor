@@ -843,4 +843,48 @@ class FlowPropertyPage(NamedItemPropertyPage):
 
 component.provideAdapter(FlowPropertyPage, name='Properties')
 
+
+class ComponentPropertyPage(NamedItemPropertyPage):
+    interface.implements(IPropertyPage)
+    component.adapts(items.ComponentItem)
+
+    def construct(self):
+        page = super(ComponentPropertyPage, self).construct()
+
+        subject = self.context.subject
+        
+        if not subject:
+            return page
+
+        hbox = gtk.HBox()
+        page.pack_start(hbox, expand=False)
+
+        button = gtk.CheckButton()
+        button.set_active(subject.isIndirectlyInstantiated)
+        button.connect('toggled', self._on_ii_change)
+        hbox.pack_start(button, expand=False)
+
+        label = gtk.Label(_('Indirectly Instantiated'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        hbox.pack_start(label, expand=False)
+
+        return page
+
+
+    def update(self):
+        pass
+
+
+    def _on_ii_change(self, button):
+        """
+        Called when user clicks "Indirectly Instantiated" check button.
+        """
+        subject = self.context.subject
+        if subject:
+            subject.isIndirectlyInstantiated = button.get_active()
+
+
+component.provideAdapter(ComponentPropertyPage, name='Properties')
+
+
 # vim:sw=4:et:ai
