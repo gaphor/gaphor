@@ -6,6 +6,9 @@ import math
 
 from gaphas.util import path_ellipse, text_align
 from gaphas.state import observed, reversible_property
+from gaphas.item import NW, SE, NE, SW
+from gaphas.solver import Variable, STRONG
+from gaphas.constraint import EqualsConstraint
 
 from gaphor import UML
 from gaphor.core import inject
@@ -213,6 +216,30 @@ class ForkNodeItem(ForkDecisionNodeItem):
             visible=self.is_join_spec_visible)
 
 
+    def setup_canvas(self):
+        super(ForkNodeItem, self).setup_canvas()
+
+        # we need only two visible, movable handles
+        h_nw = self._handles[NW]
+        h_nw.movable = True
+        h_sw = self._handles[SW]
+        h_sw.movable = True
+
+        h_ne = self._handles[NE]
+        h_se = self._handles[SE]
+#        h_ne.visible = False
+#        h_se.visible = False
+
+        cadd = self.canvas.solver.add_constraint
+        w = self.style.min_size[1]
+        c1 = EqualsConstraint(a=h_ne.x, b=Variable(w, STRONG + 1))
+        c2 = EqualsConstraint(a=h_se.x, b=Variable(w, STRONG + 1))
+        cadd(c1)
+        cadd(c2)
+        self._constraints.append(c1)
+        self._constraints.append(c2)
+
+
     def is_join_spec_visible(self):
         """
         Check if join specification should be displayed.
@@ -227,8 +254,8 @@ class ForkNodeItem(ForkDecisionNodeItem):
         specification is also drawn above the item.
         """
         cr = context.cairo
-        cr.set_line_width(self.width)
-        x = self.width / 2.0
+        cr.set_line_width(6)
+        x = 0
         cr.move_to(x, 0)
         cr.line_to(x, self.height)
 
