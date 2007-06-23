@@ -9,7 +9,7 @@ the actions bound to the toolbuttons should change as well.
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.core import _, inject, radio_action, build_action_group
-from diagramtools import PlacementTool, DefaultTool
+from diagramtools import GroupPlacementTool, PlacementTool, DefaultTool
 from gaphas.item import SE
 
 __all__ = [ 'DiagramToolbox', 'TOOLBOX_ACTIONS' ]
@@ -293,7 +293,7 @@ class DiagramToolbox(object):
                 after_handler=self._after_handler)
 
     def toolbox_lifeline(self):
-        self.view.tool = PlacementTool(
+        self.view.tool = GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.LifelineItem,
                     UML.Lifeline),
                 handle_index=SE,

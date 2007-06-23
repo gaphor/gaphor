@@ -18,7 +18,7 @@ from gaphas.tool import Tool, HandleTool, ItemTool, ToolChain
 
 from gaphor.core import inject, Transaction, transactional
 
-from gaphor.diagram.interfaces import IEditor, IConnect
+from gaphor.diagram.interfaces import IEditor, IConnect, IGroup
 
 __version__ = '$Revision$'
 
@@ -291,6 +291,8 @@ class PlacementTool(gaphas.tool.PlacementTool):
                 item = self.handle_tool.glue(view, self.new_item, opposite, wx, wy)
                 if item:
                     self.handle_tool.connect(view, self.new_item, opposite, wx, wy)
+            return True
+        return False
             
     def on_button_release(self, context, event):
         try:
@@ -300,6 +302,33 @@ class PlacementTool(gaphas.tool.PlacementTool):
         finally:
             self._tx.commit()
             self._tx = None
+
+
+
+class GroupPlacementTool(PlacementTool):
+    def on_button_press(self, context, event):
+
+        # first get parent
+        parent = None
+        if event.button == 1:
+            context.ungrab()
+            view = context.view
+            parent = view.get_item_at_point(event.x, event.y)
+
+        # now, place the new item
+        placed = PlacementTool.on_button_press(self, context, event)
+
+        # if there is a parent, then try to group item and parent
+        if placed and parent:
+            view = context.view
+            item = view.focused_item
+            
+            adapter = component.queryMultiAdapter((parent, item), IGroup)
+            if adapter and adapter.can_contain():
+                adapter.group()
+
+        return placed
+
 
 
 class TransactionalToolChain(ToolChain):

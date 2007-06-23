@@ -15,6 +15,7 @@ class AdapterLoader(object):
         self._app = app
         import gaphor.adapters.connectors
         import gaphor.adapters.editors
+        import gaphor.adapters.grouping
         import gaphor.adapters.propertypages
         
     def shutdown(self):

@@ -15,7 +15,7 @@ from zope import interface
 
 class IEditor(interface.Interface):
     """
-    Provide an interface for editing text. with the TextEditTool.
+    Provide an interface for editing text with the TextEditTool.
     """
 
     def is_editable(self, x, y):
@@ -91,6 +91,22 @@ class IConnect(interface.Interface):
 
         Returns a tuple (x, y) if the line and element may connect, None
         otherwise.
+        """
+
+
+class IGroup(interface.Interface):
+    """
+    Provide interface for adding one UML object to another, i.e.
+    interactions contain lifelines and components contain classes objects.
+    """
+    def can_contain(self):
+        """
+        Determine if parent can contain item.
+        """
+
+    def group(self):
+        """
+        Perform grouping of items.
         """
 
 
