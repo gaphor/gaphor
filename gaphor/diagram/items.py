@@ -41,6 +41,7 @@ from gaphor.diagram.flow import FlowItem
 from gaphor.diagram.objectnode import ObjectNodeItem
 
 # Interactions
+from gaphor.diagram.interaction import InteractionItem
 from gaphor.diagram.lifeline import LifelineItem
 from gaphor.diagram.message import MessageItem
 
