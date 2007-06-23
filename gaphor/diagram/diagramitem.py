@@ -338,6 +338,12 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
         self.subject = None
         super(DiagramItem, self).unlink()
 
+
+    def draw(self, context):
+        EditableTextSupport.draw(self, context)
+        context.draw_children()
+
+
     def item_at(self, x, y):
         return self
 
