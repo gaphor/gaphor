@@ -101,11 +101,13 @@ class DiagramToolbox(object):
         getattr(self, tool.replace('-', '_'))()
 
     def _item_factory(self, item_class, subject_class=None):
-        def factory_method():
+        def factory_method(parent=None):
             if subject_class:
                 subject = self.element_factory.create(subject_class)
-                return self.diagram.create(item_class, subject=subject)
-            return self.diagram.create(item_class)
+            else:
+                subject = None
+            return self.diagram.create(item_class, subject=subject,
+                    parent=parent)
         return factory_method
 
     def _namespace_item_factory(self, item_class, subject_class):
@@ -113,11 +115,11 @@ class DiagramToolbox(object):
         Returns a factory method for Namespace classes.
         To be used by the PlacementTool.
         """
-        def factory_method():
+        def factory_method(parent=None):
             subject = self.element_factory.create(subject_class)
             subject.package = self.namespace
             subject.name = 'New%s' % subject_class.__name__
-            return self.diagram.create(item_class, subject=subject)
+            return self.diagram.create(item_class, subject=subject, parent=parent)
         return factory_method
 
     def _after_handler(self):

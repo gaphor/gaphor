@@ -314,6 +314,7 @@ class GroupPlacementTool(PlacementTool):
             context.ungrab()
             view = context.view
             parent = view.get_item_at_point(event.x, event.y)
+            self.parent = parent
 
         # now, place the new item
         placed = PlacementTool.on_button_press(self, context, event)
@@ -328,6 +329,9 @@ class GroupPlacementTool(PlacementTool):
                 adapter.group()
 
         return placed
+
+    def _create_item(self):
+        return self._factory(self.parent)
 
 
 
