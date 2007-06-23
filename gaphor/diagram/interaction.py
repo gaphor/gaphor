@@ -15,10 +15,6 @@ class InteractionItem(NamedItem):
         'name-align': (ALIGN_TOP, ALIGN_LEFT),
     }
 
-    MARGIN_X = 10
-    MARGIN_Y = 5
-    PADDING = 20
-
     def draw(self, context):
         super(InteractionItem, self).draw(context)
         cr = context.cairo
@@ -32,6 +28,7 @@ class InteractionItem(NamedItem):
         cr.line_to(w, h2)
         cr.line_to(w, 0)
         cr.stroke()
+
 
 ###         self._children = []
 ### #    def on_subject_notify(self, pspec, notifiers=()):
