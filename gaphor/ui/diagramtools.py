@@ -330,8 +330,19 @@ class GroupPlacementTool(PlacementTool):
 
         return placed
 
-    def _create_item(self):
-        return self._factory(self.parent)
+    def _create_item(self, context, x, y):
+        item = self._factory(self.parent)
+        
+        # get parent position
+        px, py = self.parent._canvas_matrix_i2w.transform_point(0, 0)
+
+        # set item position
+        x, y = context.view.transform_point_c2w(x, y)
+        x -= px
+        y -= py
+        item.matrix.translate(x, y)
+
+        return item
 
 
 
