@@ -84,6 +84,8 @@ class Diagram(Namespace, PackageableElement):
         if subject:
             obj.subject = subject
         self.canvas.add(obj, parent)
+        for kid in obj._items:
+            self.canvas.add(kid, parent=obj)
         return obj
 
     def unlink(self):

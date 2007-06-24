@@ -460,19 +460,13 @@ class GroupItemTool(ItemTool):
                 assert adapter, 'No adapter in case of grouped item'
 
                 adapter.ungroup()
-                try:
-                    item.set_parent(None) # fixme: how to reparent an item
-                except:
-                    pass  # ignore until, we know how to reparent item
+                view.canvas.set_parent(item, None)
 
             if over: # add to over (over becomes parent)
                 adapter = component.queryMultiAdapter((over, item), IGroup)
                 if adapter:
                     adapter.group()
-                    try:
-                        item.set_parent(None) # fixme: how to reparent an item
-                    except:
-                        pass  # ignore until, we know how to reparent item
+                    view.canvas.set_parent(item, over)
 
 
         view.hovered_item = None

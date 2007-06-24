@@ -281,7 +281,14 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
         # properties, which should be saved in file
         self._persistent_props = set()
 
+        self._items = []
+
     id = property(lambda self: self._id, doc='Id')
+
+
+    def add_item(self, item):
+        self._items.append(item)
+
 
     def set_prop_persistent(self, name):
         """
@@ -301,10 +308,21 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
         for p in self._persistent_props:
             save_func(p, getattr(self, p.replace('-', '_')), reference=True)
 
+        parent = self.canvas.get_parent(self)
+        if parent:
+            save_func('parent', parent, reference=True)
+
+        # save kids
+        if self._items:
+            save_func('items', self._items)
+
 
     def load(self, name, value):
+        self._parent = None # temporary value to be killed in postload
         if name == 'subject':
             type(self).subject.load(self, value)
+        elif name == 'items':
+            self._items.append(value)
         else:
             #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
             try:
@@ -315,6 +333,10 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
     def postload(self):
         if self.subject:
             self.on_subject_notify(type(self).subject)
+        for item in self._items:
+            self.canvas.set_parent(item, self)
+            assert self is self.canvas.get_parent(item)
+
 
     def save_property(self, save_func, name):
         """

@@ -114,13 +114,22 @@ def save_generator(writer, factory):
         #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
         if reference:
             save_reference(name, value)
-        elif isinstance(value, UML.collection):
+        elif isinstance(value, (UML.collection, list)):
             save_collection(name, value)
         elif isinstance(value, gaphas.Item):
             writer.startElement('item', { 'id': value.id,
                                           'type': value.__class__.__name__ })
             value.save(save_canvasitem)
             writer.endElement('item')
+
+            # save subitems
+            for kid in value._items:
+                writer.startElement('item', {
+                    'id': kid.id,
+                    'type': kid.__class__.__name__ })
+                kid.save(save_canvasitem)
+                writer.endElement('item')
+
         elif isinstance(value, UML.Element):
             save_reference(name, value)
         else:
@@ -138,6 +147,7 @@ def save_generator(writer, factory):
         writer.startElement(clazz, { 'id': str(e.id) })
         e.save(save_element)
         writer.endElement(clazz)
+
         n += 1
         if n % 25 == 0:
             yield (n * 100) / size
