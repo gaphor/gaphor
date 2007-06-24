@@ -385,11 +385,12 @@ class GroupPlacementTool(PlacementTool):
 
         item = self._factory(self._parent)
         
+        view = context.view
         # get item position through parent world
-        x, y = self._parent._canvas_matrix_w2i.transform_point(x, y)
+        x, y = view.canvas.get_matrix_w2i(self._parent).transform_point(x, y)
         item.matrix.translate(x, y)
 
-        context.view.window.set_cursor(None)
+        view.window.set_cursor(None)
 
         return item
 
@@ -453,15 +454,27 @@ class GroupItemTool(ItemTool):
             if parent: # remove from parent
                 adapter = component.queryMultiAdapter((parent, item), IGroup)
                 assert adapter, 'No adapter in case of grouped item'
-
                 adapter.ungroup()
-                view.canvas.set_parent(item, None)
+
+                canvas = view.canvas
+                canvas.set_parent(item, None)
+
+                # reset item's position
+                px, py = canvas.get_matrix_w2i(parent).transform_point(0, 0)
+                item.matrix.translate(-px, -py)
+
 
             if over: # add to over (over becomes parent)
                 adapter = component.queryMultiAdapter((over, item), IGroup)
                 if adapter:
                     adapter.group()
-                    view.canvas.set_parent(item, over)
+
+                    canvas = view.canvas
+                    canvas.set_parent(item, over)
+
+                    # reset item's position
+                    x, y = canvas.get_matrix_i2w(over).transform_point(0, 0)
+                    item.matrix.translate(-x, -y)
 
 
         view.hovered_item = None
