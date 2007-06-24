@@ -348,11 +348,16 @@ class GroupPlacementTool(PlacementTool):
         object to be created.
         """
         view = context.view
+
+        if view.focused_item:
+            view.unselect_item(view.focused_item)
+            view.focused_item = None
+
         parent = view.get_item_at_point(event.x, event.y)
+
         if parent:
             adapter = component.queryMultiAdapter((parent, self._factory.item_class), IGroup)
             if adapter and adapter.pre_can_contain():
-                view.focused_item = None
                 view.hovered_item = parent
             else:
                 view.hovered_item = None
