@@ -385,13 +385,8 @@ class GroupPlacementTool(PlacementTool):
 
         item = self._factory(self._parent)
         
-        # get parent position
-        px, py = self._parent._canvas_matrix_i2w.transform_point(0, 0)
-
-        # set item position
-        x, y = context.view.transform_point_c2w(x, y)
-        x -= px
-        y -= py
+        # get item position through parent world
+        x, y = self._parent._canvas_matrix_w2i.transform_point(x, y)
         item.matrix.translate(x, y)
 
         context.view.window.set_cursor(None)
