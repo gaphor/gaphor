@@ -313,6 +313,9 @@ class GroupPlacementTool(PlacementTool):
 
         self._parent = None
 
+        # use standard dnd cursor
+        self._in_cursor = gtk.gdk.Cursor(gtk.gdk.TOP_LEFT_CORNER)
+
 
     def on_button_press(self, context, event):
         """
@@ -359,10 +362,13 @@ class GroupPlacementTool(PlacementTool):
             adapter = component.queryMultiAdapter((parent, self._factory.item_class), IGroup)
             if adapter and adapter.pre_can_contain():
                 view.hovered_item = parent
+                view.window.set_cursor(self._in_cursor)
             else:
                 view.hovered_item = None
+                view.window.set_cursor(None)
         else:
             view.hovered_item = None
+            view.window.set_cursor(None)
 
 
     def _create_item(self, context, x, y):
@@ -383,6 +389,8 @@ class GroupPlacementTool(PlacementTool):
         x -= px
         y -= py
         item.matrix.translate(x, y)
+
+        context.view.window.set_cursor(None)
 
         return item
 
