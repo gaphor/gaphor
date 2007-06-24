@@ -82,6 +82,10 @@ class InteractionLifelineGroup(AbstractGroup):
         self.parent.subject.lifeline = self.item.subject
 
 
+    def ungroup(self):
+        del self.parent.subject.lifeline[self.item.subject]
+
+
 component.provideAdapter(factory=InteractionLifelineGroup,
         adapts=(items.InteractionItem, DiagramItemMeta))
 component.provideAdapter(factory=InteractionLifelineGroup,

@@ -116,5 +116,10 @@ class IGroup(interface.Interface):
         Perform grouping of items.
         """
 
+    def ungroup(self):
+        """
+        Perform ungrouping of items.
+        """
+
 
 # vim: sw=4:et:ai

@@ -306,15 +306,19 @@ class PlacementTool(gaphas.tool.PlacementTool):
 
 
 class GroupPlacementTool(PlacementTool):
+    """
+    Try to group items when placing them on diagram.
+    """
+
+    # use standard dnd cursor to indicate grouping
+    IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.TOP_LEFT_CORNER)
+
     def __init__(self, item_factory, after_handler=None, handle_index=-1):
         super(GroupPlacementTool, self).__init__(item_factory,
                 after_handler,
                 handle_index)
 
         self._parent = None
-
-        # use standard dnd cursor
-        self._in_cursor = gtk.gdk.Cursor(gtk.gdk.TOP_LEFT_CORNER)
 
 
     def on_button_press(self, context, event):
@@ -362,7 +366,7 @@ class GroupPlacementTool(PlacementTool):
             adapter = component.queryMultiAdapter((parent, self._factory.item_class), IGroup)
             if adapter and adapter.pre_can_contain():
                 view.hovered_item = parent
-                view.window.set_cursor(self._in_cursor)
+                view.window.set_cursor(self.IN_CURSOR)
             else:
                 view.hovered_item = None
                 view.window.set_cursor(None)
@@ -394,6 +398,87 @@ class GroupPlacementTool(PlacementTool):
 
         return item
 
+
+class GroupItemTool(ItemTool):
+    """
+    Group diagram item by dropping it on another item.
+
+    Works only for one selected item, now.
+    """
+    IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.TOP_LEFT_CORNER)
+    OUT_CURSOR = gtk.gdk.Cursor(gtk.gdk.BOTTOM_RIGHT_CORNER)
+
+    def on_motion_notify(self, context, event):
+        """
+        Indicate possibility of grouping/ungrouping of selected item.
+        """
+        super(GroupItemTool, self).on_motion_notify(context, event)
+        view = context.view
+
+        if event.state & gtk.gdk.BUTTON_PRESS_MASK and len(view.selected_items) == 1:
+            item = list(view.selected_items)[0]
+            parent = view.canvas.get_parent(item)
+
+            over = view.get_item_at_point(event.x, event.y, selected=False)
+            assert over is not item
+
+            if over is parent:
+                view.hovered_item = None
+                view.window.set_cursor(None)
+                return
+
+            if parent and not over:  # are we going to remove from parent?
+                view.window.set_cursor(self.OUT_CURSOR)
+                view.hovered_item = parent
+
+            if over:       # are we going to add to parent?
+                adapter = component.queryMultiAdapter((over, item.__class__), IGroup)
+                if adapter and adapter.pre_can_contain():
+                    view.hovered_item = over
+                    view.window.set_cursor(self.IN_CURSOR)
+
+
+    def on_button_release(self, context, event):
+        """
+        Group item if it is dropped on parent's item. Ungroup item if it is
+        moved out of its parent boundaries. Method also moves item from old
+        parent to new one (regrouping).
+        """
+        super(GroupItemTool, self).on_button_release(context, event)
+        view = context.view
+        if event.button == 1 and len(view.selected_items) == 1:
+            item = list(view.selected_items)[0]
+            parent = view.canvas.get_parent(item)
+            over = view.get_item_at_point(event.x, event.y, selected=False)
+            assert over is not item
+
+            if over is parent:
+                return
+
+            if parent: # remove from parent
+                adapter = component.queryMultiAdapter((parent, item), IGroup)
+                assert adapter, 'No adapter in case of grouped item'
+
+                adapter.ungroup()
+                try:
+                    item.set_parent(None) # fixme: how to reparent an item
+                except:
+                    pass  # ignore until, we know how to reparent item
+
+            if over: # add to over (over becomes parent)
+                adapter = component.queryMultiAdapter((over, item), IGroup)
+                if adapter:
+                    adapter.group()
+                    try:
+                        item.set_parent(None) # fixme: how to reparent an item
+                    except:
+                        pass  # ignore until, we know how to reparent item
+
+
+        view.hovered_item = None
+        view.window.set_cursor(None)
+
+    
 
 
 class TransactionalToolChain(ToolChain):
@@ -441,7 +526,7 @@ def DefaultTool():
     chain = TransactionalToolChain()
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
-    chain.append(ItemTool())
+    chain.append(GroupItemTool())
     chain.append(TextEditTool())
     chain.append(RubberbandTool())
     return chain
