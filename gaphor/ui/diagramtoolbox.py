@@ -120,6 +120,7 @@ class DiagramToolbox(object):
             subject.package = self.namespace
             subject.name = 'New%s' % subject_class.__name__
             return self.diagram.create(item_class, subject=subject, parent=parent)
+        factory_method.item_class = item_class
         return factory_method
 
     def _after_handler(self):

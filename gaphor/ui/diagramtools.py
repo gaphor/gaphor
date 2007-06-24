@@ -306,35 +306,72 @@ class PlacementTool(gaphas.tool.PlacementTool):
 
 
 class GroupPlacementTool(PlacementTool):
+    def __init__(self, item_factory, after_handler=None, handle_index=-1):
+        super(GroupPlacementTool, self).__init__(item_factory,
+                after_handler,
+                handle_index)
+
+        self._parent = None
+
+
     def on_button_press(self, context, event):
+        """
+        If new item was placed onto diagram, then try to group it with
+        parent using grouping adapter.
+        """
 
         # first get parent
-        parent = None
+        self._parent = None
         if event.button == 1:
             context.ungrab()
             view = context.view
-            parent = view.get_item_at_point(event.x, event.y)
-            self.parent = parent
+            self._parent = view.get_item_at_point(event.x, event.y)
 
         # now, place the new item
         placed = PlacementTool.on_button_press(self, context, event)
 
         # if there is a parent, then try to group item and parent
-        if placed and parent:
+        if placed and self._parent:
             view = context.view
             item = view.focused_item
             
-            adapter = component.queryMultiAdapter((parent, item), IGroup)
+            adapter = component.queryMultiAdapter((self._parent, item), IGroup)
             if adapter and adapter.can_contain():
                 adapter.group()
 
         return placed
 
+
+    def on_motion_notify(self, context, event):
+        """
+        Change parent item to hovered state if it can accept diagram item
+        object to be created.
+        """
+        view = context.view
+        parent = view.get_item_at_point(event.x, event.y)
+        if parent:
+            adapter = component.queryMultiAdapter((parent, self._factory.item_class), IGroup)
+            if adapter and adapter.pre_can_contain():
+                view.focused_item = None
+                view.hovered_item = parent
+            else:
+                view.hovered_item = None
+        else:
+            view.hovered_item = None
+
+
     def _create_item(self, context, x, y):
-        item = self._factory(self.parent)
+        """
+        Create diagram item and place it within parent's boundaries.
+        """
+        # if no parent, then create with parent placement tool
+        if not self._parent:
+            return super(GroupPlacementTool, self)._create_item(context, x, y)
+
+        item = self._factory(self._parent)
         
         # get parent position
-        px, py = self.parent._canvas_matrix_i2w.transform_point(0, 0)
+        px, py = self._parent._canvas_matrix_i2w.transform_point(0, 0)
 
         # set item position
         x, y = context.view.transform_point_c2w(x, y)

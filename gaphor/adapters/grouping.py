@@ -63,13 +63,16 @@ class AbstractGroup(object):
 
 
 
+from gaphor.diagram import DiagramItemMeta
 class InteractionLifelineGroup(AbstractGroup):
     """
     Add lifeline to interaction.
     """
-    component.adapts(items.InteractionItem, items.LifelineItem)
 
 ###    __adapts__ = items.InteractionItem, items.LifelineItem
+    def pre_can_contain(self):
+        return isinstance(self.parent, items.InteractionItem) \
+                and issubclass(self.item, items.LifelineItem)
 
     def can_contain(self):
         return isinstance(self.parent, items.InteractionItem) \
@@ -79,4 +82,13 @@ class InteractionLifelineGroup(AbstractGroup):
         self.parent.subject.lifeline = self.item.subject
 
 
-component.provideAdapter(InteractionLifelineGroup)
+component.provideAdapter(factory=InteractionLifelineGroup,
+        adapts=(items.InteractionItem, DiagramItemMeta))
+component.provideAdapter(factory=InteractionLifelineGroup,
+        adapts=(items.InteractionItem, items.LifelineItem))
+
+
+class ComponentClassGroup(AbstractGroup):
+    """
+    Add class to component.
+    """
