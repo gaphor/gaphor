@@ -87,7 +87,7 @@ class InterfaceItem(ClassItem):
 
     folded = property(is_folded, _set_folded)
 
-    def update_icon(self, context):
+    def pre_update_icon(self, context):
         """
         Figure out if this interface represents a required, provided,
         assembled (wired) or dotted (minimal) look.
@@ -108,21 +108,17 @@ class InterfaceItem(ClassItem):
         self.min_width, self.min_height = self.style.icon_size
         self.width, self.height = self.style.icon_size
 
-        # update handles
+        # change handles first so gaphas.Element.pre_update can
+        # update its state
+        #
+        # update only h_se handle - rest of handles should be updated by
+        # constraints
         h_nw = self._handles[NW]
-        cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
-        h_nw.x, h_nw.y = cx - radius, cy - radius
-
-        h_ne = self._handles[NE]
-        h_ne.x, h_ne.y = cx + radius, cy - radius
-
         h_se = self._handles[SE]
-        h_se.x, h_se.y = cx + radius, cy + radius
+        h_se.x = h_nw.x + self.min_width
+        h_se.y = h_nw.y + self.min_height
 
-        h_sw = self._handles[SW]
-        h_sw.x, h_sw.y = cx - radius, cy + radius
-
-        super(InterfaceItem, self).update(context)
+        super(InterfaceItem, self).pre_update_icon(context)
 
 
     def draw_icon(self, context):
