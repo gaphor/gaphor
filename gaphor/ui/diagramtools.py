@@ -311,7 +311,7 @@ class GroupPlacementTool(PlacementTool):
     """
 
     # use standard dnd cursor to indicate grouping
-    IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.TOP_LEFT_CORNER)
+    IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.DIAMOND_CROSS)
 
     def __init__(self, item_factory, after_handler=None, handle_index=-1):
         super(GroupPlacementTool, self).__init__(item_factory,
@@ -401,8 +401,8 @@ class GroupItemTool(ItemTool):
 
     Works only for one selected item, now.
     """
-    IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.TOP_LEFT_CORNER)
-    OUT_CURSOR = gtk.gdk.Cursor(gtk.gdk.BOTTOM_RIGHT_CORNER)
+    IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.DIAMOND_CROSS)
+    OUT_CURSOR = gtk.gdk.Cursor(gtk.gdk.SIZING)
 
     def on_motion_notify(self, context, event):
         """
