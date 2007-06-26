@@ -334,7 +334,7 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
         if self.subject:
             self.on_subject_notify(type(self).subject)
         for item in self._items:
-            self.canvas.set_parent(item, self)
+            self.canvas.reparent(item, self)
             assert self is self.canvas.get_parent(item)
 
 

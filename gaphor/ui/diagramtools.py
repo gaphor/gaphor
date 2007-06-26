@@ -457,7 +457,7 @@ class GroupItemTool(ItemTool):
                 adapter.ungroup()
 
                 canvas = view.canvas
-                canvas.set_parent(item, None)
+                canvas.reparent(item, None)
 
                 # reset item's position
                 px, py = canvas.get_matrix_w2i(parent).transform_point(0, 0)
@@ -470,7 +470,7 @@ class GroupItemTool(ItemTool):
                     adapter.group()
 
                     canvas = view.canvas
-                    canvas.set_parent(item, over)
+                    canvas.reparent(item, over)
 
                     # reset item's position
                     x, y = canvas.get_matrix_i2w(over).transform_point(0, 0)
