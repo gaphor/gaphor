@@ -9,7 +9,8 @@ the actions bound to the toolbuttons should change as well.
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.core import _, inject, radio_action, build_action_group
-from diagramtools import GroupPlacementTool, PlacementTool, DefaultTool
+from diagramtools import PlacementTool, DefaultTool
+from groupingtools import GroupPlacementTool
 from gaphas.item import SE
 
 __all__ = [ 'DiagramToolbox', 'TOOLBOX_ACTIONS' ]
