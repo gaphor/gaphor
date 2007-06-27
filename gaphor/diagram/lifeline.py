@@ -9,6 +9,7 @@ from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 
 class LifetimeItem(gaphas.Item):
+    MIN_WIDTH = 10
     def __init__(self):
         super(LifetimeItem, self).__init__()
         self._th = gaphas.Handle()
@@ -18,6 +19,10 @@ class LifetimeItem(gaphas.Item):
 
         self._th.movable = False
         self._th.visible = False
+
+
+    def is_visible(self):
+        return self._bh.y - self._th.y > self.MIN_WIDTH
 
 
     def set_pos(self, x, y):
@@ -30,17 +35,18 @@ class LifetimeItem(gaphas.Item):
         super(LifetimeItem, self).update(context)
         th = self._th
         bh = self._bh
-        dy = max(10, bh.y - th.y)
+        dy = max(self.MIN_WIDTH, bh.y - th.y)
         bh.y = th.y + dy
 
 
     def draw(self, context):
         cr = context.cairo
-        cr.set_line_width(10)
-        th = self._th
-        bh = self._bh
-        cr.move_to(th.x, th.y)
-        cr.line_to(bh.x, bh.y)
+        if context.hovered or context.focused or self.is_visible():
+            cr.set_line_width(10)
+            th = self._th
+            bh = self._bh
+            cr.move_to(th.x, th.y)
+            cr.line_to(bh.x, bh.y)
 
 
 
