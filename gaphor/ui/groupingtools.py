@@ -120,14 +120,16 @@ class GroupItemTool(ItemTool):
             over = view.get_item_at_point(event.x, event.y, selected=False)
             assert over is not item
 
-            if over is parent:
+            if over is parent: # do nothing when item is over parent
                 view.hovered_item = None
                 view.window.set_cursor(None)
                 return
 
             if parent and not over:  # are we going to remove from parent?
-                view.window.set_cursor(OUT_CURSOR)
-                view.hovered_item = parent
+                adapter = component.queryMultiAdapter((parent, item.__class__), IGroup)
+                if adapter and adapter.pre_can_contain():
+                    view.window.set_cursor(OUT_CURSOR)
+                    view.hovered_item = parent
 
             if over:       # are we going to add to parent?
                 adapter = component.queryMultiAdapter((over, item.__class__), IGroup)
@@ -155,20 +157,20 @@ class GroupItemTool(ItemTool):
 
             if parent: # remove from parent
                 adapter = component.queryMultiAdapter((parent, item), IGroup)
-                assert adapter, 'No adapter in case of grouped item'
-                adapter.ungroup()
+                if adapter and adapter.can_contain():
+                    adapter.ungroup()
 
-                canvas = view.canvas
-                canvas.reparent(item, None)
+                    canvas = view.canvas
+                    canvas.reparent(item, None)
 
-                # reset item's position
-                px, py = canvas.get_matrix_w2i(parent).transform_point(0, 0)
-                item.matrix.translate(-px, -py)
+                    # reset item's position
+                    px, py = canvas.get_matrix_w2i(parent).transform_point(0, 0)
+                    item.matrix.translate(-px, -py)
 
 
             if over: # add to over (over becomes parent)
                 adapter = component.queryMultiAdapter((over, item), IGroup)
-                if adapter:
+                if adapter and adapter.can_contain():
                     adapter.group()
 
                     canvas = view.canvas
