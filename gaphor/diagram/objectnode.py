@@ -11,7 +11,6 @@ from gaphor.core import inject
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 from gaphas.util import text_extents, text_multiline
-from gaphas.geometry import Rectangle, distance_rectangle_point
 
 DEFAULT_UPPER_BOUND = '*'
 

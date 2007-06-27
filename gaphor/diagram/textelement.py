@@ -160,13 +160,9 @@ class EditableTextSupport(object):
             bounds = txt.bounds # fixme: gaphor rectangle problem
             width, height = bounds.width, bounds.height # fixme: gaphor rectangle problem
             # center stacked texts
-            txt.bounds.x0 = x + (dw - width) / 2.0
-            #txt.bounds.x0 = x + (dw - txt.bounds.width) / 2.0
-            txt.bounds.y0 = y + dy
+            txt.bounds.x = x + (dw - width) / 2.0
+            txt.bounds.y = y + dy
             dy += height
-            #dy += txt.bounds.height
-            bounds.width = width # fixme: gaphor rectangle problem
-            bounds.height = height # fixme: gaphor rectangle problem
 
 
     def update(self, context):
@@ -191,10 +187,8 @@ class EditableTextSupport(object):
 
             bounds = txt.bounds # fixme: gaphor rectangle problem
             width, height = bounds.width, bounds.height # fixme: gaphor rectangle problem
-            txt.bounds.x0 = x
-            txt.bounds.y0 = y
-            bounds.width = width # fixme: gaphor rectangle problem
-            bounds.height = height # fixme: gaphor rectangle problem
+            txt.bounds.x = x
+            txt.bounds.y = y
 
 
     def point(self, x, y):
@@ -218,7 +212,7 @@ class EditableTextSupport(object):
         cr.save()
         for txt in self._get_visible_texts(self._texts):
             bounds = txt.bounds
-            x, y = bounds.x0, bounds.y0
+            x, y = bounds.x, bounds.y
             width, height = bounds.width, bounds.height
 
             if self.subject:

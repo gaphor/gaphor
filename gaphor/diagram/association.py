@@ -649,10 +649,10 @@ class AssociationEnd(SubjectSupport):
         if context.hovered or context.focused or context.draw_all:
             cr.set_line_width(0.5)
             b = self._name_bounds
-            cr.rectangle(b.x0, b.y0, b.width, b.height)
+            cr.rectangle(b.x, b.y, b.width, b.height)
             cr.stroke()
             b = self._mult_bounds
-            cr.rectangle(b.x0, b.y0, b.width, b.height)
+            cr.rectangle(b.x, b.y, b.width, b.height)
             cr.stroke()
     
 

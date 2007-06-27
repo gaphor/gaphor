@@ -6,7 +6,6 @@ import itertools
 
 import gaphas
 from gaphas.util import text_extents, text_align
-from gaphas.geometry import Rectangle
 from diagramitem import DiagramItem
 from interfaces import IConnect
 
