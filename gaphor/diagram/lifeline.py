@@ -3,8 +3,6 @@ Lifeline diagram item.
 """
 
 import gaphas
-from gaphas.solver import Variable
-from gaphas.constraint import EqualsConstraint
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
@@ -13,29 +11,37 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 class LifetimeItem(gaphas.Item):
     def __init__(self):
         super(LifetimeItem, self).__init__()
-        self._handle = gaphas.Handle()
-        self._handles.append(self._handle)
-        self._y0 = 0
+        self._th = gaphas.Handle()
+        self._bh = gaphas.Handle()
+        self._handles.append(self._th)
+        self._handles.append(self._bh)
+
+        self._th.movable = False
+        self._th.visible = False
 
 
     def set_pos(self, x, y):
-        self._handle.x = x
-        self._y0 = y
+        self._th.x = x
+        self._bh.x = x
+        self._th.y = y
 
 
     def update(self, context):
         super(LifetimeItem, self).update(context)
-        h = self._handle
-        dy = max(10, h.y - self._y0)
-        h.y = self._y0 + dy
+        th = self._th
+        bh = self._bh
+        dy = max(10, bh.y - th.y)
+        bh.y = th.y + dy
 
 
     def draw(self, context):
         cr = context.cairo
         cr.set_line_width(10)
-        h = self._handle
-        cr.move_to(h.x, self._y0)
-        cr.line_to(h.x, h.y)
+        th = self._th
+        bh = self._bh
+        cr.move_to(th.x, th.y)
+        cr.line_to(bh.x, bh.y)
+
 
 
 # Lifeline semantics:
