@@ -1096,41 +1096,25 @@ class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
 component.provideAdapter(FlowDecisionNodeConnect)
 
 
-class MessageLifelineConnect(ElementConnect):
+class AbstractMessageLifelineConnect(object):
     """
-    Connect lifelines with a message.
+    Abstract class to connect lifelines with a message.
     """
-    component.adapts(items.LifelineItem, items.MessageItem)
-
     element_factory = inject('element_factory')
 
-    def glue(self, handle, x, y):
+    def glue_lifelines(self, handle):
+        """
+        """
         element = self.element
-        opposite = self.line.opposite(handle)
-        line = self.line
-        element = self.element
-        connected_to = opposite.connected_to
-
-        if connected_to is not None and element.__class__ != connected_to.__class__:
-            return None
-
-        if not (element.subject and isinstance(element.subject, UML.Lifeline)):
-            return None
-
-        return super(MessageLifelineConnect, self).glue(handle, x, y)
+        connected_to = self.line.opposite(handle).connected_to
+        return connected_to is None or isinstance(connected_to, element.__class__)
 
 
-    def connect(self, handle, x, y):
+
+    def connect_lifelines(self, line, send, received):
         """
         Always create a new Message with two EventOccurence instances.
         """
-        if not super(MessageLifelineConnect, self).connect(handle, x, y):
-            return
-
-        line = self.line
-        send = line.head.connected_to
-        received = line.tail.connected_to
-
         def get_subject(c):
             if not line.subject:
                 message = self.element_factory.create(UML.Message)
@@ -1162,19 +1146,12 @@ class MessageLifelineConnect(ElementConnect):
         message.messageKind = kind
 
 
-    def disconnect(self, handle):
+    def disconnect_lifelines(self, line, send, received):
         """
         Disconnect lifeline and set appropriate kind of message item. If
         there are no lifelines connected on both ends, then set UML object
         (subject) to None.
         """
-        # first disconnect
-        super(MessageLifelineConnect, self).disconnect(handle)
-
-        line = self.line
-        send = line.head.connected_to
-        received = line.tail.connected_to
-
         if send:
             line.subject.messageKind = 'lost'
             event = line.subject.receiveEvent
@@ -1204,7 +1181,76 @@ class MessageLifelineConnect(ElementConnect):
                  or not m.sendEvent and m.receiveEvent and m.messageKind == 'found')
 
 
+class MessageLifelineConnect(ElementConnect, AbstractMessageLifelineConnect):
+    """
+    Connect lifelines' heads with a message.
+    """
+    component.adapts(items.LifelineItem, items.MessageItem)
+
+    def glue(self, handle, x, y):
+        if not self.glue_lifelines(handle):
+            return None
+        return ElementConnect.glue(self, handle, x, y)
+
+    def connect(self, handle, x, y):
+        if not ElementConnect.connect(self, handle, x, y):
+            return
+
+        line = self.line
+        send = line.head.connected_to
+        received = line.tail.connected_to
+        self.connect_lifelines(line, send, received)
+
+
+    def disconnect(self, handle):
+        ElementConnect.disconnect(self, handle)
+
+        line = self.line
+        send = line.head.connected_to
+        received = line.tail.connected_to
+        self.disconnect_lifelines(line, send, received)
+
+
 component.provideAdapter(MessageLifelineConnect)
 
+
+from gaphor.diagram.lifeline import LifetimeItem
+class MessageLifetimeConnect(LineConnect, AbstractMessageLifelineConnect):
+    """
+    Connect lifelines's lifetimes with a message.
+    """
+    component.adapts(LifetimeItem, items.MessageItem)
+
+    def glue(self, handle, x, y):
+        if not self.glue_lifelines(handle):
+            return None
+        return LineConnect.glue(self, handle, x, y)
+
+    def connect(self, handle, x, y):
+        """
+        """
+        if not LineConnect.connect(self, handle, x, y):
+            return
+
+        canvas = self.element.canvas
+        line = self.line
+        send = canvas.get_parent(line.head.connected_to)
+        received = canvas.get_parent(line.tail.connected_to)
+        self.connect_lifelines(line, send, received)
+
+
+    def disconnect(self, handle):
+        LineConnect.disconnect(self, handle)
+
+        canvas = self.element.canvas
+        self.element = canvas.get_parent(self.element)
+
+        line = self.line
+        send = canvas.get_parent(line.head.connected_to)
+        received = canvas.get_parent(line.tail.connected_to)
+        self.disconnect_lifelines(line, send, received)
+
+
+component.provideAdapter(MessageLifetimeConnect)
 
 # vim:sw=4:et:ai
