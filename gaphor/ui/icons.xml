@@ -120,7 +120,7 @@
     <element>Lifeline</element>
   </icon>
   <icon id="gaphor-message">
-    <file>message24.png</file>
+    <file>message.svg</file>
     <element>Message</element>
   </icon>
   <icon id="gaphor-node">
