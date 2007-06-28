@@ -55,7 +55,7 @@ class GroupPlacementTool(PlacementTool):
 
     def on_motion_notify(self, context, event):
         """
-        Change parent item to hovered state if it can accept diagram item
+        Change parent item to dropzone state if it can accept diagram item
         object to be created.
         """
         view = context.view
@@ -69,13 +69,13 @@ class GroupPlacementTool(PlacementTool):
         if parent:
             adapter = component.queryMultiAdapter((parent, self._factory.item_class), IGroup)
             if adapter and adapter.pre_can_contain():
-                view.hovered_item = parent
+                view.dropzone_item = parent
                 view.window.set_cursor(IN_CURSOR)
             else:
-                view.hovered_item = None
+                view.dropzone_item = None
                 view.window.set_cursor(None)
         else:
-            view.hovered_item = None
+            view.dropzone_item = None
             view.window.set_cursor(None)
 
 
@@ -94,6 +94,7 @@ class GroupPlacementTool(PlacementTool):
         x, y = view.canvas.get_matrix_w2i(self._parent).transform_point(x, y)
         item.matrix.translate(x, y)
 
+        view.dropzone_item = None
         view.window.set_cursor(None)
 
         return item
@@ -121,7 +122,7 @@ class GroupItemTool(ItemTool):
             assert over is not item
 
             if over is parent: # do nothing when item is over parent
-                view.hovered_item = None
+                view.dropzone_item = None
                 view.window.set_cursor(None)
                 return
 
@@ -129,12 +130,12 @@ class GroupItemTool(ItemTool):
                 adapter = component.queryMultiAdapter((parent, item.__class__), IGroup)
                 if adapter and adapter.pre_can_contain():
                     view.window.set_cursor(OUT_CURSOR)
-                    view.hovered_item = parent
+                    view.dropzone_item = parent
 
             if over:       # are we going to add to parent?
                 adapter = component.queryMultiAdapter((over, item.__class__), IGroup)
                 if adapter and adapter.pre_can_contain():
-                    view.hovered_item = over
+                    view.dropzone_item = over
                     view.window.set_cursor(IN_CURSOR)
 
 
@@ -181,6 +182,6 @@ class GroupItemTool(ItemTool):
                     item.matrix.translate(-x, -y)
 
 
-        view.hovered_item = None
+        view.dropzone_item = None
         view.window.set_cursor(None)
 
