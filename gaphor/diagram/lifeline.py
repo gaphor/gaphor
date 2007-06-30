@@ -3,6 +3,7 @@ Lifeline diagram item.
 """
 
 import gaphas
+from gaphas.geometry import distance_line_point, Rectangle
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
@@ -42,11 +43,13 @@ class LifetimeItem(gaphas.Item):
     def draw(self, context):
         cr = context.cairo
         if context.hovered or context.focused or self.is_visible():
-            cr.set_line_width(10)
+            cr.save()
             th = self._th
             bh = self._bh
             cr.move_to(th.x, th.y)
             cr.line_to(bh.x, bh.y)
+            cr.restore()
+
 
 
 
@@ -63,25 +66,39 @@ class LifelineItem(NamedItem):
     def __init__(self, id = None):
         NamedItem.__init__(self, id)
 
-        self._has_lifetime = False
         lt = self._lifetime = LifetimeItem()
-        self._items.append(lt)
+        self._handles.extend(self._lifetime.handles())
 
         x, y = self.style.min_size
         lt.set_pos(x / 2.0, y)
 
 
+    def pre_update(self, context):
+        super(LifelineItem, self).pre_update(context)
+        self._lifetime.pre_update(context)
+
+
     def update(self, context):
         super(LifelineItem, self).update(context)
         self._lifetime.set_pos(self.width / 2.0, self.height)
+        self._lifetime.update(context)
 
 
     def draw(self, context):
         super(LifelineItem, self).draw(context)
+        self._lifetime.draw(context)
 
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
+
+
+    def point(self, x, y):
+        d1 = super(LifelineItem, self).point(x, y)
+        lt = self._lifetime
+        h1, h2 = lt.handles()
+        d2 = distance_line_point(h1.pos, h2.pos, (x, y))[0]
+        return min(d1, d2)
 
 
 # vim:sw=4:et
