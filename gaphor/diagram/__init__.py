@@ -33,6 +33,10 @@ def set_diagram_item(element, item):
 
 
 def namedelement(f):
+    """
+    Decorator for named items constructors. Injects name text element into
+    an object.
+    """
     def wrapper(*args, **kw):
         obj = args[0]
         f(*args, **kw)
@@ -45,6 +49,32 @@ def namedelement(f):
         }
         obj._name = obj.add_text('name', style=style, editable=True)
 
+    return wrapper
+
+
+def nd_subject(f):
+    """
+    Named item subject notification decorator. Updates subject notification
+    with subject's name notification.
+    """
+    def wrapper(obj, pspec, notifiers=()):
+        notifiers = ('name',) + notifiers
+        f(obj, pspec, notifiers)
+        if obj.subject:
+            obj.on_subject_notify__name(obj.subject)
+        obj.request_update()
+    return wrapper
+
+
+def nd_subject_name(f):
+    """
+    Named item subject name notification decorator. Updates text of name text
+    element.
+    """
+    def wrapper(obj, subject, pspec=None):
+        obj._name.text = subject.name
+        f(obj, subject, pspec)
+        
     return wrapper
 
 
@@ -85,9 +115,19 @@ class DiagramItemMeta(type):
                 self._name.text = subject.name
                 self.request_update()
 
-            # inject methods
-            self.on_subject_notify = subject_notification
-            self.on_subject_notify__name = name_notification
+
+            # inject or decorate notification methods
+            if hasattr(self, 'on_subject_notify'):
+                self.on_subject_notify = nd_subject(self.on_subject_notify)
+            else:
+                self.on_subject_notify = subject_notification
+
+            if hasattr(self, 'on_subject_notify__name'):
+                self.on_subject_notify__name = nd_subject_name(self.on_subject_notify__name)
+            else:
+                self.on_subject_notify__name = name_notification
+
+            # decorate constructor
             self.__init__ = namedelement(self.__init__)
 
 
