@@ -8,6 +8,7 @@ from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 import gaphor.diagram.font as font
 
 class NamedItem(ElementItem):
+    __namedelement__ = True
 
     __style__ = {
         'min-size'    : (100, 50),
@@ -29,17 +30,6 @@ class NamedItem(ElementItem):
                 style={ 'text-align-group': 'stereotype' },
                 visible=self.is_namespace_info_visible,
                 font=font.FONT_SMALL)
-
-        style = {
-                'text-align': self.style.name_align,
-                'text-padding': self.style.name_padding,
-                'text-outside': self.style.name_outside,
-                'text-align-group': 'stereotype',
-        }
-        self._name = self.add_text('name',
-                style=style,
-                editable=True,
-                font=font.FONT_NAME)
 
         # size of stereotype, namespace and name text
         self._header_size = 0, 0

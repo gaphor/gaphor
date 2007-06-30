@@ -32,6 +32,21 @@ def set_diagram_item(element, item):
     _uml_to_item_map[element] = item
 
 
+def namedelement(f):
+    def wrapper(*args, **kw):
+        obj = args[0]
+        f(*args, **kw)
+
+        style = {
+                'text-align': obj.style.name_align,
+                'text-padding': obj.style.name_padding,
+                'text-outside': obj.style.name_outside,
+                'text-align-group': 'stereotype',
+        }
+        obj._name = obj.add_text('name', style=style, editable=True)
+
+    return wrapper
+
 
 class DiagramItemMeta(type):
     """
@@ -48,6 +63,32 @@ class DiagramItemMeta(type):
 
         self.map_uml_class(data)
         self.set_style(data)
+        self.set_namedelement(data)
+
+
+    def set_namedelement(self, data):
+        """
+        If an diagram item is named element, then inject appropriate
+        decorators and notification methods.
+        """
+        if '__namedelement__' in data and data['__namedelement__']:
+
+            cls = self
+            def subject_notification(self, pspec, notifiers=()):
+                super(cls, self).on_subject_notify(pspec, ('name',) + notifiers)
+                if self.subject:
+                    self.on_subject_notify__name(self.subject)
+                self.request_update()
+
+
+            def name_notification(self, subject, pspec=None):
+                self._name.text = subject.name
+                self.request_update()
+
+            # inject methods
+            self.on_subject_notify = subject_notification
+            self.on_subject_notify__name = name_notification
+            self.__init__ = namedelement(self.__init__)
 
 
     def map_uml_class(self, data):

@@ -152,32 +152,16 @@ class DiagramLine(LineItem):
         return x, y
 
 
+
+
 class NamedLine(DiagramLine):
+    __namedelement__ = True
+
     __style__ = {
             'name-align': (ALIGN_CENTER, ALIGN_TOP),
             'name-padding': (5, 5, 5, 5),
+            'name-outside': True,
     }
-
-    def __init__(self, id = None):
-        DiagramLine.__init__(self, id)
-        style = {
-                'text-align': self.style.name_align,
-                'text-padding': self.style.name_padding,
-                'text-align-group': 'stereotype',
-        }
-        self._name = self.add_text('name', style=style, editable=True)
-
-
-    def on_subject_notify(self, pspec, notifiers=()):
-        DiagramLine.on_subject_notify(self, pspec, ('name',) + notifiers)
-        if self.subject:
-            self.on_subject_notify__name(self.subject)
-        self.request_update()
-
-
-    def on_subject_notify__name(self, subject, pspec=None):
-        self._name.text = subject.name
-        self.request_update()
 
 
 
