@@ -172,6 +172,8 @@ class UndoManager(object):
             if self._current_transaction.can_execute():
                 self.clear_redo_stack()
                 self._undo_stack.append(self._current_transaction)
+                while len(self._undo_stack) > self._stack_depth:
+                    del self._undo_stack[0]
             else:
                 pass #log.debug('nothing to commit')
 
