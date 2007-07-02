@@ -102,7 +102,7 @@ setup(
     install_requires = [
         # 'PyGTK >= 2.8.0', - Exclude, since it will not build anyway
         'decorator >= 2.0.1',
-        'gaphas >= 0.1.5.dev-r1236',
+        'gaphas >= 0.2.0.dev-r1543',
         'zope.component >= 3.3.0', # - won't compile on windows.
         # Add dependency on zope.testing to work around bug in zope.component
         'zope.testing >= 3.3.0',
