@@ -177,6 +177,7 @@ class UndoManager(object):
 
             self._current_transaction = None
         component.handle(UndoManagerStateChanged(self))
+        self._action_executed()
 
     @component.adapter(TransactionRollback)
     def rollback_transaction(self, event=None):
@@ -192,6 +193,7 @@ class UndoManager(object):
             self._current_transaction = None
         # else: mark for rollback?
         component.handle(UndoManagerStateChanged(self))
+        self._action_executed()
 
     def discard_transaction(self):
 
@@ -202,6 +204,7 @@ class UndoManager(object):
         if self._transaction_depth == 0:
             self._current_transaction = None
         component.handle(UndoManagerStateChanged(self))
+        self._action_executed()
 
     @action(name='edit-undo', stock_id='gtk-undo', accel='<Control>z')
     def undo_transaction(self):
@@ -223,6 +226,7 @@ class UndoManager(object):
         self._current_transaction = None
         self._transaction_depth = 0
         component.handle(UndoManagerStateChanged(self))
+        self._action_executed()
 
     @action(name='edit-redo', stock_id='gtk-redo', accel='<Control>y')
     def redo_transaction(self):
@@ -242,6 +246,7 @@ class UndoManager(object):
         self._transaction_depth = 0
 
         component.handle(UndoManagerStateChanged(self))
+        self._action_executed()
 
     def in_transaction(self):
         return self._current_transaction is not None
