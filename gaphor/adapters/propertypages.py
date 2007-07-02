@@ -12,7 +12,7 @@ TODO:
 """
 
 import gtk
-from gaphor.core import _, inject
+from gaphor.core import _, inject, transactional
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
@@ -49,6 +49,7 @@ class NamedItemPropertyPage(object):
         page.show_all()
         return page
 
+    @transactional
     def _on_name_change(self, entry):
         self.context.subject.name = entry.get_text()
         
@@ -103,6 +104,7 @@ class StereotypePage(object):
                 for extension in class_.extension:
                     yield extension.ownedEnd.type
 
+    @transactional
     def _on_stereotype_selected(self, button, stereotype):
         subject = self.context.subject
         if button.get_active():
@@ -147,6 +149,7 @@ class ClassPropertyPage(NamedItemPropertyPage):
 
         return page
 
+    @transactional
     def _on_abstract_change(self, button):
         self.context.subject.isAbstract = button.get_active()
 
@@ -184,6 +187,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
         return page
 
+    @transactional
     def _on_fold_change(self, button):
         self.context.folded = button.get_active()
 
@@ -246,10 +250,12 @@ class AttributesPage(object):
 
         return page
         
+    @transactional
     def _on_show_attributes_change(self, button):
         self.context.show_attributes = button.get_active()
         self.context.request_update()
         
+    @transactional
     def _on_cell_edited(self, cellrenderertext, path, new_text, col):
         """
         Update the model and UML element based on fresh user input.
@@ -334,10 +340,12 @@ class OperationsPage(object):
 
         return page
         
+    @transactional
     def _on_show_operations_change(self, button):
         self.context.show_operations = button.get_active()
         self.context.request_update()
         
+    @transactional
     def _on_cell_edited(self, cellrenderertext, path, new_text, col):
         """
         Update the model and UML element based on fresh user input.
@@ -415,6 +423,7 @@ class TaggedValuePage(object):
         tree_view.show_all()
         return page
         
+    @transactional
     def _on_cell_edited(self, cellrenderertext, path, new_text, col):
         """
         Update the model and UML element based on fresh user input.
@@ -516,9 +525,11 @@ class DependencyPropertyPage(object):
                 self.combo.set_active(index)
                 break
 
+    @transactional
     def _on_dependency_type_change(self, combo):
         self.context.dependency_type = self.dependency_types[combo.get_active()][1]
 
+    @transactional
     def _on_auto_dependency_change(self, button):
         self.context.auto_dependency = button.get_active()
 
@@ -608,18 +619,23 @@ class AssociationPropertyPage(NamedItemPropertyPage):
     def update(self):
         pass
 
+    @transactional
     def _on_show_direction_change(self, button):
         self.context.show_direction = button.get_active()
 
+    @transactional
     def _on_invert_direction_change(self, button):
         self.context.invert_direction()
 
+    @transactional
     def _on_end_name_change(self, entry, end):
         end.subject.parse(entry.get_text())
 
+    @transactional
     def _on_navigability_change(self, combo, end):
         end.navigability = (None, False, True)[combo.get_active()]
 
+    @transactional
     def _on_aggregation_change(self, combo, end):
         end.subject.aggregation = ('none', 'shared', 'composite')[combo.get_active()]
 
@@ -672,9 +688,11 @@ class LineStylePage(object):
 
         return page
 
+    @transactional
     def _on_orthogonal_change(self, button):
         self.context.orthogonal = button.get_active()
 
+    @transactional
     def _on_horizontal_change(self, button):
         self.context.horizontal = button.get_active()
 
@@ -741,17 +759,17 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     def update(self):
         pass
 
-
+    @transactional
     def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
         self.context.set_upper_bound(value)
 
-
+    @transactional
     def _on_ordering_change(self, combo):
         value = self.ORDERING_VALUES[combo.get_active()]
         self.context.set_ordering(value)
 
-
+    @transactional
     def _on_ordering_show_change(self, button):
         self.context.show_ordering = button.get_active()
         self.context.set_ordering(self.context.subject.ordering)
@@ -789,11 +807,10 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
 
         return page
 
-
     def update(self):
         pass
 
-
+    @transactional
     def _on_join_spec_change(self, entry):
         value = entry.get_text().strip()
         self.context.set_join_spec(value)
@@ -831,11 +848,10 @@ class FlowPropertyPage(NamedItemPropertyPage):
 
         return page
 
-
     def update(self):
         pass
 
-
+    @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
         self.context.set_guard(value)
@@ -870,11 +886,10 @@ class ComponentPropertyPage(NamedItemPropertyPage):
 
         return page
 
-
     def update(self):
         pass
 
-
+    @transactional
     def _on_ii_change(self, button):
         """
         Called when user clicks "Indirectly Instantiated" check button.
