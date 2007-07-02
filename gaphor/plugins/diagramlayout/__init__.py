@@ -14,7 +14,7 @@ __version__ = '0.1'
 __author__ = 'Arjan Molenaar'
 
 from zope import interface, component
-from gaphor.core import _, inject, action, build_action_group
+from gaphor.core import _, inject, action, build_action_group, transactional
 from gaphor.interfaces import IService, IActionProvider
 
 import random
@@ -53,8 +53,9 @@ class DiagramLayout(object):
             tooltip='simple diagram layout')
     def execute(self):
         d = self.gui_manager.main_window.get_current_diagram()
-        layout_diagram(d)
+        self.layout_diagram(d)
 
+    @transactional
     def layout_diagram(self, diag):
         layout_diagram(diag)
 
