@@ -120,7 +120,6 @@ class InterfaceItem(ClassItem):
 
         super(InterfaceItem, self).pre_update_icon(context)
 
-
     def draw_icon(self, context):
         cr = context.cairo
         h_nw = self._handles[NW]

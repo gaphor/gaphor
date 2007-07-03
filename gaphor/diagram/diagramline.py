@@ -105,25 +105,26 @@ class DiagramLine(LineItem):
         # First update matrix and solve constraints (NE and SW handle are
         # lazy and are resolved by the constraint solver rather than set
         # directly.
-        self.canvas.update_matrix(self)
-        self.canvas.solver.solve()
+        #self.canvas.update_matrix(self)
+        #self.canvas.solver.solve()
 
         if hasattr(self, '_load_head_connection'):
             adapter = component.queryMultiAdapter((self._load_head_connection, self), IConnect)
             assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_head_connection, self)
             h = self.head
 
-            x, y = self.canvas.get_matrix_i2w(self, calculate=True).transform_point(h.x, h.y)
-            x, y = self.canvas.get_matrix_w2i(self._load_head_connection, calculate=True).transform_point(x, y)
+            x, y = self.canvas.get_matrix_i2w(self).transform_point(h.x, h.y)
+            x, y = self.canvas.get_matrix_w2i(self._load_head_connection).transform_point(x, y)
             adapter.connect(h, x, y)
             del self._load_head_connection
+
         if hasattr(self, '_load_tail_connection'):
             adapter = component.queryMultiAdapter((self._load_tail_connection, self), IConnect)
             assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_tail_connection, self)
             h = self.tail
 
-            x, y = self.canvas.get_matrix_i2w(self, calculate=True).transform_point(h.x, h.y)
-            x, y = self.canvas.get_matrix_w2i(self._load_tail_connection, calculate=True).transform_point(x, y)
+            x, y = self.canvas.get_matrix_i2w(self).transform_point(h.x, h.y)
+            x, y = self.canvas.get_matrix_w2i(self._load_tail_connection).transform_point(x, y)
             adapter.connect(h, x, y)
             del self._load_tail_connection
         LineItem.postload(self)

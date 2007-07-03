@@ -80,7 +80,8 @@ class InteractionLifelineGroup(AbstractGroup):
 
     def group(self):
         self.parent.subject.lifeline = self.item.subject
-        self.parent.add_item(self.item)
+        self.parent.canvas.reparent(self.item, self.parent)
+        #self.parent.add_item(self.item)
 
 
     def ungroup(self):

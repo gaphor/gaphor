@@ -178,6 +178,11 @@ class ClassifierItem(NamedItem):
         if style != self._drawing_style:
             self._drawing_style = style
             self.request_update()
+#            if self.canvas:
+#                request_resolve = self.canvas.solver.request_resolve
+#                for h in self._handles: 
+#                    request_resolve(h.x)
+#                    request_resolve(h.y)
 
         if self._drawing_style == self.DRAW_COMPARTMENT:
             self.draw       = self.draw_compartment
@@ -266,8 +271,9 @@ class ClassifierItem(NamedItem):
 
     def pre_update_compartment_icon(self, context):
         self.pre_update_compartment(context)
+        # icon width plus right margin
         self.min_width = max(self.min_width,
-                self._header_size[0] + self.ICON_WIDTH + 10) # icon width plus right margin
+                self._header_size[0] + self.ICON_WIDTH + 10)
 
     def pre_update_icon(self, context):
         super(ClassifierItem, self).pre_update(context)

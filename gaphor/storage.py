@@ -38,15 +38,15 @@ def save(writer=None, factory=None, status_queue=None):
             status_queue(status)
 
 def save_generator(writer, factory):
-    """Save the current model using @writer, which is a
+    """
+    Save the current model using @writer, which is a
     gaphor.misc.xmlwriter.XMLWriter instance (or at least a SAX serializer
     with CDATA support).
     """
-    # Make bool work for Python 2.2
-    bool_ = type(bool(0))
 
     def save_reference(name, value):
-        """Save a value as a reference to another element in the model.
+        """
+        Save a value as a reference to another element in the model.
         This applies to both UML as well as canvas items.
         """
         # Save a reference to the object:
@@ -57,7 +57,8 @@ def save_generator(writer, factory):
             writer.endElement(name)
 
     def save_collection(name, value):
-        """Save a list of references.
+        """
+        Save a list of references.
         """
         if len(value) > 0:
             writer.startElement(name, {})
@@ -71,7 +72,8 @@ def save_generator(writer, factory):
             writer.endElement(name)
 
     def save_value(name, value):
-        """Save a value (attribute).
+        """
+        Save a value (attribute).
         If the value is a string, it is saves as a CDATA block.
         """
         if value is not None:
@@ -81,7 +83,7 @@ def save_generator(writer, factory):
                 writer.startCDATA()
                 writer.characters(value)
                 writer.endCDATA()
-            elif isinstance(value, bool_):
+            elif isinstance(value, bool):
                 # Write booleans as 0/1.
                 writer.characters(str(int(value)))
             else:
@@ -90,7 +92,8 @@ def save_generator(writer, factory):
             writer.endElement(name)
 
     def save_element(name, value):
-        """Save attributes and references from items in the gaphor.UML module.
+        """
+        Save attributes and references from items in the gaphor.UML module.
         A value may be a primitive (string, int), a gaphor.UML.collection
         (which contains a list of references to other UML elements) or a
         gaphas.Canvas (which contains canvas items).
@@ -108,27 +111,29 @@ def save_generator(writer, factory):
             save_value(name, value)
 
     def save_canvasitem(name, value, reference=False):
-        """Save attributes and references in a gaphor.diagram.* object.
+        """
+        Save attributes and references in a gaphor.diagram.* object.
         The extra attribute reference can be used to force UML 
         """
         #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
         if reference:
             save_reference(name, value)
-        elif isinstance(value, (UML.collection, list)):
+        elif isinstance(value, UML.collection):
             save_collection(name, value)
         elif isinstance(value, gaphas.Item):
             writer.startElement('item', { 'id': value.id,
                                           'type': value.__class__.__name__ })
             value.save(save_canvasitem)
-            writer.endElement('item')
 
             # save subitems
-            for kid in value._items:
-                writer.startElement('item', {
-                    'id': kid.id,
-                    'type': kid.__class__.__name__ })
-                kid.save(save_canvasitem)
-                writer.endElement('item')
+            for child in value.canvas.get_children(value):
+                save_canvasitem(None, child)
+#                writer.startElement('item', { 'id': child.id,
+#                                              'type': kid.__class__.__name__ })
+#                child.save(save_canvasitem)
+#                writer.endElement('item')
+
+            writer.endElement('item')
 
         elif isinstance(value, UML.Element):
             save_reference(name, value)
@@ -162,7 +167,8 @@ def load_elements(elements, factory, status_queue=None):
             status_queue(status)
 
 def load_elements_generator(elements, factory, gaphor_version=None):
-    """Load a file and create a model if possible.
+    """
+    Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
     # TODO: restructure loading code, first load model, then add canvas items
@@ -272,21 +278,21 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # Data model, loaded from file, is updated automatically, so there is
     # no need for special function.
 
+    for d in factory.select(lambda e: isinstance(e, UML.Diagram)):
+        # update_now() is implicitly called when lock is released
+        d.canvas.block_updates = False
+
     # do a postload:
     for id, elem in elements.items():
         yield update_status_queue()
         elem.element.postload()
 
-    # Unlock canvas's for updates
-    for id, elem in elements.items():
-        if isinstance(elem, parser.element) and elem.canvas:
-            elem.element.canvas.block_updates = False
-
     factory.notify_model()
 
 
 def load(filename, factory, status_queue=None):
-    """Load a file and create a model if possible.
+    """
+    Load a file and create a model if possible.
     Optionally, a status queue function can be given, to which the
     progress is written (as status_queue(progress)).
     Exceptions: GaphorError.
@@ -296,7 +302,8 @@ def load(filename, factory, status_queue=None):
             status_queue(status)
 
 def load_generator(filename, factory):
-    """Load a file and create a model if possible.
+    """
+    Load a file and create a model if possible.
     This function is a generator. It will yield values from 0 to 100 (%)
     to indicate its progression.
 
