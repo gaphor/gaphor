@@ -6,9 +6,9 @@ import math
 
 from gaphas.util import path_ellipse, text_align
 from gaphas.state import observed, reversible_property
-from gaphas.item import NW, SE, NE, SW
+from gaphas.item import NW, SE, NE, SW, Handle
 from gaphas.solver import Variable, STRONG
-from gaphas.constraint import EqualsConstraint
+from gaphas.constraint import EqualsConstraint, LessThanConstraint
 
 from gaphor import UML
 from gaphor.core import inject
@@ -215,29 +215,14 @@ class ForkNodeItem(ForkDecisionNodeItem):
             style=self.STYLE_TOP,
             visible=self.is_join_spec_visible)
 
+        # disable Element handles
+        for h in self._handles:
+            h.movable = False
+            #h.visible = False
 
-    def setup_canvas(self):
-        super(ForkNodeItem, self).setup_canvas()
-
-        # we need only two visible, movable handles
-        h_nw = self._handles[NW]
-        h_nw.movable = True
-        h_sw = self._handles[SW]
-        h_sw.movable = True
-
-        h_ne = self._handles[NE]
-        h_se = self._handles[SE]
-#        h_ne.visible = False
-#        h_se.visible = False
-
-        cadd = self.canvas.solver.add_constraint
-        w = self.style.min_size[1]
-        c1 = EqualsConstraint(a=h_ne.x, b=Variable(w, STRONG + 1))
-        c2 = EqualsConstraint(a=h_se.x, b=Variable(w, STRONG + 1))
-        cadd(c1)
-        cadd(c2)
-        self._constraints.append(c1)
-        self._constraints.append(c2)
+        # add vertical handles
+        self._handles.append(Handle(strength=STRONG+1))
+        self._handles.append(Handle(strength=STRONG+1))
 
 
     def is_join_spec_visible(self):
@@ -248,6 +233,33 @@ class ForkNodeItem(ForkDecisionNodeItem):
             and self.subject.joinSpec.value != DEFAULT_JOIN_SPEC
 
 
+    def setup_canvas(self):
+        super(ForkNodeItem, self).setup_canvas()
+        cadd = self.canvas.solver.add_constraint
+#       h1, h2 = self._handles[4:]
+#       h_nw = self._handles[NW]
+#       h_sw = self._handles[SW]
+#       h1.y = h_nw.y
+#       h2.y = h_sw.y
+#       c1 = EqualsConstraint(a=h_nw.y, b=h1.y)
+#       c2 = EqualsConstraint(a=h_sw.y, b=h2.y)
+#       w = Variable(self.width / 2.0, STRONG+2)
+#       h1.x = h2.x = w
+#       c3 = EqualsConstraint(a=h1.x, b=w)
+#       c4 = EqualsConstraint(a=h2.x, b=w)
+#       c5 = LessThanConstraint(smaller=h1.y, bigger=h2.y)
+#       cadd(c1)
+#       cadd(c2)
+#       cadd(c3)
+#       cadd(c4)
+#       cadd(c5)
+#       self._constraints.append(c1)
+#       self._constraints.append(c2)
+#       self._constraints.append(c3)
+#       self._constraints.append(c4)
+#       self._constraints.append(c5)
+
+
     def draw(self, context):
         """
         Draw vertical line - symbol of fork and join nodes. Join
@@ -255,9 +267,9 @@ class ForkNodeItem(ForkDecisionNodeItem):
         """
         cr = context.cairo
         cr.set_line_width(6)
-        x = 0
-        cr.move_to(x, 0)
-        cr.line_to(x, self.height)
+        h1, h2 = self._handles[4:]
+        cr.move_to(h1.x, 0)
+        cr.line_to(h2.x, self.height)
 
         cr.stroke()
         super(ForkNodeItem, self).draw(context)
