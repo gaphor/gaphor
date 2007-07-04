@@ -30,13 +30,9 @@ class CommentItem(ElementItem):
         See DiagramItem.on_subject_notify().
         """
         ElementItem.on_subject_notify(self, pspec, ('body',))
-
-        ##if self.subject:
-        #    self.on_subject_notify__body(self.subject, None)
         self.request_update()
 
     def on_subject_notify__body(self, subject, pspec):
-        #self.sbody.set_text(self.subject.body or '')
         self.request_update()
 
     # DiaCanvasItem callbacks:
@@ -46,7 +42,7 @@ class CommentItem(ElementItem):
         cr = context.cairo
         w, h = text_extents(cr, self.subject.body, multiline=True, padding=2)
         self.min_width = w + 10
-        self.min_height = h + 20
+        self.min_height = h + 10
         ElementItem.pre_update(self, context)
 
     def update(self, context):

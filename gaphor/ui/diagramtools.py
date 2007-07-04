@@ -159,32 +159,6 @@ class ConnectHandleTool(HandleTool):
                     grabbed_item.merge_segment(segment)
             return True
 
-class PopupItemTool(ItemTool):
-    """
-    An item tool with the ability to display a popup menu on
-    a right mouse click.
-    """
-
-    action_manager = inject('action_manager')
-
-    def __init__(self):
-        ItemTool.__init__(self, buttons=(1, 3))
-
-    def on_button_press(self, context, event):
-        if not ItemTool.on_button_press(self, context, event):
-            return False
-        if event.button == 3:
-            context.ungrab()
-            item = context.view.focused_item
-
-            if item:
-                x, y = context.view.transform_point_c2i(item, event.x, event.y)
-                log.debug('Item at cursor: %s' % item.item_at(x, y))
-                menu = self.action_manager.ui_manager.get_widget('item-popup')
-                if menu:
-                    menu.popup(None, None, None, event.button, event.time)
-        return True
-
 
 class TextEditTool(Tool):
     """

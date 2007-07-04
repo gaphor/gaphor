@@ -20,6 +20,42 @@ from gaphor import UML
 from gaphor.UML.umllex import parse_attribute, render_attribute
 import gaphas.item
 
+class CommentItemPropertyPage(object):
+    """
+    Property page for Comments
+    """
+    interface.implements(IPropertyPage)
+    component.adapts(items.CommentItem)
+
+    def __init__(self, context):
+        self.context = context
+
+    def construct(self):
+        page = gtk.VBox()
+
+        label = gtk.Label(_('Comment'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        page.pack_start(label, expand=False)
+
+        buffer = gtk.TextBuffer()
+        if self.context.subject.body:
+            buffer.set_text(self.context.subject.body)
+        text_view = gtk.TextView()
+        text_view.set_buffer(buffer)
+        text_view.show()
+        page.pack_start(text_view)
+
+        buffer.connect('changed', self._on_body_change)
+        page.show_all()
+        return page
+
+    @transactional
+    def _on_body_change(self, buffer):
+        self.context.subject.body = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
+        
+component.provideAdapter(CommentItemPropertyPage, name='Properties')
+
+
 class NamedItemPropertyPage(object):
     """
     An adapter which works for any named item view.
