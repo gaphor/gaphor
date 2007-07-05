@@ -30,4 +30,5 @@ class CommentLineItem(DiagramLine):
         context.cairo.set_dash((7.0, 5.0), 0)
         DiagramLine.draw(self, context)
 
+
 # vim: sw=4:et:ai
