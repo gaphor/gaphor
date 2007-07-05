@@ -273,7 +273,7 @@ class DiagramToolbox(object):
         self.view.tool = PlacementTool(
                 item_factory=self._item_factory(items.ForkNodeItem,
                                                 UML.JoinNode),
-                handle_index=SE,
+                handle_index=1,
                 after_handler=self._after_handler)
 
     def toolbox_object_node(self):

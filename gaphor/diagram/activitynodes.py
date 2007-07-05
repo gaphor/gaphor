@@ -4,17 +4,18 @@ Activity control nodes.
 
 import math
 
-from gaphas.util import path_ellipse, text_align
+from gaphas.util import path_ellipse
 from gaphas.state import observed, reversible_property
-from gaphas.item import NW, SE, NE, SW, Handle
-from gaphas.solver import Variable, STRONG
+from gaphas.item import Handle, Item
 from gaphas.constraint import EqualsConstraint, LessThanConstraint
 
 from gaphor import UML
 from gaphor.core import inject
+from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP, \
         ALIGN_RIGHT, ALIGN_BOTTOM
+from gaphor.diagram.style import get_text_point
 
 
 DEFAULT_JOIN_SPEC = 'and'
@@ -187,19 +188,21 @@ class DecisionNodeItem(ForkDecisionNodeItem):
 
 
 
-class ForkNodeItem(ForkDecisionNodeItem):
+class ForkNodeItem(Item, DiagramItem):
     """
     Representation of fork and join node.
     """
+    __namedelement__ = True
 
     element_factory = inject('element_factory')
 
-    __uml__   = UML.JoinNode
-    #__uml__   = UML.ForkNode
+    __uml__   = UML.ForkNode
 
     __style__ = {
         'min-size':   (6, 45),
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
+        'name-padding': (2, 2, 2, 2),
+        'name-outside': True,
     }
 
     STYLE_TOP = {
@@ -208,21 +211,33 @@ class ForkNodeItem(ForkDecisionNodeItem):
     }
 
     def __init__(self, id=None):
-        ForkDecisionNodeItem.__init__(self, id)
+        Item.__init__(self)
+        DiagramItem.__init__(self, id)
+        
+        self._handles.extend((Handle(), Handle()))
 
-        self._join_spec=self.add_text('joinSpec.value',
+        self._constraints = []
+
+        self._join_spec = self.add_text('joinSpec.value',
             pattern='{ joinSpec = %s }',
             style=self.STYLE_TOP,
             visible=self.is_join_spec_visible)
 
-        # disable Element handles
-        for h in self._handles:
-            h.movable = False
-            #h.visible = False
 
-        # add vertical handles
-        self._handles.append(Handle(strength=STRONG+1))
-        self._handles.append(Handle(strength=STRONG+1))
+    def setup_canvas(self):
+        Item.setup_canvas(self)
+
+        h1, h2 = self._handles
+        cadd = self.canvas.solver.add_constraint
+        c1 = EqualsConstraint(a=h1.x, b=h2.x)
+        c2 = LessThanConstraint(smaller=h1.y, bigger=h2.y, delta=30)
+        self._constraints.extend((cadd(c1), cadd(c2)))
+
+
+    def teardown_canvas(self):
+        super(Item, self).teardown_canvas()
+        for c in self._constraints:
+            self.canvas.solver.remove_constraint(c)
 
 
     def is_join_spec_visible(self):
@@ -230,34 +245,28 @@ class ForkNodeItem(ForkDecisionNodeItem):
         Check if join specification should be displayed.
         """
         return isinstance(self.subject, UML.JoinNode) \
+            and self.subject.joinSpec is not None \
             and self.subject.joinSpec.value != DEFAULT_JOIN_SPEC
 
 
-    def setup_canvas(self):
-        super(ForkNodeItem, self).setup_canvas()
-        cadd = self.canvas.solver.add_constraint
-#       h1, h2 = self._handles[4:]
-#       h_nw = self._handles[NW]
-#       h_sw = self._handles[SW]
-#       h1.y = h_nw.y
-#       h2.y = h_sw.y
-#       c1 = EqualsConstraint(a=h_nw.y, b=h1.y)
-#       c2 = EqualsConstraint(a=h_sw.y, b=h2.y)
-#       w = Variable(self.width / 2.0, STRONG+2)
-#       h1.x = h2.x = w
-#       c3 = EqualsConstraint(a=h1.x, b=w)
-#       c4 = EqualsConstraint(a=h2.x, b=w)
-#       c5 = LessThanConstraint(smaller=h1.y, bigger=h2.y)
-#       cadd(c1)
-#       cadd(c2)
-#       cadd(c3)
-#       cadd(c4)
-#       cadd(c5)
-#       self._constraints.append(c1)
-#       self._constraints.append(c2)
-#       self._constraints.append(c3)
-#       self._constraints.append(c4)
-#       self._constraints.append(c5)
+    def text_align(self, extents, align, padding, outside):
+        h1, h2 = self._handles
+        w, _ = self.style.min_size
+        h = h2.y - h1.y
+        x, y = get_text_point(extents, w, h, align, padding, outside)
+
+        return x, y
+
+
+    def pre_update(self, context):
+        self.update_stereotype()
+        Item.pre_update(self, context)
+        DiagramItem.pre_update(self, context)
+
+
+    def update(self, context):
+        Item.update(self, context)
+        DiagramItem.update(self, context)
 
 
     def draw(self, context):
@@ -265,14 +274,21 @@ class ForkNodeItem(ForkDecisionNodeItem):
         Draw vertical line - symbol of fork and join nodes. Join
         specification is also drawn above the item.
         """
+        Item.draw(self, context)
+        DiagramItem.draw(self, context)
+
         cr = context.cairo
+
         cr.set_line_width(6)
-        h1, h2 = self._handles[4:]
-        cr.move_to(h1.x, 0)
-        cr.line_to(h2.x, self.height)
+        h1, h2 = self._handles
+        cr.move_to(h1.x, h1.y)
+        cr.line_to(h2.x, h2.y)
 
         cr.stroke()
-        super(ForkNodeItem, self).draw(context)
+
+
+    def point(self, x, y):
+        return DiagramItem.point(self, x, y)
 
 
     def on_subject_notify(self, pspec, notifiers = ()):
@@ -282,7 +298,7 @@ class ForkNodeItem(ForkDecisionNodeItem):
         If subject is join node, then set subject of join specification
         text element.
         """
-        ForkDecisionNodeItem.on_subject_notify(self, pspec,
+        DiagramItem.on_subject_notify(self, pspec,
                 ('joinSpec', 'joinSpec.value') + notifiers)
         self.set_join_spec(DEFAULT_JOIN_SPEC)
         self.request_update()
