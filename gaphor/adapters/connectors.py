@@ -1096,9 +1096,9 @@ class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
 component.provideAdapter(FlowDecisionNodeConnect)
 
 
-class AbstractMessageLifelineConnect(object):
+class MessageLifelineConnect(ElementConnect):
     """
-    Abstract class to connect lifelines with a message.
+    Connect lifeline with a message.
     """
     element_factory = inject('element_factory')
 
@@ -1108,8 +1108,6 @@ class AbstractMessageLifelineConnect(object):
         element = self.element
         connected_to = self.line.opposite(handle).connected_to
         return connected_to is None or isinstance(connected_to, element.__class__)
-
-
 
     def connect_lifelines(self, line, send, received):
         """
@@ -1144,7 +1142,6 @@ class AbstractMessageLifelineConnect(object):
             kind = 'found'
 
         message.messageKind = kind
-
 
     def disconnect_lifelines(self, line, send, received):
         """
@@ -1181,16 +1178,26 @@ class AbstractMessageLifelineConnect(object):
                  or not m.sendEvent and m.receiveEvent and m.messageKind == 'found')
 
 
-class MessageLifelineConnect(ElementConnect, AbstractMessageLifelineConnect):
-    """
-    Connect lifelines' heads with a message.
-    """
     component.adapts(items.LifelineItem, items.MessageItem)
 
     def glue(self, handle, x, y):
         if not self.glue_lifelines(handle):
             return None
-        return ElementConnect.glue(self, handle, x, y)
+        element = self.element
+        lifetime = element.lifetime
+        head_pos = ElementConnect.glue(self, handle, x, y)
+        h_nw = element.handles()[0]
+        head_d = geometry.distance_rectangle_point((h_nw.x, h_hw.y, element.width, element.height), (x, y))
+        lifetime_d, lifetime_pos = geometry.distance_line_point(lifetime.top_handle, lifetime.bottom_handle, (x, y))
+
+        # Return the position, but remember if we should connect to the
+        # Lifetime or Lifeline instance
+        if head_d < lifetime_d:
+            self._connect_to_lifetime = False
+            return head_pos
+        else:
+            self._connect_to_lifetime = True
+            return lifetime_pos
 
     def connect(self, handle, x, y):
         if not ElementConnect.connect(self, handle, x, y):
@@ -1215,7 +1222,7 @@ component.provideAdapter(MessageLifelineConnect)
 
 
 from gaphor.diagram.lifeline import LifetimeItem
-class MessageLifetimeConnect(LineConnect, AbstractMessageLifelineConnect):
+class MessageLifetimeConnect(LineConnect): #, AbstractMessageLifelineConnect):
     """
     Connect lifelines's lifetimes with a message.
     """
@@ -1251,6 +1258,6 @@ class MessageLifetimeConnect(LineConnect, AbstractMessageLifelineConnect):
         self.disconnect_lifelines(line, send, received)
 
 
-component.provideAdapter(MessageLifetimeConnect)
+#component.provideAdapter(MessageLifetimeConnect)
 
 # vim:sw=4:et:ai
