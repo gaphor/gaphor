@@ -1187,7 +1187,7 @@ class MessageLifelineConnect(ElementConnect):
         lifetime = element.lifetime
         head_pos = ElementConnect.glue(self, handle, x, y)
         h_nw = element.handles()[0]
-        head_d = geometry.distance_rectangle_point((h_nw.x, h_hw.y, element.width, element.height), (x, y))
+        head_d = geometry.distance_rectangle_point((h_nw.x, h_nw.y, element.width, element.height), (x, y))
         lifetime_d, lifetime_pos = geometry.distance_line_point(lifetime.top_handle, lifetime.bottom_handle, (x, y))
 
         # Return the position, but remember if we should connect to the
@@ -1198,6 +1198,7 @@ class MessageLifelineConnect(ElementConnect):
         else:
             self._connect_to_lifetime = True
             return lifetime_pos
+
 
     def connect(self, handle, x, y):
         if not ElementConnect.connect(self, handle, x, y):
