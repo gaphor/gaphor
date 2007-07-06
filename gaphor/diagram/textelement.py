@@ -220,8 +220,8 @@ class EditableTextSupport(object):
                 text_multiline(cr, x, y, txt.text)
                 cr.stroke()
 
-            if (context.hovered or context.focused or context.draw_all) \
-                    and txt.editable:
+            if self.subject and txt.editable \
+                    and (context.hovered or context.focused):
 
                 width = max(15, width)
                 height = max(10, height)
