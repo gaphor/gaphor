@@ -1241,44 +1241,4 @@ class MessageLifelineConnect(ElementConnect):
 
 component.provideAdapter(MessageLifelineConnect)
 
-
-from gaphor.diagram.lifeline import LifetimeItem
-class MessageLifetimeConnect(LineConnect): #, AbstractMessageLifelineConnect):
-    """
-    Connect lifelines's lifetimes with a message.
-    """
-    component.adapts(LifetimeItem, items.MessageItem)
-
-    def glue(self, handle, x, y):
-        if not self.glue_lifelines(handle):
-            return None
-        return LineConnect.glue(self, handle, x, y)
-
-    def connect(self, handle, x, y):
-        """
-        """
-        if not LineConnect.connect(self, handle, x, y):
-            return
-
-        canvas = self.element.canvas
-        line = self.line
-        send = canvas.get_parent(line.head.connected_to)
-        received = canvas.get_parent(line.tail.connected_to)
-        self.connect_lifelines(line, send, received)
-
-
-    def disconnect(self, handle):
-        LineConnect.disconnect(self, handle)
-
-        canvas = self.element.canvas
-        self.element = canvas.get_parent(self.element)
-
-        line = self.line
-        send = canvas.get_parent(line.head.connected_to)
-        received = canvas.get_parent(line.tail.connected_to)
-        self.disconnect_lifelines(line, send, received)
-
-
-#component.provideAdapter(MessageLifetimeConnect)
-
 # vim:sw=4:et:ai
