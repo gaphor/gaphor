@@ -74,12 +74,16 @@ class NamedItemPropertyPage(object):
         hbox = gtk.HBox()
         page.pack_start(hbox, expand=False)
 
+        subject = self.context.subject
+        if not subject:
+            return page
+
         label = gtk.Label(_('Name'))
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
         entry = gtk.Entry()        
-        entry.set_text(self.context.subject and self.context.subject.name or '')
+        entry.set_text(subject and subject.name or '')
         entry.connect('changed', self._on_name_change)
         hbox.pack_start(entry)
         page.show_all()
