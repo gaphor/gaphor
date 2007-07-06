@@ -1100,6 +1100,9 @@ class MessageLifelineConnect(ElementConnect):
     """
     Connect lifeline with a message.
     """
+
+    component.adapts(items.LifelineItem, items.MessageItem)
+
     element_factory = inject('element_factory')
 
     def glue_lifelines(self, handle):
@@ -1177,8 +1180,6 @@ class MessageLifelineConnect(ElementConnect):
                  or m.sendEvent and not m.receiveEvent and m.messageKind == 'lost' \
                  or not m.sendEvent and m.receiveEvent and m.messageKind == 'found')
 
-
-    component.adapts(items.LifelineItem, items.MessageItem)
 
     def glue(self, handle, x, y):
         if not self.glue_lifelines(handle):
