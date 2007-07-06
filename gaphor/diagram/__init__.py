@@ -73,6 +73,7 @@ def nd_subject_name(f):
     """
     def wrapper(obj, subject, pspec=None):
         obj._name.text = subject.name
+        obj.request_update()
         f(obj, subject, pspec)
         
     return wrapper
@@ -104,28 +105,17 @@ class DiagramItemMeta(type):
         if '__namedelement__' in data and data['__namedelement__']:
 
             cls = self
-            def subject_notification(self, pspec, notifiers=()):
-                super(cls, self).on_subject_notify(pspec, ('name',) + notifiers)
-                if self.subject:
-                    self.on_subject_notify__name(self.subject)
-                self.request_update()
-
-
-            def name_notification(self, subject, pspec=None):
-                self._name.text = subject.name
-                self.request_update()
-
 
             # inject or decorate notification methods
             if hasattr(self, 'on_subject_notify'):
                 self.on_subject_notify = nd_subject(self.on_subject_notify)
             else:
-                self.on_subject_notify = subject_notification
+                self.on_subject_notify = nd_subject(lambda *args: None)
 
             if hasattr(self, 'on_subject_notify__name'):
                 self.on_subject_notify__name = nd_subject_name(self.on_subject_notify__name)
             else:
-                self.on_subject_notify__name = name_notification
+                self.on_subject_notify__name = nd_subject_name(lambda *args: None)
 
             # decorate constructor
             self.__init__ = namedelement(self.__init__)
