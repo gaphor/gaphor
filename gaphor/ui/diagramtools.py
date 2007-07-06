@@ -30,8 +30,16 @@ class ConnectHandleTool(HandleTool):
 
     It also adds handles to lines when a line is grabbed on the middle of
     a line segment (points are drawn by the LineSegmentPainter).
+
+    Attributes:
+     - _adapter: current adapter used to connect items
     """
     GLUE_DISTANCE = 10
+
+    def __init__(self):
+        super(ConnectHandleTool, self).__init__()
+        self._adapter = None
+
 
     def glue(self, view, item, handle, wx, wy):
         """
@@ -73,6 +81,7 @@ class ConnectHandleTool(HandleTool):
             if adapter:
                 x, y = w2i(i).transform_point(wx, wy)
                 pos = adapter.glue(handle, x, y)
+                self._adapter = adapter
                 if pos:
                     d = i.point(x, y)
                     if d <= dist:
@@ -97,17 +106,23 @@ class ConnectHandleTool(HandleTool):
         to glue (the handles are already positioned), the IConnect.connect
         is called for (glued_item, item).
         """
-        glue_item = self.glue(view, item, handle, wx, wy)
+        connected = False
+        try:
+            glue_item = self.glue(view, item, handle, wx, wy)
 
-        if glue_item:
-            adapter = component.queryMultiAdapter((glue_item, item), IConnect)
-            x, y = view.canvas.get_matrix_w2i(glue_item).transform_point(wx, wy)
-            adapter.connect(handle, x, y)
+            if glue_item:
+                x, y = view.canvas.get_matrix_w2i(glue_item).transform_point(wx, wy)
+                self._adapter.connect(handle, x, y)
 
-            return True
-        elif handle and handle.connected_to:
-            handle.disconnect()
-        return False
+                connected = True
+            elif handle and handle.connected_to:
+                handle.disconnect()
+
+        finally:
+            self._adapter = None
+
+
+        return connected
 
     def disconnect(self, view, item, handle):
         """

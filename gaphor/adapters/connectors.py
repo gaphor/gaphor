@@ -4,7 +4,7 @@ Adapters
 
 from zope import interface, component
 
-from gaphas.item import NW, SE
+from gaphas.item import NW, NE, SW, SE
 from gaphas import geometry
 from gaphas import constraint
 from gaphor import UML
@@ -97,17 +97,26 @@ class ElementConnect(AbstractConnect):
     """
     Base class for connecting a line to an ElementItem class.
     """
-    
-    def side(self, handle_pos, glued):
+    def side(self, (hx, hy), glued):
         """
         Determine the side on which the handle is connecting.
         This is done by determining the proximity to the nearest edge.
+
+        Handles of one of the sides is returned.
         """
-        hx, hy = handle_pos
-        ax, ay = glued.handles()[NW].pos
-        bx, by = glued.handles()[SE].pos
-        return min((abs(hy - ay), 0), (abs(hx - bx), 1),
-                   (abs(hy - by), 2),  (abs(hx - ax), 3))[1]
+        handles = glued.handles()
+        ax, ay = handles[NW].x, handles[NW].y
+        bx, by = handles[SE].x, handles[SE].y
+        if abs(hx - ax) < 0.01:
+            return handles[NW], handles[SW]
+        elif abs(hy - ay) < 0.01:
+            return handles[NW], handles[NE]
+        elif abs(hx - bx) < 0.01:
+            return handles[NE], handles[SE]
+        else:
+            return handles[SW], handles[SE]
+        assert False
+
 
     def glue(self, handle, x, y):
         """
@@ -127,10 +136,9 @@ class ElementConnect(AbstractConnect):
         canvas = element.canvas
         solver = canvas.solver
 
-        s = self.side((x, y), element)
+        h1, h2 = self.side((x, y), element)
         handle._connect_constraint = \
-            constraint.LineConstraint(canvas, element, element.handles()[s],
-                                element.handles()[(s+1)%4], self.line, handle)
+            constraint.LineConstraint(canvas, element, h1, h2, self.line, handle)
         solver.add_constraint(handle._connect_constraint)
         handle.connected_to = element
 
@@ -1199,6 +1207,17 @@ class MessageLifelineConnect(ElementConnect):
         else:
             self._connect_to_lifetime = True
             return lifetime_pos
+
+
+    def side(self, (hx, hy), glued):
+        """
+        Return handles of one of lifeline head's side or lifetime handles.
+        """
+        if self._connect_to_lifetime:
+            return glued.handles()[-2:]
+        else:
+            return super(MessageLifelineConnect, self).side((hx, hy), glued)
+        assert False
 
 
     def connect(self, handle, x, y):
