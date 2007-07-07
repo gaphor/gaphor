@@ -1189,24 +1189,48 @@ class MessageLifelineConnect(ElementConnect):
                  or not m.sendEvent and m.receiveEvent and m.messageKind == 'found')
 
 
+    def _is_lifetime(self, x, y, element):
+        lifetime = element.lifetime
+        h_nw = element.handles()[NW]
+        head_d = geometry.distance_rectangle_point((h_nw.x, h_nw.y, element.width, element.height), (x, y))
+        lifetime_d, lifetime_pos = geometry.distance_line_point(lifetime.top_handle, lifetime.bottom_handle, (x, y))
+        return head_d >= lifetime_d, lifetime_pos
+
+
     def glue(self, handle, x, y):
         if not self.glue_lifelines(handle):
             return None
         element = self.element
-        lifetime = element.lifetime
         head_pos = ElementConnect.glue(self, handle, x, y)
-        h_nw = element.handles()[0]
-        head_d = geometry.distance_rectangle_point((h_nw.x, h_nw.y, element.width, element.height), (x, y))
-        lifetime_d, lifetime_pos = geometry.distance_line_point(lifetime.top_handle, lifetime.bottom_handle, (x, y))
+        
+        is_lifetime, lifetime_pos = self._is_lifetime(x, y, element)
+
+        line = self.line
+        opposite = line.opposite(handle)
+        connected_to = opposite.connected_to
+
+        glue_ok = True
+        c_is_lifetime = False
+        if connected_to:
+            px, py = opposite.pos
+            c_is_lifetime = opposite.is_lifetime
+
+            # connect only if both are lifeline heads or lifetimes
+            glue_ok = not (is_lifetime ^ c_is_lifetime)
+
 
         # Return the position, but remember if we should connect to the
         # Lifetime or Lifeline instance
-        if head_d < lifetime_d:
+        if glue_ok and is_lifetime:
+            self._connect_to_lifetime = True
+            handle.is_lifetime = True
+            return lifetime_pos
+        elif glue_ok:
             self._connect_to_lifetime = False
+            handle.is_lifetime = False
             return head_pos
         else:
-            self._connect_to_lifetime = True
-            return lifetime_pos
+            return None
 
 
     def side(self, (hx, hy), glued):
