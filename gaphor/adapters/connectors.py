@@ -1074,8 +1074,8 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         # of incoming/outgoing edges.
         self.combine_nodes()
 
-    def disconnect_subject(self):
-        super(FlowForkDecisionNodeConnect, self).disconnect_subject()
+    def disconnect_subject(self, handle):
+        super(FlowForkDecisionNodeConnect, self).disconnect_subject(handle)
         if self.element.combined:
             self.decombine_nodes()
 
