@@ -64,7 +64,11 @@ class GroupPlacementTool(PlacementTool):
             view.unselect_item(view.focused_item)
             view.focused_item = None
 
-        parent = view.get_item_at_point(event.x, event.y)
+        try:
+            parent = view.get_item_at_point(event.x, event.y)
+        except KeyError:
+            # No bounding box yet.
+            return
 
         if parent:
             adapter = component.queryMultiAdapter((parent, self._factory.item_class), IGroup)
@@ -185,3 +189,5 @@ class GroupItemTool(ItemTool):
         view.dropzone_item = None
         view.window.set_cursor(None)
 
+
+# vim:sw=4:et:ai
