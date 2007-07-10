@@ -8,6 +8,7 @@ from gaphas.util import path_ellipse
 from gaphas.state import observed, reversible_property
 from gaphas.item import Handle, Item
 from gaphas.constraint import EqualsConstraint, LessThanConstraint
+from gaphas.geometry import distance_line_point
 
 from gaphor import UML
 from gaphor.core import inject
@@ -288,7 +289,10 @@ class ForkNodeItem(Item, DiagramItem):
 
 
     def point(self, x, y):
-        return DiagramItem.point(self, x, y)
+        h1, h2 = self._handles
+        d, p = distance_line_point(h1.pos, h2.pos, (x, y))
+        # Substract line_width / 2
+        return d - 3
 
 
     def on_subject_notify(self, pspec, notifiers = ()):
