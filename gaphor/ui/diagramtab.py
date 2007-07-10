@@ -212,6 +212,10 @@ class DiagramTab(object):
         if view.is_focus():
             if event.keyval == 0xFFFF and event.state == 0: # Delete
                 self.delete_selected_items()
+            elif event.keyval == 0xFF08 and event.state == 0: # Backspace
+                self.delete_selected_items()
+            else:
+                print '%x' %event.keyval, event.state
                 #self.action_manager.execute('diagram-delete')
 
 
