@@ -104,7 +104,7 @@ class DiagramExportManager(object):
         w, h = view.bounding_box.width, view.bounding_box.height
         surface = cairo.SVGSurface(filename, w, h)
         cr = cairo.Context(surface)
-        view.matrix.translate(-view.bounding_box.x0, -view.bounding_box.y0)
+        view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
         view.paint(cr)
         cr.show_page()
         surface.flush()
@@ -127,7 +127,7 @@ class DiagramExportManager(object):
         w, h = view.bounding_box.width, view.bounding_box.height
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w+1), int(h+1))
         cr = cairo.Context(surface)
-        view.matrix.translate(-view.bounding_box.x0, -view.bounding_box.y0)
+        view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
         view.paint(cr)
         cr.show_page()
         surface.write_to_png(filename)
@@ -148,7 +148,7 @@ class DiagramExportManager(object):
         w, h = view.bounding_box.width, view.bounding_box.height
         surface = cairo.PDFSurface(filename, w, h)
         cr = cairo.Context(surface)
-        view.matrix.translate(-view.bounding_box.x0, -view.bounding_box.y0)
+        view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
         view.paint(cr)
         cr.show_page()
         surface.flush()
