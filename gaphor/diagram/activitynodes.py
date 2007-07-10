@@ -145,13 +145,13 @@ class DecisionNodeItem(ActivityNodeItem):
     def save(self, save_func):
         if self._combined:
             save_func('combined', self._combined, reference=True)
-        super(ForkDecisionNodeItem, self).save(save_func)
+        super(DecisionNodeItem, self).save(save_func)
 
     def load(self, name, value):
         if name == 'combined':
             self._combined = value
         else:
-            super(ForkDecisionNodeItem, self).load(name, value)
+            super(DecisionNodeItem, self).load(name, value)
 
     @observed
     def _set_combined(self, value):
