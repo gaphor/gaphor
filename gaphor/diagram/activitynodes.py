@@ -125,13 +125,17 @@ class FlowFinalNodeItem(ActivityNodeItem):
         
 
 
-class ForkDecisionNodeItem(ActivityNodeItem):
+class DecisionNodeItem(ActivityNodeItem):
     """
-    Abstract class for fork and decision UI nodes. These nodes contain
-    combined property, which determines if the they represent combination
-    of fork/join or decision/merge nodes as described in UML
-    specification.
+    Representation of decision or merge node.
     """
+    __uml__   = UML.DecisionNode
+    __style__   = {
+        'min-size':   (20, 30),
+        'name-align': (ALIGN_LEFT, ALIGN_TOP),
+    }
+
+    RADIUS = 15
 
     def __init__(self, id=None):
         ActivityNodeItem.__init__(self, id)
@@ -156,20 +160,6 @@ class ForkDecisionNodeItem(ActivityNodeItem):
 
     combined = reversible_property(lambda s: s._combined, _set_combined)
         
-
-class DecisionNodeItem(ForkDecisionNodeItem):
-    """
-    Representation of decision or merge node.
-    """
-
-    __uml__   = UML.DecisionNode
-    __style__   = {
-        'min-size':   (20, 30),
-        'name-align': (ALIGN_LEFT, ALIGN_TOP),
-    }
-
-    RADIUS = 15
-
     def draw(self, context):
         """
         Draw diamond shape, which represents decision and merge nodes.
@@ -217,6 +207,7 @@ class ForkNodeItem(Item, DiagramItem):
         
         self._handles.extend((Handle(), Handle()))
 
+        self._combined = None
         self._constraints = []
 
         self._join_spec = self.add_text('joinSpec.value',
@@ -224,6 +215,24 @@ class ForkNodeItem(Item, DiagramItem):
             style=self.STYLE_TOP,
             visible=self.is_join_spec_visible)
 
+
+    def save(self, save_func):
+        if self._combined:
+            save_func('combined', self._combined, reference=True)
+        super(ForkNodeItem, self).save(save_func)
+
+    def load(self, name, value):
+        if name == 'combined':
+            self._combined = value
+        else:
+            super(ForkNodeItem, self).load(name, value)
+
+    @observed
+    def _set_combined(self, value):
+        #self.preserve_property('combined')
+        self._combined = value
+
+    combined = reversible_property(lambda s: s._combined, _set_combined)
 
     def setup_canvas(self):
         Item.setup_canvas(self)
@@ -236,7 +245,7 @@ class ForkNodeItem(Item, DiagramItem):
 
 
     def teardown_canvas(self):
-        super(Item, self).teardown_canvas()
+        super(ForkNodeItem, self).teardown_canvas()
         for c in self._constraints:
             self.canvas.solver.remove_constraint(c)
 

@@ -117,14 +117,19 @@ class ElementConnect(AbstractConnect):
             return handles[SW], handles[SE]
         assert False
 
+    def bounds(self, element):
+        """
+        Returns bounds of the element that we're connecting to.
+        """
+        h = element.handles()
+        return map(float, (h[NW].pos + h[SE].pos))
 
     def glue(self, handle, x, y):
         """
         Return the point the handle could connect to. None if no connection
         is allowed.
         """
-        h = self.element.handles()
-        bounds = map(float, (h[NW].pos + h[SE].pos))
+        bounds = self.bounds(self.element)
         return geometry.point_on_rectangle(bounds, (x, y), border=True)
 
     def connect_constraint(self, handle, x, y):
@@ -964,6 +969,9 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Decision/Merge node.
     """
 
+#    def side(self, (hx, hy), glued):
+#        return glued.handles()
+
     def glue(self, handle, x, y):
         """
         In addition to the normal check, one end should have at most one
@@ -995,6 +1003,10 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         #
         #if handle is line.tail and len(subject.incoming) > 0 and len(subject.outgoing) > 1:
         #    return None
+
+#        assert len(self.element.handles()) == 2, '%s: %d' % (self.element, len(self.element.handles()))
+#        h1, h2 = self.element.handles()
+#        return geometry.distance_line_point(h1.pos, h2.pos, (x, y))[1]
 
         return super(FlowForkDecisionNodeConnect, self).glue(handle, x, y)
 
@@ -1088,6 +1100,13 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
 
     fork_node_class=UML.ForkNode
     join_node_class=UML.JoinNode
+
+    def side(self, (hx, hy), element):
+        return element.handles()
+
+    def bounds(self, element):
+        h1, h2 = element.handles()
+        return map(float, (h1.pos + h2.pos))
 
 component.provideAdapter(FlowForkNodeConnect)
 

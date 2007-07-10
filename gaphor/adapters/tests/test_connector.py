@@ -354,7 +354,7 @@ class ConnectorTestCase(unittest.TestCase):
         adapter = component.queryMultiAdapter((iface, impl), IConnect)
 
         adapter.connect(impl.head, impl.head.x, impl.head.y)
-
+        
         assert impl.head.connected_to is iface
         assert impl.subject is not None
         assert impl.subject.contract[0] is iface.subject
@@ -588,7 +588,7 @@ class ConnectorTestCase(unittest.TestCase):
         assert flow1.subject in a2.subject.outgoing
         assert flow1.subject.source is a2.subject
 
-    def x_test_flow_fork_decision(self, itemClass=items.ForkNodeItem, forkNodeClass=UML.ForkNode, joinNodeClass=UML.JoinNode):
+    def test_flow_fork_decision(self, itemClass=items.ForkNodeItem, forkNodeClass=UML.ForkNode, joinNodeClass=UML.JoinNode):
         """
         Test fork/decision behaviour.
          [1] A join node has one outgoing edge.
@@ -719,8 +719,8 @@ class ConnectorTestCase(unittest.TestCase):
         assert flow2.tail.connected_to is None, flow2.tail.connected_to
 
         adapter.disconnect(flow2.head)
-        assert len(f1.subject.incoming) == 1
-        assert len(f1.subject.outgoing) == 1
+        assert len(f1.subject.incoming) == 1, len(f1.subject.incoming)
+        assert len(f1.subject.outgoing) == 0, len(f1.subject.outgoing)
 
         adapter = component.queryMultiAdapter((a2, flow2), IConnect)
         adapter.connect(flow2.head, flow2.head.x, flow2.head.y)
@@ -730,7 +730,7 @@ class ConnectorTestCase(unittest.TestCase):
         adapter.connect(flow2.tail, flow2.tail.x, flow2.tail.y)
         assert len(a2.subject.outgoing) == 1
         assert len(f1.subject.incoming) == 2
-        assert len(f1.subject.outgoing) == 1
+        assert len(f1.subject.outgoing) == 0, len(f1.subject.outgoing)
         assert type(f1.subject) is joinNodeClass, f1.subject
 
         # And of course I can't add another outgoing edge:
@@ -740,7 +740,7 @@ class ConnectorTestCase(unittest.TestCase):
         #assert flow4.head.connected_to is None
 
 
-    def x_test_flow_decision_merge(self):
+    def test_flow_decision_merge(self):
         """
         Decision/Merge node is basically the same as Fork/Join node.
         """
