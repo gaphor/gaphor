@@ -72,21 +72,21 @@ class StyleTestCase(unittest.TestCase):
 
         x, y = get_text_point_at_line(extents, p1, p2,
                 (ALIGN_LEFT, ALIGN_TOP), (2, 2, 2, 2))
-        self.assertEqual(x, 2)
-        self.assertEqual(y, 2)
+        self.assertEqual(x, 5)
+        self.assertEqual(y, -10)
 
         x, y = get_text_point_at_line(extents, p1, p2,
                 (ALIGN_RIGHT, ALIGN_TOP), (2, 2, 2, 2))
-        self.assertEqual(x, 8)
-        self.assertEqual(y, 13)
+        self.assertEqual(x, 5)
+        self.assertEqual(y, -10)
 
         p2 = -20, 20
         x, y = get_text_point_at_line(extents, p1, p2,
                 (ALIGN_LEFT, ALIGN_TOP), (2, 2, 2, 2))
-        self.assertEqual(x, -12)
-        self.assertEqual(y, 2)
+        self.assertEqual(x, -15)
+        self.assertEqual(y, -10)
 
         x, y = get_text_point_at_line(extents, p1, p2,
                 (ALIGN_RIGHT, ALIGN_TOP), (2, 2, 2, 2))
-        self.assertEqual(x, -18)
-        self.assertEqual(y, 13)
+        self.assertEqual(x, -15)
+        self.assertEqual(y, -10)

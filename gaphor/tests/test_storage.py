@@ -192,8 +192,8 @@ class StorageTestCase(unittest.TestCase):
             if isinstance(item, items.AssociationItem):
                 aa = item
         assert aa
-        assert aa.handles()[0].pos == (10, 20), aa.handles()[0].pos
-        assert aa.handles()[1].pos == (50, 60), aa.handles()[1].pos
+        assert map(float, aa.handles()[0].pos) == [10, 20], aa.handles()[0].pos
+        assert map(float, aa.handles()[1].pos) == [50, 60], aa.handles()[1].pos
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
         #print d1, d1.subject
