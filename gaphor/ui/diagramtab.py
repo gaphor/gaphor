@@ -210,9 +210,11 @@ class DiagramTab(object):
         edit stuff.
         """
         if view.is_focus():
-            if event.keyval == 0xFFFF and event.state == 0: # Delete
+            if event.keyval == 0xFFFF and \
+                    (event.state == 0 or event.state & gtk.gdk.MOD2_MASK): # Delete
                 self.delete_selected_items()
-            elif event.keyval == 0xFF08 and event.state == 0: # Backspace
+            elif event.keyval == 0xFF08 and \
+                    (event.state == 0 or event.state & gtk.gdk.MOD2_MASK): # Backspace
                 self.delete_selected_items()
             else:
                 print '%x' %event.keyval, event.state
