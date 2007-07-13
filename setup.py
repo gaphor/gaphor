@@ -67,6 +67,20 @@ class build_doc(Command):
         except ImportError:
             print 'epydoc not installed, skipping API documentation.'
 
+
+#if sys.platform == 'darwin':
+#    # Mac OS X
+#    import pkg_resources
+#    pkg_resources.require('zope.component')
+#    platform_setup_requires=['py2app']
+#    platform_setup = dict(
+#        app=['gaphor-osx.py'],
+#        )
+#else:
+platform_setup_requires = []
+platform_setup = dict()
+
+
 setup(
     name='gaphor',
     version=VERSION,
@@ -152,15 +166,20 @@ setup(
               'run': run,
     },
 
-    setup_requires = 'nose >= 0.9.2',
+    setup_requires = ['nose >= 0.9.2'] + platform_setup_requires,
 
     test_suite = 'nose.collector',
 
     options = dict(
         py2app = dict(
-            includes=['atk', 'pango', 'cairo', 'pangocairo'],
-#             CFBundleDisplayName='Gaphor',
-#             CFBundleIdentifier='net.sourceforge.gaphor'
+            argv_emulation=True,
+            semi_standalone=True, # Depend on installed Python 2.4 Framework
+            includes=['atk', 'pango', 'cairo', 'pangocairo'], #'zope.defferedimport', 'zope.component', 'zope.deprecation', 'zope.interface', 'zope.event', 'zope.testing', 'zope.proxy'],
+            packages=['gaphor', 'zope'],
+            plist=dict(
+                CFBundleGetInfoString='Gaphor',
+                CFBundleIdentifier='com.devjavu.gaphor'
+                )
         ),
         build_pot = dict(
             all_linguas = ','.join(LINGUAS),
@@ -168,7 +187,11 @@ setup(
         build_mo = dict(
             all_linguas = ','.join(LINGUAS),
         ),
-    )
+
+    ),
+
+    **platform_setup
+
 )
  
 # vim:sw=4:et:ai

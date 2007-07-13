@@ -217,15 +217,22 @@ class ForkNodeItem(Item, DiagramItem):
 
 
     def save(self, save_func):
+        save_func('matrix', tuple(self.matrix))
+        save_func('height', float(self._handles[1].y))
         if self._combined:
             save_func('combined', self._combined, reference=True)
-        super(ForkNodeItem, self).save(save_func)
+        DiagramItem.save(self, save_func)
 
     def load(self, name, value):
-        if name == 'combined':
+        if name == 'matrix':
+            self.matrix = eval(value)
+        elif name == 'height':
+            self._handles[1].y = eval(value)
+        elif name == 'combined':
             self._combined = value
         else:
-            super(ForkNodeItem, self).load(name, value)
+            DiagramItem.load(self, name, value)
+            #super(ForkNodeItem, self).load(name, value)
 
     @observed
     def _set_combined(self, value):
