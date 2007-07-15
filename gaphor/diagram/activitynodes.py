@@ -234,6 +234,11 @@ class ForkNodeItem(Item, DiagramItem):
             DiagramItem.load(self, name, value)
             #super(ForkNodeItem, self).load(name, value)
 
+    def postload(self):
+        if self.subject and self.subject.joinSpec:
+            self._join_spec.text = self.subject.joinSpec.value
+
+
     @observed
     def _set_combined(self, value):
         #self.preserve_property('combined')
