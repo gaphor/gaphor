@@ -231,13 +231,13 @@ class ForkNodeItem(Item, DiagramItem):
         elif name == 'combined':
             self._combined = value
         else:
-            DiagramItem.load(self, name, value)
-            #super(ForkNodeItem, self).load(name, value)
+            #DiagramItem.load(self, name, value)
+            super(ForkNodeItem, self).load(name, value)
 
     def postload(self):
         if self.subject and self.subject.joinSpec:
             self._join_spec.text = self.subject.joinSpec.value
-
+        super(ForkNodeItem, self).postload()
 
     @observed
     def _set_combined(self, value):
@@ -325,7 +325,8 @@ class ForkNodeItem(Item, DiagramItem):
         """
         DiagramItem.on_subject_notify(self, pspec,
                 ('joinSpec', 'joinSpec.value') + notifiers)
-        self.set_join_spec(DEFAULT_JOIN_SPEC)
+        if self.subject and not (self.subject.joinSpec or self.subject.joinSpec.value):
+            self.set_join_spec(DEFAULT_JOIN_SPEC)
         self.request_update()
 
 

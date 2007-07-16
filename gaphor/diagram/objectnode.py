@@ -88,6 +88,11 @@ class ObjectNodeItem(NamedItem):
         else:
             super(ObjectNodeItem, self).load(name, value)
 
+    def postload(self):
+        if self.subject and self.subject.upperBound:
+            self._upper_bound.text = self.subject.upperBound.value
+        super(ObjectNodeItem, self).postload()
+
     def on_subject_notify(self, pspec, notifiers = ()):
         """
         Detect subject changes. If subject is set then set upper bound text

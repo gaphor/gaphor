@@ -26,6 +26,8 @@ class EditableTextSupport(object):
         self._text_groups = { None: [] }
         self._text_groups_sizes = {}
 
+    def postload(self):
+        super(EditableTextSupport, self).postload()
 
     def texts(self):
         """

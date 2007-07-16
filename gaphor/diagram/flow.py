@@ -37,6 +37,10 @@ class FlowItem(NamedLine):
         NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.value', editable=True)
 
+    def postload(self):
+        if self.subject and self.subject.guard:
+            self._guard.text = self.subject.guard.value
+        super(FlowItem, self).postload()
 
     def on_subject_notify(self, pspec, notifiers = ()):
         NamedLine.on_subject_notify(self, pspec,
