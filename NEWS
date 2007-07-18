@@ -1,3 +1,14 @@
+0.11.0
+------
+ - Sequence diagrams
+ - Non-UML drawing primitives (rectangles, ellipses, lines).
+ - Major performance improvements in Gaphas 0.2.0.
+ - Property editor
+ - Lots of user interface tweaks
+ - Services are loaded through Egg entry points.
+ - New plugin infrastructure, based on setuptools.
+ - gtk.UIManager is now used for menus.
+
 0.10.0
 ------
  - New undo management system
