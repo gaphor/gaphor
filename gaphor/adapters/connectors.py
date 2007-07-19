@@ -203,26 +203,13 @@ class LineConnect(AbstractConnect):
         this method is called.
         """
         element = self.element
+        line = self.line
         canvas = element.canvas
-        solver = canvas.solver
 
         s, pos = self._glue(handle, x, y)
         h1, h2 = element.handles()[s], element.handles()[s+1]
-        lc = handle._connect_constraint = \
-            constraint.LineConstraint((h1.pos, h2.pos), handle.pos)
-        pdata = {
-            h1.pos: element,
-            h2.pos: element,
-            handle.pos: self.line,
-        }
 
-        canvas.projector(lc, xy=pdata)
-        canvas.projector(lc, xy=pdata, f=lc.update_ratio)
-        lc.update_ratio()
-        canvas.add_canvas_constraint(self.line, handle, lc)
-
-        #solver.add_constraint(handle._connect_constraint)
-        handle.connected_to = element
+        self._create_line_constraint(element, h1, h2, line, handle)
 
 
 class CommentLineElementConnect(ElementConnect):
