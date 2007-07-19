@@ -153,9 +153,9 @@ class ConnectHandleTool(HandleTool):
             h = item.handles()
             x, y = context.view.get_matrix_v2i(item).transform_point(event.x, event.y)
             for h1, h2 in zip(h[:-1], h[1:]):
-                vx = (h1.x + h2.x) / 2
-                cy = (h1.y + h2.y) / 2
-                if distance_point_point_fast((x,y), (cx, cy)) <= 4:
+                xp = (h1.x + h2.x) / 2
+                yp = (h1.y + h2.y) / 2
+                if distance_point_point_fast((x,y), (xp, yp)) <= 4:
                     segment = h.index(h1)
                     item.split_segment(segment)
                     self.grab_handle(item, item.handles()[segment + 1])
