@@ -107,7 +107,7 @@ class run(Command):
         else:
             print 'Launching Gaphor...'
             #gaphor.main(self.model)
-            starter = load_entry_point('gaphor==0.10.5', 'console_scripts', 'gaphor')
+            starter = load_entry_point('gaphor==%s' % (self.distribution.get_version(),), 'console_scripts', 'gaphor')
 
             if self.profile:
                 print 'Enabling profiling...'
