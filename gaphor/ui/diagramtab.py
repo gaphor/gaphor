@@ -2,6 +2,7 @@
 # vim: sw=4:et
 
 import gtk
+from cairo import Matrix
 
 from zope import component
 from gaphor import UML
@@ -251,10 +252,12 @@ class DiagramTab(object):
                 tx = Transaction()
                 item = self.diagram.create(item_class)
                 assert item
-                wx, wy = view.transform_point_c2w(x + view.hadjustment.value,
-                                              y + view.vadjustment.value)
+                inverse = Matrix(*view.matrix) 
+                inverse.invert() 
+                cx, cy = inverse.transform_point(x + view.hadjustment.value,
+                                                 y + view.vadjustment.value)
 
-                ix, iy = view.canvas.get_matrix_w2i(item, calculate=True).transform_point(max(0, wx), max(0, wy))
+                ix, iy = view.canvas.get_matrix_c2i(item, calculate=True).transform_point(max(0, cx), max(0, cy))
                 item.matrix.translate(ix, iy)
                 item.subject = element
                 tx.commit()

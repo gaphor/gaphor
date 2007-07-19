@@ -30,8 +30,7 @@ class LineSegmentPainter(Painter):
                 cy = (h1.y + h2.y) / 2
                 cr.save()
                 cr.identity_matrix()
-                m = Matrix(*view.canvas.get_matrix_i2w(item))
-                m *= view._matrix
+                m = Matrix(*view.get_matrix_i2v(item))
 
                 cr.set_antialias(ANTIALIAS_NONE)
                 cr.translate(*m.transform_point(cx, cy))

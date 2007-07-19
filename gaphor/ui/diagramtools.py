@@ -8,13 +8,16 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 """
 
 import gtk
+from cairo import Matrix
 from zope import component
 
-import gaphas
 from gaphas.geometry import distance_point_point, distance_point_point_fast, \
                             distance_line_point, distance_rectangle_point
 from gaphas.item import Line
-from gaphas.tool import Tool, HandleTool, ItemTool, ToolChain
+from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool
+from gaphas.tool import ToolChain, HoverTool, ItemTool, RubberbandTool
+
+
 
 from gaphor.core import inject, Transaction, transactional
 
@@ -41,7 +44,7 @@ class ConnectHandleTool(HandleTool):
         self._adapter = None
 
 
-    def glue(self, view, item, handle, wx, wy):
+    def glue(self, view, item, handle, cx, cy):
         """
         Find the nearest item that the handle may connect to.
 
@@ -53,19 +56,21 @@ class ConnectHandleTool(HandleTool):
         view: The view
         item: The item who's about to connect, owner of handle
         handle: the handle to connect
-        wx, wy: handle position in world coordinates
+        cx, cy: handle position in canvas coordinates
         """
         canvas = view.canvas
-        cx, cy = view.transform_point_w2c(wx, wy)
+        vx, vy = view.matrix.transform_point(cx, cy)
 
         # localize methods
-        i2w = view.canvas.get_matrix_i2w
-        w2i = view.canvas.get_matrix_w2i
+        i2c = view.canvas.get_matrix_i2c
+        c2i = view.canvas.get_matrix_c2i
         drp = distance_rectangle_point
         get_item_bounding_box = view.get_item_bounding_box
         query_adapter = component.queryMultiAdapter
 
-        dist, _ = view.transform_distance_c2w(self.GLUE_DISTANCE, 0)
+        inverse = Matrix(*view.matrix)
+        inverse.invert()
+        dist, _ = inverse.transform_distance(self.GLUE_DISTANCE, 0)
         max_dist = dist
         glue_pos_w = (0, 0)
         glue_item = None
@@ -74,23 +79,23 @@ class ConnectHandleTool(HandleTool):
                 continue
             
             b = get_item_bounding_box(i)
-            if drp(b, (cx, cy)) >= max_dist:
+            if drp(b, (vx, vy)) >= max_dist:
                 continue
             
             adapter = query_adapter((i, item), IConnect)
             if adapter:
-                x, y = w2i(i).transform_point(wx, wy)
+                x, y = c2i(i).transform_point(cx, cy)
                 pos = adapter.glue(handle, x, y)
                 self._adapter = adapter
                 if pos:
                     d = i.point(x, y)
                     if d <= dist:
                         dist = d
-                        glue_pos_w = i2w(i).transform_point(*pos)
+                        glue_pos_w = i2c(i).transform_point(*pos)
                         glue_item = i
 
         if dist < max_dist:
-            x, y = w2i(item).transform_point(*glue_pos_w)
+            x, y = c2i(item).transform_point(*glue_pos_w)
             handle.x = x
             handle.y = y
 
@@ -98,7 +103,7 @@ class ConnectHandleTool(HandleTool):
         # determine which item it should connect to
         return glue_item
 
-    def connect(self, view, item, handle, wx, wy):
+    def connect(self, view, item, handle, cx, cy):
         """
         Find an item near @handle that @item can connect to and connect.
         
@@ -108,10 +113,10 @@ class ConnectHandleTool(HandleTool):
         """
         connected = False
         try:
-            glue_item = self.glue(view, item, handle, wx, wy)
+            glue_item = self.glue(view, item, handle, cx, cy)
 
             if glue_item:
-                x, y = view.canvas.get_matrix_w2i(glue_item).transform_point(wx, wy)
+                x, y = view.canvas.get_matrix_c2i(glue_item).transform_point(cx, cy)
                 self._adapter.connect(handle, x, y)
 
                 connected = True
@@ -146,9 +151,9 @@ class ConnectHandleTool(HandleTool):
         item = view.hovered_item
         if item and item is view.focused_item and isinstance(item, Line):
             h = item.handles()
-            x, y = context.view.transform_point_c2i(item, event.x, event.y)
+            x, y = context.view.get_matrix_v2i(item).transform_point(event.x, event.y)
             for h1, h2 in zip(h[:-1], h[1:]):
-                cx = (h1.x + h2.x) / 2
+                vx = (h1.x + h2.x) / 2
                 cy = (h1.y + h2.y) / 2
                 if distance_point_point_fast((x,y), (cx, cy)) <= 4:
                     segment = h.index(h1)
@@ -229,7 +234,7 @@ class TextEditTool(Tool):
             except TypeError:
                 # Could not adapt to IEditor
                 return False
-            x, y = view.transform_point_c2i(item, event.x, event.y)
+            x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
             if editor.is_editable(x, y):
                 text = editor.get_text()
                 # get item at cursor
@@ -248,7 +253,7 @@ class TextEditTool(Tool):
         self.submit_text(widget, buffer, editor)
 
 
-class PlacementTool(gaphas.tool.PlacementTool):
+class PlacementTool(_PlacementTool):
     """
     PlacementTool is used to place items on the canvas.
     """
@@ -258,7 +263,7 @@ class PlacementTool(gaphas.tool.PlacementTool):
         item_factory is a callable. It is used to create a CanvasItem
         that is displayed on the diagram.
         """
-        gaphas.tool.PlacementTool.__init__(self, factory=item_factory,
+        _PlacementTool.__init__(self, factory=item_factory,
                                            handle_tool=ConnectHandleTool(),
                                            handle_index=handle_index)
         self.after_handler = after_handler
@@ -268,7 +273,7 @@ class PlacementTool(gaphas.tool.PlacementTool):
         self._tx = Transaction()
         view = context.view
         view.unselect_all()
-        if gaphas.tool.PlacementTool.on_button_press(self, context, event):
+        if _PlacementTool.on_button_press(self, context, event):
             try:
                 opposite = self.new_item.opposite(self.new_item.handles()[self._handle_index])
             except (KeyError, AttributeError):
@@ -276,10 +281,10 @@ class PlacementTool(gaphas.tool.PlacementTool):
             else:
                 # Connect opposite handle first, using the HandleTool's
                 # mechanisms
-                wx, wy = view.canvas.get_matrix_i2w(self.new_item, calculate=True).transform_point(opposite.x, opposite.y)
-                item = self.handle_tool.glue(view, self.new_item, opposite, wx, wy)
+                cx, cy = view.canvas.get_matrix_i2c(self.new_item, calculate=True).transform_point(opposite.x, opposite.y)
+                item = self.handle_tool.glue(view, self.new_item, opposite, cx, cy)
                 if item:
-                    self.handle_tool.connect(view, self.new_item, opposite, wx, wy)
+                    self.handle_tool.connect(view, self.new_item, opposite, cx, cy)
             return True
         return False
             
@@ -287,7 +292,7 @@ class PlacementTool(gaphas.tool.PlacementTool):
         try:
             if self.after_handler:
                 self.after_handler()
-            return gaphas.tool.PlacementTool.on_button_release(self, context, event)
+            return _PlacementTool.on_button_release(self, context, event)
         finally:
             self._tx.commit()
             self._tx = None
@@ -327,9 +332,6 @@ class TransactionalToolChain(ToolChain):
             return ToolChain.on_triple_click(self, context, event)
         finally:
             tx.commit()
-
-
-from gaphas.tool import ToolChain, HoverTool, ItemTool, RubberbandTool
 
 
 def DefaultTool():

@@ -210,7 +210,7 @@ class StorageTestCase(unittest.TestCase):
         c2 = diagram.create(items.ClassItem, subject=self.factory.create(UML.Class))
         c2.matrix.translate(200, 200)
         diagram.canvas.update_matrix(c2)
-        assert tuple(diagram.canvas.get_matrix_i2w(c2)) == (1, 0, 0, 1, 200, 200)
+        assert tuple(diagram.canvas.get_matrix_i2c(c2)) == (1, 0, 0, 1, 200, 200)
 
         a = diagram.create(items.AssociationItem)
 

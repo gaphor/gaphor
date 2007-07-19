@@ -46,11 +46,11 @@ class HandleToolTestCase(unittest.TestCase):
         # Should glue to (45, 50)
         tool.glue(view, line, handle, 45, 48)
 
-        self.assertEquals((45, 50), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
 
         handle.x, handle.y = 0, 0
         tool.connect(view, line, handle, 45, 48)
-        self.assertEquals((45, 50), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is comment, handle.connected_to
         assert handle._connect_constraint is not None
 
@@ -72,7 +72,7 @@ class HandleToolTestCase(unittest.TestCase):
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
-        print diagram.canvas.get_matrix_i2w(actor), actor.matrix
+        print diagram.canvas.get_matrix_i2c(actor), actor.matrix
         assert actor.height == 60, actor.height
         assert actor.width == 38, actor.width
         line = diagram.create(CommentLineItem)
@@ -88,7 +88,7 @@ class HandleToolTestCase(unittest.TestCase):
         # Connect one end to the Comment
         handle.x, handle.y = 0, 0
         tool.connect(view, line, handle, 45, 48)
-        self.assertEquals((45, 50), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is comment, handle.connected_to
         assert handle._connect_constraint is not None
 
@@ -100,7 +100,7 @@ class HandleToolTestCase(unittest.TestCase):
         handle.x, handle.y = 140, 150
         assert tool.glue(view, line, handle, 200, 200) is actor
         tool.connect(view, line, handle, 200, 200)
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is actor, handle.connected_to
         assert handle._connect_constraint is not None
         
@@ -111,7 +111,7 @@ class HandleToolTestCase(unittest.TestCase):
        
         tool.disconnect(view, line, handle)
 
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is actor, handle.connected_to
         assert handle._connect_constraint is None
 
@@ -123,7 +123,7 @@ class HandleToolTestCase(unittest.TestCase):
         assert tool.glue(view, line, handle, 500, 500) is None
         tool.connect(view, line, handle, 500, 500)
 
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is None, handle.connected_to
         assert handle._connect_constraint is None
 
@@ -140,7 +140,7 @@ class HandleToolTestCase(unittest.TestCase):
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
-        print diagram.canvas.get_matrix_i2w(actor), actor.matrix
+        print diagram.canvas.get_matrix_i2c(actor), actor.matrix
         assert actor.height == 60, actor.height
         assert actor.width == 38, actor.width
         line = diagram.create(CommentLineItem)
@@ -159,7 +159,7 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(context, Event(x=0, y=0, state=0))
 
         handle = line.handles()[0]
-        self.assertEquals((0, 0), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((0, 0), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is comment, 'c =' + str(handle.connected_to)
         assert handle._connect_constraint is not None
 
@@ -170,7 +170,7 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(context, Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is actor
         assert handle._connect_constraint is not None
         assert actor.subject in comment.subject.annotatedElement
@@ -182,7 +182,7 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(context, Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is actor
         assert handle._connect_constraint is not None
         assert actor.subject in comment.subject.annotatedElement
@@ -194,7 +194,7 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(context, Event(x=500, y=500, state=0))
 
         handle = line.handles()[-1]
-        self.assertEquals((500, 500), view.canvas.get_matrix_i2w(line).transform_point(handle.x, handle.y))
+        self.assertEquals((500, 500), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is None
         assert handle._connect_constraint is None
         assert len(comment.subject.annotatedElement) == 0

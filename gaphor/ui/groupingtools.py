@@ -95,7 +95,7 @@ class GroupPlacementTool(PlacementTool):
         
         view = context.view
         # get item position through parent world
-        x, y = view.canvas.get_matrix_w2i(self._parent).transform_point(x, y)
+        x, y = view.canvas.get_matrix_c2i(self._parent).transform_point(x, y)
         item.matrix.translate(x, y)
 
         view.dropzone_item = None
@@ -169,7 +169,7 @@ class GroupItemTool(ItemTool):
                     canvas.reparent(item, None)
 
                     # reset item's position
-                    px, py = canvas.get_matrix_w2i(parent).transform_point(0, 0)
+                    px, py = canvas.get_matrix_c2i(parent).transform_point(0, 0)
                     item.matrix.translate(-px, -py)
 
 
@@ -182,7 +182,7 @@ class GroupItemTool(ItemTool):
                     canvas.reparent(item, over)
 
                     # reset item's position
-                    x, y = canvas.get_matrix_i2w(over).transform_point(0, 0)
+                    x, y = canvas.get_matrix_i2c(over).transform_point(0, 0)
                     item.matrix.translate(-x, -y)
 
 

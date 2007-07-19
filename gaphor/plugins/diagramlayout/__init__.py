@@ -243,6 +243,6 @@ def find_center(item):
     """
     x = item.width / 2.0
     y = item.height / 2.0
-    return item.canvas.get_matrix_i2w(item).transform_point(x, y)
+    return item.canvas.get_matrix_i2c(item).transform_point(x, y)
 
 # vim:sw=4:et
