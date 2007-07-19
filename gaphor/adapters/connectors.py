@@ -142,9 +142,19 @@ class ElementConnect(AbstractConnect):
         solver = canvas.solver
 
         h1, h2 = self.side((x, y), element)
-        handle._connect_constraint = \
-            constraint.LineConstraint(canvas, element, h1, h2, self.line, handle)
-        solver.add_constraint(handle._connect_constraint)
+        lc = handle._connect_constraint = \
+            constraint.LineConstraint((h1.pos, h2.pos), handle.pos)
+        pdata = {
+            h1.pos: element,
+            h2.pos: element,
+            handle.pos: self.line,
+        }
+
+        canvas.projector(lc, xy=pdata)
+        canvas.projector(lc, xy=pdata, f=lc.update_ratio)
+        lc.update_ratio()
+        canvas.add_canvas_constraint(self.line, handle, lc)
+        #solver.add_constraint(handle._connect_constraint)
         handle.connected_to = element
 
 
@@ -194,10 +204,21 @@ class LineConnect(AbstractConnect):
         solver = canvas.solver
 
         s, pos = self._glue(handle, x, y)
-        handle._connect_constraint = \
-            constraint.LineConstraint(canvas, element, element.handles()[s],
-                                element.handles()[s+1], self.line, handle)
-        solver.add_constraint(handle._connect_constraint)
+        h1, h2 = element.handles()[s], element.handles()[s+1]
+        lc = handle._connect_constraint = \
+            constraint.LineConstraint((h1.pos, h2.pos), handle.pos)
+        pdata = {
+            h1.pos: element,
+            h2.pos: element,
+            handle.pos: self.line,
+        }
+
+        canvas.projector(lc, xy=pdata)
+        canvas.projector(lc, xy=pdata, f=lc.update_ratio)
+        lc.update_ratio()
+        canvas.add_canvas_constraint(self.line, handle, lc)
+
+        #solver.add_constraint(handle._connect_constraint)
         handle.connected_to = element
 
 
