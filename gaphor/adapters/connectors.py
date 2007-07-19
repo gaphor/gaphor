@@ -30,7 +30,7 @@ class AbstractConnect(object):
         """
         raise NotImplemented, 'Implement glue() in the subclass'
 
-    def connect(self, handle, x, y):
+    def connect(self, view, handle, x, y):
         """
         Connect to an element. Note that at this point the line may
         be connected to some other, or the same element by means of the
@@ -43,17 +43,11 @@ class AbstractConnect(object):
         canvas = element.canvas
         solver = canvas.solver
 
-        pos = self.glue(handle, x, y)
-
         # Disconnect old model connection
         if handle.connected_to and handle.connected_to is not self.element:
             handle.disconnect()
  
-        # Stop here if no new connection should be established
-        if not pos:
-            return False
-        
-        self.connect_constraint(handle, pos[0], pos[1])
+        self.connect_constraint(view, handle, x, y)
 
         # Set disconnect handler in the adapter, so it will also wotk if
         # connections are created programmatically.
@@ -72,7 +66,7 @@ class AbstractConnect(object):
         self.disconnect_constraints(handle)
         handle.connected_to = None
 
-    def connect_constraint(self, handle, x, y):
+    def connect_constraint(self, view, handle, x, y):
         """
         Create the actual constraint. The handle should be positioned before
         this method is called.
@@ -85,19 +79,36 @@ class AbstractConnect(object):
         Disconnect() takes care of disconnecting the handle from the
         element it's attached to, by removing the constraints.
         """
-        solver = self.line.canvas.solver
-        try:
-            solver.remove_constraint(handle._connect_constraint)
-        except AttributeError:
-            pass # No _connect_constraint property yet
-        handle._connect_constraint = None
+        canvas = self.line.canvas
+        canvas.remove_canvas_constraint(self.line, handle)
+
+
+    def _create_line_constraint(self, element, h1, h2, line, handle):
+        """
+        Create line constraint between two items.
+        """
+        canvas = element.canvas
+        lc = constraint.LineConstraint(line=(h1.pos, h2.pos), point=handle.pos)
+        pdata = {
+            h1.pos: element,
+            h2.pos: element,
+            handle.pos: line,
+        }
+    
+        canvas.projector(lc, xy=pdata)
+        canvas.projector(lc, xy=pdata, f=lc.update_ratio)
+        lc.update_ratio()
+        canvas.add_canvas_constraint(line, handle, lc)
+
+        handle.connected_to = element
+
 
 
 class ElementConnect(AbstractConnect):
     """
     Base class for connecting a line to an ElementItem class.
     """
-    def side(self, (hx, hy), glued):
+    def side(self, view, pos, glued):
         """
         Determine the side on which the handle is connecting.
         This is done by determining the proximity to the nearest edge.
@@ -105,8 +116,12 @@ class ElementConnect(AbstractConnect):
         Handles of one of the sides is returned.
         """
         handles = glued.handles()
-        ax, ay = handles[NW].x, handles[NW].y
-        bx, by = handles[SE].x, handles[SE].y
+
+        i2v = view.get_matrix_i2v
+        hx, hy = i2v(self.line).transform_point(*pos)
+        ax, ay = i2v(glued).transform_point(handles[NW].x, handles[NW].y)
+        bx, by = i2v(glued).transform_point(handles[SE].x, handles[SE].y)
+
         if abs(hx - ax) < 0.01:
             return handles[NW], handles[SW]
         elif abs(hy - ay) < 0.01:
@@ -116,6 +131,7 @@ class ElementConnect(AbstractConnect):
         else:
             return handles[SW], handles[SE]
         assert False
+
 
     def bounds(self, element):
         """
@@ -132,30 +148,17 @@ class ElementConnect(AbstractConnect):
         bounds = self.bounds(self.element)
         return geometry.point_on_rectangle(bounds, (x, y), border=True)
 
-    def connect_constraint(self, handle, x, y):
+    def connect_constraint(self, view, handle, x, y):
         """
         Create the actual constraint. The handle should be positioned before
         this method is called.
         """
         element = self.element
-        canvas = element.canvas
-        solver = canvas.solver
+        line = self.line
+        h1, h2 = self.side(view, handle.pos, element)
 
-        h1, h2 = self.side((x, y), element)
-        lc = handle._connect_constraint = \
-            constraint.LineConstraint((h1.pos, h2.pos), handle.pos)
-        pdata = {
-            h1.pos: element,
-            h2.pos: element,
-            handle.pos: self.line,
-        }
+        self._create_line_constraint(element, h1, h2, line, handle)
 
-        canvas.projector(lc, xy=pdata)
-        canvas.projector(lc, xy=pdata, f=lc.update_ratio)
-        lc.update_ratio()
-        canvas.add_canvas_constraint(self.line, handle, lc)
-        #solver.add_constraint(handle._connect_constraint)
-        handle.connected_to = element
 
 
 class LineConnect(AbstractConnect):
@@ -194,7 +197,7 @@ class LineConnect(AbstractConnect):
         """
         return self._glue(handle, x, y)[1]
 
-    def connect_constraint(self, handle, x, y):
+    def connect_constraint(self, view, handle, x, y):
         """
         Create the actual constraint. The handle should be positioned before
         this method is called.
@@ -256,8 +259,8 @@ class CommentLineElementConnect(ElementConnect):
 
         return super(CommentLineElementConnect, self).glue(handle, x, y)
 
-    def connect(self, handle, x, y):
-        if super(CommentLineElementConnect, self).connect(handle, x, y):
+    def connect(self, view, handle, x, y):
+        if super(CommentLineElementConnect, self).connect(view, handle, x, y):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -310,8 +313,8 @@ class CommentLineLineConnect(LineConnect):
 
         return super(CommentLineLineConnect, self).glue(handle, x, y)
 
-    def connect(self, handle, x, y):
-        if super(CommentLineLineConnect, self).connect(handle, x, y):
+    def connect(self, view, handle, x, y):
+        if super(CommentLineLineConnect, self).connect(view, handle, x, y):
             opposite = self.line.opposite(handle)
             if opposite.connected_to and self.element.subject:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -463,12 +466,12 @@ class RelationshipConnect(ElementConnect):
         if old and len(old.presentation) == 0:
             old.unlink()
 
-    def connect(self, handle, x, y):
+    def connect(self, view, handle, x, y):
         """
         Connect the items to each other. The model level relationship
         is created by create_subject()
         """
-        if super(RelationshipConnect, self).connect(handle, x, y):
+        if super(RelationshipConnect, self).connect(view, handle, x, y):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 self.connect_subject(handle)
@@ -1284,8 +1287,8 @@ class MessageLifelineConnect(ElementConnect):
         assert False
 
 
-    def connect(self, handle, x, y):
-        if not ElementConnect.connect(self, handle, x, y):
+    def connect(self, view, handle, x, y):
+        if not ElementConnect.connect(self, view, handle, x, y):
             return
 
         line = self.line

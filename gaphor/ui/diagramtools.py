@@ -44,7 +44,7 @@ class ConnectHandleTool(HandleTool):
         self._adapter = None
 
 
-    def glue(self, view, item, handle, cx, cy):
+    def glue(self, view, item, handle, x, y):
         """
         Find the nearest item that the handle may connect to.
 
@@ -59,51 +59,47 @@ class ConnectHandleTool(HandleTool):
         cx, cy: handle position in canvas coordinates
         """
         canvas = view.canvas
-        vx, vy = view.matrix.transform_point(cx, cy)
 
         # localize methods
-        i2c = view.canvas.get_matrix_i2c
-        c2i = view.canvas.get_matrix_c2i
+        v2i = view.get_matrix_v2i
+        i2v = view.get_matrix_i2v
         drp = distance_rectangle_point
         get_item_bounding_box = view.get_item_bounding_box
         query_adapter = component.queryMultiAdapter
 
-        inverse = Matrix(*view.matrix)
-        inverse.invert()
-        dist, _ = inverse.transform_distance(self.GLUE_DISTANCE, 0)
+        dist = self.GLUE_DISTANCE
         max_dist = dist
-        glue_pos_w = (0, 0)
+        glue_pos = (0, 0)
         glue_item = None
         for i in canvas.get_all_items():
             if i is item:
                 continue
             
             b = get_item_bounding_box(i)
-            if drp(b, (vx, vy)) >= max_dist:
+            ix, iy = v2i(i).transform_point(x, y)
+            if drp(b, (x, y)) >= max_dist:
                 continue
             
             adapter = query_adapter((i, item), IConnect)
             if adapter:
-                x, y = c2i(i).transform_point(cx, cy)
-                pos = adapter.glue(handle, x, y)
+                pos = adapter.glue(handle, ix, iy)
                 self._adapter = adapter
                 if pos:
-                    d = i.point(x, y)
+                    d = i.point(ix, iy)
                     if d <= dist:
                         dist = d
-                        glue_pos_w = i2c(i).transform_point(*pos)
+                        glue_pos = i2v(i).transform_point(*pos)
                         glue_item = i
 
         if dist < max_dist:
-            x, y = c2i(item).transform_point(*glue_pos_w)
-            handle.x = x
-            handle.y = y
+            handle.pos = v2i(item).transform_point(*glue_pos)
 
         # Return the glued item, this can be used by connect() to
         # determine which item it should connect to
         return glue_item
 
-    def connect(self, view, item, handle, cx, cy):
+
+    def connect(self, view, item, handle, x, y):
         """
         Find an item near @handle that @item can connect to and connect.
         
@@ -113,11 +109,10 @@ class ConnectHandleTool(HandleTool):
         """
         connected = False
         try:
-            glue_item = self.glue(view, item, handle, cx, cy)
+            glue_item = self.glue(view, item, handle, x, y)
 
             if glue_item:
-                x, y = view.canvas.get_matrix_c2i(glue_item).transform_point(cx, cy)
-                self._adapter.connect(handle, x, y)
+                self._adapter.connect(view, handle, x, y)
 
                 connected = True
             elif handle and handle.connected_to:
@@ -281,10 +276,10 @@ class PlacementTool(_PlacementTool):
             else:
                 # Connect opposite handle first, using the HandleTool's
                 # mechanisms
-                cx, cy = view.canvas.get_matrix_i2c(self.new_item, calculate=True).transform_point(opposite.x, opposite.y)
-                item = self.handle_tool.glue(view, self.new_item, opposite, cx, cy)
+                x, y = view.get_matrix_i2v(self.new_item).transform_point(opposite.x, opposite.y)
+                item = self.handle_tool.glue(view, self.new_item, opposite, x, y)
                 if item:
-                    self.handle_tool.connect(view, self.new_item, opposite, cx, cy)
+                    self.handle_tool.connect(view, self.new_item, opposite, x, y)
             return True
         return False
             
