@@ -206,7 +206,7 @@ class LineConnect(AbstractConnect):
         line = self.line
         canvas = element.canvas
 
-        s, pos = self._glue(handle, x, y)
+        s = self._glue(handle, x, y)[0]
         h1, h2 = element.handles()[s], element.handles()[s+1]
 
         self._create_line_constraint(element, h1, h2, line, handle)
