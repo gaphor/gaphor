@@ -1112,7 +1112,7 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     fork_node_class=UML.ForkNode
     join_node_class=UML.JoinNode
 
-    def side(self, (hx, hy), element):
+    def side(self, view, (hx, hy), element):
         return element.handles()
 
     def bounds(self, element):
@@ -1263,14 +1263,14 @@ class MessageLifelineConnect(ElementConnect):
             return None
 
 
-    def side(self, (hx, hy), glued):
+    def side(self, view, (hx, hy), glued):
         """
         Return handles of one of lifeline head's side or lifetime handles.
         """
         if self._connect_to_lifetime:
             return glued.handles()[-2:]
         else:
-            return super(MessageLifelineConnect, self).side((hx, hy), glued)
+            return super(MessageLifelineConnect, self).side(view, (hx, hy), glued)
         assert False
 
 

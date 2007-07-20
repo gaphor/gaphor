@@ -66,36 +66,28 @@ class LifelineItem(NamedItem):
     def __init__(self, id = None):
         NamedItem.__init__(self, id)
 
-        lt = self._lifetime = LifetimeItem()
-        self._handles.extend(self._lifetime.handles())
+        self._lifetime = LifetimeItem()
+        top, bottom = self._lifetime.handles()
+        self._handles.append(top)
+        self._handles.append(bottom)
 
-        x, y = self.style.min_size
+        constraints = [
+            # Apply constraint to bottom, since bottom can be moved (top can't)
+            CenterConstraint(self._handles[SW].x, self._handles[SE].x, bottom.x),
+            EqualsConstraint(top.x, bottom.x),
+            EqualsConstraint(self._handles[SW].y, top.y),
+        ]
+        self._constraints.extend(constraints)
+
 
     lifetime = property(lambda s: s._lifetime)
 
-    def setup_canvas(self):
-        super(LifelineItem, self).setup_canvas()
-
-        # Use Element._constraints:
-        top, bottom = self._lifetime.handles()
-        add = self.canvas.solver.add_constraint
-        constraints = [
-#            add(EqualsConstraint(top.x, bottom.x)),
-            # Apply constraint to bottom, since bottom can be moved (top can't)
-            add(CenterConstraint(self._handles[SW].x, self._handles[SE].x, top.x)),
-            add(CenterConstraint(self._handles[SW].x, self._handles[SE].x, bottom.x)),
-            add(EqualsConstraint(self._handles[SW].y, top.y)),
-            ]
-
-        top.x = (self._handles[SW].x + self._handles[SE].x) / 2.0
-        top.y = self._handles[SW].y
-        bottom.y = self._handles[SW].y + LifetimeItem.MIN_LENGTH
-        self._constraints.extend(constraints)
 
     def save(self, save_func):
         super(LifelineItem, self).save(save_func)
         top, bottom = self._lifetime.handles()
         save_func("lifetime-length", bottom.y - top.y)
+
 
     def load(self, name, value):
         if name == 'lifetime-length':
@@ -104,9 +96,11 @@ class LifelineItem(NamedItem):
         else:
             super(LifelineItem, self).load(name, value)
 
+
     def pre_update(self, context):
         super(LifelineItem, self).pre_update(context)
         self._lifetime.pre_update(context)
+
 
     def update(self, context):
         super(LifelineItem, self).update(context)
