@@ -325,7 +325,7 @@ class ForkNodeItem(Item, DiagramItem):
         """
         DiagramItem.on_subject_notify(self, pspec,
                 ('joinSpec', 'joinSpec.value') + notifiers)
-        if self.subject and not (self.subject.joinSpec or self.subject.joinSpec.value):
+        if self.subject and not (self.subject.joinSpec and self.subject.joinSpec.value):
             self.set_join_spec(DEFAULT_JOIN_SPEC)
         self.request_update()
 
