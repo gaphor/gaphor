@@ -111,14 +111,23 @@ class run(Command):
 
             if self.profile:
                 print 'Enabling profiling...'
-                import hotshot, hotshot.stats
-                prof = hotshot.Profile('gaphor.prof')
-                prof.runcall(starter)
-                prof.close()
-                stats = hotshot.stats.load('gaphor.prof')
-                stats.strip_dirs()
-                stats.sort_stats('time', 'calls')
-                stats.print_stats(20)
+                try:
+                    import cProfile
+                    import pstats
+                    prof = cProfile.Profile()
+                    prof.runcall(starter)
+                    prof.dump_stats('gaphor.prof')
+                    p = pstats.Stats('gaphor.prof')
+                    p.strip_dirs().sort_stats('time').print_stats(20)
+                except ImportError, ex:
+                    import hotshot, hotshot.stats
+                    prof = hotshot.Profile('gaphor.prof')
+                    prof.runcall(starter)
+                    prof.close()
+                    stats = hotshot.stats.load('gaphor.prof')
+                    stats.strip_dirs()
+                    stats.sort_stats('time', 'calls')
+                    stats.print_stats(20)
             else:
                 starter()
 
