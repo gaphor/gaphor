@@ -30,7 +30,7 @@ class AbstractConnect(object):
         """
         raise NotImplemented, 'Implement glue() in the subclass'
 
-    def connect(self, view, handle, x, y):
+    def connect(self, handle, x, y):
         """
         Connect to an element. Note that at this point the line may
         be connected to some other, or the same element by means of the
@@ -47,7 +47,7 @@ class AbstractConnect(object):
         if handle.connected_to and handle.connected_to is not self.element:
             handle.disconnect()
  
-        self.connect_constraint(view, handle, x, y)
+        self.connect_constraint(handle, x, y)
 
         # Set disconnect handler in the adapter, so it will also wotk if
         # connections are created programmatically.
@@ -66,7 +66,7 @@ class AbstractConnect(object):
         self.disconnect_constraints(handle)
         handle.connected_to = None
 
-    def connect_constraint(self, view, handle, x, y):
+    def connect_constraint(self, handle, x, y):
         """
         Create the actual constraint. The handle should be positioned before
         this method is called.
@@ -108,7 +108,7 @@ class ElementConnect(AbstractConnect):
     """
     Base class for connecting a line to an ElementItem class.
     """
-    def side(self, view, pos, glued):
+    def side(self, pos, glued):
         """
         Determine the side on which the handle is connecting.
         This is done by determining the proximity to the nearest edge.
@@ -116,11 +116,11 @@ class ElementConnect(AbstractConnect):
         Handles of one of the sides is returned.
         """
         handles = glued.handles()
-
-        i2v = view.get_matrix_i2v
-        hx, hy = i2v(self.line).transform_point(*pos)
-        ax, ay = i2v(glued).transform_point(handles[NW].x, handles[NW].y)
-        bx, by = i2v(glued).transform_point(handles[SE].x, handles[SE].y)
+        canvas = glued.canvas
+        i2c = canvas.get_matrix_i2c
+        hx, hy = i2c(self.line).transform_point(*pos)
+        ax, ay = i2c(glued).transform_point(handles[NW].x, handles[NW].y)
+        bx, by = i2c(glued).transform_point(handles[SE].x, handles[SE].y)
 
         if abs(hx - ax) < 0.01:
             return handles[NW], handles[SW]
@@ -148,14 +148,14 @@ class ElementConnect(AbstractConnect):
         bounds = self.bounds(self.element)
         return geometry.point_on_rectangle(bounds, (x, y), border=True)
 
-    def connect_constraint(self, view, handle, x, y):
+    def connect_constraint(self, handle, x, y):
         """
         Create the actual constraint. The handle should be positioned before
         this method is called.
         """
         element = self.element
         line = self.line
-        h1, h2 = self.side(view, handle.pos, element)
+        h1, h2 = self.side(handle.pos, element)
 
         self._create_line_constraint(element, h1, h2, line, handle)
 
@@ -197,7 +197,7 @@ class LineConnect(AbstractConnect):
         """
         return self._glue(handle, x, y)[1]
 
-    def connect_constraint(self, view, handle, x, y):
+    def connect_constraint(self, handle, x, y):
         """
         Create the actual constraint. The handle should be positioned before
         this method is called.
@@ -246,8 +246,8 @@ class CommentLineElementConnect(ElementConnect):
 
         return super(CommentLineElementConnect, self).glue(handle, x, y)
 
-    def connect(self, view, handle, x, y):
-        if super(CommentLineElementConnect, self).connect(view, handle, x, y):
+    def connect(self, handle, x, y):
+        if super(CommentLineElementConnect, self).connect(handle, x, y):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -300,8 +300,8 @@ class CommentLineLineConnect(LineConnect):
 
         return super(CommentLineLineConnect, self).glue(handle, x, y)
 
-    def connect(self, view, handle, x, y):
-        if super(CommentLineLineConnect, self).connect(view, handle, x, y):
+    def connect(self, handle, x, y):
+        if super(CommentLineLineConnect, self).connect(handle, x, y):
             opposite = self.line.opposite(handle)
             if opposite.connected_to and self.element.subject:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -453,12 +453,12 @@ class RelationshipConnect(ElementConnect):
         if old and len(old.presentation) == 0:
             old.unlink()
 
-    def connect(self, view, handle, x, y):
+    def connect(self, handle, x, y):
         """
         Connect the items to each other. The model level relationship
         is created by create_subject()
         """
-        if super(RelationshipConnect, self).connect(view, handle, x, y):
+        if super(RelationshipConnect, self).connect(handle, x, y):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 self.connect_subject(handle)
@@ -1112,7 +1112,7 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     fork_node_class=UML.ForkNode
     join_node_class=UML.JoinNode
 
-    def side(self, view, (hx, hy), element):
+    def side(self, (hx, hy), element):
         return element.handles()
 
     def bounds(self, element):
@@ -1263,19 +1263,19 @@ class MessageLifelineConnect(ElementConnect):
             return None
 
 
-    def side(self, view, (hx, hy), glued):
+    def side(self, (hx, hy), glued):
         """
         Return handles of one of lifeline head's side or lifetime handles.
         """
         if self._connect_to_lifetime:
             return glued.handles()[-2:]
         else:
-            return super(MessageLifelineConnect, self).side(view, (hx, hy), glued)
+            return super(MessageLifelineConnect, self).side((hx, hy), glued)
         assert False
 
 
-    def connect(self, view, handle, x, y):
-        if not ElementConnect.connect(self, view, handle, x, y):
+    def connect(self, handle, x, y):
+        if not ElementConnect.connect(self, handle, x, y):
             return
 
         line = self.line

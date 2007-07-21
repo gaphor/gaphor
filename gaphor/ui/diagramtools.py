@@ -112,7 +112,7 @@ class ConnectHandleTool(HandleTool):
             glue_item = self.glue(view, item, handle, x, y)
 
             if glue_item:
-                self._adapter.connect(view, handle, x, y)
+                self._adapter.connect(handle, x, y)
 
                 connected = True
             elif handle and handle.connected_to:
