@@ -276,7 +276,7 @@ class PlacementTool(_PlacementTool):
             else:
                 # Connect opposite handle first, using the HandleTool's
                 # mechanisms
-                x, y = view.get_matrix_i2v(self.new_item).transform_point(opposite.x, opposite.y)
+                x, y = event.x, event.y
                 item = self.handle_tool.glue(view, self.new_item, opposite, x, y)
                 if item:
                     self.handle_tool.connect(view, self.new_item, opposite, x, y)
