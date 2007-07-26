@@ -95,8 +95,8 @@ class DependencyItem(DiagramLine):
     dependency_type = property(lambda s: s._dependency_type,
                                set_dependency_type, set_dependency_type)
 
-    def update(self, context):
-        super(DependencyItem, self).update(context)
+    def post_update(self, context):
+        super(DependencyItem, self).post_update(context)
 
         from interface import InterfaceItem
         dependency_type = self._dependency_type

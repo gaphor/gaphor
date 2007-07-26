@@ -48,9 +48,9 @@ class ElementItem(gaphas.Element, DiagramItem):
         return min(d1, d2)
 
 
-    def update(self, context):
-        gaphas.Element.update(self, context)
-        DiagramItem.update(self, context)
+    def post_update(self, context):
+        gaphas.Element.post_update(self, context)
+        DiagramItem.post_update(self, context)
 
 
     def draw(self, context):

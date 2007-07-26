@@ -167,7 +167,7 @@ class EditableTextSupport(object):
             dy += height
 
 
-    def update(self, context):
+    def post_update(self, context):
         """
         Calculate position and sizes of all text elements of a diagram
         item.

@@ -68,9 +68,9 @@ class Compartment(list):
         self.width += padding[1] + padding[3]
         self.height += padding[0] + padding[2]
 
-    def update(self, context):
+    def post_update(self, context):
         for item in self:
-            item.update(context)
+            item.post_update(context)
 
     def draw(self, context):
         cr = context.cairo
@@ -187,17 +187,17 @@ class ClassifierItem(NamedItem):
         if self._drawing_style == self.DRAW_COMPARTMENT:
             self.draw       = self.draw_compartment
             self.pre_update = self.pre_update_compartment
-            self.update     = self.update_compartment
+            self.post_update = self.post_update_compartment
 
         elif self._drawing_style == self.DRAW_COMPARTMENT_ICON:
             self.draw       = self.draw_compartment_icon
             self.pre_update = self.pre_update_compartment_icon
-            self.update     = self.update_compartment_icon
+            self.post_update     = self.post_update_compartment_icon
 
         elif self._drawing_style == self.DRAW_ICON:
             self.draw       = self.draw_icon
             self.pre_update = self.pre_update_icon
-            self.update     = self.update_icon
+            self.post_update     = self.post_update_icon
 
 
     drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
@@ -265,10 +265,6 @@ class ClassifierItem(NamedItem):
         self.request_update()
 
 
-    def update_compartment(self, context):
-        super(ClassifierItem, self).update(context)
-
-
     def pre_update_compartment_icon(self, context):
         self.pre_update_compartment(context)
         # icon width plus right margin
@@ -298,17 +294,21 @@ class ClassifierItem(NamedItem):
         self.min_height = max(self.style.min_size[1], h)
 
 
-    def update_compartment_icon(self, context):
+    def post_update_compartment_icon(self, context):
         """
         Update state for box-style w/ small icon.
         """
-        super(ClassifierItem, self).update(context)
+        super(ClassifierItem, self).post_update(context)
 
-    def update_icon(self, context):
+    def post_update_icon(self, context):
         """
         Update state for icon-only presentation.
         """
-        super(ClassifierItem, self).update(context)
+        super(ClassifierItem, self).post_update(context)
+
+    def post_update_compartment(self, context):
+        super(ClassifierItem, self).post_update(context)
+
 
     def get_icon_pos(self):
         """

@@ -286,9 +286,9 @@ class ForkNodeItem(Item, DiagramItem):
         DiagramItem.pre_update(self, context)
 
 
-    def update(self, context):
-        Item.update(self, context)
-        DiagramItem.update(self, context)
+    def post_update(self, context):
+        Item.post_update(self, context)
+        DiagramItem.post_update(self, context)
 
 
     def draw(self, context):

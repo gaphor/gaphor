@@ -13,7 +13,7 @@ class ImplementationItem(DiagramLine):
         DiagramLine.__init__(self, id)
         self._solid = False 
 
-    def update(self, context):
+    def post_update(self, context):
         # change look into solid line when connected to folded interface
         from gaphor.diagram.interface import InterfaceItem
         conn_to = self.head.connected_to
@@ -22,7 +22,7 @@ class ImplementationItem(DiagramLine):
             self._solid = True
         else:
             self._solid = False
-        DiagramLine.update(self, context)
+        DiagramLine.post_update(self, context)
 
     def draw_head(self, context):
         cr = context.cairo

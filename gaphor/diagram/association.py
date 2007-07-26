@@ -119,7 +119,7 @@ class AssociationItem(NamedLine):
     def on_subject_notify__memberEnd(self, subject, pspec):
         self.request_update()
 
-    def update(self, context):
+    def post_update(self, context):
         """
         Update the shapes and sub-items of the association.
         """
@@ -166,7 +166,7 @@ class AssociationItem(NamedLine):
             self.draw_tail = self.draw_tail_undefined
 
         # update relationship after self.set calls to avoid circural updates
-        NamedLine.update(self, context)
+        NamedLine.post_update(self, context)
 
         # Calculate alignment of the head name and multiplicity
         self._head_end.update(context, handles[0].pos,
@@ -494,7 +494,7 @@ class AssociationEnd(SubjectSupport):
     def get_mult(self):
         return self._mult
 
-    def update(self, context, p1, p2):
+    def post_update(self, context, p1, p2):
         """
         Update label placement for association's name and
         multiplicity label. p1 is the line end and p2 is the last

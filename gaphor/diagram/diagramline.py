@@ -35,10 +35,10 @@ class LineItem(gaphas.Line, DiagramItem):
         DiagramItem.pre_update(self, context)
 
 
-    def update(self, context):
+    def post_update(self, context):
         #super(LineItem, self).update(context)
-        gaphas.Line.update(self, context)
-        DiagramItem.update(self, context)
+        gaphas.Line.post_update(self, context)
+        DiagramItem.post_update(self, context)
 
 
     def draw(self, context):

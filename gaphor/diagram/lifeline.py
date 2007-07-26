@@ -38,7 +38,7 @@ class LifetimeItem(object):
         if bottom.y - top.y < LifetimeItem.MIN_LENGTH:
             bottom.y = top.y + LifetimeItem.MIN_LENGTH
 
-    def update(self, context):
+    def post_update(self, context):
         pass
 
     def draw(self, context):
@@ -102,9 +102,9 @@ class LifelineItem(NamedItem):
         self._lifetime.pre_update(context)
 
 
-    def update(self, context):
-        super(LifelineItem, self).update(context)
-        #self._lifetime.update(context)
+    def post_update(self, context):
+        super(LifelineItem, self).post_update(context)
+        #self._lifetime.post_update(context)
 
 
     def draw(self, context):

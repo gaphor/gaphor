@@ -45,8 +45,8 @@ class CommentItem(ElementItem):
         self.min_height = h + 10
         ElementItem.pre_update(self, context)
 
-    def update(self, context):
-        ElementItem.update(self, context)
+    def post_update(self, context):
+        ElementItem.post_update(self, context)
 
     def draw(self, context):
         if not self.subject: return
