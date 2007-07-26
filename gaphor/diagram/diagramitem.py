@@ -348,7 +348,6 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
 
     def draw(self, context):
         EditableTextSupport.draw(self, context)
-        context.draw_children()
 
 
     def item_at(self, x, y):
