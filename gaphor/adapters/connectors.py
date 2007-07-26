@@ -81,7 +81,7 @@ class AbstractConnect(object):
         element it's attached to, by removing the constraints.
         """
         try:
-            self.line.canvas.solver.remove_constraint(self.line, handle)
+            self.line.canvas.solver.remove_constraint(handle._connect_constraint)
         except AttributeError:
             pass # No _connect_constraint property yet
         handle._connect_constraint = None
