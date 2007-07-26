@@ -40,8 +40,8 @@ class NamedItem(ElementItem):
         Display name space info when it is different, then diagram
         namespace.
         """
-        return self._from.text and \
-                self.canvas.diagram.namespace is not self.subject.namespace
+        return self._from.text and self.canvas \
+                and self.canvas.diagram.namespace is not self.subject.namespace
 
 
     def on_subject_notify(self, pspec, notifiers=()):
