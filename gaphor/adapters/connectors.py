@@ -5,6 +5,7 @@ Adapters
 from zope import interface, component
 
 from gaphas.item import NW, NE, SW, SE
+from gaphas.canvas import CanvasProjection
 from gaphas import geometry
 from gaphas import constraint
 from gaphor import UML
@@ -79,26 +80,22 @@ class AbstractConnect(object):
         Disconnect() takes care of disconnecting the handle from the
         element it's attached to, by removing the constraints.
         """
-        canvas = self.line.canvas
-        canvas.remove_canvas_constraint(self.line, handle)
+        try:
+            self.line.canvas.solver.remove_constraint(self.line, handle)
+        except AttributeError:
+            pass # No _connect_constraint property yet
+        handle._connect_constraint = None
 
 
     def _create_line_constraint(self, element, h1, h2, line, handle):
         """
         Create line constraint between two items.
         """
-        canvas = element.canvas
-        lc = constraint.LineConstraint(line=(h1.pos, h2.pos), point=handle.pos)
-        pdata = {
-            h1.pos: element,
-            h2.pos: element,
-            handle.pos: line,
-        }
-    
-        canvas.projector(lc, xy=pdata)
-        canvas.projector(lc, xy=pdata, f=lc.update_ratio)
-        lc.update_ratio()
-        canvas.add_canvas_constraint(line, handle, lc)
+        lc = constraint.LineConstraint(line=(CanvasProjection(h1.pos, element),
+                                             CanvasProjection(h2.pos, element)),
+                                       point=CanvasProjection(handle.pos, line))
+        handle._connect_constraint = lc
+        element.canvas.solver.add_constraint(lc)
 
         handle.connected_to = element
 
