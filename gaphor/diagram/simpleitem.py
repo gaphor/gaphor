@@ -8,7 +8,18 @@ from gaphas.item import Element, NW
 from gaphas.util import path_ellipse
 from style import Style
 
-class Line(_Line):
+class Dummy(object):
+    def save(self, *args):
+        pass
+
+    def load(self, *args):
+        pass
+
+    def postload(self, *args):
+        pass
+        
+
+class Line(_Line, Dummy):
 
     __style__ = {
         'line-width': 2,
@@ -33,7 +44,7 @@ class Line(_Line):
         super(Line, self).draw(context)
 
 
-class Box(Element):
+class Box(Element, Dummy):
     """
     A Box has 4 handles (for a start)::
      
@@ -64,10 +75,9 @@ class Box(Element):
         cr.set_source_rgba(*style.border_color)
         cr.set_line_width(style.border_width)
         cr.stroke()
-        context.draw_children()
 
 
-class Ellipse(Element):
+class Ellipse(Element, Dummy):
     """
     """
 
@@ -99,7 +109,6 @@ class Ellipse(Element):
         cr.set_source_rgba(*style.border_color)
         cr.set_line_width(style.border_width)
         cr.stroke()
-        context.draw_children()
 
 
-# vim:sw=4:et:ai
+# vim:sw=4:et:ai, Dummy
