@@ -169,11 +169,11 @@ class AssociationItem(NamedLine):
         NamedLine.post_update(self, context)
 
         # Calculate alignment of the head name and multiplicity
-        self._head_end.update(context, handles[0].pos,
+        self._head_end.post_update(context, handles[0].pos,
                                      handles[1].pos)
 
         # Calculate alignment of the tail name and multiplicity
-        self._tail_end.update(context, handles[-1].pos,
+        self._tail_end.post_update(context, handles[-1].pos,
                                      handles[-2].pos)
         
 
