@@ -8,18 +8,7 @@ from gaphas.item import Element, NW
 from gaphas.util import path_ellipse
 from style import Style
 
-class Dummy(object):
-    def save(self, *args):
-        pass
-
-    def load(self, *args):
-        pass
-
-    def postload(self, *args):
-        pass
-        
-
-class Line(_Line, Dummy):
+class Line(_Line):
 
     __style__ = {
         'line-width': 2,
@@ -36,6 +25,34 @@ class Line(_Line, Dummy):
 
     id = property(lambda self: self._id, doc='Id')
 
+    def save (self, save_func):
+        save_func('matrix', tuple(self.matrix))
+        for prop in ('orthogonal', 'horizontal'):
+            save_func(prop, getattr(self, prop))
+        points = [ ]
+        for h in self.handles():
+            points.append(tuple(map(float, h.pos)))
+        save_func('points', points)
+
+    def load (self, name, value):
+        if name == 'matrix':
+            self.matrix = eval(value)
+        elif name == 'points':
+            points = eval(value)
+            for x in xrange(len(points) - 2):
+                self.split_segment(0)
+            for i, p in enumerate(points):
+                self.handles()[i].pos = p
+        elif name == 'horizontal':
+            self.horizontal = eval(value)
+        elif name == 'orthogonal':
+            self._load_orthogonal = eval(value)
+
+    def postload(self):
+        if hasattr(self, '_load_orthogonal'):
+            self.orthogonal = self._load_orthogonal
+            del self._load_orthogonal
+
     def draw(self, context):
         cr = context.cairo
         style = self.style
@@ -44,7 +61,7 @@ class Line(_Line, Dummy):
         super(Line, self).draw(context)
 
 
-class Box(Element, Dummy):
+class Box(Element):
     """
     A Box has 4 handles (for a start)::
      
@@ -65,6 +82,22 @@ class Box(Element, Dummy):
 
     id = property(lambda self: self._id, doc='Id')
 
+    def save(self, save_func):
+        save_func('matrix', tuple(self.matrix))
+        save_func('width', self.width)
+        save_func('height', self.height)
+
+    def load(self, name, value):
+        if name == 'matrix':
+            self.matrix = eval(value)
+        elif name == 'width':
+            self.width = eval(value)
+        elif name == 'height':
+            self.height = eval(value)
+
+    def postload(self):
+        pass
+
     def draw(self, context):
         cr = context.cairo
         nw = self._handles[NW]
@@ -77,7 +110,7 @@ class Box(Element, Dummy):
         cr.stroke()
 
 
-class Ellipse(Element, Dummy):
+class Ellipse(Element):
     """
     """
 
@@ -93,6 +126,22 @@ class Ellipse(Element, Dummy):
         self._id = id
 
     id = property(lambda self: self._id, doc='Id')
+
+    def save(self, save_func):
+        save_func('matrix', tuple(self.matrix))
+        save_func('width', self.width)
+        save_func('height', self.height)
+
+    def load(self, name, value):
+        if name == 'matrix':
+            self.matrix = eval(value)
+        elif name == 'width':
+            self.width = eval(value)
+        elif name == 'height':
+            self.height = eval(value)
+
+    def postload(self):
+        pass
 
     def draw(self, context):
         cr = context.cairo
@@ -111,4 +160,4 @@ class Ellipse(Element, Dummy):
         cr.stroke()
 
 
-# vim:sw=4:et:ai, Dummy
+# vim:sw=4:et:ai
