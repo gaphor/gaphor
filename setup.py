@@ -89,8 +89,11 @@ setup(
     author_email='arjanmol@users.sourceforge.net',
     license='GNU General Public License',
     description='Gaphor is a UML modeling tool',
-    long_description="Gaphor is a UML modeling tool written in Python. "
-                     "It uses the GTK+ environment for user interaction.",
+    long_description="""
+Gaphor is a UML modeling tool written in Python.
+
+It uses the GTK+ environment for user interaction.
+""",
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: X11 Applications :: GTK',
