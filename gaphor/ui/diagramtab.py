@@ -8,6 +8,7 @@ from zope import component
 from gaphor import UML
 from gaphor.core import _, inject, transactional, action, build_action_group
 from gaphor.diagram import get_diagram_item
+from gaphor.diagram.items import DiagramItem
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramview import DiagramView
 from gaphor.ui.diagramtoolbox import DiagramToolbox
@@ -164,14 +165,14 @@ class DiagramTab(object):
     def delete_selected_items(self):
         items = self.view.selected_items
         for i in items:
-            try:
+            if isinstance(i, DiagramItem):
                 s = i.subject
-            except AttributeError:
-                pass # No .subject
-            else:
                 if s and len(s.presentation) == 1:
                     s.unlink()
-            i.unlink()
+                i.unlink()
+            else:
+                if i.canvas:
+                    i.canvas.remove(i)
 
     def may_remove_from_model(self, view):
         """
