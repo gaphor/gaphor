@@ -118,8 +118,8 @@ It uses the GTK+ environment for user interaction.
 
     install_requires = [
         # 'PyGTK >= 2.8.0', - Exclude, since it will not build anyway
-        'decorator >= 2.0.1',
-        'gaphas >= 0.3.0.dev-r1677',
+        'decorator >= 2.2.0',
+        'gaphas >= 0.3.0',
         'zope.component >= 3.3.0', # - won't compile on windows.
         # Add dependency on zope.testing to work around bug in zope.component
         'zope.testing >= 3.3.0',
