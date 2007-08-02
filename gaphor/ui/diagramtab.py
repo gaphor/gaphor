@@ -164,9 +164,13 @@ class DiagramTab(object):
     def delete_selected_items(self):
         items = self.view.selected_items
         for i in items:
-            s = i.subject
-            if s and len(s.presentation) == 1:
-                s.unlink()
+            try:
+                s = i.subject
+            except AttributeError:
+                pass # No .subject
+            else:
+                if s and len(s.presentation) == 1:
+                    s.unlink()
             i.unlink()
 
     def may_remove_from_model(self, view):
