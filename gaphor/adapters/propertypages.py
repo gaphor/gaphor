@@ -58,6 +58,33 @@ def remove_on_keypress(tree, event):
         model, iter = tree.get_selection().get_selected()
         if iter:
             model.remove(iter)
+        
+
+@transactional
+def on_cell_edited(cellrenderertext, path, new_text, page, cls, attr):
+    """
+    Update the model and UML element based on fresh user input.
+    """
+    model = page.model
+    item = model[path]
+    iter = model.get_iter(path)
+
+    # Delete item if text is empty
+    if not new_text:
+        model.remove(iter)
+        return
+
+    # Add a new item
+    if new_text and not item[1]:
+        a = page.element_factory.create(cls)
+        setattr(page.context.subject, attr, a)
+        item[1] = a
+        model.append(['', None])
+
+    # Apply new_text to an item
+    if item[1]:
+        item[1].parse(new_text)
+        item[0] = item[1].render()
 
 
 class CommentItemPropertyPage(object):
@@ -310,14 +337,15 @@ class AttributesPage(object):
         attrs = self.context.subject.ownedAttribute
         attributes = UMLAssociation(a for a in attrs if not a.association)
 
-        self.attributes = attributes
+        self.model = attributes
         
         tree_view = gtk.TreeView(attributes)
         tree_view.set_rules_hint(True)
         
         renderer = gtk.CellRendererText()
         renderer.set_property('editable', True)
-        renderer.connect("edited", self._on_cell_edited, 0)
+        renderer.connect('edited', on_cell_edited,
+                self, UML.Property, 'ownedAttribute')
         tag_column = gtk.TreeViewColumn('Attributes', renderer, text=0)
         tree_view.append_column(tag_column)
 
@@ -333,31 +361,6 @@ class AttributesPage(object):
         self.context.show_attributes = button.get_active()
         self.context.request_update()
         
-    @transactional
-    def _on_cell_edited(self, cellrenderertext, path, new_text, col):
-        """
-        Update the model and UML element based on fresh user input.
-        """
-        attr = self.attributes[path]
-
-        iter = self.attributes.get_iter(path)
-
-        # Delete attribute if both tag and value are empty
-        if not new_text:
-            self.attributes.remove(iter)
-            return
-
-        # Add a new attribute:
-        if new_text and not attr[1]:
-            a = self.element_factory.create(UML.Property)
-            self.context.subject.ownedAttribute = a
-            attr[1] = a
-            self.attributes.append(['', None])
-
-        # Apply new_text to Attribute
-        if attr[1]:
-            attr[1].parse(new_text)
-            attr[0] = attr[1].render()
 
 component.provideAdapter(AttributesPage, name='Attributes')
 
@@ -396,14 +399,15 @@ class OperationsPage(object):
 
         # Operations list store:
         operations = UMLAssociation(self.context.subject.ownedOperation)
-        self.operations = operations
+        self.model = operations
         
         tree_view = gtk.TreeView(operations)
         tree_view.set_rules_hint(True)
         
         renderer = gtk.CellRendererText()
         renderer.set_property('editable', True)
-        renderer.connect("edited", self._on_cell_edited, 0)
+        renderer.connect('edited', on_cell_edited,
+                self, UML.Operation, 'ownedOperation')
         tag_column = gtk.TreeViewColumn('Operation', renderer, text=0)
         tree_view.append_column(tag_column)
 
@@ -418,32 +422,7 @@ class OperationsPage(object):
     def _on_show_operations_change(self, button):
         self.context.show_operations = button.get_active()
         self.context.request_update()
-        
-    @transactional
-    def _on_cell_edited(self, cellrenderertext, path, new_text, col):
-        """
-        Update the model and UML element based on fresh user input.
-        """
-        attr = self.operations[path]
 
-        iter = self.operations.get_iter(path)
-
-        # Delete operation if both tag and value are empty
-        if not new_text:
-            self.operations.remove(iter)
-            return
-
-        # Add a new operation:
-        if new_text and not attr[1]:
-            a = self.element_factory.create(UML.Operation)
-            self.context.subject.ownedOperation = a
-            attr[1] = a
-            self.operations.append(['', None])
-
-        # Apply new_text to Operation
-        if attr[1]:
-            attr[1].parse(new_text)
-            attr[0] = attr[1].render()
 
 component.provideAdapter(OperationsPage, name='Operations')
 
