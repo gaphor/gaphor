@@ -20,6 +20,46 @@ from gaphor import UML
 from gaphor.UML.umllex import parse_attribute, render_attribute
 import gaphas.item
 
+
+class UMLAssociation(gtk.ListStore):
+    """
+    UML association GTK model. 
+    """
+    def __init__(self, data):
+        """
+        Create GTK model from UML association.
+
+        Parameters:
+
+            data: iterator of UML properties
+        """
+        super(UMLAssociation, self).__init__(str, object)
+        for item in data:
+            self.append([item.render(), item])
+        self.append(['', None])
+
+
+    def remove(self, iter):
+        """
+        Remove item from GTK model and destroy it.
+        """
+        item = self[iter][1]
+        if item:
+            item.unlink()
+            super(UMLAssociation, self).remove(iter)
+
+
+def remove_on_keypress(tree, event):
+    """
+    Remove selected items from GTK model on ``backspace`` keypress.
+    """
+    k = gtk.gdk.keyval_name(event.keyval).lower()
+    if k == 'backspace':
+        model, iter = tree.get_selection().get_selected()
+        if iter:
+            model.remove(iter)
+
+
 class CommentItemPropertyPage(object):
     """
     Property page for Comments
@@ -267,13 +307,9 @@ class AttributesPage(object):
         page.pack_start(hbox, expand=False)
 
         # Attributes list store:
-        attributes = gtk.ListStore(str, object)
-        
-        for attribute in self.context.subject.ownedAttribute:
-            if not attribute.association:
-                attributes.append([attribute.render(), attribute])
-        attributes.append(['', None])
-        
+        attrs = self.context.subject.ownedAttribute
+        attributes = UMLAssociation(a for a in attrs if not a.association)
+
         self.attributes = attributes
         
         tree_view = gtk.TreeView(attributes)
@@ -284,6 +320,8 @@ class AttributesPage(object):
         renderer.connect("edited", self._on_cell_edited, 0)
         tag_column = gtk.TreeViewColumn('Attributes', renderer, text=0)
         tree_view.append_column(tag_column)
+
+        tree_view.connect('key_press_event', remove_on_keypress)
         
         page.pack_start(tree_view)
         tree_view.show_all()
@@ -305,8 +343,7 @@ class AttributesPage(object):
         iter = self.attributes.get_iter(path)
 
         # Delete attribute if both tag and value are empty
-        if not new_text and attr[1]:
-            attr[1].unlink()
+        if not new_text:
             self.attributes.remove(iter)
             return
 
