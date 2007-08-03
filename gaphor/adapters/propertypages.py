@@ -395,12 +395,7 @@ class OperationsPage(object):
         page.pack_start(hbox, expand=False)
 
         # Operations list store:
-        operations = gtk.ListStore(str, object)
-        
-        for operation in self.context.subject.ownedOperation:
-            operations.append([operation.render(), operation])
-        operations.append(['', None])
-        
+        operations = UMLAssociation(self.context.subject.ownedOperation)
         self.operations = operations
         
         tree_view = gtk.TreeView(operations)
@@ -411,6 +406,8 @@ class OperationsPage(object):
         renderer.connect("edited", self._on_cell_edited, 0)
         tag_column = gtk.TreeViewColumn('Operation', renderer, text=0)
         tree_view.append_column(tag_column)
+
+        tree_view.connect('key_press_event', remove_on_keypress)
         
         page.pack_start(tree_view)
         tree_view.show_all()
@@ -432,8 +429,7 @@ class OperationsPage(object):
         iter = self.operations.get_iter(path)
 
         # Delete operation if both tag and value are empty
-        if not new_text and attr[1]:
-            attr[1].unlink()
+        if not new_text:
             self.operations.remove(iter)
             return
 
