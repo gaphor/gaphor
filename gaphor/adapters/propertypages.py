@@ -20,6 +20,9 @@ from gaphor import UML
 from gaphor.UML.umllex import parse_attribute, render_attribute
 import gaphas.item
 
+tree_tooltip = """\
+Use backspace key to remove %s\
+"""
 
 class UMLAssociation(gtk.ListStore):
     """
@@ -349,6 +352,9 @@ class AttributesPage(object):
         tag_column = gtk.TreeViewColumn('Attributes', renderer, text=0)
         tree_view.append_column(tag_column)
 
+        tooltips = gtk.Tooltips()
+        tooltips.set_tip(tree_view, tree_tooltip % 'attributes')
+
         tree_view.connect('key_press_event', remove_on_keypress)
         
         page.pack_start(tree_view)
@@ -410,6 +416,9 @@ class OperationsPage(object):
                 self, UML.Operation, 'ownedOperation')
         tag_column = gtk.TreeViewColumn('Operation', renderer, text=0)
         tree_view.append_column(tag_column)
+
+        tooltips = gtk.Tooltips()
+        tooltips.set_tip(tree_view, tree_tooltip % 'operations')
 
         tree_view.connect('key_press_event', remove_on_keypress)
         
