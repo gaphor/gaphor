@@ -21,14 +21,15 @@ from gaphor.UML.umllex import parse_attribute, render_attribute
 import gaphas.item
 
 tree_tooltip = """\
-Use backspace key to remove %s\
+Press ENTER to edit item, backspace/DEL to remove item.
+Use -/= to move up or move down.\
 """
 
-class UMLAssociation(gtk.ListStore):
+class UMLCollection(gtk.ListStore):
     """
     UML association GTK model. 
     """
-    def __init__(self, data):
+    def __init__(self, subject, attr, filter=None):
         """
         Create GTK model from UML association.
 
@@ -36,10 +37,41 @@ class UMLAssociation(gtk.ListStore):
 
             data: iterator of UML properties
         """
-        super(UMLAssociation, self).__init__(str, object)
-        for item in data:
-            self.append([item.render(), item])
+        super(UMLCollection, self).__init__(str, object)
+        self._subject = subject
+        self._attr = attr
+        if filter is None:
+            filter = lambda i: True
+        for item in self._collection():
+            if filter(item):
+                self.append([item.render(), item])
         self.append(['', None])
+
+
+    def _collection(self):
+        return getattr(self._subject, self._attr)
+
+
+    def swap(self, a, b):
+        """
+        Swap two items.
+        """
+        if not a or not b:
+            return
+        item1 = self[a][1]
+        item2 = self[b][1]
+        if self._collection().swap(item1, item2):
+            super(UMLCollection, self).swap(a, b)
+
+
+    def iter_prev(self, iter):
+        """
+        Get previous GTK tree iterator.
+        """
+        i = self.get_path(iter)[0]
+        if i == 0:
+            return None
+        return self.get_iter((i - 1,))
 
 
     def remove(self, iter):
@@ -49,7 +81,8 @@ class UMLAssociation(gtk.ListStore):
         item = self[iter][1]
         if item:
             item.unlink()
-            super(UMLAssociation, self).remove(iter)
+            super(UMLCollection, self).remove(iter)
+
 
 
 def remove_on_keypress(tree, event):
@@ -57,10 +90,25 @@ def remove_on_keypress(tree, event):
     Remove selected items from GTK model on ``backspace`` keypress.
     """
     k = gtk.gdk.keyval_name(event.keyval).lower()
-    if k == 'backspace':
+    if k == 'backspace' or k == 'kp_delete':
         model, iter = tree.get_selection().get_selected()
         if iter:
             model.remove(iter)
+
+
+def swap_on_keypress(tree, event):
+    """
+    Swap selected and previous (or next) items.
+    """
+    k = gtk.gdk.keyval_name(event.keyval).lower()
+    if k == 'equal' or k == 'kp_add':
+        model, iter = tree.get_selection().get_selected()
+        model.swap(iter, model.iter_next(iter))
+        return True
+    elif k == 'minus':
+        model, iter = tree.get_selection().get_selected()
+        model.swap(iter, model.iter_prev(iter))
+        return True
         
 
 @transactional
@@ -338,7 +386,7 @@ class AttributesPage(object):
 
         # Attributes list store:
         attrs = self.context.subject.ownedAttribute
-        attributes = UMLAssociation(a for a in attrs if not a.association)
+        attributes = UMLCollection(self.context.subject, 'ownedAttribute', filter=lambda i: not i.association)
 
         self.model = attributes
         
@@ -353,9 +401,10 @@ class AttributesPage(object):
         tree_view.append_column(tag_column)
 
         tooltips = gtk.Tooltips()
-        tooltips.set_tip(tree_view, tree_tooltip % 'attributes')
+        tooltips.set_tip(tree_view, tree_tooltip)
 
         tree_view.connect('key_press_event', remove_on_keypress)
+        tree_view.connect('key_press_event', swap_on_keypress)
         
         page.pack_start(tree_view)
         tree_view.show_all()
@@ -404,7 +453,7 @@ class OperationsPage(object):
         page.pack_start(hbox, expand=False)
 
         # Operations list store:
-        operations = UMLAssociation(self.context.subject.ownedOperation)
+        operations = UMLCollection(self.context.subject, 'ownedOperation')
         self.model = operations
         
         tree_view = gtk.TreeView(operations)
@@ -418,9 +467,10 @@ class OperationsPage(object):
         tree_view.append_column(tag_column)
 
         tooltips = gtk.Tooltips()
-        tooltips.set_tip(tree_view, tree_tooltip % 'operations')
+        tooltips.set_tip(tree_view, tree_tooltip)
 
         tree_view.connect('key_press_event', remove_on_keypress)
+        tree_view.connect('key_press_event', swap_on_keypress)
         
         page.pack_start(tree_view)
         tree_view.show_all()
