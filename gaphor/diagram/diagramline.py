@@ -113,9 +113,7 @@ class DiagramLine(LineItem):
             assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_head_connection, self)
             h = self.head
 
-            x, y = self.canvas.get_matrix_i2c(self).transform_point(h.x, h.y)
-            x, y = self.canvas.get_matrix_c2i(self._load_head_connection).transform_point(x, y)
-            adapter.connect(h, x, y)
+            adapter.connect(h, float(h.x), float(h.y))
             del self._load_head_connection
 
         if hasattr(self, '_load_tail_connection'):
@@ -123,9 +121,7 @@ class DiagramLine(LineItem):
             assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_tail_connection, self)
             h = self.tail
 
-            x, y = self.canvas.get_matrix_i2c(self).transform_point(h.x, h.y)
-            x, y = self.canvas.get_matrix_c2i(self._load_tail_connection).transform_point(x, y)
-            adapter.connect(h, x, y)
+            adapter.connect(h, float(h.x), float(h.y))
             del self._load_tail_connection
         LineItem.postload(self)
 
