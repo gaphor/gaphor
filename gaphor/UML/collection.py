@@ -198,30 +198,21 @@ class collection(object):
         return False
 
 
-    def moveUp(self, value):
+    def swap(self, item1, item2):
         """
-        Move element up. Owner is notified about the change.
+        Swap two elements. Return true if swap was successful.
         """
-        i1 = self.items.index(value)
-        i2 = i1 - 1
-        if i2 >= 0:
+        try:
+            i1 = self.items.index(item1)
+            i2 = self.items.index(item2)
             self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
-            self.property.notify(self.object) # send a notification that this list has changed
-        else:
-            log.warning('Cannot move up first element')
-
-
-    def moveDown(self, value):
-        """
-        Move element down. Owner is notified about the change.
-        """
-        i1 = self.items.index(value)
-        i2 = i1 + 1
-        if i2 < len(self.items):
-            self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
-            self.property.notify(self.object) # send a notification that this list has changed
-        else:
-            log.warning('Cannot move down last element')
+            # send a notification that this list has changed
+            self.property.notify(self.object)
+            return True
+        except IndexError, ex:
+            return False
+        except ValueError, ex:
+            return False
 
 
 # vi:sw=4:et
