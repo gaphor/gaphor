@@ -189,16 +189,14 @@ def parse_association_end(self, s):
                 if not self.lowerValue:
                     self.lowerValue = create(LiteralSpecification)
                 self.lowerValue.value = g('mult_l')
-            else:
-                self.lowerValue.value = ''
+
             if g('mult_u'):
                 if not g('mult_l') and self.lowerValue:
                     self.lowerValue.value = None
                 if not self.upperValue:
                     self.upperValue = create(LiteralSpecification)
                 self.upperValue.value = g('mult_u')
-            else:
-                self.upperValue.value = ''
+
             tags = g('tags')
             if tags:
                 while self.taggedValue:
