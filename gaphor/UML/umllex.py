@@ -154,13 +154,13 @@ def parse_association_end(self, s):
     # due to previous parsing (i.e. '[1'
     m = association_end_name_pat.match(s)
     if m and not m.group('name'):
-        self.name = ''
+        self.name = None
 
     # clear also multiplicity if no characters in ``s``
     m = association_end_mult_pat.match(s)
     if m and not m.group('mult_u'):
         if self.upperValue:
-            self.upperValue.value = ''
+            self.upperValue.value = None
 
     if m and m.group('mult_u') or m.group('tags'):
         g = m.group
