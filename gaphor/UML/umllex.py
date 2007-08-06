@@ -346,10 +346,10 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
     """
     name = self.name
     if not name:
-        return ''
+        name = ''
 
-    if not name or no_render_pat.match(name):
-        return name
+    if no_render_pat.match(name):
+        name = ''
 
     # Render all fields if they all are set to False
     if not (visibility or is_derived or type or multiplicity or default or tags):

@@ -668,7 +668,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         hbox.pack_start(label, expand=False)
 
         entry = gtk.Entry()        
-        entry.set_text(render_attribute(end.subject) or '')
+        entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
         entry.connect('changed', self._on_end_name_change, end)
         hbox.pack_start(entry)
 
