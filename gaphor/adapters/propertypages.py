@@ -667,10 +667,20 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
-        entry = gtk.Entry()        
+        entry = gtk.Entry()
         entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
         entry.connect('changed', self._on_end_name_change, end)
         hbox.pack_start(entry)
+
+        tooltips = gtk.Tooltips()
+        tooltips.set_tip(entry, """\
+Enter attribute name and multiplicity, for example
+- name
+- name [1]
+- name [1..2]
+- 1..2
+- [1..2]\
+""")
 
         combo = gtk.combo_box_new_text()
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
