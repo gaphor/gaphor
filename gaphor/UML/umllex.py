@@ -96,8 +96,7 @@ def parse_attribute(self, s):
     like that is altered to reflect the data in the property string.
     """
     m = attribute_pat.match(s)
-    g = m.group
-    if not m or g('garbage'):
+    if not m or m.group('garbage'):
         self.name = s
         del self.visibility
         del self.isDerived
@@ -115,6 +114,7 @@ def parse_attribute(self, s):
             self.taggedValue[0].unlink()
     else:
         from uml2 import LiteralSpecification
+        g = m.group
         create = self._factory.create
         _set_visibility(self, g('vis'))
         self.isDerived = g('derived') and True or False
