@@ -156,7 +156,12 @@ def parse_association_end(self, s):
     if m and not m.group('name'):
         self.name = ''
 
+    # clear also multiplicity if no characters in ``s``
     m = association_end_mult_pat.match(s)
+    if m and not m.group('mult_u'):
+        if self.upperValue:
+            self.upperValue.value = ''
+
     if m and m.group('mult_u') or m.group('tags'):
         g = m.group
         if not self.lowerValue:
