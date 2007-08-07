@@ -68,8 +68,6 @@ class DiagramTab(object):
     def set_diagram(self, diagram):
         if self.diagram:
             self.diagram.disconnect(self._on_diagram_event)
-            #self.diagram.canvas.disconnect(self.__undo_id)
-            #self.diagram.canvas.disconnect(self.__snap_to_grid_id)
         self.diagram = diagram
         if diagram:
             diagram.connect(('name', '__unlink__'), self._on_diagram_event)
