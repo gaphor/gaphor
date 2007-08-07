@@ -13,10 +13,12 @@ TODO:
 
 import gtk
 from gaphor.core import _, inject, transactional
+from gaphor.application import Application
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
 from gaphor import UML
+from gaphor.UML.interfaces import IAttributeChangeEvent
 from gaphor.UML.umllex import parse_attribute, render_attribute
 import gaphas.item
 
@@ -138,6 +140,25 @@ def on_cell_edited(cellrenderertext, path, new_text, page, cls, attr):
         item[0] = item[1].render()
 
 
+def watch_attribute(attribute, widget, handler):
+    """
+    Watch attribute ``attribute`` for changes. If it changes
+    ``handler(event)`` is called. When ``widget`` is destroyed, the
+    handler is unregistered.
+    If ``attribute`` is None, all attribute events are propagated to teh handler.
+    """
+    @component.adapter(IAttributeChangeEvent)
+    def attribute_watcher(event):
+        if attribute is None or event.property is attribute:
+            handler(event)
+
+    Application.register_handler(attribute_watcher)
+
+    def destroy_handler(_widget):
+        Application.unregister_handler(attribute_watcher)
+    widget.connect('destroy', destroy_handler)
+
+
 class CommentItemPropertyPage(object):
     """
     Property page for Comments
@@ -149,6 +170,7 @@ class CommentItemPropertyPage(object):
         self.context = context
 
     def construct(self):
+        subject = self.context.subject
         page = gtk.VBox()
 
         label = gtk.Label(_('Comment'))
@@ -156,14 +178,22 @@ class CommentItemPropertyPage(object):
         page.pack_start(label, expand=False)
 
         buffer = gtk.TextBuffer()
-        if self.context.subject.body:
-            buffer.set_text(self.context.subject.body)
+        if subject.body:
+            buffer.set_text(subject.body)
         text_view = gtk.TextView()
         text_view.set_buffer(buffer)
         text_view.show()
         page.pack_start(text_view)
 
-        buffer.connect('changed', self._on_body_change)
+        changed_id = buffer.connect('changed', self._on_body_change)
+
+        def handler(event):
+            if event.element is subject:
+                buffer.handler_block(changed_id)
+                buffer.set_text(event.new_value)
+                buffer.handler_unblock(changed_id)
+        watch_attribute(type(subject).body, text_view, handler)
+
         page.show_all()
         return page
 
@@ -186,7 +216,7 @@ class NamedItemPropertyPage(object):
     def __init__(self, context):
         self.context = context
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
-        
+    
     def construct(self):
         page = gtk.VBox()
         hbox = gtk.HBox()
@@ -202,7 +232,17 @@ class NamedItemPropertyPage(object):
         hbox.pack_start(label, expand=False)
         entry = gtk.Entry()        
         entry.set_text(subject and subject.name or '')
-        entry.connect('changed', self._on_name_change)
+
+        # monitor subject.name attribute
+        changed_id = entry.connect('changed', self._on_name_change)
+
+        def handler(event):
+            if event.element is subject:
+                entry.handler_block(changed_id)
+                entry.set_text(event.new_value)
+                entry.handler_unblock(changed_id)
+        watch_attribute(type(subject).name, entry, handler)
+
         hbox.pack_start(entry)
         page.show_all()
         return page
@@ -298,6 +338,7 @@ class ClassPropertyPage(NamedItemPropertyPage):
         hbox.pack_start(label, expand=False)
         button = gtk.CheckButton()
         button.set_active(self.context.subject.isAbstract)
+        
         button.connect('toggled', self._on_abstract_change)
         hbox.pack_start(button)
         hbox.show_all()
@@ -674,7 +715,15 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
         entry = gtk.Entry()
         entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
-        entry.connect('changed', self._on_end_name_change, end)
+
+        # monitor subject attribute (all, cause it contains many children)
+        changed_id = entry.connect('changed', self._on_end_name_change, end)
+        def handler(event):
+            entry.handler_block(changed_id)
+            entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
+            entry.handler_unblock(changed_id)
+        watch_attribute(None, entry, handler)
+
         hbox.pack_start(entry)
 
         tooltips = gtk.Tooltips()
