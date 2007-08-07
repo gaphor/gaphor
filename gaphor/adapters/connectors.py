@@ -48,6 +48,11 @@ class AbstractConnect(object):
         if handle.connected_to and handle.connected_to is not self.element:
             handle.disconnect()
  
+        # Save guard: only connect if it's permitted by glue()
+        #   -> glue() does not return None
+        if not self.glue(handle, x, y):
+            return False
+
         self.connect_constraint(handle, x, y)
 
         # Set disconnect handler in the adapter, so it will also wotk if
@@ -311,7 +316,7 @@ class CommentLineLineConnect(LineConnect):
         if handle.connected_to and opposite.connected_to:
             if isinstance(handle.connected_to.subject, UML.Comment):
                 del handle.connected_to.subject.annotatedElement[opposite.connected_to.subject]
-            else:
+            elif opposite.connected_to.subject:
                 del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
         super(CommentLineLineConnect, self).disconnect(handle)
 

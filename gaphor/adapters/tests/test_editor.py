@@ -110,3 +110,7 @@ class EditorTestCase(TestCase):
         self.assertEqual('+ method()', edit.get_text())
 
 
+if __name__ == '__main__':
+    unittest.main()
+
+# vim:sw=4:et:ai

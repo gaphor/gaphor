@@ -45,7 +45,7 @@ class ConnectorTestCase(unittest.TestCase):
         handle = line.tail
         adapter.connect(handle, handle.x, handle.y)
 
-        assert handle.connected_to is None
+        assert handle.connected_to is None, handle.connected_to
         assert not hasattr(handle,'_connect_constraint')
         assert not comment.subject.annotatedElement, comment.subject.annotatedElement
 
@@ -122,7 +122,7 @@ class ConnectorTestCase(unittest.TestCase):
         assert type(adapter) is gaphor.adapters.connectors.CommentLineLineConnect
         handle = line.head
         pos = adapter.glue(handle, handle.x, handle.y)
-        assert pos == (0, 10), pos
+        assert pos == (10, 50), pos
         adapter.connect(handle, handle.x, handle.y)
 
         assert handle.connected_to is assoc
