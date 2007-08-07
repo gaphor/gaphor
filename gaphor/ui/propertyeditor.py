@@ -6,6 +6,8 @@ import gtk
 from zope import interface, component
 
 from gaphor.core import _
+from gaphor.UML.interfaces import IAssociationChangeEvent
+from gaphor.UML import Presentation
 from interfaces import IPropertyPage, IDiagramSelectionChange
 
 
@@ -28,6 +30,7 @@ class PropertyEditor(object):
         
         # Make sure we recieve 
         component.provideHandler(self._selection_change)
+        component.provideHandler(self._element_changed)
         
         return self.notebook
 
@@ -83,5 +86,14 @@ class PropertyEditor(object):
         if item is None:
             return
         self.create_tabs_for_item(item)
+
+    @component.adapter(IAssociationChangeEvent)
+    def _element_changed(self, event):
+        element = event.element
+        if event.property is Presentation.subject:
+            if element is self._current_item:
+                self.clear_all_tabs()
+                self.create_tabs_for_item(self._current_item)
+
 
 # vim:sw=4:et:ai

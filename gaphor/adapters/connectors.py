@@ -891,9 +891,10 @@ class AssociationConnect(RelationshipConnect):
                 head_type.ownedAttribute = tail_end
                 tail_type.ownedAttribute = head_end
 
-                line.subject = relation
                 line.head_end.subject = head_end
                 line.tail_end.subject = tail_end
+                # Do subject itself last, so event handlers can trigger
+                line.subject = relation
 
     def disconnect_subject(self, handle):
         """
