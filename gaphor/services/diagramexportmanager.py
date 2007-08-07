@@ -120,7 +120,7 @@ class DiagramExportManager(object):
         # (used for stuff like calculating font metrics)
         tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
         tmpcr = cairo.Context(tmpsurface)
-        view.update_bounding_box(tmpcr, items=canvas.get_root_items())
+        view.update_bounding_box(tmpcr)
         tmpcr.show_page()
         tmpsurface.flush()
 
