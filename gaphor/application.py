@@ -110,7 +110,7 @@ class _Application(object):
 
     # Wrap zope.component's SiteManager methods
 
-    def registerAdapter(self, factory, adapts=None, provides=None, name=''):
+    def register_adapter(self, factory, adapts=None, provides=None, name=''):
         """
         Register an adapter (factory) that adapts objects to a specific
         interface. A name can be used to distinguish between different adapters
@@ -119,7 +119,7 @@ class _Application(object):
         self.globalSiteManager.registerAdapter(factory, adapts, provides,
                               name, event=False)
 
-    def unregisterAdapter(self, factory=None,
+    def unregister_adapter(self, factory=None,
                           required=None, provided=None, name=u''):
         """
         Unregister a previously registered adapter.
@@ -127,14 +127,14 @@ class _Application(object):
         self.globalSiteManager.unregisterAdapter(factory,
                               required, provided, name)
 
-    def registerSubscriptionAdapter(self, factory, adapts=None, provides=None):
+    def register_subscription_adapter(self, factory, adapts=None, provides=None):
         """
         Register a subscription adapter. See registerAdapter().
         """
         self.globalSiteManager.registerSubscriptionAdapter(factory, adapts,
                               provides, event=False)
 
-    def unregisterSubscriptionAdapter(self, factory=None,
+    def unregister_subscription_adapter(self, factory=None,
                           required=None, provided=None, name=u''):
         """
         Unregister a previously registered subscription adapter.
@@ -142,14 +142,14 @@ class _Application(object):
         self.globalSiteManager.unregisterSubscriptionAdapter(factory,
                               required, provided, name)
 
-    def registerHandler(self, factory, adapts=None):
+    def register_handler(self, factory, adapts=None):
         """
         Register a handler. Handlers are triggered (executed) when specific
         events are emited through the handle() method.
         """
         self.globalSiteManager.registerHandler(factory, adapts, event=False)
 
-    def unregisterHandler(self, factory=None, required=None):
+    def unregister_handler(self, factory=None, required=None):
         """
         Unregister a previously registered handler.
         """

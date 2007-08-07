@@ -36,10 +36,10 @@ class Alignment(object):
 
     def init(self, app):
 	self._app = app
-        app.registerHandler(self.update)
+        app.register_handler(self.update)
     
     def shutdown(self):
-        self._app.unregisterHandler(self.update)
+        self._app.unregister_handler(self.update)
 
     @component.adapter(IDiagramSelectionChange)
     def update(self, event=None):

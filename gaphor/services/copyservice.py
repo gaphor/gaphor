@@ -53,11 +53,11 @@ class CopyService(object):
         self.action_group.get_action('edit-copy').props.sensitive = False
         self.action_group.get_action('edit-paste').props.sensitive = False
         
-        app.registerHandler(self._update)
+        app.register_handler(self._update)
 
     def shutdown(self):
         self.copy_buffer = set()
-        self._app.unregisterHandler(self._update)
+        self._app.unregister_handler(self._update)
 
     @component.adapter(IDiagramSelectionChange)
     def _update(self, event):

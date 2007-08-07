@@ -27,10 +27,10 @@ class ActionManager(object):
                 log.debug('Loading already registered service %s' % str(service))
                 self.register_action_provider(service)
 
-        app.registerHandler(self._service_initialized_handler)
+        app.register_handler(self._service_initialized_handler)
 
     def shutdown(self):
-        self._app.unregisterHandler(self._service_initialized_handler)
+        self._app.unregister_handler(self._service_initialized_handler)
 
     def execute(self, action_id, active=None):
         a = self.get_action(action_id)

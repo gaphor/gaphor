@@ -113,18 +113,18 @@ class UndoManager(object):
 
     def init(self, app):
         self._app = app
-        app.registerHandler(self.begin_transaction)
-        app.registerHandler(self.commit_transaction)
-        app.registerHandler(self.rollback_transaction)
-        app.registerHandler(self._action_executed)
+        app.register_handler(self.begin_transaction)
+        app.register_handler(self.commit_transaction)
+        app.register_handler(self.rollback_transaction)
+        app.register_handler(self._action_executed)
         self._register_undo_handlers()
         self._action_executed()
 
     def shutdown(self):
-        self._app.unregisterHandler(self.begin_transaction)
-        self._app.unregisterHandler(self.commit_transaction)
-        self._app.unregisterHandler(self.rollback_transaction)
-        self._app.unregisterHandler(self._action_executed)
+        self._app.unregister_handler(self.begin_transaction)
+        self._app.unregister_handler(self.commit_transaction)
+        self._app.unregister_handler(self.rollback_transaction)
+        self._app.unregister_handler(self._action_executed)
         self._unregister_undo_handlers()
 
     def clear_undo_stack(self):
@@ -273,12 +273,12 @@ class UndoManager(object):
         self.add_undo_action(lambda: state.saveapply(*event));
 
     def _register_undo_handlers(self):
-        self._app.registerHandler(self.undo_create_event)
-        self._app.registerHandler(self.undo_delete_event)
-        self._app.registerHandler(self.undo_attribute_change_event)
-        self._app.registerHandler(self.undo_association_set_event)
-        self._app.registerHandler(self.undo_association_add_event)
-        self._app.registerHandler(self.undo_association_delete_event)
+        self._app.register_handler(self.undo_create_event)
+        self._app.register_handler(self.undo_delete_event)
+        self._app.register_handler(self.undo_attribute_change_event)
+        self._app.register_handler(self.undo_association_set_event)
+        self._app.register_handler(self.undo_association_add_event)
+        self._app.register_handler(self.undo_association_delete_event)
 
         #
         # Direct revert-statements from gaphas to the undomanager
@@ -287,12 +287,12 @@ class UndoManager(object):
         state.subscribers.add(self._undo_handler)
 
     def _unregister_undo_handlers(self):
-        self._app.unregisterHandler(self.undo_create_event)
-        self._app.unregisterHandler(self.undo_delete_event)
-        self._app.unregisterHandler(self.undo_attribute_change_event)
-        self._app.unregisterHandler(self.undo_association_set_event)
-        self._app.unregisterHandler(self.undo_association_add_event)
-        self._app.unregisterHandler(self.undo_association_delete_event)
+        self._app.unregister_handler(self.undo_create_event)
+        self._app.unregister_handler(self.undo_delete_event)
+        self._app.unregister_handler(self.undo_attribute_change_event)
+        self._app.unregister_handler(self.undo_association_set_event)
+        self._app.unregister_handler(self.undo_association_add_event)
+        self._app.unregister_handler(self.undo_association_delete_event)
 
         from gaphas import state
         state.observers.discard(state.revert_handler)
