@@ -3,10 +3,15 @@
 import unittest
 from weakref import ref as wref
 from sys import getrefcount
-import gaphor.UML as UML
-import gaphor.diagram as diagram
+from gaphor import UML
+from gaphor.diagram import items
+
+from gaphor.application import Application
+Application.shutdown()
 
 factory = UML.ElementFactory()
+factory.init(Application)
+
 
 class TestDiagramItems(unittest.TestCase):
 
@@ -74,22 +79,22 @@ class TestDiagramItems(unittest.TestCase):
         self.failUnless(w_d() is None, getrefcount(w_p1()))
 
     def testPackage1(self):
-        self._testTemplate1(UML.Package, diagram.PackageItem)
+        self._testTemplate1(UML.Package, items.PackageItem)
 
     def testPackage2(self):
-        self._testTemplate2(UML.Package, diagram.PackageItem)
+        self._testTemplate2(UML.Package, items.PackageItem)
 
     def testClass1(self):
-        self._testTemplate1(UML.Class, diagram.ClassItem)
+        self._testTemplate1(UML.Class, items.ClassItem)
 
     def testClass2(self):
-        self._testTemplate2(UML.Class, diagram.ClassItem)
+        self._testTemplate2(UML.Class, items.ClassItem)
 
     def testDependency1(self):
-        self._testTemplate1(UML.Dependency, diagram.DependencyItem)
+        self._testTemplate1(UML.Dependency, items.DependencyItem)
 
     def testDependency2(self):
-        self._testTemplate2(UML.Dependency, diagram.DependencyItem)
+        self._testTemplate2(UML.Dependency, items.DependencyItem)
 
     def _testTemplate3(self, uml_class, item_class):
         import gtk
@@ -146,7 +151,7 @@ class TestDiagramItems(unittest.TestCase):
         c = factory.create(UML.Class)
         d = factory.create(UML.Diagram)
         self.failUnless(getrefcount(c) == 3, getrefcount(c))
-        ci = d.create(diagram.ClassItem)
+        ci = d.create(items.ClassItem)
 
         # Add the class to the item
         #c.package = p1

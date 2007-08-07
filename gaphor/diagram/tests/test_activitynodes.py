@@ -65,7 +65,7 @@ class TestActivityNodes(unittest.TestCase):
 
         Return subject of UI node element and combined UML node.
         """
-        self.assertEquals(node.props.combined, True)
+        self.assertEquals(node.combined, True)
         self.assertEquals(node.subject.__class__, UML.MergeNode)
         self.assertEquals(len(node.subject.outgoing), 1)
         combined_node = node.subject.outgoing[0].target

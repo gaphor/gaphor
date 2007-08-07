@@ -9,6 +9,9 @@ from gaphor import diagram
 
 # Ensure adapters are available
 import gaphor.adapters
+reload(gaphor.adapters.editors)
+reload(gaphor.adapters.connectors)
+
 
 class InterfacesTestCase(unittest.TestCase):
 

@@ -4,28 +4,32 @@ Test handle tool functionality.
 
 import unittest
 from gaphor import UML
-from gaphor.ui.mainwindow import MainWindow
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.actor import ActorItem
 from gaphor.ui.diagramtools import ConnectHandleTool
 from gaphas.canvas import Context
-from gaphas.tool import ToolChainContext
 
-# Make sure adapters are loaded
-import gaphor.adapters
-import gaphor.actions
+from gaphor.application import Application
 
 Event = Context
 
 
 class HandleToolTestCase(unittest.TestCase):
 
+    def setUp(self):
+        Application.init(services=['adapter_loader', 'element_factory', 'gui_manager', 'properties_manager'])
+        self.main_window = Application.get_service('gui_manager').main_window
+
+    def shutDown(self):
+        Application.shutdown()
+
     def test_iconnect(self):
-        """Test basic glue functionality using CommentItem and CommentLine
+        """
+        Test basic glue functionality using CommentItem and CommentLine
         items.
         """
-        element_factory = UML.ElementFactory()
+        element_factory = Application.get_service('element_factory')
         diagram = element_factory.create(UML.Diagram)
         #self.main_window.show_diagram(diagram)
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
@@ -35,8 +39,9 @@ class HandleToolTestCase(unittest.TestCase):
         line = diagram.create(CommentLineItem)
         tool = ConnectHandleTool()
 
-        #view = self.main_window.get_current_diagram_view()
-        #assert view, 'View should be available here'
+        self.main_window.show_diagram(diagram)
+        view = self.main_window.get_current_diagram_view()
+        assert view, 'View should be available here'
 
         # select handle:
         handle = line.handles()[-1]
@@ -51,19 +56,19 @@ class HandleToolTestCase(unittest.TestCase):
         handle.x, handle.y = 0, 0
         tool.connect(view, line, handle, 45, 48)
         self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is comment, handle.connected_to
+        assert handle.connected_to is actor, handle.connected_to
         assert handle._connect_constraint is not None
 
         tool.disconnect(view, line, handle)
         
-        assert handle.connected_to is comment
+        assert handle.connected_to is actor
         assert handle._connect_constraint is None
 
 
     def test_iconnect_2(self):
         """Test connect/disconnect on comment and actor using comment-line.
         """
-        element_factory = UML.ElementFactory()
+        element_factory = Application.get_service('element_factory')
         diagram = element_factory.create(UML.Diagram)
         #self.main_window.show_diagram(diagram)
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
@@ -78,8 +83,9 @@ class HandleToolTestCase(unittest.TestCase):
         line = diagram.create(CommentLineItem)
         tool = ConnectHandleTool()
 
-        #view = self.main_window.get_current_diagram_view()
-        #assert view, 'View should be available here'
+        self.main_window.show_diagram(diagram)
+        view = self.main_window.get_current_diagram_view()
+        assert view, 'View should be available here'
 
         # select handle:
         handle = line.handles()[0]
@@ -131,7 +137,7 @@ class HandleToolTestCase(unittest.TestCase):
     def test_connect_3(self):
         """Test connecting through events (button press/release, motion).
         """
-        element_factory = UML.ElementFactory()
+        element_factory = Application.get_service('element_factory')
         diagram = element_factory.create(UML.Diagram)
         #self.main_window.show_diagram(diagram)
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
@@ -148,8 +154,9 @@ class HandleToolTestCase(unittest.TestCase):
         assert line.handles()[-1].pos, (10.0, 10.0)
         tool = ConnectHandleTool()
 
-        #view = self.main_window.get_current_diagram_view()
-        #assert view, 'View should be available here'
+        self.main_window.show_diagram(diagram)
+        view = self.main_window.get_current_diagram_view()
+        assert view, 'View should be available here'
 
         # Add extra methods so the Context can impersonate a ToolChainContext
         def dummy_grab(): pass

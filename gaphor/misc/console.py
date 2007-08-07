@@ -124,6 +124,13 @@ class OutputStream:
 
     self.buffer.insert_with_tags(end,text,self.style)
 
+  def truncate(self, size=None):
+    self.out.truncate(size)
+
+  def seek(self, offset, whence=0):
+    self.out.seek(offset, whence)
+
+
 class GTKInterpreterConsole(gtk.ScrolledWindow):
   """
   An InteractiveConsole for GTK. It's an actual widget,

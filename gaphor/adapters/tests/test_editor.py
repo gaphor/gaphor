@@ -8,7 +8,8 @@ from gaphor.diagram.interfaces import IEditor
 
 # ensure adapters are registered
 import gaphor.adapters
-
+reload(gaphor.adapters.editors)
+reload(gaphor.adapters.connectors)
 
 class EditorTestCase(unittest.TestCase):
 

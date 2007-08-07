@@ -27,7 +27,7 @@ class FileManagerTestCase(unittest.TestCase):
         a = fileman.action_group.get_action('file-recent-%d' % 0)
         assert a
         assert a.get_property('visible') == True
-        assert a.props.label == '1. firstfile'
+        assert a.props.label == '_1. firstfile', a.props.label
         for i in range(1, 9):
             a = fileman.action_group.get_action('file-recent-%d' % i)
             assert a

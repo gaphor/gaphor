@@ -15,6 +15,7 @@ from zope import component
 
 # ensure adapters are loaded:
 import gaphor.adapters
+reload(gaphor.adapters.connectors)
 
 __module__ = 'test_storage'
 
@@ -192,8 +193,8 @@ class StorageTestCase(unittest.TestCase):
             if isinstance(item, items.AssociationItem):
                 aa = item
         assert aa
-        assert map(float, aa.handles()[0].pos) == [10, 20], aa.handles()[0].pos
-        assert map(float, aa.handles()[1].pos) == [50, 60], aa.handles()[1].pos
+        assert map(float, aa.handles()[0].pos) == [0, 0], aa.handles()[0].pos
+        assert map(float, aa.handles()[1].pos) == [40, 40], aa.handles()[1].pos
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
         #print d1, d1.subject
@@ -234,7 +235,7 @@ class StorageTestCase(unittest.TestCase):
         diagram.canvas.update_now()
 
         assert a.head.y == 0, a.head.pos
-        assert a.tail.x == 200, a.tail.pos
+        assert a.tail.x == 10, a.tail.pos
         #assert a.tail.y == 200, a.tail.pos
         assert a.subject
 

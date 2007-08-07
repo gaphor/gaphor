@@ -5,6 +5,7 @@ Test the UndoManager.
 import unittest
 from gaphor.services.undomanager import UndoManager
 from gaphor.transaction import Transaction
+from gaphor.application import Application
 
 
 class TestUndoManager(unittest.TestCase):
@@ -12,7 +13,7 @@ class TestUndoManager(unittest.TestCase):
     def test_transactions(self):
 
         undo_manager = UndoManager()
-        undo_manager.init(None)
+        undo_manager.init(Application)
 
         assert undo_manager._transaction_depth == 0
         assert not undo_manager._current_transaction
@@ -43,7 +44,7 @@ class TestUndoManager(unittest.TestCase):
 
     def test_not_in_transaction(self):
         undo_manager = UndoManager()
-        undo_manager.init(None)
+        undo_manager.init(Application)
 
         action = object()
         undo_manager.add_undo_action(action)
@@ -69,7 +70,7 @@ class TestUndoManager(unittest.TestCase):
             undo_manager.add_undo_action(undo_action)
 
         undo_manager = UndoManager()
-        undo_manager.init(None)
+        undo_manager.init(Application)
 
         #undo_manager.begin_transaction()
         tx = Transaction()
@@ -99,7 +100,7 @@ class TestUndoManager(unittest.TestCase):
         from gaphor.UML.properties import attribute
         from gaphor.UML.element import Element
         undo_manager = UndoManager()
-        undo_manager.init(None)
+        undo_manager.init(Application)
 
         class A(Element):
             attr = attribute('attr', types.StringType, default='default')
@@ -122,7 +123,7 @@ class TestUndoManager(unittest.TestCase):
         from gaphor.UML.properties import association
         from gaphor.UML.element import Element
         undo_manager = UndoManager()
-        undo_manager.init(None)
+        undo_manager.init(Application)
 
         class A(Element): pass
         class B(Element): pass
@@ -155,7 +156,7 @@ class TestUndoManager(unittest.TestCase):
         from gaphor.UML.properties import association
         from gaphor.UML.element import Element
         undo_manager = UndoManager()
-        undo_manager.init(None)
+        undo_manager.init(Application)
  
         class A(Element): pass
         class B(Element): pass
@@ -197,7 +198,7 @@ class TestUndoManager(unittest.TestCase):
         from gaphor.UML.elementfactory import ElementFactory
         from gaphor.UML.element import Element
         undo_manager = UndoManager()
-        undo_manager.init(None)
+        undo_manager.init(Application)
         undo_manager.begin_transaction()
         ef = ElementFactory()
         p = ef.create(Element)

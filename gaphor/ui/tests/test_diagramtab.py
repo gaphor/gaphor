@@ -6,8 +6,6 @@ from gaphor.application import Application
 from gaphor.ui.diagramtab import DiagramTab
 from gaphor.ui.mainwindow import MainWindow
 
-# ensure actions are loaded:
-import gaphor.actions
 
 class DiagramTabTestCase(unittest.TestCase):
 
@@ -42,15 +40,11 @@ class DiagramTabTestCase(unittest.TestCase):
         from gaphas import Element
         from gaphas.examples import Box
         box = Box()
-        self.assertEquals(len(tab.view._item_bounds), 0)
         diagram.canvas.add(box)
         diagram.canvas.update_now()
         tab.view.request_update([box])
-        assert len(tab.view._item_bounds) == 1, tab.view._item_bounds
-        assert tab.view._item_bounds.keys()[0] is box, tab.view._item_bounds.keys()[0]
         
         from gaphor.diagram.comment import CommentItem
         comment = self.diagram.create(CommentItem, subject=self.element_factory.create(UML.Comment))
-        self.assertEquals(len(tab.view._item_bounds), 2)
         self.assertEquals(len(self.element_factory.lselect()), 2)
         

@@ -15,11 +15,11 @@ class CopyServiceTestCase(unittest.TestCase):
 
     def test_init(self):
         service = CopyService()
-        service.init(self)
+        service.init(Application)
 
     def test_copy(self):
         service = CopyService()
-        service.init(self)
+        service.init(Application)
         ef = Application.get_service('element_factory')
         diagram = ef.create(UML.Diagram)
         ci = diagram.create(items.CommentItem, subject=ef.create(UML.Comment))

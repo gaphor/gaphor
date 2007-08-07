@@ -96,7 +96,6 @@ class DependencyItem(DiagramLine):
         if not dependency_type and self.auto_dependency:
             dependency_type = self.determine_dependency_type(self.head.connected_to, self.tail.connected_to)
         self._dependency_type = dependency_type
-        log.debug('set_dependency type set to %s' % dependency_type)
         self.request_update()
 
     dependency_type = property(lambda s: s._dependency_type,
