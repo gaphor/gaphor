@@ -69,18 +69,24 @@ class DependencyItem(DiagramLine):
 
     def save(self, save_func):
         DiagramLine.save(self, save_func)
-        save_func('dependency_type', self._dependency_type.__name__)
         save_func('auto_dependency', self.auto_dependency)
 
 
     def load(self, name, value):
-        if name == 'dependency_type':
-            self.set_dependency_type(getattr(UML, value))
-        elif name == 'auto_dependency':
+        #if name == 'dependency_type':
+        #    self.set_dependency_type(getattr(UML, value))
+        if name == 'auto_dependency':
             self.auto_dependency = eval(value)
         else:
             DiagramLine.load(self, name, value)
 
+    def postload(self):
+        if self.subject:
+            dependency_type = self.subject.__class__
+            DiagramLine.postload(self)
+            self._dependency_type = dependency_type
+        else:
+            DiagramLine.postload(self)
 
     def get_dependency_type(self):
         return self._dependency_type
@@ -90,6 +96,7 @@ class DependencyItem(DiagramLine):
         if not dependency_type and self.auto_dependency:
             dependency_type = self.determine_dependency_type(self.head.connected_to, self.tail.connected_to)
         self._dependency_type = dependency_type
+        log.debug('set_dependency type set to %s' % dependency_type)
         self.request_update()
 
     dependency_type = property(lambda s: s._dependency_type,
@@ -139,15 +146,19 @@ class DependencyItem(DiagramLine):
 
     @staticmethod
     def determine_dependency_type(ts, hs):
-        """Determine dependency type:
+        """
+        Determine dependency type:
+
         - check if it is usage
         - check if it is realization
         - if none of above, then it is normal dependency
 
         The checks should be performed in above order. For example if ts and hs
         are Interface and Component, then we have two choices:
+
         - claim it is an usage (as ts is an Interface)
         - or claim it is a realization (as Interface is Classifier, too)
+
         In this case we want usage to win over realization.
         """
         dt = UML.Dependency

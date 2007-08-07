@@ -572,6 +572,8 @@ class DependencyPropertyPage(object):
     interface.implements(IPropertyPage)
     component.adapts(items.DependencyItem)
 
+    element_factory = inject('element_factory')
+
     dependency_types = (
         (_('Dependency'), UML.Dependency),
         (_('Usage'), UML.Usage),
@@ -638,7 +640,10 @@ class DependencyPropertyPage(object):
 
     @transactional
     def _on_dependency_type_change(self, combo):
-        self.context.dependency_type = self.dependency_types[combo.get_active()][1]
+        if self.context.subject:
+            new_class = self.dependency_types[combo.get_active()][1]
+            self.element_factory.swap_element(self.context.subject, new_class)
+            self.context.dependency_type = new_class
 
     @transactional
     def _on_auto_dependency_change(self, button):
