@@ -218,7 +218,7 @@ class TextEditTool(Tool):
         """
         text = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
         editor.update_text(text)
-        widget.destroy()
+        widget.get_toplevel().destroy()
 
     def on_double_click(self, context, event):
         view = context.view
@@ -239,8 +239,7 @@ class TextEditTool(Tool):
 
     def _on_key_press_event(self, widget, event, buffer, editor):
         if event.keyval == gtk.keysyms.Return:
-            pass
-            #widget.get_toplevel().destroy()
+            self.submit_text(widget, buffer, editor)
         elif event.keyval == gtk.keysyms.Escape:
             widget.get_toplevel().destroy()
 
