@@ -1,5 +1,5 @@
 
-from unittest import TestCase
+import unittest
 from zope import component
 from gaphor import UML
 from gaphor.UML.elementfactory import ElementFactory
@@ -10,7 +10,7 @@ from gaphor.diagram.interfaces import IEditor
 import gaphor.adapters
 
 
-class EditorTestCase(TestCase):
+class EditorTestCase(unittest.TestCase):
 
     def setUp(self):
         self.factory = ElementFactory()
