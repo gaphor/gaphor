@@ -3,7 +3,7 @@ Unittest the storage and parser modules
 """
 
 import os
-import unittest
+from testcase import TestCase
 from gaphor import UML
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.application import Application
@@ -12,10 +12,6 @@ from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 from zope import component
-
-# ensure adapters are loaded:
-import gaphor.adapters
-reload(gaphor.adapters.connectors)
 
 __module__ = 'test_storage'
 
@@ -31,15 +27,19 @@ class PseudoFile(object):
         pass
 
 
-class StorageTestCase(unittest.TestCase):
+class StorageTestCase(TestCase):
+
+    services = ['element_factory', 'adapter_loader']
 
     def setUp(self):
-        self.factory = ElementFactory()
+        super(StorageTestCase, self).setUp()
+        self.factory = self.get_service('element_factory')
         self.factory.init(None)
 
     def tearDown(self):
         self.factory.flush()
         self.factory.shutdown()
+        super(StorageTestCase, self).tearDown()
 
     def test_save_uml(self):
         """Saving gaphor.UML model elements.

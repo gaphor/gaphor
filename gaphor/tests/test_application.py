@@ -2,24 +2,22 @@
 """
 
 import os
-import unittest
+import testcase
 from gaphor import UML
 from gaphor.application import Application
 from zope import component
 from gaphor.interfaces import IService
 
 
-class StorageTestCase(unittest.TestCase):
+class StorageTestCase(testcase.TestCase):
 
-    def tearDown(self):
-        pass
+    services = ['undo_manager', 'file_manager']
 
     def test_service(self):
         """
         Load services. At lease the undo_manager should be available after that.
         """
         
-        Application.load_services()
         assert Application.get_service('undo_manager')
         assert Application.get_service('file_manager')
 

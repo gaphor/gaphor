@@ -1,24 +1,18 @@
 
-import unittest
+from gaphor.tests import TestCase
 from zope import component
 from gaphor import UML
-from gaphor.UML.elementfactory import ElementFactory
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IEditor
 
-# ensure adapters are registered
-import gaphor.adapters
-reload(gaphor.adapters.editors)
-reload(gaphor.adapters.connectors)
+class EditorTestCase(TestCase):
 
-class EditorTestCase(unittest.TestCase):
+    services = ['element_factory', 'adapter_loader']
 
     def setUp(self):
-        self.factory = ElementFactory()
-        self.factory.init(None)
+        super(EditorTestCase, self).setUp()
+        self.factory = self.get_service('element_factory')
 
-    def tearDown(self):
-        self.factory.shutdown()
 
     def test_association_editor(self):
         diagram = self.factory.create(UML.Diagram)
@@ -110,8 +104,5 @@ class EditorTestCase(unittest.TestCase):
         self.assertEqual(oper, edit._edit.subject)
         self.assertEqual('+ method()', edit.get_text())
 
-
-if __name__ == '__main__':
-    unittest.main()
 
 # vim:sw=4:et:ai

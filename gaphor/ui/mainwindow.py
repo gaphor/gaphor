@@ -2,7 +2,7 @@
 The main application window.
 """
 
-import gtk
+import gobject, gtk
 
 from zope import interface, component
 from gaphor.interfaces import IActionProvider
@@ -366,7 +366,8 @@ class MainWindow(ToplevelWindow):
         """
         self._tree_view = None
         self.window = None
-        gtk.main_quit()
+        if gobject.main_depth() > 0:
+            gtk.main_quit()
 
     def _on_tab_destroy(self, widget):
         tab = self.notebook_map[widget]

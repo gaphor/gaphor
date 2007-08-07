@@ -2,10 +2,9 @@
 Unnit tests for AssociationItem.
 """
 
-import unittest
+from gaphor.tests import TestCase
 from zope import component
 
-from gaphor.application import Application
 from gaphor import UML
 from gaphor.diagram.association import AssociationItem
 from gaphor.diagram.klass import ClassItem
@@ -13,20 +12,19 @@ from gaphor.diagram.interfaces import IConnect
 from gaphas import View
 
 
-class AssociationItemTestCase(unittest.TestCase):
+class AssociationItemTestCase(TestCase):
+
+    services = ['element_factory', 'adapter_loader']
 
     def setUp(self):
-        Application.init(services=['element_factory', 'adapter_loader'])
-        self.element_factory = Application.get_service('element_factory')
+        super(AssociationItemTestCase, self).setUp()
+        self.element_factory = self.get_service('element_factory')
         self.diagram = diagram = self.element_factory.create(UML.Diagram)
         self.view = View(diagram.canvas)
         self.assoc = diagram.create(AssociationItem)
         self.class1 = diagram.create(ClassItem, subject=self.element_factory.create(UML.Class))
         self.class2 = diagram.create(ClassItem, subject=self.element_factory.create(UML.Class))
-        pass
 
-    def tearDown(self):
-        Application.shutdown()
 
     def test_create1(self):
         """

@@ -2,22 +2,23 @@
 Test Item connections.
 """
 
-import unittest
+from gaphor.tests import TestCase
 from zope import component
 from gaphor import UML
-from gaphor.application import Application
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
-class ConnectorTestCase(unittest.TestCase):
+class ConnectorTestCase(TestCase):
+
+    services = ['element_factory', 'adapter_loader']
 
     def setUp(self):
-        Application.init(services=['element_factory', 'adapter_loader'])
-        self.element_factory = Application.get_service('element_factory')
+        super(ConnectorTestCase, self).setUp()
+        self.element_factory = self.get_service('element_factory')
 
     def tearDown(self):
         self.element_factory.flush()
-        Application.shutdown()
+        super(ConnectorTestCase, self).tearDown()
 
     def test_commentline_element(self):
         """
@@ -748,9 +749,6 @@ class ConnectorTestCase(unittest.TestCase):
                                      forkNodeClass=UML.DecisionNode,
                                      joinNodeClass=UML.MergeNode)
 
-
-if __name__ == '__main__':
-    unittest.main()
 
 
 # vim:sw=4:et:ai
