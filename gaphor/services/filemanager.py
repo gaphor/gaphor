@@ -277,7 +277,6 @@ def show_status_window(title, message, parent=None, queue=None):
     vbox.set_border_width(12)
     label = gtk.Label(message)
     label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
-    #label.set_padding(8, 8)
     vbox.pack_start(label)
     progress_bar = gtk.ProgressBar()
     progress_bar.set_size_request(400, -1)
