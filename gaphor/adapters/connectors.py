@@ -103,11 +103,18 @@ class AbstractConnect(object):
         Create the actual constraint. The handle should be moved into connection
         position before this method is called.
         """
+        h1, h2 = self._get_segment(handle)
+
         element = self.element
         line = self.line
 
-        h1, h2 = self._get_segment(handle)
-        self._create_line_constraint(element, h1, h2, line, handle)
+        lc = constraint.LineConstraint(line=(CanvasProjection(h1.pos, element),
+                                             CanvasProjection(h2.pos, element)),
+                                       point=CanvasProjection(handle.pos, line))
+        handle._connect_constraint = lc
+        element.canvas.solver.add_constraint(lc)
+
+        handle.connected_to = element
 
 
     def disconnect_constraints(self, handle):
@@ -120,19 +127,6 @@ class AbstractConnect(object):
         except AttributeError:
             pass # No _connect_constraint property yet
         handle._connect_constraint = None
-
-
-    def _create_line_constraint(self, element, h1, h2, line, handle):
-        """
-        Create line constraint between two items.
-        """
-        lc = constraint.LineConstraint(line=(CanvasProjection(h1.pos, element),
-                                             CanvasProjection(h2.pos, element)),
-                                       point=CanvasProjection(handle.pos, line))
-        handle._connect_constraint = lc
-        element.canvas.solver.add_constraint(lc)
-
-        handle.connected_to = element
 
 
     def _get_segment(self, handle):
