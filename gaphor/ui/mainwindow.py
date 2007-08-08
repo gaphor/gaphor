@@ -19,9 +19,10 @@ from toplevelwindow import ToplevelWindow
 
 
 from interfaces import IDiagramSelectionChange
-from gaphor.interfaces import IServiceEvent
+from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
 from event import DiagramSelectionChange
-
+from gaphor.application import Application
+from gaphor.services.filemanager import FileManagerStateChanged
 
 class MainWindow(ToplevelWindow):
     """
@@ -33,6 +34,7 @@ class MainWindow(ToplevelWindow):
     properties = inject('properties')
     element_factory = inject('element_factory')
     action_manager = inject('action_manager')
+    file_manager = inject('file_manager')
 
     title = 'Gaphor'
     size = property(lambda s: s.properties.get('ui.window-size', (760, 580)))
@@ -100,7 +102,6 @@ class MainWindow(ToplevelWindow):
 
     def __init__(self):
         ToplevelWindow.__init__(self)
-        self._filename = None
         # Map tab contents to DiagramTab
         self.notebook_map = {}
         # Tree view:
@@ -124,26 +125,11 @@ class MainWindow(ToplevelWindow):
 
     tree_view = property(lambda s: s._tree_view)
 
-    def set_filename(self, filename):
-        """
-        Set the file name of the currently opened model.
-        """
-        self._filename = filename
-
-        # Add to recent files list
-        if filename:
-            recent_files = self.properties.get('recent-files', []) 
-            if filename not in recent_files:
-                recent_files = [filename] + recent_files[:8]
-                self.properties.set('recent-files', recent_files)
-                # TODO: notify recent files manager
-                #self.action_manager.get_slot('RecentFiles').rebuild()
-
     def get_filename(self):
         """
         Return the file name of the currently opened model.
         """
-        return self._filename
+        return self.file_manager.filename
 
     def get_current_diagram_tab(self):
         """
@@ -274,6 +260,8 @@ class MainWindow(ToplevelWindow):
         self.window.connect('size-allocate', self._on_window_size_allocate)
         self.window.connect('destroy', self._on_window_destroy)
 
+        Application.register_handler(self._action_executed)
+
     def _update_toolbox(self, action_group):
         """
         Update the buttons in the toolbox. Each button should be connected
@@ -360,6 +348,20 @@ class MainWindow(ToplevelWindow):
 
     # Signal callbacks:
 
+    @component.adapter(FileManagerStateChanged)
+    def _action_executed(self, event):
+        # We're only interested in file operations
+        print 'action:', event.service
+        if event.service is self.file_manager:
+            filename = self.file_manager.filename
+            if self.window:
+                if filename:
+                    title = '%s - %s' % (self.title, filename)
+                else:
+                    title = self.title
+                self.window.set_title(title)
+
+
     def _on_window_destroy(self, window):
         """
         Window is destroyed... Quit the application.
@@ -368,6 +370,7 @@ class MainWindow(ToplevelWindow):
         self.window = None
         if gobject.main_depth() > 0:
             gtk.main_quit()
+        Application.unregister_handler(self._action_executed)
 
     def _on_tab_destroy(self, widget):
         tab = self.notebook_map[widget]

@@ -299,6 +299,7 @@ class UndoManager(object):
 
         state.subscribers.discard(self._undo_handler)
 
+
     @component.adapter(IElementCreateEvent)
     def undo_create_event(self, event):
         factory = event.service

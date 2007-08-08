@@ -5,14 +5,23 @@ The file service is responsible for loading and saving the user data.
 import gc
 import gobject, pango, gtk
 from zope import interface, component
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
 from gaphor import UML
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.misc.errorhandler import error_handler, ErrorHandlerAspect, weave_method
-
 DEFAULT_EXT='.gaphor'
+
+class FileManagerStateChanged(object):
+    """
+    Event class used to send state changes on the ndo Manager.
+    """
+    interface.implements(IServiceEvent)
+
+    def __init__(self, service):
+        self.service = service
+
 
 class FileManager(object):
     """
@@ -31,6 +40,7 @@ class FileManager(object):
           <menu action="file">
             <placeholder name="primary">
               <menuitem action="file-new" />
+              <menuitem action="file-new-template" />
               <menuitem action="file-open" />
               <menu name="recent" action="file-recent-files">
                 <menuitem action="file-recent-0" />
@@ -62,7 +72,6 @@ class FileManager(object):
 
     def __init__(self):
         self._filename = None
-        self._recent_files = []
 
     def init(self, app):
         self._app = app
@@ -72,7 +81,7 @@ class FileManager(object):
             a.set_property('hide-if-empty', False)
             self.action_group.add_action(a)
 
-        self._recent_files = self.properties('recent-files', [])
+        #recent_files = self.properties('recent-files', [])
         for i in xrange(0, 9):
             a = gtk.Action('file-recent-%d' % i, None, None, None)
             a.set_property('visible', False)
@@ -91,15 +100,16 @@ class FileManager(object):
     filename = property(lambda s: s._filename, _set_filename)
 
     def update_recent_files(self, new_filename=None):
-        if new_filename and new_filename not in self._recent_files:
-            self._recent_files.insert(0, new_filename)
-            self._recent_files = self._recent_files[0:9]
-            self.properties.set('recent-files', self._recent_files)
+        recent_files = self.properties.get('recent-files', []) 
+        if new_filename and new_filename not in recent_files:
+            recent_files.insert(0, new_filename)
+            recent_files = recent_files[0:9]
+            self.properties.set('recent-files', recent_files)
 
         for i in xrange(0, 9):
             self.action_group.get_action('file-recent-%d' % i).set_property('visible', False)
 
-        for i, f in enumerate(self._recent_files):
+        for i, f in enumerate(recent_files):
             id = 'file-recent%d' % i
             a = self.action_group.get_action('file-recent-%d' % i)
             a.props.label = '_%d. %s' % (i+1, f.replace('_', '__'))
@@ -107,8 +117,10 @@ class FileManager(object):
             a.props.visible = True
 
     def load_recent(self, action, index):
-        filename = self._recent_files[index]
+        recent_files = self.properties.get('recent-files', []) 
+        filename = recent_files[index]
         self._load(filename)
+        component.handle(FileManagerStateChanged(self))
         
     @action(name='file-new', stock_id='gtk-new')
     def new(self):
@@ -137,6 +149,8 @@ class FileManager(object):
         main_window.select_element(diagram)
         main_window.show_diagram(diagram)
 
+        component.handle(FileManagerStateChanged(self))
+
 
     def _load(self, filename):
         try:
@@ -145,7 +159,6 @@ class FileManager(object):
             main_window = self.gui_manager.main_window
             queue = Queue()
             win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, main_window.window, queue)
-            self.filename = filename
             gc.collect()
             worker = GIdleThread(storage.load_generator(filename, self.element_factory), queue)
             #self._window.action_pool.insensivate_actions()
@@ -163,7 +176,6 @@ class FileManager(object):
             view = main_window.tree_view
 
             self.filename = filename
-            main_window.set_filename(filename)
 
             # Expand all root elements:
             for node in model.root[1]:
@@ -207,8 +219,8 @@ class FileManager(object):
                 win.destroy()
 
     @action(name='file-open', stock_id='gtk-open')
-    def open(self):
-        filesel = gtk.FileChooserDialog(title='Open Gaphor model',
+    def _open_dialog(self, title):
+        filesel = gtk.FileChooserDialog(title=title,
                                         action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                         buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
 
@@ -230,15 +242,37 @@ class FileManager(object):
         filesel.destroy()
         if not filename or response != gtk.RESPONSE_OK:
             return
-        self._load(filename)
+        return filename
+
+
+    @action(name='file-new-template', label=_('New from template'))
+    def new_from_template(self):
+        filename = self._open_dialog('New Gaphor model from template')
+        if filename:
+            self._load(filename)
+
+            # It's a template: unset filename
+            self.filename = None
+            component.handle(FileManagerStateChanged(self))
+
+
+    @action(name='file-open', stock_id='gtk-open')
+    def open(self):
+        filename = self._open_dialog('Open Gaphor model')
+        if filename:
+            self._load(filename)
+            component.handle(FileManagerStateChanged(self))
+
 
     @action(name='file-save', stock_id='gtk-save')
     def save(self):
         filename = self.filename
         if filename:
             self._save(filename)
+            component.handle(FileManagerStateChanged(self))
         else:
             self.save_as()
+
 
     @action(name='file-save-as', stock_id='gtk-save-as')
     def save_as(self):
@@ -254,6 +288,7 @@ class FileManager(object):
             filename = filesel.get_filename()
         filesel.destroy()
         self._save(filename)
+        component.handle(FileManagerStateChanged(self))
 
 
 def show_status_window(title, message, parent=None, queue=None):
