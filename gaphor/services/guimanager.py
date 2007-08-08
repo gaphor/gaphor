@@ -60,7 +60,8 @@ class GUIManager(object):
         self._main_window.construct()
 
     def shutdown(self):
-        self._main_window.window.destroy()
+        if self._main_window.window:
+            self._main_window.window.destroy()
         from gaphor.ui.accelmap import save_accel_map
         save_accel_map()
 

@@ -3,7 +3,7 @@ The file service is responsible for loading and saving the user data.
 """
 
 import gc
-import gobject, gtk
+import gobject, pango, gtk
 from zope import interface, component
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.core import _, inject, action, build_action_group
@@ -257,22 +257,30 @@ class FileManager(object):
 
 
 def show_status_window(title, message, parent=None, queue=None):
+    """
+    Create a borderless window on the parent (main window), with a label and
+    a progress bar.
+    """
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     win.set_title(title)
     win.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
     win.set_transient_for(parent)
     win.set_modal(True)
     win.set_resizable(False)
-    win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
-    #win.set_skip_taskbar_hint(True)
-    #win.set_skip_pager_hint(True)
-    win.set_border_width(24)
+    win.set_decorated(False)
+    win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_SPLASHSCREEN)
+    frame = gtk.Frame()
+    win.add(frame)
+    frame.set_shadow_type(gtk.SHADOW_ETCHED_IN)
     vbox = gtk.VBox(spacing=24)
-    win.add(vbox)
+    frame.add(vbox)
+    vbox.set_border_width(16)
     label = gtk.Label(message)
-    label.set_padding(8,8)
+    label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
+    label.set_padding(8, 8)
     vbox.pack_start(label)
     progress_bar = gtk.ProgressBar()
+    progress_bar.set_size_request(400, -1)
     vbox.pack_start(progress_bar, expand=False, fill=False, padding=0)
 
     def progress_idle_handler(progress_bar, queue):
@@ -300,4 +308,4 @@ def show_status_window(title, message, parent=None, queue=None):
     win.show_all()
     return win
 
-#vim:sw=4:et:ai
+# vim:sw=4:et:ai

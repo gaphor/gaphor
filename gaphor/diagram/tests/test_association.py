@@ -58,4 +58,17 @@ class AssociationItemTestCase(TestCase):
         view = View(canvas=self.diagram.canvas)
         self.test_create1()
 
+    def test_invert_direction(self):
+        # Connect association with classes:
+        self.test_create1()
+
+        head_subject = self.assoc.subject.memberEnd[0]
+        tail_subject = self.assoc.subject.memberEnd[1]
+
+        self.assoc.invert_direction()
+
+        assert head_subject is self.assoc.subject.memberEnd[1]
+        assert tail_subject is self.assoc.subject.memberEnd[0]
+
+
 # vim:sw=4:et:ai

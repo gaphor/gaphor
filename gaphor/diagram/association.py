@@ -106,7 +106,7 @@ class AssociationItem(NamedLine):
         if not self.subject:
             return
 
-        self.subject.memberEnd.moveDown(self.subject.memberEnd[0])
+        self.subject.memberEnd.swap(self.subject.memberEnd[0], self.subject.memberEnd[1])
         self.request_update()
 
     def on_subject_notify(self, pspec, notifiers=()):
