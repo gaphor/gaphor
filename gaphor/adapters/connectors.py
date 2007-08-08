@@ -483,12 +483,12 @@ class RelationshipConnect(ElementConnect):
         if old and len(old.presentation) == 0:
             old.unlink()
 
-    def connect(self, handle, x, y):
+    def connect(self, handle):
         """
         Connect the items to each other. The model level relationship
         is created by create_subject()
         """
-        if super(RelationshipConnect, self).connect(handle, x, y):
+        if super(RelationshipConnect, self).connect(handle):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 self.connect_subject(handle)
@@ -950,7 +950,7 @@ class FlowConnect(RelationshipConnect):
     Connect FlowItem and Action/ObjectNode, initial/final nodes.
     """
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -965,7 +965,7 @@ class FlowConnect(RelationshipConnect):
            or handle is line.tail and isinstance(subject, UML.InitialNode):
             return None
 
-        return super(FlowConnect, self).glue(handle, x, y)
+        return super(FlowConnect, self).glue(handle)
 
     def connect_subject(self, handle):
         line = self.line
@@ -1010,7 +1010,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Abstract class with common behaviour for Fork/Join node and
     Decision/Merge node.
     """
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, one end should have at most one
         edge (incoming or outgoing).
@@ -1046,7 +1046,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
 #        h1, h2 = self.element.handles()
 #        return geometry.distance_line_point(h1.pos, h2.pos, (x, y))[1]
 
-        return super(FlowForkDecisionNodeConnect, self).glue(handle, x, y)
+        return super(FlowForkDecisionNodeConnect, self).glue(handle)
 
     def combine_nodes(self):
         """
@@ -1132,15 +1132,15 @@ class FlowForkDecisionNodeConnect(FlowConnect):
 
 class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     """
-    Connect Flow to a ForkNode
+    Connect Flow to a ForkNode.
     """
     component.adapts(items.ForkNodeItem, items.FlowItem)
 
     fork_node_class=UML.ForkNode
     join_node_class=UML.JoinNode
 
-    def side(self, (hx, hy), element):
-        return element.handles()
+    def _get_segment(self, handle):
+        return self.element.handles()
 
     def bounds(self, element):
         h1, h2 = element.handles()
