@@ -57,8 +57,9 @@ class NamedItem(ElementItem):
         Add a line '(from ...)' to the class item if subject's namespace
         is not the same as the namespace of this diagram.
         """
-        if self.subject.namespace:
-            self._from.text = self.subject.namespace.name
+        subject = self.subject
+        if subject and subject.namespace:
+            self._from.text = subject.namespace.name
         else:
             self._from.text = ''
         self.request_update()
