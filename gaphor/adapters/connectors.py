@@ -97,13 +97,18 @@ class AbstractConnect(object):
         self.disconnect_constraints(handle)
         handle.connected_to = None
 
+
     def connect_constraint(self, handle):
         """
-        Create the actual constraint. The handle should be positioned before
-        this method is called.
-        x, y is the position the handle should have on the line.
+        Create the actual constraint. The handle should be moved into connection
+        position before this method is called.
         """
-        raise NotImplemented, 'Implement connect_constraint() in a subclass'
+        element = self.element
+        line = self.line
+
+        h1, h2 = self._get_segment(handle)
+        self._create_line_constraint(element, h1, h2, line, handle)
+
 
     def disconnect_constraints(self, handle):
         """
@@ -195,17 +200,6 @@ class ElementConnect(AbstractConnect):
         print pos
         return pos
 
-    def connect_constraint(self, handle):
-        """
-        Create the actual constraint. The handle should be positioned before
-        this method is called.
-        """
-        element = self.element
-        line = self.line
-        h1, h2 = self._get_segment(handle)
-
-        self._create_line_constraint(element, h1, h2, line, handle)
-
 
 
 class LineConnect(AbstractConnect):
@@ -255,18 +249,6 @@ class LineConnect(AbstractConnect):
         """
         pos, _, _ = self._get_segment_data(handle)
         return self._matrix_e2l.transform_point(*pos)
-
-
-    def connect_constraint(self, handle):
-        """
-        Create the actual constraint. The handle should be positioned before
-        this method is called.
-        """
-        element = self.element
-        line = self.line
-
-        h1, h2 = self._get_segment(handle)
-        self._create_line_constraint(element, h1, h2, line, handle)
 
 
 
