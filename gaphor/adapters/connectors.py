@@ -520,7 +520,7 @@ class DependencyConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.DependencyItem)
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -545,7 +545,7 @@ class DependencyConnect(RelationshipConnect):
            not isinstance(element.subject, UML.NamedElement):
             return None
 
-        return super(DependencyConnect, self).glue(handle, x, y)
+        return super(DependencyConnect, self).glue(handle)
 
     def connect_subject(self, handle):
         """
@@ -573,7 +573,7 @@ class ImplementationConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.ImplementationItem)
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -603,7 +603,7 @@ class ImplementationConnect(RelationshipConnect):
            not isinstance(element.subject, UML.BehavioredClassifier):
             return None
 
-        return super(ImplementationConnect, self).glue(handle, x, y)
+        return super(ImplementationConnect, self).glue(handle)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Implementation,
@@ -621,7 +621,7 @@ class GeneralizationConnect(RelationshipConnect):
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
 #    # FixMe: Both ends of the generalization should be of the same  type?
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -641,7 +641,7 @@ class GeneralizationConnect(RelationshipConnect):
                  and connected_to.subject is element.subject:
             return None
 
-        return super(GeneralizationConnect, self).glue(handle, x, y)
+        return super(GeneralizationConnect, self).glue(handle)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Generalization,
@@ -658,7 +658,7 @@ class IncludeConnect(RelationshipConnect):
     """
     component.adapts(items.UseCaseItem, items.IncludeItem)
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -681,7 +681,7 @@ class IncludeConnect(RelationshipConnect):
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(IncludeConnect, self).glue(handle, x, y)
+        return super(IncludeConnect, self).glue(handle)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Include,
@@ -698,7 +698,7 @@ class ExtendConnect(RelationshipConnect):
     """
     component.adapts(items.UseCaseItem, items.ExtendItem)
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -721,7 +721,7 @@ class ExtendConnect(RelationshipConnect):
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(ExtendConnect, self).glue(handle, x, y)
+        return super(ExtendConnect, self).glue(handle)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Extend,
@@ -738,7 +738,7 @@ class ExtensionConnect(RelationshipConnect):
     """
     component.adapts(items.ClassifierItem, items.ExtensionItem)
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -768,7 +768,7 @@ class ExtensionConnect(RelationshipConnect):
            not isinstance(element.subject, UML.Stereotype):
             return None
 
-        return super(ExtensionConnect, self).glue(handle, x, y)
+        return super(ExtensionConnect, self).glue(handle)
 
     def connect_subject(self, handle):
         element = self.element
@@ -848,7 +848,7 @@ class AssociationConnect(RelationshipConnect):
     """
     component.adapts(items.ClassifierItem, items.AssociationItem)
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -862,7 +862,7 @@ class AssociationConnect(RelationshipConnect):
         if not isinstance(element.subject, UML.Classifier):
             return None
 
-        return super(AssociationConnect, self).glue(handle, x, y)
+        return super(AssociationConnect, self).glue(handle)
 
     def connect_subject(self, handle):
         element = self.element
@@ -1263,7 +1263,7 @@ class MessageLifelineConnect(ElementConnect):
         return head_d >= lifetime_d, c2i(self.line).transform_point(*lifetime_pos)
 
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         element = self.element
         line = self.line
         opposite = line.opposite(handle)
@@ -1273,7 +1273,7 @@ class MessageLifelineConnect(ElementConnect):
         if is_lifetime:
             glue_pos = lifetime_pos
         else:
-            glue_pos = ElementConnect.glue(self, handle, x, y)
+            glue_pos = ElementConnect.glue(self, handle)
         return glue_pos
         
         is_lifetime, lifetime_pos = self._is_lifetime(x, y, element)
@@ -1313,8 +1313,8 @@ class MessageLifelineConnect(ElementConnect):
         assert False
 
 
-    def connect(self, handle, x, y):
-        if not ElementConnect.connect(self, handle, x, y):
+    def connect(self, handle):
+        if not ElementConnect.connect(self, handle):
             return
 
         line = self.line
