@@ -186,12 +186,10 @@ class ElementConnect(AbstractConnect):
         e2l = self._matrix_e2l
 
         pos = l2e.transform_point(*handle.pos)
-        print l2e, e2l, pos
         bounds = self.bounds(self.element)
 
         pos = geometry.point_on_rectangle(bounds, pos, border=True)
         pos = e2l.transform_point(*pos)
-        print pos
         return pos
 
 
@@ -1012,10 +1010,6 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Abstract class with common behaviour for Fork/Join node and
     Decision/Merge node.
     """
-
-#    def side(self, (hx, hy), glued):
-#        return glued.handles()
-
     def glue(self, handle, x, y):
         """
         In addition to the normal check, one end should have at most one

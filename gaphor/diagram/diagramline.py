@@ -111,17 +111,15 @@ class DiagramLine(LineItem):
         if hasattr(self, '_load_head_connection'):
             adapter = component.queryMultiAdapter((self._load_head_connection, self), IConnect)
             assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_head_connection, self)
-            h = self.head
 
-            adapter.connect(h, float(h.x), float(h.y))
+            adapter.connect(self.head)
             del self._load_head_connection
 
         if hasattr(self, '_load_tail_connection'):
             adapter = component.queryMultiAdapter((self._load_tail_connection, self), IConnect)
             assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_tail_connection, self)
-            h = self.tail
 
-            adapter.connect(h, float(h.x), float(h.y))
+            adapter.connect(self.tail)
             del self._load_tail_connection
         LineItem.postload(self)
 
