@@ -218,51 +218,61 @@ class LineConnect(AbstractConnect):
     receive a connect() call. This allows already connected lines to set
     up relationships at model level too.
     """
-
-    def _glue(self, handle, x, y):
+    def _get_segment_data(self, handle):
         """
-        Return the segment and  point on the element (DiagramLine)
-        closest to (x, y).
+        Get segment data
+        - pos: position on a segment
+        - h1: handle starting segment
+        - h2: handle ending segment
         """
-        h = self.element.handles()
-        pos = (x, y)
-        min_d = None
-        segment = -1
-        min_p = None
         dlp = geometry.distance_line_point
-        for s, (h0, h1) in enumerate(ipair(h)):
-            d, p = dlp(h0.pos, h1.pos, pos)
-            if not s or d < min_d:
-                min_d = d
-                segment = s
-                min_p = p
-        return s, min_p
 
-    def glue(self, handle, x, y):
-        """
-        Return the point on the element (DiagramLine) closest to (x, y)
-        """
-        return self._glue(handle, x, y)[1]
+        handles = self.element.handles()
 
-    def connect_constraint(self, handle, x, y):
+        def segment(h1, h2, pos):
+            d, pos = dlp(h1.pos, h2.pos, pos)
+            return d, pos, h1, h2
+
+        pos = self._matrix_l2e.transform_point(*handle.pos)
+
+        # find the nearest segment from handle
+        data = (segment(h1, h2, pos) for h1, h2 in ipair(handles))
+        d, pos, h1, h2 = min(data, key=lambda s: s[0])
+        return pos, h1, h2
+
+
+    def _get_segment(self, handle):
+        """
+        Return diagram line segment closest to a handle.
+        """
+        _, h1, h2 = self._get_segment_data(handle)
+        return h1, h2
+
+
+    def glue(self, handle):
+        """
+        Return a point on a connectable element closest to a handle.
+        """
+        pos, _, _ = self._get_segment_data(handle)
+        return self._matrix_e2l.transform_point(*pos)
+
+
+    def connect_constraint(self, handle):
         """
         Create the actual constraint. The handle should be positioned before
         this method is called.
         """
         element = self.element
         line = self.line
-        canvas = element.canvas
 
-        s = self._glue(handle, x, y)[0]
-        h1, h2 = element.handles()[s], element.handles()[s+1]
-
+        h1, h2 = self._get_segment(handle)
         self._create_line_constraint(element, h1, h2, line, handle)
+
 
 
 class CommentLineElementConnect(ElementConnect):
     """
-    Connect a comment line to a comment item.
-    Connect Comment.annotatedElement to any element
+    Connect a comment line to any element item.
     """
     component.adapts(items.ElementItem, items.CommentLineItem)
 
@@ -316,12 +326,11 @@ component.provideAdapter(CommentLineElementConnect)
 
 class CommentLineLineConnect(LineConnect):
     """
-    Connect a comment line to a comment item.
-    Connect Comment.annotatedElement to any element
+    Connect a comment line to any diagram line.
     """
     component.adapts(items.DiagramLine, items.CommentLineItem)
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -345,10 +354,10 @@ class CommentLineLineConnect(LineConnect):
                  (not isinstance(connected_to, items.CommentItem) and not isinstance(self.element, items.CommentItem))):
             return None
 
-        return super(CommentLineLineConnect, self).glue(handle, x, y)
+        return super(CommentLineLineConnect, self).glue(handle)
 
-    def connect(self, handle, x, y):
-        if super(CommentLineLineConnect, self).connect(handle, x, y):
+    def connect(self, handle):
+        if super(CommentLineLineConnect, self).connect(handle):
             opposite = self.line.opposite(handle)
             if opposite.connected_to and self.element.subject:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
