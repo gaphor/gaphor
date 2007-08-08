@@ -82,17 +82,17 @@ class ConnectHandleTool(HandleTool):
             
             adapter = query_adapter((i, item), IConnect)
             if adapter:
-                pos = adapter.glue(handle, ix, iy)
+                pos = adapter.glue(handle)
                 self._adapter = adapter
                 if pos:
                     d = i.point(ix, iy)
                     if d <= dist:
                         dist = d
-                        glue_pos = i2v(i).transform_point(*pos)
+                        glue_pos = pos
                         glue_item = i
 
         if dist < max_dist:
-            handle.pos = v2i(item).transform_point(*glue_pos)
+            handle.pos = glue_pos
 
         # Return the glued item, this can be used by connect() to
         # determine which item it should connect to
@@ -112,7 +112,7 @@ class ConnectHandleTool(HandleTool):
             glue_item = self.glue(view, item, handle, x, y)
 
             if glue_item:
-                self._adapter.connect(handle, x, y)
+                self._adapter.connect(handle)
 
                 connected = True
             elif handle and handle.connected_to:

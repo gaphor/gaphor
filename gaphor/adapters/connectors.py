@@ -6,6 +6,7 @@ from zope import interface, component
 
 from gaphas.item import NW, NE, SW, SE
 from gaphas.canvas import CanvasProjection
+from gaphas.matrix import Matrix
 from gaphas import geometry
 from gaphas import constraint
 from gaphor import UML
@@ -16,22 +17,46 @@ from gaphor.misc.ipair import ipair
 
 class AbstractConnect(object):
     """
-    Connection code, used by both ElementConnect and LineConnect.
+    Connection adapter for Gaphor diagram items.
+
+    Line item ``line`` connects with a handle to a connectable item ``element``.
+
+    Line constraint is created between ``line`` handle and two handles of ``element``
+    (called segment, see ``AbstractConnect._get_segment`` method).
+
+    Attributes:
+
+    - line: connecting item
+    - element: connectable item
+    - _canvas: canvas reference
+    - _matrix_e2l: element to line matrix
+    - _matrix_l2e: line to element matrix
     """
     interface.implements(IConnect)
 
     def __init__(self, element, line):
         self.element = element
         self.line = line
+        canvas = self._canvas = element.canvas
 
-    def glue(self, handle, x, y):
+        i2c = canvas.get_matrix_i2c
+        c2i = canvas.get_matrix_c2i
+        self._matrix_e2l = i2c(element) * c2i(line)
+        self._matrix_l2e = i2c(line) * c2i(element)
+
+        # code below returns None from transform_point... why?
+        # self._matrix_l2e = Matrix(*self._matrix_e2l)
+        # self._matrix_l2e.invert()
+
+
+    def glue(self, handle):
         """
         Return the point the handle could connect to. None if no connection
         is allowed.
         """
         raise NotImplemented, 'Implement glue() in the subclass'
 
-    def connect(self, handle, x, y):
+    def connect(self, handle):
         """
         Connect to an element. Note that at this point the line may
         be connected to some other, or the same element by means of the
@@ -50,10 +75,10 @@ class AbstractConnect(object):
  
         # Save guard: only connect if it's permitted by glue()
         #   -> glue() does not return None
-        if not self.glue(handle, x, y):
+        if not self.glue(handle):
             return False
 
-        self.connect_constraint(handle, x, y)
+        self.connect_constraint(handle)
 
         # Set disconnect handler in the adapter, so it will also wotk if
         # connections are created programmatically.
@@ -72,7 +97,7 @@ class AbstractConnect(object):
         self.disconnect_constraints(handle)
         handle.connected_to = None
 
-    def connect_constraint(self, handle, x, y):
+    def connect_constraint(self, handle):
         """
         Create the actual constraint. The handle should be positioned before
         this method is called.
@@ -105,24 +130,34 @@ class AbstractConnect(object):
         handle.connected_to = element
 
 
+    def _get_segment(self, handle):
+        """
+        Get line segment, to which handle should connect to. Line segment is defined by two handles.
+        Examples of line segmets
+        - side of element item like class, action, etc.
+        - line segment of association
+        - lifeline's lifetime
+        """
+        raise NotImplemented()
+
+
 
 class ElementConnect(AbstractConnect):
     """
     Base class for connecting a line to an ElementItem class.
     """
-    def side(self, pos, glued):
+    def _get_segment(self, handle):
         """
         Determine the side on which the handle is connecting.
         This is done by determining the proximity to the nearest edge.
 
         Handles of one of the sides is returned.
         """
-        handles = glued.handles()
-        canvas = glued.canvas
-        i2c = canvas.get_matrix_i2c
-        hx, hy = i2c(self.line).transform_point(*pos)
-        ax, ay = i2c(glued).transform_point(handles[NW].x, handles[NW].y)
-        bx, by = i2c(glued).transform_point(handles[SE].x, handles[SE].y)
+        handles = self.element.handles()
+        l2e = self._matrix_l2e
+        hx, hy = l2e.transform_point(*handle.pos)
+        ax, ay = handles[NW].x, handles[NW].y
+        bx, by = handles[SE].x, handles[SE].y
 
         if abs(hx - ax) < 0.01:
             return handles[NW], handles[SW]
@@ -142,22 +177,32 @@ class ElementConnect(AbstractConnect):
         h = element.handles()
         return map(float, (h[NW].pos + h[SE].pos))
 
-    def glue(self, handle, x, y):
+
+    def glue(self, handle):
         """
         Return the point the handle could connect to. None if no connection
         is allowed.
         """
-        bounds = self.bounds(self.element)
-        return geometry.point_on_rectangle(bounds, (x, y), border=True)
+        l2e = self._matrix_l2e
+        e2l = self._matrix_e2l
 
-    def connect_constraint(self, handle, x, y):
+        pos = l2e.transform_point(*handle.pos)
+        print l2e, e2l, pos
+        bounds = self.bounds(self.element)
+
+        pos = geometry.point_on_rectangle(bounds, pos, border=True)
+        pos = e2l.transform_point(*pos)
+        print pos
+        return pos
+
+    def connect_constraint(self, handle):
         """
         Create the actual constraint. The handle should be positioned before
         this method is called.
         """
         element = self.element
         line = self.line
-        h1, h2 = self.side(handle.pos, element)
+        h1, h2 = self._get_segment(handle)
 
         self._create_line_constraint(element, h1, h2, line, handle)
 
@@ -221,7 +266,7 @@ class CommentLineElementConnect(ElementConnect):
     """
     component.adapts(items.ElementItem, items.CommentLineItem)
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -246,10 +291,10 @@ class CommentLineElementConnect(ElementConnect):
                  (not isinstance(connected_to, items.CommentItem) and not isinstance(self.element, items.CommentItem))):
             return None
 
-        return super(CommentLineElementConnect, self).glue(handle, x, y)
+        return super(CommentLineElementConnect, self).glue(handle)
 
-    def connect(self, handle, x, y):
-        if super(CommentLineElementConnect, self).connect(handle, x, y):
+    def connect(self, handle):
+        if super(CommentLineElementConnect, self).connect(handle):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -1146,13 +1191,6 @@ class MessageLifelineConnect(ElementConnect):
 
     element_factory = inject('element_factory')
 
-    def glue_lifelines(self, handle):
-        """
-        """
-        element = self.element
-        connected_to = self.line.opposite(handle).connected_to
-        return connected_to is None or isinstance(connected_to, element.__class__)
-
     def connect_lifelines(self, line, send, received):
         """
         Always create a new Message with two EventOccurence instances.
@@ -1222,25 +1260,44 @@ class MessageLifelineConnect(ElementConnect):
                  or not m.sendEvent and m.receiveEvent and m.messageKind == 'found')
 
 
-    def _is_lifetime(self, x, y, element):
-        lifetime = element.lifetime
-        h_nw = element.handles()[NW]
-        head_d = geometry.distance_rectangle_point((h_nw.x, h_nw.y, element.width, element.height), (x, y))
-        lifetime_d, lifetime_pos = geometry.distance_line_point(lifetime.top_handle, lifetime.bottom_handle, (x, y))
-        return head_d >= lifetime_d, lifetime_pos
+    def _is_lifetime(self, lifeline, handle):
+        """
+        Check if ``handle`` is located at lifeline's lifetime.
+        False is returned if handle is located at lifeline's head.
+        """
+        lifetime = lifeline.lifetime
+        canvas = lifeline.canvas
+        h_nw = lifeline.handles()[NW]
+
+        i2c = canvas.get_matrix_i2c
+        c2i = canvas.get_matrix_c2i
+        pos = i2c(self.line).transform_point(*handle.pos)
+
+        head_x, head_y = i2c(lifeline).transform_point(*lifeline.handles()[NW].pos)
+        width, height = i2c(lifeline).transform_distance(lifeline.width, lifeline.height)
+
+        top = i2c(lifeline).transform_point(*lifetime.top.pos)
+        bottom = i2c(lifeline).transform_point(*lifetime.bottom.pos)
+
+        head_d = geometry.distance_rectangle_point((head_x, head_y, width, height), pos)
+        lifetime_d, lifetime_pos = geometry.distance_line_point(top, bottom, pos)
+        return head_d >= lifetime_d, c2i(self.line).transform_point(*lifetime_pos)
 
 
     def glue(self, handle, x, y):
-        if not self.glue_lifelines(handle):
-            return None
         element = self.element
-        head_pos = ElementConnect.glue(self, handle, x, y)
-        
-        is_lifetime, lifetime_pos = self._is_lifetime(x, y, element)
-
         line = self.line
         opposite = line.opposite(handle)
-        connected_to = opposite.connected_to
+        opposite_connected_to = opposite.connected_to
+
+        is_lifetime, lifetime_pos = self._is_lifetime(element, handle)
+        if is_lifetime:
+            glue_pos = lifetime_pos
+        else:
+            glue_pos = ElementConnect.glue(self, handle, x, y)
+        return glue_pos
+        
+        is_lifetime, lifetime_pos = self._is_lifetime(x, y, element)
 
         glue_ok = True
         c_is_lifetime = False
@@ -1270,10 +1327,10 @@ class MessageLifelineConnect(ElementConnect):
         """
         Return handles of one of lifeline head's side or lifetime handles.
         """
-        if self._connect_to_lifetime:
+        if self._is_lifetime(glued, handle):
             return glued.handles()[-2:]
         else:
-            return super(MessageLifelineConnect, self).side((hx, hy), glued)
+            return super(MessageLifelineConnect, self).side(glued, handle)
         assert False
 
 

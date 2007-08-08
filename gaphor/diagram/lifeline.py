@@ -23,9 +23,9 @@ class LifetimeItem(object):
         self._handles[0].movable = False
         self._handles[0].visible = False
 
-    top_handle = property(lambda s: s._handles[0])
+    top = property(lambda s: s._handles[0])
 
-    bottom_handle = property(lambda s: s._handles[1])
+    bottom = property(lambda s: s._handles[1])
 
     length = property(lambda s: s._handles[1].y - s._handles[0].y)
 
