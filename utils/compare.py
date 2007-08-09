@@ -8,9 +8,9 @@ This can be called as:
 This file is part of Gaphor.
 """
 
-__all__ = ['Compare']
-
 from __future__ import generators
+
+__all__ = ['Compare']
 
 try:
     import env
