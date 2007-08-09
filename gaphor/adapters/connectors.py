@@ -1303,6 +1303,13 @@ class MessageLifelineConnect(ElementConnect):
         received = line.tail.connected_to
         self.connect_lifelines(line, send, received)
 
+        lifetime = self.element.lifetime
+        # if no lifetime then disallow making lifetime visible
+        if not lifetime.is_visible():
+            lifetime.bottom.movable = False
+        # todo: move code above to LifetimeItem class
+        lifetime._messages_count += 1
+
 
     def disconnect(self, handle):
         ElementConnect.disconnect(self, handle)
@@ -1311,6 +1318,14 @@ class MessageLifelineConnect(ElementConnect):
         send = line.head.connected_to
         received = line.tail.connected_to
         self.disconnect_lifelines(line, send, received)
+
+        lifetime = self.element.lifetime
+        lifetime._messages_count -= 1
+        # if lifetime is not visible  and there are no messages connected
+        # then allow to make lifetime visible
+        # todo: move code below to LifetimeItem class
+        if not lifetime.is_visible() and lifetime._messages_count < 1:
+            lifetime.bottom.movable = True
 
 
 component.provideAdapter(MessageLifelineConnect)

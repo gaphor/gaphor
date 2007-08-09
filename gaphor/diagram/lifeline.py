@@ -22,6 +22,7 @@ class LifetimeItem(object):
 
         self._handles[0].movable = False
         self._handles[0].visible = False
+        self._messages_count = 0
 
     top = property(lambda s: s._handles[0])
 
@@ -35,8 +36,15 @@ class LifetimeItem(object):
 
     def pre_update(self, context):
         top, bottom = self._handles
-        if bottom.y - top.y < LifetimeItem.MIN_LENGTH:
-            bottom.y = top.y + LifetimeItem.MIN_LENGTH
+
+        d = LifetimeItem.MIN_LENGTH
+
+        # if lifetime is visible and there are messages connected, then
+        # disallow hiding of lifetime
+        if not self.is_visible() and self._messages_count > 0:
+            d *= 3
+        if bottom.y - top.y < d:
+            bottom.y = top.y + d
 
     def post_update(self, context):
         pass
