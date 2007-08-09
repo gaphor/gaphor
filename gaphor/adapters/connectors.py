@@ -145,6 +145,7 @@ class ElementConnect(AbstractConnect):
     """
     Base class for connecting a line to an ElementItem class.
     """
+
     def _get_segment(self, handle):
         """
         Determine the side on which the handle is connecting.
@@ -223,7 +224,8 @@ class LineConnect(AbstractConnect):
 
         # find the nearest segment from handle
         data = (segment(h1, h2, pos) for h1, h2 in ipair(handles))
-        d, pos, h1, h2 = min(data, key=lambda s: s[0])
+        # No key needed, distance is first
+        d, pos, h1, h2 = min(data) #, key=lambda s: s[0])
         return pos, h1, h2
 
 
@@ -430,7 +432,7 @@ class RelationshipConnect(ElementConnect):
 
     def connect_connected_items(self, connected_items=None):
         """
-        Cause items connected to @line to reconnect, allowing them to
+        Cause items connected to ``line`` to reconnect, allowing them to
         establish or destroy relationships at model level.
         """
         line = self.line
@@ -442,7 +444,7 @@ class RelationshipConnect(ElementConnect):
         for item, handle in connected_items or line.canvas.get_connected_items(line):
             adapter = component.queryMultiAdapter((line, item), IConnect)
             assert adapter
-            adapter.connect(handle, handle.x, handle.y)
+            adapter.connect(handle)
         
     def disconnect_connected_items(self):
         """

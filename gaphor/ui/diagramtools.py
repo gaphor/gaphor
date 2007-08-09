@@ -260,8 +260,8 @@ class PlacementTool(_PlacementTool):
         that is displayed on the diagram.
         """
         _PlacementTool.__init__(self, factory=item_factory,
-                                           handle_tool=ConnectHandleTool(),
-                                           handle_index=handle_index)
+                                      handle_tool=ConnectHandleTool(),
+                                      handle_index=handle_index)
         self.after_handler = after_handler
         self._tx = None
 
@@ -277,10 +277,16 @@ class PlacementTool(_PlacementTool):
             else:
                 # Connect opposite handle first, using the HandleTool's
                 # mechanisms
-                x, y = event.x, event.y
-                item = self.handle_tool.glue(view, self.new_item, opposite, x, y)
+
+                # First make sure all matrices are updated:
+                view.canvas.update_matrix(self.new_item)
+                view.update_matrix(self.new_item)
+
+                vx, vy = event.x, event.y
+
+                item = self.handle_tool.glue(view, self.new_item, opposite, vx, vy)
                 if item:
-                    self.handle_tool.connect(view, self.new_item, opposite, x, y)
+                    self.handle_tool.connect(view, self.new_item, opposite, vx, vy)
             return True
         return False
             
