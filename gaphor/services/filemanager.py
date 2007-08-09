@@ -211,7 +211,6 @@ class FileManager(object):
                 out.close()
 
                 self.filename = filename
-                self.gui_manager.main_window.set_filename(filename)
 
                 # Restore states of actions
                 #self._window.action_pool.set_action_states(action_states)
