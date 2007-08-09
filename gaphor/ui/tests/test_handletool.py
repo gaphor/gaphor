@@ -73,14 +73,15 @@ class HandleToolTestCase(unittest.TestCase):
         diagram = element_factory.create(UML.Diagram)
         #self.main_window.show_diagram(diagram)
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-        assert comment.height == 50
         assert comment.width == 100
+        assert comment.height == 50
+
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
         #print diagram.canvas.get_matrix_i2c(actor), actor.matrix
-        assert actor.height == 60, actor.height
         assert actor.width == 38, actor.width
+        assert actor.height == 60, actor.height
         line = diagram.create(CommentLineItem)
         tool = ConnectHandleTool()
 
@@ -93,11 +94,15 @@ class HandleToolTestCase(unittest.TestCase):
         tool.grab_handle(line, handle)
 
         # Connect one end to the Comment
-        handle.x, handle.y = 45, 48
+        # todo: this test fails because view.get_items_in_rectangle returns
+        #       nothing in ConnectHandleTool.glue method (called by
+        #       ConnectHandleTool.connect)
+        handle.pos = view.get_matrix_v2i(line).transform_point(45, 48)
         tool.connect(view, line, handle, 45, 48)
-        self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is comment, handle.connected_to
-        assert handle._connect_constraint is not None
+        self.assertTrue(hasattr(handle, '_connect_constraint'))
+        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(handle.connected_to is comment)
+        self.assertEquals((45, 50), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
         # Connect the other end to the actor:
 
