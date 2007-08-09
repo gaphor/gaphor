@@ -43,7 +43,7 @@ class LifetimeItem(object):
         # disallow hiding of lifetime
         if not self.is_visible() and self._messages_count > 0:
             d *= 3
-        if bottom.y - top.y < d:
+        if bottom.y - top.y <= d:
             bottom.y = top.y + d
 
     def post_update(self, context):
