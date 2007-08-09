@@ -141,6 +141,7 @@ class UndoManager(object):
     def reset(self, event=None):
         self.clear_redo_stack()
         self.clear_undo_stack()
+        self._action_executed()
 
     @component.adapter(TransactionBegin)
     def begin_transaction(self, event=None):
