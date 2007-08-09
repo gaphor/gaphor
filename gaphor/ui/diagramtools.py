@@ -44,19 +44,19 @@ class ConnectHandleTool(HandleTool):
         self._adapter = None
 
 
-    def glue(self, view, item, handle, x, y):
+    def glue(self, view, item, handle, vx, vy):
         """
         Find the nearest item that the handle may connect to.
 
-        This is done by iterating over all items and query for an IConnect
-        adapter for (itered_item, @item). If such an adapter exists, the
-        glue position is determined. The item with the glue point closest
-        to the handle will be glued to.
+        This is done by checking for an IConnect adapter for all items in the
+        proximity of ``(vx, xy)``.  If such an adapter exists, the glue
+        position is determined. The item with the glue point closest to the
+        handle will be glued to.
 
         view: The view
         item: The item who's about to connect, owner of handle
         handle: the handle to connect
-        cx, cy: handle position in canvas coordinates
+        vx, vy: handle position in view coordinates
         """
         # localize methods
         v2i = view.get_matrix_v2i
@@ -69,15 +69,15 @@ class ConnectHandleTool(HandleTool):
         max_dist = dist
         glue_pos = (0, 0)
         glue_item = None
-        for i in view.get_items_in_rectangle((x - dist, y - dist,
+        for i in view.get_items_in_rectangle((vx - dist, vy - dist,
                                               dist * 2, dist * 2),
                                              reverse=True):
             if i is item:
                 continue
             
             b = get_item_bounding_box(i)
-            ix, iy = v2i(i).transform_point(x, y)
-            if drp(b, (x, y)) >= max_dist:
+            ix, iy = v2i(i).transform_point(vx, vy)
+            if drp(b, (vx, vy)) >= max_dist:
                 continue
             
             adapter = query_adapter((i, item), IConnect)
@@ -99,9 +99,9 @@ class ConnectHandleTool(HandleTool):
         return glue_item
 
 
-    def connect(self, view, item, handle, x, y):
+    def connect(self, view, item, handle, vx, vy):
         """
-        Find an item near @handle that @item can connect to and connect.
+        Find an item near ``handle`` that ``item`` can connect to and connect.
         
         This is done by attempting a glue() operation. If there is something
         to glue (the handles are already positioned), the IConnect.connect
@@ -109,7 +109,7 @@ class ConnectHandleTool(HandleTool):
         """
         connected = False
         try:
-            glue_item = self.glue(view, item, handle, x, y)
+            glue_item = self.glue(view, item, handle, vx, vy)
 
             if glue_item:
                 assert handle in self._adapter.line.handles()
