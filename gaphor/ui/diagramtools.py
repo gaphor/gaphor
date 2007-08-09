@@ -58,8 +58,6 @@ class ConnectHandleTool(HandleTool):
         handle: the handle to connect
         cx, cy: handle position in canvas coordinates
         """
-        canvas = view.canvas
-
         # localize methods
         v2i = view.get_matrix_v2i
         i2v = view.get_matrix_i2v
@@ -71,7 +69,9 @@ class ConnectHandleTool(HandleTool):
         max_dist = dist
         glue_pos = (0, 0)
         glue_item = None
-        for i in canvas.get_all_items():
+        for i in view.get_items_in_rectangle((x - dist, y - dist,
+                                              dist * 2, dist * 2),
+                                             reverse=True):
             if i is item:
                 continue
             
