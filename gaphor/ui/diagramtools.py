@@ -146,13 +146,13 @@ class ConnectHandleTool(HandleTool):
         view = context.view
         item = view.hovered_item
         if item and item is view.focused_item and isinstance(item, Line):
-            h = item.handles()
+            handles = item.handles()
             x, y = context.view.get_matrix_v2i(item).transform_point(event.x, event.y)
-            for h1, h2 in zip(h[:-1], h[1:]):
+            for h1, h2 in zip(handles[:-1], handles[1:]):
                 xp = (h1.x + h2.x) / 2
                 yp = (h1.y + h2.y) / 2
                 if distance_point_point_fast((x,y), (xp, yp)) <= 4:
-                    segment = h.index(h1)
+                    segment = handles.index(h1)
                     item.split_segment(segment)
                     self.grab_handle(item, item.handles()[segment + 1])
                     context.grab()
@@ -164,15 +164,16 @@ class ConnectHandleTool(HandleTool):
         grabbed_item = self._grabbed_item
         if super(ConnectHandleTool, self).on_button_release(context, event):
             if grabbed_handle and grabbed_item:
-                h = grabbed_item.handles()
-                if h[0] is grabbed_handle or h[-1] is grabbed_handle:
+                handles = grabbed_item.handles()
+                if handles[0] is grabbed_handle or handles[-1] is grabbed_handle:
                     return True
-                segment = h.index(grabbed_handle)
-                before = h[segment - 1]
-                after = h[segment + 1]
+                segment = handles.index(grabbed_handle)
+                before = handles[segment - 1]
+                after = handles[segment + 1]
                 d, p = distance_line_point(before.pos, after.pos, grabbed_handle.pos)
                 if d < 2:
                     grabbed_item.merge_segment(segment)
+                    # TODO: ensure constraints are updated
             return True
 
 

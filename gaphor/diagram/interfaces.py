@@ -57,10 +57,9 @@ class IConnect(interface.Interface):
     adapter could be written.
     """
 
-    def connect(self, handle, x, y):
+    def connect(self, handle):
         """
         Connect a line's handle to element.
-        x and y are translated to the element the handle is connecting to.
 
         Note that at the moment of the connect, handle.connected_to may point
         to some other item. The implementor should do the disconnect of
@@ -74,7 +73,7 @@ class IConnect(interface.Interface):
         model level.
         """
 
-    def connect_constraint(self, handle, x, y):
+    def connect_constraint(self, handle):
         """
         Connect a handle to the element.
         """
@@ -85,7 +84,7 @@ class IConnect(interface.Interface):
         This is called whenever a handle is dragged.
         """
 
-    def glue(self, handle, x, y):
+    def glue(self, handle):
         """
         Determine if a handle can glue to a specific element.
 
@@ -99,12 +98,12 @@ class IGroup(interface.Interface):
     Provide interface for adding one UML object to another, i.e.
     interactions contain lifelines and components contain classes objects.
     """
+
     def pre_can_contain(self):
         """
         Determine if parent can contain item, which is instance of given
         class. Method called before item creation.
         """
-
 
     def can_contain(self):
         """
