@@ -1267,52 +1267,44 @@ class MessageLifelineConnect(ElementConnect):
 
 
     def glue(self, handle):
+        """
+        Glue to lifeline's head or lifetime. If other side of line is
+        connected, then glue in such way that heads or lifetimes are on
+        both ends.
+        """
         element = self.element
         line = self.line
         opposite = line.opposite(handle)
-        opposite_connected_to = opposite.connected_to
 
         is_lifetime, lifetime_pos = self._is_lifetime(element, handle)
+
+        if opposite.connected_to:
+            c_is_lifetime, _ = self._is_lifetime(opposite.connected_to,
+                    opposite)
+        else:
+            c_is_lifetime = is_lifetime
+
+        # both has to be heads or lifetimes
+        if is_lifetime ^ c_is_lifetime:
+            return None
+
         if is_lifetime:
             glue_pos = lifetime_pos
         else:
             glue_pos = ElementConnect.glue(self, handle)
         return glue_pos
         
-        is_lifetime, lifetime_pos = self._is_lifetime(x, y, element)
 
-        glue_ok = True
-        c_is_lifetime = False
-        if connected_to:
-            px, py = opposite.pos
-            c_is_lifetime = opposite.is_lifetime
-
-            # connect only if both are lifeline heads or lifetimes
-            glue_ok = not (is_lifetime ^ c_is_lifetime)
-
-
-        # Return the position, but remember if we should connect to the
-        # Lifetime or Lifeline instance
-        if glue_ok and is_lifetime:
-            self._connect_to_lifetime = True
-            handle.is_lifetime = True
-            return lifetime_pos
-        elif glue_ok:
-            self._connect_to_lifetime = False
-            handle.is_lifetime = False
-            return head_pos
-        else:
-            return None
-
-
-    def side(self, (hx, hy), glued):
+    def _get_segment(self, handle):
         """
         Return handles of one of lifeline head's side or lifetime handles.
         """
-        if self._is_lifetime(glued, handle):
-            return glued.handles()[-2:]
+        element = self.element
+        is_lifetime, _ = self._is_lifetime(element, handle)
+        if is_lifetime:
+            return element.handles()[-2:] # return lifeline's lifetime handles
         else:
-            return super(MessageLifelineConnect, self).side(glued, handle)
+            return super(MessageLifelineConnect, self)._get_segment(handle)
         assert False
 
 
