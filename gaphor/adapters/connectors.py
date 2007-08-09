@@ -1242,57 +1242,44 @@ class MessageLifelineConnect(ElementConnect):
                  or not m.sendEvent and m.receiveEvent and m.messageKind == 'found')
 
 
-    def _is_lifetime(self, lifeline, handle):
+    def _glue_lifetime(self, handle):
         """
-        Check if ``handle`` is located at lifeline's lifetime.
-        False is returned if handle is located at lifeline's head.
+        Glue ``handle`` to lifeline's lifetime.
         """
-        lifetime = lifeline.lifetime
-        canvas = lifeline.canvas
-        h_nw = lifeline.handles()[NW]
+        lifetime = self.element.lifetime
+        top = lifetime.top.pos
+        bottom = lifetime.bottom.pos
 
-        i2c = canvas.get_matrix_i2c
-        c2i = canvas.get_matrix_c2i
-        pos = i2c(self.line).transform_point(*handle.pos)
+        pos = self._matrix_l2e.transform_point(*handle.pos)
+        d, pos = geometry.distance_line_point(top, bottom, pos)
 
-        head_x, head_y = i2c(lifeline).transform_point(*lifeline.handles()[NW].pos)
-        width, height = i2c(lifeline).transform_distance(lifeline.width, lifeline.height)
-
-        top = i2c(lifeline).transform_point(*lifetime.top.pos)
-        bottom = i2c(lifeline).transform_point(*lifetime.bottom.pos)
-
-        head_d = geometry.distance_rectangle_point((head_x, head_y, width, height), pos)
-        lifetime_d, lifetime_pos = geometry.distance_line_point(top, bottom, pos)
-        return head_d >= lifetime_d, c2i(self.line).transform_point(*lifetime_pos)
+        return self._matrix_e2l.transform_point(*pos)
 
 
     def glue(self, handle):
         """
-        Glue to lifeline's head or lifetime. If other side of line is
-        connected, then glue in such way that heads or lifetimes are on
-        both ends.
+        Glue to lifeline's head or lifetime. If lifeline's lifetime is
+        visible then disallow connection to lifeline's head.
         """
         element = self.element
+        lifetime = element.lifetime
         line = self.line
         opposite = line.opposite(handle)
 
-        is_lifetime, lifetime_pos = self._is_lifetime(element, handle)
+        pos = None
+        if lifetime.is_visible():
+            if opposite.connected_to:
+                glue_ok = opposite.connected_to.lifetime.is_visible()
+            else:
+                glue_ok = True
 
-        if opposite.connected_to:
-            c_is_lifetime, _ = self._is_lifetime(opposite.connected_to,
-                    opposite)
+            # lifeline's lifetime is visible, therefore glue only when
+            # opposite lifeline's lifetime is visible, too
+            if glue_ok:
+                pos = self._glue_lifetime(handle)
         else:
-            c_is_lifetime = is_lifetime
-
-        # both has to be heads or lifetimes
-        if is_lifetime ^ c_is_lifetime:
-            return None
-
-        if is_lifetime:
-            glue_pos = lifetime_pos
-        else:
-            glue_pos = ElementConnect.glue(self, handle)
-        return glue_pos
+            pos = ElementConnect.glue(self, handle)
+        return pos
         
 
     def _get_segment(self, handle):
@@ -1300,8 +1287,7 @@ class MessageLifelineConnect(ElementConnect):
         Return handles of one of lifeline head's side or lifetime handles.
         """
         element = self.element
-        is_lifetime, _ = self._is_lifetime(element, handle)
-        if is_lifetime:
+        if element.lifetime.is_visible():
             return element.handles()[-2:] # return lifeline's lifetime handles
         else:
             return super(MessageLifelineConnect, self)._get_segment(handle)
