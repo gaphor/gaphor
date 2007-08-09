@@ -35,7 +35,7 @@ class ConnectorTestCase(TestCase):
         adapter = component.queryMultiAdapter((comment, line), IConnect)
 
         handle = line.head
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is comment
         assert handle._connect_constraint is not None
@@ -44,7 +44,7 @@ class ConnectorTestCase(TestCase):
         # Connecting two ends of the line to the same item is not allowed:
 
         handle = line.tail
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is None, handle.connected_to
         assert not hasattr(handle,'_connect_constraint')
@@ -55,7 +55,7 @@ class ConnectorTestCase(TestCase):
         adapter = component.queryMultiAdapter((actor, line), IConnect)
 
         handle = line.handles()[-1]
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is actor
         assert handle._connect_constraint is not None
@@ -67,7 +67,7 @@ class ConnectorTestCase(TestCase):
 
         handle = line.tail
         adapter = component.queryMultiAdapter((actor2, line), IConnect)
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is actor2
         assert handle._connect_constraint is not None
@@ -106,11 +106,11 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c1, assoc), IConnect)
         handle = assoc.head
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         adapter = component.queryMultiAdapter((c2, assoc), IConnect)
         handle = assoc.tail
-        adapter.connect(handle, handle.x, handle.y) 
+        adapter.connect(handle) 
         assert assoc.head.connected_to is c1
         assert assoc.tail.connected_to is c2
         assert assoc.subject
@@ -122,9 +122,9 @@ class ConnectorTestCase(TestCase):
         import gaphor.adapters.connectors
         assert type(adapter) is gaphor.adapters.connectors.CommentLineLineConnect
         handle = line.head
-        pos = adapter.glue(handle, handle.x, handle.y)
+        pos = adapter.glue(handle)
         assert pos == (10, 50), pos
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is assoc
         assert handle._connect_constraint is not None
@@ -133,7 +133,7 @@ class ConnectorTestCase(TestCase):
         # Connecting two ends of the line to the same item is not allowed:
 
         handle = line.tail
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is None
         assert not hasattr(handle,'_connect_constraint')
@@ -144,7 +144,7 @@ class ConnectorTestCase(TestCase):
         adapter = component.queryMultiAdapter((comment, line), IConnect)
 
         handle = line.tail
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is comment
         assert handle._connect_constraint is not None
@@ -162,7 +162,7 @@ class ConnectorTestCase(TestCase):
 
         # Connect again:
 
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
         assert handle.connected_to is not None, handle.connected_to
 
 
@@ -185,7 +185,7 @@ class ConnectorTestCase(TestCase):
         adapter = component.queryMultiAdapter((comment, line), IConnect)
 
         handle = line.tail
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is comment
         assert handle._connect_constraint is not None
@@ -195,7 +195,7 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((assoc, line), IConnect)
         handle = line.head
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is assoc
         assert handle._connect_constraint is not None
@@ -206,7 +206,7 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c1, assoc), IConnect)
         handle = assoc.head
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert handle.connected_to is c1
         assert handle._connect_constraint is not None
@@ -215,7 +215,7 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c2, assoc), IConnect)
         handle = assoc.tail
-        adapter.connect(handle, handle.x, handle.y)
+        adapter.connect(handle)
 
         assert assoc.head.connected_to is c1
         assert assoc.tail.connected_to is c2
@@ -245,14 +245,14 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((actor1, dep), IConnect)
 
-        adapter.connect(dep.head, dep.head.x, dep.head.y)
+        adapter.connect(dep.head)
 
         assert dep.subject is None
         assert dep.head.connected_to is actor1
 
         adapter = component.queryMultiAdapter((actor2, dep), IConnect)
 
-        adapter.connect(dep.tail, dep.tail.x, dep.tail.y)
+        adapter.connect(dep.tail)
 
         assert dep.subject is not None
         assert isinstance(dep.subject, UML.Dependency), dep.subject
@@ -275,7 +275,7 @@ class ConnectorTestCase(TestCase):
 
         #iface1 = diagram.create(items.InterfaceItem, subject=UML.Interface)
 
-        adapter.connect(dep.tail, dep.tail.x, dep.tail.y)
+        adapter.connect(dep.tail)
 
         assert dep.subject is not None
         assert dep.subject is not dep_subj # the old subject has been deleted
@@ -299,11 +299,11 @@ class ConnectorTestCase(TestCase):
         
         adapter = component.queryMultiAdapter((actoritem1, dep), IConnect)
 
-        adapter.connect(dep.head, dep.head.x, dep.head.y)
+        adapter.connect(dep.head)
 
         adapter = component.queryMultiAdapter((actoritem2, dep), IConnect)
 
-        adapter.connect(dep.tail, dep.tail.x, dep.tail.y)
+        adapter.connect(dep.tail)
 
         assert dep.subject
         assert len(actor1.supplierDependency) == 1
@@ -320,11 +320,11 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((actoritem3, dep2), IConnect)
 
-        adapter.connect(dep2.head, dep2.head.x, dep2.head.y)
+        adapter.connect(dep2.head)
 
         adapter = component.queryMultiAdapter((actoritem4, dep2), IConnect)
 
-        adapter.connect(dep2.tail, dep2.tail.x, dep2.tail.y)
+        adapter.connect(dep2.tail)
 
         assert dep2.subject
         assert len(actor1.supplierDependency) == 1
@@ -342,19 +342,19 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((clazz, impl), IConnect)
 
-        adapter.connect(impl.head, impl.head.x, impl.head.y)
+        adapter.connect(impl.head)
 
         # Should not be allowed to connect to anything but Interfaces
 
         assert impl.head.connected_to is None
 
-        adapter.connect(impl.tail, impl.tail.x, impl.tail.y)
+        adapter.connect(impl.tail)
         assert impl.tail.connected_to is clazz
         assert impl.subject is None
 
         adapter = component.queryMultiAdapter((iface, impl), IConnect)
 
-        adapter.connect(impl.head, impl.head.x, impl.head.y)
+        adapter.connect(impl.head)
         
         assert impl.head.connected_to is iface
         assert impl.subject is not None
@@ -369,14 +369,14 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c1, gen), IConnect)
 
-        adapter.connect(gen.tail, gen.tail.x, gen.tail.y)
+        adapter.connect(gen.tail)
 
         assert gen.tail.connected_to is c1
         assert gen.subject is None
 
         adapter = component.queryMultiAdapter((c2, gen), IConnect)
 
-        adapter.connect(gen.head, gen.head.x, gen.head.y)
+        adapter.connect(gen.head)
 
         assert gen.head.connected_to is c2
         assert gen.subject is not None
@@ -395,14 +395,14 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c1, gen), IConnect)
 
-        adapter.connect(gen.tail, gen.tail.x, gen.tail.y)
+        adapter.connect(gen.tail)
 
         assert gen.tail.connected_to is c1
         assert gen.subject is None
 
         adapter = component.queryMultiAdapter((c2, gen), IConnect)
 
-        adapter.connect(gen.head, gen.head.x, gen.head.y)
+        adapter.connect(gen.head)
 
         assert gen.head.connected_to is c2
         assert gen.subject is not None
@@ -425,14 +425,14 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c1, gen), IConnect)
 
-        adapter.connect(gen.tail, gen.tail.x, gen.tail.y)
+        adapter.connect(gen.tail)
 
         assert gen.tail.connected_to is c1
         assert gen.subject is None
 
         adapter = component.queryMultiAdapter((c2, gen), IConnect)
 
-        adapter.connect(gen.head, gen.head.x, gen.head.y)
+        adapter.connect(gen.head)
 
         assert gen.head.connected_to is c2
         assert gen.subject is not None
@@ -466,10 +466,10 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((f1, flow), IConnect)
         assert adapter
-        adapter.connect(flow.head, flow.head.x, flow.head.y)
+        adapter.connect(flow.head)
         assert flow.head.connected_to is None
 
-        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+        adapter.connect(flow.tail)
         assert flow.head.connected_to is None
         assert flow.tail.connected_to is f1
 
@@ -479,10 +479,10 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((f2, flow), IConnect)
         assert adapter
-        adapter.connect(flow.head, flow.head.x, flow.head.y)
+        adapter.connect(flow.head)
         assert flow.head.connected_to is None
 
-        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+        adapter.connect(flow.tail)
         assert flow.head.connected_to is None
         assert flow.tail.connected_to is f2
 
@@ -494,11 +494,11 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((i1, flow), IConnect)
         assert adapter
-        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+        adapter.connect(flow.tail)
         assert flow.head.connected_to is None
         assert flow.tail.connected_to is None
 
-        adapter.connect(flow.head, flow.head.x, flow.head.y)
+        adapter.connect(flow.head)
         assert flow.tail.connected_to is None
         assert flow.head.connected_to is i1
 
@@ -517,20 +517,20 @@ class ConnectorTestCase(TestCase):
         # Connect between two actions (ControlFlow)
         adapter = component.queryMultiAdapter((a1, flow), IConnect)
         assert adapter
-        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+        adapter.connect(flow.tail)
 
         assert flow.tail.connected_to is a1
         assert flow.subject is None
 
         adapter = component.queryMultiAdapter((a2, flow), IConnect)
-        adapter.connect(flow.head, flow.head.x, flow.head.y)
+        adapter.connect(flow.head)
 
         assert flow.head.connected_to is a2
         assert flow.tail.connected_to is a1
         assert not flow.subject is None
         assert isinstance(flow.subject, UML.ControlFlow)
 
-        adapter.connect(flow.tail, flow.tail.x, flow.tail.y)
+        adapter.connect(flow.tail)
 
         assert flow.head.connected_to is a2
         assert flow.tail.connected_to is a2
@@ -540,7 +540,7 @@ class ConnectorTestCase(TestCase):
         # Connection between action and objectNode (ObjectFlow)
 
         adapter = component.queryMultiAdapter((o1, flow), IConnect)
-        adapter.connect(flow.head, flow.head.x, flow.head.y)
+        adapter.connect(flow.head)
 
         assert flow.head.connected_to is o1
         assert flow.tail.connected_to is a2
@@ -567,7 +567,7 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((a1, flow1), IConnect)
         assert adapter
-        adapter.connect(flow1.tail, flow1.tail.x, flow1.tail.y)
+        adapter.connect(flow1.tail)
         assert flow1.tail.connected_to is a1
         assert not a1.subject.incoming, a1.subject.incoming
 
@@ -575,13 +575,13 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((a1, flow2), IConnect)
         assert adapter
-        adapter.connect(flow2.tail, flow2.tail.x, flow2.tail.y)
+        adapter.connect(flow2.tail)
         assert flow1.tail.connected_to is a1
         assert flow2.tail.connected_to is a1
 
         adapter = component.queryMultiAdapter((a2, flow1), IConnect)
         assert adapter
-        adapter.connect(flow1.head, flow1.head.x, flow1.head.y)
+        adapter.connect(flow1.head)
         assert flow1.head.connected_to is a2
         assert flow1.tail.connected_to is a1
         assert flow1.subject in a1.subject.incoming
@@ -627,21 +627,21 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((a1, flow1), IConnect)
         assert adapter
-        adapter.connect(flow1.head, flow1.head.x, flow1.head.y)
+        adapter.connect(flow1.head)
 
         adapter = component.queryMultiAdapter((a2, flow2), IConnect)
         assert adapter
-        adapter.connect(flow2.tail, flow2.tail.x, flow2.tail.y)
+        adapter.connect(flow2.tail)
 
         adapter = component.queryMultiAdapter((a3, flow3), IConnect)
         assert adapter
-        adapter.connect(flow3.tail, flow3.tail.x, flow3.tail.y)
+        adapter.connect(flow3.tail)
 
         # Now connect to ForkNode:
 
         adapter = component.queryMultiAdapter((f1, flow1), IConnect)
         assert adapter
-        adapter.connect(flow1.tail, flow1.tail.x, flow1.tail.y)
+        adapter.connect(flow1.tail)
         assert flow1.tail.connected_to is f1
         assert flow1.subject
         assert flow1.subject.target is f1.subject
@@ -650,7 +650,7 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((f1, flow2), IConnect)
         assert adapter
-        adapter.connect(flow2.head, flow2.head.x, flow2.head.y)
+        adapter.connect(flow2.head)
         assert flow2.head.connected_to is f1
         assert flow2.subject.source is f1.subject
         assert flow2.subject in f1.subject.outgoing
@@ -659,7 +659,7 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((f1, flow3), IConnect)
         assert adapter
-        adapter.connect(flow3.head, flow3.head.x, flow3.head.y)
+        adapter.connect(flow3.head)
         assert flow3.head.connected_to is f1
         assert flow3.subject.source is f1.subject
         assert flow3.subject in f1.subject.outgoing
@@ -671,11 +671,11 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((f1, flow4), IConnect)
         assert adapter
-        adapter.connect(flow4.tail, flow4.tail.x, flow4.tail.y)
+        adapter.connect(flow4.tail)
         assert type(f1.subject) is forkNodeClass
 
         adapter = component.queryMultiAdapter((a4, flow4), IConnect)
-        adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
+        adapter.connect(flow4.head)
         assert type(f1.subject) is joinNodeClass
         assert f1.combined
         assert flow4.tail.connected_to is f1
@@ -692,7 +692,7 @@ class ConnectorTestCase(TestCase):
         # flow4 can be connected as outgoing flow though:
         #adapter = component.queryMultiAdapter((f1, flow4), IConnect)
         #assert adapter
-        #adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
+        #adapter.connect(flow4.head)
         #assert flow4.head.connected_to is f1
 
         adapter.disconnect(flow4.head)
@@ -716,7 +716,7 @@ class ConnectorTestCase(TestCase):
 
         # Let's try if we can connect both ends of flow2 to the ForkNode:
         adapter = component.queryMultiAdapter((f1, flow2), IConnect)
-        adapter.connect(flow2.tail, flow2.tail.x, flow2.tail.y)
+        adapter.connect(flow2.tail)
         assert flow2.tail.connected_to is None, flow2.tail.connected_to
 
         adapter.disconnect(flow2.head)
@@ -724,11 +724,11 @@ class ConnectorTestCase(TestCase):
         assert len(f1.subject.outgoing) == 0, len(f1.subject.outgoing)
 
         adapter = component.queryMultiAdapter((a2, flow2), IConnect)
-        adapter.connect(flow2.head, flow2.head.x, flow2.head.y)
+        adapter.connect(flow2.head)
         assert len(a2.subject.outgoing) == 0
 
         adapter = component.queryMultiAdapter((f1, flow2), IConnect)
-        adapter.connect(flow2.tail, flow2.tail.x, flow2.tail.y)
+        adapter.connect(flow2.tail)
         assert len(a2.subject.outgoing) == 1
         assert len(f1.subject.incoming) == 2
         assert len(f1.subject.outgoing) == 0, len(f1.subject.outgoing)
@@ -737,7 +737,7 @@ class ConnectorTestCase(TestCase):
         # And of course I can't add another outgoing edge:
         #adapter = component.queryMultiAdapter((f1, flow4), IConnect)
         #assert adapter
-        #adapter.connect(flow4.head, flow4.head.x, flow4.head.y)
+        #adapter.connect(flow4.head)
         #assert flow4.head.connected_to is None
 
 

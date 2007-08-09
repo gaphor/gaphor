@@ -32,12 +32,12 @@ class AssociationItemTestCase(TestCase):
         """
         adapter = component.queryMultiAdapter((self.class1, self.assoc), IConnect)
         assert adapter
-        adapter.connect(self.assoc.head, self.assoc.head.x, self.assoc.head.y)
+        adapter.connect(self.assoc.head)
 
         assert self.assoc.head.connected_to
 
         adapter = component.queryMultiAdapter((self.class2, self.assoc), IConnect)
-        adapter.connect(self.assoc.tail, self.assoc.tail.x, self.assoc.tail.y)
+        adapter.connect(self.assoc.tail)
 
         assert self.assoc.tail.connected_to
         assert self.assoc.subject

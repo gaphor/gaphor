@@ -8,20 +8,23 @@ class FileManagerTestCase(unittest.TestCase):
 
     def setUp(self):
         Application.init(services=['file_manager', 'element_factory', 'properties', 'gui_manager'])
+	self.recent_files_backup = Application.get_service('properties').get('recent-files')
 
     def tearDown(self):
+	Application.get_service('properties').set('recent-files', self.recent_files_backup)
         Application.shutdown()
 
     def test_recent_files(self):
         fileman = Application.get_service('file_manager')
+        properties = Application.get_service('properties')
 
         # ensure the recent_files list is empty:
-        fileman._recent_files = []
+        properties.set('recent-files', [])
         fileman.update_recent_files()
         for i in range(0, 9):
             a = fileman.action_group.get_action('file-recent-%d' % i)
             assert a
-            assert a.get_property('visible') == False
+            assert a.get_property('visible') == False, a.get_property('visible')
 
         fileman.filename = 'firstfile'
         a = fileman.action_group.get_action('file-recent-%d' % 0)

@@ -29,10 +29,12 @@ class EditorTestCase(TestCase):
 
         from gaphor.diagram.interfaces import IConnect
         connector = component.queryMultiAdapter((class1, assoc), IConnect)
-        connector.connect(assoc.handles()[0], 10, 10)
+        assoc.handles()[0].pos = 10, 10
+        connector.connect(assoc.handles()[0])
         assert assoc.handles()[0].connected_to
         connector = component.queryMultiAdapter((class2, assoc), IConnect)
-        connector.connect(assoc.handles()[-1], 100, 100)
+        assoc.handles()[-1].pos = 100, 100
+        connector.connect(assoc.handles()[-1])
         assert assoc.handles()[-1].connected_to
         assert assoc.subject
 

@@ -223,13 +223,13 @@ class StorageTestCase(TestCase):
         adapter = component.queryMultiAdapter((c1, a), IConnect)
         assert adapter
         h = a.head
-        adapter.connect(h, h.x, h.y)
+        adapter.connect(h)
         head_pos = h.pos
 
         adapter = component.queryMultiAdapter((c2, a), IConnect)
         assert adapter
         h = a.tail
-        adapter.connect(h, h.x, h.y)
+        adapter.connect(h)
         tail_pos = h.pos
 
         diagram.canvas.update_now()

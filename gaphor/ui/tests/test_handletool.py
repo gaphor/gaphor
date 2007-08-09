@@ -49,11 +49,12 @@ class HandleToolTestCase(unittest.TestCase):
         tool._grabbed_handle = handle
 
         # Should glue to (45, 50)
+        handle.pos = 45, 48
         tool.glue(view, line, handle, 45, 48)
 
         self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
 
-        handle.x, handle.y = 0, 0
+        handle.x, handle.y = 45, 48
         tool.connect(view, line, handle, 45, 48)
         self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is actor, handle.connected_to
@@ -77,7 +78,7 @@ class HandleToolTestCase(unittest.TestCase):
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
-        print diagram.canvas.get_matrix_i2c(actor), actor.matrix
+        #print diagram.canvas.get_matrix_i2c(actor), actor.matrix
         assert actor.height == 60, actor.height
         assert actor.width == 38, actor.width
         line = diagram.create(CommentLineItem)
@@ -92,7 +93,7 @@ class HandleToolTestCase(unittest.TestCase):
         tool.grab_handle(line, handle)
 
         # Connect one end to the Comment
-        handle.x, handle.y = 0, 0
+        handle.x, handle.y = 45, 48
         tool.connect(view, line, handle, 45, 48)
         self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         assert handle.connected_to is comment, handle.connected_to
@@ -146,7 +147,7 @@ class HandleToolTestCase(unittest.TestCase):
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
-        print diagram.canvas.get_matrix_i2c(actor), actor.matrix
+        #print diagram.canvas.get_matrix_i2c(actor), actor.matrix
         assert actor.height == 60, actor.height
         assert actor.width == 38, actor.width
         line = diagram.create(CommentLineItem)
