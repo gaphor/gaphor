@@ -42,7 +42,7 @@ class GIdleThread(object):
     ...         yield x
     >>> t = GIdleThread(counter(123))
     >>> t.start()
-    >>> while gen.is_alive():
+    >>> while t.is_alive():
     ...     main.iteration(False)
     """
 
