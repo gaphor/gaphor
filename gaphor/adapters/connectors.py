@@ -78,7 +78,7 @@ class AbstractConnect(object):
         if not self.glue(handle):
             return False
 
-        self.connect_constraint(handle)
+        self.connect_constraints(handle)
 
         # Set disconnect handler in the adapter, so it will also wotk if
         # connections are created programmatically.
@@ -98,7 +98,7 @@ class AbstractConnect(object):
         handle.connected_to = None
 
 
-    def connect_constraint(self, handle):
+    def connect_constraints(self, handle):
         """
         Create the actual constraint. The handle should be moved into connection
         position before this method is called.
@@ -205,6 +205,7 @@ class LineConnect(AbstractConnect):
     receive a connect() call. This allows already connected lines to set
     up relationships at model level too.
     """
+
     def _get_segment_data(self, handle):
         """
         Get segment data

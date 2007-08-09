@@ -154,6 +154,15 @@ class ConnectHandleTool(HandleTool):
                 if distance_point_point_fast((x,y), (xp, yp)) <= 4:
                     segment = handles.index(h1)
                     item.split_segment(segment)
+
+                    # Reconnect all constraints:
+                    for i, h in view.canvas.get_connected_items(item):
+                        print 'reconnect', item, i
+                        adapter = component.getMultiAdapter((item, i), IConnect)
+                        adapter.disconnect_constraints(h)
+                        adapter.connect_constraints(h)
+                        print 'done'
+
                     self.grab_handle(item, item.handles()[segment + 1])
                     context.grab()
                     self._grabbed = True
@@ -173,7 +182,13 @@ class ConnectHandleTool(HandleTool):
                 d, p = distance_line_point(before.pos, after.pos, grabbed_handle.pos)
                 if d < 2:
                     grabbed_item.merge_segment(segment)
-                    # TODO: ensure constraints are updated
+
+                    # Reconnect all constraints:
+                    for i, h in context.view.canvas.get_connected_items(grabbed_item):
+                        adapter = component.getMultiAdapter((grabbed_item, i), IConnect)
+                        adapter.disconnect_constraints(h)
+                        adapter.connect_constraints(h)
+
             return True
 
 

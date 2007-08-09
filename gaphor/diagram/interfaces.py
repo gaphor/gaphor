@@ -73,7 +73,7 @@ class IConnect(interface.Interface):
         model level.
         """
 
-    def connect_constraint(self, handle):
+    def connect_constraints(self, handle):
         """
         Connect a handle to the element.
         """
