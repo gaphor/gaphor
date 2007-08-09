@@ -157,15 +157,12 @@ class ConnectHandleTool(HandleTool):
 
                     # Reconnect all constraints:
                     for i, h in view.canvas.get_connected_items(item):
-                        print 'reconnect', item, i
                         adapter = component.getMultiAdapter((item, i), IConnect)
                         adapter.disconnect_constraints(h)
                         adapter.connect_constraints(h)
-                        print 'done'
 
                     self.grab_handle(item, item.handles()[segment + 1])
                     context.grab()
-                    self._grabbed = True
                     return True
 
     def on_button_release(self, context, event):
@@ -326,15 +323,17 @@ class TransactionalToolChain(ToolChain):
         ToolChain.__init__(self)
         self._tx = None
 
-    def grab(self, tool):
-        ToolChain.grab(self, tool)
+    def on_button_press(self, context, event):
         self._tx = Transaction()
+        return ToolChain.on_button_press(self, context, event)
 
-    def ungrab(self, tool):
-        ToolChain.ungrab(self, tool)
-        if self._tx:
-            self._tx.commit()
-            self._tx = None
+    def on_button_release(self, context, event):
+        try:
+            return ToolChain.on_button_release(self, context, event)
+        finally:
+            if self._tx:
+                self._tx.commit()
+                self._tx = None
 
     def on_double_click(self, context, event):
         tx = Transaction()

@@ -27,7 +27,8 @@ from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
                              AttributeChangeEvent, AssociationSetEvent, \
                              AssociationAddEvent, AssociationDeleteEvent
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
-                                  IAttributeChangeEvent, IAssociationChangeEvent
+                                  IAttributeChangeEvent, IModelFactoryEvent, \
+                                  IAssociationChangeEvent
 
 from gaphor.action import action, build_action_group
 from gaphor.event import ActionExecuted
@@ -113,6 +114,7 @@ class UndoManager(object):
 
     def init(self, app):
         self._app = app
+        app.register_handler(self.reset)
         app.register_handler(self.begin_transaction)
         app.register_handler(self.commit_transaction)
         app.register_handler(self.rollback_transaction)
@@ -121,6 +123,7 @@ class UndoManager(object):
         self._action_executed()
 
     def shutdown(self):
+        self._app.unregister_handler(self.reset)
         self._app.unregister_handler(self.begin_transaction)
         self._app.unregister_handler(self.commit_transaction)
         self._app.unregister_handler(self.rollback_transaction)
@@ -133,6 +136,11 @@ class UndoManager(object):
 
     def clear_redo_stack(self):
         del self._redo_stack[:]
+    
+    @component.adapter(IModelFactoryEvent)
+    def reset(self, event=None):
+        self.clear_redo_stack()
+        self.clear_undo_stack()
 
     @component.adapter(TransactionBegin)
     def begin_transaction(self, event=None):
