@@ -273,8 +273,8 @@ class CommentLineElementConnect(ElementConnect):
             return None
 
         # One end should be connected to a CommentItem:
-        glue_ok = isinstance(connected_to, items.CommentItem) \
-                ^ isinstance(self.element, items.CommentItem)
+        cls = items.CommentItem, items.CommentLineItem
+        glue_ok = isinstance(connected_to, cls) ^ isinstance(self.element, cls)
         if connected_to and not glue_ok:
             return None
 
@@ -326,9 +326,9 @@ class CommentLineLineConnect(LineConnect):
             return None
 
         # One end should be connected to a CommentItem:
-        if connected_to and \
-                ((isinstance(connected_to, items.CommentItem) and isinstance(self.element, items.CommentItem)) or \
-                 (not isinstance(connected_to, items.CommentItem) and not isinstance(self.element, items.CommentItem))):
+        cls = items.CommentItem, items.CommentLineItem
+        glue_ok = isinstance(connected_to, cls) ^ isinstance(self.element, cls)
+        if connected_to and not glue_ok:
             return None
 
         return super(CommentLineLineConnect, self).glue(handle)
