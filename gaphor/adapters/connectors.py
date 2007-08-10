@@ -273,7 +273,7 @@ class CommentLineElementConnect(ElementConnect):
             return None
 
         # One end should be connected to a CommentItem:
-        cls = items.CommentItem, items.CommentLineItem
+        cls = items.CommentItem
         glue_ok = isinstance(connected_to, cls) ^ isinstance(self.element, cls)
         if connected_to and not glue_ok:
             return None
@@ -316,7 +316,9 @@ class CommentLineLineConnect(LineConnect):
         opposite = self.line.opposite(handle)
         element = self.element
         connected_to = opposite.connected_to
-        if connected_to is element:
+
+        # do not connect to the same item nor connect to other comment line
+        if connected_to is element or isinstance(element, items.CommentLineItem):
             return None
 
         # Same goes for subjects:
@@ -326,7 +328,7 @@ class CommentLineLineConnect(LineConnect):
             return None
 
         # One end should be connected to a CommentItem:
-        cls = items.CommentItem, items.CommentLineItem
+        cls = items.CommentItem
         glue_ok = isinstance(connected_to, cls) ^ isinstance(self.element, cls)
         if connected_to and not glue_ok:
             return None
