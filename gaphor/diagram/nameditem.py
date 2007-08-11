@@ -37,11 +37,24 @@ class NamedItem(ElementItem):
 
     def is_namespace_info_visible(self):
         """
-        Display name space info when it is different, then diagram
-        namespace.
+        Display name space info when it is different, then diagram's or
+        parent's namespace.
         """
-        return self._from.text and self.canvas \
-                and self.canvas.diagram.namespace is not self.subject.namespace
+        subject = self.subject
+        canvas = self.canvas
+
+        if not subject or not canvas:
+            return False
+
+        namespace = subject.namespace
+        parent = canvas.get_parent(self)
+
+        # if there is a parent (i.e. interaction)
+        if parent and parent.subject \
+                and parent.subject.namespace is not namespace:
+            return False
+
+        return self._from.text and namespace is not canvas.diagram.namespace
 
 
     def on_subject_notify(self, pspec, notifiers=()):
