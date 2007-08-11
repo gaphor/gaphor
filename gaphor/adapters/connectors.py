@@ -1323,10 +1323,9 @@ class MessageLifelineConnect(ElementConnect):
 
         lifetime = self.element.lifetime
         lifetime._messages_count -= 1
-        # if lifetime is not visible  and there are no messages connected
-        # then allow to make lifetime visible
+        # if there are no messages connected then allow to make lifetime visible
         # todo: move code below to LifetimeItem class
-        if not lifetime.is_visible() and lifetime._messages_count < 1:
+        if lifetime._messages_count < 1:
             lifetime.bottom.movable = True
 
 
