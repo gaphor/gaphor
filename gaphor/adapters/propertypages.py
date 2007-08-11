@@ -200,7 +200,7 @@ class CommentItemPropertyPage(object):
         changed_id = buffer.connect('changed', self._on_body_change)
 
         def handler(event):
-            if event.element is subject:
+            if event.element is subject and event.new_value is not None:
                 buffer.handler_block(changed_id)
                 buffer.set_text(event.new_value)
                 buffer.handler_unblock(changed_id)
@@ -249,7 +249,7 @@ class NamedItemPropertyPage(object):
         changed_id = entry.connect('changed', self._on_name_change)
 
         def handler(event):
-            if event.element is subject:
+            if event.element is subject and event.new_value is not None:
                 entry.handler_block(changed_id)
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
