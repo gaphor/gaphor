@@ -849,15 +849,11 @@ component.provideAdapter(ExtensionConnect)
 
 class AssociationConnect(RelationshipConnect):
     """
-    Connect Class and a Stereotype using an Extension
+    Connect association to classifier.
     """
     component.adapts(items.ClassifierItem, items.AssociationItem)
 
     def glue(self, handle):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        """
         opposite = self.line.opposite(handle)
         line = self.line
         element = self.element
