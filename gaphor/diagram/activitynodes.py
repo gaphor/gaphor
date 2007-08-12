@@ -325,14 +325,15 @@ class ForkNodeItem(Item, DiagramItem):
         text element.
         """
         subject = self.subject
-        if subject and isinstance(subject, UML.JoinNode):
+        if is_join_node(subject):
             join_spec_notifiers = ('joinSpec', 'joinSpec.value')
         else:
             join_spec_notifiers = ()
 
         DiagramItem.on_subject_notify(self, pspec, join_spec_notifiers + notifiers)
 
-        self.set_join_spec(DEFAULT_JOIN_SPEC)
+        if is_join_node(subject) and not (subject.joinSpec and subject.joinSpec.value):
+            self.set_join_spec(DEFAULT_JOIN_SPEC)
         self.request_update()
 
 
@@ -341,7 +342,7 @@ class ForkNodeItem(Item, DiagramItem):
         Set join specification.
         """
         subject = self.subject
-        if not subject or not isinstance(subject, UML.JoinNode):
+        if not is_join_node(subject):
             return
 
         if not subject.joinSpec:
@@ -361,5 +362,11 @@ class ForkNodeItem(Item, DiagramItem):
     def on_subject_notify__joinSpec_value(self, subject, pspec=None):
         self.request_update()
 
+
+def is_join_node(subject):
+    """
+    Check if ``subject`` is join node. 
+    """
+    return subject and isinstance(subject, UML.JoinNode)
 
 # vim:sw=4:et
