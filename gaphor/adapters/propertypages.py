@@ -559,6 +559,9 @@ class TaggedValuePage(object):
         page = gtk.VBox()
 
         tagged_values = gtk.ListStore(str, str, object)
+
+        if self.context.subject is None:
+            return page
         
         for tagged_value in self.context.subject.taggedValue:
             tag, value = tagged_value.value.split("=")
