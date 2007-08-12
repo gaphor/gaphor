@@ -1,3 +1,20 @@
+0.11.2
+------
+- improved items's connection adapters 
+- fixed comment line, comment, message and lifeline items connection
+  adapters to implement UML specification more closely
+- items glueing speedup
+- property page is updated when association or other diagram line connects
+  to appropriate diagram items
+- removing and reordering of class' attributes and operations is possible
+  again
+- association name and multiplicity editing improvements
+
+0.11.1
+------
+- support gaphas 0.3.0 API
+- bugfixes
+
 0.11.0
 ------
  - Sequence diagrams
