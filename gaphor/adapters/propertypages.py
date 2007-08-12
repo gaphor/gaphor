@@ -983,14 +983,15 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         hbox = gtk.HBox()
         page.pack_start(hbox, expand=False)
 
-        label = gtk.Label(_('Join Specification'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
-        entry = gtk.Entry()        
-        entry.set_text(subject.joinSpec and subject.joinSpec.value or '')
-        entry.connect('changed', self._on_join_spec_change)
-        hbox.pack_start(entry)
+        if isinstance(subject, UML.JoinNode):
+            label = gtk.Label(_('Join Specification'))
+            label.set_justify(gtk.JUSTIFY_LEFT)
+            self.size_group.add_widget(label)
+            hbox.pack_start(label, expand=False)
+            entry = gtk.Entry()        
+            entry.set_text(subject.joinSpec and subject.joinSpec.value or '')
+            entry.connect('changed', self._on_join_spec_change)
+            hbox.pack_start(entry)
 
         return page
 

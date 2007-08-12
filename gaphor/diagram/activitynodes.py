@@ -235,7 +235,8 @@ class ForkNodeItem(Item, DiagramItem):
             super(ForkNodeItem, self).load(name, value)
 
     def postload(self):
-        if self.subject and self.subject.joinSpec:
+        subject = self.subject
+        if subject and isinstance(subject, UML.JoinNode) and subject.joinSpec:
             self._join_spec.text = self.subject.joinSpec.value
         super(ForkNodeItem, self).postload()
 
@@ -323,10 +324,15 @@ class ForkNodeItem(Item, DiagramItem):
         If subject is join node, then set subject of join specification
         text element.
         """
-        DiagramItem.on_subject_notify(self, pspec,
-                ('joinSpec', 'joinSpec.value') + notifiers)
-        if self.subject and not (self.subject.joinSpec and self.subject.joinSpec.value):
-            self.set_join_spec(DEFAULT_JOIN_SPEC)
+        subject = self.subject
+        if subject and isinstance(subject, UML.JoinNode):
+            join_spec_notifiers = ('joinSpec', 'joinSpec.value')
+        else:
+            join_spec_notifiers = ()
+
+        DiagramItem.on_subject_notify(self, pspec, join_spec_notifiers + notifiers)
+
+        self.set_join_spec(DEFAULT_JOIN_SPEC)
         self.request_update()
 
 
