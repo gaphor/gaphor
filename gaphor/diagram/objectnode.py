@@ -91,6 +91,8 @@ class ObjectNodeItem(NamedItem):
     def postload(self):
         if self.subject and self.subject.upperBound:
             self._upper_bound.text = self.subject.upperBound.value
+        if self.subject and self._show_ordering:
+            self.set_ordering(self.subject.ordering)
         super(ObjectNodeItem, self).postload()
 
     def on_subject_notify(self, pspec, notifiers = ()):
