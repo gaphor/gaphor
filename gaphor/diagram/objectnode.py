@@ -100,7 +100,11 @@ class ObjectNodeItem(NamedItem):
         """
         NamedItem.on_subject_notify(self, pspec,
                 ('upperBound', 'upperBound.value', 'ordering') + notifiers)
-        self.set_upper_bound(DEFAULT_UPPER_BOUND)
+
+        subject = self.subject
+        if subject and not (subject.upperBound and subject.upperBound.value):
+            self.set_upper_bound(DEFAULT_UPPER_BOUND)
+
         self.request_update()
 
 
