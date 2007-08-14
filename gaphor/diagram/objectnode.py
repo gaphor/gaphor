@@ -53,7 +53,9 @@ class ObjectNodeItem(NamedItem):
         """
         Do not show upper bound, when it's set to default value.
         """
-        return self.subject.upperBound.value != DEFAULT_UPPER_BOUND
+        subject = self.subject
+        return subject and subject.upperBound \
+                and subject.upperBound.value != DEFAULT_UPPER_BOUND
 
 
     @observed
