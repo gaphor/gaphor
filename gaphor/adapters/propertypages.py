@@ -1180,34 +1180,23 @@ class MessagePropertyPage(NamedItemPropertyPage):
             return page
 
         hbox = gtk.HBox()
+        page.pack_start(hbox, expand=False)
+
         label = gtk.Label(_('Message sort'))
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
-        hbox = gtk.HBox()
-        page.pack_start(hbox, expand=False)
-
-        self.combo = create_uml_combo(self.MESSAGE_SORT,
+        combo = self.combo = create_uml_combo(self.MESSAGE_SORT,
                 self._on_message_sort_change)
 
-        hbox.pack_start(self.combo, expand=False)
-        page.pack_start(hbox, expand=False)
+        combo = self.combo
+        index = combo.get_model().get_index(subject.messageSort)
+        combo.set_active(index)
 
-        self.update()
+        hbox.pack_start(combo, expand=False)
 
         return page
-
-
-    def update(self):
-        """
-        Update message sort combo box.
-        """
-        subject = self.context.subject
-        if subject:
-            combo = self.combo
-            index = combo.get_model().get_index(subject.messageSort)
-            combo.set_active(index)
 
 
     @transactional
