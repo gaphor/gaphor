@@ -233,6 +233,20 @@ def watch_attribute(attribute, widget, handler):
 
 
 
+def create_hbox_label(adapter, page, label):
+    """
+    Create a HBox with a label for given property page adapter and page
+    itself.
+    """
+    hbox = gtk.HBox()
+    label = gtk.Label(label)
+    label.set_justify(gtk.JUSTIFY_LEFT)
+    adapter.size_group.add_widget(label)
+    hbox.pack_start(label, expand=False)
+    page.pack_start(hbox, expand=False)
+    return hbox
+
+
 
 class CommentItemPropertyPage(object):
     """
@@ -707,31 +721,18 @@ class DependencyPropertyPage(object):
     def construct(self):
         page = gtk.VBox()
 
-        hbox = gtk.HBox()
-        label = gtk.Label(_('Dependency type'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox = create_hbox_label(self, page, _('Dependency type'))
 
         self.combo = create_uml_combo(self.DEPENDENCY_TYPES,
             self._on_dependency_type_change)
-
         hbox.pack_start(self.combo, expand=False)
-        page.pack_start(hbox, expand=False)
 
-        hbox = gtk.HBox()
-
-        label = gtk.Label(_('Automatic'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox = create_hbox_label(self, page, _('Automatic'))
 
         button = gtk.CheckButton()
         button.set_active(self.context.auto_dependency)
         button.connect('toggled', self._on_auto_dependency_change)
         hbox.pack_start(button)
-
-        page.pack_start(hbox, expand=False)
 
         page.show_all()
 
