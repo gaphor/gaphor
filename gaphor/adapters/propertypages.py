@@ -1190,7 +1190,6 @@ class MessagePropertyPage(NamedItemPropertyPage):
         combo = self.combo = create_uml_combo(self.MESSAGE_SORT,
                 self._on_message_sort_change)
 
-        combo = self.combo
         index = combo.get_model().get_index(subject.messageSort)
         combo.set_active(index)
 
