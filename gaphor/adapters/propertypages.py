@@ -123,6 +123,67 @@ def swap_on_keypress(tree, event):
         model, iter = tree.get_selection().get_selected()
         model.swap(iter, model.iter_prev(iter))
         return True
+
+
+class UMLComboModel(gtk.ListStore):
+    """
+    UML combo box model.
+
+    Model allows to easily create a combo box with values and their labels,
+    for example
+
+        label1  ->  value1
+        label2  ->  value2
+        label3  ->  value3
+
+    Labels are displayed by combo box and programmer has easy access to
+    values associated with given label.
+
+    Attributes:
+
+    - _data: model data
+    - _indices: dictionary of values' indices
+    """
+    def __init__(self, data):
+        super(UMLComboModel, self).__init__(str)
+
+        self._indices = {}
+        self._data = data
+
+        # add labels to underlying model and store index information
+        for i, (label, value) in enumerate(data):
+            self.append([label])
+            self._indices[value] = i
+
+        
+    def get_index(self, value):
+        """
+        Return index of a ``value``.
+        """
+        return self._indices[value]
+
+
+    def get_value(self, index):
+        """
+        Get value for given ``index``.
+        """
+        return self._data[index][1]
+
+
+
+def create_uml_combo(data, callback):
+    """
+    Create a combo box using ``UMLComboModel`` model.
+
+    Combo box is returned.
+    """
+    model = UMLComboModel(data)
+    combo = gtk.ComboBox(model)
+    cell = gtk.CellRendererText()
+    combo.pack_start(cell, True)
+    combo.add_attribute(cell, 'text', 0)
+    combo.connect('changed', callback)
+    return combo
         
 
 @transactional
@@ -169,6 +230,8 @@ def watch_attribute(attribute, widget, handler):
     def destroy_handler(_widget):
         Application.unregister_handler(attribute_watcher)
     widget.connect('destroy', destroy_handler)
+
+
 
 
 class CommentItemPropertyPage(object):
@@ -1091,6 +1154,72 @@ class ComponentPropertyPage(NamedItemPropertyPage):
 
 
 component.provideAdapter(ComponentPropertyPage, name='Properties')
+
+
+class MessagePropertyPage(NamedItemPropertyPage):
+    interface.implements(IPropertyPage)
+    component.adapts(items.MessageItem)
+
+    MESSAGE_SORT = (
+        ('Call', 'synchCall'),
+        ('Asynchronous', 'asynchCall'),
+        ('Signal', 'asynchSignal'),
+        ('Create', 'createMessage'),
+        ('Delete', 'deleteMessage'),
+        ('Reply', 'reply'))
+
+    def construct(self):
+        page = super(MessagePropertyPage, self).construct()
+
+        subject = self.context.subject
+        
+        if not subject:
+            return page
+
+        hbox = gtk.HBox()
+        label = gtk.Label(_('Message sort'))
+        label.set_justify(gtk.JUSTIFY_LEFT)
+        self.size_group.add_widget(label)
+        hbox.pack_start(label, expand=False)
+
+        hbox = gtk.HBox()
+        page.pack_start(hbox, expand=False)
+
+        self.combo = create_uml_combo(self.MESSAGE_SORT,
+                self._on_message_sort_change)
+
+        hbox.pack_start(self.combo, expand=False)
+        page.pack_start(hbox, expand=False)
+
+        self.update()
+
+        return page
+
+
+    def update(self):
+        """
+        Update message sort combo box.
+        """
+        context = self.context
+        if context and context.subject:
+            subject = context.subject
+            combo = self.combo
+            index = combo.get_model().get_index(subject.messageSort)
+            combo.set_active(index)
+
+
+    @transactional
+    def _on_message_sort_change(self, combo):
+        """
+        Update message item's message sort information.
+        """
+        combo = self.combo
+        ms = combo.get_model().get_value(combo.get_active())
+        self.context.set_sort(ms)
+
+         
+
+component.provideAdapter(MessagePropertyPage, name='Properties')
 
 
 # vim:sw=4:et:ai
