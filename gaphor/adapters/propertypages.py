@@ -1173,21 +1173,14 @@ class MessagePropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = gtk.HBox()
-        page.pack_start(hbox, expand=False)
-
-        label = gtk.Label(_('Message sort'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox = create_hbox_label(self, page, _('Message sort'))
 
         combo = self.combo = create_uml_combo(self.MESSAGE_SORT,
                 self._on_message_sort_change)
+        hbox.pack_start(combo, expand=False)
 
         index = combo.get_model().get_index(subject.messageSort)
         combo.set_active(index)
-
-        hbox.pack_start(combo, expand=False)
 
         return page
 
