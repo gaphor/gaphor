@@ -693,7 +693,7 @@ class DependencyPropertyPage(object):
 
     element_factory = inject('element_factory')
 
-    dependency_types = (
+    DEPENDENCY_TYPES = (
         (_('Dependency'), UML.Dependency),
         (_('Usage'), UML.Usage),
         (_('Realization'), UML.Realization),
@@ -715,20 +715,15 @@ class DependencyPropertyPage(object):
 
         dependency_type = gtk.ListStore(str)
         
-        for t, l in self.dependency_types:
+        for t, l in self.DEPENDENCY_TYPES:
             dependency_type.append([t])
         
         self.dependency_type = dependency_type
         
-        combo = gtk.ComboBox(dependency_type)
-        cell = gtk.CellRendererText()
-        combo.pack_start(cell, True)
-        combo.add_attribute(cell, 'text', 0)
-        combo.connect('changed', self._on_dependency_type_change)
-        self.combo = combo
+        self.combo = create_uml_combo(self.DEPENDENCY_TYPES,
+            self._on_dependency_type_change)
 
-        hbox.pack_start(combo, expand=False)
-
+        hbox.pack_start(self.combo, expand=False)
         page.pack_start(hbox, expand=False)
 
         hbox = gtk.HBox()
@@ -751,18 +746,26 @@ class DependencyPropertyPage(object):
 
         return page
 
+
     def update(self):
-        for index, (_, dep_type) in enumerate(self.dependency_types):
-            if dep_type is self.context.dependency_type:
-                self.combo.set_active(index)
-                break
+        """
+        Update dependency type combo box.
+        """
+        combo = self.combo
+        context = self.context
+        index = combo.get_model().get_index(context.dependency_type)
+        combo.set_active(index)
+
 
     @transactional
     def _on_dependency_type_change(self, combo):
-        if self.context.subject:
-            new_class = self.dependency_types[combo.get_active()][1]
-            self.element_factory.swap_element(self.context.subject, new_class)
-            self.context.dependency_type = new_class
+        subject = self.context.subject
+        if subject:
+            combo = self.combo
+            cls = combo.get_model().get_value(combo.get_active())
+            self.element_factory.swap_element(subject, cls)
+            self.context.dependency_type = cls
+
 
     @transactional
     def _on_auto_dependency_change(self, button):
@@ -1200,9 +1203,8 @@ class MessagePropertyPage(NamedItemPropertyPage):
         """
         Update message sort combo box.
         """
-        context = self.context
-        if context and context.subject:
-            subject = context.subject
+        subject = self.context.subject
+        if subject:
             combo = self.combo
             index = combo.get_model().get_index(subject.messageSort)
             combo.set_active(index)
