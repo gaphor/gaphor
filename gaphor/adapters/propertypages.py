@@ -713,13 +713,6 @@ class DependencyPropertyPage(object):
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
-        dependency_type = gtk.ListStore(str)
-        
-        for t, l in self.DEPENDENCY_TYPES:
-            dependency_type.append([t])
-        
-        self.dependency_type = dependency_type
-        
         self.combo = create_uml_combo(self.DEPENDENCY_TYPES,
             self._on_dependency_type_change)
 
