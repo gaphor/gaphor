@@ -126,7 +126,6 @@ class DependencyItem(DiagramLine):
     def draw(self, context):
         if self._dash_style:
             context.cairo.set_dash((7.0, 5.0), 0)
-        # TODO: draw stereotype
         super(DependencyItem, self).draw(context)
 
     @staticmethod
