@@ -21,8 +21,8 @@ specifications.
 
 Asynchronous Signal
 --------------------
-It is not clear how to draw signals. It is usually drawn with a half-arrow.
-This approach is used in Gaphor, too.
+It is not clear how to draw signals. It is usually drawn with a half-open
+arrow.  This approach is used in Gaphor, too.
 
 Delete Message
 --------------
@@ -56,6 +56,24 @@ class MessageItem(NamedLine):
         cr.fill_preserve()
 
 
+    def _draw_arrow(self, cr, half=False, filled=True):
+        """
+        Draw an arrow.
+
+        Parameters:
+
+        - half: draw half-open arrow
+        - filled: draw filled arrow
+        """
+        cr.move_to(15, -6)
+        cr.line_to(0, 0)
+        if not half:
+            cr.line_to(15, 6)
+        if filled:
+            cr.close_path()
+            cr.fill_preserve()
+
+
     def draw_head(self, context):
         super(MessageItem, self).draw_head(context)
         cr = context.cairo
@@ -69,22 +87,16 @@ class MessageItem(NamedLine):
         super(MessageItem, self).draw_tail(context)
 
         cr = context.cairo
-
         subject = self.subject
-        if subject and subject.messageKind == 'lost':
-            self._draw_circle(cr)
+        if subject:
+            if subject.messageKind == 'lost':
+                self._draw_circle(cr)
 
-        # we need always some kind of arrow...
-        cr.move_to(15, -6)
-        cr.line_to(0, 0)
-        if subject and subject.messageSort != 'asynchSignal' or not subject:
-            cr.line_to(15, 6)
-
-        # ... which should be filled arrow in some cases
-        # no subject - draw like synchronous call
-        if not subject or subject.messageSort == 'synchCall':
-            cr.close_path()
-            cr.fill_preserve()
+            half = subject.messageSort == 'asynchSignal'
+            filled = subject.messageSort == 'synchCall'
+            self._draw_arrow(cr, half, filled)
+        else:
+            self._draw_arrow(cr)
 
         cr.stroke()
 
