@@ -51,10 +51,17 @@ class MessageItem(NamedLine):
         if subject and subject.messageKind == 'lost':
             self._draw_circle(cr)
 
-        cr.line_to(0, 0)
+        # we need always some kind of arrow...
         cr.move_to(15, -6)
         cr.line_to(0, 0)
         cr.line_to(15, 6)
+
+        # ... which should be filled arrow in some cases
+        # no subject - draw like synchronous call
+        if not subject or subject.messageSort == 'synchCall':
+            cr.close_path()
+            cr.fill_preserve()
+
         cr.stroke()
 
 
@@ -65,6 +72,7 @@ class MessageItem(NamedLine):
         subject = self.subject
         if subject:
             subject.messageSort = ms
+            self.request_update()
 
 
 # vim:sw=4:et
