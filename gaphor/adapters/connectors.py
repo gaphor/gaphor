@@ -1196,12 +1196,15 @@ class MessageLifelineConnect(ElementConnect):
                 event.covered = received.subject
 
 
-    def disconnect_lifelines(self, line, send, received):
+    def disconnect_lifelines(self, line):
         """
         Disconnect lifeline and set appropriate kind of message item. If
         there are no lifelines connected on both ends, then set UML object
         (subject) to None.
         """
+        send = line.head.connected_to
+        received = line.tail.connected_to
+
         if send:
             event = line.subject.receiveEvent
             if event:
@@ -1298,12 +1301,19 @@ class MessageLifelineConnect(ElementConnect):
 
 
     def disconnect(self, handle):
-        ElementConnect.disconnect(self, handle)
-
         line = self.line
         send = line.head.connected_to
         received = line.tail.connected_to
-        self.disconnect_lifelines(line, send, received)
+
+        # if a message is delete message, then disconnection causes
+        # lifeline to be no longer destroyed (note that there can be
+        # only one delete message connected to lifeline)
+        if received and line.subject.messageSort == 'deleteMessage':
+            received.lifetime.is_destroyed = False
+            received.request_update()
+
+        ElementConnect.disconnect(self, handle)
+        self.disconnect_lifelines(line)
 
         lifetime = self.element.lifetime
         lifetime._messages_count -= 1

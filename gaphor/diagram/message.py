@@ -96,14 +96,4 @@ class MessageItem(NamedLine):
         super(MessageItem, self).draw(context)
 
 
-    def set_sort(self, ms):
-        """
-        Set message sort.
-        """
-        subject = self.subject
-        if subject:
-            subject.messageSort = ms
-            self.request_update()
-
-
 # vim:sw=4:et

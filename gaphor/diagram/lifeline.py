@@ -1,5 +1,15 @@
 """
 Lifeline diagram item.
+
+Implementation Details
+======================
+
+Destruction Event
+-----------------
+Occurence specification is not implemented, therefore destruction event
+cannot be supported. Still, destruction event notation is shown at the
+bottom of the lifeline's lifetime when delete message is connected to a
+lifeline.
 """
 
 import gaphas
@@ -13,6 +23,11 @@ from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 
 class LifetimeItem(object):
+    """
+    Attributes:
+
+    - _is_destroyed: check if delete message is connected
+    """
 
     MIN_LENGTH = 10
 
@@ -23,12 +38,19 @@ class LifetimeItem(object):
         self._handles[0].movable = False
         self._handles[0].visible = False
         self._messages_count = 0
+        self._is_destroyed = False
 
     top = property(lambda s: s._handles[0])
 
     bottom = property(lambda s: s._handles[1])
 
     length = property(lambda s: s._handles[1].y - s._handles[0].y)
+
+    def _set_destroyed(self, is_destroyed):
+        self._is_destroyed = is_destroyed
+
+    is_destroyed = property(lambda s: s._is_destroyed, _set_destroyed)
+
 
     def is_visible(self):
         top, bottom = self._handles
@@ -59,6 +81,16 @@ class LifetimeItem(object):
             cr.line_to(bh.x, bh.y)
             cr.stroke()
             cr.restore()
+
+            # draw destruction event
+            if self._is_destroyed:
+                d1 = 8
+                d2 = d1 * 2
+                cr.move_to(bh.x - d1, bh.y - d2)
+                cr.line_to(bh.x + d1, bh.y)
+                cr.move_to(bh.x - d1, bh.y)
+                cr.line_to(bh.x + d1, bh.y - d2)
+                cr.stroke()
 
     def handles(self):
         return self._handles

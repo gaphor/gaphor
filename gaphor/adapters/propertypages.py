@@ -1168,14 +1168,25 @@ class MessagePropertyPage(NamedItemPropertyPage):
     def construct(self):
         page = super(MessagePropertyPage, self).construct()
 
-        subject = self.context.subject
+        context = self.context
+        subject = context.subject
         
         if not subject:
             return page
-
         hbox = create_hbox_label(self, page, _('Message sort'))
 
-        combo = self.combo = create_uml_combo(self.MESSAGE_SORT,
+
+        sort_data = self.MESSAGE_SORT
+        lifeline = context.tail.connected_to
+
+        # disallow connecting two delete messages to a lifeline
+        if lifeline and lifeline.lifetime.is_destroyed \
+                and subject.messageSort != 'deleteMessage':
+            sort_data = list(sort_data)
+            assert sort_data[4][1] == 'deleteMessage'
+            del sort_data[4]
+
+        combo = self.combo = create_uml_combo(sort_data,
                 self._on_message_sort_change)
         hbox.pack_start(combo, expand=False)
 
@@ -1192,8 +1203,24 @@ class MessagePropertyPage(NamedItemPropertyPage):
         """
         combo = self.combo
         ms = combo.get_model().get_value(combo.get_active())
-        self.context.set_sort(ms)
 
+        context = self.context
+        subject = context.subject
+        lifeline = context.tail.connected_to
+        lifetime = lifeline.lifetime
+
+        #
+        # allow only one delete message to connect to lifeline's lifetime
+        # destroyed status can be changed only by delete message itself
+        #
+        if lifeline and subject.messageSort == 'deleteMessage' \
+                or not lifetime.is_destroyed:
+            is_destroyed = ms == 'deleteMessage'
+            lifetime.is_destroyed = is_destroyed
+            lifeline.request_update()
+
+        subject.messageSort = ms
+        context.request_update()
          
 
 component.provideAdapter(MessagePropertyPage, name='Properties')
