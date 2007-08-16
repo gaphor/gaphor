@@ -22,34 +22,40 @@ from gaphor.diagram.diagramline import NamedLine
 # Message.arguments provides a list of arguments for the operation.
 #
 class MessageItem(NamedLine):
-    def draw_tail(self, context):
+    def _draw_circle(self, cr):
+        """
+        Draw circle for lost/found messages.
+        """
+        cr.save()
+        r = 10
+        # method is called by draw_head or by draw_tail methods,
+        # so draw in (0, 0))
+        path_ellipse(cr, 0, 0, r, r)
+        cr.fill_preserve()
+        cr.restore()
+
+
+    def draw_head(self, context):
+        super(MessageItem, self).draw_head(context)
         cr = context.cairo
+        subject = self.subject
+        if subject and subject.messageKind == 'found':
+            self._draw_circle(cr)
+
+
+    def draw_tail(self, context):
+        super(MessageItem, self).draw_tail(context)
+
+        cr = context.cairo
+        subject = self.subject
+        if subject and subject.messageKind == 'lost':
+            self._draw_circle(cr)
+
         cr.line_to(0, 0)
-        cr.stroke()
         cr.move_to(15, -6)
         cr.line_to(0, 0)
         cr.line_to(15, 6)
-
-
-    def draw(self, context):
-        super(MessageItem, self).draw(context)
-        cr = context.cairo
-
-        subject = self.subject
-        if subject:
-            if self.subject.messageKind == 'lost':
-                pos = self.tail.pos
-            elif self.subject.messageKind == 'found':
-                pos = self.head.pos
-            else:
-                pos = None
-
-            if pos:
-                # draw circle for lost/found messages
-                r = 10
-                path_ellipse(cr, pos[0], pos[1], r, r)
-                cr.set_line_width(0.01)
-                cr.fill()
+        cr.stroke()
 
 
     def set_sort(self, ms):
