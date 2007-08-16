@@ -19,9 +19,10 @@ UML 2.1.1 specification says that reply message should be drawn with an
 open arrow. This is visible on examples in UML 2.0 and UML 2.1.1
 specifications.
 
-Asynchronous Message
+Asynchronous Signal
 --------------------
-It is not clear how to draw asynchronous messages. 
+It is not clear how to draw signals. It is usually drawn with a half-arrow.
+This approach is used in Gaphor, too.
 
 Delete Message
 --------------
@@ -76,7 +77,8 @@ class MessageItem(NamedLine):
         # we need always some kind of arrow...
         cr.move_to(15, -6)
         cr.line_to(0, 0)
-        cr.line_to(15, 6)
+        if subject and subject.messageSort != 'asynchSignal' or not subject:
+            cr.line_to(15, 6)
 
         # ... which should be filled arrow in some cases
         # no subject - draw like synchronous call
