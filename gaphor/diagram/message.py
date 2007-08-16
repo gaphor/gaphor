@@ -9,10 +9,11 @@ Implementation Issues
 Reply Messages
 --------------
 Different sources show that reply message has filled arrow, including
-UML 2.0. UML 2.1.1 specification says that reply message should be drawn
-with an open arrow.
+UML 2.0.
 
-We draw reply message with a filled arrow.
+UML 2.1.1 specification says that reply message should be drawn with an
+open arrow. This is visible on examples in UML 2.0 and UML 2.1.1
+specifications.
 
 Asynchronous Message
 --------------------
@@ -62,7 +63,7 @@ class MessageItem(NamedLine):
 
         # ... which should be filled arrow in some cases
         # no subject - draw like synchronous call
-        if not subject or subject.messageSort in ('synchCall', 'reply'):
+        if not subject or subject.messageSort in ('synchCall'):
             cr.close_path()
             cr.fill_preserve()
 
