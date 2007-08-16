@@ -63,7 +63,7 @@ class MessageItem(NamedLine):
 
         # ... which should be filled arrow in some cases
         # no subject - draw like synchronous call
-        if not subject or subject.messageSort in ('synchCall'):
+        if not subject or subject.messageSort == 'synchCall':
             cr.close_path()
             cr.fill_preserve()
 
