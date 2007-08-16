@@ -1195,15 +1195,6 @@ class MessageLifelineConnect(ElementConnect):
                 event.receiveMessage = message
                 event.covered = received.subject
 
-        if send and received:
-            assert send.__class__ == received.__class__
-            kind = 'complete'
-        elif send and not received:
-            kind = 'lost'
-        elif not send and received:
-            kind = 'found'
-
-        message.messageKind = kind
 
     def disconnect_lifelines(self, line, send, received):
         """
@@ -1212,7 +1203,6 @@ class MessageLifelineConnect(ElementConnect):
         (subject) to None.
         """
         if send:
-            line.subject.messageKind = 'lost'
             event = line.subject.receiveEvent
             if event:
                 event.receiveMessage = None
@@ -1220,7 +1210,6 @@ class MessageLifelineConnect(ElementConnect):
                 del event
 
         if received:
-            line.subject.messageKind = 'found'
             event = line.subject.sendEvent
             if event:
                 event.sendMessage = None
@@ -1233,7 +1222,6 @@ class MessageLifelineConnect(ElementConnect):
         if __debug__:
             m = line.subject
 
-            # see semantics of message in UML specs
             assert not m or m and \
                 (m.sendEvent and m.receiveEvent and m.messageKind == 'complete' \
                  or m.sendEvent and not m.receiveEvent and m.messageKind == 'lost' \

@@ -216,4 +216,22 @@ Component.required = property(component_required, doc = \
     Interfaces required by component. 
     """)
 del component_required
+%%
+override Message.messageKind
+
+def message_messageKind(self):
+    kind = 'unknown'
+    if self.sendEvent:
+        kind = 'lost'
+        if self.receiveEvent:
+            kind = 'complete'
+    elif self.receiveEvent:
+        kind = 'found'
+    return kind
+
+Message.messageKind = property(message_messageKind, doc=\
+    """
+    MessageKind
+    """)
+del message_messageKind
 
