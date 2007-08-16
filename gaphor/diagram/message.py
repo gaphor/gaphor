@@ -65,6 +65,15 @@ class MessageItem(NamedLine):
         cr.stroke()
 
 
+    def draw(self, context):
+        subject = self.subject
+        if subject and subject.messageSort in ('createMessage', 'reply'):
+            cr = context.cairo
+            cr.set_dash((7.0, 5.0), 0)
+
+        super(MessageItem, self).draw(context)
+
+
     def set_sort(self, ms):
         """
         Set message sort.
