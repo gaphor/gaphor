@@ -1173,25 +1173,28 @@ class MessagePropertyPage(NamedItemPropertyPage):
         
         if not subject:
             return page
-        hbox = create_hbox_label(self, page, _('Message sort'))
 
+        if context.is_communication():
+            pass
+        else:
+            hbox = create_hbox_label(self, page, _('Message sort'))
 
-        sort_data = self.MESSAGE_SORT
-        lifeline = context.tail.connected_to
+            sort_data = self.MESSAGE_SORT
+            lifeline = context.tail.connected_to
 
-        # disallow connecting two delete messages to a lifeline
-        if lifeline and lifeline.lifetime.is_destroyed \
-                and subject.messageSort != 'deleteMessage':
-            sort_data = list(sort_data)
-            assert sort_data[4][1] == 'deleteMessage'
-            del sort_data[4]
+            # disallow connecting two delete messages to a lifeline
+            if lifeline and lifeline.lifetime.is_destroyed \
+                    and subject.messageSort != 'deleteMessage':
+                sort_data = list(sort_data)
+                assert sort_data[4][1] == 'deleteMessage'
+                del sort_data[4]
 
-        combo = self.combo = create_uml_combo(sort_data,
-                self._on_message_sort_change)
-        hbox.pack_start(combo, expand=False)
+            combo = self.combo = create_uml_combo(sort_data,
+                    self._on_message_sort_change)
+            hbox.pack_start(combo, expand=False)
 
-        index = combo.get_model().get_index(subject.messageSort)
-        combo.set_active(index)
+            index = combo.get_model().get_index(subject.messageSort)
+            combo.set_active(index)
 
         return page
 

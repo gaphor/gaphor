@@ -55,6 +55,24 @@ from gaphor.diagram.diagramline import NamedLine
 
 
 class MessageItem(NamedLine):
+    """
+    Attributes:
+
+    - _is_communication: check if message is on communication diagram
+    """
+    def __init__(self, id=None):
+        super(MessageItem, self).__init__(id)
+        self._is_communication = False
+
+
+    def post_update(self, context):
+        """
+        Update communication diagram information.
+        """
+        super(MessageItem, self).post_update(context)
+        self._is_communication = self.is_communication()
+
+
     def _draw_circle(self, cr):
         """
         Draw circle for lost/found messages.
@@ -86,6 +104,11 @@ class MessageItem(NamedLine):
 
     def draw_head(self, context):
         cr = context.cairo
+        # no head drawing in case of communication diagram
+        if self._is_communication:
+            cr.move_to(0, 0)
+            return
+
         cr.move_to(0, 0)
 
         subject = self.subject
@@ -98,6 +121,12 @@ class MessageItem(NamedLine):
 
     def draw_tail(self, context):
         cr = context.cairo
+
+        # no tail drawing in case of communication diagram
+        if self._is_communication:
+            cr.line_to(0, 0)
+            return
+
         subject = self.subject
 
         if subject and subject.messageSort in ('createMessage', 'reply'):
@@ -125,8 +154,18 @@ class MessageItem(NamedLine):
 
 
     def draw(self, context):
-        subject = self.subject
         super(MessageItem, self).draw(context)
+
+
+    def is_communication(self):
+        """
+        Check if message is connecting to lifelines on communication
+        diagram.
+        """
+        lf1 = self.head.connected_to
+        lf2 = self.tail.connected_to
+        return lf1 and not lf1.lifetime.is_visible() \
+                or lf2 and not lf2.lifetime.is_visible()
 
 
 # vim:sw=4:et
