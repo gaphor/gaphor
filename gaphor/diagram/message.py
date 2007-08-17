@@ -3,8 +3,8 @@ Sequence and communication diagram messages.
 
 Messages are implemented according to UML 2.1.1 specification.
 
-Implementation Issues
-=====================
+Implementation Details
+======================
 Message sort is supported but occurence specification is not implemented.
 This means that model drawn on a diagram is not complete on UML datamodel
 level, still it is valid UML diagram (see Lifelines Diagram in UML
@@ -36,6 +36,14 @@ Events
 Occurence specification is not implemented, therefore
 - no events implemented (i.e. destroy event)
 - no message sequence number on communication diagram
+
+Operations
+----------
+``Lifeline.represents`` attribute is ``None``, so it is not possible to
+specify operation (or signal) for a message. Instead, one has to put
+operation information in message's name.
+
+See also ``lifeline`` module documentation.
 """
 
 from math import pi

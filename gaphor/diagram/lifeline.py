@@ -4,6 +4,14 @@ Lifeline diagram item.
 Implementation Details
 ======================
 
+Represented Classifier
+----------------------
+It is not clear how to attach a connectable element to a lifeline. For now,
+``Lifeline.represents`` is ``None``. Ideas:
+- drag and drop classifier from tree onto a lifeline
+- match lifeline's name with classifier's name (what about namespace?)
+- connect message to classifier, then classifier becomes a lifeline
+
 Destruction Event
 -----------------
 Occurence specification is not implemented, therefore destruction event
