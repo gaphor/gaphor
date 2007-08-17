@@ -12,8 +12,6 @@ class NamespaceTestCase(TestCase):
     def test_all(self):
         factory = Application.get_service('element_factory')
 
-        ns = NamespaceModel(factory)
-
         m = factory.create(UML.Package)
         m.name = 'm'
         a = factory.create(UML.Package)
@@ -46,8 +44,10 @@ class NamespaceTestCase(TestCase):
         assert e in b.ownedMember
         assert e.namespace is b
 
-#        # We have a model loaded. Use it!
-#        factory.notify_model()
+        ns = NamespaceModel(factory)
+
+        # We have a model loaded. Use it!
+        factory.notify_model()
 
         print '---'
         print ns.root
