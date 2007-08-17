@@ -19,30 +19,30 @@ class AttributeChangeEvent(object):
 class AssociationChangeEvent(object):
     interface.implements(IAssociationChangeEvent)
 
-    def __init__(self, element, associaton):
+    def __init__(self, element, association):
         self.element = element
-        self.property = associaton
+        self.property = association
 
 
 class AssociationSetEvent(AssociationChangeEvent):
 
-    def __init__(self, element, associaton, old_value, new_value):
-        AssociationChangeEvent.__init__(self, element, associaton)
+    def __init__(self, element, association, old_value, new_value):
+        AssociationChangeEvent.__init__(self, element, association)
         self.old_value = old_value
         self.new_value = new_value
 
 
 class AssociationAddEvent(AssociationChangeEvent):
 
-    def __init__(self, element, associaton, new_value):
-        AssociationChangeEvent.__init__(self, element, associaton)
+    def __init__(self, element, association, new_value):
+        AssociationChangeEvent.__init__(self, element, association)
         self.new_value = new_value
 
 
 class AssociationDeleteEvent(AssociationChangeEvent):
 
-    def __init__(self, element, associaton, old_value):
-        AssociationChangeEvent.__init__(self, element, associaton)
+    def __init__(self, element, association, old_value):
+        AssociationChangeEvent.__init__(self, element, association)
         self.old_value = old_value
 
 

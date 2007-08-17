@@ -44,12 +44,6 @@ class umlproperty(object):
     connected, they will be notified when the value changes.
     """
 
-    def add_deriviate(self, deriviate):
-        try:
-            self.deriviates.append(deriviate)
-        except AttributeError:
-            self.deriviates = [ deriviate ]
-
     def __get__(self, obj, class_=None):
         if obj:
             return self._get(obj)
@@ -80,42 +74,6 @@ class umlproperty(object):
             obj.notify(self.name, pspec=self)
         except Exception, e:
             log.error(str(e), e)
-
-        # we need to check if a deriviate is part of the current object:
-        # TODO: can we do this faster?
-        try:
-            deriviates = self.deriviates
-        except AttributeError:
-            pass # no derivedunion or redefine attribute
-        else:
-            values = []
-            for c in type(obj).__mro__:
-                values.extend(c.__dict__.values())
-
-            for d in deriviates:
-                if d in values:
-                    try:
-                        d.notify(obj)
-                    except Exception, e:
-                        log.error(e, e)
-
-
-#class undoattributeaction(undoaction):
-#    """
-#    This undo action contains one undo action for an attribute
-#    property.
-#    """
-#
-#    def undo(self):
-#        self.redo_value = self.prop._get(self.obj)
-#        setattr(self.obj, self.prop._name, self.value)
-#        self.prop.notify(self.obj)
-#        return self.redo
-#
-#    def redo(self):
-#        setattr(self.obj, self.prop._name, self.redo_value)
-#        self.prop.notify(self.obj)
-#        return self.undo
 
 
 class attribute(umlproperty):
@@ -472,11 +430,10 @@ class association(umlproperty):
 
 
 class derivedunion(umlproperty):
-    """Derived union
+    """
+    Derived union
     Element.union = derivedunion('union', subset1, subset2..subsetn)
     The subsets are the properties that participate in the union (Element.name),
-
-    The derivedunion is added to the subsets deriviates list.
     """
 
     def __init__(self, name, lower, upper, *subsets):
@@ -484,10 +441,11 @@ class derivedunion(umlproperty):
         self._name = intern('_' + name)
         self.lower = lower
         self.upper = upper
-        self.subsets = subsets
+        self.subsets = set(subsets)
         self.single = len(subsets) == 1
-        for s in subsets:
-            s.add_deriviate(self)
+
+        component.provideHandler(self._association_changed)
+
 
     def load(self, obj, value):
         raise ValueError, 'Derivedunion: Properties should not be loaded in a derived union %s: %s' % (self.name, value)
@@ -528,6 +486,20 @@ class derivedunion(umlproperty):
     def _del(self, obj, value=None):
         raise AttributeError, 'Can not delete values on a union'
 
+    @component.adapter(IAssociationChangeEvent)
+    def _association_changed(self, event):
+        if event.property in self.subsets:
+            # mimic the events for Set/Add/Delete
+            if isinstance(event, AssociationSetEvent):
+                component.handle(AssociationSetEvent(event.element, self, event.old_value, event.new_value))
+            elif isinstance(event, AssociationAddEvent):
+                component.handle(AssociationAddEvent(event.element, self, event.new_value))
+            elif isinstance(event, AssociationDeleteEvent):
+                component.handle(AssociationDeleteEvent(event.element, self, event.old_value))
+            else:
+                log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
+            self.notify(event.element)
+
 
 class redefine(umlproperty):
     """
@@ -535,8 +507,6 @@ class redefine(umlproperty):
     Element.x = redefine('x', Class, Element.assoc)
     If the redefine eclipses the original property (it has the same name)
     it ensures that the original values are saved and restored.
-
-    This property is connected to the originals deriviates list.
     """
 
     def __init__(self, name, type, original):
@@ -544,7 +514,8 @@ class redefine(umlproperty):
         self._name = intern('_' + name)
         self.type = type
         self.original = original
-        original.add_deriviate(self)
+
+        component.provideHandler(self._association_changed)
 
     upper = property(lambda s: s.original.upper)
     lower = property(lambda s: s.original.lower)
@@ -584,6 +555,20 @@ class redefine(umlproperty):
 
     def _del(self, obj, value, from_opposite=False):
         return self.original._del(obj, value, from_opposite)
+
+    @component.adapter(IAssociationChangeEvent)
+    def _association_changed(self, event):
+        if event.property is self.original:
+            # mimic the events for Set/Add/Delete
+            if isinstance(event, AssociationSetEvent):
+                component.handle(AssociationSetEvent(event.element, self, event.old_value, event.new_value))
+            elif isinstance(event, AssociationAddEvent):
+                component.handle(AssociationAddEvent(event.element, self, event.new_value))
+            elif isinstance(event, AssociationDeleteEvent):
+                component.handle(AssociationDeleteEvent(event.element, self, event.old_value))
+            else:
+                log.error('Don''t know how to handle event ' + str(event) + ' for redefined association')
+            self.notify(event.element)
 
 
 try:

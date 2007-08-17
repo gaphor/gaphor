@@ -373,5 +373,69 @@ class PropertiesTestCase(unittest.TestCase):
         assert a.is_unlinked
         assert b.is_unlinked
 
+    def test_derivedunion(self):
+        from zope import component
+        from gaphor.application import Application
+        from gaphor.UML.event import AssociationChangeEvent
+        
+        class A(Element):
+            is_unlinked = False
+            def unlink(self):
+                self.is_unlinked = True
+                Element.unlink(self)
+
+        A.a = association('a', A, upper=1)
+        A.b = association('b', A)
+
+        A.derived_a = derivedunion('derived_a', 0, 1, A.a)
+        A.derived_b = derivedunion('derived_b', 0, '*', A.b)
+        events = []
+        @component.adapter(AssociationChangeEvent)
+        def handler(event, events=events):
+            events.append(event)
+
+        Application.register_handler(handler)
+        try:
+            a = A()
+            a.a = A()
+            assert len(events) == 2
+            assert events[0].property is A.derived_a
+            assert events[1].property is A.a
+        finally:
+            Application.unregister_handler(handler)
+
+    def test_redefine(self):
+        from zope import component
+        from gaphor.application import Application
+        from gaphor.UML.event import AssociationChangeEvent
+        
+        class A(Element):
+            is_unlinked = False
+            def unlink(self):
+                self.is_unlinked = True
+                Element.unlink(self)
+
+        A.a = association('a', A, upper=1)
+
+        A.a = redefine('a', A, A.a)
+        events = []
+        @component.adapter(AssociationChangeEvent)
+        def handler(event, events=events):
+            events.append(event)
+
+        Application.register_handler(handler)
+        try:
+            a = A()
+            a.a = A()
+            assert len(events) == 2
+            assert events[0].property is A.a, events[0].property
+            assert events[1].property is A.a.original, events[1].property
+        finally:
+            Application.unregister_handler(handler)
+
+
+if __name__ == '__main__':
+    print 'run'
+    unittest.main()
 
 # vim:sw=4:et:ai
