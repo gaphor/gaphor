@@ -507,7 +507,7 @@ class MainWindow(ToplevelWindow):
 
     @action(name='tree-view-refresh', label=_('_Refresh'))
     def tree_view_refresh(self):
-        self._tree_model.refresh()
+        self._tree_view.get_model().refresh()
 
 
 gtk.accel_map_add_filter('gaphor')
