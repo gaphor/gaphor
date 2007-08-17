@@ -38,6 +38,8 @@ Occurence specification is not implemented, therefore
 - no message sequence number on communication diagram
 """
 
+from math import pi
+
 from gaphas.util import path_ellipse
 
 from gaphor import UML
@@ -49,11 +51,11 @@ class MessageItem(NamedLine):
         """
         Draw circle for lost/found messages.
         """
-        r = 8
         # method is called by draw_head or by draw_tail methods,
         # so draw in (0, 0))
-        path_ellipse(cr, 0, 0, r, r)
-        cr.fill_preserve()
+        cr.set_line_width(0.01)
+        cr.arc(0.0, 0.0, 4, 0.0, 2 * pi)
+        cr.fill()
 
 
     def _draw_arrow(self, cr, half=False, filled=True):
@@ -65,35 +67,48 @@ class MessageItem(NamedLine):
         - half: draw half-open arrow
         - filled: draw filled arrow
         """
-        cr.move_to(15, -6)
+        cr.move_to(15, 6)
         cr.line_to(0, 0)
         if not half:
-            cr.line_to(15, 6)
+            cr.line_to(15, -6)
         if filled:
             cr.close_path()
             cr.fill_preserve()
 
 
     def draw_head(self, context):
-        super(MessageItem, self).draw_head(context)
         cr = context.cairo
+        cr.move_to(0, 0)
 
         subject = self.subject
         if subject and subject.messageKind == 'found':
             self._draw_circle(cr)
+            cr.stroke()
+
+        cr.move_to(0, 0)
 
 
     def draw_tail(self, context):
-        super(MessageItem, self).draw_tail(context)
-
         cr = context.cairo
         subject = self.subject
+
+        if subject and subject.messageSort in ('createMessage', 'reply'):
+            cr.set_dash((7.0, 5.0), 0)
+
+        cr.line_to(0, 0)
+        cr.stroke()
+
+        cr.set_dash((), 0)
+
         if subject:
+            w = cr.get_line_width()
             if subject.messageKind == 'lost':
                 self._draw_circle(cr)
+                cr.stroke()
 
+            cr.set_line_width(w)
             half = subject.messageSort == 'asynchSignal'
-            filled = subject.messageSort == 'synchCall'
+            filled = subject.messageSort in ('synchCall', 'deleteMessage')
             self._draw_arrow(cr, half, filled)
         else:
             self._draw_arrow(cr)
@@ -103,10 +118,6 @@ class MessageItem(NamedLine):
 
     def draw(self, context):
         subject = self.subject
-        if subject and subject.messageSort in ('createMessage', 'reply'):
-            cr = context.cairo
-            cr.set_dash((7.0, 5.0), 0)
-
         super(MessageItem, self).draw(context)
 
 
