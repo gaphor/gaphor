@@ -9,7 +9,7 @@ from gaphor.interfaces import IActionProvider
 from interfaces import IUIComponent
 
 from gaphor import UML
-from gaphor.core import _, inject, action, radio_action, build_action_group
+from gaphor.core import _, inject, action, radio_action, build_action_group, transactional
 from namespace import NamespaceModel, NamespaceView
 from diagramtab import DiagramTab
 from toolbox import Toolbox
@@ -62,7 +62,10 @@ class MainWindow(ToplevelWindow):
           </menu>
           <menu action="diagram">
             <menuitem action="tree-view-create-diagram" />
+            <menuitem action="tree-view-create-package" />
+            <separator />
             <menuitem action="tree-view-delete-diagram" />
+            <menuitem action="tree-view-delete-package" />
             <separator />
             <placeholder name="primary" />
             <placeholder name="secondary" />
@@ -93,7 +96,10 @@ class MainWindow(ToplevelWindow):
           <menuitem action="tree-view-rename" />
           <separator />
           <menuitem action="tree-view-create-diagram" />
+          <menuitem action="tree-view-create-package" />
+          <separator />
           <menuitem action="tree-view-delete-diagram" />
+          <menuitem action="tree-view-delete-package" />
           <separator />
           <menuitem action="tree-view-refresh" />
         </popup>
@@ -402,6 +408,11 @@ class MainWindow(ToplevelWindow):
         """
         element = view.get_selected_element()
         self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, UML.Package)
+        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, UML.Package)
+
+        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, UML.Diagram)
+        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, UML.Package) and not element.presentation
+
         self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
 
     def _insensivate_toolbox(self):
@@ -479,6 +490,7 @@ class MainWindow(ToplevelWindow):
         cell.set_property('editable', 0)
 
     @action(name='tree-view-create-diagram', label=_('_New diagram'), stock_id='gaphor-diagram')
+    @transactional
     def tree_view_create_diagram(self):
         element = self._tree_view.get_selected_element()
         diagram = self.element_factory.create(UML.Diagram)
@@ -491,6 +503,7 @@ class MainWindow(ToplevelWindow):
         self.tree_view_rename_selected()
 
     @action(name='tree-view-delete-diagram', label=_('_Delete diagram'), stock_id='gtk-delete')
+    @transactional
     def tree_view_delete_diagram(self):
         diagram = self._tree_view.get_selected_element()
         assert isinstance(diagram, UML.Diagram)
@@ -504,6 +517,25 @@ class MainWindow(ToplevelWindow):
         if (m.run() == gtk.RESPONSE_YES):
             diagram.unlink()
         m.destroy()
+
+    @action(name='tree-view-create-package', label=_('New _package'), stock_id='gaphor-package')
+    @transactional
+    def tree_view_create_package(self):
+        element = self._tree_view.get_selected_element()
+        package = self.element_factory.create(UML.Package)
+        package.package = element
+
+        package.name = '%s package' % element.name
+
+        self.select_element(package)
+        self.tree_view_rename_selected()
+
+    @action(name='tree-view-delete-package', label=_('Delete pac_kage'), stock_id='gtk-delete')
+    @transactional
+    def tree_view_delete_package(self):
+        package = self._tree_view.get_selected_element()
+        assert isinstance(package, UML.Package)
+        package.unlink()
 
     @action(name='tree-view-refresh', label=_('_Refresh'))
     def tree_view_refresh(self):

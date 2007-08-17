@@ -1,13 +1,18 @@
 # vim:sw=4:et:ai
 
-import unittest
+from gaphor.tests.testcase import TestCase
 import gaphor.UML as UML
 from gaphor.ui.namespace import NamespaceModel
+from gaphor.application import Application
 
-class NamespaceTestCase(unittest.TestCase):
+class NamespaceTestCase(TestCase):
+
+    services = [ 'element_factory' ]
 
     def test_all(self):
-        factory = UML.ElementFactory()
+        factory = Application.get_service('element_factory')
+
+        ns = NamespaceModel(factory)
 
         m = factory.create(UML.Package)
         m.name = 'm'
@@ -41,12 +46,11 @@ class NamespaceTestCase(unittest.TestCase):
         assert e in b.ownedMember
         assert e.namespace is b
 
-
-        ns = NamespaceModel(factory)
-        # We have a model loaded. Use it!
-        factory.notify_model()
+#        # We have a model loaded. Use it!
+#        factory.notify_model()
 
         print '---'
+        print ns.root
         ns.dump()
         assert ns.path_from_element(m) == (0,)
         assert ns.path_from_element(a) == (0, 0)
@@ -55,6 +59,9 @@ class NamespaceTestCase(unittest.TestCase):
         assert ns.path_from_element(d) == (0, 0, 1)
         assert ns.path_from_element(e) == (0, 0, 0, 1)
 
+        return
+
+
         print '--- del.b.ownedClassifier[c]'
         del b.ownedClassifier[c]
         ns.dump()
@@ -62,7 +69,7 @@ class NamespaceTestCase(unittest.TestCase):
         assert ns.path_from_element(a) == (0, 0)
         assert ns.path_from_element(b) == (0, 0, 0)
         assert ns.path_from_element(d) == (0, 0, 1)
-        assert ns.path_from_element(e) == (0, 0, 0, 0)
+        assert ns.path_from_element(e) == (0, 0, 0, 0), ns.path_from_element(e)
         try:
             ns.path_from_element(c)
         except AttributeError:
@@ -109,3 +116,6 @@ class NamespaceTestCase(unittest.TestCase):
         print UML.Class.package
         print UML.Package.ownedClassifier
 
+if __name__ == '__main__':
+    import unittest
+    unittest.main()

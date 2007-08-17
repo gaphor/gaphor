@@ -450,11 +450,14 @@ class derivedunion(umlproperty):
     def load(self, obj, value):
         raise ValueError, 'Derivedunion: Properties should not be loaded in a derived union %s: %s' % (self.name, value)
 
+
     def save(self, obj, save_func):
         pass
 
+
     def __str__(self):
         return '<derivedunion %s: %s>' % (self.name, str(map(str, self.subsets))[1:-1])
+
 
     def _get(self, obj):
         if self.single:
@@ -480,11 +483,14 @@ class derivedunion(umlproperty):
                 assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
                 return u and u[0] or None
 
+
     def _set(self, obj, value):
         raise AttributeError, 'Can not set values on a union'
 
+
     def _del(self, obj, value=None):
         raise AttributeError, 'Can not delete values on a union'
+
 
     @component.adapter(IAssociationChangeEvent)
     def _association_changed(self, event):
@@ -520,16 +526,20 @@ class redefine(umlproperty):
     upper = property(lambda s: s.original.upper)
     lower = property(lambda s: s.original.lower)
 
+
     def load(self, obj, value):
         if self.original.name == self.name:
             self.original.load(obj, value)
+
 
     def save(self, obj, save_func):
         if self.original.name == self.name:
             self.original.save(obj, save_func)
 
+
     def __str__(self):
         return '<redefine %s: %s = %s>' % (self.name, self.type.__name__, str(self.original))
+
 
     def __get__(self, obj, class_=None):
         # No longer needed
@@ -537,24 +547,30 @@ class redefine(umlproperty):
             return self
         return self.original.__get__(obj, class_)
 
+
     def __set__(self, obj, value):
         # No longer needed
         if not isinstance(value, self.type):
             raise AttributeError, 'Value should be of type %s' % self.type.__name__
         self.original.__set__(obj, value)
 
+
     def __delete__(self, obj, value=None):
         # No longer needed
         self.original.__delete__(obj, value)
 
+
     def _get(self, obj):
         return self.original._get(obj)
+
 
     def _set(self, obj, value, from_opposite=False):
         return self.original._set(obj, value, from_opposite)
 
+
     def _del(self, obj, value, from_opposite=False):
         return self.original._del(obj, value, from_opposite)
+
 
     @component.adapter(IAssociationChangeEvent)
     def _association_changed(self, event):
