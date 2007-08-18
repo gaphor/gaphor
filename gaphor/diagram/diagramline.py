@@ -3,6 +3,7 @@ Basic functionality for canvas line based items on a diagram.
 """
 
 import itertools
+from math import atan2, pi
 
 import gaphas
 from gaphas.util import text_extents, text_align
@@ -132,6 +133,19 @@ class DiagramLine(LineItem):
         m = len(handles) / 2
         assert m - 1 >= 0 and m < len(handles)
         return handles[m - 1], handles[m]
+
+
+    def _get_center_pos(self, inverted=False):
+        """
+        Return position in the centre of middle segment of a line. Angle of
+        the middle segment is also returned.
+        """
+        h0, h1 = self._get_middle_segment()
+        pos = (h0.x + h1.x) / 2, (h0.y + h1.y) / 2
+        angle = atan2(h1.y - h0.y, h1.x - h0.x)
+        if inverted:
+            angle += pi
+        return pos, angle
 
 
     def text_align(self, extents, align, padding, outside):

@@ -13,8 +13,6 @@ Plan:
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
-from math import atan2, pi
-
 from gaphas.util import text_extents, text_align, text_multiline
 from gaphas.state import reversible_property
 from gaphas import Item
@@ -156,10 +154,10 @@ class AssociationItem(NamedLine):
 
             if self._show_direction:
                 h0, h1 = self._get_middle_segment()
-                self._dir_angle = atan2(h1.y - h0.y, h1.x - h0.x)
-                self._dir_pos = (h0.x + h1.x) / 2, (h0.y + h1.y) / 2
-                if self.tail_end.subject is self.subject.memberEnd[0]:
-                    self._dir_angle += pi
+                inverted = self.tail_end.subject is self.subject.memberEnd[0]
+                pos, angle = self._get_center_pos(inverted)
+                self._dir_pos = pos
+                self._dir_angle = angle
         else:
             self.draw_head = self.draw_head_undefined
             self.draw_tail = self.draw_tail_undefined
