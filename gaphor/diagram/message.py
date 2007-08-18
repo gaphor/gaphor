@@ -56,13 +56,22 @@ from gaphor.diagram.diagramline import NamedLine
 
 class MessageItem(NamedLine):
     """
+    Message item is drawn on sequence and communication diagrams.
+
+    On communication diagram, message item is decorated with an arrow in
+    the middle of a line.
+
     Attributes:
 
     - _is_communication: check if message is on communication diagram
+    - _arrow_pos: communication arrow position
+    - _arrow_angle: communication arrow angle
     """
     def __init__(self, id=None):
         super(MessageItem, self).__init__(id)
         self._is_communication = False
+        self._arrow_pos = 0, 0
+        self._arrow_angle = 0
 
 
     def post_update(self, context):
@@ -71,6 +80,11 @@ class MessageItem(NamedLine):
         """
         super(MessageItem, self).post_update(context)
         self._is_communication = self.is_communication()
+
+        if self._is_communication:
+            pos, angle = self._get_center_pos()
+            self._arrow_pos = pos
+            self._arrow_angle = angle
 
 
     def _draw_circle(self, cr):
@@ -155,6 +169,24 @@ class MessageItem(NamedLine):
 
     def draw(self, context):
         super(MessageItem, self).draw(context)
+        if self._is_communication:
+            cr = context.cairo
+            cr.save()
+            try:
+                x, y = self._arrow_pos
+                cr.translate(x + 3, y - 6)
+                cr.set_line_width(1.5)
+                cr.rotate(self._arrow_angle)
+                d = 20
+                r = 3
+                cr.move_to(0, 0)
+                cr.line_to(d, 0)
+                cr.line_to(d - r, r)
+                cr.move_to(d - r, -r)
+                cr.line_to(d, 0)
+                cr.stroke()
+            finally:
+                cr.restore()
 
 
     def is_communication(self):
