@@ -71,8 +71,7 @@ class LifetimeItem(object):
 
 
     def _is_visible(self):
-        top, bottom = self._handles
-        return bottom.y - top.y > self.MIN_LENGTH
+        return self.length > self.MIN_LENGTH
 
     is_visible = property(_is_visible)
 
@@ -141,8 +140,7 @@ class LifelineItem(NamedItem):
 
     def save(self, save_func):
         super(LifelineItem, self).save(save_func)
-        top, bottom = self._lifetime.handles()
-        save_func("lifetime-length", bottom.y - top.y)
+        save_func("lifetime-length", self._lifetime.length)
 
 
     def load(self, name, value):
