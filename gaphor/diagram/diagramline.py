@@ -124,6 +124,16 @@ class DiagramLine(LineItem):
         LineItem.postload(self)
 
 
+    def _get_middle_segment(self):
+        """
+        Get middle line segment.
+        """
+        handles = self._handles
+        m = len(handles) / 2
+        assert m - 1 >= 0 and m < len(handles)
+        return handles[m - 1], handles[m]
+
+
     def text_align(self, extents, align, padding, outside):
         handles = self._handles
         halign, valign = align
@@ -132,10 +142,9 @@ class DiagramLine(LineItem):
             p1 = handles[0].pos
             p2 = handles[-1].pos
         elif halign == ALIGN_CENTER:
-            m = len(handles) / 2
-            assert m - 1 >= 0 and m < len(handles)
-            p1 = handles[m - 1].pos
-            p2 = handles[m].pos
+            h0, h1 = self._get_middle_segment()
+            p1 = h0.pos
+            p2 = h1.pos
             x0 = (p1[0] + p2[0]) / 2.0
             y0 = (p1[1] + p2[1]) / 2.0
             p1 = (x0, y0)

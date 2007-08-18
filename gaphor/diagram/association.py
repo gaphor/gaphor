@@ -155,8 +155,7 @@ class AssociationItem(NamedLine):
                 self.draw_tail = self.draw_tail_undefined
 
             if self._show_direction:
-                m = len(self._handles) / 2
-                h0, h1 = self._handles[m - 1], self._handles[m]
+                h0, h1 = self._get_middle_segment()
                 self._dir_angle = atan2(h1.y - h0.y, h1.x - h0.x)
                 self._dir_pos = (h0.x + h1.x) / 2, (h0.y + h1.y) / 2
                 if self.tail_end.subject is self.subject.memberEnd[0]:
