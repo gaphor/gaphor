@@ -34,7 +34,10 @@ class LifetimeItem(object):
     """
     Attributes:
 
-    - _is_destroyed: check if delete message is connected
+    - is_visible: check if lifeline's lifetime is visible
+    - is_destroyed: check if delete message is connected
+    - _messages_count: amount of messages conntected to a lifeline
+    - _c_length: lifeline's lifetime length constraint
     """
 
     MIN_LENGTH = 10
