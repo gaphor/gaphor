@@ -67,22 +67,24 @@ class LifetimeItem(object):
     is_destroyed = property(lambda s: s._is_destroyed, _set_destroyed)
 
 
-    def is_visible(self):
+    def _is_visible(self):
         top, bottom = self._handles
         return bottom.y - top.y > self.MIN_LENGTH
+
+    is_visible = property(_is_visible)
 
 
     def pre_update(self, context):
         # if lifetime is visible and there are messages connected, then
         # disallow hiding of lifetime
-        if not self.is_visible() and self._messages_count > 0:
+        if not self.is_visible and self._messages_count > 0:
             self._c_length.delta = LifetimeItem.MIN_LENGTH * 3 
         elif self._messages_count == 0:
             self._c_length.delta = LifetimeItem.MIN_LENGTH
 
 
     def draw(self, context):
-        if context.hovered or context.focused or self.is_visible():
+        if context.hovered or context.focused or self.is_visible:
             cr = context.cairo
             cr.save()
             cr.set_dash((7.0, 5.0), 0)

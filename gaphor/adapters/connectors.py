@@ -1256,9 +1256,9 @@ class MessageLifelineConnect(ElementConnect):
         opposite = line.opposite(handle)
 
         pos = None
-        if lifetime.is_visible():
+        if lifetime.is_visible:
             if opposite.connected_to:
-                glue_ok = opposite.connected_to.lifetime.is_visible()
+                glue_ok = opposite.connected_to.lifetime.is_visible
             else:
                 glue_ok = True
 
@@ -1276,7 +1276,7 @@ class MessageLifelineConnect(ElementConnect):
         Return handles of one of lifeline head's side or lifetime handles.
         """
         element = self.element
-        if element.lifetime.is_visible():
+        if element.lifetime.is_visible:
             return element.handles()[-2:] # return lifeline's lifetime handles
         else:
             return super(MessageLifelineConnect, self)._get_segment(handle)
@@ -1294,7 +1294,7 @@ class MessageLifelineConnect(ElementConnect):
 
         lifetime = self.element.lifetime
         # if no lifetime then disallow making lifetime visible
-        if not lifetime.is_visible():
+        if not lifetime.is_visible:
             lifetime.bottom.movable = False
         # todo: move code above to LifetimeItem class
         lifetime._messages_count += 1
