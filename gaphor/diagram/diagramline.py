@@ -2,7 +2,6 @@
 Basic functionality for canvas line based items on a diagram.
 """
 
-import itertools
 from math import atan2, pi
 
 import gaphas
