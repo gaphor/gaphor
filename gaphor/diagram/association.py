@@ -153,7 +153,6 @@ class AssociationItem(NamedLine):
                 self.draw_tail = self.draw_tail_undefined
 
             if self._show_direction:
-                h0, h1 = self._get_middle_segment()
                 inverted = self.tail_end.subject is self.subject.memberEnd[0]
                 pos, angle = self._get_center_pos(inverted)
                 self._dir_pos = pos
