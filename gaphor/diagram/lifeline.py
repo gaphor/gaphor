@@ -24,7 +24,7 @@ import gaphas
 from gaphas.item import SW, SE
 from gaphas.solver import STRONG
 from gaphas.geometry import distance_line_point, Rectangle
-from gaphas.constraint import EqualsConstraint, CenterConstraint
+from gaphas.constraint import LessThanConstraint, EqualsConstraint, CenterConstraint
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
@@ -41,12 +41,19 @@ class LifetimeItem(object):
 
     def __init__(self):
         super(LifetimeItem, self).__init__()
-        self._handles = [gaphas.Handle(strength=STRONG), gaphas.Handle(strength=STRONG)]
+        self._handles = [gaphas.Handle(strength=STRONG - 1), gaphas.Handle(strength=STRONG)]
 
         self._handles[0].movable = False
         self._handles[0].visible = False
         self._messages_count = 0
         self._is_destroyed = False
+
+        # create constraint to keep bottom handle below top handle
+        top, bottom = self._handles
+        self._c_length = LessThanConstraint(smaller=top.y,
+                bigger=bottom.y,
+                delta=LifetimeItem.MIN_LENGTH)
+
 
     top = property(lambda s: s._handles[0])
 
@@ -64,20 +71,15 @@ class LifetimeItem(object):
         top, bottom = self._handles
         return bottom.y - top.y > self.MIN_LENGTH
 
+
     def pre_update(self, context):
-        top, bottom = self._handles
-
-        d = LifetimeItem.MIN_LENGTH
-
         # if lifetime is visible and there are messages connected, then
         # disallow hiding of lifetime
         if not self.is_visible() and self._messages_count > 0:
-            d *= 3
-        if bottom.y - top.y <= d:
-            bottom.y = top.y + d
+            self._c_length.delta = LifetimeItem.MIN_LENGTH * 3 
+        elif self._messages_count == 0:
+            self._c_length.delta = LifetimeItem.MIN_LENGTH
 
-    def post_update(self, context):
-        pass
 
     def draw(self, context):
         if context.hovered or context.focused or self.is_visible():
@@ -124,6 +126,7 @@ class LifelineItem(NamedItem):
             CenterConstraint(self._handles[SW].x, self._handles[SE].x, bottom.x),
             EqualsConstraint(top.x, bottom.x),
             EqualsConstraint(self._handles[SW].y, top.y),
+            self._lifetime._c_length,
         ]
         self._constraints.extend(constraints)
 
@@ -148,11 +151,6 @@ class LifelineItem(NamedItem):
     def pre_update(self, context):
         super(LifelineItem, self).pre_update(context)
         self._lifetime.pre_update(context)
-
-
-    def post_update(self, context):
-        super(LifelineItem, self).post_update(context)
-        #self._lifetime.post_update(context)
 
 
     def draw(self, context):
