@@ -331,7 +331,7 @@ def swap_on_keypress(tree, event):
         return True
         
 
-#@transactional
+@transactional
 def on_cell_edited(renderer, path, value, model, col):
     """
     Update editable tree model based on fresh user input.
