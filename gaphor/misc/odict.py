@@ -49,4 +49,17 @@ class odict(dict):
 
     def values(self):
         return map(self.get, self._keys)
+    
 
+    def swap(self, k1, k2):
+        """
+        Swap two elements using their keys.
+        """
+        i1 = self._keys.index(k1)
+        i2 = self._keys.index(k2)
+        self._keys[i1], self._keys[i2] = self._keys[i2], self._keys[i1]
+
+
+    def __iter__(self):
+        for k in self._keys:
+            yield k
