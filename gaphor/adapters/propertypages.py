@@ -39,48 +39,82 @@ Press ENTER to edit item, backspace/DEL to remove item.
 Use -/= to move up or move down.\
 """
 
-class UMLCollection(gtk.ListStore):
+
+class EditableTreeModel(gtk.ListStore):
     """
-    GTK tree model for UML collection.
+    Editable GTK tree model based on ListStore model.
+
+    Every row is represented by a list of editable values. Last column
+    contains an object, which is being edited (this column is not
+    displayed). When editable value in first column is set to empty string
+    then object is deleted.
+
+    Last row is empty and contains no object to edit. It allows to enter
+    new values.
+
+    When model is edited, then item is requested to be updated on canvas.
+
+    Attributes:
+    - _item: diagram item owning tree model
     """
-    def __init__(self, subject, attr, filter=None):
+    def __init__(self, item, cols=None):
         """
-        Create GTK tree model for UML collection.
+        Create new model.
 
         Parameters:
-
-            data: iterator of UML properties
+        - _item: diagram item owning tree model
+        - cols: model columns, defaults to [str, object]
         """
-        super(UMLCollection, self).__init__(str, object)
-        self._subject = subject
-        self._attr = attr
-        if filter is None:
-            filter = lambda i: True
-        for item in self._collection():
-            if filter(item):
-                self.append([item.render(), item])
-        self.append(['', None])
+        if cols is None:
+            cols = (str, object)
+        super(EditableTreeModel, self).__init__(*cols)
+        self._item = item
+
+        for data in self._get_rows():
+            self.append(data)
+        self._add_empty()
 
 
-    def _collection(self):
-        return getattr(self._subject, self._attr)
+    def _get_rows(self):
+        """
+        Return rows to be edited. Last row has to contain object being
+        edited.
+        """
+        raise NotImplemented
+
+
+    def _swap_objects(self, o1, o2):
+        """
+        Swap two objects. If objects are swapped, then return ``True``.
+        """
+        raise NotImplemented
 
 
     def swap(self, a, b):
         """
-        Swap two items.
+        Swap two list rows.
+        Parameters:
+        - a: path to first row
+        - b: path to second row
         """
         if not a or not b:
             return
-        item1 = self[a][1]
-        item2 = self[b][1]
-        if self._collection().swap(item1, item2):
-            super(UMLCollection, self).swap(a, b)
+        o1 = self[a][-1]
+        o2 = self[b][-1]
+        if self._swap_objects(o1, o2):
+            super(EditableTreeModel, self).swap(a, b)
+
+
+    def _add_empty(self):
+        """
+        Add empty row to the end of the model.
+        """
+        self.append([None] * self.get_n_columns())
 
 
     def iter_prev(self, iter):
         """
-        Get previous GTK tree iterator.
+        Get previous GTK tree iterator to ``iter``.
         """
         i = self.get_path(iter)[0]
         if i == 0:
@@ -90,37 +124,54 @@ class UMLCollection(gtk.ListStore):
 
     def remove(self, iter):
         """
-        Remove item from GTK model and destroy it.
+        Remove object from GTK model and destroy it.
         """
-        item = self[iter][1]
+        item = self[iter][-1]
         if item:
             item.unlink()
-            super(UMLCollection, self).remove(iter)
+            return super(EditableTreeModel, self).remove(iter)
 
+
+
+class UMLCollection(EditableTreeModel):
+    """
+    GTK tree model for UML collection.
+    """
+    def __init__(self, item, collection, cols=None):
+        self._collection = collection
+        super(UMLCollection, self).__init__(item, cols)
+
+
+    def _swap_objects(self, o1, o2):
+        return self._collection.swap(o1, o2)
+
+
+
+class ClassAttributes(UMLCollection):
+    def __init__(self, item):
+        super(ClassAttributes, self).__init__(item, item.subject.ownedAttribute)
+
+
+    def _get_rows(self):
+        for attr in self._collection:
+            if not attr.association:
+                yield [attr.name, attr]
+
+
+class ClassOperations(UMLCollection):
+    def __init__(self, item):
+        super(ClassOperations, self).__init__(item, item.subject.ownedOperation)
+
+
+    def _get_rows(self):
+        for operation in self._collection:
+            yield [operation.name, operation]
 
 
 class CommunicationMessageModel(gtk.ListStore):
     """
     GTK tree model for list of messages on communication diagram.
     """
-    def __init__(self, item):
-        """
-        Create GTK model from UML association.
-
-        Parameters:
-
-            item: message item on communication diagram
-        """
-        super(CommunicationMessageModel, self).__init__(str, object)
-        self._item = item
-        subject = item.subject
-
-        for message in item._messages:
-            data = [message.name, message]
-            self.append(data)
-        self.append(['', None])
-
-
     def remove(self, iter):
         """
         Remove message from message item and destroy it.
@@ -554,13 +605,9 @@ class AttributesPage(object):
         hbox.show_all()
         page.pack_start(hbox, expand=False)
 
-        # Attributes list store:
-        attrs = self.context.subject.ownedAttribute
-        attributes = UMLCollection(self.context.subject, 'ownedAttribute', filter=lambda i: not i.association)
-
-        self.model = attributes
+        self.model = ClassAttributes(self.context)
         
-        tree_view = gtk.TreeView(attributes)
+        tree_view = gtk.TreeView(self.model)
         tree_view.set_rules_hint(True)
         
         renderer = gtk.CellRendererText()
@@ -622,11 +669,9 @@ class OperationsPage(object):
         hbox.show_all()
         page.pack_start(hbox, expand=False)
 
-        # Operations list store:
-        operations = UMLCollection(self.context.subject, 'ownedOperation')
-        self.model = operations
+        self.model = ClassOperations(self.context)
         
-        tree_view = gtk.TreeView(operations)
+        tree_view = gtk.TreeView(self.model)
         tree_view.set_rules_hint(True)
         
         renderer = gtk.CellRendererText()
