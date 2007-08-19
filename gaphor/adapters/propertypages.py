@@ -168,30 +168,12 @@ class EditableTreeModel(gtk.ListStore):
 
 
 
-class UMLCollection(EditableTreeModel):
-    """
-    GTK tree model for UML collection.
-    """
-    def __init__(self, item, collection, cols=None):
-        self._collection = collection
-        super(UMLCollection, self).__init__(item, cols)
-
-
-    def _swap_objects(self, o1, o2):
-        return self._collection.swap(o1, o2)
-
-
-
-class ClassAttributes(UMLCollection):
+class ClassAttributes(EditableTreeModel):
     """
     GTK tree model to edit class attributes.
     """
-    def __init__(self, item):
-        super(ClassAttributes, self).__init__(item, item.subject.ownedAttribute)
-
-
     def _get_rows(self):
-        for attr in self._collection:
+        for attr in self._item.subject.ownedAttribute:
             if not attr.association:
                 yield [attr.name, attr]
 
@@ -208,16 +190,17 @@ class ClassAttributes(UMLCollection):
         row[0] = attr.render()
 
 
-class ClassOperations(UMLCollection):
+    def _swap_objects(self, o1, o2):
+        return self._item.subject.ownedAttribute.swap(o1, o2)
+
+
+
+class ClassOperations(EditableTreeModel):
     """
     GTK tree model to edit class operations.
     """
-    def __init__(self, item):
-        super(ClassOperations, self).__init__(item, item.subject.ownedOperation)
-
-
     def _get_rows(self):
-        for operation in self._collection:
+        for operation in self._item.subject.ownedOperation:
             yield [operation.name, operation]
 
 
@@ -231,6 +214,10 @@ class ClassOperations(UMLCollection):
         operation = row[-1]
         operation.parse(value)
         row[0] = operation.render()
+
+
+    def _swap_objects(self, o1, o2):
+        return self._item.subject.ownedOperation.swap(o1, o2)
 
 
 
