@@ -126,6 +126,7 @@ class EditableTreeModel(gtk.ListStore):
         o1 = self[a][-1]
         o2 = self[b][-1]
         if self._swap_objects(o1, o2):
+            self._item.request_update(matrix=False)
             super(EditableTreeModel, self).swap(a, b)
 
 
@@ -266,6 +267,10 @@ class CommunicationMessageModel(EditableTreeModel):
         message.name = value
         row[0] = value
         self._item.set_message_text(message, value)
+
+
+    def _swap_objects(self, o1, o2):
+        return self._item.swap_messages(o1, o2)
 
 
 

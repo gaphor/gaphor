@@ -208,13 +208,23 @@ class MessageItem(NamedLine):
         txt.text = message.name
         self._messages[message] = txt
 
+
     def remove_message(self, message):
         txt = self._messages[message]
         self.remove_text(txt)
         del self._messages[message]
 
+
     def set_message_text(self, message, text):
         self._messages[message].text = text
+
+
+    def swap_messages(self, m1, m2):
+        t1 = self._messages[m1]
+        t2 = self._messages[m2]
+        self.swap_texts(t1, t2)
+        self._messages.swap(m1, m2)
+        return True
 
 
 # vim:sw=4:et
