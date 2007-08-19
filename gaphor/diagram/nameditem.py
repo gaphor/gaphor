@@ -27,7 +27,7 @@ class NamedItem(ElementItem):
         # different namespace
         self._from = self.add_text('from',
                 pattern='(from %s)',
-                style={ 'text-align-group': 'stereotype' },
+                style={'text-align-group': 'stereotype'},
                 visible=self.is_namespace_info_visible,
                 font=font.FONT_SMALL)
 
