@@ -57,6 +57,8 @@ class EditableTreeModel(gtk.ListStore):
     Attributes:
     - _item: diagram item owning tree model
     """
+    element_factory = inject('element_factory')
+
     def __init__(self, item, cols=None):
         """
         Create new model.
@@ -79,6 +81,20 @@ class EditableTreeModel(gtk.ListStore):
         """
         Return rows to be edited. Last row has to contain object being
         edited.
+        """
+        raise NotImplemented
+
+
+    def _create_object(self):
+        """
+        Create new object.
+        """
+        raise NotImplemented
+
+
+    def _set_object_value(self, row, col, value):
+        """
+        Update row's column with a value.
         """
         raise NotImplemented
 
@@ -122,6 +138,25 @@ class EditableTreeModel(gtk.ListStore):
         return self.get_iter((i - 1,))
 
 
+    def set_value(self, iter, value, col):
+        path = self.get_path(iter)
+        row = self[path]
+
+        if col == 0 and not value:
+            # kill row and delete object if text of first column is empty
+            self.remove(iter)
+
+        elif value and not row[-1]:
+            # create new object
+            obj = self._create_object()
+            row[-1] = obj
+            self._set_object_value(row, col, value)
+            self._add_empty()
+
+        elif value:
+            self._set_object_value(row, col, value)
+
+
     def remove(self, iter):
         """
         Remove object from GTK model and destroy it.
@@ -148,6 +183,9 @@ class UMLCollection(EditableTreeModel):
 
 
 class ClassAttributes(UMLCollection):
+    """
+    GTK tree model to edit class attributes.
+    """
     def __init__(self, item):
         super(ClassAttributes, self).__init__(item, item.subject.ownedAttribute)
 
@@ -158,7 +196,22 @@ class ClassAttributes(UMLCollection):
                 yield [attr.name, attr]
 
 
+    def _create_object(self):
+        attr = self.element_factory.create(UML.Property)
+        self._item.subject.ownedAttribute = attr
+        return attr
+
+
+    def _set_object_value(self, row, col, value):
+        attr = row[-1]
+        attr.parse(value)
+        row[0] = attr.render()
+
+
 class ClassOperations(UMLCollection):
+    """
+    GTK tree model to edit class operations.
+    """
     def __init__(self, item):
         super(ClassOperations, self).__init__(item, item.subject.ownedOperation)
 
@@ -166,6 +219,19 @@ class ClassOperations(UMLCollection):
     def _get_rows(self):
         for operation in self._collection:
             yield [operation.name, operation]
+
+
+    def _create_object(self):
+        operation = self.element_factory.create(UML.Operation)
+        self._item.subject.ownedOperation = operation
+        return operation
+
+
+    def _set_object_value(self, row, col, value):
+        operation = row[-1]
+        operation.parse(value)
+        row[0] = operation.render()
+
 
 
 class CommunicationMessageModel(gtk.ListStore):
@@ -214,6 +280,15 @@ def swap_on_keypress(tree, event):
         model, iter = tree.get_selection().get_selected()
         model.swap(iter, model.iter_prev(iter))
         return True
+        
+
+#@transactional
+def on_cell_edited(renderer, path, value, model, col):
+    """
+    Update editable tree model based on fresh user input.
+    """
+    iter = model.get_iter(path)
+    model.set_value(iter, value, col)
 
 
 class UMLComboModel(gtk.ListStore):
@@ -275,33 +350,6 @@ def create_uml_combo(data, callback):
     combo.add_attribute(cell, 'text', 0)
     combo.connect('changed', callback)
     return combo
-        
-
-@transactional
-def on_cell_edited(cellrenderertext, path, new_text, page, cls, attr):
-    """
-    Update the model and UML element based on fresh user input.
-    """
-    model = page.model
-    item = model[path]
-    iter = model.get_iter(path)
-
-    # Delete item if text is empty
-    if not new_text:
-        model.remove(iter)
-        return
-
-    # Add a new item
-    if new_text and not item[1]:
-        a = page.element_factory.create(cls)
-        setattr(page.context.subject, attr, a)
-        item[1] = a
-        model.append(['', None])
-
-    # Apply new_text to an item
-    if item[1]:
-        item[1].parse(new_text)
-        item[0] = item[1].render()
 
 
 def watch_attribute(attribute, widget, handler):
@@ -336,6 +384,27 @@ def create_hbox_label(adapter, page, label):
     hbox.pack_start(label, expand=False)
     page.pack_start(hbox, expand=False)
     return hbox
+
+
+def create_tree_view(model, names):
+    """
+    Create a tree view for a editable tree model.
+    """
+    tree_view = gtk.TreeView(model)
+    tree_view.set_rules_hint(True)
+    
+    n = model.get_n_columns() - 1
+    for i in range(n):
+        renderer = gtk.CellRendererText()
+        renderer.set_property('editable', True)
+        renderer.connect('edited', on_cell_edited, model, i)
+        col = gtk.TreeViewColumn(names[i], renderer, text=i)
+        tree_view.append_column(col)
+
+    tree_view.connect('key_press_event', remove_on_keypress)
+    tree_view.connect('key_press_event', swap_on_keypress)
+
+    return tree_view
 
 
 
@@ -607,21 +676,9 @@ class AttributesPage(object):
 
         self.model = ClassAttributes(self.context)
         
-        tree_view = gtk.TreeView(self.model)
-        tree_view.set_rules_hint(True)
-        
-        renderer = gtk.CellRendererText()
-        renderer.set_property('editable', True)
-        renderer.connect('edited', on_cell_edited,
-                self, UML.Property, 'ownedAttribute')
-        tag_column = gtk.TreeViewColumn('Attributes', renderer, text=0)
-        tree_view.append_column(tag_column)
-
+        tree_view = create_tree_view(self.model, ('Attributes',))
         tooltips = gtk.Tooltips()
         tooltips.set_tip(tree_view, tree_tooltip)
-
-        tree_view.connect('key_press_event', remove_on_keypress)
-        tree_view.connect('key_press_event', swap_on_keypress)
         
         page.pack_start(tree_view)
         tree_view.show_all()
