@@ -106,6 +106,14 @@ class EditableTreeModel(gtk.ListStore):
         raise NotImplemented
 
 
+    def _get_object(self, iter):
+        """
+        Get object from ``iter``.
+        """
+        path = self.get_path(iter)
+        return self[path][-1]
+
+
     def swap(self, a, b):
         """
         Swap two list rows.
@@ -155,16 +163,20 @@ class EditableTreeModel(gtk.ListStore):
 
         elif value:
             self._set_object_value(row, col, value)
+        self._item.request_update(matrix=False)
 
 
     def remove(self, iter):
         """
         Remove object from GTK model and destroy it.
         """
-        item = self[iter][-1]
-        if item:
-            item.unlink()
+        obj = self._get_object(iter)
+        if obj:
+            obj.unlink()
+            self._item.request_update(matrix=False)
             return super(EditableTreeModel, self).remove(iter)
+        else:
+            return iter
 
 
 
@@ -221,25 +233,39 @@ class ClassOperations(EditableTreeModel):
 
 
 
-class CommunicationMessageModel(gtk.ListStore):
+class CommunicationMessageModel(EditableTreeModel):
     """
     GTK tree model for list of messages on communication diagram.
     """
+    def _get_rows(self):
+        for message in self._item._messages:
+            yield [message.name, message]
+
     def remove(self, iter):
         """
         Remove message from message item and destroy it.
         """
+        message = self._get_object(iter)
         item = self._item
-        path = self.get_path(iter)
-        message = self[path][-1]
+        super(CommunicationMessageModel, self).remove(iter)
+        item.remove_message(message)
 
-        if message:
-            super(CommunicationMessageModel, self).remove(iter)
 
-            item.remove_message(message)
-            message.unlink()
-            item.request_update(matrix=False)
+    def _create_object(self):
+        item = self._item
+        subject = item.subject
+        message = self.element_factory.create(UML.Message)
+        message.sendEvent = subject.sendEvent
+        message.receiveEvent = subject.receiveEvent
+        item.add_message(message)
+        return message
 
+
+    def _set_object_value(self, row, col, value):
+        message = row[-1]
+        message.name = value
+        row[0] = value
+        self._item.set_message_text(message, value)
 
 
 
@@ -663,7 +689,7 @@ class AttributesPage(object):
 
         self.model = ClassAttributes(self.context)
         
-        tree_view = create_tree_view(self.model, ('Attributes',))
+        tree_view = create_tree_view(self.model, (_('Attributes'),))
         tooltips = gtk.Tooltips()
         tooltips.set_tip(tree_view, tree_tooltip)
         
@@ -713,7 +739,7 @@ class OperationsPage(object):
         page.pack_start(hbox, expand=False)
 
         self.model = ClassOperations(self.context)
-        tree_view = create_tree_view(self.model, ('Operation',))
+        tree_view = create_tree_view(self.model, (_('Operation'),))
         tooltips = gtk.Tooltips()
         tooltips.set_tip(tree_view, tree_tooltip)
         
@@ -1292,25 +1318,9 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
         if context.is_communication():
             self._messages = CommunicationMessageModel(context)
-
-            tree_view = gtk.TreeView(self._messages)
-            tree_view.set_rules_hint(True)
-            
-            renderer = gtk.CellRendererText()
-            renderer.set_property('editable', True)
-            renderer.connect('edited', self._on_message_edited)
-            col = gtk.TreeViewColumn('Message', renderer, text=0)
-            tree_view.append_column(col)
-
-            renderer = gtk.CellRendererToggle()
-            renderer.set_property('activatable', True)
-            renderer.connect('toggled', self._on_message_reverted)
-            col = gtk.TreeViewColumn('Inverted', renderer, active=1)
-            tree_view.append_column(col)
-
-            tree_view.connect('key_press_event', remove_on_keypress)
-
+            tree_view = create_tree_view(self._messages, (_('Message'),))
             page.pack_start(tree_view)
+
         else:
             hbox = create_hbox_label(self, page, _('Message sort'))
 
@@ -1359,53 +1369,6 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
         subject.messageSort = ms
         context.request_update()
-
-
-    @transactional
-    def _on_message_edited(self, renderer, path, name):
-        """
-        """
-        context = self.context
-        subject = context.subject
-
-        data = self._messages[path]
-        data[0] = name
-        message = data[-1]
-        if name and not message:
-            # add message to communication diagram
-            new_message = self.element_factory.create(UML.Message)
-            new_message.name = name
-            new_message.sendEvent = subject.sendEvent
-            new_message.receiveEvent = subject.receiveEvent
-            context.add_message(new_message)
-
-            # update gtk tree datamodel
-            data[0] = name
-            data[-1] = new_message
-
-            # allow to add another message
-            self._messages.append(['', None])
-
-        elif not name and message:
-            # remove message from communication diagram
-            iter = self._messages.get_iter(path)
-            self._messages.remove(iter)
-
-        elif message:
-            # just edit message name
-            message.name = name
-            context.set_message_text(message, name)
-
-        context.request_update(matrix=False)
-
-
-    @transactional
-    def _on_message_reverted(self, renderer, path):
-        """
-        """
-        data = self._messages[path]
-        if data[2]:
-            data[1] = not data[1]
          
 
 component.provideAdapter(MessagePropertyPage, name='Properties')
