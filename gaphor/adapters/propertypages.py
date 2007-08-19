@@ -681,7 +681,6 @@ class AttributesPage(object):
         tooltips.set_tip(tree_view, tree_tooltip)
         
         page.pack_start(tree_view)
-        tree_view.show_all()
 
         return page
         
@@ -727,25 +726,11 @@ class OperationsPage(object):
         page.pack_start(hbox, expand=False)
 
         self.model = ClassOperations(self.context)
-        
-        tree_view = gtk.TreeView(self.model)
-        tree_view.set_rules_hint(True)
-        
-        renderer = gtk.CellRendererText()
-        renderer.set_property('editable', True)
-        renderer.connect('edited', on_cell_edited,
-                self, UML.Operation, 'ownedOperation')
-        tag_column = gtk.TreeViewColumn('Operation', renderer, text=0)
-        tree_view.append_column(tag_column)
-
+        tree_view = create_tree_view(self.model, ('Operation',))
         tooltips = gtk.Tooltips()
         tooltips.set_tip(tree_view, tree_tooltip)
-
-        tree_view.connect('key_press_event', remove_on_keypress)
-        tree_view.connect('key_press_event', swap_on_keypress)
         
         page.pack_start(tree_view)
-        tree_view.show_all()
 
         return page
         
