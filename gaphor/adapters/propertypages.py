@@ -41,11 +41,11 @@ Use -/= to move up or move down.\
 
 class UMLCollection(gtk.ListStore):
     """
-    UML association GTK model. 
+    GTK tree model for UML collection.
     """
     def __init__(self, subject, attr, filter=None):
         """
-        Create GTK model from UML association.
+        Create GTK tree model for UML collection.
 
         Parameters:
 
@@ -96,6 +96,50 @@ class UMLCollection(gtk.ListStore):
         if item:
             item.unlink()
             super(UMLCollection, self).remove(iter)
+
+
+
+class CommunicationMessageModel(gtk.ListStore):
+    """
+    GTK tree model for list of messages on communication diagram.
+    """
+    def __init__(self, item):
+        """
+        Create GTK model from UML association.
+
+        Parameters:
+
+            item: message item on communication diagram
+        """
+        super(CommunicationMessageModel, self).__init__(str, bool, object)
+        self._item = item
+        subject = item.subject
+
+        def is_inverted(message):
+            return message.sendEvent is subject.sendEvent \
+                    or message.receiveEvent is subject.receiveEvent
+
+        for message in item._messages:
+            data = [message.name, is_inverted(message), message]
+            self.append(data)
+        self.append(['', False, None])
+
+
+    def remove(self, iter):
+        """
+        Remove message from message item and destroy it.
+        """
+        item = self._item
+        path = self.get_path(iter)
+        message = self[path][-1]
+
+        if message:
+            super(CommunicationMessageModel, self).remove(iter)
+
+            item.remove_message(message)
+            message.unlink()
+            item.request_update(matrix=False)
+
 
 
 
@@ -1157,6 +1201,8 @@ class MessagePropertyPage(NamedItemPropertyPage):
     interface.implements(IPropertyPage)
     component.adapts(items.MessageItem)
 
+    element_factory = inject('element_factory')
+
     MESSAGE_SORT = (
         ('Call', 'synchCall'),
         ('Asynchronous', 'asynchCall'),
@@ -1175,7 +1221,26 @@ class MessagePropertyPage(NamedItemPropertyPage):
             return page
 
         if context.is_communication():
-            pass
+            self._messages = CommunicationMessageModel(context)
+
+            tree_view = gtk.TreeView(self._messages)
+            tree_view.set_rules_hint(True)
+            
+            renderer = gtk.CellRendererText()
+            renderer.set_property('editable', True)
+            renderer.connect('edited', self._on_message_edited)
+            col = gtk.TreeViewColumn('Message', renderer, text=0)
+            tree_view.append_column(col)
+
+            renderer = gtk.CellRendererToggle()
+            renderer.set_property('activatable', True)
+            renderer.connect('toggled', self._on_message_reverted)
+            col = gtk.TreeViewColumn('Inverted', renderer, active=1)
+            tree_view.append_column(col)
+
+            tree_view.connect('key_press_event', remove_on_keypress)
+
+            page.pack_start(tree_view)
         else:
             hbox = create_hbox_label(self, page, _('Message sort'))
 
@@ -1224,6 +1289,53 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
         subject.messageSort = ms
         context.request_update()
+
+
+    @transactional
+    def _on_message_edited(self, renderer, path, name):
+        """
+        """
+        context = self.context
+        subject = context.subject
+
+        data = self._messages[path]
+        data[0] = name
+        message = data[2]
+        if name and not message:
+            # add message to communication diagram
+            new_message = self.element_factory.create(UML.Message)
+            new_message.name = name
+            new_message.sendEvent = subject.sendEvent
+            new_message.receiveEvent = subject.receiveEvent
+            context.add_message(new_message)
+
+            # update gtk tree datamodel
+            data[0] = name
+            data[2] = new_message
+
+            # allow to add another message
+            self._messages.append(['', False, None])
+
+        elif not name and message:
+            # remove message from communication diagram
+            iter = self._messages.get_iter(path)
+            self._messages.remove(iter)
+
+        elif message:
+            # just edit message name
+            message.name = name
+            context.set_message_text(message, name)
+
+        context.request_update(matrix=False)
+
+
+    @transactional
+    def _on_message_reverted(self, renderer, path):
+        """
+        """
+        data = self._messages[path]
+        if data[2]:
+            data[1] = not data[1]
          
 
 component.provideAdapter(MessagePropertyPage, name='Properties')

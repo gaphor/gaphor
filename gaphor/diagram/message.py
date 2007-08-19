@@ -52,6 +52,7 @@ from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
+from gaphor.misc.odict import odict
 
 
 class MessageItem(NamedLine):
@@ -72,6 +73,7 @@ class MessageItem(NamedLine):
         self._is_communication = False
         self._arrow_pos = 0, 0
         self._arrow_angle = 0
+        self._messages = odict()
 
 
     def post_update(self, context):
@@ -198,6 +200,21 @@ class MessageItem(NamedLine):
         lf2 = self.tail.connected_to
         return lf1 and not lf1.lifetime.is_visible \
                 or lf2 and not lf2.lifetime.is_visible
+
+
+    def add_message(self, message):
+        txt = self.add_text('name',
+            style={'text-align-group': 'stereotype'})
+        txt.text = message.name
+        self._messages[message] = txt
+
+    def remove_message(self, message):
+        txt = self._messages[message]
+        self.remove_text(txt)
+        del self._messages[message]
+
+    def set_message_text(self, message, text):
+        self._messages[message].text = text
 
 
 # vim:sw=4:et
