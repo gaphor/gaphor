@@ -111,18 +111,14 @@ class CommunicationMessageModel(gtk.ListStore):
 
             item: message item on communication diagram
         """
-        super(CommunicationMessageModel, self).__init__(str, bool, object)
+        super(CommunicationMessageModel, self).__init__(str, object)
         self._item = item
         subject = item.subject
 
-        def is_inverted(message):
-            return message.sendEvent is subject.sendEvent \
-                    or message.receiveEvent is subject.receiveEvent
-
         for message in item._messages:
-            data = [message.name, is_inverted(message), message]
+            data = [message.name, message]
             self.append(data)
-        self.append(['', False, None])
+        self.append(['', None])
 
 
     def remove(self, iter):
@@ -1300,7 +1296,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
         data = self._messages[path]
         data[0] = name
-        message = data[2]
+        message = data[-1]
         if name and not message:
             # add message to communication diagram
             new_message = self.element_factory.create(UML.Message)
@@ -1311,10 +1307,10 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
             # update gtk tree datamodel
             data[0] = name
-            data[2] = new_message
+            data[-1] = new_message
 
             # allow to add another message
-            self._messages.append(['', False, None])
+            self._messages.append(['', None])
 
         elif not name and message:
             # remove message from communication diagram
