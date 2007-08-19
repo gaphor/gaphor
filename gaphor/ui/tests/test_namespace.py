@@ -2,7 +2,7 @@
 
 from gaphor.tests.testcase import TestCase
 import gaphor.UML as UML
-from gaphor.ui.namespace import NamespaceModel
+from gaphor.ui.namespace import NamespaceModel, NewNamespaceModel
 from gaphor.application import Application
 
 class NamespaceTestCase(TestCase):
@@ -115,6 +115,37 @@ class NamespaceTestCase(TestCase):
 
         print UML.Class.package
         print UML.Package.ownedClassifier
+
+
+class NewNamespaceTestCase(TestCase):
+
+    services = [ 'element_factory' ]
+
+    def test(self):
+        factory = Application.get_service('element_factory')
+
+        ns = NewNamespaceModel(factory)
+
+        m = factory.create(UML.Package)
+        m.name = 'm'
+        assert ns._nodes.has_key(m)
+        assert ns.path_from_element(m) == (0,)
+        assert ns.element_from_path((0,)) is m
+
+        a = factory.create(UML.Package)
+        a.name = 'a'
+        assert a in ns._nodes
+        assert m in ns._nodes
+        assert ns.path_from_element(a) == (1,) 
+
+        a.package = m
+        assert a in ns._nodes
+        assert a in ns._nodes[m]
+        assert m in ns._nodes
+        assert a.package is m
+        assert a in m.ownedMember
+        assert a.namespace is m
+        assert ns.path_from_element(a) == (0, 0), ns.path_from_element(a)
 
 if __name__ == '__main__':
     import unittest

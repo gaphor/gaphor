@@ -12,6 +12,8 @@ from zope import component
 
 from gaphor import UML
 from gaphor.UML.event import ModelFactoryEvent, FlushFactoryEvent
+from gaphor.UML.event import IElementCreateEvent, IElementDeleteEvent
+from gaphor.UML.event import AssociationSetEvent
 from gaphor.transaction import Transaction
 
 
@@ -369,6 +371,206 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         #print "on_iter_parent", node
         return self.node_from_element(node[0].namespace)
+
+
+
+class NewNamespaceModel(gtk.GenericTreeModel):
+
+
+    def __init__(self, factory):
+        # Init parent:
+        gtk.GenericTreeModel.__init__(self)
+
+        # We own the references to the iterators.
+        self.set_property ('leak_references', 0)
+
+        self.factory = factory
+
+        self._nodes = { None: [] }
+
+        self.exclude = _default_exclude_list
+
+        #component.provideHandler(self.flush)
+        #component.provideHandler(self._build_model)
+        component.provideHandler(self._on_element_create)
+        component.provideHandler(self._on_element_delete)
+        component.provideHandler(self._on_association_set)
+
+    def path_from_element(self, e):
+        if e:
+            ns = e.namespace
+            n = self._nodes[ns]
+            try:
+                return self.path_from_element(ns) + (n.index(e),)
+            except ValueError:
+                print 'falied:', n, ns
+        else:
+            return ()
+
+    def element_from_path(self, path):
+        """
+        Get the node form a path. None is returned if no node is found.
+        """
+        try:
+            node = self._nodes[None]
+            for index in path:
+                node = node[index]
+            return node
+        except IndexError:
+            return None
+        #    print 'No path to node %s' % path
+
+    @component.adapter(IElementCreateEvent)
+    def _on_element_create(self, event):
+        if event.service is self.factory:
+            log.debug('adding node %s' % event.element)
+            e = event.element
+            self._nodes[e] = []
+            # self.insert()
+            parent = self._nodes[e.namespace]
+            parent.append(e)
+            print 'nodes', e.namespace,  parent
+            path = self.path_from_element(e)
+            self.row_inserted(path, self.get_iter(path))
+            # TODO: add child nodes
+
+    @component.adapter(IElementDeleteEvent)
+    def _on_element_delete(self, event):
+        if event.service is self.factory:
+            log.debug('deleting node %s' % event.element)
+            e = event.element
+            path = self.path_from_element(e)
+            def remove(n):
+                for c in self._nodes[n]:
+                    remove(c)
+                del self._nodes[n]
+            remove(e)
+            self.row_deleted(path)
+
+    @component.adapter(AssociationSetEvent)
+    def _on_association_set(self, event):
+        print ('assocation set %s' % event.property)
+        if event.property is UML.NamedElement.namespace:
+            e = event.element
+            if not self._nodes.has_key(e):
+                return
+            old_value, new_value = event.old_value, event.new_value
+            path = self.path_from_element(old_value) + self._nodes[old_value].index(e)
+            self.row_deleted(path)
+            self._nodes[old_value].remove(e)
+
+            parent = self._nodes[e.namespace]
+            parent.append(e)
+            print 'set nodes', e.namespace,  parent
+            path = self.path_from_element(e)
+            self.row_inserted(path, self.get_iter(path))
+
+    @component.adapter(FlushFactoryEvent)
+    def flush(self, event=None):
+        for i in self._nodes[None]:
+            self.row_deleted((0,))
+        self._nodes = {None: []}
+
+    @component.adapter(ModelFactoryEvent)
+    def _build_model(self, event=None):
+        toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
+
+        for t in toplevel:
+            self.new_node_from_element(t, self.root)
+
+    # TreeModel methods:
+
+    def on_get_flags(self):
+        """
+        Returns the GtkTreeModelFlags for this particular type of model.
+        """
+        return 0
+
+    def on_get_n_columns(self):
+        """
+        Returns the number of columns in the model.
+        """
+        return 1
+
+    def on_get_column_type(self, index):
+        """
+        Returns the type of a column in the model.
+        """
+        return gobject.TYPE_PYOBJECT
+
+    def on_get_path(self, node):
+        """
+        Returns the path for a node as a tuple (0, 1, 1).
+        """
+        return self.path_from_element(node)
+
+    def on_get_iter(self, path):
+        """
+        Returns the node corresponding to the given path.
+        The path is a tuple of values, like (0 1 1). Returns None if no
+        iterator can be created.
+        """
+        return self.element_from_path(path)
+
+    def on_get_value(self, node, column):
+        """
+        Returns the model element that matches 'node'.
+        """
+        assert column == 0, 'column can only be 0'
+        return node
+
+    def on_iter_next(self, node):
+        """
+        Returns the next node at this level of the tree. None if no
+        next element.
+        """
+        try:
+            parent = self._nodes[node.namespace]
+            index = parent.index(node)
+            return parent[index + 1]
+        except IndexError, e:
+            #print 'error: on_next_iter', e, parent
+            #import traceback
+            #traceback.print_exc()
+            return None
+        
+    def on_iter_has_child(self, node):
+        """
+        Returns true if this node has children, or None.
+        """
+        return len(self._nodes[node]) > 0
+
+    def on_iter_children(self, node):
+        """
+        Returns the first child of this node, or None.
+        """
+        return self._nodes[node][0]
+
+    def on_iter_n_children(self, node):
+        """
+        Returns the number of children of this node.
+        """
+        return len(self._nodes[node])
+
+    def on_iter_nth_child(self, node, n):
+        """
+        Returns the nth child of this node.
+        """
+        try:
+            nodes = self._nodes[node]
+            return nodes[n]
+        except TypeError, e:
+            #print e, node, n
+            #import traceback
+            #traceback.print_exc()
+            return None
+
+    def on_iter_parent(self, node):
+        """
+        Returns the parent of this node or None if no parent
+        """
+        #print "on_iter_parent", node
+        return node.namespace
 
 
 class NamespaceView(gtk.TreeView):
