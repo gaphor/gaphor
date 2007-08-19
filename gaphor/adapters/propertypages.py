@@ -662,10 +662,7 @@ component.provideAdapter(InterfacePropertyPage, name='Properties')
 
 class AttributesPage(object):
     """
-    An editor for attributes associated with classes and interfaces
-
-    Tagged values are stored in a ListSore: tag, value, taggedValue. taggedValue
-    is an UML model element (hidden).
+    An editor for attributes associated with classes and interfaces.
     """
 
     interface.implements(IPropertyPage)
@@ -713,10 +710,7 @@ component.provideAdapter(AttributesPage, name='Attributes')
 
 class OperationsPage(object):
     """
-    An editor for operations associated with classes and interfaces
-
-    Tagged values are stored in a ListSore: tag, value, taggedValue. taggedValue
-    is an UML model element (hidden).
+    An editor for operations associated with classes and interfaces.
     """
 
     interface.implements(IPropertyPage)
