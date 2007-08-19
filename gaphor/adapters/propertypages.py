@@ -234,6 +234,37 @@ class ClassOperations(EditableTreeModel):
 
 
 
+class TaggedValues(EditableTreeModel):
+    """
+    GTK tree model to edit tagged values.
+    """
+    def __init__(self, item):
+        super(TaggedValues, self).__init__(item, [str, str, object])
+
+
+    def _get_rows(self):
+        for tv in self._item.subject.taggedValue:
+            tag, value = tv.value.split("=")
+            yield [tag, value, tv]
+
+
+    def _create_object(self):
+        tv = self.element_factory.create(UML.LiteralSpecification)
+        self._item.subject.taggedValue.append(tv)
+        return tv
+
+
+    def _set_object_value(self, row, col, value):
+        tv = row[-1]
+        row[col] = value
+        tv.value = '%s=%s' % (row[0], row[1])
+
+
+    def _swap_objects(self, o1, o2):
+        return self._item.subject.taggedValue.swap(o1, o2)
+
+
+
 class CommunicationMessageModel(EditableTreeModel):
     """
     GTK tree model for list of messages on communication diagram.
@@ -779,56 +810,10 @@ class TaggedValuePage(object):
         if self.context.subject is None:
             return page
         
-        for tagged_value in self.context.subject.taggedValue:
-            tag, value = tagged_value.value.split("=")
-            tagged_values.append([tag, value, tagged_value])
-        tagged_values.append(['','', None])
-        
-        self.tagged_values = tagged_values
-        
-        tree_view = gtk.TreeView(tagged_values)
-        tree_view.set_rules_hint(True)
-        
-        renderer = gtk.CellRendererText()
-        renderer.set_property('editable', True)
-        renderer.connect("edited", self._on_cell_edited, 0)
-        tag_column = gtk.TreeViewColumn('Tag', renderer, text=0)
-        tree_view.append_column(tag_column)
-        
-        renderer = gtk.CellRendererText()
-        renderer.set_property('editable', True)
-        renderer.connect("edited", self._on_cell_edited, 1)
-        
-        value_column = gtk.TreeViewColumn('Value', renderer, text=1)
-        tree_view.append_column(value_column)
-        
+        model = TaggedValues(self.context)
+        tree_view = create_tree_view(model, (_('Tag'), _('Value')))
         page.pack_start(tree_view)
-        tree_view.show_all()
         return page
-        
-    @transactional
-    def _on_cell_edited(self, cellrenderertext, path, new_text, col):
-        """
-        Update the model and UML element based on fresh user input.
-        """
-        tv = self.tagged_values[path]
-
-        tv[col] = new_text
-
-        iter = self.tagged_values.get_iter(path)
-
-        # Delete tagged value if both tag and value are empty
-        if not tv[0] and not tv[1] and tv[2]:
-            tv[2].unlink()
-            self.tagged_values.remove(iter)
-        
-        # Add a new tagged value:
-        elif (tv[0] or tv[1]) and not tv[2]:
-            tag = self.element_factory.create(UML.LiteralSpecification)
-            tag.value = "%s=%s"%(tv[0], tv[1])
-            self.context.subject.taggedValue.append(tag)
-            tv[2] = tag
-            self.tagged_values.append(['','', None])
         
 component.provideAdapter(TaggedValuePage, name='Tagged values')
 
