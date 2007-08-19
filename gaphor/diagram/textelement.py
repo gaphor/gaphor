@@ -63,6 +63,27 @@ class EditableTextSupport(object):
         return txt
 
 
+    def remove_text(self, txt):
+        """
+        Remove a text element from diagram item.
+
+        Parameters:
+        - txt: text to be removed
+        """
+        # remove from align group
+        style = txt.style
+        if style and hasattr(style, 'text_align_group'):
+            gname = style.text_align_group
+        else:
+            gname = None
+
+        group = self._text_groups[gname]
+        group.remove(txt)
+
+        # remove text element from diagram item
+        self._texts.remove(txt)
+
+
     def _get_visible_texts(self, texts):
         """
         Get list of visible texts.
