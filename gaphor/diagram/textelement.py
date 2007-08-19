@@ -12,6 +12,16 @@ from gaphas.util import text_extents, text_align, text_multiline, \
     text_set_font
 
 
+def swap(list, el1, el2):
+    """
+    Swap two elements on the list.
+    """
+    i1 = list.index(el1)
+    i2 = list.index(el2)
+    list[i1] = el2
+    list[i2] = el1
+
+
 class EditableTextSupport(object):
     """
     Editable text support to allow display and edit text parts of a diagram
@@ -82,6 +92,22 @@ class EditableTextSupport(object):
 
         # remove text element from diagram item
         self._texts.remove(txt)
+
+
+    def swap_texts(self, txt1, txt2):
+        """
+        Swap two text elements.
+        """
+        swap(self._texts, txt1, txt2)
+
+        style = txt1.style
+        if style and hasattr(style, 'text_align_group'):
+            gname = style.text_align_group
+        else:
+            gname = None
+
+        group = self._text_groups[gname]
+        swap(group, txt1, txt2)
 
 
     def _get_visible_texts(self, texts):
