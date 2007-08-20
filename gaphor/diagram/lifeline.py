@@ -89,7 +89,6 @@ class LifetimeItem(object):
             self._c_length.delta = LifetimeItem.MIN_LENGTH
 
             
-
     def draw(self, context):
         if context.hovered or context.focused or self.is_visible:
             cr = context.cairo
