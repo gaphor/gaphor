@@ -1178,6 +1178,7 @@ class MessageLifelineConnect(ElementConnect):
         def get_subject(c):
             if not line.subject:
                 message = self.element_factory.create(UML.Message)
+                message.name = 'call()'
                 line.subject = message
             return line.subject
 
