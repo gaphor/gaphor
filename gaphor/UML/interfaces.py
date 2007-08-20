@@ -41,6 +41,23 @@ class IAssociationChangeEvent(IElementChangeEvent):
     This event may be fired for both ends of the association.
     """
 
+class IAssociationSetEvent(IAssociationChangeEvent):
+    """
+    An association with [0..1] multiplicity has been changed.
+    """
+
+class IAssociationAddEvent(IAssociationChangeEvent):
+    """
+    An association with [0..*] multiplicity has been changed: a new entry is
+    added.
+    """
+
+class IAssociationDeleteEvent(IAssociationChangeEvent):
+    """
+    An association with [0..*] multiplicity has been changed: an entry has
+    been removed.
+    """
+
 class IElementFactoryEvent(IServiceEvent):
     """
     Events related to individual model elements.

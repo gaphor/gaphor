@@ -26,6 +26,8 @@ class AssociationChangeEvent(object):
 
 class AssociationSetEvent(AssociationChangeEvent):
 
+    interface.implements(IAssociationSetEvent)
+
     def __init__(self, element, association, old_value, new_value):
         AssociationChangeEvent.__init__(self, element, association)
         self.old_value = old_value
@@ -34,12 +36,72 @@ class AssociationSetEvent(AssociationChangeEvent):
 
 class AssociationAddEvent(AssociationChangeEvent):
 
+    interface.implements(IAssociationAddEvent)
+
     def __init__(self, element, association, new_value):
         AssociationChangeEvent.__init__(self, element, association)
         self.new_value = new_value
 
 
 class AssociationDeleteEvent(AssociationChangeEvent):
+
+    interface.implements(IAssociationDeleteEvent)
+
+    def __init__(self, element, association, old_value):
+        AssociationChangeEvent.__init__(self, element, association)
+        self.old_value = old_value
+
+
+class DerivedUnionSetEvent(AssociationChangeEvent):
+
+    interface.implements(IAssociationSetEvent)
+
+    def __init__(self, element, association, old_value, new_value):
+        AssociationChangeEvent.__init__(self, element, association)
+        self.old_value = old_value
+        self.new_value = new_value
+
+
+class DerivedUnionAddEvent(AssociationChangeEvent):
+
+    interface.implements(IAssociationAddEvent)
+
+    def __init__(self, element, association, new_value):
+        AssociationChangeEvent.__init__(self, element, association)
+        self.new_value = new_value
+
+
+class DerivedUnionDeleteEvent(AssociationChangeEvent):
+
+    interface.implements(IAssociationDeleteEvent)
+
+    def __init__(self, element, association, old_value):
+        AssociationChangeEvent.__init__(self, element, association)
+        self.old_value = old_value
+
+
+class RedefineSetEvent(AssociationChangeEvent):
+
+    interface.implements(IAssociationSetEvent)
+
+    def __init__(self, element, association, old_value, new_value):
+        AssociationChangeEvent.__init__(self, element, association)
+        self.old_value = old_value
+        self.new_value = new_value
+
+
+class RedefineAddEvent(AssociationChangeEvent):
+
+    interface.implements(IAssociationAddEvent)
+
+    def __init__(self, element, association, new_value):
+        AssociationChangeEvent.__init__(self, element, association)
+        self.new_value = new_value
+
+
+class RedefineDeleteEvent(AssociationChangeEvent):
+
+    interface.implements(IAssociationDeleteEvent)
 
     def __init__(self, element, association, old_value):
         AssociationChangeEvent.__init__(self, element, association)

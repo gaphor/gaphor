@@ -32,7 +32,11 @@ from zope import component
 from collection import collection
 from event import AttributeChangeEvent, AssociationSetEvent, \
                   AssociationAddEvent, AssociationDeleteEvent
-from interfaces import IAttributeChangeEvent, IAssociationChangeEvent
+from event import DerivedUnionSetEvent, DerivedUnionAddEvent, \
+                  DerivedUnionDeleteEvent
+from event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
+from interfaces import IAssociationChangeEvent, IAssociationSetEvent, \
+                       IAssociationAddEvent, IAssociationDeleteEvent
 import operator
 
 
@@ -432,7 +436,9 @@ class association(umlproperty):
 class derivedunion(umlproperty):
     """
     Derived union
-    Element.union = derivedunion('union', subset1, subset2..subsetn)
+
+      Element.union = derivedunion('union', subset1, subset2..subsetn)
+
     The subsets are the properties that participate in the union (Element.name),
     """
 
@@ -496,12 +502,12 @@ class derivedunion(umlproperty):
     def _association_changed(self, event):
         if event.property in self.subsets:
             # mimic the events for Set/Add/Delete
-            if isinstance(event, AssociationSetEvent):
-                component.handle(AssociationSetEvent(event.element, self, event.old_value, event.new_value))
-            elif isinstance(event, AssociationAddEvent):
-                component.handle(AssociationAddEvent(event.element, self, event.new_value))
-            elif isinstance(event, AssociationDeleteEvent):
-                component.handle(AssociationDeleteEvent(event.element, self, event.old_value))
+            if IAssociationSetEvent.providedBy(event):
+                component.handle(DerivedUnionSetEvent(event.element, self, event.old_value, event.new_value))
+            elif IAssociationAddEvent.providedBy(event):
+                component.handle(DerivedUnionAddEvent(event.element, self, event.new_value))
+            elif IAssociationDeleteEvent.providedBy(event):
+                component.handle(DerivedUnionDeleteEvent(event.element, self, event.old_value))
             else:
                 log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
             self.notify(event.element)
@@ -576,12 +582,12 @@ class redefine(umlproperty):
     def _association_changed(self, event):
         if event.property is self.original:
             # mimic the events for Set/Add/Delete
-            if isinstance(event, AssociationSetEvent):
-                component.handle(AssociationSetEvent(event.element, self, event.old_value, event.new_value))
-            elif isinstance(event, AssociationAddEvent):
-                component.handle(AssociationAddEvent(event.element, self, event.new_value))
-            elif isinstance(event, AssociationDeleteEvent):
-                component.handle(AssociationDeleteEvent(event.element, self, event.old_value))
+            if IAssociationSetEvent.providedBy(event):
+                component.handle(RedefineSetEvent(event.element, self, event.old_value, event.new_value))
+            elif IAssociationAddEvent.providedBy(event):
+                component.handle(RedefineAddEvent(event.element, self, event.new_value))
+            elif IAssociationDeleteEvent.providedBy(event):
+                component.handle(RedefineDeleteEvent(event.element, self, event.old_value))
             else:
                 log.error('Don''t know how to handle event ' + str(event) + ' for redefined association')
             self.notify(event.element)
