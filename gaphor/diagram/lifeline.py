@@ -71,7 +71,7 @@ class LifetimeItem(object):
 
 
     def _is_visible(self):
-        return self.length > self.MIN_LENGTH
+        return self.length > self.MIN_LENGTH and self.bottom.movable
 
     is_visible = property(_is_visible)
 
@@ -83,7 +83,7 @@ class LifetimeItem(object):
             self._c_length.delta = LifetimeItem.MIN_LENGTH * 3 
         elif self._messages_count == 0:
             self._c_length.delta = LifetimeItem.MIN_LENGTH
-
+            
 
     def draw(self, context):
         if context.hovered or context.focused or self.is_visible:
