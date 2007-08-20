@@ -8,6 +8,7 @@ import gobject
 import gtk
 import operator
 import stock
+
 from zope import component
 
 from gaphor import UML
@@ -28,6 +29,11 @@ _default_filter_list = (
     UML.Property,
     UML.Operation
     )
+
+# TODO: update tree sorter:
+# Diagram before Class & Package.
+# Property before Operation
+_tree_sorter = operator.attrgetter('name')
 
 
 class NamespaceModel(gtk.GenericTreeModel):
@@ -61,6 +67,8 @@ class NamespaceModel(gtk.GenericTreeModel):
         component.provideHandler(self._on_element_create)
         component.provideHandler(self._on_element_delete)
         component.provideHandler(self._on_association_set)
+
+        self._build_model()
 
     def path_from_element(self, e):
         if e:
@@ -109,25 +117,30 @@ class NamespaceModel(gtk.GenericTreeModel):
                 return
 
             original = list(parent_nodes)
-            import operator
-            parent_nodes.sort(key=operator.attrgetter('name'))
+            parent_nodes.sort(key=_tree_sorter)
             if parent_nodes != original:
                 # reorder the list:
                 self.rows_reordered(parent_path, self.get_iter(parent_path),
                                     map(list.index,
-                                        [original] * len(parent_nodes), parent_nodes))
+                                        [original] * len(parent_nodes),
+                                        parent_nodes))
 
-    def _add_element(self, element):
+    def _add_elements(self, element):
         """
         Add a single element.
         """
         self._nodes.setdefault(element, [])
         parent = self._nodes[element.namespace]
         parent.append(element)
-        import operator
-        parent.sort(key=operator.attrgetter('name'))
+        parent.sort(key=_tree_sorter)
         path = self.path_from_element(element)
         self.row_inserted(path, self.get_iter(path))
+
+        # Add children
+        if isinstance(element, UML.Namespace):
+            for e in element.ownedMember:
+                if type(e) in self.filter:
+                    self._add_elements(e)
 
 
     @component.adapter(IElementCreateEvent)
@@ -135,12 +148,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         element = event.element
         if event.service is self.factory and \
                 type(element) in self.filter:
-            def add(element):
-                self._add_element(element)
-                if isinstance(element, UML.Namespace):
-                    for e in element.ownedMember:
-                        add(e)
-            add(element)
+            self._add_elements(element)
 
 
     @component.adapter(IElementDeleteEvent)
@@ -181,12 +189,16 @@ class NamespaceModel(gtk.GenericTreeModel):
             if not self._nodes.has_key(element):
                 return
             old_value, new_value = event.old_value, event.new_value
+
+            # Remove entry from old place
             path = self.path_from_element(old_value) + (self._nodes[old_value].index(element),)
             self._nodes[old_value].remove(element)
             self.row_deleted(path)
 
+            # and add to new place
             parent = self._nodes[element.namespace]
             parent.append(element)
+            parent.sort(key=_tree_sorter)
             path = self.path_from_element(element)
             self.row_inserted(path, self.get_iter(path))
 
@@ -201,17 +213,11 @@ class NamespaceModel(gtk.GenericTreeModel):
             self.row_deleted((0,))
         self._nodes = {None: []}
 
-    def _build_model(self, event=None):
+    def _build_model(self):
         toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
 
-        def add(element):
-            self._add_element(element)
-            if isinstance(element, UML.Namespace):
-                for e in element.ownedMember:
-                    if type(e) in self.filter:
-                        add(e)
         for element in toplevel:
-            add(element)
+            self._add_elements(element)
 
     # TreeModel methods:
 
