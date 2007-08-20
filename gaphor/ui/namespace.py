@@ -386,7 +386,7 @@ class NamespaceView(gtk.TreeView):
     def expand_root_nodes(self):
         self.expand_row((0,), False)
 
-    def _set_pixbuf (self, column, cell, model, iter, data):
+    def _set_pixbuf(self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)
         try:
             icon = self.icon_cache[type(value)]
@@ -400,12 +400,11 @@ class NamespaceView(gtk.TreeView):
         cell.set_property('pixbuf', icon)
 
 
-    def _set_text (self, column, cell, model, iter, data):
+    def _set_text(self, column, cell, model, iter, data):
         """
         Set font and of model elements in tree view.
         """
         value = model.get_value(iter, 0)
-        #print 'set_name:', value
         text = value and (value.name or '').replace('\n', ' ') or '&lt;None&gt;'
 
         if isinstance(value, UML.Diagram):
@@ -478,8 +477,11 @@ class NamespaceView(gtk.TreeView):
             # else add it to the item.
             if position in (gtk.TREE_VIEW_DROP_BEFORE, gtk.TREE_VIEW_DROP_AFTER):
                 parent_iter = model.iter_parent(iter)
-                dest_element = model.get_value(parent_iter, 0)
-            #print element.name, dest_element.name
+                if parent_iter is None:
+                    dest_element = None
+                else:
+                    dest_element = model.get_value(parent_iter, 0)
+
             try:
                 # Check if element is part of the namespace of dest_element:
                 ns = dest_element
@@ -491,17 +493,20 @@ class NamespaceView(gtk.TreeView):
                 # Set package. This only works for classifiers, packages and
                 # diagrams. Properties and operations should not be moved.
                 tx = Transaction()
-                element.package = dest_element
+                if dest_element is None:
+                    del element.package
+                else:
+                    element.package = dest_element
                 tx.commit()
 
             except AttributeError:
-                #print dir(context)
                 context.drop_finish(False, time)
             else:
                 context.drop_finish(True, time)
                 # Finally let's try to select the element again.
                 path = model.path_from_element(element)
-                self.expand_row(path[:-1], False)
+                if len(path) > 1:
+                    self.expand_row(path[:-1], False)
                 selection = self.get_selection()
                 selection.select_path(path)
 
@@ -510,7 +515,6 @@ class NamespaceView(gtk.TreeView):
         DnD magic. do not touch
         """
         self.emit_stop_by_name('drag-drop')
-        #print 'drag_drop',context,x,y,time
         self.drag_get_data(context, context.targets[-1], time)
         return 1
 
