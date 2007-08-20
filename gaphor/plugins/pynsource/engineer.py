@@ -109,12 +109,12 @@ class Engineer(object):
                 adapter = component.queryMultiAdapter((superclass_item, geni), IConnect)
                 assert adapter
                 handle = geni.handles()[0]
-                adapter.connect(handle, handle.x, handle.y)
+                adapter.connect(handle)
                 #clazz.gaphor_class_item.connect_handle(geni.handles[-1])
                 adapter = component.queryMultiAdapter((clazz.gaphor_class_item, geni), IConnect)
                 assert adapter
                 handle = geni.handles()[-1]
-                adapter.connect(handle, handle.x, handle.y)
+                adapter.connect(handle)
 
     def _create_attributes(self, clazz):
         for attrobj in clazz.attrs:
@@ -195,13 +195,13 @@ class Engineer(object):
             adapter = component.queryMultiAdapter((head_type_item, association), IConnect)
             assert adapter
             handle = association.handles()[0]
-            adapter.connect(handle, handle.x, handle.y)
+            adapter.connect(handle)
 
             
             # Now the subject
             association.subject = relation
-            association.set_property('head-subject', head_end)
-            association.set_property('tail-subject', tail_end)
+            association.head_end.subject = head_end
+            association.tail_end.subject = tail_end
 
             # Connecting the other handle last will avoid a lookup for
             # an Association. in stead the association applied as subject
@@ -210,7 +210,7 @@ class Engineer(object):
             adapter = component.queryMultiAdapter((tail_type_item, association), IConnect)
             assert adapter
             handle = association.handles()[-1]
-            adapter.connect(handle, handle.x, handle.y)
+            adapter.connect(handle)
 
         else:
             # Create a simple attribute:
