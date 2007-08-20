@@ -141,7 +141,8 @@ class NewNamespaceTestCase(TestCase):
         assert a in ns._nodes
         assert a in ns._nodes[None]
         assert m in ns._nodes
-        assert ns.path_from_element(a) == (1,) 
+        assert ns.path_from_element(a) == (0,), ns.path_from_element(a)
+        assert ns.path_from_element(m) == (1,), ns.path_from_element(m)
 
         a.package = m
         assert a in ns._nodes
@@ -156,7 +157,9 @@ class NewNamespaceTestCase(TestCase):
         c = factory.create(UML.Class)
         c.name = 'c'
         assert c in ns._nodes
-        assert ns.path_from_element(c) == (1,) 
+        assert ns.path_from_element(c) == (0,) 
+        assert ns.path_from_element(m) == (1,), ns.path_from_element(m)
+        assert ns.path_from_element(a) == (1, 0), ns.path_from_element(a)
 
         c.package = m
         assert c in ns._nodes
