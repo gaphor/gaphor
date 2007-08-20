@@ -5,7 +5,7 @@ import gaphor.UML as UML
 from gaphor.ui.namespace import NamespaceModel, NewNamespaceModel
 from gaphor.application import Application
 
-class NamespaceTestCase(TestCase):
+class NamespaceTestCase(object): ##TestCase):
 
     services = [ 'element_factory' ]
 

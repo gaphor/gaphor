@@ -400,10 +400,7 @@ class NewNamespaceModel(gtk.GenericTreeModel):
         if e:
             ns = e.namespace
             n = self._nodes[ns]
-            try:
-                return self.path_from_element(ns) + (n.index(e),)
-            except ValueError:
-                print 'falied:', n, ns
+            return self.path_from_element(ns) + (n.index(e),)
         else:
             return ()
 
@@ -422,9 +419,12 @@ class NewNamespaceModel(gtk.GenericTreeModel):
 
     @component.adapter(IElementCreateEvent)
     def _on_element_create(self, event):
-        if event.service is self.factory:
+        element = event.element
+        if event.service is self.factory and \
+                isinstance(element, UML.NamedElement) and \
+                element not in self.exclude:
             log.debug('adding node %s' % event.element)
-            e = event.element
+            e = element
             self._nodes[e] = []
             # self.insert()
             parent = self._nodes[e.namespace]
@@ -436,16 +436,24 @@ class NewNamespaceModel(gtk.GenericTreeModel):
 
     @component.adapter(IElementDeleteEvent)
     def _on_element_delete(self, event):
-        if event.service is self.factory:
+        element = event.element
+        if event.service is self.factory and \
+                isinstance(element, UML.NamedElement) and \
+                element not in self.exclude:
             log.debug('deleting node %s' % event.element)
             e = event.element
             path = self.path_from_element(e)
             def remove(n):
-                for c in self._nodes[n]:
+                for c in self._nodes.get(n, []):
                     remove(c)
-                del self._nodes[n]
+                try:
+                    del self._nodes[n]
+                except KeyError, e:
+                    print 'KeyError:', e
             remove(e)
-            self.row_deleted(path)
+            print 'delete path:', path
+            if path:
+                self.row_deleted(path)
 
     @component.adapter(AssociationSetEvent)
     def _on_association_set(self, event):
@@ -455,7 +463,7 @@ class NewNamespaceModel(gtk.GenericTreeModel):
             if not self._nodes.has_key(e):
                 return
             old_value, new_value = event.old_value, event.new_value
-            path = self.path_from_element(old_value) + self._nodes[old_value].index(e)
+            path = self.path_from_element(old_value) + (self._nodes[old_value].index(e),)
             self.row_deleted(path)
             self._nodes[old_value].remove(e)
 
@@ -463,6 +471,7 @@ class NewNamespaceModel(gtk.GenericTreeModel):
             parent.append(e)
             print 'set nodes', e.namespace,  parent
             path = self.path_from_element(e)
+            print 'insert path:', path
             self.row_inserted(path, self.get_iter(path))
 
     @component.adapter(FlushFactoryEvent)
