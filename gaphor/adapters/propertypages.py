@@ -34,11 +34,6 @@ from gaphor.UML.interfaces import IAttributeChangeEvent
 from gaphor.UML.umllex import parse_attribute, render_attribute
 import gaphas.item
 
-tree_tooltip = """\
-Press ENTER to edit item, backspace/DEL to remove item.
-Use -/= to move up or move down.\
-"""
-
 
 class EditableTreeModel(gtk.ListStore):
     """
@@ -453,6 +448,13 @@ def create_tree_view(model, names):
     tree_view.connect('key_press_event', remove_on_keypress)
     tree_view.connect('key_press_event', swap_on_keypress)
 
+    tip = """\
+Press ENTER to edit item, BS/DEL to remove item.
+Use -/= to move items up or down.\
+    """
+    tooltips = gtk.Tooltips()
+    tooltips.set_tip(tree_view, tip)
+
     return tree_view
 
 
@@ -723,9 +725,6 @@ class AttributesPage(object):
         self.model = ClassAttributes(self.context)
         
         tree_view = create_tree_view(self.model, (_('Attributes'),))
-        tooltips = gtk.Tooltips()
-        tooltips.set_tip(tree_view, tree_tooltip)
-        
         page.pack_start(tree_view)
 
         return page
@@ -770,9 +769,6 @@ class OperationsPage(object):
 
         self.model = ClassOperations(self.context)
         tree_view = create_tree_view(self.model, (_('Operation'),))
-        tooltips = gtk.Tooltips()
-        tooltips.set_tip(tree_view, tree_tooltip)
-        
         page.pack_start(tree_view)
 
         return page
