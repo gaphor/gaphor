@@ -22,7 +22,7 @@ def get_stock_id(element):
             return _uml_to_stock_id_map[element]
         except KeyError:
             log.warning ('Stock id for %s not found' % element)
-            return STOCK_POINTER
+            return None #STOCK_POINTER
 
 def add_stock_icon(id, icon_dir, icon_files, uml_class=None):
     global _uml_to_stock_id_map

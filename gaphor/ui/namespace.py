@@ -12,14 +12,23 @@ from zope import component
 
 from gaphor import UML
 from gaphor.UML.event import ModelFactoryEvent, FlushFactoryEvent
-from gaphor.UML.event import IElementCreateEvent, IElementDeleteEvent
-from gaphor.UML.event import AssociationSetEvent
+from gaphor.UML.interfaces import IAttributeChangeEvent, IElementCreateEvent, IElementDeleteEvent
+from gaphor.UML.event import DerivedUnionSetEvent
 from gaphor.transaction import Transaction
 
 
 # The following items will not be shown in the treeview, although they
 # are UML.Namespace elements.
-_default_exclude_list = ( UML.Parameter, UML.Association )
+_default_filter_list = (
+    UML.Class,
+    UML.Package,
+    UML.Diagram,
+    UML.Profile,
+    UML.Stereotype,
+    UML.Property,
+    UML.Operation
+    )
+
 
 class NamespaceModel(gtk.GenericTreeModel):
     """
@@ -27,354 +36,10 @@ class NamespaceModel(gtk.GenericTreeModel):
     relationships (such as a Package containing a Class).
 
     NamedElement.namespace[1] -- Namespace.ownedMember[*]
+
+    NOTE: when a model is loaded no IAssociation*Event's are emitted.
+    
     """
-
-    def __init__(self, factory):
-        # Init parent:
-        #self.__gobject_init__()
-        gtk.GenericTreeModel.__init__(self)
-
-        # We own the references to the iterators.
-        self.set_property ('leak_references', 0)
-
-        self.factory = factory
-
-        self.root = (None, [])
-
-        self.exclude = _default_exclude_list
-
-        component.provideHandler(self.flush)
-        component.provideHandler(self._build_model)
-
-    def new_node_from_element(self, element, parent_node):
-        """
-        Create a new node for an element. Owned members are also created.
-        """
-        if isinstance(element, self.exclude):
-            return
-        node = (element, [])
-        parent_node[1].append(node)
-        # Sort the nodes, so we can tell the views exactly where the element
-        # is inserted.
-        self.sort_node(parent_node)
-        path = self.path_from_element(element)
-        #print 'new_node_from_element', path, element, element.name
-        self.row_inserted(path, self.get_iter(path))
-
-        element.connect('name', self.on_name_changed)
-        if isinstance(element, UML.Classifier) \
-                or isinstance(element, UML.Operation):
-            element.connect('isAbstract', self.on_element_changed)
-
-        if isinstance(element, UML.Namespace):
-            element.connect('ownedMember', self.on_ownedmember_changed)
-            for om in list(element.ownedMember):
-                self.new_node_from_element(om, node)
-        return node
-
-    def detach_notifiers_from_node(self, node):
-        """
-        Detach notifiers for node.
-        """
-        element = node[0]
-
-        element.disconnect(self.on_name_changed)
-
-        if isinstance(element, UML.Classifier) \
-                or isinstance(element, UML.Operation):
-            element.disconnect(self.on_element_changed)
-
-        if isinstance(element, UML.Namespace):
-            element.disconnect(self.on_ownedmember_changed)
-            for child in node[1]:
-                self.detach_notifiers_from_node(child)
-
-    def node_and_path_from_element(self, element):
-        """
-        Return (node, path) of an element.
-        """
-        #assert isinstance(element, UML.NamedElement)
-        if element:
-            parent_node, parent_path = self.node_and_path_from_element(element.namespace)
-            index = 0
-            for child in parent_node[1]:
-                if child[0] is element:
-                    break;
-                index += 1
-            else:
-                raise AttributeError, 'Element %s is not part of the NamespaceModel' % element
-            return child, parent_path + (index,)
-        else:
-            return self.root, ()
-
-    def node_from_element(self, element):
-        """
-        Get the node for an element.
-        """
-        return self.node_and_path_from_element(element)[0]
-
-    def path_from_element(self, element):
-        """
-        Get the path to an element as a tuple (e.g. (0, 1, 1)).
-        """
-        return self.node_and_path_from_element(element)[1]
-
-    def node_from_path(self, path):
-        """
-        Get the node form a path. None is returned if no node is found.
-        """
-        try:
-            node = self.root
-            for index in path:
-                node = node[1][index]
-            return node
-        except IndexError:
-            return None
-        #    print 'No path to node %s' % path
-
-    def element_from_node(self, node):
-        return node[0]
-
-    def element_from_path(self, path):
-        return self.node_from_path(path)[0]
-
-    def __sort_node(a, b):
-        m = a[0]
-        n = b[0]
-        if type(m) is type(n):
-            if m.name == n.name:
-                return 0
-            elif m.name < n.name:
-                return -1
-            else:
-                return 1
-        if isinstance(m, UML.Diagram):
-            return -1
-        elif isinstance(n, UML.Diagram):
-            return 1
-
-    def sort_node(self, node):
-        """
-        Sort nodes based on their names.
-        If path is set, the rows are "reordered".
-        """
-        # Do something like this (only a bit faster):
-        #    node[1].sort(lambda a, b: a[0].name == b[0].name and 0 or \
-        #                              a[0].name < b[0].name and -1 or 1)
-        # Uses Python cookbook recipe 2.6
-        children = node[1]
-        length = len(children)
-        getitem = operator.getitem
-        # Create a list of tuples (name, current index, node)
-        intermed = map(None,
-                       map(getattr, 
-                           map(getitem, children, (0,) * length),
-                           ('name',) * length), # name
-                       xrange(length), # index
-                       children) # node
-        intermed.sort()
-        # Replace the current node list with the new sorted list.
-        node[1][:] = map(getitem, intermed, (-1,) * length)
-
-    def dump(self):
-        def doit(node, depth=0):
-            if node[0]:
-                print ' `' * depth, node[0].name, self.path_from_element(node[0])
-            else:
-                print ' `' * depth, '<None>'
-            for child in node[1]:
-                doit(child, depth + 1)
-        doit(self.root)
-
-    def on_element_changed(self, element, pspec):
-        """
-        Element changed, update appropriate row.
-        """
-        path = self.path_from_element(element)
-        if path:
-            self.row_changed(path, self.get_iter(path))
-
-    def on_name_changed(self, element, pspec):
-        """
-        The name of element has changed, update the tree model
-        """
-        path = self.path_from_element(element)
-        if path:
-            self.row_changed(path, self.get_iter(path))
-            parent_node, parent_path = self.node_and_path_from_element(element.namespace)
-            original = list(parent_node[1])
-            self.sort_node(parent_node)
-            children = parent_node[1]
-            if children != original and hasattr(self, 'rows_reordered'):
-                # reorder the list:
-                self.rows_reordered(parent_path, self.get_iter(parent_path),
-                                    map(list.index,
-                                        [original] * len(children), children))
-
-    def on_ownedmember_changed(self, element, pspec):
-        """
-        Update the tree model when the ownedMember list changes.
-        Element is the object whose ownedMember property has changed.
-        """
-        node = self.node_from_element(element)
-        # The elements currently known by the tree model
-        node_members = map(lambda e: e[0], node[1])
-        # The elements that are now children of the element
-        owned_members = filter(lambda e: not isinstance(e, self.exclude), element.ownedMember)
-        #owned_members = element.ownedMember
-        if len(node_members) < len(owned_members):
-            # element added
-            #print 'NamespaceModel: element added'
-            for om in owned_members:
-                if om not in node_members:
-                    # we have found the newly added element
-                    self.new_node_from_element(om, node)
-                    assert len(node[1]) == len(owned_members)
-                    break
-        elif len(node_members) > len(owned_members):
-            # element removed
-            #print 'element removed', element.name, element.namespace, node
-            index = 0
-            for child in node[1]:
-                if child[0] not in owned_members:
-                    # we have found the removed element
-                    #path = self.path_from_element(child[0])
-                    path = self.path_from_element(element) + (index,)
-                    #log.debug('NS: removing node "%s" from "%s" (path=%s)' % (child[0].name, element.name, path))
-                    #print 'path=', child[0].name, path
-                    try:
-                        self.detach_notifiers_from_node(child)
-                        node[1].remove(child)
-                        self.row_deleted(path)
-                        assert len(node[1]) == len(owned_members)
-                    except Exception, e:
-                        log.warning('error:', e)
-                    break
-                index += 1
-            if len(owned_members) == 0:
-                path = self.path_from_element(element)
-                self.row_has_child_toggled(path, self.get_iter(path))
-        #else:
-            #log.debug('model is in sync for "%s"' % element.name)
-
-    @component.adapter(FlushFactoryEvent)
-    def flush(self, event=None):
-        for i in self.root[1]:
-            self.detach_notifiers_from_node(i)
-            # remove the node, it is now the first in the list:
-            self.row_deleted((0,))
-        self.root = (None, [])
-
-    @component.adapter(ModelFactoryEvent)
-    def _build_model(self, event=None):
-        toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
-
-        for t in toplevel:
-            self.new_node_from_element(t, self.root)
-
-    def refresh(self):
-        self.flush()
-        self._build_model()
-
-    # TreeModel methods:
-
-    def on_get_flags(self):
-        """
-        Returns the GtkTreeModelFlags for this particular type of model.
-        """
-        return 0
-
-    def on_get_n_columns(self):
-        """
-        Returns the number of columns in the model.
-        """
-        return 1
-
-    def on_get_column_type(self, index):
-        """
-        Returns the type of a column in the model.
-        """
-        return gobject.TYPE_PYOBJECT
-
-    def on_get_path (self, node):
-        """
-        Returns the path for a node as a tuple (0, 1, 1).
-        """
-        return self.path_from_element(node[0])
-
-    def on_get_iter(self, path):
-        """
-        Returns the node corresponding to the given path.
-        The path is a tuple of values, like (0 1 1). Returns None if no
-        iterator can be created.
-        """
-        return self.node_from_path(path)
-
-    def on_get_value(self, node, column):
-        """
-        Returns the model element that matches 'node'.
-        """
-        assert column == 0, 'column can only be 0'
-        return node[0]
-
-    def on_iter_next(self, node):
-        """
-        Returns the next node at this level of the tree (None if no
-        next element).
-        """
-        try:
-            parent = self.node_from_element(node[0].namespace)
-            #print 'on_iter_next: parent', parent
-            index = parent[1].index(node)
-            return parent[1][index + 1]
-        except IndexError, e:
-            #print 'error: on_next_iter', e, parent
-            #import traceback
-            #traceback.print_exc()
-            return None
-        
-    def on_iter_has_child(self, node):
-        """
-        Returns true if this node has children, or None.
-        """
-        return len(node[1]) > 0
-
-    def on_iter_children(self, node):
-        """
-        Returns the first child of this node, or None.
-        """
-        return node[1][0]
-
-    def on_iter_n_children(self, node):
-        """
-        Returns the number of children of this node.
-        """
-        return len (node[1])
-
-    def on_iter_nth_child(self, node, n):
-        """
-        Returns the nth child of this node.
-        """
-        try:
-            if node is None:
-                node = self.root
-            return node[1][n]
-        except TypeError, e:
-            #print e, node, n
-            #import traceback
-            #traceback.print_exc()
-            return None
-
-    def on_iter_parent(self, node):
-        """
-        Returns the parent of this node or None if no parent
-        """
-        #print "on_iter_parent", node
-        return self.node_from_element(node[0].namespace)
-
-
-
-class NewNamespaceModel(gtk.GenericTreeModel):
 
 
     def __init__(self, factory):
@@ -388,10 +53,11 @@ class NewNamespaceModel(gtk.GenericTreeModel):
 
         self._nodes = { None: [] }
 
-        self.exclude = _default_exclude_list
+        self.filter = _default_filter_list
 
-        #component.provideHandler(self.flush)
-        #component.provideHandler(self._build_model)
+        component.provideHandler(self.flush)
+        component.provideHandler(self.refresh)
+        component.provideHandler(self._on_element_change)
         component.provideHandler(self._on_element_create)
         component.provideHandler(self._on_element_delete)
         component.provideHandler(self._on_association_set)
@@ -409,83 +75,143 @@ class NewNamespaceModel(gtk.GenericTreeModel):
         Get the node form a path. None is returned if no node is found.
         """
         try:
-            node = self._nodes[None]
+            nodes = self._nodes
+            node = None
             for index in path:
-                node = node[index]
+                node = nodes[node][index]
             return node
         except IndexError:
             return None
-        #    print 'No path to node %s' % path
+
+    @component.adapter(IAttributeChangeEvent)
+    def _on_element_change(self, event):
+        """
+        Element changed, update appropriate row.
+        """
+        element = event.element
+        if element not in self._nodes:
+            return
+
+        if event.property is UML.Classifier.isAbstract or \
+                event.property is UML.BehavioralFeature.isAbstract:
+            path = self.path_from_element(element)
+            if path:
+                self.row_changed(path, self.get_iter(path))
+
+        if event.property is UML.NamedElement.name:
+            path = self.path_from_element(element)
+            if not path:
+                return
+            self.row_changed(path, self.get_iter(path))
+            parent_nodes = self._nodes[element.namespace]
+            parent_path = self.path_from_element(element.namespace)
+            if not parent_path:
+                return
+
+            original = list(parent_nodes)
+            import operator
+            parent_nodes.sort(key=operator.attrgetter('name'))
+            if parent_nodes != original:
+                # reorder the list:
+                self.rows_reordered(parent_path, self.get_iter(parent_path),
+                                    map(list.index,
+                                        [original] * len(parent_nodes), parent_nodes))
+
+    def _add_element(self, element):
+        """
+        Add a single element.
+        """
+        self._nodes.setdefault(element, [])
+        parent = self._nodes[element.namespace]
+        parent.append(element)
+        import operator
+        parent.sort(key=operator.attrgetter('name'))
+        path = self.path_from_element(element)
+        self.row_inserted(path, self.get_iter(path))
+
 
     @component.adapter(IElementCreateEvent)
     def _on_element_create(self, event):
         element = event.element
         if event.service is self.factory and \
-                isinstance(element, UML.NamedElement) and \
-                element not in self.exclude:
-            log.debug('adding node %s' % event.element)
-            e = element
-            self._nodes[e] = []
-            # self.insert()
-            parent = self._nodes[e.namespace]
-            parent.append(e)
-            print 'nodes', e.namespace,  parent
-            path = self.path_from_element(e)
-            self.row_inserted(path, self.get_iter(path))
-            # TODO: add child nodes
+                type(element) in self.filter:
+            def add(element):
+                self._add_element(element)
+                if isinstance(element, UML.Namespace):
+                    for e in element.ownedMember:
+                        add(e)
+            add(element)
+
 
     @component.adapter(IElementDeleteEvent)
     def _on_element_delete(self, event):
         element = event.element
         if event.service is self.factory and \
-                isinstance(element, UML.NamedElement) and \
-                element not in self.exclude:
-            log.debug('deleting node %s' % event.element)
-            e = event.element
-            path = self.path_from_element(e)
+                type(element) in self.filter:
+
+            try:
+                path = self.path_from_element(element)
+            except (KeyError, ValueError):
+                # No such element (anymore)
+                return
+
+            # Remove element from parent
+            if element.namespace:
+                parent_nodes = self._nodes[element.namespace]
+                parent_nodes.remove(element)
+
+            # Remove all sub-elements:
             def remove(n):
                 for c in self._nodes.get(n, []):
                     remove(c)
-                try:
-                    del self._nodes[n]
-                except KeyError, e:
-                    print 'KeyError:', e
-            remove(e)
-            print 'delete path:', path
+                del self._nodes[n]
+
+            remove(element)
             if path:
                 self.row_deleted(path)
 
-    @component.adapter(AssociationSetEvent)
+
+    @component.adapter(DerivedUnionSetEvent)
     def _on_association_set(self, event):
-        print ('assocation set %s' % event.property)
+        element = event.element
+        if element not in self._nodes:
+            return
+
         if event.property is UML.NamedElement.namespace:
-            e = event.element
-            if not self._nodes.has_key(e):
+            if not self._nodes.has_key(element):
                 return
             old_value, new_value = event.old_value, event.new_value
-            path = self.path_from_element(old_value) + (self._nodes[old_value].index(e),)
+            path = self.path_from_element(old_value) + (self._nodes[old_value].index(element),)
+            self._nodes[old_value].remove(element)
             self.row_deleted(path)
-            self._nodes[old_value].remove(e)
 
-            parent = self._nodes[e.namespace]
-            parent.append(e)
-            print 'set nodes', e.namespace,  parent
-            path = self.path_from_element(e)
-            print 'insert path:', path
+            parent = self._nodes[element.namespace]
+            parent.append(element)
+            path = self.path_from_element(element)
             self.row_inserted(path, self.get_iter(path))
+
+    @component.adapter(ModelFactoryEvent)
+    def refresh(self, event=None):
+        self.flush()
+        self._build_model()
 
     @component.adapter(FlushFactoryEvent)
     def flush(self, event=None):
-        for i in self._nodes[None]:
+        for n in self._nodes[None]:
             self.row_deleted((0,))
         self._nodes = {None: []}
 
-    @component.adapter(ModelFactoryEvent)
     def _build_model(self, event=None):
         toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
 
-        for t in toplevel:
-            self.new_node_from_element(t, self.root)
+        def add(element):
+            self._add_element(element)
+            if isinstance(element, UML.Namespace):
+                for e in element.ownedMember:
+                    if type(e) in self.filter:
+                        add(e)
+        for element in toplevel:
+            add(element)
 
     # TreeModel methods:
 
@@ -511,7 +237,8 @@ class NewNamespaceModel(gtk.GenericTreeModel):
         """
         Returns the path for a node as a tuple (0, 1, 1).
         """
-        return self.path_from_element(node)
+        path = self.path_from_element(node)
+        return path
 
     def on_get_iter(self, path):
         """
@@ -538,9 +265,6 @@ class NewNamespaceModel(gtk.GenericTreeModel):
             index = parent.index(node)
             return parent[index + 1]
         except IndexError, e:
-            #print 'error: on_next_iter', e, parent
-            #import traceback
-            #traceback.print_exc()
             return None
         
     def on_iter_has_child(self, node):
@@ -569,16 +293,12 @@ class NewNamespaceModel(gtk.GenericTreeModel):
             nodes = self._nodes[node]
             return nodes[n]
         except TypeError, e:
-            #print e, node, n
-            #import traceback
-            #traceback.print_exc()
             return None
 
     def on_iter_parent(self, node):
         """
         Returns the parent of this node or None if no parent
         """
-        #print "on_iter_parent", node
         return node.namespace
 
 
@@ -603,7 +323,15 @@ class NamespaceView(gtk.TreeView):
         self.factory = factory
         self.icon_cache = {}
 
-        self.set_property('headers-visible', 0)
+        self.set_property('headers-visible', False)
+        self.set_property('search-column', 0)
+        def search_func(model, column, key, iter, data=None):
+            assert column == 0
+            element = model.get_value(iter, column)
+            if element.name:
+                return not element.name.startswith(key)
+        self.set_search_equal_func(search_func)
+
         self.set_rules_hint(True)
         selection = self.get_selection()
         selection.set_mode(gtk.SELECTION_BROWSE)
@@ -648,6 +376,9 @@ class NamespaceView(gtk.TreeView):
         if not iter:
             return
         return model.get_value(iter, 0)
+
+    def expand_root_nodes(self):
+        self.expand_row((0,), False)
 
     def _set_pixbuf (self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)

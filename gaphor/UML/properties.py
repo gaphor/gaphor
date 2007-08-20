@@ -313,19 +313,16 @@ class association(umlproperty):
             if value is old:
                 return
 
-            # is done in _del(): undoassociationaction(self, obj, old)
             if old:
-                self._del(obj, old)
+                if not from_opposite and self.opposite:
+                    getattr(type(old), self.opposite)._del(old, obj, from_opposite=True)
+                old.disconnect(self.__on_unlink, obj)
+                if self.composite:
+                    obj.disconnect(self.__on_composite_unlink, old)
 
             if value is None:
                 return
 
-            #if value is self._get(obj):
-            #    #log.debug('association: value already in obj: %s' % value)
-            #    return
-
-            #if not from_opposite:
-            #    undosetassociationaction(self, obj, value)
             setattr(obj, self._name, value)
             if do_notify:
                 event = AssociationSetEvent(obj, self, old, value)
@@ -336,11 +333,8 @@ class association(umlproperty):
                 c = collection(self, obj, self.type)
                 setattr(obj, self._name, c)
             elif value in c:
-                #log.debug('association: value already in obj: %s' % value)
                 return
 
-            #if not from_opposite:
-            #    undosetassociationaction(self, obj, value)
             c.items.append(value)
             if do_notify:
                 event = AssociationAddEvent(obj, self, value)
@@ -372,9 +366,6 @@ class association(umlproperty):
             if value is None:
                 return
 
-        #if not from_opposite:
-        #    undodelassociationaction(self, obj, value)
-
         if not from_opposite and self.opposite:
             getattr(type(value), self.opposite)._del(value, obj, from_opposite=True)
 
@@ -388,6 +379,7 @@ class association(umlproperty):
                     pass
                 else:
                     component.handle(AssociationDeleteEvent(obj, self, value))
+
                 # Remove items collection if empty
                 if not items:
                     delattr(obj, self._name)
@@ -396,7 +388,6 @@ class association(umlproperty):
                 delattr(obj, self._name)
             except:
                 pass
-                #print 'association._del: delattr failed for %s' % self.name
             else:
                 component.handle(AssociationSetEvent(obj, self, value, None))
 

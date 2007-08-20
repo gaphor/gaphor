@@ -172,15 +172,12 @@ class FileManager(object):
 
             # Let this be handled by the main window itself:
             #self._window.set_message('Model loaded successfully')
-            model = main_window.tree_model
             view = main_window.tree_view
 
             self.filename = filename
 
             # Expand all root elements:
-            for node in model.root[1]:
-                view.expand_row(model.path_from_element(node[0]), False)
-
+            view.expand_root_nodes()
         finally:
             try:
                 win.destroy()

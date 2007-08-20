@@ -44,17 +44,19 @@ class ElementFactory(object):
         """
         Create a new model element of type type.
         """
-        return self.create_as(type, uniqueid.generate_id())
+        obj = self.create_as(type, uniqueid.generate_id())
+        component.handle(ElementCreateEvent(self, obj))
+        return obj
 
     def create_as(self, type, id):
         """
         Create a new model element of type 'type' with 'id' as its ID.
-        This method should only be used when loading models.
+        This method should only be used when loading models, since it does
+        not emit an ElementCreateEvent event.
         """
         assert issubclass(type, Element)
         obj = type(id, self)
         self._elements[id] = obj
-        component.handle(ElementCreateEvent(self, obj))
         return obj
 
     def size(self):
