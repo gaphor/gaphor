@@ -1301,12 +1301,14 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
             self._messages = CommunicationMessageModel(context)
             tree_view = create_tree_view(self._messages, (_('Message'),))
+            tree_view.set_headers_visible(False)
             frame = gtk.Frame(label=_('Additional Messages'))
             frame.add(tree_view)
             hbox.pack_start(frame)
 
             #self._messages = CommunicationMessageModel(context)
             #tree_view = create_tree_view(self._messages, (_('Message'),))
+            #tree_view.set_headers_visible(False)
             frame = gtk.Frame(label=_('Inverted Messages'))
             #frame.add(tree_view)
             hbox.pack_end(frame)
