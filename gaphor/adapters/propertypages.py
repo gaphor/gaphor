@@ -513,25 +513,23 @@ class NamedItemPropertyPage(object):
 
     interface.implements(IPropertyPage)
 
+    NAME_LABEL = _('Name')
+
     def __init__(self, context):
         self.context = context
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
     
     def construct(self):
         page = gtk.VBox()
-        hbox = gtk.HBox()
-        page.pack_start(hbox, expand=False)
 
         subject = self.context.subject
         if not subject:
             return page
 
-        label = gtk.Label(_('Name'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox = create_hbox_label(self, page, self.NAME_LABEL)
         entry = gtk.Entry()        
         entry.set_text(subject and subject.name or '')
+        hbox.pack_start(entry)
 
         # monitor subject.name attribute
         changed_id = entry.connect('changed', self._on_name_change)
@@ -543,7 +541,6 @@ class NamedItemPropertyPage(object):
                 entry.handler_unblock(changed_id)
         watch_attribute(type(subject).name, entry, handler)
 
-        hbox.pack_start(entry)
         page.show_all()
         return page
 
@@ -1278,6 +1275,8 @@ class MessagePropertyPage(NamedItemPropertyPage):
     component.adapts(items.MessageItem)
 
     element_factory = inject('element_factory')
+
+    NAME_LABEL = _('Message')
 
     MESSAGE_SORT = (
         ('Call', 'synchCall'),
