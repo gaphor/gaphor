@@ -227,7 +227,7 @@ class EditableTextSupport(object):
         hint = 0
         style = txt.style
         if style.text_align_str:
-            chunks = txt.text.split(style.text_align_str)
+            chunks = txt.text.split(style.text_align_str, 1)
             if len(chunks) > 1:
                 hint, _ = text_extents(cr, chunks[0], font=txt.font)
         return hint
