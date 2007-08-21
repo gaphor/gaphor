@@ -15,6 +15,7 @@ class NamedItem(ElementItem):
         'name-align'  : (ALIGN_CENTER, ALIGN_TOP),
         'name-padding': (5, 10, 5, 10),
         'name-outside': False,
+        'name-align-str': None,
     }
 
     def __init__(self, id=None):

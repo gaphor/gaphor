@@ -68,6 +68,11 @@ class MessageItem(NamedLine):
     - _arrow_pos: communication arrow position
     - _arrow_angle: communication arrow angle
     """
+
+    __style__ = {
+        'name-align-str': ':',
+    }
+
     def __init__(self, id=None):
         super(MessageItem, self).__init__(id)
         self._is_communication = False
@@ -204,7 +209,9 @@ class MessageItem(NamedLine):
 
     def add_message(self, message):
         txt = self.add_text('name',
-            style={'text-align-group': 'stereotype'})
+            style={'text-align-group': 'stereotype',
+                'text-align-str': ':',
+            })
         txt.text = message.name
         self._messages[message] = txt
 

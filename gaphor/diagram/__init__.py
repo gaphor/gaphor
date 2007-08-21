@@ -45,6 +45,7 @@ def namedelement(f):
                 'text-align': obj.style.name_align,
                 'text-padding': obj.style.name_padding,
                 'text-outside': obj.style.name_outside,
+                'text-align-str': obj.style.name_align_str,
                 'text-align-group': 'stereotype',
         }
         obj._name = obj.add_text('name', style=style, editable=True)

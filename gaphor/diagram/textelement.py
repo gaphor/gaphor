@@ -206,12 +206,31 @@ class EditableTextSupport(object):
         dy = 0
         dw = extents[0]
         for txt in texts:
-            bounds = txt.bounds # fixme: gaphor rectangle problem
-            width, height = bounds.width, bounds.height # fixme: gaphor rectangle problem
+            bounds = txt.bounds
+            width, height = bounds.width, bounds.height
+            hint = self._get_text_align_hint(cr, txt)
             # center stacked texts
-            txt.bounds.x = x + (dw - width) / 2.0
+            if hint:
+                txt.bounds.x = x + dw / 2.0 - hint
+            else:
+                txt.bounds.x = x + (dw - width) / 2.0
             txt.bounds.y = y + dy
             dy += height
+
+
+    def _get_text_align_hint(self, cr, txt):
+        """
+        Calculate hint value for text element. Currently, hint value is
+        calculated only for text elements, which style contains
+        ``text-align-str`` style property.
+        """
+        hint = 0
+        style = txt.style
+        if style.text_align_str:
+            chunks = txt.text.split(style.text_align_str)
+            if len(chunks) > 1:
+                hint, _ = text_extents(cr, chunks[0], font=txt.font)
+        return hint
 
 
     def post_update(self, context):
@@ -326,6 +345,7 @@ class TextElement(object):
         self._style.add('text-padding', (2, 2, 2, 2))
         self._style.add('text-align', (ALIGN_CENTER, ALIGN_TOP))
         self._style.add('text-outside', False)
+        self._style.add('text-align-str', None)
         if style:
             self._style.update(style)
 
