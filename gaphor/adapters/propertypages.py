@@ -264,6 +264,10 @@ class CommunicationMessageModel(EditableTreeModel):
     """
     GTK tree model for list of messages on communication diagram.
     """
+    def __init__(self, item, cols=None, inverted=False):
+        super(CommunicationMessageModel, self).__init__(item, cols)
+        self.inverted = inverted
+
     def _get_rows(self):
         for message in self._item._messages:
             yield [message.name, message]
@@ -276,7 +280,7 @@ class CommunicationMessageModel(EditableTreeModel):
         message = self._get_object(iter)
         item = self._item
         super(CommunicationMessageModel, self).remove(iter)
-        item.remove_message(message)
+        item.remove_message(message, self.inverted)
 
 
     def _create_object(self):
@@ -285,7 +289,7 @@ class CommunicationMessageModel(EditableTreeModel):
         message = self.element_factory.create(UML.Message)
         message.sendEvent = subject.sendEvent
         message.receiveEvent = subject.receiveEvent
-        item.add_message(message)
+        item.add_message(message, self.inverted)
         return message
 
 
@@ -293,11 +297,11 @@ class CommunicationMessageModel(EditableTreeModel):
         message = row[-1]
         message.name = value
         row[0] = value
-        self._item.set_message_text(message, value)
+        self._item.set_message_text(message, value, self.inverted)
 
 
     def _swap_objects(self, o1, o2):
-        return self._item.swap_messages(o1, o2)
+        return self._item.swap_messages(o1, o2, self.inverted)
 
 
 
@@ -1306,11 +1310,11 @@ class MessagePropertyPage(NamedItemPropertyPage):
             frame.add(tree_view)
             hbox.pack_start(frame)
 
-            #self._messages = CommunicationMessageModel(context)
-            #tree_view = create_tree_view(self._messages, (_('Message'),))
-            #tree_view.set_headers_visible(False)
+            self._messages = CommunicationMessageModel(context, inverted=True)
+            tree_view = create_tree_view(self._messages, (_('Message'),))
+            tree_view.set_headers_visible(False)
             frame = gtk.Frame(label=_('Inverted Messages'))
-            #frame.add(tree_view)
+            frame.add(tree_view)
             hbox.pack_end(frame)
 
             page.pack_start(hbox)

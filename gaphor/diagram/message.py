@@ -53,6 +53,7 @@ from gaphas.util import path_ellipse
 from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.misc.odict import odict
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
 
 class MessageItem(NamedLine):
@@ -79,6 +80,7 @@ class MessageItem(NamedLine):
         self._arrow_pos = 0, 0
         self._arrow_angle = 0
         self._messages = odict()
+        self._inverted_messages = odict()
 
 
     def post_update(self, context):
@@ -174,26 +176,37 @@ class MessageItem(NamedLine):
         cr.stroke()
 
 
+    def _draw_communication_arrow(self, cr, inverted=False):
+        cr.save()
+        try:
+            hint = 1
+            angle = self._arrow_angle
+            if inverted:
+                hint = -1
+                angle += pi
+            x, y = self._arrow_pos
+            cr.translate(x + hint * 3, y - hint * 6)
+            cr.set_line_width(1.5)
+            cr.rotate(angle)
+            d = 20
+            r = 3
+            cr.move_to(0, 0)
+            cr.line_to(d, 0)
+            cr.line_to(d - r, r)
+            cr.move_to(d - r, -r)
+            cr.line_to(d, 0)
+            cr.stroke()
+        finally:
+            cr.restore()
+
+
     def draw(self, context):
         super(MessageItem, self).draw(context)
         if self._is_communication:
             cr = context.cairo
-            cr.save()
-            try:
-                x, y = self._arrow_pos
-                cr.translate(x + 3, y - 6)
-                cr.set_line_width(1.5)
-                cr.rotate(self._arrow_angle)
-                d = 20
-                r = 3
-                cr.move_to(0, 0)
-                cr.line_to(d, 0)
-                cr.line_to(d - r, r)
-                cr.move_to(d - r, -r)
-                cr.line_to(d, 0)
-                cr.stroke()
-            finally:
-                cr.restore()
+            self._draw_communication_arrow(cr)
+            if len(self._inverted_messages) > 0:
+                self._draw_communication_arrow(cr, True)
 
 
     def is_communication(self):
@@ -207,30 +220,53 @@ class MessageItem(NamedLine):
                 or lf2 and not lf2.lifetime.is_visible
 
 
-    def add_message(self, message):
-        txt = self.add_text('name',
-            style={'text-align-group': 'stereotype',
-                'text-align-str': ':',
-            })
+    def add_message(self, message, inverted):
+        if inverted:
+            messages = self._inverted_messages
+            style = {
+                'text-align-group': 'inverted',
+                'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
+            }
+        else:
+            messages = self._messages
+            group = 'stereotype'
+            style = {
+                'text-align-group': 'stereotype',
+            }
+
+        style['text-align-str'] = ':'
+        txt = self.add_text('name', style=style)
         txt.text = message.name
-        self._messages[message] = txt
+        messages[message] = txt
 
 
-    def remove_message(self, message):
-        txt = self._messages[message]
+    def remove_message(self, message, inverted):
+        if inverted:
+            messages = self._inverted_messages
+        else:
+            messages = self._messages
+        txt = messages[message]
         self.remove_text(txt)
-        del self._messages[message]
+        del messages[message]
 
 
-    def set_message_text(self, message, text):
-        self._messages[message].text = text
+    def set_message_text(self, message, text, inverted):
+        if inverted:
+            messages = self._inverted_messages
+        else:
+            messages = self._messages
+        messages[message].text = text
 
 
-    def swap_messages(self, m1, m2):
-        t1 = self._messages[m1]
-        t2 = self._messages[m2]
+    def swap_messages(self, m1, m2, inverted):
+        if inverted:
+            messages = self._inverted_messages
+        else:
+            messages = self._messages
+        t1 = messages[m1]
+        t2 = messages[m2]
         self.swap_texts(t1, t2)
-        self._messages.swap(m1, m2)
+        messages.swap(m1, m2)
         return True
 
 
