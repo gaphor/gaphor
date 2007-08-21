@@ -1222,14 +1222,13 @@ class MessageLifelineConnect(ElementConnect):
 
         if not send and not received:
             line.subject = None
+            for message in line._messages:
+                line.remove_message(message, False)
+                message.unlink()
 
-        if __debug__:
-            m = line.subject
-
-            assert not m or m and \
-                (m.sendEvent and m.receiveEvent and m.messageKind == 'complete' \
-                 or m.sendEvent and not m.receiveEvent and m.messageKind == 'lost' \
-                 or not m.sendEvent and m.receiveEvent and m.messageKind == 'found')
+            for message in line._inverted_messages:
+                line.remove_message(message, True)
+                message.unlink()
 
 
     def _glue_lifetime(self, handle):
