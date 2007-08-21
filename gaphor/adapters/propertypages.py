@@ -120,7 +120,7 @@ class EditableTreeModel(gtk.ListStore):
             return
         o1 = self[a][-1]
         o2 = self[b][-1]
-        if self._swap_objects(o1, o2):
+        if o1 and o2 and self._swap_objects(o1, o2):
             self._item.request_update(matrix=False)
             super(EditableTreeModel, self).swap(a, b)
 
