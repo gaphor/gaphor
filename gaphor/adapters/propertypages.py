@@ -265,14 +265,19 @@ class CommunicationMessageModel(EditableTreeModel):
     GTK tree model for list of messages on communication diagram.
     """
     def _get_rows(self):
+        subject = self._item.subject
+        yield subject.name, subject
         for message in self._item._messages:
             yield [message.name, message]
+
 
     def remove(self, iter):
         """
         Remove message from message item and destroy it.
         """
         message = self._get_object(iter)
+        if message is self._item.subject:
+            return
         item = self._item
         super(CommunicationMessageModel, self).remove(iter)
         item.remove_message(message)
@@ -1287,11 +1292,10 @@ class MessagePropertyPage(NamedItemPropertyPage):
         ('Reply', 'reply'))
 
     def construct(self):
-        page = super(MessagePropertyPage, self).construct()
-
+        page = gtk.VBox()
         context = self.context
         subject = context.subject
-        
+
         if not subject:
             return page
 
@@ -1301,6 +1305,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
             page.pack_start(tree_view)
 
         else:
+            page = super(MessagePropertyPage, self).construct()
             hbox = create_hbox_label(self, page, _('Message sort'))
 
             sort_data = self.MESSAGE_SORT
