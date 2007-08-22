@@ -5,7 +5,6 @@ Such as a modifier 'subject' property and a unique id.
 
 from gaphor import UML
 from gaphor.misc import uniqueid
-from gaphor.UML import Element, Presentation
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
@@ -13,7 +12,7 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
 
-class SubjectSupport(Presentation, Element):
+class SubjectSupport(UML.Presentation):
     """
     Support class that adds support methods for Presentation.subject.
 
@@ -22,8 +21,7 @@ class SubjectSupport(Presentation, Element):
     """
 
     def __init__(self):
-        Presentation.__init__(self)
-        Element.__init__(self)
+        UML.Presentation.__init__(self)
         # Add the class' on_subject_notify() as handler:
         self.connect('subject', type(self).on_subject_notify)
 

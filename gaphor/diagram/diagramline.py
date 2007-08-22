@@ -180,6 +180,7 @@ class NamedLine(DiagramLine):
             'name-align': (ALIGN_CENTER, ALIGN_TOP),
             'name-padding': (5, 5, 5, 5),
             'name-outside': True,
+            'name-align-str': None,
     }
 
 
