@@ -1165,6 +1165,12 @@ component.provideAdapter(FlowDecisionNodeConnect)
 class MessageLifelineConnect(ElementConnect):
     """
     Connect lifeline with a message.
+
+    A message can connect to both the lifeline's head (the rectangle)
+    or the lifetime line. In case it's added to the head, the message
+    is considered to be part of a communication diagram. If the message is
+    added to a lifetime line, it's considered a sequence diagram.
+
     """
 
     component.adapts(items.LifelineItem, items.MessageItem)
@@ -1175,7 +1181,7 @@ class MessageLifelineConnect(ElementConnect):
         """
         Always create a new Message with two EventOccurence instances.
         """
-        def get_subject(c):
+        def get_subject():
             if not line.subject:
                 message = self.element_factory.create(UML.Message)
                 message.name = 'call()'
@@ -1183,14 +1189,14 @@ class MessageLifelineConnect(ElementConnect):
             return line.subject
 
         if send:
-            message = get_subject(send)
+            message = get_subject()
             if not message.sendEvent:
                 event = self.element_factory.create(UML.EventOccurrence)
                 event.sendMessage = message
                 event.covered = send.subject
 
         if received:
-            message = get_subject(received)
+            message = get_subject()
             if not message.receiveEvent:
                 event = self.element_factory.create(UML.EventOccurrence)
                 event.receiveMessage = message
@@ -1200,8 +1206,8 @@ class MessageLifelineConnect(ElementConnect):
     def disconnect_lifelines(self, line):
         """
         Disconnect lifeline and set appropriate kind of message item. If
-        there are no lifelines connected on both ends, then set UML object
-        (subject) to None.
+        there are no lifelines connected on both ends, then remove the message
+        from the data model.
         """
         send = line.head.connected_to
         received = line.tail.connected_to
@@ -1221,7 +1227,11 @@ class MessageLifelineConnect(ElementConnect):
                 del event
 
         if not send and not received:
-            line.subject = None
+            # Both ends are disconnected:
+            message = line.subject
+            del line.subject
+            if not message.presentation:
+                message.unlink()
             for message in line._messages:
                 line.remove_message(message, False)
                 message.unlink()
@@ -1234,6 +1244,8 @@ class MessageLifelineConnect(ElementConnect):
     def _glue_lifetime(self, handle):
         """
         Glue ``handle`` to lifeline's lifetime.
+
+        The position returned is in line coordinates.
         """
         lifetime = self.element.lifetime
         top = lifetime.top.pos
