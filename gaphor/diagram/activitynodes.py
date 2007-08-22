@@ -194,6 +194,7 @@ class ForkNodeItem(Item, DiagramItem):
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
         'name-padding': (2, 2, 2, 2),
         'name-outside': True,
+        'name-align-str': None,
     }
 
     STYLE_TOP = {
