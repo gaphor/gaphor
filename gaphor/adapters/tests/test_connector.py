@@ -780,6 +780,56 @@ class ConnectorTestCase(TestCase):
         assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 0, \
                 factory.lselect(lambda e: e.isKindOf(UML.Message))
 
+
+    def test_message_connect_2(self):
+        factory = self.element_factory
+
+        diagram = factory.create(UML.Diagram)
+
+        lifeline1 = diagram.create(items.LifelineItem)
+        lifeline2 = diagram.create(items.LifelineItem)
+
+        message = diagram.create(items.MessageItem)
+        assert message.subject is None
+
+        adapter = component.queryMultiAdapter((lifeline1, message), IConnect)
+        assert adapter is not None
+        
+        # connect tail of message to lifeline.
+        adapter.connect(message.head)
+
+        # If one side is connected a "lost" message is created
+        assert message.subject is not None
+        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1
+        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 1
+        assert factory.lselect(lambda e: e.isKindOf(UML.Message))[0] is message.subject
+        assert factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))[0] is message.subject.sendEvent
+        
+        adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
+        assert adapter is not None
+
+        adapter.connect(message.tail)
+        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1
+        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 2
+        assert factory.lselect(lambda e: e.isKindOf(UML.Message))[0] is message.subject
+        assert message.subject.sendEvent in factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))
+        assert message.subject.receiveEvent in factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))
+        
+        adapter = component.queryMultiAdapter((lifeline1, message), IConnect)
+        adapter.disconnect(message.head)
+        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1
+        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 1
+        
+        adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
+        adapter.disconnect(message.tail)
+
+        assert message.subject is None
+        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 0, \
+                factory.lselect(lambda e: e.isKindOf(UML.Message))
+        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 0, \
+                factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))
+
+
 if __name__ == '__main__':
     import unittest
     unittest.main()

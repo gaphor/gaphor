@@ -1215,16 +1215,12 @@ class MessageLifelineConnect(ElementConnect):
         if send:
             event = line.subject.receiveEvent
             if event:
-                event.receiveMessage = None
-                event.covered = None
-                del event
+                event.unlink()
 
         if received:
             event = line.subject.sendEvent
             if event:
-                event.sendMessage = None
-                event.covered = None
-                del event
+                event.unlink()
 
         if not send and not received:
             # Both ends are disconnected:
