@@ -13,7 +13,9 @@ ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = -1, 0, 1
 # vertical align
 ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = -1, 0, 1
 
-
+# helper tuples to move text depending on quadrant
+WIDTH_HELPER = (0, 0, -1)    # width helper tuple
+PADDING_HELPER = (1, 1, -1)  # padding helper tuple
 
 # 30 degrees
 ANGLE_030 = pi / 6.0
@@ -244,12 +246,9 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
         else:
             q = cmp(dx / dy, 0)
 
-        # helper tuples to move text depending on quadrant
-        a = (0, 0, -1)  # width helper tuple
-        b = (1, 1, -1)  # padding helper tuple
-
         h2 = height / 2.0
-        x = x0 + b[q] * (padding[PADDING_LEFT] + h2 / abs(tan(angle))) + width * a[q]
+        x = x0 + PADDING_HELPER[q] * (padding[PADDING_LEFT] \
+                + h2 / abs(tan(angle))) + width * WIDTH_HELPER[q]
         y = y0 - h2
 
     return x, y
