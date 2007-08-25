@@ -5,9 +5,8 @@ Test item styles.
 import unittest
 
 from gaphor.diagram.style import get_text_point, \
-        get_text_point_at_line, get_min_size, \
-        ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT, \
-        ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM
+    get_text_point_at_line, get_text_point_at_line2, get_min_size, \
+    ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT, ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM
 
 
 class StyleTestCase(unittest.TestCase):
@@ -90,3 +89,17 @@ class StyleTestCase(unittest.TestCase):
                 (ALIGN_RIGHT, ALIGN_TOP), (2, 2, 2, 2))
         self.assertEqual(x, -15)
         self.assertEqual(y, -10)
+
+
+    def test_align_line2(self):
+        """
+        Test aligned at the line text position calculation
+        """
+        extents = 10, 5
+        p1 = 0, 0
+        p2 = 20, 5
+
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, 5)
+        self.assertAlmostEqual(y, -6.75)
