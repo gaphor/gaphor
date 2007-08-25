@@ -10,7 +10,8 @@ from diagramitem import DiagramItem
 from interfaces import IConnect
 
 from gaphor.diagram.style import get_text_point_at_line, \
-        ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
+    get_text_point_at_line2, \
+    ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 class LineItem(gaphas.Line, DiagramItem):
     """
@@ -154,19 +155,18 @@ class DiagramLine(LineItem):
         if halign == ALIGN_LEFT:
             p1 = handles[0].pos
             p2 = handles[-1].pos
+            x, y = get_text_point_at_line(extents, p1, p2, align, padding)
+
         elif halign == ALIGN_CENTER:
             h0, h1 = self._get_middle_segment()
             p1 = h0.pos
             p2 = h1.pos
-            x0 = (p1[0] + p2[0]) / 2.0
-            y0 = (p1[1] + p2[1]) / 2.0
-            p1 = (x0, y0)
-            p2 = (x0, y0)
+            x, y = get_text_point_at_line2(extents, p1, p2, align, padding)
         elif halign == ALIGN_RIGHT:
             p1 = handles[-1].pos
             p2 = handles[-2].pos
 
-        x, y = get_text_point_at_line(extents, p1, p2, align, padding)
+            x, y = get_text_point_at_line(extents, p1, p2, align, padding)
 
         return x, y
 

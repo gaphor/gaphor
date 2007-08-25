@@ -196,4 +196,24 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
     return p1[0] + name_dx, p1[1] + name_dy
 
 
+
+def get_text_point_at_line2(extents, p1, p2, align, padding):
+    """
+    Calculate position of the text relative to a line defined by points
+    (p1, p2). Text is aligned using align and padding information. 
+
+    TODO: merge with get_text_point_at_line function
+
+    Parameters:
+     - extents: text extents like width, height, etc.
+     - p1:      beginning of line
+     - p2:      end of line
+     - align:   text align information (center, top, etc.)
+     - padding: text padding
+    """
+    x = (p1[0] + p2[0]) / 2.0
+    y = (p1[1] + p2[1]) / 2.0
+    return x, y
+
+
 # vim:sw=4:et
