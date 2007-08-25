@@ -2,6 +2,8 @@
 Style classes and constants.
 """
 
+from math import atan2, tan, pi
+
 # padding
 PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = range(4)
 
@@ -11,6 +13,13 @@ ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = -1, 0, 1
 # vertical align
 ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = -1, 0, 1
 
+
+
+# 30 degrees
+ANGLE_030 = pi / 6.0
+
+# 150 degrees
+ANGLE_150 = 150.0 / 180.0 * pi
 
 class Style(object):
     """
@@ -211,8 +220,38 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
      - align:   text align information (center, top, etc.)
      - padding: text padding
     """
-    x = (p1[0] + p2[0]) / 2.0
-    y = (p1[1] + p2[1]) / 2.0
+    dx = p1[0] + p2[0]
+    dy = p1[1] + p2[1]
+    x0 = dx / 2.0
+    y0 = dy / 2.0
+    angle = atan2(p2[1] - p1[1], p2[0] - p1[0])
+
+    width, height = extents
+
+    # move to center and move by delta depending on line angle
+    if abs(angle) % ANGLE_150 <= ANGLE_030:
+        # <0, 30>, <150, 180>, <-180, -150>, <-30, 0> <- horizontal mode
+        w2 = width / 2.0
+        x = x0 - w2
+        y = y0 - height - padding[PADDING_BOTTOM] - w2 * abs(tan(angle))
+    else:
+        # much better in case of vertical lines
+
+        # determine quadrant, we are interested in 1 or 3 and 2 or 4
+        # see helper tuples below
+        if abs(dy) < 1e-6:
+            q = 0
+        else:
+            q = cmp(dx / dy, 0)
+
+        # helper tuples to move text depending on quadrant
+        a = (0, 0, -1)  # width helper tuple
+        b = (1, 1, -1)  # padding helper tuple
+
+        h2 = height / 2.0
+        x = x0 + b[q] * (padding[PADDING_LEFT] + h2 / abs(tan(angle))) + width * a[q]
+        y = y0 - h2
+
     return x, y
 
 
