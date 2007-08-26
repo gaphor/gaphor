@@ -2,7 +2,7 @@
 Style classes and constants.
 """
 
-from math import atan2, pi
+from math import pi
 
 # padding
 PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = range(4)
@@ -13,15 +13,9 @@ ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = -1, 0, 1
 # vertical align
 ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = -1, 0, 1
 
-# helper tuples to move text depending on quadrant
-WIDTH_HELPER = (0, 0, -1)    # width helper tuple
-PADDING_HELPER = (1, 1, -1)  # padding helper tuple
-
-# 30 degrees
-ANGLE_030 = pi / 6.0
-
-# 150 degrees
-ANGLE_150 = 150.0 / 180.0 * pi
+# hint tuples to move text depending on quadrant
+WIDTH_HINT = (0, 0, -1)    # width hint tuple
+PADDING_HINT = (1, 1, -1)  # padding hint tuple
 
 EPSILON = 1e-6
 
@@ -226,21 +220,26 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
     """
     x0 = (p1[0] + p2[0]) / 2.0
     y0 = (p1[1] + p2[1]) / 2.0
-    dx = p1[0] - p2[0]
-    dy = p1[1] - p2[1]
-    angle = atan2(dy, dx)
+    dx = p2[0] - p1[0]
+    dy = p2[1] - p1[1]
+
+    if abs(dx) < EPSILON:
+        d1 = -1.0
+        d2 = 1.0
+    elif abs(dy) < EPSILON:
+        d1 = 0.0
+        d2 = 0.0
+    else:
+        d1 = dy / dx
+        d2 = abs(d1)
 
     width, height = extents
 
     # move to center and move by delta depending on line angle
-    if abs(angle) % ANGLE_150 <= ANGLE_030:
-        # <0, 30>, <150, 180>, <-180, -150>, <-30, 0> <- horizontal mode
-
+    if d2 < 0.5774: # <0, 30>, <150, 180>, <-180, -150>, <-30, 0>
+        # horizontal mode
         w2 = width / 2.0
-        if abs(dx) < EPSILON:
-            hint = 0
-        else:
-            hint = w2 * abs(dy / dx)
+        hint = w2 * d2
 
         x = x0 - w2
         y = y0 - height - padding[PADDING_BOTTOM] - hint
@@ -248,16 +247,12 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
         # much better in case of vertical lines
 
         # determine quadrant, we are interested in 1 or 3 and 2 or 4
-        # see helper tuples below
+        # see hint tuples below
         h2 = height / 2.0
-        if abs(dy) < EPSILON:
-            q = 0
-            hint = 0
-        else:
-            q = cmp(dx / dy, 0)
-            hint = h2 * abs(dx / dy)
+        q = cmp(d1, 0)
+        hint = h2 / d2
 
-        x = x0 + PADDING_HELPER[q] * (padding[PADDING_LEFT] + hint) + width * WIDTH_HELPER[q]
+        x = x0 + PADDING_HINT[q] * (padding[PADDING_LEFT] + hint) + width * WIDTH_HINT[q]
         y = y0 - h2
 
     return x, y
