@@ -96,27 +96,27 @@ class StyleTestCase(unittest.TestCase):
         Test aligned at the line text position calculation, horizontal mode
         """
         extents = 10, 5
-        p1 = 0, 0
+        p1 = 0.0, 0.0
 
-        p2 = 20, 5
+        p2 = 20.0, 5.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, 5)
         self.assertAlmostEqual(y, -6.75)
 
-        p2 = 20, -5
+        p2 = 20.0, -5.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, 5)
         self.assertAlmostEqual(y, -11.75)
 
-        p2 = -20, 5
+        p2 = -20.0, 5.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, -15)
         self.assertAlmostEqual(y, -6.75)
 
-        p2 = -20, -5
+        p2 = -20.0, -5.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, -15)
@@ -130,25 +130,25 @@ class StyleTestCase(unittest.TestCase):
         extents = 10, 5
         p1 = 0, 0
 
-        p2 = 5, 20
+        p2 = 5.0, 20.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, 5.125)
         self.assertAlmostEqual(y, 7.5)
 
-        p2 = 5, -20
+        p2 = 5.0, -20.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, -10.125)
         self.assertAlmostEqual(y, -12.5)
 
-        p2 = -5, 20
+        p2 = -5.0, 20.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, -15.125)
         self.assertAlmostEqual(y, 7.5)
 
-        p2 = -5, -20
+        p2 = -5.0, -20.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, 0.125)
@@ -163,25 +163,25 @@ class StyleTestCase(unittest.TestCase):
         extents = 10, 5
         p1 = 0, 0
 
-        p2 = 20, 0
+        p2 = 20.0, 0.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, 5)
         self.assertAlmostEqual(y, -8)
 
-        p2 = -20, 0
+        p2 = -20.0, 0.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, -15)
         self.assertAlmostEqual(y, -8)
 
-        p2 = 0, 20
+        p2 = 0.0, 20.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, 2)
         self.assertAlmostEqual(y, 7.5)
 
-        p2 = 0, -20
+        p2 = 0.0, -20.0
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, 2)
