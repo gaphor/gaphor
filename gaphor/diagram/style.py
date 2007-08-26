@@ -224,11 +224,11 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
      - align:   text align information (center, top, etc.)
      - padding: text padding
     """
-    dx = p1[0] + p2[0]
-    dy = p1[1] + p2[1]
-    x0 = dx / 2.0
-    y0 = dy / 2.0
-    angle = atan2(p2[1] - p1[1], p2[0] - p1[0])
+    x0 = (p1[0] + p2[0]) / 2.0
+    y0 = (p1[1] + p2[1]) / 2.0
+    dx = p1[0] - p2[0]
+    dy = p1[1] - p2[1]
+    angle = atan2(dy, dx)
 
     width, height = extents
 
