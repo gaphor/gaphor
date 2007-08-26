@@ -249,15 +249,12 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
 
         # determine quadrant, we are interested in 1 or 3 and 2 or 4
         # see helper tuples below
-        if abs(dy) < EPSILON:
-            q = 0
-        else:
-            q = cmp(dx / dy, 0)
-
         h2 = height / 2.0
         if abs(dy) < EPSILON:
+            q = 0
             hint = 0
         else:
+            q = cmp(dx / dy, 0)
             hint = h2 * abs(dx / dy)
 
         x = x0 + PADDING_HELPER[q] * (padding[PADDING_LEFT] + hint) + width * WIDTH_HELPER[q]
