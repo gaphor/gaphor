@@ -2,7 +2,7 @@
 Style classes and constants.
 """
 
-from math import atan2, tan, pi
+from math import atan2, pi
 
 # padding
 PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = range(4)
@@ -22,6 +22,8 @@ ANGLE_030 = pi / 6.0
 
 # 150 degrees
 ANGLE_150 = 150.0 / 180.0 * pi
+
+EPSILON = 1e-6
 
 class Style(object):
     """
@@ -233,22 +235,32 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
     # move to center and move by delta depending on line angle
     if abs(angle) % ANGLE_150 <= ANGLE_030:
         # <0, 30>, <150, 180>, <-180, -150>, <-30, 0> <- horizontal mode
+
         w2 = width / 2.0
+        if abs(dx) < EPSILON:
+            hint = 0
+        else:
+            hint = w2 * abs(dy / dx)
+
         x = x0 - w2
-        y = y0 - height - padding[PADDING_BOTTOM] - w2 * abs(tan(angle))
+        y = y0 - height - padding[PADDING_BOTTOM] - hint
     else:
         # much better in case of vertical lines
 
         # determine quadrant, we are interested in 1 or 3 and 2 or 4
         # see helper tuples below
-        if abs(dy) < 1e-6:
+        if abs(dy) < EPSILON:
             q = 0
         else:
             q = cmp(dx / dy, 0)
 
         h2 = height / 2.0
-        x = x0 + PADDING_HELPER[q] * (padding[PADDING_LEFT] \
-                + h2 / abs(tan(angle))) + width * WIDTH_HELPER[q]
+        if abs(dy) < EPSILON:
+            hint = 0
+        else:
+            hint = h2 * abs(dx / dy)
+
+        x = x0 + PADDING_HELPER[q] * (padding[PADDING_LEFT] + hint) + width * WIDTH_HELPER[q]
         y = y0 - h2
 
     return x, y
