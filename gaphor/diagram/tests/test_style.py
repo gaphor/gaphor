@@ -91,15 +91,98 @@ class StyleTestCase(unittest.TestCase):
         self.assertEqual(y, -10)
 
 
-    def test_align_line2(self):
+    def test_align_line2_h(self):
         """
-        Test aligned at the line text position calculation
+        Test aligned at the line text position calculation, horizontal mode
         """
         extents = 10, 5
         p1 = 0, 0
-        p2 = 20, 5
 
+        p2 = 20, 5
         x, y = get_text_point_at_line2(extents, p1, p2,
                 (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
         self.assertAlmostEqual(x, 5)
         self.assertAlmostEqual(y, -6.75)
+
+        p2 = 20, -5
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, 5)
+        self.assertAlmostEqual(y, -11.75)
+
+        p2 = -20, 5
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, -15)
+        self.assertAlmostEqual(y, -6.75)
+
+        p2 = -20, -5
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, -15)
+        self.assertAlmostEqual(y, -11.75)
+
+
+    def test_align_line2_v(self):
+        """
+        Test aligned at the line text position calculation, vertical mode
+        """
+        extents = 10, 5
+        p1 = 0, 0
+
+        p2 = 5, 20
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, 5.125)
+        self.assertAlmostEqual(y, 7.5)
+
+        p2 = 5, -20
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, -10.125)
+        self.assertAlmostEqual(y, -12.5)
+
+        p2 = -5, 20
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, -15.125)
+        self.assertAlmostEqual(y, 7.5)
+
+        p2 = -5, -20
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, 0.125)
+        self.assertAlmostEqual(y, -12.5)
+
+
+    def test_align_line2_o(self):
+        """
+        Test aligned at the line text position calculation, orthogonal
+        lines
+        """
+        extents = 10, 5
+        p1 = 0, 0
+
+        p2 = 20, 0
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, 5)
+        self.assertAlmostEqual(y, -8)
+
+        p2 = -20, 0
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, -15)
+        self.assertAlmostEqual(y, -8)
+
+        p2 = 0, 20
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, 2)
+        self.assertAlmostEqual(y, 7.5)
+
+        p2 = 0, -20
+        x, y = get_text_point_at_line2(extents, p1, p2,
+                (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2))
+        self.assertAlmostEqual(x, 2)
+        self.assertAlmostEqual(y, -12.5)
