@@ -265,12 +265,16 @@ class CommunicationMessageModel(EditableTreeModel):
     GTK tree model for list of messages on communication diagram.
     """
     def __init__(self, item, cols=None, inverted=False):
-        super(CommunicationMessageModel, self).__init__(item, cols)
         self.inverted = inverted
+        super(CommunicationMessageModel, self).__init__(item, cols)
 
     def _get_rows(self):
-        for message in self._item._messages:
-            yield [message.name, message]
+        if self.inverted:
+            for message in self._item._inverted_messages:
+                yield [message.name, message]
+        else:
+            for message in self._item._messages:
+                yield [message.name, message]
 
 
     def remove(self, iter):
@@ -1316,8 +1320,8 @@ class MessagePropertyPage(NamedItemPropertyPage):
             frame.add(tree_view)
             hbox.pack_start(frame)
 
-            self._messages = CommunicationMessageModel(context, inverted=True)
-            tree_view = create_tree_view(self._messages, (_('Message'),))
+            self._inverted_messages = CommunicationMessageModel(context, inverted=True)
+            tree_view = create_tree_view(self._inverted_messages, (_('Message'),))
             tree_view.set_headers_visible(False)
             frame = gtk.Frame(label=_('Inverted Messages'))
             frame.add(tree_view)
