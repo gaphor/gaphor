@@ -98,6 +98,36 @@ class MessageItem(NamedLine):
             self._arrow_angle = angle
 
 
+    def save(self, save_func):
+        def save(name, messages):
+            for message in messages:
+                save_func(name, message, reference=True)
+
+        save('message', self._messages)
+        save('inverted', self._inverted_messages)
+
+        super(MessageItem, self).save(save_func)
+
+
+    def load(self, name, value):
+        if name == 'message':
+            self.add_message(value, False)
+        elif name == 'inverted':
+            self.add_message(value, True)
+        else:
+            super(MessageItem, self).load(name, value)
+
+
+    def postload(self):
+        for message in self._messages:
+            self.set_message_text(message, message.name, False)
+
+        for message in self._inverted_messages:
+            self.set_message_text(message, message.name, True)
+
+        super(MessageItem, self).postload()
+
+
     def _draw_circle(self, cr):
         """
         Draw circle for lost/found messages.
