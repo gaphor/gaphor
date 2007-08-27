@@ -202,16 +202,21 @@ class EditableTextSupport(object):
         x, y = self.text_align(extents, style.text_align,
                 style.text_padding, style.text_outside)
 
+        max_hint = 0
+        if style.text_align_str:
+            for txt in texts:
+                txt._hint = self._get_text_align_hint(cr, txt)
+                max_hint = max(max_hint, txt._hint)
+
         # stack texts
         dy = 0
         dw = extents[0]
         for txt in texts:
             bounds = txt.bounds
             width, height = bounds.width, bounds.height
-            hint = self._get_text_align_hint(cr, txt)
             # center stacked texts
-            if hint:
-                txt.bounds.x = x + dw / 2.0 - hint
+            if max_hint:
+                txt.bounds.x = x + max_hint - txt._hint
             else:
                 txt.bounds.x = x + (dw - width) / 2.0
             txt.bounds.y = y + dy
@@ -220,16 +225,14 @@ class EditableTextSupport(object):
 
     def _get_text_align_hint(self, cr, txt):
         """
-        Calculate hint value for text element. Currently, hint value is
-        calculated only for text elements, which style contains
-        ``text-align-str`` style property.
+        Calculate hint value for text element depending on
+        ``text_align_str`` style property.
         """
-        hint = 0
         style = txt.style
-        if style.text_align_str:
-            chunks = txt.text.split(style.text_align_str, 1)
-            if len(chunks) > 1:
-                hint, _ = text_extents(cr, chunks[0], font=txt.font)
+        chunks = txt.text.split(style.text_align_str, 1)
+        hint = 0
+        if len(chunks) > 1:
+            hint, _ = text_extents(cr, chunks[0], font=txt.font)
         return hint
 
 
