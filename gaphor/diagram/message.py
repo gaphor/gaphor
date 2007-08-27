@@ -225,7 +225,7 @@ class MessageItem(NamedLine):
             messages = self._inverted_messages
             style = {
                 'text-align-group': 'inverted',
-                'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
+                'text-align': (ALIGN_CENTER, ALIGN_BOTTOM),
             }
         else:
             messages = self._messages
