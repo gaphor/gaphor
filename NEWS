@@ -1,6 +1,6 @@
 0.11.3
 ------
-- packages can be created on tree level, now
+- allow to create packages in model tree
 - improved messages on communication diagrams
 - improved text align algorithms
 - tagged values can be reordered and removed (like class attributes and
