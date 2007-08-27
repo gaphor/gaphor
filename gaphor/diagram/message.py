@@ -55,6 +55,7 @@ from gaphor.diagram.diagramline import NamedLine
 from gaphor.misc.odict import odict
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
+PADDING = (10, 10, 10, 10)
 
 class MessageItem(NamedLine):
     """
@@ -72,6 +73,7 @@ class MessageItem(NamedLine):
 
     __style__ = {
         'name-align-str': ':',
+        'name-padding': PADDING,
     }
 
     def __init__(self, id=None):
@@ -192,12 +194,12 @@ class MessageItem(NamedLine):
 
             cr.translate(x, y)
             cr.rotate(angle)
-            cr.translate(3 * hint, 6 * hint)
+            cr.translate(0, 6 * hint)
 
-            d = 20
+            d = 15
             r = 3
             cr.set_line_width(1.5)
-            cr.move_to(0, 0)
+            cr.move_to(-d, 0)
             cr.line_to(d, 0)
             cr.line_to(d - r, r)
             cr.move_to(d - r, -r)
@@ -242,6 +244,7 @@ class MessageItem(NamedLine):
             }
 
         style['text-align-str'] = ':'
+        style['text-padding'] = PADDING
         txt = self.add_text('name', style=style)
         txt.text = message.name
         messages[message] = txt
