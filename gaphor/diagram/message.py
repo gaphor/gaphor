@@ -179,17 +179,24 @@ class MessageItem(NamedLine):
     def _draw_communication_arrow(self, cr, inverted=False):
         cr.save()
         try:
-            hint = 1
             angle = self._arrow_angle
+
+            hint = -1
+            if abs(angle) > pi / 2:
+                hint = 1
+
             if inverted:
-                hint = -1
-                angle += pi
+                angle += hint * pi
+
             x, y = self._arrow_pos
-            cr.translate(x + hint * 3, y - hint * 6)
-            cr.set_line_width(1.5)
+
+            cr.translate(x, y)
             cr.rotate(angle)
+            cr.translate(3 * hint, 6 * hint)
+
             d = 20
             r = 3
+            cr.set_line_width(1.5)
             cr.move_to(0, 0)
             cr.line_to(d, 0)
             cr.line_to(d - r, r)
