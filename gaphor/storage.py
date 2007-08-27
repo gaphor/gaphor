@@ -11,7 +11,7 @@ verify(filename)
     we have a valid model, just a valid file).
 """
 
-from cStringIO import StringIO
+from cStringIO import StringIO, InputType
 from xml.sax.saxutils import escape
 import types
 import sys
@@ -309,7 +309,10 @@ def load_generator(filename, factory):
 
     Exceptions: GaphorError.
     """
-    log.info('Loading file %s' % os.path.basename(filename))
+    if isinstance(filename, (file, InputType)):
+        log.info('Loading file from file descriptor')
+    else:
+        log.info('Loading file %s' % os.path.basename(filename))
     try:
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()

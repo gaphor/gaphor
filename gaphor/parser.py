@@ -35,6 +35,7 @@ __all__ = [ 'parse', 'ParserException' ]
 
 import os
 from xml.sax import handler
+from cStringIO import InputType
 
 from gaphor.misc.odict import odict
 
@@ -321,8 +322,20 @@ def parse_generator(filename, loader):
 def parse_file(filename, parser):
     """Parse the file filename with parser.
     """
-    file_size = os.stat(filename)[6]
-    f = open(filename, 'rb')
+    is_fd = True
+    if isinstance(filename, file):
+        f = filename
+        file_size = os.fstat(f.fileno())[6]
+    elif isinstance(filename, InputType):
+        f = filename
+        data = f.getvalue()
+        file_size = len(data)
+        f.reset()
+    else:
+        file_size = os.stat(filename)[6]
+        f = open(filename, 'rb')
+        is_fd = False
+
     block_size = 512
 
     block = f.read(block_size)
@@ -334,7 +347,8 @@ def parse_file(filename, parser):
         yield (read_size * 100) / file_size
 
     parser.close()
-    f.close()
+    if not is_fd:
+        f.close()
 
 if __name__ == '__main__':
     parse('ns.xml')

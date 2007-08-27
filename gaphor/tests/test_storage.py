@@ -12,6 +12,7 @@ from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 from zope import component
+from cStringIO import StringIO
 
 __module__ = 'test_storage'
 
@@ -239,16 +240,18 @@ class StorageTestCase(TestCase):
         #assert a.tail.y == 200, a.tail.pos
         assert a.subject
 
-        fd = open(filename, 'w')
+        fd = StringIO()
         storage.save(XMLWriter(fd), factory=self.factory)
+        data = fd.getvalue()
         fd.close()
 
         old_a_subject_id = a.subject.id
 
         self.factory.flush()
         assert not list(self.factory.select())
-
-        storage.load(filename, factory=self.factory)
+        fd = StringIO(data)
+        storage.load(fd, factory=self.factory)
+        fd.close()
 
         assert len(self.factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
         d = self.factory.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
