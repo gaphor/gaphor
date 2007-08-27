@@ -15,6 +15,7 @@ ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = -1, 0, 1
 
 # hint tuples to move text depending on quadrant
 WIDTH_HINT = (0, 0, -1)    # width hint tuple
+R_WIDTH_HINT = (-1, -1, 0)    # width hint tuple
 PADDING_HINT = (1, 1, -1)  # padding hint tuple
 
 EPSILON = 1e-6
@@ -234,6 +235,7 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
         d2 = abs(d1)
 
     width, height = extents
+    halign, valign = align
 
     # move to center and move by delta depending on line angle
     if d2 < 0.5774: # <0, 30>, <150, 180>, <-180, -150>, <-30, 0>
@@ -242,7 +244,10 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
         hint = w2 * d2
 
         x = x0 - w2
-        y = y0 - height - padding[PADDING_BOTTOM] - hint
+        if valign == ALIGN_TOP:
+            y = y0 - height - padding[PADDING_BOTTOM] - hint
+        else:
+            y = y0 + padding[PADDING_TOP] + hint
     else:
         # much better in case of vertical lines
 
@@ -250,9 +255,15 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
         # see hint tuples below
         h2 = height / 2.0
         q = cmp(d1, 0)
-        hint = h2 / d2
+        if abs(dx) < EPSILON:
+            hint = 0
+        else:
+            hint = h2 / d2
 
-        x = x0 + PADDING_HINT[q] * (padding[PADDING_LEFT] + hint) + width * WIDTH_HINT[q]
+        if valign == ALIGN_TOP:
+            x = x0 + PADDING_HINT[q] * (padding[PADDING_LEFT] + hint) + width * WIDTH_HINT[q]
+        else:
+            x = x0 - PADDING_HINT[q] * (padding[PADDING_RIGHT] + hint) + width * R_WIDTH_HINT[q]
         y = y0 - h2
 
     return x, y
