@@ -1120,7 +1120,7 @@ end.
        return template%(aclass,aclass)
 
 
-def test():
+def run():
     #FILE = 'testmodule01.py'
     #FILE = 'C:\\Documents and Settings\\Administrator\\Desktop\\try\\PyutXmlV6.py'
     #FILE = 'testmodule02.py'
@@ -1139,7 +1139,7 @@ def test():
     print 'Done.'
 
 if __name__ == '__main__':
-    #test()
+    #run()
     import sys, glob, getopt
     SIMPLE = 0
     globbed = []
