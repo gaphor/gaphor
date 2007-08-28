@@ -1,5 +1,5 @@
 """
-Service test cases.
+Application service test cases.
 """
 
 from gaphor.tests.testcase import TestCase
@@ -9,11 +9,11 @@ from zope import component
 from gaphor.interfaces import IService
 
 
-class ServiceTestCase(TestCase):
+class LoadServiceTestCase(TestCase):
 
     services = ['undo_manager', 'file_manager']
 
-    def test_service(self):
+    def test_service_load(self):
         """
         Load services. At lease the undo_manager should be available after that.
         """
