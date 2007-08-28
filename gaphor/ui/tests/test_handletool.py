@@ -161,23 +161,23 @@ class HandleToolTestCase(unittest.TestCase):
         """
         element_factory = Application.get_service('element_factory')
         diagram = element_factory.create(UML.Diagram)
-        #self.main_window.show_diagram(diagram)
+
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
         assert comment.height == 50
         assert comment.width == 100
+
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
-        #print diagram.canvas.get_matrix_i2c(actor), actor.matrix
         assert actor.height == 60, actor.height
         assert actor.width == 38, actor.width
+
         line = diagram.create(CommentLineItem)
         assert line.handles()[0].pos, (0.0, 0.0)
         assert line.handles()[-1].pos, (10.0, 10.0)
         tool = ConnectHandleTool()
 
-        self.main_window.show_diagram(diagram)
-        view = self.main_window.get_current_diagram_view()
+        view = self.get_diagram_view(diagram)
         assert view, 'View should be available here'
 
         # Add extra methods so the Context can impersonate a ToolChainContext
@@ -189,8 +189,8 @@ class HandleToolTestCase(unittest.TestCase):
 
         handle = line.handles()[0]
         self.assertEquals((0, 0), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is comment, 'c =' + str(handle.connected_to)
-        assert handle._connect_constraint is not None
+        self.assertTrue(handle.connected_to is comment, 'c = ' + str(handle.connected_to))
+        self.assertTrue(handle._connect_constraint is not None)
 
         # Grab the second handle and drag it to the actor
 
@@ -200,9 +200,9 @@ class HandleToolTestCase(unittest.TestCase):
 
         handle = line.handles()[-1]
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is actor
-        assert handle._connect_constraint is not None
-        assert actor.subject in comment.subject.annotatedElement
+        self.assertTrue(handle.connected_to is actor)
+        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
         # Press, release, nothing should change
 
@@ -212,9 +212,9 @@ class HandleToolTestCase(unittest.TestCase):
 
         handle = line.handles()[-1]
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is actor
-        assert handle._connect_constraint is not None
-        assert actor.subject in comment.subject.annotatedElement
+        self.assertTrue(handle.connected_to is actor)
+        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
         # Move second handle away from the actor. Should remove connection
 
@@ -224,9 +224,9 @@ class HandleToolTestCase(unittest.TestCase):
 
         handle = line.handles()[-1]
         self.assertEquals((500, 500), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is None
-        assert handle._connect_constraint is None
-        assert len(comment.subject.annotatedElement) == 0
+        self.assertTrue(handle.connected_to is None)
+        self.assertTrue(handle._connect_constraint is None)
+        self.assertEquals(len(comment.subject.annotatedElement), 0)
 
 
 # vim:sw=4:et:ai
