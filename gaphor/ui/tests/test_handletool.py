@@ -3,6 +3,8 @@ Test handle tool functionality.
 """
 
 import unittest
+import gtk
+
 from gaphor import UML
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
@@ -23,6 +25,20 @@ class HandleToolTestCase(unittest.TestCase):
 
     def shutDown(self):
         Application.shutdown()
+
+    def get_diagram_view(self, diagram):
+        """
+        Get a view for diagram.
+        """
+        self.main_window.show_diagram(diagram)
+        view = self.main_window.get_current_diagram_view()
+
+        # realize view, forces bounding box recalculation
+        while gtk.events_pending():
+            gtk.main_iteration()
+
+        return view
+
 
     def test_iconnect(self):
         """
@@ -85,8 +101,8 @@ class HandleToolTestCase(unittest.TestCase):
         line = diagram.create(CommentLineItem)
         tool = ConnectHandleTool()
 
-        self.main_window.show_diagram(diagram)
-        view = self.main_window.get_current_diagram_view()
+        view = self.get_diagram_view(diagram)
+
         assert view, 'View should be available here'
 
         # select handle:
@@ -94,9 +110,6 @@ class HandleToolTestCase(unittest.TestCase):
         tool.grab_handle(line, handle)
 
         # Connect one end to the Comment
-        # todo: this test fails because view.get_items_in_rectangle returns
-        #       nothing in ConnectHandleTool.glue method (called by
-        #       ConnectHandleTool.connect)
         handle.pos = view.get_matrix_v2i(line).transform_point(45, 48)
         tool.connect(view, line, handle, 45, 48)
         self.assertTrue(hasattr(handle, '_connect_constraint'))
