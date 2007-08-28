@@ -29,6 +29,8 @@ class TestCase(unittest.TestCase):
 
     def tearDown(self):
         Application.shutdown()
+        self.element_factory.flush()
+        self.element_factory.shutdown()
         
 
     def get_service(self, name):
@@ -56,6 +58,7 @@ class TestCase(unittest.TestCase):
 
         self.element_factory.flush()
         assert not list(self.element_factory.select())
+        assert not list(self.element_factory.lselect())
         return data
 
 
