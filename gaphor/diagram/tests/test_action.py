@@ -2,19 +2,14 @@
 Test actions.
 """
 
-import unittest
-
 from gaphor import UML
 from gaphor.diagram.action import ActionItem
+from gaphor.tests.testcase import TestCase
 
 
-class ActionTestCase(unittest.TestCase):
-
+class ActionTestCase(TestCase):
     def test_action(self):
         """Test creation of actions.
         """
-        element_factory = UML.ElementFactory()
-        diagram = element_factory.create(UML.Diagram)
-        klass = diagram.create(ActionItem, subject=element_factory.create(UML.Action))
+        self.create(ActionItem, UML.Action)
 
-        diagram.canvas.update()
