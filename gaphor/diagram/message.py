@@ -56,6 +56,7 @@ from gaphor.misc.odict import odict
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
 PADDING = (10, 10, 10, 10)
+PI_2 = pi / 2
 
 class MessageItem(NamedLine):
     """
@@ -67,8 +68,8 @@ class MessageItem(NamedLine):
     Attributes:
 
     - _is_communication: check if message is on communication diagram
-    - _arrow_pos: communication arrow position
-    - _arrow_angle: communication arrow angle
+    - _arrow_pos: decorating arrow position
+    - _arrow_angle: decorating arrow angle
     """
 
     __style__ = {
@@ -215,13 +216,16 @@ class MessageItem(NamedLine):
         cr.stroke()
 
 
-    def _draw_communication_arrow(self, cr, inverted=False):
+    def _draw_decorating_arrow(self, cr, inverted=False):
         cr.save()
         try:
             angle = self._arrow_angle
 
             hint = -1
-            if abs(angle) > pi / 2:
+
+            # rotation hint, keep arrow on the same side as message text
+            # elements
+            if abs(angle) >= PI_2 and angle != -PI_2:
                 hint = 1
 
             if inverted:
@@ -229,17 +233,22 @@ class MessageItem(NamedLine):
 
             x, y = self._arrow_pos
 
+            # move to arrow pos and rotate, below we operate in horizontal
+            # mode
             cr.translate(x, y)
             cr.rotate(angle)
+            # add some padding
             cr.translate(0, 6 * hint)
 
+            # draw decorating arrow
             d = 15
+            dr = d - 4
             r = 3
             cr.set_line_width(1.5)
             cr.move_to(-d, 0)
             cr.line_to(d, 0)
-            cr.line_to(d - r, r)
-            cr.move_to(d - r, -r)
+            cr.line_to(dr, r)
+            cr.move_to(dr, -r)
             cr.line_to(d, 0)
             cr.stroke()
         finally:
@@ -248,11 +257,14 @@ class MessageItem(NamedLine):
 
     def draw(self, context):
         super(MessageItem, self).draw(context)
+
+        # on communication diagram draw decorating arrows for messages and
+        # inverted messages
         if self._is_communication:
             cr = context.cairo
-            self._draw_communication_arrow(cr)
+            self._draw_decorating_arrow(cr)
             if len(self._inverted_messages) > 0:
-                self._draw_communication_arrow(cr, True)
+                self._draw_decorating_arrow(cr, True)
 
 
     def is_communication(self):
