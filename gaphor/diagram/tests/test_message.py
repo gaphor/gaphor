@@ -2,37 +2,31 @@
 Test messages.
 """
 
-import unittest
 from cStringIO import StringIO
 
 from gaphor import UML
 from gaphor.diagram.message import MessageItem
 from gaphor import storage
 from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.tests.testcase import TestCase
 
 
-class MessageTestCase(unittest.TestCase):
+class MessageTestCase(TestCase):
     def test_message(self):
         """Test creation of messages
         """
-        factory = UML.ElementFactory()
-        diagram = factory.create(UML.Diagram)
-        item = diagram.create(MessageItem, subject=factory.create(UML.Message))
-
-        diagram.canvas.update()
+        self.create(MessageItem, UML.Message)
 
 
     def test_adding_message(self):
         """Test adding message on communication diagram
         """
-        factory = UML.ElementFactory()
-        diagram = factory.create(UML.Diagram)
-        item = diagram.create(MessageItem, subject=factory.create(UML.Message))
-
-        diagram.canvas.update()
+        factory = self.element_factory
+        item = self.create(MessageItem, UML.Message)
 
         message = factory.create(UML.Message)
         message.name = 'test-message'
+
         item.add_message(message, False)
         self.assertTrue(message in item._messages)
         self.assertTrue(message not in item._inverted_messages)
@@ -50,11 +44,8 @@ class MessageTestCase(unittest.TestCase):
     def test_changing_message_text(self):
         """Test changing message text
         """
-        factory = UML.ElementFactory()
-        diagram = factory.create(UML.Diagram)
-        item = diagram.create(MessageItem, subject=factory.create(UML.Message))
-
-        diagram.canvas.update()
+        factory = self.element_factory
+        item = self.create(MessageItem, UML.Message)
 
         message = factory.create(UML.Message)
         message.name = 'test-message'
@@ -76,11 +67,8 @@ class MessageTestCase(unittest.TestCase):
     def test_message_removal(self):
         """Test message removal
         """
-        factory = UML.ElementFactory()
-        diagram = factory.create(UML.Diagram)
-        item = diagram.create(MessageItem, subject=factory.create(UML.Message))
-
-        diagram.canvas.update()
+        factory = self.element_factory
+        item = self.create(MessageItem, UML.Message)
 
         message = factory.create(UML.Message)
         item.add_message(message, False)
@@ -100,11 +88,8 @@ class MessageTestCase(unittest.TestCase):
     def test_messages_swapping(self):
         """Test messages swapping
         """
-        factory = UML.ElementFactory()
-        diagram = factory.create(UML.Diagram)
-        item = diagram.create(MessageItem, subject=factory.create(UML.Message))
-
-        diagram.canvas.update()
+        factory = self.element_factory
+        item = self.create(MessageItem, UML.Message)
 
         m1 = factory.create(UML.Message)
         m2 = factory.create(UML.Message)
@@ -122,11 +107,8 @@ class MessageTestCase(unittest.TestCase):
     def test_message_persistence(self):
         """Test message saving/loading
         """
-        factory = UML.ElementFactory()
-        diagram = factory.create(UML.Diagram)
-        item = diagram.create(MessageItem, subject=factory.create(UML.Message))
-
-        diagram.canvas.update()
+        factory = self.element_factory
+        item = self.create(MessageItem, UML.Message)
 
         m1 = factory.create(UML.Message)
         m2 = factory.create(UML.Message)
@@ -148,10 +130,10 @@ class MessageTestCase(unittest.TestCase):
         data = f.getvalue()
         f.close()
 
-        # load
-        factory = UML.ElementFactory()
+        factory.flush()
         assert not list(factory.select())
 
+        # load
         f = StringIO(data)
         storage.load(f, factory=factory)
         f.close()
