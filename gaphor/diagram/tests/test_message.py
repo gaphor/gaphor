@@ -160,3 +160,6 @@ class MessageTestCase(unittest.TestCase):
         item = diagram.canvas.select(lambda e: isinstance(e, MessageItem))[0]
         self.assertEquals(len(item._messages), 2)
         self.assertEquals(len(item._inverted_messages), 2)
+        # check for loaded messages and order of messages
+        self.assertEquals(['m1', 'm2'], [m.name for m in item._messages])
+        self.assertEquals(['m3', 'm4'], [m.name for m in item._inverted_messages])
