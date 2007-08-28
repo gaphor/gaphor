@@ -12,23 +12,14 @@ class ConnectorTestCase(TestCase):
 
     services = ['element_factory', 'adapter_loader']
 
-    def setUp(self):
-        super(ConnectorTestCase, self).setUp()
-        self.element_factory = self.get_service('element_factory')
-
-    def tearDown(self):
-        self.element_factory.flush()
-        super(ConnectorTestCase, self).tearDown()
-
     def test_commentline_element(self):
         """
 	Test CommentLineItem connecting to comment and Actor items.
         """
-        diagram = self.element_factory.create(UML.Diagram)
-        comment = diagram.create(items.CommentItem, subject=self.element_factory.create(UML.Comment))
-        line = diagram.create(items.CommentLineItem)
-        actor = diagram.create(items.ActorItem, subject=self.element_factory.create(UML.Actor))
-        actor2 = diagram.create(items.ActorItem, subject=self.element_factory.create(UML.Actor))
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
+        actor = self.create(items.ActorItem, UML.Actor)
+        actor2 = self.create(items.ActorItem, UML.Actor)
 
         # Connect the comment item to the head of the line:
 
@@ -95,14 +86,13 @@ class ConnectorTestCase(TestCase):
           2. association is disconnected while a comment is connected:
              -> association should be removed from comment.annotatedElement
         """
-        diagram = self.element_factory.create(UML.Diagram)
-        comment = diagram.create(items.CommentItem, subject=self.element_factory.create(UML.Comment))
-        line = diagram.create(items.CommentLineItem)
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
         line.head.pos = 100, 100
         line.tail.pos = 100, 100
-        c1 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
-        c2 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
-        assoc = diagram.create(items.AssociationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+        assoc = self.create(items.AssociationItem)
 
         adapter = component.queryMultiAdapter((c1, assoc), IConnect)
         handle = assoc.head
@@ -171,14 +161,13 @@ class ConnectorTestCase(TestCase):
         Test behaviour when the CommentLine's subject (association) is
         connected after the comment line is connected.
         """
-        diagram = self.element_factory.create(UML.Diagram)
-        comment = diagram.create(items.CommentItem, subject=self.element_factory.create(UML.Comment))
-        line = diagram.create(items.CommentLineItem)
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
         line.head.pos = 100, 100
         line.tail.pos = 100, 100
-        c1 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
-        c2 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
-        assoc = diagram.create(items.AssociationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+        assoc = self.create(items.AssociationItem)
 
         # connect the comment
 
@@ -238,10 +227,9 @@ class ConnectorTestCase(TestCase):
 
 
     def test_dependency(self):
-        diagram = self.element_factory.create(UML.Diagram)
-        actor1 = diagram.create(items.ActorItem, subject=self.element_factory.create(UML.Actor))
-        actor2 = diagram.create(items.ActorItem, subject=self.element_factory.create(UML.Actor))
-        dep = diagram.create(items.DependencyItem)
+        actor1 = self.create(items.ActorItem, UML.Actor)
+        actor2 = self.create(items.ActorItem, UML.Actor)
+        dep = self.create(items.DependencyItem)
 
         adapter = component.queryMultiAdapter((actor1, dep), IConnect)
 
@@ -273,7 +261,7 @@ class ConnectorTestCase(TestCase):
         assert dep_subj not in actor1.subject.supplierDependency
         assert dep_subj not in actor2.subject.clientDependency
 
-        #iface1 = diagram.create(items.InterfaceItem, subject=UML.Interface)
+        #iface1 = self.create(items.InterfaceItem, UML.Interface)
 
         adapter.connect(dep.tail)
 
@@ -290,12 +278,11 @@ class ConnectorTestCase(TestCase):
         """Dependency should appear in a new diagram, bound on a new
         DependencyItem.
         """
-        diagram = self.element_factory.create(UML.Diagram)
-        actor1 = self.element_factory.create(UML.Actor)
-        actor2 = self.element_factory.create(UML.Actor)
-        actoritem1 = diagram.create(items.ActorItem, subject=actor1)
-        actoritem2 = diagram.create(items.ActorItem, subject=actor2)
-        dep = diagram.create(items.DependencyItem)
+        actoritem1 = self.create(items.ActorItem, UML.Actor)
+        actoritem2 = self.create(items.ActorItem, UML.Actor)
+        actor1 = actoritem1.subject
+        actor2 = actoritem2.subject
+        dep = self.create(items.DependencyItem)
         
         adapter = component.queryMultiAdapter((actoritem1, dep), IConnect)
 
@@ -335,10 +322,9 @@ class ConnectorTestCase(TestCase):
         assert dep.subject is dep2.subject
 
     def test_implementation(self):
-        diagram = self.element_factory.create(UML.Diagram)
-        impl = diagram.create(items.ImplementationItem)
-        clazz = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
-        iface = diagram.create(items.InterfaceItem, subject=self.element_factory.create(UML.Interface))
+        impl = self.create(items.ImplementationItem)
+        clazz = self.create(items.ClassItem, UML.Class)
+        iface = self.create(items.InterfaceItem, UML.Interface)
 
         adapter = component.queryMultiAdapter((clazz, impl), IConnect)
 
@@ -362,10 +348,9 @@ class ConnectorTestCase(TestCase):
         assert impl.subject.implementatingClassifier[0] is clazz.subject
 
     def test_generalization(self):
-        diagram = self.element_factory.create(UML.Diagram)
-        gen = diagram.create(items.GeneralizationItem)
-        c1 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
-        c2 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
+        gen = self.create(items.GeneralizationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
 
         adapter = component.queryMultiAdapter((c1, gen), IConnect)
 
@@ -384,12 +369,9 @@ class ConnectorTestCase(TestCase):
         assert gen.subject.specific is c1.subject
 
     def test_extension(self):
-        assert len(list(self.element_factory.select())) == 0
-
-        diagram = self.element_factory.create(UML.Diagram)
-        gen = diagram.create(items.ExtensionItem)
-        c1 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Stereotype))
-        c2 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
+        gen = self.create(items.ExtensionItem)
+        c1 = self.create(items.ClassItem, UML.Stereotype)
+        c2 = self.create(items.ClassItem, UML.Class)
 
         assert len(list(self.element_factory.select())) == 3
 
@@ -414,12 +396,9 @@ class ConnectorTestCase(TestCase):
         assert len(list(self.element_factory.select())) == 3, list(self.element_factory.select())
 
     def test_association(self):
-        assert len(list(self.element_factory.select())) == 0
-
-        diagram = self.element_factory.create(UML.Diagram)
-        gen = diagram.create(items.AssociationItem)
-        c1 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
-        c2 = diagram.create(items.ClassItem, subject=self.element_factory.create(UML.Class))
+        gen = self.create(items.AssociationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
 
         assert len(list(self.element_factory.select())) == 3
 
@@ -452,13 +431,10 @@ class ConnectorTestCase(TestCase):
         assert len(list(self.element_factory.select())) == 3, list(self.element_factory.select())
 
     def test_flow_activitynodes(self):
-        assert len(list(self.element_factory.select())) == 0
-
-        diagram = self.element_factory.create(UML.Diagram)
-        flow = diagram.create(items.FlowItem)
-        i1 = diagram.create(items.InitialNodeItem, subject=self.element_factory.create(UML.InitialNode))
-        f1 = diagram.create(items.ActivityFinalNodeItem, subject=self.element_factory.create(UML.ActivityFinalNode))
-        f2 = diagram.create(items.FlowFinalNodeItem, subject=self.element_factory.create(UML.FlowFinalNode))
+        flow = self.create(items.FlowItem)
+        i1 = self.create(items.InitialNodeItem, UML.InitialNode)
+        f1 = self.create(items.ActivityFinalNodeItem, UML.ActivityFinalNode)
+        f2 = self.create(items.FlowFinalNodeItem, UML.FlowFinalNode)
 
         assert len(self.element_factory.lselect()) == 4
 
@@ -504,14 +480,12 @@ class ConnectorTestCase(TestCase):
 
     
     def test_flow_action(self):
-        assert len(list(self.element_factory.select())) == 0
+        flow = self.create(items.FlowItem)
+        a1 = self.create(items.ActionItem, UML.Action)
+        a2 = self.create(items.ActionItem, UML.Action)
+        o1 = self.create(items.ObjectNodeItem, UML.ObjectNode)
 
-        diagram = self.element_factory.create(UML.Diagram)
-        flow = diagram.create(items.FlowItem)
-        a1 = diagram.create(items.ActionItem, subject=self.element_factory.create(UML.Action))
-        a2 = diagram.create(items.ActionItem, subject=self.element_factory.create(UML.Action))
-        o1 = diagram.create(items.ObjectNodeItem, subject=self.element_factory.create(UML.ObjectNode))
-
+        # diagram, two actions and object node with literal specification, flow has no subject
         assert len(self.element_factory.lselect()) == 5, self.element_factory.lselect()
 
         # Connect between two actions (ControlFlow)
@@ -554,15 +528,13 @@ class ConnectorTestCase(TestCase):
         assert flow.subject is None
 
     def test_flow_connect(self):
-        assert len(list(self.element_factory.select())) == 0
+        flow1 = self.create(items.FlowItem)
+        flow2 = self.create(items.FlowItem)
+        a1 = self.create(items.ActionItem, UML.Action)
+        a2 = self.create(items.ActionItem, UML.Action)
+        o1 = self.create(items.ObjectNodeItem, UML.ObjectNode)
 
-        diagram = self.element_factory.create(UML.Diagram)
-        flow1 = diagram.create(items.FlowItem)
-        flow2 = diagram.create(items.FlowItem)
-        a1 = diagram.create(items.ActionItem, subject=self.element_factory.create(UML.Action))
-        a2 = diagram.create(items.ActionItem, subject=self.element_factory.create(UML.Action))
-        o1 = diagram.create(items.ObjectNodeItem, subject=self.element_factory.create(UML.ObjectNode))
-
+        # diagram, two actions and object node, flows has no subjects
         assert len(self.element_factory.lselect()) == 4, self.element_factory.lselect()
 
         adapter = component.queryMultiAdapter((a1, flow1), IConnect)
@@ -602,18 +574,15 @@ class ConnectorTestCase(TestCase):
          [2] The edges coming into and out of a fork node must be either all
              object flows or all control flows.
         """
-        assert len(list(self.element_factory.select())) == 0
-
-        diagram = self.element_factory.create(UML.Diagram)
-        flow1 = diagram.create(items.FlowItem)
-        flow2 = diagram.create(items.FlowItem)
-        flow3 = diagram.create(items.FlowItem)
-        flow4 = diagram.create(items.FlowItem)
-        a1 = diagram.create(items.ActionItem, subject=self.element_factory.create(UML.Action))
-        a2 = diagram.create(items.ActionItem, subject=self.element_factory.create(UML.Action))
-        a3 = diagram.create(items.ActionItem, subject=self.element_factory.create(UML.Action))
-        a4 = diagram.create(items.ActionItem, subject=self.element_factory.create(UML.Action))
-        f1 = diagram.create(itemClass, subject=self.element_factory.create(joinNodeClass))
+        flow1 = self.create(items.FlowItem)
+        flow2 = self.create(items.FlowItem)
+        flow3 = self.create(items.FlowItem)
+        flow4 = self.create(items.FlowItem)
+        a1 = self.create(items.ActionItem, UML.Action)
+        a2 = self.create(items.ActionItem, UML.Action)
+        a3 = self.create(items.ActionItem, UML.Action)
+        a4 = self.create(items.ActionItem, UML.Action)
+        f1 = self.create(itemClass, joinNodeClass)
 
         #assert len(self.element_factory.lselect()) == 6, self.element_factory.lselect()
 
@@ -752,12 +721,8 @@ class ConnectorTestCase(TestCase):
 
     def test_message_connect(self):
         factory = self.element_factory
-
-        diagram = factory.create(UML.Diagram)
-
-        lifeline = diagram.create(items.LifelineItem)
-
-        message = diagram.create(items.MessageItem)
+        lifeline = self.create(items.LifelineItem)
+        message = self.create(items.MessageItem)
 
         assert message.subject is None
 
@@ -786,10 +751,10 @@ class ConnectorTestCase(TestCase):
 
         diagram = factory.create(UML.Diagram)
 
-        lifeline1 = diagram.create(items.LifelineItem)
-        lifeline2 = diagram.create(items.LifelineItem)
+        lifeline1 = self.create(items.LifelineItem)
+        lifeline2 = self.create(items.LifelineItem)
 
-        message = diagram.create(items.MessageItem)
+        message = self.create(items.MessageItem)
         assert message.subject is None
 
         adapter = component.queryMultiAdapter((lifeline1, message), IConnect)

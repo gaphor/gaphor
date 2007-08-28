@@ -24,7 +24,9 @@ class TestCase(unittest.TestCase):
     def setUp(self):
         Application.init(services=self.services)
         self.element_factory = Application.get_service('element_factory')
+        assert len(list(self.element_factory.select())) == 0
         self.diagram = self.element_factory.create(UML.Diagram)
+        assert len(list(self.element_factory.select())) == 1
 
 
     def tearDown(self):
@@ -37,11 +39,14 @@ class TestCase(unittest.TestCase):
         return Application.get_service(name)
 
 
-    def create(self, item_cls, subject_cls):
+    def create(self, item_cls, subject_cls=None):
         """
         Create an item with specified subject.
         """
-        subject = self.element_factory.create(subject_cls)
+        if subject_cls is None:
+            subject = None
+        else:
+            subject = self.element_factory.create(subject_cls)
         item = self.diagram.create(item_cls, subject=subject)
         self.diagram.canvas.update()
         return item
