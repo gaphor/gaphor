@@ -107,7 +107,12 @@ class NamespaceModel(gtk.GenericTreeModel):
                 self.row_changed(path, self.get_iter(path))
 
         if event.property is UML.NamedElement.name:
-            path = self.path_from_element(element)
+            try:
+                path = self.path_from_element(element)
+            except KeyError:
+                # Element not visible in the tree view
+                return
+
             if not path:
                 return
             self.row_changed(path, self.get_iter(path))
@@ -130,7 +135,11 @@ class NamespaceModel(gtk.GenericTreeModel):
         Add a single element.
         """
         self._nodes.setdefault(element, [])
-        parent = self._nodes[element.namespace]
+        try:
+            parent = self._nodes[element.namespace]
+        except AssertionError, e:
+            log.error('Undoing a change?', e)
+            return
         parent.append(element)
         parent.sort(key=_tree_sorter)
         path = self.path_from_element(element)
@@ -143,11 +152,26 @@ class NamespaceModel(gtk.GenericTreeModel):
                     self._add_elements(e)
 
 
+    def _remove_element(self, element):
+        """
+        Remove elements from the nodes. No update signal is emitted.
+        """
+        def remove(n):
+            for c in self._nodes.get(n, []):
+                remove(c)
+            try:
+                del self._nodes[n]
+            except KeyError:
+                pass
+
+        remove(element)
+
+
     @component.adapter(IElementCreateEvent)
     def _on_element_create(self, event):
         element = event.element
         if event.service is self.factory and \
-                type(element) in self.filter:
+                 type(element) in self.filter:
             self._add_elements(element)
 
 
@@ -156,51 +180,68 @@ class NamespaceModel(gtk.GenericTreeModel):
         element = event.element
         if event.service is self.factory and \
                 type(element) in self.filter:
-
             try:
                 path = self.path_from_element(element)
             except (KeyError, ValueError):
                 # No such element (anymore)
                 return
 
+            # Remove all sub-elements:
+            print 'removing element', element
+            self._remove_element(element)
+            if path:
+                self.row_deleted(path)
+
             # Remove element from parent
             if element.namespace:
                 parent_nodes = self._nodes[element.namespace]
                 parent_nodes.remove(element)
-
-            # Remove all sub-elements:
-            def remove(n):
-                for c in self._nodes.get(n, []):
-                    remove(c)
-                del self._nodes[n]
-
-            remove(element)
-            if path:
-                self.row_deleted(path)
+                path = self.path_from_element(element.namespace)
+                if path:
+                    self.row_has_child_toggled(path, self.get_iter(path))
 
 
     @component.adapter(DerivedUnionSetEvent)
     def _on_association_set(self, event):
+
         element = event.element
-        if element not in self._nodes:
+        if type(element) not in self.filter:
             return
 
         if event.property is UML.NamedElement.namespace:
-            if not self._nodes.has_key(element):
+            # Check if the element is actually in the element factory:
+            if element not in self.factory:
                 return
+
             old_value, new_value = event.old_value, event.new_value
 
             # Remove entry from old place
-            path = self.path_from_element(old_value) + (self._nodes[old_value].index(element),)
-            self._nodes[old_value].remove(element)
-            self.row_deleted(path)
+            if self._nodes.has_key(old_value):
+                try:
+                    path = self.path_from_element(old_value) + (self._nodes[old_value].index(element),)
+                except ValueError:
+                    log.error('Unable to create path for element %s and old_value %s' % (element, self._nodes[old_value]))
+                else:
+                    self._nodes[old_value].remove(element)
+                    self.row_deleted(path)
+                    path = self.path_from_element(old_value)
+                    if path:
+                        self.row_has_child_toggled(path, self.get_iter(path))
 
-            # and add to new place
-            parent = self._nodes[element.namespace]
-            parent.append(element)
-            parent.sort(key=_tree_sorter)
-            path = self.path_from_element(element)
-            self.row_inserted(path, self.get_iter(path))
+            # Add to new place. This may fail if the type of the new place is
+            # not in the tree model (because it's filtered)
+            if self._nodes.has_key(new_value):
+                if self._nodes.has_key(element):
+                    parent = self._nodes[new_value]
+                    parent.append(element)
+                    parent.sort(key=_tree_sorter)
+                    path = self.path_from_element(element)
+                    self.row_inserted(path, self.get_iter(path))
+                elif type(element) in self.filter:
+                    self._add_elements(element)
+            elif self._nodes.has_key(element):
+                # Non-existent: remove entirely
+                self._remove_element(element)
 
     @component.adapter(ModelFactoryEvent)
     def refresh(self, event=None):

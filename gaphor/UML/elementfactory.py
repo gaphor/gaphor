@@ -73,6 +73,9 @@ class ElementFactory(object):
 
     __getitem__ = lookup
 
+    def __contains__(self, element):
+        return self.lookup(element.id) is element
+
     def select(self, expression=None):
         """
         Iterate elements that comply with expression.

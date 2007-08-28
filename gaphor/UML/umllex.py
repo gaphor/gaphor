@@ -1,6 +1,5 @@
-#!/usr/bin/env python
-# vim:sw=4:et
-"""Lexical analizer for attributes and operations.
+"""
+Lexical analizer for attributes and operations.
 
 In this module some parse functions are added for attributes and operations.
 The regular expressions are constructed based on a series of
@@ -8,7 +7,10 @@ The regular expressions are constructed based on a series of
 attribute/operation.
 """
 
-__all__ = [ 'parse_property', 'parse_operation', 'render_property', 'render_operation' ]
+__all__ = [
+        'parse_property', 'parse_operation',
+        'render_property', 'render_operation'
+        ]
 
 import re
 from cStringIO import StringIO
@@ -501,3 +503,6 @@ def render_lifeline(self):
     """
     """
     return self.name
+
+
+# vim:sw=4:et:ai

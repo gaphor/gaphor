@@ -920,6 +920,15 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
+        combo = gtk.combo_box_new_text()
+        for t in ('public (+)', 'protected (#)', 'package (~)', 'private (-)'):
+            combo.append_text(t)
+        
+        combo.set_active(['public', 'protected', 'package', 'private'].index(end.subject.visibility))
+
+        combo.connect('changed', self._on_visibility_change, end)
+        hbox.pack_start(combo, expand=False)
+
         entry = gtk.Entry()
         entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
 
@@ -1012,6 +1021,10 @@ Enter attribute name and multiplicity, for example
     @transactional
     def _on_end_name_change(self, entry, end):
         end.subject.parse(entry.get_text())
+
+    @transactional
+    def _on_visibility_change(self, combo, end):
+        end.subject.visibility = ('public', 'protected', 'package', 'private')[combo.get_active()]
 
     @transactional
     def _on_navigability_change(self, combo, end):
