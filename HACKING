@@ -29,6 +29,14 @@ Above is based on
     http://peak.telecommunity.com/DevCenter/EasyInstall#traditional-pythonpath-based-installation
 
 
+Running Tests
+=============
+To run tests on Unix machine
+
+    Xvfb :2.0 &
+    DISPLAY=:2.0 nosetests gaphor/ 2>&1 | tee tests.log
+
+
 Structure
 =========
 
