@@ -99,20 +99,18 @@ class MessageItem(NamedLine):
 
 
     def save(self, save_func):
-        def save(name, messages):
-            for message in messages:
-                save_func(name, message, reference=True)
-
-        save('message', self._messages)
-        save('inverted', self._inverted_messages)
+        save_func('message', list(self._messages), reference=True)
+        save_func('inverted', list(self._inverted_messages), reference=True)
 
         super(MessageItem, self).save(save_func)
 
 
     def load(self, name, value):
         if name == 'message':
+            #print 'message! value =', value
             self.add_message(value, False)
         elif name == 'inverted':
+            #print 'inverted! value =', value
             self.add_message(value, True)
         else:
             super(MessageItem, self).load(name, value)

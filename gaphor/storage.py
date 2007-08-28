@@ -1,5 +1,5 @@
-# vim: sw=4:et
-"""Load and save Gaphor models to Gaphors own XML format.
+"""
+Load and save Gaphor models to Gaphors own XML format.
 
 Three functions are exported:
 load(filename)
@@ -116,10 +116,11 @@ def save_generator(writer, factory):
         The extra attribute reference can be used to force UML 
         """
         #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
-        if reference:
-            save_reference(name, value)
-        elif isinstance(value, UML.collection):
+        if isinstance(value, UML.collection) or \
+                (isinstance(value, (list, tuple)) and reference == True):
             save_collection(name, value)
+        elif reference:
+            save_reference(name, value)
         elif isinstance(value, gaphas.Item):
             writer.startElement('item', { 'id': value.id,
                                           'type': value.__class__.__name__ })
@@ -474,3 +475,5 @@ def version_0_5_2(elements, factory, gaphor_version):
             except Exception, e:
                 log.error('Error while updating Association', e)
 
+
+# vim: sw=4:et
