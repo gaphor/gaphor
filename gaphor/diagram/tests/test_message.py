@@ -2,12 +2,8 @@
 Test messages.
 """
 
-from cStringIO import StringIO
-
 from gaphor import UML
 from gaphor.diagram.message import MessageItem
-from gaphor import storage
-from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.tests.testcase import TestCase
 
 
@@ -124,22 +120,10 @@ class MessageTestCase(TestCase):
         item.add_message(m3, True)
         item.add_message(m4, True)
 
-        # save
-        f = StringIO()
-        storage.save(XMLWriter(f), factory=factory)
-        data = f.getvalue()
-        f.close()
+        data = self.save()
+        self.load(data)
 
-        factory.flush()
-        assert not list(factory.select())
-
-        # load
-        f = StringIO(data)
-        storage.load(f, factory=factory)
-        f.close()
-        
-        diagram = factory.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
-        item = diagram.canvas.select(lambda e: isinstance(e, MessageItem))[0]
+        item = self.diagram.canvas.select(lambda e: isinstance(e, MessageItem))[0]
         self.assertEquals(len(item._messages), 2)
         self.assertEquals(len(item._inverted_messages), 2)
         # check for loaded messages and order of messages
