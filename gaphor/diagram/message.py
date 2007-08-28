@@ -73,7 +73,6 @@ class MessageItem(NamedLine):
 
     __style__ = {
         'name-align-str': ':',
-        'name-padding': PADDING,
     }
 
     def __init__(self, id=None):
@@ -85,12 +84,22 @@ class MessageItem(NamedLine):
         self._inverted_messages = odict()
 
 
+    def pre_update(self, context):
+        """
+        Update communication diagram information.
+        """
+        self._is_communication = self.is_communication()
+        if self._is_communication:
+            self._name.style.text_padding = PADDING
+
+        super(MessageItem, self).pre_update(context)
+
+
     def post_update(self, context):
         """
         Update communication diagram information.
         """
         super(MessageItem, self).post_update(context)
-        self._is_communication = self.is_communication()
 
         if self._is_communication:
             pos, angle = self._get_center_pos()
