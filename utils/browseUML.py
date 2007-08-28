@@ -18,17 +18,9 @@ def print_vars(cls):
     global done
     done.append(cls)
     print cls.__name__ + ":"
-    dict = cls._attrdef
+    dict = cls.__dict__
     for key in dict.keys():
-        print "\t" + key + ":",
-	if type(dict[key][0]) is type(Sequence):
-	    print "Sequence of " + dict[key][1].__name__,
-	else:
-	    print "Instance of " + dict[key][1].__name__,
-	if len(dict[key]) > 2:
-	    print "( <-> " + dict[key][2] + ")"
-	else:
-	    print ""
+        print "\t" + key + ":", str(dict[key])
     for base in cls.__bases__:
 	if base not in done:
 	    print_vars(base)
