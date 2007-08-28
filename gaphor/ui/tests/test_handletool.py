@@ -118,39 +118,38 @@ class HandleToolTestCase(unittest.TestCase):
         self.assertEquals((45, 50), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
         # Connect the other end to the actor:
-
         handle = line.handles()[-1]
         tool.grab_handle(line, handle)
 
         handle.x, handle.y = 140, 150
-        assert tool.glue(view, line, handle, 200, 200) is actor
+        glued = tool.glue(view, line, handle, 200, 200) 
+        self.assertTrue(glued is actor)
         tool.connect(view, line, handle, 200, 200)
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is actor, handle.connected_to
-        assert handle._connect_constraint is not None
+        self.assertTrue(hasattr(handle, '_connect_constraint'))
+        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(handle.connected_to is actor)
+        self.assertEquals((200, 200), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
         
         # Disconnect only disconnects the constraints:
-
-        assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
-        assert actor.subject in comment.subject.annotatedElement
+        self.assertEquals(len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement)
+        self.assertTrue(actor.subject in comment.subject.annotatedElement)
        
         tool.disconnect(view, line, handle)
 
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is actor, handle.connected_to
-        assert handle._connect_constraint is None
+        self.assertTrue(handle.connected_to is actor, handle.connected_to)
+        self.assertTrue(handle._connect_constraint is None)
 
         # Try to connect far away from any item will only do a full disconnect
+        self.assertEquals(len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement)
+        self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
-        assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
-        assert actor.subject in comment.subject.annotatedElement
-
-        assert tool.glue(view, line, handle, 500, 500) is None
+        self.assertTrue(tool.glue(view, line, handle, 500, 500) is None)
         tool.connect(view, line, handle, 500, 500)
 
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is None, handle.connected_to
-        assert handle._connect_constraint is None
+        self.assertTrue(handle.connected_to is None)
+        self.assertTrue(handle._connect_constraint is None)
 
 
     def test_connect_3(self):
