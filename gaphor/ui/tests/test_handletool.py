@@ -47,16 +47,19 @@ class HandleToolTestCase(unittest.TestCase):
         """
         element_factory = Application.get_service('element_factory')
         diagram = element_factory.create(UML.Diagram)
-        #self.main_window.show_diagram(diagram)
+
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
         assert comment.height == 50
         assert comment.width == 100
+
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
+        actor.matrix.translate(200, 200)
+        diagram.canvas.update_matrix(actor)
+
         line = diagram.create(CommentLineItem)
         tool = ConnectHandleTool()
 
-        self.main_window.show_diagram(diagram)
-        view = self.main_window.get_current_diagram_view()
+        view = self.get_diagram_view(diagram)
         assert view, 'View should be available here'
 
         # select handle:
@@ -64,22 +67,23 @@ class HandleToolTestCase(unittest.TestCase):
         tool._grabbed_item = line
         tool._grabbed_handle = handle
 
-        # Should glue to (45, 50)
-        handle.pos = 45, 48
-        tool.glue(view, line, handle, 45, 48)
+        # Should glue to (238, 248)
+        handle.pos = 245, 248
+        item = tool.glue(view, line, handle, 245, 248)
+        self.assertTrue(item is not None)
+        self.assertEquals((238, 248), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
 
-        self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-
-        handle.x, handle.y = 45, 48
-        tool.connect(view, line, handle, 45, 48)
-        self.assertEquals((45, 50), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        assert handle.connected_to is actor, handle.connected_to
-        assert handle._connect_constraint is not None
+        handle.x, handle.y = 245, 248
+        tool.connect(view, line, handle, 245, 248)
+        self.assertTrue(hasattr(handle, '_connect_constraint'))
+        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(handle.connected_to is actor, handle.connected_to)
+        self.assertEquals((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
         tool.disconnect(view, line, handle)
         
-        assert handle.connected_to is actor
-        assert handle._connect_constraint is None
+        self.assertTrue(handle.connected_to is actor)
+        self.assertTrue(handle._connect_constraint is None)
 
 
     def test_iconnect_2(self):
