@@ -24,9 +24,9 @@ class TestCase(unittest.TestCase):
     def setUp(self):
         Application.init(services=self.services)
         self.element_factory = Application.get_service('element_factory')
-        assert len(list(self.element_factory.select())) == 0
+        assert len(list(self.element_factory.select())) == 0, list(self.element_factory.select())
         self.diagram = self.element_factory.create(UML.Diagram)
-        assert len(list(self.element_factory.select())) == 1
+        assert len(list(self.element_factory.select())) == 1, list(self.element_factory.select())
 
 
     def tearDown(self):
