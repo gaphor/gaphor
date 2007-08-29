@@ -1264,16 +1264,19 @@ class MessageLifelineConnect(ElementConnect):
         opposite = line.opposite(handle)
 
         pos = None
-        if lifetime.is_visible:
-            if opposite.connected_to:
-                glue_ok = opposite.connected_to.lifetime.is_visible
-            else:
-                glue_ok = True
+        if opposite.connected_to:
+            opposite_is_visible = opposite.connected_to.lifetime.is_visible
 
-            # lifeline's lifetime is visible, therefore glue only when
-            # opposite lifeline's lifetime is visible, too
-            if glue_ok:
+            if lifetime.is_visible and opposite_is_visible:
+                # glue lifetimes if both are visible
                 pos = self._glue_lifetime(handle)
+            elif not lifetime.is_visible and not opposite_is_visible:
+                # glue heads if both lifetimes are invisible
+                pos = ElementConnect.glue(self, handle)
+
+        elif lifetime.is_visible:
+            pos = self._glue_lifetime(handle)
+
         else:
             pos = ElementConnect.glue(self, handle)
         return pos
