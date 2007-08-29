@@ -435,7 +435,6 @@ class PropertiesTestCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    print 'run'
     unittest.main()
 
 # vim:sw=4:et:ai

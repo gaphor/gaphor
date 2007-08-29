@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# vim:sw=4:et
 """
 Properties used to create the UML 2.0 data model.
 
@@ -430,7 +428,7 @@ class derivedunion(umlproperty):
 
       Element.union = derivedunion('union', subset1, subset2..subsetn)
 
-    The subsets are the properties that participate in the union (Element.name),
+    The subsets are the properties that participate in the union (Element.name).
     """
 
     def __init__(self, name, lower, upper, *subsets):
@@ -461,24 +459,22 @@ class derivedunion(umlproperty):
             #return getattr(obj, self.subsets[0])
             return self.subsets[0].__get__(obj)
         else:
-            u = list()
+            u = set()
             for s in self.subsets:
                 tmp = s.__get__(obj)
                 if tmp:
                     # append or extend tmp (is it a list or not)
                     try:
                         for t in tmp:
-                            if t not in u:
-                                u.append(t)
-                        #u.extend(tmp)
+                            u.add(t)
                     except TypeError:
-                        if tmp not in u:
-                            u.append(tmp)
+                        # [0..1] property
+                        u.add(tmp)
             if self.upper > 1:
                 return u
             else:
                 assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
-                return u and u[0] or None
+                return u and iter(u).next() or None
 
 
     def _set(self, obj, value):
@@ -595,3 +591,6 @@ else:
     psyco.bind(association)
     psyco.bind(derivedunion)
     psyco.bind(redefine)
+
+
+# vim:sw=4:et:ai
