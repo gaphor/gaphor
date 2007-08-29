@@ -48,9 +48,9 @@ TOOLBOX_ACTIONS = (
         ('toolbox-object-node', _('Object node'), 'gaphor-object-node'),
         ('toolbox-flow', _('Control/object flow'), 'gaphor-control-flow'),
     )), (_('Interactions'), (
-        ('toolbox-interaction', _('Interaction'), 'gaphor-interaction'),
         ('toolbox-lifeline', _('Lifeline'), 'gaphor-lifeline'),
         ('toolbox-message', _('Message'), 'gaphor-message'),
+        ('toolbox-interaction', _('Interaction'), 'gaphor-interaction'),
     )), (_('Use Cases'), (
         ('toolbox-usecase', _('Use case'), 'gaphor-usecase'),
         ('toolbox-actor', _('Actor'), 'gaphor-actor'),
