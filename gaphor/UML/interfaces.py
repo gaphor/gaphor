@@ -49,13 +49,13 @@ class IAssociationSetEvent(IAssociationChangeEvent):
 class IAssociationAddEvent(IAssociationChangeEvent):
     """
     An association with [0..*] multiplicity has been changed: a new entry is
-    added.
+    added. ``new_value`` contains the property being added.
     """
 
 class IAssociationDeleteEvent(IAssociationChangeEvent):
     """
     An association with [0..*] multiplicity has been changed: an entry has
-    been removed.
+    been removed. ``old_value`` contains the property that has been removed.
     """
 
 class IElementFactoryEvent(IServiceEvent):

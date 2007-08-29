@@ -404,6 +404,110 @@ class PropertiesTestCase(unittest.TestCase):
         finally:
             Application.unregister_handler(handler)
 
+    def test_derivedunion_events(self):
+        from zope import component
+        from gaphor.application import Application
+        from gaphor.UML.event import AssociationChangeEvent
+        from gaphor.UML.event import DerivedUnionSetEvent, DerivedUnionAddEvent, DerivedUnionDeleteEvent
+        
+        class A(Element):
+            is_unlinked = False
+            def unlink(self):
+                self.is_unlinked = True
+                Element.unlink(self)
+
+        A.a1 = association('a1', A, upper=1)
+        A.a2 = association('a2', A, upper=1)
+        A.b1 = association('b1', A, upper='*')
+        A.b2 = association('b2', A, upper='*')
+        A.b3 = association('b3', A, upper=1)
+
+        A.derived_a = derivedunion('derived_a', 0, 1, A.a1, A.a2)
+        A.derived_b = derivedunion('derived_b', 0, '*', A.b1, A.b2, A.b3)
+        
+        events = []
+        @component.adapter(AssociationChangeEvent)
+        def handler(event, events=events):
+            events.append(event)
+
+        Application.register_handler(handler)
+        try:
+            a = A()
+            a.a1 = A()
+            assert len(events) == 2
+            assert events[0].property is A.derived_a
+            assert events[1].property is A.a1
+
+            a.a2 = A()
+            # Should not emit DerivedUnionSetEvent
+            assert len(events) == 3
+            assert events[2].property is A.a2
+
+            old_a1 = a.a1
+            del a.a1
+            assert len(events) == 5, len(events)
+            assert events[3].property is A.derived_a
+            assert events[3].new_value is a.a2, '%s %s %s' % (a.a1, a.a2, events[3].new_value)
+            assert events[3].old_value is old_a1, '%s %s %s' % (a.a1, a.a2, events[3].old_value)
+            assert events[4].property is A.a1
+
+            old_a2 = a.a2
+            del a.a2
+            assert len(events) == 7, len(events)
+            assert events[5].property is A.derived_a
+            assert events[5].new_value is None, '%s %s %s' % (a.a1, a.a2, events[5].new_value)
+            assert events[5].old_value is old_a2, '%s %s %s' % (a.a1, a.a2, events[5].old_value)
+            assert events[6].property is A.a2
+
+            del events[:]
+            assert len(events) == 0, len(events)
+
+            a.b1 = A()
+            assert len(events) == 2
+            assert events[0].property is A.derived_b
+            assert events[1].property is A.b1
+
+            a.b2 = A()
+            assert len(events) == 4
+            assert events[2].property is A.derived_b
+            assert events[3].property is A.b2
+
+            a.b2 = A()
+            assert len(events) == 6
+            assert events[4].property is A.derived_b
+            assert events[5].property is A.b2
+
+            a.b3 = A()
+            assert len(events) == 8, len(events)
+            assert events[6].property is A.derived_b
+            assert events[7].property is A.b3
+
+            # Add b3's value to b2, should not emit derived union event
+            a.b2 = a.b3
+            assert len(events) == 9, len(events)
+            assert events[8].property is A.b2
+
+            # Remove b3's value to b2
+            del a.b2[a.b3]
+            assert len(events) == 10, len(events)
+            assert events[9].property is A.b2
+
+            a.b3 = A()
+            assert len(events) == 13, len(events)
+            assert events[10].property is A.derived_b
+            assert type(events[10]) is DerivedUnionDeleteEvent, type(events[10])
+            assert events[11].property is A.derived_b
+            assert type(events[11]) is DerivedUnionAddEvent, type(events[11])
+            assert events[12].property is A.b3
+
+            del a.b3
+            assert len(events) == 15, len(events)
+            assert events[13].property is A.derived_b
+            assert type(events[13]) is DerivedUnionDeleteEvent, type(events[10])
+            assert events[14].property is A.b3
+        finally:
+            Application.unregister_handler(handler)
+        
     def test_redefine(self):
         from zope import component
         from gaphor.application import Application
