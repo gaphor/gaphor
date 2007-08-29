@@ -55,7 +55,6 @@ from gaphor.diagram.diagramline import NamedLine
 from gaphor.misc.odict import odict
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
-PADDING = (10, 10, 10, 10)
 PI_2 = pi / 2
 
 class MessageItem(NamedLine):
@@ -76,6 +75,12 @@ class MessageItem(NamedLine):
         'name-align-str': ':',
     }
 
+    # name padding on sequence diagram
+    SD_PADDING = NamedLine.style.name_padding
+
+    # name padding on communication diagram
+    CD_PADDING = (10, 10, 10, 10)
+
     def __init__(self, id=None):
         super(MessageItem, self).__init__(id)
         self._is_communication = False
@@ -91,7 +96,9 @@ class MessageItem(NamedLine):
         """
         self._is_communication = self.is_communication()
         if self._is_communication:
-            self._name.style.text_padding = PADDING
+            self._name.style.text_padding = self.CD_PADDING
+        else:
+            self._name.style.text_padding = self.SD_PADDING
 
         super(MessageItem, self).pre_update(context)
 
