@@ -146,7 +146,7 @@ class EditableTreeModel(gtk.ListStore):
         path = self.get_path(iter)
         row = self[path]
 
-        if col == 0 and not value:
+        if col == 0 and not value and row[-1]:
             # kill row and delete object if text of first column is empty
             self.remove(iter)
 
