@@ -52,6 +52,8 @@ class FlowItem(NamedLine):
 
 
     def on_subject_notify__guard(self, subject, pspec=None):
+        if not subject.guard or not subject.guard.value:
+            self._guard.text = ''
         self.request_update()
 
 
