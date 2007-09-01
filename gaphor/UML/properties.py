@@ -175,7 +175,6 @@ class enumeration(umlproperty):
         if value == old:
             return
 
-        #undoattributeaction(self, obj, self._get(obj))
         if value == self.default:
             delattr(obj, self._name)
         else:
@@ -186,44 +185,12 @@ class enumeration(umlproperty):
     def _del(self, obj, value=None):
         old = self._get(obj)
         try:
-            #undoattributeaction(self, obj, self._get(obj))
             delattr(obj, self._name)
         except AttributeError:
             pass
         else:
             component.handle(AttributeChangeEvent(obj, self, old, self.default))
             self.notify(obj)
-
-
-#class undosetassociationaction(undoaction):
-#    """
-#    Undo a 'set' action in an association.
-#    """
-#
-#    def undo(self):
-#        #log.debug('undosetassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
-#        self.prop._del(self.obj, self.value)
-#        return self.redo
-#
-#    def redo(self):
-#        #log.debug('undosetassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
-#        self.prop._set(self.obj, self.value)
-##        return self.undo
-
-
-#class undodelassociationaction(undoaction):
-#    """Undo a 'del' action in an association.
-#    """
-#
-#    def undo(self):
-#        #log.debug('undodelassociationaction set: %s %s %s' % (self.obj, self.prop.name, self.value))
-#        self.prop._set(self.obj, self.value)
-#        return self.redo
-#
-#    def redo(self):
-#        #log.debug('undodelassociationaction del: %s %s %s' % (self.obj, self.prop.name, self.value))
-#        self.prop._del(self.obj, self.value)
-#        return self.undo
 
 
 class association(umlproperty):
@@ -299,7 +266,7 @@ class association(umlproperty):
 
         This method is called from the opposite association property.
         """
-        #print '__set__', self, obj, value
+        #print '__set__', self, obj, value, self._get(obj)
         if not (isinstance(value, self.type) or \
                 (value is None and self.upper == 1)):
             raise AttributeError, 'Value should be of type %s' % self.type.__name__
@@ -308,22 +275,24 @@ class association(umlproperty):
             old = self._get(obj)
 
             # do nothing if we are assigned our current value:
+            # Still do your thing, since undo handlers expect that.
             if value is old:
                 return
 
             if old:
-                if not from_opposite and self.opposite:
-                    getattr(type(old), self.opposite)._del(old, obj, from_opposite=True)
-                old.disconnect(self.__on_unlink, obj)
-                if self.composite:
-                    obj.disconnect(self.__on_composite_unlink, old)
+                self._del(obj, old, from_opposite=from_opposite, do_notify=False)
+
+            if do_notify:
+                event = AssociationSetEvent(obj, self, old, value)
 
             if value is None:
+                if do_notify:
+                    self.notify(obj)
+                    component.handle(event)
                 return
 
             setattr(obj, self._name, value)
-            if do_notify:
-                event = AssociationSetEvent(obj, self, old, value)
+
         else:
             # Set the actual value
             c = self._get(obj)
@@ -350,7 +319,7 @@ class association(umlproperty):
             self.notify(obj)
             component.handle(event)
 
-    def _del(self, obj, value, from_opposite=False):
+    def _del(self, obj, value, from_opposite=False, do_notify=True):
         """
         Delete is used for element deletion and for removal of
         elements from a list.
@@ -367,6 +336,7 @@ class association(umlproperty):
         if not from_opposite and self.opposite:
             getattr(type(value), self.opposite)._del(value, obj, from_opposite=True)
 
+        event = None
         if self.upper > 1:
             c = self._get(obj)
             if c:
@@ -376,7 +346,8 @@ class association(umlproperty):
                 except:
                     pass
                 else:
-                    component.handle(AssociationDeleteEvent(obj, self, value))
+                    if do_notify:
+                        event = AssociationDeleteEvent(obj, self, value)
 
                 # Remove items collection if empty
                 if not items:
@@ -387,12 +358,15 @@ class association(umlproperty):
             except:
                 pass
             else:
-                component.handle(AssociationSetEvent(obj, self, value, None))
+                if do_notify:
+                    event = AssociationSetEvent(obj, self, value, None)
 
         value.disconnect(self.__on_unlink, obj)
         if self.composite:
             obj.disconnect(self.__on_composite_unlink, value)
-        self.notify(obj)
+        if do_notify and event:
+            self.notify(obj)
+            component.handle(event)
 
     def __on_unlink(self, value, pspec, obj):
         """

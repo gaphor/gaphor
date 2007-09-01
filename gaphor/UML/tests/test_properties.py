@@ -21,6 +21,19 @@ class PropertiesTestCase(unittest.TestCase):
         assert a.one is b
         assert b.two is a
 
+        a.one = None
+        assert a.one is None
+        assert b.two is None
+
+        a.one = b
+        assert a.one is b
+        assert b.two is a
+
+        del a.one
+        assert a.one is None
+        assert b.two is None
+
+
     def test_association_n_x(self):
         #
         # n:-
@@ -37,6 +50,7 @@ class PropertiesTestCase(unittest.TestCase):
         a.one = b
         assert b in a.one
         assert b.two is a
+
 
     def test_association_1_1(self):
         #
@@ -78,6 +92,7 @@ class PropertiesTestCase(unittest.TestCase):
         assert b.two is None
         assert len(a._observers.get('__unlink__')) == 0
         assert len(b._observers.get('__unlink__')) == 0
+
 
     def test_association_1_n(self):
         #
@@ -149,6 +164,7 @@ class PropertiesTestCase(unittest.TestCase):
             pass #ok
         else:
             assert 0, 'should not be removed'
+
 
     def test_association_n_n(self):
         #

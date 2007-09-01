@@ -207,7 +207,6 @@ class UndoManager(object):
         self._action_executed()
 
     def discard_transaction(self):
-
         if not self._current_transaction:
             raise TransactionError, 'No transaction to discard'
 
@@ -347,6 +346,7 @@ class UndoManager(object):
         association = event.property
         obj = event.element
         value = event.old_value
+        #print 'got new set event', association, obj, value
         def _undo_association_set_event():
             #print 'undoing action', obj, value
             # Tell the assoctaion it should not need to let the opposite
