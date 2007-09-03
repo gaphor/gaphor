@@ -187,7 +187,6 @@ class NamespaceModel(gtk.GenericTreeModel):
                 return
 
             # Remove all sub-elements:
-            print 'removing element', element
             self._remove_element(element)
             if path:
                 self.row_deleted(path)
