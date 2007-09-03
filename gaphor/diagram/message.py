@@ -286,6 +286,9 @@ class MessageItem(NamedLine):
 
 
     def add_message(self, message, inverted):
+        """
+        Add message onto communication diagram.
+        """
         if inverted:
             messages = self._inverted_messages
             style = {
@@ -307,6 +310,9 @@ class MessageItem(NamedLine):
 
 
     def remove_message(self, message, inverted):
+        """
+        Remove message from communication diagram.
+        """
         if inverted:
             messages = self._inverted_messages
         else:
@@ -317,6 +323,9 @@ class MessageItem(NamedLine):
 
 
     def set_message_text(self, message, text, inverted):
+        """
+        Set text of message on communication diagram.
+        """
         if inverted:
             messages = self._inverted_messages
         else:
@@ -325,6 +334,9 @@ class MessageItem(NamedLine):
 
 
     def swap_messages(self, m1, m2, inverted):
+        """
+        Swap order of two messages on communication diagram.
+        """
         if inverted:
             messages = self._inverted_messages
         else:
