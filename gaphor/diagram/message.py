@@ -300,7 +300,7 @@ class MessageItem(NamedLine):
             }
 
         style['text-align-str'] = ':'
-        style['text-padding'] = PADDING
+        style['text-padding'] = self.CD_PADDING
         txt = self.add_text('name', style=style)
         txt.text = message.name
         messages[message] = txt
