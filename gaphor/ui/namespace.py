@@ -180,24 +180,20 @@ class NamespaceModel(gtk.GenericTreeModel):
         element = event.element
         if event.service is self.factory and \
                 type(element) in self.filter:
-            try:
-                path = self.path_from_element(element)
-            except (KeyError, ValueError):
-                # No such element (anymore)
-                return
+            path = self.path_from_element(element)
 
             # Remove all sub-elements:
-            self._remove_element(element)
             if path:
                 self.row_deleted(path)
+                if path[:-1]:
+                    self.row_has_child_toggled(path[:-1], self.get_iter(path[:-1]))
+            self._remove_element(element)
 
-            # Remove element from parent
-            if element.namespace:
-                parent_nodes = self._nodes[element.namespace]
-                parent_nodes.remove(element)
-                path = self.path_from_element(element.namespace)
-                if path:
-                    self.row_has_child_toggled(path, self.get_iter(path))
+            parent_node = self._nodes[element.namespace]
+            parent_node.remove(element)
+
+#            if path and parent_node and len(self._nodes[parent_node]) == 0:
+#                self.row_has_child_toggled(path[:-1], self.get_iter(path[:-1]))
 
 
     @component.adapter(DerivedUnionSetEvent)
@@ -223,7 +219,7 @@ class NamespaceModel(gtk.GenericTreeModel):
                 else:
                     self._nodes[old_value].remove(element)
                     self.row_deleted(path)
-                    path = self.path_from_element(old_value)
+                    path = path[:-1] #self.path_from_element(old_value)
                     if path:
                         self.row_has_child_toggled(path, self.get_iter(path))
 
@@ -317,13 +313,17 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         Returns true if this node has children, or None.
         """
-        return len(self._nodes[node]) > 0
+        n = self._nodes.get(node)
+        return n or len(n) > 0
 
     def on_iter_children(self, node):
         """
         Returns the first child of this node, or None.
         """
-        return self._nodes[node][0]
+        try:
+            return self._nodes[node][0]
+        except KeyError:
+            pass
 
     def on_iter_n_children(self, node):
         """

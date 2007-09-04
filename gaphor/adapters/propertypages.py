@@ -642,6 +642,9 @@ class ClassPropertyPage(NamedItemPropertyPage):
     def construct(self):
         page = super(ClassPropertyPage, self).construct()
 
+        if not self.context.subject:
+            return page
+
         # Abstract toggle
         hbox = gtk.HBox()
         label = gtk.Label(_("Abstract"))
@@ -722,6 +725,9 @@ class AttributesPage(object):
     def construct(self):
         page = gtk.VBox()
 
+        if not self.context.subject:
+            return page
+
         # Show attributes toggle
         hbox = gtk.HBox()
         label = gtk.Label(_("Show attributes"))
@@ -766,6 +772,9 @@ class OperationsPage(object):
         
     def construct(self):
         page = gtk.VBox()
+
+        if not self.context.subject:
+            return page
 
         # Show operations toggle
         hbox = gtk.HBox()
