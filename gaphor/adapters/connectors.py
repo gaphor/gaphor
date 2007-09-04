@@ -1228,11 +1228,11 @@ class MessageLifelineConnect(ElementConnect):
             del line.subject
             if not message.presentation:
                 message.unlink()
-            for message in line._messages:
+            for message in list(line._messages):
                 line.remove_message(message, False)
                 message.unlink()
 
-            for message in line._inverted_messages:
+            for message in list(line._inverted_messages):
                 line.remove_message(message, True)
                 message.unlink()
 
