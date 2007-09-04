@@ -162,7 +162,7 @@ class DiagramTab(object):
     @transactional
     def delete_selected_items(self):
         items = self.view.selected_items
-        for i in items:
+        for i in list(items):
             if isinstance(i, DiagramItem):
                 s = i.subject
                 if s and len(s.presentation) == 1:
