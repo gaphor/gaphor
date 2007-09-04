@@ -800,8 +800,6 @@ class ConnectorTestCase(TestCase):
     def test_message_connect_cd(self):
         """Test connecting message on communication diagram
         """
-        factory = self.element_factory
-
         lifeline1 = self.create(items.LifelineItem)
         lifeline2 = self.create(items.LifelineItem)
 
@@ -838,8 +836,6 @@ class ConnectorTestCase(TestCase):
     def test_message_connect_sd(self):
         """Test connecting message on sequence diagram
         """
-        factory = self.element_factory
-
         lifeline1 = self.create(items.LifelineItem)
         lifeline2 = self.create(items.LifelineItem)
 
