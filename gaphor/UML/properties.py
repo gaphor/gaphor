@@ -203,9 +203,8 @@ class association(umlproperty):
     will cause the association to be ended if the element on the other end
     of the association is unlinked.
 
-    If the association is a composite relationship, the value is connected to
-    the elements __unlink__ signal too. This will cause the value to be
-    unlinked as soon as the element is unlinked.
+    If the association is a composite relationship, the association will
+    unlink all elements attached to if it is unlinked.
     """
  
     def __init__(self, name, type, lower=0, upper='*', composite=False, opposite=None):
@@ -223,7 +222,8 @@ class association(umlproperty):
         self._set(obj, value, do_notify=False)
 
     def postload(self, obj):
-        """In the postload step, ensure that bi-directional associations
+        """
+        In the postload step, ensure that bi-directional associations
         are bi-directional.
         """
         values = self._get(obj)
