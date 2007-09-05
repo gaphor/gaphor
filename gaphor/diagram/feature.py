@@ -25,6 +25,7 @@ class FeatureItem(DiagramItem):
         self.text = ''
         # Fool unlink code:
         self.canvas = None
+        self.need_sync = False
 
 
     # Ensure we call the right connect functions:
@@ -70,7 +71,7 @@ class AttributeItem(FeatureItem):
 
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
-        self.need_sync_attributes = False
+        self.need_sync = False
 
     def on_subject_notify(self, pspec, notifiers=()):
         FeatureItem.on_subject_notify(self, pspec, ('name',
@@ -107,13 +108,13 @@ class AttributeItem(FeatureItem):
         """
         #if self.parent:
         #    self.parent.sync_attributes()
-        self.need_sync_attributes = True
+        self.need_sync = True
         self.request_update()
 
     def pre_update(self, context):
-        if self.need_sync_attributes and context.parent:
-            context.parent.sync_attributes()
-        self.need_sync_attributes = False
+#        if self.need_sync and context.parent:
+#            context.parent.sync_attributes()
+        self.need_sync = False
         self.update_size(self.subject.render(), context)
         #super(AttributeItem, self).pre_update(context)
 
@@ -131,7 +132,7 @@ class OperationItem(FeatureItem):
 
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
-        self.need_sync_operations = False
+        self.need_sync = False
 
     def on_subject_notify(self, pspec, notifiers=()):
         FeatureItem.on_subject_notify(self, pspec,
@@ -142,7 +143,7 @@ class OperationItem(FeatureItem):
 
     def postload(self):
         FeatureItem.postload(self)
-        self.need_sync_operations = False
+        self.need_sync = False
 
     def on_subject_notify__name(self, subject, pspec):
         #log.debug('setting text %s' % self.subject.render() or '')
@@ -153,9 +154,9 @@ class OperationItem(FeatureItem):
     on_subject_notify__taggedValue = on_subject_notify__name
 
     def pre_update(self, context):
-        if self.need_sync_operations and context.parent:
-            context.parent.sync_operations()
-        self.need_sync_operations = False
+#        if self.need_sync and context.parent:
+#            context.parent.sync_operations()
+        self.need_sync = False
         self.update_size(self.subject.render(), context)
         #super(OperationItem, self).pre_update(context)
 

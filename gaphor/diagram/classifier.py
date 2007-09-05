@@ -27,6 +27,13 @@ class Compartment(list):
         for item in self:
             save_func(None, item)
 
+    def get_need_sync(self):
+        for item in self:
+            if item.need_sync:
+                return True
+
+    need_sync = property(get_need_sync)
+
     def has_item(self, item):
         """
         Check if the compartment already contains an item with the

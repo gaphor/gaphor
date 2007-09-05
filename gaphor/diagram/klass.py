@@ -1,9 +1,6 @@
-"""ClassItem diagram item
 """
-# vim:sw=4:et
-
-# TODO: make loading of features work (adjust on_groupable_add)
-#       probably best to do is subclass Feature in OperationItem and A.Item
+ClassItem diagram item
+"""
 
 from gaphas.state import observed, reversible_property
 
@@ -123,3 +120,12 @@ class ClassItem(ClassifierItem):
         #log.debug('on_subject_notify__ownedOperation')
         self.sync_operations()
 
+    def pre_update(self, context):
+        if self._attributes.need_sync:
+            self.sync_attributes()
+        if self._operations.need_sync:
+            self.sync_operations()
+        super(ClassItem, self).pre_update(context)
+
+
+# vim:sw=4:et:ai
