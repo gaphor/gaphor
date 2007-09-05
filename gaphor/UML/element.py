@@ -29,10 +29,9 @@ class Element(object):
     factory = property(lambda self: self._factory,
                        doc="The factory that created this element")
 
-    # TODO: move save/load code to adapters
-    def save(self, save_func):
+    def umlproperties(self):
         """
-        Save the state by calling save_func(name, value).
+        Iterate over all UML properties 
         """
         umlprop = umlproperty
         class_ = type(self)
@@ -40,7 +39,15 @@ class Element(object):
             if not propname.startswith('_'):
                 prop = getattr(class_, propname)
                 if isinstance(prop, umlprop):
-                    prop.save(self, save_func)
+                    yield prop
+
+    # TODO: move save/load code to adapters
+    def save(self, save_func):
+        """
+        Save the state by calling save_func(name, value).
+        """
+        for prop in self.umlproperties():
+            prop.save(self, save_func)
 
     def load(self, name, value):
         """
@@ -59,16 +66,8 @@ class Element(object):
         """
         Fix up the odds and ends.
         """
-        for name in dir(type(self)):
-            if not name.startswith('_'):
-                try:
-                    prop = getattr(type(self), name)
-                except AttributeError, e:
-                    raise AttributeError, "'%s' has no property '%s'" % \
-                                                (type(self).__name__, name)
-                else:
-                    if isinstance(prop, umlproperty):
-                        prop.postload(self)
+        for prop in self.umlproperties():
+            prop.postload(self)
 
     def unlink(self):
         """
@@ -78,6 +77,8 @@ class Element(object):
         if self.__in_unlink.testandset():
             component.handle(ElementDeleteEvent(self._factory, self))
             try:
+                for prop in self.umlproperties():
+                    prop.unlink(self)
                 self.notify('__unlink__', '__unlink__')
             finally:
                 self.__in_unlink.unlock()

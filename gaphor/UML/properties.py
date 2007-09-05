@@ -67,6 +67,12 @@ class umlproperty(object):
     def postload(self, obj):
         pass
 
+    def unlink(self, obj):
+        """
+        This is called from the Element to denote the element is unlinking.
+        """
+        pass
+
     def notify(self, obj):
         """
         Notify obj that the property's value has been changed.
@@ -309,8 +315,8 @@ class association(umlproperty):
         # Callbacks are only connected if a new relationship has
         # been established.
         value.connect('__unlink__', self.__on_unlink, obj)
-        if self.composite:
-            obj.connect('__unlink__', self.__on_composite_unlink, value)
+#        if self.composite:
+#            obj.connect('__unlink__', self.__on_composite_unlink, value)
         
         if not from_opposite and self.opposite:
             getattr(type(value), self.opposite)._set(value, obj, from_opposite=True, do_notify=do_notify)
@@ -362,11 +368,24 @@ class association(umlproperty):
                     event = AssociationSetEvent(obj, self, value, None)
 
         value.disconnect(self.__on_unlink, obj)
-        if self.composite:
-            obj.disconnect(self.__on_composite_unlink, value)
+#        if self.composite:
+#            obj.disconnect(self.__on_composite_unlink, value)
         if do_notify and event:
             self.notify(obj)
             component.handle(event)
+
+    def unlink(self, obj):
+        values = self._get(obj)
+        composite = self.composite
+        if values:
+            if self.upper == 1:
+                values = [values]
+
+            for value in list(values):
+                # TODO: make normal unlinking work through this method.
+                #self.__delete__(obj, value)
+                if composite:
+                    value.unlink()
 
     def __on_unlink(self, value, pspec, obj):
         """
@@ -379,21 +398,6 @@ class association(umlproperty):
             self.__delete__(obj, value)
             # re-establish unlink handler:
             value.connect('__unlink__', self.__on_unlink, obj)
-
-    def __on_composite_unlink(self, obj, pspec, value):
-        """
-        Unlink value if we have a part-whole (composite) relationship
-        (value is a composite of obj).
-        The implementation of value.unlink() should ensure that no deadlocks
-        occur.
-        """
-        #print '__on_composite_unlink:', self, name, value
-        if pspec == '__unlink__':
-            value.unlink()
-            obj.connect('__unlink__', self.__on_composite_unlink, value)
-        #else:
-            #print 'RELINK'
-            #value.relink()
 
 
 class derivedunion(umlproperty):
