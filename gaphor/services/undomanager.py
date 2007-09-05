@@ -311,6 +311,9 @@ class UndoManager(object):
     @component.adapter(IElementCreateEvent)
     def undo_create_event(self, event):
         factory = event.service
+        # A factory is not always present, e.g. for DiagramItems
+        if not factory:
+            return
         element = event.element
         def _undo_create_event():
             try:
@@ -324,7 +327,11 @@ class UndoManager(object):
     @component.adapter(IElementDeleteEvent)
     def undo_delete_event(self, event):
         factory = event.service
+        # A factory is not always present, e.g. for DiagramItems
+        if not factory:
+            return
         element = event.element
+        assert factory, 'No factory defined for %s (%s)' % (element, factory)
         def _undo_delete_event():
             factory._elements[element.id] = element
             component.handle(ElementCreateEvent(factory, element))
