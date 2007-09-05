@@ -84,7 +84,8 @@ class Writer:
         self.out.close()
 
     def write_classdef(self, clazz):
-        """Write a class definition (class xx(x): pass).
+        """
+        Write a class definition (class xx(x): pass).
         First the parent classes are examined. After that its own definition
         is written. It is ensured that class definitions are only written
         once.
@@ -101,7 +102,8 @@ class Writer:
         clazz.written = True
 
     def write_property(self, full_name, value):
-        """Write a property to the file. If the property is overridden, use the
+        """
+        Write a property to the file. If the property is overridden, use the
         overridden value. full_name should be like Class.attribute. value is
         free format text.
         """
@@ -109,7 +111,8 @@ class Writer:
             self.write('%s = %s\n' % (full_name, value))
 
     def write_attribute(self, a, enumerations={}):
-        """Write a definition for attribute a. Enumerations may be a dict
+        """
+        Write a definition for attribute a. Enumerations may be a dict
         of enumerations, indexed by ID. These are used to identify enums.
         """
         params = { }
@@ -168,83 +171,47 @@ class Writer:
             msg("No override for operation %s" % full_name)
 
     def write_association(self, head, tail):
-        """Write an association for head. False is returned if the association
-        is derived.
-        The head association end is enriched with the following attributes:
-            derived - association is a derived union or not
-            name - name of the association end (name of head is found on tail)
-            class_name - name of the class this association belongs to
-            opposite_class_name - name of the class at the other end of the assoc.
-            lower - lower multiplicity
-            upper - upper multiplicity
-            subsets - derived unions that use the association
-            redefines - redefines existing associations
-        Returns True if the association is written. False is returned if
-        the association should be handled by write_derivedunion() or
-        write_redefine().
         """
-        navigable = head.get('class_')
-        if not navigable:
-            # from this side, the association is not navigable
-            return True
-
-        name = head.name
-        if name is None:
-            raise ValueError('ERROR! no name, but navigable: %s (%s.%s)' % (head.id, head.class_name, head.name))
-
-        derived = int(head.isDerived or 0)
-
-        #print head.id, head.lowerValue
-        upper = head.upperValue and head.upperValue.value or '*'
-        lower = head.lowerValue and head.lowerValue.value or upper
-        if lower == '*':
-            lower = 0
-        subsets, redefines = parse_association_tags(head.taggedValue)
-
-        # Add the values found. These are used later to generate derived unions.
-        head.derived = derived
-        #head.name = name
-        head.class_name = head.class_['name']
-        head.opposite_class_name = head.type['name']
-        head.lower = lower
-        head.upper = upper
-        head.subsets = subsets
-        head.redefines = redefines
-
+        Write an association for head. 
+        The association should not be a redefine or derived association.
+        """
+        assert head.navigable
         # Derived unions and redefines are handled separately
-        if derived or redefines:
-            return False
+        assert not head.derived
+        assert not head.redefines
 
-        a = "association('%s', %s" % (name, head.opposite_class_name)
-        if lower not in ('0', 0):
-            a += ', lower=%s' % lower
-        if upper != '*':
-            a += ', upper=%s' % upper
-        if head.get('aggregation') == 'composite':
+        a = "association('%s', %s" % (head.name, head.opposite_class_name)
+        if head.lower not in ('0', 0):
+            a += ', lower=%s' % head.lower
+        if head.upper != '*':
+            a += ', upper=%s' % head.upper
+        if head.composite:
             a += ', composite=True'
 
         # Add the opposite property if the head itself is navigable:
-        navigable = tail.get('class_')
-        if navigable:
+        if tail.navigable:
             try:
                 #o_derived, o_name = parse_association_name(tail['name'])
                 o_name = tail.name
-                o_derived = int(tail.isDerived or 0)
+                o_derived = tail.derived
             except KeyError:
                 msg('ERROR! no name, but navigable: %s (%s.%s)' %
                     (tail.id, tail.class_name, tail.name))
             else:
-                assert not (derived and not o_derived), 'One end is derived, the other end not ???'
+                assert not (head.derived and not o_derived), 'One end is derived, the other end not ???'
                 a += ", opposite='%s'" % o_name
 
-        self.write_property("%s.%s" % (head.class_name, name), a + ')')
-        return True
+        self.write_property("%s.%s" % (head.class_name, head.name), a + ')')
+
 
     def write_derivedunion(self, d):
-        """Write a derived union. If there are no subsets a warning
+        """
+        Write a derived union. If there are no subsets a warning
         is issued. The derivedunion is still created though.
+
         Derived unions may be created for associations that were returned
-        False by write_association()."""
+        False by write_association().
+        """
         subs = ''
         for u in d.union:
             if u.derived and not u.written:
@@ -262,8 +229,10 @@ class Writer:
         d.written = True
 
     def write_redefine(self, r):
-        """Redefines may be created for associations that were returned
-        False by write_association()."""
+        """
+        Redefines may be created for associations that were returned
+        False by write_association().
+        """
         self.write_property("%s.%s" % (r.class_name, r.name),
                             "redefine('%s', %s, %s)" % (r.name, r.opposite_class_name, r.redefines))
 
@@ -310,6 +279,47 @@ def parse_association_tags(tag):
 
     #print 'found', subsets, redefines
     return subsets, redefines
+
+def parse_association_end(head, tail):
+    """
+    The head association end is enriched with the following attributes:
+
+        derived - association is a derived union or not
+        name - name of the association end (name of head is found on tail)
+        class_name - name of the class this association belongs to
+        opposite_class_name - name of the class at the other end of the assoc.
+        lower - lower multiplicity
+        upper - upper multiplicity
+        composite - if the association has a composite relation to the other end
+        subsets - derived unions that use the association
+        redefines - redefines existing associations
+    """
+    head.navigable = head.get('class_')
+    if not head.navigable:
+        # from this side, the association is not navigable
+        return
+
+    name = head.name
+    if name is None:
+        raise ValueError('ERROR! no name, but navigable: %s (%s.%s)' % (head.id, head.class_name, head.name))
+
+    #print head.id, head.lowerValue
+    upper = head.upperValue and head.upperValue.value or '*'
+    lower = head.lowerValue and head.lowerValue.value or upper
+    if lower == '*':
+        lower = 0
+    subsets, redefines = parse_association_tags(head.taggedValue)
+
+    # Add the values found. These are used later to generate derived unions.
+    head.class_name = head.class_['name']
+    head.opposite_class_name = head.type['name']
+    head.lower = lower
+    head.upper = upper
+    head.subsets = subsets
+    head.composite = head.get('aggregation') == 'composite'
+    head.derived = int(head.isDerived or 0)
+    head.redefines = redefines
+
 
 def generate(filename, outfile=None, overridesfile=None):
     # parse the file
@@ -416,16 +426,18 @@ def generate(filename, outfile=None, overridesfile=None):
             ends.append(end)
 
         for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
-            if not writer.write_association(e1, e2):
-                # At this point the association is parsed, but not written.
-                # assure that derived unions do not get overwritten
-                if e1.redefines:
-                    redefines.append(e1)
-                else:
-                    assert not derivedunions.get(e1.name), "%s.%s is already in derived union set in class %s" % (e1.class_name, e1.name, derivedunions.get(e1.name).class_name)
-                    derivedunions[e1.name] = e1
-                    e1.union = [ ]
-                    e1.written = False
+            parse_association_end(e1, e2)
+
+        for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
+            if e1.redefines:
+                redefines.append(e1)
+            elif e1.derived:
+                assert not derivedunions.get(e1.name), "%s.%s is already in derived union set in class %s" % (e1.class_name, e1.name, derivedunions.get(e1.name).class_name)
+                derivedunions[e1.name] = e1
+                e1.union = [ ]
+                e1.written = False
+            elif e1.navigable:
+                writer.write_association(e1, e2)
 
 
     # create derived unions, first link the association ends to the d
