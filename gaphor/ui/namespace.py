@@ -73,8 +73,11 @@ class NamespaceModel(gtk.GenericTreeModel):
     def path_from_element(self, e):
         if e:
             ns = e.namespace
-            n = self._nodes[ns]
-            return self.path_from_element(ns) + (n.index(e),)
+            n = self._nodes.get(ns)
+            if n:
+                return self.path_from_element(ns) + (n.index(e),)
+            else:
+                return ()
         else:
             return ()
 
@@ -189,8 +192,9 @@ class NamespaceModel(gtk.GenericTreeModel):
                     self.row_has_child_toggled(path[:-1], self.get_iter(path[:-1]))
             self._remove_element(element)
 
-            parent_node = self._nodes[element.namespace]
-            parent_node.remove(element)
+            parent_node = self._nodes.get(element.namespace)
+            if parent_node:
+                parent_node.remove(element)
 
 #            if path and parent_node and len(self._nodes[parent_node]) == 0:
 #                self.row_has_child_toggled(path[:-1], self.get_iter(path[:-1]))
