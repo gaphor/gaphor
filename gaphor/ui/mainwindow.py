@@ -515,6 +515,11 @@ class MainWindow(ToplevelWindow):
                               'This operation is not undoable!' \
                               % (diagram.name or '<None>'))
         if (m.run() == gtk.RESPONSE_YES):
+            for i in reversed(diagram.canvas.get_all_items()):
+                s = i.subject
+                if s and len(s.presentation) == 1:
+                    s.unlink()
+                i.unlink
             diagram.unlink()
         m.destroy()
 
