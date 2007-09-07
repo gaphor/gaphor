@@ -36,6 +36,20 @@ _default_filter_list = (
 _tree_sorter = operator.attrgetter('name')
 
 
+def catchall(func):
+    def catchall_wrapper(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except Exception, e:
+            log.error('Exception in %s. Try to refresh the entire model' % (func,), e)
+            try:
+                args[0].refresh()
+            except Exception, e:
+                log.error('Failed to refresh')
+            
+    return catchall_wrapper
+
+
 class NamespaceModel(gtk.GenericTreeModel):
     """
     The NamespaceModel holds a view on the data model based on namespace
@@ -95,6 +109,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             return None
 
     @component.adapter(IAttributeChangeEvent)
+    @catchall
     def _on_element_change(self, event):
         """
         Element changed, update appropriate row.
@@ -138,11 +153,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         Add a single element.
         """
         self._nodes.setdefault(element, [])
-        try:
-            parent = self._nodes[element.namespace]
-        except AssertionError, e:
-            log.error('Undoing a change?', e)
-            return
+        parent = self._nodes[element.namespace]
         parent.append(element)
         parent.sort(key=_tree_sorter)
         path = self.path_from_element(element)
@@ -171,6 +182,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 
 
     @component.adapter(IElementCreateEvent)
+    @catchall
     def _on_element_create(self, event):
         element = event.element
         if event.service is self.factory and \
@@ -179,6 +191,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 
 
     @component.adapter(IElementDeleteEvent)
+    @catchall
     def _on_element_delete(self, event):
         element = event.element
         if event.service is self.factory and \
@@ -201,6 +214,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 
 
     @component.adapter(DerivedUnionSetEvent)
+    @catchall
     def _on_association_set(self, event):
 
         element = event.element
