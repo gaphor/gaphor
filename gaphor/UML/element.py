@@ -79,7 +79,7 @@ class Element(object):
             try:
                 for prop in self.umlproperties():
                     prop.unlink(self)
-                self.notify('__unlink__', '__unlink__')
+                self.notify('__unlink__')
             finally:
                 self.__in_unlink.unlock()
 
@@ -113,14 +113,14 @@ class Element(object):
             except ValueError:
                 pass
 
-    def notify(self, name, cb_name=None, pspec=None):
+    def notify(self, name, pspec=None):
         """
         Send notification to attached callbacks that a property
         has changed.
 
         Obsolete. Connect to the appropriate change event (see event.py)
         """
-        cb_list = self._observers.get(cb_name or name, ())
+        cb_list = self._observers.get(name, ())
         #log.debug('Element.notify: %s' % cb_list)
         if not pspec:
             try:

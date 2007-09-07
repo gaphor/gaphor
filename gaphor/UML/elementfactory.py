@@ -131,6 +131,8 @@ class ElementFactory(object):
         """
         Flush all elements (remove them from the factory).
         """
+        component.handle(FlushFactoryEvent(self))
+
         # First flush all diagrams:
         for value in list(self.select(lambda e: isinstance(e, Diagram))):
             # Make sure no updates happen while destroying the canvas
@@ -147,8 +149,6 @@ class ElementFactory(object):
         # Force Garbage collection, so memory allocated by items is freed.
         import gc
         for i in range(4): gc.collect()
-
-        component.handle(FlushFactoryEvent(self))
 
 
     def swap_element(self, element, new_class):
