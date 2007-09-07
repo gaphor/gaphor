@@ -34,7 +34,7 @@ from gaphor.action import action, build_action_group
 from gaphor.event import ActionExecuted
 
 
-class Transaction(object):
+class ActionStack(object):
     """
     A transaction. Every action that is added between a begin_transaction()
     and a commit_transaction() call is recorded in a transaction, so it can
@@ -153,7 +153,7 @@ class UndoManager(object):
             #raise TransactionError, 'Already in a transaction'
             return
 
-        self._current_transaction = Transaction()
+        self._current_transaction = ActionStack()
         self._transaction_depth += 1
 
     def add_undo_action(self, action):
@@ -200,10 +200,20 @@ class UndoManager(object):
 
         self._transaction_depth -= 1
         if self._transaction_depth == 0:
-            self._current_transaction.execute()
+            errorous_tx = self._current_transaction
             self._current_transaction = None
-        # else: mark for rollback?
-        component.handle(UndoManagerStateChanged(self))
+            self.begin_transaction()
+            try:
+                try:
+                    errorous_tx.execute()
+                except Exception, e:
+                    log.error('Error while rolling back', e)
+            finally:
+                # Discard all data collected in the rollback "transaction"
+                self.discard_transaction()
+
+            component.handle(UndoManagerStateChanged(self))
+
         self._action_executed()
 
     def discard_transaction(self):
@@ -226,7 +236,7 @@ class UndoManager(object):
             self.commit_transaction()
         transaction = self._undo_stack.pop()
 
-        self._current_transaction = Transaction()
+        self._current_transaction = ActionStack()
         self._transaction_depth += 1
 
         transaction.execute()
@@ -245,7 +255,7 @@ class UndoManager(object):
 
         transaction = self._redo_stack.pop()
 
-        self._current_transaction = Transaction()
+        self._current_transaction = ActionStack()
         self._transaction_depth += 1
 
         transaction.execute()
