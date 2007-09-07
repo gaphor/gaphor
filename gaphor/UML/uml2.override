@@ -28,13 +28,6 @@ def _del(self):
 
 MultiplicityElement.lower = property(_get, _set, _del)
 del _get, _set, _del
-# TODO: let it also emit notifications
-# A notifier should be connected on instantiation of the lowerValue element.
-# - this should be done on creation of the lowerValue, hence we should
-#   add a notifier when self.lowerValue changes.
-# - This requires some extra code to be executed on creation of our
-#   MultiplicityElement. This can be done either in the Element or the
-#   ElementFactory.
 %%
 override MultiplicityElement.upper
 # Make it watch MultiplicityElement.upperValue.value
@@ -59,8 +52,8 @@ def class_extension(self):
         extension.append(e)
     return extension
 
-Class.extension = property(class_extension, doc=\
-    """References the Extensions that specify additional properties of the
+Class.extension = property(class_extension, doc="""
+    References the Extensions that specify additional properties of the
     metaclass. The property is derived from the extensions whose memberEnds
     are typed by the Class.""")
 del class_extension
@@ -70,8 +63,8 @@ def extension_metaclass(self):
     ownedEnd = self.ownedEnd
     return [c for c in self.memberEnd if c not in ownedEnd][0].type
 
-Extension.metaclass = property(extension_metaclass, doc=\
-    """References the Class that is extended through an Extension. The
+Extension.metaclass = property(extension_metaclass, doc="""
+    References the Class that is extended through an Extension. The
     property is derived from the type of the memberEnd that is not the
     ownedEnd.""")
 del extension_metaclass
@@ -83,7 +76,9 @@ override Classifier.general
 def classifier_general(self):
     return [g.general for g in self.generalization]
 
-Classifier.general = property(classifier_general, doc="")
+Classifier.general = property(classifier_general, doc="""
+    Return a list of all superclasses for class (iterating the Generalizations.
+    """)
 del classifier_general
 %%
 override Class.superClass
@@ -95,7 +90,8 @@ Namespace.importedMember = derivedunion('importedMember', 0, '*')
 override Property.opposite
 
 def property_opposite(self):
-    """In the case where the property is one navigable end of a binary
+    """
+    In the case where the property is one navigable end of a binary
     association with both ends navigable, this gives the other end.
 
     For Gaphor the property on the other end is returned regardless the
@@ -125,8 +121,8 @@ Constraint.context = derivedunion('context', 0, 1)
 %%
 override Association.endType
 
-Association.endType = property(lambda self: [end.type for end in self.memberEnd if end], doc=\
-    """References the classifiers that are used as types of the ends of the
+Association.endType = property(lambda self: [end.type for end in self.memberEnd if end], doc="""
+    References the classifiers that are used as types of the ends of the
     association.""")
 
 %%
@@ -166,7 +162,8 @@ del render_lifeline
 override Extenstion.metaclass
 
 def extension_metaclass(self):
-    """References the Class that is extended through an Extension. The
+    """
+    References the Class that is extended through an Extension. The
     property is derived from the type of the memberEnd that is not the
     ownedEnd.
     """
@@ -209,16 +206,13 @@ def component_provided(self):
 
     return tuple(set(itertools.chain(implementations, realizations, *rc_realizations)))
 
-Component.provided = property(component_provided, doc = \
-    """
+Component.provided = property(component_provided, doc="""
     Interfaces provided to component environment. 
     """)
 del component_provided
 %%
 override Component.required
 def component_required(self):
-    import itertools
-
     usages = _pr_interface_deps(self, Usage)
 
     # realizing classifiers usages
@@ -227,8 +221,7 @@ def component_required(self):
 
     return tuple(set(itertools.chain(usages, *rc_usages)))
 
-Component.required = property(component_required, doc = \
-    """
+Component.required = property(component_required, doc="""
     Interfaces required by component. 
     """)
 del component_required
@@ -245,8 +238,7 @@ def message_messageKind(self):
         kind = 'found'
     return kind
 
-Message.messageKind = property(message_messageKind, doc=\
-    """
+Message.messageKind = property(message_messageKind, doc="""
     MessageKind
     """)
 del message_messageKind
