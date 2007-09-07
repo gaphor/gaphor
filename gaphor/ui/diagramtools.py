@@ -207,8 +207,12 @@ class TextEditTool(Tool):
         buffer = gtk.TextBuffer()
         if text:
             buffer.set_text(text)
+            startiter, enditer = buffer.get_bounds()
+            buffer.move_mark_by_name('selection_bound', startiter)
+            buffer.move_mark_by_name('insert', enditer)
         text_view = gtk.TextView()
         text_view.set_buffer(buffer)
+        
         text_view.show()
         window.add(text_view)
         window.size_allocate(gtk.gdk.Rectangle(int(x), int(y), 50, 50))
