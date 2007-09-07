@@ -72,6 +72,7 @@ class IModelFactoryEvent(IElementFactoryEvent):
 class IFlushFactoryEvent(IElementFactoryEvent):
     """
     All elements are removed from the ElementFactory.
+    This event is emitted before the factory is emptied.
     """
 
 
