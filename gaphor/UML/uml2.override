@@ -179,16 +179,33 @@ Extenstion.metaclass = property(extension_metaclass, doc=extension_metaclass.__d
 del extension_metaclass
 %%
 override Component.provided
-def component_provided(self):
-    from gaphor.UML.util import pr_interface_deps, pr_rc_interface_deps
-    import itertools
+import itertools
 
+def _pr_interface_deps(classifier, dep_type):
+    """
+    Return all interfaces, which are connected to a classifier with given
+    dependency type.
+    """
+    return (dep.supplier[0] for dep in classifier.clientDependency \
+        if dep.isKindOf(dep_type) and dep.supplier[0].isKindOf(UML.Interface))
+
+def _pr_rc_interface_deps(component, dep_type):
+    """
+    Return all interfaces, which are connected to realizing classifiers of
+    specified component. Returned interfaces are connected to realizing
+    classifiers with given dependency type.
+
+    Generator of generators is returned. Do not forget to flat it later.
+    """
+    return (_pr_interface_deps(r.realizingClassifier, dep_type) for r in component.realization)
+
+def component_provided(self):
     implementations = (impl.contract[0] for impl in self.implementation if impl.isKindOf(Implementation))
-    realizations = pr_interface_deps(self, Realization)
+    realizations = _pr_interface_deps(self, Realization)
 
     # realizing classifiers realizations
     # this generator of generators, so flatten it later
-    rc_realizations = pr_rc_interface_deps(self, Realization)
+    rc_realizations = _pr_rc_interface_deps(self, Realization)
 
     return tuple(set(itertools.chain(implementations, realizations, *rc_realizations)))
 
@@ -200,14 +217,13 @@ del component_provided
 %%
 override Component.required
 def component_required(self):
-    from gaphor.UML.util import pr_interface_deps, pr_rc_interface_deps
     import itertools
 
-    usages = pr_interface_deps(self, Usage)
+    usages = _pr_interface_deps(self, Usage)
 
     # realizing classifiers usages
     # this generator of generators, so flatten it later
-    rc_usages = pr_rc_interface_deps(self, Usage)
+    rc_usages = _pr_rc_interface_deps(self, Usage)
 
     return tuple(set(itertools.chain(usages, *rc_usages)))
 
