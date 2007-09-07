@@ -212,9 +212,19 @@ class TextEditTool(Tool):
             buffer.move_mark_by_name('insert', enditer)
         text_view = gtk.TextView()
         text_view.set_buffer(buffer)
-        
+        #text_view.set_border_width(2)
+        text_view.set_left_margin(2)
+        text_view.set_right_margin(2)
         text_view.show()
-        window.add(text_view)
+        
+        frame = gtk.Frame()
+        frame.set_shadow_type(gtk.SHADOW_IN)
+        #frame.set_border_width(1)
+        frame.add(text_view)
+        frame.show()
+
+        window.add(frame)
+        #window.set_border_width(1)
         window.size_allocate(gtk.gdk.Rectangle(int(x), int(y), 50, 50))
         #window.move(int(x), int(y))
         cursor_pos = view.get_toplevel().get_screen().get_display().get_pointer()
