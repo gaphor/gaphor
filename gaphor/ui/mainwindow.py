@@ -347,7 +347,8 @@ class MainWindow(ToplevelWindow):
         """
         path = self.tree_model.path_from_element(element)
         # Expand the first row:
-        self._tree_view.expand_row(path[:-1], False)
+        if len(path) > 1:
+            self._tree_view.expand_row(path[:-1], False)
         selection = self._tree_view.get_selection()
         selection.select_path(path)
         self._on_view_cursor_changed(self._tree_view)
@@ -496,7 +497,10 @@ class MainWindow(ToplevelWindow):
         diagram = self.element_factory.create(UML.Diagram)
         diagram.package = element
 
-        diagram.name = '%s diagram' % element.name
+        if element:
+            diagram.name = '%s diagram' % element.name
+        else:
+            diagram.name = 'New diagram'
 
         self.select_element(diagram)
         self.show_diagram(diagram)
@@ -530,7 +534,10 @@ class MainWindow(ToplevelWindow):
         package = self.element_factory.create(UML.Package)
         package.package = element
 
-        package.name = '%s package' % element.name
+        if element:
+            package.name = '%s package' % element.name
+        else:
+            package.name = 'New model'
 
         self.select_element(package)
         self.tree_view_rename_selected()

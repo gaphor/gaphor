@@ -2,7 +2,6 @@
 Transation support for Gaphor
 """
 
-import sys
 from zope import interface, component
 from gaphor.interfaces import ITransaction
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
@@ -12,14 +11,12 @@ def transactional(func):
         tx = Transaction()
         try:
 	    func(*args, **kwargs)
-        except:
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            log.error('Transaction terminated due to an exception, performing a rollback', exc_value)
+        except Exception, e:
+            log.error('Transaction terminated due to an exception, performing a rollback', e)
             try:
                 tx.rollback()
-            except:
-                exc_type, exc_value, exc_traceback = sys.exc_info()
-                log.error('Rollback failed', exc_value)
+            except Exception, e:
+                log.error('Rollback failed', e)
             raise
         else:
             tx.commit()
