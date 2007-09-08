@@ -34,6 +34,7 @@ takes a long time. The yielded values are the percentage of the file read.
 __all__ = [ 'parse', 'ParserException' ]
 
 import os
+import types
 from xml.sax import handler
 from cStringIO import InputType
 
@@ -320,10 +321,11 @@ def parse_generator(filename, loader):
 
 
 def parse_file(filename, parser):
-    """Parse the file filename with parser.
+    """
+    Parse the file filename with parser.
     """
     is_fd = True
-    if isinstance(filename, file):
+    if isinstance(filename, types.FileType):
         f = filename
         file_size = os.fstat(f.fileno())[6]
     elif isinstance(filename, InputType):
