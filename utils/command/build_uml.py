@@ -6,13 +6,8 @@ into gaphor/UML/uml2.py.
 Also a distutils tool, build_uml, is provided.
 """
 
-##
-## The Command
-##
-
 import os.path
 from distutils.core import Command
-from distutils.command.build import build
 from distutils.util import byte_compile
 from distutils.dep_util import newer
 
@@ -64,7 +59,20 @@ class build_uml(Command):
             print 'not generating %s (up-to-date)' % py_model
         byte_compile([outfile])
 
-build.sub_commands.append(('build_uml', None))
 
+# Wrap setuptools' build_py command, so we're sure build_uml is performed
+# before the build_py code.
+
+from setuptools.command.build_py import build_py
+
+def build_py_run(self, run=build_py.run):
+    for cmd_name in self.get_sub_commands():
+        self.run_command(cmd_name)
+
+    run(self)
+    
+build_py.run = build_py_run
+
+build_py.sub_commands.append(('build_uml', None))
 
 # vim:sw=4:et
