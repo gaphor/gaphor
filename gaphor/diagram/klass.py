@@ -34,6 +34,9 @@ class ClassItem(ClassifierItem):
         self._attributes = self.create_compartment('attributes')
         self._operations = self.create_compartment('operations')
 
+        self.add_watch(UML.Class.ownedAttribute)
+        self.add_watch(UML.Class.ownedOperation)
+
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
         # otherwise the classes will unintentionally grow due to "visible"

@@ -27,6 +27,16 @@ class LineItem(gaphas.Line, DiagramItem):
     tail = property(lambda self: self._handles[-1])
 
 
+    def setup_canvas(self):
+        gaphas.Line.setup_canvas()
+        self.register_handlers()
+
+
+    def teardown_canvas(self):
+        gaphas.Line.teardown_canvas()
+        self.unregister_handlers()
+
+
     def pre_update(self, context):
         # first, update stereotype to know its text
         self.update_stereotype()

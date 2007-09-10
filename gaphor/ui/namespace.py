@@ -11,6 +11,7 @@ import stock
 
 from zope import component
 
+from gaphor.application import Application
 from gaphor import UML
 from gaphor.UML.event import ModelFactoryEvent, FlushFactoryEvent
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementCreateEvent, IElementDeleteEvent
@@ -75,14 +76,27 @@ class NamespaceModel(gtk.GenericTreeModel):
 
         self.filter = _default_filter_list
 
-        component.provideHandler(self.flush)
-        component.provideHandler(self.refresh)
-        component.provideHandler(self._on_element_change)
-        component.provideHandler(self._on_element_create)
-        component.provideHandler(self._on_element_delete)
-        component.provideHandler(self._on_association_set)
+        Application.register_handler(self.flush)
+        Application.register_handler(self.refresh)
+        Application.register_handler(self._on_element_change)
+        Application.register_handler(self._on_element_create)
+        Application.register_handler(self._on_element_delete)
+        Application.register_handler(self._on_association_set)
 
         self._build_model()
+
+
+    def close(self):
+        """
+        Close the namespace model, unregister handlers.
+        """
+        Application.unregister_handler(self.flush)
+        Application.unregister_handler(self.refresh)
+        Application.unregister_handler(self._on_element_change)
+        Application.unregister_handler(self._on_element_create)
+        Application.unregister_handler(self._on_element_delete)
+        Application.unregister_handler(self._on_association_set)
+
 
     def path_from_element(self, e):
         if e:
@@ -94,6 +108,7 @@ class NamespaceModel(gtk.GenericTreeModel):
                 return ()
         else:
             return ()
+
 
     def element_from_path(self, path):
         """
@@ -107,6 +122,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             return node
         except IndexError:
             return None
+
 
     @component.adapter(IAttributeChangeEvent)
     @catchall
@@ -147,6 +163,7 @@ class NamespaceModel(gtk.GenericTreeModel):
                                     map(list.index,
                                         [original] * len(parent_nodes),
                                         parent_nodes))
+
 
     def _add_elements(self, element):
         """
@@ -256,10 +273,12 @@ class NamespaceModel(gtk.GenericTreeModel):
                 # Non-existent: remove entirely
                 self._remove_element(element)
 
+
     @component.adapter(ModelFactoryEvent)
     def refresh(self, event=None):
         self.flush()
         self._build_model()
+
 
     @component.adapter(FlushFactoryEvent)
     def flush(self, event=None):
@@ -267,11 +286,13 @@ class NamespaceModel(gtk.GenericTreeModel):
             self.row_deleted((0,))
         self._nodes = {None: []}
 
+
     def _build_model(self):
         toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
 
         for element in toplevel:
             self._add_elements(element)
+
 
     # TreeModel methods:
 
@@ -281,11 +302,13 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         return 0
 
+
     def on_get_n_columns(self):
         """
         Returns the number of columns in the model.
         """
         return 1
+
 
     def on_get_column_type(self, index):
         """
@@ -293,12 +316,14 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         return gobject.TYPE_PYOBJECT
 
+
     def on_get_path(self, node):
         """
         Returns the path for a node as a tuple (0, 1, 1).
         """
         path = self.path_from_element(node)
         return path
+
 
     def on_get_iter(self, path):
         """
@@ -308,12 +333,14 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         return self.element_from_path(path)
 
+
     def on_get_value(self, node, column):
         """
         Returns the model element that matches 'node'.
         """
         assert column == 0, 'column can only be 0'
         return node
+
 
     def on_iter_next(self, node):
         """
@@ -326,6 +353,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             return parent[index + 1]
         except IndexError, e:
             return None
+
         
     def on_iter_has_child(self, node):
         """
@@ -333,6 +361,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         n = self._nodes.get(node)
         return n or len(n) > 0
+
 
     def on_iter_children(self, node):
         """
@@ -343,11 +372,13 @@ class NamespaceModel(gtk.GenericTreeModel):
         except KeyError:
             pass
 
+
     def on_iter_n_children(self, node):
         """
         Returns the number of children of this node.
         """
         return len(self._nodes[node])
+
 
     def on_iter_nth_child(self, node, n):
         """
@@ -358,6 +389,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             return nodes[n]
         except TypeError, e:
             return None
+
 
     def on_iter_parent(self, node):
         """
@@ -434,6 +466,7 @@ class NamespaceView(gtk.TreeView):
         self.connect('drag-drop', NamespaceView.on_drag_drop)
         self.connect('drag-data-delete', NamespaceView.on_drag_data_delete)
 
+
     def get_selected_element(self):
         selection = self.get_selection()
         model, iter = selection.get_selected()
@@ -441,8 +474,10 @@ class NamespaceView(gtk.TreeView):
             return
         return model.get_value(iter, 0)
 
+
     def expand_root_nodes(self):
         self.expand_row((0,), False)
+
 
     def _set_pixbuf(self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)
@@ -490,8 +525,10 @@ class NamespaceView(gtk.TreeView):
         except Exception, e:
             log.error('Could not create path from string "%s"' % path_str)
 
+
 #    def do_drag_begin (self, context):
 #        print 'do_drag_begin'
+
 
     def on_drag_data_get(self, context, selection_data, info, time):
         """
@@ -508,11 +545,13 @@ class NamespaceView(gtk.TreeView):
             else:
                 selection_data.set(selection_data.target, 8, element.name)
 
+
     def on_drag_data_delete (self, context):
         """
         DnD magic. do not touch.
         """
         self.emit_stop_by_name('drag-data-delete')
+
 
     # Drop
     def on_drag_data_received(self, context, x, y, selection, info, time):
@@ -568,6 +607,7 @@ class NamespaceView(gtk.TreeView):
                 selection = self.get_selection()
                 selection.select_path(path)
 
+
     def on_drag_drop(self, context, x, y, time):
         """
         DnD magic. do not touch
@@ -575,6 +615,7 @@ class NamespaceView(gtk.TreeView):
         self.emit_stop_by_name('drag-drop')
         self.drag_get_data(context, context.targets[-1], time)
         return 1
+
 
 gobject.type_register(NamespaceModel)
 gobject.type_register(NamespaceView)

@@ -163,6 +163,7 @@ class ClassifierItem(NamedItem):
         self._compartments = []
 
         self._drawing_style = ClassifierItem.DRAW_NONE
+        self.add_watch(UML.Classifier.isAbstract, self.on_classifier_is_abstract)
 
 
     def save(self, save_func):
@@ -174,7 +175,7 @@ class ClassifierItem(NamedItem):
 
     def postload(self):
         NamedItem.postload(self)
-        self.on_subject_notify__isAbstract(self.subject)
+        self.on_classifier_is_abstract(None)
 
     @observed
     def set_drawing_style(self, style):
@@ -258,16 +259,8 @@ class ClassifierItem(NamedItem):
         self.request_update()
 
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        NamedItem.on_subject_notify(self, pspec, ('isAbstract',) + notifiers)
-        # Create already existing attributes and operations:
-        if self.subject:
-            self.on_subject_notify__isAbstract(self.subject)
-        self.request_update()
-
-    def on_subject_notify__isAbstract(self, subject, pspec=None):
-        self._name.font = subject.isAbstract \
+    def on_classifier_is_abstract(self, event):
+        self._name.font = (self.subject and self.subject.isAbstract) \
                 and font.FONT_ABSTRACT_NAME or font.FONT_NAME
         self.request_update()
 

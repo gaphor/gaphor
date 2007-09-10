@@ -14,7 +14,7 @@ from gaphor.diagram.interfaces import IConnect
 from zope import component
 from cStringIO import StringIO
 
-__module__ = 'test_storage'
+#__module__ = 'test_storage'
 
 class PseudoFile(object):
 

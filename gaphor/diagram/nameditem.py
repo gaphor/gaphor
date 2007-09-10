@@ -34,7 +34,8 @@ class NamedItem(ElementItem):
 
         # size of stereotype, namespace and name text
         self._header_size = 0, 0
-
+        self.add_watch(UML.NamedElement.namespace, self.on_named_element_namespace)
+        self.add_watch(UML.Namespace.name, self.on_named_element_namespace)
 
     def is_namespace_info_visible(self):
         """
@@ -58,15 +59,7 @@ class NamedItem(ElementItem):
         return self._from.text and namespace is not canvas.diagram.namespace
 
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        ElementItem.on_subject_notify(self, pspec,
-                ('namespace', 'namespace.name') + notifiers)
-        if self.subject:
-            self.on_subject_notify__namespace(self.subject)
-                                    
-
-    def on_subject_notify__namespace(self, subject, pspec=None):
+    def on_named_element_namespace(self, event):
         """
         Add a line '(from ...)' to the class item if subject's namespace
         is not the same as the namespace of this diagram.
@@ -77,13 +70,6 @@ class NamedItem(ElementItem):
         else:
             self._from.text = ''
         self.request_update()
-
-
-    def on_subject_notify__namespace_name(self, subject, pspec=None):
-        """
-        Change the '(from ...)' line if the namespace's name changes.
-        """
-        self.on_subject_notify__namespace(subject, pspec)
 
 
     def pre_update(self, context):

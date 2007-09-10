@@ -3,7 +3,9 @@ DiagramItem provides basic functionality for presentations.
 Such as a modifier 'subject' property and a unique id.
 """
 
+from zope import component
 from gaphor import UML
+from gaphor.application import Application
 from gaphor.misc import uniqueid
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
@@ -278,7 +280,10 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
 
         # properties, which should be saved in file
         self._persistent_props = set()
+        self._watched_properties = dict()
 
+        self.add_watch(UML.Element.appliedStereotype, self.on_element_applied_stereotype)
+        self.add_watch(UML.Presentation.subject, self.on_presentation_subject)
 
     id = property(lambda self: self._id, doc='Id')
 
@@ -312,6 +317,7 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
             except:
                 log.warning('%s has no property named %s (value %s)' % (self, name, value))
 
+
     def postload(self):
         if self.subject:
             self.on_subject_notify(type(self).subject)
@@ -323,12 +329,14 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
         """
         save_func(name, getattr(self, name.replace('-', '_')))
 
+
     def save_properties(self, save_func, *names):
         """
         Save a property, this is a shorthand method.
         """
         for name in names:
             self.save_property(save_func, name)
+
 
     def unlink(self):
         """
@@ -344,6 +352,13 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
         super(DiagramItem, self).unlink()
 
 
+    def request_update(self):
+        """
+        Placeholder for gaphor.Item's request_update() method.
+        """
+        pass
+
+
     def draw(self, context):
         EditableTextSupport.draw(self, context)
 
@@ -351,19 +366,51 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
     def item_at(self, x, y):
         return self
 
-    def on_subject_notify__appliedStereotype(self, subject, pspec=None):
+
+    def on_subject_notify(self, pspec, notifiers=()):
+        SubjectSupport.on_subject_notify(self, pspec, notifiers)
+
+    def on_presentation_subject(self, event):
+        for prop, handler in self._watched_properties.iteritems():
+            if handler:
+                # Provide event?
+                handler(None)
+
+    def on_element_applied_stereotype(self, event):
         if self.subject:
             self.update_stereotype()
             self.request_update()
 
-    def request_update(self):
-        """
-        Placeholder for gaphor.Item's request_update() method.
-        """
-        pass
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        SubjectSupport.on_subject_notify(self, pspec, notifiers + ('appliedStereotype',))
+    def add_watch(self, property, handler=None):
+        """
+        Add a property (umlproperty) to be watched. a handler may be provided
+        that will be called with the event as argument (handler(event)).
+        """
+        assert isinstance(property, UML.properties.umlproperty)
+        self._watched_properties[property] = handler
+
+
+    def register_handlers(self):
+        Application.register_handler(self.on_element_change)
+
+
+    def unregister_handlers(self):
+        Application.unregister_handler(self.on_element_change)
+
+
+    @component.adapter(UML.interfaces.IElementChangeEvent)
+    def on_element_change(self, event):
+        """
+        Called when a model element has changed.
+        """
+        if event.property in self._watched_properties:
+            handler = self._watched_properties[event.property]
+            if handler:
+                handler(event)
+            elif self.subject:
+                log.debug('on_element_changed')
+                self.request_update()
 
 
 # vim:sw=4:et:ai

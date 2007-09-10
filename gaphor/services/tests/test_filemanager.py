@@ -7,7 +7,7 @@ from gaphor.services.filemanager import FileManager
 class FileManagerTestCase(unittest.TestCase):
 
     def setUp(self):
-        Application.init(services=['file_manager', 'element_factory', 'properties', 'gui_manager'])
+        Application.init(services=['file_manager', 'element_factory', 'properties', 'gui_manager', 'action_manager'])
         self.recent_files_backup = Application.get_service('properties').get('recent-files')
 
     def tearDown(self):

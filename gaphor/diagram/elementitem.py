@@ -23,17 +23,30 @@ class ElementItem(gaphas.Element, DiagramItem):
         self.min_height  = self.style.min_size[1]
         self.auto_resize = 0
 
+
     def save(self, save_func):
         save_func('matrix', tuple(self.matrix))
         for prop in ('width', 'height'):
             self.save_property(save_func, prop)
         DiagramItem.save(self, save_func)
 
+
     def load(self, name, value):
         if name == 'matrix':
             self.matrix = eval(value)
         else:
             DiagramItem.load(self, name, value)
+
+
+    def setup_canvas(self):
+        gaphas.Element.setup_canvas()
+        self.register_handlers()
+
+
+    def teardown_canvas(self):
+        gaphas.Element.teardown_canvas()
+        self.unregister_handlers()
+
 
     def pre_update(self, context):
         #super(ElementItem, self).pre_update(context)

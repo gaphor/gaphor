@@ -15,7 +15,7 @@ class LoadServiceTestCase(unittest.TestCase):
         """
         Load services. At lease the undo_manager should be available after that.
         """
-        Application.init(['undo_manager', 'file_manager'])
+        Application.init(['undo_manager', 'file_manager', 'properties'])
 
         self.assertTrue(Application.get_service('undo_manager') is not None)
         self.assertTrue(Application.get_service('file_manager') is not None)

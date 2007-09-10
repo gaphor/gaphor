@@ -20,7 +20,7 @@ Event = Context
 class HandleToolTestCase(unittest.TestCase):
 
     def setUp(self):
-        Application.init(services=['adapter_loader', 'element_factory', 'gui_manager', 'properties_manager'])
+        Application.init(services=['adapter_loader', 'element_factory', 'gui_manager', 'properties_manager', 'action_manager', 'properties'])
         self.main_window = Application.get_service('gui_manager').main_window
 
     def shutDown(self):
