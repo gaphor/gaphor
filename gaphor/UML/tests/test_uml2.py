@@ -38,7 +38,7 @@ class TestUML2(unittest.TestCase):
         self.assertEquals(c.namespace, p)
         self.failUnless(c in p.ownedElement)
         
-    def __on_owned_member(self, pspec, name):
+    def _on_owned_member(self, pspec, name):
         self.owned_member_called = True
 
     def testOwnedMember(self):
@@ -46,7 +46,7 @@ class TestUML2(unittest.TestCase):
         c = factory.create(UML.Class)
         p = factory.create(UML.Package)
         self.owned_member_called = False
-        p.connect('ownedMember', self.__on_owned_member)
+        p.connect('ownedMember', self._on_owned_member)
         c.package = p
         self.assertEquals(self.owned_member_called, True)
 
@@ -55,7 +55,7 @@ class TestUML2(unittest.TestCase):
         c = factory.create(UML.Class)
         p = factory.create(UML.Package)
         self.owned_member_called = False
-        p.connect('ownedMember', self.__on_owned_member)
+        p.connect('ownedMember', self._on_owned_member)
         c.package = p
         self.assertEquals(self.owned_member_called, True)
         self.owned_member_called = False
