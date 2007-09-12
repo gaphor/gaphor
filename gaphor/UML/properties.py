@@ -221,6 +221,7 @@ class association(umlproperty):
         self.upper = upper
         self.composite = composite
         self.opposite = opposite and intern(opposite)
+        self.stub = None
 
     def load(self, obj, value):
         if not isinstance(value, self.type):
@@ -314,12 +315,20 @@ class association(umlproperty):
 
         # Callbacks are only connected if a new relationship has
         # been established.
-        value.connect('__unlink__', self.__on_unlink, obj)
+#        value.connect('__unlink__', self.__on_unlink, obj)
 #        if self.composite:
 #            obj.connect('__unlink__', self.__on_composite_unlink, value)
         
         if not from_opposite and self.opposite:
-            getattr(type(value), self.opposite)._set(value, obj, from_opposite=True, do_notify=do_notify)
+            opposite = getattr(type(value), self.opposite)
+            if not opposite.opposite:
+                opposite.stub = self
+            opposite._set(value, obj, from_opposite=True, do_notify=do_notify)
+        elif not self.opposite:
+            if not self.stub:
+                self.stub = associationstub(self)
+                setattr(self.type, 'UML_associationstub_%x' % id(self), self.stub)
+            self.stub._set(value, obj)
 
         if do_notify:
             self.notify(obj)
@@ -341,6 +350,9 @@ class association(umlproperty):
 
         if not from_opposite and self.opposite:
             getattr(type(value), self.opposite)._del(value, obj, from_opposite=True)
+        elif not self.opposite:
+            if self.stub:
+                self.stub._del(value, obj, from_opposite=True)
 
         event = None
         if self.upper > 1:
@@ -367,7 +379,7 @@ class association(umlproperty):
                 if do_notify:
                     event = AssociationSetEvent(obj, self, value, None)
 
-        value.disconnect(self.__on_unlink, obj)
+#        value.disconnect(self.__on_unlink, obj)
 #        if self.composite:
 #            obj.disconnect(self.__on_composite_unlink, value)
         if do_notify and event:
@@ -383,21 +395,67 @@ class association(umlproperty):
 
             for value in list(values):
                 # TODO: make normal unlinking work through this method.
-                #self.__delete__(obj, value)
+                self.__delete__(obj, value)
                 if composite:
                     value.unlink()
 
-    def __on_unlink(self, value, pspec, obj):
-        """
-        Disconnect when the element on the other end of the association
-        (value) sends the '__unlink__' signal. This is especially important
-        for uni-directional associations.
-        """
-        #print '__on_unlink', name, obj, value
-        if pspec == '__unlink__':
-            self.__delete__(obj, value)
-            # re-establish unlink handler:
-            value.connect('__unlink__', self.__on_unlink, obj)
+#    def __on_unlink(self, value, pspec, obj):
+#        """
+#        Disconnect when the element on the other end of the association
+#        (value) sends the '__unlink__' signal. This is especially important
+#        for uni-directional associations.
+#        """
+#        #print '__on_unlink', name, obj, value
+#        if pspec == '__unlink__':
+#            self.__delete__(obj, value)
+#            # re-establish unlink handler:
+#            value.connect('__unlink__', self.__on_unlink, obj)
+#
+
+class AssociationStubError(Exception):
+    pass
+
+
+class associationstub(umlproperty):
+
+    def __init__(self, association):
+        self.association = association
+        self._name = intern('_stub_%x' % id(self))
+
+    def __get__(self, obj, class_=None):
+        if obj:
+            raise AssociationStubError, 'getting values not allowed'
+        return self
+
+    def __set__(self, obj, value):
+        raise AssociationStubError, 'setting values not allowed'
+
+    def __delete__(self, obj, value=None):
+        raise AssociationStubError, 'deleting values not allowed'
+
+    def save(self, obj, save_func):
+        pass
+
+    def load(self, obj, value):
+        pass
+
+    def unlink(self, obj):
+        try:
+            values = getattr(obj, self._name)
+        except AttributeError:
+            pass
+        else:
+            for value in set(values):
+                self.association.__delete__(value, obj)
+
+    def _set(self, obj, value):
+        try:
+            getattr(obj, self._name).add(value)
+        except AttributeError:
+            setattr(obj, self._name, set([value]))
+            
+    def _del(self, obj, value, from_opposite=False):
+        getattr(obj, self._name).discard(value)
 
 
 class derivedunion(umlproperty):
