@@ -56,10 +56,10 @@ class FeatureItem(DiagramItem):
         cr = context.cairo
         self.width, self.height = text_extents(cr, text)
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        DiagramItem.on_subject_notify(self, pspec, notifiers)
-        #log.debug('setting text %s' % self.subject.render() or '')
-        self.text = self.subject and self.subject.render() or ''
+#    def on_subject_notify(self, pspec, notifiers=()):
+#        DiagramItem.on_subject_notify(self, pspec, notifiers)
+#        #log.debug('setting text %s' % self.subject.render() or '')
+#        self.text = self.subject and self.subject.render() or ''
 
     def point(self, x, y):
         """
@@ -73,47 +73,35 @@ class AttributeItem(FeatureItem):
         FeatureItem.__init__(self, id)
         self.need_sync = False
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        FeatureItem.on_subject_notify(self, pspec, ('name',
-                                                    'isDerived',
-                                                    'visibility',
-                                                    'lowerValue.value',
-                                                    'upperValue.value',
-                                                    'defaultValue.value',
-                                                    'typeValue.value',
-                                                    'taggedValue',
-                                                    'association')
-                                                    + notifiers)
-        #self._expression.set_text(self.subject.render() or '')
-        #self.request_update()
+        self.add_watch(UML.Property.name)
+        self.add_watch(UML.Property.isDerived)
+        self.add_watch(UML.Property.visibility)
+        self.add_watch(UML.Property.association, self.on_property_association)
+        self.add_watch(UML.Property.lowerValue)
+        self.add_watch(UML.Property.upperValue)
+        self.add_watch(UML.Property.defaultValue)
+        self.add_watch(UML.Property.typeValue)
+        self.add_watch(UML.Property.taggedValue)
+        self.add_watch(UML.ValueSpecification.value, self.on_feature_value)
 
-    def on_subject_notify__name(self, subject, pspec):
-        #log.debug('setting text %s' % self.subject.render() or '')
-        #self._expression.set_text(self.subject.render() or '')
-        self.request_update()
+    def on_feature_value(self, event):
+        element = event.element
+        subject = self.subject
+        if subject and element in (subject.lowerValue, subject.upperValue, subject.defaultValue, subject.typeValue, subject.taggedValue):
+            self.request_update()
 
-    on_subject_notify__isDerived = on_subject_notify__name
-    on_subject_notify__visibility = on_subject_notify__name
-    on_subject_notify__lowerValue_value = on_subject_notify__name
-    on_subject_notify__upperValue_value = on_subject_notify__name
-    on_subject_notify__defaultValue_value = on_subject_notify__name
-    on_subject_notify__typeValue_value = on_subject_notify__name
-    on_subject_notify__taggedValue = on_subject_notify__name
 
-    def on_subject_notify__association(self, subject, pspec):
+    def on_property_association(self, event):
         """
         Make sure we update the attribute compartment (in case
         the class_ property was defined before it is connected to
         an association.
         """
-        #if self.parent:
-        #    self.parent.sync_attributes()
-        self.need_sync = True
-        self.request_update()
+        if event.element is self.subject:
+            self.need_sync = True
+            self.request_update()
 
     def pre_update(self, context):
-#        if self.need_sync and context.parent:
-#            context.parent.sync_attributes()
         self.need_sync = False
         self.update_size(self.subject.render(), context)
         #super(AttributeItem, self).pre_update(context)
@@ -122,8 +110,6 @@ class AttributeItem(FeatureItem):
         cr = context.cairo
         text_set_font(cr, font.FONT)
         text_align(cr, 0, 0, self.subject.render() or '', align_x=1, align_y=1)
-        #cr.show_text(self.subject.render() or '')
-
 
 
 # TODO: handle Parameter's
@@ -133,25 +119,19 @@ class OperationItem(FeatureItem):
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
         self.need_sync = False
-
-    def on_subject_notify(self, pspec, notifiers=()):
-        FeatureItem.on_subject_notify(self, pspec,
-                        ('name', 'visibility', 'isAbstract')
-                        + notifiers)
-
+        
+        self.add_watch(UML.Operation.name)
+        self.add_watch(UML.Operation.visibility)
+        self.add_watch(UML.Operation.isAbstract)
+        self.add_watch(UML.Operation.taggedValue)
+        # Parameters
         # TODO: Handle subject.returnResult[*] and subject.formalParameter[*]
+        self.add_watch(UML.Operation.isAbstract)
+
 
     def postload(self):
         FeatureItem.postload(self)
         self.need_sync = False
-
-    def on_subject_notify__name(self, subject, pspec):
-        #log.debug('setting text %s' % self.subject.render() or '')
-        self.request_update()
-
-    on_subject_notify__isAbstract = on_subject_notify__name
-    on_subject_notify__visibility = on_subject_notify__name
-    on_subject_notify__taggedValue = on_subject_notify__name
 
     def pre_update(self, context):
 #        if self.need_sync and context.parent:

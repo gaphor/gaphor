@@ -8,7 +8,6 @@ from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 import gaphor.diagram.font as font
 
 class NamedItem(ElementItem):
-    __namedelement__ = True
 
     __style__ = {
         'min-size'    : (100, 50),
@@ -32,8 +31,17 @@ class NamedItem(ElementItem):
                 visible=self.is_namespace_info_visible,
                 font=font.FONT_SMALL)
 
+        obj._name = obj.add_text('name', style={
+                    'text-align': self.style.name_align,
+                    'text-padding': self.style.name_padding,
+                    'text-outside': self.style.name_outside,
+                    'text-align-str': self.style.name_align_str,
+                    'text-align-group': 'stereotype',
+                }, editable=True)
+
         # size of stereotype, namespace and name text
         self._header_size = 0, 0
+        self.add_watch(UML.NamedElement.name, self.on_named_element_name)
         self.add_watch(UML.NamedElement.namespace, self.on_named_element_namespace)
         self.add_watch(UML.Namespace.name, self.on_named_element_namespace)
 
@@ -57,6 +65,13 @@ class NamedItem(ElementItem):
             return False
 
         return self._from.text and namespace is not canvas.diagram.namespace
+
+
+    def on_named_element_name(self, event):
+        """
+        """
+        self._name.text = subject.name
+        self.request_update()
 
 
     def on_named_element_namespace(self, event):

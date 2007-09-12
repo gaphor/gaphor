@@ -408,7 +408,7 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
             handler = self._watched_properties[event.property]
             if handler:
                 handler(event)
-            elif self.subject:
+            elif self.subject and self.subject is event.element:
                 log.debug('on_element_changed')
                 self.request_update()
 

@@ -90,6 +90,7 @@ class ClassItem(ClassifierItem):
         self.sync_uml_elements(owned_attributes, self._attributes,
                            self._create_attribute)
 
+
     def sync_operations(self):
         """
         Sync the contents of the operations compartment with the data
@@ -99,29 +100,13 @@ class ClassItem(ClassifierItem):
                            self._create_operation)
 
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        #log.debug('Class.on_subject_notify(%s, %s)' % (pspec, notifiers))
-        ClassifierItem.on_subject_notify(self, pspec,
-                                    ('ownedAttribute', 'ownedOperation') + notifiers)
-        # Create already existing attributes and operations:
-        if self.subject:
-            self.sync_attributes()
-            self.sync_operations()
-        self.request_update()
-
-    def on_subject_notify__ownedAttribute(self, subject, pspec=None):
-        """
-        Called when the ownedAttribute property of our subject changes.
-        """
-        #log.debug('on_subject_notify__ownedAttribute')
+    def on_class_owned_attribute(self, event):
         self.sync_attributes()
 
-    def on_subject_notify__ownedOperation(self, subject, pspec=None):
-        """
-        Called when the ownedOperation property of our subject changes.
-        """
-        #log.debug('on_subject_notify__ownedOperation')
+
+    def on_class_owned_operation(self, event):
         self.sync_operations()
+
 
     def pre_update(self, context):
         if self._attributes.need_sync:

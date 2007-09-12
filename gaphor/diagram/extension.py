@@ -20,13 +20,8 @@ class ExtensionItem(NamedLine):
 
     def __init__(self, id=None):
         NamedLine.__init__(self, id)
+        self.add_watch(UML.Extension.ownedEnd)
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        NamedLine.on_subject_notify(self, pspec,
-                notifiers + ('ownedEnd',))
-
-    def on_subject_notify__ownedEnd(self, subject, pspec):
-        self.request_update()
 
     def draw_head(self, context):
         cr = context.cairo

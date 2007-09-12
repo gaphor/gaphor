@@ -1,8 +1,8 @@
-"""
-Basic functionality for canvas line based items on a diagram.
-"""
+    """
+    Basic functionality for canvas line based items on a diagram.
+    """
 
-from math import atan2, pi
+    from math import atan2, pi
 
 import gaphas
 from gaphas.util import text_extents, text_align
@@ -184,7 +184,6 @@ class DiagramLine(LineItem):
 
 
 class NamedLine(DiagramLine):
-    __namedelement__ = True
 
     __style__ = {
             'name-align': (ALIGN_CENTER, ALIGN_TOP),
@@ -193,6 +192,21 @@ class NamedLine(DiagramLine):
             'name-align-str': None,
     }
 
+    def __init__(self, id=None):
+        DiagramLine.__init__(self, id)
+        obj._name = obj.add_text('name', style={
+                    'text-align': self.style.name_align,
+                    'text-padding': self.style.name_padding,
+                    'text-outside': self.style.name_outside,
+                    'text-align-str': self.style.name_align_str,
+                    'text-align-group': 'stereotype',
+                }, editable=True)
+        self.add_watch(UML.NamedElement.name, self.on_named_element_name)
+
+
+    def on_named_element_name(self, event):
+        self._name.text = subject.name
+        self.request_update()
 
 
 class FreeLine(LineItem):

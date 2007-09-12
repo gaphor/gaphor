@@ -183,7 +183,6 @@ class ForkNodeItem(Item, DiagramItem):
     """
     Representation of fork and join node.
     """
-    __namedelement__ = True
 
     element_factory = inject('element_factory')
 
@@ -215,6 +214,18 @@ class ForkNodeItem(Item, DiagramItem):
             pattern='{ joinSpec = %s }',
             style=self.STYLE_TOP,
             visible=self.is_join_spec_visible)
+
+        obj._name = obj.add_text('name', style={
+                    'text-align': self.style.name_align,
+                    'text-padding': self.style.name_padding,
+                    'text-outside': self.style.name_outside,
+                    'text-align-str': self.style.name_align_str,
+                    'text-align-group': 'stereotype',
+                }, editable=True)
+
+        self.add_watch(UML.NamedElement.name, on_named_element_name)
+        self.add_watch(UML.JoinNode.joinSpec, on_join_node_join_spec)
+        self.add_watch(UML.LiteralSpecification.value, on_join_node_join_spec)
 
 
     def save(self, save_func):
@@ -318,24 +329,18 @@ class ForkNodeItem(Item, DiagramItem):
         return d - 3
 
 
-    def on_subject_notify(self, pspec, notifiers = ()):
-        """
-        Detect changes of subject.
-
-        If subject is join node, then set subject of join specification
-        text element.
-        """
-        subject = self.subject
-        if is_join_node(subject):
-            join_spec_notifiers = ('joinSpec', 'joinSpec.value')
-        else:
-            join_spec_notifiers = ()
-
-        DiagramItem.on_subject_notify(self, pspec, join_spec_notifiers + notifiers)
-
-        if is_join_node(subject) and not (subject.joinSpec and subject.joinSpec.value):
-            self.set_join_spec(DEFAULT_JOIN_SPEC)
+    def on_named_element_name(self, event):
+        self._name.text = subject.name
         self.request_update()
+
+    def on_join_node_join_spec(self, event):
+        subject = self.subject
+        if self.subject and is_join_node(subject) and \
+                (event.element is subject.joinSpec or \
+                 event.element is subject.joinSpec.value):
+            if is_join_node(subject) and not (subject.joinSpec and subject.joinSpec.value):
+                self.set_join_spec(DEFAULT_JOIN_SPEC)
+            self.request_update()
 
 
     def set_join_spec(self, value):
@@ -354,14 +359,6 @@ class ForkNodeItem(Item, DiagramItem):
 
         subject.joinSpec.value = value
         self._join_spec.text = value
-
-
-    def on_subject_notify__joinSpec(self, subject, pspec=None):
-        self.request_update()
-
-
-    def on_subject_notify__joinSpec_value(self, subject, pspec=None):
-        self.request_update()
 
 
 def is_join_node(subject):

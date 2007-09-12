@@ -48,6 +48,10 @@ class ObjectNodeItem(NamedItem):
             style = self.STYLE_BOTTOM,
             visible=self._get_show_ordering)
 
+        self.add_watch(UML.ValueSpecification)
+        self.add_watch(UML.ValueSpecification.value)
+        self.add_watch(UML.ObjectNode.ordering)
+
 
     def is_upper_bound_visible(self):
         """
@@ -97,19 +101,14 @@ class ObjectNodeItem(NamedItem):
             self.set_ordering(self.subject.ordering)
         super(ObjectNodeItem, self).postload()
 
-    def on_subject_notify(self, pspec, notifiers = ()):
-        """
-        Detect subject changes. If subject is set then set upper bound text
-        element subject.
-        """
-        NamedItem.on_subject_notify(self, pspec,
-                ('upperBound', 'upperBound.value', 'ordering') + notifiers)
 
+    def on_object_node_upper_bound(self, event):
+        element = self.element
         subject = self.subject
-        if subject and not (subject.upperBound and subject.upperBound.value):
-            self.set_upper_bound(DEFAULT_UPPER_BOUND)
-
-        self.request_update()
+        if subject and (element is subject or element is subject.upperBound):
+            if not (subject.upperBound and subject.upperBound.value):
+                self.set_upper_bound(DEFAULT_UPPER_BOUND)
+            self.request_update()
 
 
     def draw(self, context):
@@ -143,18 +142,6 @@ class ObjectNodeItem(NamedItem):
         subject = self.subject
         subject.ordering = value
         self._ordering.text = value
-
-
-    def on_subject_notify__upperBound(self, subject, pspec=None):
-        self.request_update()
-
-
-    def on_subject_notify__upperBound_value(self, subject, pspec=None):
-        self.request_update()
-
-
-    def on_subject_notify__ordering(self, subject, pspec=None):
-        self.request_update()
 
 
 

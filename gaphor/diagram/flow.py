@@ -36,29 +36,23 @@ class FlowItem(NamedLine):
     def __init__(self, id = None):
         NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.value', editable=True)
+        self.add_watch(UML.ControlFlow.guard)
+        self.add_watch(UML.LiteralSpecification.value)
+
 
     def postload(self):
         if self.subject and self.subject.guard:
             self._guard.text = self.subject.guard.value
         super(FlowItem, self).postload()
 
-    def on_subject_notify(self, pspec, notifiers = ()):
-        NamedLine.on_subject_notify(self, pspec,
-            ('guard', 'guard.value',) + notifiers)
-        if self.subject:
-            self.on_subject_notify__guard(self.subject)
-            self.on_subject_notify__guard_value(self.subject)
-        self.request_update()
 
-
-    def on_subject_notify__guard(self, subject, pspec=None):
-        if not subject.guard or not subject.guard.value:
-            self._guard.text = ''
-        self.request_update()
-
-
-    def on_subject_notify__guard_value(self, subject, pspec=None):
-        self.request_update()
+    def on_control_flow_guard(self, event):
+        element = event.element
+        subject = self.subject
+        if subject and (element is subject or element is subject.guard):
+            if not subject.guard or not subject.guard.value:
+                self._guard.text = ''
+            self.request_update()
 
 
     def set_guard(self, value):
@@ -92,12 +86,12 @@ class ACItem(object):
 
         # set new value notification function to change activity edge
         # connector name globally
-        vnf = self.on_subject_notify__value
-        def f(subject, pspec):
-            vnf(subject, pspec)
-            if self.parent._opposite:
-                self.parent._opposite._connector.subject.value = subject.value
-        self.on_subject_notify__value = f
+        #vnf = self.on_subject_notify__value
+        #def f(subject, pspec):
+        #    vnf(subject, pspec)
+        #    if self.parent._opposite:
+        #        self.parent._opposite._connector.subject.value = subject.value
+        #self.on_subject_notify__value = f
 
 
     def move_center(self, x, y):

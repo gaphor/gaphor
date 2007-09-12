@@ -20,20 +20,11 @@ class CommentItem(ElementItem):
         self.min_width = CommentItem.EAR + 2 * CommentItem.OFFSET
         self.height = 50
         self.width = 100
+        self.add_watch(UML.Comment.body)
 
     def edit(self):
         #self.start_editing(self._body)
         pass
-
-    def on_subject_notify(self, pspec):
-        """
-        See DiagramItem.on_subject_notify().
-        """
-        ElementItem.on_subject_notify(self, pspec, ('body',))
-        self.request_update()
-
-    def on_subject_notify__body(self, subject, pspec):
-        self.request_update()
 
     # DiaCanvasItem callbacks:
 
