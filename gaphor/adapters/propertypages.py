@@ -183,7 +183,7 @@ class ClassAttributes(EditableTreeModel):
     def _get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
-                yield [attr.name, attr]
+                yield [attr.render(), attr]
 
 
     def _create_object(self):
@@ -209,7 +209,7 @@ class ClassOperations(EditableTreeModel):
     """
     def _get_rows(self):
         for operation in self._item.subject.ownedOperation:
-            yield [operation.name, operation]
+            yield [operation.render(), operation]
 
 
     def _create_object(self):
@@ -445,7 +445,7 @@ def create_hbox_label(adapter, page, label):
     return hbox
 
 
-def create_tree_view(model, names):
+def create_tree_view(model, names, tip=""):
     """
     Create a tree view for a editable tree model.
     """
@@ -463,7 +463,7 @@ def create_tree_view(model, names):
     tree_view.connect('key_press_event', remove_on_keypress)
     tree_view.connect('key_press_event', swap_on_keypress)
 
-    tip = """\
+    tip = tip + """
 Press ENTER to edit item, BS/DEL to remove item.
 Use -/= to move items up or down.\
     """
@@ -742,7 +742,13 @@ class AttributesPage(object):
 
         self.model = ClassAttributes(self.context)
         
-        tree_view = create_tree_view(self.model, (_('Attributes'),))
+        tip = """\
+Add and edit class attributes according to UML syntax. Attribute syntax examples
+- attr
+- + attr: int
+- # /attr: int
+"""
+        tree_view = create_tree_view(self.model, (_('Attributes'),), tip)
         page.pack_start(tree_view)
 
         return page
@@ -789,7 +795,13 @@ class OperationsPage(object):
         page.pack_start(hbox, expand=False)
 
         self.model = ClassOperations(self.context)
-        tree_view = create_tree_view(self.model, (_('Operation'),))
+        tip = """\
+Add and edit class operations according to UML syntax. Operation syntax examples
+- call()
+- + call(a: int, b: str)
+- # call(a: int: b: str): bool
+"""
+        tree_view = create_tree_view(self.model, (_('Operation'),), tip)
         page.pack_start(tree_view)
 
         return page
