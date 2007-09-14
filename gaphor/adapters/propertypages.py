@@ -183,7 +183,7 @@ class ClassAttributes(EditableTreeModel):
     def _get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
-                yield [attr.name, attr]
+                yield [attr.render(), attr]
 
 
     def _create_object(self):
@@ -209,7 +209,7 @@ class ClassOperations(EditableTreeModel):
     """
     def _get_rows(self):
         for operation in self._item.subject.ownedOperation:
-            yield [operation.name, operation]
+            yield [operation.render(), operation]
 
 
     def _create_object(self):
