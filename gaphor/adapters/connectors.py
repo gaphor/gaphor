@@ -733,7 +733,7 @@ class ExtendConnect(RelationshipConnect):
         relation = self.relationship_or_new(UML.Extend,
                     ('extendedCase', None),
                     ('extension', 'extend'))
-        line.subject = relation
+        self.line.subject = relation
 
 component.provideAdapter(ExtendConnect)
 
