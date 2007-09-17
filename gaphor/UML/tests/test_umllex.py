@@ -38,13 +38,23 @@ dump_oper('myfunc(aap:str[1] = "aap" { tag1, tag2 }, out two {tag3}): type')
 element_factory = ElementFactory()
 element_factory.init(None)
 
-class UmlLexTestCase(unittest.TestCase):
-
+class AttributeTestCase(unittest.TestCase):
     def setUp(self):
         element_factory.flush()
 
-    def teardown(self):
+
+    def tearDown(self):
         element_factory.flush()
+
+
+    def test_render(self):
+        a = element_factory.create(Property)
+        parse_property(a, 'myattr')
+        assert a.render() == '+ myattr', a.render()
+
+        parse_property(a, 'myattr: int')
+        assert a.render() == '+ myattr: int', a.render()
+
 
     def test_parse_property_1(self):
         #log.set_log_level(log.INFO)
@@ -195,6 +205,15 @@ class UmlLexTestCase(unittest.TestCase):
 
         a.unlink()
 
+
+class OperationTestCase(unittest.TestCase):
+
+    def setUp(self):
+        element_factory.flush()
+
+    def tearDown(self):
+        element_factory.flush()
+
     def test_parse_operation_1(self):
         o = element_factory.create(Operation)
         assert len(element_factory.values()) == 1
@@ -277,4 +296,3 @@ class UmlLexTestCase(unittest.TestCase):
         parse_operation(o, '- myfunc2: myType2')
 
         #print 'done'
-
