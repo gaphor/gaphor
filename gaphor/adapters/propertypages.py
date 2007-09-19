@@ -936,6 +936,9 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         
     def construct_end(self, title, end):
         hbox = gtk.HBox()
+        if not end.subject:
+            return hbox
+
         label = gtk.Label(title)
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
