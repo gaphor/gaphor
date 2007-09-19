@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# vim:sw=4
-"""This is Gaphor, a Python based UML editor.
+"""
+This is Gaphor, a Python based UML modelling tool.
 """
 
 __all__ = [ 'main', 'GaphorError' ]
@@ -54,3 +54,4 @@ __builtin__.__dict__['log'] = misc.logger.Logger()
 if __debug__: 
     refs = []
 
+# vim:sw=4
