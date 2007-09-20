@@ -28,6 +28,22 @@ from utils.command.run import run
 
 LINGUAS = [ 'ca', 'es', 'nl', 'sv' ]
 
+# Wrap setuptools' build_py command, so we're sure build_uml is performed
+# before the build_py code.
+
+from setuptools.command.build_py import build_py
+
+class build_py_with_sub_commands(build_py):
+
+    def run(self):
+        for cmd_name in self.get_sub_commands():
+            self.run_command(cmd_name)
+
+        build_py.run(self)
+    
+build_py_with_sub_commands.sub_commands.append(('build_uml', None))
+
+
 class build_doc(Command):
     description = 'Builds the documentation'
     user_options = []
@@ -68,17 +84,34 @@ class build_doc(Command):
             print 'epydoc not installed, skipping API documentation.'
 
 
-#if sys.platform == 'darwin':
-#    # Mac OS X
-#    import pkg_resources
-#    pkg_resources.require('zope.component')
-#    platform_setup_requires=['py2app']
-#    platform_setup = dict(
-#        app=['gaphor-osx.py'],
-#        )
-#else:
-platform_setup_requires = []
-platform_setup = dict()
+if sys.platform == 'darwin' and 'py2app' in sys.argv:
+    # Mac OS X
+    import pkg_resources
+    pkg_resources.require('zope.component')
+    platform_setup_requires=['py2app']
+    platform_setup = dict(
+        app=['gaphor-osx.py'],
+        )
+elif sys.platform == 'win32' and 'py2exe' in sys.argv:
+    # Windows
+    import py2exe
+    platform_setup_requires = ['py2exe']
+    platform_setup= { 'app': ['gaphor'], }
+
+    import pkg_resources
+    eggs = pkg_resources.require("gaphor")
+    for egg in eggs:
+       if os.path.isdir(egg.location):
+           sys.path.insert(0, egg.location)
+           continue
+       else:
+           print 'Can only handle unpacked eggs.'
+    egg_names = []
+    for egg in eggs:
+        egg_names.append(egg.project_name)
+else:
+    platform_setup_requires = []
+    platform_setup = dict()
 
 
 setup(
@@ -160,6 +193,7 @@ It uses the GTK+ environment for user interaction.
     },
 
     cmdclass = {
+              'build_py': build_py_with_sub_commands,
               'build_uml': build_uml,
               'build_mo': build_mo,
               'build_pot': build_pot,
@@ -183,6 +217,11 @@ It uses the GTK+ environment for user interaction.
                 CFBundleIdentifier='com.devjavu.gaphor'
                 )
         ),
+        py2exe = dict(
+            packages='gaphas, decorator',
+            includes='cairo, pango, pangocairo, atk',
+        ),
+        
         build_pot = dict(
             all_linguas = ','.join(LINGUAS),
         ),
