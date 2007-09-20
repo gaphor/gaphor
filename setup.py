@@ -7,7 +7,7 @@ dependencies.
 Run 'python setup.py run' to start Gaphor directly (without install).
 """
 
-VERSION = '0.12.3'
+VERSION = '0.12.4'
 
 import os
 import sys
@@ -27,6 +27,19 @@ from utils.command.install_lib import install_lib
 from utils.command.run import run
 
 LINGUAS = [ 'ca', 'es', 'nl', 'sv' ]
+
+from setuptools.command.build_py import build_py
+
+class build_py_with_sub_commands(build_py):
+
+    def run(self):
+        for cmd_name in self.get_sub_commands():
+            self.run_command(cmd_name)
+
+        build_py.run(self)
+
+build_py_with_sub_commands.sub_commands.append(('build_uml', None))
+
 
 class build_doc(Command):
     description = 'Builds the documentation'
@@ -160,6 +173,7 @@ It uses the GTK+ environment for user interaction.
     },
 
     cmdclass = {
+              'build_py': build_py_with_sub_commands,
               'build_uml': build_uml,
               'build_mo': build_mo,
               'build_pot': build_pot,
