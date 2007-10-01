@@ -39,12 +39,12 @@ class ElementItem(gaphas.Element, DiagramItem):
 
 
     def setup_canvas(self):
-        gaphas.Element.setup_canvas()
+        gaphas.Element.setup_canvas(self)
         self.register_handlers()
 
 
     def teardown_canvas(self):
-        gaphas.Element.teardown_canvas()
+        gaphas.Element.teardown_canvas(self)
         self.unregister_handlers()
 
 

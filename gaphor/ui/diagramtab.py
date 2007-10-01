@@ -69,8 +69,10 @@ class DiagramTab(object):
         if self.diagram:
             self.diagram.disconnect(self._on_diagram_event)
         self.diagram = diagram
+
         if diagram:
-            diagram.connect(('name', '__unlink__'), self._on_diagram_event)
+# TODO: create new style event handler
+#            diagram.connect(('name', '__unlink__'), self._on_diagram_event)
 
             if self.view:
                 self.view.hadjustment.set_value(0.0)

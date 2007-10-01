@@ -73,16 +73,6 @@ class umlproperty(object):
         """
         pass
 
-    def notify(self, obj):
-        """
-        Notify obj that the property's value has been changed.
-        Deriviates are also triggered to send a notify signal.
-        """
-        try:
-            obj.notify(self.name, pspec=self)
-        except Exception, e:
-            log.error(str(e), e)
-
 
 class attribute(umlproperty):
     """
@@ -134,7 +124,6 @@ class attribute(umlproperty):
         else:
             setattr(obj, self._name, value)
         component.handle(AttributeChangeEvent(obj, self, old, value))
-        self.notify(obj)
 
     def _del(self, obj, value=None):
         old = self._get(obj)
@@ -145,7 +134,6 @@ class attribute(umlproperty):
             pass
         else:
             component.handle(AttributeChangeEvent(obj, self, old, self.default))
-            self.notify(obj)
 
 
 class enumeration(umlproperty):
@@ -186,7 +174,6 @@ class enumeration(umlproperty):
         else:
             setattr(obj, self._name, value)
         component.handle(AttributeChangeEvent(obj, self, old, value))
-        self.notify(obj)
 
     def _del(self, obj, value=None):
         old = self._get(obj)
@@ -196,7 +183,6 @@ class enumeration(umlproperty):
             pass
         else:
             component.handle(AttributeChangeEvent(obj, self, old, self.default))
-            self.notify(obj)
 
 
 class association(umlproperty):
@@ -294,7 +280,6 @@ class association(umlproperty):
 
             if value is None:
                 if do_notify:
-                    self.notify(obj)
                     component.handle(event)
                 return
 
@@ -331,7 +316,6 @@ class association(umlproperty):
             self.stub._set(value, obj)
 
         if do_notify:
-            self.notify(obj)
             component.handle(event)
 
     def _del(self, obj, value, from_opposite=False, do_notify=True):
@@ -383,7 +367,6 @@ class association(umlproperty):
 #        if self.composite:
 #            obj.disconnect(self.__on_composite_unlink, value)
         if do_notify and event:
-            self.notify(obj)
             component.handle(event)
 
     def unlink(self, obj):
@@ -580,7 +563,6 @@ class derivedunion(umlproperty):
                     if values:
                         new_value = iter(values).next()
                     component.handle(DerivedUnionSetEvent(event.element, self, old_value, new_value))
-            self.notify(event.element)
 
 
 class redefine(umlproperty):
@@ -660,7 +642,6 @@ class redefine(umlproperty):
                 component.handle(RedefineDeleteEvent(event.element, self, event.old_value))
             else:
                 log.error('Don''t know how to handle event ' + str(event) + ' for redefined association')
-            self.notify(event.element)
 
 
 try:

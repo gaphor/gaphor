@@ -336,28 +336,28 @@ class PropertiesTestCase(unittest.TestCase):
         del a.a
         assert a.a == 'one'
 
-    def test_notify(self):
-        import types
-        class A(Element):
-            notified=None
-            def notify(self, name, pspec):
-                self.notified = name
-
-        A.assoc = association('assoc', A)
-        A.attr = attribute('attr', types.StringType, 'default')
-        A.enum = enumeration('enum', ('one', 'two'), 'one')
-
-        a = A()
-        assert a.notified == None
-        a.assoc = A()
-        assert a.notified == 'assoc', a.notified
-        a.attr = 'newval'
-        assert a.notified == 'attr', a.notified
-        a.enum = 'two'
-        assert a.notified == 'enum', a.notified
-        a.notified = None
-        a.enum = 'two' # should not notify since value hasn't changed.
-        assert a.notified == None
+#    def test_notify(self):
+#        import types
+#        class A(Element):
+#            notified=None
+#            def notify(self, name, pspec):
+#                self.notified = name
+#
+#        A.assoc = association('assoc', A)
+#        A.attr = attribute('attr', types.StringType, 'default')
+#        A.enum = enumeration('enum', ('one', 'two'), 'one')
+#
+#        a = A()
+#        assert a.notified == None
+#        a.assoc = A()
+#        assert a.notified == 'assoc', a.notified
+#        a.attr = 'newval'
+#        assert a.notified == 'attr', a.notified
+#        a.enum = 'two'
+#        assert a.notified == 'enum', a.notified
+#        a.notified = None
+#        a.enum = 'two' # should not notify since value hasn't changed.
+#        assert a.notified == None
 
     def test_derivedunion(self):
         class A(Element): pass

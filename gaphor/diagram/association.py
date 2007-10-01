@@ -20,7 +20,6 @@ from gaphas.geometry import Rectangle, distance_point_point_fast
 from gaphas.geometry import distance_rectangle_point, distance_line_point
 
 from gaphor import UML
-from gaphor.diagram.diagramitem import SubjectSupport
 from gaphor.diagram.diagramline import NamedLine
 
 
@@ -45,6 +44,20 @@ class AssociationItem(NamedLine):
         self._show_direction = False
         self._dir_angle = 0
         self._dir_pos = 0, 0
+        
+        self.add_watch(UML.Association.ownedEnd)
+        self.add_watch(UML.Association.memberEnd)
+
+        # For the association ends:
+        self.add_watch(UML.Property.aggregation)
+        self.add_watch(UML.Property.owningAssociation)
+        self.add_watch(UML.Property.class_)
+        self.add_watch(UML.Property.interface_)
+        self.add_watch(UML.Property.visibility, self.on_association_end_value)
+        self.add_watch(UML.Property.name, self.on_association_end_value)
+        # lowerValue, upperValue and taggedValue
+        self.add_watch(UML.LiteralSpecification.value, self.on_association_end_value)
+
 
     def set_show_direction(self, dir):
         self._show_direction = dir
@@ -107,15 +120,20 @@ class AssociationItem(NamedLine):
         self.subject.memberEnd.swap(self.subject.memberEnd[0], self.subject.memberEnd[1])
         self.request_update()
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        NamedLine.on_subject_notify(self, pspec,
-                notifiers + ('ownedEnd', 'memberEnd'))
-
-    def on_subject_notify__ownedEnd(self, subject, pspec):
-        self.request_update()
-
-    def on_subject_notify__memberEnd(self, subject, pspec):
-        self.request_update()
+    def on_association_end_value(self, event):
+        """
+        Handle events and update text on association end.
+        """
+        if event:
+            element = event.element
+            for end in (self._head_end, self._tail_end):
+                subject = end.subject
+                if subject and element in (subject, subject.lowerValue, \
+                        subject.upperValue, subject.taggedValue):
+                    end.set_text()
+                    self.request_update()
+                    break;
+            
 
     def post_update(self, context):
         """
@@ -301,7 +319,7 @@ class AssociationItem(NamedLine):
         return self
         
         
-class AssociationEnd(SubjectSupport):
+class AssociationEnd(UML.Presentation):
     """
     An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and
@@ -315,28 +333,9 @@ class AssociationEnd(SubjectSupport):
       the first 20-30 units of the line, for association end popup menu.
     """
 
-    head_popup_menu = (
-        'Head_unknownNavigation',
-        'Head_isNotNavigable',
-        'Head_isNavigable',
-        'separator',
-        'Head_AggregationNone',
-        'Head_AggregationShared',
-        'Head_AggregationComposite'
-    )
-
-    tail_popup_menu = (
-        'Tail_unknownNavigation',
-        'Tail_isNotNavigable',
-        'Tail_isNavigable',
-        'separator',
-        'Tail_AggregationNone',
-        'Tail_AggregationShared',
-        'Tail_AggregationComposite'
-    )
 
     def __init__(self, owner, id=None, end=None):
-        SubjectSupport.__init__(self)
+        UML.Presentation.__init__(self)
         self._owner = owner
         self._end = end
         
@@ -349,34 +348,27 @@ class AssociationEnd(SubjectSupport):
 
         self._subject = None
 
+
     def _set_subject(self, value):
         self._subject = value
-        class pspec:
-            name = 'subject'
-        self.on_subject_notify(pspec)
+        self.set_text()
+        self.request_update()
 
     def _del_subject(self):
         self._subject = None
-        class pspec:
-            name = 'subject'
-        self.on_subject_notify(pspec)
+        self.set_text()
+        self.request_update()
 
     subject = property(lambda s: s._subject, _set_subject, _del_subject)
 
-    def get_popup_menu(self):
-        if self.subject:
-            if self._end == 'head':
-                return self.head_popup_menu
-            else:
-                return self.tail_popup_menu
-        elif self.parent:
-            return self.parent.get_popup_menu()
 
     def request_update(self):
         self._owner.request_update()
 
+
     def set_text(self):
-        """Set the text on the association end.
+        """
+        Set the text on the association end.
         """
         if self.subject:
             try:
@@ -471,24 +463,30 @@ class AssociationEnd(SubjectSupport):
 
     navigability = property(get_navigability, _set_navigability)
 
+
     def point_name(self, x, y):
         p = (x, y)
         drp = distance_rectangle_point
         return drp(self._name_bounds, p)
+
 
     def point_mult(self, x, y):
         p = (x, y)
         drp = distance_rectangle_point
         return drp(self._mult_bounds, p)
 
+
     def point(self, x, y):
         return min(self.point_name(x, y), self.point_mult(x, y))
+
 
     def get_name(self):
         return self._name
 
+
     def get_mult(self):
         return self._mult
+
 
     def post_update(self, context, p1, p2):
         """
@@ -572,47 +570,6 @@ class AssociationEnd(SubjectSupport):
                                       width=mult_w,
                                       height=mult_h)
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        SubjectSupport.on_subject_notify(self, pspec,
-                        notifiers + ('aggregation', 'visibility',
-                        'name', 'lowerValue.value',
-                        'upperValue.value', 'taggedValue',
-                        'owningAssociation', 'class_', 'interface_'))
-        #print 'w/ assoc', self.subject and self.subject.association
-        self.set_text()
-        self.request_update()
-        
-    def on_subject_notify__aggregation(self, subject, pspec):
-        self.request_update()
-
-    def on_subject_notify__name(self, subject, pspec):
-        self.set_text()
-
-    def on_subject_notify__visibility(self, subject, pspec):
-        self.set_text()
-
-    def on_subject_notify__lowerValue_value(self, lower_value, pspec):
-        log.debug('New value for lowerValue.value: %s' % lower_value and lower_value.value)
-        self.set_text()
-        self.request_update()
-
-    def on_subject_notify__upperValue_value(self, upper_value, pspec):
-        #log.debug('New value for upperValue.value: %s' %  upper_value and upper_value.value)
-        self.set_text()
-        self.request_update()
-
-    def on_subject_notify__taggedValue(self, tagged_value, pspec):
-        self.set_text()
-        self.request_update()
-
-    def on_subject_notify__owningAssociation(self, upper_value, pspec):
-        self.request_update()
-
-    def on_subject_notify__class_(self, upper_value, pspec):
-        self.request_update()
-
-    def on_subject_notify__interface_(self, upper_value, pspec):
-        self.request_update()
 
     def point(self, x, y):
         """Given a point (x, y) return the distance to the canvas item.
@@ -630,6 +587,7 @@ class AssociationEnd(SubjectSupport):
 #            log.error("Could not determine distance", e)
         d3 = 1000.0
         return min(d1, d2, d3)
+
 
     def draw(self, context):
         """Draw name and multiplicity of the line end.

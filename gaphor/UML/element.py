@@ -79,61 +79,9 @@ class Element(object):
             try:
                 for prop in self.umlproperties():
                     prop.unlink(self)
-                self.notify('__unlink__')
             finally:
                 self.__in_unlink.unlock()
 
-    def connect(self, names, callback, *data):
-        """
-        Attach 'callback' to a list of names. Names may also be a string.
-        A name is the name of a property of the object or '__unlink__'.
-
-        Obsolete. Connect to the appropriate change event (see event.py)
-        """
-        #log.debug('Element.connect(%s, %s, %s)' % (names, callback, data))
-        if type(names) is types.StringType:
-            names = (names,)
-        cb = (callback,) + data
-        for name in names:
-            self._observers.setdefault(name, []).append(cb)
-
-    def disconnect(self, callback, *data):
-        """
-        Detach a callback identified by it's data.
-
-        Obsolete. Connect to the appropriate change event (see event.py)
-        """
-        cb = (callback,) + data
-        for values in self._observers.values():
-            # Remove all occurences of 'cb' from values
-            # (if none is found ValueError is raised).
-            try:
-                while True:
-                    values.remove(cb)
-            except ValueError:
-                pass
-
-    def notify(self, name, pspec=None):
-        """
-        Send notification to attached callbacks that a property
-        has changed.
-
-        Obsolete. Connect to the appropriate change event (see event.py)
-        """
-        cb_list = self._observers.get(name, ())
-        #log.debug('Element.notify: %s' % cb_list)
-        if not pspec:
-            try:
-                pspec = getattr(type(self), name)
-            except AttributeError:
-                pspec = name
-        
-        # Use a copy of the list to ensure all items are notified
-        for cb_data in list(cb_list):
-            try:
-                apply(cb_data[0], (self, pspec) + cb_data[1:])
-            except Exception, e:
-                log.error('failed notification for %s' % cb_data[0], e)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 

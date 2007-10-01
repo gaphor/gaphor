@@ -14,132 +14,6 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
 STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
 
-class SubjectSupport(UML.Presentation):
-    """
-    Support class that adds support methods for Presentation.subject.
-
-    This is a support class that should could be added to subclasses of
-    UML.Presentation.
-    """
-
-    def __init__(self):
-        UML.Presentation.__init__(self)
-        # Add the class' on_subject_notify() as handler:
-        self.connect('subject', type(self).on_subject_notify)
-
-        # __the_subject is a backup that is used to disconnect signals when a
-        # new subject is set (or the original one is removed)
-        self.__the_subject = None
-
-    def _subject_connect_helper(self, element, callback_prefix, prop_list):
-        """
-        Connect a signal notifier. The notifier can be just the name of
-        one of the subjects properties.
-
-        See: DiagramItem.on_subject_notify()
-        """
-        #log.debug('_subject_connect_helper: %s %s %s' % (element, callback_prefix, prop_list))
-
-        prop = prop_list[0]
-        callback_name = '%s_%s' % (callback_prefix, prop)
-        if len(prop_list) == 1:
-            #log.debug('_subject_connect_helper - %s %s' % (element, callback_name))
-            handler = getattr(self, callback_name)
-            element.connect(prop, handler)
-            # Call the handler, so it can update its state
-            #handler(prop, getattr(type(element), prop))
-            #handler(element, getattr(type(element), prop))
-        else:
-            p = getattr(element, prop)
-            #log.debug('_subject_connect_helper 2 - %s: %s' % (prop, p))
-            pl = prop_list[1:]
-            element.connect(prop, self._on_subject_notify_helper, callback_name, pl, [p])
-            if p:
-                self._subject_connect_helper(p, callback_name, pl)
-            else:
-                pass
-
-    def _subject_disconnect_helper(self, element, callback_prefix, prop_list):
-        """
-        Disconnect a previously connected signal handler.
-
-        See: DiagramItem.on_subject_notify()
-        """
-        #log.debug('_subject_disconnect_helper: %s %s %s' % (element, callback_prefix, prop_list))
-        prop = prop_list[0]
-        callback_name = '%s_%s' % (callback_prefix, prop)
-        if len(prop_list) == 1:
-            #log.debug('_subject_disconnect_helper - %s %s' % (element, callback_name))
-            handler = getattr(self, callback_name)
-            element.disconnect(handler)
-            # Call the handler, so it can update its state
-            #handler(element, getattr(type(element), prop))
-        else:
-            p = getattr(element, prop)
-            #log.debug('_subject_disconnect_helper 2 - %s' % prop)
-            pl = prop_list[1:]
-            element.disconnect(self._on_subject_notify_helper, callback_name, pl, [p])
-            if p:
-                self._subject_disconnect_helper(p, callback_name, pl)
-            else:
-                pass
-
-    def _on_subject_notify_helper(self, element, pspec, callback_name, prop_list, old):
-        """
-        This signal handler handles signals that are not direct properties
-        of self.subject (e.g. 'subject.lowerValue.value'). This way the
-        presentation class is not bothered with the details of keeping track
-        of those properties.
-
-        NOTE: This only works for properties with multiplicity [0..1] or [1].
-
-        See: DiagramItem.on_subject_notify()
-        """
-        name = pspec.name
-        prop = getattr(element, name)
-        #log.debug('_on_subject_notify_helper: %s %s %s %s %s' % (element, name, callback_name, prop_list, old))
-        # Attach a new signal handler with the new 'old' value:
-        if old[0]:
-            #log.info('disconnecting')
-            self._subject_disconnect_helper(old[0], callback_name, prop_list)
-        if prop:
-            self._subject_connect_helper(prop, callback_name, prop_list)
-
-        # Set the new "old" value
-        old[0] = prop
-
-    def on_subject_notify(self, pspec, notifiers=()):
-        """
-        A new subject is set on this model element.
-        notifiers is an optional tuple of elements that also need a
-        callback function. Callbacks have the signature
-        on_subject_notify__<notifier>(self, subject, pspec).
-
-        A notifier can be a property of subject (e.g. 'name') or a property
-        of a property of subject (e.g. 'lowerValue.value').
-        """
-        #log.info('Setting subject from %s to %s' % (self.__the_subject, self.subject))
-        # First, split all notifiers on '.'
-        callback_prefix = 'on_subject_notify_'
-        notifiers = map(str.split, notifiers, ['.'] * len(notifiers))
-        old_subject = self.__the_subject
-        subject_connect_helper = self._subject_connect_helper
-        subject_disconnect_helper = self._subject_disconnect_helper
-
-        if old_subject:
-            for n in notifiers:
-                #self._subject_disconnect(self.__the_subject, n)
-                subject_disconnect_helper(old_subject, callback_prefix, n)
-
-        if self.subject:
-            subject = self.__the_subject = self.subject
-            for n in notifiers:
-                #log.debug('DiaCanvasItem.on_subject_notify: %s' % signal)
-                #self._subject_connect(self.subject, n)
-                subject_connect_helper(subject, callback_prefix, n)
-
-        self.request_update()
-
 
 class StereotypeSupport(object):
     """
@@ -248,7 +122,7 @@ class StereotypeSupport(object):
         return None
 
 
-class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
+class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
     """
     Basic functionality for all model elements (lines and elements!).
 
@@ -272,7 +146,7 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
     __metaclass__ = DiagramItemMeta
 
     def __init__(self, id=None):
-        SubjectSupport.__init__(self)
+        UML.Presentation.__init__(self)
         EditableTextSupport.__init__(self)
         StereotypeSupport.__init__(self)
 
@@ -320,7 +194,7 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
 
     def postload(self):
         if self.subject:
-            self.on_subject_notify(type(self).subject)
+            self.on_presentation_subject(None)
 
 
     def save_property(self, save_func, name):
@@ -358,6 +232,11 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
         """
         pass
 
+    def pre_update(self, context):
+        EditableTextSupport.pre_update(self, context)
+
+    def post_update(self, context):
+        EditableTextSupport.post_update(self, context)
 
     def draw(self, context):
         EditableTextSupport.draw(self, context)
@@ -367,10 +246,9 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
         return self
 
 
-    def on_subject_notify(self, pspec, notifiers=()):
-        SubjectSupport.on_subject_notify(self, pspec, notifiers)
-
     def on_presentation_subject(self, event):
+        if event is None or event.element is not self:
+            return
         for prop, handler in self._watched_properties.iteritems():
             if handler:
                 # Provide event?
@@ -409,7 +287,6 @@ class DiagramItem(SubjectSupport, StereotypeSupport, EditableTextSupport):
             if handler:
                 handler(event)
             elif self.subject and self.subject is event.element:
-                log.debug('on_element_changed')
                 self.request_update()
 
 

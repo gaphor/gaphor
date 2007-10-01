@@ -3,6 +3,7 @@ Base classes related to items, which represent UML classes deriving
 from NamedElement.
 """
 
+from gaphor import UML
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 import gaphor.diagram.font as font
@@ -31,7 +32,7 @@ class NamedItem(ElementItem):
                 visible=self.is_namespace_info_visible,
                 font=font.FONT_SMALL)
 
-        obj._name = obj.add_text('name', style={
+        self._name = self.add_text('name', style={
                     'text-align': self.style.name_align,
                     'text-padding': self.style.name_padding,
                     'text-outside': self.style.name_outside,
@@ -43,7 +44,6 @@ class NamedItem(ElementItem):
         self._header_size = 0, 0
         self.add_watch(UML.NamedElement.name, self.on_named_element_name)
         self.add_watch(UML.NamedElement.namespace, self.on_named_element_namespace)
-        self.add_watch(UML.Namespace.name, self.on_named_element_namespace)
 
     def is_namespace_info_visible(self):
         """
@@ -70,7 +70,7 @@ class NamedItem(ElementItem):
     def on_named_element_name(self, event):
         """
         """
-        self._name.text = subject.name
+        self._name.text = self.subject.name
         self.request_update()
 
 

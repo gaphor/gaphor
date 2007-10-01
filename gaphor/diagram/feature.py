@@ -28,11 +28,6 @@ class FeatureItem(DiagramItem):
         self.need_sync = False
 
 
-    # Ensure we call the right connect functions:
-    connect = DiagramItem.connect
-    disconnect = DiagramItem.disconnect
-    notify = DiagramItem.notify
-
     def save(self, save_func):
 #        for prop in ('affine',):
 #            self.save_property(save_func, prop)
@@ -82,7 +77,7 @@ class AttributeItem(FeatureItem):
         self.add_watch(UML.Property.defaultValue)
         self.add_watch(UML.Property.typeValue)
         self.add_watch(UML.Property.taggedValue)
-        self.add_watch(UML.ValueSpecification.value, self.on_feature_value)
+        self.add_watch(UML.LiteralSpecification.value, self.on_feature_value)
 
     def on_feature_value(self, event):
         element = event.element
