@@ -1,8 +1,8 @@
-    """
-    Basic functionality for canvas line based items on a diagram.
-    """
+"""
+Basic functionality for canvas line based items on a diagram.
+"""
 
-    from math import atan2, pi
+from math import atan2, pi
 
 import gaphas
 from gaphas.util import text_extents, text_align
