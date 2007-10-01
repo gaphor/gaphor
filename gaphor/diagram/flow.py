@@ -77,6 +77,7 @@ class ACItem(object):
 
     RADIUS = 10
     def __init__(self, id):
+        pass
         #TextElement.__init__(self, id)
         #self._circle = diacanvas.shape.Ellipse()
         #self._circle.set_line_width(2.0)
