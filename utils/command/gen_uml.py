@@ -17,7 +17,7 @@ Also a distutils tool, build_uml, is provided.
 # Recreate the model using some very dynamic class, so we can set all
 # attributes and traverse them to generate the data model.
 
-from gaphor.storage.parser import parse, base, element, canvas, canvasitem
+from gaphor.parser import parse, base, element, canvas, canvasitem
 import sys, string, operator
 import override
 
