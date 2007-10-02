@@ -23,7 +23,7 @@ class inject(object):
     
     def __init__(self, name):
         self._name = name
-        self._inj = None
+        self._s = None
         
     def __get__(self, obj, class_=None):
         """
@@ -31,9 +31,9 @@ class inject(object):
         """
         if not obj:
             return self
-        if self._inj is None:
-            self._inj = _Application.get_service(self._name)
-        return self._inj
+        if self._s is None:
+            self._s = _Application.get_service(self._name)
+        return self._s
 
 
 # vim:sw=4:et:ai
