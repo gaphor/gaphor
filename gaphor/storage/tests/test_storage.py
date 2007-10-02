@@ -3,18 +3,18 @@ Unittest the storage and parser modules
 """
 
 import os
-from testcase import TestCase
+from gaphor.tests.testcase import TestCase
 from gaphor import UML
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.application import Application
-from gaphor import storage
+from gaphor.storage import storage
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 from zope import component
 from cStringIO import StringIO
 
-#__module__ = 'test_storage'
+__module__ = 'test_storage'
 
 class PseudoFile(object):
 
