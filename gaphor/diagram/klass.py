@@ -34,8 +34,8 @@ class ClassItem(ClassifierItem):
         self._attributes = self.create_compartment('attributes')
         self._operations = self.create_compartment('operations')
 
-        self.add_watch(UML.Class.ownedAttribute)
-        self.add_watch(UML.Class.ownedOperation)
+        self.add_watch(UML.Class.ownedAttribute, self.on_class_owned_attribute)
+        self.add_watch(UML.Class.ownedOperation, self.on_class_owned_operation)
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -101,11 +101,13 @@ class ClassItem(ClassifierItem):
 
 
     def on_class_owned_attribute(self, event):
-        self.sync_attributes()
+        if self.subject:
+            self.sync_attributes()
 
 
     def on_class_owned_operation(self, event):
-        self.sync_operations()
+        if self.subject:
+            self.sync_operations()
 
 
     def pre_update(self, context):

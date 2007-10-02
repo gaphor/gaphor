@@ -53,6 +53,9 @@ class InterfaceItem(ClassItem):
         self._draw_required = False
         self._draw_provided = False
 
+        self.add_watch(UML.Interface.ownedAttribute, self.on_class_owned_attribute)
+        self.add_watch(UML.Interface.ownedOperation, self.on_class_owned_operation)
+
     @observed
     def set_drawing_style(self, style):
         """
