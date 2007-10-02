@@ -30,7 +30,7 @@ class ServiceShutdownEvent(object):
 
 class TransactionBegin(object):
     """
-    This event denotes the beginning of an transaction.
+    This event denotes the beginning of a transaction.
     Nested (sub-) transactions should not emit this signal.
     """
     interface.implements(ITransactionEvent)
