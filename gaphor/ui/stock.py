@@ -7,7 +7,7 @@ from xml.sax import handler
 import gtk
 
 from gaphor import UML
-from gaphor.parser import ParserException
+from gaphor.storage.parser import ParserException
 
 XMLNS='http://gaphor.sourceforge.net/gaphor/stock-icons'
 

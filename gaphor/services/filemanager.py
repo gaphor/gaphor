@@ -154,7 +154,7 @@ class FileManager(object):
 
     def _load(self, filename):
         try:
-            from gaphor import storage
+            from gaphor.storage import storage
             log.debug('Loading from: %s' % filename)
             main_window = self.gui_manager.main_window
             queue = Queue()
@@ -187,7 +187,7 @@ class FileManager(object):
 
     def _save(self, filename):
         if filename and len(filename) > 0:
-            from gaphor import storage
+            from gaphor.storage import storage
             if not filename.endswith(DEFAULT_EXT):
                 filename = filename + DEFAULT_EXT
 

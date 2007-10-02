@@ -30,13 +30,13 @@ class FeatureItem(DiagramItem):
 
 
     def save(self, save_func):
-#        for prop in ('affine',):
-#            self.save_property(save_func, prop)
         DiagramItem.save(self, save_func)
         
+
     def postload(self):
         if self.subject:
             self._expression.set_text(self.subject.render())
+
 
     def get_size(self, update=False):
         """
@@ -45,17 +45,18 @@ class FeatureItem(DiagramItem):
         """
         return self.width, self.height
 
+
     def get_text(self):
         return ''
 
-    def update_size(self, text, context):
-        cr = context.cairo
-        self.width, self.height = text_extents(cr, text)
 
-#    def on_subject_notify(self, pspec, notifiers=()):
-#        DiagramItem.on_subject_notify(self, pspec, notifiers)
-#        #log.debug('setting text %s' % self.subject.render() or '')
-#        self.text = self.subject and self.subject.render() or ''
+    def update_size(self, text, context):
+        if text:
+            cr = context.cairo
+            self.width, self.height = text_extents(cr, text)
+        else:
+            self.width, self.height = 0, 0
+
 
     def point(self, x, y):
         """

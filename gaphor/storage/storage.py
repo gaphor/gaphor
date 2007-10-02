@@ -21,8 +21,8 @@ import gc
 import gaphas
 
 from gaphor import UML
-from gaphor import parser
 from gaphor import diagram
+from gaphor.storage import parser
 from gaphor.application import Application
 from gaphor.diagram import items
 from gaphor.i18n import _

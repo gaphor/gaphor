@@ -206,8 +206,9 @@ class NamedLine(DiagramLine):
 
 
     def on_named_element_name(self, event):
-        self._name.text = subject.name
-        self.request_update()
+        if self.subject:
+            self._name.text = self.subject.name
+            self.request_update()
 
 
 class FreeLine(LineItem):
