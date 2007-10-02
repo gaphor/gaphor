@@ -23,7 +23,14 @@ from gaphor.transaction import Transaction
 # are UML.Namespace elements.
 _default_filter_list = (
     UML.Class,
+    UML.Interface,
     UML.Package,
+    UML.Component,
+    UML.Node,
+    UML.Artifact,
+    UML.Interaction,
+    UML.UseCase,
+    UML.Actor,
     UML.Diagram,
     UML.Profile,
     UML.Stereotype,
