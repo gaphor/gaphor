@@ -26,7 +26,6 @@ class FeatureItem(DiagramItem):
         self.text = ''
         # Fool unlink code:
         self.canvas = None
-        self.need_sync = False
 
 
     def save(self, save_func):
@@ -68,12 +67,10 @@ class AttributeItem(FeatureItem):
 
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
-        self.need_sync = False
 
         self.add_watch(UML.Property.name)
         self.add_watch(UML.Property.isDerived)
         self.add_watch(UML.Property.visibility)
-        self.add_watch(UML.Property.association, self.on_property_association)
         self.add_watch(UML.Property.lowerValue)
         self.add_watch(UML.Property.upperValue)
         self.add_watch(UML.Property.defaultValue)
@@ -88,18 +85,7 @@ class AttributeItem(FeatureItem):
             self.request_update()
 
 
-    def on_property_association(self, event):
-        """
-        Make sure we update the attribute compartment (in case
-        the class_ property was defined before it is connected to
-        an association.
-        """
-        if event.element is self.subject:
-            self.need_sync = True
-            self.request_update()
-
     def pre_update(self, context):
-        self.need_sync = False
         self.update_size(self.subject.render(), context)
         #super(AttributeItem, self).pre_update(context)
 
@@ -115,7 +101,6 @@ class OperationItem(FeatureItem):
 
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
-        self.need_sync = False
         
         self.add_watch(UML.Operation.name)
         self.add_watch(UML.Operation.visibility)
@@ -128,12 +113,8 @@ class OperationItem(FeatureItem):
 
     def postload(self):
         FeatureItem.postload(self)
-        self.need_sync = False
 
     def pre_update(self, context):
-#        if self.need_sync and context.parent:
-#            context.parent.sync_operations()
-        self.need_sync = False
         self.update_size(self.subject.render(), context)
         #super(OperationItem, self).pre_update(context)
 

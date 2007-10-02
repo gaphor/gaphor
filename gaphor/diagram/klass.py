@@ -36,6 +36,8 @@ class ClassItem(ClassifierItem):
 
         self.add_watch(UML.Class.ownedAttribute, self.on_class_owned_attribute)
         self.add_watch(UML.Class.ownedOperation, self.on_class_owned_operation)
+        self.add_watch(UML.Property.association, self.on_class_owned_attribute)
+
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -45,10 +47,12 @@ class ClassItem(ClassifierItem):
         self.save_property(save_func, 'show-operations')
         ClassifierItem.save(self, save_func)
 
+
     def postload(self):
         ClassifierItem.postload(self)
         self.sync_attributes()
         self.sync_operations()
+
 
     @observed
     def _set_show_operations(self, value):
@@ -57,6 +61,7 @@ class ClassItem(ClassifierItem):
     show_operations = reversible_property(fget=lambda s: s._operations.visible,
                                fset=_set_show_operations)
 
+    
     @observed
     def _set_show_attributes(self, value):
         self._attributes.visible = value
@@ -64,6 +69,7 @@ class ClassItem(ClassifierItem):
     show_attributes = reversible_property(fget=lambda s: s._attributes.visible,
                                fset=_set_show_attributes)
 
+    
     def _create_attribute(self, attribute):
         """
         Create a new attribute item.
@@ -72,6 +78,7 @@ class ClassItem(ClassifierItem):
         new.subject = attribute
         self._attributes.append(new)
 
+
     def _create_operation(self, operation):
         """
         Create a new operation item.
@@ -79,6 +86,7 @@ class ClassItem(ClassifierItem):
         new = OperationItem()
         new.subject = operation
         self._operations.append(new)
+
 
     def sync_attributes(self):
         """
@@ -108,14 +116,6 @@ class ClassItem(ClassifierItem):
     def on_class_owned_operation(self, event):
         if self.subject:
             self.sync_operations()
-
-
-    def pre_update(self, context):
-        if self._attributes.need_sync:
-            self.sync_attributes()
-        if self._operations.need_sync:
-            self.sync_operations()
-        super(ClassItem, self).pre_update(context)
 
 
 # vim:sw=4:et:ai
