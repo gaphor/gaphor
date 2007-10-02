@@ -3,11 +3,11 @@ Unittest the storage and parser modules
 """
 
 import os
-from testcase import TestCase
+from gaphor.tests.testcase import TestCase
 from gaphor import UML
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.application import Application
-from gaphor import storage
+from gaphor.storage import storage
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
