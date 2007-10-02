@@ -169,6 +169,11 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         Add a single element.
         """
+        if type(element) not in self.filter:
+            return
+        if element.namespace and type(element.namespace) not in self.filter:
+            return
+
         self._nodes.setdefault(element, [])
         parent = self._nodes[element.namespace]
         parent.append(element)
@@ -179,8 +184,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         # Add children
         if isinstance(element, UML.Namespace):
             for e in element.ownedMember:
-                if type(e) in self.filter:
-                    self._add_elements(e)
+                self._add_elements(e)
 
 
     def _remove_element(self, element):
@@ -202,8 +206,7 @@ class NamespaceModel(gtk.GenericTreeModel):
     @catchall
     def _on_element_create(self, event):
         element = event.element
-        if event.service is self.factory and \
-                 type(element) in self.filter:
+        if event.service is self.factory:
             self._add_elements(element)
 
 
@@ -267,7 +270,7 @@ class NamespaceModel(gtk.GenericTreeModel):
                     parent.sort(key=_tree_sorter)
                     path = self.path_from_element(element)
                     self.row_inserted(path, self.get_iter(path))
-                elif type(element) in self.filter:
+                else:
                     self._add_elements(element)
             elif self._nodes.has_key(element):
                 # Non-existent: remove entirely

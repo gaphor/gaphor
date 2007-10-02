@@ -4,6 +4,7 @@ Feature diagram item. Feature is a super class of both Attribute, Operations and
 Methods.
 '''
 
+from gaphor import UML
 from gaphas.item import Item
 from diagramitem import DiagramItem
 from gaphor.diagram import DiagramItemMeta

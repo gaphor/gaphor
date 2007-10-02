@@ -157,7 +157,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         self._watched_properties = dict()
 
         self.add_watch(UML.Element.appliedStereotype, self.on_element_applied_stereotype)
-        self.add_watch(UML.Presentation.subject, self.on_presentation_subject)
 
     id = property(lambda self: self._id, doc='Id')
 
@@ -246,14 +245,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         return self
 
 
-    def on_presentation_subject(self, event):
-        if event is None or event.element is not self:
-            return
-        for prop, handler in self._watched_properties.iteritems():
-            if handler:
-                # Provide event?
-                handler(None)
-
     def on_element_applied_stereotype(self, event):
         if self.subject:
             self.update_stereotype()
@@ -271,10 +262,25 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
     def register_handlers(self):
         Application.register_handler(self.on_element_change)
+        Application.register_handler(self.on_presentation_subject)
+        if self.subject:
+            self.on_presentation_subject(None)
 
 
     def unregister_handlers(self):
+        Application.unregister_handler(self.on_presentation_subject)
         Application.unregister_handler(self.on_element_change)
+
+
+    @component.adapter(UML.interfaces.IAssociationSetEvent)
+    def on_presentation_subject(self, event):
+        if event is None or \
+                (event.property is UML.Presentation.subject and \
+                 event.element is self):
+            for prop, handler in self._watched_properties.iteritems():
+                if handler:
+                    # Provide event?
+                    handler(None)
 
 
     @component.adapter(UML.interfaces.IElementChangeEvent)

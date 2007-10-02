@@ -70,8 +70,9 @@ class NamedItem(ElementItem):
     def on_named_element_name(self, event):
         """
         """
-        self._name.text = self.subject.name
-        self.request_update()
+        if self.subject:
+            self._name.text = self.subject.name
+            self.request_update()
 
 
     def on_named_element_namespace(self, event):
