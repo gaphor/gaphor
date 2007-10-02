@@ -152,9 +152,7 @@ It uses the GTK+ environment for user interaction.
     install_requires = [
         # 'PyGTK >= 2.8.0', - Exclude, since it will not build anyway
         'gaphas >= 0.3.0',
-        'zope.component >= 3.3.0', # - won't compile on windows.
-        # Add dependency on zope.testing to work around bug in zope.component
-        'zope.testing >= 3.3.0',
+        'zope.component >= 3.4.0', # - won't compile on windows.
     ],
 
     zip_safe = False,
@@ -186,9 +184,6 @@ It uses the GTK+ environment for user interaction.
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',
             'consolewindow = gaphor.ui.consolewindow:ConsoleWindow',
-        ],
-        'distutils.commands': [
-            'nosetests = nose.commands:nosetests',
         ],
     },
 
