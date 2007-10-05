@@ -27,6 +27,7 @@ class AssociationUndoTestCase(unittest.TestCase):
         factory = Application.get_service('element_factory')
 
         diagram = factory.create(UML.Diagram)
+        solver = diagram.canvas.solver
         
         class1 = factory.create(UML.Class)
         class1.name = 'class1'
@@ -53,6 +54,14 @@ class AssociationUndoTestCase(unittest.TestCase):
 
         former = (assoc.subject, assoc.head_end.subject, assoc.tail_end.subject)
         
+        # Also check solver state:
+        x_cons = list(solver.constraints_with_variable(assoc.handles()[1].x))
+        y_cons = list(solver.constraints_with_variable(assoc.handles()[1].y))
+
+        assert len(solver._constraints) == 14, len(solver._constraints)
+        #assert len(x_cons) == 1, x_cons
+        #assert len(y_cons) == 1, y_cons
+
         tx = transaction.Transaction()
         
         adapter = component.queryMultiAdapter((classItem2, assoc), IConnect)
@@ -64,6 +73,14 @@ class AssociationUndoTestCase(unittest.TestCase):
         assert assoc.subject is None
         assert assoc.head_end.subject is None
         assert assoc.tail_end.subject is None
+
+        # Also check solver state:
+        x_cons = list(solver.constraints_with_variable(assoc.handles()[1].x))
+        y_cons = list(solver.constraints_with_variable(assoc.handles()[1].y))
+
+        assert len(solver._constraints) == 13, len(solver._constraints)
+        #assert len(x_cons) == 0, x_cons
+        #assert len(y_cons) == 0, y_cons
 
         undo_manager = Application.get_service('undo_manager')
 
@@ -77,7 +94,35 @@ class AssociationUndoTestCase(unittest.TestCase):
         assert assoc.head_end.subject is former[1]
         assert assoc.tail_end.subject is former[2]
 
+        # Also check solver state:
+        x_cons = list(solver.constraints_with_variable(assoc.handles()[1].x))
+        y_cons = list(solver.constraints_with_variable(assoc.handles()[1].y))
+
+        assert len(solver._constraints) == 14, len(solver._constraints)
+        assert len(x_cons) == 0, x_cons
+        assert len(y_cons) == 0, y_cons
+
+
+        # Disconnect again:
+
+        adapter = component.queryMultiAdapter((classItem2, assoc), IConnect)
+        assert adapter
+        adapter.disconnect(assoc.handles()[1])
         
+        assert assoc.subject is None
+        assert assoc.head_end.subject is None
+        assert assoc.tail_end.subject is None
+
+        # Also check solver state:
+        x_cons = list(solver.constraints_with_variable(assoc.handles()[1].x))
+        y_cons = list(solver.constraints_with_variable(assoc.handles()[1].y))
+
+        # Ah hah! the constraint is not disconnected again!
+        # (Added to solver, not to Handle I guess)
+        assert len(solver._constraints) == 13, len(solver._constraints)
+        #assert len(x_cons) == 0, x_cons
+        #assert len(y_cons) == 0, y_cons
+
 
 if __name__ == '__main__':
     unittest.main()
