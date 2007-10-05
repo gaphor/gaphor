@@ -346,21 +346,6 @@ class AssociationEnd(UML.Presentation):
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
 
-        self._subject = None
-
-
-    def _set_subject(self, value):
-        self._subject = value
-        self.set_text()
-        self.request_update()
-
-    def _del_subject(self):
-        self._subject = None
-        self.set_text()
-        self.request_update()
-
-    subject = property(lambda s: s._subject, _set_subject, _del_subject)
-
 
     def request_update(self):
         self._owner.request_update()
