@@ -56,8 +56,8 @@
      inkscape:zoom="4.40625"
      inkscape:cx="48"
      inkscape:cy="48"
-     inkscape:window-width="872"
-     inkscape:window-height="622"
+     inkscape:window-width="960"
+     inkscape:window-height="721"
      inkscape:window-x="0"
      inkscape:window-y="0"
      pagecolor="#ffffff"
@@ -80,37 +80,37 @@
      y="0"
      xlink:href="#rect6824"
      id="use6951"
-     transform="translate(4.0000005,4)"
+     transform="translate(4.0000001,4)"
      width="96"
      height="96"
      style="opacity:0.5;fill:#000000;fill-opacity:1" />
   <rect
      style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
      id="rect6824"
-     width="82"
+     width="76"
      height="68"
      x="8"
      y="12"
      ry="6.500278"
-     rx="9.6639643" />
+     rx="8.9568453" />
   <rect
      style="fill:#a6c2d1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect833"
-     width="74"
+     width="68"
      height="20"
      x="12"
      y="16"
      ry="5.717133"
-     rx="7.9687085"
+     rx="7.322597"
      inkscape:export-xdpi="22.5"
      inkscape:export-ydpi="22.5" />
   <rect
      style="fill:#e1e4e6;fill-rule:evenodd;stroke:none;stroke-width:0"
      id="rect835"
-     width="74"
+     width="68"
      height="36"
      x="12"
      y="40"
      ry="3.1539278"
-     rx="7.5380044" />
+     rx="6.926815" />
 </svg>
