@@ -151,6 +151,10 @@
     <file>state24.png</file>
     <element>State</element>
   </icon>
+  <icon id="gaphor-transition">
+    <file>transition24.png</file>
+    <element>Transition</element>
+  </icon>
   <icon id="gaphor-stereotype">
     <file>stereotype24.png</file>
     <element>Stereotype</element>

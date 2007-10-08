@@ -53,6 +53,7 @@ TOOLBOX_ACTIONS = (
         ('toolbox-interaction', _('Interaction'), 'gaphor-interaction'),
     )), (_('States'), (
         ('toolbox-state', _('State'), 'gaphor-state'),
+        ('toolbox-transition', _('Transition'), 'gaphor-transition'),
     )), (_('Use Cases'), (
         ('toolbox-usecase', _('Use case'), 'gaphor-usecase'),
         ('toolbox-actor', _('Actor'), 'gaphor-actor'),
@@ -316,6 +317,11 @@ class DiagramToolbox(object):
                 item_factory=self._namespace_item_factory(items.StateItem,
                     UML.State),
                 handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_transition(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.TransitionItem),
                 after_handler=self._after_handler)
 
     # Use cases:
