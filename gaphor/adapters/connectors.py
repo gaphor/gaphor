@@ -111,7 +111,7 @@ class AbstractConnect(object):
         lc = constraint.LineConstraint(line=(CanvasProjection(h1.pos, element),
                                              CanvasProjection(h2.pos, element)),
                                        point=CanvasProjection(handle.pos, line))
-        handle._connect_constraint = lc
+        handle.connection_data = lc
         element.canvas.solver.add_constraint(lc)
 
         handle.connected_to = element
@@ -123,11 +123,11 @@ class AbstractConnect(object):
         element it's attached to, by removing the constraints.
         """
         try:
-            if handle._connect_constraint:
-                self.line.canvas.solver.remove_constraint(handle._connect_constraint)
+            if handle.connection_data:
+                self.line.canvas.solver.remove_constraint(handle.connection_data)
         except AttributeError:
-            pass # No _connect_constraint property yet
-        handle._connect_constraint = None
+            pass # No connection_data property yet
+        handle.connection_data = None
 
 
     def _get_segment(self, handle):
