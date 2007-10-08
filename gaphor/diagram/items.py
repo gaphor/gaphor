@@ -45,6 +45,9 @@ from gaphor.diagram.interaction import InteractionItem
 from gaphor.diagram.lifeline import LifelineItem
 from gaphor.diagram.message import MessageItem
 
+# States
+from gaphor.diagram.states.state import StateItem
+
 # Use Cases:
 from gaphor.diagram.actor import ActorItem
 from gaphor.diagram.usecase import UseCaseItem

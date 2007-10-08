@@ -51,6 +51,8 @@ TOOLBOX_ACTIONS = (
         ('toolbox-lifeline', _('Lifeline'), 'gaphor-lifeline'),
         ('toolbox-message', _('Message'), 'gaphor-message'),
         ('toolbox-interaction', _('Interaction'), 'gaphor-interaction'),
+    )), (_('States'), (
+        ('toolbox-state', _('State'), 'gaphor-state'),
     )), (_('Use Cases'), (
         ('toolbox-usecase', _('Use case'), 'gaphor-usecase'),
         ('toolbox-actor', _('Actor'), 'gaphor-actor'),
@@ -306,6 +308,14 @@ class DiagramToolbox(object):
     def toolbox_message(self):
         self.view.tool = PlacementTool(
                 item_factory=self._item_factory(items.MessageItem),
+                after_handler=self._after_handler)
+
+    # States:
+    def toolbox_state(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._namespace_item_factory(items.StateItem,
+                    UML.State),
+                handle_index=SE,
                 after_handler=self._after_handler)
 
     # Use cases:

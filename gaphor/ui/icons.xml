@@ -147,6 +147,10 @@
     <file>attribute24.png</file>
     <element>Property</element>
   </icon>
+  <icon id="gaphor-state">
+    <file>state24.png</file>
+    <element>State</element>
+  </icon>
   <icon id="gaphor-stereotype">
     <file>stereotype24.png</file>
     <element>Stereotype</element>
