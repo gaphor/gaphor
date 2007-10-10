@@ -369,6 +369,34 @@ class RelationshipConnect(ElementConnect):
 
     element_factory = inject('element_factory')
 
+    # relationships can sometimes by unary, i.e. association, flow
+    # override in deriving class to allow unary relationship
+    CAN_BE_UNARY = False
+
+    def glue(self, handle):
+        """
+        In addition to the normal check, both relationship ends may not be
+        connected to the same element. Same goes for subjects.
+        """
+        if not self.CAN_BE_UNARY:
+            opposite = self.line.opposite(handle)
+            line = self.line
+            element = self.element
+            connected_to = opposite.connected_to
+
+            # Element can not be a parent for itself.
+            if connected_to is element:
+                return None
+
+            # Same goes for subjects:
+            if connected_to and \
+                    (not (connected_to.subject or element.subject)) \
+                     and connected_to.subject is element.subject:
+                return None
+
+        return super(RelationshipConnect, self).glue(handle)
+
+
     def relationship(self, required_type, head, tail):
         """
         Find an existing relationship in the model that meets the
@@ -527,24 +555,8 @@ class DependencyConnect(RelationshipConnect):
     component.adapts(items.NamedItem, items.DependencyItem)
 
     def glue(self, handle):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        """
-        opposite = self.line.opposite(handle)
         line = self.line
         element = self.element
-        connected_to = opposite.connected_to
-
-        # Element can not be a parent for itself.
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
 
         # Element should be a NamedElement
         if not element.subject or \
@@ -580,24 +592,8 @@ class ImplementationConnect(RelationshipConnect):
     component.adapts(items.NamedItem, items.ImplementationItem)
 
     def glue(self, handle):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        """
-        opposite = self.line.opposite(handle)
         line = self.line
         element = self.element
-        connected_to = opposite.connected_to
-
-        # Element can not be a parent for itself.
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
 
         # Element at the head should be an Interface
         if handle is line.head and \
@@ -624,30 +620,8 @@ class GeneralizationConnect(RelationshipConnect):
     """
     Connect Classifiers with a Generalization relationship.
     """
+    # FixMe: Both ends of the generalization should be of the same  type?
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
-
-#    # FixMe: Both ends of the generalization should be of the same  type?
-    def glue(self, handle):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        """
-        opposite = self.line.opposite(handle)
-        line = self.line
-        element = self.element
-        connected_to = opposite.connected_to
-
-        # Element can not be a parent for itself.
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
-
-        return super(GeneralizationConnect, self).glue(handle)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Generalization,
@@ -665,24 +639,8 @@ class IncludeConnect(RelationshipConnect):
     component.adapts(items.UseCaseItem, items.IncludeItem)
 
     def glue(self, handle):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        """
-        opposite = self.line.opposite(handle)
         line = self.line
         element = self.element
-        connected_to = opposite.connected_to
-        
-        # Element can not be a parent for itself.
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
 
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
@@ -705,25 +663,9 @@ class ExtendConnect(RelationshipConnect):
     component.adapts(items.UseCaseItem, items.ExtendItem)
 
     def glue(self, handle):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        """
-        opposite = self.line.opposite(handle)
         line = self.line
         element = self.element
-        connected_to = opposite.connected_to
         
-        # Element can not be a parent for itself.
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
-
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
@@ -745,24 +687,8 @@ class ExtensionConnect(RelationshipConnect):
     component.adapts(items.ClassifierItem, items.ExtensionItem)
 
     def glue(self, handle):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        """
-        opposite = self.line.opposite(handle)
         line = self.line
         element = self.element
-        connected_to = opposite.connected_to
-
-        # Element can not be a parent for itself.
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
 
         # Element at the head should be a Class
         if handle is line.head and \
@@ -854,11 +780,10 @@ class AssociationConnect(RelationshipConnect):
     """
     component.adapts(items.ClassifierItem, items.AssociationItem)
 
+    CAN_BE_UNARY = True    # allow one classifier to be connected by association
+
     def glue(self, handle):
-        opposite = self.line.opposite(handle)
-        line = self.line
         element = self.element
-        connected_to = opposite.connected_to
 
         # Element should be a Classifier
         if not isinstance(element.subject, UML.Classifier):
@@ -952,16 +877,11 @@ class FlowConnect(RelationshipConnect):
     Connect FlowItem and Action/ObjectNode, initial/final nodes.
     """
 
+    CAN_BE_UNARY = True   # flow can connect same actions
+
     def glue(self, handle):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        """
-        opposite = self.line.opposite(handle)
         line = self.line
-        element = self.element
-        subject = element.subject
-        connected_to = opposite.connected_to
+        subject = self.element.subject
 
         if handle is line.head and isinstance(subject, UML.FinalNode) \
            or handle is line.tail and isinstance(subject, UML.InitialNode):
@@ -1013,26 +933,6 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Decision/Merge node.
     """
     def glue(self, handle):
-        """
-        In addition to the normal check, one end should have at most one
-        edge (incoming or outgoing).
-        """
-        opposite = self.line.opposite(handle)
-        line = self.line
-        element = self.element
-        subject = element.subject
-        connected_to = opposite.connected_to
-
-        # Element can not connect back to itself
-        if connected_to is element:
-            return None
-
-        # Same goes for subjects:
-        if connected_to and \
-                (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
-            return None
-
         # If one side of self.element has more than one edge, the
         # type of node is determined (either join or fork).
         #
