@@ -12,7 +12,10 @@ DY = 8
 DDX = 0.4 * DX
 DDY = 0.4 * DY
 
-class StateItem(NamedItem):
+class VertexItem(NamedItem):
+    pass
+
+class StateItem(VertexItem):
     __uml__   = UML.State
     __style__ = {
         'min-size':   (50, 30),

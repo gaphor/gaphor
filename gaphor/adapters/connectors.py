@@ -1237,4 +1237,5 @@ class MessageLifelineConnect(ElementConnect):
 
 component.provideAdapter(MessageLifelineConnect)
 
+
 # vim:sw=4:et:ai
