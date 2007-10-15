@@ -18,7 +18,7 @@
    inkscape:version="0.45.1"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0"
-   inkscape:export-filename="/home/users/wrobell/projects/gaphor/gaphor/trunk/iconsrc/state24.png"
+   inkscape:export-filename="/home/users/wrobell/projects/gaphor/gaphor/trunk/gaphor/ui/pixmaps/state24.png"
    inkscape:export-xdpi="22.5"
    inkscape:export-ydpi="22.5">
   <metadata
@@ -113,4 +113,19 @@
      y="40"
      ry="3.1539278"
      rx="6.926815" />
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 53.186064,44.622047 L 41.068829,67.653543"
+     id="path2198"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 39.049291,57.023622 L 26.932058,57.023622"
+     id="path2200"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 55.205603,57.023622 L 67.322835,57.023622"
+     id="path3173"
+     sodipodi:nodetypes="cc" />
 </svg>

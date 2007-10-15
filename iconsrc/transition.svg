@@ -15,9 +15,9 @@
    inkscape:version="0.45.1"
    sodipodi:docbase="/home/users/wrobell/projects/gaphor/gaphor/trunk/iconsrc"
    sodipodi:docname="transition.svg"
-   inkscape:export-filename="/home/users/wrobell/projects/gaphor/data/pixmaps/objectnode.png"
-   inkscape:export-xdpi="22.500000"
-   inkscape:export-ydpi="22.500000"
+   inkscape:export-filename="/home/users/wrobell/projects/gaphor/gaphor/trunk/gaphor/ui/pixmaps/transition24.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0">
   <defs
@@ -233,5 +233,20 @@
        d="M 44.783289,49.7089 L 48.783289,46.7089 L 44.783289,43.7089"
        id="path5471"
        sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 39.283289,39.2089 L 37.283289,44.2089"
+       id="path2198"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 35.783289,41.7089 L 33.783289,41.7089"
+       id="path2200"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 40.783289,41.7089 L 42.783289,41.7089"
+       id="path3173"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>
