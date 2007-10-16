@@ -14,13 +14,13 @@ class AdapterLoader(object):
     def init(self, app):
         self._app = app
         import gaphor.adapters.connectors
-        reload(gaphor.adapters.connectors)
+        #reload(gaphor.adapters.connectors)
         import gaphor.adapters.editors
-        reload(gaphor.adapters.editors)
+        #reload(gaphor.adapters.editors)
         import gaphor.adapters.grouping
-        reload(gaphor.adapters.grouping)
+        #reload(gaphor.adapters.grouping)
         import gaphor.adapters.propertypages
-        reload(gaphor.adapters.propertypages)
+        #reload(gaphor.adapters.propertypages)
 
     def shutdown(self):
         pass
