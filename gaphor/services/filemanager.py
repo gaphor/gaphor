@@ -214,7 +214,6 @@ class FileManager(object):
             finally:
                 win.destroy()
 
-    @action(name='file-open', stock_id='gtk-open')
     def _open_dialog(self, title):
         filesel = gtk.FileChooserDialog(title=title,
                                         action=gtk.FILE_CHOOSER_ACTION_OPEN,
