@@ -24,8 +24,8 @@ class ArtifactItem(ClassifierItem):
         self.drawing_style = self.DRAW_COMPARTMENT_ICON
         self._line = []
         
-    def update_compartment_icon(self, context):
-        super(ArtifactItem, self).update_compartment_icon(context)
+    def pre_update_compartment_icon(self, context):
+        super(ArtifactItem, self).pre_update_compartment_icon(context)
         w = self.ICON_WIDTH
         h = self.ICON_HEIGHT
         ix, iy = self.get_icon_pos()
@@ -43,6 +43,8 @@ class ArtifactItem(ClassifierItem):
     def draw_compartment_icon(self, context):
         cr = context.cairo
         cr.save()
+        self.draw_compartment(context)
+        cr.restore()
 
         # draw icon
         w = self.ICON_WIDTH
@@ -55,7 +57,6 @@ class ArtifactItem(ClassifierItem):
             cr.line_to(x, y)
         cr.stroke()
 
-        cr.restore()
-        self.draw_compartment(context)
+
 
 # vim:sw=4:et
