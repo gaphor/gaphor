@@ -7,6 +7,8 @@ from cairo import Matrix
 from zope import component
 from gaphor import UML
 from gaphor.core import _, inject, transactional, action, build_action_group
+from gaphor.application import Application
+from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.diagram import get_diagram_item
 from gaphor.diagram.items import DiagramItem
 from gaphor.transaction import Transaction
@@ -53,6 +55,8 @@ class DiagramTab(object):
         self.owning_window = owning_window
         self.action_group = build_action_group(self)
         self.toolbox = None
+        Application.register_handler(self._on_element_change)
+        Application.register_handler(self._on_element_delete)
 
     title = property(lambda s: s.diagram and s.diagram.name or _('<None>'))
 
@@ -66,17 +70,11 @@ class DiagramTab(object):
         return self.diagram.canvas
 
     def set_diagram(self, diagram):
-        if self.diagram:
-            self.diagram.disconnect(self._on_diagram_event)
         self.diagram = diagram
 
-        if diagram:
-# TODO: create new style event handler
-#            diagram.connect(('name', '__unlink__'), self._on_diagram_event)
-
-            if self.view:
-                self.view.hadjustment.set_value(0.0)
-                self.view.vadjustment.set_value(0.0)
+        if diagram and self.view:
+            self.view.hadjustment.set_value(0.0)
+            self.view.vadjustment.set_value(0.0)
 
 
     def construct(self):
@@ -122,6 +120,20 @@ class DiagramTab(object):
         
         return table
 
+
+    @component.adapter(IAttributeChangeEvent)
+    def _on_element_change(self, event):
+        if event.element is self.diagram and \
+                event.property is UML.Diagram.name:
+           self.owning_window.set_tab_label(self, self.title) 
+
+
+    @component.adapter(IElementDeleteEvent)
+    def _on_element_delete(self, event):
+        if event.element is self.diagram:
+            self.close()
+
+
     @action(name='diagram-close', stock_id='gtk-close')
     def close(self):
         """
@@ -135,30 +147,37 @@ class DiagramTab(object):
         self.set_diagram(None)
         # We need this to get the view deleted properly:
         #del self.view.diagram
+        Application.unregister_handler(self._on_element_delete)
+        Application.unregister_handler(self._on_element_change)
         del self.view
-        del self.diagram
+
 
     @action(name='diagram-zoom-in', stock_id='gtk-zoom-in')
     def zoom_in(self):
         self.view.zoom(1.2)
 
+
     @action(name='diagram-zoom-out', stock_id='gtk-zoom-out')
     def zoom_out(self):
         self.view.zoom(1 / 1.2)
+
 
     @action(name='diagram-zoom-100', stock_id='gtk-zoom-100')
     def zoom_100(self):
         zx = self.view.matrix[0]
         self.view.zoom(1 / zx)
 
+
     @action(name='diagram-select-all', label='_Select all', accel='<Control>a')
     def select_all(self):
         self.view.select_all()
+
 
     @action(name='diagram-unselect-all', label='Des_elect all',
             accel='<Control><Shift>a')
     def unselect_all(self):
         self.view.unselect_all()
+
         
     @action(name='diagram-delete', stock_id='gtk-delete')
     @transactional
@@ -174,6 +193,7 @@ class DiagramTab(object):
                 if i.canvas:
                     i.canvas.remove(i)
 
+
     def may_remove_from_model(self, view):
         """
         Check if there are items which will be deleted from the model
@@ -186,6 +206,7 @@ class DiagramTab(object):
         if last_in_model:
             return self.confirm_deletion_of_items(last_in_model)
         return True
+
 
     def confirm_deletion_of_items(self, last_in_model):
         """
@@ -209,6 +230,7 @@ class DiagramTab(object):
             return True
         return False
 
+
     def _on_key_press_event(self, view, event):
         """
         Handle the 'Delete' key. This can not be handled directly (through
@@ -230,13 +252,6 @@ class DiagramTab(object):
     def _on_view_selection_changed(self, view, selection_or_focus):
         component.handle(DiagramSelectionChange(view, view.focused_item, view.selected_items))
 
-    def _on_diagram_event(self, element, pspec):
-        if pspec == '__unlink__':
-            self.close()
-        elif pspec.name == 'name':
-            print 'Trying to set name to', element.name
-            self.owning_window.set_tab_label(self, element.name)
-            #self.get_window().set_title(self.diagram.name or '<None>')
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
         """
