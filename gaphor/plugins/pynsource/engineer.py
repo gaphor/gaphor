@@ -100,11 +100,11 @@ class Engineer(object):
                         continue
                 # Finally, create the generalization relationship
                 print 'Creating Generalization for %s' % clazz, superclass
-                gen = self.element_factory.create(UML.Generalization)
-                gen.general = superclass
-                gen.specific = clazz.gaphor_class
+                #gen = self.element_factory.create(UML.Generalization)
+                #gen.general = superclass
+                #gen.specific = clazz.gaphor_class
                 geni = self.diagram.create(items.GeneralizationItem)
-                geni.subject = gen
+                #geni.subject = gen
                 
                 adapter = component.queryMultiAdapter((superclass_item, geni), IConnect)
                 assert adapter
@@ -171,47 +171,47 @@ class Engineer(object):
             head_type = clazz.gaphor_class
             head_type_item = clazz.gaphor_class_item
 
-            relation = self.element_factory.create(UML.Association)
-            head_end = self.element_factory.create(UML.Property)
-            head_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
-            tail_end = self.element_factory.create(UML.Property)
-            tail_end.name = attr.attrname
-            tail_end.visibility = self._visibility(attr.attrname)
-            tail_end.aggregation = 'composite'
-            tail_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
-            relation.package = self.diagram.namespace
-            relation.memberEnd = head_end
-            relation.memberEnd = tail_end
-            head_end.type = head_type
-            tail_end.type = tail_type
-            head_type.ownedAttribute = tail_end
-            tail_type.ownedAttribute = head_end
+            #relation = self.element_factory.create(UML.Association)
+            #head_end = self.element_factory.create(UML.Property)
+            #head_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
+            #tail_end = self.element_factory.create(UML.Property)
+            #tail_end.name = attr.attrname
+            #tail_end.visibility = self._visibility(attr.attrname)
+            #tail_end.aggregation = 'composite'
+            #tail_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
+            #relation.package = self.diagram.namespace
+            #relation.memberEnd = head_end
+            #relation.memberEnd = tail_end
+            #head_end.type = head_type
+            #tail_end.type = tail_type
+            #head_type.ownedAttribute = tail_end
+            #tail_type.ownedAttribute = head_end
 
-            # Now create the diagram item:
+            
+            # Now the subject
+            #association.subject = relation
+            #association.head_end.subject = head_end
+            #association.tail_end.subject = tail_end
+
+            # Create the diagram item:
             association = self.diagram.create(items.AssociationItem)
 
-            # First connect one handle:
-            #head_type_item.connect_handle(association.handles[0])
             adapter = component.queryMultiAdapter((head_type_item, association), IConnect)
             assert adapter
             handle = association.handles()[0]
             adapter.connect(handle)
 
-            
-            # Now the subject
-            association.subject = relation
-            association.head_end.subject = head_end
-            association.tail_end.subject = tail_end
-
-            # Connecting the other handle last will avoid a lookup for
-            # an Association. in stead the association applied as subject
-            # is used.
-            #tail_type_item.connect_handle(association.handles[-1])
             adapter = component.queryMultiAdapter((tail_type_item, association), IConnect)
             assert adapter
             handle = association.handles()[-1]
             adapter.connect(handle)
 
+            # Apply attribute information to the association (ends)
+            association.head_end.navigability = False
+            tail_prop = association.tail_end.subject
+            tail_prop.name = attr.attrname
+            tail_prop.visibility = self._visibility(attr.attrname)
+            tail_prop.aggregation = 'composite'
         else:
             # Create a simple attribute:
             #print "%s %s" % (attr.attrname, static)
