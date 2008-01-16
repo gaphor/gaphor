@@ -333,9 +333,10 @@ class AssociationEnd(UML.Presentation):
       the first 20-30 units of the line, for association end popup menu.
     """
 
-
+    
     def __init__(self, owner, id=None, end=None):
         UML.Presentation.__init__(self)
+        self._id = None # Transient object
         self._owner = owner
         self._end = end
         
