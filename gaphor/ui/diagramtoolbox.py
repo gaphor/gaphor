@@ -121,9 +121,10 @@ class DiagramToolbox(object):
         """
         def factory_method(parent=None):
             subject = self.element_factory.create(subject_class)
+            item = self.diagram.create(item_class, subject=subject, parent=parent)
             subject.package = self.namespace
             subject.name = 'New%s' % subject_class.__name__
-            return self.diagram.create(item_class, subject=subject, parent=parent)
+            return item
         factory_method.item_class = item_class
         return factory_method
 
