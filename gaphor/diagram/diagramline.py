@@ -14,6 +14,7 @@ from gaphor.diagram.style import get_text_point_at_line, \
     get_text_point_at_line2, \
     ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
+
 class LineItem(gaphas.Line, DiagramItem):
     """
     Base class for diagram lines.
@@ -206,7 +207,7 @@ class NamedLine(DiagramLine):
 
 
     def on_named_element_name(self, event):
-        if self.subject:
+        if event is None or self.subject is event.element:
             self._name.text = self.subject.name
             self.request_update()
 

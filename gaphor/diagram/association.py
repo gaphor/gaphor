@@ -54,7 +54,7 @@ class AssociationItem(NamedLine):
         self.add_watch(UML.Property.class_)
         self.add_watch(UML.Property.interface_)
         self.add_watch(UML.Property.visibility, self.on_association_end_value)
-        self.add_watch(UML.Property.name, self.on_association_end_value)
+        #self.add_watch(UML.Property.name, self.on_association_end_value)
         # lowerValue, upperValue and taggedValue
         self.add_watch(UML.LiteralSpecification.value, self.on_association_end_value)
 
@@ -108,7 +108,7 @@ class AssociationItem(NamedLine):
     def unlink(self):
         self._head_end.unlink()
         self._tail_end.unlink()
-        NamedLine.unlink(self)
+        super(AssociationItem, self).unlink()
 
     def invert_direction(self):
         """Invert the direction of the association, this is done by
@@ -119,6 +119,19 @@ class AssociationItem(NamedLine):
 
         self.subject.memberEnd.swap(self.subject.memberEnd[0], self.subject.memberEnd[1])
         self.request_update()
+
+    def on_named_element_name(self, event):
+        """
+        Override NamedLine.on_named_element_name.
+        Update names of the association as well as its ends.
+        """
+        if event is None:
+            super(AssociationItem, self).on_named_element_name(event)
+            self.on_association_end_value(event)
+        elif event.element is self.subject:
+            super(AssociationItem, self).on_named_element_name(event)
+        else:
+            self.on_association_end_value(event)
 
     def on_association_end_value(self, event):
         """
@@ -180,7 +193,7 @@ class AssociationItem(NamedLine):
             self.draw_tail = self.draw_tail_undefined
 
         # update relationship after self.set calls to avoid circural updates
-        NamedLine.post_update(self, context)
+        super(AssociationItem, self).post_update(context)
 
         # Calculate alignment of the head name and multiplicity
         self._head_end.post_update(context, handles[0].pos,

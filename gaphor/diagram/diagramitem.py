@@ -257,6 +257,7 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         that will be called with the event as argument (handler(event)).
         """
         assert isinstance(property, UML.properties.umlproperty)
+        #print 'Registering. Old val is', self._watched_properties.get(property)
         self._watched_properties[property] = handler
 
 
