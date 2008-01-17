@@ -18,7 +18,19 @@ class Element(object):
     """
 
     def __init__(self, id=None, factory=None):
-        self._id = id or uniqueid.generate_id()
+        """
+        Create an element. As optional parameters an id and factory can be
+        given.
+
+        Id is a serial number for the element. The default id is None and will
+        result in an automatic creation of an id. An existing id (such as an
+        int or string) can be provided as well. An id False will result in no
+        id being  given (for "transient" or helper classes).
+
+        Factory can be provided to refer to the class that maintains the
+        lifecycle of the element.
+        """
+        self._id = id or (id is not False and uniqueid.generate_id() or False)
         # The factory this element belongs to.
         self._factory = factory
         self._observers = dict()

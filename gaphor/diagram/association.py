@@ -335,8 +335,7 @@ class AssociationEnd(UML.Presentation):
 
     
     def __init__(self, owner, id=None, end=None):
-        UML.Presentation.__init__(self)
-        self._id = None # Transient object
+        UML.Presentation.__init__(self, id=False) # Transient object
         self._owner = owner
         self._end = end
         

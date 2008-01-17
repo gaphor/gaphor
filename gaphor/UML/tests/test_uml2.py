@@ -29,6 +29,14 @@ class TestUML2(unittest.TestCase):
 #        print 'notify: ev2'
 #        a.notify('ev2')
 
+    def test_ids(self):
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
+        assert c.id
+        assert c.id.startswith('DCE:')
+        p = factory.create_as(UML.Class, id=False)
+        assert p.id is False, p.id
+
     def test1(self):
         factory = UML.ElementFactory()
         c = factory.create(UML.Class)
