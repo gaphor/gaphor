@@ -4,7 +4,7 @@
 import sys
 import gtk
 from zope import interface
-import gaphor
+from gaphor.application import Application
 from gaphor.interfaces import IActionProvider
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.action import action, build_action_group
@@ -42,7 +42,9 @@ class ConsoleWindow(ToplevelWindow):
         self.ui_manager = None # injected
 
     def ui_component(self):
-        console = GTKInterpreterConsole()
+        console = GTKInterpreterConsole(locals={
+                'service': Application.get_service
+                })
         console.show()
         return console
 
