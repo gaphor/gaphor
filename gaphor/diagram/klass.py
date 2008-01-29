@@ -87,6 +87,12 @@ class ClassItem(ClassifierItem):
         new.subject = operation
         self._operations.append(new)
 
+    def unregister_handlers(self):
+        super(ClassItem, self).unregister_handlers()
+        for a in self._attributes:
+            a.unregister_handlers() 
+        for o in self._operations:
+            o.unregister_handlers() 
 
     def sync_attributes(self):
         """
