@@ -452,7 +452,7 @@ class MainWindow(ToplevelWindow):
         self._update_toolbox(tab.toolbox.action_group)
 
         # Make sure everyone knows the selection has changed.
-        component.handle(DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
+        Application.handle(DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
 
     def _on_window_size_allocate(self, window, allocation):
         """

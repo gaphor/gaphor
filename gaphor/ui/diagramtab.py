@@ -250,7 +250,7 @@ class DiagramTab(object):
 
 
     def _on_view_selection_changed(self, view, selection_or_focus):
-        component.handle(DiagramSelectionChange(view, view.focused_item, view.selected_items))
+        Application.handle(DiagramSelectionChange(view, view.focused_item, view.selected_items))
 
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
