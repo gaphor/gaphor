@@ -1,5 +1,5 @@
-	Gaphor - A UML CASE tool.
-
+Gaphor - The Pythonic UML modelling tool
+========================================
 
 Gaphor is rapidly becoming the first really usable CASE tool for GNOME (and
 Linux in general).
@@ -7,11 +7,11 @@ Linux in general).
 Gaphor is written in Python, which makes it very easy to use (and
 very easy to extend (and to write ;-).
 
-You can start Gaphor by running the run-gaphor.sh script if your on *nix. Use the run-gaphor.bat file if your under Windows. 
+You can start Gaphor by running the run-gaphor.sh script if your on *nix.
+Use the run-gaphor.bat file if your under Windows. 
 
-Documentation is stored in a different module: gaphor-doc. It can also be
-read on-line on http://gaphor.sourceforge.net/manual.
+For documentation refer to our project website at http://gaphor.devjavu.com.
 
 Have fun,
 
-Arjan Molenaar <arjanmolenaar@hetnet.nl>
+  Gaphor development team <http://gaphor.devjavu.com>
