@@ -36,7 +36,7 @@ class ActionManager(object):
         a = self.get_action(action_id)
         if a:
             a.activate()
-            component.handle(ActionExecuted(action_id, a))
+            self._app.handle(ActionExecuted(action_id, a))
         else:
             log.warning('Unknown action: %s' % action_id)
 

@@ -165,7 +165,7 @@ class UndoManager(object):
             return
 
         self._current_transaction.add(action)
-        component.handle(UndoManagerStateChanged(self))
+        self._app.handle(UndoManagerStateChanged(self))
 
         # TODO: should this be placed here?
         self._action_executed()
@@ -187,7 +187,7 @@ class UndoManager(object):
                 pass #log.debug('nothing to commit')
 
             self._current_transaction = None
-        component.handle(UndoManagerStateChanged(self))
+        self._app.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @component.adapter(TransactionRollback)
@@ -212,7 +212,7 @@ class UndoManager(object):
                 # Discard all data collected in the rollback "transaction"
                 self.discard_transaction()
 
-            component.handle(UndoManagerStateChanged(self))
+            self._app.handle(UndoManagerStateChanged(self))
 
         self._action_executed()
 
@@ -223,7 +223,7 @@ class UndoManager(object):
         self._transaction_depth -= 1
         if self._transaction_depth == 0:
             self._current_transaction = None
-        component.handle(UndoManagerStateChanged(self))
+        self._app.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @action(name='edit-undo', stock_id='gtk-undo', accel='<Control>z')
@@ -245,7 +245,7 @@ class UndoManager(object):
         self._redo_stack.append(self._current_transaction)
         self._current_transaction = None
         self._transaction_depth = 0
-        component.handle(UndoManagerStateChanged(self))
+        self._app.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @action(name='edit-redo', stock_id='gtk-redo', accel='<Control>y')
@@ -265,7 +265,7 @@ class UndoManager(object):
         self._current_transaction = None
         self._transaction_depth = 0
 
-        component.handle(UndoManagerStateChanged(self))
+        self._app.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     def in_transaction(self):
@@ -330,7 +330,7 @@ class UndoManager(object):
                 del factory._elements[element.id]
             except KeyError:
                 pass # Key was probably already removed in an unlink call
-            component.handle(ElementDeleteEvent(factory, element))
+            self._app.handle(ElementDeleteEvent(factory, element))
         self.add_undo_action(_undo_create_event)
 
 
@@ -344,7 +344,7 @@ class UndoManager(object):
         assert factory, 'No factory defined for %s (%s)' % (element, factory)
         def _undo_delete_event():
             factory._elements[element.id] = element
-            component.handle(ElementCreateEvent(factory, element))
+            self._app.handle(ElementCreateEvent(factory, element))
         self.add_undo_action(_undo_delete_event)
 
 

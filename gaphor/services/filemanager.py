@@ -120,7 +120,7 @@ class FileManager(object):
         recent_files = self.properties.get('recent-files', []) 
         filename = recent_files[index]
         self._load(filename)
-        component.handle(FileManagerStateChanged(self))
+        self._app.handle(FileManagerStateChanged(self))
         
     @action(name='file-new', stock_id='gtk-new')
     def new(self):
@@ -149,7 +149,7 @@ class FileManager(object):
         main_window.select_element(diagram)
         main_window.show_diagram(diagram)
 
-        component.handle(FileManagerStateChanged(self))
+        self._app.handle(FileManagerStateChanged(self))
 
 
     def _load(self, filename):
@@ -248,7 +248,7 @@ class FileManager(object):
 
             # It's a template: unset filename
             self.filename = None
-            component.handle(FileManagerStateChanged(self))
+            self._app.handle(FileManagerStateChanged(self))
 
 
     @action(name='file-open', stock_id='gtk-open')
@@ -256,7 +256,7 @@ class FileManager(object):
         filename = self._open_dialog('Open Gaphor model')
         if filename:
             self._load(filename)
-            component.handle(FileManagerStateChanged(self))
+            self._app.handle(FileManagerStateChanged(self))
 
 
     @action(name='file-save', stock_id='gtk-save')
@@ -264,7 +264,7 @@ class FileManager(object):
         filename = self.filename
         if filename:
             self._save(filename)
-            component.handle(FileManagerStateChanged(self))
+            self._app.handle(FileManagerStateChanged(self))
         else:
             self.save_as()
 
@@ -283,7 +283,7 @@ class FileManager(object):
             filename = filesel.get_filename()
         filesel.destroy()
         self._save(filename)
-        component.handle(FileManagerStateChanged(self))
+        self._app.handle(FileManagerStateChanged(self))
 
 
 def show_status_window(title, message, parent=None, queue=None):
