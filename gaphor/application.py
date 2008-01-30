@@ -19,7 +19,7 @@ import gaphor.UML
 class _Application(object):
     """
     The Gaphor application is started from the Application instance. It behaves
-    as a singleton in many ways.
+    like a singleton in many ways.
 
     The Application is responsible for loading services and plugins. Services
     are registered as "utilities" in the application registry.
