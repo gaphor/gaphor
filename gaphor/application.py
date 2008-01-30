@@ -22,7 +22,7 @@ class _Application(object):
     as a singleton in many ways.
 
     The Application is responsible for loading services and plugins. Services
-    are registered as "utilities" in a global registry.
+    are registered as "utilities" in the application registry.
 
     Methods are provided that wrap zope.component's handle, adapter and
     subscription registrations. In addition to registration methods also
@@ -34,8 +34,7 @@ class _Application(object):
     
     def __init__(self):
         self._uninitialized_services = {}
-        self._components = component.registry.Components(name='app',
-                               bases=(component.getGlobalSiteManager(),))
+        self._init_components()
 
     def init(self, services=None):
         """
@@ -44,6 +43,28 @@ class _Application(object):
         self.load_services(services)
         self.init_all_services()
 
+    def _init_components(self):
+        """
+        Initialize application level component registry.
+
+        Frequently used query methods are overridden on the zope.component
+        module.
+        """
+        self._components = component.registry.Components(name='app',
+                               bases=(component.getGlobalSiteManager(),))
+
+        # Make sure component.handle() and query methods works.
+        # TODO: eventually all queries should be done through the Application
+        # instance.
+        component.handle = self.handle
+        component.getMultiAdapter = self._components.getMultiAdapter
+        component.queryMultiAdapter = self._components.queryMultiAdapter
+        component.getAdapter = self._components.getAdapter
+        component.queryAdapter = self._components.queryAdapter
+        component.getAdapters = self._components.getAdapters
+        component.getUtility = self._components.getUtility
+        component.queryUtility = self._components.queryUtility
+        component.getUtilitiesFor = self._components.getUtilitiesFor
 
     def load_services(self, services=None):
         """
@@ -102,8 +123,8 @@ class _Application(object):
             self.handle(ServiceShutdownEvent(name, srv))
             self._components.unregisterUtility(srv, IService, name)
 
-        # TODO: Re-initialize components registry
-        # - unregister all adapters and utilities
+        # Re-initialize components registry
+        self._init_components()
 
     # Wrap zope.component's Components methods
 
@@ -161,13 +182,5 @@ class _Application(object):
 
 # Make sure there is only one!
 Application = _Application()
-
-# Make sure component.handle() and query methods works.
-# TODO: eventually all queries should be done through the Application instance.
-component.handle = Application.handle
-component.getMultiAdapter = Application._components.getMultiAdapter
-component.queryMultiAdapter = Application._components.queryMultiAdapter
-component.getAdapters = Application._components.getAdapters
-component.getUtilitiesFor = Application._components.getUtilitiesFor
 
 # vim:sw=4:et:ai
