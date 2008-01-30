@@ -53,7 +53,6 @@ class Element(object):
                 if isinstance(prop, umlprop):
                     yield prop
 
-    # TODO: move save/load code to adapters
     def save(self, save_func):
         """
         Save the state by calling save_func(name, value).

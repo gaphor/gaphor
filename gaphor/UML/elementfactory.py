@@ -6,11 +6,11 @@ Factory for and registration of model elements.
 from zope import interface
 from zope import component
 from gaphor.misc import uniqueid, odict
+from gaphor.interfaces import IService
 from gaphor.UML.element import Element
 from gaphor.UML.diagram import Diagram
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
-                                  IFlushFactoryEvent, IModelFactoryEvent, \
-                                  IService
+                                  IFlushFactoryEvent, IModelFactoryEvent
 from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
 
@@ -35,9 +35,11 @@ class ElementFactory(object):
         self._observers = list()
 
     def init(self, app):
-        component.provideHandler(self._element_unlinked)
+        self._app = app
+        app.register_handler(self._element_deleted)
 
     def shutdown(self):
+        self._app.unregister_handler(self._element_deleted)
         self.flush()
 
     def create(self, type):
@@ -45,7 +47,7 @@ class ElementFactory(object):
         Create a new model element of type type.
         """
         obj = self.create_as(type, uniqueid.generate_id())
-        component.handle(ElementCreateEvent(self, obj))
+        self._app.handle(ElementCreateEvent(self, obj))
         return obj
 
     def create_as(self, type, id):
@@ -131,7 +133,7 @@ class ElementFactory(object):
         """
         Flush all elements (remove them from the factory).
         """
-        component.handle(FlushFactoryEvent(self))
+        self._app.handle(FlushFactoryEvent(self))
 
         # First flush all diagrams:
         for value in list(self.select(lambda e: isinstance(e, Diagram))):
@@ -161,10 +163,10 @@ class ElementFactory(object):
         Send notification that a new model has been loaded by means of the
         ModelFactoryEvent event from gaphor.UML.event.
         """
-        component.handle(ModelFactoryEvent(self))
+        self._app.handle(ModelFactoryEvent(self))
 
     @component.adapter(ElementDeleteEvent)
-    def _element_unlinked(self, event):
+    def _element_deleted(self, event):
         """
         Remove an element from the factory.
         """

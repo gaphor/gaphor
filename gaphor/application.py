@@ -34,7 +34,8 @@ class _Application(object):
     
     def __init__(self):
         self._uninitialized_services = {}
-        self.globalSiteManager = component.getGlobalSiteManager()
+        self._components = component.registry.Components(name='app',
+                               bases=(component.getGlobalSiteManager(),))
 
     def init(self, services=None):
         """
@@ -42,6 +43,7 @@ class _Application(object):
         """
         self.load_services(services)
         self.init_all_services()
+
 
     def load_services(self, services=None):
         """
@@ -77,7 +79,7 @@ class _Application(object):
         else:
             log.info('initializing service service.%s' % name)
             srv.init(self)
-            self.globalSiteManager.registerUtility(srv, IService, name)
+            self._components.registerUtility(srv, IService, name)
             self.handle(ServiceInitializedEvent(name, srv))
             return srv
 
@@ -86,7 +88,7 @@ class _Application(object):
 
     def get_service(self, name):
         try:
-            return self.globalSiteManager.getUtility(IService, name)
+            return self._components.getUtility(IService, name)
         except component.ComponentLookupError:
             return self.init_service(name)
 
@@ -95,20 +97,15 @@ class _Application(object):
         gtk.main()
 
     def shutdown(self):
-        for name, srv in self.globalSiteManager.getUtilitiesFor(IService):
+        for name, srv in self._components.getUtilitiesFor(IService):
             srv.shutdown()
             self.handle(ServiceShutdownEvent(name, srv))
-            self.globalSiteManager.unregisterUtility(srv, IService, name)
+            self._components.unregisterUtility(srv, IService, name)
 
-        # Re-initialize Zope's global site manager
-        # (cleanup adapters and utilities):
-        try:
-            self.globalSiteManager.__init__('base')
-        except Exception, e:
-            log.error('Re-initialization of the Zope SiteManager failed', e)
-        self.__init__()
+        # TODO: Re-initialize components registry
+        # - unregister all adapters and utilities
 
-    # Wrap zope.component's SiteManager methods
+    # Wrap zope.component's Components methods
 
     def register_adapter(self, factory, adapts=None, provides=None, name=''):
         """
@@ -116,7 +113,7 @@ class _Application(object):
         interface. A name can be used to distinguish between different adapters
         that adapt to the same interfaces.
         """
-        self.globalSiteManager.registerAdapter(factory, adapts, provides,
+        self._components.registerAdapter(factory, adapts, provides,
                               name, event=False)
 
     def unregister_adapter(self, factory=None,
@@ -124,14 +121,14 @@ class _Application(object):
         """
         Unregister a previously registered adapter.
         """
-        self.globalSiteManager.unregisterAdapter(factory,
+        self._components.unregisterAdapter(factory,
                               required, provided, name)
 
     def register_subscription_adapter(self, factory, adapts=None, provides=None):
         """
         Register a subscription adapter. See registerAdapter().
         """
-        self.globalSiteManager.registerSubscriptionAdapter(factory, adapts,
+        self._components.registerSubscriptionAdapter(factory, adapts,
                               provides, event=False)
 
     def unregister_subscription_adapter(self, factory=None,
@@ -139,7 +136,7 @@ class _Application(object):
         """
         Unregister a previously registered subscription adapter.
         """
-        self.globalSiteManager.unregisterSubscriptionAdapter(factory,
+        self._components.unregisterSubscriptionAdapter(factory,
                               required, provided, name)
 
     def register_handler(self, factory, adapts=None):
@@ -147,22 +144,30 @@ class _Application(object):
         Register a handler. Handlers are triggered (executed) when specific
         events are emited through the handle() method.
         """
-        self.globalSiteManager.registerHandler(factory, adapts, event=False)
+        self._components.registerHandler(factory, adapts, event=False)
 
     def unregister_handler(self, factory=None, required=None):
         """
         Unregister a previously registered handler.
         """
-        self.globalSiteManager.unregisterHandler(factory, required)
+        self._components.unregisterHandler(factory, required)
  
     def handle(self, *objects):
         """
         Send event notifications to registered handlers.
         """
-        self.globalSiteManager.handle(*objects)
+        self._components.handle(*objects)
+
 
 # Make sure there is only one!
 Application = _Application()
 
+# Make sure component.handle() and query methods works.
+# TODO: eventually all queries should be done through the Application instance.
+component.handle = Application.handle
+component.getMultiAdapter = Application._components.getMultiAdapter
+component.queryMultiAdapter = Application._components.queryMultiAdapter
+component.getAdapters = Application._components.getAdapters
+component.getUtilitiesFor = Application._components.getUtilitiesFor
 
 # vim:sw=4:et:ai

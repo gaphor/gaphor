@@ -1,6 +1,7 @@
 
 import unittest
 from zope import component
+from gaphor.application import Application
 from gaphor.UML import *
 from gaphor.UML.interfaces import *
 import gc
@@ -27,9 +28,10 @@ class ElementFactoryTestCase(unittest.TestCase):
 
     def setUp(self):
         self.factory = ElementFactory()
-        self.factory.init(None)
+        self.factory.init(Application)
 
     def tearDown(self):
+        self.factory.shutdown()
         del self.factory
         self.clearEvents()
 

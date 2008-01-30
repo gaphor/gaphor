@@ -6,6 +6,7 @@ import gtk
 from zope import interface, component
 
 from gaphor.core import _
+from gaphor.application import Application
 from gaphor.UML.interfaces import IAssociationChangeEvent
 from gaphor.UML import Presentation
 from interfaces import IPropertyPage, IDiagramSelectionChange
@@ -29,8 +30,8 @@ class PropertyEditor(object):
         self.notebook.connect('switch-page', self._on_switch_page)
         
         # Make sure we recieve 
-        component.provideHandler(self._selection_change)
-        component.provideHandler(self._element_changed)
+        Application.register_handler(self._selection_change)
+        Application.register_handler(self._element_changed)
         
         return self.notebook
 

@@ -1,6 +1,6 @@
 
 import unittest
-import gaphor
+from gaphor.application import Application
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.UML import *
 from gaphor.UML.umllex import *
@@ -36,7 +36,7 @@ dump_oper('myfunc(aap:str[1] = "aap" { tag1, tag2 }, out two {tag3}): type')
 
 
 element_factory = ElementFactory()
-element_factory.init(None)
+element_factory.init(Application)
 
 class AttributeTestCase(unittest.TestCase):
     def setUp(self):
