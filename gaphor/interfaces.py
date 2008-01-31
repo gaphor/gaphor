@@ -71,4 +71,17 @@ class IActionExecutedEvent(interface.Interface):
     action = interface.Attribute("The performed action")
 
 
+class IEventFilter(interface.Interface):
+    """
+    Filter events when they're about to be handled. Events can be changed or
+    blocked.
+    """
+
+    def filter(self):
+        """
+        Return a value (e.g. message/reason) why the event is filtered.
+        Returning `None` or `False` will propagate event emission.
+        """
+
+
 # vim:sw=4:et

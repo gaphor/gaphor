@@ -11,7 +11,7 @@ All important services are present in the application object:
 
 import pkg_resources
 from zope import component
-from gaphor.interfaces import IService
+from gaphor.interfaces import IService, IEventFilter
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 import gaphor.UML
 
@@ -35,6 +35,7 @@ class _Application(object):
     def __init__(self):
         self._uninitialized_services = {}
         self._init_components()
+        self._event_filter = None
 
     def init(self, services=None):
         """
@@ -163,7 +164,7 @@ class _Application(object):
     def register_handler(self, factory, adapts=None):
         """
         Register a handler. Handlers are triggered (executed) when specific
-        events are emited through the handle() method.
+        events are emitted through the handle() method.
         """
         self._components.registerHandler(factory, adapts, event=False)
 
@@ -173,11 +174,23 @@ class _Application(object):
         """
         self._components.unregisterHandler(factory, required)
  
+    def _filter(self, objects):
+        filtered = list(objects)
+        for o in objects:
+            for adapter in self._components.subscribers(objects, IEventFilter):
+                if adapter.filter():
+                    # event is blocked
+                    filtered.remove(o)
+                    break
+        return filtered
+
     def handle(self, *objects):
         """
         Send event notifications to registered handlers.
         """
-        self._components.handle(*objects)
+        objects = self._filter(objects)
+        if objects:
+            self._components.handle(*objects)
 
 
 # Make sure there is only one!

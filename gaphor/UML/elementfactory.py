@@ -6,13 +6,33 @@ Factory for and registration of model elements.
 from zope import interface
 from zope import component
 from gaphor.misc import uniqueid, odict
-from gaphor.interfaces import IService
-from gaphor.UML.element import Element
-from gaphor.UML.diagram import Diagram
+from gaphor.interfaces import IService, IEventFilter
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
-                                  IFlushFactoryEvent, IModelFactoryEvent
+                                  IFlushFactoryEvent, IModelFactoryEvent, \
+                                  IElementChangeEvent
 from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
+from gaphor.UML.element import Element
+from gaphor.UML.diagram import Diagram
+
+
+class ElementChangedEventBlocker(object):
+    """
+    Blocks all events of type IElementChangeEvent.
+
+    This filter is placed when the the element factory flushes it's content.
+    """
+    component.adapts(IElementChangeEvent)
+    interface.implements(IEventFilter)
+
+    def __init__(self, event):
+        self._event = event
+
+    def filter(self):
+        """
+        Return the event or None if the event is not to be emitted.
+        """
+        return 'Blocked by ElementFactory.flush()'
 
 
 class ElementFactory(object):
@@ -135,16 +155,20 @@ class ElementFactory(object):
         """
         self._app.handle(FlushFactoryEvent(self))
 
-        # First flush all diagrams:
-        for value in list(self.select(lambda e: isinstance(e, Diagram))):
-            # Make sure no updates happen while destroying the canvas
-            value.canvas.block_updates = True
-            value.unlink()
+        self._app.register_subscription_adapter(ElementChangedEventBlocker)
+        try:
+            # First flush all diagrams:
+            for value in list(self.select(lambda e: isinstance(e, Diagram))):
+                # Make sure no updates happen while destroying the canvas
+                value.canvas.block_updates = True
+                value.unlink()
 
-        for key, value in self._elements.items():
-            #print 'ElementFactory: unlinking', value
-            #print 'references:', gc.get_referrers(value)
-            value.unlink()
+            for key, value in self._elements.items():
+                #print 'ElementFactory: unlinking', value
+                #print 'references:', gc.get_referrers(value)
+                value.unlink()
+        finally:
+            self._app.unregister_subscription_adapter(ElementChangedEventBlocker)
 
         assert len(self._elements) == 0, 'Still items in the factory: %s' % str(self._elements.values())
 
