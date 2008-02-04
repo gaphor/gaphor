@@ -178,6 +178,24 @@ class FileManager(object):
 
             # Expand all root elements:
             view.expand_root_nodes()
+
+            # Open all diagrams under root node.
+            # TODO: move this! This is generic code.
+            # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
+            model = main_window.tree_model
+            try:
+                iter = model.get_iter((0,))
+            except ValueError:
+                # no data
+                pass
+            else:
+                if model.iter_has_child(iter):
+                    iter = model.iter_children(iter)
+                    while iter:
+                        e = model.get_value(iter, 0)
+                        if isinstance(e, UML.Diagram):
+                            main_window.show_diagram(e)
+                        iter = model.iter_next(iter)
         finally:
             try:
                 win.destroy()
