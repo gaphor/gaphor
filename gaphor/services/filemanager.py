@@ -146,8 +146,8 @@ class FileManager(object):
         self.filename = None
         element_factory.notify_model()
 
-        main_window.select_element(diagram)
-        main_window.show_diagram(diagram)
+        #main_window.select_element(diagram)
+        #main_window.show_diagram(diagram)
 
         self._app.handle(FileManagerStateChanged(self))
 
@@ -170,32 +170,8 @@ class FileManager(object):
                 log.error('Error while loading model from file %s: %s' % (filename, worker.error))
                 error_handler(message='Error while loading model from file %s' % filename, exc_info=worker.exc_info)
 
-            # Let this be handled by the main window itself:
-            #self._window.set_message('Model loaded successfully')
-            view = main_window.tree_view
-
             self.filename = filename
 
-            # Expand all root elements:
-            view.expand_root_nodes()
-
-            # Open all diagrams under root node.
-            # TODO: move this! This is generic code.
-            # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
-            model = main_window.tree_model
-            try:
-                iter = model.get_iter((0,))
-            except ValueError:
-                # no data
-                pass
-            else:
-                if model.iter_has_child(iter):
-                    iter = model.iter_children(iter)
-                    while iter:
-                        e = model.get_value(iter, 0)
-                        if isinstance(e, UML.Diagram):
-                            main_window.show_diagram(e)
-                        iter = model.iter_next(iter)
         finally:
             try:
                 win.destroy()

@@ -20,6 +20,7 @@ from toplevelwindow import ToplevelWindow
 
 from interfaces import IDiagramSelectionChange
 from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
+from gaphor.UML.event import ModelFactoryEvent
 from event import DiagramSelectionChange
 from gaphor.application import Application
 from gaphor.services.filemanager import FileManagerStateChanged
@@ -267,6 +268,7 @@ class MainWindow(ToplevelWindow):
         self.window.connect('destroy', self._on_window_destroy)
 
         Application.register_handler(self._action_executed)
+        Application.register_handler(self._new_model_content)
 
     def _update_toolbox(self, action_group):
         """
@@ -355,6 +357,32 @@ class MainWindow(ToplevelWindow):
 
     # Signal callbacks:
 
+    @component.adapter(ModelFactoryEvent)
+    def _new_model_content(self, event):
+        """
+        Open the toplevel element and load toplevel diagrams.
+        """
+        # Expand all root elements:
+        self.tree_view.expand_root_nodes()
+
+        # Open all diagrams under root node.
+        # TODO: move this! This is generic code.
+        # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
+        model = self.tree_model
+        try:
+            iter = model.get_iter((0,))
+        except ValueError:
+            # no data
+            pass
+        else:
+            if model.iter_has_child(iter):
+                iter = model.iter_children(iter)
+                while iter:
+                    e = model.get_value(iter, 0)
+                    if isinstance(e, UML.Diagram):
+                        self.show_diagram(e)
+                    iter = model.iter_next(iter)
+    
     @component.adapter(FileManagerStateChanged)
     def _action_executed(self, event):
         # We're only interested in file operations
@@ -378,6 +406,7 @@ class MainWindow(ToplevelWindow):
         if gobject.main_depth() > 0:
             gtk.main_quit()
         Application.unregister_handler(self._action_executed)
+        Application.unregister_handler(self._new_model_content)
 
     def _on_tab_destroy(self, widget):
         tab = self.notebook_map[widget]
@@ -471,6 +500,7 @@ class MainWindow(ToplevelWindow):
         self.ask_to_close() and gtk.main_quit()
         self._tree_view.get_model().close()
         Application.unregister_handler(self._action_executed)
+        Application.unregister_handler(self._new_model_content)
 
     @action(name='tree-view-open', label='_Open')
     def tree_view_open_selected(self):
