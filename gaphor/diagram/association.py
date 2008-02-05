@@ -49,10 +49,10 @@ class AssociationItem(NamedLine):
         self.add_watch(UML.Association.memberEnd)
 
         # For the association ends:
-        self.add_watch(UML.Property.aggregation)
-        self.add_watch(UML.Property.owningAssociation)
-        self.add_watch(UML.Property.class_)
-        self.add_watch(UML.Property.interface_)
+        self.add_watch(UML.Property.aggregation, self.on_association_end_value)
+        self.add_watch(UML.Property.owningAssociation, self.on_association_end_value)
+        self.add_watch(UML.Property.class_, self.on_association_end_value)
+        self.add_watch(UML.Property.interface_, self.on_association_end_value)
         self.add_watch(UML.Property.visibility, self.on_association_end_value)
         #self.add_watch(UML.Property.name, self.on_association_end_value)
         # lowerValue, upperValue and taggedValue
@@ -146,6 +146,11 @@ class AssociationItem(NamedLine):
                     end.set_text()
                     self.request_update()
                     break;
+        else:
+            for end in (self._head_end, self._tail_end):
+                end.set_text()
+            self.request_update()
+
             
 
     def post_update(self, context):
