@@ -421,6 +421,8 @@ def watch_attribute(attribute, widget, handler):
     @component.adapter(IAttributeChangeEvent)
     def attribute_watcher(event):
         if attribute is None or event.property is attribute:
+            if widget.props.has_focus:
+                return
             handler(event)
 
     Application.register_handler(attribute_watcher)
