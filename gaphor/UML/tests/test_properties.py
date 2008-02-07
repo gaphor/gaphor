@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
+from zope import component
+from gaphor.application import Application
 from gaphor.UML.properties import *
 from gaphor.UML.element import Element
+from gaphor.UML.event import AssociationChangeEvent
 
 class PropertiesTestCase(unittest.TestCase):
 
@@ -223,6 +226,41 @@ class PropertiesTestCase(unittest.TestCase):
         #assert len(a1._observers.get('__unlink__')) == 0
         #assert len(b1._observers.get('__unlink__')) == 0
 
+    def test_association_swap(self):
+        class A(Element): pass
+        class B(Element): pass
+        class C(Element): pass
+
+        A.one = association('one', B, 0, '*')
+
+        a = A()
+        b1 = B()
+        b2 = B()
+
+        a.one = b1
+        a.one = b2
+        assert a.one.size() == 2
+        assert a.one[0] is b1
+        assert a.one[1] is b2
+
+        events = []
+        @component.adapter(AssociationChangeEvent)
+        def handler(event, events=events):
+            events.append(event)
+
+        Application.register_handler(handler)
+        try:
+            a.one.swap(b1, b2)
+            assert len(events) == 1
+            assert events[0].property is A.one
+            assert events[0].element is a
+        finally:
+            Application.unregister_handler(handler)
+
+        assert a.one.size() == 2
+        assert a.one[0] is b2
+        assert a.one[1] is b1
+
     def test_association_unlink_1(self):
         #
         # unlink
@@ -425,9 +463,6 @@ class PropertiesTestCase(unittest.TestCase):
         assert b.is_unlinked
 
     def test_derivedunion(self):
-        from zope import component
-        from gaphor.application import Application
-        from gaphor.UML.event import AssociationChangeEvent
         
         class A(Element):
             is_unlinked = False

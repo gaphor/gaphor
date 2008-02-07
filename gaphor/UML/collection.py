@@ -3,6 +3,8 @@
 """
 
 import inspect
+from zope import component
+from event import AssociationChangeEvent
 
 class CollectionError(Exception):
     pass
@@ -206,8 +208,9 @@ class collection(object):
             i1 = self.items.index(item1)
             i2 = self.items.index(item2)
             self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
+
             # send a notification that this list has changed
-            self.property.notify(self.object)
+            component.handle(AssociationChangeEvent(self.object, self.property))
             return True
         except IndexError, ex:
             return False
