@@ -490,6 +490,9 @@ class CommentItemPropertyPage(object):
         subject = self.context.subject
         page = gtk.VBox()
 
+        if not subject:
+            return page
+
         label = gtk.Label(_('Comment'))
         label.set_justify(gtk.JUSTIFY_LEFT)
         page.pack_start(label, expand=False)
