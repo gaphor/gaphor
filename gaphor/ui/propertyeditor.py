@@ -41,7 +41,10 @@ class PropertyEditor(object):
         """
         last_tab = self._last_tab
         for name, adapter in component.getAdapters([item,], IPropertyPage):
-            self.notebook.prepend_page(adapter.construct(), gtk.Label(name))
+            try:
+                self.notebook.prepend_page(adapter.construct(), gtk.Label(name))
+            except Exception, e:
+                log.error('Could not construct property page for ' + name, e)
         self.notebook.show_all()
 
         self._last_tab = last_tab
