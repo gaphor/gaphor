@@ -183,13 +183,15 @@ class PyNSource(object):
     def on_add_clicked(self, button):
         filesel = gtk.FileSelection('Open Python file')
         filesel.hide_fileop_buttons()
+        filesel.set_select_multiple(True)
         response = filesel.run()
-        filename = filesel.get_filename()
+        filenames = filesel.get_selections()
         filesel.destroy()
-        if filename and response == gtk.RESPONSE_OK:
-            iter = self.filelist.append()
-            self.filelist.set_value(iter, NAME_COLUMN, filename)
-            #self.execute_button.set_property('
+        if response == gtk.RESPONSE_OK:
+            for filename in filenames:
+                iter = self.filelist.append()
+                self.filelist.set_value(iter, NAME_COLUMN, filename)
+                #self.execute_button.set_property('
 
     def on_add_dir_clicked(self, button):
         pass
