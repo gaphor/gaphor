@@ -59,6 +59,7 @@ class ElementFactory(object):
         app.register_handler(self._element_deleted)
 
     def shutdown(self):
+        # unregister after flush: the handler is needed to empty the _elements
         self.flush()
         self._app.unregister_handler(self._element_deleted)
 

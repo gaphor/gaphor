@@ -86,10 +86,10 @@ class Element(object):
         """
         # Uses a mutex to make sure it is not called recursively
         if self.__in_unlink.testandset():
+            component.handle(ElementDeleteEvent(self._factory, self))
             try:
                 for prop in self.umlproperties():
                     prop.unlink(self)
-                component.handle(ElementDeleteEvent(self._factory, self))
             finally:
                 self.__in_unlink.unlock()
 
