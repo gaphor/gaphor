@@ -29,7 +29,7 @@ class ElementFactoryTestCase(unittest.TestCase):
     def setUp(self):
         self.factory = ElementFactory()
         self.factory.init(Application)
-
+            
     def tearDown(self):
         self.factory.shutdown()
         del self.factory
@@ -45,7 +45,6 @@ class ElementFactoryTestCase(unittest.TestCase):
         ef = self.factory
 
         p = ef.create(Parameter)
-        wp = weakref.ref(p)
         assert len(ef.values()) == 1
 
     def testFlush(self):

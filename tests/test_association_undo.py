@@ -25,6 +25,7 @@ class AssociationUndoTestCase(unittest.TestCase):
 
     def testAssociationUndo(self):
         factory = Application.get_service('element_factory')
+        undo_manager = Application.get_service('undo_manager')
 
         diagram = factory.create(UML.Diagram)
         solver = diagram.canvas.solver
@@ -81,8 +82,6 @@ class AssociationUndoTestCase(unittest.TestCase):
         assert len(solver._constraints) == 13, len(solver._constraints)
         #assert len(x_cons) == 0, x_cons
         #assert len(y_cons) == 0, y_cons
-
-        undo_manager = Application.get_service('undo_manager')
 
         assert undo_manager.can_undo()
 

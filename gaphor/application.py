@@ -34,7 +34,7 @@ class _Application(object):
     
     def __init__(self):
         self._uninitialized_services = {}
-        self._init_components()
+        self.init_components()
         self._event_filter = None
 
     def init(self, services=None):
@@ -44,13 +44,16 @@ class _Application(object):
         self.load_services(services)
         self.init_all_services()
 
-    def _init_components(self):
+    def init_components(self):
         """
         Initialize application level component registry.
 
         Frequently used query methods are overridden on the zope.component
         module.
         """
+        #self._components = component.getGlobalSiteManager()
+        #return
+
         self._components = component.registry.Components(name='app',
                                bases=(component.getGlobalSiteManager(),))
 
@@ -75,7 +78,6 @@ class _Application(object):
         Service should provide an interface gaphor.interfaces.IService.
         """
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
-            #print ep, dir(ep)
             log.debug('found entry point service.%s' % ep.name)
             cls = ep.load()
             if not IService.implementedBy(cls):
@@ -125,7 +127,7 @@ class _Application(object):
             self._components.unregisterUtility(srv, IService, name)
 
         # Re-initialize components registry
-        self._init_components()
+        self.init_components()
 
     # Wrap zope.component's Components methods
 
@@ -184,13 +186,13 @@ class _Application(object):
                     break
         return filtered
 
-    def handle(self, *objects):
+    def handle(self, *events):
         """
         Send event notifications to registered handlers.
         """
-        objects = self._filter(objects)
+        objects = self._filter(events)
         if objects:
-            self._components.handle(*objects)
+            self._components.handle(*events)
 
 
 # Make sure there is only one!

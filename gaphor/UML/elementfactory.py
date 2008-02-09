@@ -10,7 +10,7 @@ from gaphor.interfaces import IService, IEventFilter
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
                                   IFlushFactoryEvent, IModelFactoryEvent, \
                                   IElementChangeEvent
-from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
+from gaphor.UML.event import ElementCreateEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
 from gaphor.UML.element import Element
 from gaphor.UML.diagram import Diagram
@@ -59,8 +59,8 @@ class ElementFactory(object):
         app.register_handler(self._element_deleted)
 
     def shutdown(self):
-        self._app.unregister_handler(self._element_deleted)
         self.flush()
+        self._app.unregister_handler(self._element_deleted)
 
     def create(self, type):
         """
@@ -164,8 +164,6 @@ class ElementFactory(object):
                 value.unlink()
 
             for key, value in self._elements.items():
-                #print 'ElementFactory: unlinking', value
-                #print 'references:', gc.get_referrers(value)
                 value.unlink()
         finally:
             self._app.unregister_subscription_adapter(ElementChangedEventBlocker)
@@ -189,7 +187,7 @@ class ElementFactory(object):
         """
         self._app.handle(ModelFactoryEvent(self))
 
-    @component.adapter(ElementDeleteEvent)
+    @component.adapter(IElementDeleteEvent)
     def _element_deleted(self, event):
         """
         Remove an element from the factory.
