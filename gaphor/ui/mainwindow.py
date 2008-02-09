@@ -9,7 +9,7 @@ from gaphor.interfaces import IActionProvider
 from interfaces import IUIComponent
 
 from gaphor import UML
-from gaphor.core import _, inject, action, radio_action, build_action_group, transactional
+from gaphor.core import _, inject, action, toggle_action, build_action_group, transactional
 from namespace import NamespaceModel, NamespaceView
 from diagramtab import DiagramTab
 from toolbox import Toolbox
@@ -67,6 +67,8 @@ class MainWindow(ToplevelWindow):
             <separator />
             <menuitem action="tree-view-delete-diagram" />
             <menuitem action="tree-view-delete-package" />
+            <separator />
+            <menuitem action="reset-tool-after-create" />
             <separator />
             <placeholder name="primary" />
             <placeholder name="secondary" />
@@ -127,6 +129,7 @@ class MainWindow(ToplevelWindow):
             a.set_property('hide-if-empty', False)
             self.action_group.add_action(a)
         self._tab_ui_settings = None
+        self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
 
     tree_model = property(lambda s: s.tree_view.get_model())
 
@@ -584,6 +587,10 @@ class MainWindow(ToplevelWindow):
     def tree_view_refresh(self):
         self._tree_view.get_model().refresh()
 
+
+    @toggle_action(name='reset-tool-after-create', label=_('_Reset tool'), active=False)
+    def reset_tool_after_create(self, active):
+        self.properties.set('reset-tool-after-create', active)
 
 gtk.accel_map_add_filter('gaphor')
 
