@@ -160,15 +160,13 @@ class UndoManager(object):
         """
         Add an action to undo. An action
         """
-        #log.debug('add_undo_action: %s %s' % (self._current_transaction, action))
-        if not self._current_transaction:
-            return
+        if self._current_transaction:
+            log.debug('add_undo_action: %s %s' % (self._current_transaction, action))
+            self._current_transaction.add(action)
+            self._app.handle(UndoManagerStateChanged(self))
 
-        self._current_transaction.add(action)
-        self._app.handle(UndoManagerStateChanged(self))
-
-        # TODO: should this be placed here?
-        self._action_executed()
+            # TODO: should this be placed here?
+            self._action_executed()
 
     @component.adapter(TransactionCommit)
     def commit_transaction(self, event=None):
@@ -287,7 +285,8 @@ class UndoManager(object):
     ## Undo Handlers
     ##
 
-    def _undo_handler(self, event):
+    def _gaphas_undo_handler(self, event):
+        print 'Gaphas event:', event
         self.add_undo_action(lambda: state.saveapply(*event));
 
     def _register_undo_handlers(self):
@@ -302,7 +301,7 @@ class UndoManager(object):
         # Direct revert-statements from gaphas to the undomanager
         state.observers.add(state.revert_handler)
 
-        state.subscribers.add(self._undo_handler)
+        state.subscribers.add(self._gaphas_undo_handler)
 
     def _unregister_undo_handlers(self):
         self._app.unregister_handler(self.undo_create_event)
@@ -315,7 +314,7 @@ class UndoManager(object):
         from gaphas import state
         state.observers.discard(state.revert_handler)
 
-        state.subscribers.discard(self._undo_handler)
+        state.subscribers.discard(self._gaphas_undo_handler)
 
 
     @component.adapter(IElementCreateEvent)
