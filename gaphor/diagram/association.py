@@ -67,13 +67,9 @@ class AssociationItem(NamedLine):
 
     def setup_canvas(self):
         super(AssociationItem, self).setup_canvas()
-        self._head_end._canvas = self.canvas
-        self._tail_end._canvas = self.canvas
 
     def teardown_canvas(self):
         super(AssociationItem, self).teardown_canvas()
-        del self._head_end._canvas
-        del self._tail_end._canvas
 
     def save(self, save_func):
         NamedLine.save(self, save_func)

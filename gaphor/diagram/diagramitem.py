@@ -215,14 +215,10 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         """
         Remove the item from the canvas and set subject to None.
         """
-        super(DiagramItem, self).unlink()
-        self.subject = None
         if self.canvas:
-            #try:
             self.canvas.remove(self)
-            #except KeyError:
-            #    # Canvas was already removed
-            #    pass
+        self.subject = None
+        super(DiagramItem, self).unlink()
 
 
     def request_update(self):

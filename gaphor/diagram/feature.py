@@ -24,7 +24,7 @@ class FeatureItem(DiagramItem):
         self.width = 0
         self.height = 0
         self.text = ''
-        # Fool unlink code:
+        # Fool unlink code (attribute is not a gaphas.Item):
         self.canvas = None
 
 

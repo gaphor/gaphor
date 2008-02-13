@@ -161,7 +161,7 @@ class UndoManager(object):
         Add an action to undo. An action
         """
         if self._current_transaction:
-            log.debug('add_undo_action: %s %s' % (self._current_transaction, action))
+            #log.debug('add_undo_action: %s %s' % (self._current_transaction, action))
             self._current_transaction.add(action)
             self._app.handle(UndoManagerStateChanged(self))
 
@@ -286,7 +286,6 @@ class UndoManager(object):
     ##
 
     def _gaphas_undo_handler(self, event):
-        print 'Gaphas event:', event
         self.add_undo_action(lambda: state.saveapply(*event));
 
     def _register_undo_handlers(self):
