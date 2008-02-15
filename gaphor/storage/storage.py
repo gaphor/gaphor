@@ -21,6 +21,7 @@ import gc
 import gaphas
 
 from gaphor import UML
+from gaphor.UML.elementfactory import ElementChangedEventBlocker
 from gaphor import diagram
 from gaphor.storage import parser
 from gaphor.application import Application
@@ -179,7 +180,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     size = len(elements) * 3
     def update_status_queue(_n=[0]):
         n = _n[0] = _n[0] + 1
-        if n % 10 == 0:
+        if n % 30 == 0:
             return (n * 100) / size
 
     #log.info('0%')
@@ -194,7 +195,8 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     for id, elem in elements.items():
-        yield update_status_queue()
+        st = update_status_queue()
+        if st: yield st
         if isinstance(elem, parser.element):
             cls = getattr(UML, elem.type)
             #log.debug('Creating UML element for %s (%s)' % (elem, elem.id))
@@ -214,7 +216,8 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     # load attributes and create references:
     for id, elem in elements.items():
-        yield update_status_queue()
+        st = update_status_queue()
+        if st: yield st
         # Ensure that all elements have their element instance ready...
         assert hasattr(elem, 'element')
 
@@ -285,7 +288,8 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     # do a postload:
     for id, elem in elements.items():
-        yield update_status_queue()
+        st = update_status_queue()
+        if st: yield st
         elem.element.postload()
 
     factory.notify_model()
@@ -335,12 +339,17 @@ def load_generator(filename, factory):
         factory.flush()
         gc.collect()
         log.info("Read %d elements from file" % len(elements))
-        for percentage in load_elements_generator(elements, factory, gaphor_version):
-            pass
-            if percentage:
-                yield percentage / 2 + 50
-            else:
-                yield percentage
+        Application.register_subscription_adapter(ElementChangedEventBlocker)
+        try:
+            for percentage in load_elements_generator(elements, factory, gaphor_version):
+                if percentage:
+                    yield percentage / 2 + 50
+                else:
+                    yield percentage
+        except Exception, e:
+            Application.unregister_subscription_adapter(ElementChangedEventBlocker)
+            raise
+        Application.unregister_subscription_adapter(ElementChangedEventBlocker)
         gc.collect()
         yield 100
     except Exception, e:

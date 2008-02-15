@@ -295,7 +295,7 @@ class CommentLineElementConnect(ElementConnect):
         if handle.connected_to and opposite.connected_to:
             if isinstance(opposite.connected_to.subject, UML.Comment):
                 del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
-            else:
+            elif opposite.connected_to.subject:
                 del handle.connected_to.subject.annotatedElement[opposite.connected_to.subject]
         super(CommentLineElementConnect, self).disconnect(handle)
 

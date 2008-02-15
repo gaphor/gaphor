@@ -361,7 +361,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             parent = self._nodes[node.namespace]
             index = parent.index(node)
             return parent[index + 1]
-        except IndexError, e:
+        except (IndexError, ValueError), e:
             return None
 
         

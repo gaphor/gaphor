@@ -258,6 +258,7 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
 
     def register_handlers(self):
+        Application.register_handler(self.on_model_factory_event)
         Application.register_handler(self.on_element_change)
         Application.register_handler(self.on_presentation_subject)
         # FixMe: calls to request_update() cause tests to fail
@@ -266,8 +267,14 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
 
     def unregister_handlers(self):
+        Application.unregister_handler(self.on_model_factory_event)
         Application.unregister_handler(self.on_presentation_subject)
         Application.unregister_handler(self.on_element_change)
+
+
+    @component.adapter(UML.interfaces.IModelFactoryEvent)
+    def on_model_factory_event(self, event):
+        self.on_presentation_subject(None)
 
 
     @component.adapter(UML.interfaces.IAssociationSetEvent)

@@ -22,7 +22,8 @@ class IElementDeleteEvent(IElementEvent):
 
 
 class IElementChangeEvent(IElementEvent):
-    """Generic event fired when element state changes.
+    """
+    Generic event fired when element state changes.
     """
     property = interface.Attribute("The property that changed")
     old_value = interface.Attribute("The property value before the change")
