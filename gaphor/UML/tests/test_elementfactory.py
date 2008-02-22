@@ -112,5 +112,24 @@ class ElementFactoryTestCase(unittest.TestCase):
         ef.flush()
         self.assertTrue(IFlushFactoryEvent.providedBy(last_event) )
 
+    def test_element_event(self):
+        ef = self.factory
 
-# vim:sw=4:et
+        events = []
+        @component.adapter(Class, IElementChangeEvent)
+        def handler(element, event, events=events):
+            assert element is event.element
+            events.append(event)
+
+        Application.register_handler(handler)
+
+        try:
+            c = Class()
+            c.name = 'name'
+            assert len(events) == 1, events
+            assert events[0].new_value == 'name'
+        finally:
+            Application.unregister_handler(handler)
+
+
+# vim:sw=4:et:ai

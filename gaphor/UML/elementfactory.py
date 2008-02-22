@@ -56,10 +56,12 @@ class ElementFactory(object):
 
     def init(self, app):
         self._app = app
+        app.register_handler(self._element_notify)
         app.register_handler(self._element_deleted)
 
     def shutdown(self):
         # unregister after flush: the handler is needed to empty the _elements
+        self._app.unregister_handler(self._element_notify)
         self.flush()
         self._app.unregister_handler(self._element_deleted)
 
@@ -187,6 +189,14 @@ class ElementFactory(object):
         ModelFactoryEvent event from gaphor.UML.event.
         """
         self._app.handle(ModelFactoryEvent(self))
+
+    @component.adapter(IElementChangeEvent)
+    def _element_notify(self, event):
+        """
+        Dispatch IElementChangeEvent events to interested adapters registered
+        by (class, event).
+        """
+        self._app.handle(event.element, event)
 
     @component.adapter(IElementDeleteEvent)
     def _element_deleted(self, event):
