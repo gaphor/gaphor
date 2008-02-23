@@ -4,6 +4,8 @@ from NamedElement.
 """
 
 from gaphor import UML
+from gaphor.UML.interfaces import IAttributeChangeEvent
+from gaphor.application import Application
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 import gaphor.diagram.font as font
@@ -70,7 +72,7 @@ class NamedItem(ElementItem):
     def on_named_element_name(self, event):
         """
         """
-        if self.subject:
+        if event is None or self.subject is event.element:
             self._name.text = self.subject.name
             self.request_update()
 
@@ -81,11 +83,12 @@ class NamedItem(ElementItem):
         is not the same as the namespace of this diagram.
         """
         subject = self.subject
-        if subject and subject.namespace:
-            self._from.text = subject.namespace.name
-        else:
-            self._from.text = ''
-        self.request_update()
+        if event is None or subject is event.element:
+            if subject and subject.namespace:
+                self._from.text = subject.namespace.name
+            else:
+                self._from.text = ''
+            self.request_update()
 
 
     def pre_update(self, context):
