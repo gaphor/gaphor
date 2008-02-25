@@ -29,7 +29,7 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is comment
-        assert handle._connect_constraint is not None
+        assert handle.connection_data is not None
         assert not comment.subject.annotatedElement
 
         # Connecting two ends of the line to the same item is not allowed:
@@ -38,7 +38,7 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is None, handle.connected_to
-        assert not hasattr(handle,'_connect_constraint')
+        #assert not hasattr(handle,'connection_constraint')
         assert not comment.subject.annotatedElement, comment.subject.annotatedElement
 
         #print '# now connect the actor'
@@ -49,7 +49,7 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is actor
-        assert handle._connect_constraint is not None
+        assert handle.connection_data is not None
         assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
         assert actor.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
 
@@ -61,7 +61,7 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is actor2
-        assert handle._connect_constraint is not None
+        assert handle.connection_data is not None
         assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
         assert actor2.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
 
@@ -70,7 +70,7 @@ class ConnectorTestCase(TestCase):
         adapter.disconnect(handle)
 
         assert handle.connected_to is None, handle.connected_to
-        assert handle._connect_constraint is None
+        assert handle.connection_data is None
         assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
         assert not actor2.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
 
@@ -117,7 +117,7 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is assoc
-        assert handle._connect_constraint is not None
+        assert handle.connection_data is not None
         assert not comment.subject.annotatedElement
 
         # Connecting two ends of the line to the same item is not allowed:
@@ -126,7 +126,6 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is None
-        assert not hasattr(handle,'_connect_constraint')
         assert not comment.subject.annotatedElement, comment.subject.annotatedElement
 
         # now connect the comment
@@ -137,7 +136,7 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is comment
-        assert handle._connect_constraint is not None
+        assert handle.connection_data is not None
         assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
         assert assoc.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
 
@@ -146,7 +145,7 @@ class ConnectorTestCase(TestCase):
         adapter.disconnect(handle)
 
         assert handle.connected_to is None, handle.connected_to
-        assert handle._connect_constraint is None
+        assert handle.connection_data is None
         assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
         assert not assoc.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
 
@@ -177,7 +176,7 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is comment
-        assert handle._connect_constraint is not None
+        assert handle.connection_data is not None
         assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
 
         # connect opposite end to the association:
@@ -187,7 +186,7 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is assoc
-        assert handle._connect_constraint is not None
+        assert handle.connection_data is not None
         assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
         assert assoc.subject is None
 
@@ -198,7 +197,7 @@ class ConnectorTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is c1
-        assert handle._connect_constraint is not None
+        assert handle.connection_data is not None
         assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
         assert assoc.subject is None
 

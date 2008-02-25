@@ -80,6 +80,11 @@ class AbstractConnect(object):
 
         self.connect_constraints(handle)
 
+        # TODO: Add handler that triggers on setting self.element.subject = None
+        # TODO: How should we disconnect this handler?
+        #       Maybe one global handler will suffice. Then the adapters can
+        #       be created on an as-needed basis.
+        
         # Set disconnect handler in the adapter, so it will also wotk if
         # connections are created programmatically.
         def _disconnect():
@@ -95,6 +100,7 @@ class AbstractConnect(object):
         Subclasses should disconnect model-level connections.
         """
         self.disconnect_constraints(handle)
+        # TODO: AJM: is this correct? Should move to handle.disconnect()?
         handle.connected_to = None
 
 
@@ -199,7 +205,7 @@ class ElementConnect(AbstractConnect):
 class LineConnect(AbstractConnect):
     """
     Base class for connecting two lines to each other.
-    The line that is conencted to is called 'element', as in ElementConnect.
+    The line that is connected to is called 'element', as in ElementConnect.
 
     Once a line has been connected at both ends, and a model element is
     assigned to it, all items connectedt to this line (e.g. Comments)
