@@ -72,7 +72,7 @@ class NamedItem(ElementItem):
     def on_named_element_name(self, event):
         """
         """
-        if event is None or self.subject is event.element:
+        if self.subject and (event is None or self.subject is event.element):
             self._name.text = self.subject.name
             self.request_update()
 
