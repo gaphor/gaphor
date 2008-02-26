@@ -185,9 +185,6 @@ class DiagramTab(object):
         items = self.view.selected_items
         for i in list(items):
             if isinstance(i, DiagramItem):
-                s = i.subject
-                if s and len(s.presentation) == 1:
-                    s.unlink()
                 i.unlink()
             else:
                 if i.canvas:

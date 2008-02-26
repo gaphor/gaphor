@@ -217,7 +217,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         """
         if self.canvas:
             self.canvas.remove(self)
-        self.subject = None
         super(DiagramItem, self).unlink()
 
 

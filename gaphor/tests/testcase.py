@@ -37,13 +37,11 @@ class TestCase(unittest.TestCase):
         return Application.get_service(name)
 
 
-    def create(self, item_cls, subject_cls=None):
+    def create(self, item_cls, subject_cls=None, subject=None):
         """
         Create an item with specified subject.
         """
-        if subject_cls is None:
-            subject = None
-        else:
+        if subject_cls is not None:
             subject = self.element_factory.create(subject_cls)
         item = self.diagram.create(item_cls, subject=subject)
         self.diagram.canvas.update()

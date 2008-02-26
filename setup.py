@@ -173,6 +173,7 @@ It uses the GTK+ environment for user interaction.
             'action_manager = gaphor.services.actionmanager:ActionManager',
             'gui_manager = gaphor.services.guimanager:GUIManager',
             'copy = gaphor.services.copyservice:CopyService',
+            'sanitizer = gaphor.services.sanitizerservice:SanitizerService',
             'xmi_export = gaphor.plugins.xmiexport:XMIExport',
             'diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout',
             'pynsource = gaphor.plugins.pynsource:PyNSource',

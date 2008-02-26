@@ -9,7 +9,7 @@ from gaphor.misc import uniqueid, odict
 from gaphor.interfaces import IService, IEventFilter
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
                                   IFlushFactoryEvent, IModelFactoryEvent, \
-                                  IElementChangeEvent
+                                  IElementChangeEvent, IElementEvent
 from gaphor.UML.event import ElementCreateEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
 from gaphor.UML.element import Element
@@ -190,10 +190,10 @@ class ElementFactory(object):
         """
         self._app.handle(ModelFactoryEvent(self))
 
-    @component.adapter(IElementChangeEvent)
+    @component.adapter(IElementEvent)
     def _element_notify(self, event):
         """
-        Dispatch IElementChangeEvent events to interested adapters registered
+        Dispatch IElementEvent events to interested adapters registered
         by (class, event).
         """
         self._app.handle(event.element, event)
