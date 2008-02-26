@@ -48,8 +48,7 @@ class ObjectNodeItem(NamedItem):
             style = self.STYLE_BOTTOM,
             visible=self._get_show_ordering)
 
-        self.add_watch(UML.ValueSpecification)
-        self.add_watch(UML.ValueSpecification.value)
+        self.add_watch(UML.LiteralSpecification.value)
         self.add_watch(UML.ObjectNode.ordering)
 
 

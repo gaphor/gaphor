@@ -9,7 +9,7 @@ import unittest
 from cStringIO import StringIO
 
 from gaphor import UML
-from gaphor import storage
+from gaphor.storage import storage
 from gaphor.application import Application
 from gaphor.misc.xmlwriter import XMLWriter
 

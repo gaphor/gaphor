@@ -215,7 +215,7 @@ class ForkNodeItem(Item, DiagramItem):
             style=self.STYLE_TOP,
             visible=self.is_join_spec_visible)
 
-        obj._name = obj.add_text('name', style={
+        self._name = self.add_text('name', style={
                     'text-align': self.style.name_align,
                     'text-padding': self.style.name_padding,
                     'text-outside': self.style.name_outside,
@@ -223,9 +223,9 @@ class ForkNodeItem(Item, DiagramItem):
                     'text-align-group': 'stereotype',
                 }, editable=True)
 
-        self.add_watch(UML.NamedElement.name, on_named_element_name)
-        self.add_watch(UML.JoinNode.joinSpec, on_join_node_join_spec)
-        self.add_watch(UML.LiteralSpecification.value, on_join_node_join_spec)
+        self.add_watch(UML.NamedElement.name, self.on_named_element_name)
+        self.add_watch(UML.JoinNode.joinSpec, self.on_join_node_join_spec)
+        self.add_watch(UML.LiteralSpecification.value, self.on_join_node_join_spec)
 
 
     def save(self, save_func):
@@ -330,12 +330,14 @@ class ForkNodeItem(Item, DiagramItem):
 
 
     def on_named_element_name(self, event):
-        self._name.text = subject.name
-        self.request_update()
+        subject = self.subject
+        if subject and (event is None or event.element is subject):
+            self._name.text = subject.name
+            self.request_update()
 
     def on_join_node_join_spec(self, event):
         subject = self.subject
-        if self.subject and is_join_node(subject) and \
+        if subject and is_join_node(subject) and \
                 (event.element is subject.joinSpec or \
                  event.element is subject.joinSpec.value):
             if is_join_node(subject) and not (subject.joinSpec and subject.joinSpec.value):

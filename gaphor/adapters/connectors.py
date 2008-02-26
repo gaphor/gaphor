@@ -89,7 +89,6 @@ class AbstractConnect(object):
         # connections are created programmatically.
         def _disconnect():
             self.disconnect(handle)
-            handle.disconnect = lambda: 0
         handle.disconnect = _disconnect
 
         return True
@@ -100,8 +99,8 @@ class AbstractConnect(object):
         Subclasses should disconnect model-level connections.
         """
         self.disconnect_constraints(handle)
-        # TODO: AJM: is this correct? Should move to handle.disconnect()?
         handle.connected_to = None
+        handle.disconnect = lambda: 0
 
 
     def connect_constraints(self, handle):

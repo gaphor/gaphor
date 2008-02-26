@@ -41,7 +41,7 @@ class ConnectorTestCase(TestCase):
         #assert not hasattr(handle,'connection_constraint')
         assert not comment.subject.annotatedElement, comment.subject.annotatedElement
 
-        #print '# now connect the actor'
+        # now connect the actor
 
         adapter = component.queryMultiAdapter((actor, line), IConnect)
 
@@ -73,6 +73,80 @@ class ConnectorTestCase(TestCase):
         assert handle.connection_data is None
         assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
         assert not actor2.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
+
+        adapter = component.queryMultiAdapter((comment, line), IConnect)
+
+        handle = line.head
+        adapter.disconnect(handle)
+        
+
+    def test_commentline_class(self):
+        """
+        Connect a CommentLine to a class and unlink the commentLine
+        afterwards.
+        """
+        clazz = self.create(items.ClassItem, UML.Class)
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
+
+        adapter = component.queryMultiAdapter((comment, line), IConnect)
+        handle = line.head
+        adapter.connect(handle)
+
+        adapter = component.queryMultiAdapter((clazz, line), IConnect)
+        handle = line.tail
+        adapter.connect(handle)
+
+        assert clazz.subject in comment.subject.annotatedElement
+        assert comment.subject in clazz.subject.ownedComment
+
+        line.unlink()
+
+        assert not comment.subject.annotatedElement
+        assert not clazz.subject.ownedComment
+
+
+    def test_commentline_relationship_unlink(self):
+        """
+        Connect a CommentLine to a relationship item.
+        Removing the relationship should work.
+
+        Demonstrates defect #103.
+        """
+        clazz1 = self.create(items.ClassItem, UML.Class)
+        clazz2 = self.create(items.ClassItem, UML.Class)
+        gen = self.create(items.GeneralizationItem)
+
+        adapter = component.queryMultiAdapter((clazz1, gen), IConnect)
+        handle = gen.head
+        adapter.connect(handle)
+
+        adapter = component.queryMultiAdapter((clazz2, gen), IConnect)
+        handle = gen.tail
+        adapter.connect(handle)
+
+        assert gen.subject
+
+        # And now the comment:
+
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
+
+        adapter = component.queryMultiAdapter((comment, line), IConnect)
+        handle = line.head
+        adapter.connect(handle)
+
+        adapter = component.queryMultiAdapter((gen, line), IConnect)
+        handle = line.tail
+        adapter.connect(handle)
+
+        assert gen.subject in comment.subject.annotatedElement
+        assert comment.subject in gen.subject.ownedComment
+
+        gen.unlink()
+
+        assert not comment.subject.annotatedElement
+        assert not gen.subject
 
 
     def test_commentline_association(self):
