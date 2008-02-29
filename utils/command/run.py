@@ -106,7 +106,7 @@ class run(Command):
             execfile(self.file, {})
         else:
             print 'Launching Gaphor...'
-            #gaphor.main(self.model)
+            del sys.argv[1:]
             starter = load_entry_point('gaphor==%s' % (self.distribution.get_version(),), 'console_scripts', 'gaphor')
 
             if self.profile:

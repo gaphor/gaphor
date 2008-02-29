@@ -119,7 +119,7 @@ class FileManager(object):
     def load_recent(self, action, index):
         recent_files = self.properties.get('recent-files', []) 
         filename = recent_files[index]
-        self._load(filename)
+        self.load(filename)
         self._app.handle(FileManagerStateChanged(self))
         
     @action(name='file-new', stock_id='gtk-new')
@@ -152,7 +152,7 @@ class FileManager(object):
         self._app.handle(FileManagerStateChanged(self))
 
 
-    def _load(self, filename):
+    def load(self, filename):
         try:
             from gaphor.storage import storage
             log.debug('Loading from: %s' % filename)
@@ -238,7 +238,7 @@ class FileManager(object):
     def new_from_template(self):
         filename = self._open_dialog('New Gaphor model from template')
         if filename:
-            self._load(filename)
+            self.load(filename)
 
             # It's a template: unset filename
             self.filename = None
@@ -249,7 +249,7 @@ class FileManager(object):
     def open(self):
         filename = self._open_dialog('Open Gaphor model')
         if filename:
-            self._load(filename)
+            self.load(filename)
             self._app.handle(FileManagerStateChanged(self))
 
 

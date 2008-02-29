@@ -26,7 +26,7 @@ class GaphorError(Exception):
             self.args = args
 
 
-def main(gaphor_file=None):
+def launch(gaphor_file=None):
     """
     Start the main application by initiating and running
     gaphor.application.Application. 
@@ -36,15 +36,25 @@ def main(gaphor_file=None):
     from gaphor.application import Application
     Application.init()
 
-    main_window = Application.get_service('gui_manager').main_window
-    action_manager = Application.get_service('action_manager')
+    file_manager = Application.get_service('file_manager')
     if gaphor_file:
-        main_window.set_filename(gaphor_file)
-        action_manager.execute('file-revert')
+        file_manager.load(gaphor_file)
     else:
-        action_manager.execute('file-new')
+        file_manager.new()
+
     Application.run()
     Application.shutdown()
+
+
+def main():
+    """
+    Main from the command line
+    """
+    import sys
+    if len(sys.argv) > 1:
+        launch(sys.argv[1])
+    else:
+        launch()
 
 
 # TODO: Remove this
