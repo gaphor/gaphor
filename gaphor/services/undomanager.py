@@ -23,12 +23,11 @@ from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollbac
 from gaphor.transaction import TransactionError, transactional
 
 from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
-                             FlushFactoryEvent, ModelFactoryEvent, \
-                             AttributeChangeEvent, AssociationSetEvent, \
+                             ModelFactoryEvent, AssociationSetEvent, \
                              AssociationAddEvent, AssociationDeleteEvent
-from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
-                                  IAttributeChangeEvent, IModelFactoryEvent, \
-                                  IAssociationChangeEvent
+from gaphor.UML.interfaces import IElementDeleteEvent, \
+                                  IAttributeChangeEvent, IModelFactoryEvent
+                                  
 
 from gaphor.action import action, build_action_group
 from gaphor.event import ActionExecuted
@@ -316,7 +315,7 @@ class UndoManager(object):
         state.subscribers.discard(self._gaphas_undo_handler)
 
 
-    @component.adapter(IElementCreateEvent)
+    @component.adapter(ElementCreateEvent)
     def undo_create_event(self, event):
         factory = event.service
         # A factory is not always present, e.g. for DiagramItems

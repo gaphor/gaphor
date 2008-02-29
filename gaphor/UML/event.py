@@ -108,6 +108,13 @@ class RedefineDeleteEvent(AssociationChangeEvent):
         self.old_value = old_value
 
 
+class DiagramItemCreateEvent(object):
+    interface.implements(IElementCreateEvent)
+
+    def __init__(self, element):
+        self.element = element
+
+
 class ElementCreateEvent(object):
     interface.implements(IElementCreateEvent, IElementFactoryEvent)
 

@@ -8,10 +8,12 @@ __author__ = 'Arjan Molenaar'
 __version__ = '$revision$'
 __date__ = '$date$'
 
+from zope import component
 import gobject
 import gaphas
 from gaphor.misc import uniqueid
 from uml2 import Namespace, PackageableElement
+from event import DiagramItemCreateEvent
 
 class DiagramCanvas(gaphas.Canvas):
     """
@@ -84,6 +86,8 @@ class Diagram(Namespace, PackageableElement):
         if subject:
             obj.subject = subject
         self.canvas.add(obj, parent)
+        print 'send event', obj
+        component.handle(DiagramItemCreateEvent(obj))
         return obj
 
     def unlink(self):

@@ -7,7 +7,7 @@ from zope import interface, component
 
 from gaphor.core import _
 from gaphor.application import Application
-from gaphor.UML.interfaces import IAssociationChangeEvent
+from gaphor.UML.interfaces import IElementCreateEvent, IAssociationChangeEvent
 from gaphor.UML import Presentation
 from interfaces import IPropertyPage, IDiagramSelectionChange
 
@@ -20,7 +20,9 @@ class PropertyEditor(object):
     def __init__(self):
         super(PropertyEditor, self).__init__()
         self._current_item = None
-        self._last_tab = _('Properties')
+        self._default_tab = _('Properties')
+        self._last_tab = self._default_tab
+        self._new_item = False
     
     def construct(self):
         self.notebook = gtk.Notebook()
@@ -32,6 +34,7 @@ class PropertyEditor(object):
         # Make sure we recieve 
         Application.register_handler(self._selection_change)
         Application.register_handler(self._element_changed)
+        Application.register_handler(self._new_item_on_diagram)
         
         return self.notebook
 
@@ -47,7 +50,7 @@ class PropertyEditor(object):
                 log.error('Could not construct property page for ' + name, e)
         self.notebook.show_all()
 
-        self._last_tab = last_tab
+        self._last_tab = self._new_item and self._default_tab or last_tab
 
         # Show the last selected tab again.
         for page_num in range(0, self.notebook.get_n_pages()):
@@ -56,7 +59,10 @@ class PropertyEditor(object):
             if label_text == self._last_tab:
                 self.notebook.set_current_page(page_num)
                 break
-
+        
+        if self._new_item:
+            #self.notebook.grab_focus()
+            self._new_item = False
             
         
     def clear_all_tabs(self):
@@ -98,6 +104,11 @@ class PropertyEditor(object):
             if element is self._current_item:
                 self.clear_all_tabs()
                 self.create_tabs_for_item(self._current_item)
+
+    @component.adapter(Presentation, IElementCreateEvent)
+    def _new_item_on_diagram(self, item, event):
+        self._new_item = True
+        self.notebook.set_current_page(0)
 
 
 # vim:sw=4:et:ai

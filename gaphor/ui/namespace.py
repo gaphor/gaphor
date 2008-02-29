@@ -13,8 +13,8 @@ from zope import component
 
 from gaphor.application import Application
 from gaphor import UML
-from gaphor.UML.event import ModelFactoryEvent, FlushFactoryEvent
-from gaphor.UML.interfaces import IAttributeChangeEvent, IElementCreateEvent, IElementDeleteEvent
+from gaphor.UML.event import ElementCreateEvent, ModelFactoryEvent, FlushFactoryEvent
+from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.UML.event import DerivedUnionSetEvent
 from gaphor.transaction import Transaction
 
@@ -209,7 +209,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         remove(element)
 
 
-    @component.adapter(IElementCreateEvent)
+    @component.adapter(ElementCreateEvent)
     @catchall
     def _on_element_create(self, event):
         element = event.element

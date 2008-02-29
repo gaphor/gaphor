@@ -128,10 +128,13 @@ class DiagramToolbox(object):
         factory_method.item_class = item_class
         return factory_method
 
-    def _after_handler(self):
+    def _after_handler(self, new_item):
         if self.properties('reset-tool-after-create', False):
             self.action_group.get_action('toolbox-pointer').activate()
             # TODO: if the item is a NamedItem, start the EditTool.
+        if isinstance(new_item, items.DiagramItem) and \
+                isinstance(new_item.subject, UML.NamedElement):
+            print 'start edit tool from after tool handler'
 
 
     ##

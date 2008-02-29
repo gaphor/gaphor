@@ -319,7 +319,7 @@ class PlacementTool(_PlacementTool):
     def on_button_release(self, context, event):
         try:
             if self.after_handler:
-                self.after_handler()
+                self.after_handler(self.new_item)
             return _PlacementTool.on_button_release(self, context, event)
         finally:
             self._tx.commit()
