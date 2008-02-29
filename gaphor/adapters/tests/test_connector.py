@@ -558,8 +558,8 @@ class ConnectorTestCase(TestCase):
         a2 = self.create(items.ActionItem, UML.Action)
         o1 = self.create(items.ObjectNodeItem, UML.ObjectNode)
 
-        # diagram, two actions and object node with literal specification, flow has no subject
-        assert len(self.element_factory.lselect()) == 5, self.element_factory.lselect()
+        # diagram, two actions and object node, flow has no subject
+        assert len(self.element_factory.lselect()) == 4, self.element_factory.lselect()
 
         # Connect between two actions (ControlFlow)
         adapter = component.queryMultiAdapter((a1, flow), IConnect)
