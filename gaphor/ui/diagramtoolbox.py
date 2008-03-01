@@ -53,6 +53,8 @@ TOOLBOX_ACTIONS = (
         ('toolbox-interaction', _('Interaction'), 'gaphor-interaction'),
     )), (_('States'), (
         ('toolbox-state', _('State'), 'gaphor-state'),
+        ('toolbox-initial-pseudostate', _('Initial Pseudostate'), 'gaphor-initial-pseudostate'),
+        ('toolbox-final-state', _('Final State'), 'gaphor-final-state'),
         ('toolbox-transition', _('Transition'), 'gaphor-transition'),
     )), (_('Use Cases'), (
         ('toolbox-usecase', _('Use case'), 'gaphor-usecase'),
@@ -320,6 +322,20 @@ class DiagramToolbox(object):
         self.view.tool = PlacementTool(
                 item_factory=self._namespace_item_factory(items.StateItem,
                     UML.State),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_initial_pseudostate(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.InitialPseudostateItem,
+                                                UML.PseudoState),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_final_state(self):
+        self.view.tool = PlacementTool(
+                item_factory=self._item_factory(items.FinalStateItem,
+                                                UML.FinalState),
                 handle_index=SE,
                 after_handler=self._after_handler)
 

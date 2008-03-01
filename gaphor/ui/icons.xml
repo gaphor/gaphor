@@ -151,6 +151,14 @@
     <file>state24.png</file>
     <element>State</element>
   </icon>
+  <icon id="gaphor-final-state">
+    <file>finalstate24.png</file>
+    <element>FinalState</element>
+  </icon>
+  <icon id="gaphor-initial-pseudostate">
+    <file>initialpseudostate24.png</file>
+    <element>Pseudostate</element>
+  </icon>
   <icon id="gaphor-transition">
     <file>transition24.png</file>
     <element>Transition</element>
