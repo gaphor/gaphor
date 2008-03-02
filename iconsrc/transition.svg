@@ -203,7 +203,7 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:window-width="960"
-     inkscape:window-height="721"
+     inkscape:window-height="718"
      inkscape:window-x="0"
      inkscape:window-y="0"
      width="24px"
@@ -224,29 +224,20 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-28.783289,-34.7089)">
-    <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.80000007;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:none;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
-       d="M 30.721767,46.729566 L 48.124301,46.732883"
-       id="path2246" />
-    <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 44.783289,49.7089 L 48.783289,46.7089 L 44.783289,43.7089"
-       id="path5471"
-       sodipodi:nodetypes="ccc" />
-    <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000012;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 39.567876,40.2089 L 36.852461,44.673185"
-       id="path2198"
-       sodipodi:nodetypes="cc" />
-    <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000012;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 35.783289,44.208902 L 32.302258,44.208902"
-       id="path2200"
-       sodipodi:nodetypes="cc" />
-    <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000012;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 38.783287,44.208902 L 42.29626,44.208902"
-       id="path3173"
-       sodipodi:nodetypes="cc" />
+    <g
+       id="g2191"
+       inkscape:export-filename="/home/users/wrobell/projects/gaphor/gaphor/trunk/iconsrc/path2198.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         id="path2246"
+         d="M 30.721767,46.729566 L 48.124301,46.732883"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.80000007;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:none;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="ccc"
+         id="path5471"
+         d="M 44.783289,49.7089 L 48.783289,46.7089 L 44.783289,43.7089"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
   </g>
 </svg>
