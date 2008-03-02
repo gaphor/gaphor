@@ -46,8 +46,11 @@ from gaphor.diagram.lifeline import LifelineItem
 from gaphor.diagram.message import MessageItem
 
 # States
-from gaphor.diagram.states.state import StateItem, VertexItem
+from gaphor.diagram.states import VertexItem
+from gaphor.diagram.states.state import StateItem
 from gaphor.diagram.states.transition import TransitionItem
+from gaphor.diagram.states.finalstate import FinalStateItem
+from gaphor.diagram.states.pseudostates import InitialPseudostateItem
 
 # Use Cases:
 from gaphor.diagram.actor import ActorItem

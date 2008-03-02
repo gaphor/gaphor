@@ -328,7 +328,7 @@ class DiagramToolbox(object):
     def toolbox_initial_pseudostate(self):
         self.view.tool = PlacementTool(
                 item_factory=self._item_factory(items.InitialPseudostateItem,
-                                                UML.PseudoState),
+                                                UML.Pseudostate),
                 handle_index=SE,
                 after_handler=self._after_handler)
 

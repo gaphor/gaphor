@@ -3,17 +3,14 @@ State diagram item.
 """
 
 from gaphor import UML
-from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 from math import pi
+from gaphor.diagram.states import VertexItem
 
 DX = 15
 DY = 8
 DDX = 0.4 * DX
 DDY = 0.4 * DY
-
-class VertexItem(NamedItem):
-    pass
 
 class StateItem(VertexItem):
     __uml__   = UML.State
