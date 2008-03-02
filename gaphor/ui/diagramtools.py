@@ -122,8 +122,8 @@ class ConnectHandleTool(HandleTool):
         finally:
             self._adapter = None
 
-
         return connected
+
 
     def disconnect(self, view, item, handle):
         """
@@ -135,6 +135,7 @@ class ConnectHandleTool(HandleTool):
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
             adapter.disconnect_constraints(handle)
         
+
     def on_button_press(self, context, event):
         """
         In addition to the normal behavior, the button press event creates
@@ -164,6 +165,7 @@ class ConnectHandleTool(HandleTool):
                     self.grab_handle(item, item.handles()[segment + 1])
                     context.grab()
                     return True
+
 
     def on_button_release(self, context, event):
         grabbed_handle = self._grabbed_handle
