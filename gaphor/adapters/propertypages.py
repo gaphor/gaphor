@@ -504,6 +504,7 @@ class CommentItemPropertyPage(object):
         text_view.set_buffer(buffer)
         text_view.show()
         page.pack_start(text_view)
+        page.set_data('default', text_view)
 
         changed_id = buffer.connect('changed', self._on_body_change)
 
@@ -550,6 +551,7 @@ class NamedItemPropertyPage(object):
         entry = gtk.Entry()        
         entry.set_text(subject and subject.name or '')
         hbox.pack_start(entry)
+        page.set_data('default', entry)
 
         # monitor subject.name attribute
         changed_id = entry.connect('changed', self._on_name_change)

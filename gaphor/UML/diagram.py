@@ -87,7 +87,6 @@ class Diagram(Namespace, PackageableElement):
             obj.subject = subject
         self.canvas.add(obj, parent)
         print 'send event', obj
-        component.handle(DiagramItemCreateEvent(obj))
         return obj
 
     def unlink(self):

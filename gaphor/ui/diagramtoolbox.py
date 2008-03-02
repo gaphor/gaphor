@@ -6,6 +6,8 @@ The Toolbox is bound to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
+from zope import component
+from gaphor.UML.event import DiagramItemCreateEvent
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.core import _, inject, radio_action, build_action_group
@@ -133,10 +135,7 @@ class DiagramToolbox(object):
     def _after_handler(self, new_item):
         if self.properties('reset-tool-after-create', False):
             self.action_group.get_action('toolbox-pointer').activate()
-            # TODO: if the item is a NamedItem, start the EditTool.
-        if isinstance(new_item, items.DiagramItem) and \
-                isinstance(new_item.subject, UML.NamedElement):
-            print 'start edit tool from after tool handler'
+        component.handle(DiagramItemCreateEvent(new_item))
 
 
     ##

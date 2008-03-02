@@ -22,7 +22,6 @@ class PropertyEditor(object):
         self._current_item = None
         self._default_tab = _('Properties')
         self._last_tab = self._default_tab
-        self._new_item = False
     
     def construct(self):
         self.notebook = gtk.Notebook()
@@ -45,26 +44,26 @@ class PropertyEditor(object):
         last_tab = self._last_tab
         for name, adapter in component.getAdapters([item,], IPropertyPage):
             try:
-                self.notebook.prepend_page(adapter.construct(), gtk.Label(name))
+                page = adapter.construct()
+                self.notebook.prepend_page(page, gtk.Label(name))
             except Exception, e:
                 log.error('Could not construct property page for ' + name, e)
         self.notebook.show_all()
 
-        self._last_tab = self._new_item and self._default_tab or last_tab
-
+        self.select_tab(last_tab)
+        
+            
+    def select_tab(self, name):
         # Show the last selected tab again.
         for page_num in range(0, self.notebook.get_n_pages()):
             page = self.notebook.get_nth_page(page_num)
             label_text = self.notebook.get_tab_label_text(page)
-            if label_text == self._last_tab:
+            if label_text == name:
                 self.notebook.set_current_page(page_num)
+                self._last_tab = name
                 break
         
-        if self._new_item:
-            #self.notebook.grab_focus()
-            self._new_item = False
-            
-        
+
     def clear_all_tabs(self):
         """
         Remove all tabs from the notebook.
@@ -107,8 +106,12 @@ class PropertyEditor(object):
 
     @component.adapter(Presentation, IElementCreateEvent)
     def _new_item_on_diagram(self, item, event):
-        self._new_item = True
-        self.notebook.set_current_page(0)
-
+        if self.notebook.get_n_pages() > 0:
+            self.select_tab(self._default_tab)
+            page = self.notebook.get_nth_page(self.notebook.get_current_page())
+            default = page.get_data('default')
+            if default:
+                default.grab_focus()
+        
 
 # vim:sw=4:et:ai
