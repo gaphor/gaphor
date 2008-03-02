@@ -1,5 +1,7 @@
 """
 Pseudostate diagram items.
+
+See also gaphor.diagram.states package description.
 """
 
 from gaphor import UML
