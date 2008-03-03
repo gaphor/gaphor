@@ -86,7 +86,6 @@ class Diagram(Namespace, PackageableElement):
         if subject:
             obj.subject = subject
         self.canvas.add(obj, parent)
-        print 'send event', obj
         return obj
 
     def unlink(self):
