@@ -534,6 +534,8 @@ class RelationshipConnect(ElementConnect):
                 line = self.line
                 if line.subject:
                     self.connect_connected_items()
+            return True
+
 
     def disconnect(self, handle):
         """
