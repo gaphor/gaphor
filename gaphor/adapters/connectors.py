@@ -1,5 +1,8 @@
 """
-Adapters
+Connector adapters.
+
+To register connectors registered in this module, it is imported from
+gaphor.adapter package.
 """
 
 from zope import interface, component
