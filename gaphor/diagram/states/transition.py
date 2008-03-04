@@ -22,12 +22,13 @@ class TransitionItem(NamedLine):
     def __init__(self, id = None):
         NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.specification.value', editable=True)
+        self.add_watch(UML.Transition.guard)
 
 
     def postload(self):
         if self.subject and self.subject.guard:
-            self._guard.text = self.subject.guard.value
-        super(FlowItem, self).postload()
+            self._guard.text = self.subject.guard.constraint.value
+        super(TransitionItem, self).postload()
 
 
     def draw_tail(self, context):
