@@ -1,6 +1,9 @@
 """
 Connection between two state machine vertices (state, pseudostate) using
 transition.
+
+To register connectors implemented in this module, it is imported in
+gaphor.adapter package.
 """
 
 from zope import interface, component
