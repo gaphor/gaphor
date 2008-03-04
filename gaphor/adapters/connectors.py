@@ -1,7 +1,7 @@
 """
 Connector adapters.
 
-To register connectors implemented in this module, it is imported from
+To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 

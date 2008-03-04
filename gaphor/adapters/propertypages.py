@@ -1,7 +1,7 @@
 """
 Adapters for the Property Editor.
 
-To register property pages implemented in this module, it is imported from
+To register property pages implemented in this module, it is imported in
 gaphor.adapter package.
 
 # TODO: make all labels align top-left
