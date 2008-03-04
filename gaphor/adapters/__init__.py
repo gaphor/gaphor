@@ -2,4 +2,5 @@
 import gaphor.adapters.connectors
 import gaphor.adapters.editors
 
-from gaphor.adapters.states import vertexconnect
+import gaphor.adapters.states.vertexconnect
+import gaphor.adapters.states.propertypages
