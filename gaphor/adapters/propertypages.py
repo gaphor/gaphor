@@ -1,5 +1,8 @@
 """
-Adapters for the Property Editor
+Adapters for the Property Editor.
+
+To register property pages implemented in this module, it is imported from
+gaphor.adapter package.
 
 # TODO: make all labels align top-left
 # Add hidden columns for list stores where i can put the actual object
