@@ -607,7 +607,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         A.a = association('a', A, upper=1)
 
-        A.a = redefine('a', A, A.a)
+        A.a = redefine(A, 'a', A, A.a)
         events = []
         @component.adapter(AssociationChangeEvent)
         def handler(event, events=events):
@@ -620,6 +620,48 @@ class PropertiesTestCase(unittest.TestCase):
             assert len(events) == 2
             assert events[0].property is A.a, events[0].property
             assert events[1].property is A.a.original, events[1].property
+        finally:
+            Application.unregister_handler(handler)
+
+    def test_redefine_subclass(self):
+        from zope import component
+        from gaphor.application import Application
+        from gaphor.UML.event import AssociationChangeEvent
+        
+        class A(Element):
+            is_unlinked = False
+            def unlink(self):
+                self.is_unlinked = True
+                Element.unlink(self)
+
+        A.a = association('a', A, upper=1)
+
+        class B(A):
+            pass
+
+        B.b = redefine(B, 'b', A, A.a)
+        
+        events = []
+        @component.adapter(AssociationChangeEvent)
+        def handler(event, events=events):
+            events.append(event)
+
+        Application.register_handler(handler)
+        try:
+            a = A()
+            a.a = A()
+            # Only a.a changes, no B class involved
+            assert len(events) == 1
+            assert events[0].property is A.a, events[0].property
+            #assert events[1].property is A.a.original, events[1].property
+            del events[:]
+
+            a = B()
+            a.a = A()
+            # Now events are sent for both association and redefine
+            assert len(events) == 2
+            assert events[0].property is B.b, events[0].property
+            assert events[1].property is B.b.original, events[1].property
         finally:
             Application.unregister_handler(handler)
 

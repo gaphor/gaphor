@@ -568,12 +568,13 @@ class derivedunion(umlproperty):
 class redefine(umlproperty):
     """
     Redefined association
-    Element.x = redefine('x', Class, Element.assoc)
+    Element.x = redefine('x', Element, Class, Element.assoc)
     If the redefine eclipses the original property (it has the same name)
     it ensures that the original values are saved and restored.
     """
 
-    def __init__(self, name, type, original):
+    def __init__(self, decl_class, name, type, original):
+        self.decl_class = decl_class
         self.name = intern(name)
         self._name = intern('_' + name)
         self.type = type
@@ -632,7 +633,7 @@ class redefine(umlproperty):
 
     @component.adapter(IAssociationChangeEvent)
     def _association_changed(self, event):
-        if event.property is self.original:
+        if event.property is self.original and isinstance(event.element, self.decl_class):
             # mimic the events for Set/Add/Delete
             if IAssociationSetEvent.providedBy(event):
                 component.handle(RedefineSetEvent(event.element, self, event.old_value, event.new_value))

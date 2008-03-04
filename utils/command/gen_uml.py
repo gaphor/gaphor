@@ -234,7 +234,7 @@ class Writer:
         False by write_association().
         """
         self.write_property("%s.%s" % (r.class_name, r.name),
-                            "redefine('%s', %s, %s)" % (r.name, r.opposite_class_name, r.redefines))
+                            "redefine(%s, '%s', %s, %s)" % (r.class_name, r.name, r.opposite_class_name, r.redefines))
 
 
 def parse_association_name(name):
