@@ -10,6 +10,7 @@ class InitialPseudostate(TestCase):
     """
     Initial pseudostate item test cases.
     """
+
     def test_initial_pseudostate(self):
         """Test creation of initial pseudostate
         """

@@ -22,9 +22,9 @@ class TransitionItem(NamedLine):
     def __init__(self, id = None):
         NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.specification.value', editable=True)
-        self.add_watch(UML.Transition.guard)
-        self.add_watch(UML.Constraint.specification)
-        self.add_watch(UML.LiteralSpecification.value)
+        self.add_watch(UML.Transition.guard, self.on_guard)
+        self.add_watch(UML.Constraint.specification, self.on_guard)
+        self.add_watch(UML.LiteralSpecification.value, self.on_guard)
 
 
     def postload(self):
@@ -34,6 +34,23 @@ class TransitionItem(NamedLine):
         if self.subject and self.subject.guard:
             self._guard.text = self.subject.guard.specification.value
         super(TransitionItem, self).postload()
+
+
+    def on_guard(self, event):
+        if not self.subject:
+            return
+        element = event.element
+        guard = self.subject.guard
+        if event is None or \
+                (element is self.subject) or \
+                (element is guard) or \
+                (guard and element is guard.specification):
+            try:
+                self._guard.text = self.subject.guard.specification.value or ''
+            except AttributeError:
+                # Have a no-value here
+                self._guard.text = ''
+            self.request_update()
 
 
     def draw_tail(self, context):
