@@ -55,6 +55,7 @@ class InterfaceItem(ClassItem):
 
         self.add_watch(UML.Interface.ownedAttribute, self.on_class_owned_attribute)
         self.add_watch(UML.Interface.ownedOperation, self.on_class_owned_operation)
+        self.add_watch(UML.Implementation.contract, self.on_implementation_contract)
 
     @observed
     def set_drawing_style(self, style):
@@ -89,6 +90,11 @@ class InterfaceItem(ClassItem):
             self.drawing_style = self.DRAW_COMPARTMENT
 
     folded = property(is_folded, _set_folded)
+
+    def on_implementation_contract(self, event):
+        #print 'on_implementation_contract', event, event.element
+        if event is None or event.element.contract is self:
+            self.request_update()
 
     def pre_update_icon(self, context):
         """

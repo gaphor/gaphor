@@ -41,7 +41,8 @@ import operator
 class umlproperty(object):
     """
     Superclass for attribute, enumeration and association.
-    The subclasses should define a 'name' attribute that contains the name
+
+    The subclasses should define a ``name`` attribute that contains the name
     of the property. Derived properties (derivedunion and redefine) can be
     connected, they will be notified when the value changes.
     """
@@ -138,8 +139,12 @@ class attribute(umlproperty):
 
 class enumeration(umlproperty):
     """
-    Enumeration.
-    Element.enum = enumeration('enum', ('one', 'two', 'three'), 'one')
+    Enumeration
+
+      Element.enum = enumeration('enum', ('one', 'two', 'three'), 'one')
+
+    An enumeration is a special kind of attribute that can only hold a
+    predefined set of values. Multiplicity is always `[0..1]`
     """
 
     def __init__(self, name, values, default):
@@ -382,24 +387,18 @@ class association(umlproperty):
                 if composite:
                     value.unlink()
 
-#    def __on_unlink(self, value, pspec, obj):
-#        """
-#        Disconnect when the element on the other end of the association
-#        (value) sends the '__unlink__' signal. This is especially important
-#        for uni-directional associations.
-#        """
-#        #print '__on_unlink', name, obj, value
-#        if pspec == '__unlink__':
-#            self.__delete__(obj, value)
-#            # re-establish unlink handler:
-#            value.connect('__unlink__', self.__on_unlink, obj)
-#
 
 class AssociationStubError(Exception):
     pass
 
 
 class associationstub(umlproperty):
+    """
+    An association stub is an internal thingy that ensures all associations
+    are always bi-directional. This helps the application when one end of
+    the association is unlinked. On unlink() of an element all `umlproperty`'s
+    are iterated and called by their unlink() method.
+    """
 
     def __init__(self, association):
         self.association = association
@@ -568,7 +567,9 @@ class derivedunion(umlproperty):
 class redefine(umlproperty):
     """
     Redefined association
-    Element.x = redefine('x', Element, Class, Element.assoc)
+
+      Element.redefine = redefine(Element, 'redefine', Class, Element.assoc)
+
     If the redefine eclipses the original property (it has the same name)
     it ensures that the original values are saved and restored.
     """

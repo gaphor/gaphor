@@ -2,23 +2,16 @@
 Test classes.
 """
 
-import unittest
-
+from gaphor.tests.testcase import TestCase
 from gaphor import UML
 from gaphor.diagram.interface import InterfaceItem
 
 import gaphor.adapters
 
 
-class ClassTestCase(unittest.TestCase):
+class ClassTestCase(TestCase):
 
-    def setUp(self):
-        self.element_factory = UML.ElementFactory()
-
-    def tearDown(self):
-        #self.element_factory.flush()
-        #assert len(self.element_factory.lselect()) == 0
-        pass
+    services = [ 'element_factory' ]
 
     def test_interface(self):
         diagram = self.element_factory.create(UML.Diagram)
