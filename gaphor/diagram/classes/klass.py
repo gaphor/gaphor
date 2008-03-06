@@ -7,7 +7,7 @@ from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.i18n import _
 
-from classifier import ClassifierItem
+from gaphor.diagram.classifier import ClassifierItem
 from feature import AttributeItem, OperationItem
 
         

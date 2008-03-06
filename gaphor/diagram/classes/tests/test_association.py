@@ -6,8 +6,8 @@ from gaphor.tests import TestCase
 from zope import component
 
 from gaphor import UML
-from gaphor.diagram.association import AssociationItem
-from gaphor.diagram.klass import ClassItem
+from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.interfaces import IConnect
 from gaphas import View
 

@@ -15,7 +15,7 @@ class ImplementationItem(DiagramLine):
 
     def post_update(self, context):
         # change look into solid line when connected to folded interface
-        from gaphor.diagram.interface import InterfaceItem
+        from interface import InterfaceItem
         conn_to = self.head.connected_to
         if isinstance(conn_to, InterfaceItem) \
            and conn_to.is_folded():

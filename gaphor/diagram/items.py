@@ -16,14 +16,14 @@ from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.simpleitem import Line, Box, Ellipse
 
 # Classes:
-from gaphor.diagram.feature import FeatureItem, AttributeItem, OperationItem
-from gaphor.diagram.klass import ClassItem
-from gaphor.diagram.interface import InterfaceItem
-from gaphor.diagram.package import PackageItem
-from gaphor.diagram.association import AssociationItem
-from gaphor.diagram.dependency import DependencyItem
-from gaphor.diagram.generalization import GeneralizationItem
-from gaphor.diagram.implementation import ImplementationItem
+from gaphor.diagram.classes.feature import FeatureItem, AttributeItem, OperationItem
+from gaphor.diagram.classes.klass import ClassItem
+from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.package import PackageItem
+from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.dependency import DependencyItem
+from gaphor.diagram.classes.generalization import GeneralizationItem
+from gaphor.diagram.classes.implementation import ImplementationItem
 
 # Components:
 from gaphor.diagram.artifact import ArtifactItem

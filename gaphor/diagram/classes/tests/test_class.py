@@ -2,22 +2,22 @@
 Test classes.
 """
 
-import unittest
+from gaphor.tests.testcase import TestCase
 
 from gaphor import UML
-from gaphor.diagram.klass import ClassItem
+from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.interfaces import IEditor
 
 import gaphor.adapters
 
 
-class ClassTestCase(unittest.TestCase):
+class ClassTestCase(TestCase):
 
     def test_compartments(self):
         """
         Test creation of classes and working of compartments.
         """
-        element_factory = UML.ElementFactory()
+        element_factory = self.element_factory
         diagram = element_factory.create(UML.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
@@ -50,7 +50,7 @@ class ClassTestCase(unittest.TestCase):
 
     def test_attribute_removal(self):
 
-        element_factory = UML.ElementFactory()
+        element_factory = self.element_factory
         diagram = element_factory.create(UML.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
         diagram.canvas.update()
@@ -80,7 +80,7 @@ class ClassTestCase(unittest.TestCase):
         """
         Test working of item_at method.
         """
-        element_factory = UML.ElementFactory()
+        element_factory = self.element_factory
         diagram = element_factory.create(UML.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
         klass.subject.name = 'Class1'

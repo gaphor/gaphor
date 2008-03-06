@@ -1,15 +1,15 @@
 # vim:sw=4:et
-'''
+"""
 Feature diagram item. Feature is a super class of both Attribute, Operations and
 Methods.
-'''
+"""
 
 from gaphor import UML
 from gaphas.item import Item
-from diagramitem import DiagramItem
 from gaphor.diagram import DiagramItemMeta
+from gaphor.diagram.diagramitem import DiagramItem
 from gaphas.util import text_extents, text_set_font, text_align
-import font
+from gaphor.diagram import font
 
 class FeatureItem(DiagramItem):
     """

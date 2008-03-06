@@ -8,9 +8,9 @@ from gaphas.item import NW, SE, NE, SW
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
-from gaphor.diagram.dependency import DependencyItem
-from gaphor.diagram.implementation import ImplementationItem
-from gaphor.diagram.klass import ClassItem
+from dependency import DependencyItem
+from implementation import ImplementationItem
+from klass import ClassItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 
@@ -56,6 +56,9 @@ class InterfaceItem(ClassItem):
         self.add_watch(UML.Interface.ownedAttribute, self.on_class_owned_attribute)
         self.add_watch(UML.Interface.ownedOperation, self.on_class_owned_operation)
         self.add_watch(UML.Implementation.contract, self.on_implementation_contract)
+        #self.add_watch(UML.Interface.implementation)
+        self.add_watch(UML.Interface.supplierDependency)
+
 
     @observed
     def set_drawing_style(self, style):

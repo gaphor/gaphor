@@ -24,7 +24,8 @@ from gaphor.diagram.diagramline import DiagramLine
 
 
 class DependencyItem(DiagramLine):
-    """This class represents all types of dependencies.
+    """
+    This class represents all types of dependencies.
 
     Normally a dependency looks like a dashed line with an arrow head.
     The dependency can have a stereotype attached to it, stating the kind of
