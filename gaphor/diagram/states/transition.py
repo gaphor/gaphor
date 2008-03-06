@@ -39,7 +39,7 @@ class TransitionItem(NamedLine):
     def on_guard(self, event):
         if not self.subject:
             return
-        element = event.element
+        element = event and event.element
         guard = self.subject.guard
         if event is None or \
                 (element is self.subject) or \

@@ -121,6 +121,7 @@ class ElementFactoryTestCase(unittest.TestCase):
             assert element is event.element
             events.append(event)
 
+        #Application.init_components()
         Application.register_handler(handler)
 
         try:

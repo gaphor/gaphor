@@ -3,6 +3,7 @@ from gaphor.diagram import items
 from gaphor.tests.testcase import TestCase
 
 class ActivityNodesTestCase(TestCase):
+
     def test_decision_node(self):
         """Test creation of decision node
         """
