@@ -89,15 +89,15 @@ class AssociationItemTestCase(TestCase):
 
         head = a._head_end
 
-        head._set_navigability(True)
+        head.navigability = True
         assert head.subject.class_ == c2.subject
         assert head.subject.owningAssociation is None
 
-        head._set_navigability(False)
+        head.navigability = False
         assert head.subject.class_ is None
         assert head.subject.owningAssociation == a.subject
 
-        head._set_navigability(None)
+        head.navigability = None
         assert head.subject.class_ is None
         assert head.subject.owningAssociation is None
 
@@ -120,15 +120,15 @@ class AssociationItemTestCase(TestCase):
 
         head = a._head_end
 
-        head._set_navigability(True)
+        head.navigability = True
         assert head.subject.interface_ == c2.subject
         assert head.subject.owningAssociation is None
 
-        head._set_navigability(False)
+        head.navigability = False
         assert head.subject.interface_ is None
         assert head.subject.owningAssociation == a.subject
 
-        head._set_navigability(None)
+        head.navigability = None
         assert head.subject.interface_ is None
         assert head.subject.owningAssociation is None
 
@@ -151,15 +151,15 @@ class AssociationItemTestCase(TestCase):
 
         head = a._head_end
 
-        head._set_navigability(True)
+        head.navigability = True
         assert head.subject.classifier == c2.subject
         assert head.subject.owningAssociation is None
 
-        head._set_navigability(False)
+        head.navigability = False
         assert head.subject.classifier is None
         assert head.subject.owningAssociation == a.subject
 
-        head._set_navigability(None)
+        head.navigability = None
         assert head.subject.classifier is None
         assert head.subject.owningAssociation is None
 
