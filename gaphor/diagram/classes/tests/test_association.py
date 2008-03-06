@@ -71,4 +71,34 @@ class AssociationItemTestCase(TestCase):
         assert tail_subject is self.assoc.subject.memberEnd[0]
 
 
+    def test_navigability_at_class(self):
+        """Test association end navigability connected to a class"""
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
+
+        a = self.create(AssociationItem)
+
+        adapter = component.queryMultiAdapter((c1, a), IConnect)
+        assert adapter
+        adapter.connect(a.head)
+        assert a.head.connected_to
+
+        adapter = component.queryMultiAdapter((c2, a), IConnect)
+        adapter.connect(a.tail)
+        assert a.tail.connected_to
+
+        head = a._head_end
+
+        head._set_navigability(True)
+        assert head.subject.class_ == c2.subject
+        assert head.subject.owningAssociation is None
+
+        head._set_navigability(False)
+        assert head.subject.class_ is None
+        assert head.subject.owningAssociation == a.subject
+
+        head._set_navigability(None)
+        assert head.subject.class_ is None
+        assert head.subject.owningAssociation is None
+
 # vim:sw=4:et:ai
