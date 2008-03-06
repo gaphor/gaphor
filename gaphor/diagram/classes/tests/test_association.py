@@ -8,6 +8,7 @@ from zope import component
 from gaphor import UML
 from gaphor.diagram.classes.association import AssociationItem
 from gaphor.diagram.classes.klass import ClassItem
+from gaphor.diagram.items import InterfaceItem
 from gaphor.diagram.interfaces import IConnect
 from gaphas import View
 
@@ -99,6 +100,37 @@ class AssociationItemTestCase(TestCase):
 
         head._set_navigability(None)
         assert head.subject.class_ is None
+        assert head.subject.owningAssociation is None
+
+
+    def test_navigability_at_interface(self):
+        """Test association end navigability connected to an interface"""
+        c1 = self.create(InterfaceItem, UML.Interface)
+        c2 = self.create(InterfaceItem, UML.Interface)
+
+        a = self.create(AssociationItem)
+
+        adapter = component.queryMultiAdapter((c1, a), IConnect)
+        assert adapter
+        adapter.connect(a.head)
+        assert a.head.connected_to
+
+        adapter = component.queryMultiAdapter((c2, a), IConnect)
+        adapter.connect(a.tail)
+        assert a.tail.connected_to
+
+        head = a._head_end
+
+        head._set_navigability(True)
+        assert head.subject.interface_ == c2.subject
+        assert head.subject.owningAssociation is None
+
+        head._set_navigability(False)
+        assert head.subject.interface_ is None
+        assert head.subject.owningAssociation == a.subject
+
+        head._set_navigability(None)
+        assert head.subject.interface_ is None
         assert head.subject.owningAssociation is None
 
 # vim:sw=4:et:ai
