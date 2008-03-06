@@ -166,9 +166,9 @@ class AssociationItem(NamedLine):
                 self.draw_head = self.draw_head_composite
             elif tail_subject.aggregation == intern('shared'):
                 self.draw_head = self.draw_head_shared
-            elif self._head_end.get_navigability():
+            elif self._head_end.navigability:
                 self.draw_head = self.draw_head_navigable
-            elif self._head_end.get_navigability() == False:
+            elif self._head_end.navigability == False:
                 self.draw_head = self.draw_head_none
             else:
                 self.draw_head = self.draw_head_undefined
@@ -177,9 +177,9 @@ class AssociationItem(NamedLine):
                 self.draw_tail = self.draw_tail_composite
             elif head_subject.aggregation == intern('shared'):
                 self.draw_tail = self.draw_tail_shared
-            elif self._tail_end.get_navigability():
+            elif self._tail_end.navigability:
                 self.draw_tail = self.draw_tail_navigable
-            elif self._tail_end.get_navigability() == False:
+            elif self._tail_end.navigability == False:
                 self.draw_tail = self.draw_tail_none
             else:
                 self.draw_tail = self.draw_tail_undefined
@@ -381,7 +381,7 @@ class AssociationEnd(UML.Presentation):
                 self._mult = m
                 self.request_update()
 
-    def get_navigability(self):
+    def _get_navigability(self):
         """
         Check navigability of the AssociationEnd. If property is owned by
         class via ownedAttribute, then it is navigable. If property is
@@ -460,7 +460,7 @@ class AssociationEnd(UML.Presentation):
             log.warning('AssociationEnd.set_navigable: %s missing' % \
                         (subject and 'subject' or 'opposite Property'))
 
-    navigability = property(get_navigability, _set_navigability)
+    navigability = property(_get_navigability, _set_navigability)
 
 
     def point_name(self, x, y):
