@@ -1,12 +1,10 @@
 #!/usr/bin/python
 
 import gaphor
-import gaphor.storage as storage
+from gaphor.storage import storage
 import gaphor.UML as UML
-import diacanvas
 
 import cairo
-import cairo.svg
 
 import optparse
 import os
@@ -107,10 +105,30 @@ for model in args:
         # we use always svg as midstep for conversion between gaphor file
         # and pdf; it should be changed in the future, when diacanvas
         # uses canvas which supports pdf as output format...
-        svg = diacanvas.ExportSVG()
-        svg.render(diagram.canvas)
-        svg.save(svg_name)
+        print dir(diagram)
+        log.debug('Exporting SVG image to: %s' % filename)
+        view = View(canvas)
+        view.painter = ItemPainter()
 
+        # Update bounding boxes with a temporaly CairoContext
+        # (used for stuff like calculating font metrics)
+        tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
+        tmpcr = cairo.Context(tmpsurface)
+        view.update_bounding_box(tmpcr)
+        tmpcr.show_page()
+        tmpsurface.flush()
+
+        w, h = view.bounding_box.width, view.bounding_box.height
+        surface = cairo.SVGSurface(filename, w, h)
+        cr = cairo.Context(surface)
+        view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
+        view.paint(cr)
+        cr.show_page()
+        surface.flush()
+        surface.finish()
+
+        import sys
+        sys.exit(1)
         if options.format == 'pdf':
             svg = cairo.svg.Context()
             svg.parse(svg_name)
