@@ -33,12 +33,12 @@ class ExtendItemTestCase(TestCase):
         adapter.connect(handle)
 
         assert handle.connected_to is uc2
-        assert handle._connect_constraint is not None
+        assert handle.connection_data is not None
 
         adapter.disconnect(handle)
 
         assert handle.connected_to is None, handle.connected_to
-        assert handle._connect_constraint is None
+        assert handle.connection_data is None
 
 
 

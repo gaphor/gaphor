@@ -4,19 +4,17 @@ Unnit tests for simple items.
 
 import unittest
 
+from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.simpleitem import Line, Box, Ellipse
 from gaphas import View
 
 
-class SimpleItemTestCase(unittest.TestCase):
+class SimpleItemTestCase(TestCase):
 
     def setUp(self):
-        self.diagram = diagram = UML.ElementFactory().create(UML.Diagram)
-        self.view = View(diagram.canvas)
-
-    def tearDown(self):
-        pass
+        super(SimpleItemTestCase, self).setUp()
+        self.view = View(self.diagram.canvas)
 
     def test_line(self):
         """

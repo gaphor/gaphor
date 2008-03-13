@@ -75,15 +75,14 @@ class HandleToolTestCase(unittest.TestCase):
 
         handle.x, handle.y = 245, 248
         tool.connect(view, line, handle, 245, 248)
-        self.assertTrue(hasattr(handle, '_connect_constraint'))
-        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(handle.connection_data is not None)
         self.assertTrue(handle.connected_to is actor, handle.connected_to)
         self.assertEquals((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
         tool.disconnect(view, line, handle)
         
         self.assertTrue(handle.connected_to is actor)
-        self.assertTrue(handle._connect_constraint is None)
+        self.assertTrue(handle.connection_data is None)
 
 
     def test_iconnect_2(self):
@@ -116,8 +115,8 @@ class HandleToolTestCase(unittest.TestCase):
         # Connect one end to the Comment
         handle.pos = view.get_matrix_v2i(line).transform_point(45, 48)
         tool.connect(view, line, handle, 45, 48)
-        self.assertTrue(hasattr(handle, '_connect_constraint'))
-        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(hasattr(handle, 'connection_data'))
+        self.assertTrue(handle.connection_data is not None)
         self.assertTrue(handle.connected_to is comment)
         self.assertEquals((45, 50), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
@@ -129,8 +128,8 @@ class HandleToolTestCase(unittest.TestCase):
         glued = tool.glue(view, line, handle, 200, 200) 
         self.assertTrue(glued is actor)
         tool.connect(view, line, handle, 200, 200)
-        self.assertTrue(hasattr(handle, '_connect_constraint'))
-        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(hasattr(handle, 'connection_data'))
+        self.assertTrue(handle.connection_data is not None)
         self.assertTrue(handle.connected_to is actor)
         self.assertEquals((200, 200), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
         
@@ -142,7 +141,7 @@ class HandleToolTestCase(unittest.TestCase):
 
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         self.assertTrue(handle.connected_to is actor, handle.connected_to)
-        self.assertTrue(handle._connect_constraint is None)
+        self.assertTrue(handle.connection_data is None)
 
         # Try to connect far away from any item will only do a full disconnect
         self.assertEquals(len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement)
@@ -153,7 +152,7 @@ class HandleToolTestCase(unittest.TestCase):
 
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         self.assertTrue(handle.connected_to is None)
-        self.assertTrue(handle._connect_constraint is None)
+        self.assertTrue(handle.connection_data is None)
 
 
     def test_connect_3(self):
@@ -190,7 +189,7 @@ class HandleToolTestCase(unittest.TestCase):
         handle = line.handles()[0]
         self.assertEquals((0, 0), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         self.assertTrue(handle.connected_to is comment, 'c = ' + str(handle.connected_to))
-        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(handle.connection_data is not None)
 
         # Grab the second handle and drag it to the actor
 
@@ -201,7 +200,7 @@ class HandleToolTestCase(unittest.TestCase):
         handle = line.handles()[-1]
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         self.assertTrue(handle.connected_to is actor)
-        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(handle.connection_data is not None)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
         # Press, release, nothing should change
@@ -213,7 +212,7 @@ class HandleToolTestCase(unittest.TestCase):
         handle = line.handles()[-1]
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         self.assertTrue(handle.connected_to is actor)
-        self.assertTrue(handle._connect_constraint is not None)
+        self.assertTrue(handle.connection_data is not None)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
         # Move second handle away from the actor. Should remove connection
@@ -225,7 +224,7 @@ class HandleToolTestCase(unittest.TestCase):
         handle = line.handles()[-1]
         self.assertEquals((500, 500), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         self.assertTrue(handle.connected_to is None)
-        self.assertTrue(handle._connect_constraint is None)
+        self.assertTrue(handle.connection_data is None)
         self.assertEquals(len(comment.subject.annotatedElement), 0)
 
 

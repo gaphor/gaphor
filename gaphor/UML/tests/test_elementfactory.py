@@ -126,6 +126,7 @@ class ElementFactoryTestCase(unittest.TestCase):
 
         try:
             c = Class()
+            del events[:]
             c.name = 'name'
             assert len(events) == 1, events
             assert events[0].new_value == 'name'
