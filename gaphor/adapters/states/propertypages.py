@@ -7,7 +7,8 @@ gaphor.adapter package.
 
 import gtk
 
-from gaphor.core import _, transactional
+from gaphor.core import _, inject, transactional
+from gaphor import UML
 from gaphor.diagram import items
 from gaphor.ui.interfaces import IPropertyPage
 from zope import interface, component
@@ -17,6 +18,7 @@ class TransitionPropertyPage(NamedItemPropertyPage):
     """
     Transition property page allows to edit guard specification.
     """
+    element_factory = inject('element_factory')
 
     interface.implements(IPropertyPage)
     component.adapts(items.TransitionItem)
@@ -49,7 +51,11 @@ class TransitionPropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        self.context.set_guard(value)
+        subject = self.context.subject
+        if subject.guard is None:
+            subject.guard = self.element_factory.create(UML.Constraint)
+            subject.guard.specification = self.element_factory.create(UML.LiteralSpecification)
+        subject.guard.specification.value = value
 
 
 component.provideAdapter(TransitionPropertyPage, name='Properties')

@@ -3,6 +3,7 @@ State transition implementation.
 """
 
 from gaphor import UML
+from gaphor.core import inject
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
@@ -11,7 +12,6 @@ class TransitionItem(NamedLine):
     """
     Representation of state transition.
     """
-
     __uml__ = UML.Transition
 
     __style__ = {
@@ -60,11 +60,6 @@ class TransitionItem(NamedLine):
         cr.move_to(15, -6)
         cr.line_to(0, 0)
         cr.line_to(15, 6)
-
-
-    def set_guard(self, value):
-        self.subject.guard.specification.value = value
-        self._guard.text = value
 
 
 # vim:sw=4:et:ai
