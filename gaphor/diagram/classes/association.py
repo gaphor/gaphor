@@ -427,12 +427,21 @@ class AssociationEnd(UML.Presentation):
             #
 
             # if navigable
+            #
+            # WARNING! see bug http://gaphor.devjavu.com/ticket/110
+            #
             if isinstance(opposite.type, UML.Class):
                 if subject.class_:
                     del subject.class_
             elif isinstance(opposite.type, UML.Interface):
                 if subject.interface_:
                     del subject.interface_
+            elif isinstance(opposite.type, UML.Actor):
+                if subject.actor:
+                    del subject.actor
+            elif isinstance(opposite.type, UML.UseCase):
+                if subject.useCase:
+                    del subject.useCase
             else:
                 assert 0, 'Should never be reached'
 
@@ -444,11 +453,18 @@ class AssociationEnd(UML.Presentation):
             #
             # Set navigability.
             #
+            #
+            # WARNING! see bug http://gaphor.devjavu.com/ticket/110
+            #
             if navigable:
                 if isinstance(opposite.type, UML.Class):
                     subject.class_ = opposite.type
                 elif isinstance(opposite.type, UML.Interface):
                     subject.interface_ = opposite.type
+                elif isinstance(opposite.type, UML.Actor):
+                    subject.actor = opposite.type
+                elif isinstance(opposite.type, UML.UseCase):
+                    subject.useCase = opposite.type
                 else:
                     assert 0, 'Should never be reached'
             elif navigable == False:
