@@ -385,7 +385,7 @@ class AssociationEnd(UML.Presentation):
         """
         Check navigability of the AssociationEnd. If property is owned by
         class via ownedAttribute, then it is navigable. If property is
-        owned by association by owndedEnd, then it is not navigable.
+        owned by association by ownedEnd, then it is not navigable.
         Otherwise the navigability is unknown.
 
         Returned navigability values:
@@ -397,11 +397,20 @@ class AssociationEnd(UML.Presentation):
         subject = self.subject
 
         if subject and subject.opposite:
+            #
+            # WARNING! see bug http://gaphor.devjavu.com/ticket/110
+            #
             opposite = subject.opposite
             if isinstance(opposite.type, UML.Interface):
                 type = subject.interface_
-            else: # isinstance(opposite.type, UML.Class):
+            elif isinstance(opposite.type, UML.Class):
                 type = subject.class_
+            elif isinstance(opposite.type, UML.Actor):
+                type = subject.actor
+            elif isinstance(opposite.type, UML.UseCase):
+                type = subject.useCase
+            else:
+                assert 0, 'Should never be reached'
 
             if type and subject in type.ownedAttribute:
                 navigability = True
