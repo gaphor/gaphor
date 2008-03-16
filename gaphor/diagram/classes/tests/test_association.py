@@ -7,7 +7,7 @@ from zope import component
 
 from gaphor import UML
 from gaphor.diagram.items import AssociationItem, ClassItem, InterfaceItem, \
-    UseCaseItem
+    UseCaseItem, ActorItem
 from gaphor.diagram.interfaces import IConnect
 from gaphas import View
 
@@ -133,8 +133,8 @@ class AssociationItemTestCase(TestCase):
         assert head.subject.owningAssociation is None
 
 
-    def test_navigability_at_classifier(self):
-        """Test association end navigability connected to any classifier"""
+    def test_navigability_at_usecase(self):
+        """Test association end navigability connected to an usecase"""
         c1 = self.create(UseCaseItem, UML.UseCase)
         c2 = self.create(UseCaseItem, UML.UseCase)
 
@@ -162,5 +162,38 @@ class AssociationItemTestCase(TestCase):
         head.navigability = None
         assert head.subject.classifier is None
         assert head.subject.owningAssociation is None
+
+
+    def test_navigability_at_actor(self):
+        """Test association end navigability connected to an actor"""
+        c1 = self.create(ActorItem, UML.Actor)
+        c2 = self.create(ActorItem, UML.Actor)
+
+        a = self.create(AssociationItem)
+
+        adapter = component.queryMultiAdapter((c1, a), IConnect)
+        assert adapter
+        adapter.connect(a.head)
+        assert a.head.connected_to
+
+        adapter = component.queryMultiAdapter((c2, a), IConnect)
+        adapter.connect(a.tail)
+        assert a.tail.connected_to
+
+        head = a._head_end
+
+        head.navigability = True
+        assert head.subject.classifier == c2.subject
+        assert head.subject.owningAssociation is None
+
+        head.navigability = False
+        assert head.subject.classifier is None
+        assert head.subject.owningAssociation == a.subject
+
+        head.navigability = None
+        assert head.subject.classifier is None
+        assert head.subject.owningAssociation is None
+
+
 
 # vim:sw=4:et:ai
