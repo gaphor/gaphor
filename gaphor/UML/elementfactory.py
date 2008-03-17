@@ -53,6 +53,7 @@ class ElementFactory(object):
     def __init__(self):
         self._elements = odict.odict()
         self._observers = list()
+        self._app = None
 
     def init(self, app):
         self._app = app
@@ -61,16 +62,19 @@ class ElementFactory(object):
 
     def shutdown(self):
         # unregister after flush: the handler is needed to empty the _elements
-        self._app.unregister_handler(self._element_notify)
+        if self._app:
+            self._app.unregister_handler(self._element_notify)
         self.flush()
-        self._app.unregister_handler(self._element_deleted)
+        if self._app:
+            self._app.unregister_handler(self._element_deleted)
 
     def create(self, type):
         """
         Create a new model element of type type.
         """
         obj = self.create_as(type, uniqueid.generate_id())
-        self._app.handle(ElementCreateEvent(self, obj))
+        if self._app:
+            self._app.handle(ElementCreateEvent(self, obj))
         return obj
 
     def create_as(self, type, id):
@@ -156,9 +160,10 @@ class ElementFactory(object):
         """
         Flush all elements (remove them from the factory).
         """
-        self._app.handle(FlushFactoryEvent(self))
+        if self._app:
+            self._app.handle(FlushFactoryEvent(self))
+            self._app.register_subscription_adapter(ElementChangedEventBlocker)
 
-        self._app.register_subscription_adapter(ElementChangedEventBlocker)
         try:
             # First flush all diagrams:
             for value in list(self.select(lambda e: isinstance(e, Diagram))):
@@ -169,7 +174,8 @@ class ElementFactory(object):
             for key, value in self._elements.items():
                 value.unlink()
         finally:
-            self._app.unregister_subscription_adapter(ElementChangedEventBlocker)
+            if self._app:
+                self._app.unregister_subscription_adapter(ElementChangedEventBlocker)
 
         assert len(self._elements) == 0, 'Still items in the factory: %s' % str(self._elements.values())
 
@@ -188,7 +194,8 @@ class ElementFactory(object):
         Send notification that a new model has been loaded by means of the
         ModelFactoryEvent event from gaphor.UML.event.
         """
-        self._app.handle(ModelFactoryEvent(self))
+        if self._app:
+            self._app.handle(ModelFactoryEvent(self))
 
     @component.adapter(IElementEvent)
     def _element_notify(self, event):
@@ -196,7 +203,8 @@ class ElementFactory(object):
         Dispatch IElementEvent events to interested adapters registered
         by (class, event).
         """
-        self._app.handle(event.element, event)
+        if self._app:
+            self._app.handle(event.element, event)
 
     @component.adapter(IElementDeleteEvent)
     def _element_deleted(self, event):
