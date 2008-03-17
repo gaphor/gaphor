@@ -4,13 +4,15 @@ import gaphor
 from gaphor.storage import storage
 import gaphor.UML as UML
 
+from gaphas.painter import ItemPainter
+from gaphas.view import View
+
 import cairo
 
 import optparse
 import os
 import re
 import sys
-import tempfile
 
 def pkg2dir(package):
     """
@@ -34,19 +36,19 @@ def message(msg):
 
 usage = 'usage: %prog [options] file1 file2...'
 
-parser = optparse.OptionParser(usage = usage)
+parser = optparse.OptionParser(usage=usage)
 
-parser.add_option('-v', '--verbose', dest = 'verbose', action = 'store_true',
-    help = 'verbose output')
-parser.add_option('-u', '--use-underscores', dest = 'underscores', action = 'store_true',
-    help = 'use underscores instead of spaces for output filenames')
-parser.add_option('-d', '--dir', dest = 'dir', metavar = 'directory',
-    help = 'output to directory')
-parser.add_option('-f', '--format', dest = 'format', metavar = 'format',
-    help = 'output file format, default pdf', default = 'pdf',
-    choices = ['pdf', 'svg'])
-parser.add_option('-r', '--regex', dest = 'regex', metavar = 'regex',
-    help = 'process diagrams which name matches given regular expresion;' \
+parser.add_option('-v', '--verbose', dest='verbose', action='store_true',
+    help='verbose output')
+parser.add_option('-u', '--use-underscores', dest='underscores', action='store_true',
+    help='use underscores instead of spaces for output filenames')
+parser.add_option('-d', '--dir', dest='dir', metavar='directory',
+    help='output to directory')
+parser.add_option('-f', '--format', dest='format', metavar='format',
+    help='output file format, default pdf', default='pdf',
+    choices=['pdf', 'svg', 'png'])
+parser.add_option('-r', '--regex', dest='regex', metavar='regex',
+    help='process diagrams which name matches given regular expresion;' \
     ' name includes package name; regular expressions are case insensitive')
 
 (options, args) = parser.parse_args()
@@ -70,12 +72,12 @@ for model in args:
     message('\nready for rendering\n')
 
     for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
-        dir = pkg2dir(diagram.package)
+        odir = pkg2dir(diagram.package)
 
-        pname = dir + '/' + diagram.name # plain name, no extension
-                                         # or additional directories
+        pname = odir + '/' + diagram.name
+
         if options.underscores:
-            dir = dir.replace(' ', '_')
+            odir = odir.replace(' ', '_')
             pname = pname.replace(' ', '_')
 
         if name_re and not name_re.search(pname):
@@ -83,35 +85,19 @@ for model in args:
             continue
 
         if options.dir:
-            dir = '%s/%s' % (options.dir, dir)
+            odir = '%s/%s' % (options.dir, odir)
 
-        pdf_name = '%s/%s.pdf' % (dir, diagram.name)
+        outfilename = '%s/%s.%s' % (odir, diagram.name, options.format)
 
-        # in case of pdf format we create temporary svg file; see comment below
-        if options.format == 'svg':
-            svg_name = '%s/%s.svg' % (dir, diagram.name)
-            out_name = svg_name
-        else:
-            fd, svg_name = tempfile.mkstemp()
-            del fd # we do not use it anymore
-            out_name = pdf_name
+        if not os.path.exists(odir):
+            message('creating dir %s' % odir)
+            os.makedirs(odir)
 
-        if not os.path.exists(dir):
-            message('creating dir %s' % dir)
-            os.makedirs(dir)
+        message('rendering: %s -> %s...' % (pname, outfilename))
 
-        message('rendering: %s -> %s...' % (pname, out_name))
-
-        # we use always svg as midstep for conversion between gaphor file
-        # and pdf; it should be changed in the future, when diacanvas
-        # uses canvas which supports pdf as output format...
-        print dir(diagram)
-        log.debug('Exporting SVG image to: %s' % filename)
-        view = View(canvas)
+        view = View(diagram.canvas)
         view.painter = ItemPainter()
 
-        # Update bounding boxes with a temporaly CairoContext
-        # (used for stuff like calculating font metrics)
         tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
         tmpcr = cairo.Context(tmpsurface)
         view.update_bounding_box(tmpcr)
@@ -119,24 +105,21 @@ for model in args:
         tmpsurface.flush()
 
         w, h = view.bounding_box.width, view.bounding_box.height
-        surface = cairo.SVGSurface(filename, w, h)
+        if options.format == 'pdf':
+            surface = cairo.PDFSurface(outfilename, w, h)
+        elif options.format == 'svg':
+            surface = cairo.SVGSurface(outfilename, w, h)
+        elif options.format == 'png':
+            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w+1), int(h+1))
+        else:
+            assert False, 'unknown format %s' % options.format
         cr = cairo.Context(surface)
         view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
         view.paint(cr)
         cr.show_page()
+
+        if options.format == 'png':
+            surface.write_to_png(outfilename)
+
         surface.flush()
         surface.finish()
-
-        import sys
-        sys.exit(1)
-        if options.format == 'pdf':
-            svg = cairo.svg.Context()
-            svg.parse(svg_name)
-            width, height = svg.get_size()
-
-            ctx = cairo.Context(cairo.PDFSurface(pdf_name, width, height))
-            svg.render(ctx)
-            ctx.show_page()
-
-            # svg file is no longer necessary
-            os.unlink(svg_name)
