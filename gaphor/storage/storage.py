@@ -29,6 +29,13 @@ from gaphor.diagram import items
 from gaphor.i18n import _
 #from gaphor.misc.xmlwriter import XMLWriter
 
+# import gaphor.adapters.connectors package, so diagram items can find
+# their appropriate connectors (i.e. diagram line requires this);
+# this allows external scripts to load diagram properly... or should
+# this be done using services? i.e. request storage service, which should
+# depend on connectors service?
+from gaphor.adapters import connectors
+
 __all__ = [ 'load', 'save' ]
 
 FILE_FORMAT_VERSION = '3.0'
