@@ -123,3 +123,8 @@ for model in args:
 
         surface.flush()
         surface.finish()
+
+def main():
+    pass
+
+# vim:sw=4:et:ai

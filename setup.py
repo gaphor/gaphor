@@ -162,7 +162,7 @@ It uses the GTK+ environment for user interaction.
     entry_points = {
         'console_scripts': [
             'gaphor = gaphor:main',
-            'gaphorconvert = gaphor.tools.gaphorconvert',
+            'gaphorconvert = gaphor.tools.gaphorconvert:main',
         ],
         'gaphor.services': [
             'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
