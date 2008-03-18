@@ -10,7 +10,7 @@ from gaphor.interfaces import IService, IEventFilter
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
                                   IFlushFactoryEvent, IModelFactoryEvent, \
                                   IElementChangeEvent, IElementEvent
-from gaphor.UML.event import ElementCreateEvent, \
+from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
 from gaphor.UML.element import Element
 from gaphor.UML.diagram import Diagram
@@ -160,9 +160,10 @@ class ElementFactory(object):
         """
         Flush all elements (remove them from the factory).
         """
-        if self._app:
-            self._app.handle(FlushFactoryEvent(self))
-            self._app.register_subscription_adapter(ElementChangedEventBlocker)
+        app = self._app
+        if app:
+            app.handle(FlushFactoryEvent(self))
+            app.register_subscription_adapter(ElementChangedEventBlocker)
 
         try:
             # First flush all diagrams:
@@ -170,12 +171,15 @@ class ElementFactory(object):
                 # Make sure no updates happen while destroying the canvas
                 value.canvas.block_updates = True
                 value.unlink()
-
+                if not app:
+                    self._element_deleted(ElementDeleteEvent(self, value))
             for key, value in self._elements.items():
                 value.unlink()
+                if not app:
+                    self._element_deleted(ElementDeleteEvent(self, value))
         finally:
-            if self._app:
-                self._app.unregister_subscription_adapter(ElementChangedEventBlocker)
+            if app:
+                app.unregister_subscription_adapter(ElementChangedEventBlocker)
 
         assert len(self._elements) == 0, 'Still items in the factory: %s' % str(self._elements.values())
 

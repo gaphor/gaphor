@@ -27,9 +27,10 @@ component.provideHandler(handler)
 class ElementFactoryTestCase(unittest.TestCase):
 
     def setUp(self):
+        Application.init_components()
         self.factory = ElementFactory()
         self.factory.init(Application)
-            
+
     def tearDown(self):
         self.factory.shutdown()
         del self.factory
@@ -61,6 +62,23 @@ class ElementFactoryTestCase(unittest.TestCase):
 
         assert wp() is None
         assert len(ef.values()) == 0
+
+
+    def testWithoutApplication(self):
+        ef = ElementFactory()
+
+        p = ef.create(Parameter)
+        assert ef.size() == 1, ef.size()
+
+        ef.flush()
+        assert ef.size() == 0, ef.size()
+
+        p = ef.create(Parameter)
+        assert ef.size() == 1, ef.size()
+
+        p.unlink()
+        assert ef.size() == 0, ef.size()
+
 
     def testUnlink(self):
         ef = self.factory
