@@ -74,11 +74,14 @@ for model in args:
     for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
         odir = pkg2dir(diagram.package)
 
-        pname = odir + '/' + diagram.name
+        # just diagram name
+        dname = diagram.name
+        # full diagram name including package path
+        pname = '%s/%s' % (odir, dname)
 
         if options.underscores:
             odir = odir.replace(' ', '_')
-            pname = pname.replace(' ', '_')
+            dname = dname.replace(' ', '_')
 
         if name_re and not name_re.search(pname):
             message('skipping %s' % pname)
@@ -87,7 +90,7 @@ for model in args:
         if options.dir:
             odir = '%s/%s' % (options.dir, odir)
 
-        outfilename = '%s/%s.%s' % (odir, diagram.name, options.format)
+        outfilename = '%s/%s.%s' % (odir, dname, options.format)
 
         if not os.path.exists(odir):
             message('creating dir %s' % odir)
