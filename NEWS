@@ -3,6 +3,9 @@
 - Transition to zope events completed.
 - state machines
 
+For a complete set of changes and fixes see:
+  http://gaphor.devjavu.com/query?milestone=Gaphor+0.13.0
+
 0.12.0
 ------
 - undo/redo fixes
@@ -32,21 +35,21 @@
 
 0.11.0
 ------
- - Sequence diagrams
- - Non-UML drawing primitives (rectangles, ellipses, lines).
- - Major performance improvements in Gaphas 0.2.0.
- - Property editor
- - Lots of user interface tweaks
- - Services are loaded through Egg entry points.
- - New plugin infrastructure, based on setuptools.
- - gtk.UIManager is now used for menus.
+- Sequence diagrams
+- Non-UML drawing primitives (rectangles, ellipses, lines).
+- Major performance improvements in Gaphas 0.2.0.
+- Property editor
+- Lots of user interface tweaks
+- Services are loaded through Egg entry points.
+- New plugin infrastructure, based on setuptools.
+- gtk.UIManager is now used for menus.
 
 0.10.0
 ------
- - New undo management system
- - Setuptools is used for installation and also within Gaphor
- - Depends on zope.component 3.4 and gaphas 0.1.3 (installed on as-needed basis)
- - Installable as Python Egg
+- New undo management system
+- Setuptools is used for installation and also within Gaphor
+- Depends on zope.component 3.4 and gaphas 0.1.3 (installed on as-needed basis)
+- Installable as Python Egg
 
 0.9.0
 -----
@@ -54,6 +57,7 @@
 - Zope Adapters used for item connections
 - Undo managements temporaly disabled
 - Added loads of unit tests
+
 NOTE: if you have Zope 3 installed it's probably not a good idea to install
       Gaphor too, since Gaphor tries to install Zope3 packages too.
       Don't worry, you can run Gaphor perfectly well using the run-gaphor.sh
