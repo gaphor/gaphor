@@ -269,13 +269,9 @@ class DiagramTab(object):
                 tx = Transaction()
                 item = self.diagram.create(item_class)
                 assert item
-                inverse = Matrix(*view.matrix) 
-                inverse.invert() 
-                cx, cy = inverse.transform_point(x + view.hadjustment.value,
-                                                 y + view.vadjustment.value)
-
-                ix, iy = view.canvas.get_matrix_c2i(item, calculate=True).transform_point(max(0, cx), max(0, cy))
-                item.matrix.translate(ix, iy)
+                
+                x, y = view.get_matrix_v2i(item).transform_point(x, y)
+                item.matrix.translate(x, y)
                 item.subject = element
                 tx.commit()
                 view.unselect_all()
