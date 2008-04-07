@@ -943,27 +943,12 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Decision/Merge node.
     """
     def glue(self, handle):
-        # If one side of self.element has more than one edge, the
-        # type of node is determined (either join or fork).
-        #
-        # TODO: remove these restrictions and create a combined join/fork or
-        #       decision/merge node 
-        #if handle is line.head and len(subject.incoming) > 1 and len(subject.outgoing) > 0:
-        #    return None
-        #
-        #if handle is line.tail and len(subject.incoming) > 0 and len(subject.outgoing) > 1:
-        #    return None
-
-#        assert len(self.element.handles()) == 2, '%s: %d' % (self.element, len(self.element.handles()))
-#        h1, h2 = self.element.handles()
-#        return geometry.distance_line_point(h1.pos, h2.pos, (x, y))[1]
-        
         # No cyclic connect is possible on a Flow/Decision node:
-        line = self.line
+        head, tail = self.line.head, self.line.tail
         subject = self.element.subject
         
-        if handle is line.head and line.tail.connected_to and line.tail.connected_to.subject is subject \
-           or handle is line.tail and line.head.connected_to and line.head.connected_to.subject is subject:
+        if handle is head and tail.connected_to and tail.connected_to.subject is subject \
+           or handle is tail and head.connected_to and head.connected_to.subject is subject:
             return None
 
         return super(FlowForkDecisionNodeConnect, self).glue(handle)
