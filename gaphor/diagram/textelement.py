@@ -331,7 +331,7 @@ class TextElement(object):
     bounds = property(lambda self: self._bounds)
 
     def __init__(self, attr, style=None, pattern=None, visible=None,
-            editable=False, font=font.FONT_NAME):
+            editable=False, font=font.FONT):
         """
         Create new text element with bounds (0, 0, 10, 10) and empty text.
 

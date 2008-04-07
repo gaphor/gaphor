@@ -158,7 +158,7 @@ class ClassifierItem(NamedItem):
 
         self._drawing_style = ClassifierItem.DRAW_NONE
         self.add_watch(UML.Classifier.isAbstract, self.on_classifier_is_abstract)
-
+        self._name.font = font.FONT_NAME
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
