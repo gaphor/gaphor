@@ -710,6 +710,10 @@ class ConnectorTestCase(TestCase):
         assert type(f1.subject) is forkNodeClass, f1.subject
 
         # flow4 will force the forknode to become a combined node:
+        # Connecting line this:
+        #        head  tail|--flow2-->[ a2 ]
+        # [ a1 ] --flow1-->|
+        # [ a4 ] --flow4-->|--flow3-->[ a3 ]
 
         adapter = component.queryMultiAdapter((f1, flow4), IConnect)
         assert adapter
