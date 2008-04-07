@@ -338,7 +338,8 @@ class ForkNodeItem(Item, DiagramItem):
     def on_join_node_join_spec(self, event):
         subject = self.subject
         if subject and is_join_node(subject) and \
-                (event.element is subject.joinSpec or \
+                (event is None or \
+                 event.element is subject.joinSpec or \
                  event.element is subject.joinSpec.value):
             if is_join_node(subject) and not (subject.joinSpec and subject.joinSpec.value):
                 self.set_join_spec(DEFAULT_JOIN_SPEC)

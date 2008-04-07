@@ -957,6 +957,14 @@ class FlowForkDecisionNodeConnect(FlowConnect):
 #        assert len(self.element.handles()) == 2, '%s: %d' % (self.element, len(self.element.handles()))
 #        h1, h2 = self.element.handles()
 #        return geometry.distance_line_point(h1.pos, h2.pos, (x, y))[1]
+        
+        # No cyclic connect is possible on a Flow/Decision node:
+        line = self.line
+        subject = self.element.subject
+        
+        if handle is line.head and line.tail.connected_to and line.tail.connected_to.subject is subject \
+           or handle is line.tail and line.head.connected_to and line.head.connected_to.subject is subject:
+            return None
 
         return super(FlowForkDecisionNodeConnect, self).glue(handle)
 
