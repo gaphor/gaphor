@@ -308,8 +308,8 @@ class AssociationItem(NamedLine):
         context.cairo.line_to(0, 0)
 
     def draw(self, context):
-        cr = context.cairo
         super(AssociationItem, self).draw(context)
+        cr = context.cairo
         self._head_end.draw(context)
         self._tail_end.draw(context)
         if self._show_direction:
