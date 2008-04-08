@@ -1,12 +1,10 @@
-
-"""AssociationItem -- Graphical representation of an association.
+"""
+Association item - graphical representation of an association.
 
 Plan:
  - transform AssociationEnd in a (dumb) data class
  - for assocation name and direction tag, use the same trick as is used
    for line ends.
- - 
-
 """
 
 # TODO: for Association.postload(): in some cases where the association ends
@@ -106,8 +104,9 @@ class AssociationItem(NamedLine):
         super(AssociationItem, self).unlink()
 
     def invert_direction(self):
-        """Invert the direction of the association, this is done by
-        swapping the head and tail-ends subjects.
+        """
+        Invert the direction of the association, this is done by swapping
+        the head and tail-ends subjects.
         """
         if not self.subject:
             return
@@ -117,8 +116,9 @@ class AssociationItem(NamedLine):
 
     def on_named_element_name(self, event):
         """
-        Override NamedLine.on_named_element_name.
         Update names of the association as well as its ends.
+
+        Override NamedLine.on_named_element_name.
         """
         if event is None:
             super(AssociationItem, self).on_named_element_name(event)
@@ -205,14 +205,17 @@ class AssociationItem(NamedLine):
         
 
     def point(self, x, y):
-        """Returns the distance from the Association to the (mouse) cursor.
+        """
+        Returns the distance from the Association to the (mouse) cursor.
         """
         return min(super(AssociationItem, self).point(x, y),
                    self._head_end.point(x, y),
                    self._tail_end.point(x, y))
 
     def draw_head_none(self, context):
-        """Draw an 'x' on the line end, indicating no traversing.
+        """
+        Draw an 'x' on the line end to indicate no navigability at
+        association head.
         """
         cr = context.cairo
         cr.move_to(6, -4)
@@ -222,8 +225,11 @@ class AssociationItem(NamedLine):
         cr.stroke()
         cr.move_to(0, 0)
 
+
     def draw_tail_none(self, context):
-        """Draw an 'x' on the line end, indicating no traversing.
+        """
+        Draw an 'x' on the line end to indicate no navigability at
+        association tail.
         """
         cr = context.cairo
         cr.line_to(0, 0)
@@ -233,7 +239,12 @@ class AssociationItem(NamedLine):
         cr.rel_line_to(-8, 8)
         cr.stroke()
 
+
     def _draw_diamond(self, cr):
+        """
+        Helper function to draw diamond shape for shared and composite
+        aggregations.
+        """
         cr.move_to(20, 0)
         cr.line_to(10, -6)
         cr.line_to(0, 0)
@@ -241,8 +252,11 @@ class AssociationItem(NamedLine):
         #cr.line_to(20, 0)
         cr.close_path()
 
+
     def draw_head_composite(self, context):
-        """Draw a closed diamond on the line end.
+        """
+        Draw a closed diamond on the line end to indicate composite
+        aggregation at association head.
         """
         cr = context.cairo
         self._draw_diamond(cr)
@@ -250,8 +264,11 @@ class AssociationItem(NamedLine):
         cr.stroke()
         cr.move_to(20, 0)
 
+
     def draw_tail_composite(self, context):
-        """Draw a closed diamond on the line end.
+        """
+        Draw a closed diamond on the line end to indicate composite
+        aggregation at association tail.
         """
         cr = context.cairo
         cr.line_to(20, 0)
@@ -260,15 +277,21 @@ class AssociationItem(NamedLine):
         cr.fill_preserve()
         cr.stroke()
 
+
     def draw_head_shared(self, context):
-        """Draw an open diamond on the line end.
+        """
+        Draw an open diamond on the line end to indicate shared aggregation
+        at association head.
         """
         cr = context.cairo
         self._draw_diamond(cr)
         cr.move_to(20, 0)
 
+
     def draw_tail_shared(self, context):
-        """Draw an open diamond on the line end.
+        """
+        Draw an open diamond on the line end to indicate shared aggregation
+        at association tail.
         """
         cr = context.cairo
         cr.line_to(20, 0)
@@ -276,8 +299,11 @@ class AssociationItem(NamedLine):
         self._draw_diamond(cr)
         cr.stroke()
 
+
     def draw_head_navigable(self, context):
-        """Draw a normal arrow.
+        """
+        Draw a normal arrow to indicate association end navigability at
+        association head.
         """
         cr = context.cairo
         cr.move_to(15, -6)
@@ -286,8 +312,11 @@ class AssociationItem(NamedLine):
         cr.stroke()
         cr.move_to(0, 0)
 
+
     def draw_tail_navigable(self, context):
-        """Draw a normal arrow.
+        """
+        Draw a normal arrow to indicate association end navigability at
+        association tail.
         """
         cr = context.cairo
         cr.line_to(0, 0)
@@ -296,15 +325,22 @@ class AssociationItem(NamedLine):
         cr.line_to(0, 0)
         cr.line_to(15, 6)
 
+
     def draw_head_undefined(self, context):
-        """Draw nothing. undefined.
+        """
+        Draw nothing to indicate undefined association end at association
+        head.
         """
         context.cairo.move_to(0, 0)
 
+
     def draw_tail_undefined(self, context):
-        """Draw nothing. undefined.
+        """
+        Draw nothing to indicate undefined association end at association
+        tail.
         """
         context.cairo.line_to(0, 0)
+
 
     def draw(self, context):
         super(AssociationItem, self).draw(context)
