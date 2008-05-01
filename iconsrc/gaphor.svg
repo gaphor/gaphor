@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@
    height="400"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.45.1"
+   inkscape:version="0.46"
    version="1.0"
    sodipodi:docbase="/home/wrobell"
    sodipodi:docname="gaphor.svg"
@@ -23,6 +23,13 @@
    inkscape:export-ydpi="10.8">
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 200 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="400 : 200 : 1"
+       inkscape:persp3d-origin="200 : 133.33333 : 1"
+       id="perspective2463" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient3372">
@@ -36,10 +43,9 @@
          id="stop3376" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient3363">
       <stop
-         style="stop-color:#650082;stop-opacity:1;"
+         style="stop-color:#54006c;stop-opacity:1;"
          offset="0"
          id="stop3366" />
       <stop
@@ -48,10 +54,9 @@
          id="stop3368" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient3346">
       <stop
-         style="stop-color:#e6c800;stop-opacity:1;"
+         style="stop-color:#c7c000;stop-opacity:1;"
          offset="0"
          id="stop3348" />
       <stop
@@ -378,41 +383,35 @@
          stdDeviation="1.0589857"
          id="feGaussianBlur4103" />
     </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3331">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="3.1729602"
-         id="feGaussianBlur3333" />
-    </filter>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3346"
-       id="linearGradient3352"
-       x1="222.77211"
-       y1="94.492447"
-       x2="59.405895"
-       y2="236.01468"
-       gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3363"
-       id="linearGradient3370"
-       x1="-236.79849"
-       y1="312.89941"
-       x2="-404.6355"
-       y2="454.3685"
-       gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3372"
-       id="linearGradient3378"
+       id="linearGradient2469"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0058783,0,0,1.0058783,-12.344461,10.938244)"
        x1="-83.168747"
        y1="310.24118"
        x2="77.656029"
-       y2="149.95532"
-       gradientUnits="userSpaceOnUse" />
+       y2="149.95532" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3363"
+       id="linearGradient2473"
+       gradientUnits="userSpaceOnUse"
+       x1="-236.79849"
+       y1="312.89941"
+       x2="-404.6355"
+       y2="454.3685" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3346"
+       id="linearGradient2477"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.014415,0,0,0.9994128,-6.2342295,13.746519)"
+       x1="222.77211"
+       y1="94.492447"
+       x2="59.405895"
+       y2="236.01468" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -424,9 +423,9 @@
      objecttolerance="10000"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.3775"
-     inkscape:cx="200.99688"
-     inkscape:cy="204.94346"
+     inkscape:zoom="1"
+     inkscape:cx="57.057971"
+     inkscape:cy="200"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      width="400px"
@@ -439,12 +438,23 @@
      inkscape:guide-points="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     gridspacingx="10px"
-     gridspacingy="10px"
      inkscape:window-width="1264"
      inkscape:window-height="762"
-     inkscape:window-x="328"
-     inkscape:window-y="170" />
+     inkscape:window-x="69"
+     inkscape:window-y="50">
+    <inkscape:grid
+       id="GridFromPre046Settings"
+       type="xygrid"
+       originx="0px"
+       originy="0px"
+       spacingx="10px"
+       spacingy="10px"
+       color="#0000ff"
+       empcolor="#0000ff"
+       opacity="0.2"
+       empopacity="0.4"
+       empspacing="5" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -461,48 +471,36 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:url(#linearGradient3378);fill-opacity:1.0;fill-rule:evenodd;stroke:none;stroke-width:13.16855335;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:url(#linearGradient2469);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:13.16855335;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect3154"
-       width="165.43964"
-       height="165.43962"
-       x="-87.783607"
-       y="149.95532"
-       transform="matrix(0.8823748,-0.4705473,0.8823748,0.4705473,0,0)"
+       width="166.41214"
+       height="166.41212"
+       x="-100.64408"
+       y="161.77505"
+       transform="matrix(0.883349,-0.4687158,0.883349,0.4687158,0,0)"
        inkscape:export-filename="/home/wrobell/rect3161.png"
        inkscape:export-xdpi="21.6"
        inkscape:export-ydpi="21.6" />
     <rect
-       style="fill:url(#linearGradient3352);fill-opacity:1.0;fill-rule:evenodd;stroke:none;stroke-width:12.79309368;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:url(#linearGradient2477);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:12.79309368;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect3156"
-       width="169.57607"
-       height="143.54204"
-       x="54.117817"
-       y="94.524002"
-       transform="matrix(0.8798555,0.4752414,0,1,0,0)"
+       width="172.02051"
+       height="143.45775"
+       x="48.663696"
+       y="108.21501"
+       transform="matrix(0.8836156,0.4682131,0,1,0,0)"
        inkscape:export-filename="/home/wrobell/rect3161.png"
        inkscape:export-xdpi="21.6"
        inkscape:export-ydpi="21.6" />
     <rect
-       style="fill:url(#linearGradient3370);fill-opacity:1.0;fill-rule:evenodd;stroke:none;stroke-width:12.79309368;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4101)"
+       style="fill:url(#linearGradient2473);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:12.79309368;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4101)"
        id="rect3161"
        width="169.57607"
        height="143.54204"
        x="-404.6355"
        y="312.01407"
-       transform="matrix(-0.8798555,0.4752414,0,1,0,0)"
+       transform="matrix(-0.8963529,0.4749624,0,0.9994128,-5.6962039,11.355758)"
        inkscape:export-xdpi="21.6"
        inkscape:export-ydpi="21.6" />
-    <text
-       xml:space="preserve"
-       style="font-size:434.43008423px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;opacity:0.45;filter:url(#filter3331)"
-       x="-4.3835921"
-       y="376.38919"
-       id="text3244"
-       transform="scale(1.1592145,0.8626531)"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3246"
-         x="-4.3835921"
-         y="376.38919">G</tspan></text>
   </g>
 </svg>
