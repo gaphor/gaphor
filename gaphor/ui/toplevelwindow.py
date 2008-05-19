@@ -2,11 +2,20 @@
 Basic stuff for toplevel windows.
 """
 
+import os.path
+import pkg_resources
+
 import gtk
 
 from zope import interface
 from interfaces import IUIComponent
 
+ICONS = (
+    'gaphor-24x24.png',
+    'gaphor-48x48.png',
+    'gaphor-96x96.png',
+    'gaphor-256x256.png',
+)
 
 class ToplevelWindow(object):
 
@@ -23,6 +32,11 @@ class ToplevelWindow(object):
         self.window.set_title(self.title)
         self.window.set_size_request(*self.size)
         self.window.set_resizable(True)
+
+        # set default icons of gaphor windows
+        icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
+        icons = (gtk.gdk.pixbuf_new_from_file(os.path.join(icon_dir, f)) for f in ICONS)
+        self.window.set_icon_list(*icons)
 
         self.window.add_accel_group(self.ui_manager.get_accel_group())
 
