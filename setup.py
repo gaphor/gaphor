@@ -127,6 +127,10 @@ Gaphor is a UML modeling tool written in Python.
 
 It uses the GTK+ environment for user interaction.
 """,
+    data_files=[
+        ('share/pixmaps', ['gaphor/ui/pixmaps/gaphor-48x48.png']),
+        ('share/applications', ['gaphor.desktop']),
+    ],
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: X11 Applications :: GTK',

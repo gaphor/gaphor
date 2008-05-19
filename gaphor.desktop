@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Gaphor
+Comment=UML modeling environment written in Python
+Comment[pl]=Środowisko modelowania UML oparte o Pythona
+Exec=gaphor
+Icon=gaphor-48x48.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=GTK;GNOME;Development;ProjectManagement;
+# vi: encoding=utf-8
