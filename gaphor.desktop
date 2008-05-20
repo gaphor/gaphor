@@ -1,7 +1,8 @@
 [Desktop Entry]
 Name=Gaphor
-Comment=UML modeling environment written in Python
-Comment[pl]=Środowisko modelowania UML oparte o Pythona
+Comment=UML modelling environment
+Comment[nl]=UML modelleer omgeving environment
+Comment[pl]=Środowisko modelowania UML
 Exec=gaphor
 Icon=gaphor-48x48.png
 Terminal=false
