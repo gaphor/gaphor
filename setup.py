@@ -84,6 +84,14 @@ class build_doc(Command):
             print 'epydoc not installed, skipping API documentation.'
 
 
+data_files = []
+
+if sys.platform != 'win32':
+    data_files = [
+        ('share/pixmaps', ['gaphor/ui/pixmaps/gaphor-48x48.png']),
+        ('share/applications', ['gaphor.desktop']),
+    ]
+
 if sys.platform == 'darwin' and 'py2app' in sys.argv:
     # Mac OS X
     import pkg_resources
@@ -127,10 +135,7 @@ Gaphor is a UML modeling tool written in Python.
 
 It uses the GTK+ environment for user interaction.
 """,
-    data_files=[
-        ('share/pixmaps', ['gaphor/ui/pixmaps/gaphor-48x48.png']),
-        ('share/applications', ['gaphor.desktop']),
-    ],
+    data_files=data_files,
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: X11 Applications :: GTK',
