@@ -109,11 +109,11 @@ elif sys.platform == 'win32' and 'py2exe' in sys.argv:
     import pkg_resources
     eggs = pkg_resources.require("gaphor")
     for egg in eggs:
-       if os.path.isdir(egg.location):
-           sys.path.insert(0, egg.location)
-           continue
-       else:
-           print 'Can only handle unpacked eggs.'
+        if os.path.isdir(egg.location):
+            sys.path.insert(0, egg.location)
+            continue
+        else:
+            print 'Can only handle unpacked eggs.'
     egg_names = []
     for egg in eggs:
         egg_names.append(egg.project_name)
