@@ -117,7 +117,7 @@ class Toolbox(gtk.VBox):
 
     def _construct(self):
 
-        self.set_border_width(3)
+        #self.set_border_width(3)
 
         self.tooltips = gtk.Tooltips()
 

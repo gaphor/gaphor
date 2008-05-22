@@ -250,7 +250,7 @@ class MainWindow(ToplevelWindow):
         self.notebook = notebook
         self._tree_view = view
        
-        vbox.set_border_width(3)
+        #vbox.set_border_width(3)
 
         toolbox = Toolbox(TOOLBOX_ACTIONS)
         vbox.pack_start(toolbox, expand=False)
