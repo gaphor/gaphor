@@ -85,26 +85,12 @@ class DiagramTab(object):
         """
         assert self.diagram
 
-        table = gtk.Table(2,2, False)
-
-        frame = gtk.Frame()
-        frame.set_shadow_type(gtk.SHADOW_IN)
-        table.attach(frame, 0, 1, 0, 1,
-                     gtk.EXPAND | gtk.FILL | gtk.SHRINK,
-                     gtk.EXPAND | gtk.FILL | gtk.SHRINK)
-
         view = DiagramView(diagram=self.diagram)
-        #view.set_scroll_region(0, 0, 600, 450)
-
-        frame.add(view)
-        
-        sbar = gtk.VScrollbar(view.vadjustment)
-        table.attach(sbar, 1, 2, 0, 1, gtk.FILL,
-                     gtk.EXPAND | gtk.FILL | gtk.SHRINK)
-
-        sbar = gtk.HScrollbar(view.hadjustment)
-        table.attach(sbar, 0, 1, 1, 2, gtk.EXPAND | gtk.FILL | gtk.SHRINK,
-                     gtk.FILL)
+        scrolled_window = gtk.ScrolledWindow(view.hadjustment, view.vadjustment)
+        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
+        scrolled_window.add(view)
+        scrolled_window.show_all()
 
         view.connect('focus-changed', self._on_view_selection_changed)
         view.connect('selection-changed', self._on_view_selection_changed)
@@ -113,12 +99,11 @@ class DiagramTab(object):
 
         self.view = view
 
-        table.show_all()
-        self.widget = table
+        self.widget = scrolled_window
         
         self.toolbox = DiagramToolbox(view)
         
-        return table
+        return scrolled_window
 
 
     @component.adapter(IAttributeChangeEvent)
