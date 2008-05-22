@@ -213,7 +213,7 @@ class MainWindow(ToplevelWindow):
         view.connect_after('cursor-changed', self._on_view_cursor_changed)
 
         vbox = gtk.VBox()
-        vbox.pack_start(scrolled_window, expand=True)
+        vbox.pack_start(scrolled_window, expand=True, padding=3)
         scrolled_window.show()
 
         paned = gtk.HPaned()
@@ -250,8 +250,6 @@ class MainWindow(ToplevelWindow):
         self.notebook = notebook
         self._tree_view = view
        
-        #vbox.set_border_width(3)
-
         toolbox = Toolbox(TOOLBOX_ACTIONS)
         vbox.pack_start(toolbox, expand=False)
         toolbox.show()
