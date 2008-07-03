@@ -15,8 +15,10 @@ class DiagramView(gaphas.GtkView):
 
     TARGET_STRING = 0
     TARGET_ELEMENT_ID = 1
+    TARGET_TOOLBOX_ACTION = 2
     DND_TARGETS = [
-        ('gaphor/element-id', 0, TARGET_ELEMENT_ID)]
+        ('gaphor/element-id', 0, TARGET_ELEMENT_ID),
+        ('gaphor/toolbox-action', 0, TARGET_TOOLBOX_ACTION)]
 
     __gtype_name__ = 'GaphorDiagramView'
 

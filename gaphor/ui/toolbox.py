@@ -25,12 +25,20 @@ class Toolbox(gtk.VBox):
     3 connect to action
     """
 
+    TARGET_STRING = 0
+    TARGET_TOOLBOX_ACTION = 1
+    DND_TARGETS = [
+        ('STRING', 0, TARGET_STRING),
+        ('text/plain', 0, TARGET_STRING),
+        ('gaphor/toolbox-action', 0, TARGET_TOOLBOX_ACTION)]
+
     __gsignals__ = {
         'toggled': (gobject.SIGNAL_RUN_FIRST,
                     gobject.TYPE_NONE, (gobject.TYPE_STRING, gobject.TYPE_INT))
     }
 
     properties = inject('properties')
+
 
     def __init__(self, toolboxdef):
         """
@@ -42,6 +50,7 @@ class Toolbox(gtk.VBox):
         #self.boxes = []
         self.buttons = []
         self._construct()
+
 
     def on_wrapbox_decorator_toggled(self, button, content):
         """
@@ -62,6 +71,7 @@ class Toolbox(gtk.VBox):
         # Save the property:
         self.properties.set('ui.toolbox.%s' % button.toggle_id,
                             content.get_property('visible'))
+
 
     def make_wrapbox_decorator(self, title, content):
         """
@@ -102,6 +112,7 @@ class Toolbox(gtk.VBox):
 
         return vbox
 
+
     def toolbox_button(self, action_name, stock_id,
                        icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR):
         button = gtk.ToggleButton()
@@ -113,7 +124,15 @@ class Toolbox(gtk.VBox):
         else:
             button.props.label = action_name
         button.action_name = action_name
+        
+        # Enable DND (behaviour like tree view)
+        button.drag_source_set(gtk.gdk.BUTTON1_MASK, self.DND_TARGETS,
+                gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+        button.drag_source_set_icon_stock(stock_id)
+        button.connect('drag-data-get', self._button_drag_data_get)
+
         return button
+
 
     def _construct(self):
 
@@ -123,7 +142,6 @@ class Toolbox(gtk.VBox):
 
         for title, items in self.toolboxdef:
             wrapbox = Wrapbox()
-            action = None
             for action_name, label, stock_id in items:
                 button = self.toolbox_button(action_name, stock_id)
                 if label:
@@ -139,5 +157,10 @@ class Toolbox(gtk.VBox):
                 wrapbox.show()
 
         self.tooltips.enable()
+
+
+    def _button_drag_data_get(self, button, context, selection_data, info, time):
+        selection_data.set(selection_data.target, 8, button.action_name)
+
 
 # vim:sw=4:et:ai

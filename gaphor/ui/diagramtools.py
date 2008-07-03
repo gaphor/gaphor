@@ -16,8 +16,7 @@ from gaphas.geometry import distance_point_point, distance_point_point_fast, \
 from gaphas.item import Line
 from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool
 from gaphas.tool import ToolChain, HoverTool, ItemTool, RubberbandTool
-
-
+from gaphas.canvas import Context
 
 from gaphor.core import inject, Transaction, transactional
 
@@ -292,6 +291,10 @@ class PlacementTool(_PlacementTool):
                                       handle_index=handle_index)
         self.after_handler = after_handler
         self._tx = None
+
+    @transactional
+    def create_item(self, view, x, y):
+        self._create_item(Context(view=view), x, y)
 
     def on_button_press(self, context, event):
         self._tx = Transaction()
