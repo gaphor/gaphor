@@ -208,7 +208,6 @@ class ForkNodeItem(Item, DiagramItem):
         self._handles.extend((Handle(), Handle()))
 
         self._combined = None
-        self._constraints = []
 
         self._join_spec = self.add_text('joinSpec.value',
             pattern='{ joinSpec = %s }',
@@ -271,8 +270,6 @@ class ForkNodeItem(Item, DiagramItem):
 
     def teardown_canvas(self):
         super(ForkNodeItem, self).teardown_canvas()
-        for c in self._constraints:
-            self.canvas.solver.remove_constraint(c)
 
 
     def is_join_spec_visible(self):
