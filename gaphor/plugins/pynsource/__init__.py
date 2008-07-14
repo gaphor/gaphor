@@ -97,7 +97,7 @@ class PyNSource(object):
 
         frame = gtk.Frame('Files to reverse-engineer')
         frame.set_border_width(8)
-        frame.set_size_request(300, 200)
+        frame.set_size_request(500, 300)
         frame.show()
         hbox.pack_start(frame, expand=True)
 
@@ -124,14 +124,14 @@ class PyNSource(object):
         bbox.set_layout(gtk.BUTTONBOX_SPREAD)
         bbox.set_border_width(10)
         button = gtk.Button(stock='gtk-add')
-        button.connect('clicked', self.on_add_clicked)
+        button.connect('clicked', self.on_add_dir_clicked)
         bbox.add(button)
         self.add_button = button
 
-        button = gtk.Button('Add dir...')
-        button.connect('clicked', self.on_add_dir_clicked)
-        bbox.add(button)
-        self.add_dir_button = button
+        #button = gtk.Button('Add dir...')
+        #button.connect('clicked', self.on_add_dir_clicked)
+        #bbox.add(button)
+        #self.add_dir_button = button
 
         button = gtk.Button(stock='gtk-remove')
         button.connect('clicked', self.on_remove_clicked)
@@ -152,7 +152,7 @@ class PyNSource(object):
 
         self.filelist = filelist
         self.treeview = treeview
-        
+
         return dialog
 
     def reset(self):
@@ -161,6 +161,44 @@ class PyNSource(object):
         self.remove_button = None
         self.treeview = None
         self.filelist = None
+
+    def Walk(self, root, recurse=0, pattern='*', return_folders=0):
+        import fnmatch
+        import os
+        import string
+
+        # initialize
+        result = []
+
+        # must have at least root folder
+        try:
+            names = os.listdir(root)
+        except os.error:
+            return result
+
+        # expand pattern
+        pattern = pattern or '*'
+        pat_list = string.splitfields(pattern, ';')
+
+        # check each file
+        for name in names:
+            fullname = os.path.normpath(os.path.join(root, name))
+
+            # grab if it matches our pattern and entry type
+            for pat in pat_list:
+                if fnmatch.fnmatch(name, pat):
+                    if os.path.isfile(fullname) or (
+                            return_folders and os.path.isdir(fullname)):
+                        result.append(fullname)
+                    continue
+
+            # recursively scan other folders, appending results
+            if recurse:
+                if os.path.isdir(fullname) and not os.path.islink(fullname):
+                    result = result + self.Walk(
+                                    fullname, recurse, pattern, return_folders)
+
+        return result
 
     def on_view_cursor_changed(self, view):
         selection = view.get_selection()
@@ -180,21 +218,27 @@ class PyNSource(object):
             pass
         self.execute_button.set_property('sensitive', bool(iter))
 
-    def on_add_clicked(self, button):
-        filesel = gtk.FileSelection('Open Python file')
+    def on_add_dir_clicked(self, button):
+        import os
+        filesel = gtk.FileSelection('Add Source Code')
         filesel.hide_fileop_buttons()
         filesel.set_select_multiple(True)
+        filesel.set_filename('~/')
         response = filesel.run()
-        filenames = filesel.get_selections()
+        selection = filesel.get_selections()
         filesel.destroy()
-        if response == gtk.RESPONSE_OK:
-            for filename in filenames:
-                iter = self.filelist.append()
-                self.filelist.set_value(iter, NAME_COLUMN, filename)
-                #self.execute_button.set_property('
 
-    def on_add_dir_clicked(self, button):
-        pass
+        if response == gtk.RESPONSE_OK:
+            for filename in selection:
+                if os.path.isdir(filename):
+                    list = self.Walk(filename, 1, '*.py', 1)
+                    for file in list:
+                        iter = self.filelist.append()
+                        self.filelist.set_value(iter, NAME_COLUMN, file)
+                else:
+                    list = filename
+                    iter = self.filelist.append()
+                    self.filelist.set_value(iter, NAME_COLUMN, list)
 
     def on_remove_clicked(self, button):
         selection = self.treeview.get_selection()
@@ -202,7 +246,7 @@ class PyNSource(object):
         if not iter:
             return
         element = filelist.remove(iter)
-        
+
         self.remove_button.set_property('sensitive', False)
 
 
