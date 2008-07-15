@@ -33,7 +33,6 @@ class Element(object):
         self._id = id or (id is not False and uniqueid.generate_id() or False)
         # The factory this element belongs to.
         self._factory = factory
-        self._observers = dict()
         self.__in_unlink = mutex.mutex()
 
     id = property(lambda self: self._id, doc='Id')
