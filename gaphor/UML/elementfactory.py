@@ -70,7 +70,7 @@ class ElementFactory(object):
 
     def create(self, type):
         """
-        Create a new model element of type type.
+        Create a new model element of type ``type``.
         """
         obj = self.create_as(type, uniqueid.generate_id())
         if self._app:
@@ -88,11 +88,26 @@ class ElementFactory(object):
         self._elements[id] = obj
         return obj
 
+    def bind(self, element):
+        """
+        Bind an already created element to the element factory.
+        The element may not be bound to another factory already.
+        """
+        if hasattr(element, '_factory') and element._factory:
+            raise AttributeError, "element is already bound"
+        if self._elements.get(element.id):
+            raise AttributeError, "an element already exists with the same id"
+
+        element._factory = self
+        self._elements[element.id] = element
+        
+
     def size(self):
         """
         Return the amount of elements currently in the factory.
         """
         return len(self._elements)
+
 
     def lookup(self, id):
         """
@@ -100,10 +115,13 @@ class ElementFactory(object):
         """
         return self._elements.get(id)
 
+
     __getitem__ = lookup
+
 
     def __contains__(self, element):
         return self.lookup(element.id) is element
+
 
     def select(self, expression=None):
         """
@@ -117,11 +135,13 @@ class ElementFactory(object):
                 if expression(e):
                     yield e
 
+
     def lselect(self, expression=None):
         """
         Like select(), but returns a list.
         """
         return list(self.select(expression))
+
 
     def keys(self):
         """
@@ -129,11 +149,13 @@ class ElementFactory(object):
         """
         return self._elements.keys()
 
+
     def iterkeys(self):
         """
         Return a iterator with all id's in the factory.
         """
         return self._elements.iterkeys()
+
 
     def values(self):
         """
@@ -141,11 +163,13 @@ class ElementFactory(object):
         """
         return self._elements.values()
 
+
     def itervalues(self):
         """
         Return a iterator with all elements in the factory.
         """
         return self._elements.itervalues()
+
 
     def is_empty(self):
         """
@@ -155,6 +179,7 @@ class ElementFactory(object):
             return False
         else:
             return True
+
 
     def flush(self):
         """
@@ -193,6 +218,7 @@ class ElementFactory(object):
         if element.__class__ is not new_class:
             element.__class__ = new_class
 
+
     def notify_model(self):
         """
         Send notification that a new model has been loaded by means of the
@@ -200,6 +226,7 @@ class ElementFactory(object):
         """
         if self._app:
             self._app.handle(ModelFactoryEvent(self))
+
 
     @component.adapter(IElementEvent)
     def _element_notify(self, event):
@@ -209,6 +236,7 @@ class ElementFactory(object):
         """
         if self._app:
             self._app.handle(event.element, event)
+
 
     @component.adapter(IElementDeleteEvent)
     def _element_deleted(self, event):

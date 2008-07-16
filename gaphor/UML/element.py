@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:sw=4:et
 """
 Base class for UML model elements.
 """
@@ -11,6 +10,7 @@ from zope import component
 from event import ElementDeleteEvent
 from gaphor.misc import uniqueid
 from properties import umlproperty, association
+
 
 class Element(object):
     """
@@ -35,10 +35,13 @@ class Element(object):
         self._factory = factory
         self.__in_unlink = mutex.mutex()
 
+
     id = property(lambda self: self._id, doc='Id')
+
 
     factory = property(lambda self: self._factory,
                        doc="The factory that created this element")
+
 
     def umlproperties(self):
         """
@@ -52,12 +55,14 @@ class Element(object):
                 if isinstance(prop, umlprop):
                     yield prop
 
+
     def save(self, save_func):
         """
         Save the state by calling save_func(name, value).
         """
         for prop in self.umlproperties():
             prop.save(self, save_func)
+
 
     def load(self, name, value):
         """
@@ -72,12 +77,14 @@ class Element(object):
         else:
             prop.load(self, value)
 
+
     def postload(self):
         """
         Fix up the odds and ends.
         """
         for prop in self.umlproperties():
             prop.postload(self)
+
 
     def unlink(self):
         """
@@ -101,11 +108,21 @@ class Element(object):
         """
         return isinstance(self, class_)
 
+
     def isTypeOf(self, other):
         """
         Returns true if the object is of the same type as other.
         """
         return type(self) == type(other)
+
+
+    def __getstate__(self):
+        d = dict(self.__dict__)
+        try:
+            del d['_factory']
+        except KeyError:
+            pass
+        return d
 
 
 try:
@@ -115,3 +132,4 @@ except ImportError:
 else:
     psyco.bind(Element)
 
+# vim:sw=4:et

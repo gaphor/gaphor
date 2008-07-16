@@ -120,7 +120,7 @@ class Ellipse(Element):
         'fill-color': (1, 1, 1, 0),
     }
 
-    def __init__(self, id):
+    def __init__(self, id=None):
         super(Ellipse, self).__init__()
         self.style = Style(Ellipse.__style__)
         self._id = id
