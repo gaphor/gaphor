@@ -52,6 +52,10 @@ class BackupServiceTestCase(unittest.TestCase):
         self.save_and_load('test-diagrams/simple-items.gaphor')
 
 
+    def test_namespace(self):
+        self.save_and_load('test-diagrams/namespace.gaphor')
+
+
 #    def test_stereotype(self):
 #        self.save_and_load('test-diagrams/stereotype.gaphor')
 

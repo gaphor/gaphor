@@ -18,6 +18,21 @@ from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
 from gaphor.misc.ipair import ipair
 
+
+class disconnect_handle(object):
+    """
+    Helper for handle disconnection. Those objects are used, in stead of bound
+    methods, since the pickle persister can't handle bound methods.
+    """
+
+    def __init__(self, adapter, handle):
+        self.adapter = adapter
+        self.handle = handle
+
+    def __call__(self):
+        self.adapter.disconnect(self.handle)
+
+
 class AbstractConnect(object):
     """
     Connection adapter for Gaphor diagram items.
@@ -90,9 +105,9 @@ class AbstractConnect(object):
         
         # Set disconnect handler in the adapter, so it will also wotk if
         # connections are created programmatically.
-        def _disconnect():
-            self.disconnect(handle)
-        handle.disconnect = _disconnect
+        #def _disconnect():
+        #    self.disconnect(handle)
+        handle.disconnect = disconnect_handle(self, handle)
 
         return True
 
@@ -103,7 +118,7 @@ class AbstractConnect(object):
         """
         self.disconnect_constraints(handle)
         handle.connected_to = None
-        handle.disconnect = lambda: 0
+        handle.disconnect = None
 
 
     def connect_constraints(self, handle):
