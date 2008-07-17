@@ -226,5 +226,24 @@ class StorageTestCase(TestCase):
         assert not a.head.connected_to is a.tail.connected_to
         #assert a.head_end._name
 
+    def test_load_save(self):
+        f = open('test-diagrams/simple-items.gaphor', 'r')
+        storage.load(f, factory=self.element_factory)
+        f.close()
+
+        pf = PseudoFile()
+        storage.save(XMLWriter(pf), factory=self.element_factory)
+
+        f = open('test-diagrams/simple-items.gaphor', 'r')
+        orig = f.read()
+        f.close()
+
+        copy = pf.data
+        assert len(copy) == len(orig)
+        orig = orig.replace('0.11.1', '%VER%')
+        copy = copy.replace('0.13.1', '%VER%')
+
+        assert copy == orig, copy + ' != ' + orig
+
 
 # vim:sw=4:et:ai

@@ -1,21 +1,25 @@
 """
 """
 
-import pickle
 from zope import interface
+from gaphor.UML import Element
 from gaphor.application import Application
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.core import _, inject
 
-class MyPickler(pickle.Pickler):
+# Register application specific picklers:
+import gaphas.picklers
+from gaphor.misc.latepickle import LatePickler
 
-    def save(self, obj):
-        #print 'saving obj', obj
-        try:
-            return pickle.Pickler.save(self, obj)
-        except Exception, e:
-            print 'Error while pickling', obj, self.dispatch.get(type(obj))
-            raise e
+
+import pickle
+class MyPickler(LatePickler):
+    """
+    Customize the pickler to only delay instantiations of Element objects.
+    """
+
+    def delay(self, obj):
+        return isinstance(obj, Element)
 
 
 class BackupService(object):

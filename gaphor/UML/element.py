@@ -125,6 +125,11 @@ class Element(object):
         return d
 
 
+    def __setstate__(self, state):
+        self._factory = None
+        self.__dict__.update(state)
+
+
 try:
     import psyco
 except ImportError:

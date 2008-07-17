@@ -21,20 +21,22 @@ class BackupServiceTestCase(unittest.TestCase):
         Application.shutdown()
         
     def save_and_load(self, filename):
+        factory = self.element_factory
+
         f = open(filename, 'r')
         storage.load(f, factory=self.element_factory)
         f.close()
         
         self.backup_service.backup()
         
-        elements = self.element_factory.lselect()
+        elements = map(factory.lookup, factory.keys())
 
         orig = StringIO()
         storage.save(XMLWriter(orig), factory=self.element_factory)
 
         self.backup_service.restore()
 
-        restored = self.element_factory.lselect()
+        restored = map(factory.lookup, factory.keys())
 
         assert len(elements) == len(restored)
         assert elements != restored
@@ -45,7 +47,7 @@ class BackupServiceTestCase(unittest.TestCase):
         orig = orig.getvalue()
         copy = copy.getvalue()
         assert len(orig) == len(copy)
-        #assert orig.getvalue() == copy.getvalue(), orig.getvalue() + ' != ' + copy.getvalue()
+        #assert orig == copy, orig + ' != ' + copy
 
 
     def test_simple(self):
@@ -55,9 +57,23 @@ class BackupServiceTestCase(unittest.TestCase):
     def test_namespace(self):
         self.save_and_load('test-diagrams/namespace.gaphor')
 
+    def test_association(self):
+        self.save_and_load('test-diagrams/association.gaphor')
 
-#    def test_stereotype(self):
-#        self.save_and_load('test-diagrams/stereotype.gaphor')
+    def test_interactions(self):
+        self.save_and_load('test-diagrams/interactions.gaphor')
+
+    def test_bicycle(self):
+        self.save_and_load('test-diagrams/bicycle.gaphor')
+
+    def test_line_align(self):
+        self.save_and_load('test-diagrams/line-align.gaphor')
+
+#    def test_gaphas_canvas(self):
+#        self.save_and_load('../gaphas/gaphor-canvas.gaphor')
+
+    def test_stereotype(self):
+        self.save_and_load('test-diagrams/stereotype.gaphor')
 
 
 # vim: sw=4:et:ai
