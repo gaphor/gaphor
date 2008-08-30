@@ -179,7 +179,7 @@ It uses the GTK+ environment for user interaction.
             'undo_manager = gaphor.services.undomanager:UndoManager',
             'element_factory = gaphor.UML.elementfactory:ElementFactory',
             'file_manager = gaphor.services.filemanager:FileManager',
-            'backup_service = gaphor.services.backupservice:BackupService',
+            #'backup_service = gaphor.services.backupservice:BackupService',
             'diagram_export_manager = gaphor.services.diagramexportmanager:DiagramExportManager',
             'action_manager = gaphor.services.actionmanager:ActionManager',
             'gui_manager = gaphor.services.guimanager:GUIManager',
