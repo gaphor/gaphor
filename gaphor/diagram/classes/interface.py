@@ -6,6 +6,8 @@ import itertools
 from math import pi
 from gaphas.item import NW, SE, NE, SW
 from gaphas.state import observed, reversible_property
+from gaphas.constraint import CenterConstraint, EqualsConstraint
+from gaphas.connector import Handle, PointPort
 
 from gaphor import UML
 from dependency import DependencyItem
@@ -52,6 +54,33 @@ class InterfaceItem(ClassItem):
         ClassItem.__init__(self, id)
         self._draw_required = False
         self._draw_provided = False
+
+        h_ne, h_nw, h_sw, h_se = self._handles[:4]
+
+        # create additional connection ports for folded mode
+        h1 = Handle()
+        h2 = Handle()
+        h1.visible = False
+        h1.movable = False
+        h2.visible = False
+        h2.movable = False
+        p1 = PointPort(h1)
+        p2 = PointPort(h2)
+        p1.connectable = False
+        p2.connectable = False
+
+        # keep first port in the middle of the left edge
+        cc1 = CenterConstraint(a=h_ne.y, b=h_se.y, center=h1.y)
+        eq1 = EqualsConstraint(a=h_ne.x, b=h1.x)
+        # keep second port in the middle of the right edge
+        cc2 = CenterConstraint(a=h_nw.y, b=h_sw.y, center=h2.y)
+        eq2 = EqualsConstraint(a=h_nw.x, b=h2.x)
+        self._constraints.extend((cc1, eq1, cc2, eq2))
+
+        self._handles.append(h1)
+        self._handles.append(h2)
+        self._ports.append(p1)
+        self._ports.append(p2)
 
         self.add_watch(UML.Interface.ownedAttribute, self.on_class_owned_attribute)
         self.add_watch(UML.Interface.ownedOperation, self.on_class_owned_operation)

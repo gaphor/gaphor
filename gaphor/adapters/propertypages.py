@@ -714,6 +714,18 @@ class InterfacePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_fold_change(self, button):
         self.context.folded = button.get_active()
+        ports = self.context.ports()
+        handles = self.context.handles()
+        for p in ports[:4]:
+            p.connectable = not self.context.folded
+        for h in handles[:4]:
+            h.visible = not self.context.folded
+
+        for p in ports[-2:]:
+            p.connectable = self.context.folded
+        for h in handles[-2:]:
+            h.visible = self.context.folded
+
 
 component.provideAdapter(InterfacePropertyPage, name='Properties')
 
