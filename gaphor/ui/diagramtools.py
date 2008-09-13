@@ -14,8 +14,9 @@ from zope import component
 from gaphas.geometry import distance_point_point, distance_point_point_fast, \
                             distance_line_point, distance_rectangle_point
 from gaphas.item import Line
-from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool
-from gaphas.tool import ToolChain, HoverTool, ItemTool, RubberbandTool
+from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool, \
+    ToolChain, HoverTool, ItemTool, RubberbandTool, \
+    ConnectHandleTool as _ConnectHandleTool
 from gaphas.canvas import Context
 
 from gaphor.core import inject, Transaction, transactional
@@ -25,7 +26,7 @@ from gaphor.diagram.interfaces import IEditor, IConnect
 __version__ = '$Revision$'
 
 
-class ConnectHandleTool(HandleTool):
+class ConnectHandleTool(_ConnectHandleTool):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
     to connect items to one-another.
@@ -36,8 +37,6 @@ class ConnectHandleTool(HandleTool):
     Attributes:
      - _adapter: current adapter used to connect items
     """
-    GLUE_DISTANCE = 10
-
     def __init__(self):
         super(ConnectHandleTool, self).__init__()
         self._adapter = None
@@ -57,45 +56,21 @@ class ConnectHandleTool(HandleTool):
         handle: the handle to connect
         vx, vy: handle position in view coordinates
         """
-        # localize methods
-        v2i = view.get_matrix_v2i
-        i2v = view.get_matrix_i2v
-        drp = distance_rectangle_point
-        get_item_bounding_box = view.get_item_bounding_box
-        query_adapter = component.queryMultiAdapter
-
-        dist = self.GLUE_DISTANCE
-        max_dist = dist
-        glue_pos = (0, 0)
-        glue_item = None
-        for i in view.get_items_in_rectangle((vx - dist, vy - dist,
-                                              dist * 2, dist * 2),
-                                             reverse=True):
-            if i is item:
-                continue
-            
-            b = get_item_bounding_box(i)
-            ix, iy = v2i(i).transform_point(vx, vy)
-            if drp(b, (vx, vy)) >= max_dist:
-                continue
-            
-            adapter = query_adapter((i, item), IConnect)
+        glue_item, port = super(ConnectHandleTool, self).glue(view, item, handle, vx, vy)
+        glued = False
+        if glue_item:
+            adapter = component.queryMultiAdapter((glue_item, item), IConnect)
             if adapter:
-                pos = adapter.glue(handle)
                 self._adapter = adapter
-                if pos:
-                    d = i.point(ix, iy)
-                    if d <= dist:
-                        dist = d
-                        glue_pos = pos
-                        glue_item = i
+                # check if adapter allows to glue items
+                glued = adapter.glue(handle)
 
-        if dist < max_dist:
-            handle.pos = glue_pos
+        if not glued:
+            # if adapter is not found, then no glueing is performed
+            # and connection is not going to happen
+            glue_item, port = None, None
 
-        # Return the glued item, this can be used by connect() to
-        # determine which item it should connect to
-        return glue_item
+        return glue_item, port
 
 
     def connect(self, view, item, handle, vx, vy):
@@ -108,16 +83,11 @@ class ConnectHandleTool(HandleTool):
         """
         connected = False
         try:
-            glue_item = self.glue(view, item, handle, vx, vy)
+            connected = super(ConnectHandleTool, self).connect(view, item, handle, vx, vy)
 
-            if glue_item:
+            if connected:
                 assert handle in self._adapter.line.handles()
                 self._adapter.connect(handle)
-
-                connected = True
-            elif handle and handle.connected_to:
-                handle.disconnect()
-
         finally:
             self._adapter = None
 

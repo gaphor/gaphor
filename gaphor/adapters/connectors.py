@@ -47,8 +47,6 @@ class AbstractConnect(object):
     - line: connecting item
     - element: connectable item
     - _canvas: canvas reference
-    - _matrix_e2l: element to line matrix
-    - _matrix_l2e: line to element matrix
     """
     interface.implements(IConnect)
 
@@ -57,22 +55,15 @@ class AbstractConnect(object):
         self.line = line
         canvas = self._canvas = element.canvas
 
-        i2c = canvas.get_matrix_i2c
-        c2i = canvas.get_matrix_c2i
-        self._matrix_e2l = i2c(element) * c2i(line)
-        self._matrix_l2e = i2c(line) * c2i(element)
-
-        # code below returns None from transform_point... why?
-        # self._matrix_l2e = Matrix(*self._matrix_e2l)
-        # self._matrix_l2e.invert()
-
 
     def glue(self, handle):
         """
-        Return the point the handle could connect to. None if no connection
-        is allowed.
+        Determine if items can be connected.
+
+        Returns `True` by default.
         """
-        raise NotImplemented, 'Implement glue() in the subclass'
+        return True
+
 
     def connect(self, handle):
         """
@@ -81,197 +72,20 @@ class AbstractConnect(object):
         handle.connected_to property. Also the connection at UML level
         still exists.
         
-        Returns True if a connection is established.
+        Returns `True` if a connection is established.
         """
-        element = self.element
-        canvas = element.canvas
-        solver = canvas.solver
-
-        # Disconnect old model connection
-        if handle.connected_to and handle.connected_to is not self.element:
-            handle.disconnect()
- 
-        # Save guard: only connect if it's permitted by glue()
-        #   -> glue() does not return None
-        if not self.glue(handle):
-            return False
-
-        self.connect_constraints(handle)
-
-        # TODO: Add handler that triggers on setting self.element.subject = None
-        # TODO: How should we disconnect this handler?
-        #       Maybe one global handler will suffice. Then the adapters can
-        #       be created on an as-needed basis.
-        
-        # Set disconnect handler in the adapter, so it will also wotk if
-        # connections are created programmatically.
-        #def _disconnect():
-        #    self.disconnect(handle)
-        handle.disconnect = disconnect_handle(self, handle)
-
         return True
+
 
     def disconnect(self, handle):
         """
-        Do a full disconnect, also disconnect at UML model level.
-        Subclasses should disconnect model-level connections.
+        Disconnect UML model level connections.
         """
-        self.disconnect_constraints(handle)
-        handle.connected_to = None
-        handle.disconnect = None
-
-
-    def connect_constraints(self, handle):
-        """
-        Create the actual constraint. The handle should be moved into connection
-        position before this method is called.
-        """
-        h1, h2 = self._get_segment(handle)
-
-        element = self.element
-        line = self.line
-
-        lc = constraint.LineConstraint(line=(CanvasProjection(h1.pos, element),
-                                             CanvasProjection(h2.pos, element)),
-                                       point=CanvasProjection(handle.pos, line))
-        handle.connection_data = lc
-        element.canvas.solver.add_constraint(lc)
-
-        handle.connected_to = element
-
-
-    def disconnect_constraints(self, handle):
-        """
-        Disconnect() takes care of disconnecting the handle from the
-        element it's attached to, by removing the constraints.
-        """
-        try:
-            if handle.connection_data:
-                self.line.canvas.solver.remove_constraint(handle.connection_data)
-        except AttributeError:
-            pass # No connection_data property yet
-        handle.connection_data = None
-
-
-    def _get_segment(self, handle):
-        """
-        Get line segment, to which handle should connect to. Line segment is defined by two handles.
-        Examples of line segmets
-        - side of element item like class, action, etc.
-        - line segment of association
-        - lifeline's lifetime
-        """
-        raise NotImplemented()
+        pass
 
 
 
-class ElementConnect(AbstractConnect):
-    """
-    Base class for connecting a line to an ElementItem class.
-    """
-
-    def _get_segment(self, handle):
-        """
-        Determine the side on which the handle is connecting.
-        This is done by determining the proximity to the nearest edge.
-
-        Handles of one of the sides is returned.
-        """
-        handles = self.element.handles()
-        l2e = self._matrix_l2e
-        hx, hy = l2e.transform_point(*handle.pos)
-        ax, ay = handles[NW].x, handles[NW].y
-        bx, by = handles[SE].x, handles[SE].y
-
-        if abs(hx - ax) < 0.01:
-            return handles[NW], handles[SW]
-        elif abs(hy - ay) < 0.01:
-            return handles[NW], handles[NE]
-        elif abs(hx - bx) < 0.01:
-            return handles[NE], handles[SE]
-        else:
-            return handles[SW], handles[SE]
-        assert False
-
-
-    def bounds(self, element):
-        """
-        Returns bounds of the element that we're connecting to.
-        """
-        h = element.handles()
-        return map(float, (h[NW].pos + h[SE].pos))
-
-
-    def glue(self, handle):
-        """
-        Return the point the handle could connect to. None if no connection
-        is allowed.
-        """
-        l2e = self._matrix_l2e
-        e2l = self._matrix_e2l
-
-        pos = l2e.transform_point(*handle.pos)
-        bounds = self.bounds(self.element)
-
-        pos = geometry.point_on_rectangle(bounds, pos, border=True)
-        pos = e2l.transform_point(*pos)
-        return pos
-
-
-
-class LineConnect(AbstractConnect):
-    """
-    Base class for connecting two lines to each other.
-    The line that is connected to is called 'element', as in ElementConnect.
-
-    Once a line has been connected at both ends, and a model element is
-    assigned to it, all items connectedt to this line (e.g. Comments)
-    receive a connect() call. This allows already connected lines to set
-    up relationships at model level too.
-    """
-
-    def _get_segment_data(self, handle):
-        """
-        Get segment data
-        - pos: position on a segment
-        - h1: handle starting segment
-        - h2: handle ending segment
-        """
-        dlp = geometry.distance_line_point
-
-        handles = self.element.handles()
-
-        def segment(h1, h2, pos):
-            d, pos = dlp(h1.pos, h2.pos, pos)
-            return d, pos, h1, h2
-
-        pos = self._matrix_l2e.transform_point(*handle.pos)
-
-        # find the nearest segment from handle
-        data = (segment(h1, h2, pos) for h1, h2 in ipair(handles))
-        # No key needed, distance is first
-        d, pos, h1, h2 = min(data) #, key=lambda s: s[0])
-        return pos, h1, h2
-
-
-    def _get_segment(self, handle):
-        """
-        Return diagram line segment closest to a handle.
-        """
-        _, h1, h2 = self._get_segment_data(handle)
-        return h1, h2
-
-
-    def glue(self, handle):
-        """
-        Return a point on a connectable element closest to a handle.
-        """
-        pos, _, _ = self._get_segment_data(handle)
-        return self._matrix_e2l.transform_point(*pos)
-
-
-
-class CommentLineElementConnect(ElementConnect):
+class CommentLineElementConnect(AbstractConnect):
     """
     Connect a comment line to any element item.
     """
@@ -325,7 +139,7 @@ class CommentLineElementConnect(ElementConnect):
 component.provideAdapter(CommentLineElementConnect)
 
 
-class CommentLineLineConnect(LineConnect):
+class CommentLineLineConnect(AbstractConnect):
     """
     Connect a comment line to any diagram line.
     """
@@ -380,7 +194,7 @@ class CommentLineLineConnect(LineConnect):
 component.provideAdapter(CommentLineLineConnect)
 
 
-class RelationshipConnect(ElementConnect):
+class RelationshipConnect(AbstractConnect):
     """
     Base class for relationship connections, such as associations,
     dependencies and implementations.
@@ -1059,13 +873,6 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     fork_node_class=UML.ForkNode
     join_node_class=UML.JoinNode
 
-    def _get_segment(self, handle):
-        return self.element.handles()
-
-    def bounds(self, element):
-        h1, h2 = element.handles()
-        return map(float, (h1.pos + h2.pos))
-
 component.provideAdapter(FlowForkNodeConnect)
 
 
@@ -1081,7 +888,7 @@ class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
 component.provideAdapter(FlowDecisionNodeConnect)
 
 
-class MessageLifelineConnect(ElementConnect):
+class MessageLifelineConnect(AbstractConnect):
     """
     Connect lifeline with a message.
 
@@ -1191,13 +998,13 @@ class MessageLifelineConnect(ElementConnect):
                 pos = self._glue_lifetime(handle)
             elif not lifetime.is_visible and not opposite_is_visible:
                 # glue heads if both lifetimes are invisible
-                pos = ElementConnect.glue(self, handle)
+                pos = AbstractConnect.glue(self, handle)
 
         elif lifetime.is_visible:
             pos = self._glue_lifetime(handle)
 
         else:
-            pos = ElementConnect.glue(self, handle)
+            pos = AbstractConnect.glue(self, handle)
         return pos
         
 
@@ -1214,7 +1021,7 @@ class MessageLifelineConnect(ElementConnect):
 
 
     def connect(self, handle):
-        if not ElementConnect.connect(self, handle):
+        if not AbstractConnect.connect(self, handle):
             return
 
         line = self.line
@@ -1242,7 +1049,7 @@ class MessageLifelineConnect(ElementConnect):
             received.lifetime.is_destroyed = False
             received.request_update()
 
-        ElementConnect.disconnect(self, handle)
+        AbstractConnect.disconnect(self, handle)
         self.disconnect_lifelines(line)
 
         lifetime = self.element.lifetime
