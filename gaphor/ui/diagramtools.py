@@ -102,7 +102,8 @@ class ConnectHandleTool(_ConnectHandleTool):
         """
         if handle.connected_to:
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
-            adapter.disconnect_constraints(handle)
+            adapter.disconnect(handle)
+        super(ConnectHandleTool, self).disconnect(view, item, handle)
         
 
     def on_button_press(self, context, event):
