@@ -42,35 +42,18 @@ class ConnectHandleTool(_ConnectHandleTool):
         self._adapter = None
 
 
-    def glue(self, view, item, handle, vx, vy):
+    def _can_glue(self, view, item, handle, glue_item, port):
         """
-        Find the nearest item that the handle may connect to.
-
-        This is done by checking for an IConnect adapter for all items in the
-        proximity of ``(vx, xy)``.  If such an adapter exists, the glue
-        position is determined. The item with the glue point closest to the
-        handle will be glued to.
-
-        view: The view
-        item: The item who's about to connect, owner of handle
-        handle: the handle to connect
-        vx, vy: handle position in view coordinates
+        Determine if item and glue item can glue/connect using connection
+        adapters.
         """
-        glue_item, port = super(ConnectHandleTool, self).glue(view, item, handle, vx, vy)
-        glued = False
-        if glue_item:
-            adapter = component.queryMultiAdapter((glue_item, item), IConnect)
-            if adapter:
-                self._adapter = adapter
-                # check if adapter allows to glue items
-                glued = adapter.glue(handle)
+        can_glue = False
+        adapter = component.queryMultiAdapter((glue_item, item), IConnect)
+        if adapter:
+            self._adapter = adapter
+            can_glue = adapter.glue(handle)
 
-        if not glued:
-            # if adapter is not found, then no glueing is performed
-            # and connection is not going to happen
-            glue_item, port = None, None
-
-        return glue_item, port
+        return can_glue
 
 
     def connect(self, view, item, handle, vx, vy):
