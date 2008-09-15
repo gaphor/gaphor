@@ -35,7 +35,7 @@ TOOLBOX_ACTIONS = (
         ('toolbox-implementation', _('Implementation'), 'gaphor-implementation'),
     )), (_('Components'), (
         ('toolbox-component', _('Component'), 'gaphor-component'),
-        ('toolbox-assembly-connector', _('Assembly connector'), 'gaphor-assembly-connector'),
+        ('toolbox-connector', _('Connector'), 'gaphor-connector'),
         ('toolbox-node', _('Node'), 'gaphor-node'),
         ('toolbox-artifact', _('Artifact'), 'gaphor-artifact'),
 #        (_('Composite Structures'), (
@@ -234,11 +234,9 @@ class DiagramToolbox(object):
                 handle_index=SE,
                 after_handler=self._after_handler)
 
-    def toolbox_assembly_connector(self):
+    def toolbox_connector(self):
         return PlacementTool(
-                item_factory=self._item_factory(items.AssemblyConnectorItem,
-                                                          UML.Connector),
-                handle_index=SE,
+                item_factory=self._item_factory(items.ConnectorItem),
                 after_handler=self._after_handler)
 
     def toolbox_node(self):

@@ -47,10 +47,6 @@
     <file>component24.png</file>
     <element>Component</element>
   </icon>
-  <icon id="gaphor-assembly-connector">
-    <file>assembly-connector.png</file>
-    <element>Connector</element>
-  </icon>
   <icon id="gaphor-connector">
     <file>connector.png</file>
     <element>Connector</element>

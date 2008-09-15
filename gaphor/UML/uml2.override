@@ -184,7 +184,7 @@ def _pr_interface_deps(classifier, dep_type):
     dependency type.
     """
     return (dep.supplier[0] for dep in classifier.clientDependency \
-        if dep.isKindOf(dep_type) and dep.supplier[0].isKindOf(UML.Interface))
+        if dep.isKindOf(dep_type) and dep.supplier[0].isKindOf(Interface))
 
 def _pr_rc_interface_deps(component, dep_type):
     """

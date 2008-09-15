@@ -27,7 +27,7 @@ from gaphor.diagram.classes.implementation import ImplementationItem
 
 # Components:
 from gaphor.diagram.artifact import ArtifactItem
-from gaphor.diagram.connector import AssemblyConnectorItem
+from gaphor.diagram.connector import ConnectorItem
 from gaphor.diagram.component import ComponentItem
 from gaphor.diagram.node import NodeItem
 
