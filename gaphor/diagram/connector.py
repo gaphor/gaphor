@@ -24,6 +24,8 @@ and connector's `kind` attribute.
 Current implementation is subject to change in the future, when UML
 specification clarifies issues described below.
 
+See also http://www.omg.org/issues/uml2-rtf.open.html#Issue7251
+
 Connector Kind
 ----------------------------------
 Chapter Components of UML specification adds `kind` attribute to connector
