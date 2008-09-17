@@ -101,3 +101,6 @@ class ConnectorItem(NamedLine):
             cr.stroke()
         finally:
             cr.restore()
+
+
+# vim:sw=4:et:ai
