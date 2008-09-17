@@ -66,10 +66,6 @@ class AssemblyConnectorTestCase(TestCase):
 
         i1, i2 = self._create_interfaces('A', 'B')
 
-        # no components, no interfaces
-        interfaces = self.adapter._get_interfaces(None, None)
-        self.assertEquals([], interfaces)
-
         # no provided/required interfaces
         interfaces = self.adapter._get_interfaces(self.c1, self.c2)
         self.assertEquals([], interfaces)
@@ -95,14 +91,91 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertEquals([i1, i2], interfaces)
 
 
-    def test_component_glue(self):
-        """Test glueing components with assembly connector.
+    def test_component_one_side_glue(self):
+        """Test glueing first component
         """
         glued = self.adapter.glue(self.line.head)
-        self.assertFalse(glued) # no interfaces, no glue
+        self.assertTrue(glued)
 
-        glued = self.adapter.glue(self.line.tail)
-        self.assertFalse(glued) # no interfaces, no glue
+
+    def test_component_glue_no_interfaces(self):
+        """Test glueing components with no interfaces using assembly connector
+        """
+        self.line.head.connected_to = self.c1
+        self.adapter.connect(self.line.head)
+
+        query = (self.c2, self.line)
+        adap2 = component.queryMultiAdapter(query, IConnect)
+        glued = adap2.glue(self.line.tail)
+        self.assertFalse(glued)
+
+
+    def test_components_glue(self):
+        """Test glueing components
+        """
+        self.line.head.connected_to = self.c1
+        connected = self.adapter.connect(self.line.head)
+
+        i1, = self._create_interfaces('A')
+        self._provide(self.c1.subject, i1)
+        self._require(self.c2.subject, i1)
+
+        query = (self.c2, self.line)
+        adap2 = component.queryMultiAdapter(query, IConnect)
+        glued = adap2.glue(self.line.tail)
+        self.assertTrue(glued)
+
+
+    def test_components_glue_switched(self):
+        """Test glueing components in different order
+        """
+        self.line.tail.connected_to = self.c2
+        connected = self.adapter.connect(self.line.tail)
+
+        i1, = self._create_interfaces('A')
+        self._provide(self.c1.subject, i1)
+        self._require(self.c2.subject, i1)
+
+        query = (self.c1, self.line)
+        adap2 = component.queryMultiAdapter(query, IConnect)
+        glued = adap2.glue(self.line.head)
+        self.assertTrue(glued)
+
+
+    def test_components_connection(self):
+        """Test components connection
+        """
+        self.line.head.connected_to = self.c1
+        self.adapter.connect(self.line.head)
+
+        i1, = self._create_interfaces('A')
+        self._provide(self.c1.subject, i1)
+        self._require(self.c2.subject, i1)
+
+        self.line.tail.connected_to = self.c2
+        query = (self.c2, self.line)
+        adap2 = component.queryMultiAdapter(query, IConnect)
+        connected = adap2.connect(self.line.tail)
+        self.assertTrue(connected)
+
+        # test UML data model
+        # is connector really connector?
+        self.assertTrue(isinstance(self.line.subject, UML.Connector))
+        connector = self.line.subject
+        # there should be two connector ends
+        self.assertEquals(2, len(connector.end))
+        # interface i1 is on both ends
+        end1 = connector.end[0]
+        end2 = connector.end[1]
+        self.assertEquals(i1, end1.role)
+        self.assertEquals(i1, end2.role)
+        # connector ends identify components 
+        p1 = end1.partWithPort
+        p2 = end2.partWithPort
+        self.assertEquals(p1, self.c1.subject.ownedPort)
+        self.assertEquals(p2, self.c2.subject.ownedPort)
+        # it is assembly connector
+        self.assertEquals('assembly', connector.kind)
 
 
 

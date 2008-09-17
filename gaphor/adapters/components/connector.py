@@ -30,12 +30,10 @@ class AssemblyConnectorConnect(AbstractConnect):
          c2
             Component requiring interfaces.
         """
-        interfaces = []
-        if c1 is not None and c2 is not None:
-            provided = set(c1.subject.provided)
-            required = set(c2.subject.required)
-            interfaces = list(provided.intersection(required))
-            interfaces.sort(key=operator.attrgetter('name'))
+        provided = set(c1.subject.provided)
+        required = set(c2.subject.required)
+        interfaces = list(provided.intersection(required))
+        interfaces.sort(key=operator.attrgetter('name'))
         return interfaces
 
 
@@ -45,13 +43,15 @@ class AssemblyConnectorConnect(AbstractConnect):
         opposite = line.opposite(handle)
 
         # get component items on required and provided side of a connector
-        provided = opposite.connected_to
-        required = self.element
-        # head points to provided side of assembly connector
-        if line.head is opposite:
-            provided, required = required, provided
+        if handle is line.head:
+            provided = self.element
+            required = opposite.connected_to
+        else:
+            provided = opposite.connected_to
+            required = self.element
 
-        glue_ok = len(self._get_interfaces(provided, required)) > 0
+        if provided is not None and required is not None:
+            glue_ok = len(self._get_interfaces(provided, required)) > 0
         return glue_ok
 
 
@@ -63,8 +63,25 @@ class AssemblyConnectorConnect(AbstractConnect):
         line = self.line
         provided = line.head.connected_to
         required = line.tail.connected_to
-        opposite = line.opposite(handle)
-        line.subject = self.element_factory.create(UML.Connector)
+
+        if provided and required:
+            # create uml data model
+            connector = line.subject = self.element_factory.create(UML.Connector)
+            end1 = self.element_factory.create(UML.ConnectorEnd)
+            end2 = self.element_factory.create(UML.ConnectorEnd)
+            interface = self._get_interfaces(provided, required)[0]
+            end1.role = interface
+            end2.role = interface
+            connector.end = end1
+            connector.end = end2
+            p1 = self.element_factory.create(UML.Port)
+            p2 = self.element_factory.create(UML.Port)
+            end1.partWithPort = p1
+            end2.partWithPort = p2
+            provided.subject.ownedPort = p1
+            required.subject.ownedPort = p2
+            return True
+        return False
 
 
 component.provideAdapter(AssemblyConnectorConnect)
