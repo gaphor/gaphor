@@ -178,5 +178,29 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertEquals('assembly', connector.kind)
 
 
+    def test_disconnection(self):
+        """Test assembly connector disconnection
+        """
+        self.line.head.connected_to = self.c1
+        self.adapter.connect(self.line.head)
+
+        i1, = self._create_interfaces('A')
+        self._provide(self.c1.subject, i1)
+        self._require(self.c2.subject, i1)
+
+        self.line.tail.connected_to = self.c2
+        query = (self.c2, self.line)
+        adap2 = component.queryMultiAdapter(query, IConnect)
+        connected = adap2.connect(self.line.tail)
+        assert connected
+
+        self.adapter.disconnect(self.line.head)
+        
+        factory = self.element_factory
+        self.assertEquals(0, len(factory.lselect(lambda e: e.isKindOf(UML.Connector))))
+        self.assertEquals(0, len(factory.lselect(lambda e: e.isKindOf(UML.ConnectorEnd))))
+        self.assertEquals(0, len(factory.lselect(lambda e: e.isKindOf(UML.Port))))
+
+
 
 # vim:sw=4:et:ai

@@ -84,4 +84,15 @@ class AssemblyConnectorConnect(AbstractConnect):
         return False
 
 
+    def disconnect(self, handle):
+        super(AssemblyConnectorConnect, self).disconnect(handle)
+        line = self.line
+        provided = line.head.connected_to
+        required = line.tail.connected_to
+        if provided and required:
+            line.subject.unlink()
+            provided.subject.ownedPort.unlink()
+            required.subject.ownedPort.unlink()
+
+
 component.provideAdapter(AssemblyConnectorConnect)
