@@ -97,7 +97,7 @@ class ConnectorItem(NamedLine):
             cx, cy = pos
             cr.translate(cx, cy)
             cr.rotate(angle)
-            cr.arc(0, 0, self.RADIUS_REQUIRED, pi / 2 - 0.2, pi * 1.5 + 0.2)
+            cr.arc_negative(0, 0, self.RADIUS_REQUIRED, pi / 2 - 0.2, pi * 1.5 + 0.2)
             cr.move_to(0, 0)
             cr.arc(0, 0, self.RADIUS_PROVIDED, 0, pi*2)
             cr.stroke()
