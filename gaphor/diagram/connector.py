@@ -76,7 +76,6 @@ class ConnectorItem(NamedLine):
     """
     __uml__        = UML.Connector
     __style__   = {
-        'min-size':   (20, 20),
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
         'name-outside': True,
     }
@@ -90,8 +89,8 @@ class ConnectorItem(NamedLine):
 
     def draw(self, context):
         super(ConnectorItem, self).draw(context)
-        cr = context.cairo
-        try:
+        if self.subject and self.subject.kind == 'assembly':
+            cr = context.cairo
             cr.save()
             pos, angle = self._get_center_pos()
             cx, cy = pos
@@ -101,7 +100,6 @@ class ConnectorItem(NamedLine):
             cr.move_to(0, 0)
             cr.arc(0, 0, self.RADIUS_PROVIDED, 0, pi*2)
             cr.stroke()
-        finally:
             cr.restore()
 
 
