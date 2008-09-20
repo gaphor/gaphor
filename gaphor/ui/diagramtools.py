@@ -51,7 +51,7 @@ class ConnectHandleTool(_ConnectHandleTool):
         adapter = component.queryMultiAdapter((glue_item, item), IConnect)
         if adapter:
             self._adapter = adapter
-            can_glue = adapter.glue(handle)
+            can_glue = adapter.glue(handle, port)
 
         return can_glue
 
@@ -70,7 +70,7 @@ class ConnectHandleTool(_ConnectHandleTool):
 
             if connected:
                 assert handle in self._adapter.line.handles()
-                self._adapter.connect(handle)
+                self._adapter.connect(handle, None)
         finally:
             self._adapter = None
 
