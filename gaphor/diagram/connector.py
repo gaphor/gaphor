@@ -55,7 +55,7 @@ are connectable elements.
 from math import pi
 
 from gaphor import UML
-from gaphas.item import NW
+from gaphas.connector import Handle, PointPort
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
@@ -64,6 +64,7 @@ class ConnectorItem(NamedLine):
     Connector item.
 
     Connector is implemented as a line
+        - by default, arrow is drawn at line's tail
         - assembly connector icon is drawn in the middle if connector is
           assembly connector
         - item is annotated with `delegate` stereotype if connector is
@@ -85,11 +86,42 @@ class ConnectorItem(NamedLine):
 
     def __init__(self, id=None):
         super(ConnectorItem, self).__init__(id)
+        h1 = Handle(strength=0)
+        h2 = Handle(strength=0)
+        self._handles.insert(1, h1)
+        self._handles.insert(2, h2)
+        h1.pos = (3, 3)
+        h2.pos = (7, 7)
+        h1.movable = False
+        h2.movable = False
+
+        self._constraint(h1, line=(self.head, self.tail))
+        self._constraint(h2, line=(self.head, self.tail))
+
+        self._provided_port = PointPort(h1)
+        self._required_port = PointPort(h2)
+        self._ports.append(self._provided_port)
+        self._ports.append(self._required_port)
+
+
+    is_assembly = property(lambda self: \
+            self.subject is not None and self.subject.kind == 'assembly')
+
+
+    def draw_tail(self, context):
+        cr = context.cairo
+        cr.line_to(0, 0)
+        cr.stroke()
+
+        if not self.is_assembly:
+            cr.move_to(15, -6)
+            cr.line_to(0, 0)
+            cr.line_to(15, 6)
 
 
     def draw(self, context):
         super(ConnectorItem, self).draw(context)
-        if self.subject and self.subject.kind == 'assembly':
+        if self.is_assembly:
             cr = context.cairo
             cr.save()
             pos, angle = self._get_center_pos()

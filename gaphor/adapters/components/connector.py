@@ -1,5 +1,10 @@
 """
-Assembly connector connections.
+Connector connections.
+
+Currently, two kind of connections are supported. First one is simple
+assembly connector between two components. Second allows to visually group
+assembly connectors (see UML 2.2 specification, figure 8.18, page 160) by
+connecting component and other assembly connector.
 """
 
 import operator
@@ -11,7 +16,7 @@ from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.adapters.connectors import AbstractConnect
 
-class AssemblyConnectorConnect(AbstractConnect):
+class ComponentAssemblyConnectorConnect(AbstractConnect):
     """
     Connect two components which provide and require same interfaces.
     """
@@ -38,7 +43,7 @@ class AssemblyConnectorConnect(AbstractConnect):
 
 
     def glue(self, handle):
-        glue_ok = super(AssemblyConnectorConnect, self).glue(handle)
+        glue_ok = super(ComponentAssemblyConnectorConnect, self).glue(handle)
         line = self.line
         opposite = line.opposite(handle)
 
@@ -56,7 +61,7 @@ class AssemblyConnectorConnect(AbstractConnect):
 
 
     def connect(self, handle):
-        connected = super(AssemblyConnectorConnect, self).connect(handle)
+        connected = super(ComponentAssemblyConnectorConnect, self).connect(handle)
         if not connected:
             return False
 
@@ -85,7 +90,7 @@ class AssemblyConnectorConnect(AbstractConnect):
 
 
     def disconnect(self, handle):
-        super(AssemblyConnectorConnect, self).disconnect(handle)
+        super(ComponentAssemblyConnectorConnect, self).disconnect(handle)
         line = self.line
         provided = line.head.connected_to
         required = line.tail.connected_to
@@ -95,4 +100,67 @@ class AssemblyConnectorConnect(AbstractConnect):
             required.subject.ownedPort.unlink()
 
 
-component.provideAdapter(AssemblyConnectorConnect)
+component.provideAdapter(ComponentAssemblyConnectorConnect)
+
+
+
+class GroupAssemblyConnectorConnect(AbstractConnect):
+    """
+    Group assembly connectors by connecting component and assembly
+    connector.
+    """
+    component.adapts(items.ConnectorItem, items.ConnectorItem)
+
+    element_factory = inject('element_factory')
+
+    def glue(self, handle):
+        glue_ok = super(GroupAssemblyConnectorConnect, self).glue(handle)
+        line = self.line
+        opposite = line.opposite(handle)
+
+        if handle.connected_to or opposite.connected_to:
+            glue_ok = True
+        return glue_ok
+
+
+    def connect(self, handle):
+        connected = super(GroupAssemblyConnectorConnect, self).connect(handle)
+        if not connected:
+            return False
+
+        line = self.line
+        provided = line.head.connected_to
+        required = line.tail.connected_to
+
+        if provided and required:
+            # create uml data model
+            connector = line.subject = self.element_factory.create(UML.Connector)
+            end1 = self.element_factory.create(UML.ConnectorEnd)
+            end2 = self.element_factory.create(UML.ConnectorEnd)
+            interface = self._get_interfaces(provided, required)[0]
+            end1.role = interface
+            end2.role = interface
+            connector.end = end1
+            connector.end = end2
+            p1 = self.element_factory.create(UML.Port)
+            p2 = self.element_factory.create(UML.Port)
+            end1.partWithPort = p1
+            end2.partWithPort = p2
+            provided.subject.ownedPort = p1
+            required.subject.ownedPort = p2
+            return True
+        return False
+
+
+    def disconnect(self, handle):
+        super(GroupAssemblyConnectorConnect, self).disconnect(handle)
+        line = self.line
+        provided = line.head.connected_to
+        required = line.tail.connected_to
+        if provided and required:
+            line.subject.unlink()
+            provided.subject.ownedPort.unlink()
+            required.subject.ownedPort.unlink()
+
+
+component.provideAdapter(GroupAssemblyConnectorConnect)
