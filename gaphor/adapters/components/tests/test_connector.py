@@ -8,10 +8,7 @@ from gaphor import UML
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
-class AssemblyConnectorTestCase(TestCase):
-    """
-    Test components connection with assembly connector.
-    """
+class TestCaseBase(TestCase):
 
     services = ['element_factory', 'adapter_loader']
 
@@ -25,7 +22,7 @@ class AssemblyConnectorTestCase(TestCase):
         """
         for name in args:
             interface = self.element_factory.create(UML.Interface)
-            interface.name = 'B'
+            interface.name = name
             yield interface
 
 
@@ -91,13 +88,18 @@ class AssemblyConnectorTestCase(TestCase):
         Create two components and a connector item line. Adapter for
         connecting components with connector is created as well.
         """
-        super(AssemblyConnectorTestCase, self).setUp()
+        super(TestCaseBase, self).setUp()
 
         self.c1 = self.create(items.ComponentItem, UML.Component)
         self.c2 = self.create(items.ComponentItem, UML.Component)
         self.line = self.create(items.ConnectorItem)
 
 
+
+class AssemblyConnectorTestCase(TestCaseBase):
+    """
+    Test components connection with assembly connector.
+    """
     def test_component_intersection(self):
         """Test component intersection of provided and required interfaces"""
 
@@ -226,6 +228,36 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertEquals(0, len(self._kindof(UML.ConnectorEnd)))
         self.assertEquals(0, len(self._kindof(UML.Port)))
 
+
+
+class AssemblyConnectorGroupingTestCase(TestCaseBase):
+    def test_connector_glue_no_port(self):
+        """Test assembly connectors glueing with no port
+        """
+        assembly = self.create(items.ConnectorItem)
+        glued = self._glue(self.line, self.line.head, assembly)
+        self.assertFalse(glued)
+
+
+    def test_connector_glue_port(self):
+        """Test assembly connectors glueing with ports
+        """
+        assembly = self.create(items.ConnectorItem)
+        port_p = assembly._provided_port
+        port_r = assembly._required_port
+        head, tail = self.line.head, self.line.tail
+
+        glued = self._glue(self.line, head, assembly, port_r)
+        self.assertTrue(glued)
+
+        glued = self._glue(self.line, head, assembly, port_p)
+        self.assertFalse(glued)
+
+        glued = self._glue(self.line, tail, assembly, port_r)
+        self.assertFalse(glued)
+
+        glued = self._glue(self.line, tail, assembly, port_p)
+        self.assertTrue(glued)
 
 
 # vim:sw=4:et:ai
