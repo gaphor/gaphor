@@ -47,6 +47,38 @@ class AssemblyConnectorTestCase(TestCase):
         usage.supplier = interface
 
 
+    def _glue(self, line, handle, item, port=None):
+        """
+        Glue line's handle to an item.
+        """
+        query = (item, line)
+        adapter = component.queryMultiAdapter(query, IConnect)
+        return adapter.glue(handle, port)
+
+
+    def _connect(self, line, handle, item, port=None):
+        """
+        Connect line's handle to an item.
+        """
+        query = (item, line)
+        handle.connected_to = item
+        try:
+            adapter = component.queryMultiAdapter(query, IConnect)
+            return adapter.connect(handle, port)
+        except Error, ex:
+            handle.connected_to = None
+            raise ex
+
+
+    def _disconnect(self, line, handle):
+        """
+        Disconnect line's handle.
+        """
+        query = (handle.connected_to, line)
+        adapter = component.queryMultiAdapter(query, IConnect)
+        adapter.disconnect(self.line.head)
+
+
     def setUp(self):
         """
         Create two components and a connector item line. Adapter for
@@ -57,8 +89,6 @@ class AssemblyConnectorTestCase(TestCase):
         self.c1 = self.create(items.ComponentItem, UML.Component)
         self.c2 = self.create(items.ComponentItem, UML.Component)
         self.line = self.create(items.ConnectorItem)
-        query = (self.c1, self.line)
-        self.adapter = component.queryMultiAdapter(query, IConnect)
 
 
     def test_component_intersection(self):
@@ -66,96 +96,85 @@ class AssemblyConnectorTestCase(TestCase):
 
         i1, i2 = self._create_interfaces('A', 'B')
 
+        query = (self.c1, self.line)
+        adapter = component.queryMultiAdapter(query, IConnect)
+
         # no provided/required interfaces
-        interfaces = self.adapter._get_interfaces(self.c1, self.c2)
+        interfaces = adapter._get_interfaces(self.c1, self.c2)
         self.assertEquals([], interfaces)
 
         # c1 provides i1
         self._provide(self.c1.subject, i1)
-        interfaces = self.adapter._get_interfaces(self.c1, self.c2)
+        interfaces = adapter._get_interfaces(self.c1, self.c2)
         self.assertEquals([], interfaces)
 
         # c1 provides i1 and c2 requires i1
         self._require(self.c2.subject, i1)
-        interfaces = self.adapter._get_interfaces(self.c1, self.c2)
+        interfaces = adapter._get_interfaces(self.c1, self.c2)
         self.assertEquals([i1], interfaces)
 
         # c1 provides i1 and i2, c2 requires i1 only 
         self._provide(self.c1.subject, i2)
-        interfaces = self.adapter._get_interfaces(self.c1, self.c2)
+        interfaces = adapter._get_interfaces(self.c1, self.c2)
         self.assertEquals([i1], interfaces)
 
         # both components require and provide interfaces i1 and i2
         self._require(self.c2.subject, i2)
-        interfaces = self.adapter._get_interfaces(self.c1, self.c2)
+        interfaces = adapter._get_interfaces(self.c1, self.c2)
         self.assertEquals([i1, i2], interfaces)
 
 
     def test_component_one_side_glue(self):
         """Test glueing first component
         """
-        glued = self.adapter.glue(self.line.head)
+        glued = self._glue(self.line, self.line.head, self.c1)
         self.assertTrue(glued)
 
 
     def test_component_glue_no_interfaces(self):
         """Test glueing components with no interfaces using assembly connector
         """
-        self.line.head.connected_to = self.c1
-        self.adapter.connect(self.line.head)
-
-        query = (self.c2, self.line)
-        adap2 = component.queryMultiAdapter(query, IConnect)
-        glued = adap2.glue(self.line.tail)
+        self._connect(self.line, self.line.head, self.c1)
+        glued = self._glue(self.line, self.line.tail, self.c2)
         self.assertFalse(glued)
 
 
     def test_components_glue(self):
         """Test glueing components
         """
-        self.line.head.connected_to = self.c1
-        connected = self.adapter.connect(self.line.head)
+        self._connect(self.line, self.line.head, self.c1)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
-        query = (self.c2, self.line)
-        adap2 = component.queryMultiAdapter(query, IConnect)
-        glued = adap2.glue(self.line.tail)
+        glued = self._glue(self.line, self.line.tail, self.c2)
         self.assertTrue(glued)
 
 
     def test_components_glue_switched(self):
         """Test glueing components in different order
         """
-        self.line.tail.connected_to = self.c2
-        connected = self.adapter.connect(self.line.tail)
+        self._connect(self.line, self.line.tail, self.c2)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
-        query = (self.c1, self.line)
-        adap2 = component.queryMultiAdapter(query, IConnect)
-        glued = adap2.glue(self.line.head)
+        glued = self._glue(self.line, self.line.head, self.c1)
         self.assertTrue(glued)
 
 
     def test_components_connection(self):
         """Test components connection
         """
-        self.line.head.connected_to = self.c1
-        self.adapter.connect(self.line.head)
+        self._connect(self.line, self.line.head, self.c1)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
-        self.line.tail.connected_to = self.c2
-        query = (self.c2, self.line)
-        adap2 = component.queryMultiAdapter(query, IConnect)
-        connected = adap2.connect(self.line.tail)
+        connected = self._connect(self.line, self.line.tail, self.c2)
         self.assertTrue(connected)
 
         # test UML data model
@@ -181,20 +200,16 @@ class AssemblyConnectorTestCase(TestCase):
     def test_disconnection(self):
         """Test assembly connector disconnection
         """
-        self.line.head.connected_to = self.c1
-        self.adapter.connect(self.line.head)
+        self._connect(self.line, self.line.head, self.c1)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
-        self.line.tail.connected_to = self.c2
-        query = (self.c2, self.line)
-        adap2 = component.queryMultiAdapter(query, IConnect)
-        connected = adap2.connect(self.line.tail)
+        connected = self._connect(self.line, self.line.tail, self.c2)
         assert connected
 
-        self.adapter.disconnect(self.line.head)
+        self._disconnect(self.line, self.line.head)
         
         factory = self.element_factory
         self.assertEquals(0, len(factory.lselect(lambda e: e.isKindOf(UML.Connector))))
