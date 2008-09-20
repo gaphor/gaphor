@@ -114,12 +114,20 @@ class GroupAssemblyConnectorConnect(AbstractConnect):
     element_factory = inject('element_factory')
 
     def glue(self, handle, port):
+        """
+        Allow to connect
+        - connector's tail to provided port 
+        - connector's head to required port
+        """
         glue_ok = super(GroupAssemblyConnectorConnect, self).glue(handle, port)
         line = self.line
         opposite = line.opposite(handle)
 
-        if port is line._required_port or port is line._required_port:
-            glue_ok = True
+        if handle is line.head:
+            glue_ok = port is self.element._required_port
+        elif handle is line.tail:
+            glue_ok = port is self.element._provided_port
+
         return glue_ok
 
 
