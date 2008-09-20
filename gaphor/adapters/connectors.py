@@ -53,7 +53,7 @@ class AbstractConnect(object):
     def __init__(self, element, line):
         self.element = element
         self.line = line
-        canvas = self._canvas = element.canvas
+        self._canvas = element.canvas
 
 
     def glue(self, handle):
