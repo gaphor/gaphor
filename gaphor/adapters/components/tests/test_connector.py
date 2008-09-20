@@ -181,6 +181,8 @@ class AssemblyConnectorTestCase(TestCase):
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
+        self.assertFalse(self.line.is_assembly)
+
         connected = self._connect(self.line, self.line.tail, self.c2)
         self.assertTrue(connected)
 
@@ -202,6 +204,7 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertEquals(p2, self.c2.subject.ownedPort)
         # it is assembly connector
         self.assertEquals('assembly', connector.kind)
+        self.assertTrue(self.line.is_assembly)
 
 
     def test_disconnection(self):
