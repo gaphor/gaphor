@@ -42,7 +42,7 @@ class TransitionConnect(VertexConnect):
         is_final = isinstance(subject, UML.FinalState)
         if isinstance(subject, UML.State) and not is_final \
                 or handle is line.tail and is_final:
-            return super(TransitionConnect, self.glue(handle, port)
+            return super(TransitionConnect, self).glue(handle, port)
         else:
             return None
 
@@ -68,7 +68,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         subject = self.element.subject
 
         if handle is line.head and not self.element._connected:
-            return super(InitialPseudostateTransitionConnect, self.glue(handle, port)
+            return super(InitialPseudostateTransitionConnect, self).glue(handle, port)
         else:
             return None
 
@@ -78,7 +78,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         Update InitialPseudostateItem._connected attribute to `True` to
         disallow more connections.
         """
-        if super(InitialPseudostateTransitionConnect, self.connect(handle, port):
+        if super(InitialPseudostateTransitionConnect, self).connect(handle, port):
             self.element._connected = True
 
 

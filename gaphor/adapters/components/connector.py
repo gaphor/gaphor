@@ -43,7 +43,7 @@ class ComponentAssemblyConnectorConnect(AbstractConnect):
 
 
     def glue(self, handle, port):
-        glue_ok = super(ComponentAssemblyConnectorConnect, self.glue(handle, port)
+        glue_ok = super(ComponentAssemblyConnectorConnect, self).glue(handle, port)
         line = self.line
         opposite = line.opposite(handle)
 
@@ -61,7 +61,7 @@ class ComponentAssemblyConnectorConnect(AbstractConnect):
 
 
     def connect(self, handle, port):
-        connected = super(ComponentAssemblyConnectorConnect, self.connect(handle, port)
+        connected = super(ComponentAssemblyConnectorConnect, self).connect(handle, port)
         if not connected:
             return False
 
@@ -114,17 +114,17 @@ class GroupAssemblyConnectorConnect(AbstractConnect):
     element_factory = inject('element_factory')
 
     def glue(self, handle, port):
-        glue_ok = super(GroupAssemblyConnectorConnect, self.glue(handle, port)
+        glue_ok = super(GroupAssemblyConnectorConnect, self).glue(handle, port)
         line = self.line
         opposite = line.opposite(handle)
 
-        if handle.connected_to or opposite.connected_to:
+        if port is line._required_port or port is line._required_port:
             glue_ok = True
         return glue_ok
 
 
     def connect(self, handle, port):
-        connected = super(GroupAssemblyConnectorConnect, self.connect(handle, port)
+        connected = super(GroupAssemblyConnectorConnect, self).connect(handle, port)
         if not connected:
             return False
 

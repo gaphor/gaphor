@@ -116,10 +116,10 @@ class CommentLineElementConnect(AbstractConnect):
         if connected_to and not glue_ok:
             return None
 
-        return super(CommentLineElementConnect, self.glue(handle, port)
+        return super(CommentLineElementConnect, self).glue(handle, port)
 
     def connect(self, handle, port):
-        if super(CommentLineElementConnect, self.connect(handle, port):
+        if super(CommentLineElementConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -171,10 +171,10 @@ class CommentLineLineConnect(AbstractConnect):
         if connected_to and not glue_ok:
             return None
 
-        return super(CommentLineLineConnect, self.glue(handle, port)
+        return super(CommentLineLineConnect, self).glue(handle, port)
 
     def connect(self, handle, port):
-        if super(CommentLineLineConnect, self.connect(handle, port):
+        if super(CommentLineLineConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
             if opposite.connected_to and self.element.subject:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -231,7 +231,7 @@ class RelationshipConnect(AbstractConnect):
                      and connected_to.subject is element.subject:
                 return None
 
-        return super(RelationshipConnect, self.glue(handle, port)
+        return super(RelationshipConnect, self).glue(handle, port)
 
 
     def relationship(self, required_type, head, tail):
@@ -359,7 +359,7 @@ class RelationshipConnect(AbstractConnect):
         Connect the items to each other. The model level relationship
         is created by create_subject()
         """
-        if super(RelationshipConnect, self.connect(handle, port):
+        if super(RelationshipConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 self.connect_subject(handle)
@@ -402,7 +402,7 @@ class DependencyConnect(RelationshipConnect):
            not isinstance(element.subject, UML.NamedElement):
             return None
 
-        return super(DependencyConnect, self.glue(handle, port)
+        return super(DependencyConnect, self).glue(handle, port)
 
     def connect_subject(self, handle):
         """
@@ -444,7 +444,7 @@ class ImplementationConnect(RelationshipConnect):
            not isinstance(element.subject, UML.BehavioredClassifier):
             return None
 
-        return super(ImplementationConnect, self.glue(handle, port)
+        return super(ImplementationConnect, self).glue(handle, port)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Implementation,
@@ -484,7 +484,7 @@ class IncludeConnect(RelationshipConnect):
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(IncludeConnect, self.glue(handle, port)
+        return super(IncludeConnect, self).glue(handle, port)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Include,
@@ -508,7 +508,7 @@ class ExtendConnect(RelationshipConnect):
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(ExtendConnect, self.glue(handle, port)
+        return super(ExtendConnect, self).glue(handle, port)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Extend,
@@ -539,7 +539,7 @@ class ExtensionConnect(RelationshipConnect):
            not isinstance(element.subject, UML.Stereotype):
             return None
 
-        return super(ExtensionConnect, self.glue(handle, port)
+        return super(ExtensionConnect, self).glue(handle, port)
 
     def connect_subject(self, handle):
         element = self.element
@@ -628,7 +628,7 @@ class AssociationConnect(RelationshipConnect):
         if not isinstance(element.subject, UML.Classifier):
             return None
 
-        return super(AssociationConnect, self.glue(handle, port)
+        return super(AssociationConnect, self).glue(handle, port)
 
     def connect_subject(self, handle):
         element = self.element
@@ -726,7 +726,7 @@ class FlowConnect(RelationshipConnect):
            or handle is line.tail and isinstance(subject, UML.InitialNode):
             return None
 
-        return super(FlowConnect, self.glue(handle, port)
+        return super(FlowConnect, self).glue(handle, port)
 
     def connect_subject(self, handle):
         line = self.line
@@ -780,7 +780,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
            or handle is tail and head.connected_to and head.connected_to.subject is subject:
             return None
 
-        return super(FlowForkDecisionNodeConnect, self.glue(handle, port)
+        return super(FlowForkDecisionNodeConnect, self).glue(handle, port)
 
     def combine_nodes(self):
         """
