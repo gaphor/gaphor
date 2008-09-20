@@ -79,6 +79,13 @@ class AssemblyConnectorTestCase(TestCase):
         adapter.disconnect(self.line.head)
 
 
+    def _kindof(self, cls):
+        """
+        Find UML metaclass instances using element factory.
+        """
+        return self.element_factory.lselect(lambda e: e.isKindOf(cls))
+
+
     def setUp(self):
         """
         Create two components and a connector item line. Adapter for
@@ -212,9 +219,9 @@ class AssemblyConnectorTestCase(TestCase):
         self._disconnect(self.line, self.line.head)
         
         factory = self.element_factory
-        self.assertEquals(0, len(factory.lselect(lambda e: e.isKindOf(UML.Connector))))
-        self.assertEquals(0, len(factory.lselect(lambda e: e.isKindOf(UML.ConnectorEnd))))
-        self.assertEquals(0, len(factory.lselect(lambda e: e.isKindOf(UML.Port))))
+        self.assertEquals(0, len(self._kindof(UML.Connector)))
+        self.assertEquals(0, len(self._kindof(UML.ConnectorEnd)))
+        self.assertEquals(0, len(self._kindof(UML.Port)))
 
 
 
