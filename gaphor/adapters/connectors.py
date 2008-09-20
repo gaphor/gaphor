@@ -56,7 +56,7 @@ class AbstractConnect(object):
         self._canvas = element.canvas
 
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         """
         Determine if items can be connected.
 
@@ -65,7 +65,7 @@ class AbstractConnect(object):
         return True
 
 
-    def connect(self, handle):
+    def connect(self, handle, port):
         """
         Connect to an element. Note that at this point the line may
         be connected to some other, or the same element by means of the
@@ -91,7 +91,7 @@ class CommentLineElementConnect(AbstractConnect):
     """
     component.adapts(items.ElementItem, items.CommentLineItem)
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -116,10 +116,10 @@ class CommentLineElementConnect(AbstractConnect):
         if connected_to and not glue_ok:
             return None
 
-        return super(CommentLineElementConnect, self).glue(handle)
+        return super(CommentLineElementConnect, self.glue(handle, port)
 
-    def connect(self, handle):
-        if super(CommentLineElementConnect, self).connect(handle):
+    def connect(self, handle, port):
+        if super(CommentLineElementConnect, self.connect(handle, port):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -145,7 +145,7 @@ class CommentLineLineConnect(AbstractConnect):
     """
     component.adapts(items.DiagramLine, items.CommentLineItem)
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -171,10 +171,10 @@ class CommentLineLineConnect(AbstractConnect):
         if connected_to and not glue_ok:
             return None
 
-        return super(CommentLineLineConnect, self).glue(handle)
+        return super(CommentLineLineConnect, self.glue(handle, port)
 
-    def connect(self, handle):
-        if super(CommentLineLineConnect, self).connect(handle):
+    def connect(self, handle, port):
+        if super(CommentLineLineConnect, self.connect(handle, port):
             opposite = self.line.opposite(handle)
             if opposite.connected_to and self.element.subject:
                 if isinstance(opposite.connected_to.subject, UML.Comment):
@@ -210,7 +210,7 @@ class RelationshipConnect(AbstractConnect):
     # override in deriving class to allow unary relationship
     CAN_BE_UNARY = False
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         """
         In addition to the normal check, both relationship ends may not be
         connected to the same element. Same goes for subjects.
@@ -231,7 +231,7 @@ class RelationshipConnect(AbstractConnect):
                      and connected_to.subject is element.subject:
                 return None
 
-        return super(RelationshipConnect, self).glue(handle)
+        return super(RelationshipConnect, self.glue(handle, port)
 
 
     def relationship(self, required_type, head, tail):
@@ -354,12 +354,12 @@ class RelationshipConnect(AbstractConnect):
         if old and len(old.presentation) == 0:
             old.unlink()
 
-    def connect(self, handle):
+    def connect(self, handle, port):
         """
         Connect the items to each other. The model level relationship
         is created by create_subject()
         """
-        if super(RelationshipConnect, self).connect(handle):
+        if super(RelationshipConnect, self.connect(handle, port):
             opposite = self.line.opposite(handle)
             if opposite.connected_to:
                 self.connect_subject(handle)
@@ -393,7 +393,7 @@ class DependencyConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.DependencyItem)
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         line = self.line
         element = self.element
 
@@ -402,7 +402,7 @@ class DependencyConnect(RelationshipConnect):
            not isinstance(element.subject, UML.NamedElement):
             return None
 
-        return super(DependencyConnect, self).glue(handle)
+        return super(DependencyConnect, self.glue(handle, port)
 
     def connect_subject(self, handle):
         """
@@ -430,7 +430,7 @@ class ImplementationConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.ImplementationItem)
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         line = self.line
         element = self.element
 
@@ -444,7 +444,7 @@ class ImplementationConnect(RelationshipConnect):
            not isinstance(element.subject, UML.BehavioredClassifier):
             return None
 
-        return super(ImplementationConnect, self).glue(handle)
+        return super(ImplementationConnect, self.glue(handle, port)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Implementation,
@@ -477,14 +477,14 @@ class IncludeConnect(RelationshipConnect):
     """
     component.adapts(items.UseCaseItem, items.IncludeItem)
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         line = self.line
         element = self.element
 
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(IncludeConnect, self).glue(handle)
+        return super(IncludeConnect, self.glue(handle, port)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Include,
@@ -501,14 +501,14 @@ class ExtendConnect(RelationshipConnect):
     """
     component.adapts(items.UseCaseItem, items.ExtendItem)
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         line = self.line
         element = self.element
         
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(ExtendConnect, self).glue(handle)
+        return super(ExtendConnect, self.glue(handle, port)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Extend,
@@ -525,7 +525,7 @@ class ExtensionConnect(RelationshipConnect):
     """
     component.adapts(items.ClassifierItem, items.ExtensionItem)
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         line = self.line
         element = self.element
 
@@ -539,7 +539,7 @@ class ExtensionConnect(RelationshipConnect):
            not isinstance(element.subject, UML.Stereotype):
             return None
 
-        return super(ExtensionConnect, self).glue(handle)
+        return super(ExtensionConnect, self.glue(handle, port)
 
     def connect_subject(self, handle):
         element = self.element
@@ -621,14 +621,14 @@ class AssociationConnect(RelationshipConnect):
 
     CAN_BE_UNARY = True    # allow one classifier to be connected by association
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         element = self.element
 
         # Element should be a Classifier
         if not isinstance(element.subject, UML.Classifier):
             return None
 
-        return super(AssociationConnect, self).glue(handle)
+        return super(AssociationConnect, self.glue(handle, port)
 
     def connect_subject(self, handle):
         element = self.element
@@ -718,7 +718,7 @@ class FlowConnect(RelationshipConnect):
 
     CAN_BE_UNARY = True   # flow can connect same actions
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         line = self.line
         subject = self.element.subject
 
@@ -726,7 +726,7 @@ class FlowConnect(RelationshipConnect):
            or handle is line.tail and isinstance(subject, UML.InitialNode):
             return None
 
-        return super(FlowConnect, self).glue(handle)
+        return super(FlowConnect, self.glue(handle, port)
 
     def connect_subject(self, handle):
         line = self.line
@@ -771,7 +771,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Abstract class with common behaviour for Fork/Join node and
     Decision/Merge node.
     """
-    def glue(self, handle):
+    def glue(self, handle, port):
         # No cyclic connect is possible on a Flow/Decision node:
         head, tail = self.line.head, self.line.tail
         subject = self.element.subject
@@ -780,7 +780,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
            or handle is tail and head.connected_to and head.connected_to.subject is subject:
             return None
 
-        return super(FlowForkDecisionNodeConnect, self).glue(handle)
+        return super(FlowForkDecisionNodeConnect, self.glue(handle, port)
 
     def combine_nodes(self):
         """
@@ -979,7 +979,7 @@ class MessageLifelineConnect(AbstractConnect):
         return self._matrix_e2l.transform_point(*pos)
 
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         """
         Glue to lifeline's head or lifetime. If lifeline's lifetime is
         visible then disallow connection to lifeline's head.
@@ -1020,8 +1020,8 @@ class MessageLifelineConnect(AbstractConnect):
         assert False
 
 
-    def connect(self, handle):
-        if not AbstractConnect.connect(self, handle):
+    def connect(self, handle, port):
+        if not AbstractConnect.connect(self, handle, port):
             return
 
         line = self.line
