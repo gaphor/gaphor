@@ -59,12 +59,8 @@ class TestCaseBase(TestCase):
         """
         query = (item, line)
         handle.connected_to = item
-        try:
-            adapter = component.queryMultiAdapter(query, IConnect)
-            return adapter.connect(handle, port)
-        except Error, ex:
-            handle.connected_to = None
-            raise ex
+        adapter = component.queryMultiAdapter(query, IConnect)
+        return adapter.connect(handle, port)
 
 
     def _disconnect(self, line, handle):
@@ -223,7 +219,6 @@ class AssemblyConnectorTestCase(TestCaseBase):
 
         self._disconnect(self.line, self.line.head)
         
-        factory = self.element_factory
         self.assertEquals(0, len(self._kindof(UML.Connector)))
         self.assertEquals(0, len(self._kindof(UML.ConnectorEnd)))
         self.assertEquals(0, len(self._kindof(UML.Port)))
@@ -260,13 +255,82 @@ class AssemblyConnectorGroupingTestCase(TestCaseBase):
         self.assertTrue(glued)
 
 
-    def test_connector_connect_connectors(self):
-        """Test assembly connectors to not connect two connectors"""
+    def test_connectors_noconnection(self):
+        """Test assembly connectors to not connect two connectors
+        """
         assembly = self.create(items.ConnectorItem)
         self._connect(self.line, self.line.head, assembly, assembly._required_port)
         glued = self._glue(self.line, self.line.tail, assembly, assembly._provided_port)
         self.assertFalse(glued)
 
+
+    def test_connector_grouping(self):
+        """Test assembly connectors grouping
+        """
+        self._connect(self.line, self.line.head, self.c1)
+
+        i1, = self._create_interfaces('A')
+        self._provide(self.c1.subject, i1)
+        self._require(self.c2.subject, i1)
+
+        connected = self._connect(self.line, self.line.tail, self.c2)
+        assert connected
+
+        assembly = self.create(items.ConnectorItem)
+        c3 = self.create(items.ComponentItem, UML.Component)
+        self._provide(c3.subject, i1)
+        self._connect(assembly, assembly.head, c3)
+
+        connected = self._connect(assembly, assembly.tail, self.line, self.line._provided_port)
+        self.assertTrue(connected)
+
+        # test UML data model
+        # is connector really connector?
+        self.assertTrue(isinstance(assembly.subject, UML.Connector))
+        connector = assembly.subject
+        # there should be two connector ends
+        self.assertEquals(2, len(connector.end))
+        # interface i1 is on both ends
+        end1 = connector.end[0]
+        end2 = connector.end[1]
+        self.assertEquals(i1, end1.role)
+        self.assertEquals(i1, end2.role)
+        # connector ends identify components 
+        p1 = end1.partWithPort
+        p2 = end2.partWithPort
+        self.assertEquals(p1, c3.subject.ownedPort)
+        self.assertEquals(p2, self.c2.subject.ownedPort)
+        # it is assembly connector
+        self.assertEquals('assembly', connector.kind)
+        self.assertTrue(assembly.is_assembly)
+
+
+    def test_groupped_connector_disconnection(self):
+        """Test groupped assembly connectors disconnection
+        """
+        self._connect(self.line, self.line.head, self.c1)
+
+        i1, = self._create_interfaces('A')
+        self._provide(self.c1.subject, i1)
+        self._require(self.c2.subject, i1)
+
+        connected = self._connect(self.line, self.line.tail, self.c2)
+        assert connected
+
+        assembly = self.create(items.ConnectorItem)
+        c3 = self.create(items.ComponentItem, UML.Component)
+        self._provide(c3.subject, i1)
+        self._connect(assembly, assembly.head, c3)
+
+        connected = self._connect(assembly, assembly.tail, self.line, self.line._provided_port)
+        assert connected
+
+        self._disconnect(assembly, assembly.tail)
+        
+        self.assertEquals(1, len(self._kindof(UML.Connector)))
+        self.assertEquals([self.line.subject], self._kindof(UML.Connector))
+        self.assertEquals(2, len(self._kindof(UML.ConnectorEnd)))
+        self.assertEquals(2, len(self._kindof(UML.Port)))
 
 
 # vim:sw=4:et:ai
