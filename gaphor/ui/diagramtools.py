@@ -42,7 +42,7 @@ class ConnectHandleTool(_ConnectHandleTool):
         self._adapter = None
 
 
-    def _can_glue(self, view, item, handle, glue_item, port):
+    def can_glue(self, view, item, handle, glue_item, port):
         """
         Determine if item and glue item can glue/connect using connection
         adapters.
