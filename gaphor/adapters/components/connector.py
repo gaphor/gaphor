@@ -123,7 +123,9 @@ class GroupAssemblyConnectorConnect(AbstractConnect):
         line = self.line
         opposite = line.opposite(handle)
 
-        if handle is line.head:
+        if isinstance(opposite.connected_to, items.ConnectorItem):
+            glue_ok = False
+        elif handle is line.head:
             glue_ok = port is self.element._required_port
         elif handle is line.tail:
             glue_ok = port is self.element._provided_port

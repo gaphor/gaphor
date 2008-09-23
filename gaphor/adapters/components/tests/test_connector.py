@@ -260,4 +260,13 @@ class AssemblyConnectorGroupingTestCase(TestCaseBase):
         self.assertTrue(glued)
 
 
+    def test_connector_connect_connectors(self):
+        """Test assembly connectors to not connect two connectors"""
+        assembly = self.create(items.ConnectorItem)
+        self._connect(self.line, self.line.head, assembly, assembly._required_port)
+        glued = self._glue(self.line, self.line.tail, assembly, assembly._provided_port)
+        self.assertFalse(glued)
+
+
+
 # vim:sw=4:et:ai
