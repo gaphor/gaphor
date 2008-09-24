@@ -90,13 +90,11 @@ class ConnectorItem(NamedLine):
         h2 = Handle(strength=0)
         self._handles.insert(1, h1)
         self._handles.insert(2, h2)
-        h1.pos = (3, 3)
-        h2.pos = (7, 7)
         h1.movable = False
         h2.movable = False
 
-        self._constraint(h1, line=(self.head, self.tail))
-        self._constraint(h2, line=(self.head, self.tail))
+        self._constraint(h1, line=(self.head, self.tail), align=0.5, delta=-15)
+        self._constraint(h2, line=(self.head, self.tail), align=0.5, delta=15)
 
         self._provided_port = PointPort(h1)
         self._required_port = PointPort(h2)
@@ -108,31 +106,33 @@ class ConnectorItem(NamedLine):
             self.subject is not None and self.subject.kind == 'assembly')
 
 
-    def draw_tail(self, context):
-        cr = context.cairo
-        cr.line_to(0, 0)
-        cr.stroke()
-
-        if not self.is_assembly:
-            cr.move_to(15, -6)
-            cr.line_to(0, 0)
-            cr.line_to(15, 6)
+#    def draw_tail(self, context):
+#        cr = context.cairo
+#        cr.line_to(0, 0)
+#        cr.stroke()
+#
+#        if not self.is_assembly:
+#            cr.move_to(15, -6)
+#            cr.line_to(0, 0)
+#            cr.line_to(15, 6)
 
 
     def draw(self, context):
         super(ConnectorItem, self).draw(context)
-        if self.is_assembly:
-            cr = context.cairo
-            cr.save()
-            pos, angle = self._get_center_pos()
-            cx, cy = pos
-            cr.translate(cx, cy)
-            cr.rotate(angle)
-            cr.arc_negative(0, 0, self.RADIUS_REQUIRED, pi / 2 - 0.2, pi * 1.5 + 0.2)
-            cr.move_to(0, 0)
-            cr.arc(0, 0, self.RADIUS_PROVIDED, 0, pi*2)
-            cr.stroke()
-            cr.restore()
+        if isinstance(self.head.connected_to, ConnectorItem) \
+                or isinstance(self.tail.connected_to, ConnectorItem):
+            return
+        cr = context.cairo
+        cr.save()
+        pos, angle = self._get_center_pos()
+        cx, cy = pos
+        cr.translate(cx, cy)
+        cr.rotate(angle)
+        cr.arc_negative(0, 0, self.RADIUS_REQUIRED, pi / 2 - 0.2, pi * 1.5 + 0.2)
+        cr.move_to(0, 0)
+        cr.arc(0, 0, self.RADIUS_PROVIDED, 0, pi*2)
+        cr.stroke()
+        cr.restore()
 
 
 # vim:sw=4:et:ai
