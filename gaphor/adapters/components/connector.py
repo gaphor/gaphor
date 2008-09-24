@@ -12,13 +12,11 @@ import operator
 from zope import interface, component
 
 from gaphor import UML
-from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.adapters.connectors import AbstractConnect
 
 
 class ConnectorConnectBase(AbstractConnect):
-    element_factory = inject('element_factory')
     def _get_interfaces(self, c1, c2):
         """
         Return list of common interfaces provided by first component and

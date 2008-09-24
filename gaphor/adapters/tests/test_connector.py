@@ -394,32 +394,6 @@ class ConnectorTestCase(TestCase):
 
         assert dep.subject is dep2.subject
 
-    def test_implementation(self):
-        impl = self.create(items.ImplementationItem)
-        clazz = self.create(items.ClassItem, UML.Class)
-        iface = self.create(items.InterfaceItem, UML.Interface)
-
-        adapter = component.queryMultiAdapter((clazz, impl), IConnect)
-
-        adapter.connect(impl.head)
-
-        # Should not be allowed to connect to anything but Interfaces
-
-        assert impl.head.connected_to is None
-
-        adapter.connect(impl.tail)
-        assert impl.tail.connected_to is clazz
-        assert impl.subject is None
-
-        adapter = component.queryMultiAdapter((iface, impl), IConnect)
-
-        adapter.connect(impl.head)
-        
-        assert impl.head.connected_to is iface
-        assert impl.subject is not None
-        assert impl.subject.contract[0] is iface.subject
-        assert impl.subject.implementatingClassifier[0] is clazz.subject
-
     def test_generalization(self):
         gen = self.create(items.GeneralizationItem)
         c1 = self.create(items.ClassItem, UML.Class)

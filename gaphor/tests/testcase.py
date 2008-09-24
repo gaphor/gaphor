@@ -7,11 +7,13 @@ services and start off.
 
 import unittest
 from cStringIO import StringIO
+from zope import component
 
 from gaphor import UML
 from gaphor.storage import storage
 from gaphor.application import Application
 from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.diagram.interfaces import IConnect
 
 # Increment log level
 log.set_log_level(log.WARNING)
@@ -19,7 +21,7 @@ log.set_log_level(log.WARNING)
 
 class TestCase(unittest.TestCase):
     
-    services = ['element_factory']
+    services = ['element_factory', 'adapter_loader']
     
     def setUp(self):
         Application.init(services=self.services)
@@ -46,6 +48,41 @@ class TestCase(unittest.TestCase):
         item = self.diagram.create(item_cls, subject=subject)
         self.diagram.canvas.update()
         return item
+
+
+    def glue(self, line, handle, item, port=None):
+        """
+        Glue line's handle to an item.
+        """
+        query = (item, line)
+        adapter = component.queryMultiAdapter(query, IConnect)
+        return adapter.glue(handle, port)
+
+
+    def connect(self, line, handle, item, port=None):
+        """
+        Connect line's handle to an item.
+        """
+        query = (item, line)
+        handle.connected_to = item
+        adapter = component.queryMultiAdapter(query, IConnect)
+        return adapter.connect(handle, port)
+
+
+    def disconnect(self, line, handle):
+        """
+        Disconnect line's handle.
+        """
+        query = (handle.connected_to, line)
+        adapter = component.queryMultiAdapter(query, IConnect)
+        adapter.disconnect(self.line.head)
+
+
+    def kindof(self, cls):
+        """
+        Find UML metaclass instances using element factory.
+        """
+        return self.element_factory.lselect(lambda e: e.isKindOf(cls))
 
 
     def save(self):

@@ -50,6 +50,8 @@ class AbstractConnect(object):
     """
     interface.implements(IConnect)
 
+    element_factory = inject('element_factory')
+
     def __init__(self, element, line):
         self.element = element
         self.line = line

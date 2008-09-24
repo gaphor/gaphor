@@ -9,9 +9,6 @@ from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
 class TestCaseBase(TestCase):
-
-    services = ['element_factory', 'adapter_loader']
-
     def _create_interfaces(self, *args):
         """
         Generate interfaces with names sepecified by arguments.
@@ -42,41 +39,6 @@ class TestCaseBase(TestCase):
         usage = self.element_factory.create(UML.Usage)
         component.clientDependency = usage
         usage.supplier = interface
-
-
-    def _glue(self, line, handle, item, port=None):
-        """
-        Glue line's handle to an item.
-        """
-        query = (item, line)
-        adapter = component.queryMultiAdapter(query, IConnect)
-        return adapter.glue(handle, port)
-
-
-    def _connect(self, line, handle, item, port=None):
-        """
-        Connect line's handle to an item.
-        """
-        query = (item, line)
-        handle.connected_to = item
-        adapter = component.queryMultiAdapter(query, IConnect)
-        return adapter.connect(handle, port)
-
-
-    def _disconnect(self, line, handle):
-        """
-        Disconnect line's handle.
-        """
-        query = (handle.connected_to, line)
-        adapter = component.queryMultiAdapter(query, IConnect)
-        adapter.disconnect(self.line.head)
-
-
-    def _kindof(self, cls):
-        """
-        Find UML metaclass instances using element factory.
-        """
-        return self.element_factory.lselect(lambda e: e.isKindOf(cls))
 
 
     def setUp(self):
@@ -132,48 +94,48 @@ class AssemblyConnectorTestCase(TestCaseBase):
     def test_component_one_side_glue(self):
         """Test glueing first component
         """
-        glued = self._glue(self.line, self.line.head, self.c1)
+        glued = self.glue(self.line, self.line.head, self.c1)
         self.assertTrue(glued)
 
 
     def test_component_glue_no_interfaces(self):
         """Test glueing components with no interfaces using assembly connector
         """
-        self._connect(self.line, self.line.head, self.c1)
-        glued = self._glue(self.line, self.line.tail, self.c2)
+        self.connect(self.line, self.line.head, self.c1)
+        glued = self.glue(self.line, self.line.tail, self.c2)
         self.assertFalse(glued)
 
 
     def test_components_glue(self):
         """Test glueing components
         """
-        self._connect(self.line, self.line.head, self.c1)
+        self.connect(self.line, self.line.head, self.c1)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
-        glued = self._glue(self.line, self.line.tail, self.c2)
+        glued = self.glue(self.line, self.line.tail, self.c2)
         self.assertTrue(glued)
 
 
     def test_components_glue_switched(self):
         """Test glueing components in different order
         """
-        self._connect(self.line, self.line.tail, self.c2)
+        self.connect(self.line, self.line.tail, self.c2)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
-        glued = self._glue(self.line, self.line.head, self.c1)
+        glued = self.glue(self.line, self.line.head, self.c1)
         self.assertTrue(glued)
 
 
     def test_components_connection(self):
         """Test components connection
         """
-        self._connect(self.line, self.line.head, self.c1)
+        self.connect(self.line, self.line.head, self.c1)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
@@ -181,7 +143,7 @@ class AssemblyConnectorTestCase(TestCaseBase):
 
         self.assertFalse(self.line.is_assembly)
 
-        connected = self._connect(self.line, self.line.tail, self.c2)
+        connected = self.connect(self.line, self.line.tail, self.c2)
         self.assertTrue(connected)
 
         # test UML data model
@@ -208,20 +170,20 @@ class AssemblyConnectorTestCase(TestCaseBase):
     def test_disconnection(self):
         """Test assembly connector disconnection
         """
-        self._connect(self.line, self.line.head, self.c1)
+        self.connect(self.line, self.line.head, self.c1)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
-        connected = self._connect(self.line, self.line.tail, self.c2)
+        connected = self.connect(self.line, self.line.tail, self.c2)
         assert connected
 
-        self._disconnect(self.line, self.line.head)
+        self.disconnect(self.line, self.line.head)
         
-        self.assertEquals(0, len(self._kindof(UML.Connector)))
-        self.assertEquals(0, len(self._kindof(UML.ConnectorEnd)))
-        self.assertEquals(0, len(self._kindof(UML.Port)))
+        self.assertEquals(0, len(self.kindof(UML.Connector)))
+        self.assertEquals(0, len(self.kindof(UML.ConnectorEnd)))
+        self.assertEquals(0, len(self.kindof(UML.Port)))
 
 
 
@@ -230,7 +192,7 @@ class AssemblyConnectorGroupingTestCase(TestCaseBase):
         """Test assembly connectors glueing with no port
         """
         assembly = self.create(items.ConnectorItem)
-        glued = self._glue(self.line, self.line.head, assembly)
+        glued = self.glue(self.line, self.line.head, assembly)
         self.assertFalse(glued)
 
 
@@ -242,16 +204,16 @@ class AssemblyConnectorGroupingTestCase(TestCaseBase):
         port_r = assembly._required_port
         head, tail = self.line.head, self.line.tail
 
-        glued = self._glue(self.line, head, assembly, port_r)
+        glued = self.glue(self.line, head, assembly, port_r)
         self.assertTrue(glued)
 
-        glued = self._glue(self.line, head, assembly, port_p)
+        glued = self.glue(self.line, head, assembly, port_p)
         self.assertFalse(glued)
 
-        glued = self._glue(self.line, tail, assembly, port_r)
+        glued = self.glue(self.line, tail, assembly, port_r)
         self.assertFalse(glued)
 
-        glued = self._glue(self.line, tail, assembly, port_p)
+        glued = self.glue(self.line, tail, assembly, port_p)
         self.assertTrue(glued)
 
 
@@ -259,29 +221,29 @@ class AssemblyConnectorGroupingTestCase(TestCaseBase):
         """Test assembly connectors to not connect two connectors
         """
         assembly = self.create(items.ConnectorItem)
-        self._connect(self.line, self.line.head, assembly, assembly._required_port)
-        glued = self._glue(self.line, self.line.tail, assembly, assembly._provided_port)
+        self.connect(self.line, self.line.head, assembly, assembly._required_port)
+        glued = self.glue(self.line, self.line.tail, assembly, assembly._provided_port)
         self.assertFalse(glued)
 
 
     def test_connector_grouping(self):
         """Test assembly connectors grouping
         """
-        self._connect(self.line, self.line.head, self.c1)
+        self.connect(self.line, self.line.head, self.c1)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
-        connected = self._connect(self.line, self.line.tail, self.c2)
+        connected = self.connect(self.line, self.line.tail, self.c2)
         assert connected
 
         assembly = self.create(items.ConnectorItem)
         c3 = self.create(items.ComponentItem, UML.Component)
         self._provide(c3.subject, i1)
-        self._connect(assembly, assembly.head, c3)
+        self.connect(assembly, assembly.head, c3)
 
-        connected = self._connect(assembly, assembly.tail, self.line, self.line._provided_port)
+        connected = self.connect(assembly, assembly.tail, self.line, self.line._provided_port)
         self.assertTrue(connected)
 
         # test UML data model
@@ -308,29 +270,29 @@ class AssemblyConnectorGroupingTestCase(TestCaseBase):
     def test_groupped_connector_disconnection(self):
         """Test groupped assembly connectors disconnection
         """
-        self._connect(self.line, self.line.head, self.c1)
+        self.connect(self.line, self.line.head, self.c1)
 
         i1, = self._create_interfaces('A')
         self._provide(self.c1.subject, i1)
         self._require(self.c2.subject, i1)
 
-        connected = self._connect(self.line, self.line.tail, self.c2)
+        connected = self.connect(self.line, self.line.tail, self.c2)
         assert connected
 
         assembly = self.create(items.ConnectorItem)
         c3 = self.create(items.ComponentItem, UML.Component)
         self._provide(c3.subject, i1)
-        self._connect(assembly, assembly.head, c3)
+        self.connect(assembly, assembly.head, c3)
 
-        connected = self._connect(assembly, assembly.tail, self.line, self.line._provided_port)
+        connected = self.connect(assembly, assembly.tail, self.line, self.line._provided_port)
         assert connected
 
-        self._disconnect(assembly, assembly.tail)
+        self.disconnect(assembly, assembly.tail)
         
-        self.assertEquals(1, len(self._kindof(UML.Connector)))
-        self.assertEquals([self.line.subject], self._kindof(UML.Connector))
-        self.assertEquals(2, len(self._kindof(UML.ConnectorEnd)))
-        self.assertEquals(2, len(self._kindof(UML.Port)))
+        self.assertEquals(1, len(self.kindof(UML.Connector)))
+        self.assertEquals([self.line.subject], self.kindof(UML.Connector))
+        self.assertEquals(2, len(self.kindof(UML.ConnectorEnd)))
+        self.assertEquals(2, len(self.kindof(UML.Port)))
 
 
 # vim:sw=4:et:ai
