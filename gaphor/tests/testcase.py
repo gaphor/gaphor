@@ -75,7 +75,7 @@ class TestCase(unittest.TestCase):
         """
         query = (handle.connected_to, line)
         adapter = component.queryMultiAdapter(query, IConnect)
-        adapter.disconnect(self.line.head)
+        adapter.disconnect(line.head)
 
 
     def kindof(self, cls):
