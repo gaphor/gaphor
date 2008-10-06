@@ -63,10 +63,15 @@ class TestCase(unittest.TestCase):
         """
         Connect line's handle to an item.
         """
-        query = (item, line)
         handle.connected_to = item
+
+        query = (item, line)
         adapter = component.queryMultiAdapter(query, IConnect)
-        return adapter.connect(handle, port)
+        connected = adapter.connect(handle, port)
+
+        assert handle.connected_to is item
+
+        return connected
 
 
     def disconnect(self, line, handle):
@@ -76,6 +81,10 @@ class TestCase(unittest.TestCase):
         query = (handle.connected_to, line)
         adapter = component.queryMultiAdapter(query, IConnect)
         adapter.disconnect(line.head)
+
+        handle.connected_to = None
+
+        assert handle.connected_to is None
 
 
     def kindof(self, cls):
