@@ -1,5 +1,5 @@
 """
-Test implementation (interfecae realization) item connectors.
+Test implementation (interface realization) item connectors.
 """
 
 from gaphor import UML
@@ -55,32 +55,6 @@ class ImplementationTestCase(TestCase):
         self.assertTrue(impl.subject.contract[0] is iface.subject)
         self.assertTrue(impl.subject.implementatingClassifier[0] is clazz.subject)
 
-
-    def test_folded_interface_connection(self):
-        """Test connecting implementation to folded interface
-        """
-        iface = self.create(items.InterfaceItem, UML.Interface)
-        iface.set_drawing_style(items.InterfaceItem.DRAW_ICON)
-        impl = self.create(items.ImplementationItem)
-
-        assert not impl._solid
-        self.connect(impl, impl.head, iface)
-        self.assertTrue(impl._solid)
-
-
-    def test_folded_interface_disconnection(self):
-        """Test disconnection implementation from folded interface
-        """
-        iface = self.create(items.InterfaceItem, UML.Interface)
-        iface.set_drawing_style(items.InterfaceItem.DRAW_ICON)
-        impl = self.create(items.ImplementationItem)
-
-        assert not impl._solid
-        self.connect(impl, impl.head, iface)
-        assert impl._solid
-
-        self.disconnect(impl, impl.head)
-        self.assertTrue(not impl._solid)
 
 
 # vim:sw=4:et:ai

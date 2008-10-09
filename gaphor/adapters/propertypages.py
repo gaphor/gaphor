@@ -696,13 +696,16 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
         # Fold toggle
         hbox = gtk.HBox()
-        label = gtk.Label(_("Fold"))
+        label = gtk.Label(_("Folded"))
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
+
         button = gtk.CheckButton()
         button.set_active(self.context.folded)
         button.connect('toggled', self._on_fold_change)
+        item = self.context
+        button.set_sensitive(len(item.canvas.get_connected_items(item)) == 0)
         hbox.pack_start(button)
         hbox.show_all()
         page.pack_start(hbox, expand=False)
@@ -713,21 +716,16 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
     @transactional
     def _on_fold_change(self, button):
-        self.context.folded = button.get_active()
-        ports = self.context.ports()
-        handles = self.context.handles()
-        for p in ports[:4]:
-            p.connectable = not self.context.folded
-        for h in handles[:4]:
-            h.visible = not self.context.folded
-
-        for p in ports[-2:]:
-            p.connectable = self.context.folded
-        for h in handles[-2:]:
-            h.visible = self.context.folded
+        item = self.context
+        assert len(item.canvas.get_connected_items(item)) == 0
+        if button.get_active():
+            item.folded = item.FOLDED_PROVIDED
+        else:
+            item.folded = item.FOLDED_NONE
 
 
 component.provideAdapter(InterfacePropertyPage, name='Properties')
+
 
 
 class AttributesPage(object):

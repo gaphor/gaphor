@@ -66,7 +66,7 @@ class DependencyItem(DiagramLine):
 
         self._dependency_type = UML.Dependency
         self.auto_dependency = True
-        self._dash_style = True
+        self._solid = False
 
     def save(self, save_func):
         DiagramLine.save(self, save_func)
@@ -102,21 +102,10 @@ class DependencyItem(DiagramLine):
     dependency_type = property(lambda s: s._dependency_type,
                                set_dependency_type, set_dependency_type)
 
-    def post_update(self, context):
-        super(DependencyItem, self).post_update(context)
-
-        from interface import InterfaceItem
-        dependency_type = self._dependency_type
-        c1 = self.head.connected_to
-        if c1 and dependency_type is UML.Usage \
-           and isinstance(c1, InterfaceItem) and c1.is_folded():
-            self._dash_style = False
-        else:
-            self._dash_style = True
 
     def draw_head(self, context):
         cr = context.cairo
-        if self._dash_style:
+        if not self._solid:
             cr.set_dash((), 0)
             cr.move_to(15, -6)
             cr.line_to(0, 0)
@@ -125,20 +114,22 @@ class DependencyItem(DiagramLine):
         cr.move_to(0, 0)
     
     def draw(self, context):
-        if self._dash_style:
+        if not self._solid:
             context.cairo.set_dash((7.0, 5.0), 0)
         super(DependencyItem, self).draw(context)
 
     @staticmethod
     def is_usage(s):
-        """Return true if dependency should be usage dependency.
+        """
+        Return true if dependency should be usage dependency.
         """
         return isinstance(s, UML.Interface)
 
 
     @staticmethod
     def is_realization(ts, hs):
-        """Return true if dependency should be realization dependency.
+        """
+        Return true if dependency should be realization dependency.
         """
         return isinstance(ts, UML.Classifier) and isinstance(hs, UML.Component)
 
