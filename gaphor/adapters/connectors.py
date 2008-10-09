@@ -428,7 +428,7 @@ component.provideAdapter(DependencyConnect)
 
 class ImplementationConnect(RelationshipConnect):
     """
-    Connect Interface and a BehavioredClassifier using an Implementation
+    Connect Interface and a BehavioredClassifier using an Implementation.
     """
     component.adapts(items.NamedItem, items.ImplementationItem)
 
@@ -448,13 +448,41 @@ class ImplementationConnect(RelationshipConnect):
 
         return super(ImplementationConnect, self).glue(handle, port)
 
+
     def connect_subject(self, handle):
+        """
+        Perform implementation relationship connection.
+        """
         relation = self.relationship_or_new(UML.Implementation,
                     ('contract', None),
                     ('implementatingClassifier', 'implementation'))
         self.line.subject = relation
 
+
+    def connect(self, handle, port):
+        """
+        Implementation item can be changed to draw in solid mode, when
+        connected to folded interface.
+        """
+
+        super(ImplementationConnect, self).connect(handle, port)
+        item = self.line.head.connected_to
+        if isinstance(item, items.InterfaceItem):
+            self.line._solid = item.is_folded()
+
+
+    def disconnect(self, handle):
+        """
+        If implementation item is no longer connected to an interface, then
+        draw in non-solid mode.
+        """
+        super(ImplementationConnect, self).disconnect(handle)
+        if handle is self.line.head:
+            self.line._solid = False
+
+
 component.provideAdapter(ImplementationConnect)
+
 
 
 class GeneralizationConnect(RelationshipConnect):
