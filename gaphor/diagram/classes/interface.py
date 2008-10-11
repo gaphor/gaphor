@@ -1,40 +1,38 @@
 """
 Interface item implementation. There are several notations supported
 
-- class box with interface stereotype
-- folded interface
-    - ball is drawn to indicate provided interface
-    - socket is drawn to indicate required interface
+    - class box with interface stereotype
+    - folded interface
+        - ball is drawn to indicate provided interface
+        - socket is drawn to indicate required interface
 
 Folded Interface Item
 =====================
 Folded interface notation is reserved for very simple situations.
 When interface is folded
 
-- only an implementation can be connected (ball - provided interface)
-- or only usage dependency can be connected (socket - required interface)
-- normal dependencies can be connected as well 
+    - only an implementation can be connected (ball - provided interface)
+    - or only usage dependency can be connected (socket - required interface)
+    - normal dependencies can be connected as well 
 
 Above means that interface cannot be folded when
 
-- both, usage dependency and implementation are connected
-- any other lines, beside normal dependecies, are connected
+    - both, usage dependency and implementation are connected
+    - any other lines, beside normal dependecies, are connected
 
-For examples, see
-
-    http://martinfowler.com/bliki/BallAndSocket.html
+For examples, see http://martinfowler.com/bliki/BallAndSocket.html.
 
 Folding and Connecting
 ----------------------
 Current approach to folding and connecting lines to an interface is as
 follows
 
-- allow folding/unfolding of an interface only when there are _no_ lines
-  connected
-- when interface is folded, allow only one implementation or depenedency
-  usage to be connected
-- when interface is folded, allow normal dependencies to be connected as
-  well 
+    - allow folding/unfolding of an interface only when there are _no_ lines
+      connected
+    - when interface is folded, allow only one implementation or depenedency
+      usage to be connected
+    - when interface is folded, allow normal dependencies to be connected as
+      well 
 
 Above solution is bit restrictive, for example we could allow folding when
 there is only one implementation connected. Such solution would require
@@ -59,10 +57,6 @@ class InterfaceItem(ClassItem):
     Interface item supporting class box and folded notations.
 
     When in folded mode, provided (ball) notation is used by default.
-
-    :Atributes:
-     folded
-        Check or set folded notation, see FOLDED_* constants.
     """
 
     __uml__        = UML.Interface
@@ -137,9 +131,7 @@ class InterfaceItem(ClassItem):
         """
         Set folded notation.
 
-        :Parameters:
-         folded
-            Folded state, see FOLDED_* constants.
+        :param folded: Folded state, see FOLDED_* constants.
         """
         if folded == self.FOLDED_NONE:
             self.drawing_style = self.DRAW_COMPARTMENT
@@ -147,7 +139,8 @@ class InterfaceItem(ClassItem):
             self.drawing_style = self.DRAW_ICON
         self._folded = folded
 
-    folded = property(_is_folded, _set_folded)
+    folded = property(_is_folded, _set_folded,
+        doc="Check or set folded notation, see FOLDED_* constants.")
 
     def on_implementation_contract(self, event):
         #print 'on_implementation_contract', event, event.element
