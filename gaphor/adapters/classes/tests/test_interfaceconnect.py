@@ -67,29 +67,30 @@ class DependencyTestCase(TestCase):
 
 
 LINES = (items.ImplementationItem,
+        items.DependencyItem,
         items.GeneralizationItem,
         items.AssociationItem,
         items.IncludeItem,
         items.ExtendItem)
 
-class FoldedInterfaceWithImplementationTestCase(TestCase):
+class FoldedInterfaceMultipleLinesTestCase(TestCase):
     """
     Test connection of additional diagram lines to folded interface,
-    which has already implementation connected.
+    which has already usage depenendency or implementation connected.
     """
     def setUp(self):
-        super(FoldedInterfaceWithImplementationTestCase, self).setUp()
+        super(FoldedInterfaceMultipleLinesTestCase, self).setUp()
 
         self.iface = self.create(items.InterfaceItem, UML.Interface)
         self.iface.folded = self.iface.FOLDED_PROVIDED
-        impl = self.create(items.ImplementationItem)
-
-        self.connect(impl, impl.head, self.iface)
 
 
-    def test_any_line(self):
+    def test_interface_with_implementation(self):
         """Test glueing different lines to folded interface with implementation
         """
+        impl = self.create(items.ImplementationItem)
+        self.connect(impl, impl.head, self.iface)
+
         for cls in LINES:
             line = self.create(cls)
             glued = self.glue(line, line.head, self.iface)
@@ -97,52 +98,17 @@ class FoldedInterfaceWithImplementationTestCase(TestCase):
             self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
 
 
-    def test_dependency_glue(self):
-        """Test glueing dependency to folded interface with implementation
-        """
-        dep = self.create(items.DependencyItem)
-        glued = self.glue(dep, dep.head, self.iface)
-        # dependency can be glued...
-        self.assertTrue(glued)
-        # ... but it cannot be usage dependency
-        self.assertFalse(dep.is_usage(self.iface.subject))
-
-
-
-class FoldedInterfaceWithDependency(TestCase):
-    """
-    Test connection of additional diagram lines to folded interface,
-    which has already dependency connected.
-    """
-    def setUp(self):
-        super(FoldedInterfaceWithDependency, self).setUp()
-
-        self.iface = self.create(items.InterfaceItem, UML.Interface)
-        self.iface.folded = self.iface.FOLDED_PROVIDED
-        dep = self.create(items.DependencyItem)
-
-        self.connect(dep, dep.head, self.iface)
-
-
-    def test_any_line(self):
+    def test_interface_with_dependency(self):
         """Test glueing different lines to folded interface with dependency
         """
+        dep = self.create(items.DependencyItem)
+        self.connect(dep, dep.head, self.iface)
+
         for cls in LINES:
             line = self.create(cls)
             glued = self.glue(line, line.head, self.iface)
             # no additional lines (specified above) can be glued
             self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
-
-
-    def test_dependency_glue(self):
-        """Test glueing dependency to folded interface with dependency
-        """
-        dep = self.create(items.DependencyItem)
-        glued = self.glue(dep, dep.head, self.iface)
-        # dependency can be glued...
-        self.assertTrue(glued)
-        # ... but it cannot be usage dependency
-        self.assertFalse(dep.is_usage(self.iface.subject))
 
 
 

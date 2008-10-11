@@ -13,14 +13,43 @@ When interface is folded
 
     - only an implementation can be connected (ball - provided interface)
     - or only usage dependency can be connected (socket - required interface)
-    - normal dependencies can be connected as well 
 
 Above means that interface cannot be folded when
 
     - both, usage dependency and implementation are connected
-    - any other lines, beside normal dependecies, are connected
+    - any other lines are connected
 
-For examples, see http://martinfowler.com/bliki/BallAndSocket.html.
+Dependencies
+------------
+Dependencies between folded interfaces are *not supported*
+
++---------------------+---------------------+
+|     *Supported*     |    *Unsupported*    |
++=====================+=====================+
+| ::                  | ::                  |
+|                     |                     |
+|   |A|--(    O--|B|  |   |A|--(--->O--|B|  |
+|        Z    Z       |        Z    Z       |
++---------------------+---------------------+
+
+A requires interface Z and B provides interface Z, Z is connected to itself
+with dependency.
+
+There is no need for additional dependency
+
+    - UML data model provides information, that Z is common for A and B
+      (A requires Z, B provides Z)
+    - on a diagram, both folded interface items (required and provided)
+      represent the same interface, which is easily identifiable with its
+      name
+
+Even more, adding a dependency between folded interfaces provides
+information (on UML data model level) that an interface depenends on itself
+but it is not the intention of this (*unsupported*) notation.
+
+For more examples of non-supported by Gaphor notation, see
+http://martinfowler.com/bliki/BallAndSocket.html.
+
 
 Folding and Connecting
 ----------------------
@@ -31,8 +60,6 @@ follows
       connected
     - when interface is folded, allow only one implementation or depenedency
       usage to be connected
-    - when interface is folded, allow normal dependencies to be connected as
-      well 
 
 Above solution is bit restrictive, for example we could allow folding when
 there is only one implementation connected. Such solution would require
