@@ -90,7 +90,7 @@ class InterfacePort(LinePort):
 
     The port provides rotation angle information as well. Rotation angle
     is direction the port is facing (i.e. 0 is north, PI/2 is west, etc.).
-    The rotation angle shall be used to determine rotation of provided
+    The rotation angle shall be used to determine rotation of required
     interface notation (socket's arc is in the same direction as the
     angle).
 
