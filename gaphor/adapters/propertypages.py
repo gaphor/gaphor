@@ -705,7 +705,13 @@ class InterfacePropertyPage(NamedItemPropertyPage):
         button.set_active(self.context.folded)
         button.connect('toggled', self._on_fold_change)
         item = self.context
-        button.set_sensitive(len(item.canvas.get_connected_items(item)) == 0)
+
+        connected_items = [c[0] for c in item.canvas.get_connected_items(item)]
+        allowed = (items.DependencyItem, items.ImplementationItem)
+        can_fold = len(connected_items) == 0 \
+            or len(connected_items) == 1 and isinstance(connected_items[0], allowed)
+
+        button.set_sensitive(can_fold)
         hbox.pack_start(button)
         hbox.show_all()
         page.pack_start(hbox, expand=False)
@@ -717,11 +723,25 @@ class InterfacePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_fold_change(self, button):
         item = self.context
-        assert len(item.canvas.get_connected_items(item)) == 0
+
+        connected_items = [c[0] for c in item.canvas.get_connected_items(item)]
+        assert len(connected_items) <= 1
+
+        line = None
+        if len(connected_items) == 1:
+            line = connected_items[0]
+
         if button.get_active():
-            item.folded = item.FOLDED_PROVIDED
+            if line and isinstance(line, items.DependencyItem):
+                item.folded = item.FOLDED_REQUIRED
+            else:
+                item.folded = item.FOLDED_PROVIDED
         else:
             item.folded = item.FOLDED_NONE
+
+        if line:
+            line._solid = button.get_active()
+            line.request_update()
 
 
 component.provideAdapter(InterfacePropertyPage, name='Properties')
