@@ -1,23 +1,23 @@
 """
 Interface item implementation. There are several notations supported
 
-    - class box with interface stereotype
-    - folded interface
-        - ball is drawn to indicate provided interface
-        - socket is drawn to indicate required interface
+- class box with interface stereotype
+- folded interface
+    - ball is drawn to indicate provided interface
+    - socket is drawn to indicate required interface
 
 Folded Interface Item
 =====================
 Folded interface notation is reserved for very simple situations.
 When interface is folded
 
-    - only an implementation can be connected (ball - provided interface)
-    - or only usage dependency can be connected (socket - required interface)
+- only an implementation can be connected (ball - provided interface)
+- or only usage dependency can be connected (socket - required interface)
 
 Above means that interface cannot be folded when
 
-    - both, usage dependency and implementation are connected
-    - any other lines are connected
+- both, usage dependency and implementation are connected
+- any other lines are connected
 
 Dependencies
 ------------
@@ -37,11 +37,10 @@ with dependency.
 
 There is no need for additional dependency
 
-    - UML data model provides information, that Z is common for A and B
-      (A requires Z, B provides Z)
-    - on a diagram, both folded interface items (required and provided)
-      represent the same interface, which is easily identifiable with its
-      name
+- UML data model provides information, that Z is common for A and B
+  (A requires Z, B provides Z)
+- on a diagram, both folded interface items (required and provided)
+  represent the same interface, which is easily identifiable with its name
 
 Even more, adding a dependency between folded interfaces provides
 information (on UML data model level) that an interface depenends on itself
@@ -56,10 +55,10 @@ Folding and Connecting
 Current approach to folding and connecting lines to an interface is as
 follows
 
-    - allow folding/unfolding of an interface only when there are _no_ lines
-      connected
-    - when interface is folded, allow only one implementation or depenedency
-      usage to be connected
+- allow folding/unfolding of an interface only when there are _no_ lines
+  connected
+- when interface is folded, allow only one implementation or depenedency
+  usage to be connected
 
 Above solution is bit restrictive, for example we could allow folding when
 there is only one implementation connected. Such solution would require
@@ -68,15 +67,62 @@ reconnection on appropriate ports, therefore it is postoned for now.
 Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
-import itertools
 from math import pi
-from gaphas.item import NW, SE, NE, SW
 from gaphas.state import observed, reversible_property
+from gaphas.item import NW, NE, SE, SW
+from gaphas.connector import LinePort
+from gaphas.geometry import distance_line_point, distance_point_point
 
 from gaphor import UML
 from klass import ClassItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
+
+
+class InterfacePort(LinePort):
+    """
+    Interface connection port.
+    
+    It is simple line port, which changes glue behaviour depending on
+    interface folded state. If interface is folded, then
+    `InterfacePort.glue` method suggests connection in the middle of the
+    port.
+
+    The port provides rotation angle information as well. Rotation angle
+    is direction the port is facing (i.e. 0 is north, PI/2 is west, etc.).
+    The rotation angle shall be used to determine rotation of provided
+    interface notation (socket's arc is in the same direction as the
+    angle).
+
+    :IVariables:
+     angle
+        Rotation angle.
+     iface
+        Interface owning port.
+
+    """
+    def __init__(self, h1, h2, iface, angle):
+        super(InterfacePort, self).__init__(h1, h2)
+        self.angle = angle
+        self.iface = iface
+
+
+    def glue(self, x, y):
+        """
+        Behaves like simple line port, but for folded interface suggests
+        connection to the middle point of a port.
+        """
+        if self.iface.folded:
+            px = (self.start.x + self.end.x) / 2
+            py = (self.start.y + self.end.y) / 2
+            d = distance_point_point((px, py), (x, y))
+            return (px, py), d
+        else:
+            p1 = self.start.pos
+            p2 = self.end.pos
+            d, pl = distance_line_point(p1, p2, (x, y))
+            return pl, d
+
 
 
 class InterfaceItem(ClassItem):
@@ -119,6 +165,21 @@ class InterfaceItem(ClassItem):
     def __init__(self, id=None):
         ClassItem.__init__(self, id)
         self._folded = self.FOLDED_NONE
+        self._angle = 0
+
+        handles = self._handles
+        h_nw = handles[NW]
+        h_ne = handles[NE]
+        h_sw = handles[SW]
+        h_se = handles[SE]
+
+        # edge of element define default element ports
+        self._ports = [
+            InterfacePort(h_nw, h_ne, self, 0),
+            InterfacePort(h_ne, h_se, self, pi / 2),
+            InterfacePort(h_se, h_sw, self, pi),
+            InterfacePort(h_sw, h_nw, self, pi * 1.5)
+        ]
 
         self.add_watch(UML.Interface.ownedAttribute, self.on_class_owned_attribute)
         self.add_watch(UML.Interface.ownedOperation, self.on_class_owned_operation)
@@ -134,15 +195,17 @@ class InterfaceItem(ClassItem):
         make non-movable if the icon (folded) style is used.
         """
         ClassItem.set_drawing_style(self, style)
-        # TODO: adjust offsets so the center point is the same
+
+        movable = True
         if self._drawing_style == self.DRAW_ICON:
             self._name.style.update(self.FOLDED_STYLE)
-            for h in self._handles: h.movable = False
-            self.request_update()
+            movable = False
         else:
             self._name.style.update(self.UNFOLDED_STYLE)
-            for h in self._handles: h.movable = True
-            self.request_update()
+
+        for h in self._handles:
+            h.movable = movable
+        self.request_update()
 
 
     drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
@@ -206,13 +269,13 @@ class InterfaceItem(ClassItem):
         h_nw = self._handles[NW]
         cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
         if self._folded == self.FOLDED_REQUIRED:
-            cr.move_to(cx, cy + self.RADIUS_REQUIRED)
-            cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, pi/2, pi*1.5)
-            cr.stroke()
+            cr.save()
+            cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self._angle, pi + self._angle)
+            cr.restore()
         else:
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi*2)
-            cr.stroke()
+        cr.stroke()
         super(InterfaceItem, self).draw(context)
 
 

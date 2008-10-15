@@ -60,6 +60,7 @@ class DependencyInterfaceConnect(DependencyConnect):
             if self.element.folded != self.element.FOLDED_NONE:
                 line._solid = True
                 self.element.folded = self.element.FOLDED_REQUIRED
+                self.element._angle = port.angle
 
 
     def disconnect(self, handle):
