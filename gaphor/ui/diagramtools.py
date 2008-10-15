@@ -66,15 +66,15 @@ class ConnectHandleTool(_ConnectHandleTool):
         """
         connected = False
         try:
-            connected = super(ConnectHandleTool, self).connect(view, item, handle, vx, vy)
+            glue_item, port = super(ConnectHandleTool, self).connect(view, item, handle, vx, vy)
 
-            if connected:
+            if glue_item is not None:
                 assert handle in self._adapter.line.handles()
-                self._adapter.connect(handle, None)
+                self._adapter.connect(handle, port)
         finally:
             self._adapter = None
 
-        return connected
+        return glue_item, port
 
 
     def disconnect(self, view, item, handle):
