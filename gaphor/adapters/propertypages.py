@@ -731,16 +731,22 @@ class InterfacePropertyPage(NamedItemPropertyPage):
         if len(connected_items) == 1:
             line = connected_items[0]
 
-        if button.get_active():
-            if line and isinstance(line, items.DependencyItem):
-                item.folded = item.FOLDED_REQUIRED
-            else:
-                item.folded = item.FOLDED_PROVIDED
+
+        fold = button.get_active()
+
+        if fold:
+            item.folded = item.FOLDED_PROVIDED
         else:
             item.folded = item.FOLDED_NONE
 
         if line:
-            line._solid = button.get_active()
+            if fold and isinstance(line, items.DependencyItem):
+                item.folded = item.FOLDED_REQUIRED
+
+            line._solid = fold
+            constraint = line.head.connection_data
+            constraint.ratio_x = 0.5
+            constraint.ratio_y = 0.5
             line.request_update()
 
 

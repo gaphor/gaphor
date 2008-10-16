@@ -15,7 +15,7 @@ class ImplementationTestCase(TestCase):
         impl = self.create(items.ImplementationItem)
 
         assert not impl._solid
-        self.connect(impl, impl.head, iface)
+        self.connect(impl, impl.head, iface, iface.ports()[0])
         self.assertTrue(impl._solid)
 
 
@@ -27,7 +27,7 @@ class ImplementationTestCase(TestCase):
         impl = self.create(items.ImplementationItem)
 
         assert not impl._solid
-        self.connect(impl, impl.head, iface)
+        self.connect(impl, impl.head, iface, iface.ports()[0])
         assert impl._solid
 
         self.disconnect(impl, impl.head)
@@ -43,7 +43,7 @@ class DependencyTestCase(TestCase):
         dep = self.create(items.DependencyItem)
 
         assert not dep._solid
-        self.connect(dep, dep.head, iface)
+        self.connect(dep, dep.head, iface, iface.ports()[0])
         self.assertTrue(dep._solid)
         # at the end, interface folded notation shall be `required' one
         self.assertEquals(iface.folded, iface.FOLDED_REQUIRED)
@@ -57,13 +57,29 @@ class DependencyTestCase(TestCase):
         dep = self.create(items.DependencyItem)
 
         assert not dep._solid
-        self.connect(dep, dep.head, iface)
+        self.connect(dep, dep.head, iface, iface.ports()[0])
         assert dep._solid
 
         self.disconnect(dep, dep.head)
         self.assertTrue(not dep._solid)
         # after disconnection, interface folded notation shall be `provided' one
         self.assertEquals(iface.folded, iface.FOLDED_PROVIDED)
+
+
+    def test_unfolded_interface_disconnection(self):
+        """Test disconnection dependency from unfolded interface
+        """
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        dep = self.create(items.DependencyItem)
+
+        self.connect(dep, dep.head, iface, iface.ports()[0])
+        assert not dep._solid
+
+        self.disconnect(dep, dep.head)
+        self.assertTrue(not dep._solid)
+        # after disconnection, interface folded property shall be
+        # `FOLDED_NONE'
+        self.assertEquals(iface.folded, iface.FOLDED_NONE)
 
 
 LINES = (items.ImplementationItem,
@@ -89,7 +105,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
         """Test glueing different lines to folded interface with implementation
         """
         impl = self.create(items.ImplementationItem)
-        self.connect(impl, impl.head, self.iface)
+        self.connect(impl, impl.head, self.iface, self.iface.ports()[0])
 
         for cls in LINES:
             line = self.create(cls)
@@ -102,7 +118,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
         """Test glueing different lines to folded interface with dependency
         """
         dep = self.create(items.DependencyItem)
-        self.connect(dep, dep.head, self.iface)
+        self.connect(dep, dep.head, self.iface, self.iface.ports()[0])
 
         for cls in LINES:
             line = self.create(cls)

@@ -60,7 +60,10 @@ class DependencyInterfaceConnect(DependencyConnect):
             if self.element.folded != self.element.FOLDED_NONE:
                 line._solid = True
                 self.element.folded = self.element.FOLDED_REQUIRED
-                self.element._angle = port.angle
+            # change interface angle even when it is unfolded, this way
+            # required interface will be rotated properly when folded by
+            # user
+            self.element._angle = port.angle
 
 
     def disconnect(self, handle):
@@ -71,8 +74,12 @@ class DependencyInterfaceConnect(DependencyConnect):
         """
         super(DependencyInterfaceConnect, self).disconnect(handle)
         if handle is self.line.head:
+            iface = self.element
             self.line._solid = False
-            self.element.folded = self.element.FOLDED_PROVIDED
+            # don't change folding notation when interface is unfolded, see
+            # test_unfolded_interface_disconnection as well
+            if iface.folded:
+                iface.folded = iface.FOLDED_PROVIDED
 
 
 component.provideAdapter(DependencyInterfaceConnect)
