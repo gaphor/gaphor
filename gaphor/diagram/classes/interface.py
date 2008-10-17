@@ -55,14 +55,10 @@ Folding and Connecting
 Current approach to folding and connecting lines to an interface is as
 follows
 
-- allow folding/unfolding of an interface only when there are _no_ lines
-  connected
+- allow folding/unfolding of an interface only when there is only one
+  implementation or depenedency usage connected
 - when interface is folded, allow only one implementation or depenedency
   usage to be connected
-
-Above solution is bit restrictive, for example we could allow folding when
-there is only one implementation connected. Such solution would require
-reconnection on appropriate ports, therefore it is postoned for now.
 
 Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
