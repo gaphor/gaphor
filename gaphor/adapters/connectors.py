@@ -38,9 +38,6 @@ class AbstractConnect(object):
 
     Line item ``line`` connects with a handle to a connectable item ``element``.
 
-    Line constraint is created between ``line`` handle and two handles of ``element``
-    (called segment, see ``AbstractConnect._get_segment`` method).
-
     Attributes:
 
     - line: connecting item
@@ -54,15 +51,23 @@ class AbstractConnect(object):
     def __init__(self, element, line):
         self.element = element
         self.line = line
-        self._canvas = element.canvas
 
 
     def glue(self, handle, port):
         """
         Determine if items can be connected.
 
+        The method contains a hack for folded interfaces, see
+        `gaphor.diagram.classes.interface` module documentation for
+        connection to folded interface rules.
+
         Returns `True` by default.
         """
+        iface = self.element
+        if isinstance(iface, items.InterfaceItem) and iface.folded:
+            canvas = iface.canvas
+            count = len(canvas.get_connected_items(iface))
+            return count == 0 and isinstance(self.line, (items.DependencyItem, items.ImplementationItem))
         return True
 
 

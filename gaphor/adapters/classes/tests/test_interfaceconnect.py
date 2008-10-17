@@ -86,8 +86,7 @@ LINES = (items.ImplementationItem,
         items.DependencyItem,
         items.GeneralizationItem,
         items.AssociationItem,
-        items.IncludeItem,
-        items.ExtendItem)
+        items.CommentLineItem)
 
 class FoldedInterfaceMultipleLinesTestCase(TestCase):
     """
@@ -123,6 +122,25 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
         for cls in LINES:
             line = self.create(cls)
             glued = self.glue(line, line.head, self.iface)
+            # no additional lines (specified above) can be glued
+            self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
+
+
+
+class FoldedInterfaceSingleLineTestCase(TestCase):
+    """
+    Test connection of diagram lines to folded interface. Any lines beside
+    implementation and dependency should be forbidden to connect.
+    """
+    def test_interface_with_forbidden_lines(self):
+        """Test glueing forbidden lines to folded interface
+        """
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface.folded = iface.FOLDED_PROVIDED
+
+        for cls in LINES[2:]:
+            line = self.create(cls)
+            glued = self.glue(line, line.head, iface)
             # no additional lines (specified above) can be glued
             self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
 
