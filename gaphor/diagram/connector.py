@@ -7,14 +7,16 @@ specification) is implemented. This is done with ConnectorItem class.
 Assembly Connector
 ==================
 To connect two components with assembly connector
-    - first component has to provide at least one interface
-    - second one has to require the same interface or its superinterface
+
+- first component has to provide at least one interface
+- second one has to require the same interface or its superinterface
 
 Using property pages, user can change
-    - the interface - interface is changed on all ends of assembly
-      connector
-    - superinterface - the interface is changed on given end of assembly
-      connector
+
+- the interface - interface is changed on all ends of assembly
+  connector
+- superinterface - the interface is changed on given end of assembly
+  connector
 
 UML Specificatiom Issues
 ========================
@@ -64,16 +66,18 @@ class ConnectorItem(NamedLine):
     Connector item.
 
     Connector is implemented as a line
-        - by default, arrow is drawn at line's tail
-        - assembly connector icon is drawn in the middle if connector is
-          assembly connector
-        - item is annotated with `delegate` stereotype if connector is
-          delegate connector
+
+    - by default, arrow is drawn at line's tail
+    - assembly connector icon is drawn in the middle if connector is
+      assembly connector
+    - item is annotated with `delegate` stereotype if connector is
+      delegate connector
     
     Assembly connector connects two components, its line ends describe
     provided and required sides of assembly connector
-        - head shows provided interfaces
-        - tail shows required interfaces
+
+    - head shows provided interfaces
+    - tail shows required interfaces
     """
     __uml__        = UML.Connector
     __style__   = {
@@ -93,8 +97,8 @@ class ConnectorItem(NamedLine):
         h1.movable = False
         h2.movable = False
 
-        self._constraint(h1, line=(self.head, self.tail), align=0.5, delta=-15)
-        self._constraint(h2, line=(self.head, self.tail), align=0.5, delta=15)
+        self.constraint(h1, line=(self.head, self.tail), align=0.5, delta=-15)
+        self.constraint(h2, line=(self.head, self.tail), align=0.5, delta=15)
 
         self._provided_port = PointPort(h1)
         self._required_port = PointPort(h2)
