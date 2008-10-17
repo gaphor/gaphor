@@ -56,25 +56,14 @@ class ConnectHandleTool(_ConnectHandleTool):
         return can_glue
 
 
-    def connect(self, view, item, handle, vx, vy):
-        """
-        Find an item near ``handle`` that ``item`` can connect to and connect.
-        
-        This is done by attempting a glue() operation. If there is something
-        to glue (the handles are already positioned), the IConnect.connect
-        is called for (glued_item, item).
-        """
-        connected = False
+    def pre_connect(self, view, item, handle, glue_item, port):
         try:
-            glue_item, port = super(ConnectHandleTool, self).connect(view, item, handle, vx, vy)
-
-            if glue_item is not None:
-                assert handle in self._adapter.line.handles()
-                self._adapter.connect(handle, port)
+            assert handle in self._adapter.line.handles()
+            self._adapter.connect(handle, port)
         finally:
             self._adapter = None
 
-        return glue_item, port
+        return True
 
 
     def disconnect(self, view, item, handle):
