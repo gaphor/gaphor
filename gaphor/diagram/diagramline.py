@@ -108,9 +108,23 @@ class DiagramLine(LineItem):
         else:
             LineItem.load(self, name, value)
 
-    def postload(self):
-        # Ohoh, need the IConnect adapters here
+
+    def _connect(self, handle, item):
+        # Ohoh, need the IConnect adapters here and handle connection tool
+        # can we move that to storage module?
         from zope import component
+        from gaphor.ui.diagramtools import ConnectHandleTool
+        tool = ConnectHandleTool()
+
+        adapter = component.queryMultiAdapter((item, self), IConnect)
+        assert adapter, 'No IConnect adapter to connect %s to %s' % (item, self)
+
+        port = tool.find_port(self, handle, item)
+        adapter.connect(handle, port)
+        tool.post_connect(self.canvas, self, handle, item, port)
+
+
+    def postload(self):
         if hasattr(self, '_load_orthogonal'):
             self.orthogonal = self._load_orthogonal
             del self._load_orthogonal
@@ -122,18 +136,13 @@ class DiagramLine(LineItem):
         #self.canvas.solver.solve()
 
         if hasattr(self, '_load_head_connection'):
-            adapter = component.queryMultiAdapter((self._load_head_connection, self), IConnect)
-            assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_head_connection, self)
-
-            adapter.connect(self.head)
+            self._connect(self.head, self._load_head_connection)
             del self._load_head_connection
 
         if hasattr(self, '_load_tail_connection'):
-            adapter = component.queryMultiAdapter((self._load_tail_connection, self), IConnect)
-            assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_tail_connection, self)
-
-            adapter.connect(self.tail)
+            self._connect(self.tail, self._load_tail_connection)
             del self._load_tail_connection
+
         LineItem.postload(self)
 
 
