@@ -16,7 +16,7 @@ from gaphas.geometry import distance_point_point, distance_point_point_fast, \
 from gaphas.item import Line
 from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool, \
     ToolChain, HoverTool, ItemTool, RubberbandTool, \
-    ConnectHandleTool as _ConnectHandleTool
+    ConnectHandleTool as _ConnectHandleTool, LineSegmentTool
 from gaphas.canvas import Context
 
 from gaphor.core import inject, Transaction, transactional
@@ -76,61 +76,6 @@ class ConnectHandleTool(_ConnectHandleTool):
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
             adapter.disconnect(handle)
         super(ConnectHandleTool, self).disconnect(view, item, handle)
-        
-
-    def on_button_press(self, context, event):
-        """
-        In addition to the normal behavior, the button press event creates
-        new handles if it is activated on the middle of a line segment.
-        """
-        if super(ConnectHandleTool, self).on_button_press(context, event):
-            return True
-
-        view = context.view
-        item = view.hovered_item
-        if item and item is view.focused_item and isinstance(item, Line):
-            handles = item.handles()
-            x, y = context.view.get_matrix_v2i(item).transform_point(event.x, event.y)
-            for h1, h2 in zip(handles[:-1], handles[1:]):
-                xp = (h1.x + h2.x) / 2
-                yp = (h1.y + h2.y) / 2
-                if distance_point_point_fast((x,y), (xp, yp)) <= 4:
-                    segment = handles.index(h1)
-                    item.split_segment(segment)
-
-                    # Reconnect all constraints:
-                    for i, h in view.canvas.get_connected_items(item):
-                        adapter = component.getMultiAdapter((item, i), IConnect)
-                        adapter.disconnect_constraints(h)
-                        adapter.connect_constraints(h)
-
-                    self.grab_handle(item, item.handles()[segment + 1])
-                    context.grab()
-                    return True
-
-
-    def on_button_release(self, context, event):
-        grabbed_handle = self._grabbed_handle
-        grabbed_item = self._grabbed_item
-        if super(ConnectHandleTool, self).on_button_release(context, event):
-            if grabbed_handle and grabbed_item:
-                handles = grabbed_item.handles()
-                if handles[0] is grabbed_handle or handles[-1] is grabbed_handle:
-                    return True
-                segment = handles.index(grabbed_handle)
-                before = handles[segment - 1]
-                after = handles[segment + 1]
-                d, p = distance_line_point(before.pos, after.pos, grabbed_handle.pos)
-                if d < 2:
-                    grabbed_item.merge_segment(segment)
-
-                    # Reconnect all constraints:
-                    for i, h in context.view.canvas.get_connected_items(grabbed_item):
-                        adapter = component.getMultiAdapter((grabbed_item, i), IConnect)
-                        adapter.disconnect_constraints(h)
-                        adapter.connect_constraints(h)
-
-            return True
 
 
 class TextEditTool(Tool):
@@ -321,6 +266,7 @@ def DefaultTool():
     chain = TransactionalToolChain()
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
+    chain.append(LineSegmentTool())
     chain.append(GroupItemTool())
     chain.append(TextEditTool())
     chain.append(RubberbandTool())
