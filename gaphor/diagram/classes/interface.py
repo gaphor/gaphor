@@ -32,8 +32,9 @@ Dependencies between folded interfaces are *not supported*
 |        Z    Z       |        Z    Z       |
 +---------------------+---------------------+
 
-A requires interface Z and B provides interface Z, Z is connected to itself
-with dependency.
+On above diagram, A requires interface Z and B provides interface Z.
+Additionally, on the right diagram, Z is connected to itself with
+dependency.
 
 There is no need for additional dependency
 
