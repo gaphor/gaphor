@@ -100,8 +100,8 @@ class ConnectorItem(NamedLine):
         self.constraint(h1, line=(self.head, self.tail), align=0.5, delta=-15)
         self.constraint(h2, line=(self.head, self.tail), align=0.5, delta=15)
 
-        self._provided_port = PointPort(h1)
-        self._required_port = PointPort(h2)
+        self._provided_port = PointPort(h1.pos)
+        self._required_port = PointPort(h2.pos)
         self._ports.append(self._provided_port)
         self._ports.append(self._required_port)
 
