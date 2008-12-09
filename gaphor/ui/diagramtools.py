@@ -201,11 +201,11 @@ class PlacementTool(_PlacementTool):
                 view.canvas.update_matrix(self.new_item)
                 view.update_matrix(self.new_item)
 
-                vx, vy = event.x, event.y
+                pos = event.x, event.y
 
-                item = self.handle_tool.glue(view, self.new_item, opposite, vx, vy)
+                item = self.handle_tool.glue(view, self.new_item, opposite, pos)
                 if item:
-                    self.handle_tool.connect(view, self.new_item, opposite, vx, vy)
+                    self.handle_tool.connect(view, self.new_item, opposite, pos)
             return True
         return False
             

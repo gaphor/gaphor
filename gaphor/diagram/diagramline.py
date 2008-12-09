@@ -60,9 +60,9 @@ class LineItem(gaphas.Line, DiagramItem):
         DiagramItem.draw(self, context)
 
 
-    def point(self, x, y):
-        d1 = gaphas.Line.point(self, x, y)
-        d2 = DiagramItem.point(self, x, y)
+    def point(self, pos):
+        d1 = gaphas.Line.point(self, pos)
+        d2 = DiagramItem.point(self, pos)
         return min(d1, d2)
 
 

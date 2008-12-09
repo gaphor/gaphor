@@ -36,7 +36,7 @@ class GroupPlacementTool(PlacementTool):
         if event.button == 1:
             context.ungrab()
             view = context.view
-            self._parent = view.get_item_at_point(event.x, event.y)
+            self._parent = view.get_item_at_point((event.x, event.y))
 
         # now, place the new item
         placed = PlacementTool.on_button_press(self, context, event)
@@ -65,7 +65,8 @@ class GroupPlacementTool(PlacementTool):
             view.focused_item = None
 
         try:
-            parent = view.get_item_at_point(event.x, event.y)
+            pos = event.x, event.y
+            parent = view.get_item_at_point(pos)
         except KeyError:
             # No bounding box yet.
             return
@@ -83,13 +84,13 @@ class GroupPlacementTool(PlacementTool):
             view.window.set_cursor(None)
 
 
-    def _create_item(self, context, x, y):
+    def _create_item(self, context, pos):
         """
         Create diagram item and place it within parent's boundaries.
         """
         # if no parent, then create with parent placement tool
         if not self._parent:
-            return super(GroupPlacementTool, self)._create_item(context, x, y)
+            return super(GroupPlacementTool, self)._create_item(context, pos)
 
         item = self._factory(self._parent)
         
@@ -122,7 +123,7 @@ class GroupItemTool(ItemTool):
             item = list(view.selected_items)[0]
             parent = view.canvas.get_parent(item)
 
-            over = view.get_item_at_point(event.x, event.y, selected=False)
+            over = view.get_item_at_point((event.x, event.y), selected=False)
             assert over is not item
 
             if over is parent: # do nothing when item is over parent
@@ -154,7 +155,8 @@ class GroupItemTool(ItemTool):
         if event.button == 1 and len(view.selected_items) == 1:
             item = list(view.selected_items)[0]
             parent = view.canvas.get_parent(item)
-            over = view.get_item_at_point(event.x, event.y, selected=False)
+            pos = event.x, event.y
+            over = view.get_item_at_point(pos, selected=False)
             assert over is not item
 
             if over is parent:

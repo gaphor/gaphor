@@ -262,7 +262,7 @@ class EditableTextSupport(object):
             txt.bounds.y = y
 
 
-    def point(self, x, y):
+    def point(self, pos):
         """
         Return the distance to the nearest editable and visible text
         element.
@@ -271,7 +271,7 @@ class EditableTextSupport(object):
             yield 10000.0
             for txt in self._texts:
                 if txt.is_visible() and txt.editable:
-                    yield distance_rectangle_point(txt.bounds, (x, y))
+                    yield distance_rectangle_point(txt.bounds, pos)
         return min(distances())
 
 

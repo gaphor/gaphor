@@ -168,10 +168,10 @@ class LifelineItem(NamedItem):
         self._lifetime.draw(context)
 
 
-    def point(self, x, y):
-        d1 = super(LifelineItem, self).point(x, y)
+    def point(self, pos):
+        d1 = super(LifelineItem, self).point(pos)
         h1, h2 = self._lifetime.handles()
-        d2 = distance_line_point(h1.pos, h2.pos, (x, y))[0]
+        d2 = distance_line_point(h1.pos, h2.pos, pos)[0]
         return min(d1, d2)
 
 
