@@ -3,7 +3,6 @@
 
 import gtk
 import gaphas
-from diagrampainters import DefaultPainter
 
 
 class DiagramView(gaphas.GtkView):
@@ -26,7 +25,6 @@ class DiagramView(gaphas.GtkView):
         super(DiagramView, self).__init__(diagram and diagram.canvas)
         self.diagram = diagram
         self.canvas = diagram.canvas
-        self.painter = DefaultPainter()
 
         # Drop
         self.drag_dest_set (gtk.DEST_DEFAULT_ALL, DiagramView.DND_TARGETS,
