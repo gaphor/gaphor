@@ -97,8 +97,9 @@ class ConnectorItem(NamedLine):
         h1.movable = False
         h2.movable = False
 
-        self.constraint(h1, line=(self.head, self.tail), align=0.5, delta=-15)
-        self.constraint(h2, line=(self.head, self.tail), align=0.5, delta=15)
+        line = self.head.pos, self.tail.pos
+        self.constraint(line=(h1.pos, line), align=0.5, delta=-15)
+        self.constraint(line=(h2.pos, line), align=0.5, delta=15)
 
         self._provided_port = PointPort(h1.pos)
         self._required_port = PointPort(h2.pos)
