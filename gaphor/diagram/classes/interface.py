@@ -104,7 +104,7 @@ class InterfacePort(LinePort):
         self.iface = iface
 
 
-    def glue(self, x, y):
+    def glue(self, pos):
         """
         Behaves like simple line port, but for folded interface suggests
         connection to the middle point of a port.
@@ -112,12 +112,12 @@ class InterfacePort(LinePort):
         if self.iface.folded:
             px = (self.start.x + self.end.x) / 2
             py = (self.start.y + self.end.y) / 2
-            d = distance_point_point((px, py), (x, y))
+            d = distance_point_point((px, py), pos)
             return (px, py), d
         else:
             p1 = self.start.pos
             p2 = self.end.pos
-            d, pl = distance_line_point(p1, p2, (x, y))
+            d, pl = distance_line_point(p1, p2, pos)
             return pl, d
 
 
