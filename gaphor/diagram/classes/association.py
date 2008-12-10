@@ -525,7 +525,7 @@ class AssociationEnd(UML.Presentation):
 
     def point_name(self, pos):
         drp = distance_rectangle_point
-        return drp(self._name_bounds, p)
+        return drp(self._name_bounds, pos)
 
 
     def point_mult(self, pos):
@@ -635,8 +635,8 @@ class AssociationEnd(UML.Presentation):
         d1 = drp(self._name_bounds, pos)
         d2 = drp(self._mult_bounds, pos)
 #        try:
-#            d3 = geometry.distance_point_point(self._point1, p)
-#            d4, dummy = distance_line_point(self._point1, self._point2, p, 1.0, 0) #diacanvas.shape.CAP_ROUND)
+#            d3 = geometry.distance_point_point(self._point1, pos)
+#            d4, dummy = distance_line_point(self._point1, self._point2, pos, 1.0, 0) #diacanvas.shape.CAP_ROUND)
 #            if d3 < 15 and d4 < 5:
 #                d3 = 0.0
 #        except Exception, e:

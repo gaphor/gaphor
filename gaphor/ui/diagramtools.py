@@ -181,8 +181,8 @@ class PlacementTool(_PlacementTool):
         self._tx = None
 
     @transactional
-    def create_item(self, view, x, y):
-        self._create_item(Context(view=view), x, y)
+    def create_item(self, view, pos):
+        self._create_item(Context(view=view), pos)
 
     def on_button_press(self, context, event):
         self._tx = Transaction()
@@ -201,11 +201,11 @@ class PlacementTool(_PlacementTool):
                 view.canvas.update_matrix(self.new_item)
                 view.update_matrix(self.new_item)
 
-                pos = event.x, event.y
+                vpos = event.x, event.y
 
-                item = self.handle_tool.glue(view, self.new_item, opposite, pos)
+                item = self.handle_tool.glue(view, self.new_item, opposite, vpos)
                 if item:
-                    self.handle_tool.connect(view, self.new_item, opposite, pos)
+                    self.handle_tool.connect(view, self.new_item, opposite, vpos)
             return True
         return False
             

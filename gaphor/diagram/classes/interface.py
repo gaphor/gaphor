@@ -98,8 +98,8 @@ class InterfacePort(LinePort):
         Interface owning port.
 
     """
-    def __init__(self, h1, h2, iface, angle):
-        super(InterfacePort, self).__init__(h1, h2)
+    def __init__(self, start, end, iface, angle):
+        super(InterfacePort, self).__init__(start, end)
         self.angle = angle
         self.iface = iface
 
@@ -110,13 +110,13 @@ class InterfacePort(LinePort):
         connection to the middle point of a port.
         """
         if self.iface.folded:
-            px = (self.start.x + self.end.x) / 2
-            py = (self.start.y + self.end.y) / 2
+            px = (self.start[0] + self.end[0]) / 2
+            py = (self.start[1] + self.end[1]) / 2
             d = distance_point_point((px, py), pos)
             return (px, py), d
         else:
-            p1 = self.start.pos
-            p2 = self.end.pos
+            p1 = self.start
+            p2 = self.end
             d, pl = distance_line_point(p1, p2, pos)
             return pl, d
 

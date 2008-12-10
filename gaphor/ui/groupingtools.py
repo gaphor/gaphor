@@ -65,8 +65,7 @@ class GroupPlacementTool(PlacementTool):
             view.focused_item = None
 
         try:
-            pos = event.x, event.y
-            parent = view.get_item_at_point(pos)
+            parent = view.get_item_at_point((event.x, event.y))
         except KeyError:
             # No bounding box yet.
             return
@@ -96,7 +95,7 @@ class GroupPlacementTool(PlacementTool):
         
         view = context.view
         # get item position through parent world
-        x, y = view.canvas.get_matrix_c2i(self._parent).transform_point(x, y)
+        x, y = view.canvas.get_matrix_c2i(self._parent).transform_point(*pos)
         item.matrix.translate(x, y)
 
         view.dropzone_item = None
@@ -155,8 +154,7 @@ class GroupItemTool(ItemTool):
         if event.button == 1 and len(view.selected_items) == 1:
             item = list(view.selected_items)[0]
             parent = view.canvas.get_parent(item)
-            pos = event.x, event.y
-            over = view.get_item_at_point(pos, selected=False)
+            over = view.get_item_at_point((event.x, event.y), selected=False)
             assert over is not item
 
             if over is parent:
