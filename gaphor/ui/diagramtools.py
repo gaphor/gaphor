@@ -56,7 +56,15 @@ class ConnectHandleTool(_ConnectHandleTool):
         return can_glue
 
 
-    def pre_connect(self, view, item, handle, glue_item, port):
+    def post_connect(self, view, item, handle, glue_item, port):
+        """
+        Connecting requires the handles to be connected before the model
+        level connection is made.
+
+        Note that once this method is called, the glue() method has done that
+        for us.
+        """
+	super(ConnectHandleTool, self).post_connect(view, item, handle, glue_item, port)
         try:
             assert handle in self._adapter.line.handles()
             self._adapter.connect(handle, port)
