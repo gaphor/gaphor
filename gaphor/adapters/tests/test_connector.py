@@ -26,16 +26,17 @@ class ConnectorTestCase(TestCase):
         adapter = component.queryMultiAdapter((comment, line), IConnect)
 
         handle = line.head
-        adapter.connect(handle)
+        adapter.connect(handle, comment.ports()[0])
 
-        assert handle.connected_to is comment
+        ## OLD: assert handle.connected_to is comment
+        assert handle.connected_to is None
         assert handle.connection_data is not None
         assert not comment.subject.annotatedElement
 
         # Connecting two ends of the line to the same item is not allowed:
 
         handle = line.tail
-        adapter.connect(handle)
+        adapter.connect(handle, comment.ports()[0])
 
         assert handle.connected_to is None, handle.connected_to
         #assert not hasattr(handle,'connection_constraint')
@@ -46,7 +47,7 @@ class ConnectorTestCase(TestCase):
         adapter = component.queryMultiAdapter((actor, line), IConnect)
 
         handle = line.handles()[-1]
-        adapter.connect(handle)
+        adapter.connect(handle, actor.ports()[0])
 
         assert handle.connected_to is actor
         assert handle.connection_data is not None
@@ -58,7 +59,7 @@ class ConnectorTestCase(TestCase):
 
         handle = line.tail
         adapter = component.queryMultiAdapter((actor2, line), IConnect)
-        adapter.connect(handle)
+        adapter.connect(handle, actor2.ports()[0])
 
         assert handle.connected_to is actor2
         assert handle.connection_data is not None
@@ -91,11 +92,11 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((comment, line), IConnect)
         handle = line.head
-        adapter.connect(handle)
+        adapter.connect(handle, comment.ports()[0])
 
         adapter = component.queryMultiAdapter((clazz, line), IConnect)
         handle = line.tail
-        adapter.connect(handle)
+        adapter.connect(handle, clazz.ports()[0])
 
         assert clazz.subject in comment.subject.annotatedElement
         assert comment.subject in clazz.subject.ownedComment
@@ -119,11 +120,11 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((clazz1, gen), IConnect)
         handle = gen.head
-        adapter.connect(handle)
+        adapter.connect(handle, clazz1.ports()[0])
 
         adapter = component.queryMultiAdapter((clazz2, gen), IConnect)
         handle = gen.tail
-        adapter.connect(handle)
+        adapter.connect(handle, clazz2.ports()[0])
 
         assert gen.subject
 
@@ -170,11 +171,11 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c1, assoc), IConnect)
         handle = assoc.head
-        adapter.connect(handle)
+        adapter.connect(handle, c1.ports()[0])
 
         adapter = component.queryMultiAdapter((c2, assoc), IConnect)
         handle = assoc.tail
-        adapter.connect(handle) 
+        adapter.connect(handle, c2.ports()[0]) 
         assert assoc.head.connected_to is c1
         assert assoc.tail.connected_to is c2
         assert assoc.subject
@@ -188,7 +189,7 @@ class ConnectorTestCase(TestCase):
         handle = line.head
         pos = adapter.glue(handle)
         assert pos == (10, 50), pos
-        adapter.connect(handle)
+        adapter.connect(handle, assoc.ports()[0])
 
         assert handle.connected_to is assoc
         assert handle.connection_data is not None
@@ -247,7 +248,7 @@ class ConnectorTestCase(TestCase):
         adapter = component.queryMultiAdapter((comment, line), IConnect)
 
         handle = line.tail
-        adapter.connect(handle)
+        adapter.connect(handle, comment.ports()[0])
 
         assert handle.connected_to is comment
         assert handle.connection_data is not None
@@ -306,14 +307,14 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((actor1, dep), IConnect)
 
-        adapter.connect(dep.head)
+        adapter.connect(dep.head, actor1.ports()[0])
 
         assert dep.subject is None
         assert dep.head.connected_to is actor1
 
         adapter = component.queryMultiAdapter((actor2, dep), IConnect)
 
-        adapter.connect(dep.tail)
+        adapter.connect(dep.tail, acrot2.ports()[0])
 
         assert dep.subject is not None
         assert isinstance(dep.subject, UML.Dependency), dep.subject
@@ -359,11 +360,11 @@ class ConnectorTestCase(TestCase):
         
         adapter = component.queryMultiAdapter((actoritem1, dep), IConnect)
 
-        adapter.connect(dep.head)
+        adapter.connect(dep.head, actoritem1.ports()[0])
 
         adapter = component.queryMultiAdapter((actoritem2, dep), IConnect)
 
-        adapter.connect(dep.tail)
+        adapter.connect(dep.tail, actoritem2.ports()[0])
 
         assert dep.subject
         assert len(actor1.supplierDependency) == 1
@@ -380,11 +381,11 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((actoritem3, dep2), IConnect)
 
-        adapter.connect(dep2.head)
+        adapter.connect(dep2.head, actoritem3.ports()[0])
 
         adapter = component.queryMultiAdapter((actoritem4, dep2), IConnect)
 
-        adapter.connect(dep2.tail)
+        adapter.connect(dep2.tail, actoritem4.ports()[0])
 
         assert dep2.subject
         assert len(actor1.supplierDependency) == 1
@@ -401,14 +402,14 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c1, gen), IConnect)
 
-        adapter.connect(gen.tail)
+        adapter.connect(gen.tail, c1.ports()[0])
 
         assert gen.tail.connected_to is c1
         assert gen.subject is None
 
         adapter = component.queryMultiAdapter((c2, gen), IConnect)
 
-        adapter.connect(gen.head)
+        adapter.connect(gen.head, c2.ports()[0])
 
         assert gen.head.connected_to is c2
         assert gen.subject is not None
@@ -424,14 +425,14 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c1, gen), IConnect)
 
-        adapter.connect(gen.tail)
+        adapter.connect(gen.tail, c1.ports()[0])
 
         assert gen.tail.connected_to is c1
         assert gen.subject is None
 
         adapter = component.queryMultiAdapter((c2, gen), IConnect)
 
-        adapter.connect(gen.head)
+        adapter.connect(gen.head, c2.ports()[0])
 
         assert gen.head.connected_to is c2
         assert gen.subject is not None
@@ -451,14 +452,14 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((c1, gen), IConnect)
 
-        adapter.connect(gen.tail)
+        adapter.connect(gen.tail, c1.ports()[-1])
 
         assert gen.tail.connected_to is c1
         assert gen.subject is None
 
         adapter = component.queryMultiAdapter((c2, gen), IConnect)
 
-        adapter.connect(gen.head)
+        adapter.connect(gen.head, c2.ports()[0])
 
         assert gen.head.connected_to is c2
         assert gen.subject is not None
@@ -489,10 +490,10 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((f1, flow), IConnect)
         assert adapter
-        adapter.connect(flow.head)
+        adapter.connect(flow.head, f1.ports()[0])
         assert flow.head.connected_to is None
 
-        adapter.connect(flow.tail)
+        adapter.connect(flow.tail, f1.ports()[0])
         assert flow.head.connected_to is None
         assert flow.tail.connected_to is f1
 
@@ -538,20 +539,20 @@ class ConnectorTestCase(TestCase):
         # Connect between two actions (ControlFlow)
         adapter = component.queryMultiAdapter((a1, flow), IConnect)
         assert adapter
-        adapter.connect(flow.tail)
+        adapter.connect(flow.tail, a1.ports()[0])
 
         assert flow.tail.connected_to is a1
         assert flow.subject is None
 
         adapter = component.queryMultiAdapter((a2, flow), IConnect)
-        adapter.connect(flow.head)
+        adapter.connect(flow.head, a2.ports()[0])
 
         assert flow.head.connected_to is a2
         assert flow.tail.connected_to is a1
         assert not flow.subject is None
         assert isinstance(flow.subject, UML.ControlFlow)
 
-        adapter.connect(flow.tail)
+        adapter.connect(flow.tail, a2.ports()[0])
 
         assert flow.head.connected_to is a2
         assert flow.tail.connected_to is a2
@@ -586,7 +587,7 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((a1, flow1), IConnect)
         assert adapter
-        adapter.connect(flow1.tail)
+        adapter.connect(flow1.tail, a1.ports()[0])
         assert flow1.tail.connected_to is a1
         assert not a1.subject.incoming, a1.subject.incoming
 
@@ -594,13 +595,13 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((a1, flow2), IConnect)
         assert adapter
-        adapter.connect(flow2.tail)
+        adapter.connect(flow2.tail, a1.ports()[0])
         assert flow1.tail.connected_to is a1
         assert flow2.tail.connected_to is a1
 
         adapter = component.queryMultiAdapter((a2, flow1), IConnect)
         assert adapter
-        adapter.connect(flow1.head)
+        adapter.connect(flow1.head, a2.ports()[0])
         assert flow1.head.connected_to is a2
         assert flow1.tail.connected_to is a1
         assert flow1.subject in a1.subject.incoming
@@ -643,21 +644,21 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((a1, flow1), IConnect)
         assert adapter
-        adapter.connect(flow1.head)
+        adapter.connect(flow1.head, a1.ports()[0])
 
         adapter = component.queryMultiAdapter((a2, flow2), IConnect)
         assert adapter
-        adapter.connect(flow2.tail)
+        adapter.connect(flow2.tail, a2.ports()[0])
 
         adapter = component.queryMultiAdapter((a3, flow3), IConnect)
         assert adapter
-        adapter.connect(flow3.tail)
+        adapter.connect(flow3.tail, a3.ports()[0])
 
         # Now connect to ForkNode:
 
         adapter = component.queryMultiAdapter((f1, flow1), IConnect)
         assert adapter
-        adapter.connect(flow1.tail)
+        adapter.connect(flow1.tail, f1.ports()[0])
         assert flow1.tail.connected_to is f1
         assert flow1.subject
         assert flow1.subject.target is f1.subject
@@ -666,7 +667,7 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((f1, flow2), IConnect)
         assert adapter
-        adapter.connect(flow2.head)
+        adapter.connect(flow2.head, f1.ports()[0])
         assert flow2.head.connected_to is f1
         assert flow2.subject.source is f1.subject
         assert flow2.subject in f1.subject.outgoing
@@ -675,7 +676,7 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((f1, flow3), IConnect)
         assert adapter
-        adapter.connect(flow3.head)
+        adapter.connect(flow3.head, f1.ports()[0])
         assert flow3.head.connected_to is f1
         assert flow3.subject.source is f1.subject
         assert flow3.subject in f1.subject.outgoing
@@ -691,11 +692,11 @@ class ConnectorTestCase(TestCase):
 
         adapter = component.queryMultiAdapter((f1, flow4), IConnect)
         assert adapter
-        adapter.connect(flow4.tail)
+        adapter.connect(flow4.tail, f1.ports()[0])
         assert type(f1.subject) is forkNodeClass
 
         adapter = component.queryMultiAdapter((a4, flow4), IConnect)
-        adapter.connect(flow4.head)
+        adapter.connect(flow4.head, a4.ports()[0])
         assert type(f1.subject) is joinNodeClass
         assert f1.combined
         assert flow4.tail.connected_to is f1
@@ -712,7 +713,7 @@ class ConnectorTestCase(TestCase):
         # flow4 can be connected as outgoing flow though:
         #adapter = component.queryMultiAdapter((f1, flow4), IConnect)
         #assert adapter
-        #adapter.connect(flow4.head)
+        #adapter.connect(flow4.head, f1.ports()[0])
         #assert flow4.head.connected_to is f1
 
         adapter.disconnect(flow4.head)
@@ -736,19 +737,19 @@ class ConnectorTestCase(TestCase):
 
         # Let's try if we can connect both ends of flow2 to the ForkNode:
         adapter = component.queryMultiAdapter((f1, flow2), IConnect)
-        adapter.connect(flow2.tail)
+        adapter.connect(flow2.tail, f1.ports()[0])
         assert flow2.tail.connected_to is None, flow2.tail.connected_to
 
-        adapter.disconnect(flow2.head)
+        adapter.disconnect(flow2.head, f1.ports()[0])
         assert len(f1.subject.incoming) == 1, len(f1.subject.incoming)
         assert len(f1.subject.outgoing) == 0, len(f1.subject.outgoing)
 
         adapter = component.queryMultiAdapter((a2, flow2), IConnect)
-        adapter.connect(flow2.head)
+        adapter.connect(flow2.head, f1.ports()[0])
         assert len(a2.subject.outgoing) == 0
 
         adapter = component.queryMultiAdapter((f1, flow2), IConnect)
-        adapter.connect(flow2.tail)
+        adapter.connect(flow2.tail, f1.ports()[0])
         assert len(a2.subject.outgoing) == 1
         assert len(f1.subject.incoming) == 2
         assert len(f1.subject.outgoing) == 0, len(f1.subject.outgoing)
@@ -757,7 +758,7 @@ class ConnectorTestCase(TestCase):
         # And of course I can't add another outgoing edge:
         #adapter = component.queryMultiAdapter((f1, flow4), IConnect)
         #assert adapter
-        #adapter.connect(flow4.head)
+        #adapter.connect(flow4.head, f1.ports()[0])
         #assert flow4.head.connected_to is None
 
 
@@ -784,7 +785,7 @@ class ConnectorTestCase(TestCase):
         assert adapter is not None
         
         # connect tail of message to lifeline.
-        adapter.connect(message.head)
+        adapter.connect(message.head, lifeline.ports()[0])
 
         # If one side is connected a "lost" message is created
         assert message.subject is not None
@@ -814,7 +815,7 @@ class ConnectorTestCase(TestCase):
         assert adapter is not None
         
         # connect tail of message to lifeline.
-        adapter.connect(message.head)
+        adapter.connect(message.head, lifeline1.ports()[0])
 
         # If one side is connected a "lost" message is created
         assert message.subject is not None
@@ -826,7 +827,7 @@ class ConnectorTestCase(TestCase):
         adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
         assert adapter is not None
 
-        adapter.connect(message.tail)
+        adapter.connect(message.tail, lifeline2.ports()[0])
         assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1
         assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 2
         assert factory.lselect(lambda e: e.isKindOf(UML.Message))[0] is message.subject
@@ -866,12 +867,12 @@ class ConnectorTestCase(TestCase):
         assert adapter is not None
         
         # connect head of message to lifeline
-        adapter.connect(message.head)
+        adapter.connect(message.head, lifeline1.ports()[0])
 
         adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
         assert adapter is not None
 
-        adapter.connect(message.tail)
+        adapter.connect(message.tail, lifeline2.ports()[0])
         # we should not be connected to second lifeline as it is on
         # sequence diagram
         assert message.tail.connected_to is None
@@ -880,7 +881,7 @@ class ConnectorTestCase(TestCase):
         lifetime.bottom.y -= 10
         assert not lifetime.is_visible
 
-        adapter.connect(message.tail)
+        adapter.connect(message.tail, lifeline2.ports()[0])
         assert message.tail.connected_to is lifeline2
 
 
@@ -902,12 +903,12 @@ class ConnectorTestCase(TestCase):
         assert adapter is not None
         
         # connect head of message to lifeline
-        adapter.connect(message.head)
+        adapter.connect(message.head, lifeline1.ports()[0])
 
         adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
         assert adapter is not None
 
-        adapter.connect(message.tail)
+        adapter.connect(message.tail, lifeline2.ports()[0])
         # we should not be connected to second lifeline as it is on
         # communication diagram
         assert message.tail.connected_to is None
@@ -918,7 +919,7 @@ class ConnectorTestCase(TestCase):
         assert lifetime.is_visible
         
         # connect again
-        adapter.connect(message.tail)
+        adapter.connect(message.tail, lifeline2.ports()[0])
         assert message.tail.connected_to is lifeline2
 
 
@@ -937,12 +938,12 @@ class ConnectorTestCase(TestCase):
         assert adapter is not None
         
         # connect head of message to lifeline
-        adapter.connect(message.head)
+        adapter.connect(message.head, lifeline1.ports()[0])
 
         adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
         assert adapter is not None
 
-        adapter.connect(message.tail)
+        adapter.connect(message.tail, lifeline2.ports()[0])
         assert message.tail.connected_to is lifeline2
         
         assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1

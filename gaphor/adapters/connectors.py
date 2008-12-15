@@ -251,6 +251,7 @@ class RelationshipConnect(AbstractConnect):
         tail - tuple (association name on line, association name on element)
         """
         line = self.line
+        element = self.element
 
         head_subject = line.head.connected_to.subject
         tail_subject = line.tail.connected_to.subject

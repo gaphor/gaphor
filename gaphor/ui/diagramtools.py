@@ -67,6 +67,7 @@ class ConnectHandleTool(_ConnectHandleTool):
         super(ConnectHandleTool, self).post_connect(view, item, handle, glue_item, port)
         try:
             assert handle in self._adapter.line.handles()
+            assert port in self._adapter.element.ports()
             self._adapter.connect(handle, port)
         finally:
             self._adapter = None

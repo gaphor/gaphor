@@ -96,7 +96,8 @@ class DiagramLine(LineItem):
         elif name == 'points':
             points = eval(value)
             for x in xrange(len(points) - 2):
-                self.split_segment(0)
+                h = self._create_handle((0, 0))
+                self._handles.insert(1, h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
         elif name == 'orthogonal':
