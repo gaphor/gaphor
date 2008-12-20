@@ -23,26 +23,18 @@ class TransitionConnectorTestCase(TestCase):
         t = self.create(items.TransitionItem)
         assert t.subject is None
 
-        adapter = component.queryMultiAdapter((v1, t), IConnect)
-        assert adapter is not None
+        # connect vertices with transition
+        self.connect(t, t.head, v1)
+        self.connect(t, t.tail, v2)
         
-        # connect head of transition to a state
-        adapter.connect(t.head)
-        assert t.subject is None
+        self.assertTrue(t.subject is not None)
 
-        adapter = component.queryMultiAdapter((v2, t), IConnect)
-        assert adapter is not None
-
-        # connect tail of transition to a second state
-        adapter.connect(t.tail)
-        assert t.subject is not None
-
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Transition))) == 1
+        self.assertEquals(1, len(self.kindof(UML.Transition)))
         
-        assert t.subject == v1.subject.outgoing[0]
-        assert t.subject == v2.subject.incoming[0]
-        assert t.subject.source == v1.subject
-        assert t.subject.target == v2.subject
+        self.assertEquals(t.subject, v1.subject.outgoing[0])
+        self.assertEquals(t.subject, v2.subject.incoming[0])
+        self.assertEquals(t.subject.source, v1.subject)
+        self.assertEquals(t.subject.target, v2.subject)
 
 
     def test_vertex_disconnect(self):
