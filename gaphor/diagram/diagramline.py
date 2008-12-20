@@ -111,18 +111,14 @@ class DiagramLine(LineItem):
 
 
     def _connect(self, handle, item):
-        # Ohoh, need the IConnect adapters here and handle connection tool
+        # we need connection tool, here;
         # can we move that to storage module?
-        from zope import component
         from gaphor.ui.diagramtools import ConnectHandleTool
         tool = ConnectHandleTool()
 
-        adapter = component.queryMultiAdapter((item, self), IConnect)
-        assert adapter, 'No IConnect adapter to connect %s to %s' % (item, self)
-
         port = tool.find_port(self, handle, item)
-        adapter.connect(handle, port)
-        tool.post_connect(self.canvas, self, handle, item, port)
+        tool.connect_handle(self, handle, item, port)
+        tool.post_connect(self, handle, item, port)
 
 
     def postload(self):

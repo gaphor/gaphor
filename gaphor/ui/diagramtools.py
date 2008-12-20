@@ -33,15 +33,7 @@ class ConnectHandleTool(_ConnectHandleTool):
 
     It also adds handles to lines when a line is grabbed on the middle of
     a line segment (points are drawn by the LineSegmentPainter).
-
-    Attributes:
-     - _adapter: current adapter used to connect items
     """
-    def __init__(self):
-        super(ConnectHandleTool, self).__init__()
-        self._adapter = None
-
-
     def can_glue(self, view, item, handle, glue_item, port):
         """
         Determine if item and glue item can glue/connect using connection
@@ -49,14 +41,10 @@ class ConnectHandleTool(_ConnectHandleTool):
         """
         can_glue = False
         adapter = component.queryMultiAdapter((glue_item, item), IConnect)
-        if adapter:
-            self._adapter = adapter
-            can_glue = adapter.glue(handle, port)
-
-        return can_glue
+        return adapter and adapter.glue(handle, port)
 
 
-    def post_connect(self, view, item, handle, glue_item, port):
+    def post_connect(self, item, handle, glue_item, port):
         """
         Connecting requires the handles to be connected before the model
         level connection is made.
@@ -64,15 +52,14 @@ class ConnectHandleTool(_ConnectHandleTool):
         Note that once this method is called, the glue() method has done that
         for us.
         """
-        super(ConnectHandleTool, self).post_connect(view, item, handle, glue_item, port)
-        try:
-            assert handle in self._adapter.line.handles()
-            assert port in self._adapter.element.ports()
-            self._adapter.connect(handle, port)
-        finally:
-            self._adapter = None
+        super(ConnectHandleTool, self).post_connect(item, handle, glue_item, port)
+        adapter = component.queryMultiAdapter((glue_item, item), IConnect)
 
-        return True
+        assert adapter is not None
+        assert handle in adapter.line.handles()
+        assert port in adapter.element.ports()
+
+        adapter.connect(handle, port)
 
 
     def disconnect(self, view, item, handle):
