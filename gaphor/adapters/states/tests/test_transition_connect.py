@@ -15,8 +15,6 @@ class TransitionConnectorTestCase(TestCase):
     def test_vertex_connect(self):
         """Test transition to state vertex connection
         """
-        factory = self.element_factory
-
         v1 = self.create(items.StateItem, UML.State)
         v2 = self.create(items.StateItem, UML.State)
 
@@ -40,38 +38,25 @@ class TransitionConnectorTestCase(TestCase):
     def test_vertex_disconnect(self):
         """Test transition and state vertices disconnection
         """
-        factory = self.element_factory
-
+        t = self.create(items.TransitionItem)
         v1 = self.create(items.StateItem, UML.State)
         v2 = self.create(items.StateItem, UML.State)
 
-        t = self.create(items.TransitionItem)
-        assert t.subject is None
-
-        adapter = component.queryMultiAdapter((v1, t), IConnect)
-        assert adapter is not None
-        
-        # connect head of transition to a state
-        adapter.connect(t.head)
-        assert t.subject is None
-
-        adapter = component.queryMultiAdapter((v2, t), IConnect)
-        assert adapter is not None
-
-        # connect tail of transition to a second state
-        adapter.connect(t.tail)
+        self.connect(t, t.head, v1)
+        self.connect(t, t.tail, v2)
         assert t.subject is not None
 
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Transition))) == 1
+        self.assertEquals(1, len(self.kindof(UML.Transition)))
         
+        # test preconditions
         assert t.subject == v1.subject.outgoing[0]
         assert t.subject == v2.subject.incoming[0]
 
-        adapter.disconnect(t.tail)
-        assert t.subject is None
+        self.disconnect(t, t.tail)
+        self.assertTrue(t.subject is None)
 
-        adapter.disconnect(t.head)
-        assert t.subject is None
+        self.disconnect(t, t.head)
+        self.assertTrue(t.subject is None)
 
 
     def test_initial_pseudostate_connect(self):
