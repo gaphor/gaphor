@@ -3,42 +3,50 @@ Test extend item connections.
 """
 
 from gaphor.tests import TestCase
-from zope import component
 from gaphor import UML
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import IConnect
 
 class ExtendItemTestCase(TestCase):
-
-    services = ['element_factory', 'adapter_loader']
-
-    def test_commentline_element(self):
+    def test_use_case_glue(self):
+        """Test glueing to use cases.
         """
-        Test Extend item connecting to use cases.
+        uc1 = self.create(items.UseCaseItem, UML.UseCase)
+        extend = self.create(items.ExtendItem)
+
+        glued = self.glue(extend, extend.head, uc1)
+        self.assertTrue(glued)
+
+
+    def test_use_case_connect(self):
+        """Test connecting to use cases.
         """
         uc1 = self.create(items.UseCaseItem, UML.UseCase)
         uc2 = self.create(items.UseCaseItem, UML.UseCase)
         extend = self.create(items.ExtendItem)
 
-        adapter = component.queryMultiAdapter((uc1, extend), IConnect)
+        self.connect(extend, extend.head, uc1)
+        self.assertTrue(extend.head.connected_to, uc1)
 
-        handle = extend.head
-        adapter.connect(handle)
+        self.connect(extend, extend.tail, uc2)
+        self.assertTrue(extend.tail.connected_to, uc2)
 
-        assert handle.connected_to is uc1
 
-        adapter = component.queryMultiAdapter((uc2, extend), IConnect)
+    def test_use_case_disconnect(self):
+        """Test disconnecting from use cases.
+        """
+        uc1 = self.create(items.UseCaseItem, UML.UseCase)
+        uc2 = self.create(items.UseCaseItem, UML.UseCase)
+        extend = self.create(items.ExtendItem)
 
-        handle = extend.tail
-        adapter.connect(handle)
+        self.connect(extend, extend.head, uc1)
+        self.connect(extend, extend.tail, uc2)
 
-        assert handle.connected_to is uc2
-        assert handle.connection_data is not None
+        self.disconnect(extend, extend.head)
+        self.assertTrue(extend.head.connected_to is None)
+        self.assertTrue(extend.subject is None)
 
-        adapter.disconnect(handle)
-
-        assert handle.connected_to is None, handle.connected_to
-        assert handle.connection_data is None
+        self.disconnect(extend, extend.tail)
+        self.assertTrue(extend.tail.connected_to is None)
 
 
 
