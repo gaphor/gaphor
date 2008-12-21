@@ -6,14 +6,6 @@ from gaphor.diagram import items
 from gaphor.diagram.interfaces import IEditor
 
 class EditorTestCase(TestCase):
-
-    services = ['element_factory', 'adapter_loader']
-
-    def setUp(self):
-        super(EditorTestCase, self).setUp()
-        self.factory = self.get_service('element_factory')
-
-
     def test_association_editor(self):
         assoc = self.create(items.AssociationItem)
         adapter = IEditor(assoc)
@@ -46,12 +38,11 @@ class EditorTestCase(TestCase):
 
         
     def test_objectnode_editor(self):
-        diagram = self.factory.create(UML.Diagram)
-        node = diagram.create(items.ObjectNodeItem, subject=self.factory.create(UML.ObjectNode))
-        diagram.canvas.update_now()
+        node = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        self.diagram.canvas.update_now()
 
         adapter = IEditor(node)
-        assert adapter.is_editable(10, 10)
+        self.assertTrue(adapter.is_editable(10, 10))
         #assert not adapter.edit_tag
 
         #assert adapter.is_editable(*node.tag_bounds[:2])
@@ -62,21 +53,20 @@ class EditorTestCase(TestCase):
         """
         Test classifier editor
         """
-        diagram = self.factory.create(UML.Diagram)
-        klass = diagram.create(items.ClassItem, subject=self.factory.create(UML.Class))
+        klass = self.create(items.ClassItem, UML.Class)
         klass.subject.name = 'Class1'
 
-        diagram.canvas.update()
+        self.diagram.canvas.update()
 
-        attr = self.factory.create(UML.Property)
+        attr = self.element_factory.create(UML.Property)
         attr.name = "blah"
         klass.subject.ownedAttribute = attr
 
-        oper = self.factory.create(UML.Operation)
+        oper = self.element_factory.create(UML.Operation)
         oper.name = 'method'
         klass.subject.ownedOperation = oper
 
-        diagram.canvas.update()
+        self.diagram.canvas.update()
 
         edit = IEditor(klass)
 
