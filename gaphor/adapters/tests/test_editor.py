@@ -15,41 +15,35 @@ class EditorTestCase(TestCase):
 
 
     def test_association_editor(self):
-        diagram = self.factory.create(UML.Diagram)
-        assoc = diagram.create(items.AssociationItem)
+        assoc = self.create(items.AssociationItem)
         adapter = IEditor(assoc)
         assert not adapter.is_editable(10, 10)
         assert adapter._edit is None
 
         # Intermezzo: connect the association between two classes
-        class1 = diagram.create(items.ClassItem, subject=self.factory.create(UML.Class))
-        class2 = diagram.create(items.ClassItem, subject=self.factory.create(UML.Class))
-        from gaphor.interfaces import IService
-        component.provideUtility(self.factory, IService, 'element_factory')
+        class1 = self.create(items.ClassItem, UML.Class)
+        class2 = self.create(items.ClassItem, UML.Class)
 
-        from gaphor.diagram.interfaces import IConnect
-        connector = component.queryMultiAdapter((class1, assoc), IConnect)
         assoc.handles()[0].pos = 10, 10
-        connector.connect(assoc.handles()[0])
-        assert assoc.handles()[0].connected_to
-        connector = component.queryMultiAdapter((class2, assoc), IConnect)
         assoc.handles()[-1].pos = 100, 100
-        connector.connect(assoc.handles()[-1])
-        assert assoc.handles()[-1].connected_to
+        self.connect(assoc, assoc.head, class1)
+        self.connect(assoc, assoc.tail, class2)
         assert assoc.subject
 
         # Now the association has a subject member, so editing should really
         # work.
-        assert adapter.is_editable(55, 55)
-        assert adapter._edit is assoc
+        pos = 55, 55
+        self.assertTrue(adapter.is_editable(*pos))
+        self.assertTrue(adapter._edit is assoc)
 
-        x, y = assoc.head_end._name_bounds[:2]
-        assert adapter.is_editable(x, y)
-        assert adapter._edit is assoc.head_end
+        pos = assoc.head_end._name_bounds[:2]
+        self.assertTrue(adapter.is_editable(*pos))
+        self.assertTrue(adapter._edit is assoc.head_end)
         
-        x, y = assoc.tail_end._name_bounds[:2]
-        assert adapter.is_editable(x, y)
-        assert adapter._edit is assoc.tail_end
+        pos = assoc.tail_end._name_bounds[:2]
+        self.assertTrue(adapter.is_editable(*pos))
+        self.assertTrue(adapter._edit is assoc.tail_end)
+
         
     def test_objectnode_editor(self):
         diagram = self.factory.create(UML.Diagram)

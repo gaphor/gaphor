@@ -166,9 +166,9 @@ class AssociationItemEditor(object):
         item = self._item
         if not item.subject:
             return False
-        if item.head_end.point(x, y) <= 0:
+        if item.head_end.point((x, y)) <= 0:
             self._edit = item.head_end
-        elif item.tail_end.point(x, y) <= 0:
+        elif item.tail_end.point((x, y)) <= 0:
             self._edit = item.tail_end
         else:
             self._edit = item
