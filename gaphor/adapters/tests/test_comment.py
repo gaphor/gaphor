@@ -61,36 +61,26 @@ class CommentLineTestCase(TestCase):
         self.assertFalse(line.tail.connected_to is ac)
 
         
-    def test_commentline_class(self):
-        """
-        Connect a CommentLine to a class and unlink the commentLine
-        afterwards.
+    def test_commentline_unlink(self):
+        """Test comment line unlinking using a class item.
         """
         clazz = self.create(items.ClassItem, UML.Class)
         comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
 
-        adapter = component.queryMultiAdapter((comment, line), IConnect)
-        handle = line.head
-        adapter.connect(handle, comment.ports()[0])
-
-        adapter = component.queryMultiAdapter((clazz, line), IConnect)
-        handle = line.tail
-        adapter.connect(handle, clazz.ports()[0])
-
-        assert clazz.subject in comment.subject.annotatedElement
-        assert comment.subject in clazz.subject.ownedComment
+        self.connect(line, line.head, comment)
+        self.connect(line, line.tail, clazz)
+        self.assertTrue(clazz.subject in comment.subject.annotatedElement)
+        self.assertTrue(comment.subject in clazz.subject.ownedComment)
 
         line.unlink()
 
-        assert not comment.subject.annotatedElement
-        assert not clazz.subject.ownedComment
+        self.assertTrue(comment.subject.annotatedElement is None)
+        self.assertTrue(clazz.subject.ownedComment is None)
 
 
     def test_commentline_relationship_unlink(self):
-        """
-        Connect a CommentLine to a relationship item.
-        Removing the relationship should work.
+        """Test comment line to a relationship item connection and unlink.
 
         Demonstrates defect #103.
         """
@@ -98,36 +88,24 @@ class CommentLineTestCase(TestCase):
         clazz2 = self.create(items.ClassItem, UML.Class)
         gen = self.create(items.GeneralizationItem)
 
-        adapter = component.queryMultiAdapter((clazz1, gen), IConnect)
-        handle = gen.head
-        adapter.connect(handle, clazz1.ports()[0])
-
-        adapter = component.queryMultiAdapter((clazz2, gen), IConnect)
-        handle = gen.tail
-        adapter.connect(handle, clazz2.ports()[0])
+        self.connect(gen, gen.head, clazz1)
+        self.connect(gen, gen.tail, clazz2)
 
         assert gen.subject
 
-        # And now the comment:
-
+        # now, connect comment to a generalization (relationship)
         comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
+        self.connect(line, line.head, comment)
+        self.connect(line, line.tail, gen)
 
-        adapter = component.queryMultiAdapter((comment, line), IConnect)
-        handle = line.head
-        adapter.connect(handle)
-
-        adapter = component.queryMultiAdapter((gen, line), IConnect)
-        handle = line.tail
-        adapter.connect(handle)
-
-        assert gen.subject in comment.subject.annotatedElement
-        assert comment.subject in gen.subject.ownedComment
+        self.assertTrue(gen.subject in comment.subject.annotatedElement)
+        self.assertTrue(comment.subject in gen.subject.ownedComment)
 
         gen.unlink()
 
-        assert not comment.subject.annotatedElement
-        assert not gen.subject
+        self.assertTrue(comment.subject.annotatedElement is None)
+        self.assertTrue(gen.subject is None)
 
 
     def test_commentline_association(self):
