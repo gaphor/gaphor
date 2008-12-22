@@ -2,69 +2,65 @@
 Comment and comment line items connection adapters tests.
 """
 
+from gaphor import UML
+from gaphor.diagram import items
+
 from gaphor.tests import TestCase
 
 class CommentLineTestCase(TestCase):
-    def test_commentline_element(self):
+    def test_commentline_annotated_element(self):
+        """Test comment line item annotated element creation
+        """
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
+
+        self.connect(line, line.head, comment)
+        # while connected, but no annotated element yet
+        self.assertTrue(line.head.connected_to is not None)
+        self.assertTrue(comment.subject.annotatedElement is None)
+
+
+    def test_commentline_same_comment_glue(self):
+        """Test comment line item glueing to already connected comment item
+        """
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
+
+        self.connect(line, line.head, comment)
+        glued = self.glue(line, line.tail, comment)
+        self.assertFalse(glued)
+
+
+    def test_commentline_element_connect(self):
         """Test comment line connecting to comment and actor items.
         """
         comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
-        actor = self.create(items.ActorItem, UML.Actor)
-        actor2 = self.create(items.ActorItem, UML.Actor)
+        ac = self.create(items.ActorItem, UML.Actor)
 
-        # connect the comment item to the head of the line
         self.connect(line, line.head, comment)
-        self.assertTrue(line.head.connected_to is not None)
-        self.assertTrue(comment.subject.annotatedElement is None)
+        self.connect(line, line.tail, ac)
+        self.assertTrue(line.tail.connected_to is ac)
+        self.assertEquals(1, len(comment.subject.annotatedElement))
+        self.assertTrue(ac.subject in comment.subject.annotatedElement)
 
-        # Connecting two ends of the line to the same item is not allowed:
-        handle = line.tail
-        adapter.connect(handle, comment.ports()[0])
 
-        assert handle.connected_to is None, handle.connected_to
-        #assert not hasattr(handle,'connection_constraint')
-        assert not comment.subject.annotatedElement, comment.subject.annotatedElement
+    def test_commentline_element_disconnect(self):
+        """Test comment line connecting to comment and disconnecting actor item.
+        """
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
+        ac = self.create(items.ActorItem, UML.Actor)
 
-        # now connect the actor
+        self.connect(line, line.head, comment)
+        self.connect(line, line.tail, ac)
 
-        adapter = component.queryMultiAdapter((actor, line), IConnect)
+        assert line.tail.connected_to is ac
 
-        handle = line.handles()[-1]
-        adapter.connect(handle, actor.ports()[0])
+        self.disconnect(line, line.tail)
+        self.assertFalse(line.tail.connected_to is ac)
 
-        assert handle.connected_to is actor
-        assert handle.connection_data is not None
-        assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
-        assert actor.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
-
-        # Same thing with another actor
-        # (should disconnect the already connected actor):
-
-        handle = line.tail
-        adapter = component.queryMultiAdapter((actor2, line), IConnect)
-        adapter.connect(handle, actor2.ports()[0])
-
-        assert handle.connected_to is actor2
-        assert handle.connection_data is not None
-        assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
-        assert actor2.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
-
-        # Disconnect actor:
-
-        adapter.disconnect(handle)
-
-        assert handle.connected_to is None, handle.connected_to
-        assert handle.connection_data is None
-        assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
-        assert not actor2.subject in comment.subject.annotatedElement, comment.subject.annotatedElement
-
-        adapter = component.queryMultiAdapter((comment, line), IConnect)
-
-        handle = line.head
-        adapter.disconnect(handle)
         
-
     def test_commentline_class(self):
         """
         Connect a CommentLine to a class and unlink the commentLine
