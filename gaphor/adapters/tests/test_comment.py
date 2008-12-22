@@ -15,7 +15,7 @@ class CommentLineTestCase(TestCase):
         line = self.create(items.CommentLineItem)
 
         self.connect(line, line.head, comment)
-        # while connected, but no annotated element yet
+        # connected, but no annotated element yet
         self.assertTrue(line.head.connected_to is not None)
         self.assertTrue(comment.subject.annotatedElement is None)
 
