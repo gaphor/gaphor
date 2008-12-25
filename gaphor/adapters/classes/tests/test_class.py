@@ -127,3 +127,5 @@ class DependencyTestCase(TestCase):
         self.assertTrue(actor2.clientDependency[0] is dep.subject)
 
         self.assertTrue(dep.subject is dep2.subject)
+
+# vim:sw=4:et:ai

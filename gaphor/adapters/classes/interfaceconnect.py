@@ -84,3 +84,5 @@ class DependencyInterfaceConnect(DependencyConnect):
 
 
 component.provideAdapter(DependencyInterfaceConnect)
+
+# vim:sw=4:et:ai

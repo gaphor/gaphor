@@ -43,3 +43,4 @@ class DependencyConnect(RelationshipConnect):
 
 component.provideAdapter(DependencyConnect)
 
+# vim:sw=4:et:ai
