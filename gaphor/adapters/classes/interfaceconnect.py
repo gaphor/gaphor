@@ -10,7 +10,8 @@ from zope import interface, component
 
 from gaphor import UML
 from gaphor.diagram import items
-from gaphor.adapters.connectors import ImplementationConnect, DependencyConnect
+from gaphor.adapters.connectors import ImplementationConnect
+from gaphor.adapters.classes.classconnect import DependencyConnect
 
 class ImplementationInterfaceConnect(ImplementationConnect):
     """
