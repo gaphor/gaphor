@@ -2,6 +2,7 @@
 import gaphor.adapters.connectors
 import gaphor.adapters.editors
 
+import gaphor.adapters.actions.flowconnect
 import gaphor.adapters.classes.classconnect
 import gaphor.adapters.classes.interfaceconnect
 import gaphor.adapters.profiles.extensionconnect
