@@ -12,41 +12,6 @@ class ConnectorTestCase(TestCase):
 
     services = ['element_factory', 'adapter_loader']
 
-    def test_association(self):
-        gen = self.create(items.AssociationItem)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
-
-        assert len(list(self.element_factory.select())) == 3
-
-        adapter = component.queryMultiAdapter((c1, gen), IConnect)
-
-        adapter.connect(gen.tail, c1.ports()[-1])
-
-        assert gen.tail.connected_to is c1
-        assert gen.subject is None
-
-        adapter = component.queryMultiAdapter((c2, gen), IConnect)
-
-        adapter.connect(gen.head, c2.ports()[0])
-
-        assert gen.head.connected_to is c2
-        assert gen.subject is not None
-        
-        # Diagram, Class x2, Property *2, Association, LiteralSpec *2
-        assert len(list(self.element_factory.select())) == 8, list(self.element_factory.select())
-        assert gen.head_end.subject is not None
-        assert gen.tail_end.subject is not None
-        assert gen.head_end._name_bounds.width == 10
-        assert gen.tail_end._name_bounds.width == 10
-
-        gen.head_end.subject.name = 'cheese'
-        assert gen.head_end._name_bounds.width > 10, gen.head_end._name_bounds.width
-
-        adapter.disconnect(gen.head)
-
-        assert len(list(self.element_factory.select())) == 3, list(self.element_factory.select())
-
     def test_flow_activitynodes(self):
         flow = self.create(items.FlowItem)
         i1 = self.create(items.InitialNodeItem, UML.InitialNode)

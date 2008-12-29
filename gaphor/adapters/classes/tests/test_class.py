@@ -166,4 +166,64 @@ class GeneralizationTestCase(TestCase):
         self.assertTrue(gen.subject.general is c2.subject)
         self.assertTrue(gen.subject.specific is c1.subject)
 
+
+
+class AssociationConnectorTestCase(TestCase):
+    """
+    Association item connection adapters tests.
+    """
+    def test_glue(self):
+        """Test association item glue
+        """
+        asc = self.create(items.AssociationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+
+        glued = self.glue(asc, asc.head, c1)
+        self.assertTrue(glued)
+
+        self.connect(asc, asc.head, c1)
+
+        glued = self.glue(asc, asc.tail, c2)
+        self.assertTrue(glued)
+
+
+    def test_connection(self):
+        """Test association item connection
+        """
+        asc = self.create(items.AssociationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+
+        self.connect(asc, asc.head, c1)
+        self.assertTrue(asc.subject is None) # no UML metaclass yet
+
+        self.connect(asc, asc.tail, c2)
+        self.assertTrue(asc.subject is not None)
+        
+        # Diagram, Class *2, Property *2, Association, LiteralSpec *2
+        self.assertEquals(8, len(list(self.element_factory.select())))
+        self.assertTrue(asc.head_end.subject is not None)
+        self.assertTrue(asc.tail_end.subject is not None)
+
+
+    def test_disconnection(self):
+        """Test association item disconnection
+        """
+        asc = self.create(items.AssociationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+
+        self.connect(asc, asc.head, c1)
+        self.assertTrue(asc.subject is None) # no UML metaclass yet
+
+        self.connect(asc, asc.tail, c2)
+        assert asc.subject is not None
+
+        self.disconnect(asc, asc.head)
+        
+        # after disconnection: one diagram and two classes
+        self.assertEquals(3, len(list(self.element_factory.select())))
+
+
 # vim:sw=4:et:ai

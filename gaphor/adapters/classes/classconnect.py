@@ -61,4 +61,102 @@ component.provideAdapter(GeneralizationConnect)
 
 
 
+class AssociationConnect(RelationshipConnect):
+    """
+    Connect association to classifier.
+    """
+    component.adapts(items.ClassifierItem, items.AssociationItem)
+
+    CAN_BE_UNARY = True    # allow one classifier to be connected by association
+
+    def glue(self, handle, port):
+        element = self.element
+
+        # Element should be a Classifier
+        if not isinstance(element.subject, UML.Classifier):
+            return None
+
+        return super(AssociationConnect, self).glue(handle, port)
+
+    def connect_subject(self, handle):
+        element = self.element
+        line = self.line
+
+        c1 = line.head.connected_to
+        c2 = line.tail.connected_to
+        if c1 and c2:
+            head_type = c1.subject
+            tail_type = c2.subject
+
+            # First check if we do not already contain the right subject:
+            if line.subject:
+                end1 = line.subject.memberEnd[0]
+                end2 = line.subject.memberEnd[1]
+                if (end1.type is head_type and end2.type is tail_type) \
+                   or (end2.type is head_type and end1.type is tail_type):
+                    return
+                    
+            # Find all associations and determine if the properties on
+            # the association ends have a type that points to the class.
+            for assoc in self.element_factory.select():
+                if isinstance(assoc, UML.Association):
+                    end1 = assoc.memberEnd[0]
+                    end2 = assoc.memberEnd[1]
+                    if (end1.type is head_type and end2.type is tail_type) \
+                       or (end2.type is head_type and end1.type is tail_type):
+                        # check if this entry is not yet in the diagram
+                        # Return if the association is not (yet) on the canvas
+                        for item in assoc.presentation:
+                            if item.canvas is element.canvas:
+                                break
+                        else:
+                            line.subject = assoc
+                            if (end1.type is head_type and end2.type is tail_type):
+                                line.head_end.subject = end1
+                                line.tail_end.subject = end2
+                            else:
+                                line.head_end.subject = end2
+                                line.tail_end.subject = end1
+                            return
+            else:
+                # Create a new Extension relationship
+                relation = self.element_factory.create(UML.Association)
+                head_end = self.element_factory.create(UML.Property)
+                head_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
+                tail_end = self.element_factory.create(UML.Property)
+                tail_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
+                relation.package = element.canvas.diagram.namespace
+                relation.memberEnd = head_end
+                relation.memberEnd = tail_end
+                head_end.type = head_type
+                tail_end.type = tail_type
+                head_type.ownedAttribute = tail_end
+                tail_type.ownedAttribute = head_end
+
+                line.head_end.subject = head_end
+                line.tail_end.subject = tail_end
+                # Do subject itself last, so event handlers can trigger
+                line.subject = relation
+
+    def disconnect_subject(self, handle):
+        """
+        Disconnect model element.
+        Disconnect property (memberEnd) too, in case of end of life for
+        Extension
+        """
+        opposite = self.line.opposite(handle)
+        if handle.connected_to and opposite.connected_to:
+            old = self.line.subject
+            del self.line.subject
+            del self.line.head_end.subject
+            del self.line.tail_end.subject
+            if old and len(old.presentation) == 0:
+                for e in list(old.memberEnd):
+                    e.unlink()
+                old.unlink()
+
+
+component.provideAdapter(AssociationConnect)
+
+
 # vim:sw=4:et:ai
