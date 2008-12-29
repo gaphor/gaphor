@@ -1,11 +1,11 @@
+"""
+Classes related (dependency, implementation) adapter connections.
+"""
+
 from gaphor.adapters.connectors import RelationshipConnect
 from zope import interface, component
 from gaphor import UML
 from gaphor.diagram import items
-
-"""
-Classes related (dependency, implementation) adapter connections.
-"""
 
 class DependencyConnect(RelationshipConnect):
     """
