@@ -43,4 +43,22 @@ class DependencyConnect(RelationshipConnect):
 
 component.provideAdapter(DependencyConnect)
 
+
+class GeneralizationConnect(RelationshipConnect):
+    """
+    Connect Classifiers with a Generalization relationship.
+    """
+    # FixMe: Both ends of the generalization should be of the same  type?
+    component.adapts(items.ClassifierItem, items.GeneralizationItem)
+
+    def connect_subject(self, handle):
+        relation = self.relationship_or_new(UML.Generalization,
+                    ('general', None),
+                    ('specific', 'generalization'))
+        self.line.subject = relation
+
+component.provideAdapter(GeneralizationConnect)
+
+
+
 # vim:sw=4:et:ai

@@ -9,7 +9,9 @@ from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
 class DependencyTestCase(TestCase):
-
+    """
+    Dependency item connection adapter tests.
+    """
     def test_dependency_glue(self):
         """Test dependency glue to two actor items
         """
@@ -127,5 +129,43 @@ class DependencyTestCase(TestCase):
         self.assertTrue(actor2.clientDependency[0] is dep.subject)
 
         self.assertTrue(dep.subject is dep2.subject)
+
+
+class GeneralizationTestCase(TestCase):
+    """
+    Generalization item connection adapter tests.
+    """
+    def test_glue(self):
+        """Test generalization item glueing using two classes
+        """
+        gen = self.create(items.GeneralizationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+
+        glued = self.glue(gen, gen.tail, c1)
+        self.assertTrue(glued)
+
+        self.connect(gen, gen.tail, c1)
+        self.assertTrue(gen.tail.connected_to is c1)
+        self.assertTrue(gen.subject is None)
+
+        glued = self.glue(gen, gen.head, c2)
+        self.assertTrue(glued)
+
+
+    def test_connection(self):
+        """Test generalization item connection using two classes
+        """
+        gen = self.create(items.GeneralizationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+
+        self.connect(gen, gen.tail, c1)
+        assert gen.tail.connected_to is c1
+
+        self.connect(gen, gen.head, c2)
+        self.assertTrue(gen.subject is not None)
+        self.assertTrue(gen.subject.general is c2.subject)
+        self.assertTrue(gen.subject.specific is c1.subject)
 
 # vim:sw=4:et:ai

@@ -12,28 +12,6 @@ class ConnectorTestCase(TestCase):
 
     services = ['element_factory', 'adapter_loader']
 
-
-    def test_generalization(self):
-        gen = self.create(items.GeneralizationItem)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
-
-        adapter = component.queryMultiAdapter((c1, gen), IConnect)
-
-        adapter.connect(gen.tail, c1.ports()[0])
-
-        assert gen.tail.connected_to is c1
-        assert gen.subject is None
-
-        adapter = component.queryMultiAdapter((c2, gen), IConnect)
-
-        adapter.connect(gen.head, c2.ports()[0])
-
-        assert gen.head.connected_to is c2
-        assert gen.subject is not None
-        assert gen.subject.general is c2.subject
-        assert gen.subject.specific is c1.subject
-
     def test_extension(self):
         gen = self.create(items.ExtensionItem)
         c1 = self.create(items.ClassItem, UML.Stereotype)
