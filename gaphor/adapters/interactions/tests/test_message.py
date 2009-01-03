@@ -7,13 +7,44 @@ from gaphor import UML
 from gaphor.diagram import items
 
 class BasicMessageConnectionsTestCase(TestCase):
-    def test_glue(self):
-        """Test message glue
+    def test_head_glue(self):
+        """Test message head glue
         """
         ll = self.create(items.LifelineItem)
         msg = self.create(items.MessageItem)
 
-        glued = self.glue(msg, msg.head, ll)
+        # get head port
+        port = ll.ports()[0]
+        glued = self.glue(msg, msg.head, ll, port)
+        self.assertTrue(glued)
+
+
+    def test_invisible_lifetime_glue(self):
+        """Test message invisible lifetime glue
+        """
+        ll = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
+
+        # get lifetime port
+        port = ll._lifetime_port
+        glued = self.glue(msg, msg.head, ll, port)
+        assert not ll.lifetime.is_visible
+        self.assertFalse(glued)
+
+
+    def test_visible_lifetime_glue(self):
+        """Test message invisible lifetime glue
+        """
+        ll = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
+
+        ll.lifetime.bottom.y += 10
+
+        # get lifetime port
+        port = ll._lifetime_port
+        glued = self.glue(msg, msg.head, ll, port)
+
+        assert ll.lifetime.is_visible
         self.assertTrue(glued)
 
 
