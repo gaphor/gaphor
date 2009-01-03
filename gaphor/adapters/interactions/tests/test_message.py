@@ -114,6 +114,26 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertTrue(msg.subject.receiveEvent in occurences, '%s' % occurences)
 
 
+    def test_lifetime_connection(self):
+        """Test messages' lifetimes connection
+        """
+        message = self.create(items.MessageItem)
+        lifeline1 = self.create(items.LifelineItem)
+        lifeline2 = self.create(items.LifelineItem)
+
+        # make lifelines to be in sequence diagram mode
+        lifeline1.lifetime.bottom.y += 10
+        lifeline2.lifetime.bottom.y += 10
+        assert lifeline1.lifetime.is_visible and lifeline2.lifetime.is_visible
+
+        # connect lifetimes with messages message to lifeline's head
+        self.connect(message, message.head, lifeline1, lifeline1._lifetime_port)
+        self.connect(message, message.tail, lifeline2, lifeline2._lifetime_port)
+
+        self.assertTrue(message.subject is not None)
+        self.assertEquals(message.subject.messageKind, 'complete')
+
+
     def test_disconnection(self):
         """Test message disconnection
         """
@@ -134,72 +154,62 @@ class BasicMessageConnectionsTestCase(TestCase):
 
 
 
-class CommunicationDiagramMessageConnectionsTestCase(TestCase):
-    def test_message_connect_cd(self):
-        """Test connecting message on communication diagram
+class DiagramModeMessageConnectionTestCase(TestCase):
+    def test_message_glue_cd(self):
+        """Test glueing message on communication diagram
         """
         lifeline1 = self.create(items.LifelineItem)
         lifeline2 = self.create(items.LifelineItem)
 
-        # make second lifeline to be on sequence diagram
+        # make second lifeline to be in sequence diagram mode
         lifetime = lifeline2.lifetime
         lifetime.bottom.y += 10
         assert lifetime.is_visible
 
         message = self.create(items.MessageItem)
-        assert message.subject is None
 
-        adapter = component.queryMultiAdapter((lifeline1, message), IConnect)
-        assert adapter is not None
-        
-        # connect head of message to lifeline
-        adapter.connect(message.head, lifeline1.ports()[0])
+        # connect head of message to lifeline's head
+        self.connect(message, message.head, lifeline1)
 
-        adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
-        assert adapter is not None
+        glued = self.glue(message, message.tail, lifeline2, lifeline2._lifetime_port)
+        # no connection possible as 2nd lifeline is in sequence diagram
+        # mode
+        self.assertFalse(glued)
 
-        adapter.connect(message.tail, lifeline2.ports()[0])
-        # we should not be connected to second lifeline as it is on
-        # sequence diagram
-        assert message.tail.connected_to is None
 
-        # make lifetime invisible and connect again
-        lifetime.bottom.y -= 10
-        assert not lifetime.is_visible
+    def test_message_glue_sd(self):
+        """Test glueing message on sequence diagram
+        """
+        lifeline1 = self.create(items.LifelineItem)
+        lifeline2 = self.create(items.LifelineItem)
 
-        adapter.connect(message.tail, lifeline2.ports()[0])
-        assert message.tail.connected_to is lifeline2
+        # make 2nd lifeline to be in sequence diagram mode
+        lifetime = lifeline2.lifetime
+        lifetime.bottom.y += 10
+        assert lifetime.is_visible
+
+        message = self.create(items.MessageItem)
+
+        # connect lifetime of message to lifeline's lifetime
+        self.connect(message, message.head, lifeline1, lifeline1._lifetime_port)
+
+        glued = self.glue(message, message.tail, lifeline2)
+        # no connection possible as 2nd lifeline is in communication
+        # diagram mode
+        self.assertFalse(glued)
 
 
     def test_messages_disconnect_cd(self):
         """Test disconnecting messages on communication diagram
         """
-        factory = self.element_factory
-
         lifeline1 = self.create(items.LifelineItem)
         lifeline2 = self.create(items.LifelineItem)
-
         message = self.create(items.MessageItem)
-        assert message.subject is None
 
-        adapter = component.queryMultiAdapter((lifeline1, message), IConnect)
-        assert adapter is not None
+        self.connect(message, message.head, lifeline1)
+        self.connect(message, message.tail, lifeline2)
         
-        # connect head of message to lifeline
-        adapter.connect(message.head, lifeline1.ports()[0])
-
-        adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
-        assert adapter is not None
-
-        adapter.connect(message.tail, lifeline2.ports()[0])
-        assert message.tail.connected_to is lifeline2
-        
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 2
-        assert factory.lselect(lambda e: e.isKindOf(UML.Message))[0] is message.subject
-        assert message.subject.sendEvent in factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))
-        assert message.subject.receiveEvent in factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))
-
+        factory = self.element_factory
         subject = message.subject
 
         # add some more messages
@@ -226,54 +236,14 @@ class CommunicationDiagramMessageConnectionsTestCase(TestCase):
         message.add_message(m3, True)
         message.add_message(m4, True)
 
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 5
+        assert len(self.kindof(UML.Message)) == 5
 
         # disconnect
-        adapter.disconnect(message.head)
-        adapter.disconnect(message.tail)
+        self.disconnect(message, message.head)
+        self.disconnect(message, message.tail)
 
         # we expect no messages
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 0
-
-
-class SequenceDiagramMessageConnectionsTestCase(TestCase):
-    def test_message_connect_sd(self):
-        """Test connecting message on sequence diagram
-        """
-        lifeline1 = self.create(items.LifelineItem)
-        lifeline2 = self.create(items.LifelineItem)
-
-        # make first lifeline to be on sequence diagram
-        lifetime = lifeline1.lifetime
-        lifetime.bottom.y += 10
-        assert lifetime.is_visible
-
-        message = self.create(items.MessageItem)
-        assert message.subject is None
-
-        adapter = component.queryMultiAdapter((lifeline1, message), IConnect)
-        assert adapter is not None
-        
-        # connect head of message to lifeline
-        adapter.connect(message.head, lifeline1.ports()[0])
-
-        adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
-        assert adapter is not None
-
-        adapter.connect(message.tail, lifeline2.ports()[0])
-        # we should not be connected to second lifeline as it is on
-        # communication diagram
-        assert message.tail.connected_to is None
-
-        # make second lifeline to be on sequence diagram
-        lifetime = lifeline2.lifetime
-        lifetime.bottom.y += 10
-        assert lifetime.is_visible
-        
-        # connect again
-        adapter.connect(message.tail, lifeline2.ports()[0])
-        assert message.tail.connected_to is lifeline2
-
+        self.assertEquals(0, len(self.kindof(UML.Message)))
 
 
 # vim:sw=4:et:ai
