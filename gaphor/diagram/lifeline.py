@@ -22,6 +22,7 @@ lifeline.
 
 import gaphas
 from gaphas.item import SW, SE
+from gaphas.connector import LinePort
 from gaphas.solver import STRONG
 from gaphas.geometry import distance_line_point, Rectangle
 from gaphas.constraint import LessThanConstraint, EqualsConstraint, CenterConstraint
@@ -29,6 +30,10 @@ from gaphas.constraint import LessThanConstraint, EqualsConstraint, CenterConstr
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
+
+class LifetimePort(LinePort):
+    pass
+
 
 class LifetimeItem(object):
     """
@@ -128,6 +133,8 @@ class LifelineItem(NamedItem):
         top, bottom = self._lifetime.handles()
         self._handles.append(top)
         self._handles.append(bottom)
+        self._lifetime_port = LifetimePort(top.pos, bottom.pos)
+        self._ports.append(self._lifetime_port)
 
         constraints = [
             # Apply constraint to bottom, since bottom can be moved (top can't)

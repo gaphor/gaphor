@@ -1,84 +1,106 @@
+"""
+Message connection adapter tests.
+"""
+
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
 
 class BasicMessageConnectionsTestCase(TestCase):
-    def test_message_connect_lost(self):
-        """Test lost message creating
+    def test_glue(self):
+        """Test message glue
         """
-        factory = self.element_factory
-        lifeline = self.create(items.LifelineItem)
-        message = self.create(items.MessageItem)
+        ll = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
 
-        assert message.subject is None
+        glued = self.glue(msg, msg.head, ll)
+        self.assertTrue(glued)
 
-        adapter = component.queryMultiAdapter((lifeline, message), IConnect)
 
-        assert adapter is not None
-        
-        # connect tail of message to lifeline.
-        adapter.connect(message.head, lifeline.ports()[0])
+    def test_lost_message_connection(self):
+        """Test lost message connection
+        """
+        ll = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
+
+        self.connect(msg, msg.head, ll)
 
         # If one side is connected a "lost" message is created
-        assert message.subject is not None
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 1
-        assert factory.lselect(lambda e: e.isKindOf(UML.Message))[0] is message.subject
-        assert factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))[0] is message.subject.sendEvent
+        self.assertTrue(msg.subject is not None)
+        self.assertEquals(msg.subject.messageKind, 'lost')
+
+        messages = self.kindof(UML.Message)
+        occurences = self.kindof(UML.EventOccurrence)
+
+        self.assertEquals(1, len(messages))
+        self.assertEquals(1, len(occurences))
+        self.assertTrue(messages[0] is msg.subject)
+        self.assertTrue(occurences[0] is msg.subject.sendEvent)
         
-        adapter.disconnect(message.head)
-        assert message.subject is None
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 0, \
-                factory.lselect(lambda e: e.isKindOf(UML.Message))
 
-
-    def test_message_connect(self):
-        """Test message connection (not lost, not found)
+    def test_found_message_connection(self):
+        """Test found message connection
         """
-        factory = self.element_factory
+        ll = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
 
-        lifeline1 = self.create(items.LifelineItem)
-        lifeline2 = self.create(items.LifelineItem)
+        self.connect(msg, msg.tail, ll)
 
-        message = self.create(items.MessageItem)
-        assert message.subject is None
+        # If one side is connected a "found" message is created
+        self.assertTrue(msg.subject is not None)
+        self.assertEquals(msg.subject.messageKind, 'found')
 
-        adapter = component.queryMultiAdapter((lifeline1, message), IConnect)
-        assert adapter is not None
+        messages = self.kindof(UML.Message)
+        occurences = self.kindof(UML.EventOccurrence)
+
+        self.assertEquals(1, len(messages))
+        self.assertEquals(1, len(occurences))
+        self.assertTrue(messages[0] is msg.subject)
+        self.assertTrue(occurences[0] is msg.subject.receiveEvent)
         
-        # connect tail of message to lifeline.
-        adapter.connect(message.head, lifeline1.ports()[0])
 
-        # If one side is connected a "lost" message is created
-        assert message.subject is not None
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 1
-        assert factory.lselect(lambda e: e.isKindOf(UML.Message))[0] is message.subject
-        assert factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))[0] is message.subject.sendEvent
-        
-        adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
-        assert adapter is not None
+    def test_complete_message_connection(self):
+        """Test complete message connection
+        """
+        ll1 = self.create(items.LifelineItem)
+        ll2 = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
 
-        adapter.connect(message.tail, lifeline2.ports()[0])
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 2
-        assert factory.lselect(lambda e: e.isKindOf(UML.Message))[0] is message.subject
-        assert message.subject.sendEvent in factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))
-        assert message.subject.receiveEvent in factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))
-        
-        adapter = component.queryMultiAdapter((lifeline1, message), IConnect)
-        adapter.disconnect(message.head)
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 1
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 1
-        
-        adapter = component.queryMultiAdapter((lifeline2, message), IConnect)
-        adapter.disconnect(message.tail)
+        self.connect(msg, msg.head, ll1)
+        self.connect(msg, msg.tail, ll2)
 
-        assert message.subject is None
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.Message))) == 0, \
-                factory.lselect(lambda e: e.isKindOf(UML.Message))
-        assert len(factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))) == 0, \
-                factory.lselect(lambda e: e.isKindOf(UML.EventOccurrence))
+        # two sides are connected - "complete" message is created
+        self.assertTrue(msg.subject is not None)
+        self.assertEquals(msg.subject.messageKind, 'complete')
+
+        messages = self.kindof(UML.Message)
+        occurences = self.kindof(UML.EventOccurrence)
+
+        self.assertEquals(1, len(messages))
+        self.assertEquals(2, len(occurences))
+        self.assertTrue(messages[0] is msg.subject)
+        self.assertTrue(msg.subject.sendEvent in occurences, '%s' % occurences)
+        self.assertTrue(msg.subject.receiveEvent in occurences, '%s' % occurences)
+
+
+    def test_disconnection(self):
+        """Test message disconnection
+        """
+        ll1 = self.create(items.LifelineItem)
+        ll2 = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
+
+        self.connect(msg, msg.head, ll1)
+        self.connect(msg, msg.tail, ll2)
+
+        # one side disconnection
+        self.disconnect(msg, msg.head)
+        self.assertTrue(msg.subject is not None, '%s' % msg.subject)
+
+        # 2nd side disconnection
+        self.disconnect(msg, msg.tail)
+        self.assertTrue(msg.subject is None, '%s' % msg.subject)
+
 
 
 class CommunicationDiagramMessageConnectionsTestCase(TestCase):

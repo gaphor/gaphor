@@ -79,22 +79,6 @@ class MessageLifelineConnect(AbstractConnect):
                 message.unlink()
 
 
-    def _glue_lifetime(self, handle):
-        """
-        Glue ``handle`` to lifeline's lifetime.
-
-        The position returned is in line coordinates.
-        """
-        lifetime = self.element.lifetime
-        top = lifetime.top.pos
-        bottom = lifetime.bottom.pos
-
-        pos = self._matrix_l2e.transform_point(*handle.pos)
-        d, pos = geometry.distance_line_point(top, bottom, pos)
-
-        return self._matrix_e2l.transform_point(*pos)
-
-
     def glue(self, handle, port):
         """
         Glue to lifeline's head or lifetime. If lifeline's lifetime is
@@ -105,40 +89,16 @@ class MessageLifelineConnect(AbstractConnect):
         line = self.line
         opposite = line.opposite(handle)
 
-        pos = None
         if opposite.connected_to:
             opposite_is_visible = opposite.connected_to.lifetime.is_visible
+            # connect lifetimes if both are visible or both invisible
+            return not (lifetime.is_visible ^ opposite_is_visible)
 
-            if lifetime.is_visible and opposite_is_visible:
-                # glue lifetimes if both are visible
-                pos = self._glue_lifetime(handle)
-            elif not lifetime.is_visible and not opposite_is_visible:
-                # glue heads if both lifetimes are invisible
-                pos = AbstractConnect.glue(self, handle)
-
-        elif lifetime.is_visible:
-            pos = self._glue_lifetime(handle)
-
-        else:
-            pos = AbstractConnect.glue(self, handle)
-        return pos
+        return not (lifetime.is_visible ^ (port is element._lifetime_port))
         
 
-    def _get_segment(self, handle):
-        """
-        Return handles of one of lifeline head's side or lifetime handles.
-        """
-        element = self.element
-        if element.lifetime.is_visible:
-            return element.handles()[-2:] # return lifeline's lifetime handles
-        else:
-            return super(MessageLifelineConnect, self)._get_segment(handle)
-        assert False
-
-
     def connect(self, handle, port):
-        if not AbstractConnect.connect(self, handle, port):
-            return
+        super(MessageLifelineConnect, self).connect(handle, port)
 
         line = self.line
         send = line.head.connected_to
@@ -154,6 +114,8 @@ class MessageLifelineConnect(AbstractConnect):
 
 
     def disconnect(self, handle):
+        super(MessageLifelineConnect, self).disconnect(handle)
+
         line = self.line
         send = line.head.connected_to
         received = line.tail.connected_to
