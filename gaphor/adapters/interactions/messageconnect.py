@@ -127,7 +127,6 @@ class MessageLifelineConnect(AbstractConnect):
             received.lifetime.is_destroyed = False
             received.request_update()
 
-        AbstractConnect.disconnect(self, handle)
         self.disconnect_lifelines(line)
 
         lifetime = self.element.lifetime
