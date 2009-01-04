@@ -159,4 +159,40 @@ class AssociationConnect(RelationshipConnect):
 component.provideAdapter(AssociationConnect)
 
 
+
+class ImplementationConnect(RelationshipConnect):
+    """
+    Connect Interface and a BehavioredClassifier using an Implementation.
+    """
+    component.adapts(items.NamedItem, items.ImplementationItem)
+
+    def glue(self, handle, port):
+        line = self.line
+        element = self.element
+
+        # Element at the head should be an Interface
+        if handle is line.head and \
+           not isinstance(element.subject, UML.Interface):
+            return None
+
+        # Element at the tail should be a BehavioredClassifier
+        if handle is line.tail and \
+           not isinstance(element.subject, UML.BehavioredClassifier):
+            return None
+
+        return super(ImplementationConnect, self).glue(handle, port)
+
+
+    def connect_subject(self, handle):
+        """
+        Perform implementation relationship connection.
+        """
+        relation = self.relationship_or_new(UML.Implementation,
+                    ('contract', None),
+                    ('implementatingClassifier', 'implementation'))
+        self.line.subject = relation
+
+
+component.provideAdapter(ImplementationConnect)
+
 # vim:sw=4:et:ai
