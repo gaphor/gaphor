@@ -67,9 +67,11 @@ class TestCase(unittest.TestCase):
 
         query = (item, line)
         adapter = component.queryMultiAdapter(query, IConnect)
+        old_disconnect = handle.disconnect
         connected = adapter.connect(handle, port)
 
         assert handle.connected_to is item
+        assert handle.disconnect is not old_disconnect
 
         return connected
 

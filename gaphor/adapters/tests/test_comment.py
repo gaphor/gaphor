@@ -8,6 +8,9 @@ from gaphor.diagram import items
 from gaphor.tests import TestCase
 
 class CommentLineTestCase(TestCase):
+
+    services = ['element_factory', 'adapter_loader', 'sanitizer']
+
     def test_commentline_annotated_element(self):
         """Test comment line item annotated element creation
         """
@@ -73,10 +76,43 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(clazz.subject in comment.subject.annotatedElement)
         self.assertTrue(comment.subject in clazz.subject.ownedComment)
 
+        self.assertTrue(line.canvas)
+
+        # FixMe: This should invoke the disconnnect handler of the line's
+        #  handles.
+
         line.unlink()
 
+        self.assertFalse(line.canvas)
         self.assertFalse(comment.subject.annotatedElement)
         self.assertTrue(clazz.subject.ownedComment is None)
+
+
+    def test_commentline_element_unlink(self):
+        """Test comment line unlinking using a class item.
+        """
+        clazz = self.create(items.ClassItem, UML.Class)
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
+
+        self.connect(line, line.head, comment)
+        self.connect(line, line.tail, clazz)
+        self.assertTrue(clazz.subject in comment.subject.annotatedElement)
+        self.assertTrue(comment.subject in clazz.subject.ownedComment)
+
+        self.assertTrue(line.canvas)
+
+        clazz_subject = clazz.subject
+
+        # FixMe: This should invoke the disconnnect handler of the line's
+        #  handles.
+
+        clazz.unlink()
+
+        self.assertFalse(clazz.canvas)
+        self.assertTrue(line.canvas)
+        self.assertFalse(comment.subject.annotatedElement)
+        self.assertTrue(len(clazz_subject.ownedComment) == 0)
 
 
     def test_commentline_relationship_unlink(self):
@@ -102,7 +138,13 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(gen.subject in comment.subject.annotatedElement)
         self.assertTrue(comment.subject in gen.subject.ownedComment)
 
+        # FixMe: This should invoke the disconnnect handler of the line's
+        #  handles.
+
         gen.unlink()
 
         self.assertFalse(comment.subject.annotatedElement)
         self.assertTrue(gen.subject is None)
+
+
+# vim: sw=4:et:ai
