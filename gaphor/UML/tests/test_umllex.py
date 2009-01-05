@@ -36,15 +36,16 @@ dump_oper('myfunc(aap:str[1] = "aap" { tag1, tag2 }, out two {tag3}): type')
 
 
 element_factory = ElementFactory()
-element_factory.init(Application)
 
 class AttributeTestCase(unittest.TestCase):
+
     def setUp(self):
+        element_factory.init(Application)
         element_factory.flush()
 
 
     def tearDown(self):
-        element_factory.flush()
+        element_factory.shutdown()
 
 
     def test_render(self):
