@@ -281,8 +281,8 @@ class MessageItem(NamedLine):
         """
         lf1 = self.head.connected_to
         lf2 = self.tail.connected_to
-        return lf1 and not lf1.lifetime.is_visible \
-                or lf2 and not lf2.lifetime.is_visible
+        return lf1 and not lf1.lifetime.visible \
+                or lf2 and not lf2.lifetime.visible
 
 
     def add_message(self, message, inverted):

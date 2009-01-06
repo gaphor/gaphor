@@ -1419,7 +1419,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
             lifeline = context.tail.connected_to
 
             # disallow connecting two delete messages to a lifeline
-            if lifeline and lifeline.lifetime.is_destroyed \
+            if lifeline and lifeline.is_destroyed \
                     and subject.messageSort != 'deleteMessage':
                 sort_data = list(sort_data)
                 assert sort_data[4][1] == 'deleteMessage'
@@ -1453,9 +1453,9 @@ class MessagePropertyPage(NamedItemPropertyPage):
         #
         if lifeline:
             if subject.messageSort == 'deleteMessage' \
-                    or not lifeline.lifetime.is_destroyed:
+                    or not lifeline.is_destroyed:
                 is_destroyed = ms == 'deleteMessage'
-                lifeline.lifetime.is_destroyed = is_destroyed
+                lifeline.is_destroyed = is_destroyed
                 lifeline.request_update()
 
         subject.messageSort = ms

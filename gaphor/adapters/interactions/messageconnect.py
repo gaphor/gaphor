@@ -90,11 +90,11 @@ class MessageLifelineConnect(AbstractConnect):
         opposite = line.opposite(handle)
 
         if opposite.connected_to:
-            opposite_is_visible = opposite.connected_to.lifetime.is_visible
+            opposite_is_visible = opposite.connected_to.lifetime.visible
             # connect lifetimes if both are visible or both invisible
-            return not (lifetime.is_visible ^ opposite_is_visible)
+            return not (lifetime.visible ^ opposite_is_visible)
 
-        return not (lifetime.is_visible ^ (port is element._lifetime_port))
+        return not (lifetime.visible ^ (port is element.lifetime.port))
         
 
     def connect(self, handle, port):
@@ -106,11 +106,12 @@ class MessageLifelineConnect(AbstractConnect):
         self.connect_lifelines(line, send, received)
 
         lifetime = self.element.lifetime
-        # if no lifetime then disallow making lifetime visible
-        if not lifetime.is_visible:
-            lifetime.bottom.movable = False
-        # todo: move code above to LifetimeItem class
-        lifetime._messages_count += 1
+        # if connected to head, then make lifetime invisible
+        if port is lifetime.port:
+            lifetime.min_length = lifetime.MIN_LENGTH_VISIBLE
+        else:
+            lifetime.visible = False
+            lifetime.connectable = False
 
 
     def disconnect(self, handle):
@@ -119,22 +120,24 @@ class MessageLifelineConnect(AbstractConnect):
         line = self.line
         send = line.head.connected_to
         received = line.tail.connected_to
+        lifeline = self.element
+        lifetime = lifeline.lifetime
 
         # if a message is delete message, then disconnection causes
         # lifeline to be no longer destroyed (note that there can be
         # only one delete message connected to lifeline)
         if received and line.subject.messageSort == 'deleteMessage':
-            received.lifetime.is_destroyed = False
+            received.is_destroyed = False
             received.request_update()
 
         self.disconnect_lifelines(line)
 
-        lifetime = self.element.lifetime
-        lifetime._messages_count -= 1
-        # if there are no messages connected then allow to make lifetime visible
-        # todo: move code below to LifetimeItem class
-        if lifetime._messages_count < 1:
-            lifetime.bottom.movable = True
+        if len(line.canvas.get_connected_items(lifeline)) == 1:
+            # after disconnection count of connected items will be
+            # zero, so allow connections to lifeline's lifetime
+            lifetime.connectable = True
+            lifetime.min_length = lifetime.MIN_LENGTH
+            
 
 
 component.provideAdapter(MessageLifelineConnect)

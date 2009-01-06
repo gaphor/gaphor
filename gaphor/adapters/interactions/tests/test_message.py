@@ -20,31 +20,26 @@ class BasicMessageConnectionsTestCase(TestCase):
 
 
     def test_invisible_lifetime_glue(self):
-        """Test message invisible lifetime glue
+        """Test message to invisible lifetime glue
         """
         ll = self.create(items.LifelineItem)
         msg = self.create(items.MessageItem)
 
-        # get lifetime port
-        port = ll._lifetime_port
-        glued = self.glue(msg, msg.head, ll, port)
-        assert not ll.lifetime.is_visible
+        glued = self.glue(msg, msg.head, ll, ll.lifetime.port)
+
+        assert not ll.lifetime.visible
         self.assertFalse(glued)
 
 
     def test_visible_lifetime_glue(self):
-        """Test message invisible lifetime glue
+        """Test message to visible lifetime glue
         """
         ll = self.create(items.LifelineItem)
         msg = self.create(items.MessageItem)
 
-        ll.lifetime.bottom.y += 10
+        ll.lifetime.visible = True
 
-        # get lifetime port
-        port = ll._lifetime_port
-        glued = self.glue(msg, msg.head, ll, port)
-
-        assert ll.lifetime.is_visible
+        glued = self.glue(msg, msg.head, ll, ll.lifetime.port)
         self.assertTrue(glued)
 
 
@@ -117,21 +112,21 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_lifetime_connection(self):
         """Test messages' lifetimes connection
         """
-        message = self.create(items.MessageItem)
-        lifeline1 = self.create(items.LifelineItem)
-        lifeline2 = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
+        ll1 = self.create(items.LifelineItem)
+        ll2 = self.create(items.LifelineItem)
 
         # make lifelines to be in sequence diagram mode
-        lifeline1.lifetime.bottom.y += 10
-        lifeline2.lifetime.bottom.y += 10
-        assert lifeline1.lifetime.is_visible and lifeline2.lifetime.is_visible
+        ll1.lifetime.visible = True
+        ll2.lifetime.visible = True
+        assert ll1.lifetime.visible and ll2.lifetime.visible
 
         # connect lifetimes with messages message to lifeline's head
-        self.connect(message, message.head, lifeline1, lifeline1._lifetime_port)
-        self.connect(message, message.tail, lifeline2, lifeline2._lifetime_port)
+        self.connect(msg, msg.head, ll1, ll1.lifetime.port)
+        self.connect(msg, msg.tail, ll2, ll2.lifetime.port)
 
-        self.assertTrue(message.subject is not None)
-        self.assertEquals(message.subject.messageKind, 'complete')
+        self.assertTrue(msg.subject is not None)
+        self.assertEquals(msg.subject.messageKind, 'complete')
 
 
     def test_disconnection(self):
@@ -153,6 +148,46 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertTrue(msg.subject is None, '%s' % msg.subject)
 
 
+    def test_lifetime_connectivity_on_head(self):
+        """Test lifeline's lifetime connectivity change on head connection
+        """
+        ll = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
+
+        # connect message to lifeline's head, lifeline's lifetime
+        # visibility and connectivity should change
+        self.connect(msg, msg.head, ll)
+        self.assertFalse(ll.lifetime.visible)
+        self.assertFalse(ll.lifetime.connectable)
+        self.assertEquals(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
+
+        # ... and disconnection
+        self.disconnect(msg, msg.head)
+        self.assertTrue(ll.lifetime.connectable)
+        self.assertEquals(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
+
+
+    def test_lifetime_connectivity_on_lifetime(self):
+        """Test lifeline's lifetime connectivity change on lifetime connection
+        """
+        ll = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
+
+        ll.lifetime.visible = True
+
+        # connect message to lifeline's lifetime, lifeline's lifetime
+        # visibility and connectivity should unchange
+        self.connect(msg, msg.head, ll, ll.lifetime.port)
+        self.assertTrue(ll.lifetime.connectable)
+        self.assertEquals(ll.lifetime.MIN_LENGTH_VISIBLE, ll.lifetime.min_length)
+
+        # ... and disconnection
+        self.disconnect(msg, msg.head)
+        self.assertTrue(ll.lifetime.connectable)
+        self.assertTrue(ll.lifetime.visible)
+        self.assertEquals(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
+
+
 
 class DiagramModeMessageConnectionTestCase(TestCase):
     def test_message_glue_cd(self):
@@ -160,18 +195,15 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         """
         lifeline1 = self.create(items.LifelineItem)
         lifeline2 = self.create(items.LifelineItem)
+        message = self.create(items.MessageItem)
 
         # make second lifeline to be in sequence diagram mode
-        lifetime = lifeline2.lifetime
-        lifetime.bottom.y += 10
-        assert lifetime.is_visible
-
-        message = self.create(items.MessageItem)
+        lifeline2.lifetime.visible = True
 
         # connect head of message to lifeline's head
         self.connect(message, message.head, lifeline1)
 
-        glued = self.glue(message, message.tail, lifeline2, lifeline2._lifetime_port)
+        glued = self.glue(message, message.tail, lifeline2, lifeline2.lifetime.port)
         # no connection possible as 2nd lifeline is in sequence diagram
         # mode
         self.assertFalse(glued)
@@ -180,20 +212,18 @@ class DiagramModeMessageConnectionTestCase(TestCase):
     def test_message_glue_sd(self):
         """Test glueing message on sequence diagram
         """
-        lifeline1 = self.create(items.LifelineItem)
-        lifeline2 = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
+        ll1 = self.create(items.LifelineItem)
+        ll2 = self.create(items.LifelineItem)
 
-        # make 2nd lifeline to be in sequence diagram mode
-        lifetime = lifeline2.lifetime
-        lifetime.bottom.y += 10
-        assert lifetime.is_visible
-
-        message = self.create(items.MessageItem)
+        # 1st lifeline - communication diagram
+        # 2nd lifeline - sequence diagram
+        ll2.lifetime.visible = True
 
         # connect lifetime of message to lifeline's lifetime
-        self.connect(message, message.head, lifeline1, lifeline1._lifetime_port)
+        self.connect(msg, msg.head, ll1, ll1.lifetime.port)
 
-        glued = self.glue(message, message.tail, lifeline2)
+        glued = self.glue(msg, msg.tail, ll2)
         # no connection possible as 2nd lifeline is in communication
         # diagram mode
         self.assertFalse(glued)
@@ -202,15 +232,15 @@ class DiagramModeMessageConnectionTestCase(TestCase):
     def test_messages_disconnect_cd(self):
         """Test disconnecting messages on communication diagram
         """
-        lifeline1 = self.create(items.LifelineItem)
-        lifeline2 = self.create(items.LifelineItem)
-        message = self.create(items.MessageItem)
+        ll1 = self.create(items.LifelineItem)
+        ll2 = self.create(items.LifelineItem)
+        msg = self.create(items.MessageItem)
 
-        self.connect(message, message.head, lifeline1)
-        self.connect(message, message.tail, lifeline2)
+        self.connect(msg, msg.head, ll1)
+        self.connect(msg, msg.tail, ll2)
         
         factory = self.element_factory
-        subject = message.subject
+        subject = msg.subject
 
         # add some more messages
         m1 = factory.create(UML.Message)
@@ -221,8 +251,8 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         m2.sendEvent = subject.sendEvent
         m2.receiveEvent = subject.receiveEvent
 
-        message.add_message(m1, False)
-        message.add_message(m2, False)
+        msg.add_message(m1, False)
+        msg.add_message(m2, False)
 
         # add some inverted messages
         m3 = factory.create(UML.Message)
@@ -233,14 +263,14 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         m4.sendEvent = subject.receiveEvent
         m4.receiveEvent = subject.sendEvent
 
-        message.add_message(m3, True)
-        message.add_message(m4, True)
+        msg.add_message(m3, True)
+        msg.add_message(m4, True)
 
         assert len(self.kindof(UML.Message)) == 5
 
         # disconnect
-        self.disconnect(message, message.head)
-        self.disconnect(message, message.tail)
+        self.disconnect(msg, msg.head)
+        self.disconnect(msg, msg.tail)
 
         # we expect no messages
         self.assertEquals(0, len(self.kindof(UML.Message)))
