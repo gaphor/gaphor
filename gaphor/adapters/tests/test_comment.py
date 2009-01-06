@@ -11,6 +11,10 @@ class CommentLineTestCase(TestCase):
 
     services = ['element_factory', 'adapter_loader', 'sanitizer']
 
+    # NOTE: Still have to test what happens if one Item at the CommentLineItem
+    #       end is removed, while the item still has references and is not
+    #       removed itself.
+
     def test_commentline_annotated_element(self):
         """Test comment line item annotated element creation
         """
@@ -65,7 +69,7 @@ class CommentLineTestCase(TestCase):
 
         
     def test_commentline_unlink(self):
-        """Test comment line unlinking using a class item.
+        """Test comment line unlinking.
         """
         clazz = self.create(items.ClassItem, UML.Class)
         comment = self.create(items.CommentItem, UML.Comment)
@@ -84,8 +88,10 @@ class CommentLineTestCase(TestCase):
         line.unlink()
 
         self.assertFalse(line.canvas)
-        self.assertFalse(comment.subject.annotatedElement)
-        self.assertTrue(clazz.subject.ownedComment is None)
+        self.assertFalse(clazz.subject in comment.subject.annotatedElement)
+        self.assertFalse(comment.subject in clazz.subject.ownedComment)
+        self.assertTrue(len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement)
+        self.assertTrue(len(clazz.subject.ownedComment) == 0, clazz.subject.ownedComment)
 
 
     def test_commentline_element_unlink(self):

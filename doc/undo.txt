@@ -38,8 +38,6 @@ To update:
       fuzzyness (attr)
       orthogonal (boolean)
       horizontal (boolean)
-      split_segment()
-      merge_segment()
 
   Canvas:
     tree:
