@@ -16,7 +16,8 @@ from gaphas.geometry import distance_point_point, distance_point_point_fast, \
 from gaphas.item import Line
 from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool, \
     ToolChain, HoverTool, ItemTool, RubberbandTool, \
-    ConnectHandleTool as _ConnectHandleTool, LineSegmentTool
+    ConnectHandleTool as _ConnectHandleTool, LineSegmentTool, \
+    DisconnectHandle as _DisconnectHandle
 from gaphas.canvas import Context
 
 from gaphor.core import inject, Transaction, transactional
@@ -34,6 +35,7 @@ class ConnectHandleTool(_ConnectHandleTool):
     It also adds handles to lines when a line is grabbed on the middle of
     a line segment (points are drawn by the LineSegmentPainter).
     """
+
     def can_glue(self, view, item, handle, glue_item, port):
         """
         Determine if item and glue item can glue/connect using connection
@@ -62,16 +64,38 @@ class ConnectHandleTool(_ConnectHandleTool):
         adapter.connect(handle, port)
 
 
-    def disconnect(self, view, item, handle):
-        """
-        Disconnect the handle from the element by removing constraints.
-        Do not yet release the connection on model level, since the handle
-        may be connected to the same item on some other place.
-        """
+    def connect_handle(self, line, handle, item, port):
+        super(ConnectHandleTool, self).connect_handle(line, handle, item, port)
+	# Set new disconnect handler:
+	handle.disconnect = DisconnectHandle(line, handle)
+
+
+#    def disconnect(self, view, item, handle):
+#        """
+#        Disconnect the handle from the element by removing constraints.
+#        Do not yet release the connection on model level, since the handle
+#        may be connected to the same item on some other place.
+#        """
+#        if handle.connected_to:
+#            adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
+#            adapter.disconnect(handle)
+#        super(ConnectHandleTool, self).disconnect(view, item, handle)
+
+
+class DisconnectHandle(_DisconnectHandle):
+    """
+    extend the default disconnect handle method with the means to disconnect
+    on model level, using the adapter.  
+    """
+    def handle_disconnect(self):
+        handle = self.handle
+        item = self.item
+	print 'Disconnect handler!', handle.connected_to
         if handle.connected_to:
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
+	    print 'Disconnect handler!', adapter
             adapter.disconnect(handle)
-        super(ConnectHandleTool, self).disconnect(view, item, handle)
+        super(DisconnectHandle, self).handle_disconnect()
 
 
 class TextEditTool(Tool):

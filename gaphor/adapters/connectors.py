@@ -116,6 +116,8 @@ class CommentLineElementConnect(AbstractConnect):
 
     def disconnect(self, handle):
         opposite = self.line.opposite(handle)
+        print handle.connected_to , opposite.connected_to
+
         if handle.connected_to and opposite.connected_to:
             if isinstance(opposite.connected_to.subject, UML.Comment):
                 del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
