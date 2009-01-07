@@ -69,12 +69,12 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Should glue to (238, 248)
         handle.pos = 245, 248
-        item = tool.glue(view, line, handle, 245, 248)
+        item = tool.glue(view, line, handle, (245, 248))
         self.assertTrue(item is not None)
         self.assertEquals((238, 248), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
 
         handle.x, handle.y = 245, 248
-        tool.connect(view, line, handle, 245, 248)
+        tool.connect(view, line, handle, (245, 248))
         self.assertTrue(handle.connection_data is not None)
         self.assertTrue(handle.connected_to is actor, handle.connected_to)
         self.assertEquals((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
@@ -114,7 +114,7 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Connect one end to the Comment
         handle.pos = view.get_matrix_v2i(line).transform_point(45, 48)
-        tool.connect(view, line, handle, 45, 48)
+        tool.connect(view, line, handle, (45, 48))
         self.assertTrue(hasattr(handle, 'connection_data'))
         self.assertTrue(handle.connection_data is not None)
         self.assertTrue(handle.connected_to is comment)
