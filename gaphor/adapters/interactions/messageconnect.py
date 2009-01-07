@@ -64,7 +64,9 @@ class MessageLifelineConnect(AbstractConnect):
             if event:
                 event.unlink()
 
-        if not send and not received:
+        # one is disconnected and one is about to be disconnected,
+        # so destroy the message
+        if not send or not received:
             # Both ends are disconnected:
             message = line.subject
             del line.subject
