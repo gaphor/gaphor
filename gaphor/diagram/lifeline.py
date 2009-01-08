@@ -21,7 +21,6 @@ lifeline.
 """
 
 from gaphas.item import SW, SE
-from gaphas.state import reversible_property
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG
 from gaphas.geometry import distance_line_point, Rectangle
@@ -70,23 +69,25 @@ class LifetimeItem(object):
 
         self._c_min_length = None # to be set by lifeline item
 
-    length = property(lambda s: s.bottom.y - s.top.y)
+    def _set_length(self, length):
+        """
+        Set lifeline's lifetime length.
+        """
+        self.bottom.y = self.top.y + length
+
+    length = property(lambda s: s.bottom.y - s.top.y, _set_length)
 
     def _set_min_length(self, length):
         assert self._c_min_length is not None
         self._c_min_length.delta = length
 
-
     min_length = property(lambda s: s._c_min_length.delta, _set_min_length)
-
 
     def _set_connectable(self, connectable):
         self.port.connectable = connectable
         self.bottom.movable = connectable
 
-
-    connectable = reversible_property(lambda s: s.port.connectable, _set_connectable)
-
+    connectable = property(lambda s: s.port.connectable, _set_connectable)
 
     def _is_visible(self):
         return self.length > self.MIN_LENGTH
@@ -100,7 +101,6 @@ class LifetimeItem(object):
             self.bottom.y = self.top.y + 3 * self.MIN_LENGTH
         else:
             self.bottom.y = self.top.y + self.MIN_LENGTH
-
 
     visible = property(_is_visible, _set_visible)
 
@@ -151,7 +151,7 @@ class LifelineItem(NamedItem):
 
     def save(self, save_func):
         super(LifelineItem, self).save(save_func)
-        save_func("lifetime-length", self.lifetime.length)
+        save_func('lifetime-length', self.lifetime.length)
 
 
     def load(self, name, value):
