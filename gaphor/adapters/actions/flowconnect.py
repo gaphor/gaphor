@@ -124,17 +124,17 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         element = self.element
         if element.combined:
             join_node = element.subject
-            flow = join_node.outgoing[0]
-            fork_node = flow.target
+            cflow = join_node.outgoing[0] # combining flow
+            fork_node = cflow.target
             assert fork_node is element.combined
             assert isinstance(join_node, join_node_class)
             assert isinstance(fork_node, fork_node_class)
 
             if len(join_node.incoming) < 2 or len(fork_node.outgoing) < 2:
                 # Move all outgoing edges to the first node (the join node):
-                for flow in list(fork_node.outgoing):
-                    flow.source = join_node
-                flow.unlink()
+                for f in list(fork_node.outgoing):
+                    f.source = join_node
+                cflow.unlink()
                 fork_node.unlink()
 
                 # swap subject to fork node if outgoing > 1

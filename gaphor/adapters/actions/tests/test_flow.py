@@ -261,7 +261,7 @@ class FlowItemDesisionAndForkNodes:
 
 
     def test_combined_nodes_connection(self):
-        """Test combined nodes
+        """Test combined nodes connection
 
         Connection scheme is presented below::
 
@@ -303,7 +303,7 @@ class FlowItemDesisionAndForkNodes:
 
 
     def test_combined_node_disconnection(self):
-        """Test combined nodes
+        """Test combined nodes disconnection
 
         Connection scheme is presented below::
 
@@ -336,9 +336,11 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
         self.connect(flow4, flow4.tail, jn)
 
-        # needed for test below
+        # needed for tests below
         cflow = jn.subject.outgoing[0]
+        cnode = jn.combined
         assert cflow in self.kindof(UML.ControlFlow)
+        assert cnode in self.kindof(self.forkNodeClass)
 
         # test disconnection
         self.disconnect(flow4, flow4.head)
@@ -346,6 +348,8 @@ class FlowItemDesisionAndForkNodes:
         self.assertTrue(jn.combined is None)
 
         flows = self.kindof(UML.ControlFlow)
+        nodes = self.kindof(self.forkNodeClass)
+        self.assertTrue(cnode not in nodes, '%s in %s' % (cnode, nodes))
         self.assertTrue(cflow not in flows, '%s in %s' % (cflow, flows))
 
 
