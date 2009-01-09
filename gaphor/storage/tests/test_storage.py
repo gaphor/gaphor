@@ -30,8 +30,6 @@ class PseudoFile(object):
 
 class StorageTestCase(TestCase):
 
-    services = TestCase.services + ['adapter_loader']
-
     def test_save_uml(self):
         """Saving gaphor.UML model elements.
         """
@@ -178,11 +176,6 @@ class StorageTestCase(TestCase):
         assert tuple(self.diagram.canvas.get_matrix_i2c(c2)) == (1, 0, 0, 1, 200, 200)
 
         a = self.create(items.AssociationItem)
-
-        # Provide our element factory as Utility, since the connect adapters
-        # depend on it.
-        from gaphor.interfaces import IService
-        component.provideUtility(self.element_factory, IService, 'element_factory')
 
         self.connect(a, a.head, c1)
         head_pos = a.head.pos
