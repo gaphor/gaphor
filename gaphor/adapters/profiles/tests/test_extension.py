@@ -27,6 +27,9 @@ class ExtensionConnectorTestCase(TestCase):
         ext = self.create(items.ExtensionItem)
         st = self.create(items.ClassItem, UML.Stereotype)
 
+        # test precondition
+        assert type(st.subject) is UML.Stereotype
+
         # cannot connect extension item head to a stereotype
         glued = self.glue(ext, ext.head, st)
         self.assertFalse(glued)
