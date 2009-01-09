@@ -191,7 +191,7 @@ class FlowItemDesisionAndForkNodes:
 
                   head  tail
             [ a1 ]--flow1-->    |
-                             [ jn ] --flow3-->[ a3 ]
+                             [ jn ] --flow3--> [ a3 ]
             [ a2 ]--flow2-->    |
 
         Node class changes due to two incoming edges and one outgoing edge.
@@ -202,7 +202,9 @@ class FlowItemDesisionAndForkNodes:
         a1 = self.create(items.ActionItem, UML.Action)
         a2 = self.create(items.ActionItem, UML.Action)
         a3 = self.create(items.ActionItem, UML.Action)
-        jn = self.create(self.item_cls, self.join_node_cls)
+        jn = self.create(self.item_cls, self.fork_node_cls)
+
+        assert type(jn.subject) is self.fork_node_cls
 
         # connect actions first
         self.connect(flow1, flow1.head, a1)
@@ -215,7 +217,7 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
 
         # node class changes
-        self.assertTrue(type(jn.subject) is self.fork_node_cls)
+        self.assertTrue(type(jn.subject) is self.join_node_cls)
 
 
     def test_outgoing_edges(self):
@@ -224,9 +226,9 @@ class FlowItemDesisionAndForkNodes:
 
         Connection scheme is presented below::
 
-                   head  tail   |--flow2-->[ a2 ]
-            [ a1 ] --flow1-->[ jn ]
-                                |--flow3-->[ a3 ]
+                   head  tail    | --flow2-->[ a2 ]
+            [ a1 ] --flow1--> [ jn ]
+                                 | --flow3-->[ a3 ]
         """
         flow1 = self.create(items.FlowItem)
         flow2 = self.create(items.FlowItem)

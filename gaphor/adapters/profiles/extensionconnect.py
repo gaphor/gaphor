@@ -12,19 +12,18 @@ class ExtensionConnect(RelationshipConnect):
 
     def glue(self, handle, port):
         line = self.line
-        element = self.element
+        subject = self.element.subject
 
-        # Element at the head should be a Class
-        if handle is line.head and \
-           not isinstance(element.subject, UML.Class):
-            return None
+        if handle is line.head:
+            # Element at the head should be a class
+            # (implies stereotype as well)
+            glue = isinstance(subject, UML.Class)
+        elif handle is line.tail:
+            # Element at the tail should be a stereotype
+            glue = isinstance(subject, UML.Stereotype)
 
-        # Element at the tail should be a Stereotype
-        if handle is line.tail and \
-           not isinstance(element.subject, UML.Stereotype):
-            return None
+        return glue and super(ExtensionConnect, self).glue(handle, port)
 
-        return super(ExtensionConnect, self).glue(handle, port)
 
     def connect_subject(self, handle):
         element = self.element

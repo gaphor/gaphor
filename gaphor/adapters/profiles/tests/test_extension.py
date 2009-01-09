@@ -30,9 +30,10 @@ class ExtensionConnectorTestCase(TestCase):
         # test precondition
         assert type(st.subject) is UML.Stereotype
 
-        # cannot connect extension item head to a stereotype
+        # can connect extension item head to a Stereotype UML metaclass,
+        # because it derives from Class UML metaclass
         glued = self.glue(ext, ext.head, st)
-        self.assertFalse(glued)
+        self.assertTrue(glued)
 
 
     def test_glue(self):
