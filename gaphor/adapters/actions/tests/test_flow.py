@@ -164,16 +164,16 @@ class FlowItemDesisionAndForkNodes:
       object flows or all control flows.
     """
 
-    itemClass = None
-    forkNodeClass = None
-    joinNodeClass = None
+    item_cls = None
+    fork_node_cls = None
+    join_node_cls = None
 
     def test_glue(self):
         """Test decision/fork nodes glue
         """
         flow = self.create(items.FlowItem)
         action = self.create(items.ActionItem, UML.Action)
-        node = self.create(self.itemClass, self.joinNodeClass)
+        node = self.create(self.item_cls, self.join_node_cls)
 
         glued = self.glue(flow, flow.head, node)
         self.assertTrue(glued)
@@ -202,7 +202,7 @@ class FlowItemDesisionAndForkNodes:
         a1 = self.create(items.ActionItem, UML.Action)
         a2 = self.create(items.ActionItem, UML.Action)
         a3 = self.create(items.ActionItem, UML.Action)
-        jn = self.create(self.itemClass, self.joinNodeClass)
+        jn = self.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
         self.connect(flow1, flow1.head, a1)
@@ -215,7 +215,7 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
 
         # node class changes
-        self.assertTrue(type(jn.subject) is self.forkNodeClass)
+        self.assertTrue(type(jn.subject) is self.fork_node_cls)
 
 
     def test_outgoing_edges(self):
@@ -234,7 +234,7 @@ class FlowItemDesisionAndForkNodes:
         a1 = self.create(items.ActionItem, UML.Action)
         a2 = self.create(items.ActionItem, UML.Action)
         a3 = self.create(items.ActionItem, UML.Action)
-        jn = self.create(self.itemClass, self.joinNodeClass)
+        jn = self.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
         self.connect(flow1, flow1.head, a1)
@@ -243,10 +243,10 @@ class FlowItemDesisionAndForkNodes:
 
         # connect to the node
         self.connect(flow1, flow1.tail, jn)
-        self.assertTrue(type(jn.subject) is self.joinNodeClass)
+        self.assertTrue(type(jn.subject) is self.join_node_cls)
 
         self.connect(flow2, flow2.head, jn)
-        self.assertTrue(type(jn.subject) is self.joinNodeClass)
+        self.assertTrue(type(jn.subject) is self.join_node_cls)
 
         self.assertEquals(1, len(jn.subject.incoming))
         self.assertEquals(1, len(jn.subject.outgoing))
@@ -256,7 +256,7 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
         self.assertEquals(2, len(jn.subject.outgoing))
 
-        self.assertTrue(type(jn.subject) is self.forkNodeClass,
+        self.assertTrue(type(jn.subject) is self.fork_node_cls,
                 '%s' % jn.subject)
 
 
@@ -279,7 +279,7 @@ class FlowItemDesisionAndForkNodes:
         a2 = self.create(items.ActionItem, UML.Action)
         a3 = self.create(items.ActionItem, UML.Action)
         a4 = self.create(items.ActionItem, UML.Action)
-        jn = self.create(self.itemClass, self.joinNodeClass)
+        jn = self.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
         self.connect(flow1, flow1.head, a1)
@@ -293,7 +293,7 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
 
         self.connect(flow4, flow4.tail, jn)
-        self.assertTrue(type(jn.subject) is self.joinNodeClass)
+        self.assertTrue(type(jn.subject) is self.join_node_cls)
         self.assertTrue(jn.combined is not None)
 
         # check node combination
@@ -322,7 +322,7 @@ class FlowItemDesisionAndForkNodes:
         a2 = self.create(items.ActionItem, UML.Action)
         a3 = self.create(items.ActionItem, UML.Action)
         a4 = self.create(items.ActionItem, UML.Action)
-        jn = self.create(self.itemClass, self.joinNodeClass)
+        jn = self.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
         self.connect(flow1, flow1.head, a1)
@@ -340,7 +340,7 @@ class FlowItemDesisionAndForkNodes:
         cflow = jn.subject.outgoing[0]
         cnode = jn.combined
         assert cflow in self.kindof(UML.ControlFlow)
-        assert cnode in self.kindof(self.forkNodeClass)
+        assert cnode in self.kindof(self.fork_node_cls)
 
         # test disconnection
         self.disconnect(flow4, flow4.head)
@@ -348,23 +348,23 @@ class FlowItemDesisionAndForkNodes:
         self.assertTrue(jn.combined is None)
 
         flows = self.kindof(UML.ControlFlow)
-        nodes = self.kindof(self.forkNodeClass)
+        nodes = self.kindof(self.fork_node_cls)
         self.assertTrue(cnode not in nodes, '%s in %s' % (cnode, nodes))
         self.assertTrue(cflow not in flows, '%s in %s' % (cflow, flows))
 
 
 
 class FlowItemForkNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
-    itemClass = items.ForkNodeItem
-    forkNodeClass = UML.ForkNode
-    joinNodeClass = UML.JoinNode
+    item_cls = items.ForkNodeItem
+    fork_node_cls = UML.ForkNode
+    join_node_cls = UML.JoinNode
 
 
 
 class FlowItemDecisionNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
-    itemClass = items.DecisionNodeItem
-    forkNodeClass = UML.DecisionNode
-    joinNodeClass = UML.MergeNode
+    item_cls = items.DecisionNodeItem
+    fork_node_cls = UML.DecisionNode
+    join_node_cls = UML.MergeNode
 
 
 

@@ -84,16 +84,16 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         """
         Combine join/fork or decision/methe nodes into one diagram item.
         """
-        fork_node_class = self.fork_node_class
-        join_node_class = self.join_node_class
+        fork_node_cls = self.fork_node_cls
+        join_node_cls = self.join_node_cls
         line = self.line
         element = self.element
         subject = element.subject
         if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
-            self.element_factory.swap_element(subject, join_node_class)
+            self.element_factory.swap_element(subject, join_node_cls)
             element.request_update()
         elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
-            self.element_factory.swap_element(subject, fork_node_class)
+            self.element_factory.swap_element(subject, fork_node_cls)
             element.request_update()
         elif not element.combined and len(subject.incoming) > 1 and len(subject.outgoing) > 1:
             join_node = subject
@@ -104,8 +104,8 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             else:
                 flow_class = UML.ControlFlow
             
-            self.element_factory.swap_element(join_node, join_node_class)
-            fork_node = self.element_factory.create(fork_node_class)
+            self.element_factory.swap_element(join_node, join_node_cls)
+            fork_node = self.element_factory.create(fork_node_cls)
             for flow in list(join_node.outgoing):
                 flow.source = fork_node
             flow = self.element_factory.create(flow_class)
@@ -118,8 +118,8 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         """
         Decombine join/fork or decision/merge nodes.
         """
-        fork_node_class = self.fork_node_class
-        join_node_class = self.join_node_class
+        fork_node_cls = self.fork_node_cls
+        join_node_cls = self.join_node_cls
         line = self.line
         element = self.element
         if element.combined:
@@ -127,8 +127,8 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             cflow = join_node.outgoing[0] # combining flow
             fork_node = cflow.target
             assert fork_node is element.combined
-            assert isinstance(join_node, join_node_class)
-            assert isinstance(fork_node, fork_node_class)
+            assert isinstance(join_node, join_node_cls)
+            assert isinstance(fork_node, fork_node_cls)
 
             if len(join_node.incoming) < 2 or len(fork_node.outgoing) < 2:
                 # Move all outgoing edges to the first node (the join node):
@@ -140,7 +140,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
                 # swap subject to fork node if outgoing > 1
                 if len(join_node.outgoing) > 1:
                     assert len(join_node.incoming) < 2
-                    self.element_factory.swap_element(join_node, fork_node_class)
+                    self.element_factory.swap_element(join_node, fork_node_cls)
                 element.combined = None
 
     def connect_subject(self, handle):
@@ -168,8 +168,8 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     """
     component.adapts(items.ForkNodeItem, items.FlowItem)
 
-    fork_node_class=UML.ForkNode
-    join_node_class=UML.JoinNode
+    fork_node_cls=UML.ForkNode
+    join_node_cls=UML.JoinNode
 
 component.provideAdapter(FlowForkNodeConnect)
 
@@ -180,9 +180,10 @@ class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
     """
     component.adapts(items.DecisionNodeItem, items.FlowItem)
 
-    fork_node_class = UML.DecisionNode
-    join_node_class = UML.MergeNode
+    fork_node_cls = UML.DecisionNode
+    join_node_cls = UML.MergeNode
 
 component.provideAdapter(FlowDecisionNodeConnect)
+
 
 # vim:sw=4:et:ai
