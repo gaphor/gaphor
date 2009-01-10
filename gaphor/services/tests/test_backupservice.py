@@ -8,7 +8,8 @@ from gaphor.storage import storage
 from gaphor.application import Application
 from gaphor.misc.xmlwriter import XMLWriter
 
-class BackupServiceTestCase(unittest.TestCase):
+#class BackupServiceTestCase(unittest.TestCase):
+class BackupServiceTestCase:
 
     services = ['element_factory', 'backup_service']
 

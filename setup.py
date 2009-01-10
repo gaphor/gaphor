@@ -209,7 +209,7 @@ It uses the GTK+ environment for user interaction.
               'run': run,
     },
 
-    setup_requires = ['nose >= 0.9.2'] + platform_setup_requires,
+    setup_requires = ['nose == 0.9.3'] + platform_setup_requires,
 
     test_suite = 'nose.collector',
 
