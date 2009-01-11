@@ -52,6 +52,9 @@ class TestCaseBase(TestCase):
         self.c2 = self.create(items.ComponentItem, UML.Component)
         self.line = self.create(items.ConnectorItem)
 
+        # no subject for assembly by default
+        self.assembly = self.create(items.AssemblyConnectorItem)
+
 
 
 class AssemblyConnectorConnectTestCase(TestCaseBase):
@@ -61,7 +64,7 @@ class AssemblyConnectorConnectTestCase(TestCaseBase):
     def test_ac_glue(self):
         """Test assembly connector glueing
         """
-        assembly = self.create(items.AssemblyConnectorItem)
+        assembly = self.assembly
         pport = assembly._provided_port
         rport = assembly._required_port
         head, tail = self.line.head, self.line.tail
@@ -88,20 +91,41 @@ class AssemblyConnectorConnectTestCase(TestCaseBase):
         glued = self.glue(self.line, self.line.tail, self.c1)
         self.assertTrue(glued)
 
-    # tests below to be fixed
 
-    def test_connectors_no_glue(self):
-        """Test assembly connectors to be not connected by one connector item
+    def test_ac_connection(self):
+        """Test assembly connector connection
         """
-        assembly = self.create(items.AssemblyConnectorItem)
-        pport = assembly._provided_port
-        rport = assembly._required_port
+        assembly = self.assembly
+        head = self.line.head
+        self.connect(self.line, head, assembly, assembly._required_port)
+
+        self.assertTrue(self.line.subject is None)
+        self.assertTrue(self.assembly.subject is None)
+
+
+    def test_component_connection(self):
+        """Test component connection
+        """
+        self.connect(self.line, self.line.head, self.c1)
+        self.assertTrue(self.line.subject is None)
+        self.assertTrue(self.assembly.subject is None)
+
+
+    def test_one_component_connection(self):
+        """Test assembly connector connection with one component
+        """
+        assembly = self.assembly
         head, tail = self.line.head, self.line.tail
 
-        self.connect(self.line, head, assembly, rport)
-        glued = self.glue(self.line, tail, assembly, pport)
-        self.assertFalse(glued)
+        self.connect(self.line, head, assembly, assembly._required_port)
+        self.connect(self.line, tail, self.c1)
 
+        # one component created, no assembly connector yet
+        self.assertTrue(assembly.subject is None)
+        self.assertTrue(self.line.subject is None)
+
+
+    # tests below to be fixed
 
     def test_connector_grouping(self):
         """Test assembly connectors grouping
@@ -170,6 +194,8 @@ class AssemblyConnectorConnectTestCase(TestCaseBase):
         self.assertEquals([self.line.subject], self.kindof(UML.Connector))
         self.assertEquals(2, len(self.kindof(UML.ConnectorEnd)))
         self.assertEquals(2, len(self.kindof(UML.Port)))
+
+
     def test_component_intersection(self):
         """Test component intersection of provided and required interfaces"""
 
@@ -201,47 +227,6 @@ class AssemblyConnectorConnectTestCase(TestCaseBase):
         self._require(self.c2.subject, i2)
         interfaces = adapter._get_interfaces(self.c1, self.c2)
         self.assertEquals([i1, i2], interfaces)
-
-
-    def test_component_one_side_glue(self):
-        """Test glueing first component
-        """
-        glued = self.glue(self.line, self.line.head, self.c1)
-        self.assertTrue(glued)
-
-
-    def test_component_glue_no_interfaces(self):
-        """Test glueing components with no interfaces using assembly connector
-        """
-        self.connect(self.line, self.line.head, self.c1)
-        glued = self.glue(self.line, self.line.tail, self.c2)
-        self.assertFalse(glued)
-
-
-    def test_components_glue(self):
-        """Test glueing components
-        """
-        self.connect(self.line, self.line.head, self.c1)
-
-        i1, = self._create_interfaces('A')
-        self._provide(self.c1.subject, i1)
-        self._require(self.c2.subject, i1)
-
-        glued = self.glue(self.line, self.line.tail, self.c2)
-        self.assertTrue(glued)
-
-
-    def test_components_glue_switched(self):
-        """Test glueing components in different order
-        """
-        self.connect(self.line, self.line.tail, self.c2)
-
-        i1, = self._create_interfaces('A')
-        self._provide(self.c1.subject, i1)
-        self._require(self.c2.subject, i1)
-
-        glued = self.glue(self.line, self.line.head, self.c1)
-        self.assertTrue(glued)
 
 
     def test_components_connection(self):

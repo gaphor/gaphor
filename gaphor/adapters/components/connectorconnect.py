@@ -35,40 +35,42 @@ class ConnectorConnectBase(AbstractConnect):
         return interfaces
 
 
+    def _get_info(self, assembly):
+        data = {
+            'required': [],
+            'provided': [],
+            'interfaces': [],
+        }
+        return data
+
+
     def connect(self, handle, port):
-        connected = super(ConnectorConnectBase, self).connect(handle, port)
-        if not connected:
-            return False
+        super(ConnectorConnectBase, self).connect(handle, port)
 
         line = self.line
-        provided = line.head.connected_to
-        required = line.tail.connected_to
-        if isinstance(provided, items.ConnectorItem):
-            provided = provided.head.connected_to
-        if isinstance(required, items.ConnectorItem):
-            required = required.tail.connected_to
+        assembly = line.head.connected_to
+        if not isinstance(assembly, items.AssemblyConnectorItem):
+            assembly = line.tail.connected_to
 
-        assert provided is None or isinstance(provided, items.ComponentItem)
-        assert required is None or isinstance(required, items.ComponentItem)
+        if isinstance(assembly, items.AssemblyConnectorItem):
+            data = self._get_info(assembly)
 
-        if provided and required:
-            # create uml data model
-            connector = line.subject = self.element_factory.create(UML.Connector)
-            end1 = self.element_factory.create(UML.ConnectorEnd)
-            end2 = self.element_factory.create(UML.ConnectorEnd)
-            interface = self._get_interfaces(provided, required)[0]
-            end1.role = interface
-            end2.role = interface
-            connector.end = end1
-            connector.end = end2
-            p1 = self.element_factory.create(UML.Port)
-            p2 = self.element_factory.create(UML.Port)
-            end1.partWithPort = p1
-            end2.partWithPort = p2
-            provided.subject.ownedPort = p1
-            required.subject.ownedPort = p2
-            return True
-        return False
+            if data['interfaces']:
+                # create uml data model
+                connector = line.subject = self.element_factory.create(UML.Connector)
+                end1 = self.element_factory.create(UML.ConnectorEnd)
+                end2 = self.element_factory.create(UML.ConnectorEnd)
+                interface = self._get_interfaces(provided, required)[0]
+                end1.role = interface
+                end2.role = interface
+                connector.end = end1
+                connector.end = end2
+                p1 = self.element_factory.create(UML.Port)
+                p2 = self.element_factory.create(UML.Port)
+                end1.partWithPort = p1
+                end2.partWithPort = p2
+                provided.subject.ownedPort = p1
+                required.subject.ownedPort = p2
 
 
     def disconnect(self, handle):
@@ -89,31 +91,21 @@ class ConnectorConnectBase(AbstractConnect):
 
 
 
-class ComponentAssemblyConnectorConnect(ConnectorConnectBase):
+class ComponentConnectorConnect(ConnectorConnectBase):
     """
     Connect two components which provide and require same interfaces.
     """
     component.adapts(items.ComponentItem, items.ConnectorItem)
 
     def glue(self, handle, port):
-        glue_ok = super(ComponentAssemblyConnectorConnect, self).glue(handle, port)
+        glue_ok = super(ComponentConnectorConnect, self).glue(handle, port)
         line = self.line
         opposite = line.opposite(handle)
 
-        # get component items on required and provided side of a connector
-        if handle is line.head:
-            provided = self.element
-            required = opposite.connected_to
-        else:
-            provided = opposite.connected_to
-            required = self.element
-
-        if provided is not None and required is not None:
-            glue_ok = len(self._get_interfaces(provided, required)) > 0
         return glue_ok
 
 
-component.provideAdapter(ComponentAssemblyConnectorConnect)
+component.provideAdapter(ComponentConnectorConnect)
 
 
 
@@ -126,8 +118,8 @@ class AssemblyConnectorConnect(ConnectorConnectBase):
     def glue(self, handle, port):
         """
         Allow to connect
-        - connector's tail to provided port 
         - connector's head to required port
+        - connector's tail to provided port 
         """
         line = self.line
         opposite = line.opposite(handle)
