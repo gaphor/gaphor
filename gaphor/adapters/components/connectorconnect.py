@@ -117,12 +117,11 @@ component.provideAdapter(ComponentAssemblyConnectorConnect)
 
 
 
-class GroupAssemblyConnectorConnect(ConnectorConnectBase):
+class AssemblyConnectorConnect(ConnectorConnectBase):
     """
-    Group assembly connectors by connecting component and assembly
-    connector.
+    Connect assembly connectors with connector.
     """
-    component.adapts(items.ConnectorItem, items.ConnectorItem)
+    component.adapts(items.AssemblyConnectorItem, items.ConnectorItem)
 
     def glue(self, handle, port):
         """
@@ -130,18 +129,19 @@ class GroupAssemblyConnectorConnect(ConnectorConnectBase):
         - connector's tail to provided port 
         - connector's head to required port
         """
-        glue_ok = super(GroupAssemblyConnectorConnect, self).glue(handle, port)
         line = self.line
         opposite = line.opposite(handle)
 
-        if isinstance(opposite.connected_to, items.ConnectorItem):
-            glue_ok = False
+        if isinstance(opposite.connected_to, items.AssemblyConnectorItem):
+            glue_ok = False # no connection from assembly connector to assembly connector
         elif handle is line.head:
             glue_ok = port is self.element._required_port
         elif handle is line.tail:
             glue_ok = port is self.element._provided_port
+        else:
+            glue_ok = False
 
-        return glue_ok
+        return glue_ok and super(AssemblyConnectorConnect, self).glue(handle, port)
 
 
-component.provideAdapter(GroupAssemblyConnectorConnect)
+component.provideAdapter(AssemblyConnectorConnect)

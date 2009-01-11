@@ -187,42 +187,38 @@ class AssemblyConnectorTestCase(TestCaseBase):
 
 
 
-class AssemblyConnectorGroupingTestCase(TestCaseBase):
-    def test_connector_glue_no_port(self):
-        """Test assembly connectors glueing with no port
+class AssemblyConnectorConnectTestCase(TestCaseBase):
+    def test_glue(self):
+        """Test assembly connector glueing
         """
-        assembly = self.create(items.ConnectorItem)
-        glued = self.glue(self.line, self.line.head, assembly)
-        self.assertFalse(glued)
-
-
-    def test_connector_glue_port(self):
-        """Test assembly connectors glueing with ports
-        """
-        assembly = self.create(items.ConnectorItem)
-        port_p = assembly._provided_port
-        port_r = assembly._required_port
+        assembly = self.create(items.AssemblyConnectorItem)
+        pport = assembly._provided_port
+        rport = assembly._required_port
         head, tail = self.line.head, self.line.tail
 
-        glued = self.glue(self.line, head, assembly, port_r)
+        glued = self.glue(self.line, head, assembly, rport)
         self.assertTrue(glued)
 
-        glued = self.glue(self.line, head, assembly, port_p)
+        glued = self.glue(self.line, head, assembly, pport)
         self.assertFalse(glued)
 
-        glued = self.glue(self.line, tail, assembly, port_r)
+        glued = self.glue(self.line, tail, assembly, rport)
         self.assertFalse(glued)
 
-        glued = self.glue(self.line, tail, assembly, port_p)
+        glued = self.glue(self.line, tail, assembly, pport)
         self.assertTrue(glued)
 
 
-    def test_connectors_noconnection(self):
-        """Test assembly connectors to not connect two connectors
+    def test_connectors_no_glue(self):
+        """Test assembly connectors to be not connected by one connector item
         """
-        assembly = self.create(items.ConnectorItem)
-        self.connect(self.line, self.line.head, assembly, assembly._required_port)
-        glued = self.glue(self.line, self.line.tail, assembly, assembly._provided_port)
+        assembly = self.create(items.AssemblyConnectorItem)
+        pport = assembly._provided_port
+        rport = assembly._required_port
+        head, tail = self.line.head, self.line.tail
+
+        self.connect(self.line, head, assembly, rport)
+        glued = self.glue(self.line, tail, assembly, pport)
         self.assertFalse(glued)
 
 
