@@ -16,6 +16,24 @@ from gaphor.diagram import items
 from gaphor.adapters.connectors import AbstractConnect
 
 
+def _interfaces(pcomp, rcomp):
+    """
+    Return list of sorted interfaces common to components connected by
+    assembly connector.
+    """
+    provided = set()
+    required = set()
+    for c in pcomp:
+        provided.update(c.subject.provided)
+
+    for c in rcomp:
+        required.update(c.subject.required)
+
+    interfaces = list(provided.intersection(required))
+    interfaces.sort(key=operator.attrgetter('name'))
+    return interfaces
+
+
 class ConnectorConnectBase(AbstractConnect):
     def _get_interfaces(self, c1, c2):
         """
@@ -35,15 +53,6 @@ class ConnectorConnectBase(AbstractConnect):
         return interfaces
 
 
-    def _get_info(self, assembly):
-        data = {
-            'required': [],
-            'provided': [],
-            'interfaces': [],
-        }
-        return data
-
-
     def connect(self, handle, port):
         super(ConnectorConnectBase, self).connect(handle, port)
 
@@ -53,24 +62,54 @@ class ConnectorConnectBase(AbstractConnect):
             assembly = line.tail.connected_to
 
         if isinstance(assembly, items.AssemblyConnectorItem):
-            data = self._get_info(assembly)
+            def get_component(line):
+                item = line.head.connected_to
+                if not isinstance(item, items.ComponentItem):
+                    item = line.tail.connected_to
+                if not isinstance(item, items.ComponentItem):
+                    item = None
+                return item
 
-            if data['interfaces']:
+                    
+            def fetch_components(port):
+                components = []
+                for c in port._connected:
+                    item = get_component(c)
+                    if item is not None:
+                        components.append(item)
+                return components
+
+            pcomp = fetch_components(assembly._provided_port)
+            rcomp = fetch_components(assembly._required_port)
+
+            interfaces = _interfaces(pcomp, rcomp)
+
+            if len(interfaces) > 0:
                 # create uml data model
-                connector = line.subject = self.element_factory.create(UML.Connector)
-                end1 = self.element_factory.create(UML.ConnectorEnd)
-                end2 = self.element_factory.create(UML.ConnectorEnd)
-                interface = self._get_interfaces(provided, required)[0]
-                end1.role = interface
-                end2.role = interface
-                connector.end = end1
-                connector.end = end2
-                p1 = self.element_factory.create(UML.Port)
-                p2 = self.element_factory.create(UML.Port)
-                end1.partWithPort = p1
-                end2.partWithPort = p2
-                provided.subject.ownedPort = p1
-                required.subject.ownedPort = p2
+                connector =  self.element_factory.create(UML.Connector)
+                connector.kind = 'assembly'
+                assembly.subject = connector
+
+                iface = interfaces[0]
+
+                def create(component, conn):
+                    end = self.element_factory.create(UML.ConnectorEnd)
+                    end.role = iface
+                    connector.end = end
+                    end.partWithPort = self.element_factory.create(UML.Port)
+
+                    conn.subject = end
+                    component.subject.ownedPort = end.partWithPort
+
+                for conn in assembly._provided_port._connected:
+                    item = get_component(conn)
+                    if item is not None:
+                        create(item, conn)
+
+                for conn in assembly._required_port._connected:
+                    item = get_component(conn)
+                    if item is not None:
+                        create(item, conn)
 
 
     def disconnect(self, handle):
@@ -124,16 +163,22 @@ class AssemblyConnectorConnect(ConnectorConnectBase):
         line = self.line
         opposite = line.opposite(handle)
 
-        if isinstance(opposite.connected_to, items.AssemblyConnectorItem):
-            glue_ok = False # no connection from assembly connector to assembly connector
-        elif handle is line.head:
-            glue_ok = port is self.element._required_port
-        elif handle is line.tail:
-            glue_ok = port is self.element._provided_port
-        else:
-            glue_ok = False
+        # no connection from assembly connector to assembly connector
+        glue_ok = not isinstance(opposite.connected_to, items.AssemblyConnectorItem)
 
         return glue_ok and super(AssemblyConnectorConnect, self).glue(handle, port)
+
+
+    def connect(self, handle, port):
+        if isinstance(self.element, items.AssemblyConnectorItem):
+            port._connected.append(self.line)
+        super(AssemblyConnectorConnect, self).connect(handle, port)
+
+
+    def disconnect(self, handle, port):
+        super(AssemblyConnectorConnect, self).connect(handle, port)
+        if isinstance(self.element, items.ComponentItem):
+            port._connected.remove(self.element)
 
 
 component.provideAdapter(AssemblyConnectorConnect)

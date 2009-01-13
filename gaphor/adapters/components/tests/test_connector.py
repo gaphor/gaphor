@@ -6,7 +6,8 @@ from gaphor.tests import TestCase
 from zope import component
 from gaphor import UML
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import IConnect
+
+from gaphor.adapters.components.connectorconnect import _interfaces
 
 class TestCaseBase(TestCase):
     def _create_interfaces(self, *args):
@@ -73,10 +74,10 @@ class AssemblyConnectorConnectTestCase(TestCaseBase):
         self.assertTrue(glued)
 
         glued = self.glue(self.line, head, assembly, pport)
-        self.assertFalse(glued)
+        self.assertTrue(glued)
 
         glued = self.glue(self.line, tail, assembly, rport)
-        self.assertFalse(glued)
+        self.assertTrue(glued)
 
         glued = self.glue(self.line, tail, assembly, pport)
         self.assertTrue(glued)
@@ -120,53 +121,105 @@ class AssemblyConnectorConnectTestCase(TestCaseBase):
         self.connect(self.line, head, assembly, assembly._required_port)
         self.connect(self.line, tail, self.c1)
 
-        # one component created, no assembly connector yet
+        # check connection information at port level
+        self.assertTrue(assembly._required_port._connected[-1] is self.line)
+
+        # one component connected, no assembly connector yet
         self.assertTrue(assembly.subject is None)
         self.assertTrue(self.line.subject is None)
 
 
+    def test_two_components_connection(self):
+        """Test assembly connector connection with two components
+        """
+        assembly = self.assembly
+        conn1 = self.line
+        conn2 = self.create(items.ConnectorItem)
+        c1 = self.c1
+        c2 = self.c2
+
+        self.connect(conn1, conn1.head, assembly, assembly._required_port)
+        self.connect(conn1, conn1.tail, self.c1)
+        # check connection information at port level
+        self.assertTrue(assembly._required_port._connected[-1] is conn1)
+
+        self.connect(conn2, conn2.tail, assembly, assembly._provided_port)
+        self.connect(conn2, conn2.head, self.c2)
+        # check connection information at port level
+        self.assertTrue(assembly._provided_port._connected[-1] is conn2)
+
+        # components connected, no assembly connector yet as there are no
+        # provided/required interfaces
+        self.assertTrue(assembly.subject is None)
+        self.assertTrue(conn1.subject is None)
+        self.assertTrue(conn2.subject is None)
+
+
+    def test_interfaces_gathering(self):
+        """Test interfaces gathering
+        """
+        c1 = self.c1
+        c2 = self.c2
+        c3 = self.create(items.ComponentItem, UML.Component)
+
+        i1, = self._create_interfaces('A')
+
+        self._provide(c1.subject, i1)
+        self._require(c2.subject, i1)
+        self._provide(c3.subject, i1)
+
+        ifaces = _interfaces([c1, c3], [c2])
+        self.assertEquals(1, len(ifaces), 'interfaces %s' % ifaces)
+        self.assertTrue(i1 in ifaces, 'interfaces %s' % ifaces)
+
+
+    def test_connections_with_interfaces(self):
+        """Test assembly connector connections with interfaces
+        """
+        assembly = self.assembly
+        pport = self.assembly._provided_port
+        rport = self.assembly._required_port
+        conn1 = self.line
+        conn2 = self.create(items.ConnectorItem)
+        conn3 = self.create(items.ConnectorItem)
+        c1 = self.c1
+        c2 = self.c2
+        c3 = self.create(items.ComponentItem, UML.Component)
+
+        i1, = self._create_interfaces('A')
+
+        self.connect(conn1, conn1.head, c1)
+        self.connect(conn2, conn2.head, c2)
+        self.connect(conn1, conn1.head, c3)
+
+        self._provide(c1.subject, i1)
+        self._require(c2.subject, i1)
+        self._provide(c3.subject, i1)
+
+        self.connect(conn1, conn1.tail, assembly, pport)
+        self.connect(conn2, conn2.tail, assembly, rport)
+
+        # test UML data model
+        # check if connector is really assembly connector
+        connector = assembly.subject
+        self.assertTrue(isinstance(connector, UML.Connector))
+        self.assertEquals('assembly', connector.kind)
+
+        # there should be two connector ends
+        self.assertEquals(2, len(connector.end))
+        # interface i1 is on both ends
+        end1 = connector.end[0]
+        end2 = connector.end[1]
+        self.assertEquals(i1, end1.role)
+        self.assertEquals(i1, end2.role)
+        # connector ends point to components 
+        p1 = end1.partWithPort
+        p2 = end2.partWithPort
+        self.assertEquals(p1, c3.subject.ownedPort)
+        self.assertEquals(p2, c2.subject.ownedPort)
+
+
     # tests below to be reviewed and fixed
-
-#   def test_connector_grouping(self):
-#       """Test assembly connectors grouping
-#       """
-#       self.connect(self.line, self.line.head, self.c1)
-
-#       i1, = self._create_interfaces('A')
-#       self._provide(self.c1.subject, i1)
-#       self._require(self.c2.subject, i1)
-
-#       connected = self.connect(self.line, self.line.tail, self.c2)
-#       assert connected
-
-#       assembly = self.create(items.ConnectorItem)
-#       c3 = self.create(items.ComponentItem, UML.Component)
-#       self._provide(c3.subject, i1)
-#       self.connect(assembly, assembly.head, c3)
-
-#       connected = self.connect(assembly, assembly.tail, self.line, self.line._provided_port)
-#       self.assertTrue(connected)
-
-#       # test UML data model
-#       # is connector really connector?
-#       self.assertTrue(isinstance(assembly.subject, UML.Connector))
-#       connector = assembly.subject
-#       # there should be two connector ends
-#       self.assertEquals(2, len(connector.end))
-#       # interface i1 is on both ends
-#       end1 = connector.end[0]
-#       end2 = connector.end[1]
-#       self.assertEquals(i1, end1.role)
-#       self.assertEquals(i1, end2.role)
-#       # connector ends identify components 
-#       p1 = end1.partWithPort
-#       p2 = end2.partWithPort
-#       self.assertEquals(p1, c3.subject.ownedPort)
-#       self.assertEquals(p2, self.c2.subject.ownedPort)
-#       # it is assembly connector
-#       self.assertEquals('assembly', connector.kind)
-#       self.assertTrue(assembly.is_assembly)
-
 
 #   def test_groupped_connector_disconnection(self):
 #       """Test groupped assembly connectors disconnection

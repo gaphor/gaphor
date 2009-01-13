@@ -82,6 +82,8 @@ class AssemblyConnectorItem(ElementItem):
         pp = VariablePoint((35, 15))
         self._provided_port = PointPort(pp)
         self._required_port = PointPort(rp)
+        self._provided_port._connected = []
+        self._required_port._connected = []
         self._ports = [self._provided_port, self._required_port]
 
     def draw(self, context):
@@ -134,6 +136,10 @@ class ConnectorItem(NamedLine):
         cr.line_to(0, 0)
         cr.line_to(15, 6)
 
+
+    def on_named_element_name(self, event):
+        if isinstance(self.subject, UML.Connector):
+            super(ConnectorItem, self).on_named_element_name(event)
 
 
 # vim:sw=4:et:ai
