@@ -145,6 +145,7 @@ class InterfaceConnectTestCase(TestCase):
         self.connect(line, line.head, iface, pport)
         # interface goes into assembly mode
         self.assertEquals(iface.FOLDED_ASSEMBLY, iface.folded)
+        self.assertFalse(iface._name.is_visible())
 
         # check port status
         self.assertTrue(pport.provided and not pport.required and pport.connectable)
@@ -238,6 +239,7 @@ class InterfaceConnectTestCase(TestCase):
         self.disconnect(line, line.head)
         self.assertEquals(iface.FOLDED_PROVIDED, iface.folded)
         self.assertEquals(iface._angle, 0)
+        self.assertTrue(iface._name.is_visible())
 
         self.assertFalse(any(p.provided for p in iface.ports()))
         self.assertFalse(any(p.required for p in iface.ports()))

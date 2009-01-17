@@ -172,6 +172,8 @@ class InterfaceItem(ClassItem):
         ClassItem.__init__(self, id)
         self._folded = self.FOLDED_NONE
         self._angle = 0
+        old_f = self._name.is_visible
+        self._name.is_visible = lambda: old_f() and self._folded != self.FOLDED_ASSEMBLY
 
         handles = self._handles
         h_nw = handles[NW]
