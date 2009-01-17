@@ -6,6 +6,10 @@ Interface item implementation. There are several notations supported
     - ball is drawn to indicate provided interface
     - socket is drawn to indicate required interface
 
+Interface item can act as icon of assembly connector, see
+`gaphor.diagram.connector` module documentation for details. *Documentation
+of this module does not take into accout assembly connector icon mode.*
+
 Folded Interface Item
 =====================
 Folded interface notation is reserved for very simple situations.
@@ -44,7 +48,7 @@ There is no need for additional dependency
   represent the same interface, which is easily identifiable with its name
 
 Even more, adding a dependency between folded interfaces provides
-information (on UML data model level) that an interface depenends on itself
+information, on UML data model level, that an interface depenends on itself
 but it is not the intention of this (*unsupported*) notation.
 
 For more examples of non-supported by Gaphor notation, see
@@ -102,6 +106,8 @@ class InterfacePort(LinePort):
         super(InterfacePort, self).__init__(start, end)
         self.angle = angle
         self.iface = iface
+        self.required = False
+        self.provided = False
 
 
     def glue(self, pos):
@@ -124,7 +130,8 @@ class InterfacePort(LinePort):
 
 class InterfaceItem(ClassItem):
     """
-    Interface item supporting class box and folded notations.
+    Interface item supporting class box, folded notations and assembly
+    connector icon mode.
 
     When in folded mode, provided (ball) notation is used by default.
     """
@@ -157,6 +164,8 @@ class InterfaceItem(ClassItem):
     FOLDED_PROVIDED = 1
     # Folded mode, required (socket) notation.
     FOLDED_REQUIRED = 2
+    # Folded mode, notation of assembly connector icon mode (ball&socket).
+    FOLDED_ASSEMBLY = 3
 
 
     def __init__(self, id=None):
@@ -241,7 +250,10 @@ class InterfaceItem(ClassItem):
         """
         radius = self.RADIUS_PROVIDED
         self.style.icon_size = self.style.icon_size_provided
-        if self._folded == self.FOLDED_REQUIRED:
+
+        if self._folded == self.FOLDED_REQUIRED \
+                or self._folded == self.FOLDED_ASSEMBLY:
+
             radius = self.RADIUS_REQUIRED
             self.style.icon_size = self.style.icon_size_required
 
@@ -265,11 +277,13 @@ class InterfaceItem(ClassItem):
         cr = context.cairo
         h_nw = self._handles[NW]
         cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
-        if self._folded == self.FOLDED_REQUIRED:
+        required = self._folded == self.FOLDED_REQUIRED or self._folded == self.FOLDED_ASSEMBLY
+        provided = self._folded == self.FOLDED_PROVIDED or self._folded == self.FOLDED_ASSEMBLY
+        if required:
             cr.save()
             cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self._angle, pi + self._angle)
             cr.restore()
-        else:
+        if provided:
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi*2)
         cr.stroke()

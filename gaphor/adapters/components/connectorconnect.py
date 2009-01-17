@@ -115,6 +115,8 @@ class ConnectorConnectBase(AbstractConnect):
     def disconnect(self, handle):
         super(ConnectorConnectBase, self).disconnect(handle)
         line = self.line
+        if line.subject is None:
+            return
         provided = line.head.connected_to
         required = line.tail.connected_to
 
@@ -182,3 +184,64 @@ class AssemblyConnectorConnect(ConnectorConnectBase):
 
 
 component.provideAdapter(AssemblyConnectorConnect)
+
+class InterfaceConnectorConnect(AbstractConnect):
+    """
+    Connect connector to an interface to maintain assembly connection.
+
+    Inspired by
+    http://www.visual-paradigm.com/VPGallery/diagrams/Component.html
+    """
+    component.adapts(items.InterfaceItem, items.ConnectorItem)
+
+    def glue(self, handle, port):
+        """
+        Allow glueing to folded interface only and when only connectors are
+        connected.
+        """
+        glue_ok = False
+        if self.element.folded:
+            # find connected items, which are not connectors
+            canvas = self.element.canvas
+            connected = [d for d in canvas.get_connected_items(self.element)
+                    if not isinstance(d[0], items.ConnectorItem)]
+            glue_ok = len(connected) == 0
+
+        return glue_ok
+
+
+    def connect(self, handle, port):
+        super(InterfaceConnectorConnect, self).connect(handle, port)
+
+        iface = self.element
+        iface.folded = iface.FOLDED_ASSEMBLY
+         
+        # determine required and provided ports
+        pport = port
+        ports = iface.ports()
+        index = ports.index(port)
+        rport = ports[(index + 2) % 4]
+        if not pport.provided and not pport.required:
+            pport.provided = True
+            rport.required = True
+            iface._angle = rport.angle
+
+            ports[(index + 1) % 4].connectable = False
+            ports[(index + 3) % 4].connectable = False
+
+
+    def disconnect(self, handle):
+        super(InterfaceConnectorConnect, self).disconnect(handle)
+        iface = self.element
+        # about to disconnect last connector
+        if len(iface.canvas.get_connected_items(iface)) == 1:
+            ports = iface.ports()
+            iface.folded = iface.FOLDED_PROVIDED
+            iface._angle = ports[0].angle
+            for p in ports:
+                p.connectable = True
+                p.provided = False
+                p.required = False
+
+
+component.provideAdapter(InterfaceConnectorConnect)

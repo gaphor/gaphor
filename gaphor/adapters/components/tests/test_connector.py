@@ -57,6 +57,192 @@ class TestCaseBase(TestCase):
         self.assembly = self.create(items.AssemblyConnectorItem)
 
 
+class InterfaceConnectTestCase(TestCase):
+    """
+    Test connection with interface acting as assembly connector.
+
+    See also AbstractConnect class for interface exceptions.
+    """
+    def test_non_folded_glue(self):
+        """Test non-folded interface glueing
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        line = self.create(items.ConnectorItem)
+
+        glued = self.glue(line, line.head, iface)
+        self.assertFalse(glued)
+
+
+    def test_folded_glue(self):
+        """Test folded interface glueing
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        line = self.create(items.ConnectorItem)
+
+        iface.folded = iface.FOLDED_REQUIRED
+        glued = self.glue(line, line.head, iface)
+        self.assertTrue(glued)
+
+
+    def test_glue_when_dependency_connected(self):
+        """Test interface glueing, when dependency connected
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        dep = self.create(items.DependencyItem)
+        line = self.create(items.ConnectorItem)
+
+        self.connect(dep, dep.head, iface)
+
+        iface.folded = iface.FOLDED_REQUIRED
+        glued = self.glue(line, line.head, iface)
+        self.assertFalse(glued)
+
+
+    def test_glue_when_implementation_connected(self):
+        """Test interface glueing, when implementation connected
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        impl = self.create(items.ImplementationItem)
+        line = self.create(items.ConnectorItem)
+
+        self.connect(impl, impl.head, iface)
+
+        iface.folded = iface.FOLDED_REQUIRED
+        glued = self.glue(line, line.head, iface)
+        self.assertFalse(glued)
+
+
+    def test_glue_when_connector_connected(self):
+        """Test interface glueing, when connector connected
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        iface.folded = iface.FOLDED_REQUIRED
+
+        line1 = self.create(items.ConnectorItem)
+        line2 = self.create(items.ConnectorItem)
+
+        self.connect(line1, line1.head, iface)
+        self.assertEquals(iface.FOLDED_ASSEMBLY, iface.folded)
+
+        glued = self.glue(line2, line2.head, iface)
+        self.assertTrue(glued)
+
+
+    def test_simple_connection(self):
+        """Test simple connection to an interface
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        line = self.create(items.ConnectorItem)
+
+        iface.folded = iface.FOLDED_PROVIDED
+        pport = iface.ports()[0]
+        rport = iface.ports()[2]
+
+        # test preconditions
+        assert not pport.provided and not pport.required
+        assert not rport.provided and not rport.required
+
+        self.connect(line, line.head, iface, pport)
+        # interface goes into assembly mode
+        self.assertEquals(iface.FOLDED_ASSEMBLY, iface.folded)
+
+        # check port status
+        self.assertTrue(pport.provided and not pport.required and pport.connectable)
+        self.assertTrue(rport.required and not rport.provided and rport.connectable)
+        p1 = iface.ports()[1]
+        p2 = iface.ports()[3]
+        self.assertTrue(not p1.required and not p1.provided and not p1.connectable)
+        self.assertTrue(not p2.required and not p2.provided and not p2.connectable)
+
+
+    def test_connection_angle_change(self):
+        """Test angle after connection to an interface
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        line = self.create(items.ConnectorItem)
+
+        iface.folded = iface.FOLDED_PROVIDED
+        pport = iface.ports()[1]
+        rport = iface.ports()[3]
+
+        # test preconditions
+        assert not pport.provided and not pport.required
+        assert not rport.provided and not rport.required
+        assert iface._angle == 0.0
+
+        self.connect(line, line.head, iface, pport)
+        self.assertEquals(rport.angle, iface._angle)
+
+
+    def test_connection_of_two_connectors_one_side(self):
+        """Test connection of two connectors to required port of an interface
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        c1 = self.create(items.ConnectorItem)
+        c2 = self.create(items.ConnectorItem)
+
+        iface.folded = iface.FOLDED_PROVIDED
+        pport = iface.ports()[0]
+        rport = iface.ports()[2]
+
+        # connect to the same interface
+        self.connect(c1, c1.head, iface, pport)
+        self.connect(c2, c2.head, iface, pport)
+
+        # check port status
+        self.assertTrue(pport.provided and not pport.required)
+        self.assertTrue(rport.required and not rport.provided)
+        p1 = iface.ports()[1]
+        p2 = iface.ports()[3]
+        self.assertTrue(not p1.required and not p1.provided)
+        self.assertTrue(not p2.required and not p2.provided)
+
+
+    def test_connection_of_two_connectors_two_sides(self):
+        """Test connection of two connectors to required and provided ports of an interface
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        c1 = self.create(items.ConnectorItem)
+        c2 = self.create(items.ConnectorItem)
+
+        iface.folded = iface.FOLDED_PROVIDED
+        pport = iface.ports()[0]
+        rport = iface.ports()[2]
+
+        self.connect(c1, c1.head, iface, pport)
+        self.connect(c2, c2.head, iface, rport)
+
+        # check port status
+        self.assertTrue(pport.provided and not pport.required)
+        self.assertTrue(rport.required and not rport.provided)
+        p1 = iface.ports()[1]
+        p2 = iface.ports()[3]
+        self.assertTrue(not p1.required and not p1.provided)
+        self.assertTrue(not p2.required and not p2.provided)
+
+
+    def test_simple_disconnection(self):
+        """Test disconnection of simple connection to an interface
+        """
+        iface = self.create(items.InterfaceItem, UML.Component)
+        line = self.create(items.ConnectorItem)
+
+        iface.folded = iface.FOLDED_PROVIDED
+        pport = iface.ports()[1]
+
+        self.connect(line, line.head, iface, pport)
+
+        # test preconditions
+        assert pport.provided and not pport.required and pport.connectable
+
+        self.disconnect(line, line.head)
+        self.assertEquals(iface.FOLDED_PROVIDED, iface.folded)
+        self.assertEquals(iface._angle, 0)
+
+        self.assertFalse(any(p.provided for p in iface.ports()))
+        self.assertFalse(any(p.required for p in iface.ports()))
+        self.assertTrue(all(p.connectable for p in iface.ports()))
+
 
 class AssemblyConnectorConnectTestCase(TestCaseBase):
     """
