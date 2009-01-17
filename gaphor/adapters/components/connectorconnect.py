@@ -149,42 +149,6 @@ class ComponentConnectorConnect(ConnectorConnectBase):
 component.provideAdapter(ComponentConnectorConnect)
 
 
-
-class AssemblyConnectorConnect(ConnectorConnectBase):
-    """
-    Connect assembly connectors with connector.
-    """
-    component.adapts(items.AssemblyConnectorItem, items.ConnectorItem)
-
-    def glue(self, handle, port):
-        """
-        Allow to connect
-        - connector's head to required port
-        - connector's tail to provided port 
-        """
-        line = self.line
-        opposite = line.opposite(handle)
-
-        # no connection from assembly connector to assembly connector
-        glue_ok = not isinstance(opposite.connected_to, items.AssemblyConnectorItem)
-
-        return glue_ok and super(AssemblyConnectorConnect, self).glue(handle, port)
-
-
-    def connect(self, handle, port):
-        if isinstance(self.element, items.AssemblyConnectorItem):
-            port._connected.append(self.line)
-        super(AssemblyConnectorConnect, self).connect(handle, port)
-
-
-    def disconnect(self, handle, port):
-        super(AssemblyConnectorConnect, self).connect(handle, port)
-        if isinstance(self.element, items.ComponentItem):
-            port._connected.remove(self.element)
-
-
-component.provideAdapter(AssemblyConnectorConnect)
-
 class InterfaceConnectorConnect(AbstractConnect):
     """
     Connect connector to an interface to maintain assembly connection.
