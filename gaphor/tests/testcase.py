@@ -53,7 +53,12 @@ class TestCase(unittest.TestCase):
     def glue(self, line, handle, item, port=None):
         """
         Glue line's handle to an item.
+
+        If port is not provided, then first port is used.
         """
+        if port is None and len(item.ports()) > 0:
+            port = item.ports()[0]
+            
         query = (item, line)
         adapter = component.queryMultiAdapter(query, IConnect)
         return adapter.glue(handle, port)
@@ -62,7 +67,12 @@ class TestCase(unittest.TestCase):
     def connect(self, line, handle, item, port=None):
         """
         Connect line's handle to an item.
+
+        If port is not provided, then first port is used.
         """
+        if port is None and len(item.ports()) > 0:
+            port = item.ports()[0]
+
         handle.connected_to = item
 
         query = (item, line)
