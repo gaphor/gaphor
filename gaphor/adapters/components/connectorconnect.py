@@ -132,16 +132,17 @@ class ConnectorConnectBase(AbstractConnect):
 
 
 
-class ComponentConnectorConnect(ConnectorConnectBase):
+class ComponentConnectorConnect(AbstractConnect):
     """
-    Connect two components which provide and require same interfaces.
+    Connection of connector item to a component.
     """
     component.adapts(items.ComponentItem, items.ConnectorItem)
 
     def glue(self, handle, port):
         glue_ok = super(ComponentConnectorConnect, self).glue(handle, port)
-        line = self.line
-        opposite = line.opposite(handle)
+
+        opposite = self.line.opposite(handle)
+        glue_ok = not isinstance(opposite.connected_to, items.ComponentItem)
 
         return glue_ok
 
@@ -153,8 +154,8 @@ class InterfaceConnectorConnect(AbstractConnect):
     """
     Connect connector to an interface to maintain assembly connection.
 
-    Inspired by
-    http://www.visual-paradigm.com/VPGallery/diagrams/Component.html
+    See also `AbstractConnect` class for exception of interface item
+    connections.
     """
     component.adapts(items.InterfaceItem, items.ConnectorItem)
 
