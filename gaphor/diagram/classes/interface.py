@@ -202,22 +202,13 @@ class InterfaceItem(ClassItem):
         In addition to setting the drawing style, the handles are
         make non-movable if the icon (folded) style is used.
         """
-        ClassItem.set_drawing_style(self, style)
-
-        movable = True
+        super(InterfaceItem, self).set_drawing_style(style)
         if self._drawing_style == self.DRAW_ICON:
-            self._name.style.update(self.FOLDED_STYLE)
-            movable = False
+            self.folded = self.FOLDED_PROVIDED # set default folded mode
         else:
-            self._name.style.update(self.UNFOLDED_STYLE)
-
-        for h in self._handles:
-            h.movable = movable
-        self.request_update()
-
+            self.folded = self.FOLDED_NONE # unset default folded mode
 
     drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
-
 
     def _is_folded(self):
         """
@@ -231,11 +222,21 @@ class InterfaceItem(ClassItem):
 
         :param folded: Folded state, see FOLDED_* constants.
         """
-        if folded == self.FOLDED_NONE:
-            self.drawing_style = self.DRAW_COMPARTMENT
-        else:
-            self.drawing_style = self.DRAW_ICON
+        movable = True
+
         self._folded = folded
+
+        if folded == self.FOLDED_NONE:
+            self._drawing_style = self.DRAW_COMPARTMENT
+            self._name.style.update(self.UNFOLDED_STYLE)
+        else:
+            self._drawing_style = self.DRAW_ICON
+            self._name.style.update(self.FOLDED_STYLE)
+            movable = False
+
+        for h in self._handles:
+            h.movable = movable
+        self.request_update()
 
     folded = property(_is_folded, _set_folded,
         doc="Check or set folded notation, see FOLDED_* constants.")
