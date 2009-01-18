@@ -32,6 +32,8 @@ class ComponentConnectTestCase(TestCase):
         line = self.create(items.ConnectorItem)
 
         self.connect(line, line.head, component)
+        self.assertTrue(line.subject is None)
+        self.assertTrue(line.end is None)
 
 
     def test_glue_both(self):
@@ -135,6 +137,10 @@ class InterfaceConnectTestCase(TestCase):
         self.assertEquals(iface.FOLDED_ASSEMBLY, iface.folded)
         self.assertFalse(iface._name.is_visible())
 
+        # no UML metamodel yet
+        self.assertTrue(line.subject is None)
+        self.assertTrue(line.end is None)
+
         # check port status
         self.assertTrue(pport.provided and not pport.required and pport.connectable)
         self.assertTrue(rport.required and not rport.provided and rport.connectable)
@@ -178,6 +184,12 @@ class InterfaceConnectTestCase(TestCase):
         self.connect(c1, c1.head, iface, pport)
         self.connect(c2, c2.head, iface, pport)
 
+        # no UML metamodel yet
+        self.assertTrue(c1.subject is None)
+        self.assertTrue(c1.end is None)
+        self.assertTrue(c2.subject is None)
+        self.assertTrue(c2.end is None)
+
         # check port status
         self.assertTrue(pport.provided and not pport.required)
         self.assertTrue(rport.required and not rport.provided)
@@ -200,6 +212,12 @@ class InterfaceConnectTestCase(TestCase):
 
         self.connect(c1, c1.head, iface, pport)
         self.connect(c2, c2.head, iface, rport)
+
+        # no UML metamodel yet
+        self.assertTrue(c1.subject is None)
+        self.assertTrue(c1.end is None)
+        self.assertTrue(c2.subject is None)
+        self.assertTrue(c2.end is None)
 
         # check port status
         self.assertTrue(pport.provided and not pport.required)

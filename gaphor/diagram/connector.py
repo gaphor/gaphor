@@ -110,14 +110,24 @@ class ConnectorItem(NamedLine):
     Connector item line.
 
     Represents Connector UML metaclass. If connected to interface item in
-    assembly connector mode, then `Connector.end` represents appropriate
-    `ConnectorEnd` UML metaclass instance.
+    assembly connector mode, then `Connector.end` attribute represents
+    appropriate `ConnectorEnd` UML metaclass instance.
+
+    :Attributes:
+     subject
+        Connector UML metaclass instance.
+     end
+        ConnectorEnd UML metaclass instance.
     """
     __uml__        = UML.Connector
     __style__   = {
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
         'name-outside': True,
     }
+
+    def __init__(self, id):
+        super(ConnectorItem, self).__init__(id)
+        self.end = None
 
 
     def draw_tail(self, context):
@@ -127,6 +137,18 @@ class ConnectorItem(NamedLine):
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
+
+
+    def save(self, save_func):
+        super(ConnectorItem, self).save(save_func)
+        save_func('end', self.end)
+
+
+    def load(self, name, value):
+        if name == 'end':
+            self.end = value
+        else:
+            super(ConnectorItem, self).load(name, value)
 
 
     #def on_named_element_name(self, event):
