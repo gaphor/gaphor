@@ -123,9 +123,10 @@ class ConnectorItem(NamedLine):
     def draw_tail(self, context):
         cr = context.cairo
         cr.line_to(0, 0)
-        cr.move_to(15, -6)
-        cr.line_to(0, 0)
-        cr.line_to(15, 6)
+        if self.subject and self.subject.kind == 'delegation':
+            cr.move_to(15, -6)
+            cr.line_to(0, 0)
+            cr.line_to(15, 6)
 
 
     #def on_named_element_name(self, event):
