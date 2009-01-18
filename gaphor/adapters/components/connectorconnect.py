@@ -119,66 +119,27 @@ class ConnectorConnectBase(AbstractConnect):
                 else:
                     self.create_uml(line, component, assembly, iface.subject)
 
-##           if isinstance(assembly, items.AssemblyConnectorItem):
-##                       
-##               def fetch_components(port):
-##                   components = []
-##                   for c in port._connected:
-##                       item = get_component(c)
-##                       if item is not None:
-##                           components.append(item)
-##                   return components
-##
-##               pcomp = fetch_components(assembly._provided_port)
-##               rcomp = fetch_components(assembly._required_port)
-##
-##               interfaces = _interfaces(pcomp, rcomp)
-##
-##               if len(interfaces) > 0:
-##                   # create uml data model
-##                   connector =  self.element_factory.create(UML.Connector)
-##                   connector.kind = 'assembly'
-##                   assembly.subject = connector
-##
-##                   iface = interfaces[0]
-##
-##                   def create(component, conn):
-##                       end = self.element_factory.create(UML.ConnectorEnd)
-##                       end.role = iface
-##                       connector.end = end
-##                       end.partWithPort = self.element_factory.create(UML.Port)
-##
-##                       conn.subject = end
-##                       component.subject.ownedPort = end.partWithPort
-##
-##                   for conn in assembly._provided_port._connected:
-##                       item = get_component(conn)
-##                       if item is not None:
-##                           create(item, conn)
-##
-##                   for conn in assembly._required_port._connected:
-##                       item = get_component(conn)
-##                       if item is not None:
-##                           create(item, conn)
 
+    def disconnect(self, handle):
+        super(ConnectorConnectBase, self).disconnect(handle)
+        line = self.line
+        if line.subject is None:
+            return
 
-#   def disconnect(self, handle):
-#       super(ConnectorConnectBase, self).disconnect(handle)
-#       line = self.line
-#       if line.subject is None:
-#           return
-#       provided = line.head.connected_to
-#       required = line.tail.connected_to
+        iface = line.head.connected_to
+        if not isinstance(iface, items.InterfaceItem):
+            iface = line.tail.connected_to
 
-#       if isinstance(provided, items.ConnectorItem):
-#           provided = provided.head.connected_to
-#       if isinstance(required, items.ConnectorItem):
-#           required = required.tail.connected_to
-
-#       if provided and required:
-#           line.subject.unlink()
-#           provided.subject.ownedPort.unlink()
-#           required.subject.ownedPort.unlink()
+        connected = iface.canvas.get_connected_items(iface)
+        if len(connected) == 2:
+            line.subject.unlink()
+            for conn, h in connected:
+                c = self.get_component(conn)
+                c.subject.ownedPort.unlink()
+        else:
+            line.subject = None
+            c = self.get_component(line)
+            c.subject.ownedPort.unlink()
 
 
 
