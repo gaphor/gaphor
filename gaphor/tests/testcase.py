@@ -74,6 +74,7 @@ class TestCase(unittest.TestCase):
             port = item.ports()[0]
 
         handle.connected_to = item
+        handle.connected_port = port
 
         query = (item, line)
         adapter = component.queryMultiAdapter(query, IConnect)
@@ -95,6 +96,7 @@ class TestCase(unittest.TestCase):
         adapter.disconnect(line.head)
 
         handle.connected_to = None
+        handle.connected_port = None
 
         assert handle.connected_to is None
 
