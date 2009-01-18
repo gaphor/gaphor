@@ -82,7 +82,6 @@ class ConnectorConnectBase(AbstractConnect):
         assembly.end = end
 
         connector.subject = assembly
-        connector.end = end
         component.subject.ownedPort = end.partWithPort
 
 

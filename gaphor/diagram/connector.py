@@ -118,6 +118,8 @@ class ConnectorItem(NamedLine):
         Connector UML metaclass instance.
      end
         ConnectorEnd UML metaclass instance.
+     _interface
+        Interface name, when connector is assembly connector.
     """
     __uml__        = UML.Connector
     __style__   = {
@@ -128,6 +130,15 @@ class ConnectorItem(NamedLine):
     def __init__(self, id):
         super(ConnectorItem, self).__init__(id)
         self.end = None
+        self._interface = self.add_text('end.role.name')
+        self.add_watch(UML.Connector.end, self.on_connector_end)
+
+
+    def on_connector_end(self, event):
+        if isinstance(event, UML.event.AssociationAddEvent):
+            if self.subject is event.element:
+                self.end = event.new_value
+                self._interface.text = self.end.role.name
 
 
     def draw_tail(self, context):

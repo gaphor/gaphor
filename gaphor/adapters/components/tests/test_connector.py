@@ -329,15 +329,21 @@ class AssemblyConnectorTestCase(TestCase):
         # interface is on both ends
         end1 = conn1.end
         end2 = conn2.end
-        self.assertTrue(end1 in assembly.end)
-        self.assertTrue(end2 in assembly.end)
+
+        self.assertTrue(end1 in assembly.end,
+            '%s not in %s' % (end1, assembly.end))
+        self.assertTrue(end2 in assembly.end,
+            '%s not in %s' % (end2, assembly.end))
+
         self.assertEquals(end1.role, iface.subject)
         self.assertEquals(end2.role, iface.subject)
-        # connector ends point to components 
+        # ends of connector point to components 
         p1 = end1.partWithPort
         p2 = end2.partWithPort
-        self.assertEquals(p1, c1.subject.ownedPort)
-        self.assertEquals(p2, c2.subject.ownedPort)
+        self.assertEquals(p1, c1.subject.ownedPort,
+            '%s != %s' % (p1, c1.subject.ownedPort))
+        self.assertEquals(p2, c2.subject.ownedPort,
+            '%s != %s' % (p2, c2.subject.ownedPort))
 
 
 #   def test_interfaces_gathering(self):
