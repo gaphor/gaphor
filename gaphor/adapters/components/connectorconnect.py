@@ -7,9 +7,7 @@ assembly connectors (see UML 2.2 specification, figure 8.18, page 160) by
 connecting component and other assembly connector.
 """
 
-import operator
-
-from zope import interface, component
+from zope import component
 
 from gaphor import UML
 from gaphor.diagram import items

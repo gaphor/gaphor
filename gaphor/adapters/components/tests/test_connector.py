@@ -3,7 +3,6 @@ Test connector item connectors.
 """
 
 from gaphor.tests import TestCase
-from zope import component
 from gaphor import UML
 from gaphor.diagram import items
 
