@@ -16,24 +16,6 @@ from gaphor.diagram import items
 from gaphor.adapters.connectors import AbstractConnect
 
 
-def _interfaces(pcomp, rcomp):
-    """
-    Return list of sorted interfaces common to components connected by
-    assembly connector.
-    """
-    provided = set()
-    required = set()
-    for c in pcomp:
-        provided.update(c.subject.provided)
-
-    for c in rcomp:
-        required.update(c.subject.required)
-
-    interfaces = list(provided.intersection(required))
-    interfaces.sort(key=operator.attrgetter('name'))
-    return interfaces
-
-
 class ConnectorConnectBase(AbstractConnect):
     def _get_interfaces(self, c1, c2):
         """

@@ -7,9 +7,6 @@ from zope import component
 from gaphor import UML
 from gaphor.diagram import items
 
-from gaphor.adapters.components.connectorconnect import _interfaces
-
-
 
 class ComponentConnectTestCase(TestCase):
     """
