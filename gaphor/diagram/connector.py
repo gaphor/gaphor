@@ -136,9 +136,8 @@ class ConnectorItem(NamedLine):
 
     def on_connector_end(self, event):
         if isinstance(event, UML.event.AssociationAddEvent):
-            if self.subject is event.element:
-                self.end = event.new_value
-                self._interface.text = self.end.role.name
+            self.end = event.new_value
+            self._interface.text = self.end.role.name
 
 
     def draw_tail(self, context):

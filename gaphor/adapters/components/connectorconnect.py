@@ -76,12 +76,13 @@ class ConnectorConnectBase(AbstractConnect):
          iface
             Instance of Interface UML metaclass.
         """
+        connector.subject = assembly
+
         end =  self.element_factory.create(UML.ConnectorEnd)
         end.role = iface
         end.partWithPort = self.element_factory.create(UML.Port)
         assembly.end = end
 
-        connector.subject = assembly
         component.subject.ownedPort = end.partWithPort
 
 
