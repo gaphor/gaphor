@@ -9,37 +9,6 @@ from gaphor.diagram import items
 
 from gaphor.adapters.components.connectorconnect import _interfaces
 
-def create_interfaces(self, *args):
-    """
-    Generate interfaces with names sepecified by arguments.
-
-    :Paramters:
-     args
-        List of interface names.
-    """
-    for name in args:
-        interface = self.element_factory.create(UML.Interface)
-        interface.name = name
-        yield interface
-
-
-def provide(self, component, interface):
-    """
-    Change component's data so it implements interfaces.
-    """
-    impl = self.element_factory.create(UML.Implementation)
-    component.implementation = impl
-    impl.contract = interface
-
-
-def require(self, component, interface):
-    """
-    Change component's data so it requires interface.
-    """
-    usage = self.element_factory.create(UML.Usage)
-    component.clientDependency = usage
-    usage.supplier = interface
-
 
 
 class ComponentConnectTestCase(TestCase):
@@ -265,101 +234,92 @@ class InterfaceConnectTestCase(TestCase):
         self.assertTrue(all(p.connectable for p in iface.ports()))
 
 
-#lass AssemblyConnectorConnectTestCase(TestCaseBase):
-#   """
-#   Test components connection with assembly connector.
-#   """
-#   def test_ac_glue(self):
-#       """Test assembly connector glueing
-#       """
-#       assembly = self.assembly
-#       pport = assembly._provided_port
-#       rport = assembly._required_port
-#       head, tail = self.line.head, self.line.tail
 
-#       glued = self.glue(self.line, head, assembly, rport)
-#       self.assertTrue(glued)
+class AssemblyConnectorTestCase(TestCase):
+    """
+    Test assembly connector. It is assumed that interface and component
+    connection tests defined above are working correctly.
+    """
+    def create_interfaces(self, *args):
+        """
+        Generate interfaces with names sepecified by arguments.
 
-#       glued = self.glue(self.line, head, assembly, pport)
-#       self.assertTrue(glued)
-
-#       glued = self.glue(self.line, tail, assembly, rport)
-#       self.assertTrue(glued)
-
-#       glued = self.glue(self.line, tail, assembly, pport)
-#       self.assertTrue(glued)
+        :Paramters:
+         args
+            List of interface names.
+        """
+        for name in args:
+            interface = self.element_factory.create(UML.Interface)
+            interface.name = name
+            yield interface
 
 
-#   def test_component_glue(self):
-#       """Test component glueing
-#       """
-#       glued = self.glue(self.line, self.line.head, self.c1)
-#       self.assertTrue(glued)
-
-#       glued = self.glue(self.line, self.line.tail, self.c1)
-#       self.assertTrue(glued)
-
-
-#   def test_ac_connection(self):
-#       """Test assembly connector connection
-#       """
-#       assembly = self.assembly
-#       head = self.line.head
-#       self.connect(self.line, head, assembly, assembly._required_port)
-
-#       self.assertTrue(self.line.subject is None)
-#       self.assertTrue(self.assembly.subject is None)
+    def provide(self, component, interface):
+        """
+        Change component's data so it implements interfaces.
+        """
+        impl = self.element_factory.create(UML.Implementation)
+        component.implementation = impl
+        impl.contract = interface
 
 
-#   def test_component_connection(self):
-#       """Test component connection
-#       """
-#       self.connect(self.line, self.line.head, self.c1)
-#       self.assertTrue(self.line.subject is None)
-#       self.assertTrue(self.assembly.subject is None)
+    def require(self, component, interface):
+        """
+        Change component's data so it requires interface.
+        """
+        usage = self.element_factory.create(UML.Usage)
+        component.clientDependency = usage
+        usage.supplier = interface
 
 
-#   def test_one_component_connection(self):
-#       """Test assembly connector connection with one component
-#       """
-#       assembly = self.assembly
-#       head, tail = self.line.head, self.line.tail
+    def test_connection(self):
+        """Test basic assembly connection
+        """
+        conn1 = self.create(items.ConnectorItem)
+        conn2 = self.create(items.ConnectorItem)
 
-#       self.connect(self.line, head, assembly, assembly._required_port)
-#       self.connect(self.line, tail, self.c1)
+        c1 = self.create(items.ComponentItem, UML.Component)
+        c2 = self.create(items.ComponentItem, UML.Component)
 
-#       # check connection information at port level
-#       self.assertTrue(assembly._required_port._connected[-1] is self.line)
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface.folded = iface.FOLDED_ASSEMBLY
+        pport = iface.ports()[0]
+        rport = iface.ports()[2]
 
-#       # one component connected, no assembly connector yet
-#       self.assertTrue(assembly.subject is None)
-#       self.assertTrue(self.line.subject is None)
+        # first component provides interface
+        # and the second one requires it
+        self.provide(c1.subject, iface.subject)
+        self.require(c2.subject, iface.subject)
 
+        # connect component
+        self.connect(conn1, conn1.head, c1)
+        self.connect(conn2, conn2.head, c2)
 
-#   def test_two_components_connection(self):
-#       """Test assembly connector connection with two components
-#       """
-#       assembly = self.assembly
-#       conn1 = self.line
-#       conn2 = self.create(items.ConnectorItem)
-#       c1 = self.c1
-#       c2 = self.c2
+        # make an assembly
+        self.connect(conn1, conn1.tail, iface, pport)
+        self.connect(conn2, conn2.tail, iface, rport)
 
-#       self.connect(conn1, conn1.head, assembly, assembly._required_port)
-#       self.connect(conn1, conn1.tail, self.c1)
-#       # check connection information at port level
-#       self.assertTrue(assembly._required_port._connected[-1] is conn1)
+        # test UML data model
+        self.assertTrue(conn1.subject is conn2.subject,
+            '%s is not %s' % (conn1.subject, conn2.subject))
+        assembly = conn1.subject
+        self.assertTrue(isinstance(assembly, UML.Connector))
+        self.assertEquals('assembly', assembly.kind)
 
-#       self.connect(conn2, conn2.tail, assembly, assembly._provided_port)
-#       self.connect(conn2, conn2.head, self.c2)
-#       # check connection information at port level
-#       self.assertTrue(assembly._provided_port._connected[-1] is conn2)
-
-#       # components connected, no assembly connector yet as there are no
-#       # provided/required interfaces
-#       self.assertTrue(assembly.subject is None)
-#       self.assertTrue(conn1.subject is None)
-#       self.assertTrue(conn2.subject is None)
+        # there should be two connector ends
+        self.assertEquals(2, len(assembly.end))
+        # interface is on both ends
+        end1 = conn1.end
+        end2 = conn2.end
+        self.assertTrue(end1 in assembly.end)
+        self.assertTrue(end2 in assembly.end)
+        self.assertEquals(end1.role, iface.subject)
+        self.assertEquals(end2.role, iface.subject)
+        # connector ends point to components 
+        p1 = end1.partWithPort
+        p2 = end2.partWithPort
+        self.assertEquals(p1, c1.subject.ownedPort)
+        self.assertEquals(p2, c2.subject.ownedPort)
 
 
 #   def test_interfaces_gathering(self):
@@ -380,50 +340,6 @@ class InterfaceConnectTestCase(TestCase):
 #       self.assertTrue(i1 in ifaces, 'interfaces %s' % ifaces)
 
 
-#   def test_connections_with_interfaces(self):
-#       """Test assembly connector connections with interfaces
-#       """
-#       assembly = self.assembly
-#       pport = self.assembly._provided_port
-#       rport = self.assembly._required_port
-#       conn1 = self.line
-#       conn2 = self.create(items.ConnectorItem)
-#       conn3 = self.create(items.ConnectorItem)
-#       c1 = self.c1
-#       c2 = self.c2
-#       c3 = self.create(items.ComponentItem, UML.Component)
-
-#       i1, = self._create_interfaces('A')
-
-#       self.connect(conn1, conn1.head, c1)
-#       self.connect(conn2, conn2.head, c2)
-#       self.connect(conn1, conn1.head, c3)
-
-#       self._provide(c1.subject, i1)
-#       self._require(c2.subject, i1)
-#       self._provide(c3.subject, i1)
-
-#       self.connect(conn1, conn1.tail, assembly, pport)
-#       self.connect(conn2, conn2.tail, assembly, rport)
-
-#       # test UML data model
-#       # check if connector is really assembly connector
-#       connector = assembly.subject
-#       self.assertTrue(isinstance(connector, UML.Connector))
-#       self.assertEquals('assembly', connector.kind)
-
-#       # there should be two connector ends
-#       self.assertEquals(2, len(connector.end))
-#       # interface i1 is on both ends
-#       end1 = connector.end[0]
-#       end2 = connector.end[1]
-#       self.assertEquals(i1, end1.role)
-#       self.assertEquals(i1, end2.role)
-#       # connector ends point to components 
-#       p1 = end1.partWithPort
-#       p2 = end2.partWithPort
-#       self.assertEquals(p1, c3.subject.ownedPort)
-#       self.assertEquals(p2, c2.subject.ownedPort)
 
 
 #   def test_groupped_connector_disconnection(self):

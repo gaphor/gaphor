@@ -52,87 +52,137 @@ class ConnectorConnectBase(AbstractConnect):
         interfaces.sort(key=operator.attrgetter('name'))
         return interfaces
 
+    def get_component(self, connector):
+        """
+        Get component connected by connector.
+        """
+        item = connector.head.connected_to
+        if not isinstance(item, items.ComponentItem):
+            item = connector.tail.connected_to
+        if not isinstance(item, items.ComponentItem):
+            item = None
+        return item
+
+
+    def create_uml(self, connector, component, assembly, iface):
+        """
+        :Parameters:
+         connector
+            Connector item.
+         component
+            Component item.
+         assembly
+            Instance of Connector UML metaclass.
+         iface
+            Instance of Interface UML metaclass.
+        """
+        end =  self.element_factory.create(UML.ConnectorEnd)
+        end.role = iface
+        end.partWithPort = self.element_factory.create(UML.Port)
+        assembly.end = end
+
+        connector.subject = assembly
+        connector.end = end
+        component.subject.ownedPort = end.partWithPort
+
 
     def connect(self, handle, port):
         super(ConnectorConnectBase, self).connect(handle, port)
 
         line = self.line
-        assembly = line.head.connected_to
-        if not isinstance(assembly, items.AssemblyConnectorItem):
-            assembly = line.tail.connected_to
+        canvas = self.line.canvas
 
-        if isinstance(assembly, items.AssemblyConnectorItem):
-            def get_component(line):
-                item = line.head.connected_to
-                if not isinstance(item, items.ComponentItem):
-                    item = line.tail.connected_to
-                if not isinstance(item, items.ComponentItem):
-                    item = None
-                return item
+        if line.head.connected_to and line.tail.connected_to:
+            iface = line.head.connected_to
+            component = line.tail.connected_to
 
-                    
-            def fetch_components(port):
-                components = []
-                for c in port._connected:
-                    item = get_component(c)
-                    if item is not None:
-                        components.append(item)
-                return components
+            # reference interface and component correctly
+            if isinstance(component, items.InterfaceItem):
+                assert isinstance(iface, items.ComponentItem)
+                component, iface = iface, component
 
-            pcomp = fetch_components(assembly._provided_port)
-            rcomp = fetch_components(assembly._required_port)
+            connected = canvas.get_connected_items(iface)
+            if len(connected) > 1:
+                # find assembly connector
+                assembly = None
+                for conn, h in connected:
+                    if conn.subject:
+                        assembly = conn.subject
+                        assert assembly.kind == 'assembly'
+                        break
 
-            interfaces = _interfaces(pcomp, rcomp)
+                if assembly is None:
+                    assembly =  self.element_factory.create(UML.Connector)
+                    assembly.kind = 'assembly'
+                    for c, h in connected:
+                        self.create_uml(c, self.get_component(c), assembly, iface.subject)
+                else:
+                    self.create_uml(line, component, assembly, iface.subject)
 
-            if len(interfaces) > 0:
-                # create uml data model
-                connector =  self.element_factory.create(UML.Connector)
-                connector.kind = 'assembly'
-                assembly.subject = connector
-
-                iface = interfaces[0]
-
-                def create(component, conn):
-                    end = self.element_factory.create(UML.ConnectorEnd)
-                    end.role = iface
-                    connector.end = end
-                    end.partWithPort = self.element_factory.create(UML.Port)
-
-                    conn.subject = end
-                    component.subject.ownedPort = end.partWithPort
-
-                for conn in assembly._provided_port._connected:
-                    item = get_component(conn)
-                    if item is not None:
-                        create(item, conn)
-
-                for conn in assembly._required_port._connected:
-                    item = get_component(conn)
-                    if item is not None:
-                        create(item, conn)
-
-
-    def disconnect(self, handle):
-        super(ConnectorConnectBase, self).disconnect(handle)
-        line = self.line
-        if line.subject is None:
-            return
-        provided = line.head.connected_to
-        required = line.tail.connected_to
-
-        if isinstance(provided, items.ConnectorItem):
-            provided = provided.head.connected_to
-        if isinstance(required, items.ConnectorItem):
-            required = required.tail.connected_to
-
-        if provided and required:
-            line.subject.unlink()
-            provided.subject.ownedPort.unlink()
-            required.subject.ownedPort.unlink()
+##           if isinstance(assembly, items.AssemblyConnectorItem):
+##                       
+##               def fetch_components(port):
+##                   components = []
+##                   for c in port._connected:
+##                       item = get_component(c)
+##                       if item is not None:
+##                           components.append(item)
+##                   return components
+##
+##               pcomp = fetch_components(assembly._provided_port)
+##               rcomp = fetch_components(assembly._required_port)
+##
+##               interfaces = _interfaces(pcomp, rcomp)
+##
+##               if len(interfaces) > 0:
+##                   # create uml data model
+##                   connector =  self.element_factory.create(UML.Connector)
+##                   connector.kind = 'assembly'
+##                   assembly.subject = connector
+##
+##                   iface = interfaces[0]
+##
+##                   def create(component, conn):
+##                       end = self.element_factory.create(UML.ConnectorEnd)
+##                       end.role = iface
+##                       connector.end = end
+##                       end.partWithPort = self.element_factory.create(UML.Port)
+##
+##                       conn.subject = end
+##                       component.subject.ownedPort = end.partWithPort
+##
+##                   for conn in assembly._provided_port._connected:
+##                       item = get_component(conn)
+##                       if item is not None:
+##                           create(item, conn)
+##
+##                   for conn in assembly._required_port._connected:
+##                       item = get_component(conn)
+##                       if item is not None:
+##                           create(item, conn)
 
 
+#   def disconnect(self, handle):
+#       super(ConnectorConnectBase, self).disconnect(handle)
+#       line = self.line
+#       if line.subject is None:
+#           return
+#       provided = line.head.connected_to
+#       required = line.tail.connected_to
 
-class ComponentConnectorConnect(AbstractConnect):
+#       if isinstance(provided, items.ConnectorItem):
+#           provided = provided.head.connected_to
+#       if isinstance(required, items.ConnectorItem):
+#           required = required.tail.connected_to
+
+#       if provided and required:
+#           line.subject.unlink()
+#           provided.subject.ownedPort.unlink()
+#           required.subject.ownedPort.unlink()
+
+
+
+class ComponentConnectorConnect(ConnectorConnectBase):
     """
     Connection of connector item to a component.
     """
@@ -150,7 +200,7 @@ class ComponentConnectorConnect(AbstractConnect):
 component.provideAdapter(ComponentConnectorConnect)
 
 
-class InterfaceConnectorConnect(AbstractConnect):
+class InterfaceConnectorConnect(ConnectorConnectBase):
     """
     Connect connector to an interface to maintain assembly connection.
 
