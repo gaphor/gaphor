@@ -30,6 +30,9 @@ class ConnectorItemTestCase(TestCase):
         self.assertTrue(conn._end is end)
         self.assertEquals('RedSea', conn._interface.text)
 
+        conn.end = None
+        self.assertEquals('', conn._interface.text)
+
 
     def test_persistence(self):
         """Test connector item saving/loading

@@ -144,6 +144,8 @@ class ConnectorItem(NamedLine):
         self._end = end
         if end and end.role:
             self._interface.text = self.end.role.name
+        else:
+            self._interface.text = ''
 
     end = property(attrgetter('_end'), _set_end, doc='Connector.end reference')
 
