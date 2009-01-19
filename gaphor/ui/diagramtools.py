@@ -66,20 +66,8 @@ class ConnectHandleTool(_ConnectHandleTool):
 
     def connect_handle(self, line, handle, item, port):
         super(ConnectHandleTool, self).connect_handle(line, handle, item, port)
-	# Set new disconnect handler:
-	handle.disconnect = DisconnectHandle(line, handle)
-
-
-#    def disconnect(self, view, item, handle):
-#        """
-#        Disconnect the handle from the element by removing constraints.
-#        Do not yet release the connection on model level, since the handle
-#        may be connected to the same item on some other place.
-#        """
-#        if handle.connected_to:
-#            adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
-#            adapter.disconnect(handle)
-#        super(ConnectHandleTool, self).disconnect(view, item, handle)
+        # Set new disconnect handler:
+        handle.disconnect = DisconnectHandle(line, handle)
 
 
 class DisconnectHandle(_DisconnectHandle):
@@ -90,10 +78,8 @@ class DisconnectHandle(_DisconnectHandle):
     def handle_disconnect(self):
         handle = self.handle
         item = self.item
-	print 'Disconnect handler!', handle.connected_to
         if handle.connected_to:
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
-	    print 'Disconnect handler!', adapter
             adapter.disconnect(handle)
         super(DisconnectHandle, self).handle_disconnect()
 
