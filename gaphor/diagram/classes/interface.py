@@ -227,10 +227,10 @@ class InterfaceItem(ClassItem):
         self._folded = folded
 
         if folded == self.FOLDED_NONE:
-            self._drawing_style = self.DRAW_COMPARTMENT
+            super(InterfaceItem, self).set_drawing_style(self.DRAW_COMPARTMENT)
             self._name.style.update(self.UNFOLDED_STYLE)
         else:
-            self._drawing_style = self.DRAW_ICON
+            super(InterfaceItem, self).set_drawing_style(self.DRAW_ICON)
             self._name.style.update(self.FOLDED_STYLE)
             movable = False
 
