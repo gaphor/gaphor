@@ -142,7 +142,8 @@ class ConnectorItem(NamedLine):
 
     def _set_end(self, end):
         self._end = end
-        self._interface.text = self.end.role.name
+        if end and end.role:
+            self._interface.text = self.end.role.name
 
     end = property(attrgetter('_end'), _set_end, doc='Connector.end reference')
 

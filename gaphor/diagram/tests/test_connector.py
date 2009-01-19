@@ -18,6 +18,19 @@ class ConnectorItemTestCase(TestCase):
         self.assertTrue(conn.end is None)
 
 
+    def test_setting_end(self):
+        """Test creation of connector item
+        """
+        conn = self.create(ConnectorItem, UML.Connector)
+        end = self.element_factory.create(UML.ConnectorEnd)
+        iface = self.element_factory.create(UML.Interface)
+        end.role = iface
+        iface.name = 'RedSea'
+        conn.end = end
+        self.assertTrue(conn._end is end)
+        self.assertEquals('RedSea', conn._interface.text)
+
+
     def test_persistence(self):
         """Test connector item saving/loading
         """
