@@ -104,6 +104,7 @@ from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
+from operator import attrgetter
 
 class ConnectorItem(NamedLine):
     """
@@ -129,16 +130,21 @@ class ConnectorItem(NamedLine):
 
     def __init__(self, id):
         super(ConnectorItem, self).__init__(id)
-        self.end = None
+        self._end = None
         self._interface = self.add_text('end.role.name')
-        self.add_watch(UML.Connector.end, self.on_connector_end)
+        #self.add_watch(UML.Connector.end, self.on_connector_end)
 
 
-    def on_connector_end(self, event):
-        if isinstance(event, UML.event.AssociationAddEvent):
-            self.end = event.new_value
-            self._interface.text = self.end.role.name
+#    def on_connector_end(self, event):
+#        if isinstance(event, UML.event.AssociationAddEvent):
+#            self.end = event.new_value
+#            self._interface.text = self.end.role.name
 
+    def _set_end(self, end):
+        self._end = end
+        self._interface.text = self.end.role.name
+
+    end = property(attrgetter('_end'), _set_end, doc='Connector.end reference')
 
     def draw_tail(self, context):
         cr = context.cairo

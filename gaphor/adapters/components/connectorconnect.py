@@ -63,6 +63,7 @@ class ConnectorConnectBase(AbstractConnect):
         end.partWithPort = self.element_factory.create(UML.Port)
         assembly.end = end
 
+        connector.end = end
         component.subject.ownedPort = end.partWithPort
 
 
