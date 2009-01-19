@@ -1,10 +1,8 @@
 """
 Connector connections.
 
-Currently, two kind of connections are supported. First one is simple
-assembly connector between two components. Second allows to visually group
-assembly connectors (see UML 2.2 specification, figure 8.18, page 160) by
-connecting component and other assembly connector.
+Implemented using interface item in assembly connector mode, see
+`gaphor.diagram.connector` module for details.
 """
 
 from zope import component
