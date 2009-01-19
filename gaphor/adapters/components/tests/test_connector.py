@@ -373,6 +373,9 @@ class AssemblyConnectorTestCase(TestCase):
         assert conn1.subject and conn2.subject
 
         self.disconnect(conn1, conn1.head)
+
+        self.assertTrue(conn1.subject is None)
+        self.assertTrue(conn2.subject is None)
         
         self.assertEquals(0, len(self.kindof(UML.Connector)))
         self.assertEquals(0, len(self.kindof(UML.ConnectorEnd)))

@@ -46,6 +46,9 @@ class ConnectorConnectBase(AbstractConnect):
 
     def create_uml(self, connector, component, assembly, iface):
         """
+        Create assembly connector UML metamodel for given connector item
+        and component.
+
         :Parameters:
          connector
             Connector item.
@@ -65,6 +68,23 @@ class ConnectorConnectBase(AbstractConnect):
 
         connector.end = end
         component.subject.ownedPort = end.partWithPort
+
+
+    def drop_uml(self, connector, component):
+        """
+        Destroy assembly connector UML metamodel existing between connector
+        item and component item.
+
+        :Parameters:
+         connector
+            Connector item.
+         component
+            Component item.
+        """
+        component.subject.ownedPort.unlink()
+        connector.end.unlink()
+        connector.end = None
+        connector.subject = None
 
 
     def connect(self, handle, port):
@@ -113,14 +133,15 @@ class ConnectorConnectBase(AbstractConnect):
 
         connected = iface.canvas.get_connected_items(iface)
         if len(connected) == 2:
-            line.subject.unlink()
+            connector = line.subject
             for conn, h in connected:
                 c = self.get_component(conn)
-                c.subject.ownedPort.unlink()
+                self.drop_uml(conn, c)
+                conn.request_update(matrix=False)
+            connector.unlink()
         else:
-            line.subject = None
             c = self.get_component(line)
-            c.subject.ownedPort.unlink()
+            self.drop_uml(line, c)
 
 
 
