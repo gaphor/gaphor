@@ -87,6 +87,37 @@ class ConnectorConnectBase(AbstractConnect):
         connector.subject = None
 
 
+    def glue(self, handle, port):
+        glue_ok = super(ConnectorConnectBase, self).glue(handle, port)
+
+        iface = self.element
+        component = self.line.opposite(handle).connected_to
+
+        if isinstance(component, items.InterfaceItem):
+            component, iface = iface, component
+            port = self.line.opposite(handle).connected_port
+
+        # connect only components and interfaces but not two interfaces nor
+        # two components
+        glue_ok = not (isinstance(component, items.ComponentItem) \
+                and isinstance(iface, items.ComponentItem) \
+                or isinstance(component, items.InterfaceItem) \
+                and isinstance(iface, items.InterfaceItem))
+
+        # if port type is known, then allow connection to proper port only
+        if glue_ok and component is not None and iface is not None \
+                and (port.required or port.provided):
+
+            assert isinstance(component, items.ComponentItem)
+            assert isinstance(iface, items.InterfaceItem)
+
+            glue_ok = port.provided and iface.subject in component.subject.provided \
+                or port.required and iface.subject in component.subject.required
+            return glue_ok
+
+        return glue_ok
+
+
     def connect(self, handle, port):
         super(ConnectorConnectBase, self).connect(handle, port)
 
@@ -151,16 +182,9 @@ class ComponentConnectorConnect(ConnectorConnectBase):
     """
     component.adapts(items.ComponentItem, items.ConnectorItem)
 
-    def glue(self, handle, port):
-        glue_ok = super(ComponentConnectorConnect, self).glue(handle, port)
-
-        opposite = self.line.opposite(handle)
-        glue_ok = not isinstance(opposite.connected_to, items.ComponentItem)
-
-        return glue_ok
-
 
 component.provideAdapter(ComponentConnectorConnect)
+
 
 
 class InterfaceConnectorConnect(ConnectorConnectBase):
@@ -177,13 +201,15 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         Allow glueing to folded interface only and when only connectors are
         connected.
         """
-        glue_ok = False
-        if self.element.folded:
+        glue_ok = super(InterfaceConnectorConnect, self).glue(handle, port)
+        iface = self.element
+        glue_ok = glue_ok and iface.folded != iface.FOLDED_NONE
+        if glue_ok:
             # find connected items, which are not connectors
             canvas = self.element.canvas
-            connected = [d for d in canvas.get_connected_items(self.element)
-                    if not isinstance(d[0], items.ConnectorItem)]
-            glue_ok = len(connected) == 0
+            connected = canvas.get_connected_items(self.element)
+            lines = [d for d in connected if not isinstance(d[0], items.ConnectorItem)]
+            glue_ok = len(lines) == 0
 
         return glue_ok
 
@@ -199,9 +225,14 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         ports = iface.ports()
         index = ports.index(port)
         rport = ports[(index + 2) % 4]
-        if not pport.provided and not pport.required:
+        if not port.provided and not port.required:
+            component = self.line.opposite(handle).connected_to
+            if component is not None and iface.subject in component.subject.required:
+                pport, rport = rport, pport
+
             pport.provided = True
             rport.required = True
+
             iface._angle = rport.angle
 
             ports[(index + 1) % 4].connectable = False

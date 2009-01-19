@@ -342,6 +342,69 @@ class AssemblyConnectorTestCase(TestCase):
             '%s != %s' % (p2, c2.subject.ownedPort))
 
 
+    def test_port_glue(self):
+        """Test if port glueing works correctly
+        """
+        conn1 = self.create(items.ConnectorItem)
+        conn2 = self.create(items.ConnectorItem)
+        conn3 = self.create(items.ConnectorItem)
+
+        c1 = self.create(items.ComponentItem, UML.Component)
+        c2 = self.create(items.ComponentItem, UML.Component)
+        c3 = self.create(items.ComponentItem, UML.Component)
+
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface.folded = iface.FOLDED_ASSEMBLY
+        pport = iface.ports()[0]
+        rport = iface.ports()[2]
+
+        self.provide(c1.subject, iface.subject)
+        self.require(c2.subject, iface.subject)
+        self.require(c3.subject, iface.subject)
+
+        # connect first two components
+        self.connect(conn1, conn1.head, c1)
+        self.connect(conn2, conn2.head, c2)
+
+        self.connect(conn1, conn1.tail, iface, pport)
+        self.connect(conn3, conn3.tail, iface, pport)
+
+        # cannot glue to provided port of interface, which is required
+        glued = self.glue(conn2, conn2.tail, iface, pport)
+        self.assertFalse(glued)
+
+        # cannot glue component, which requires an interface, when
+        # connector is connected to to provided port
+        glued = self.glue(conn3, conn3.head, c3)
+        self.assertFalse(glued)
+
+
+    def test_port_status(self):
+        """Test if port type is set properly
+        """
+        conn1 = self.create(items.ConnectorItem)
+
+        c1 = self.create(items.ComponentItem, UML.Component)
+
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface.folded = iface.FOLDED_ASSEMBLY
+        pport = iface.ports()[0]
+        rport = iface.ports()[2]
+
+        # component requires interface
+        self.require(c1.subject, iface.subject)
+
+        # connect component
+        self.connect(conn1, conn1.head, c1)
+
+        # first step to make an assembly
+        self.connect(conn1, conn1.tail, iface, rport)
+
+        # is required port really required one?
+        self.assertTrue(rport.required)
+        self.assertTrue(pport.provided)
+
+
     def test_disconnection(self):
         """Test assembly connector disconnection
         """
