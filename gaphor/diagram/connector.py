@@ -131,7 +131,9 @@ class ConnectorItem(NamedLine):
     def __init__(self, id):
         super(ConnectorItem, self).__init__(id)
         self._end = None
-        self._interface = self.add_text('end.role.name')
+        self._interface = self.add_text('end.role.name', style={
+            'text-align-group': 'stereotype',
+        })
 
 
     def _set_end(self, end):
