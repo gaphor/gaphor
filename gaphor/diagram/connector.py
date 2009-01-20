@@ -152,6 +152,9 @@ class ConnectorItem(NamedLine):
         Callback used, when interface name changes (interface is referenced
         by `ConnectorItem.end.role`).
         """
+        # fixme: this method is called when name of _every_ interface in
+        #        data model changes
+        # fixme: this method is called when connector's name changes, why?
         if event and event.element:
             self._interface.text = event.element.name
             self.request_update(matrix=False)
