@@ -431,6 +431,94 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertTrue(rport.required)
 
 
+    def test_connection_order(self):
+        """Test connection order of assembly connection
+        """
+        conn1 = self.create(items.ConnectorItem)
+        conn2 = self.create(items.ConnectorItem)
+
+        c1 = self.create(items.ComponentItem, UML.Component)
+        c2 = self.create(items.ComponentItem, UML.Component)
+
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface.folded = iface.FOLDED_ASSEMBLY
+        pport = iface.ports()[0]
+        rport = iface.ports()[2]
+
+        # both components provide interface only
+        self.provide(c1.subject, iface.subject)
+        self.provide(c2.subject, iface.subject)
+
+        # connect components
+        self.connect(conn1, conn1.head, c1)
+        self.connect(conn2, conn2.head, c2)
+
+        # connect to provided port
+        self.connect(conn1, conn1.tail, iface, pport)
+        self.connect(conn2, conn2.tail, iface, pport)
+        # no UML data model yet (no connection on provided port)
+        self.assertTrue(conn1.subject is None)
+        self.assertTrue(conn2.subject is None)
+        self.assertTrue(conn1.end is None)
+        self.assertTrue(conn2.end is None)
+
+
+    def test_addtional_connections(self):
+        """Test additional connections to assembly connection
+        """
+        conn1 = self.create(items.ConnectorItem)
+        conn2 = self.create(items.ConnectorItem)
+        conn3 = self.create(items.ConnectorItem)
+
+        c1 = self.create(items.ComponentItem, UML.Component)
+        c2 = self.create(items.ComponentItem, UML.Component)
+        c3 = self.create(items.ComponentItem, UML.Component)
+
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface.folded = iface.FOLDED_ASSEMBLY
+        pport = iface.ports()[0]
+        rport = iface.ports()[2]
+
+        # provide and require interface by components
+        self.provide(c1.subject, iface.subject)
+        self.require(c2.subject, iface.subject)
+        self.require(c3.subject, iface.subject)
+
+        # connect components
+        self.connect(conn1, conn1.head, c1)
+        self.connect(conn2, conn2.head, c2)
+        self.connect(conn3, conn3.head, c3)
+
+        # create assembly
+        self.connect(conn1, conn1.tail, iface, pport)
+        self.connect(conn2, conn2.tail, iface, rport)
+
+        # test precondition
+        assert conn1.subject and conn2.subject
+
+        #  additional connection
+        self.connect(conn3, conn3.tail, iface, rport)
+
+        # test UML data model
+        self.assertTrue(conn3.subject is conn1.subject)
+        self.assertTrue(conn3.end is not None)
+
+        assembly = conn1.subject
+
+        self.assertEquals(3, len(assembly.end))
+
+        end3 = conn3.end
+
+        self.assertTrue(end3 in assembly.end,
+            '%s not in %s' % (end3, assembly.end))
+
+        self.assertEquals(end3.role, iface.subject)
+        # ends of connector point to components 
+        p3 = end3.partWithPort
+        self.assertEquals(p3, c3.subject.ownedPort,
+            '%s != %s' % (p3, c3.subject.ownedPort))
+
+
     def test_disconnection(self):
         """Test assembly connector disconnection
         """
@@ -459,12 +547,59 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn2, conn2.tail, iface, rport)
   
         # test precondition
-        assert conn1.subject and conn2.subject
+        assert conn1.subject is conn2.subject
 
         self.disconnect(conn1, conn1.head)
 
         self.assertTrue(conn1.subject is None)
         self.assertTrue(conn2.subject is None)
+        
+        self.assertEquals(0, len(self.kindof(UML.Connector)))
+        self.assertEquals(0, len(self.kindof(UML.ConnectorEnd)))
+        self.assertEquals(0, len(self.kindof(UML.Port)))
+
+
+    def test_disconnection_order(self):
+        """Test assembly connector disconnection order
+        """
+        conn1 = self.create(items.ConnectorItem)
+        conn2 = self.create(items.ConnectorItem)
+        conn3 = self.create(items.ConnectorItem)
+
+        c1 = self.create(items.ComponentItem, UML.Component)
+        c2 = self.create(items.ComponentItem, UML.Component)
+        c3 = self.create(items.ComponentItem, UML.Component)
+
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface.folded = iface.FOLDED_ASSEMBLY
+        pport = iface.ports()[0]
+        rport = iface.ports()[2]
+
+        # provide and require interface
+        self.provide(c1.subject, iface.subject)
+        self.require(c2.subject, iface.subject)
+        self.require(c3.subject, iface.subject)
+
+        # connect components
+        self.connect(conn1, conn1.head, c1)
+        self.connect(conn2, conn2.head, c2)
+        self.connect(conn3, conn3.head, c3)
+
+        # make assembly
+        self.connect(conn1, conn1.tail, iface, pport)
+        self.connect(conn2, conn2.tail, iface, rport)
+        self.connect(conn3, conn3.tail, iface, rport)
+  
+        # test precondition
+        assert conn1.subject is conn2.subject is conn3.subject
+
+        # disconnect from provided port
+        # assembly should be destroyed
+        self.disconnect(conn1, conn1.head)
+
+        self.assertTrue(conn1.subject is None)
+        self.assertTrue(conn2.subject is None)
+        self.assertTrue(conn3.subject is None)
         
         self.assertEquals(0, len(self.kindof(UML.Connector)))
         self.assertEquals(0, len(self.kindof(UML.ConnectorEnd)))

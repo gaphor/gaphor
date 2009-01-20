@@ -30,6 +30,23 @@ class ConnectorConnectBase(AbstractConnect):
         interfaces.sort(key=operator.attrgetter('name'))
         return interfaces
 
+
+    def get_connecting(self, iface, both=False):
+        """
+        Get items connecting to interface.
+
+        :Parameters:
+         iface
+            Interface in question.
+         both
+            If true, then filter out one-side connections.
+        """
+        connected = iface.canvas.get_connected_items(iface)
+        if both:
+            connected = [(l, h) for l, h in connected if l.opposite(h).connected_to]
+        return connected
+
+
     def get_component(self, connector):
         """
         Get component connected by connector.
@@ -131,8 +148,12 @@ class ConnectorConnectBase(AbstractConnect):
                 assert isinstance(iface, items.ComponentItem)
                 component, iface = iface, component
 
-            connected = canvas.get_connected_items(iface)
-            if len(connected) > 1:
+            connected = self.get_connecting(iface, both=True)
+            ports = set(h.connected_port for _, h in connected)
+
+            # to make an assembly at least two connector ends need to exist
+            # also, two different ports of interface need to be connected
+            if len(connected) > 1 and len(ports) == 2:
                 # find assembly connector
                 assembly = None
                 for conn, h in connected:
@@ -160,8 +181,13 @@ class ConnectorConnectBase(AbstractConnect):
         if not isinstance(iface, items.InterfaceItem):
             iface = line.tail.connected_to
 
-        connected = iface.canvas.get_connected_items(iface)
-        if len(connected) == 2:
+        connected = self.get_connecting(iface, both=True)
+        # find ports, which will stay connected after disconnection
+        ports = set(h.connected_port for c, h in connected if c is not self.line)
+
+        # destroy whole assembly if one connected item stays
+        # or only one port will stay connected
+        if len(connected) == 2 or len(ports) == 1:
             connector = line.subject
             for conn, h in connected:
                 c = self.get_component(conn)
@@ -205,8 +231,8 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         if glue_ok:
             # find connected items, which are not connectors
             canvas = self.element.canvas
-            connected = canvas.get_connected_items(self.element)
-            lines = [d for d in connected if not isinstance(d[0], items.ConnectorItem)]
+            connected = self.get_connecting(self.element)
+            lines = [l for l, h in connected if not isinstance(l, items.ConnectorItem)]
             glue_ok = len(lines) == 0
 
         return glue_ok
@@ -241,7 +267,7 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         super(InterfaceConnectorConnect, self).disconnect(handle)
         iface = self.element
         # about to disconnect last connector
-        if len(iface.canvas.get_connected_items(iface)) == 1:
+        if len(self.get_connecting(iface)) == 1:
             ports = iface.ports()
             iface.folded = iface.FOLDED_PROVIDED
             iface._angle = ports[0].angle
