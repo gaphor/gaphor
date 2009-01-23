@@ -30,8 +30,6 @@ class PseudoFile(object):
 
 class StorageTestCase(TestCase):
 
-    services = TestCase.services + ['adapter_loader']
-
     def test_save_uml(self):
         """Saving gaphor.UML model elements.
         """
@@ -177,24 +175,13 @@ class StorageTestCase(TestCase):
         self.diagram.canvas.update_matrix(c2)
         assert tuple(self.diagram.canvas.get_matrix_i2c(c2)) == (1, 0, 0, 1, 200, 200)
 
-        a = self.diagram.create(items.AssociationItem)
+        a = self.create(items.AssociationItem)
 
-        # Provide our element factory as Utility, since the connect adapters
-        # depend on it.
-        from gaphor.interfaces import IService
-        component.provideUtility(self.element_factory, IService, 'element_factory')
+        self.connect(a, a.head, c1)
+        head_pos = a.head.pos
 
-        adapter = component.queryMultiAdapter((c1, a), IConnect)
-        assert adapter
-        h = a.head
-        adapter.connect(h)
-        head_pos = h.pos
-
-        adapter = component.queryMultiAdapter((c2, a), IConnect)
-        assert adapter
-        h = a.tail
-        adapter.connect(h)
-        tail_pos = h.pos
+        self.connect(a, a.tail, c2)
+        tail_pos = a.tail.pos
 
         self.diagram.canvas.update_now()
 
@@ -216,14 +203,15 @@ class StorageTestCase(TestCase):
         storage.load(fd, factory=self.element_factory)
         fd.close()
 
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
-        d = self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
+        diagrams = list(self.kindof(UML.Diagram))
+        self.assertEquals(1, len(diagrams))
+        d = diagrams[0]
         a = d.canvas.select(lambda e: isinstance(e, items.AssociationItem))[0]
-        assert a.subject
-        assert old_a_subject_id == a.subject.id
-        assert a.head.connected_to
-        assert a.tail.connected_to
-        assert not a.head.connected_to is a.tail.connected_to
+        self.assertTrue(a.subject is not None)
+        self.assertEquals(old_a_subject_id, a.subject.id)
+        self.assertTrue(a.head.connected_to is not None)
+        self.assertTrue(a.tail.connected_to is not None)
+        self.assertTrue(not a.head.connected_to is a.tail.connected_to)
         #assert a.head_end._name
 
     def test_load_save(self):

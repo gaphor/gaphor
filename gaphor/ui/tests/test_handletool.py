@@ -18,6 +18,9 @@ Event = Context
 
 
 class HandleToolTestCase(unittest.TestCase):
+    """
+    Handle connection tool integration tests.
+    """
 
     def setUp(self):
         Application.init(services=['adapter_loader', 'element_factory', 'gui_manager', 'properties_manager', 'action_manager', 'properties'])
@@ -69,19 +72,19 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Should glue to (238, 248)
         handle.pos = 245, 248
-        item = tool.glue(view, line, handle, 245, 248)
+        item = tool.glue(view, line, handle, (245, 248))
         self.assertTrue(item is not None)
         self.assertEquals((238, 248), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
 
         handle.x, handle.y = 245, 248
-        tool.connect(view, line, handle, 245, 248)
+        tool.connect(view, line, handle, (245, 248))
         self.assertTrue(handle.connection_data is not None)
         self.assertTrue(handle.connected_to is actor, handle.connected_to)
         self.assertEquals((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
         tool.disconnect(view, line, handle)
         
-        self.assertTrue(handle.connected_to is actor)
+        self.assertTrue(handle.connected_to is None)
         self.assertTrue(handle.connection_data is None)
 
 
@@ -114,41 +117,35 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Connect one end to the Comment
         handle.pos = view.get_matrix_v2i(line).transform_point(45, 48)
-        tool.connect(view, line, handle, 45, 48)
+        tool.connect(view, line, handle, (45, 48))
         self.assertTrue(hasattr(handle, 'connection_data'))
         self.assertTrue(handle.connection_data is not None)
         self.assertTrue(handle.connected_to is comment)
-        self.assertEquals((45, 50), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
+        pos = view.get_matrix_i2v(line).transform_point(handle.x, handle.y)
+        self.assertAlmostEquals(45, pos[0], 0.00001)
+        self.assertAlmostEquals(50, pos[1], 0.00001)
 
         # Connect the other end to the actor:
         handle = line.handles()[-1]
         tool.grab_handle(line, handle)
 
         handle.x, handle.y = 140, 150
-        glued = tool.glue(view, line, handle, 200, 200) 
+        glued, port = tool.glue(view, line, handle, (200, 200))
         self.assertTrue(glued is actor)
-        tool.connect(view, line, handle, 200, 200)
+        tool.connect(view, line, handle, (200, 200))
         self.assertTrue(hasattr(handle, 'connection_data'))
         self.assertTrue(handle.connection_data is not None)
         self.assertTrue(handle.connected_to is actor)
         self.assertEquals((200, 200), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
         
-        # Disconnect only disconnects the constraints:
-        self.assertEquals(len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement)
-        self.assertTrue(actor.subject in comment.subject.annotatedElement)
-       
-        tool.disconnect(view, line, handle)
-
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        self.assertTrue(handle.connected_to is actor, handle.connected_to)
-        self.assertTrue(handle.connection_data is None)
-
         # Try to connect far away from any item will only do a full disconnect
         self.assertEquals(len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
-        self.assertTrue(tool.glue(view, line, handle, 500, 500) is None)
-        tool.connect(view, line, handle, 500, 500)
+        item, port = tool.glue(view, line, handle, (500, 500))
+        self.assertTrue(item is None, item)
+        self.assertTrue(port is None, port)
+        tool.connect(view, line, handle, (500, 500))
 
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         self.assertTrue(handle.connected_to is None)

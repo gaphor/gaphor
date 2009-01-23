@@ -60,42 +60,21 @@ class StereotypeSupport(object):
         Note, that this method is also called from
         ExtensionItem.confirm_connect_handle method.
         """
-        if self.subject:
-            applied_stereotype = self.subject.appliedStereotype
-        else:
-            applied_stereotype = None
-
-        def stereotype_name(name):
-            """
-            Return a nice name to display as stereotype. First will be
-            character lowercase unless the second character is uppercase.
-            """
-            if len(name) > 1 and name[1].isupper():
-                return name
-            else:
-                return name[0].lower() + name[1:]
-
         # by default no stereotype, however check for __stereotype__
         # attribute to assign some static stereotype see interfaces,
         # use case relationships, package or class for examples
-        stereotype = getattr(self, '__stereotype__', None)
+        stereotype = getattr(self, '__stereotype__', ())
         if stereotype:
             stereotype = self.parse_stereotype(stereotype)
 
-        if applied_stereotype:
-            # generate string with stereotype names separated by coma
-            sl = ', '.join(stereotype_name(s.name) for s in applied_stereotype)
-            if stereotype:
-                stereotype = '%s, %s' % (stereotype, sl)
-            else:
-                stereotype = sl
-
-        # Phew! :]
+        # Phew! :] :P
+        stereotype = UML.model.stereotypes_str(self.subject, stereotype)
         self.set_stereotype(stereotype)
+
 
     def parse_stereotype(self, data):
         if isinstance(data, str): # return data as stereotype if it is a string
-            return data
+            return (data,)
 
         subject = self.subject
 
@@ -118,8 +97,8 @@ class StereotypeSupport(object):
                 ok = predicate(self)
 
             if ok:
-                return stereotype
-        return None
+                return (stereotype,)
+        return ()
 
 
 class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):

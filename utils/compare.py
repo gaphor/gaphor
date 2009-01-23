@@ -8,8 +8,6 @@ This can be called as:
 This file is part of Gaphor.
 """
 
-from __future__ import generators
-
 __all__ = ['Compare']
 
 try:
@@ -17,8 +15,8 @@ try:
 except ImportError:
     pass
 
-import gaphor.parser
 import gaphor.storage
+import gaphor.storage.parser
 import gaphor.UML
 
 class Compare(object):
@@ -50,7 +48,7 @@ class Compare(object):
         else:
             msg = '+'
         
-        if isinstance(element, gaphor.parser.canvas):
+        if isinstance(element, gaphor.storage.parser.canvas):
             msg += ' <canvas>:'
         else:
             if self.show_id:
@@ -61,7 +59,7 @@ class Compare(object):
             if self.show_id or n:
                 msg += ':'
 
-        msg += ' %s' % (isinstance(element, gaphor.parser.canvas) and 'Canvas' or element.type)
+        msg += ' %s' % (isinstance(element, gaphor.storage.parser.canvas) and 'Canvas' or element.type)
 
         if name:
             msg += '.%s' % name
@@ -81,7 +79,7 @@ class Compare(object):
         """Load the model file and create a factory.
         A tuple (elements, factory) is returned.
         """
-        elements = gaphor.parser.parse(filename)
+        elements = gaphor.storage.parser.parse(filename)
         factory = gaphor.UML.ElementFactory()
         try:
             gaphor.storage.load_elements(elements, factory)

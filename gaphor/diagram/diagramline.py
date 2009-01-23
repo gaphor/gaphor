@@ -60,9 +60,9 @@ class LineItem(gaphas.Line, DiagramItem):
         DiagramItem.draw(self, context)
 
 
-    def point(self, x, y):
-        d1 = gaphas.Line.point(self, x, y)
-        d2 = DiagramItem.point(self, x, y)
+    def point(self, pos):
+        d1 = gaphas.Line.point(self, pos)
+        d2 = DiagramItem.point(self, pos)
         return min(d1, d2)
 
 
@@ -96,7 +96,8 @@ class DiagramLine(LineItem):
         elif name == 'points':
             points = eval(value)
             for x in xrange(len(points) - 2):
-                self.split_segment(0)
+                h = self._create_handle((0, 0))
+                self._handles.insert(1, h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
         elif name == 'orthogonal':
@@ -108,9 +109,19 @@ class DiagramLine(LineItem):
         else:
             LineItem.load(self, name, value)
 
+
+    def _connect(self, handle, item):
+        # we need connection tool, here;
+        # can we move that to storage module?
+        from gaphor.ui.diagramtools import ConnectHandleTool
+        tool = ConnectHandleTool()
+
+        port = tool.find_port(self, handle, item)
+        tool.connect_handle(self, handle, item, port)
+        tool.post_connect(self, handle, item, port)
+
+
     def postload(self):
-        # Ohoh, need the IConnect adapters here
-        from zope import component
         if hasattr(self, '_load_orthogonal'):
             self.orthogonal = self._load_orthogonal
             del self._load_orthogonal
@@ -122,18 +133,13 @@ class DiagramLine(LineItem):
         #self.canvas.solver.solve()
 
         if hasattr(self, '_load_head_connection'):
-            adapter = component.queryMultiAdapter((self._load_head_connection, self), IConnect)
-            assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_head_connection, self)
-
-            adapter.connect(self.head)
+            self._connect(self.head, self._load_head_connection)
             del self._load_head_connection
 
         if hasattr(self, '_load_tail_connection'):
-            adapter = component.queryMultiAdapter((self._load_tail_connection, self), IConnect)
-            assert adapter, 'No IConnect adapter to connect %s to %s' % (self._load_tail_connection, self)
-
-            adapter.connect(self.tail)
+            self._connect(self.tail, self._load_tail_connection)
             del self._load_tail_connection
+
         LineItem.postload(self)
 
 

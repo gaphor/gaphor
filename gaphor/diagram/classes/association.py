@@ -204,13 +204,13 @@ class AssociationItem(NamedLine):
                                      handles[-2].pos)
         
 
-    def point(self, x, y):
+    def point(self, pos):
         """
         Returns the distance from the Association to the (mouse) cursor.
         """
-        return min(super(AssociationItem, self).point(x, y),
-                   self._head_end.point(x, y),
-                   self._tail_end.point(x, y))
+        return min(super(AssociationItem, self).point(pos),
+                   self._head_end.point(pos),
+                   self._tail_end.point(pos))
 
     def draw_head_none(self, context):
         """
@@ -523,20 +523,18 @@ class AssociationEnd(UML.Presentation):
     navigability = property(_get_navigability, _set_navigability)
 
 
-    def point_name(self, x, y):
-        p = (x, y)
+    def point_name(self, pos):
         drp = distance_rectangle_point
-        return drp(self._name_bounds, p)
+        return drp(self._name_bounds, pos)
 
 
-    def point_mult(self, x, y):
-        p = (x, y)
+    def point_mult(self, pos):
         drp = distance_rectangle_point
-        return drp(self._mult_bounds, p)
+        return drp(self._mult_bounds, pos)
 
 
-    def point(self, x, y):
-        return min(self.point_name(x, y), self.point_mult(x, y))
+    def point(self, pos):
+        return min(self.point_name(pos), self.point_mult(pos))
 
 
     def get_name(self):
@@ -630,16 +628,15 @@ class AssociationEnd(UML.Presentation):
                                       height=mult_h)
 
 
-    def point(self, x, y):
+    def point(self, pos):
         """Given a point (x, y) return the distance to the canvas item.
         """
-        p = (x, y)
         drp = distance_rectangle_point
-        d1 = drp(self._name_bounds, p)
-        d2 = drp(self._mult_bounds, p)
+        d1 = drp(self._name_bounds, pos)
+        d2 = drp(self._mult_bounds, pos)
 #        try:
-#            d3 = geometry.distance_point_point(self._point1, p)
-#            d4, dummy = distance_line_point(self._point1, self._point2, p, 1.0, 0) #diacanvas.shape.CAP_ROUND)
+#            d3 = geometry.distance_point_point(self._point1, pos)
+#            d4, dummy = distance_line_point(self._point1, self._point2, pos, 1.0, 0) #diacanvas.shape.CAP_ROUND)
 #            if d3 < 15 and d4 < 5:
 #                d3 = 0.0
 #        except Exception, e:

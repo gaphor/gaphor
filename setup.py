@@ -7,7 +7,7 @@ dependencies.
 Run 'python setup.py run' to start Gaphor directly (without install).
 """
 
-VERSION = '0.13.1'
+VERSION = '0.14.0'
 
 import os
 import sys
@@ -160,7 +160,7 @@ It uses the GTK+ environment for user interaction.
 
     install_requires = [
         # 'PyGTK >= 2.8.0', - Exclude, since it will not build anyway
-        'gaphas >= 0.3.0, < 0.4',
+        'gaphas >= 0.4.0',
         'zope.component >= 3.4.0', # - won't compile on windows.
     ],
 
@@ -209,7 +209,7 @@ It uses the GTK+ environment for user interaction.
               'run': run,
     },
 
-    setup_requires = ['nose >= 0.9.2'] + platform_setup_requires,
+    setup_requires = ['nose == 0.9.3'] + platform_setup_requires,
 
     test_suite = 'nose.collector',
 

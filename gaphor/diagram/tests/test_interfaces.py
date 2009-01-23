@@ -6,14 +6,10 @@ import unittest
 from zope import interface
 from gaphor import diagram
 from gaphor import diagram
-
-# Ensure adapters are available
-import gaphor.adapters
-reload(gaphor.adapters.editors)
-reload(gaphor.adapters.connectors)
+from gaphor.tests import TestCase
 
 
-class InterfacesTestCase(unittest.TestCase):
+class InterfacesTestCase(TestCase):
 
     def test_comment(self):
         #self.assertTrue(diagram.interfaces.ICommentItem.implementedBy(diagram.comment.CommentItem))

@@ -31,7 +31,7 @@ class TransitionConnect(VertexConnect):
     """
     component.adapts(items.VertexItem, items.TransitionItem)
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         """
         Glue transition handle and vertex item. Guard from connecting
         transition's head with final state.
@@ -42,7 +42,7 @@ class TransitionConnect(VertexConnect):
         is_final = isinstance(subject, UML.FinalState)
         if isinstance(subject, UML.State) and not is_final \
                 or handle is line.tail and is_final:
-            return super(TransitionConnect, self).glue(handle)
+            return super(TransitionConnect, self).glue(handle, port)
         else:
             return None
 
@@ -59,7 +59,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
     """
     component.adapts(items.InitialPseudostateItem, items.TransitionItem)
 
-    def glue(self, handle):
+    def glue(self, handle, port):
         """
         Glue to initial pseudostate with transition's head and when there are
         no transitions connected.
@@ -68,17 +68,17 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         subject = self.element.subject
 
         if handle is line.head and not self.element._connected:
-            return super(InitialPseudostateTransitionConnect, self).glue(handle)
+            return super(InitialPseudostateTransitionConnect, self).glue(handle, port)
         else:
             return None
 
 
-    def connect(self, handle):
+    def connect(self, handle, port):
         """
         Update InitialPseudostateItem._connected attribute to `True` to
         disallow more connections.
         """
-        if super(InitialPseudostateTransitionConnect, self).connect(handle):
+        if super(InitialPseudostateTransitionConnect, self).connect(handle, port):
             self.element._connected = True
 
 

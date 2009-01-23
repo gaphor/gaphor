@@ -1,29 +1,139 @@
 """
-Interface item.
+Interface item implementation. There are several notations supported
+
+- class box with interface stereotype
+- folded interface
+    - ball is drawn to indicate provided interface
+    - socket is drawn to indicate required interface
+
+Interface item can act as icon of assembly connector, see
+`gaphor.diagram.connector` module documentation for details. *Documentation
+of this module does not take into accout assembly connector icon mode.*
+
+Folded Interface Item
+=====================
+Folded interface notation is reserved for very simple situations.
+When interface is folded
+
+- only an implementation can be connected (ball - provided interface)
+- or only usage dependency can be connected (socket - required interface)
+
+Above means that interface cannot be folded when
+
+- both, usage dependency and implementation are connected
+- any other lines are connected
+
+Dependencies
+------------
+Dependencies between folded interfaces are *not supported*
+
++---------------------+---------------------+
+|     *Supported*     |    *Unsupported*    |
++=====================+=====================+
+| ::                  | ::                  |
+|                     |                     |
+|   |A|--(    O--|B|  |   |A|--(--->O--|B|  |
+|        Z    Z       |        Z    Z       |
++---------------------+---------------------+
+
+On above diagram, A requires interface Z and B provides interface Z.
+Additionally, on the right diagram, Z is connected to itself with
+dependency.
+
+There is no need for additional dependency
+
+- UML data model provides information, that Z is common for A and B
+  (A requires Z, B provides Z)
+- on a diagram, both folded interface items (required and provided)
+  represent the same interface, which is easily identifiable with its name
+
+Even more, adding a dependency between folded interfaces provides
+information, on UML data model level, that an interface depenends on itself
+but it is not the intention of this (*unsupported*) notation.
+
+For more examples of non-supported by Gaphor notation, see
+http://martinfowler.com/bliki/BallAndSocket.html.
+
+
+Folding and Connecting
+----------------------
+Current approach to folding and connecting lines to an interface is as
+follows
+
+- allow folding/unfolding of an interface only when there is only one
+  implementation or depenedency usage connected
+- when interface is folded, allow only one implementation or depenedency
+  usage to be connected
+
+Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
-import itertools
 from math import pi
-from gaphas.item import NW, SE, NE, SW
 from gaphas.state import observed, reversible_property
+from gaphas.item import NW, NE, SE, SW
+from gaphas.connector import LinePort
+from gaphas.geometry import distance_line_point, distance_point_point
 
 from gaphor import UML
-from dependency import DependencyItem
-from implementation import ImplementationItem
 from klass import ClassItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 
 
+class InterfacePort(LinePort):
+    """
+    Interface connection port.
+    
+    It is simple line port, which changes glue behaviour depending on
+    interface folded state. If interface is folded, then
+    `InterfacePort.glue` method suggests connection in the middle of the
+    port.
+
+    The port provides rotation angle information as well. Rotation angle
+    is direction the port is facing (i.e. 0 is north, PI/2 is west, etc.).
+    The rotation angle shall be used to determine rotation of required
+    interface notation (socket's arc is in the same direction as the
+    angle).
+
+    :IVariables:
+     angle
+        Rotation angle.
+     iface
+        Interface owning port.
+
+    """
+    def __init__(self, start, end, iface, angle):
+        super(InterfacePort, self).__init__(start, end)
+        self.angle = angle
+        self.iface = iface
+        self.required = False
+        self.provided = False
+
+
+    def glue(self, pos):
+        """
+        Behaves like simple line port, but for folded interface suggests
+        connection to the middle point of a port.
+        """
+        if self.iface.folded:
+            px = (self.start[0] + self.end[0]) / 2
+            py = (self.start[1] + self.end[1]) / 2
+            d = distance_point_point((px, py), pos)
+            return (px, py), d
+        else:
+            p1 = self.start
+            p2 = self.end
+            d, pl = distance_line_point(p1, p2, pos)
+            return pl, d
+
+
+
 class InterfaceItem(ClassItem):
     """
-    This item represents an interface drawn as a dot. The class-like
-    representation is provided by ClassItem. These representations can be
-    switched by using the Fold and Unfold actions.
+    Interface item supporting class box, folded notations and assembly
+    connector icon mode.
 
-    TODO (see also DependencyItem): when a Usage dependency is connected to
-          the interface, draw a line, but not all the way to the connecting
-          handle. Stop drawing the line 'x' points earlier. 
+    When in folded mode, provided (ball) notation is used by default.
     """
 
     __uml__        = UML.Interface
@@ -48,10 +158,36 @@ class InterfaceItem(ClassItem):
     RADIUS_PROVIDED = 10
     RADIUS_REQUIRED = 14
 
+    # Non-folded mode.
+    FOLDED_NONE     = 0
+    # Folded mode, provided (ball) notation.
+    FOLDED_PROVIDED = 1
+    # Folded mode, required (socket) notation.
+    FOLDED_REQUIRED = 2
+    # Folded mode, notation of assembly connector icon mode (ball&socket).
+    FOLDED_ASSEMBLY = 3
+
+
     def __init__(self, id=None):
         ClassItem.__init__(self, id)
-        self._draw_required = False
-        self._draw_provided = False
+        self._folded = self.FOLDED_NONE
+        self._angle = 0
+        old_f = self._name.is_visible
+        self._name.is_visible = lambda: old_f() and self._folded != self.FOLDED_ASSEMBLY
+
+        handles = self._handles
+        h_nw = handles[NW]
+        h_ne = handles[NE]
+        h_sw = handles[SW]
+        h_se = handles[SE]
+
+        # edge of element define default element ports
+        self._ports = [
+            InterfacePort(h_nw, h_ne, self, 0),
+            InterfacePort(h_ne, h_se, self, pi / 2),
+            InterfacePort(h_se, h_sw, self, pi),
+            InterfacePort(h_sw, h_nw, self, pi * 1.5)
+        ]
 
         self.add_watch(UML.Interface.ownedAttribute, self.on_class_owned_attribute)
         self.add_watch(UML.Interface.ownedOperation, self.on_class_owned_operation)
@@ -66,54 +202,61 @@ class InterfaceItem(ClassItem):
         In addition to setting the drawing style, the handles are
         make non-movable if the icon (folded) style is used.
         """
-        ClassItem.set_drawing_style(self, style)
-        # TODO: adjust offsets so the center point is the same
+        super(InterfaceItem, self).set_drawing_style(style)
         if self._drawing_style == self.DRAW_ICON:
-            self._name.style.update(self.FOLDED_STYLE)
-            for h in self._handles: h.movable = False
-            self.request_update()
+            self.folded = self.FOLDED_PROVIDED # set default folded mode
         else:
-            self._name.style.update(self.UNFOLDED_STYLE)
-            for h in self._handles: h.movable = True
-            self.request_update()
+            self.folded = self.FOLDED_NONE # unset default folded mode
 
     drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
 
-    def is_folded(self):
+    def _is_folded(self):
         """
-        Returns True if the interface is drawn as a circle/dot.
-        Unfolded means it's drawn like a classifier.
+        Check if interface item is folded interface item.
         """
-        return self.drawing_style == self.DRAW_ICON
+        return self._folded
 
     def _set_folded(self, folded):
-        if folded:
-            self.drawing_style = self.DRAW_ICON
-        else:
-            self.drawing_style = self.DRAW_COMPARTMENT
+        """
+        Set folded notation.
 
-    folded = property(is_folded, _set_folded)
+        :param folded: Folded state, see FOLDED_* constants.
+        """
+        movable = True
+
+        self._folded = folded
+
+        if folded == self.FOLDED_NONE:
+            super(InterfaceItem, self).set_drawing_style(self.DRAW_COMPARTMENT)
+            self._name.style.update(self.UNFOLDED_STYLE)
+        else:
+            super(InterfaceItem, self).set_drawing_style(self.DRAW_ICON)
+            self._name.style.update(self.FOLDED_STYLE)
+            movable = False
+
+        for h in self._handles:
+            h.movable = movable
+        self.request_update()
+
+    folded = property(_is_folded, _set_folded,
+        doc="Check or set folded notation, see FOLDED_* constants.")
 
     def on_implementation_contract(self, event):
         #print 'on_implementation_contract', event, event.element
         if event is None or event.element.contract is self:
             self.request_update()
 
+
     def pre_update_icon(self, context):
         """
-        Figure out if this interface represents a required, provided,
-        assembled (wired) or dotted (minimal) look.
+        Change style to use icon style information.
         """
-
-        self._draw_required = self._draw_provided = False
-        for item, handle in self.canvas.get_connected_items(self):
-            if gives_required(item, handle):
-                self._draw_required = True
-            elif gives_provided(item, handle):
-                self._draw_provided = True
         radius = self.RADIUS_PROVIDED
         self.style.icon_size = self.style.icon_size_provided
-        if self._draw_required:
+
+        if self._folded == self.FOLDED_REQUIRED \
+                or self._folded == self.FOLDED_ASSEMBLY:
+
             radius = self.RADIUS_REQUIRED
             self.style.icon_size = self.style.icon_size_required
 
@@ -132,46 +275,22 @@ class InterfaceItem(ClassItem):
 
         super(InterfaceItem, self).pre_update_icon(context)
 
+
     def draw_icon(self, context):
         cr = context.cairo
         h_nw = self._handles[NW]
         cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
-        if self._draw_required:
-            cr.move_to(cx, cy + self.RADIUS_REQUIRED)
-            cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, pi/2, pi*1.5)
-            cr.stroke()
-        if self._draw_provided or not self._draw_required:
+        required = self._folded == self.FOLDED_REQUIRED or self._folded == self.FOLDED_ASSEMBLY
+        provided = self._folded == self.FOLDED_PROVIDED or self._folded == self.FOLDED_ASSEMBLY
+        if required:
+            cr.save()
+            cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self._angle, pi + self._angle)
+            cr.restore()
+        if provided:
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi*2)
-            cr.stroke()
+        cr.stroke()
         super(InterfaceItem, self).draw(context)
-
-
-def gives_provided(item, handle):
-    """
-    Check if an item connected to an interface changes semantics of this
-    interface to be provided.
-
-    handle - handle of an item
-    """
-    return isinstance(item, ImplementationItem)
-
-
-def gives_required(item, handle):
-    """
-    Check if an item connected to an interface changes semantics of this
-    interface to be required.
-
-    handle - handle of an item
-    TODO: check subject.clientDependency and subject.supplierDependency
-    """
-    # check for dependency item, interfaces is required if
-    # - connecting handle is head one
-    # - is in auto dependency
-    # - if is not in auto dependency then its UML type is Usage
-    return isinstance(item, DependencyItem) and item.handles()[0] == handle \
-        and (not item.auto_dependency and item.dependency_type is UML.Usage
-            or item.auto_dependency)
 
 
 # vim:sw=4:et

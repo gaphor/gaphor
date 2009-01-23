@@ -15,5 +15,6 @@ class InitialPseudostate(TestCase):
         """Test creation of initial pseudostate
         """
         item = self.create(InitialPseudostateItem, UML.Pseudostate)
-        assert item.subject.kind == 'initial'
+        self.assertEquals('initial', item.subject.kind)
+        self.assertFalse(item._connected) # not connected by default
 

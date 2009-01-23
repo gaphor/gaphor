@@ -57,10 +57,10 @@ class FeatureItem(DiagramItem):
             self.width, self.height = 0, 0
 
 
-    def point(self, x, y):
+    def point(self, pos):
         """
         """
-        return distance_rectangle_point((0, 0, self.width, self.height), (x, y))
+        return distance_rectangle_point((0, 0, self.width, self.height), pos)
 
 
 class AttributeItem(FeatureItem):

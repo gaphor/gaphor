@@ -241,7 +241,7 @@ class DiagramTab(object):
         """
         if data and data.format == 8 and info == DiagramView.TARGET_TOOLBOX_ACTION:
             tool = self.toolbox.get_tool(data.data)
-            tool.create_item(view, x, y)
+            tool.create_item(view, (x, y))
             context.finish(True, False, time)
         elif data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
             #print 'drag_data_received:', data.data, info

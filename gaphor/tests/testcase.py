@@ -7,11 +7,13 @@ services and start off.
 
 import unittest
 from cStringIO import StringIO
+from zope import component
 
 from gaphor import UML
 from gaphor.storage import storage
 from gaphor.application import Application
 from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.diagram.interfaces import IConnect
 
 # Increment log level
 log.set_log_level(log.WARNING)
@@ -19,7 +21,7 @@ log.set_log_level(log.WARNING)
 
 class TestCase(unittest.TestCase):
     
-    services = ['element_factory']
+    services = ['element_factory', 'adapter_loader']
     
     def setUp(self):
         Application.init(services=self.services)
@@ -46,6 +48,64 @@ class TestCase(unittest.TestCase):
         item = self.diagram.create(item_cls, subject=subject)
         self.diagram.canvas.update()
         return item
+
+
+    def glue(self, line, handle, item, port=None):
+        """
+        Glue line's handle to an item.
+
+        If port is not provided, then first port is used.
+        """
+        if port is None and len(item.ports()) > 0:
+            port = item.ports()[0]
+            
+        query = (item, line)
+        adapter = component.queryMultiAdapter(query, IConnect)
+        return adapter.glue(handle, port)
+
+
+    def connect(self, line, handle, item, port=None):
+        """
+        Connect line's handle to an item.
+
+        If port is not provided, then first port is used.
+        """
+        if port is None and len(item.ports()) > 0:
+            port = item.ports()[0]
+
+        handle.connected_to = item
+        handle.connected_port = port
+
+        query = (item, line)
+        adapter = component.queryMultiAdapter(query, IConnect)
+        old_disconnect = handle.disconnect
+        connected = adapter.connect(handle, port)
+
+        assert handle.connected_to is item
+        assert handle.disconnect is not old_disconnect
+
+        return connected
+
+
+    def disconnect(self, line, handle):
+        """
+        Disconnect line's handle.
+        """
+        query = (handle.connected_to, line)
+        adapter = component.queryMultiAdapter(query, IConnect)
+        adapter.disconnect(line.head)
+
+        handle.connected_to = None
+        handle.connected_port = None
+
+        assert handle.connected_to is None
+
+
+    def kindof(self, cls):
+        """
+        Find UML metaclass instances using element factory.
+        """
+        return self.element_factory.lselect(lambda e: e.isKindOf(cls))
 
 
     def save(self):

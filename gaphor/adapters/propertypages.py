@@ -696,13 +696,22 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
         # Fold toggle
         hbox = gtk.HBox()
-        label = gtk.Label(_("Fold"))
+        label = gtk.Label(_("Folded"))
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
+
         button = gtk.CheckButton()
         button.set_active(self.context.folded)
         button.connect('toggled', self._on_fold_change)
+        item = self.context
+
+        connected_items = [c[0] for c in item.canvas.get_connected_items(item)]
+        allowed = (items.DependencyItem, items.ImplementationItem)
+        can_fold = len(connected_items) == 0 \
+            or len(connected_items) == 1 and isinstance(connected_items[0], allowed)
+
+        button.set_sensitive(can_fold)
         hbox.pack_start(button)
         hbox.show_all()
         page.pack_start(hbox, expand=False)
@@ -713,9 +722,36 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
     @transactional
     def _on_fold_change(self, button):
-        self.context.folded = button.get_active()
+        item = self.context
+
+        connected_items = [c[0] for c in item.canvas.get_connected_items(item)]
+        assert len(connected_items) <= 1
+
+        line = None
+        if len(connected_items) == 1:
+            line = connected_items[0]
+
+
+        fold = button.get_active()
+
+        if fold:
+            item.folded = item.FOLDED_PROVIDED
+        else:
+            item.folded = item.FOLDED_NONE
+
+        if line:
+            if fold and isinstance(line, items.DependencyItem):
+                item.folded = item.FOLDED_REQUIRED
+
+            line._solid = fold
+            constraint = line.head.connection_data
+            constraint.ratio_x = 0.5
+            constraint.ratio_y = 0.5
+            line.request_update()
+
 
 component.provideAdapter(InterfacePropertyPage, name='Properties')
+
 
 
 class AttributesPage(object):
@@ -1383,7 +1419,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
             lifeline = context.tail.connected_to
 
             # disallow connecting two delete messages to a lifeline
-            if lifeline and lifeline.lifetime.is_destroyed \
+            if lifeline and lifeline.is_destroyed \
                     and subject.messageSort != 'deleteMessage':
                 sort_data = list(sort_data)
                 assert sort_data[4][1] == 'deleteMessage'
@@ -1417,9 +1453,9 @@ class MessagePropertyPage(NamedItemPropertyPage):
         #
         if lifeline:
             if subject.messageSort == 'deleteMessage' \
-                    or not lifeline.lifetime.is_destroyed:
+                    or not lifeline.is_destroyed:
                 is_destroyed = ms == 'deleteMessage'
-                lifeline.lifetime.is_destroyed = is_destroyed
+                lifeline.is_destroyed = is_destroyed
                 lifeline.request_update()
 
         subject.messageSort = ms

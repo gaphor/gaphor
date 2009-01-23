@@ -14,8 +14,10 @@ from zope import component
 from gaphas.geometry import distance_point_point, distance_point_point_fast, \
                             distance_line_point, distance_rectangle_point
 from gaphas.item import Line
-from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool
-from gaphas.tool import ToolChain, HoverTool, ItemTool, RubberbandTool
+from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool, \
+    ToolChain, HoverTool, ItemTool, RubberbandTool, \
+    ConnectHandleTool as _ConnectHandleTool, LineSegmentTool, \
+    DisconnectHandle as _DisconnectHandle
 from gaphas.canvas import Context
 
 from gaphor.core import inject, Transaction, transactional
@@ -25,169 +27,61 @@ from gaphor.diagram.interfaces import IEditor, IConnect
 __version__ = '$Revision$'
 
 
-class ConnectHandleTool(HandleTool):
+class ConnectHandleTool(_ConnectHandleTool):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
     to connect items to one-another.
 
     It also adds handles to lines when a line is grabbed on the middle of
     a line segment (points are drawn by the LineSegmentPainter).
-
-    Attributes:
-     - _adapter: current adapter used to connect items
     """
-    GLUE_DISTANCE = 10
 
-    def __init__(self):
-        super(ConnectHandleTool, self).__init__()
-        self._adapter = None
-
-
-    def glue(self, view, item, handle, vx, vy):
+    def can_glue(self, view, item, handle, glue_item, port):
         """
-        Find the nearest item that the handle may connect to.
-
-        This is done by checking for an IConnect adapter for all items in the
-        proximity of ``(vx, xy)``.  If such an adapter exists, the glue
-        position is determined. The item with the glue point closest to the
-        handle will be glued to.
-
-        view: The view
-        item: The item who's about to connect, owner of handle
-        handle: the handle to connect
-        vx, vy: handle position in view coordinates
+        Determine if item and glue item can glue/connect using connection
+        adapters.
         """
-        # localize methods
-        v2i = view.get_matrix_v2i
-        i2v = view.get_matrix_i2v
-        drp = distance_rectangle_point
-        get_item_bounding_box = view.get_item_bounding_box
-        query_adapter = component.queryMultiAdapter
-
-        dist = self.GLUE_DISTANCE
-        max_dist = dist
-        glue_pos = (0, 0)
-        glue_item = None
-        for i in view.get_items_in_rectangle((vx - dist, vy - dist,
-                                              dist * 2, dist * 2),
-                                             reverse=True):
-            if i is item:
-                continue
-            
-            b = get_item_bounding_box(i)
-            ix, iy = v2i(i).transform_point(vx, vy)
-            if drp(b, (vx, vy)) >= max_dist:
-                continue
-            
-            adapter = query_adapter((i, item), IConnect)
-            if adapter:
-                pos = adapter.glue(handle)
-                self._adapter = adapter
-                if pos:
-                    d = i.point(ix, iy)
-                    if d <= dist:
-                        dist = d
-                        glue_pos = pos
-                        glue_item = i
-
-        if dist < max_dist:
-            handle.pos = glue_pos
-
-        # Return the glued item, this can be used by connect() to
-        # determine which item it should connect to
-        return glue_item
+        can_glue = False
+        adapter = component.queryMultiAdapter((glue_item, item), IConnect)
+        return adapter and adapter.glue(handle, port)
 
 
-    def connect(self, view, item, handle, vx, vy):
+    def post_connect(self, item, handle, glue_item, port):
         """
-        Find an item near ``handle`` that ``item`` can connect to and connect.
-        
-        This is done by attempting a glue() operation. If there is something
-        to glue (the handles are already positioned), the IConnect.connect
-        is called for (glued_item, item).
+        Connecting requires the handles to be connected before the model
+        level connection is made.
+
+        Note that once this method is called, the glue() method has done that
+        for us.
         """
-        connected = False
-        try:
-            glue_item = self.glue(view, item, handle, vx, vy)
+        super(ConnectHandleTool, self).post_connect(item, handle, glue_item, port)
+        adapter = component.queryMultiAdapter((glue_item, item), IConnect)
 
-            if glue_item:
-                assert handle in self._adapter.line.handles()
-                self._adapter.connect(handle)
+        assert adapter is not None
+        assert handle in adapter.line.handles()
+        assert port in adapter.element.ports()
 
-                connected = True
-            elif handle and handle.connected_to:
-                handle.disconnect()
-
-        finally:
-            self._adapter = None
-
-        return connected
+        adapter.connect(handle, port)
 
 
-    def disconnect(self, view, item, handle):
-        """
-        Disconnect the handle from the element by removing constraints.
-        Do not yet release the connection on model level, since the handle
-        may be connected to the same item on some other place.
-        """
+    def connect_handle(self, line, handle, item, port):
+        super(ConnectHandleTool, self).connect_handle(line, handle, item, port)
+        # Set new disconnect handler:
+        handle.disconnect = DisconnectHandle(line, handle)
+
+
+class DisconnectHandle(_DisconnectHandle):
+    """
+    extend the default disconnect handle method with the means to disconnect
+    on model level, using the adapter.  
+    """
+    def handle_disconnect(self):
+        handle = self.handle
+        item = self.item
         if handle.connected_to:
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
-            adapter.disconnect_constraints(handle)
-        
-
-    def on_button_press(self, context, event):
-        """
-        In addition to the normal behavior, the button press event creates
-        new handles if it is activated on the middle of a line segment.
-        """
-        if super(ConnectHandleTool, self).on_button_press(context, event):
-            return True
-
-        view = context.view
-        item = view.hovered_item
-        if item and item is view.focused_item and isinstance(item, Line):
-            handles = item.handles()
-            x, y = context.view.get_matrix_v2i(item).transform_point(event.x, event.y)
-            for h1, h2 in zip(handles[:-1], handles[1:]):
-                xp = (h1.x + h2.x) / 2
-                yp = (h1.y + h2.y) / 2
-                if distance_point_point_fast((x,y), (xp, yp)) <= 4:
-                    segment = handles.index(h1)
-                    item.split_segment(segment)
-
-                    # Reconnect all constraints:
-                    for i, h in view.canvas.get_connected_items(item):
-                        adapter = component.getMultiAdapter((item, i), IConnect)
-                        adapter.disconnect_constraints(h)
-                        adapter.connect_constraints(h)
-
-                    self.grab_handle(item, item.handles()[segment + 1])
-                    context.grab()
-                    return True
-
-
-    def on_button_release(self, context, event):
-        grabbed_handle = self._grabbed_handle
-        grabbed_item = self._grabbed_item
-        if super(ConnectHandleTool, self).on_button_release(context, event):
-            if grabbed_handle and grabbed_item:
-                handles = grabbed_item.handles()
-                if handles[0] is grabbed_handle or handles[-1] is grabbed_handle:
-                    return True
-                segment = handles.index(grabbed_handle)
-                before = handles[segment - 1]
-                after = handles[segment + 1]
-                d, p = distance_line_point(before.pos, after.pos, grabbed_handle.pos)
-                if d < 2:
-                    grabbed_item.merge_segment(segment)
-
-                    # Reconnect all constraints:
-                    for i, h in context.view.canvas.get_connected_items(grabbed_item):
-                        adapter = component.getMultiAdapter((grabbed_item, i), IConnect)
-                        adapter.disconnect_constraints(h)
-                        adapter.connect_constraints(h)
-
-            return True
+            adapter.disconnect(handle)
+        super(DisconnectHandle, self).handle_disconnect()
 
 
 class TextEditTool(Tool):
@@ -293,8 +187,8 @@ class PlacementTool(_PlacementTool):
         self._tx = None
 
     @transactional
-    def create_item(self, view, x, y):
-        self._create_item(Context(view=view), x, y)
+    def create_item(self, view, pos):
+        self._create_item(Context(view=view), pos)
 
     def on_button_press(self, context, event):
         self._tx = Transaction()
@@ -313,11 +207,11 @@ class PlacementTool(_PlacementTool):
                 view.canvas.update_matrix(self.new_item)
                 view.update_matrix(self.new_item)
 
-                vx, vy = event.x, event.y
+                vpos = event.x, event.y
 
-                item = self.handle_tool.glue(view, self.new_item, opposite, vx, vy)
+                item = self.handle_tool.glue(view, self.new_item, opposite, vpos)
                 if item:
-                    self.handle_tool.connect(view, self.new_item, opposite, vx, vy)
+                    self.handle_tool.connect(view, self.new_item, opposite, vpos)
             return True
         return False
             
@@ -378,6 +272,7 @@ def DefaultTool():
     chain = TransactionalToolChain()
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
+    chain.append(LineSegmentTool())
     chain.append(GroupItemTool())
     chain.append(TextEditTool())
     chain.append(RubberbandTool())
