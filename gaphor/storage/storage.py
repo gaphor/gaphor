@@ -385,7 +385,7 @@ def version_0_9_0(elements, factory, gaphor_version):
                         del elem.values['color']
 
             except Exception, e:
-                log.error('Error while updating taggedValues', e)
+                log.error('Error while updating from DiaCanvas2', e)
 
 def version_0_7_2(elements, factory, gaphor_version):
     """
