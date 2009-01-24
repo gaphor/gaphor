@@ -385,7 +385,7 @@ def version_0_14_0(elements, factory, gaphor_version):
                     for refid in data:
                         st = elements[refid]
                         obj = parser.element(generate_id(), 'InstanceSpecification')
-                        obj.references['classifier'] = st.id
+                        obj.references['classifier'] = [st.id] # it is many to many
                         elements[obj.id] = obj
                         applied.append(obj.id)
 
