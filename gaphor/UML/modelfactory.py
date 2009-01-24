@@ -9,6 +9,7 @@ Functions collected in this module allow to
 """
 
 import itertools
+from .uml2 import *
 
 def stereotypes_str(element, stereotypes=()):
     """
@@ -23,7 +24,7 @@ def stereotypes_str(element, stereotypes=()):
     """
     # generate string with stereotype names separated by coma
     if element:
-        applied = (stereotype_name(s) for s in element.appliedStereotype)
+        applied = (stereotype_name(st) for st in get_applied_stereotypes(element))
     else:
         applied = ()
     return ', '.join(itertools.chain(stereotypes, applied))
@@ -44,5 +45,66 @@ def stereotype_name(stereotype):
     else:
         return name[0].lower() + name[1:]
 
+
+def apply_stereotype(factory, element, stereotype):
+    """
+    Apply a stereotype to an element.
+
+    :Parameters:
+     factory
+        UML metamodel factory.
+     element
+        UML metamodel class instance.
+     stereotype
+        UML metamodel stereotype instance.
+    """
+    obj = factory.create(InstanceSpecification)
+    obj.classifier = stereotype
+    element.appliedStereotype = obj
+
+
+def remove_stereotype(element, stereotype):
+    """
+    Remove a stereotype from an element.
+
+    :Parameters:
+     element
+        UML metamodel element instance.
+     stereotype
+        UML metamodel stereotype instance.
+    """
+    for obj in element.appliedStereotype:
+        if obj.classifier[0] is stereotype:
+            del element.appliedStereotype[obj]
+            obj.unlink()
+            break
+
+
+def get_stereotypes(factory, element):
+    """
+    Get collection of possible stereotypes for specified element.
+    """
+    # UML specs does not allow to extend stereotypes with stereotypes
+    if isinstance(element, Stereotype):
+        raise StopIteration()
+
+    cls = type(element)
+
+    # find out names of classes, which are superclasses of element class
+    names = set(c.__name__ for c in cls.__mro__ if issubclass(c, Element))
+
+    # find stereotypes that extend element class
+    classes = factory.select(lambda e: e.isKindOf(Class) and e.name in names)
+
+    for cls in classes:
+        for extension in cls.extension:
+            yield extension.ownedEnd.type
+
+
+def get_applied_stereotypes(element):
+    """
+    Get collection of applied stereotypes to an element.
+    """
+    return (obj.classifier[0] for obj in element.appliedStereotype)
 
 # vim:sw=4:et

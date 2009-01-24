@@ -196,6 +196,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     version_0_6_2(elements, factory, gaphor_version)
     version_0_7_2(elements, factory, gaphor_version)
     version_0_9_0(elements, factory, gaphor_version)
+    version_0_14_0(elements, factory, gaphor_version)
 
     #log.debug("Still have %d elements" % len(elements))
 
@@ -362,6 +363,40 @@ def load_generator(filename, factory):
     except Exception, e:
         log.info('file %s could not be loaded' % filename, e)
         raise
+
+
+def version_0_14_0(elements, factory, gaphor_version):
+    """
+    Fix applied stereotypes UML metamodel. Before Gaphor 0.14.0 applied
+    stereotypes was a collection of stereotypes classes, but now the list
+    needs to be replaced with collection of stereotypes instances.
+
+    This function is called before the actual elements are constructed.
+    """
+    from gaphor.misc.uniqueid import generate_id
+    if tuple(map(int, gaphor_version.split('.'))) < (0, 14, 0):
+        values = (v for v in elements.values() if type(v) is parser.element)
+        for et in values:
+            try:
+                if 'appliedStereotype' in et.references:
+                    data = tuple(et.references['appliedStereotype'])
+                    applied = []
+                    # collect stereotypes instances in `applied` list
+                    for refid in data:
+                        st = elements[refid]
+                        obj = parser.element(generate_id(), 'InstanceSpecification')
+                        obj.references['classifier'] = st.id
+                        elements[obj.id] = obj
+                        applied.append(obj.id)
+
+                        assert obj.id in applied and obj.id in elements
+
+                    # replace stereotypes with their instances
+                    assert len(applied) == len(data)
+                    et.references['appliedStereotype'] = applied
+
+            except Exception, e:
+                log.error('Error while updating stereotypes', e)
 
 
 def version_0_9_0(elements, factory, gaphor_version):

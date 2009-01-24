@@ -232,6 +232,32 @@ class ClassOperations(EditableTreeModel):
 
 
 
+class StereotypeInstances(EditableTreeModel):
+    """
+    GTK tree model to edit instance specification
+    """
+    def _get_rows(self):
+        for operation in self._item.subject.ownedOperation:
+            yield [operation.render(), operation]
+
+
+    def _create_object(self):
+        operation = self.element_factory.create(UML.Operation)
+        self._item.subject.ownedOperation = operation
+        return operation
+
+
+    def _set_object_value(self, row, col, value):
+        operation = row[-1]
+        operation.parse(value)
+        row[0] = operation.render()
+
+
+    def _swap_objects(self, o1, o2):
+        return self._item.subject.ownedOperation.swap(o1, o2)
+
+
+
 class TaggedValues(EditableTreeModel):
     """
     GTK tree model to edit tagged values.
@@ -591,46 +617,28 @@ class StereotypePage(object):
         
     def construct(self):
         page = gtk.VBox()
-        for i, stereotype in enumerate(self.get_stereotypes()):
+        subject = self.context.subject
+        applied = set(UML.model.get_applied_stereotypes(subject))
+        stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
+        for i, stereotype in enumerate(stereotypes):
             if (i % 3) == 0:
-                hbox = gtk.HBox()
+                hbox = gtk.HBox(spacing=20)
                 page.pack_start(hbox, expand=False)
-            button = gtk.CheckButton()
-            button.set_active(stereotype in self.context.subject.appliedStereotype)
+            button = gtk.CheckButton(label=stereotype.name)
+            button.set_active(stereotype in applied)
             button.connect('toggled', self._on_stereotype_selected, stereotype)
             hbox.pack_start(button, expand=False)
-            label = gtk.Label(stereotype.name)
-            label.set_justify(gtk.JUSTIFY_LEFT)
-            self.size_group.add_widget(label)
-            hbox.pack_start(label)
         page.show_all()
         return page
 
-    def get_stereotypes(self):
-        stereotype_list = []
-        subject = self.context.subject
-
-        # UML specs does not allow to extend stereotypes with stereotypes
-        if subject and not isinstance(subject, UML.Stereotype):
-            cls = type(subject)
-
-            # find out names of classes, which are superclasses of our subject
-            names = set(c.__name__ for c in cls.__mro__ if issubclass(c, UML.Element))
-
-            # find stereotypes that extend out metaclass
-            classes = self.element_factory.select(lambda e: e.isKindOf(UML.Class) and e.name in names)
-
-            for class_ in classes:
-                for extension in class_.extension:
-                    yield extension.ownedEnd.type
 
     @transactional
     def _on_stereotype_selected(self, button, stereotype):
         subject = self.context.subject
         if button.get_active():
-            subject.appliedStereotype = stereotype
+            UML.model.apply_stereotype(self.element_factory, subject, stereotype)
         else:
-            del subject.appliedStereotype[stereotype]
+            UML.model.remove_stereotype(subject, stereotype)
         
 component.provideAdapter(StereotypePage,
                          adapts=[items.ElementItem], name='Stereotypes')
