@@ -232,29 +232,48 @@ class ClassOperations(EditableTreeModel):
 
 
 
-class StereotypeInstances(EditableTreeModel):
+class StereotypeInstances(gtk.TreeStore):
     """
-    GTK tree model to edit instance specification
+    GTK tree model to edit instance specifications of stereotypes.
     """
-    def _get_rows(self):
-        for operation in self._item.subject.ownedOperation:
-            yield [operation.render(), operation]
+
+    def __init__(self, item):
+        #super(gtk.TreeStore, self).__init__(_('Attribute'), _('Value'))
+        gtk.TreeStore.__init__(self, str, str)
+        self.item = item
+        self.refresh()
+
+    def refresh(self):
+        self.clear()
+        applied = UML.model.get_applied_stereotypes(self.item.subject)
+        for st in applied:
+            parent = self.append(None, (st.name, ''))
+            for attr in st.ownedAttribute:
+                self.append(parent, (attr.name, 'value'))
+
+#    def _get_rows(self):
+#        factory = self.element_factory
+#        stereotypes = UML.model.get_stereotypes(factory, self._item.subject)
+#        for st in stereotypes:
+#            yield [st.name, None]
+#            for attr in st.ownedAttribute:
+#                yield [attr.render(), attr]
 
 
-    def _create_object(self):
-        operation = self.element_factory.create(UML.Operation)
-        self._item.subject.ownedOperation = operation
-        return operation
+#   def _create_object(self):
+#       operation = self.element_factory.create(UML.Operation)
+#       self._item.subject.ownedOperation = operation
+#       return operation
 
 
-    def _set_object_value(self, row, col, value):
-        operation = row[-1]
-        operation.parse(value)
-        row[0] = operation.render()
+#   def _set_object_value(self, row, col, value):
+#       operation = row[-1]
+#       operation.parse(value)
+#       row[0] = operation.render()
 
 
-    def _swap_objects(self, o1, o2):
-        return self._item.subject.ownedOperation.swap(o1, o2)
+#   def _swap_objects(self, o1, o2):
+#       return self._item.subject.ownedOperation.swap(o1, o2)
 
 
 
@@ -628,6 +647,12 @@ class StereotypePage(object):
             button.set_active(stereotype in applied)
             button.connect('toggled', self._on_stereotype_selected, stereotype)
             hbox.pack_start(button, expand=False)
+
+        
+        self.model = StereotypeInstances(self.context)
+        tree_view = create_tree_view(self.model, (_('Attribute'), _('Value')))
+        page.pack_start(tree_view)
+
         page.show_all()
         return page
 
@@ -639,6 +664,7 @@ class StereotypePage(object):
             UML.model.apply_stereotype(self.element_factory, subject, stereotype)
         else:
             UML.model.remove_stereotype(subject, stereotype)
+        self.model.refresh()
         
 component.provideAdapter(StereotypePage,
                          adapts=[items.ElementItem], name='Stereotypes')
