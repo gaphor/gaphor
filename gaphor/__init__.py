@@ -52,7 +52,15 @@ def main():
     """
     import sys
     if len(sys.argv) > 1:
-        launch(sys.argv[1])
+        if sys.argv[1] in ('-p', '--profile'):
+            print 'Starting profiler...'
+            import cProfile
+            import pstats
+            cProfile.run('import gaphor; gaphor.launch()', 'gaphor.prof')
+            p = pstats.Stats('gaphor.prof')
+            p.strip_dirs().sort_stats('time').print_stats(40)
+        else:
+            launch(sys.argv[1])
     else:
         launch()
 

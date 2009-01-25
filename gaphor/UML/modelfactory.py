@@ -9,7 +9,7 @@ Functions collected in this module allow to
 """
 
 import itertools
-from .uml2 import *
+from gaphor.UML.uml2 import *
 
 def stereotypes_str(element, stereotypes=()):
     """
