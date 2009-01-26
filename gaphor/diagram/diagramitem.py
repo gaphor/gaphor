@@ -11,9 +11,6 @@ from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 
-STEREOTYPE_OPEN  = '\xc2\xab' # '<<'
-STEREOTYPE_CLOSE = '\xc2\xbb' # '>>'
-
 
 class StereotypeSupport(object):
     """
@@ -29,7 +26,6 @@ class StereotypeSupport(object):
     def __init__(self):
         self._stereotype = self.add_text('stereotype',
                 style=self.STEREOTYPE_ALIGN,
-                pattern='%s%%s%s' % (STEREOTYPE_OPEN, STEREOTYPE_CLOSE),
                 visible=self.is_stereotype_visible)
 
 

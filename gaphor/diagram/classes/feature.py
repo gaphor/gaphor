@@ -162,7 +162,7 @@ class StereotypeNameItem(FeatureItem):
 
 
     def _render_name(self):
-        return '<<%s>>' % self.subject.name
+        return UML.model.STEREOTYPE_FMT % self.subject.name
 
 
     def pre_update(self, context):

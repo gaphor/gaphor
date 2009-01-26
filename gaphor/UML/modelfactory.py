@@ -11,6 +11,9 @@ Functions collected in this module allow to
 import itertools
 from gaphor.UML.uml2 import *
 
+# '<<%s>>'
+STEREOTYPE_FMT = '\xc2\xab%s\xc2\xbb'
+
 def stereotypes_str(element, stereotypes=()):
     """
     Identify stereotypes of an UML metamodel instance and return coma
@@ -27,7 +30,11 @@ def stereotypes_str(element, stereotypes=()):
         applied = (stereotype_name(st) for st in get_applied_stereotypes(element))
     else:
         applied = ()
-    return ', '.join(itertools.chain(stereotypes, applied))
+    s = ', '.join(itertools.chain(stereotypes, applied))
+    if s:
+        return STEREOTYPE_FMT % s
+    else:
+        return ''
 
 
 def stereotype_name(stereotype):

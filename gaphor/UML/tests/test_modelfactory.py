@@ -1,6 +1,6 @@
 from gaphor import UML
 from gaphor.application import Application
-
+from gaphor.UML.modelfactory import STEREOTYPE_FMT as fmt
 
 import unittest
 
@@ -39,7 +39,7 @@ class StereotypesTest(unittest.TestCase):
         UML.model.apply_stereotype(self.factory, cls, s2)
         UML.model.apply_stereotype(self.factory, cls, s3)
 
-        self.assertEquals('s1, s2, s3', UML.model.stereotypes_str(cls))
+        self.assertEquals(fmt % 's1, s2, s3', UML.model.stereotypes_str(cls))
 
 
     def test_no_stereotypes(self):
@@ -65,7 +65,7 @@ class StereotypesTest(unittest.TestCase):
         UML.model.apply_stereotype(self.factory, cls, s3)
 
         result = UML.model.stereotypes_str(cls, ('test',))
-        self.assertEquals('test, s1, s2, s3', result)
+        self.assertEquals(fmt % 'test, s1, s2, s3', result)
 
 
     def test_just_additional_stereotypes(self):
@@ -74,7 +74,7 @@ class StereotypesTest(unittest.TestCase):
         cls = self.factory.create(UML.Class)
 
         result = UML.model.stereotypes_str(cls, ('test',))
-        self.assertEquals('test', result)
+        self.assertEquals(fmt % 'test', result)
 
 
     def test_getting_stereotypes(self):
