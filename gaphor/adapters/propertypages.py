@@ -443,7 +443,7 @@ def create_hbox_label(adapter, page, label):
     """
     hbox = gtk.HBox()
     label = gtk.Label(label)
-    label.set_justify(gtk.JUSTIFY_LEFT)
+    label.set_alignment(0.0, 0.5)
     adapter.size_group.add_widget(label)
     hbox.pack_start(label, expand=False)
     page.pack_start(hbox, expand=False)
@@ -941,7 +941,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
             return hbox
 
         label = gtk.Label(title)
-        label.set_justify(gtk.JUSTIFY_LEFT)
+        label.set_alignment(0.0, 0.5)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
@@ -1014,7 +1014,7 @@ Enter attribute name and multiplicity, for example
         button.connect('toggled', self._on_show_direction_change)
         hbox.pack_start(button)
 
-        button = gtk.Button(_('Invert direction'))
+        button = gtk.Button(_('Invert Direction'))
         button.connect('clicked', self._on_invert_direction_change)
         hbox.pack_start(button)
 
@@ -1092,7 +1092,7 @@ class LineStylePage(object):
         page.pack_start(hbox, expand=False)
 
         hbox = gtk.HBox()
-        label = gtk.Label(_('horizontal'))
+        label = gtk.Label(_('Horizontal'))
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
@@ -1136,26 +1136,13 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = gtk.HBox()
-        page.pack_start(hbox, expand=False)
-
-        label = gtk.Label(_('Upper Bound'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox = create_hbox_label(self, page, _('Upper bound'))
         entry = gtk.Entry()        
         entry.set_text(subject.upperBound and subject.upperBound.value or '')
         entry.connect('changed', self._on_upper_bound_change)
         hbox.pack_start(entry)
 
-        hbox = gtk.HBox()
-        page.pack_start(hbox, expand=False)
-
-        label = gtk.Label('Ordering')
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
-
+        hbox = create_hbox_label(self, page, _('Ordering'))
         combo = gtk.combo_box_new_text()
         for v in self.ORDERING_VALUES:
             combo.append_text(v)
@@ -1168,8 +1155,8 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         button.connect('toggled', self._on_ordering_show_change)
         hbox.pack_start(button, expand=False)
 
-        label = gtk.Label('show')
-        label.set_justify(gtk.JUSTIFY_LEFT)
+        label = gtk.Label(_('Show'))
+        label.set_alignment(0.0, 0.5)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
@@ -1217,10 +1204,7 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         page.pack_start(hbox, expand=False)
 
         if isinstance(subject, UML.JoinNode):
-            label = gtk.Label(_('Join Specification'))
-            label.set_justify(gtk.JUSTIFY_LEFT)
-            self.size_group.add_widget(label)
-            hbox.pack_start(label, expand=False)
+            hbox = create_hbox_label(self, page, _('Join specification'))
             entry = gtk.Entry()        
             entry.set_text(subject.joinSpec and subject.joinSpec.value or '')
             entry.connect('changed', self._on_join_spec_change)
@@ -1301,8 +1285,8 @@ class ComponentPropertyPage(NamedItemPropertyPage):
         button.connect('toggled', self._on_ii_change)
         hbox.pack_start(button, expand=False)
 
-        label = gtk.Label(_('Indirectly Instantiated'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
+        label = gtk.Label(_('Indirectly instantiated'))
+        label.set_alignment(0.0, 0.5)
         hbox.pack_start(label, expand=False)
 
         return page
@@ -1313,7 +1297,7 @@ class ComponentPropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_ii_change(self, button):
         """
-        Called when user clicks "Indirectly Instantiated" check button.
+        Called when user clicks "Indirectly instantiated" check button.
         """
         subject = self.context.subject
         if subject:
