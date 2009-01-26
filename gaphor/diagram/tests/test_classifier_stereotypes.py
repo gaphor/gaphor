@@ -84,4 +84,21 @@ class StereotypesAttributesTestCase(TestCase):
         self.assertFalse(compartment.visible)
 
 
+    def test_removing_stereotype(self):
+        """Test if stereotype compartment is destroyed when stereotype is removed
+        """
+        factory = self.element_factory
+        c = self.create(ComponentItem, UML.Component)
+
+        c.show_stereotypes_attrs = True
+
+        UML.model.apply_stereotype(factory, c.subject, self.st1)
+
+        # test precondition
+        assert len(c._compartments) == 1
+
+        UML.model.remove_stereotype(c.subject, self.st1)
+        self.assertEquals(0, len(c._compartments))
+
+
 # vim:sw=4:et

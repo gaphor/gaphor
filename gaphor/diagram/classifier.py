@@ -167,13 +167,16 @@ class ClassifierItem(NamedItem):
 
 
     def on_stereotype_change(self, event):
-        if isinstance(event, UML.event.AssociationAddEvent) \
-                and event.element is self.subject \
+        if event and event.element is self.subject \
                 and self._stereotypes is not None:
-            self._create_stereotype_compartment(event.new_value)
+
+            if isinstance(event, UML.event.AssociationAddEvent):
+                self._create_stereotype_compartment(event.new_value)
+            elif isinstance(event, UML.event.AssociationDeleteEvent):
+                self._remove_stereotype_compartment(event.old_value)
 
 
-    def find_stereotype_compartment(self, obj):
+    def _find_stereotype_compartment(self, obj):
         for comp in self._compartments:
             if comp.id is obj:
                 return comp
@@ -183,7 +186,7 @@ class ClassifierItem(NamedItem):
         if event and event.element in self.subject.appliedStereotype \
                 and self._stereotypes is not None:
 
-            comp = self.find_stereotype_compartment(event.element)
+            comp = self._find_stereotype_compartment(event.element)
             if not comp:
                 log.debug('No compartment found for %s' % event.element)
                 return
@@ -203,6 +206,13 @@ class ClassifierItem(NamedItem):
         self._update_stereotype_compartment(c, obj)
         self._compartments.append(c)
         self.request_update()
+
+
+    def _remove_stereotype_compartment(self, obj):
+        comp = self._find_stereotype_compartment(obj)
+        if comp:
+            self._compartments.remove(comp)
+            self.request_update()
 
 
     def _update_stereotype_compartment(self, comp, obj):
