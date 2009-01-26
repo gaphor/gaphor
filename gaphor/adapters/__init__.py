@@ -8,6 +8,7 @@ import gaphor.adapters.classes.interfaceconnect
 import gaphor.adapters.components.connectorconnect
 import gaphor.adapters.interactions.messageconnect
 import gaphor.adapters.profiles.extensionconnect
+import gaphor.adapters.profiles.stereotypespage
 import gaphor.adapters.usecases.usecaseconnect
 
 import gaphor.adapters.states.vertexconnect
