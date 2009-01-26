@@ -115,7 +115,7 @@ class StereotypePage(object):
 
         # show stereotypes attributes toggle
         hbox = gtk.HBox()
-        label = gtk.Label(_('Show Stereotypes Attributes'))
+        label = gtk.Label(_('Show stereotypes attributes'))
         hbox.pack_start(label, expand=False)
         button = gtk.CheckButton()
         button.set_active(self.context.show_stereotypes_attrs)
