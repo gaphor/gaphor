@@ -68,6 +68,7 @@ def apply_stereotype(factory, element, stereotype):
     obj = factory.create(InstanceSpecification)
     obj.classifier = stereotype
     element.appliedStereotype = obj
+    return obj
 
 
 def remove_stereotype(element, stereotype):
@@ -133,5 +134,17 @@ def extend_with_stereotype(factory, element, stereotype):
     assert ext in element.extension
 
     return ext
+
+
+def add_slot(factory, obj, attr):
+    """
+    Add slot to instance specification for an attribute.
+    """
+    slot = factory.create(Slot)
+    slot.definingFeature = attr
+    slot.value = factory.create(LiteralSpecification)
+    obj.slot = slot
+    return slot
+
 
 # vim:sw=4:et

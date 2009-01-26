@@ -16,9 +16,10 @@ class Compartment(list):
     A compartment has a line on top and a list of FeatureItems.
     """
 
-    def __init__(self, name, owner):
+    def __init__(self, name, owner, id=None):
         self.name = name
         self.owner = owner
+        self.id = id
         self.visible = True
         self.width = 0
         self.height = 0
@@ -156,35 +157,79 @@ class ClassifierItem(NamedItem):
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
         self._compartments = []
-        self._stereotypes = []
+        self._stereotypes = None
 
         self._drawing_style = ClassifierItem.DRAW_NONE
         self.add_watch(UML.Classifier.isAbstract, self.on_classifier_is_abstract)
+        self.add_watch(UML.Element.appliedStereotype, self.on_stereotype_change)
+        self.add_watch(UML.InstanceSpecification.slot, self.on_stereotype_attr_change)
         self._name.font = font.FONT_NAME
+
+
+    def on_stereotype_change(self, event):
+        if isinstance(event, UML.event.AssociationAddEvent) \
+                and event.element is self.subject \
+                and self._stereotypes is not None:
+            self._create_stereotype_compartment(event.new_value)
+
+
+    def find_stereotype_compartment(self, obj):
+        for comp in self._compartments:
+            if comp.id is obj:
+                return comp
+
+
+    def on_stereotype_attr_change(self, event):
+        if event and event.element in self.subject.appliedStereotype \
+                and self._stereotypes is not None:
+
+            comp = self.find_stereotype_compartment(event.element)
+            if not comp:
+                log.debug('No compartment found for %s' % event.element)
+                return
+
+            if isinstance(event, (UML.event.AssociationAddEvent, UML.event.AssociationDeleteEvent)):
+                self._update_stereotype_compartment(comp, event.element)
+
+            self.request_update()
+
+
+    def _create_stereotype_compartment(self, obj):
+        c = Compartment(obj.classifier[0].name, self, obj)
+        self._stereotypes.append(c)
+        item = StereotypeNameItem()
+        item.subject = obj.classifier[0]
+        c.append(item)
+        self._update_stereotype_compartment(c, obj)
+        self._compartments.append(c)
+        self.request_update()
+
+
+    def _update_stereotype_compartment(self, comp, obj):
+        del comp[1:]
+        for slot in obj.slot:
+            item = SlotItem()
+            item.subject = slot
+            comp.append(item)
+        comp.visible = len(obj.slot) > 0
 
 
     @observed
     def _set_show_stereotypes_attrs(self, value):
-        if self._stereotypes:
+        if self._stereotypes is not None:
             for comp in self._stereotypes:
                 self._compartments.remove(comp)
-            del self._stereotypes[:]
+            self._stereotypes = None
         if value:
+            self._stereotypes = []
             for obj in self.subject.appliedStereotype:
-                if len(obj.slot) > 0:
-                    c = Compartment('stereotypes', self)
-                    c.visible = True
-                    self._stereotypes.append(c)
-                    item = StereotypeNameItem()
-                    item.subject = obj.classifier[0]
-                    c.append(item)
-                    for slot in obj.slot:
-                        item = SlotItem()
-                        item.subject = slot
-                        c.append(item)
-                self._compartments.extend(self._stereotypes)
+                self._create_stereotype_compartment(obj)
+            log.debug('Showing stereotypes attributes enabled')
+        else:
+            log.debug('Showing stereotypes attributes disabled')
 
-    show_stereotypes_attrs = reversible_property(fget=lambda s: len(s._stereotypes),
+    show_stereotypes_attrs = reversible_property(
+            fget=lambda s: s._stereotypes is not None,
             fset=_set_show_stereotypes_attrs)
 
     def save(self, save_func):

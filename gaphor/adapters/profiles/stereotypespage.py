@@ -65,10 +65,7 @@ class StereotypeAttributes(gtk.TreeStore):
             return # nothing to do and don't create slot without value
 
         if slot is None:
-            slot = self.element_factory.create(UML.Slot)
-            slot.definingFeature = attr
-            slot.value = self.element_factory.create(UML.LiteralSpecification)
-            obj.slot = slot
+            slot = UML.model.add_slot(self.element_factory, obj, attr)
 
         assert slot
 
