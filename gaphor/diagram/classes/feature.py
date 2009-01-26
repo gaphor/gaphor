@@ -125,7 +125,7 @@ class OperationItem(FeatureItem):
         #cr.show_text(self.subject.render() or '')
 
 
-class StereotypeAttributeItem(FeatureItem):
+class SlotItem(FeatureItem):
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
 

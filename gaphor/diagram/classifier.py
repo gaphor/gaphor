@@ -6,7 +6,7 @@ from gaphas.state import observed, reversible_property
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.classes.feature import StereotypeAttributeItem, StereotypeNameItem
+from gaphor.diagram.classes.feature import SlotItem, StereotypeNameItem
 
 import font
 
@@ -179,7 +179,7 @@ class ClassifierItem(NamedItem):
                     item.subject = obj.classifier[0]
                     c.append(item)
                     for slot in obj.slot:
-                        item = StereotypeAttributeItem()
+                        item = SlotItem()
                         item.subject = slot
                         c.append(item)
                 self._compartments.extend(self._stereotypes)
