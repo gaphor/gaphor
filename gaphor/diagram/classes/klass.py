@@ -8,7 +8,7 @@ from gaphor import UML
 from gaphor.i18n import _
 
 from gaphor.diagram.classifier import ClassifierItem
-from feature import AttributeItem, OperationItem
+from gaphor.diagram.classes.feature import AttributeItem, OperationItem
 
         
 class ClassItem(ClassifierItem):
@@ -56,10 +56,10 @@ class ClassItem(ClassifierItem):
 
     @observed
     def _set_show_operations(self, value):
-            self._operations.visible = value
+        self._operations.visible = value
 
     show_operations = reversible_property(fget=lambda s: s._operations.visible,
-                               fset=_set_show_operations)
+            fset=_set_show_operations)
 
     
     @observed

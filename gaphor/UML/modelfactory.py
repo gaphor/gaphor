@@ -82,7 +82,7 @@ def remove_stereotype(element, stereotype):
 
 def get_stereotypes(factory, element):
     """
-    Get collection of possible stereotypes for specified element.
+    Get sorted collection of possible stereotypes for specified element.
     """
     # UML specs does not allow to extend stereotypes with stereotypes
     if isinstance(element, Stereotype):
@@ -95,10 +95,9 @@ def get_stereotypes(factory, element):
 
     # find stereotypes that extend element class
     classes = factory.select(lambda e: e.isKindOf(Class) and e.name in names)
-
-    for cls in classes:
-        for extension in cls.extension:
-            yield extension.ownedEnd.type
+    
+    stereotypes = set(ext.ownedEnd.type for cls in classes for ext in cls.extension)
+    return sorted(stereotypes, key=lambda st: st.name)
 
 
 def get_applied_stereotypes(element):
@@ -106,5 +105,26 @@ def get_applied_stereotypes(element):
     Get collection of applied stereotypes to an element.
     """
     return (obj.classifier[0] for obj in element.appliedStereotype)
+
+
+def extend_with_stereotype(factory, element, stereotype):
+    """
+    Extend an element with a stereotype.
+    """
+    ext = factory.create(Extension)
+    p = factory.create(Property)
+    ext_end = factory.create(ExtensionEnd)
+
+    ext.memberEnd = p
+    ext.memberEnd = ext_end
+    ext.ownedEnd = ext_end
+    ext_end.type = stereotype
+    p.type = element
+    p.name = 'baseClass'
+    element.ownedAttribute = ext_end
+
+    assert ext in element.extension
+
+    return ext
 
 # vim:sw=4:et

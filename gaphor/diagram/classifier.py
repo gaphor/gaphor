@@ -6,6 +6,7 @@ from gaphas.state import observed, reversible_property
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.classes.feature import StereotypeAttributeItem, StereotypeNameItem
 
 import font
 
@@ -155,10 +156,36 @@ class ClassifierItem(NamedItem):
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
         self._compartments = []
+        self._stereotypes = []
 
         self._drawing_style = ClassifierItem.DRAW_NONE
         self.add_watch(UML.Classifier.isAbstract, self.on_classifier_is_abstract)
         self._name.font = font.FONT_NAME
+
+
+    @observed
+    def _set_show_stereotypes_attrs(self, value):
+        if self._stereotypes:
+            for comp in self._stereotypes:
+                self._compartments.remove(comp)
+            del self._stereotypes[:]
+        if value:
+            for obj in self.subject.appliedStereotype:
+                if len(obj.slot) > 0:
+                    c = Compartment('stereotypes', self)
+                    c.visible = True
+                    self._stereotypes.append(c)
+                    item = StereotypeNameItem()
+                    item.subject = obj.classifier[0]
+                    c.append(item)
+                    for slot in obj.slot:
+                        item = StereotypeAttributeItem()
+                        item.subject = slot
+                        c.append(item)
+                self._compartments.extend(self._stereotypes)
+
+    show_stereotypes_attrs = reversible_property(fget=lambda s: len(s._stereotypes),
+            fset=_set_show_stereotypes_attrs)
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
@@ -167,9 +194,11 @@ class ClassifierItem(NamedItem):
         self.save_property(save_func, 'drawing-style')
         NamedItem.save(self, save_func)
 
+
     def postload(self):
         NamedItem.postload(self)
         self.on_classifier_is_abstract(None)
+
 
     @observed
     def set_drawing_style(self, style):
@@ -332,7 +361,7 @@ class ClassifierItem(NamedItem):
         else:
             width = self.width
 
-        # draw compartments
+        # draw compartments and stereotype compartments
         for comp in self._compartments:
             if not comp.visible:
                 continue

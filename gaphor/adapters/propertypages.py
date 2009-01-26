@@ -145,7 +145,7 @@ class EditableTreeModel(gtk.ListStore):
         return self.get_iter((i - 1,))
 
 
-    def set_value(self, iter, value, col):
+    def set_value(self, iter, col, value):
         path = self.get_path(iter)
         row = self[path]
 
@@ -232,48 +232,76 @@ class ClassOperations(EditableTreeModel):
 
 
 
-class StereotypeInstances(gtk.TreeStore):
+class StereotypeAttributes(gtk.TreeStore):
     """
     GTK tree model to edit instance specifications of stereotypes.
     """
-
+    element_factory = inject('element_factory')
     def __init__(self, item):
-        #super(gtk.TreeStore, self).__init__(_('Attribute'), _('Value'))
-        gtk.TreeStore.__init__(self, str, str)
+        gtk.TreeStore.__init__(self, str, str, object, object, object)
         self.item = item
         self.refresh()
 
     def refresh(self):
         self.clear()
         applied = UML.model.get_applied_stereotypes(self.item.subject)
-        for st in applied:
-            parent = self.append(None, (st.name, ''))
+        instances = self.item.subject.appliedStereotype
+
+        # map attributes to slots
+        slots = {}
+        for obj in instances:
+            for slot in obj.slot:
+                slots[slot.definingFeature] = slot
+
+        for st, obj in zip(applied, instances):
+            parent = self.append(None, (st.name, '', st, None, None))
             for attr in st.ownedAttribute:
-                self.append(parent, (attr.name, 'value'))
-
-#    def _get_rows(self):
-#        factory = self.element_factory
-#        stereotypes = UML.model.get_stereotypes(factory, self._item.subject)
-#        for st in stereotypes:
-#            yield [st.name, None]
-#            for attr in st.ownedAttribute:
-#                yield [attr.render(), attr]
+                if not attr.association:
+                    slot = slots.get(attr)
+                    value = slot.value.value if slot is not None else ''
+                    data = (attr.name, value, attr, obj, slot)
+                    self.append(parent, data)
 
 
-#   def _create_object(self):
-#       operation = self.element_factory.create(UML.Operation)
-#       self._item.subject.ownedOperation = operation
-#       return operation
+    def set_value(self, iter, col, value):
+        """
+        Set value of stereotype property applied to an UML element.
 
+        Slot is created if instance Create valuChange value of instance spe
+        """
+        if col != 1: # only editing of 2nd column is allowed
+            return
 
-#   def _set_object_value(self, row, col, value):
-#       operation = row[-1]
-#       operation.parse(value)
-#       row[0] = operation.render()
+        path = self.get_path(iter)
+        row = self[path]
+        name, old_value, attr, obj, slot = row
+        if isinstance(attr, UML.Stereotype):
+            return # don't edit stereotype rows
 
+        log.debug('editing %s' % list(row))
 
-#   def _swap_objects(self, o1, o2):
-#       return self._item.subject.ownedOperation.swap(o1, o2)
+        if slot is None and not value:
+            return # nothing to do and don't create slot without value
+
+        if slot is None:
+            slot = self.element_factory.create(UML.Slot)
+            slot.definingFeature = attr
+            slot.value = self.element_factory.create(UML.LiteralSpecification)
+            obj.slot = slot
+
+        assert slot
+
+        if value:
+            slot.value.value = value
+        else:
+            # no value, then remove slot
+            del obj.slot[slot]
+            slot = None
+            value = ''
+
+        row[1] = value
+        row[4] = slot
+        log.debug('slots %s' % obj.slot)
 
 
 
@@ -395,7 +423,7 @@ def on_cell_edited(renderer, path, value, model, col):
     Update editable tree model based on fresh user input.
     """
     iter = model.get_iter(path)
-    model.set_value(iter, value, col)
+    model.set_value(iter, col, value)
 
 
 class UMLComboModel(gtk.ListStore):
@@ -495,19 +523,32 @@ def create_hbox_label(adapter, page, label):
     return hbox
 
 
-def create_tree_view(model, names, tip=""):
+def create_tree_view(model, names, tip='', ro_cols=None):
     """
     Create a tree view for a editable tree model.
+
+    :Parameters:
+     model
+        Model, for which tree view is created.
+     names
+        Names of columns.
+     tip
+        User interface tool tip for tree view.
+     ro_cols
+        Collection of indices pointing read only columns.
     """
+    if ro_cols is None:
+        ro_cols = set()
+
     tree_view = gtk.TreeView(model)
     tree_view.set_rules_hint(True)
     
     n = model.get_n_columns() - 1
-    for i in range(n):
+    for name, i in zip(names, range(n)):
         renderer = gtk.CellRendererText()
-        renderer.set_property('editable', True)
+        renderer.set_property('editable', i not in ro_cols)
         renderer.connect('edited', on_cell_edited, model, i)
-        col = gtk.TreeViewColumn(names[i], renderer, text=i)
+        col = gtk.TreeViewColumn(name, renderer, text=i)
         tree_view.append_column(col)
 
     tree_view.connect('key_press_event', remove_on_keypress)
@@ -637,6 +678,9 @@ class StereotypePage(object):
     def construct(self):
         page = gtk.VBox()
         subject = self.context.subject
+        if subject is None:
+            return
+
         applied = set(UML.model.get_applied_stereotypes(subject))
         stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
         for i, stereotype in enumerate(stereotypes):
@@ -648,9 +692,20 @@ class StereotypePage(object):
             button.connect('toggled', self._on_stereotype_selected, stereotype)
             hbox.pack_start(button, expand=False)
 
-        
-        self.model = StereotypeInstances(self.context)
-        tree_view = create_tree_view(self.model, (_('Attribute'), _('Value')))
+        # show stereotypes attributes toggle
+        hbox = gtk.HBox()
+        label = gtk.Label(_('Show Stereotypes Attributes'))
+        hbox.pack_start(label, expand=False)
+        button = gtk.CheckButton()
+        button.set_active(self.context.show_stereotypes_attrs)
+        button.connect('toggled', self._on_show_stereotypes_attrs_change)
+        hbox.pack_start(button)
+        page.pack_start(hbox, expand=False)
+
+        # stereotype attributes
+        self.model = StereotypeAttributes(self.context)
+        t = '%s / %s' % (_('Stereotype'), _('Attribute'))
+        tree_view = create_tree_view(self.model, (t, _('Value')), ro_cols=(0,))
         page.pack_start(tree_view)
 
         page.show_all()
@@ -665,6 +720,13 @@ class StereotypePage(object):
         else:
             UML.model.remove_stereotype(subject, stereotype)
         self.model.refresh()
+
+        
+    @transactional
+    def _on_show_stereotypes_attrs_change(self, button):
+        self.context.show_stereotypes_attrs = button.get_active()
+        self.context.request_update()
+
         
 component.provideAdapter(StereotypePage,
                          adapts=[items.ElementItem], name='Stereotypes')

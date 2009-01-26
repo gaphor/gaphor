@@ -100,6 +100,9 @@ class StereotypeSupport(object):
                 return (stereotype,)
         return ()
 
+    # no support for all items yet, see classifier for classifier support
+    show_stereotypes_attrs = False
+
 
 class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
     """

@@ -64,18 +64,9 @@ class ExtensionConnect(RelationshipConnect):
                             return
             else:
                 # Create a new Extension relationship
-                relation = self.element_factory.create(UML.Extension)
-                head_end = self.element_factory.create(UML.Property)
-                tail_end = self.element_factory.create(UML.ExtensionEnd)
-                relation.package = element.canvas.diagram.namespace
-                relation.memberEnd = head_end
-                relation.memberEnd = tail_end
-                relation.ownedEnd = tail_end
-                head_end.type = head_type
-                tail_end.type = tail_type
-                tail_type.ownedAttribute = head_end
-                head_end.name = 'baseClass'
-
+                relation = UML.model.extend_with_stereotype(self.element_factory,
+                        head_type,
+                        tail_type)
                 line.subject = relation
 
     def disconnect_subject(self, handle):
