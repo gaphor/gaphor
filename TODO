@@ -32,9 +32,6 @@ For 0.10.0 and later:
     - __uml__
     - __stereotype__
 
- - In some cases (like when editing attributes) Enter should be used to
-   complete the edit action.
-
 Older (long term ;) todo items:
 -------------------------------
 
