@@ -22,9 +22,6 @@ For 0.10.0 and later:
     I think we should stick with shallow copy for now.
 
  - namedelement.py: from NamedElement
- - items.tex: describe:
-    - __uml__
-    - __stereotype__
 
 Older (long term ;) todo items:
 -------------------------------
