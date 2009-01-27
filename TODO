@@ -5,9 +5,6 @@ For 0.10.0 and later:
  - bug in zope.component package: in zope.component.globalregistry.py zope.testing is included.  This package is only a dependency for the [test] setting. zope.testing is not mandatory.
  Use a more recent version
 
- - Load / save regression testing
-   !!! Create some example diagrams,
-
  - reimplement the mechanism that adds already existing relationships to the
    diagram if an item is copied to that diagram.
 
