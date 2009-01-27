@@ -68,15 +68,6 @@ Older (long term ;) todo items:
    association has been created between Stereotype and Class, Interface and
    Package.
 
-Diagram Items
-=============
-Gaphor does not need to support *all* diagram types, but at least some
-functinality should be provided for those.
-
-- Sequence diagram:
-  . Life line
-  . different message types
-  . Interaction
 
 UI
 --
