@@ -8,7 +8,6 @@ For 0.10.0 and later:
  - Load / save regression testing
    !!! Create some example diagrams,
 
- - using stereotypes
  - reimplement the mechanism that adds already existing relationships to the
    diagram if an item is copied to that diagram.
 
