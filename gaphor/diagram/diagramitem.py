@@ -4,6 +4,7 @@ Such as a modifier 'subject' property and a unique id.
 """
 
 from zope import component
+from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.misc import uniqueid
@@ -14,7 +15,7 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 
 class StereotypeSupport(object):
     """
-    Support methods for stereotypes.
+    Support for stereotypes for every diagram item.
     """
     STEREOTYPE_ALIGN = {
         'text-align'  : (ALIGN_CENTER, ALIGN_TOP),
@@ -26,14 +27,36 @@ class StereotypeSupport(object):
     def __init__(self):
         self._stereotype = self.add_text('stereotype',
                 style=self.STEREOTYPE_ALIGN,
-                visible=self.is_stereotype_visible)
+                visible=lambda: self._stereotype.text)
+        self._show_stereotypes_attrs = False
 
 
-    def is_stereotype_visible(self):
+    @observed
+    def _set_show_stereotypes_attrs(self, value):
+        self._show_stereotypes_attrs = value
+        self.update_stereotypes_attrs()
+
+    show_stereotypes_attrs = reversible_property(
+            fget=lambda s: s._show_stereotypes_attrs,
+            fset=_set_show_stereotypes_attrs,
+            doc="""
+            Diagram item should show stereotypes attributes when property
+            is set to True.
+
+            When changed, method `update_stereotypes_attrs` is called.
+            """)
+
+    def update_stereotypes_attrs(self):
         """
-        Display stereotype if it is not empty.
+        Update display of stereotypes attributes.
+
+        The method does nothing at the moment. In the future it should
+        probably display stereotypes attributes under stereotypes header.
+
+        Abstract class for classifiers overrides this method to display
+        stereotypes attributes in compartments.
         """
-        return self._stereotype.text
+        pass
 
 
     def set_stereotype(self, text=None):
@@ -96,8 +119,6 @@ class StereotypeSupport(object):
                 return (stereotype,)
         return ()
 
-    # no support for all items yet, see classifier for classifier support
-    show_stereotypes_attrs = False
 
 
 class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):

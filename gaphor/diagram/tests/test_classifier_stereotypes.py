@@ -58,7 +58,7 @@ class StereotypesAttributesTestCase(TestCase):
         # test precondition
         assert not c._compartments[0].visible
 
-        UML.model.add_slot(factory, obj, self.st1.ownedAttribute[0])
+        slot = UML.model.add_slot(factory, obj, self.st1.ownedAttribute[0])
 
         compartment = c._compartments[0]
         self.assertTrue(compartment.visible)

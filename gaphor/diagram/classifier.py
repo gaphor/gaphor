@@ -157,7 +157,6 @@ class ClassifierItem(NamedItem):
     def __init__(self, id=None):
         NamedItem.__init__(self, id)
         self._compartments = []
-        self._stereotypes = None
 
         self._drawing_style = ClassifierItem.DRAW_NONE
         self.add_watch(UML.Classifier.isAbstract, self.on_classifier_is_abstract)
@@ -168,7 +167,7 @@ class ClassifierItem(NamedItem):
 
     def on_stereotype_change(self, event):
         if event and event.element is self.subject \
-                and self._stereotypes is not None:
+                and self._show_stereotypes_attrs:
 
             if isinstance(event, UML.event.AssociationAddEvent):
                 self._create_stereotype_compartment(event.new_value)
@@ -184,7 +183,7 @@ class ClassifierItem(NamedItem):
 
     def on_stereotype_attr_change(self, event):
         if event and event.element in self.subject.appliedStereotype \
-                and self._stereotypes is not None:
+                and self._show_stereotypes_attrs:
 
             comp = self._find_stereotype_compartment(event.element)
             if not comp:
@@ -199,7 +198,6 @@ class ClassifierItem(NamedItem):
 
     def _create_stereotype_compartment(self, obj):
         c = Compartment(obj.classifier[0].name, self, obj)
-        self._stereotypes.append(c)
         item = StereotypeNameItem()
         item.subject = obj.classifier[0]
         c.append(item)
@@ -224,23 +222,24 @@ class ClassifierItem(NamedItem):
         comp.visible = len(obj.slot) > 0
 
 
-    @observed
-    def _set_show_stereotypes_attrs(self, value):
-        if self._stereotypes is not None:
-            for comp in self._stereotypes:
+    def update_stereotypes_attrs(self):
+        """
+        Display or hide stereotypes attributes.
+        
+        New compartment is created for every stereotype having attributes
+        redefined.
+        """
+        # remove all stereotype compartments first
+        for comp in self._compartments:
+            if isinstance(comp.id, UML.InstanceSpecification):
                 self._compartments.remove(comp)
-            self._stereotypes = None
-        if value:
-            self._stereotypes = []
+        if self._show_stereotypes_attrs:
             for obj in self.subject.appliedStereotype:
                 self._create_stereotype_compartment(obj)
             log.debug('Showing stereotypes attributes enabled')
         else:
             log.debug('Showing stereotypes attributes disabled')
 
-    show_stereotypes_attrs = reversible_property(
-            fget=lambda s: s._stereotypes is not None,
-            fset=_set_show_stereotypes_attrs)
 
     def save(self, save_func):
         # Store the show- properties *before* the width/height properties,
