@@ -12,8 +12,6 @@ For 0.10.0 and later:
  - reimplement the mechanism that adds already existing relationships to the
    diagram if an item is copied to that diagram.
 
- - components and stuff
-
  - lot's of tests are dependent on a decently initialized main window.
    There is no need for these actions to depend on a main window, they only
    need a gaphas.View instance.
