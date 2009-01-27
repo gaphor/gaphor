@@ -56,9 +56,6 @@ Older (long term ;) todo items:
 
 - How to figure out if a module exists without loading it? Solved by setuptools
 
-- Exporting diagrams to UML XMI (work in progress),
-  code, images (SVG/png), etc. - make a plugin!
-
 - Create a good algorithm for placement of lines and maybe nodes too.
 
 - Automatically draw relations when an item is DND-ed from the tree-view
