@@ -111,23 +111,21 @@ class Compartment(list):
 
 class ClassifierItem(NamedItem):
     """
-    This item visualizes a Class instance.
+    Abstract class for visualization of classifiers having compartments
+    like class, interface, component.
 
-    A ClassifierItem is a superclass for (all) Classifier like objects,
-    such as Class, Interface, Component and Actor.
+    Classifier item has ability to display stereotypes attributes in
+    separate compartment per stereotype, which attributes has been changed.
 
-    ClassifierItem controls the stereotype, namespace and owning package.
+    Classifier item has three drawing styles (changed with
+    `ClassifierItem.drawing_style` property)
 
-    A classifier has three drawing style (ClassifierItem.drawing_style):
-     - The comparttment view, as often used by Classes
-     - A compartment view, but with a little stereotype icon in the right corner
-     - One big icon, as used by Actors and sometimes interfaces.
+     - the comparttment view - often used by classes
+     - a compartment view, but with a little stereotype icon in the right corner
+     - an icon - used by actor and interface items
 
-    To support this behavior a few helper methods are defined which can be
-    called/overridden:
-     - update_compartment_icon (box-style with small icon (see ComponentItem))
-     - update_icon (does nothing by default, an impl. should be provided by
-                    subclasses (see ActorItem))
+    Methods pre_update/post_update/draw are defined to support drawing
+    styles. Appropriate methods are called depending on drawing style.
     """
 
     # Do not use preset drawing style
