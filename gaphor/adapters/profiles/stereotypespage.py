@@ -32,7 +32,7 @@ class StereotypeAttributes(gtk.TreeStore):
         slots = {}
         for obj in instances:
             for slot in obj.slot:
-                slots[slot.definingFeature] = slot
+                slots[slot.definedFeature] = slot
 
         for st, obj in zip(applied, instances):
             parent = self.append(None, (st.name, '', st, None, None))
