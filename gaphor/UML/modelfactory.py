@@ -94,7 +94,7 @@ def get_stereotypes(factory, element):
     """
     # UML specs does not allow to extend stereotypes with stereotypes
     if isinstance(element, Stereotype):
-        raise StopIteration()
+        return ()
 
     cls = type(element)
 
