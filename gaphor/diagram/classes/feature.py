@@ -138,7 +138,7 @@ class SlotItem(FeatureItem):
 
     def _render_slot(self):
         slot = self.subject
-        return '%s = "%s"' % (slot.definingFeature.name, slot.value.value)
+        return '%s = "%s"' % (slot.definingFeature.name, slot.value[0].value)
 
     def pre_update(self, context):
         self.update_size(self._render_slot(), context)
