@@ -115,12 +115,24 @@ class StereotypesAttributesTestCase(TestCase):
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes_attrs = True
+        UML.model.apply_stereotype(factory, c.subject, self.st1)
+        obj = UML.model.apply_stereotype(factory, c.subject, self.st2)
+
+        # change attribute of 2nd stereotype
+        attr = self.st2.ownedAttribute[0]
+        slot = UML.model.add_slot(self.element_factory, obj, attr)
+        slot.value[0].value = 'st2 test21'
 
         data = self.save()
         self.load(data)
 
         item = self.diagram.canvas.select(lambda e: isinstance(e, ComponentItem))[0]
         self.assertTrue(item.show_stereotypes_attrs)
+        self.assertEquals(2, len(item._compartments))
+        # first stereotype has no attributes changed, so compartment
+        # invisible
+        self.assertFalse(item._compartments[0].visible)
+        self.assertTrue(item._compartments[1].visible)
 
     
     def test_saving_stereotype_attributes(self):

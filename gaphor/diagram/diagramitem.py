@@ -155,8 +155,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         self._persistent_props = set()
         self._watched_properties = dict()
 
-        self.set_prop_persistent('show_stereotypes_attrs')
-
         self.add_watch(UML.Element.appliedStereotype, self.on_element_applied_stereotype)
 
     id = property(lambda self: self._id, doc='Id')
@@ -176,6 +174,8 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         if self.subject:
             save_func('subject', self.subject)
 
+        save_func('show_stereotypes_attrs', self.show_stereotypes_attrs)
+
         # save persistent properties
         for p in self._persistent_props:
             save_func(p, getattr(self, p.replace('-', '_')))
@@ -184,6 +184,8 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
     def load(self, name, value):
         if name == 'subject':
             type(self).subject.load(self, value)
+        elif name == 'show_stereotypes_attrs':
+            self._show_stereotypes_attrs = eval(value)
         else:
             #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
             try:
@@ -195,6 +197,7 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
     def postload(self):
         if self.subject:
             self.on_presentation_subject(None)
+            self.update_stereotypes_attrs()
 
 
     def save_property(self, save_func, name):
