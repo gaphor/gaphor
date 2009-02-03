@@ -108,6 +108,21 @@ class StereotypesAttributesTestCase(TestCase):
         self.assertEquals(0, len(c._compartments))
 
     
+    def test_stereotype_attributes_status_saving(self):
+        """Test stereotype attributes status saving
+        """
+        factory = self.element_factory
+        c = self.create(ComponentItem, UML.Component)
+
+        c.show_stereotypes_attrs = True
+
+        data = self.save()
+        self.load(data)
+
+        item = self.diagram.canvas.select(lambda e: isinstance(e, ComponentItem))[0]
+        self.assertTrue(item.show_stereotypes_attrs)
+
+    
     def test_saving_stereotype_attributes(self):
         """Test stereotype attributes saving
         """
@@ -148,5 +163,6 @@ class StereotypesAttributesTestCase(TestCase):
         # no stereotype st2 attribute changes, no slots
         obj = el.appliedStereotype[1]
         self.assertEquals(0, len(obj.slot))
+
 
 # vim:sw=4:et
