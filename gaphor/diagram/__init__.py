@@ -10,15 +10,15 @@ __date__ = '$date$'
 
 import inspect
 import gobject
+import uuid
 
-from gaphor.misc import uniqueid
 from gaphor.diagram.style import Style
 
 # Map UML elements to their (default) representation.
 _uml_to_item_map = { }
 
 def create(type):
-    return create_as(type, uniqueid.generate_id())
+    return create_as(type, str(uuid.uuid1()))
 
 def create_as(type, id):
     return type(id)

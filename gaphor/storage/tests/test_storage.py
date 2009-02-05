@@ -227,7 +227,11 @@ class StorageTestCase(TestCase):
         f.close()
 
         copy = pf.data
-        assert len(copy) == len(orig)
+        f = open('tmp.gaphor', 'w')
+        f.write(copy)
+        f.close()
+
+        assert len(copy) == len(orig), copy
         orig = orig.replace('0.11.1', '%VER%')
         copy = copy.replace('0.13.1', '%VER%')
 

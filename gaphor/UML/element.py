@@ -8,7 +8,7 @@ __all__ = [ 'Element' ]
 import types, mutex
 from zope import component
 from event import ElementDeleteEvent
-from gaphor.misc import uniqueid
+import uuid
 from properties import umlproperty, association
 
 
@@ -30,7 +30,7 @@ class Element(object):
         Factory can be provided to refer to the class that maintains the
         lifecycle of the element.
         """
-        self._id = id or (id is not False and uniqueid.generate_id() or False)
+        self._id = id or (id is not False and str(uuid.uuid1()) or False)
         # The factory this element belongs to.
         self._factory = factory
         self.__in_unlink = mutex.mutex()

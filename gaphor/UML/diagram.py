@@ -11,7 +11,7 @@ __date__ = '$date$'
 from zope import component
 import gobject
 import gaphas
-from gaphor.misc import uniqueid
+import uuid
 from uml2 import Namespace, PackageableElement
 from event import DiagramItemCreateEvent
 
@@ -82,7 +82,7 @@ class Diagram(Namespace, PackageableElement):
         a unique ID and it is attached to the diagram's root item.
         """
         assert issubclass(type, gaphas.Item)
-        obj = type(uniqueid.generate_id())
+        obj = type(str(uuid.uuid1()))
         if subject:
             obj.subject = subject
         self.canvas.add(obj, parent)

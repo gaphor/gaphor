@@ -35,7 +35,6 @@ class TestUML2(unittest.TestCase):
         factory.init(Application)
         c = factory.create(UML.Class)
         assert c.id
-        assert c.id.startswith('DCE:')
         p = factory.create_as(UML.Class, id=False)
         assert p.id is False, p.id
         factory.shutdown()

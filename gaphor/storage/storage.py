@@ -373,7 +373,7 @@ def version_0_14_0(elements, factory, gaphor_version):
 
     This function is called before the actual elements are constructed.
     """
-    from gaphor.misc.uniqueid import generate_id
+    import uuid
     if tuple(map(int, gaphor_version.split('.'))) < (0, 14, 0):
         values = (v for v in elements.values() if type(v) is parser.element)
         for et in values:
@@ -384,8 +384,9 @@ def version_0_14_0(elements, factory, gaphor_version):
                     # collect stereotypes instances in `applied` list
                     for refid in data:
                         st = elements[refid]
-                        obj = parser.element(generate_id(), 'InstanceSpecification')
-                        obj.references['classifier'] = [st.id] # it is many to many
+                        obj = parser.element(str(uuid.uuid1()),
+                                             'InstanceSpecification')
+                        obj.references['classifier'] = [st.id]
                         elements[obj.id] = obj
                         applied.append(obj.id)
 
@@ -429,7 +430,7 @@ def version_0_7_2(elements, factory, gaphor_version):
     the multiplicity of taggedValue has changed from 0..1 to *, so all elements
     should be converted to a list.
     """
-    from gaphor.misc.uniqueid import generate_id
+    import uuid
 
     if tuple(map(int, gaphor_version.split('.'))) < (0, 7, 2):
         for elem in elements.values():
@@ -442,7 +443,7 @@ def version_0_7_2(elements, factory, gaphor_version):
                     if tv.value:
                         for t in map(str.strip, str(tv.value).split(',')):
                             #log.debug("Tagged value: %s" % t)
-                            newtv = parser.element(generate_id(),
+                            newtv = parser.element(str(uuid.uuid1()),
                                                    'LiteralSpecification')
                             newtv.values['value'] = t
                             elements[newtv.id] = newtv

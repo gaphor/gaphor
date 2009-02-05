@@ -7,7 +7,6 @@ from zope import component
 from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.misc import uniqueid
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP

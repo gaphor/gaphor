@@ -5,7 +5,8 @@ Factory for and registration of model elements.
 
 from zope import interface
 from zope import component
-from gaphor.misc import uniqueid, odict
+import uuid
+from gaphor.misc import odict
 from gaphor.interfaces import IService, IEventFilter
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
                                   IFlushFactoryEvent, IModelFactoryEvent, \
@@ -72,7 +73,7 @@ class ElementFactory(object):
         """
         Create a new model element of type ``type``.
         """
-        obj = self.create_as(type, uniqueid.generate_id())
+        obj = self.create_as(type, str(uuid.uuid1()))
         if self._app:
             self._app.handle(ElementCreateEvent(self, obj))
         return obj
