@@ -156,7 +156,7 @@ class GaphorLoader(handler.ContentHandler):
         self.elements = odict() # map id: element/canvasitem
         self.__stack = []
         self.value_is_cdata = 0
-        self.cdata = ''
+        self.text = ''
         # may have 3 states:
         #  2: simple data, should be stripped
         #  1: CDATA block,
@@ -168,7 +168,7 @@ class GaphorLoader(handler.ContentHandler):
             raise ParserException, 'Invalid XML document.'
 
     def startElement(self, name, attrs):
-        self.cdata = ''
+        self.text = ''
         self.in_cdata = 2 # initial, just read text
         
         state = self.state()
@@ -250,9 +250,9 @@ class GaphorLoader(handler.ContentHandler):
                 # Two levels up: the attribute name
                 n = self.peek(2)
                 if self.in_cdata == 2:
-                    self.cdata = self.cdata.strip()
+                    self.text = self.text.strip()
                 # Three levels up: the element instance (element or canvasitem)
-                self.peek(3).values[n] = self.cdata
+                self.peek(3).values[n] = self.text
         self.pop()
 
     def startElementNS(self, name, qname, attrs):
@@ -272,8 +272,8 @@ class GaphorLoader(handler.ContentHandler):
     def characters(self, content):
         """Read characters."""
         if self.in_cdata:
-            self.cdata = self.cdata + content
-            #print 'characters: "%s"' % self.cdata
+            self.text = self.text + content
+            #print 'characters: "%s"' % self.text
 
     # Lexical handler stuff:
 
@@ -283,9 +283,9 @@ class GaphorLoader(handler.ContentHandler):
 
     def startCDATA(self):
         """Start a CDATA section. In case no CDATA section has been read
-        before, the self.cdata is cleared."""
+        before, the self.text is cleared."""
         if self.in_cdata == 2:
-            self.cdata = ''
+            self.text = ''
         self.in_cdata = 1
 
     def endCDATA(self):
