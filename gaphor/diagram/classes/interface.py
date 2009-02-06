@@ -222,20 +222,42 @@ class InterfaceItem(ClassItem):
 
         :param folded: Folded state, see FOLDED_* constants.
         """
-        movable = True
 
         self._folded = folded
 
         if folded == self.FOLDED_NONE:
-            super(InterfaceItem, self).set_drawing_style(self.DRAW_COMPARTMENT)
-            self._name.style.update(self.UNFOLDED_STYLE)
+            movable = True
+            draw_mode = self.DRAW_COMPARTMENT
+            name_style = self.UNFOLDED_STYLE
         else:
-            super(InterfaceItem, self).set_drawing_style(self.DRAW_ICON)
-            self._name.style.update(self.FOLDED_STYLE)
+            if self._folded == self.FOLDED_PROVIDED:
+                icon_size = self.style.icon_size_provided
+            else: # required interface or assembly icon mode
+                icon_size = self.style.icon_size_required
+
+            self.style.icon_size =  icon_size
+            self.min_width, self.min_height = icon_size
+            self.width, self.height = icon_size
+
+            # update only h_se handle - rest of handles should be updated by
+            # constraints
+            h_nw = self._handles[NW]
+            h_se = self._handles[SE]
+            h_se.x = h_nw.x + self.min_width
+            h_se.y = h_nw.y + self.min_height
+
             movable = False
+            draw_mode = self.DRAW_ICON
+            name_style = self.FOLDED_STYLE
+
+        # call super method to avoid recursion (set_drawing_style calls
+        # _set_folded method)
+        super(InterfaceItem, self).set_drawing_style(draw_mode)
+        self._name.style.update(name_style)
 
         for h in self._handles:
             h.movable = movable
+
         self.request_update()
 
     folded = property(_is_folded, _set_folded,
@@ -245,35 +267,6 @@ class InterfaceItem(ClassItem):
         #print 'on_implementation_contract', event, event.element
         if event is None or event.element.contract is self:
             self.request_update()
-
-
-    def pre_update_icon(self, context):
-        """
-        Change style to use icon style information.
-        """
-        radius = self.RADIUS_PROVIDED
-        self.style.icon_size = self.style.icon_size_provided
-
-        if self._folded == self.FOLDED_REQUIRED \
-                or self._folded == self.FOLDED_ASSEMBLY:
-
-            radius = self.RADIUS_REQUIRED
-            self.style.icon_size = self.style.icon_size_required
-
-        self.min_width, self.min_height = self.style.icon_size
-        self.width, self.height = self.style.icon_size
-
-        # change handles first so gaphas.Element.pre_update can
-        # update its state
-        #
-        # update only h_se handle - rest of handles should be updated by
-        # constraints
-        h_nw = self._handles[NW]
-        h_se = self._handles[SE]
-        h_se.x = h_nw.x + self.min_width
-        h_se.y = h_nw.y + self.min_height
-
-        super(InterfaceItem, self).pre_update_icon(context)
 
 
     def draw_icon(self, context):
