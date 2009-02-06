@@ -217,39 +217,4 @@ class NamedLine(DiagramLine):
             self._name.text = self.subject.name
             self.request_update()
 
-
-class FreeLine(LineItem):
-    """
-    TODO: get rid of this one.
-
-    A line with disabled last handle. This allows to create diagram items,
-    which have one or more additional lines.
-
-    Last handle is usually attached to a point of diagram item. This point
-    is called main point.
-    """
-    def __init__(self, id = None, mpt = None):
-        LineItem.__init__(self, id)
-
-        # expose first handle
-        self._handle = self.handles[0]
-
-        # disable last handle, it should be in main point
-        h = self.handles[-1]
-        h.props.movable = False
-        h.props.connectable = False
-        h.props.visible = False
-
-        self._main_point = mpt
-
-        if self._main_point is None:
-            self._main_point = 0, 0
-
-
-    def on_update(self, affine):
-        self.handles[-1].set_pos_i(*self._main_point)
-        self._handle.set_pos_i(*self._handle.get_pos_i()) # really strange, but we have to do this
-
-        LineItem.on_update(self, affine)
-
 # vim:sw=4:et
