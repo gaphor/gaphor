@@ -121,6 +121,7 @@ class DependencyItem(DiagramLine):
             context.cairo.set_dash((7.0, 5.0), 0)
         super(DependencyItem, self).draw(context)
 
+    # todo: move methods defined below to modelfactory module
 
     @staticmethod
     def is_usage(s):
