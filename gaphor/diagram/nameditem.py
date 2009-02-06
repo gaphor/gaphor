@@ -47,6 +47,7 @@ class NamedItem(ElementItem):
         self.add_watch(UML.NamedElement.name, self.on_named_element_name)
         self.add_watch(UML.NamedElement.namespace, self.on_named_element_namespace)
 
+
     def is_namespace_info_visible(self):
         """
         Display name space info when it is different, then diagram's or
@@ -56,6 +57,9 @@ class NamedItem(ElementItem):
         canvas = self.canvas
 
         if not subject or not canvas:
+            return False
+
+        if not self._name.is_visible():
             return False
 
         namespace = subject.namespace
@@ -71,6 +75,7 @@ class NamedItem(ElementItem):
 
     def on_named_element_name(self, event):
         """
+        Callback to be invoked, when named element name is changed.
         """
         if self.subject and (event is None or self.subject is event.element):
             self._name.text = self.subject.name
