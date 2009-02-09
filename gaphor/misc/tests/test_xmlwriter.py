@@ -21,7 +21,7 @@ class XMLWriterTestCase(unittest.TestCase):
         xml_w.endElement('foo')
 
         xml = """<?xml version="1.0" encoding="%s"?>\n<foo/>""" % sys.getdefaultencoding()
-        assert w.s == xml, tuple(w.s)
+        assert w.s == xml, w.s + ' != ' + xml
 
     def test_elements_2(self):
         w = Writer()
@@ -32,7 +32,7 @@ class XMLWriterTestCase(unittest.TestCase):
         xml_w.endElement('bar')
         xml_w.endElement('foo')
 
-        xml = """<?xml version="1.0" encoding="%s"?>\n<foo>\n<bar/></foo>""" % sys.getdefaultencoding()
+        xml = """<?xml version="1.0" encoding="%s"?>\n<foo>\n<bar/>\n</foo>""" % sys.getdefaultencoding()
         assert w.s == xml, w.s
 
     def test_elements_test(self):
@@ -45,7 +45,7 @@ class XMLWriterTestCase(unittest.TestCase):
         xml_w.endElement('bar')
         xml_w.endElement('foo')
 
-        xml = """<?xml version="1.0" encoding="%s"?>\n<foo>\n<bar>hello</bar></foo>""" % sys.getdefaultencoding()
+        xml = """<?xml version="1.0" encoding="%s"?>\n<foo>\n<bar>hello</bar>\n</foo>""" % sys.getdefaultencoding()
         assert w.s == xml, w.s
 
     def test_elements_ns_default(self):

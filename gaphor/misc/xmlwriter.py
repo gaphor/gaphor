@@ -1,100 +1,138 @@
 # vim:sw=4:et
 
 import sys
-from xml.sax.saxutils import XMLGenerator
+from xml.sax.saxutils import escape, quoteattr
+import xml.sax.handler
 
+# See whether the xmlcharrefreplace error handler is
+# supported
+try:
+    from codecs import xmlcharrefreplace_errors
+    _error_handling = "xmlcharrefreplace"
+    del xmlcharrefreplace_errors
+except ImportError:
+    _error_handling = "strict"
 
-class XMLWriter(XMLGenerator):
-    """An XMLGenerator with CDATA handling extensions.
-    """
+class XMLWriter(xml.sax.handler.ContentHandler):
 
-    def __init__(self, out=None):
-        XMLGenerator.__init__(self, out, sys.getdefaultencoding())
+    def __init__(self, out=None, encoding=None):
+        if out is None:
+            out = sys.stdout
+        xml.sax.handler.ContentHandler.__init__(self)
+        self._out = out
+        self._ns_contexts = [{}] # contains uri -> prefix dicts
+        self._current_context = self._ns_contexts[-1]
+        self._undeclared_ns_maps = []
+        self._encoding = encoding or sys.getdefaultencoding()
+
         self._in_cdata = False
         self._in_start_tag = False
+        self._next_newline = False
 
-    def _write(self, text, raw=False):
+    def _write(self, text, start_tag=False, end_tag=False):
         """
-        This write method is a bit smart about what it writes.
-        ``raw`` can be set to True to circumvent the smart behaviour.
+        Write data. Tags should not be escaped. They should be marked
+        by setting either ``start_tag`` or ``end_tag`` to ``True``.
+        Only the tag should be marked this way. Other stuff, such as
+        namespaces and attributes can be written directly to the file.
         """
-        # We have an end tag:
-        if not raw and self._in_start_tag and text.startswith('</'):
-            XMLGenerator._write(self, '/>')
-            self._in_start_tag = False
-            return
-           
-        # A normal start tag: remember we didn't write it
-        if not raw and text == '>':
+        if self._next_newline:
+            self._out.write('\n')
+            self._next_newline = False
+
+        if start_tag and not self._in_start_tag:
             self._in_start_tag = True
+            self._out.write('<')
+        elif start_tag and self._in_start_tag:
+            self._out.write('>')
+            self._out.write('\n')
+            self._out.write('<')
+        elif end_tag and self._in_start_tag:
+            self._out.write('/>')
+            self._in_start_tag = False
+            self._next_newline = True
             return
-
-        # close last start tag:
-        if self._in_start_tag:
-            XMLGenerator._write(self, '>')
-
-        # starting a new tag: add newlines
-        if not raw and text.startswith('<') and not text.startswith('</') and not text.startswith('<?') and not text.startswith('<%'):
-            XMLGenerator._write(self, '\n')
+        elif not start_tag and self._in_start_tag:
+            self._out.write('>')
+            self._in_start_tag = False
+        elif end_tag:
+            self._out.write('</')
+            self._out.write(text)
+            self._out.write('>')
+            self._in_start_tag = False
+            self._next_newline = True
+            return
             
-        self._in_start_tag = False
-        XMLGenerator._write(self, text)
+        if isinstance(text, str):
+            self._out.write(text)
+        else:
+            self._out.write(text.encode(self._encoding, _error_handling))
 
-    # Lexical handler methods
+    def _qname(self, name):
+        """Builds a qualified name from a (ns_url, localname) pair"""
+        if name[0]:
+            # The name is in a non-empty namespace
+            prefix = self._current_context[name[0]]
+            if prefix:
+                # If it is not the default namespace, prepend the prefix
+                return prefix + ":" + name[1]
+        # Return the unqualified name
+        return name[1]
+
+    # ContentHandler methods
 
     def startDocument(self):
-        self._write('<?xml version="1.0" encoding="%s"?>' %
+        self._write('<?xml version="1.0" encoding="%s"?>\n' %
                         self._encoding)
 
-#    def startElement(self, name, attrs):
-#        self._write('\n')
-#        self._write('<' + name)
-#        for (name, value) in attrs.items():
-#            self._write(' %s=%s' % (name, quoteattr(value)))
-#        self._in_start_tag = True
+    def startPrefixMapping(self, prefix, uri):
+        self._ns_contexts.append(self._current_context.copy())
+        self._current_context[uri] = prefix
+        self._undeclared_ns_maps.append((prefix, uri))
 
-#    def endElement(self, name):
-#        if self._in_start_tag:
-#            self._in_start_tag = False
-#            self._write('/>')
-#        else:
-#            XMLGenerator.endElement(self, name)
-#        self._write('\n')
- 
-#    def startElementNS(self, name, qname, attrs):
-#        self._write('\n')
-#        self._write('<' + self._qname(name))
-#
-#        for prefix, uri in self._undeclared_ns_maps:
-#            if prefix:
-#                self._out.write(' xmlns:%s="%s"' % (prefix, uri))
-#            else:
-#                self._out.write(' xmlns="%s"' % uri)
-#        self._undeclared_ns_maps = []
-#
-#        for (name, value) in attrs.items():
-#            self._write(' %s=%s' % (self._qname(name), quoteattr(value)))
-#        self._in_start_tag = True
+    def endPrefixMapping(self, prefix):
+        self._current_context = self._ns_contexts[-1]
+        del self._ns_contexts[-1]
 
-#    def endElementNS(self, name, qname):
-#        """
-#        Like XMLGenerator.endElementNS(), but adds newline at end of tag.
-#        """
-#        if self._in_start_tag:
-#            self._in_start_tag = False
-#            self._write('/>')
-#        else:
-#            XMLGenerator.endElementNS(self, name, qname)
+    def startElement(self, name, attrs):
+        self._write(name, start_tag=True)
+        for (name, value) in attrs.items():
+            self._out.write(' %s=%s' % (name, quoteattr(value)))
+
+    def endElement(self, name):
+        self._write(name, end_tag=True)
+
+    def startElementNS(self, name, qname, attrs):
+        self._write(self._qname(name), start_tag=True)
+
+        for prefix, uri in self._undeclared_ns_maps:
+            if prefix:
+                self._out.write(' xmlns:%s="%s"' % (prefix, uri))
+            else:
+                self._out.write(' xmlns="%s"' % uri)
+        self._undeclared_ns_maps = []
+
+        for (name, value) in attrs.items():
+            self._out.write(' %s=%s' % (self._qname(name), quoteattr(value)), start_tag=True)
+
+    def endElementNS(self, name, qname):
+        self._write('%s' % self._qname(name), end_tag=True)
 
     def characters(self, content):
         if self._in_cdata:
-            self._write(content.replace(']]>', '] ]>'), raw=True)
+            self._write(content.replace(']]>', '] ]>'))
         else:
-            XMLGenerator.characters(self, content)
+            self._write(escape(content))
+
+    def ignorableWhitespace(self, content):
+        self._write(content)
+
+    def processingInstruction(self, target, data):
+        self._write('<?%s %s?>' % (target, data))
 
     def comment(self, comment):
         self._write('<!-- ')
-        self._write(comment.replace('-->', '- ->'), raw=True)
+        self._write(comment.replace('-->', '- ->'))
         self._write(' -->')
 
     def startCDATA(self):
@@ -105,3 +143,5 @@ class XMLWriter(XMLGenerator):
         self._write(']]>')
         self._in_cdata = False
 
+
+# vim:sw=4:et:ai
