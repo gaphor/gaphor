@@ -25,7 +25,7 @@ class ClassItem(ClassifierItem):
     __uml__ = UML.Class, UML.Stereotype
     __stereotype__ = {
         'stereotype': UML.Stereotype,
-         'metaclass': lambda self: (not isinstance(self.subject, UML.Stereotype)) and hasattr(self.subject, 'extension') and self.subject.extension,
+        'metaclass': lambda self: (not isinstance(self.subject, UML.Stereotype)) and hasattr(self.subject, 'extension') and self.subject.extension,
     }
     
     def __init__(self, id=None):

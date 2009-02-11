@@ -7,6 +7,7 @@ from zope import component
 from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.application import Application
+from gaphor.core import inject
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
@@ -143,6 +144,8 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
     __metaclass__ = DiagramItemMeta
 
+    dispatcher = inject('property_based_dispatcher')
+
     def __init__(self, id=None):
         UML.Presentation.__init__(self)
         EditableTextSupport.__init__(self)
@@ -155,6 +158,7 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         self._watched_properties = dict()
 
         self.add_watch(UML.Element.appliedStereotype, self.on_element_applied_stereotype)
+        #self.add_watch(UML.Stereotype, self.on_element_applied_stereotype)
 
     id = property(lambda self: self._id, doc='Id')
 
@@ -248,6 +252,9 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
             self.update_stereotype()
             self.request_update()
 
+    def on_subject_changed(self, event):
+        if event and self.subject and self.subject is event.element:
+            self.request_update()
 
     def add_watch(self, property, handler=None):
         """
@@ -255,14 +262,17 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         that will be called with the event as argument (handler(event)).
         """
         assert isinstance(property, UML.properties.umlproperty)
-        #print 'Registering. Old val is', self._watched_properties.get(property)
-        self._watched_properties[property] = handler
+        self._watched_properties[property] = handler or self.on_subject_changed
 
 
     def register_handlers(self):
         Application.register_handler(self.on_model_factory_event)
-        Application.register_handler(self.on_element_change)
+#        Application.register_handler(self.on_element_change)
         Application.register_handler(self.on_presentation_subject)
+        dispatcher = self.dispatcher
+        for class_, handler in self._watched_properties.iteritems():
+            dispatcher.register_handler(class_, handler)
+
         # FixMe: calls to request_update() cause tests to fail
 #        if self.subject:
 #            self.on_presentation_subject(None)
@@ -271,7 +281,10 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
     def unregister_handlers(self):
         Application.unregister_handler(self.on_model_factory_event)
         Application.unregister_handler(self.on_presentation_subject)
-        Application.unregister_handler(self.on_element_change)
+#        Application.unregister_handler(self.on_element_change)
+        dispatcher = self.dispatcher
+        for class_, handler in self._watched_properties.iteritems():
+            dispatcher.unregister_handler(class_, handler)
 
 
     @component.adapter(UML.interfaces.IModelFactoryEvent)
