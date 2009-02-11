@@ -174,6 +174,7 @@ It uses the GTK+ environment for user interaction.
             'gaphorconvert = gaphor.tools.gaphorconvert:main',
         ],
         'gaphor.services': [
+            #'component_registry = gaphor.services.componentregistry:ZopeComponentRegistry',
             'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
             'properties = gaphor.services.properties:Properties',
             'undo_manager = gaphor.services.undomanager:UndoManager',
@@ -185,6 +186,8 @@ It uses the GTK+ environment for user interaction.
             'gui_manager = gaphor.services.guimanager:GUIManager',
             'copy = gaphor.services.copyservice:CopyService',
             'sanitizer = gaphor.services.sanitizerservice:SanitizerService',
+            'class_based_dispatcher = gaphor.services.classbaseddispatcher:ClassBasedDispatcher',
+            'property_based_dispatcher = gaphor.services.propertybaseddispatcher:PropertyBasedDispatcher',
             'xmi_export = gaphor.plugins.xmiexport:XMIExport',
             'diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout',
             'pynsource = gaphor.plugins.pynsource:PyNSource',
