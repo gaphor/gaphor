@@ -1,6 +1,6 @@
 # vim:sw=4:et:ai
 
-import unittest
+from gaphor.tests import TestCase
 from weakref import ref as wref
 from sys import getrefcount
 from gaphor import UML
@@ -13,7 +13,9 @@ factory = UML.ElementFactory()
 factory.init(Application)
 
 
-class TestDiagramItems(unittest.TestCase):
+class TestDiagramItems(TestCase):
+
+    services = ['element_factory', 'property_based_dispatcher']
 
     def gc_collect(self):
         import gc

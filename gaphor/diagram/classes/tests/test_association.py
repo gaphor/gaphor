@@ -2,6 +2,8 @@
 Unnit tests for AssociationItem.
 """
 
+from zope import component
+from gaphor.diagram.interfaces import IConnect
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.items import AssociationItem, ClassItem, InterfaceItem, \

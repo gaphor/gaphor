@@ -18,7 +18,7 @@ from gaphor.application import Application
 class AssociationUndoTestCase(unittest.TestCase):
     
     def setUp(self):
-        Application.init(services=['adapter_loader', 'element_factory', 'undo_manager'])
+        Application.init(services=['adapter_loader', 'element_factory', 'undo_manager', 'property_based_dispatcher'])
 
     def tearDown(self):
         Application.shutdown()

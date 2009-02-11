@@ -9,7 +9,7 @@ from gaphor.application import Application
 class DiagramLayoutTestCase(unittest.TestCase):
 
     def setUp(self):
-        Application.init(services=['element_factory', 'gui_manager', 'properties', 'action_manager', 'diagram_layout'])
+        Application.init(services=['element_factory', 'gui_manager', 'properties', 'action_manager', 'diagram_layout', 'property_based_dispatcher'])
 
     def tearDown(self):
         Application.shutdown()

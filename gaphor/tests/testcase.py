@@ -21,10 +21,11 @@ log.set_log_level(log.WARNING)
 
 class TestCase(unittest.TestCase):
     
+    core_services = ['property_based_dispatcher']
     services = ['element_factory', 'adapter_loader']
     
     def setUp(self):
-        Application.init(services=self.services)
+        Application.init(services=self.core_services+self.services)
         self.element_factory = Application.get_service('element_factory')
         assert len(list(self.element_factory.select())) == 0, list(self.element_factory.select())
         self.diagram = self.element_factory.create(UML.Diagram)
@@ -32,6 +33,7 @@ class TestCase(unittest.TestCase):
 
 
     def tearDown(self):
+        self.element_factory.shutdown()
         Application.shutdown()
         
 

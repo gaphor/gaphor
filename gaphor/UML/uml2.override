@@ -48,7 +48,6 @@ override Class.extension
 def class_extension(self):
     extension = []
     for e in self._factory.select(lambda e: e.isKindOf(Extension) and self in e.endType):
-
         extension.append(e)
     return extension
 
