@@ -14,8 +14,7 @@ NOTE: it would be nice to use actions in conjunction with functools.partial,
       A replacement is available in gaphor.misc.partial.
 """
 
-from zope import interface
-from zope import component
+from zope import interface, component
 
 from gaphas import state
 from gaphor.interfaces import IService, IServiceEvent, IActionProvider

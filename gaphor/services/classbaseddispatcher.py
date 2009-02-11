@@ -17,6 +17,8 @@ class ClassBasedDispatcher(object):
     originate on a whole lot of classes.
     """
 
+    interface.implements(IService)
+
     def __init__(self):
         # Handlers is a dict of sets
         self._handlers = {}
@@ -39,21 +41,23 @@ class ClassBasedDispatcher(object):
     def unregister_handler(self, type, handler):
         s = self._handlers.get(type)
         if s:
-            s.remove(handler)
+            s.discard(handler)
 
 
+    @component.adapter(IElementEvent)
     def on_element_event(self, event):
         element = event.element
-        # Find registered items for this element
-        s = self._handlers.get(type(element))
-        if not s:
-            return
-        for handler in s:
-            handler(event)
-        
-        # TODO: find handlers for superclasses of element. Add those to a cache
-        # If no cache set:
-        # Create one and find all handlers for superclasses. Add those to cache
-        # Clear cache when a new handler is registered or one is deregistered
+        # Cache this?
+        for c in type(element).__mro__:
+            # Find registered items for this element
+            s = self._handlers.get(c)
+            if not s:
+                continue
+            for handler in s:
+                try:
+                    handler(event)
+                except Exception, e:
+                    log.error('problem executing handler %s' % handler, e)
+
 
 # vim:sw=4:et:ai
