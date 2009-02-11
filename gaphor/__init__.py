@@ -43,7 +43,7 @@ def launch(gaphor_file=None):
         file_manager.new()
 
     Application.run()
-    Application.shutdown()
+    #Application.shutdown()
 
 
 def main():
@@ -58,7 +58,7 @@ def main():
             import pstats
             cProfile.run('import gaphor; gaphor.launch()', 'gaphor.prof')
             p = pstats.Stats('gaphor.prof')
-            p.strip_dirs().sort_stats('time').print_stats(40)
+            p.strip_dirs().sort_stats('time').print_stats(50)
         else:
             launch(sys.argv[1])
     else:
