@@ -220,12 +220,12 @@ class Writer:
             subs += '%s.%s' % (u.class_name, u.name)
         if subs:
             self.write_property("%s.%s" % (d.class_name, d.name),
-                                "derivedunion('%s', %s, %s, %s)" % (d.name, d.lower, d.upper == '*' and "'*'" or d.upper, subs))
+                                "derivedunion('%s', %s, %s, %s, %s)" % (d.name, d.opposite_class_name, d.lower, d.upper == '*' and "'*'" or d.upper, subs))
         else:
             if not self.overrides.has_override('%s.%s' % (d.class_name, d.name)):
                 msg('no subsets for derived union: %s.%s[%s..%s]' % (d.class_name, d.name, d.lower, d.upper))
             self.write_property("%s.%s" % (d.class_name, d.name),
-                                "derivedunion('%s', %s, %s)" % (d.name, d.lower, d.upper == '*' and "'*'" or d.upper))
+                                "derivedunion('%s', %s, %s, %s)" % (d.name, d.opposite_class_name, d.lower, d.upper == '*' and "'*'" or d.upper))
         d.written = True
 
     def write_redefine(self, r):

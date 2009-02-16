@@ -368,9 +368,6 @@ class association(umlproperty):
                 if do_notify:
                     event = AssociationSetEvent(obj, self, value, None)
 
-#        value.disconnect(self.__on_unlink, obj)
-#        if self.composite:
-#            obj.disconnect(self.__on_composite_unlink, value)
         if do_notify and event:
             component.handle(event)
 
@@ -449,9 +446,10 @@ class derivedunion(umlproperty):
     The subsets are the properties that participate in the union (Element.name).
     """
 
-    def __init__(self, name, lower, upper, *subsets):
+    def __init__(self, name, type, lower, upper, *subsets):
         self.name = intern(name)
         self._name = intern('_' + name)
+        self.type = type
         self.lower = lower
         self.upper = upper
         self.subsets = set(subsets)

@@ -69,7 +69,7 @@ Extension.metaclass = property(extension_metaclass, doc="""
 del extension_metaclass
 %%
 override Classifier.inheritedMember
-Classifier.inheritedMember = derivedunion('inheritedMember', 0, '*')
+Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
 %%
 override Classifier.general
 def classifier_general(self):
@@ -84,7 +84,7 @@ override Class.superClass
 Class.superClass = Classifier.general
 %%
 override Namespace.importedMember
-Namespace.importedMember = derivedunion('importedMember', 0, '*')
+Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 %%
 override Property.opposite
 
@@ -116,7 +116,7 @@ override Property.isComposite
 Property.isComposite = property(lambda self: self.aggregation == intern('composite'))
 %%
 override Constraint.context
-Constraint.context = derivedunion('context', 0, 1)
+Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
 override Association.endType
 
@@ -136,7 +136,7 @@ Property.render = render_property
 del render_property
 %%
 override Operation.type
-Operation.type = derivedunion('type', 0, 1)
+Operation.type = derivedunion('type', DataType, 0, 1)
 %%
 override Operation.parse
 from umllex import parse_operation
