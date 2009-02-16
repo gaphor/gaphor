@@ -10,9 +10,7 @@ from cStringIO import StringIO
 from zope import component
 
 from gaphor import UML
-from gaphor.storage import storage
 from gaphor.application import Application
-from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.diagram.interfaces import IConnect
 
 # Increment log level
@@ -114,6 +112,8 @@ class TestCase(unittest.TestCase):
         """
         Save diagram into string.
         """
+        from gaphor.storage import storage
+        from gaphor.misc.xmlwriter import XMLWriter
         f = StringIO()
         storage.save(XMLWriter(f), factory=self.element_factory)
         data = f.getvalue()
@@ -130,6 +130,7 @@ class TestCase(unittest.TestCase):
         Load data from specified string. Update ``TestCase.diagram``
         attribute to hold new loaded diagram.
         """
+        from gaphor.storage import storage
         f = StringIO(data)
         storage.load(f, factory=self.element_factory)
         f.close()
