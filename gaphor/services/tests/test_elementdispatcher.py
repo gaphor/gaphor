@@ -2,19 +2,19 @@
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.services.elementbaseddispatcher import ElementBasedDispatcher
+from gaphor.services.elementdispatcher import ElementDispatcher
 
 
-class ElementBasedDispatcherTestCase(TestCase):
+class ElementDispatcherTestCase(TestCase):
 
     def setUp(self):
-        super(ElementBasedDispatcherTestCase, self).setUp()
+        super(ElementDispatcherTestCase, self).setUp()
         self.events = []
-        self.dispatcher = ElementBasedDispatcher()
+        self.dispatcher = ElementDispatcher()
         self.dispatcher.init(Application)
 
     def tearDown(self):
-        super(ElementBasedDispatcherTestCase, self).tearDown()
+        super(ElementDispatcherTestCase, self).tearDown()
 
     def _handler(self, event):
         self.events.append(event)
@@ -137,7 +137,7 @@ class ElementBasedDispatcherTestCase(TestCase):
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
-        del element.ownedOperation[0]
+        del element.ownedOperation[o]
         assert len(dispatcher._handlers) == 1
 
 

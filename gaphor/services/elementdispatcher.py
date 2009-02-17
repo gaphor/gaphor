@@ -8,7 +8,7 @@ from gaphor.UML.interfaces import IElementChangeEvent
 from gaphor import UML
 from gaphor.UML.interfaces import IAssociationSetEvent, IAssociationAddEvent, IAssociationDeleteEvent
 
-class ElementBasedDispatcher(object):
+class ElementDispatcher(object):
     """
     The Element based Dispatcher allows handlers to receive only events
     related to certain elements. Those elements should be registered to. Also
@@ -63,7 +63,7 @@ class ElementBasedDispatcher(object):
         (association, attribute, etc.) representing the path.
 
         >>> from gaphor import UML
-        >>> dispatcher = ElementBasedDispatcher()
+        >>> dispatcher = ElementDispatcher()
         >>> map(str, dispatcher._path_to_properties(UML.Class(),
         ...         'ownedOperation.parameter.name')) # doctest: +NORMALIZE_WHITESPACE
         ['<association ownedOperation: Operation[0..*] <>-> class_>',
