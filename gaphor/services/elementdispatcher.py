@@ -104,8 +104,6 @@ class ElementDispatcher(object):
         Provided an element and a path of properties (props), register the
         handler for each property.
         """
-        if not props:
-            return
         property, remainder = props[0], props[1:]
         key = (element, property)
         try:
@@ -178,7 +176,10 @@ class ElementDispatcher(object):
             except KeyError:
                 pass
             else:
-                del handlers[handler]
+                try:
+                    del handlers[handler]
+                except KeyError:
+                    pass
                 if not handlers:
                     del self._handlers[key]
         del self._reverse[handler]
@@ -195,23 +196,28 @@ class ElementDispatcher(object):
                     log.error('problem executing handler %s' % handler, e)
         
             # Handle add/removal of handlers based on the kind of event
+            # Filter out handlers that have no remaining properties
             if IAssociationSetEvent.providedBy(event):
                 for handler, remainder in handlers.iteritems():
-                    if event.old_value:
+                    if remainder and event.old_value:
                         self._remove_handlers(event.old_value, remainder[0], handler)
-                    if event.new_value:
+                    if remainder and event.new_value:
                         self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationAddEvent.providedBy(event):
                 for handler, remainder in handlers.iteritems():
-                    self._add_handlers(event.new_value, remainder, handler)
+                    if remainder:
+                        self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationDeleteEvent.providedBy(event):
                 for handler, remainder in handlers.iteritems():
-                    self._remove_handlers(event.old_value, remainder[0], handler)
+                    if remainder:
+                        self._remove_handlers(event.old_value, remainder[0], handler)
 
     @component.adapter(IModelFactoryEvent)
     def on_model_loaded(self, event):
         for key, value in self._handlers.items():
             for h, remainder in value.items():
                 self._add_handlers(key[0], (key[1],) + remainder, h)
+        for h in self._reverse.iterkeys():
+            h(None)
 
 # vim:sw=4:et:ai
