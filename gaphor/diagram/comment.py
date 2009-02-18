@@ -20,7 +20,7 @@ class CommentItem(ElementItem):
         self.min_width = CommentItem.EAR + 2 * CommentItem.OFFSET
         self.height = 50
         self.width = 100
-        self.watch('subject.body')
+        self.watch('subject<Comment>.body')
 
     def edit(self):
         #self.start_editing(self._body)
