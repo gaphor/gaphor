@@ -19,7 +19,7 @@ log.set_log_level(log.WARNING)
 
 class TestCase(unittest.TestCase):
     
-    core_services = ['property_based_dispatcher']
+    core_services = ['property_dispatcher']
     services = ['element_factory', 'adapter_loader']
     
     def setUp(self):
