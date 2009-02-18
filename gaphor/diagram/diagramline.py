@@ -209,7 +209,7 @@ class NamedLine(DiagramLine):
                     'text-align-str': self.style.name_align_str,
                     'text-align-group': 'stereotype',
                 }, editable=True)
-        self.add_watch(UML.NamedElement.name, self.on_named_element_name)
+        self.watch('subject<NamedElement>.name', self.on_named_element_name)
 
 
     def on_named_element_name(self, event):

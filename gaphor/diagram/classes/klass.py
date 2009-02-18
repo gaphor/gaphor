@@ -34,9 +34,8 @@ class ClassItem(ClassifierItem):
         self._attributes = self.create_compartment('attributes')
         self._operations = self.create_compartment('operations')
 
-        self.add_watch(UML.Class.ownedAttribute, self.on_class_owned_attribute)
-        self.add_watch(UML.Class.ownedOperation, self.on_class_owned_operation)
-        self.add_watch(UML.Property.association, self.on_class_owned_attribute)
+        self.watch('subject<Class>.ownedOperation', self.on_class_owned_operation)\
+            .watch('subject<Class>.ownedAttribute.association', self.on_class_owned_attribute)
 
 
     def save(self, save_func):

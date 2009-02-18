@@ -44,8 +44,8 @@ class NamedItem(ElementItem):
 
         # size of stereotype, namespace and name text
         self._header_size = 0, 0
-        self.add_watch(UML.NamedElement.name, self.on_named_element_name)
-        self.add_watch(UML.NamedElement.namespace, self.on_named_element_namespace)
+        self.watch('subject<NamedElement>.name', self.on_named_element_name)\
+            .watch('subject<Namespace>.namespace', self.on_named_element_namespace)
 
 
     def is_namespace_info_visible(self):
@@ -77,9 +77,8 @@ class NamedItem(ElementItem):
         """
         Callback to be invoked, when named element name is changed.
         """
-        if self.subject and (event is None or self.subject is event.element):
-            self._name.text = self.subject.name
-            self.request_update()
+        self._name.text = self.subject.name
+        self.request_update()
 
 
     def on_named_element_namespace(self, event):
@@ -88,12 +87,11 @@ class NamedItem(ElementItem):
         is not the same as the namespace of this diagram.
         """
         subject = self.subject
-        if event is None or subject is event.element:
-            if subject and subject.namespace:
-                self._from.text = subject.namespace.name
-            else:
-                self._from.text = ''
-            self.request_update()
+        if subject and subject.namespace:
+            self._from.text = subject.namespace.name
+        else:
+            self._from.text = ''
+        self.request_update()
 
 
     def pre_update(self, context):

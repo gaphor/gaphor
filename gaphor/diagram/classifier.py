@@ -157,9 +157,9 @@ class ClassifierItem(NamedItem):
         self._compartments = []
 
         self._drawing_style = ClassifierItem.DRAW_NONE
-        self.add_watch(UML.Classifier.isAbstract, self.on_classifier_is_abstract)
-        self.add_watch(UML.Element.appliedStereotype, self.on_stereotype_change)
-        self.add_watch(UML.InstanceSpecification.slot, self.on_stereotype_attr_change)
+        self.watch('subject<Classifier>.isAbstract', self.on_classifier_is_abstract)\
+            .watch('subject.appliedStereotype', self.on_stereotype_change)\
+            .watch('subject.appliedStereotype.slot', self.on_stereotype_attr_change)
         self._name.font = font.FONT_NAME
 
 
