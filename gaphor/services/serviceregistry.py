@@ -38,9 +38,11 @@ class ServiceRegistry(object):
                 srv = cls()
                 self._uninitialized_services[ep.name] = srv
 
+
     def init_all_services(self):
         while self._uninitialized_services:
             self.init_service(self._uninitialized_services.iterkeys().next())
+
 
     def init_service(self, name):
         """
@@ -65,5 +67,6 @@ class ServiceRegistry(object):
             return self.component_registry.get_utility(IService, name)
         except component.ComponentLookupError:
             return self.init_service(name)
+
 
 # vim: sw=4:et:ai

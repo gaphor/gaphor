@@ -4,7 +4,7 @@
 from zope import interface, component
 from gaphor.core import inject
 from gaphor.interfaces import IService
-from gaphor.UML.interfaces import IElementChangeEvent
+from gaphor.UML.interfaces import IElementChangeEvent, IModelFactoryEvent
 from gaphor import UML
 from gaphor.UML.interfaces import IAssociationSetEvent, IAssociationAddEvent, IAssociationDeleteEvent
 
@@ -49,11 +49,13 @@ class ElementDispatcher(object):
 
     def init(self, app):
         self._app = app
+        app.register_handler(self.on_model_loaded)
         app.register_handler(self.on_element_change_event)
 
 
     def shutdown(self):
         self._app.unregister_handler(self.on_element_change_event)
+        self._app.unregister_handler(self.on_model_loaded)
         self._app = None
 
 
@@ -102,6 +104,8 @@ class ElementDispatcher(object):
         Provided an element and a path of properties (props), register the
         handler for each property.
         """
+        if not props:
+            return
         property, remainder = props[0], props[1:]
         key = (element, property)
         try:
@@ -136,7 +140,6 @@ class ElementDispatcher(object):
         """
         key = element, property
         handlers = self._handlers.get(key)
-        print 'removing', element, property, handlers
         if not handlers:
             return
 
@@ -155,7 +158,7 @@ class ElementDispatcher(object):
             del self._handlers[key]
 
 
-    def register_handler(self, element, path, handler):
+    def register_handler(self, handler, element, path):
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
 
@@ -164,11 +167,20 @@ class ElementDispatcher(object):
         """
         Unregister a handler from the registy.
         """
-        for key in reversed(self._reverse[handler]):
-            handlers = self._handlers[key]
-            del handlers[handler]
-            if not handlers:
-                del self._handlers[key]
+        try:
+            reverse = reversed(self._reverse[handler])
+        except KeyError:
+            return
+
+        for key in reverse:
+            try:
+                handlers = self._handlers[key]
+            except KeyError:
+                pass
+            else:
+                del handlers[handler]
+                if not handlers:
+                    del self._handlers[key]
         del self._reverse[handler]
 
 
@@ -196,5 +208,10 @@ class ElementDispatcher(object):
                 for handler, remainder in handlers.iteritems():
                     self._remove_handlers(event.old_value, remainder[0], handler)
 
+    @component.adapter(IModelFactoryEvent)
+    def on_model_loaded(self, event):
+        for key, value in self._handlers.items():
+            for h, remainder in value.items():
+                self._add_handlers(key[0], (key[1],) + remainder, h)
 
 # vim:sw=4:et:ai
