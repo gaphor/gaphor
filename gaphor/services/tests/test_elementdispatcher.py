@@ -24,8 +24,7 @@ class ElementDispatcherTestCase(TestCase):
     def test_register_handler(self):
         dispatcher = self.dispatcher
         element = UML.Class()
-        def handler(event): print 'Handled', event.element
-        dispatcher.register_handler(handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
         assert len(dispatcher._handlers) == 1
         assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
 
@@ -34,27 +33,25 @@ class ElementDispatcherTestCase(TestCase):
         element.ownedOperation = UML.Operation()
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
         p.name = 'func'
-        dispatcher.register_handler(handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
         assert len(dispatcher._handlers) == 3
 
 
     def test_register_handler_2(self):
         dispatcher = self.dispatcher
         element = UML.Class()
-        def handler(event): print 'Handled', event.element
 
         # Add some properties:
 
         element.ownedOperation = UML.Operation()
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
-        dispatcher.register_handler(handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
 
         assert len(self.events) == 0, len(self.events)
-        dispatcher.register_handler(handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
 
         p.name = 'func'
         assert len(self.events) == 1, len(self.events)
-        assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
 
 
     def test_unregister_handler(self):
@@ -62,24 +59,22 @@ class ElementDispatcherTestCase(TestCase):
         # First some setup:
         dispatcher = self.dispatcher
         element = UML.Class()
-        def handler(event): print 'Handled', event.element
         o = element.ownedOperation = UML.Operation()
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
         p.name = 'func'
-        dispatcher.register_handler(handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
         assert len(dispatcher._handlers) == 3
         assert dispatcher._handlers[element, UML.Class.ownedOperation]
         assert dispatcher._handlers[o, UML.Operation.parameter]
         assert dispatcher._handlers[p, UML.Parameter.name]
 
-        #dispatcher._remove_handlers(o, UML.Operation.parameter, handler)
-        dispatcher.unregister_handler(handler)
+        dispatcher.unregister_handler(self._handler)
 
         assert len(dispatcher._handlers) == 0, dispatcher._handlers
         assert len(dispatcher._reverse) == 0, dispatcher._reverse
         #assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
         # Should not fail here too:
-        dispatcher.unregister_handler(handler)
+        dispatcher.unregister_handler(self._handler)
 
 
     def test_notification(self):
@@ -227,6 +222,67 @@ class ElementDispatcherAsServiceTestCase(TestCase):
 
         del element.ownedOperation[o]
         assert len(dispatcher._handlers) == 2
+
+
+    def test_association_notification(self):
+        """
+        Test notifications with Class object.
+        
+        Tricky case where no events are fired.
+        """
+        dispatcher = self.dispatcher
+        element = UML.Association()
+        p1 = element.memberEnd = UML.Property()
+        p2 = element.memberEnd = UML.Property()
+
+        assert len(element.memberEnd) == 2
+        print element.memberEnd
+        dispatcher.register_handler(self._handler, element, 'memberEnd.name')
+        assert len(dispatcher._handlers) == 3, len(dispatcher._handlers)
+        assert not self.events
+
+        p1.name = 'foo'
+        assert len(self.events) == 1, (self.events, dispatcher._handlers)
+        assert len(dispatcher._handlers) == 3
+        
+        p1.name = 'othername'
+        assert len(self.events) == 2, self.events
+
+
+    def test_association_notification_complex(self):
+        """
+        Test notifications with Class object.
+        
+        Tricky case where no events are fired.
+        """
+        dispatcher = self.dispatcher
+        element = UML.Association()
+        p1 = element.memberEnd = UML.Property()
+        p2 = element.memberEnd = UML.Property()
+        p1.lowerValue = UML.LiteralSpecification()
+        p1.upperValue = UML.LiteralSpecification()
+        p2.lowerValue = UML.LiteralSpecification()
+        p2.upperValue = UML.LiteralSpecification()
+
+        assert len(element.memberEnd) == 2
+        print element.memberEnd
+
+        base = 'memberEnd<Property>.'
+        dispatcher.register_handler(self._handler, element, base + 'name')
+        dispatcher.register_handler(self._handler, element, base + 'aggregation')
+        dispatcher.register_handler(self._handler, element, base + 'classifier')
+        dispatcher.register_handler(self._handler, element, base + 'lowerValue<LiteralSpecification>.value')
+        dispatcher.register_handler(self._handler, element, base + 'upperValue<LiteralSpecification>.value')
+
+        assert len(dispatcher._handlers) == 15, len(dispatcher._handlers)
+        assert not self.events
+
+        p1.name = 'foo'
+        assert len(self.events) == 1, (self.events, dispatcher._handlers)
+        assert len(dispatcher._handlers) == 15
+        
+        p1.name = 'othername'
+        assert len(self.events) == 2, self.events
 
 
 # vim: sw=4:et:ai

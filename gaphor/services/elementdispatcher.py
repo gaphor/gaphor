@@ -112,7 +112,14 @@ class ElementDispatcher(object):
             handlers = dict()
             self._handlers[key] = handlers
 
-        handlers[handler] = remainder
+        if handlers.get(handler):
+            print 'overwrite:', map(str,handlers.get(handler)), map(str,remainder)
+        try:
+            remainders = handlers[handler]
+        except KeyError:
+            remainders = handlers[handler] = set()
+        if remainder:
+            remainders.add(remainder)
 
         try:
             reverse = self._reverse[handler]       
@@ -128,7 +135,7 @@ class ElementDispatcher(object):
                     self._add_handlers(e, remainder, handler)
             else:
                 e = property._get(element)
-                if e:
+                if e and remainder:
                     self._add_handlers(e, remainder, handler)
 
 
@@ -141,9 +148,9 @@ class ElementDispatcher(object):
         if not handlers:
             return
 
-        for h, remainder in handlers.items():
+        for h, remainders in handlers.items():
             if h is handler:
-                if remainder:
+                for remainder in remainders:
                     if property.upper > 1:
                         for e in property._get(element):
                             self._remove_handlers(e, remainder[0], handler)
@@ -198,25 +205,28 @@ class ElementDispatcher(object):
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
             if IAssociationSetEvent.providedBy(event):
-                for handler, remainder in handlers.iteritems():
-                    if remainder and event.old_value:
-                        self._remove_handlers(event.old_value, remainder[0], handler)
-                    if remainder and event.new_value:
-                        self._add_handlers(event.new_value, remainder, handler)
+                for handler, remainders in handlers.iteritems():
+                    if remainders and event.old_value:
+                        for remainder in remainders:
+                            self._remove_handlers(event.old_value, remainder[0], handler)
+                    if remainders and event.new_value:
+                        for remainder in remainders:
+                            self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationAddEvent.providedBy(event):
-                for handler, remainder in handlers.iteritems():
-                    if remainder:
+                for handler, remainders in handlers.iteritems():
+                    for remainder in remainders:
                         self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationDeleteEvent.providedBy(event):
-                for handler, remainder in handlers.iteritems():
-                    if remainder:
+                for handler, remainders in handlers.iteritems():
+                    for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
     @component.adapter(IModelFactoryEvent)
     def on_model_loaded(self, event):
         for key, value in self._handlers.items():
-            for h, remainder in value.items():
-                self._add_handlers(key[0], (key[1],) + remainder, h)
+            for h, remainders in value.items():
+                for remainder in remainders:
+                    self._add_handlers(key[0], (key[1],) + remainder, h)
         for h in self._reverse.iterkeys():
             h(None)
 
