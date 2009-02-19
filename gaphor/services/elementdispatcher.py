@@ -39,7 +39,7 @@ class ElementDispatcher(object):
 
     def __init__(self):
         # Table used to fire events:
-        # (event.element, event.property): { handler: path, ..}
+        # (event.element, event.property): { handler: set(path, ..), ..}
         self._handlers = dict()
 
         # Fast resolution when handlers are disconnected
@@ -106,14 +106,15 @@ class ElementDispatcher(object):
         """
         property, remainder = props[0], props[1:]
         key = (element, property)
+        
+        # Register key
         try:
             handlers = self._handlers[key]
         except KeyError:
             handlers = dict()
             self._handlers[key] = handlers
 
-        if handlers.get(handler):
-            print 'overwrite:', map(str,handlers.get(handler)), map(str,remainder)
+        # Register handler and it's remaining paths
         try:
             remainders = handlers[handler]
         except KeyError:
@@ -121,6 +122,7 @@ class ElementDispatcher(object):
         if remainder:
             remainders.add(remainder)
 
+        # Also add them to the reverse table, easing disconnecting
         try:
             reverse = self._reverse[handler]       
         except KeyError:
@@ -129,6 +131,7 @@ class ElementDispatcher(object):
 
         reverse.append(key)
 
+        # Apply remaining path
         if remainder:
             if property.upper > 1:
                 for e in property._get(element):
@@ -148,17 +151,15 @@ class ElementDispatcher(object):
         if not handlers:
             return
 
-        for h, remainders in handlers.items():
-            if h is handler:
-                for remainder in remainders:
-                    if property.upper > 1:
-                        for e in property._get(element):
-                            self._remove_handlers(e, remainder[0], handler)
-                    else:
-                        e = property._get(element)
-                        if e:
-                            self._remove_handlers(e, remainder[0], handler)
-            del handlers[h]
+        for remainder in handlers[handler]:
+            if property.upper > 1:
+                for e in property._get(element):
+                    self._remove_handlers(e, remainder[0], handler)
+            else:
+                e = property._get(element)
+                if e:
+                    self._remove_handlers(e, remainder[0], handler)
+        del handlers[handler]
         if not handlers:
             del self._handlers[key]
 
@@ -220,6 +221,7 @@ class ElementDispatcher(object):
                 for handler, remainders in handlers.iteritems():
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
+
 
     @component.adapter(IModelFactoryEvent)
     def on_model_loaded(self, event):
