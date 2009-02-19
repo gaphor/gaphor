@@ -43,17 +43,22 @@ class AssociationItem(NamedLine):
         self._dir_angle = 0
         self._dir_pos = 0, 0
         
-        self.add_watch(UML.Association.ownedEnd)
-        self.add_watch(UML.Association.memberEnd)
+        #self.watch('subject<Association>.ownedEnd')\
+            #.watch('subject<Association>.memberEnd')
 
         # For the association ends:
-        self.add_watch(UML.Property.aggregation, self.on_association_end_value)
-        self.add_watch(UML.Property.owningAssociation, self.on_association_end_value)
-        self.add_watch(UML.Property.classifier, self.on_association_end_value)
-        self.add_watch(UML.Property.visibility, self.on_association_end_value)
+        base = 'subject<Association>.memberEnd<Property>.'
+        self.watch(base + 'name', self.on_association_end_value)\
+            .watch(base + 'aggregation', self.on_association_end_value)\
+            .watch(base + 'classifier', self.on_association_end_value)\
+            .watch(base + 'visibility', self.on_association_end_value)\
+            .watch(base + 'lowerValue<LiteralSpecification>.value', self.on_association_end_value)\
+            .watch(base + 'upperValue<LiteralSpecification>.value', self.on_association_end_value)\
+            .watch(base + 'taggedValue<LiteralSpecification>.value', self.on_association_end_value)\
+            .watch(base + 'owningAssociation', self.on_association_end_value)
         #self.add_watch(UML.Property.name, self.on_association_end_value)
         # lowerValue, upperValue and taggedValue
-        self.add_watch(UML.LiteralSpecification.value, self.on_association_end_value)
+        #self.add_watch(UML.LiteralSpecification.value, self.on_association_end_value)
 
 
     def set_show_direction(self, dir):
@@ -132,19 +137,19 @@ class AssociationItem(NamedLine):
         """
         Handle events and update text on association end.
         """
-        if event:
-            element = event.element
-            for end in (self._head_end, self._tail_end):
-                subject = end.subject
-                if subject and element in (subject, subject.lowerValue, \
-                        subject.upperValue, subject.taggedValue):
-                    end.set_text()
-                    self.request_update()
-                    break;
-        else:
-            for end in (self._head_end, self._tail_end):
-                end.set_text()
-            self.request_update()
+        #if event:
+        #    element = event.element
+        #    for end in (self._head_end, self._tail_end):
+        #        subject = end.subject
+        #        if subject and element in (subject, subject.lowerValue, \
+        #                subject.upperValue, subject.taggedValue):
+        #            end.set_text()
+        #            self.request_update()
+        ##            break;
+        #else:
+        for end in (self._head_end, self._tail_end):
+            end.set_text()
+        self.request_update()
 
             
 

@@ -11,6 +11,9 @@ from gaphor.diagram.items import AssociationItem, ClassItem, InterfaceItem, \
 
 
 class AssociationItemTestCase(TestCase):
+
+    services = TestCase.services + ['element_dispatcher']
+
     def setUp(self):
         super(AssociationItemTestCase, self).setUp()
         self.assoc = self.create(AssociationItem)
@@ -55,13 +58,10 @@ class AssociationItemTestCase(TestCase):
         c2 = self.create(ClassItem, UML.Class)
         a = self.create(AssociationItem)
 
-        adapter = component.queryMultiAdapter((c1, a), IConnect)
-        assert adapter
-        adapter.connect(a.head)
+        self.connect(a, a.head, c1)
         assert a.head.connected_to
 
-        adapter = component.queryMultiAdapter((c2, a), IConnect)
-        adapter.connect(a.tail)
+        self.connect(a, a.tail, c2)
         assert a.tail.connected_to
 
         head = a._head_end
@@ -86,13 +86,10 @@ class AssociationItemTestCase(TestCase):
 
         a = self.create(AssociationItem)
 
-        adapter = component.queryMultiAdapter((c1, a), IConnect)
-        assert adapter
-        adapter.connect(a.head)
+        self.connect(a, a.head, c1)
         assert a.head.connected_to
 
-        adapter = component.queryMultiAdapter((c2, a), IConnect)
-        adapter.connect(a.tail)
+        self.connect(a, a.tail, c2)
         assert a.tail.connected_to
 
         head = a._head_end
@@ -117,13 +114,10 @@ class AssociationItemTestCase(TestCase):
 
         a = self.create(AssociationItem)
 
-        adapter = component.queryMultiAdapter((c1, a), IConnect)
-        assert adapter
-        adapter.connect(a.head)
+        self.connect(a, a.head, c1)
         assert a.head.connected_to
 
-        adapter = component.queryMultiAdapter((c2, a), IConnect)
-        adapter.connect(a.tail)
+        self.connect(a, a.tail, c2)
         assert a.tail.connected_to
 
         head = a._head_end
@@ -148,13 +142,10 @@ class AssociationItemTestCase(TestCase):
 
         a = self.create(AssociationItem)
 
-        adapter = component.queryMultiAdapter((c1, a), IConnect)
-        assert adapter
-        adapter.connect(a.head)
+        self.connect(a, a.head, c1)
         assert a.head.connected_to
 
-        adapter = component.queryMultiAdapter((c2, a), IConnect)
-        adapter.connect(a.tail)
+        self.connect(a, a.tail, c2)
         assert a.tail.connected_to
 
         head = a._head_end
@@ -172,5 +163,33 @@ class AssociationItemTestCase(TestCase):
         assert head.subject.owningAssociation is None
 
 
+    def test_association_end_updates(self):
+        """Test association end navigability connected to a class"""
+        from gaphas.canvas import Canvas
+        canvas = Canvas()
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
+        a = self.create(AssociationItem)
+
+        self.connect(a, a.head, c1)
+        assert a.head.connected_to
+
+        self.connect(a, a.tail, c2)
+        assert a.tail.connected_to
+
+        assert a.subject.memberEnd, a.subject.memberEnd
+
+        assert a.subject.memberEnd[0] is a.head_end.subject
+        assert a.subject.memberEnd[1] is a.tail_end.subject
+        assert a.subject.memberEnd[0].name is None
+
+        dispatcher = self.get_service('element_dispatcher')
+        print dispatcher._handlers.has_key((a.subject.memberEnd[0], UML.Property.name))
+        print '*' * 60
+        a.subject.memberEnd[0].name = 'blah'
+        print '*' * 60
+        self.diagram.canvas.update()
+
+        assert a.head_end._name == '+ blah', a.head_end.get_name()
 
 # vim:sw=4:et:ai

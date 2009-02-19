@@ -57,7 +57,7 @@ class IConnect(interface.Interface):
     adapter could be written.
     """
 
-    def connect(self, handle):
+    def connect(self, handle, port):
         """
         Connect a line's handle to element.
 
