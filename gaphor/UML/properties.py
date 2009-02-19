@@ -147,6 +147,9 @@ class enumeration(umlproperty):
     predefined set of values. Multiplicity is always `[0..1]`
     """
 
+    # All enumerations have a type 'str'
+    type = property(lambda s: str)
+
     def __init__(self, name, values, default):
         self.name = intern(name)
         self._name = intern('_' + name)
