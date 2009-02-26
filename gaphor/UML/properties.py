@@ -33,9 +33,14 @@ from event import AttributeChangeEvent, AssociationSetEvent, \
 from event import DerivedUnionSetEvent, DerivedUnionAddEvent, \
                   DerivedUnionDeleteEvent
 from event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
-from interfaces import IAssociationChangeEvent, IAssociationSetEvent, \
+from interfaces import IElementChangeEvent, \
+                       IAssociationChangeEvent, IAssociationSetEvent, \
                        IAssociationAddEvent, IAssociationDeleteEvent
 import operator
+import time
+
+# Stamping version time on derivedunions
+stamp = time.clock
 
 
 class umlproperty(object):
@@ -306,12 +311,6 @@ class association(umlproperty):
             if do_notify:
                 event = AssociationAddEvent(obj, self, value)
 
-        # Callbacks are only connected if a new relationship has
-        # been established.
-#        value.connect('__unlink__', self.__on_unlink, obj)
-#        if self.composite:
-#            obj.connect('__unlink__', self.__on_composite_unlink, value)
-        
         if not from_opposite and self.opposite:
             opposite = getattr(type(value), self.opposite)
             if not opposite.opposite:
@@ -440,18 +439,31 @@ class associationstub(umlproperty):
         getattr(obj, self._name).discard(value)
 
 
-class derivedunion(umlproperty):
+class unioncache(object):
     """
-    Derived union
+    Small cache helper object for derivedunions.
+    """
 
-      Element.union = derivedunion('union', subset1, subset2..subsetn)
+    def __init__(self, data, version):
+        self.data = data
+        self.version = version
 
-    The subsets are the properties that participate in the union (Element.name).
+
+class derived(umlproperty):
+    """
+    Base class for derived properties, both derived unions and custom
+    properties.
+
+    Note that, although this derived property sends DerivedUnionAddEvent,
+    -Delete- and Set events, this gives just an assumption that something
+    may have changed. If something actually changed depends on the filter
+    applied to the derived property.
     """
 
     def __init__(self, name, type, lower, upper, *subsets):
         self.name = intern(name)
         self._name = intern('_' + name)
+        self.version = 1
         self.type = type
         self.lower = lower
         self.upper = upper
@@ -470,7 +482,96 @@ class derivedunion(umlproperty):
 
 
     def __str__(self):
-        return '<derivedunion %s: %s>' % (self.name, str(map(str, self.subsets))[1:-1])
+        return '<derived %s: %s>' % (self.name, str(map(str, self.subsets))[1:-1])
+
+    def filter(self, obj):
+        raise NotImplementedError, 'Implement this in the property.'
+
+    def _update(self, obj):
+        """
+        Update the list of items. Returns a unioncache instance.
+        """
+        u = self.filter(obj)
+        if self.upper <= 1:
+            assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
+            u = u and iter(u).next()
+
+        uc = unioncache(u, self.version)
+        setattr(obj, self._name, uc)
+        return uc
+        
+        
+    def _get(self, obj):
+        try:
+            uc = getattr(obj, self._name)
+            if uc.version != self.version:
+                uc = self._update(obj)
+        except AttributeError:
+            uc = self._update(obj)
+        
+        return uc.data
+
+
+    def _set(self, obj, value):
+        raise AttributeError, 'Can not set values on a union'
+
+
+    def _del(self, obj, value=None):
+        raise AttributeError, 'Can not delete values on a union'
+
+    @component.adapter(IElementChangeEvent)
+    def _association_changed(self, event):
+        """
+        Re-emit state change for the derived properties as DerivedUnion*Event's.
+
+        TODO: We should fetch the old and new state of the namespace item in
+        stead of the old and new values of the item that changed.
+
+        If multiplicity is [0..1]:
+          send DerivedUnionSetEvent if len(union) < 2
+        if multiplicity is [*]:
+          send DerivedUnionAddEvent and DerivedUnionDeleteEvent
+            if value not in derived union and 
+        """
+        if event.property in self.subsets:
+            # Make sure unions are created again
+            self.version += 1
+            
+            if not IAssociationChangeEvent.providedBy(event):
+                return
+                
+            # mimic the events for Set/Add/Delete
+            if self.upper > 1:
+                if IAssociationSetEvent.providedBy(event):
+                    old_value, new_value = event.old_value, event.new_value
+                    # Do a filter? Change to 
+                    component.handle(DerivedUnionDeleteEvent(event.element, self, old_value))
+                    component.handle(DerivedUnionAddEvent(event.element, self, new_value))
+
+                elif IAssociationAddEvent.providedBy(event):
+                    new_value = event.new_value
+                    component.handle(DerivedUnionAddEvent(event.element, self, new_value))
+
+                elif IAssociationDeleteEvent.providedBy(event):
+                    old_value = event.old_value
+                    component.handle(DerivedUnionDeleteEvent(event.element, self, old_value))
+                else:
+                    log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
+            else:        
+                # This is a [0..1] event
+                assert IAssociationSetEvent.providedBy(event)
+                old_value, new_value = event.old_value, event.new_value
+                component.handle(DerivedUnionSetEvent(event.element, self, old_value, new_value))
+
+
+class derivedunion(derived):
+    """
+    Derived union
+
+      Element.union = derivedunion('union', subset1, subset2..subsetn)
+
+    The subsets are the properties that participate in the union (Element.name).
+    """
 
     def _union(self, obj, exclude=None):
         """
@@ -492,24 +593,10 @@ class derivedunion(umlproperty):
                         u.add(tmp)
             return u
 
-    def _get(self, obj):
-        u = self._union(obj)
-        if self.upper > 1:
-            return u
-        else:
-            assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
-            return u and iter(u).next() or None
-
-
-    def _set(self, obj, value):
-        raise AttributeError, 'Can not set values on a union'
-
-
-    def _del(self, obj, value=None):
-        raise AttributeError, 'Can not delete values on a union'
-
-
-    @component.adapter(IAssociationChangeEvent)
+    # Filter is our default filter
+    filter = _union
+    
+    @component.adapter(IElementChangeEvent)
     def _association_changed(self, event):
         """
         Re-emit state change for the derived union (as DerivedUnion*Event's).
@@ -524,8 +611,13 @@ class derivedunion(umlproperty):
             if value not in derived union and 
         """
         if event.property in self.subsets:
+            # Make sure unions are created again
+            self.version += 1
+            
+            if not IAssociationChangeEvent.providedBy(event):
+                return
+                
             # mimic the events for Set/Add/Delete
-
             if self.upper > 1:
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
@@ -538,6 +630,7 @@ class derivedunion(umlproperty):
                     new_value = event.new_value
                     if new_value not in self._union(event.element, exclude=event.property):
                         component.handle(DerivedUnionAddEvent(event.element, self, new_value))
+
                 elif IAssociationDeleteEvent.providedBy(event):
                     old_value = event.old_value
                     if old_value not in self._union(event.element, exclude=event.property):

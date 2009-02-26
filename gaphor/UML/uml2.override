@@ -7,6 +7,11 @@ comment
   Comment parts start with 'comment' on the line belowe the percentage
   symbols, 'override' is used to define a overridden variable. 
 
+  Overrides may in their turn derive from other properties, in that case
+  the 'derives' keyword may be used. It's only useful to declare the
+  associations (and other derived properties) an overridden value depends
+  on, since attributes have been written anyway. Note that no smart things
+  wrt inheritance is done.
 %%
 override Element
 from element import Element
@@ -14,47 +19,34 @@ from element import Element
 override Diagram
 from diagram import Diagram
 %%
-override MultiplicityElement.lower
-# Make it watch MultiplicityElement.lowerValue.value
-def _get(self):
-    return self.lowerValue and self.lowerValue.value
-def _set(self, value):
-    if not self.lowerValue:
-        self.lowerValue = self._factory.create(LiteralString)
-    self.lowerValue.value = value
-def _del(self):
-    if self.lowerValue:
-        del self.lowerValue.value
-
-MultiplicityElement.lower = property(_get, _set, _del)
-del _get, _set, _del
+override MultiplicityElement.lower derives MultiplicityElement.lowerValue
+MultiplicityElement.lower = derived('lower', object, 0, 1, MultiplicityElement.lowerValue, LiteralSpecification.value, LiteralString.value)
+MultiplicityElement.lower.filter = lambda obj: [ obj.lowerValue and obj.lowerValue.value ]
 %%
-override MultiplicityElement.upper
-# Make it watch MultiplicityElement.upperValue.value
-def _get(self):
-    return self.upperValue and self.upperValue.value
-def _set(self, value):
-    if not self.upperValue:
-        self.upperValue = self._factory.create(LiteralString)
-    self.upperValue.value = value
-def _del(self):
-    if self.upperValue:
-        del self.upperValue.value
-
-MultiplicityElement.upper = property(_get, _set, _del)
-del _get, _set, _del
+override MultiplicityElement.upper derives MultiplicityElement.upperValue
+MultiplicityElement.upper = derived('upper', object, 0, 1, MultiplicityElement.upperValue, LiteralSpecification.value, LiteralString.value)
+MultiplicityElement.upper.filter = lambda obj: [ obj.upperValue and obj.upperValue.value ]
 %%
-override Class.extension
+override Association.endType derives Association.memberEnd Property.type
+
+# References the classifiers that are used as types of the ends of the
+# association.
+
+Association.endType = derived('endType', Type, 0, '*', Association.memberEnd, Property.type)
+Association.endType.filter = lambda self: [end.type for end in self.memberEnd if end]
+
+%%
+override Class.extension derives Association.endType
 def class_extension(self):
-    extension = []
-    for e in self._factory.select(lambda e: e.isKindOf(Extension) and self in e.endType):
-        extension.append(e)
-    return extension
+    return list(self._factory.select(lambda e: e.isKindOf(Extension) and self in e.endType))
 
-Class.extension = property(class_extension, doc="""
-    References the Extensions that specify additional properties of the
-    metaclass. The property is derived from the extensions whose memberEnds
-    are typed by the Class.""")
+Class.extension = derived('extension', Extension, 0, '*', Association.endType)
+Class.extension.filter = class_extension
+
+#Class.extension = property(class_extension, doc="""
+#    References the Extensions that specify additional properties of the
+#    metaclass. The property is derived from the extensions whose memberEnds
+#    are typed by the Class.""")
 del class_extension
 %%
 override Extension.metaclass
@@ -96,11 +88,6 @@ def property_opposite(self):
     For Gaphor the property on the other end is returned regardless the
     navigability.
     """
-    #if not self.owningAssociation and len(self.association.memberEnd) == 2:
-    #    other_end = self.association.memberEnd[0] is self \
-    #                and self.association.memberEnd[1] \
-    #                or self.association.memberEnd[0]
-    #    return other_end
     if self.association is not None and len(self.association.memberEnd) == 2:
         return self.association.memberEnd[0] is self \
                and self.association.memberEnd[1] \
@@ -112,18 +99,13 @@ Property.opposite = property(property_opposite, doc=property_opposite.__doc__)
 del property_opposite
 
 %%
-override Property.isComposite
-Property.isComposite = property(lambda self: self.aggregation == intern('composite'))
+override Property.isComposite derives Property.aggregation
+#Property.isComposite = property(lambda self: self.aggregation == intern('composite'))
+Property.isComposite = derivedunion('isComposite', bool, 0, 1, Property.aggregation)
+Property.isComposite.filter = lambda obj: [obj.aggregation == intern('composite')]
 %%
 override Constraint.context
 Constraint.context = derivedunion('context', Namespace, 0, 1)
-%%
-override Association.endType
-
-Association.endType = property(lambda self: [end.type for end in self.memberEnd if end], doc="""
-    References the classifiers that are used as types of the ends of the
-    association.""")
-
 %%
 override Property.parse
 from umllex import parse_property

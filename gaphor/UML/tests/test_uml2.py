@@ -79,5 +79,96 @@ class TestUML2(unittest.TestCase):
         factory.shutdown()
 
 
+    def test_class_extension(self):
+        factory = UML.ElementFactory()
+        factory.init(Application)
+        c = factory.create(UML.Class)
+        s = factory.create(UML.Stereotype)
+
+        # Create stereotype connection, return Extension instance
+        e = UML.model.extend_with_stereotype(factory, c, s)
+
+        assert len(c.extension) == 1
+        assert e in c.extension
+        assert e.ownedEnd.type is s
+        
+    def test_lower_upper(self):
+        """
+        Test MultiplicityElement.{lower|upper}
+        """
+        assert UML.MultiplicityElement.lowerValue in UML.MultiplicityElement.lower.subsets
+        assert UML.LiteralSpecification.value in UML.MultiplicityElement.lower.subsets
+
+        e = UML.MultiplicityElement()
+        e.lowerValue = UML.LiteralString()
+        e.lowerValue.value = '2'
+        assert e.lower == '2', e.lower
+
+        assert UML.MultiplicityElement.upperValue in UML.MultiplicityElement.upper.subsets
+        assert UML.LiteralSpecification.value in UML.MultiplicityElement.upper.subsets
+
+        e.upperValue = UML.LiteralString()
+        e.upperValue.value = 'up'
+        assert UML.MultiplicityElement.upper.version == 4, UML.MultiplicityElement.upper.version
+        assert e.upper == 'up'
+        e.upperValue.value = 'down'
+        assert UML.MultiplicityElement.upper.version == 5, UML.MultiplicityElement.upper.version
+        assert e.upper == 'down', e.upper
+
+        # TODO: test signal handling
+
+    def test_property_is_composite(self):
+        p = UML.Property()
+        assert p.isComposite == False, p.isComposite
+        p.aggregation = 'shared'
+        assert p.isComposite == False, p.isComposite
+        p.aggregation = 'composite'
+        assert p.isComposite == True, p.isComposite
+
+
+    def test_association_endType(self):
+        factory = UML.ElementFactory()
+        c1 = UML.Class()
+        c2 = UML.Class()
+        a = UML.Association()
+        a.memberEnd = UML.Property()
+        a.memberEnd = UML.Property()
+        a.memberEnd[0].type = c1
+        a.memberEnd[1].type = c2
+        c1.ownedAttribute = a.memberEnd[0]
+        c2.ownedAttribute = a.memberEnd[1]
+
+        assert c1 in a.endType
+        assert c2 in a.endType
+
+        c3 = UML.Class()
+        a.memberEnd[1].type = c3
+
+        assert c1 in a.endType
+        assert c3 in a.endType
+
+
+
+    def skip_test_class_extension(self):
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
+        s = factory.create(UML.Stereotype)
+        e = UML.model.extend_with_stereotype(factory, c, s)
+
+        assert e in c.extension
+        assert UML.Class.extension.version >= 1, UML.Class.extension.version
+        
+        assert len(c.extension) == 1
+        assert e in c.extension
+
+        s = factory.create(UML.Stereotype)
+        e = UML.model.extend_with_stereotype(factory, c, s)
+
+        assert len(c.ownedAttribute) == 2
+        assert len(c.extension) == 2
+        assert UML.Class.extension.version > 6, UML.Class.extension.version
+        assert e in c.extension
+
+
 if __name__ == '__main__':
     unittest.main()

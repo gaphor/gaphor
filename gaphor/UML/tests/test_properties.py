@@ -402,7 +402,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         A.a = association('a', A)
         A.b = association('b', A, 0, 1)
-        A.u = derivedunion('u', 0, '*', A.a, A.b)
+        A.u = derivedunion('u', object, 0, '*', A.a, A.b)
 
         a = A()
         assert len(a.a) == 0, 'a.a = %s' % a.a
@@ -433,7 +433,7 @@ class PropertiesTestCase(unittest.TestCase):
                     self.notified = True
 
         E.a = association('a', A)
-        E.u = derivedunion('u', 0, '*', E.a)
+        E.u = derivedunion('u', A, 0, '*', E.a)
 
         e = E()
         assert e.notified == False
@@ -473,8 +473,8 @@ class PropertiesTestCase(unittest.TestCase):
         A.a = association('a', A, upper=1)
         A.b = association('b', A)
 
-        A.derived_a = derivedunion('derived_a', 0, 1, A.a)
-        A.derived_b = derivedunion('derived_b', 0, '*', A.b)
+        A.derived_a = derivedunion('derived_a', A, 0, 1, A.a)
+        A.derived_b = derivedunion('derived_b', A, 0, '*', A.b)
         events = []
         @component.adapter(AssociationChangeEvent)
         def handler(event, events=events):
@@ -484,7 +484,7 @@ class PropertiesTestCase(unittest.TestCase):
         try:
             a = A()
             a.a = A()
-            assert len(events) == 2
+            assert len(events) == 2, events
             assert events[0].property is A.derived_a
             assert events[1].property is A.a
         finally:
@@ -508,8 +508,8 @@ class PropertiesTestCase(unittest.TestCase):
         A.b2 = association('b2', A, upper='*')
         A.b3 = association('b3', A, upper=1)
 
-        A.derived_a = derivedunion('derived_a', 0, 1, A.a1, A.a2)
-        A.derived_b = derivedunion('derived_b', 0, '*', A.b1, A.b2, A.b3)
+        A.derived_a = derivedunion('derived_a', object, 0, 1, A.a1, A.a2)
+        A.derived_b = derivedunion('derived_b', object, 0, '*', A.b1, A.b2, A.b3)
         
         events = []
         @component.adapter(AssociationChangeEvent)
@@ -523,27 +523,33 @@ class PropertiesTestCase(unittest.TestCase):
             assert len(events) == 2
             assert events[0].property is A.derived_a
             assert events[1].property is A.a1
+            assert a.derived_a is a.a1
+            a.a1 = A()
+            assert len(events) == 4, len(events)
+            assert a.derived_a is a.a1
 
             a.a2 = A()
             # Should not emit DerivedUnionSetEvent
-            assert len(events) == 3
-            assert events[2].property is A.a2
+            assert len(events) == 5, len(events)
+            assert events[4].property is A.a2
 
+            del events[:]
             old_a1 = a.a1
             del a.a1
-            assert len(events) == 5, len(events)
-            assert events[3].property is A.derived_a
-            assert events[3].new_value is a.a2, '%s %s %s' % (a.a1, a.a2, events[3].new_value)
-            assert events[3].old_value is old_a1, '%s %s %s' % (a.a1, a.a2, events[3].old_value)
-            assert events[4].property is A.a1
+            assert len(events) == 2, len(events)
+            assert events[0].property is A.derived_a
+            assert events[0].new_value is a.a2, '%s %s %s' % (a.a1, a.a2, events[3].new_value)
+            assert events[0].old_value is old_a1, '%s %s %s' % (a.a1, a.a2, events[3].old_value)
+            assert events[1].property is A.a1
 
+            del events[:]
             old_a2 = a.a2
             del a.a2
-            assert len(events) == 7, len(events)
-            assert events[5].property is A.derived_a
-            assert events[5].new_value is None, '%s %s %s' % (a.a1, a.a2, events[5].new_value)
-            assert events[5].old_value is old_a2, '%s %s %s' % (a.a1, a.a2, events[5].old_value)
-            assert events[6].property is A.a2
+            assert len(events) == 2, len(events)
+            assert events[0].property is A.derived_a
+            assert events[0].new_value is None, '%s %s %s' % (a.a1, a.a2, events[5].new_value)
+            assert events[0].old_value is old_a2, '%s %s %s' % (a.a1, a.a2, events[5].old_value)
+            assert events[1].property is A.a2
 
             del events[:]
             assert len(events) == 0, len(events)

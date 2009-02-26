@@ -1,4 +1,3 @@
-# vim:sw=4:et
 """
 This file contains code for loading up an override file.  The override file
 provides implementations of functions where the code generator could not
@@ -38,7 +37,7 @@ class Overrides:
         while line:
             if line == '%%\n' or line == '%%':
                 if lines:
-                    bufs.append((string.join(lines, ''), startline))
+                    bufs.append((list(lines), startline))
                 startline = linenum + 1
                 lines = []
             else:
@@ -46,24 +45,24 @@ class Overrides:
             line = fp.readline()
             linenum = linenum + 1
         if lines:
-            bufs.append((string.join(lines, ''), startline))
+            bufs.append((list(lines), startline))
 
         if not bufs:
             return
 
         # Parse the parts of the file
-        for buffer, startline in bufs:
-            pos = string.find(buffer, '\n')
-            if pos >= 0:
-                line = buffer[:pos]
-                rest = buffer[pos+1:]
-            else:
-                line = buffer ; rest = ''
+        for lines, startline in bufs:
+            line = lines[0]
+            rest = lines[1:]
             words = string.split(line)
 
+            # TODO: Create a mech to define dependencies
             if words[0] == 'override':
                 func = words[1]
-                self.overrides[func] = rest
+                deps = ()
+                if len(words) > 3 and words[2] == 'derives':
+                    deps = tuple(words[3:])
+                self.overrides[func] = (deps, string.join(rest, ''), '%d: %s' % (startline, line))
             elif words[0] == 'comment':
                 pass # ignore comments
             else:
@@ -73,12 +72,18 @@ class Overrides:
     def has_override(self, key):
         return bool(self.overrides.get(key))
 
+    def derives(self, key):
+        return self.overrides.get(key, ((), None))[0]
+
     def write_override(self, fp, key):
         """Write override data for 'key' to a file refered to by 'fp'."""
-        data = self.overrides.get(key)
+        deps, data, line = self.overrides.get(key, ((), None, None))
         if not data:
             return False
 
+        fp.write('# ')
+        fp.write(line)
         fp.write(data)
         return True
 
+# vim:sw=4:et:ai
