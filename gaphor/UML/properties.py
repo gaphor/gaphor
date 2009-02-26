@@ -494,7 +494,10 @@ class derived(umlproperty):
         u = self.filter(obj)
         if self.upper <= 1:
             assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
-            u = u and iter(u).next()
+            if u:
+                u = iter(u).next()
+            else:
+                u = None
 
         uc = unioncache(u, self.version)
         setattr(obj, self._name, uc)
