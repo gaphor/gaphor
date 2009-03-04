@@ -137,10 +137,6 @@ def save_generator(writer, factory):
             # save subitems
             for child in value.canvas.get_children(value):
                 save_canvasitem(None, child)
-#                writer.startElement('item', { 'id': child.id,
-#                                              'type': kid.__class__.__name__ })
-#                child.save(save_canvasitem)
-#                writer.endElement('item')
 
             writer.endElement('item')
 
