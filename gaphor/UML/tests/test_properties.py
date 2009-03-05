@@ -494,7 +494,7 @@ class PropertiesTestCase(unittest.TestCase):
         from zope import component
         from gaphor.application import Application
         from gaphor.UML.event import AssociationChangeEvent
-        from gaphor.UML.event import DerivedUnionSetEvent, DerivedUnionAddEvent, DerivedUnionDeleteEvent
+        from gaphor.UML.event import DerivedSetEvent, DerivedAddEvent, DerivedDeleteEvent
         
         class A(Element):
             is_unlinked = False
@@ -529,7 +529,7 @@ class PropertiesTestCase(unittest.TestCase):
             assert a.derived_a is a.a1
 
             a.a2 = A()
-            # Should not emit DerivedUnionSetEvent
+            # Should not emit DerivedSetEvent
             assert len(events) == 5, len(events)
             assert events[4].property is A.a2
 
@@ -587,15 +587,15 @@ class PropertiesTestCase(unittest.TestCase):
             a.b3 = A()
             assert len(events) == 13, len(events)
             assert events[10].property is A.derived_b
-            assert type(events[10]) is DerivedUnionDeleteEvent, type(events[10])
+            assert type(events[10]) is DerivedDeleteEvent, type(events[10])
             assert events[11].property is A.derived_b
-            assert type(events[11]) is DerivedUnionAddEvent, type(events[11])
+            assert type(events[11]) is DerivedAddEvent, type(events[11])
             assert events[12].property is A.b3
 
             del a.b3
             assert len(events) == 15, len(events)
             assert events[13].property is A.derived_b
-            assert type(events[13]) is DerivedUnionDeleteEvent, type(events[10])
+            assert type(events[13]) is DerivedDeleteEvent, type(events[10])
             assert events[14].property is A.b3
         finally:
             Application.unregister_handler(handler)

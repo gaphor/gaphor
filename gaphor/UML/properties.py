@@ -30,8 +30,8 @@ from zope import component
 from collection import collection
 from event import AttributeChangeEvent, AssociationSetEvent, \
                   AssociationAddEvent, AssociationDeleteEvent
-from event import DerivedUnionChangeEvent, DerivedUnionSetEvent, \
-                  DerivedUnionAddEvent, DerivedUnionDeleteEvent
+from event import DerivedChangeEvent, DerivedSetEvent, \
+                  DerivedAddEvent, DerivedDeleteEvent
 from event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
 from interfaces import IElementChangeEvent, \
                        IAssociationChangeEvent, IAssociationSetEvent, \
@@ -454,7 +454,7 @@ class derived(umlproperty):
     Base class for derived properties, both derived unions and custom
     properties.
 
-    Note that, although this derived property sends DerivedUnionAddEvent,
+    Note that, although this derived property sends DerivedAddEvent,
     -Delete- and Set events, this gives just an assumption that something
     may have changed. If something actually changed depends on the filter
     applied to the derived property.
@@ -525,15 +525,15 @@ class derived(umlproperty):
     @component.adapter(IElementChangeEvent)
     def _association_changed(self, event):
         """
-        Re-emit state change for the derived properties as DerivedUnion*Event's.
+        Re-emit state change for the derived properties as Derived*Event's.
 
         TODO: We should fetch the old and new state of the namespace item in
         stead of the old and new values of the item that changed.
 
         If multiplicity is [0..1]:
-          send DerivedUnionSetEvent if len(union) < 2
+          send DerivedSetEvent if len(union) < 2
         if multiplicity is [*]:
-          send DerivedUnionAddEvent and DerivedUnionDeleteEvent
+          send DerivedAddEvent and DerivedDeleteEvent
             if value not in derived union and 
         """
         if event.property in self.subsets:
@@ -548,26 +548,26 @@ class derived(umlproperty):
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
                     # Do a filter? Change to 
-                    component.handle(DerivedUnionDeleteEvent(event.element, self, old_value))
-                    component.handle(DerivedUnionAddEvent(event.element, self, new_value))
+                    component.handle(DerivedDeleteEvent(event.element, self, old_value))
+                    component.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationAddEvent.providedBy(event):
                     new_value = event.new_value
-                    component.handle(DerivedUnionAddEvent(event.element, self, new_value))
+                    component.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationDeleteEvent.providedBy(event):
                     old_value = event.old_value
-                    component.handle(DerivedUnionDeleteEvent(event.element, self, old_value))
+                    component.handle(DerivedDeleteEvent(event.element, self, old_value))
 
                 elif IAssociationChangeEvent.providedBy(event):
-                    component.handle(DerivedUnionChangeEvent(event.element, self))
+                    component.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
             else:        
                 # This is a [0..1] event
                 assert IAssociationSetEvent.providedBy(event)
                 old_value, new_value = event.old_value, event.new_value
-                component.handle(DerivedUnionSetEvent(event.element, self, old_value, new_value))
+                component.handle(DerivedSetEvent(event.element, self, old_value, new_value))
 
 
 class derivedunion(derived):
@@ -605,15 +605,15 @@ class derivedunion(derived):
     @component.adapter(IElementChangeEvent)
     def _association_changed(self, event):
         """
-        Re-emit state change for the derived union (as DerivedUnion*Event's).
+        Re-emit state change for the derived union (as Derived*Event's).
 
         TODO: We should fetch the old and new state of the namespace item in
         stead of the old and new values of the item that changed.
 
         If multiplicity is [0..1]:
-          send DerivedUnionSetEvent if len(union) < 2
+          send DerivedSetEvent if len(union) < 2
         if multiplicity is [*]:
-          send DerivedUnionAddEvent and DerivedUnionDeleteEvent
+          send DerivedAddEvent and DerivedDeleteEvent
             if value not in derived union and 
         """
         if event.property in self.subsets:
@@ -628,22 +628,22 @@ class derivedunion(derived):
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
                     if old_value and old_value not in self._union(event.element, exclude=event.property):
-                        component.handle(DerivedUnionDeleteEvent(event.element, self, old_value))
+                        component.handle(DerivedDeleteEvent(event.element, self, old_value))
                     if new_value and new_value not in self._union(event.element, exclude=event.property):
-                        component.handle(DerivedUnionAddEvent(event.element, self, new_value))
+                        component.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationAddEvent.providedBy(event):
                     new_value = event.new_value
                     if new_value not in self._union(event.element, exclude=event.property):
-                        component.handle(DerivedUnionAddEvent(event.element, self, new_value))
+                        component.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationDeleteEvent.providedBy(event):
                     old_value = event.old_value
                     if old_value not in self._union(event.element, exclude=event.property):
-                        component.handle(DerivedUnionDeleteEvent(event.element, self, old_value))
+                        component.handle(DerivedDeleteEvent(event.element, self, old_value))
 
                 elif IAssociationChangeEvent.providedBy(event):
-                    component.handle(DerivedUnionChangeEvent(event.element, self))
+                    component.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
             else:        
@@ -652,7 +652,7 @@ class derivedunion(derived):
                 # This is a [0..1] event
                 if self.single:
                     # Only one subset element, so pass the values on
-                    component.handle(DerivedUnionSetEvent(event.element, self, old_value, new_value))
+                    component.handle(DerivedSetEvent(event.element, self, old_value, new_value))
                 else:
                     values = self._union(event.element, exclude=event.property)
 
@@ -664,7 +664,7 @@ class derivedunion(derived):
                         return
                     if values:
                         new_value = iter(values).next()
-                    component.handle(DerivedUnionSetEvent(event.element, self, old_value, new_value))
+                    component.handle(DerivedSetEvent(event.element, self, old_value, new_value))
 
 
 class redefine(umlproperty):

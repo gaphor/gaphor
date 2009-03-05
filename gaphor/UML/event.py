@@ -52,11 +52,11 @@ class AssociationDeleteEvent(AssociationChangeEvent):
         self.old_value = old_value
 
 
-class DerivedUnionChangeEvent(AssociationChangeEvent):
+class DerivedChangeEvent(AssociationChangeEvent):
     pass
 
 
-class DerivedUnionSetEvent(DerivedUnionChangeEvent):
+class DerivedSetEvent(DerivedChangeEvent):
 
     interface.implements(IAssociationSetEvent)
 
@@ -66,7 +66,7 @@ class DerivedUnionSetEvent(DerivedUnionChangeEvent):
         self.new_value = new_value
 
 
-class DerivedUnionAddEvent(DerivedUnionChangeEvent):
+class DerivedAddEvent(DerivedChangeEvent):
 
     interface.implements(IAssociationAddEvent)
 
@@ -75,7 +75,7 @@ class DerivedUnionAddEvent(DerivedUnionChangeEvent):
         self.new_value = new_value
 
 
-class DerivedUnionDeleteEvent(DerivedUnionChangeEvent):
+class DerivedDeleteEvent(DerivedChangeEvent):
 
     interface.implements(IAssociationDeleteEvent)
 

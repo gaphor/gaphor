@@ -15,7 +15,7 @@ from gaphor.application import Application
 from gaphor import UML
 from gaphor.UML.event import ElementCreateEvent, ModelFactoryEvent, FlushFactoryEvent
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
-from gaphor.UML.event import DerivedUnionSetEvent
+from gaphor.UML.event import DerivedSetEvent
 from gaphor.transaction import Transaction
 
 
@@ -240,7 +240,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 #                self.row_has_child_toggled(path[:-1], self.get_iter(path[:-1]))
 
 
-    @component.adapter(DerivedUnionSetEvent)
+    @component.adapter(DerivedSetEvent)
     @catchall
     def _on_association_set(self, event):
 
