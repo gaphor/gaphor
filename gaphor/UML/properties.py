@@ -30,8 +30,8 @@ from zope import component
 from collection import collection
 from event import AttributeChangeEvent, AssociationSetEvent, \
                   AssociationAddEvent, AssociationDeleteEvent
-from event import DerivedUnionSetEvent, DerivedUnionAddEvent, \
-                  DerivedUnionDeleteEvent
+from event import DerivedUnionChangeEvent, DerivedUnionSetEvent, \
+                  DerivedUnionAddEvent, DerivedUnionDeleteEvent
 from event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
 from interfaces import IElementChangeEvent, \
                        IAssociationChangeEvent, IAssociationSetEvent, \
@@ -558,6 +558,9 @@ class derived(umlproperty):
                 elif IAssociationDeleteEvent.providedBy(event):
                     old_value = event.old_value
                     component.handle(DerivedUnionDeleteEvent(event.element, self, old_value))
+
+                elif IAssociationChangeEvent.providedBy(event):
+                    component.handle(DerivedUnionChangeEvent(event.element, self))
                 else:
                     log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
             else:        
@@ -638,6 +641,9 @@ class derivedunion(derived):
                     old_value = event.old_value
                     if old_value not in self._union(event.element, exclude=event.property):
                         component.handle(DerivedUnionDeleteEvent(event.element, self, old_value))
+
+                elif IAssociationChangeEvent.providedBy(event):
+                    component.handle(DerivedUnionChangeEvent(event.element, self))
                 else:
                     log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
             else:        
