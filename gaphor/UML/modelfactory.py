@@ -127,9 +127,10 @@ def extend_with_stereotype(factory, element, stereotype):
     ext.memberEnd = ext_end
     ext.ownedEnd = ext_end
     ext_end.type = stereotype
+    ext_end.aggregation = 'composite'
     p.type = element
     p.name = 'baseClass'
-    element.ownedAttribute = ext_end
+    stereotype.ownedAttribute = p
 
     assert ext in element.extension
 
