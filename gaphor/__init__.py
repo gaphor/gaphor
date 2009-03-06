@@ -43,7 +43,7 @@ def launch(gaphor_file=None):
         file_manager.new()
 
     Application.run()
-    #Application.shutdown()
+    Application.shutdown()
 
 
 def main():
