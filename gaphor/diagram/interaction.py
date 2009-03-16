@@ -11,7 +11,7 @@ class InteractionItem(NamedItem):
     __uml__ = UML.Interaction
 
     __style__ = {
-        'min-size': (300, 300),
+        'min-size': (150, 100),
         'name-align': (ALIGN_TOP, ALIGN_LEFT),
     }
 
