@@ -200,6 +200,7 @@ It uses the GTK+ environment for user interaction.
         'gaphor.uicomponents': [
             'mainwindow = gaphor.ui.mainwindow:MainWindow',
             'consolewindow = gaphor.ui.consolewindow:ConsoleWindow',
+            'infowindow = gaphor.ui.infowindow:InfoWindow',
         ],
     },
 

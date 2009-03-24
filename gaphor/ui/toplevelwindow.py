@@ -9,6 +9,8 @@ import gtk
 
 from zope import interface
 from interfaces import IUIComponent
+from gaphor.core import inject
+
 
 ICONS = (
     'gaphor-24x24.png',
@@ -24,14 +26,24 @@ class ToplevelWindow(object):
     menubar_path = ''
     toolbar_path = ''
 
+    gui_manager = inject('gui_manager')
+
     def __init__(self):
         self.window = None
 
-    def construct(self):
+    def construct(self, main=False):
+        # We need the main window so we can set transient windows.
+        if not main:
+            main_window = self.gui_manager.main_window.window
+
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title(self.title)
         self.window.set_size_request(*self.size)
         self.window.set_resizable(True)
+
+        if not main and main_window:
+            self.window.set_transient_for(main_window)
+
 
         # set default icons of gaphor windows
         icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
@@ -44,13 +56,11 @@ class ToplevelWindow(object):
         self.window.add(vbox)
         vbox.show()
 
-        #self.ui_manager.insert_action_group(self.action_group, 0)
-        #self.ui_manager.add_ui_from_string(self.menu_xml)
-
         menubar = self.ui_manager.get_widget(self.menubar_path)
+        print 'menubar', menubar
         if menubar:
             vbox.pack_start(menubar, expand=False)
-            #menubar.show()
+            #menubar.show_all()
         
         if self.toolbar_path:
             toolbar = self.ui_manager.get_widget(self.toolbar_path)

@@ -259,7 +259,7 @@ class MainWindow(ToplevelWindow):
         return paned
 
     def construct(self):
-        super(MainWindow, self).construct()
+        super(MainWindow, self).construct(main=True)
 
         self.window.connect('delete-event', self._on_window_delete)
 

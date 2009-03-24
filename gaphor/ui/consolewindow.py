@@ -52,11 +52,13 @@ class ConsoleWindow(ToplevelWindow):
     def open(self):
         if not self.window:
             self.construct()
+            self.window.connect('destroy', self.close)
         else:
             self.window.show_all()
 
     @action(name='ConsoleWindow:close', stock_id='gtk-close', accel='<Control><Shift>w')
-    def close(self):
+    def close(self, window=None):
         self.window.destroy()
         self.window = None
 
+# vim:sw=4:et:ai
