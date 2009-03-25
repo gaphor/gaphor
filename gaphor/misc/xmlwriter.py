@@ -113,7 +113,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         self._undeclared_ns_maps = []
 
         for (name, value) in attrs.items():
-            self._out.write(' %s=%s' % (self._qname(name), quoteattr(value)), start_tag=True)
+            self._out.write(' %s=%s' % (self._qname(name), quoteattr(value)))
 
     def endElementNS(self, name, qname):
         self._write('%s' % self._qname(name), end_tag=True)

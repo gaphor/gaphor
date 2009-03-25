@@ -20,7 +20,7 @@ log.set_log_level(log.WARNING)
 class TestCase(unittest.TestCase):
     
     core_services = ['property_dispatcher']
-    services = ['element_factory', 'adapter_loader']
+    services = ['element_factory', 'adapter_loader', 'element_dispatcher']
     
     def setUp(self):
         Application.init(services=self.core_services+self.services)
