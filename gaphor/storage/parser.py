@@ -89,7 +89,7 @@ class canvasitem(base):
         self.canvasitems = []
 
 
-XMLNS='http://gaphor.sourceforge.net/gaphor'
+XMLNS='http://gaphor.sourceforge.net/model'
 
 class ParserException(Exception):
     pass

@@ -181,6 +181,23 @@ class FileManager(object):
 
     def _save(self, filename):
         if filename and len(filename) > 0:
+            from gaphor.storage import verify
+            orphans = verify.orphan_references(self.element_factory)
+            if orphans:
+                main_window = self.gui_manager.main_window
+                dialog = gtk.MessageDialog(main_window.window,
+                    gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                    gtk.MESSAGE_WARNING, gtk.BUTTONS_YES_NO,
+                    _("The model contains some references to items that are "
+                    "not maintained. Do you want to clean this before saving the model?"))
+                #dialog.format_secondary_text("The 
+                answer = dialog.run()
+                dialog.destroy()
+                if answer != gtk.RESPONSE_YES:
+                    for o in orphans:
+                        o.unlink()
+                    assert not verify.orphan_references(self.element_factory)
+
             from gaphor.storage import storage
             if not filename.endswith(DEFAULT_EXT):
                 filename = filename + DEFAULT_EXT

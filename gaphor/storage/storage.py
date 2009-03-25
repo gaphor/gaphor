@@ -6,9 +6,6 @@ load(filename)
     load a model from a file
 save(filename)
     store the current model in a file
-verify(filename)
-    check the validity of the file (this does not tell us
-    we have a valid model, just a valid file).
 """
 
 from cStringIO import StringIO, InputType
@@ -39,6 +36,7 @@ from gaphor.adapters import connectors
 __all__ = [ 'load', 'save' ]
 
 FILE_FORMAT_VERSION = '3.0'
+NAMESPACE_MODEL = 'http://gaphor.sourceforge.net/model'
 
 def save(writer=None, factory=None, status_queue=None):
     for status in save_generator(writer, factory):
@@ -52,13 +50,16 @@ def save_generator(writer, factory):
     with CDATA support).
     """
 
+    # Maintain a set of id's, one for elements, one for references.
+    # Write only to file if references is a subset of elements
+
     def save_reference(name, value):
         """
         Save a value as a reference to another element in the model.
         This applies to both UML as well as canvas items.
         """
         # Save a reference to the object:
-        if value.id: #, 'Referenced element %s has no id' % value
+        if value.id:
             writer.startElement(name, {})
             writer.startElement('ref', { 'refid': value.id })
             writer.endElement('ref')
@@ -73,7 +74,7 @@ def save_generator(writer, factory):
             writer.startElement('reflist', {})
             for v in value:
                 #save_reference(name, v)
-                if v.id: #, 'Referenced element %s has no id' % v
+                if v.id:
                     writer.startElement('ref', { 'refid': v.id })
                     writer.endElement('ref')
             writer.endElement('reflist')
@@ -146,8 +147,12 @@ def save_generator(writer, factory):
             save_value(name, value)
 
     writer.startDocument()
-    writer.startElement('gaphor', { 'version': FILE_FORMAT_VERSION,
-                                    'gaphor-version': Application.distribution.version })
+    writer.startPrefixMapping('', NAMESPACE_MODEL)
+#    writer.startElement('gaphor', { 'version': FILE_FORMAT_VERSION,
+#                                    'gaphor-version': Application.distribution.version })
+    writer.startElementNS((NAMESPACE_MODEL, 'gaphor'), None,
+            { (NAMESPACE_MODEL, 'version'): FILE_FORMAT_VERSION,
+              (NAMESPACE_MODEL, 'gaphor-version'): Application.distribution.version })
 
     size = factory.size()
     n = 0
@@ -162,7 +167,9 @@ def save_generator(writer, factory):
         if n % 25 == 0:
             yield (n * 100) / size
 
-    writer.endElement('gaphor')
+    #writer.endElement('gaphor')
+    writer.endElementNS((NAMESPACE_MODEL, 'gaphor'), None)
+    writer.endPrefixMapping('')
     writer.endDocument()
 
 

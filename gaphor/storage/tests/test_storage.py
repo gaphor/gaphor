@@ -231,7 +231,7 @@ class StorageTestCase(TestCase):
         f.write(copy)
         f.close()
 
-        assert len(copy) == len(orig), copy
+        assert len(copy) == len(orig), "%d != %d:\n%s" % (len(copy), len(orig), copy)
         orig = orig.replace('0.11.1', '%VER%')
         copy = copy.replace('0.13.1', '%VER%')
 
