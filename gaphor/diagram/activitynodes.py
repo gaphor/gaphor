@@ -6,7 +6,7 @@ import math
 
 from gaphas.util import path_ellipse
 from gaphas.state import observed, reversible_property
-from gaphas.item import Handle, Item
+from gaphas.item import Handle, Item, LinePort
 from gaphas.constraint import EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
 
@@ -205,7 +205,10 @@ class ForkNodeItem(Item, DiagramItem):
         Item.__init__(self)
         DiagramItem.__init__(self, id)
         
-        self._handles.extend((Handle(), Handle()))
+        h1, h2 = Handle(), Handle()
+        self._handles.append(h1)
+        self._handles.append(h2)
+        self._ports.append(LinePort(h1, h2))
 
         self._combined = None
 
