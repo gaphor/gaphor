@@ -14,7 +14,6 @@ from namespace import NamespaceModel, NamespaceView
 from diagramtab import DiagramTab
 from toolbox import Toolbox
 from diagramtoolbox import TOOLBOX_ACTIONS
-from propertyeditor import PropertyEditor
 from toplevelwindow import ToplevelWindow
 
 
@@ -228,17 +227,11 @@ class MainWindow(ToplevelWindow):
         notebook.connect_after('switch-page', self._on_notebook_switch_page)
         notebook.connect_after('page-removed', self._on_notebook_page_removed)
 
-        self.property_editor = PropertyEditor()
-        pe_notebook = self.property_editor.construct()
-        pe_notebook.set_size_request(-1, 50)
-
         second_paned = gtk.VPaned()
         second_paned.set_property('position',
                                  int(self.properties.get('ui.property-editor-position', 600)))
         second_paned.pack1(notebook)
         notebook.show()
-        second_paned.pack2(pe_notebook)
-        pe_notebook.show()
         
         paned.pack2(second_paned)
         second_paned.show()
