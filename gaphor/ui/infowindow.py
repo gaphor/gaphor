@@ -2,12 +2,9 @@
 The file service is responsible for loading and saving the user data.
 """
 
-import gc
-import gobject, pango, gtk
-from zope import interface, component
-from gaphor.interfaces import IService, IActionProvider, IServiceEvent
+from zope import interface
+from gaphor.interfaces import IService, IActionProvider
 from gaphor.core import _, inject, action, build_action_group
-from gaphor import UML
 from gaphor.ui.toplevelwindow import ToplevelWindow
 from gaphor.ui.propertyeditor import PropertyEditor
 
@@ -20,7 +17,6 @@ class InfoWindow(ToplevelWindow):
     interface.implements(IService, IActionProvider)
 
     element_factory = inject('element_factory')
-    gui_manager = inject('gui_manager')
     properties = inject('properties')
 
     title = _("Info")
