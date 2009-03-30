@@ -140,7 +140,7 @@ class ConnectorItem(NamedLine):
         self._end = end
         if end and end.role:
             self._interface.text = self.end.role.name
-            self.add_watch(UML.Interface.name, self.on_interface_name) 
+            self.watch('end<ConnectorEnd>.role<Interface>.name', self.on_interface_name)
         else:
             self._interface.text = ''
             # fixme: how to remove notification?
@@ -152,9 +152,6 @@ class ConnectorItem(NamedLine):
         Callback used, when interface name changes (interface is referenced
         by `ConnectorItem.end.role`).
         """
-        # fixme: this method is called when name of _every_ interface in
-        #        data model changes
-        # fixme: this method is called when connector's name changes, why?
         if event and event.element:
             self._interface.text = event.element.name
             self.request_update(matrix=False)
