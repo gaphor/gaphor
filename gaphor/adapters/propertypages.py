@@ -1174,7 +1174,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_ordering_change(self, combo):
         value = self.ORDERING_VALUES[combo.get_active()]
-        self.context.set_ordering(value)
+        self.context.subject.ordering = value
 
     @transactional
     def _on_ordering_show_change(self, button):

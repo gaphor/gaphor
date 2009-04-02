@@ -213,8 +213,8 @@ class NamedLine(DiagramLine):
 
 
     def on_named_element_name(self, event):
-        if self.subject and (event is None or self.subject is event.element):
-            self._name.text = self.subject.name
-            self.request_update()
+        self._name.text = self.subject and self.subject.name or ''
+        self.request_update()
+
 
 # vim:sw=4:et

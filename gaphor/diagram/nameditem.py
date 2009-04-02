@@ -77,8 +77,9 @@ class NamedItem(ElementItem):
         """
         Callback to be invoked, when named element name is changed.
         """
-        self._name.text = self.subject.name
-        self.request_update()
+        if self.subject:
+            self._name.text = self.subject.name
+            self.request_update()
 
 
     def on_named_element_namespace(self, event):

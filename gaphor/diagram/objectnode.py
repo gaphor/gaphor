@@ -48,8 +48,22 @@ class ObjectNodeItem(NamedItem):
             style = self.STYLE_BOTTOM,
             visible=self._get_show_ordering)
 
-        self.add_watch(UML.LiteralSpecification.value)
-        self.add_watch(UML.ObjectNode.ordering)
+        self.watch('subject<ObjectNode>.upperBound<LiteralSpecification>.value', self.on_object_node_upper_bound)\
+            .watch('subject<ObjectNode>.ordering', self.on_object_node_ordering)
+
+
+    def on_object_node_ordering(self, event):
+        if self.subject:
+            self._ordering.text = self.subject.ordering
+        self.request_update()
+
+
+    def on_object_node_upper_bound(self, event):
+        subject = self.subject
+        if subject and subject.upperBound:
+            self._upper_bound.text = subject.upperBound
+            self.request_update()
+
 
 
     def is_upper_bound_visible(self):
@@ -62,18 +76,7 @@ class ObjectNodeItem(NamedItem):
 
 
     @observed
-    def _set_ordering(self, ordering):
-        """
-        Set ordering of object node.
-        """
-        self.subject.ordering = ordering
-        self.request_update()
-
-    ordering = reversible_property(lambda s: s.subject.ordering, _set_ordering)
-
-    @observed
     def _set_show_ordering(self, value):
-        #self.preserve_property(pspec.name)
         self._show_ordering = value
         self.request_update()
 
@@ -99,15 +102,6 @@ class ObjectNodeItem(NamedItem):
         if self.subject and self._show_ordering:
             self.set_ordering(self.subject.ordering)
         super(ObjectNodeItem, self).postload()
-
-
-    def on_object_node_upper_bound(self, event):
-        element = self.element
-        subject = self.subject
-        if subject and (element is subject or element is subject.upperBound):
-            if not (subject.upperBound and subject.upperBound.value):
-                self.set_upper_bound(DEFAULT_UPPER_BOUND)
-            self.request_update()
 
 
     def draw(self, context):

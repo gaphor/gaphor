@@ -225,9 +225,8 @@ class ForkNodeItem(Item, DiagramItem):
                     'text-align-group': 'stereotype',
                 }, editable=True)
 
-        self.add_watch(UML.NamedElement.name, self.on_named_element_name)
-        self.add_watch(UML.JoinNode.joinSpec, self.on_join_node_join_spec)
-        self.add_watch(UML.LiteralSpecification.value, self.on_join_node_join_spec)
+        self.watch('subject<NamedElement>.name', self.on_named_element_name)\
+            .watch('subject<JoinNode>.joinSpec<LiteralSpecification>.value', self.on_join_node_join_spec)
 
 
     def save(self, save_func):
@@ -330,20 +329,19 @@ class ForkNodeItem(Item, DiagramItem):
 
 
     def on_named_element_name(self, event):
+        print 'on_named_element_name', self.subject
         subject = self.subject
-        if subject and (event is None or event.element is subject):
+        if subject:
             self._name.text = subject.name
             self.request_update()
 
     def on_join_node_join_spec(self, event):
         subject = self.subject
-        if subject and is_join_node(subject) and \
-                (event is None or \
-                 event.element is subject.joinSpec or \
-                 event.element is subject.joinSpec.value):
-            if is_join_node(subject) and not (subject.joinSpec and subject.joinSpec.value):
-                self.set_join_spec(DEFAULT_JOIN_SPEC)
-            self.request_update()
+        try:
+            self._join_spec.text = subject.joinSpec.value
+        except AttributeError, e:
+            self.set_join_spec(DEFAULT_JOIN_SPEC)
+        self.request_update()
 
 
     def set_join_spec(self, value):
@@ -361,7 +359,6 @@ class ForkNodeItem(Item, DiagramItem):
             value = DEFAULT_JOIN_SPEC
 
         subject.joinSpec.value = value
-        self._join_spec.text = value
 
 
 def is_join_node(subject):

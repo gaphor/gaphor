@@ -153,12 +153,10 @@ class ConnectorItem(NamedLine):
         by `ConnectorItem.end.role`).
         """
         try:
-            print 'on_interface_name', event, event.element
             #self._interface.text = self.subject.end[0].role.name
             self._interface.text = self.end.role.name
             self.request_update(matrix=False)
         except (IndexError, AttributeError), e:
-            print 'on_interface_name', e
             self._interface.text = ''
 
 

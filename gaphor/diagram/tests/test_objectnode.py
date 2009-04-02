@@ -3,8 +3,51 @@ from gaphor.diagram import items
 from gaphor.tests.testcase import TestCase
 
 class ObjectNodeTestCase(TestCase):
+
     def test_object_node(self):
         self.create(items.ObjectNodeItem, UML.ObjectNode)
 
-# vim:sw=4:et:ai
 
+    def test_name(self):
+        """
+        Test updating of object node name
+        """
+        node = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        node.subject.name = 'Blah'
+
+        self.assertEquals('Blah', node._name.text)
+
+        node.subject = None
+        # Undefined
+
+
+    def test_upper_bound(self):
+        """
+        TODO: Test upper bound
+        """
+        pass
+
+
+    def test_ordering(self):
+        """
+        Test updating of ObjectNodeItem.ordering.
+        """
+        node = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        node.subject.ordering = "unordered"
+
+        self.assertEquals('{ ordering = unordered }', node._ordering.text)
+
+        node.show_ordering = True
+
+        self.assertEquals('{ ordering = unordered }', node._ordering.text)
+
+
+    def test_persistence(self):
+        """
+        TODO: Test connector item saving/loading
+        """
+        pass
+
+
+
+# vim:sw=4:et:ai

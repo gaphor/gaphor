@@ -20,7 +20,7 @@ class ExtensionItem(NamedLine):
 
     def __init__(self, id=None):
         NamedLine.__init__(self, id)
-        self.add_watch(UML.Extension.ownedEnd)
+        self.watch('subject<Extension>.ownedEnd')
 
 
     def draw_head(self, context):

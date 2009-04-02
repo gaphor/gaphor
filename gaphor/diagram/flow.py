@@ -36,8 +36,7 @@ class FlowItem(NamedLine):
     def __init__(self, id = None):
         NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.value', editable=True)
-        self.add_watch(UML.ControlFlow.guard)
-        self.add_watch(UML.LiteralSpecification.value)
+        self.watch('subject<ControlFlow>.guard<LiteralSpecification>.value', self.on_control_flow_guard)
 
 
     def postload(self):
@@ -47,17 +46,13 @@ class FlowItem(NamedLine):
 
 
     def on_control_flow_guard(self, event):
-        element = event.element
-        subject = self.subject
-        if subject and (element is subject or element is subject.guard):
-            if not subject.guard or not subject.guard.value:
-                self._guard.text = ''
-            self.request_update()
-
-
-    def set_guard(self, value):
-        self.subject.guard.value = value
-        self._guard.text = value
+        print 'on_control_flow_guard', self.subject, event
+        try:
+            self._guard.text = self.subject.guard.value
+        except AttributeError, e:
+            print 'error', e
+            self._guard.text = ''
+        self.request_update()
 
 
     def draw_tail(self, context):
