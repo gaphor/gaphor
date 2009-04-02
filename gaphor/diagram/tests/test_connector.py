@@ -15,7 +15,25 @@ class ConnectorItemTestCase(TestCase):
         """Test creation of connector item
         """
         conn = self.create(ConnectorItem, UML.Connector)
+        self.assertFalse(conn.subject is None)
         self.assertTrue(conn.end is None)
+
+
+    def test_name(self):
+        """Test connected interface name
+        """
+        conn = self.create(ConnectorItem, UML.Connector)
+        end = self.element_factory.create(UML.ConnectorEnd)
+        iface = self.element_factory.create(UML.Interface)
+        end.role = iface
+        conn.subject.end = end
+        conn.end = end
+        self.assertTrue(conn._end is end)
+
+        self.assertEquals('', conn._interface.text)
+
+        iface.name = 'RedSea'
+        self.assertEquals('RedSea', conn._interface.text)
 
 
     def test_setting_end(self):
@@ -26,10 +44,12 @@ class ConnectorItemTestCase(TestCase):
         iface = self.element_factory.create(UML.Interface)
         end.role = iface
         iface.name = 'RedSea'
+        conn.subject.end = end
         conn.end = end
         self.assertTrue(conn._end is end)
         self.assertEquals('RedSea', conn._interface.text)
 
+        del conn.subject.end[end]
         conn.end = None
         self.assertEquals('', conn._interface.text)
 

@@ -134,27 +134,32 @@ class ConnectorItem(NamedLine):
         self._interface = self.add_text('end.role.name', style={
             'text-align-group': 'stereotype',
         })
+        self.watch('subject<Connector>.end.role.name', self.on_interface_name)
 
 
     def _set_end(self, end):
         self._end = end
         if end and end.role:
             self._interface.text = self.end.role.name
-            self.watch('end<ConnectorEnd>.role<Interface>.name', self.on_interface_name)
         else:
             self._interface.text = ''
-            # fixme: how to remove notification?
 
     end = property(attrgetter('_end'), _set_end, doc='Connector.end reference')
+
 
     def on_interface_name(self, event):
         """
         Callback used, when interface name changes (interface is referenced
         by `ConnectorItem.end.role`).
         """
-        if event and event.element:
-            self._interface.text = event.element.name
+        try:
+            print 'on_interface_name', event, event.element
+            #self._interface.text = self.subject.end[0].role.name
+            self._interface.text = self.end.role.name
             self.request_update(matrix=False)
+        except (IndexError, AttributeError), e:
+            print 'on_interface_name', e
+            self._interface.text = ''
 
 
     def draw_tail(self, context):
