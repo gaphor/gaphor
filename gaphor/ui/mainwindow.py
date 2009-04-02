@@ -134,11 +134,13 @@ class MainWindow(ToplevelWindow):
 
     tree_view = property(lambda s: s._tree_view)
 
+
     def get_filename(self):
         """
         Return the file name of the currently opened model.
         """
         return self.file_manager.filename
+
 
     def get_current_diagram_tab(self):
         """
@@ -148,6 +150,7 @@ class MainWindow(ToplevelWindow):
         """
         return self.get_current_tab()
 
+
     def get_current_diagram(self):
         """
         Return the Diagram associated with the viewed DiagramTab.
@@ -156,6 +159,7 @@ class MainWindow(ToplevelWindow):
         tab = self.get_current_diagram_tab()
         return tab and tab.get_diagram()
 
+
     def get_current_diagram_view(self):
         """
         Return the DiagramView associated with the viewed DiagramTab.
@@ -163,6 +167,7 @@ class MainWindow(ToplevelWindow):
         """
         tab = self.get_current_diagram_tab()
         return tab and tab.get_view()
+
 
     def ask_to_close(self):
         """
@@ -175,6 +180,7 @@ class MainWindow(ToplevelWindow):
         answer = dialog.run()
         dialog.destroy()
         return answer == gtk.RESPONSE_YES
+
 
     def show_diagram(self, diagram):
         """
@@ -194,6 +200,7 @@ class MainWindow(ToplevelWindow):
         self.set_current_page(tab)
 
         return tab
+
 
     def ui_component(self):
         """
@@ -227,18 +234,10 @@ class MainWindow(ToplevelWindow):
         notebook.connect_after('switch-page', self._on_notebook_switch_page)
         notebook.connect_after('page-removed', self._on_notebook_page_removed)
 
-        second_paned = gtk.VPaned()
-        second_paned.set_property('position',
-                                 int(self.properties.get('ui.property-editor-position', 600)))
-        second_paned.pack1(notebook)
-        notebook.show()
         
-        paned.pack2(second_paned)
-        second_paned.show()
+        paned.pack2(notebook)
+        notebook.show()
         paned.show()
-
-        second_paned.connect('notify::position',
-                            self._on_property_editor_notify_position)
 
         self.notebook = notebook
         self._tree_view = view
@@ -249,7 +248,10 @@ class MainWindow(ToplevelWindow):
 
         self._toolbox = toolbox
 
+        self.open_welcome_page()
+
         return paned
+
 
     def construct(self):
         super(MainWindow, self).construct(main=True)
@@ -264,18 +266,14 @@ class MainWindow(ToplevelWindow):
         Application.register_handler(self._action_executed)
         Application.register_handler(self._new_model_content)
 
-    def _update_toolbox(self, action_group):
+
+    def open_welcome_page(self):
         """
-        Update the buttons in the toolbox. Each button should be connected
-        by an action. Each button is assigned a special _action_name_
-        attribute that can be used to fetch the action from the ui manager.
+        Create a new tab with a textual welcome page, a sort of 101 for
+        Gaphor.
         """
-        for button in self._toolbox.buttons:
-            
-            action_name = button.action_name
-            action = action_group.get_action(action_name)
-            if action:
-                action.connect_proxy(button)
+        pass
+
 
     # Notebook methods:
 
@@ -477,15 +475,27 @@ class MainWindow(ToplevelWindow):
         # Make sure everyone knows the selection has changed.
         Application.handle(DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
 
+
     def _on_window_size_allocate(self, window, allocation):
         """
         Store the window size in a property.
         """
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
 
-    def _on_property_editor_notify_position(self, paned, arg):
-        self.properties.set('ui.property-editor-position',
-                     paned.get_position())
+
+    def _update_toolbox(self, action_group):
+        """
+        Update the buttons in the toolbox. Each button should be connected
+        by an action. Each button is assigned a special _action_name_
+        attribute that can be used to fetch the action from the ui manager.
+        """
+        for button in self._toolbox.buttons:
+            
+            action_name = button.action_name
+            action = action_group.get_action(action_name)
+            if action:
+                action.connect_proxy(button)
+
 
     # Actions:
 
@@ -496,13 +506,16 @@ class MainWindow(ToplevelWindow):
         Application.unregister_handler(self._action_executed)
         Application.unregister_handler(self._new_model_content)
 
+
     @action(name='tree-view-open', label='_Open')
     def tree_view_open_selected(self):
         element = self._tree_view.get_selected_element()
+        # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
             self.show_diagram(element)
         else:
             log.debug('No action defined for element %s' % type(element).__name__)
+
 
     @action(name='tree-view-rename', label=_('Rename'))
     def tree_view_rename_selected(self):
@@ -515,6 +528,7 @@ class MainWindow(ToplevelWindow):
         cell.set_property('text', element.name)
         view.set_cursor(path, column, True)
         cell.set_property('editable', 0)
+
 
     @action(name='tree-view-create-diagram', label=_('_New diagram'), stock_id='gaphor-diagram')
     @transactional
@@ -532,6 +546,7 @@ class MainWindow(ToplevelWindow):
         self.show_diagram(diagram)
         self.tree_view_rename_selected()
 
+
     @action(name='tree-view-delete-diagram', label=_('_Delete diagram'), stock_id='gtk-delete')
     @transactional
     def tree_view_delete_diagram(self):
@@ -543,7 +558,7 @@ class MainWindow(ToplevelWindow):
                               'This will possibly delete diagram items\n'
                               'that are not shown in other diagrams.'
                               % (diagram.name or '<None>'))
-        if (m.run() == gtk.RESPONSE_YES):
+        if m.run() == gtk.RESPONSE_YES:
             for i in reversed(diagram.canvas.get_all_items()):
                 s = i.subject
                 if s and len(s.presentation) == 1:
@@ -551,6 +566,7 @@ class MainWindow(ToplevelWindow):
                 i.unlink
             diagram.unlink()
         m.destroy()
+
 
     @action(name='tree-view-create-package', label=_('New _package'), stock_id='gaphor-package')
     @transactional
@@ -567,12 +583,14 @@ class MainWindow(ToplevelWindow):
         self.select_element(package)
         self.tree_view_rename_selected()
 
+
     @action(name='tree-view-delete-package', label=_('Delete pac_kage'), stock_id='gtk-delete')
     @transactional
     def tree_view_delete_package(self):
         package = self._tree_view.get_selected_element()
         assert isinstance(package, UML.Package)
         package.unlink()
+
 
     @action(name='tree-view-refresh', label=_('_Refresh'))
     def tree_view_refresh(self):
@@ -582,6 +600,7 @@ class MainWindow(ToplevelWindow):
     @toggle_action(name='reset-tool-after-create', label=_('_Reset tool'), active=False)
     def reset_tool_after_create(self, active):
         self.properties.set('reset-tool-after-create', active)
+
 
 gtk.accel_map_add_filter('gaphor')
 
