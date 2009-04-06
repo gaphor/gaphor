@@ -90,6 +90,10 @@ class MainWindow(ToplevelWindow):
           </menu>
         </menubar>
         <toolbar name='mainwindow-toolbar'>
+            <placeholder name="left" />
+            <placeholder name="right">
+              <separator />
+            </placeholder>
         </toolbar>
         <toolbar action="tools">
         </toolbar>

@@ -61,11 +61,13 @@ class FileManager(object):
           </menu>
         </menubar>
         <toolbar action="mainwindow-toolbar">
-          <toolitem action="file-open" />
-          <separator />
-          <toolitem action="file-save" />
-          <toolitem action="file-save-as" />
-          <separator />
+          <placeholder name="left">
+            <toolitem action="file-open" />
+            <separator />
+            <toolitem action="file-save" />
+            <toolitem action="file-save-as" />
+            <separator />
+          </placeholder>
         </toolbar>
       </ui>
     """

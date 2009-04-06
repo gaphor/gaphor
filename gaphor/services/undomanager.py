@@ -95,9 +95,11 @@ class UndoManager(object):
           </menu>
         </menubar>
         <toolbar action="mainwindow-toolbar">
-          <toolitem action="edit-undo" />
-          <toolitem action="edit-redo" />
-          <separator />
+          <placeholder name="left">
+            <toolitem action="edit-undo" />
+            <toolitem action="edit-redo" />
+            <separator />
+          </placeholder>
         </toolbar>
       </ui>
     """

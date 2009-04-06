@@ -48,8 +48,8 @@ class toggle_action(action):
     A toggle button can be switched on and off.
     An extra 'active' attribute is provided than gives the initial status.
     """
-    def __init__(self, name, label=None, accel=None, active=False):
-        super(toggle_action, self).__init__(name, label, accel=accel, active=active)
+    def __init__(self, name, label=None, tooltip=None, stock_id=None, accel=None, active=False):
+        super(toggle_action, self).__init__(name, label, tooltip, stock_id, accel=accel, active=active)
 
 
 class radio_action(action):

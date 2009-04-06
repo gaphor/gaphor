@@ -41,10 +41,12 @@ class DiagramTab(object):
           </menu>
         </menubar>
         <toolbar name='mainwindow-toolbar'>
-          <separator />
-          <toolitem action="diagram-zoom-in" />
-          <toolitem action="diagram-zoom-out" />
-          <toolitem action="diagram-zoom-100" />
+          <placeholder name="left">
+            <separator />
+            <toolitem action="diagram-zoom-in" />
+            <toolitem action="diagram-zoom-out" />
+            <toolitem action="diagram-zoom-100" />
+          </placeholder>
         </toolbar>
       </ui>
     """
