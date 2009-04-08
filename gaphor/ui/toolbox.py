@@ -52,66 +52,33 @@ class Toolbox(gtk.VBox):
         self._construct()
 
 
-    def on_wrapbox_decorator_toggled(self, button, content):
-        """
-        This function is called when the Wrapbox decorator is clicked. It
-        changes the visibility of the content and the arrow in front of the
-        button label.
-        """
-        # Fetch the arrow item:
-        arrow = button.get_children()[0].get_children()[0]
-        if not content.get_property('visible'):
-            content.show()
-            arrow.set(gtk.ARROW_DOWN, gtk.SHADOW_IN)
-            self.emit('toggled', button.toggle_id, True)
-        else:
-            content.hide()
-            arrow.set(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
-            self.emit('toggled', button.toggle_id, False)
-        # Save the property:
-        self.properties.set('ui.toolbox.%s' % button.toggle_id,
-                            content.get_property('visible'))
-
-
     def make_wrapbox_decorator(self, title, content):
         """
         Create a gtk.VBox with in the top compartment a label that can be
         clicked to show/hide the lower compartment.
         """
-        vbox = gtk.VBox()
+        expander = gtk.Expander()
 
-        button = gtk.Button()
-        button.set_relief(gtk.RELIEF_NONE)
-        button.toggle_id = title.replace(' ', '-').lower()
-        hbox = gtk.HBox()
-        button.add(hbox)
+        expander.set_label(title)
 
-        arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_IN)
-        hbox.pack_start(arrow, False, False, 0)
+        prop = 'ui.toolbox.%s' % title.replace(' ', '-').lower()
+        
+        expanded = self.properties.get(prop, False)
+        expander.set_expanded(expanded)
 
-        label = gtk.Label(title)
-        hbox.pack_start(label, expand=False, fill=False)
+        expander.connect('activate', self.on_expander_toggled, prop)
 
-        sep = gtk.HSeparator()
-        hbox.pack_start(sep, expand=True, fill=True)
-        hbox.set_spacing(3)
+        expander.add(content)
 
-        vbox.pack_start(button, False, False, 1)
-        vbox.pack_start(content, False, False, 1)
+        expander.show_all()
 
-        vbox.show_all()
+        return expander
 
-        button.connect('clicked', self.on_wrapbox_decorator_toggled, content)
 
-        vbox.label = label
-        vbox.content = content
-
-        expanded = self.properties.get('ui.toolbox.%s' % button.toggle_id, False)
-        content.set_property('visible', not expanded)
-        self.on_wrapbox_decorator_toggled(button, content)
-
-        return vbox
-
+    def on_expander_toggled(self, widget, prop):
+        # Save the property:
+        self.properties.set(prop, widget.get_expanded())
+        
 
     def toolbox_button(self, action_name, stock_id,
                        icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR):
