@@ -26,24 +26,15 @@ class ToplevelWindow(object):
     menubar_path = ''
     toolbar_path = ''
 
-    gui_manager = inject('gui_manager')
-
     def __init__(self):
         self.window = None
 
-    def construct(self, main=False):
-        # We need the main window so we can set transient windows.
-        if not main:
-            main_window = self.gui_manager.main_window.window
+    def construct(self):
 
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title(self.title)
         self.window.set_size_request(*self.size)
         self.window.set_resizable(True)
-
-        if not main and main_window:
-            self.window.set_transient_for(main_window)
-
 
         # set default icons of gaphor windows
         icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
@@ -57,7 +48,6 @@ class ToplevelWindow(object):
         vbox.show()
 
         menubar = self.ui_manager.get_widget(self.menubar_path)
-        print 'menubar', menubar
         if menubar:
             vbox.pack_start(menubar, expand=False)
             #menubar.show_all()
@@ -72,6 +62,22 @@ class ToplevelWindow(object):
         vbox.show()
         # TODO: add statusbar
         self.window.show()
+
+
+class UtilityWindow(ToplevelWindow):
+
+    gui_manager = inject('gui_manager')
+
+    def construct(self):
+        super(UtilityWindow, self).construct()
+        main_window = self.gui_manager.main_window.window
+        self.window.set_transient_for(main_window)
+        self.window.set_keep_above(True)
+        # Window size is program controlled
+        #self.window.set_policy(allow_shrink=False,
+        #                       allow_grow=False,
+        #                       auto_shrink=True)
+        self.window.set_resizable(False)
 
 
 # vim:sw=4:et:ai

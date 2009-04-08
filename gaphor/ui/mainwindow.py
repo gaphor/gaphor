@@ -258,7 +258,7 @@ class MainWindow(ToplevelWindow):
 
 
     def construct(self):
-        super(MainWindow, self).construct(main=True)
+        super(MainWindow, self).construct()
 
         self.window.connect('delete-event', self._on_window_delete)
 

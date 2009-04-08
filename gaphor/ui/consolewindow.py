@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim: sw=4:et
 
 import sys
 import gtk
@@ -9,10 +8,10 @@ from gaphor.interfaces import IActionProvider
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.action import action, build_action_group
 from gaphor.misc.console import GTKInterpreterConsole
-from toplevelwindow import ToplevelWindow
+from toplevelwindow import UtilityWindow
 
 
-class ConsoleWindow(ToplevelWindow):
+class ConsoleWindow(UtilityWindow):
     
     interface.implements(IActionProvider)
 
@@ -23,17 +22,12 @@ class ConsoleWindow(ToplevelWindow):
               <menuitem action="ConsoleWindow:open" />
             </menu>
           </menubar>
-          <menubar name="consolewindow">
-            <menu action="file">
-              <menuitem action="ConsoleWindow:close" />
-            </menu>
-          </menubar>
         </ui>
         """
 
     title = 'Gaphor Console'
     size = (400, 400)
-    menubar_path = '/consolewindow'
+    menubar_path = ''
     toolbar_path = ''
 
     def __init__(self):
