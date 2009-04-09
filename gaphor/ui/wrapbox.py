@@ -18,9 +18,7 @@ class Wrapbox(gtk.Table):
         self.resize_idle_id = 0
         self.rows = 1
         self.cols = 1
-        #self.table = gtk.Table(self.rows, self.cols)
         self.resize(self.rows, self.cols)
-        #self.table.connect('size_allocate', self.on_size_allocate)
         self.connect('size_allocate', self.on_size_allocate)
         self.children = []
 

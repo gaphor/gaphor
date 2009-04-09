@@ -83,6 +83,7 @@ class Toolbox(gtk.VBox):
     def toolbox_button(self, action_name, stock_id,
                        icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR):
         button = gtk.ToggleButton()
+        button.set_relief(gtk.RELIEF_NONE)
         if stock_id:
             icon = gtk.Image()
             icon.set_from_stock(stock_id, icon_size)

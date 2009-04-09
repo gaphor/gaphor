@@ -519,6 +519,7 @@ class CommentItemPropertyPage(object):
         text_view = gtk.TextView()
         text_view.set_buffer(buffer)
         text_view.show()
+        text_view.set_size_request(-1, 100)
         page.pack_start(text_view)
         page.set_data('default', text_view)
 

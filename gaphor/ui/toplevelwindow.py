@@ -25,6 +25,7 @@ class ToplevelWindow(object):
 
     menubar_path = ''
     toolbar_path = ''
+    resizable = True
 
     def __init__(self):
         self.window = None
@@ -34,7 +35,7 @@ class ToplevelWindow(object):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title(self.title)
         self.window.set_size_request(*self.size)
-        self.window.set_resizable(True)
+        self.window.set_resizable(self.resizable)
 
         # set default icons of gaphor windows
         icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
@@ -43,24 +44,27 @@ class ToplevelWindow(object):
 
         self.window.add_accel_group(self.ui_manager.get_accel_group())
 
-        vbox = gtk.VBox()
-        self.window.add(vbox)
-        vbox.show()
-
-        menubar = self.ui_manager.get_widget(self.menubar_path)
-        if menubar:
-            vbox.pack_start(menubar, expand=False)
-            #menubar.show_all()
         
-        if self.toolbar_path:
+        if self.menubar_path or self.toolbar_path:
+            # Create a full featured window.
+            vbox = gtk.VBox()
+            self.window.add(vbox)
+            vbox.show()
+
+            menubar = self.ui_manager.get_widget(self.menubar_path)
+            if menubar:
+                vbox.pack_start(menubar, expand=False)
+            
             toolbar = self.ui_manager.get_widget(self.toolbar_path)
             if toolbar:
                 vbox.pack_start(toolbar, expand=False)
-                #toolbar.show()
 
-        vbox.pack_end(self.ui_component(), expand=True)
-        vbox.show()
-        # TODO: add statusbar
+            vbox.pack_end(self.ui_component(), expand=self.resizable)
+            vbox.show()
+            # TODO: add statusbar
+        else:
+            # Create a simple window.
+            self.window.add(self.ui_component())
         self.window.show()
 
 
@@ -68,16 +72,15 @@ class UtilityWindow(ToplevelWindow):
 
     gui_manager = inject('gui_manager')
 
+    resizable = False
+
     def construct(self):
         super(UtilityWindow, self).construct()
+
         main_window = self.gui_manager.main_window.window
         self.window.set_transient_for(main_window)
         self.window.set_keep_above(True)
-        # Window size is program controlled
-        #self.window.set_policy(allow_shrink=False,
-        #                       allow_grow=False,
-        #                       auto_shrink=True)
-        self.window.set_resizable(False)
+        self.window.show()
 
 
 # vim:sw=4:et:ai

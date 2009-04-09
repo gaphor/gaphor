@@ -20,7 +20,7 @@ class InfoWindow(UtilityWindow):
     properties = inject('properties')
 
     title = _("Info")
-    size = (300, 300)
+    size = (200, -1)
     menu_xml = """
       <ui>
         <toolbar action="mainwindow-toolbar">
@@ -55,13 +55,13 @@ class InfoWindow(UtilityWindow):
         else:
             self.window.hide()
 
+
     def ui_component(self):
        self.property_editor = PropertyEditor()
-       pe_notebook = self.property_editor.construct()
-       pe_notebook.set_size_request(-1, 50)
+       pe = self.property_editor.construct()
 
-       pe_notebook.show()
-       return pe_notebook
+       pe.show()
+       return pe
 
 
     def close(self, widget=None, event=None):
