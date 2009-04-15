@@ -937,7 +937,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         #self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
         
     def construct_end(self, title, end):
-        hbox = gtk.HBox()
+        hbox = gtk.VBox()
         if not end.subject:
             return hbox
 
@@ -945,15 +945,6 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         label.set_alignment(0.0, 0.5)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
-
-        combo = gtk.combo_box_new_text()
-        for t in ('public (+)', 'protected (#)', 'package (~)', 'private (-)'):
-            combo.append_text(t)
-        
-        combo.set_active(['public', 'protected', 'package', 'private'].index(end.subject.visibility))
-
-        combo.connect('changed', self._on_visibility_change, end)
-        hbox.pack_start(combo, expand=False)
 
         entry = gtk.Entry()
         entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
@@ -977,6 +968,15 @@ Enter attribute name and multiplicity, for example
 - 1..2
 - [1..2]\
 """)
+
+        combo = gtk.combo_box_new_text()
+        for t in ('public (+)', 'protected (#)', 'package (~)', 'private (-)'):
+            combo.append_text(t)
+        
+        combo.set_active(['public', 'protected', 'package', 'private'].index(end.subject.visibility))
+
+        combo.connect('changed', self._on_visibility_change, end)
+        hbox.pack_start(combo, expand=False)
 
         combo = gtk.combo_box_new_text()
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
