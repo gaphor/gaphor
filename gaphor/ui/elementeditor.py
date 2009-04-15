@@ -9,7 +9,7 @@ from gaphor.ui.toplevelwindow import UtilityWindow
 from gaphor.ui.propertyeditor import PropertyEditor
 
 
-class InfoWindow(UtilityWindow):
+class ElementEditor(UtilityWindow):
     """
     The file service, responsible for loading and saving Gaphor models.
     """
@@ -19,14 +19,14 @@ class InfoWindow(UtilityWindow):
     element_factory = inject('element_factory')
     properties = inject('properties')
 
-    title = _("Info")
+    title = _("Element Editor")
     size = (200, -1)
     menu_xml = """
       <ui>
         <toolbar action="mainwindow-toolbar">
           <placeholder name="right">
             <separator expand="true" />
-            <toolitem action="Info:open" position="bot" />
+            <toolitem action="ElementEditor:open" position="bot" />
           </placeholder>
         </toolbar>
       </ui>
@@ -43,8 +43,8 @@ class InfoWindow(UtilityWindow):
         pass
 
         
-    @toggle_action(name='Info:open', stock_id='gtk-info')
-    def info(self, active):
+    @toggle_action(name='ElementEditor:open', stock_id='gtk-edit')
+    def elementeditor(self, active):
         if active:
             if not self.window:
                 self.construct()
@@ -65,6 +65,6 @@ class InfoWindow(UtilityWindow):
 
 
     def close(self, widget=None, event=None):
-        self.action_group.get_action('Info:open').set_active(False)
+        self.action_group.get_action('ElementEditor:open').set_active(False)
 
 # vim:sw=4:et:ai
