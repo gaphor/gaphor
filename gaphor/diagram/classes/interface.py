@@ -102,6 +102,7 @@ class InterfacePort(LinePort):
         Interface owning port.
 
     """
+
     def __init__(self, start, end, iface, angle):
         super(InterfacePort, self).__init__(start, end)
         self.angle = angle
@@ -189,11 +190,9 @@ class InterfaceItem(ClassItem):
             InterfacePort(h_sw, h_nw, self, pi * 1.5)
         ]
 
-        self.add_watch(UML.Interface.ownedAttribute, self.on_class_owned_attribute)
-        self.add_watch(UML.Interface.ownedOperation, self.on_class_owned_operation)
-        self.add_watch(UML.Implementation.contract, self.on_implementation_contract)
-        #self.add_watch(UML.Interface.implementation)
-        self.add_watch(UML.Interface.supplierDependency)
+        self.watch('subject<Interface>.ownedAttribute', self.on_class_owned_attribute) \
+            .watch('subject<Interface>.ownedOperation', self.on_class_owned_operation) \
+            .watch('subject<Interface>.supplierDependency')
 
 
     @observed
@@ -263,11 +262,6 @@ class InterfaceItem(ClassItem):
     folded = property(_is_folded, _set_folded,
         doc="Check or set folded notation, see FOLDED_* constants.")
 
-    def on_implementation_contract(self, event):
-        #print 'on_implementation_contract', event, event.element
-        if event is None or event.element.contract is self:
-            self.request_update()
-
 
     def draw_icon(self, context):
         cr = context.cairo
@@ -286,4 +280,4 @@ class InterfaceItem(ClassItem):
         super(InterfaceItem, self).draw(context)
 
 
-# vim:sw=4:et
+# vim:sw=4:et:ai

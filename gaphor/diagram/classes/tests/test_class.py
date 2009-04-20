@@ -13,8 +13,6 @@ import gaphor.adapters
 
 class ClassTestCase(TestCase):
 
-    services = TestCase.services + ['element_dispatcher', 'property_dispatcher']
-
     def test_compartments(self):
         """
         Test creation of classes and working of compartments.

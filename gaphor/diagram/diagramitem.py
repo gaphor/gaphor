@@ -145,7 +145,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
     __metaclass__ = DiagramItemMeta
 
     dispatcher = inject('element_dispatcher')
-    property_dispatcher = inject('property_dispatcher')
 
     def __init__(self, id=None):
         UML.Presentation.__init__(self)
@@ -157,11 +156,10 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         # properties, which should be saved in file
         self._persistent_props = set()
         # Old style: remove
-        self._watched_properties = dict()
         self._watched_paths = dict()
 
-        self.watch('subject', self.on_presentation_subject)\
-            .watch('subject.appliedStereotype', self.on_element_applied_stereotype)
+        self.watch('subject') \
+            .watch('subject.appliedStereotype.classifier.name', self.on_element_applied_stereotype)
 
     id = property(lambda self: self._id, doc='Id')
 
@@ -202,7 +200,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
     def postload(self):
         if self.subject:
-            self.on_presentation_subject(None)
             self.update_stereotypes_attrs()
 
 
@@ -272,60 +269,17 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         return self
 
 
-    def add_watch(self, prop, handler=None):
-        """
-        Add a property (umlproperty) to be watched. a handler may be provided
-        that will be called with the event as argument (handler(event)).
-        """
-        assert isinstance(prop, UML.properties.umlproperty)
-        self._watched_properties[prop] = handler or self.on_subject_changed
-
-
     def register_handlers(self):
-        Application.register_handler(self.on_model_factory_event)
-        #Application.register_handler(self.on_presentation_subject)
         dispatcher = self.dispatcher
         for path, handler in self._watched_paths.iteritems():
             log.debug('registering handler on ' + path + ' for ' + str(self))
             dispatcher.register_handler(handler, self, path)
 
-        # TODO: Old stuff: remove
-        property_dispatcher = self.property_dispatcher
-        for prop, handler in self._watched_properties.iteritems():
-            property_dispatcher.register_handler(prop, handler)
-
-        # FixMe: calls to request_update() cause tests to fail
-#        if self.subject:
-#            self.on_presentation_subject(None)
-
 
     def unregister_handlers(self):
-        Application.unregister_handler(self.on_model_factory_event)
-        #Application.unregister_handler(self.on_presentation_subject)
         dispatcher = self.dispatcher
         for path, handler in self._watched_paths.iteritems():
             dispatcher.unregister_handler(handler)
-
-        # TODO: Old stuff: remove
-        property_dispatcher = self.property_dispatcher
-        for prop, handler in self._watched_properties.iteritems():
-            property_dispatcher.unregister_handler(prop, handler)
-
-
-    @component.adapter(UML.interfaces.IModelFactoryEvent)
-    def on_model_factory_event(self, event):
-        self.on_presentation_subject(None)
-
-
-    def on_presentation_subject(self, event):
-        if event is None or \
-                (event.property is UML.Presentation.subject and \
-                 event.element is self):
-            for prop, handler in self._watched_properties.iteritems():
-                if handler:
-                    # Provide event?
-                    handler(None)
-
 
 
 # vim:sw=4:et:ai

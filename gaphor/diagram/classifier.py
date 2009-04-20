@@ -164,9 +164,7 @@ class ClassifierItem(NamedItem):
 
 
     def on_stereotype_change(self, event):
-        if event and event.element is self.subject \
-                and self._show_stereotypes_attrs:
-
+        if self._show_stereotypes_attrs:
             if isinstance(event, UML.event.AssociationAddEvent):
                 self._create_stereotype_compartment(event.new_value)
             elif isinstance(event, UML.event.AssociationDeleteEvent):
@@ -234,9 +232,9 @@ class ClassifierItem(NamedItem):
         if self._show_stereotypes_attrs:
             for obj in self.subject.appliedStereotype:
                 self._create_stereotype_compartment(obj)
-            log.debug('Showing stereotypes attributes enabled')
-        else:
-            log.debug('Showing stereotypes attributes disabled')
+        #    log.debug('Showing stereotypes attributes enabled')
+        #else:
+        #    log.debug('Showing stereotypes attributes disabled')
 
 
     def save(self, save_func):

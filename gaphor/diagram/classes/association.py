@@ -56,10 +56,6 @@ class AssociationItem(NamedLine):
             .watch(base + 'upperValue<LiteralSpecification>.value', self.on_association_end_value)\
             .watch(base + 'taggedValue<LiteralSpecification>.value', self.on_association_end_value)\
             .watch(base + 'owningAssociation', self.on_association_end_value)
-        #self.add_watch(UML.Property.name, self.on_association_end_value)
-        # lowerValue, upperValue and taggedValue
-        #self.add_watch(UML.LiteralSpecification.value, self.on_association_end_value)
-
 
     def set_show_direction(self, dir):
         self._show_direction = dir

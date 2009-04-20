@@ -68,21 +68,23 @@ class AttributeItem(FeatureItem):
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
 
-        self.add_watch(UML.Property.name)
-        self.add_watch(UML.Property.isDerived)
-        self.add_watch(UML.Property.visibility)
-        self.add_watch(UML.Property.lowerValue)
-        self.add_watch(UML.Property.upperValue)
-        self.add_watch(UML.Property.defaultValue)
-        self.add_watch(UML.Property.typeValue)
-        self.add_watch(UML.Property.taggedValue)
-        self.add_watch(UML.LiteralSpecification.value, self.on_feature_value)
-
-    def on_feature_value(self, event):
-        element = event.element
-        subject = self.subject
-        if subject and element in (subject.lowerValue, subject.upperValue, subject.defaultValue, subject.typeValue, subject.taggedValue):
-            self.request_update()
+        self.watch('subject.name') \
+            .watch('subject.isDerived') \
+            .watch('subject.visibility') \
+            .watch('subject.lowerValue<LiteralSpecification>.value') \
+            .watch('subject.upperValue<LiteralSpecification>.value') \
+            .watch('subject.defaultValue<LiteralSpecification>.value') \
+            .watch('subject.typeValue<LiteralSpecification>.value') \
+            .watch('subject.taggedValue<LiteralSpecification>.value')
+        #self.add_watch(UML.Property.name)
+        #self.add_watch(UML.Property.isDerived)
+        #self.add_watch(UML.Property.visibility)
+        #self.add_watch(UML.Property.lowerValue)
+        #self.add_watch(UML.Property.upperValue)
+        #self.add_watch(UML.Property.defaultValue)
+        #self.add_watch(UML.Property.typeValue)
+        #self.add_watch(UML.Property.taggedValue)
+        #self.add_watch(UML.LiteralSpecification.value, self.on_feature_value)
 
 
     def pre_update(self, context):
@@ -95,28 +97,42 @@ class AttributeItem(FeatureItem):
         text_align(cr, 0, 0, self.subject.render() or '', align_x=1, align_y=1)
 
 
-# TODO: handle Parameter's
-
 class OperationItem(FeatureItem):
 
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
         
-        self.add_watch(UML.Operation.name)
-        self.add_watch(UML.Operation.visibility)
-        self.add_watch(UML.Operation.isAbstract)
-        self.add_watch(UML.Operation.taggedValue)
+        self.watch('subject.name') \
+            .watch('subject.isAbstract') \
+            .watch('subject.visibility') \
+            .watch('subject.taggedValue<LiteralSpecification>.value') \
+            .watch('subject.returnResult.lowerValue<LiteralSpecification>.value') \
+            .watch('subject.returnResult.upperValue<LiteralSpecification>.value') \
+            .watch('subject.returnResult.typeValue<LiteralSpecification>.value') \
+            .watch('subject.returnResult.taggedValue<LiteralSpecification>.value') \
+            .watch('subject.formalParameter.lowerValue<LiteralSpecification>.value') \
+            .watch('subject.formalParameter.upperValue<LiteralSpecification>.value') \
+            .watch('subject.formalParameter.typeValue<LiteralSpecification>.value') \
+            .watch('subject.formalParameter.defaultValue<LiteralSpecification>.value') \
+            .watch('subject.formalParameter.taggedValue<LiteralSpecification>.value')
+
+        #self.add_watch(UML.Operation.name)
+        #self.add_watch(UML.Operation.visibility)
+        #self.add_watch(UML.Operation.isAbstract)
+        #self.add_watch(UML.Operation.taggedValue)
         # Parameters
         # TODO: Handle subject.returnResult[*] and subject.formalParameter[*]
-        self.add_watch(UML.Operation.isAbstract)
+        #self.add_watch(UML.Operation.isAbstract)
 
 
     def postload(self):
         FeatureItem.postload(self)
 
+
     def pre_update(self, context):
         self.update_size(self.subject.render(), context)
         #super(OperationItem, self).pre_update(context)
+
 
     def draw(self, context):
         cr = context.cairo
@@ -175,4 +191,4 @@ class StereotypeNameItem(FeatureItem):
         text_align(cr, 0, 0, self._render_name(), align_x=0.5, align_y=0.5)
 
 
-# vim:sw=4:et
+# vim:sw=4:et:ai
