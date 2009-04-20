@@ -23,6 +23,12 @@ class StereotypesTest(unittest.TestCase):
         stereotype.name = 'T'
         self.assertEquals('t', UML.model.stereotype_name(stereotype))
 
+        stereotype.name = ''
+        self.assertEquals('', UML.model.stereotype_name(stereotype))
+
+        stereotype.name = None
+        self.assertEquals('', UML.model.stereotype_name(stereotype))
+
 
     def test_stereotypes_conversion(self):
         """Test stereotypes conversion

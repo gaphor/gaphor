@@ -9,7 +9,7 @@ from gaphor.UML.interfaces import IElementChangeEvent
 
 class PropertyDispatcher(object):
     """
-    The Class based Dispatcher allows classes to register on events originated
+    The Propery Dispatcher allows classes to register on events originated
     by a specific element property, instead of the event type.
 
     This makes it easier for (for example) items to register on events from

@@ -10,7 +10,7 @@ from gaphor.diagram.interfaces import IConnect
 
 class TransitionConnectorTestCase(TestCase):
 
-    services = ['element_factory', 'adapter_loader']
+    services = TestCase.services
 
     def test_vertex_connect(self):
         """Test transition to state vertex connection

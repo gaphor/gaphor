@@ -188,7 +188,7 @@ It uses the GTK+ environment for user interaction.
             'copy = gaphor.services.copyservice:CopyService',
             'sanitizer = gaphor.services.sanitizerservice:SanitizerService',
             'element_dispatcher = gaphor.services.elementdispatcher:ElementDispatcher',
-            'property_dispatcher = gaphor.services.propertydispatcher:PropertyDispatcher',
+            #'property_dispatcher = gaphor.services.propertydispatcher:PropertyDispatcher',
             'xmi_export = gaphor.plugins.xmiexport:XMIExport',
             'diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout',
             'pynsource = gaphor.plugins.pynsource:PyNSource',

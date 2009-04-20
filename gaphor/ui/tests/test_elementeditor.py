@@ -1,8 +1,10 @@
 
 from gaphor.ui.elementeditor import ElementEditor
-import unittest
+from gaphor.tests.testcase import TestCase
 
-class ElementEditorTestCase(unittest.TestCase):
+class ElementEditorTestCase(TestCase):
+
+    services = TestCase.services + ['gui_manager', 'action_manager', 'properties']
 
     def test1(self):
         import gtk

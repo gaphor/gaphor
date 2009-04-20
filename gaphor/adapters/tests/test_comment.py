@@ -9,7 +9,7 @@ from gaphor.tests import TestCase
 
 class CommentLineTestCase(TestCase):
 
-    services = ['element_factory', 'adapter_loader', 'sanitizer']
+    services = TestCase.services + ['sanitizer']
 
     # NOTE: Still have to test what happens if one Item at the CommentLineItem
     #       end is removed, while the item still has references and is not

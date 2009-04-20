@@ -32,16 +32,16 @@ class Properties(object):
         self._backend = backend or FileBackend()
 
     def init(self, app):
-        self._backend.load(self)
+        self._backend.load(self._resources)
     
     def shutdown(self):
-        self._backend.save(self)
+        self._backend.save(self._resources)
 
     def __call__(self, r, default=_no_default):
         return self.get(r, default)
 
     def save(self):
-        self._backend.save(self)
+        self._backend.save(self._resources)
 
     def _items(self):
         return self._resources.iteritems()
@@ -83,11 +83,11 @@ class Properties(object):
         """
         self._resources[r] = value
 
-    def persist(self, r, value):
-        """
-        Save the property to a persistent storage.
-        """
-        self._backend.update(r, value)
+#    def persist(self, r, value):
+#        """
+#        Save the property to a persistent storage.
+#        """
+#        self._backend.update(r, value)
 
 
 class FileBackend(object):
@@ -106,13 +106,17 @@ class FileBackend(object):
         return os.path.join(datadir, self.RESOURCE_FILE)
 
     def load(self, resource):
+        """
+        Load resources from a file. Resources are saved like you do with
+        a dict().
+        """
         filename = self.get_filename(user_data_dir)
         if os.path.exists(filename) and os.path.isfile(filename):
             f = open(filename)
             d = f.read()
             f.close()
             for k, v in eval(d).iteritems():
-                resource.set(k, v)
+                resource[k] = v
 
     def save(self, resource):
         """
@@ -122,7 +126,7 @@ class FileBackend(object):
         """
         filename = self.get_filename(user_data_dir, create=True)
         f = open(filename, 'w')
-        pprint.pprint(resource._resources, f)
+        pprint.pprint(resource, f)
 
     def update(self, r, value):
         pass

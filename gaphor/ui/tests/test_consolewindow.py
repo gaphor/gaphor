@@ -1,8 +1,10 @@
 
 from gaphor.ui.consolewindow import ConsoleWindow
-import unittest
+from gaphor.tests.testcase import TestCase
 
-class ConsoleWindowTestCase(unittest.TestCase):
+class ConsoleWindowTestCase(TestCase):
+
+    services = TestCase.services + ['gui_manager', 'action_manager', 'properties']
 
     def test1(self):
         import gtk

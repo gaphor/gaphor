@@ -5,14 +5,13 @@ from gaphor import UML
 from gaphor.diagram import items
 from gaphor.plugins.diagramlayout import DiagramLayout
 from gaphor.application import Application
+from gaphor.tests.testcase import TestCase
 
-class DiagramLayoutTestCase(unittest.TestCase):
 
-    def setUp(self):
-        Application.init(services=['element_factory', 'gui_manager', 'properties', 'action_manager', 'diagram_layout', 'property_based_dispatcher'])
+class DiagramLayoutTestCase(TestCase):
 
-    def tearDown(self):
-        Application.shutdown()
+    services = TestCase.services + ['gui_manager', 'properties', 'action_manager', 'diagram_layout']
+
 
     def testDiagramLayout(self):
         elemfact = Application.get_service('element_factory')

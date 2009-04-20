@@ -19,11 +19,10 @@ log.set_log_level(log.WARNING)
 
 class TestCase(unittest.TestCase):
     
-    core_services = ['property_dispatcher']
     services = ['element_factory', 'adapter_loader', 'element_dispatcher']
     
     def setUp(self):
-        Application.init(services=self.core_services+self.services)
+        Application.init(services=self.services)
         self.element_factory = Application.get_service('element_factory')
         assert len(list(self.element_factory.select())) == 0, list(self.element_factory.select())
         self.diagram = self.element_factory.create(UML.Diagram)

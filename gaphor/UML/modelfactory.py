@@ -47,7 +47,9 @@ def stereotype_name(stereotype):
         Stereotype UML metamodel instance.
     """
     name = stereotype.name
-    if len(name) > 1 and name[1].isupper():
+    if not name:
+        return ''
+    elif len(name) > 1 and name[1].isupper():
         return name
     else:
         return name[0].lower() + name[1:]

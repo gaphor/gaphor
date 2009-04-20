@@ -1,17 +1,14 @@
 
-import unittest
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.services.copyservice import CopyService
 from gaphor.application import Application
+from gaphor.tests.testcase import TestCase
 
-class CopyServiceTestCase(unittest.TestCase):
 
-    def setUp(self):
-        Application.init(services=['gui_manager', 'action_manager', 'element_factory', 'properties'])
+class CopyServiceTestCase(TestCase):
 
-    def tearDown(self):
-        Application.shutdown()
+    services = TestCase.services + ['gui_manager', 'action_manager', 'properties']
 
     def test_init(self):
         service = CopyService()

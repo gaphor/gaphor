@@ -18,7 +18,7 @@ class WindowOwner(object):
 
 class DiagramToolboxTestCase(TestCase):
 
-    services = ['element_factory', 'properties']
+    services = ['element_factory', 'properties', 'element_dispatcher']
 
     def setUp(self):
         TestCase.setUp(self)
