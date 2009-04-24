@@ -161,7 +161,8 @@ class TextEditTool(Tool):
                 return True
 
     def _on_key_press_event(self, widget, event, buffer, editor):
-        if event.keyval == gtk.keysyms.Return:
+        if event.keyval == gtk.keysyms.Return and \
+                not event.state & (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK):
             self.submit_text(widget, buffer, editor)
         elif event.keyval == gtk.keysyms.Escape:
             widget.get_toplevel().destroy()
