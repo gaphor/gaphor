@@ -49,7 +49,6 @@ class TransitionConnect(VertexConnect):
 component.provideAdapter(TransitionConnect)
 
 
-
 class InitialPseudostateTransitionConnect(VertexConnect):
     """
     Connect initial pseudostate using transition item.
@@ -65,29 +64,33 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         no transitions connected.
         """
         line = self.line
-        subject = self.element.subject
+        element = self.element
+        subject = element.subject
 
-        if handle is line.head and not self.element._connected:
+        # Check if no other items are connected
+        connected_items = element.canvas.get_connected_items(element)
+        connected_items = filter(lambda e: isinstance(e[0], items.TransitionItem) and e[0] is not line, connected_items)
+        if handle is line.head and not connected_items:
             return super(InitialPseudostateTransitionConnect, self).glue(handle, port)
         else:
             return None
 
-
-    def connect(self, handle, port):
-        """
-        Update InitialPseudostateItem._connected attribute to `True` to
-        disallow more connections.
-        """
-        if super(InitialPseudostateTransitionConnect, self).connect(handle, port):
-            self.element._connected = True
-
-
-    def disconnect(self, handle):
-        """
-        Update InitialPseudostateItem._connected attribute to `False` to
-        allow transition connection again after disconnection.
-        """
-        super(InitialPseudostateTransitionConnect, self).disconnect(handle)
-        self.element._connected = False
-
 component.provideAdapter(InitialPseudostateTransitionConnect)
+
+class HistoryPseudostateTransitionConnect(VertexConnect):
+    """
+    Connect history pseudostate using transition item.
+
+    It modifies InitialPseudostateItem._connected attribute to disallow
+    connection of more than one transition.
+    """
+    component.adapts(items.HistoryPseudostateItem, items.TransitionItem)
+
+    def glue(self, handle, port):
+        """
+        """
+        return super(HistoryPseudostateTransitionConnect, self).glue(handle, port)
+
+component.provideAdapter(HistoryPseudostateTransitionConnect)
+
+# vim:sw=4:et:ai

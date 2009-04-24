@@ -195,6 +195,7 @@ class ClassAttributes(EditableTreeModel):
         return attr
 
 
+    @transactional
     def _set_object_value(self, row, col, value):
         attr = row[-1]
         attr.parse(value)
@@ -221,6 +222,7 @@ class ClassOperations(EditableTreeModel):
         return operation
 
 
+    @transactional
     def _set_object_value(self, row, col, value):
         operation = row[-1]
         operation.parse(value)
@@ -613,11 +615,11 @@ class ClassPropertyPage(NamedItemPropertyPage):
 
         # Abstract toggle
         hbox = gtk.HBox()
-        label = gtk.Label(_("Abstract"))
+        label = gtk.Label('')
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_("Abstract"))
         button.set_active(self.context.subject.isAbstract)
         
         button.connect('toggled', self._on_abstract_change)
@@ -652,12 +654,12 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
         # Fold toggle
         hbox = gtk.HBox()
-        label = gtk.Label(_("Folded"))
+        label = gtk.Label("")
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_("Folded"))
         button.set_active(self.context.folded)
         button.connect('toggled', self._on_fold_change)
         item = self.context
@@ -732,10 +734,10 @@ class AttributesPage(object):
 
         # Show attributes toggle
         hbox = gtk.HBox()
-        label = gtk.Label(_("Show attributes"))
+        label = gtk.Label('')
         label.set_justify(gtk.JUSTIFY_LEFT)
         hbox.pack_start(label, expand=False)
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_('Show attributes'))
         button.set_active(self.context.show_attributes)
         button.connect('toggled', self._on_show_attributes_change)
         hbox.pack_start(button)
@@ -786,10 +788,10 @@ class OperationsPage(object):
 
         # Show operations toggle
         hbox = gtk.HBox()
-        label = gtk.Label(_("Show operations"))
+        label = gtk.Label("")
         label.set_justify(gtk.JUSTIFY_LEFT)
         hbox.pack_start(label, expand=False)
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_("Show operations"))
         button.set_active(self.context.show_operations)
         button.connect('toggled', self._on_show_operations_change)
         hbox.pack_start(button)
@@ -882,9 +884,9 @@ class DependencyPropertyPage(object):
             self._on_dependency_type_change)
         hbox.pack_start(self.combo, expand=False)
 
-        hbox = create_hbox_label(self, page, _('Automatic'))
+        hbox = create_hbox_label(self, page, '')
 
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_('Automatic'))
         button.set_active(self.context.auto_dependency)
         button.connect('toggled', self._on_auto_dependency_change)
         hbox.pack_start(button)
@@ -1005,12 +1007,12 @@ Enter attribute name and multiplicity, for example
             return page
 
         hbox = gtk.HBox()
-        label = gtk.Label(_('Show direction'))
+        label = gtk.Label('')
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_('Show direction'))
         button.set_active(self.context.show_direction)
         button.connect('toggled', self._on_show_direction_change)
         hbox.pack_start(button)
@@ -1080,12 +1082,12 @@ class LineStylePage(object):
         page = gtk.VBox()
 
         hbox = gtk.HBox()
-        label = gtk.Label(_('Orthogonal'))
+        label = gtk.Label('')
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_('Orthogonal'))
         button.set_active(self.context.orthogonal)
         button.connect('toggled', self._on_orthogonal_change)
         hbox.pack_start(button)
@@ -1093,12 +1095,12 @@ class LineStylePage(object):
         page.pack_start(hbox, expand=False)
 
         hbox = gtk.HBox()
-        label = gtk.Label(_('Horizontal'))
+        label = gtk.Label('')
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_('Horizontal'))
         button.set_active(self.context.horizontal)
         button.connect('toggled', self._on_horizontal_change)
         hbox.pack_start(button)
@@ -1143,7 +1145,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         entry.connect('changed', self._on_upper_bound_change)
         hbox.pack_start(entry)
 
-        hbox = create_hbox_label(self, page, _('Ordering'))
+        hbox = create_hbox_label(self, page, '')
         combo = gtk.combo_box_new_text()
         for v in self.ORDERING_VALUES:
             combo.append_text(v)
@@ -1151,7 +1153,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         combo.connect('changed', self._on_ordering_change)
         hbox.pack_start(combo, expand=False)
 
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_('Ordering'))
         button.set_active(self.context.show_ordering)
         button.connect('toggled', self._on_ordering_show_change)
         hbox.pack_start(button, expand=False)
@@ -1281,14 +1283,10 @@ class ComponentPropertyPage(NamedItemPropertyPage):
         hbox = gtk.HBox()
         page.pack_start(hbox, expand=False)
 
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_('Indirectly instantiated'))
         button.set_active(subject.isIndirectlyInstantiated)
         button.connect('toggled', self._on_ii_change)
         hbox.pack_start(button, expand=False)
-
-        label = gtk.Label(_('Indirectly instantiated'))
-        label.set_alignment(0.0, 0.5)
-        hbox.pack_start(label, expand=False)
 
         return page
 

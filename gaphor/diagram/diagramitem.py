@@ -272,7 +272,7 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
     def register_handlers(self):
         dispatcher = self.dispatcher
         for path, handler in self._watched_paths.iteritems():
-            log.debug('registering handler on ' + path + ' for ' + str(self))
+            #log.debug('registering handler on ' + path + ' for ' + str(self))
             dispatcher.register_handler(handler, self, path)
 
 

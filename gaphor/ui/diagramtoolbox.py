@@ -55,6 +55,7 @@ TOOLBOX_ACTIONS = (
         ('toolbox-state', _('State'), 'gaphor-state'),
         ('toolbox-initial-pseudostate', _('Initial Pseudostate'), 'gaphor-initial-pseudostate'),
         ('toolbox-final-state', _('Final State'), 'gaphor-final-state'),
+        ('toolbox-history-pseudostate', _('History Pseudostate'), 'gaphor-history-pseudostate'),
         ('toolbox-transition', _('Transition'), 'gaphor-transition'),
     )), (_('Use Cases'), (
         ('toolbox-usecase', _('Use case'), 'gaphor-usecase'),
@@ -114,17 +115,22 @@ class DiagramToolbox(object):
         tool_name = list(itemiter(TOOLBOX_ACTIONS))[id][0]
         self.view.tool = self.get_tool(tool_name)
 
-    def _item_factory(self, item_class, subject_class=None):
+    def _item_factory(self, item_class, subject_class=None, extra_func=None):
+        """
+        ``extra_func`` may be a function accepting the newly created item.
+        """
         def factory_method(parent=None):
             if subject_class:
                 subject = self.element_factory.create(subject_class)
             else:
                 subject = None
-            return self.diagram.create(item_class, subject=subject,
+            item = self.diagram.create(item_class, subject=subject,
                     parent=parent)
+            if extra_func: extra_func(item)
+            return item
         return factory_method
 
-    def _namespace_item_factory(self, item_class, subject_class):
+    def _namespace_item_factory(self, item_class, subject_class,):
         """
         Returns a factory method for Namespace classes.
         To be used by the PlacementTool.
@@ -335,10 +341,30 @@ class DiagramToolbox(object):
                 handle_index=SE,
                 after_handler=self._after_handler)
 
-    def toolbox_initial_pseudostate(self):
+    def _toolbox_pseudostate(self, kind):
+        def set_state(item):
+            item.subject.kind = kind
         return PlacementTool(
                 item_factory=self._item_factory(items.InitialPseudostateItem,
-                                                UML.Pseudostate),
+                                                UML.Pseudostate, set_state),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_initial_pseudostate(self):
+        def set_state(item):
+            item.subject.kind = 'initial'
+        return PlacementTool(
+                item_factory=self._item_factory(items.InitialPseudostateItem,
+                                                UML.Pseudostate, set_state),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_history_pseudostate(self):
+        def set_state(item):
+            item.subject.kind = 'shallowHistory'
+        return PlacementTool(
+                item_factory=self._item_factory(items.HistoryPseudostateItem,
+                                                UML.Pseudostate, set_state),
                 handle_index=SE,
                 after_handler=self._after_handler)
 

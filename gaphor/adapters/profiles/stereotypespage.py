@@ -97,7 +97,8 @@ class StereotypePage(object):
         page = gtk.VBox()
         subject = self.context.subject
         if subject is None:
-            return
+            page.pack_start(gtk.Label('No data'), expand=False)
+            return page
 
         applied = set(UML.model.get_applied_stereotypes(subject))
         stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
@@ -112,9 +113,9 @@ class StereotypePage(object):
 
         # show stereotypes attributes toggle
         hbox = gtk.HBox()
-        label = gtk.Label(_('Show stereotypes attributes'))
+        label = gtk.Label('')
         hbox.pack_start(label, expand=False)
-        button = gtk.CheckButton()
+        button = gtk.CheckButton(_('Show stereotypes attributes'))
         button.set_active(self.context.show_stereotypes_attrs)
         button.connect('toggled', self._on_show_stereotypes_attrs_change)
         hbox.pack_start(button)

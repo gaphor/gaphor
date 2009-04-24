@@ -24,8 +24,10 @@ class FeatureItem(DiagramItem):
         self.width = 0
         self.height = 0
         self.text = ''
+        self.font = font.FONT
         # Fool unlink code (attribute is not a gaphas.Item):
         self.canvas = None
+        self.watch('subject.isStatic', self.on_feature_is_static)
 
 
     def save(self, save_func):
@@ -34,7 +36,17 @@ class FeatureItem(DiagramItem):
 
     def postload(self):
         if self.subject:
-            self._expression.set_text(self.subject.render())
+            self.text = self.subject.render()
+        self.on_feature_is_static(None)
+
+
+    def on_feature_is_static(self, event):
+        ##
+        ## TODO: How do I underline text??
+        ##
+        self.font = (self.subject and self.subject.isStatic) \
+                and font.FONT_ABSTRACT_NAME or font.FONT_NAME
+        self.request_update()
 
 
     def get_size(self, update=False):
@@ -57,10 +69,20 @@ class FeatureItem(DiagramItem):
             self.width, self.height = 0, 0
 
 
+    def pre_update(self, context):
+        self.update_size(self.subject.render(), context)
+
+
     def point(self, pos):
         """
         """
         return distance_rectangle_point((0, 0, self.width, self.height), pos)
+
+
+    def draw(self, context):
+        cr = context.cairo
+        text_set_font(cr, self.font)
+        text_align(cr, 0, 0, self.subject.render() or '', align_x=1, align_y=1)
 
 
 class AttributeItem(FeatureItem):
@@ -76,25 +98,12 @@ class AttributeItem(FeatureItem):
             .watch('subject.defaultValue<LiteralSpecification>.value') \
             .watch('subject.typeValue<LiteralSpecification>.value') \
             .watch('subject.taggedValue<LiteralSpecification>.value')
-        #self.add_watch(UML.Property.name)
-        #self.add_watch(UML.Property.isDerived)
-        #self.add_watch(UML.Property.visibility)
-        #self.add_watch(UML.Property.lowerValue)
-        #self.add_watch(UML.Property.upperValue)
-        #self.add_watch(UML.Property.defaultValue)
-        #self.add_watch(UML.Property.typeValue)
-        #self.add_watch(UML.Property.taggedValue)
-        #self.add_watch(UML.LiteralSpecification.value, self.on_feature_value)
 
 
-    def pre_update(self, context):
-        self.update_size(self.subject.render(), context)
-        #super(AttributeItem, self).pre_update(context)
+    def postload(self):
+        if self.subject:
+            self.text = self.subject.render()
 
-    def draw(self, context):
-        cr = context.cairo
-        text_set_font(cr, font.FONT)
-        text_align(cr, 0, 0, self.subject.render() or '', align_x=1, align_y=1)
 
 
 class OperationItem(FeatureItem):
@@ -103,7 +112,7 @@ class OperationItem(FeatureItem):
         FeatureItem.__init__(self, id)
         
         self.watch('subject.name') \
-            .watch('subject.isAbstract') \
+            .watch('subject.isAbstract', self.on_operation_is_abstract) \
             .watch('subject.visibility') \
             .watch('subject.taggedValue<LiteralSpecification>.value') \
             .watch('subject.returnResult.lowerValue<LiteralSpecification>.value') \
@@ -116,29 +125,17 @@ class OperationItem(FeatureItem):
             .watch('subject.formalParameter.defaultValue<LiteralSpecification>.value') \
             .watch('subject.formalParameter.taggedValue<LiteralSpecification>.value')
 
-        #self.add_watch(UML.Operation.name)
-        #self.add_watch(UML.Operation.visibility)
-        #self.add_watch(UML.Operation.isAbstract)
-        #self.add_watch(UML.Operation.taggedValue)
-        # Parameters
-        # TODO: Handle subject.returnResult[*] and subject.formalParameter[*]
-        #self.add_watch(UML.Operation.isAbstract)
-
 
     def postload(self):
-        FeatureItem.postload(self)
+        if self.subject:
+            self.text = self.subject.render()
+        self.on_operation_is_abstract(None)
 
+    def on_operation_is_abstract(self, event):
+        self.font = (self.subject and self.subject.isAbstract) \
+                and font.FONT_ABSTRACT_NAME or font.FONT_NAME
+        self.request_update()
 
-    def pre_update(self, context):
-        self.update_size(self.subject.render(), context)
-        #super(OperationItem, self).pre_update(context)
-
-
-    def draw(self, context):
-        cr = context.cairo
-        text_set_font(cr, font.FONT)
-        text_align(cr, 0, 0, self.subject.render() or '', align_x=1, align_y=1)
-        #cr.show_text(self.subject.render() or '')
 
 
 class SlotItem(FeatureItem):

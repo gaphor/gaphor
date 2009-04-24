@@ -25,7 +25,6 @@ class ElementEditor(UtilityWindow):
       <ui>
         <toolbar action="mainwindow-toolbar">
           <placeholder name="right">
-            <separator expand="true" />
             <toolitem action="ElementEditor:open" position="bot" />
           </placeholder>
         </toolbar>

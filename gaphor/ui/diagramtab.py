@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim: sw=4:et
 
 import gtk
 from cairo import Matrix
@@ -88,7 +87,7 @@ class DiagramTab(object):
         assert self.diagram
 
         view = DiagramView(diagram=self.diagram)
-        scrolled_window = gtk.ScrolledWindow(view.hadjustment, view.vadjustment)
+        scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
         scrolled_window.add(view)
@@ -273,3 +272,4 @@ class DiagramTab(object):
         else:
             context.finish(False, False, time)
 
+# vim: sw=4:et:ai

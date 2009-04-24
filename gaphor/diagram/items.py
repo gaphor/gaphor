@@ -51,7 +51,7 @@ from gaphor.diagram.states import VertexItem
 from gaphor.diagram.states.state import StateItem
 from gaphor.diagram.states.transition import TransitionItem
 from gaphor.diagram.states.finalstate import FinalStateItem
-from gaphor.diagram.states.pseudostates import InitialPseudostateItem
+from gaphor.diagram.states.pseudostates import InitialPseudostateItem, HistoryPseudostateItem
 
 # Use Cases:
 from gaphor.diagram.actor import ActorItem
