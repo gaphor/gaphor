@@ -10,7 +10,9 @@ See the documentation on the mixins.
 
 """
 
-__all__ = [ 'querymixin', 'recursemixin' ]
+__all__ = [ 'querymixin', 'recursemixin', 'getslicefix' ]
+
+import sys
 
 
 def match(element, expr):
@@ -41,11 +43,11 @@ def match(element, expr):
     >>> match(a, 'it.nonexistent=="root"')
     False
 
+    NOTE: the object ``it`` was introduced since properties (descriptors) can
+    not be executed from within a dictionary context.
     """
-    g = { 'it': element }
-
     try:
-        return eval(expr, g, {})
+        return eval(expr, { 'it': element }, {})
     except (AttributeError, NameError):
         # attribute does not (yet) exist
         #print 'No attribute', expr, d
@@ -108,62 +110,65 @@ class querymixin(object):
 def issafeiterable(obj):
     """
     Checks if the object is iteable, but not a string.
+
+    >>> issafeiterable([])
+    True
+    >>> issafeiterable(set())
+    True
+    >>> issafeiterable({})
+    True
+    >>> issafeiterable(1)
+    False
+    >>> issafeiterable('text')
+    False
     """
     try:
-        iter(obj)
+        return iter(obj) and not isinstance(obj, basestring)
     except TypeError:
-        return False
-    else:
-        return not isinstance(obj, basestring)
+        pass
+    return False
 
 
 class recurseproxy(object):
     """
     Proxy object (helper) for the recusemixin.
+
+    The proxy has limited capabilities compared to a real list (or set): it can
+    be iterated and a getitem can be performed.
+    On the other side, the type of the original sequence is maintained, so
+    getitem operations act as if they're executed on the original list.
     """
 
-    def __init__(self, sequence, key=None):
+    def __init__(self, sequence):
         self.__sequence = sequence
-        self.__key = key
-
-    def list_class(self):
-        return list
 
     def __getitem__(self, key):
-        return self.list_class()(self).__getitem__(key)
+        return self.__sequence.__getitem__(key)
 
     def __iter__(self):
         """
         Iterate over the items. If there is some level of nesting, the parent
         items are iterated as well.
         """
-        key = self.__key
-        sequence = self.__sequence
-        if key is None:
-            # top level - always iterate
-            for e in sequence:
-                #print 'root element', e
-                yield e
-        else:
-            for e in sequence:
-                try:
-                    obj = getattr(e, key)
-                except AttributeError:
-                    pass # No such attribute, just fetch the next
-                else:
-                    # Either flatten or return the value as is.
-                    if issafeiterable(obj):
-                        for o in obj:
-                            yield o
-                    else:
-                        yield obj
-
+        return iter(self.__sequence)
 
     def __getattr__(self, key):
         """
         Create a new proxy for the attribute.
         """
-        return type(self)(self, key)
+        def mygetattr():
+            for e in self.__sequence:
+                try:
+                    obj = getattr(e, key)
+                    if issafeiterable(obj):
+                        for i in obj:
+                            yield i
+                    else:
+                        yield obj
+                except AttributeError:
+                    pass
+        # Create a copy of the proxy type, inclusing a copy of the sequence type
+        return type(self)(type(self.__sequence)(mygetattr()))
 
 
 class recursemixin(object):
@@ -171,7 +176,7 @@ class recursemixin(object):
     Mixin class for lists, sets, etc. If data is requested using ``[:]``,
     a ``recurseproxy`` instance is created.
 
-    The basic idea is you have a class that can contain children:
+    The basic idea is to have a class that can contain children:
 
     >>> class A(object):
     ...     def __init__(self, name, *children):
@@ -196,22 +201,18 @@ class recursemixin(object):
     >>> a.children[1].name
     'e'
 
-    Given ``a``, I want to iterate all grand-children (b, c, d, one, two) and the
-    structure I want to do that with is:
+    Given ``a``, I want to iterate all grand-children (b, c, d, one, two) and
+    the structure I want to do that with is:
 
       ``a.children[:].children``
 
-    In order to do this we have to use a special list class, so we can handle our
-    specific case. ``__getslice__`` should be overridden, so we can make it behave
-    like a normal python object (legacy, yes...).
+    In order to do this we have to use a special list class, so we can handle
+    our specific case. ``__getslice__`` should be overridden, so we can make it
+    behave like a normal python object (legacy, yes...).
 
     >>> import sys
-    >>> class rlist(recursemixin, list):
-    ...     def __getslice__(self, a, b, c=None):
-    ...         if a == 0: a = None
-    ...         if b == sys.maxint: b = None
-    ...         return self.__getitem__(slice(a, b, c))
-
+    >>> class rlist(recursemixin, getslicefix, list):
+    ...     pass
     >>> class A(object):
     ...     def __init__(self, name, *children):
     ...         self.name = name
@@ -246,16 +247,30 @@ class recursemixin(object):
     ['b', 'c', 'd', 'one', 'two']
     """
     _recursemixin_trigger = slice(None, None, None)
-    #_recurse_mixin_root = object()
 
     def proxy_class(self):
         return recurseproxy
 
     def __getitem__(self, key):
         if key == self._recursemixin_trigger:
-            return self.proxy_class()(self, None)
+            return self.proxy_class()(self)
         else:
             return super(recursemixin, self).__getitem__(key)
 
+
+class getslicefix(object):
+    """
+    C-Python classes still use __getslice__. This behaviour is depricated
+    and getitem should be called instead.
+    """
+
+    def __getslice__(self, a, b, c=None):
+        """
+        ``__getslice__`` is deprecated. Calls are redirected to
+        ``__getitem__()``.
+        """
+        if a == 0: a = None
+        if b == sys.maxint: b = None
+        return self.__getitem__(slice(a, b, c))
 
 # vim: sw=4:et:ai

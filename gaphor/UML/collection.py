@@ -36,7 +36,7 @@ class collectionlist(recursemixin, querymixin, list):
     >>> list(c.ownedOperation[0].formalParameter[:].name)
     ['foo', 'bar']
     >>> c.ownedOperation[:].formalParameter.name   # doctest: +ELLIPSIS
-    <gaphor.UML.collection.collectionproxy object at 0x...>
+    <gaphor.misc.listmixins.recurseproxy object at 0x...>
     >>> list(c.ownedOperation[:].formalParameter.name)
     ['foo', 'bar']
     >>> c.ownedOperation[0].formalParameter['it.name=="foo"', 0].name
@@ -44,33 +44,6 @@ class collectionlist(recursemixin, querymixin, list):
     >>> c.ownedOperation[:].formalParameter['it.name=="foo"', 0].name
     'foo'
     """
-
-    def __getitem__(self, key):
-        return super(collectionlist, self).__getitem__(key)
-
-    def __getslice__(self, a, b, c=None):
-        """
-        ``__getslice__`` is deprecated. Calls are redirected to
-        ``__getitem__()``.
-        """
-        if a == 0: a = None
-        if b == sys.maxint: b = None
-        return self.__getitem__(slice(a, b, c))
-
-    def proxy_class(self):
-        return collectionproxy
-
-
-class collectionproxy(recurseproxy):
-
-    def recursive_types(self):
-        """
-        What should be iterated.
-        """
-        return (recursemixin, recurseproxy, collection, collectionlist)
-
-    def list_class(self):
-        return collectionlist
 
 
 class collection(object):
