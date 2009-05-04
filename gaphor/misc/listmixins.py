@@ -210,7 +210,6 @@ class recursemixin(object):
     our specific case. ``__getslice__`` should be overridden, so we can make it
     behave like a normal python object (legacy, yes...).
 
-    >>> import sys
     >>> class rlist(recursemixin, getslicefix, list):
     ...     pass
     >>> class A(object):
