@@ -42,8 +42,12 @@ class GIdleThread(object):
     ...         yield x
     >>> t = GIdleThread(counter(123))
     >>> t.start()
+    2
+    >>> main = gobject.main_context_default()
     >>> while t.is_alive():
-    ...     main.iteration(False)
+    ...     main.iteration(False) # doctest: +ELLIPSIS
+    True
+    ...
     """
 
     def __init__(self, generator, queue=None):
