@@ -37,10 +37,6 @@ def base__getitem__(self, key):
 
 base.__getitem__ = base__getitem__
 
-# redefine 'bool' for Python version < 2.3
-if map(int, sys.version[:3].split('.')) < [2, 3]:
-    header = header + "bool = int\n"
-
 
 import re
 
@@ -123,7 +119,7 @@ class Writer:
         if type.lower() == 'boolean':
             # FixMe: Should this be a boolean or an integer?
             # Integer is save and compattable with python2.2.
-            type = 'int'
+            type = 'bool'
         elif type.lower() in ('integer', 'unlimitednatural'):
             type = 'int'
         elif type.lower() == 'string':
