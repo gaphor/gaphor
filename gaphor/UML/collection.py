@@ -5,9 +5,73 @@
 import inspect
 from zope import component
 from event import AssociationChangeEvent
+from gaphor.misc.listmixins import querymixin, recursemixin, recurseproxy
 
-class CollectionError(Exception):
-    pass
+
+class collectionlist(recursemixin, querymixin, list):
+    """
+    >>> c = collectionlist()
+    >>> c.append('a')
+    >>> c.append('b')
+    >>> c.append('c')
+    >>> c
+    ['a', 'b', 'c']
+
+    It should work with the datamodel too:
+
+    >>> from gaphor.UML import *
+    >>> c = Class()
+    >>> c.ownedOperation = Operation()
+    >>> c.ownedOperation   # doctest: +ELLIPSIS
+    [<gaphor.UML.uml2.Operation object at 0x...>]
+    >>> c.ownedOperation[0]   # doctest: +ELLIPSIS
+    <gaphor.UML.uml2.Operation object at 0x...>
+    >>> c.ownedOperation = Operation()
+    >>> c.ownedOperation[0].formalParameter = Parameter()
+    >>> c.ownedOperation[0].formalParameter = Parameter()
+    >>> c.ownedOperation[0].formalParameter[0].name = 'foo'
+    >>> c.ownedOperation[0].formalParameter[0].name
+    'foo'
+    >>> c.ownedOperation[0].formalParameter[1].name = 'bar'
+    >>> list(c.ownedOperation[0].formalParameter[:].name)
+    ['foo', 'bar']
+    >>> c.ownedOperation[:].formalParameter.name   # doctest: +ELLIPSIS
+    <gaphor.UML.collection.collectionproxy object at 0x...>
+    >>> list(c.ownedOperation[:].formalParameter.name)
+    ['foo', 'bar']
+    >>> c.ownedOperation[0].formalParameter['it.name=="foo"', 0].name
+    'foo'
+    >>> c.ownedOperation[:].formalParameter['it.name=="foo"', 0].name
+    'foo'
+    """
+
+    def __getitem__(self, key):
+        return super(collectionlist, self).__getitem__(key)
+
+    def __getslice__(self, a, b, c=None):
+        """
+        ``__getslice__`` is deprecated. Calls are redirected to
+        ``__getitem__()``.
+        """
+        if a == 0: a = None
+        if b == sys.maxint: b = None
+        return self.__getitem__(slice(a, b, c))
+
+    def proxy_class(self):
+        return collectionproxy
+
+
+class collectionproxy(recurseproxy):
+
+    def recursive_types(self):
+        """
+        What should be iterated.
+        """
+        return (recursemixin, recurseproxy, collection, collectionlist)
+
+    def list_class(self):
+        return collectionlist
+
 
 class collection(object):
     """
@@ -18,28 +82,19 @@ class collection(object):
         self.property = property
         self.object = object
         self.type = type
-        self.items = []
+        self.items = collectionlist()
 
     def __len__(self):
         return len(self.items)
 
     def __setitem__(self, key, value):
-        raise CollectionError, 'items should not be overwritten.'
+        raise RuntimeError, 'items should not be overwritten.'
 
     def __delitem__(self, key):
         self.remove(key)
 
     def __getitem__(self, key):
         return self.items.__getitem__(key)
-
-    def __getslice__(self, i, j):
-        return self.items.__getslice__(i, j)
-
-    def __setslice__(self, i, j, s):
-        raise CollectionError, 'items should not be overwritten.'
-
-    def __delslice__(self, i, j):
-        raise CollectionError, 'items should not be deleted this way.'
 
     def __contains__(self, obj):
         return self.items.__contains__(obj)
@@ -59,7 +114,7 @@ class collection(object):
         if isinstance(value, self.type):
             self.property._set(self.object, value)
         else:
-            raise CollectionError, 'Object is not of type %s' % self.type.__name__
+            raise TypeError, 'Object is not of type %s' % self.type.__name__
 
     def remove(self, value):
         if value in self.items:
@@ -218,4 +273,4 @@ class collection(object):
             return False
 
 
-# vi:sw=4:et
+# vi:sw=4:et:ai
