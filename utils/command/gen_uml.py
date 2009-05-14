@@ -69,7 +69,7 @@ class Writer:
     def __init__(self, filename, overrides=None):
         self.overrides = overrides
         if filename:
-            self.out = open(filename, 'w')
+            self.out = hasattr(filename, 'write') and filename or open(filename, 'w')
         else:
             self.out = sys.stdout
 
@@ -119,7 +119,7 @@ class Writer:
         if type.lower() == 'boolean':
             # FixMe: Should this be a boolean or an integer?
             # Integer is save and compattable with python2.2.
-            type = 'bool'
+            type = 'int'
         elif type.lower() in ('integer', 'unlimitednatural'):
             type = 'int'
         elif type.lower() == 'string':
@@ -171,6 +171,9 @@ class Writer:
         Write an association for head. 
         The association should not be a redefine or derived association.
         """
+        if head.written:
+            return
+
         assert head.navigable
         # Derived unions and redefines are handled separately
         assert not head.derived
@@ -349,6 +352,7 @@ def generate(filename, outfile=None, overridesfile=None):
     associations = { }
     properties = { }
     operations = { }
+    extensions = { } # for identifying metaclasses
     for key, val in all_elements.items():
         # Find classes, *Kind (enumerations) are given special treatment
         if isinstance(val, element):
@@ -356,10 +360,13 @@ def generate(filename, outfile=None, overridesfile=None):
                 if val['name'].endswith('Kind') or val['name'].endswith('Sort'):
                     enumerations[key] = val
                 else:
+                    # Metaclasses are removed later on (need to be checked
+                    # via the Extension instances)
                     classes[key] = val
                     # Add extra properties for easy code generation:
                     val.specialization = []
                     val.generalization = []
+                    val.stereotypeName = None
                     val.written = False
             elif val.type == 'Generalization':
                 generalizations[key] = val
@@ -372,8 +379,11 @@ def generate(filename, outfile=None, overridesfile=None):
                 resolve(val, 'lowerValue')
                 resolve(val, 'upperValue')
                 resolve(val, 'taggedValue')
+                val.written = False
             elif val.type == 'Operation':
                 operations[key] = val
+            elif val.type == 'Extension':
+                extensions[key] = val
 
     # find inheritance relationships
     for g in generalizations.values():
@@ -390,8 +400,37 @@ def generate(filename, outfile=None, overridesfile=None):
             values.append(str(properties[key]['name']))
         e.enumerates = tuple(values)
 
+    # Remove metaclasses from classes dict
+    # should check for Extension.memberEnd<Property>.type
+    for e in extensions.values():
+        ends = []
+        for end in e.memberEnd:
+            end = all_elements[end]
+            end.type = all_elements[end['type']]
+            ends.append(end)
+        e.memberEnd = ends
+        del classes[e.memberEnd[0].type.id]
+
+
     # create file header
     writer.write(header)
+
+    # Tag classes with appliedStereotypes
+    for c in classes.values():
+        if c.get('appliedStereotype'):
+            # Figure out stereotype name through
+            # Class.appliedStereotype.classifier.name
+            instSpec = all_elements[c.appliedStereotype[0]]
+            sType = all_elements[instSpec.classifier[0]]
+            c.stereotypeName = sType.name
+            writer.write("# class '%s' has been stereotyped as '%s'\n" % (c.name, c.stereotypeName))
+            c.written = True
+            def tag_children(me):
+                for child in me.specialization:
+                    writer.write("# class '%s' has been stereotyped as '%s' too\n" % (child.name, c.stereotypeName))
+                    child.written = True
+                    tag_children(child)
+            tag_children(c)
 
     # create class definitions
     for c in classes.values():
@@ -416,16 +455,30 @@ def generate(filename, outfile=None, overridesfile=None):
     redefines = [ ]
     for a in associations.values():
         ends = []
-        for end in a['memberEnd']:
+        for end in a.memberEnd:
             end = properties[end]
             end.type = classes[end['type']]
             end.class_ = end.get('class_') and classes[end['class_']] or None
-            #assert end.type is not end.class_
-            #if not end.get('lowerValue'):
-                #end.lowerValue = end.lowerValue.get('value') or ''
-            #else:
-                #end.lowerValue = ''
+#            if end.type and end.type.stereotypeName == 'SimpleAttribute':
+#                writer.write("# '%s' is a simple attribute\n" % (end.name, ))
+#                a.asAttribute = end
             ends.append(end)
+
+#        if getattr(a, 'asAttribute', None):
+#            writer.write("# '%s: %s' is a simple attribute\n" % (a.asAttribute.name, a.asAttribute.type.name))
+            #writer.write_attribute(a.asAttribute, enumerations)
+            # Skip the association creation.
+        #    continue
+
+        for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
+            if e1.type and e1.type.stereotypeName == 'SimpleAttribute':
+                writer.write("# '%s.%s' is a simple attribute\n" % (e2.type.name, e1.name))
+                e1.class_name = e2.type.name
+                e1.typeValue = { 'value': 'str'}
+
+                writer.write_attribute(e1, enumerations)
+                e1.written = True
+                e2.written = True
 
         for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
             parse_association_end(e1, e2)
@@ -479,4 +532,4 @@ if __name__ == '__main__':
     doctest.testmod()
     generate('uml2.gaphor')
 
-# vim:sw=4:et
+# vim:sw=4:et:ai
