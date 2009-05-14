@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor version="3.0" gaphor-version="0.14.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.14.0">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -8073,7 +8073,7 @@ namespace, featuringClassifier]]></val>
 <LiteralSpecification id="DCE:EE3FE10A-4864-11D8-A4FB-20895068F46E"/>
 <LiteralSpecification id="DCE:EF0D91CA-4864-11D8-A4FB-20895068F46E">
 <value>
-<val><![CDATA[*]]></val>
+<val><![CDATA[1]]></val>
 </value>
 </LiteralSpecification>
 <LiteralString id="DCE:BBF344C6-2E06-11D8-A169-52D559F3DAB9"/>
@@ -13284,7 +13284,11 @@ featuringClassifier]]></val>
 <ref refid="DCE:A2B151FA-8404-11D8-82A2-7B88E55A3BEC"/>
 </upperValue>
 </Property>
-<LiteralSpecification id="DCE:23B168F8-DB15-11D7-8BD0-27F1E06F5E9F"/>
+<LiteralSpecification id="DCE:23B168F8-DB15-11D7-8BD0-27F1E06F5E9F">
+<value>
+<val><![CDATA[0]]></val>
+</value>
+</LiteralSpecification>
 <Property id="DCE:07DC2046-4A8A-11D7-B090-133D836EF880">
 <association>
 <ref refid="DCE:07DBA3DA-4A8A-11D7-B090-133D836EF880"/>
@@ -20135,8 +20139,8 @@ ownedMember]]></val>
 </presentation>
 <taggedValue>
 <reflist>
-<ref refid="DCE:AA135AA8-44B0-11DA-9223-000D936B094A"/>
-<ref refid="DCE:AA1497B0-44B0-11DA-9223-000D936B094A"/>
+<ref refid="ab8551da-3fe2-11de-89d3-00224128e79d"/>
+<ref refid="ab85b7b0-3fe2-11de-89d3-00224128e79d"/>
 </reflist>
 </taggedValue>
 <type>
@@ -20145,9 +20149,6 @@ ownedMember]]></val>
 <upperValue>
 <ref refid="DCE:EF0D91CA-4864-11D8-A4FB-20895068F46E"/>
 </upperValue>
-<visibility>
-<val><![CDATA[public]]></val>
-</visibility>
 </Property>
 <Class id="DCE:CED40330-4A88-11D7-B08E-133D836EF880">
 <generalization>
@@ -40413,16 +40414,6 @@ subsets ownedMember]]></val>
 <val><![CDATA[featuringClassifier]]></val>
 </value>
 </LiteralSpecification>
-<LiteralSpecification id="DCE:AA135AA8-44B0-11DA-9223-000D936B094A">
-<value>
-<val><![CDATA[ordered]]></val>
-</value>
-</LiteralSpecification>
-<LiteralSpecification id="DCE:AA1497B0-44B0-11DA-9223-000D936B094A">
-<value>
-<val><![CDATA[subsets ownedElement]]></val>
-</value>
-</LiteralSpecification>
 <LiteralSpecification id="DCE:AA165000-44B0-11DA-9223-000D936B094A">
 <value>
 <val><![CDATA[subsets namespace]]></val>
@@ -40814,7 +40805,7 @@ subsets ownedMember]]></val>
 <val>165.0</val>
 </width>
 <height>
-<val>64.0</val>
+<val>69.2490234375</val>
 </height>
 <subject>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
@@ -40840,7 +40831,7 @@ subsets ownedMember]]></val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (246.0, -2.5328947368421382)]</val>
+<val>[(0.0, 0.0), (246.0, -1.1515727796052886)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:51852E6E-44B2-11DA-B054-000D936B094A"/>
@@ -46556,4 +46547,240 @@ subsets ownedMember]]></val>
 </type>
 </Property>
 <LiteralSpecification id="DCE:5366D44A-E81E-11DD-BD54-000D936B094A"/>
+<Package id="76a964f2-3fe1-11de-8375-00224128e79d">
+<name>
+<val><![CDATA[Profiles]]></val>
+</name>
+<nestedPackage>
+<reflist>
+<ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</nestedPackage>
+<ownedDiagram>
+<reflist>
+<ref refid="83d007f8-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Diagram id="83d007f8-3fe1-11de-8375-00224128e79d">
+<name>
+<val><![CDATA[Profiles diagram]]></val>
+</name>
+<package>
+<ref refid="76a964f2-3fe1-11de-8375-00224128e79d"/>
+</package>
+<canvas>
+<item type="PackageItem" id="88ce697a-3fe1-11de-8375-00224128e79d">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 76.0, 49.0)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
+</canvas>
+</Diagram>
+<Profile id="88ce1e8e-3fe1-11de-8375-00224128e79d">
+<name>
+<val><![CDATA[Gaphor]]></val>
+</name>
+<ownedClassifier>
+<reflist>
+<ref refid="a054df8e-3fe1-11de-8375-00224128e79d"/>
+<ref refid="a38a6700-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</ownedClassifier>
+<ownedDiagram>
+<reflist>
+<ref refid="9ab5c2dc-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</ownedDiagram>
+<package>
+<ref refid="76a964f2-3fe1-11de-8375-00224128e79d"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="88ce697a-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</presentation>
+</Profile>
+<Diagram id="9ab5c2dc-3fe1-11de-8375-00224128e79d">
+<name>
+<val><![CDATA[Gaphor diagram]]></val>
+</name>
+<package>
+<ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
+</package>
+<canvas>
+<item type="ClassItem" id="a055b2b0-3fe1-11de-8375-00224128e79d">
+<show-attributes>
+<val>1</val>
+</show-attributes>
+<show-operations>
+<val>1</val>
+</show-operations>
+<drawing-style>
+<val>1</val>
+</drawing-style>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 110.0, 44.0)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>56.9072265625</val>
+</height>
+<subject>
+<ref refid="a054df8e-3fe1-11de-8375-00224128e79d"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
+<item type="ClassItem" id="a38b172c-3fe1-11de-8375-00224128e79d">
+<show-attributes>
+<val>1</val>
+</show-attributes>
+<show-operations>
+<val>1</val>
+</show-operations>
+<drawing-style>
+<val>1</val>
+</drawing-style>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 107.0, 203.0)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>60.3935546875</val>
+</height>
+<subject>
+<ref refid="a38a6700-3fe1-11de-8375-00224128e79d"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
+<item type="ExtensionItem" id="a89e8e42-3fe1-11de-8375-00224128e79d">
+<subject>
+<ref refid="a987f3a2-3fe1-11de-8375-00224128e79d"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 157.0, 100.9072265625)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (0.0, 102.0927734375)]</val>
+</points>
+<head-connection>
+<ref refid="a055b2b0-3fe1-11de-8375-00224128e79d"/>
+</head-connection>
+<tail-connection>
+<ref refid="a38b172c-3fe1-11de-8375-00224128e79d"/>
+</tail-connection>
+</item>
+</canvas>
+</Diagram>
+<Class id="a054df8e-3fe1-11de-8375-00224128e79d">
+<name>
+<val><![CDATA[Class]]></val>
+</name>
+<package>
+<ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="a055b2b0-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</presentation>
+</Class>
+<Stereotype id="a38a6700-3fe1-11de-8375-00224128e79d">
+<name>
+<val><![CDATA[SimpleAttribute]]></val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="a988313c-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</ownedAttribute>
+<package>
+<ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="a38b172c-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</presentation>
+</Stereotype>
+<Extension id="a987f3a2-3fe1-11de-8375-00224128e79d">
+<memberEnd>
+<reflist>
+<ref refid="a988313c-3fe1-11de-8375-00224128e79d"/>
+<ref refid="a9887944-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</memberEnd>
+<ownedEnd>
+<ref refid="a9887944-3fe1-11de-8375-00224128e79d"/>
+</ownedEnd>
+<presentation>
+<reflist>
+<ref refid="a89e8e42-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</presentation>
+</Extension>
+<Property id="a988313c-3fe1-11de-8375-00224128e79d">
+<association>
+<ref refid="a987f3a2-3fe1-11de-8375-00224128e79d"/>
+</association>
+<class_>
+<ref refid="a38a6700-3fe1-11de-8375-00224128e79d"/>
+</class_>
+<name>
+<val><![CDATA[baseClass]]></val>
+</name>
+<type>
+<ref refid="a054df8e-3fe1-11de-8375-00224128e79d"/>
+</type>
+</Property>
+<ExtensionEnd id="a9887944-3fe1-11de-8375-00224128e79d">
+<aggregation>
+<val><![CDATA[composite]]></val>
+</aggregation>
+<association>
+<ref refid="a987f3a2-3fe1-11de-8375-00224128e79d"/>
+</association>
+<type>
+<ref refid="a38a6700-3fe1-11de-8375-00224128e79d"/>
+</type>
+</ExtensionEnd>
+<LiteralSpecification id="ab8551da-3fe2-11de-89d3-00224128e79d">
+<value>
+<val><![CDATA[ordered]]></val>
+</value>
+</LiteralSpecification>
+<LiteralSpecification id="ab85b7b0-3fe2-11de-89d3-00224128e79d">
+<value>
+<val><![CDATA[subsets ownedElement]]></val>
+</value>
+</LiteralSpecification>
 </gaphor>
