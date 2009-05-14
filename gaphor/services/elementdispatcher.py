@@ -69,7 +69,7 @@ class ElementDispatcher(object):
         >>> map(str, dispatcher._path_to_properties(UML.Class(),
         ...         'ownedOperation.parameter.name')) # doctest: +NORMALIZE_WHITESPACE
         ['<association ownedOperation: Operation[0..*] <>-> class_>',
-        "<derivedunion parameter:
+        "<derived parameter:
             '<association returnResult: Parameter[0..*] <>-> ownerReturnParam>',
             '<association formalParameter: Parameter[0..*] <>-> ownerFormalParam>'>",
         "<attribute name: <type 'str'>[0..1] = None>"]

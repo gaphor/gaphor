@@ -14,9 +14,6 @@ from gaphor.diagram.states import VertexItem
 class InitialPseudostateItem(VertexItem):
     """
     Initial pseudostate diagram item.
-
-    Parameters
-        - _connected - guard used to not connect more than one transition
     """
     __uml__   = UML.Pseudostate
     __style__ = {
@@ -31,8 +28,6 @@ class InitialPseudostateItem(VertexItem):
         super(InitialPseudostateItem, self).__init__(id)
         for h in self.handles():
             h.movable = False
-
-        self._connected = False
 
 
     def draw(self, context):
@@ -51,9 +46,6 @@ class InitialPseudostateItem(VertexItem):
 class HistoryPseudostateItem(VertexItem):
     """
     History pseudostate diagram item.
-
-    Parameters
-        - _connected - guard used to not connect more than one transition
     """
     __uml__   = UML.Pseudostate
     __style__ = {
@@ -68,8 +60,6 @@ class HistoryPseudostateItem(VertexItem):
         super(HistoryPseudostateItem, self).__init__(id)
         for h in self.handles():
             h.movable = False
-
-        self._connected = False
 
 
     def draw(self, context):

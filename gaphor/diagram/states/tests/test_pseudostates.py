@@ -6,6 +6,7 @@ from gaphor import UML
 from gaphor.diagram.states.pseudostates import InitialPseudostateItem, HistoryPseudostateItem
 from gaphor.tests.testcase import TestCase
 
+
 class InitialPseudostate(TestCase):
     """
     Initial pseudostate item test cases.
@@ -16,15 +17,15 @@ class InitialPseudostate(TestCase):
         """
         item = self.create(InitialPseudostateItem, UML.Pseudostate)
         self.assertEquals('initial', item.subject.kind)
-        self.assertFalse(item._connected) # not connected by default
 
 
     def test_history_pseudostate(self):
         """Test creation of initial pseudostate
         """
         item = self.create(HistoryPseudostateItem, UML.Pseudostate)
+        # history setting is done in the DiagramToolbox factory:
+        item.subject.kind = 'shallowHistory'
         self.assertEquals('shallowHistory', item.subject.kind)
-        self.assertFalse(item._connected) # not connected by default
 
 
 # vim:sw=4:et:ai

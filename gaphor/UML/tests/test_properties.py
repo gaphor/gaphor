@@ -5,7 +5,7 @@ from zope import component
 from gaphor.application import Application
 from gaphor.UML.properties import *
 from gaphor.UML.element import Element
-from gaphor.UML.event import AssociationChangeEvent
+from gaphor.UML.interfaces import IAssociationChangeEvent
 
 class PropertiesTestCase(unittest.TestCase):
 
@@ -244,7 +244,7 @@ class PropertiesTestCase(unittest.TestCase):
         assert a.one[1] is b2
 
         events = []
-        @component.adapter(AssociationChangeEvent)
+        @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -476,7 +476,7 @@ class PropertiesTestCase(unittest.TestCase):
         A.derived_a = derivedunion('derived_a', A, 0, 1, A.a)
         A.derived_b = derivedunion('derived_b', A, 0, '*', A.b)
         events = []
-        @component.adapter(AssociationChangeEvent)
+        @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -493,7 +493,6 @@ class PropertiesTestCase(unittest.TestCase):
     def test_derivedunion_events(self):
         from zope import component
         from gaphor.application import Application
-        from gaphor.UML.event import AssociationChangeEvent
         from gaphor.UML.event import DerivedSetEvent, DerivedAddEvent, DerivedDeleteEvent
         
         class A(Element):
@@ -512,7 +511,7 @@ class PropertiesTestCase(unittest.TestCase):
         A.derived_b = derivedunion('derived_b', object, 0, '*', A.b1, A.b2, A.b3)
         
         events = []
-        @component.adapter(AssociationChangeEvent)
+        @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -603,7 +602,6 @@ class PropertiesTestCase(unittest.TestCase):
     def test_redefine(self):
         from zope import component
         from gaphor.application import Application
-        from gaphor.UML.event import AssociationChangeEvent
         
         class A(Element):
             is_unlinked = False
@@ -615,7 +613,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         A.a = redefine(A, 'a', A, A.a)
         events = []
-        @component.adapter(AssociationChangeEvent)
+        @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -632,7 +630,6 @@ class PropertiesTestCase(unittest.TestCase):
     def test_redefine_subclass(self):
         from zope import component
         from gaphor.application import Application
-        from gaphor.UML.event import AssociationChangeEvent
         
         class A(Element):
             is_unlinked = False
@@ -648,7 +645,7 @@ class PropertiesTestCase(unittest.TestCase):
         B.b = redefine(B, 'b', A, A.a)
         
         events = []
-        @component.adapter(AssociationChangeEvent)
+        @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 

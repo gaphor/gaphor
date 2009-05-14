@@ -2,13 +2,13 @@
 Test the UndoManager.
 """
 
-import unittest
+from gaphor.tests.testcase import TestCase
 from gaphor.services.undomanager import UndoManager
 from gaphor.transaction import Transaction
 from gaphor.application import Application
 
 
-class TestUndoManager(unittest.TestCase):
+class TestUndoManager(TestCase):
 
     def test_transactions(self):
 
@@ -227,8 +227,11 @@ class TestUndoManager(unittest.TestCase):
         undo_manager.init(Application)
         undo_manager.begin_transaction()
         ef = ElementFactory()
+        ef.init(Application)
         p = ef.create(Element)
 
+        assert undo_manager._current_transaction
+        assert undo_manager._current_transaction._actions
         assert undo_manager.can_undo()
 
         undo_manager.commit_transaction()
@@ -252,7 +255,7 @@ class TestUndoManager(unittest.TestCase):
     def test_uml_associations(self):
 
         from zope import component
-        from gaphor.UML.event import AssociationChangeEvent
+        from gaphor.UML.interfaces import IAssociationChangeEvent
         from gaphor.UML.properties import association, derivedunion
         from gaphor.UML import Element
 
@@ -272,7 +275,7 @@ class TestUndoManager(unittest.TestCase):
         A.derived_b = derivedunion('derived_b', 0, '*', A.b1, A.b2, A.b3)
 
         events = []
-        @component.adapter(AssociationChangeEvent)
+        @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -287,21 +290,19 @@ class TestUndoManager(unittest.TestCase):
             a.a1 = A()
             undo_manager.commit_transaction()
             
-            assert len(events) == 2
-            assert events[0].property is A.derived_a
-            assert events[1].property is A.a1
+            assert len(events) == 1, events
+            assert events[0].property is A.a1
             assert undo_manager.can_undo()
 
             undo_manager.undo_transaction()
             assert not undo_manager.can_undo()
             assert undo_manager.can_redo()
-            assert len(events) == 4, len(events)
-            assert events[2].property is A.derived_a
-            assert events[3].property is A.a1
+            assert len(events) == 2, events
+            assert events[1].property is A.a1
 
         finally:
             Application.unregister_handler(handler)
             undo_manager.shutdown()
 
 
-# vim:sw=4:et
+# vim:sw=4:et:ai

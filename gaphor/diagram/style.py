@@ -25,15 +25,17 @@ class Style(object):
     Item style information. Style information is provided through object's
     attributes, i.e.::
 
-        class InitialNodeItem
-            __style__ = {
-                'name-align': ('center', 'top'),
-            }
+    >>> from gaphor.diagram import DiagramItemMeta
+    >>> class InitialNodeItem(object):
+    ...     __metaclass__ = DiagramItemMeta
+    ...     __style__ = {
+    ...         'name-align': ('center', 'top'),
+    ...     }
 
     is translated to::
 
-        >>> print style.name_align
-        ('center', 'top')
+    >>> print InitialNodeItem().style.name_align
+    ('center', 'top')
     """
 
     def __init__(self, *args, **kwargs):

@@ -1,46 +1,33 @@
-UML Model
-~~~~~~~~~
+UML datamodel
+=============
 
-The UML model that should hold all information. It would be nice if the model
-looks like the UML MetaModel. In order to keep the model consistent a lot of
-bi-directional relations have to be made. Those relations have a multiplicity
-of '0..1', '1', '1..*' or '*'. For simplicity we reduce this to '1' and '*'.
+For it's data storage, Gaphor uses the UML metamodel specs as guidelines.
+Actually, the datamodel is generated for a model file. 
 
-For the objects that have a multiplicity of 1 we can simply assign a
-value to the attribute. If a new value is assigned to the value we can simply
-replace it.
-
-We also need some sort of Sequence object (a 'list-deluxe') that will allow us
-to add and remove elements from the list. We can use the List object for that,
-but we should check the object that is added to the list for its type. 
+The model is build using smart properties (descriptors). Those descriptors fire
+events when they're changed. This allows the rest of the application (visuals,
+undo system) to update their state accordingly. The events are send using Zope
+(3)'s signalling mechanism, called Handlers.
 
 
-Signals
-~~~~~~~
-UML elements should emit signals if their state changes. This can be done
-by means of the misc.signal.Signal class. All what's left is to define a
-protocol (the arguments that the UML element supplies).
+Model details
+-------------
 
-The following cases can occur:
-1. Unidirectional relationships or attributes:
-   a. Set data
-   b. Set data and overwrite old data
-   c. Remove the attribute
-2. Bidirectional relationships
-   a. multiplicity of '1'
-   b. multiplicity of '*'
+Pay attention to the following changes/additions with respect to the official
+model:
 
-For non-sequence attributes we can do something like this
+Additions to the model have been put in the package AuxilaryConstructs.Presentations and .Stereotypes.
 
-	def signal_handler(attribute_name, old_value, new_value, *custom_args):
-	    pass
+A Diagram element is added in order to model the diagrams.
 
-where old_value and new_value is None (or the default value) in case no value
-was set before.
-
-For sequences we can only add and remove values. We can do this with the
-same amount of attributes, only old_value will be one of 'add' or 'remove' and
-new_value will contain the value that is added or removed.
+A special construct has been put into place in order to apply stereotypes to
+model elements. The current specs (2.2) are not clear on that subject.
+We follow teh same direction as MonoUML (URL!)
 
 
+TODO:
+ValueSpecification is generated as if it were a normal attribute.
+As a result, it's subclasses (Expression, OpaqueExpression, InstanceValue,
+LiteralSpecification and its Literal* subclasses) are not available.
 
+The Slot.value reference is singular.

@@ -245,8 +245,10 @@ class ElementFactory(object):
         Remove an element from the factory.
         """
         element = event.element
-        if self._elements.has_key(element.id):
+        try:
             del self._elements[element.id]
+        except KeyError:
+            pass
 
 
 # vim:sw=4:et

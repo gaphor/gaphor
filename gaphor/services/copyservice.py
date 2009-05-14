@@ -4,7 +4,8 @@ Copy / Paste functionality
 
 from zope import interface, component
 import gaphas
-from gaphor import UML
+from gaphor.UML import Element
+from gaphor.UML.collection import collection
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.interfaces import IDiagramSelectionChange
 from gaphor.core import _, inject, action, build_action_group, transactional
@@ -84,9 +85,9 @@ class CopyService(object):
                 self._item.load(name, item)
 
     def copy_func(self, name, value, reference=False):
-        if reference or isinstance(value, UML.Element):
+        if reference or isinstance(value, Element):
             self._load_element(name, value)
-        elif isinstance(value, UML.collection):
+        elif isinstance(value, collection):
             for item in value:
                 self._load_element(name, item)
         elif isinstance(value, gaphas.Item):

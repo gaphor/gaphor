@@ -18,6 +18,7 @@ import gc
 import gaphas
 
 from gaphor import UML
+from gaphor.UML.collection import collection
 from gaphor.UML.elementfactory import ElementChangedEventBlocker
 from gaphor import diagram
 from gaphor.storage import parser
@@ -110,7 +111,7 @@ def save_generator(writer, factory):
         #log.debug('saving element: %s|%s %s' % (name, value, type(value)))
         if isinstance (value, (UML.Element, gaphas.Item)):
             save_reference(name, value)
-        elif isinstance(value, UML.collection):
+        elif isinstance(value, collection):
             save_collection(name, value)
         elif isinstance(value, gaphas.Canvas):
             writer.startElement('canvas', {})
@@ -125,7 +126,7 @@ def save_generator(writer, factory):
         The extra attribute reference can be used to force UML 
         """
         #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
-        if isinstance(value, UML.collection) or \
+        if isinstance(value, collection) or \
                 (isinstance(value, (list, tuple)) and reference == True):
             save_collection(name, value)
         elif reference:
