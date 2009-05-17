@@ -15,7 +15,7 @@ __all__ = [ 'querymixin', 'recursemixin', 'getslicefix' ]
 import sys
 
 
-def match(element, expr):
+class Matcher(object):
     """
     Returns True if the expression returns True.
     The context for the expression is the element.
@@ -34,33 +34,29 @@ def match(element, expr):
 
     If we want to match, ``it`` is used to refer to the subjected object:
 
-    >>> match(a, 'it.name=="root"')
+    >>> Matcher('it.name=="root"')(a)
     True
-    >>> match(a, 'it.b.name=="b"')
+    >>> Matcher('it.b.name=="b"')(a)
     True
-    >>> match(a, 'it.name=="blah"')
+    >>> Matcher('it.name=="blah"')(a)
     False
-    >>> match(a, 'it.nonexistent=="root"')
+    >>> Matcher('it.nonexistent=="root"')(a)
     False
 
     NOTE: the object ``it`` was introduced since properties (descriptors) can
     not be executed from within a dictionary context.
     """
-    try:
-        return eval(expr, { 'it': element }, {})
-    except (AttributeError, NameError):
-        # attribute does not (yet) exist
-        #print 'No attribute', expr, d
-        return False
-
-
-class Matcher(object):
 
     def __init__(self, expr):
-        self.expr = expr
+        self.expr = compile(expr, '<matcher>', 'eval')
 
     def __call__(self, element):
-        return match(element, self.expr)
+        try:
+            return eval(self.expr, { 'it': element }, {})
+        except (AttributeError, NameError):
+            # attribute does not (yet) exist
+            #print 'No attribute', expr, d
+            return False
 
 
 class querymixin(object):
