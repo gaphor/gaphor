@@ -26,6 +26,7 @@ TODO:
  
 """
 
+import gobject
 import gtk
 from gaphor.core import _, inject, transactional
 from gaphor.application import Application
@@ -153,14 +154,14 @@ class EditableTreeModel(gtk.ListStore):
             # kill row and delete object if text of first column is empty
             self.remove(iter)
 
-        elif value and not row[-1]:
+        elif value and col == 0 and not row[-1]:
             # create new object
             obj = self._create_object()
             row[-1] = obj
             self._set_object_value(row, col, value)
             self._add_empty()
 
-        elif value:
+        elif row[-1]:
             self._set_object_value(row, col, value)
         self._item.request_update(matrix=False)
 
@@ -186,7 +187,7 @@ class ClassAttributes(EditableTreeModel):
     def _get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
-                yield [attr.render(), attr]
+                yield [attr.render(), attr.isStatic, attr]
 
 
     def _create_object(self):
@@ -198,9 +199,12 @@ class ClassAttributes(EditableTreeModel):
     @transactional
     def _set_object_value(self, row, col, value):
         attr = row[-1]
-        attr.parse(value)
-        row[0] = attr.render()
-
+        if col == 0:
+            attr.parse(value)
+            row[0] = attr.render()
+        elif col == 1:
+            attr.isStatic = not attr.isStatic
+            row[1] = attr.isStatic
 
     def _swap_objects(self, o1, o2):
         return self._item.subject.ownedAttribute.swap(o1, o2)
@@ -347,12 +351,21 @@ def swap_on_keypress(tree, event):
         
 
 @transactional
-def on_cell_edited(renderer, path, value, model, col):
+def on_text_cell_edited(renderer, path, value, model, col=0):
     """
     Update editable tree model based on fresh user input.
     """
     iter = model.get_iter(path)
     model.set_value(iter, col, value)
+
+
+@transactional
+def on_bool_cell_edited(renderer, path, model, col):
+    """
+    Update editable tree model based on fresh user input.
+    """
+    iter = model.get_iter(path)
+    model.set_value(iter, col, renderer.get_active())
 
 
 class UMLComboModel(gtk.ListStore):
@@ -474,11 +487,22 @@ def create_tree_view(model, names, tip='', ro_cols=None):
     
     n = model.get_n_columns() - 1
     for name, i in zip(names, range(n)):
-        renderer = gtk.CellRendererText()
-        renderer.set_property('editable', i not in ro_cols)
-        renderer.connect('edited', on_cell_edited, model, i)
-        col = gtk.TreeViewColumn(name, renderer, text=i)
-        tree_view.append_column(col)
+        col_type = model.get_column_type(i)
+        if col_type == gobject.TYPE_STRING:
+            renderer = gtk.CellRendererText()
+            renderer.set_property('editable', i not in ro_cols)
+            renderer.set_property('is-expanded', True)
+            renderer.connect('edited', on_text_cell_edited, model, i)
+            col = gtk.TreeViewColumn(name, renderer, text=i)
+            col.set_expand(True)
+            tree_view.append_column(col)
+        elif col_type == gobject.TYPE_BOOLEAN:
+            renderer = gtk.CellRendererToggle()
+            renderer.set_property('activatable', i not in ro_cols)
+            renderer.connect('toggled', on_bool_cell_edited, model, i)
+            col = gtk.TreeViewColumn(name, renderer, active=i)
+            col.set_expand(False)
+            tree_view.append_column(col)
 
     tree_view.connect('key_press_event', remove_on_keypress)
     tree_view.connect('key_press_event', swap_on_keypress)
@@ -744,7 +768,7 @@ class AttributesPage(object):
         hbox.show_all()
         page.pack_start(hbox, expand=False)
 
-        self.model = ClassAttributes(self.context)
+        self.model = ClassAttributes(self.context, (str, bool, object))
         
         tip = """\
 Add and edit class attributes according to UML syntax. Attribute syntax examples
@@ -752,11 +776,13 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 - + attr: int
 - # /attr: int
 """
-        tree_view = create_tree_view(self.model, (_('Attributes'),), tip)
+        tree_view = create_tree_view(self.model, (_('Attributes'), _('S')), tip)
+
         page.pack_start(tree_view)
 
         return page
         
+
     @transactional
     def _on_show_attributes_change(self, button):
         self.context.show_attributes = button.get_active()

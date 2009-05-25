@@ -8,7 +8,7 @@ from gaphor import UML
 from gaphas.item import Item
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.diagramitem import DiagramItem
-from gaphas.util import text_extents, text_set_font, text_align
+from gaphas.util import text_extents, text_set_font, text_align, text_underline
 from gaphor.diagram import font
 
 class FeatureItem(DiagramItem):
@@ -90,20 +90,28 @@ class AttributeItem(FeatureItem):
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
 
-        self.watch('subject.name') \
-            .watch('subject.isDerived') \
-            .watch('subject.visibility') \
-            .watch('subject.lowerValue<LiteralSpecification>.value') \
-            .watch('subject.upperValue<LiteralSpecification>.value') \
-            .watch('subject.defaultValue<LiteralSpecification>.value') \
-            .watch('subject.typeValue<LiteralSpecification>.value') \
-            .watch('subject.taggedValue<LiteralSpecification>.value')
+        self.watch('subject<NamedItem>.name') \
+            .watch('subject<Property>.isDerived') \
+            .watch('subject<Property>.visibility') \
+            .watch('subject<Property>.isStatic') \
+            .watch('subject<Property>.lowerValue<LiteralSpecification>.value') \
+            .watch('subject<Property>.upperValue<LiteralSpecification>.value') \
+            .watch('subject<Property>.defaultValue<LiteralSpecification>.value') \
+            .watch('subject<Property>.typeValue<LiteralSpecification>.value') \
+            .watch('subject<Property>.taggedValue<LiteralSpecification>.value')
 
 
     def postload(self):
         if self.subject:
             self.text = self.subject.render()
 
+    def draw(self, context):
+        if self.subject.isStatic:
+            cr = context.cairo
+            text_set_font(cr, self.font)
+            text_underline(cr, 0, 0, self.subject.render() or '')
+        else:
+            super(AttributeItem, self).draw(context)
 
 
 class OperationItem(FeatureItem):
