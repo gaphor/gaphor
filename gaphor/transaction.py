@@ -6,6 +6,7 @@ from zope import interface, component
 from gaphor.interfaces import ITransaction
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 
+
 def transactional(func):
     def _transactional(*args, **kwargs):
         tx = Transaction()
@@ -21,6 +22,7 @@ def transactional(func):
         else:
             tx.commit()
     return _transactional
+
 
 class TransactionError(Exception):
     """
@@ -41,8 +43,6 @@ class Transaction(object):
 
     def commit(self):
         self._close()
-#        if self._need_rollback:
-#            log.warning('Tried to commit a transaction already marked for rollback.')
         if not self._stack:
             if self._need_rollback:
                 component.handle(TransactionRollback())

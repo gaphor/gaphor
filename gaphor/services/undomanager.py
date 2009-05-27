@@ -161,7 +161,6 @@ class UndoManager(object):
         Add an action to undo. An action
         """
         if self._current_transaction:
-            #log.debug('add_undo_action: %s %s' % (self._current_transaction, action))
             self._current_transaction.add(action)
             self._app.handle(UndoManagerStateChanged(self))
 
@@ -170,7 +169,6 @@ class UndoManager(object):
 
     @component.adapter(TransactionCommit)
     def commit_transaction(self, event=None):
-        #log.debug('commit_transaction')
         if not self._current_transaction:
             return #raise TransactionError, 'No transaction to commit'
 
@@ -182,7 +180,7 @@ class UndoManager(object):
                 while len(self._undo_stack) > self._stack_depth:
                     del self._undo_stack[0]
             else:
-                pass #log.debug('nothing to commit')
+                pass
 
             self._current_transaction = None
         self._app.handle(UndoManagerStateChanged(self))
@@ -349,50 +347,50 @@ class UndoManager(object):
     @component.adapter(IAttributeChangeEvent)
     def undo_attribute_change_event(self, event):
         attribute = event.property
-        obj = event.element
+        element = event.element
         value = event.old_value
         def _undo_attribute_change_event():
-            attribute._set(obj, value)
+            attribute._set(element, value)
         self.add_undo_action(_undo_attribute_change_event)
 
 
     @component.adapter(AssociationSetEvent)
     def undo_association_set_event(self, event):
         association = event.property
-        obj = event.element
+        element = event.element
         value = event.old_value
-        #print 'got new set event', association, obj, value
+        #print 'got new set event', association, element, value
         def _undo_association_set_event():
-            #print 'undoing action', obj, value
+            #print 'undoing action', element, value
             # Tell the assoctaion it should not need to let the opposite
             # side connect (it has it's own signal)
-            association._set(obj, value, from_opposite=True)
+            association._set(element, value, from_opposite=True)
         self.add_undo_action(_undo_association_set_event)
 
 
     @component.adapter(AssociationAddEvent)
     def undo_association_add_event(self, event):
         association = event.property
-        obj = event.element
+        element = event.element
         value = event.new_value
         def _undo_association_add_event():
-            #print 'undoing action', obj, value
+            #print 'undoing action', element, value
             # Tell the assoctaion it should not need to let the opposite
             # side connect (it has it's own signal)
-            association._del(obj, value, from_opposite=True)
+            association._del(element, value, from_opposite=True)
         self.add_undo_action(_undo_association_add_event)
 
 
     @component.adapter(AssociationDeleteEvent)
     def undo_association_delete_event(self, event):
         association = event.property
-        obj = event.element
+        element = event.element
         value = event.old_value
         def _undo_association_delete_event():
-            #print 'undoing action', obj, value
+            #print 'undoing action', element, value
             # Tell the assoctaion it should not need to let the opposite
             # side connect (it has it's own signal)
-            association._set(obj, value, from_opposite=True)
+            association._set(element, value, from_opposite=True)
         self.add_undo_action(_undo_association_delete_event)
 
 
