@@ -33,6 +33,8 @@ class IPropertyPage(interface.Interface):
     A property page which can display itself in a notebook
     """
     
+    order = interface.Attribute('Order number, used for ordered display')
+
     def construct(self):
         """
         Create the page (gtk.Widget) that belongs to the Property page.

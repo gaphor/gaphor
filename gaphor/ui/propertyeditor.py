@@ -42,7 +42,13 @@ class PropertyEditor(object):
         """
         Load all tabs that can operate on the given item.
         """
+        adapters = []
         for name, adapter in component.getAdapters([item,], IPropertyPage):
+            adapters.append((adapter.order, name, adapter))
+
+        adapters.sort()
+
+        for _, name, adapter in adapters:
             try:
                 page = adapter.construct()
                 expander = gtk.Expander()

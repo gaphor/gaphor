@@ -87,6 +87,8 @@ class StereotypePage(object):
 
     interface.implements(IPropertyPage)
 
+    order = 40
+
     element_factory = inject('element_factory')
 
     def __init__(self, context):
