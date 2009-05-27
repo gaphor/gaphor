@@ -146,6 +146,7 @@ class EditableTreeModel(gtk.ListStore):
         return self.get_iter((i - 1,))
 
 
+    @transactional
     def set_value(self, iter, col, value):
         path = self.get_path(iter)
         row = self[path]
@@ -173,7 +174,7 @@ class EditableTreeModel(gtk.ListStore):
         obj = self._get_object(iter)
         if obj:
             obj.unlink()
-            self._item.request_update(matrix=False)
+            #self._item.request_update(matrix=False)
             return super(EditableTreeModel, self).remove(iter)
         else:
             return iter
@@ -324,6 +325,7 @@ class CommunicationMessageModel(EditableTreeModel):
 
 
 
+@transactional
 def remove_on_keypress(tree, event):
     """
     Remove selected items from GTK model on ``backspace`` keypress.
@@ -335,6 +337,7 @@ def remove_on_keypress(tree, event):
             model.remove(iter)
 
 
+@transactional
 def swap_on_keypress(tree, event):
     """
     Swap selected and previous (or next) items.
@@ -525,6 +528,8 @@ class CommentItemPropertyPage(object):
     interface.implements(IPropertyPage)
     component.adapts(items.CommentItem)
 
+    order = 0
+
     def __init__(self, context):
         self.context = context
 
@@ -577,6 +582,8 @@ class NamedItemPropertyPage(object):
 
     interface.implements(IPropertyPage)
 
+    order = 10
+
     NAME_LABEL = _('Name')
 
     def __init__(self, context):
@@ -625,7 +632,6 @@ class ClassPropertyPage(NamedItemPropertyPage):
     Adapter which shows a property page for a class view.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.ClassItem)
 
     def __init__(self, context):
@@ -667,7 +673,6 @@ class InterfacePropertyPage(NamedItemPropertyPage):
     Adapter which shows a property page for an interface view.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.InterfaceItem)
 
     def __init__(self, context):
@@ -744,6 +749,8 @@ class AttributesPage(object):
     interface.implements(IPropertyPage)
     component.adapts(items.ClassItem)
 
+    order = 20
+
     element_factory = inject('element_factory')
 
     def __init__(self, context):
@@ -799,6 +806,8 @@ class OperationsPage(object):
 
     interface.implements(IPropertyPage)
     component.adapts(items.ClassItem)
+
+    order = 30
 
     element_factory = inject('element_factory')
 
@@ -856,6 +865,8 @@ class TaggedValuePage(object):
     interface.implements(IPropertyPage)
     component.adapts(items.NamedItem)
 
+    order = 200
+
     element_factory = inject('element_factory')
     def __init__(self, context):
         super(TaggedValuePage, self).__init__()
@@ -887,6 +898,8 @@ class DependencyPropertyPage(object):
 
     interface.implements(IPropertyPage)
     component.adapts(items.DependencyItem)
+
+    order = 0
 
     element_factory = inject('element_factory')
 
@@ -956,7 +969,6 @@ class AssociationPropertyPage(NamedItemPropertyPage):
     """
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.AssociationItem)
 
     def __init__(self, context):
@@ -1099,6 +1111,8 @@ class LineStylePage(object):
     interface.implements(IPropertyPage)
     component.adapts(gaphas.item.Line)
 
+    order = 400
+
     def __init__(self, context):
         super(LineStylePage, self).__init__()
         self.context = context
@@ -1152,7 +1166,6 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     """
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.ObjectNodeItem)
 
     ORDERING_VALUES = ['unordered', 'ordered', 'LIFO', 'FIFO']
@@ -1218,7 +1231,6 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     """
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.ForkNodeItem)
 
     def construct(self):
@@ -1257,7 +1269,6 @@ class FlowPropertyPage(NamedItemPropertyPage):
     """
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.FlowItem)
 
     def construct(self):
@@ -1295,7 +1306,9 @@ component.provideAdapter(FlowPropertyPage, name='Properties')
 
 
 class ComponentPropertyPage(NamedItemPropertyPage):
-    interface.implements(IPropertyPage)
+    """
+    """
+
     component.adapts(items.ComponentItem)
 
     def construct(self):
@@ -1333,7 +1346,9 @@ component.provideAdapter(ComponentPropertyPage, name='Properties')
 
 
 class MessagePropertyPage(NamedItemPropertyPage):
-    interface.implements(IPropertyPage)
+    """
+    """
+
     component.adapts(items.MessageItem)
 
     element_factory = inject('element_factory')
