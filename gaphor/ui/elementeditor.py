@@ -14,7 +14,7 @@ class ElementEditor(UtilityWindow):
     The file service, responsible for loading and saving Gaphor models.
     """
 
-    interface.implements(IService, IActionProvider)
+    interface.implements(IActionProvider)
 
     element_factory = inject('element_factory')
     properties = inject('properties')
@@ -35,13 +35,6 @@ class ElementEditor(UtilityWindow):
         self.action_group = build_action_group(self)
         self.window = None
 
-    def init(self, app):
-        self._app = app
-
-    def shutdown(self):
-        pass
-
-        
     @toggle_action(name='ElementEditor:open', stock_id='gtk-edit')
     def elementeditor(self, active):
         if active:
@@ -50,7 +43,7 @@ class ElementEditor(UtilityWindow):
                 self.window.connect('delete-event', self.close)
                 self.window.connect('delete-event', self.window.hide_on_delete)
             else:
-               self.window.show_all()
+                self.window.show_all()
         else:
             self.window.hide()
 
