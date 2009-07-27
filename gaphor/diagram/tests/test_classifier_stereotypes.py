@@ -8,6 +8,7 @@ from gaphor.tests import TestCase
 
 
 class StereotypesAttributesTestCase(TestCase):
+
     def setUp(self):
         """
         Create two stereotypes and extend component UML metaclass using
@@ -36,6 +37,9 @@ class StereotypesAttributesTestCase(TestCase):
         UML.model.extend_with_stereotype(factory, cls, st1)
         UML.model.extend_with_stereotype(factory, cls, st2)
 
+    def tearDown(self):
+        del self.st1
+        del self.st2
 
     def test_applying_stereotype(self):
         """Test if stereotype compartment is created when stereotype is applied
@@ -121,7 +125,7 @@ class StereotypesAttributesTestCase(TestCase):
         # change attribute of 2nd stereotype
         attr = self.st2.ownedAttribute[0]
         slot = UML.model.add_slot(self.element_factory, obj, attr)
-        slot.value[0].value = 'st2 test21'
+        slot.value.value = 'st2 test21'
 
         data = self.save()
         self.load(data)
@@ -146,12 +150,17 @@ class StereotypesAttributesTestCase(TestCase):
         UML.model.apply_stereotype(factory, c.subject, self.st1)
         UML.model.apply_stereotype(factory, c.subject, self.st2)
 
-        attr1, attr2 = self.st1.ownedAttribute
+        self.assertEquals(3, len(self.st1.ownedAttribute))
+        attr1, attr2, attr3 = self.st1.ownedAttribute
+        assert attr1.name == 'st1_attr_1', attr1.name
+        assert attr2.name == 'st1_attr_2', attr2.name
+        assert attr3.name == 'baseClass', attr3.name
+
         obj = c.subject.appliedStereotype[0]
         slot = UML.model.add_slot(self.element_factory, obj, attr1)
-        slot.value[0].value = 'st1 test1'
+        slot.value.value = 'st1 test1'
         slot = UML.model.add_slot(self.element_factory, obj, attr2)
-        slot.value[0].value = 'st1 test2'
+        slot.value.value = 'st1 test2'
 
         data = self.save()
         self.load(data)
@@ -168,9 +177,9 @@ class StereotypesAttributesTestCase(TestCase):
         obj = el.appliedStereotype[0]
         self.assertEquals(2, len(obj.slot))
         self.assertEquals('st1_attr_1', obj.slot[0].definingFeature.name)
-        self.assertEquals('st1 test1', obj.slot[0].value[0].value)
+        self.assertEquals('st1 test1', obj.slot[0].value.value)
         self.assertEquals('st1_attr_2', obj.slot[1].definingFeature.name)
-        self.assertEquals('st1 test2', obj.slot[1].value[0].value)
+        self.assertEquals('st1 test2', obj.slot[1].value.value)
 
         # no stereotype st2 attribute changes, no slots
         obj = el.appliedStereotype[1]

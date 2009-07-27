@@ -39,7 +39,7 @@ class StereotypeAttributes(gtk.TreeStore):
             for attr in st.ownedAttribute:
                 if not attr.association:
                     slot = slots.get(attr)
-                    value = slot.value[0].value if slot is not None else ''
+                    value = slot.value.value if slot is not None else ''
                     data = (attr.name, value, attr, obj, slot)
                     self.append(parent, data)
 
@@ -70,7 +70,7 @@ class StereotypeAttributes(gtk.TreeStore):
         assert slot
 
         if value:
-            slot.value[0].value = value
+            slot.value.value = value
         else:
             # no value, then remove slot
             del obj.slot[slot]
