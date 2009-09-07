@@ -14,6 +14,19 @@ from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
 
 
+def find_closest_port(item, point, converter):
+    closest = None
+    max_dist = 10000
+    for p in item.ports():
+        if not p.connectable: continue
+        ip = converter(*point)
+        pg, d = p.glue(ip)
+        if d >= max_dist: continue
+        closest = p
+        max_dist = d
+    return closest
+
+
 class AbstractConnect(object):
     """
     Connection adapter for Gaphor diagram items.
@@ -300,10 +313,14 @@ class RelationshipConnect(AbstractConnect):
 
         # First make sure coordinates match
         solver.solve()
-        for item, handle in connected_items or line.canvas.get_connected_items(line):
+        for item, handle in connected_items or canvas.get_connected_items(line):
+            port = find_closest_port(item,
+                    canvas.get_matrix_i2c(line).transform_point(*handle.pos),
+                    canvas.get_matrix_i2c(item).transform_point)
+                
             adapter = component.queryMultiAdapter((line, item), IConnect)
             assert adapter
-            adapter.connect(handle)
+            adapter.connect(handle, port)
         
     def disconnect_connected_items(self):
         """
