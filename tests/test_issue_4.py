@@ -24,5 +24,22 @@ class CyclicDiagramTestCase(TestCase):
         """
         load('test-diagrams/diagram-#4.gaphor', self.element_factory)
 
+    def test_bug_idle(self):
+        """
+        This test loads the file.
+
+        This does not nearly resemble the error, since the model should
+        be loaded from within the mainloop (which will delay all updates).
+        """
+        import gobject, gtk
+        def handler():
+            try:
+                load('test-diagrams/diagram-#4.gaphor', self.element_factory)
+            finally:
+                gtk.main_quit()
+
+        assert gobject.timeout_add(1, handler) > 0
+        gtk.main()
+
 
 # vi:sw=4:et:ai
