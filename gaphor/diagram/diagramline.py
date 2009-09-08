@@ -129,8 +129,8 @@ class DiagramLine(LineItem):
         # First update matrix and solve constraints (NE and SW handle are
         # lazy and are resolved by the constraint solver rather than set
         # directly.
-        #self.canvas.update_matrix(self)
-        #self.canvas.solver.solve()
+        self.canvas.update_matrix(self)
+        self.canvas.solver.solve()
 
         if hasattr(self, '_load_head_connection'):
             self._connect(self.head, self._load_head_connection)

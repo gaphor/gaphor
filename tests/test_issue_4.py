@@ -17,7 +17,7 @@ class CyclicDiagramTestCase(TestCase):
 
     def test_bug(self):
         """
-        This test loads the file.
+        Load file.
 
         This does not nearly resemble the error, since the model should
         be loaded from within the mainloop (which will delay all updates).
@@ -26,7 +26,7 @@ class CyclicDiagramTestCase(TestCase):
 
     def test_bug_idle(self):
         """
-        This test loads the file.
+        Load file in gtk main loop.
 
         This does not nearly resemble the error, since the model should
         be loaded from within the mainloop (which will delay all updates).
