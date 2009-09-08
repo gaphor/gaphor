@@ -1,3 +1,8 @@
+0.14.1
+------
+
+- Fixed bug when loading diagrams.
+
 0.13.1
 ------
 - added desktop file and gaphor icons
