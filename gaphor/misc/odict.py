@@ -1,8 +1,9 @@
 # from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/107747
 class odict(dict):
-    def __init__(self, dict=None):
+
+    def __init__(self, dict=()):
         self._keys = []
-        dict.__init__(self, dict)
+        super(odict, self).__init__(dict)
 
     def __delitem__(self, key):
         dict.__delitem__(self, key)
