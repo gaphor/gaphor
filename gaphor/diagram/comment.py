@@ -22,25 +22,26 @@ class CommentItem(ElementItem):
         self.width = 100
         self.watch('subject<Comment>.body')
 
+
     def edit(self):
         #self.start_editing(self._body)
         pass
 
-    # DiaCanvasItem callbacks:
 
     def pre_update(self, context):
-        if not self.subject: return
+        if not self.subject:
+            return
         cr = context.cairo
         w, h = text_extents(cr, self.subject.body, multiline=True, padding=2)
-        self.min_width = w + 10
-        self.min_height = h + 10
+        e2 = self.EAR * 2
+        self.min_width = w + e2 + 5
+        self.min_height = h + e2
         ElementItem.pre_update(self, context)
 
-    def post_update(self, context):
-        ElementItem.post_update(self, context)
 
     def draw(self, context):
-        if not self.subject: return
+        if not self.subject:
+            return
         c = context.cairo
         # Width and height, adjusted for line width...
         ox = float(self._handles[NW].pos.x)
@@ -60,7 +61,7 @@ class CommentItem(ElementItem):
         c.stroke()
 	if self.subject.body:
 	    # Do not print empty string, since cairo-win32 can't handle it.
-            text_multiline(c, 5, 5, self.subject.body, padding=2)
+            text_multiline(c, self.EAR, self.EAR, self.subject.body, padding=2)
 	    #c.move_to(10, 15)
 	    #c.show_text(self.subject.body)
 
