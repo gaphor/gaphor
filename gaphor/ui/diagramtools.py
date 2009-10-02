@@ -16,8 +16,7 @@ from gaphas.geometry import distance_point_point, distance_point_point_fast, \
 from gaphas.item import Line
 from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool, \
     ToolChain, HoverTool, ItemTool, RubberbandTool, \
-    ConnectHandleTool as _ConnectHandleTool, LineSegmentTool, \
-    DisconnectHandle as _DisconnectHandle
+    ConnectHandleTool as _ConnectHandleTool, LineSegmentTool
 from gaphas.canvas import Context
 
 from gaphor.core import inject, Transaction, transactional
@@ -64,24 +63,34 @@ class ConnectHandleTool(_ConnectHandleTool):
         adapter.connect(handle, port)
 
 
-    def connect_handle(self, line, handle, item, port):
-        super(ConnectHandleTool, self).connect_handle(line, handle, item, port)
-        # Set new disconnect handler:
-        handle.disconnect = DisconnectHandle(line, handle)
+    def connect_handle(self, line, handle, item, port, callback=None):
+        callback = DisconnectHandle(line, handle)
+        super(ConnectHandleTool, self).connect_handle(line, handle,
+                item, port,
+                callback)
 
 
-class DisconnectHandle(_DisconnectHandle):
+class DisconnectHandle(object):
     """
-    extend the default disconnect handle method with the means to disconnect
-    on model level, using the adapter.  
+    Callback for items disconnection using the adapters.
+
+    :Variables:
+     item
+        Connecting item.
+     handle
+        Handle of connecting item.
     """
-    def handle_disconnect(self):
+    def __init__(self, item, handle):
+        self.item = item
+        self.handle = handle
+
+
+    def __call__(self):
         handle = self.handle
         item = self.item
         if handle.connected_to:
             adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
             adapter.disconnect(handle)
-        super(DisconnectHandle, self).handle_disconnect()
 
 
 class TextEditTool(Tool):
