@@ -242,7 +242,7 @@ class RelationshipConnect(AbstractConnect):
             opposite = self.line.opposite(handle)
             line = self.line
             element = self.element
-            connected_to = opposite.connected_to
+            connected_to = self.get_connected_to_item(opposite)
 
             # Element can not be a parent for itself.
             if connected_to is element:
@@ -270,8 +270,8 @@ class RelationshipConnect(AbstractConnect):
         line = self.line
         element = self.element
 
-        head_subject = line.head.connected_to.subject
-        tail_subject = line.tail.connected_to.subject
+        head_subject = self.get_connected_to_item(line.head).subject
+        tail_subject = self.get_connected_to_item(line.tail).subject
 
         edge_head_name = head[0]
         node_head_name = head[1]
@@ -319,8 +319,8 @@ class RelationshipConnect(AbstractConnect):
         if not relation:
             line = self.line
             relation = self.element_factory.create(type)
-            setattr(relation, head[0], line.head.connected_to.subject)
-            setattr(relation, tail[0], line.tail.connected_to.subject)
+            setattr(relation, head[0], self.get_connected_to_item(line.head).subject)
+            setattr(relation, tail[0], self.get_connected_to_item(line.tail).subject)
         return relation
 
     def connect_connected_items(self, connected_items=None):
@@ -389,7 +389,8 @@ class RelationshipConnect(AbstractConnect):
         """
         if super(RelationshipConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
-            if opposite.connected_to:
+            oct = self.get_connected_to_item(opposite)
+            if oct:
                 self.connect_subject(handle)
                 line = self.line
                 if line.subject:
@@ -403,7 +404,9 @@ class RelationshipConnect(AbstractConnect):
         """
         line = self.line
         opposite = line.opposite(handle)
-        if handle.connected_to and opposite.connected_to:
+        oct = self.get_connected_to_item(opposite)
+        hct = self.get_connected_to_item(handle)
+        if hct and oct:
             old = line.subject
              
             connected_items = self.disconnect_connected_items()
