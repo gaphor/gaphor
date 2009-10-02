@@ -88,8 +88,10 @@ class DisconnectHandle(object):
     def __call__(self):
         handle = self.handle
         item = self.item
-        if handle.connected_to:
-            adapter = component.queryMultiAdapter((handle.connected_to, item), IConnect)
+        canvas = self.item.canvas
+        data = canvas.get_connected_to(item, handle)
+        if data:
+            adapter = component.queryMultiAdapter((data[0], item), IConnect)
             adapter.disconnect(handle)
 
 

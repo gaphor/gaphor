@@ -47,6 +47,24 @@ class AbstractConnect(object):
         self.line = line
 
 
+    def get_connected_to(self, handle):
+        """
+        Get connection information (connected item and port) for connection
+        realized with specified handle.
+        """
+        canvas = self.element.canvas
+        return canvas.get_connected_to(self.line, handle)
+
+
+    def get_connected_to_item(self, handle):
+        """
+        Get item connected to connecting item via specified handle.
+        """
+        data = self.get_connected_to(handle)
+        if data is not None:
+            return data[0]
+
+
     def glue(self, handle, port):
         """
         Determine if items can be connected.
@@ -98,8 +116,9 @@ class CommentLineElementConnect(AbstractConnect):
         One of the ends should be connected to a UML.Comment element.
         """
         opposite = self.line.opposite(handle)
+        connected_to = self.get_connected_to_item(opposite)
         element = self.element
-        connected_to = opposite.connected_to
+
         if connected_to is element:
             return None
 
@@ -121,21 +140,23 @@ class CommentLineElementConnect(AbstractConnect):
     def connect(self, handle, port):
         if super(CommentLineElementConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
-            if opposite.connected_to:
-                if isinstance(opposite.connected_to.subject, UML.Comment):
-                    opposite.connected_to.subject.annotatedElement = self.element.subject
+            connected_to = self.get_connected_to_item(opposite)
+            if connected_to:
+                if isinstance(connected_to.subject, UML.Comment):
+                    connected_to.subject.annotatedElement = self.element.subject
                 else:
-                    self.element.subject.annotatedElement = opposite.connected_to.subject
+                    self.element.subject.annotatedElement = connected_to.subject
 
     def disconnect(self, handle):
         opposite = self.line.opposite(handle)
-        print handle.connected_to , opposite.connected_to
+        oct = self.get_connected_to_item(opposite)
+        hct = self.get_connected_to_item(handle)
 
-        if handle.connected_to and opposite.connected_to:
-            if isinstance(opposite.connected_to.subject, UML.Comment):
-                del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
-            elif opposite.connected_to.subject:
-                del handle.connected_to.subject.annotatedElement[opposite.connected_to.subject]
+        if hct and oct:
+            if isinstance(oct.subject, UML.Comment):
+                del oct.subject.annotatedElement[hct.subject]
+            elif oct.subject:
+                del hct.subject.annotatedElement[oct.subject]
         super(CommentLineElementConnect, self).disconnect(handle)
 
 component.provideAdapter(CommentLineElementConnect)

@@ -43,8 +43,8 @@ class CommentItem(ElementItem):
         if not self.subject: return
         c = context.cairo
         # Width and height, adjusted for line width...
-        ox = float(self._handles[NW].x)
-        oy = float(self._handles[NW].y)
+        ox = float(self._handles[NW].pos.x)
+        oy = float(self._handles[NW].pos.y)
         w = self.width + ox
         h = self.height + oy
         ear = CommentItem.EAR
