@@ -59,24 +59,26 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        assert a.head.connected_to
+        c = self.get_connected_to_item(a, a.head)
+        self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        assert a.tail.connected_to
+        c = self.get_connected_to_item(a, a.tail)
+        self.assertTrue(c is c2)
 
         head = a._head_end
 
         head.navigability = True
-        assert head.subject.class_ == c2.subject
-        assert head.subject.owningAssociation is None
+        self.assertTrue(head.subject.class_ == c2.subject)
+        self.assertTrue(head.subject.owningAssociation is None)
 
         head.navigability = False
-        assert head.subject.class_ is None
-        assert head.subject.owningAssociation == a.subject
+        self.assertTrue(head.subject.class_ is None)
+        self.assertTrue(head.subject.owningAssociation == a.subject)
 
         head.navigability = None
-        assert head.subject.class_ is None
-        assert head.subject.owningAssociation is None
+        self.assertTrue(head.subject.class_ is None)
+        self.assertTrue(head.subject.owningAssociation is None)
 
 
     def test_navigability_at_interface(self):
@@ -87,10 +89,12 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        assert a.head.connected_to
+        c = self.get_connected_to_item(a, a.head)
+        self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        assert a.tail.connected_to
+        c = self.get_connected_to_item(a, a.tail)
+        self.assertTrue(c is c2)
 
         head = a._head_end
 
@@ -115,10 +119,12 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        assert a.head.connected_to
+        c = self.get_connected_to_item(a, a.head)
+        self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        assert a.tail.connected_to
+        c = self.get_connected_to_item(a, a.tail)
+        self.assertTrue(c is c2)
 
         head = a._head_end
 
@@ -143,10 +149,12 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        assert a.head.connected_to
+        c = self.get_connected_to_item(a, a.head)
+        self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        assert a.tail.connected_to
+        c = self.get_connected_to_item(a, a.tail)
+        self.assertTrue(c is c2)
 
         head = a._head_end
 
@@ -172,10 +180,12 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        assert a.head.connected_to
+        c = self.get_connected_to_item(a, a.head)
+        self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        assert a.tail.connected_to
+        c = self.get_connected_to_item(a, a.tail)
+        self.assertTrue(c is c2)
 
         assert a.subject.memberEnd, a.subject.memberEnd
 

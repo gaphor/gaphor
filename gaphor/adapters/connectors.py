@@ -78,8 +78,8 @@ class AbstractConnect(object):
         iface = self.element
         if isinstance(iface, items.InterfaceItem) and iface.folded:
             canvas = iface.canvas
-            count = len(canvas.get_connected_items(iface))
-            return count == 0 and isinstance(self.line, (items.DependencyItem, items.ImplementationItem))
+            count = any(canvas.get_connected_items(iface))
+            return not count and isinstance(self.line, (items.DependencyItem, items.ImplementationItem))
         return True
 
 

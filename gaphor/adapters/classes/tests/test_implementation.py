@@ -50,7 +50,8 @@ class ImplementationTestCase(TestCase):
 
         # check the datamodel
         self.assertTrue(isinstance(impl.subject, UML.Implementation))
-        self.assertTrue(impl.head.connected_to is iface)
+        ct = self.get_connected_to_item(impl, impl.head)
+        self.assertTrue(ct is iface)
         self.assertTrue(impl.subject is not None)
         self.assertTrue(impl.subject.contract[0] is iface.subject)
         self.assertTrue(impl.subject.implementatingClassifier[0] is clazz.subject)

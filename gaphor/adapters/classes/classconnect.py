@@ -82,8 +82,8 @@ class AssociationConnect(RelationshipConnect):
         element = self.element
         line = self.line
 
-        c1 = line.head.connected_to
-        c2 = line.tail.connected_to
+        c1 = self.get_connected_to_item(line.head)
+        c2 = self.get_connected_to_item(line.tail)
         if c1 and c2:
             head_type = c1.subject
             tail_type = c2.subject
@@ -145,7 +145,9 @@ class AssociationConnect(RelationshipConnect):
         Extension
         """
         opposite = self.line.opposite(handle)
-        if handle.connected_to and opposite.connected_to:
+        c1 = self.get_connected_to_item(handle)
+        c2 = self.get_connected_to_item(opposite)
+        if c1 and c2:
             old = self.line.subject
             del self.line.subject
             del self.line.head_end.subject

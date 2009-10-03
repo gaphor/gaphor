@@ -95,10 +95,10 @@ class DependencyItem(DiagramLine):
 
     def set_dependency_type(self, dependency_type=None):
         if not dependency_type and self.auto_dependency:
-            i1 = self.tail.connected_to
-            i2 = self.head.connected_to
+            i1 = self.canvas.get_connected_to(self, self.tail)
+            i2 = self.canvas.get_connected_to(self, self.head)
             if i1 and i2:
-                dependency_type = self.determine_dependency_type(i1.subject, i2.subject)
+                dependency_type = self.determine_dependency_type(i1[0].subject, i2[0].subject)
         self._dependency_type = dependency_type
         self.request_update()
 

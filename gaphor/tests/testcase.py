@@ -100,6 +100,20 @@ class TestCase(unittest.TestCase):
         assert not canvas.get_connected_to(line, handle)
 
 
+    def get_connected_to_item(self, line, handle):
+        """
+        Get item connected to line via handle.
+        """
+        return self.diagram.canvas.get_connected_to(line, handle)[0]
+
+
+    def get_connected_to(self, line, handle):
+        """
+        Get connection information.
+        """
+        return self.diagram.canvas.get_connected_to(line, handle)
+
+
     def kindof(self, cls):
         """
         Find UML metaclass instances using element factory.
