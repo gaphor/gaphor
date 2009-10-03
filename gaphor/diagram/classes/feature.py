@@ -171,29 +171,5 @@ class SlotItem(FeatureItem):
         text_align(cr, 0, 0, self._render_slot(), align_x=1, align_y=1)
 
 
-class StereotypeNameItem(FeatureItem):
-    def __init__(self, id=None):
-        FeatureItem.__init__(self, id)
-
-#    def on_feature_value(self, event):
-#        element = event.element
-#        subject = self.subject
-#        if subject and element in (subject.lowerValue, subject.upperValue, subject.defaultValue, subject.typeValue, subject.taggedValue):
-#            self.request_update()
-
-
-    def _render_name(self):
-        return UML.model.STEREOTYPE_FMT % self.subject.name
-
-
-    def pre_update(self, context):
-        self.update_size(self._render_name(), context)
-        #super(AttributeItem, self).pre_update(context)
-
-    def draw(self, context):
-        cr = context.cairo
-        text_set_font(cr, font.FONT)
-        text_align(cr, 0, 0, self._render_name(), align_x=0.5, align_y=0.5)
-
 
 # vim:sw=4:et:ai
