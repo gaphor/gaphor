@@ -140,7 +140,7 @@ class ConnectorConnectBase(AbstractConnect):
         super(ConnectorConnectBase, self).connect(handle, port)
 
         line = self.line
-        canvas = self.line.canvas
+        canvas = line.canvas
 
         c1 = self.get_connected_to_item(line.head)
         c2 = self.get_connected_to_item(line.tail)
@@ -153,7 +153,7 @@ class ConnectorConnectBase(AbstractConnect):
                 component, iface = iface, component
 
             connected = self.get_connecting(iface, both=True)
-            ports = set(self.get_connected_to(h) for _, h in connected)
+            ports = set(canvas.get_connected_to(l, h)[1] for l, h in connected)
 
             # to make an assembly at least two connector ends need to exist
             # also, two different ports of interface need to be connected
