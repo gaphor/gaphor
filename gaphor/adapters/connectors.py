@@ -65,6 +65,15 @@ class AbstractConnect(object):
             return data[0]
 
 
+    def get_connected_to_port(self, handle):
+        """
+        Get port of item connected to connecting item via specified handle.
+        """
+        data = self.get_connected_to(handle)
+        if data is not None:
+            return data[1]
+
+
     def glue(self, handle, port):
         """
         Determine if items can be connected.
