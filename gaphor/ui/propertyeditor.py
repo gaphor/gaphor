@@ -89,8 +89,9 @@ class PropertyEditor(object):
         self.clear_pages()
 
         if item is None:
-            label = gtk.Label('no item selected')
-            self.vbox.pack_start(label, expand=False)
+            label = gtk.Label()
+            label.set_markup('<b>No item selected</b>')
+            self.vbox.pack_start(label, expand=False, padding=10)
             label.show()
             return
         self.create_pages(item)

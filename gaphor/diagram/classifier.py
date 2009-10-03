@@ -6,7 +6,8 @@ from gaphas.state import observed, reversible_property
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.classes.feature import SlotItem, StereotypeNameItem
+from gaphor.diagram.classes.feature import SlotItem
+from gaphas.util import text_extents, text_align
 
 import font
 
@@ -23,6 +24,8 @@ class Compartment(list):
         self.visible = True
         self.width = 0
         self.height = 0
+        self.title = None
+        self.title_height = 0
 
     def save(self, save_func):
         #log.debug('Compartment.save: %s' % self)
@@ -61,6 +64,10 @@ class Compartment(list):
         if self:
             # self (=list) contains items
             sizes = [ (0, 0) ] # to not throw exceptions by max and sum
+            if self.title:
+                w, h = text_extents(cr, self.title)
+                self.title_height = h
+                sizes.append((w, h))
             sizes.extend(f.get_size(True) for f in self)
             self.width = max(size[0] for size in sizes)
             self.height = sum(size[1] for size in sizes)
@@ -81,6 +88,8 @@ class Compartment(list):
         vspacing = self.owner.style.compartment_vspacing
         cr.translate(padding[1], padding[0])
         offset = 0
+        if self.title:
+            offset += self.title_height + vspacing
         for item in self:
             cr.save()
             try:
@@ -194,9 +203,7 @@ class ClassifierItem(NamedItem):
 
     def _create_stereotype_compartment(self, obj):
         c = Compartment(obj.classifier[0].name, self, obj)
-        item = StereotypeNameItem()
-        item.subject = obj.classifier[0]
-        c.append(item)
+        c.title = UML.model.STEREOTYPE_FMT % obj.classifier[0].name
         self._update_stereotype_compartment(c, obj)
         self._compartments.append(c)
         self.request_update()
@@ -210,7 +217,7 @@ class ClassifierItem(NamedItem):
 
 
     def _update_stereotype_compartment(self, comp, obj):
-        del comp[1:]
+        del comp[:]
         for slot in obj.slot:
             item = SlotItem()
             item.subject = slot
@@ -232,9 +239,9 @@ class ClassifierItem(NamedItem):
         if self._show_stereotypes_attrs:
             for obj in self.subject.appliedStereotype:
                 self._create_stereotype_compartment(obj)
-        #    log.debug('Showing stereotypes attributes enabled')
-        #else:
-        #    log.debug('Showing stereotypes attributes disabled')
+            log.debug('Showing stereotypes attributes enabled')
+        else:
+            log.debug('Showing stereotypes attributes disabled')
 
 
     def save(self, save_func):
@@ -419,6 +426,10 @@ class ClassifierItem(NamedItem):
             cr.move_to(0, 0)
             cr.line_to(self.width, 0)
             cr.stroke()
+
+            if comp.title:
+                padding = self.style.compartment_padding
+                text_align(cr, self.width / 2.0, padding[0], comp.title, align_y=1)
             try:
                 comp.draw(context)
             finally:

@@ -83,10 +83,12 @@ class DiagramLine(LineItem):
         for h in self.handles():
             points.append(tuple(map(float, h.pos)))
         save_func('points', points)
-        c = self.head.connected_to
+
+        canvas = self.canvas
+        c = canvas.get_connected_to(self, self.head)[0]
         if c:
             save_func('head-connection', c, reference=True)
-        c = self.tail.connected_to
+        c = canvas.get_connected_to(self, self.tail)[0]
         if c:
             save_func('tail-connection', c, reference=True)
 

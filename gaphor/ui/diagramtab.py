@@ -228,8 +228,7 @@ class DiagramTab(object):
                     (event.state == 0 or event.state & gtk.gdk.MOD2_MASK): # Backspace
                 self.delete_selected_items()
             else:
-                print '%x' %event.keyval, event.state
-                #self.action_manager.execute('diagram-delete')
+                log.debug('keyval=%x, state=%x' % (event.keyval, event.state))
 
 
     def _on_view_selection_changed(self, view, selection_or_focus):
