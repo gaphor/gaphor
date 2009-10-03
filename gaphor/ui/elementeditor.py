@@ -34,6 +34,8 @@ class ElementEditor(UtilityWindow):
     def __init__(self):
         self.action_group = build_action_group(self)
         self.window = None
+        self.property_editor = PropertyEditor()
+        self.widget = self.property_editor.construct()
 
     @toggle_action(name='ElementEditor:open', stock_id='gtk-edit')
     def elementeditor(self, active):
@@ -49,11 +51,8 @@ class ElementEditor(UtilityWindow):
 
 
     def ui_component(self):
-       self.property_editor = PropertyEditor()
-       pe = self.property_editor.construct()
-
-       pe.show()
-       return pe
+        self.widget.show()
+        return self.widget
 
 
     def close(self, widget=None, event=None):
