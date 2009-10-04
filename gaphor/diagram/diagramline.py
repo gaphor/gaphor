@@ -85,12 +85,12 @@ class DiagramLine(LineItem):
         save_func('points', points)
 
         canvas = self.canvas
-        c = canvas.get_connected_to(self, self.head)[0]
+        c = canvas.get_connected_to(self, self.head)
         if c:
-            save_func('head-connection', c, reference=True)
-        c = canvas.get_connected_to(self, self.tail)[0]
+            save_func('head-connection', c[0], reference=True)
+        c = canvas.get_connected_to(self, self.tail)
         if c:
-            save_func('tail-connection', c, reference=True)
+            save_func('tail-connection', c[0], reference=True)
 
     def load (self, name, value):
         if name == 'matrix':
