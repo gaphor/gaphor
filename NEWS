@@ -1,5 +1,7 @@
 ------
-- node can group other nodes
+- node can group
+  - other nodes
+  - components
 
 0.14.0
 ------
