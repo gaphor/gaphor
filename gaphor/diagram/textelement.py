@@ -296,8 +296,9 @@ class EditableTextSupport(object):
 
                 width = max(15, width)
                 height = max(10, height)
+                cr.set_source_rgb(0.6, 0.6, 0.6)
                 cr.set_line_width(0.5)
-                cr.rectangle(x, y, width, height)
+                cr.rectangle(x - 5, y - 1, width + 10, height + 2)
                 cr.stroke()
 
         cr.restore()
