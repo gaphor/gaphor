@@ -209,19 +209,22 @@ class CommentLineLineConnect(AbstractConnect):
     def connect(self, handle, port):
         if super(CommentLineLineConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
-            if opposite.connected_to and self.element.subject:
-                if isinstance(opposite.connected_to.subject, UML.Comment):
-                    opposite.connected_to.subject.annotatedElement = self.element.subject
+            c = self.get_connected_to_item(opposite)
+            if c and self.element.subject:
+                if isinstance(c.subject, UML.Comment):
+                    c.subject.annotatedElement = self.element.subject
                 else:
-                    self.element.subject.annotatedElement = opposite.connected_to.subject
+                    self.element.subject.annotatedElement = c.subject
 
     def disconnect(self, handle):
+        c1 = self.get_connected_to_item(handle)
         opposite = self.line.opposite(handle)
-        if handle.connected_to and opposite.connected_to:
-            if isinstance(handle.connected_to.subject, UML.Comment):
-                del handle.connected_to.subject.annotatedElement[opposite.connected_to.subject]
-            elif opposite.connected_to.subject:
-                del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
+        c2 = self.get_connected_to_item(opposite)
+        if c1 and c2:
+            if isinstance(c1.subject, UML.Comment):
+                del c1.subject.annotatedElement[c2.subject]
+            elif c2.subject:
+                del c2.subject.annotatedElement[c1.subject]
         super(CommentLineLineConnect, self).disconnect(handle)
 
 component.provideAdapter(CommentLineLineConnect)

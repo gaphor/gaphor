@@ -104,7 +104,10 @@ class TestCase(unittest.TestCase):
         """
         Get item connected to line via handle.
         """
-        return self.diagram.canvas.get_connected_to(line, handle)[0]
+        data = self.diagram.canvas.get_connected_to(line, handle)
+        if data:
+            return data[0]
+        return None
 
 
     def get_connected_to(self, line, handle):
