@@ -1,6 +1,7 @@
 from zope import interface, component
 
 from gaphor.diagram import items
+from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.interfaces import IGroup
 
 class AbstractGroup(object):
@@ -37,7 +38,6 @@ class AbstractGroup(object):
 
 
 
-from gaphor.diagram import DiagramItemMeta
 class InteractionLifelineGroup(AbstractGroup):
     """
     Add lifeline to interaction.
