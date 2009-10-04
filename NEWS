@@ -1,3 +1,10 @@
+------
+- node can group other nodes
+
+0.14.0
+------
+- stereotypes can have attributes
+
 0.13.1
 ------
 - added desktop file and gaphor icons

@@ -94,6 +94,32 @@ component.provideAdapter(factory=InteractionLifelineGroup,
         adapts=(items.InteractionItem, items.LifelineItem))
 
 
+class NodeGroup(AbstractGroup):
+    """
+    Add node to another node.
+    """
+    def pre_can_contain(self):
+        return isinstance(self.parent, items.NodeItem) \
+                and issubclass(self.item, items.NodeItem)
+
+    def can_contain(self):
+        return isinstance(self.parent, items.NodeItem) \
+                and isinstance(self.item, items.NodeItem)
+
+    def group(self):
+        self.parent.subject.nestedNode = self.item.subject
+        self.parent.canvas.reparent(self.item, self.parent)
+
+
+    def ungroup(self):
+        del self.parent.subject.nestedNode[self.item.subject]
+
+component.provideAdapter(factory=NodeGroup,
+        adapts=(items.NodeItem, DiagramItemMeta))
+component.provideAdapter(factory=NodeGroup,
+        adapts=(items.NodeItem, items.NodeItem))
+
+
 class ComponentClassGroup(AbstractGroup):
     """
     Add class to component.
