@@ -22382,6 +22382,7 @@ ownedMember]]></val>
 <generalization>
 <reflist>
 <ref refid="DCE:8ACBB2E8-AE12-11D8-9F3C-00C00C03A405"/>
+<ref refid="058d0170-b124-11de-abbf-000d93868322"/>
 </reflist>
 </generalization>
 <name>
@@ -22407,6 +22408,7 @@ ownedMember]]></val>
 <ref refid="DCE:3D64F61C-8320-11D8-BEC8-00C00C03A405"/>
 <ref refid="DCE:33965FE4-97BA-11D8-9E36-00C00C03A405"/>
 <ref refid="DCE:CA53F57E-A41C-11D8-B0B1-00061BC22919"/>
+<ref refid="fa46d930-b123-11de-abbf-000d93868322"/>
 </reflist>
 </presentation>
 </Class>
@@ -35310,6 +35312,7 @@ some elements to have a stereotype]]></val>
 <reflist>
 <ref refid="DCE:D3A5143A-3B89-11D9-96AF-B1C16A765BD4"/>
 <ref refid="DCE:A072E440-8351-11DD-8EDA-000D936B094A"/>
+<ref refid="93634e88-b123-11de-abbf-000d93868322"/>
 </reflist>
 </nestedPackage>
 <ownedDiagram>
@@ -35363,6 +35366,23 @@ some elements to have a stereotype]]></val>
 </height>
 <subject>
 <ref refid="DCE:A072E440-8351-11DD-8EDA-000D936B094A"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
+<item type="PackageItem" id="9364cc2c-b123-11de-abbf-000d93868322">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 125.0, 253.0)</val>
+</matrix>
+<width>
+<val>122.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="93634e88-b123-11de-abbf-000d93868322"/>
 </subject>
 <show_stereotypes_attrs>
 <val>0</val>
@@ -46227,6 +46247,7 @@ subsets ownedMember]]></val>
 <presentation>
 <reflist>
 <ref refid="DCE:8BD522E0-8352-11DD-8EDA-000D936B094A"/>
+<ref refid="e7cee324-b123-11de-abbf-000d93868322"/>
 </reflist>
 </presentation>
 </Class>
@@ -46903,4 +46924,123 @@ subsets ownedMember]]></val>
 <val><![CDATA[subsets redefinitionContext]]></val>
 </value>
 </LiteralSpecification>
+<Package id="93634e88-b123-11de-abbf-000d93868322">
+<name>
+<val><![CDATA[StructuredClasses]]></val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="b136e974-b123-11de-abbf-000d93868322"/>
+</reflist>
+</ownedDiagram>
+<package>
+<ref refid="DCE:C08EFEC6-3B89-11D9-96AF-B1C16A765BD4"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="9364cc2c-b123-11de-abbf-000d93868322"/>
+</reflist>
+</presentation>
+</Package>
+<Diagram id="b136e974-b123-11de-abbf-000d93868322">
+<name>
+<val><![CDATA[StructuredClasses]]></val>
+</name>
+<package>
+<ref refid="93634e88-b123-11de-abbf-000d93868322"/>
+</package>
+<canvas>
+<item type="ClassItem" id="e7cee324-b123-11de-abbf-000d93868322">
+<show-attributes>
+<val>0</val>
+</show-attributes>
+<show-operations>
+<val>0</val>
+</show-operations>
+<drawing-style>
+<val>1</val>
+</drawing-style>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 232.0, 171.0)</val>
+</matrix>
+<width>
+<val>142.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<subject>
+<ref refid="DCE:8BD30E4E-8352-11DD-8EDA-000D936B094A"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
+<item type="ClassItem" id="fa46d930-b123-11de-abbf-000d93868322">
+<show-attributes>
+<val>0</val>
+</show-attributes>
+<show-operations>
+<val>0</val>
+</show-operations>
+<drawing-style>
+<val>1</val>
+</drawing-style>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 249.0, 279.0)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<subject>
+<ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
+<item type="GeneralizationItem" id="046d4eb2-b124-11de-abbf-000d93868322">
+<subject>
+<ref refid="058d0170-b124-11de-abbf-000d93868322"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 301.0, 221.0)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (0.0, 58.0)]</val>
+</points>
+<head-connection>
+<ref refid="e7cee324-b123-11de-abbf-000d93868322"/>
+</head-connection>
+<tail-connection>
+<ref refid="fa46d930-b123-11de-abbf-000d93868322"/>
+</tail-connection>
+</item>
+</canvas>
+</Diagram>
+<Generalization id="058d0170-b124-11de-abbf-000d93868322">
+<general>
+<ref refid="DCE:8BD30E4E-8352-11DD-8EDA-000D936B094A"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="046d4eb2-b124-11de-abbf-000d93868322"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
+</specific>
+</Generalization>
 </gaphor>
