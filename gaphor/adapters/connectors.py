@@ -45,6 +45,8 @@ class AbstractConnect(object):
     def __init__(self, element, line):
         self.element = element
         self.line = line
+        self.canvas = self.element.canvas
+        assert self.canvas == self.element.canvas == self.line.canvas
 
 
     def get_connected_to(self, handle):
@@ -52,8 +54,7 @@ class AbstractConnect(object):
         Get connection information (connected item and port) for connection
         realized with specified handle.
         """
-        canvas = self.element.canvas
-        return canvas.get_connected_to(self.line, handle)
+        return self.canvas.get_connected_to(self.line, handle)
 
 
     def get_connected_to_item(self, handle):
@@ -86,7 +87,7 @@ class AbstractConnect(object):
         """
         iface = self.element
         if isinstance(iface, items.InterfaceItem) and iface.folded:
-            canvas = iface.canvas
+            canvas = self.canvas
             count = any(canvas.get_connected_items(iface))
             return not count and isinstance(self.line, (items.DependencyItem, items.ImplementationItem))
         return True
@@ -338,7 +339,7 @@ class RelationshipConnect(AbstractConnect):
         establish or destroy relationships at model level.
         """
         line = self.line
-        canvas = line.canvas
+        canvas = self.canvas
         solver = canvas.solver
 
         # First make sure coordinates match
@@ -361,12 +362,12 @@ class RelationshipConnect(AbstractConnect):
         list can be used to connect items again with connect_connected_items()).
         """
         line = self.line
-        canvas = line.canvas
+        canvas = self.canvas
         solver = canvas.solver
 
         # First make sure coordinates match
         solver.solve()
-        connected_items = list(line.canvas.get_connected_items(line))
+        connected_items = list(canvas.get_connected_items(line))
         for item, handle in connected_items:
             adapter = component.queryMultiAdapter((line, item), IConnect)
             assert adapter
