@@ -3,6 +3,7 @@
 
 0.14.0
 ------
+- reintroduced assembly connections
 - stereotypes can have attributes
 
 0.13.1
