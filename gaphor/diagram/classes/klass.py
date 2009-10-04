@@ -28,11 +28,16 @@ class ClassItem(ClassifierItem):
         'metaclass': lambda self: (not isinstance(self.subject, UML.Stereotype)) and hasattr(self.subject, 'extension') and self.subject.extension,
     }
     
+    __style__ = {
+        'extra-space': 'compartment',
+    }
+
     def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
         self.drawing_style = self.DRAW_COMPARTMENT
         self._attributes = self.create_compartment('attributes')
         self._operations = self.create_compartment('operations')
+        self._operations.use_extra_space = True
 
         self.watch('subject<Class>.ownedOperation', self.on_class_owned_operation)\
             .watch('subject<Class>.ownedAttribute.association', self.on_class_owned_attribute)
@@ -56,6 +61,8 @@ class ClassItem(ClassifierItem):
     @observed
     def _set_show_operations(self, value):
         self._operations.visible = value
+        self._operations.use_extra_space = value
+        self._attributes.use_extra_space = not self._operations.visible
 
     show_operations = reversible_property(fget=lambda s: s._operations.visible,
             fset=_set_show_operations)

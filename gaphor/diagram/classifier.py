@@ -26,6 +26,7 @@ class Compartment(list):
         self.height = 0
         self.title = None
         self.title_height = 0
+        self.use_extra_space = False
 
     def save(self, save_func):
         #log.debug('Compartment.save: %s' % self)
@@ -154,6 +155,10 @@ class ClassifierItem(NamedItem):
         'compartment-vspacing': 3,
         'name-padding': (10, 10, 10, 10),
         'stereotype-padding': (10, 10, 2, 10),
+        # extra space can be used by header or a compartment;
+        # we don't want to consume the extra space by compartments, which
+        # contain stereotype information
+        'extra-space': 'header',  # 'header' or 'compartment'
     }
     # Default size for small icons
     ICON_WIDTH    = 15
@@ -170,6 +175,7 @@ class ClassifierItem(NamedItem):
             .watch('subject.appliedStereotype', self.on_stereotype_change)\
             .watch('subject.appliedStereotype.slot', self.on_stereotype_attr_change)
         self._name.font = font.FONT_NAME
+        self._extra_space = 0
 
 
     def on_stereotype_change(self, event):
@@ -367,7 +373,7 @@ class ClassifierItem(NamedItem):
         for comp in self._compartments:
             comp.pre_update(context)
 
-        sizes = [comp.get_size() for comp in self._compartments]
+        sizes = [comp.get_size() for comp in self._compartments if comp.visible]
         sizes.append((self.min_width, self._header_size[1]))
 
         self.min_width = max(size[0] for size in sizes)
@@ -419,10 +425,18 @@ class ClassifierItem(NamedItem):
         else:
             width = self.width
 
+        extra_space = self.height - self.min_height
+
+        # extra space is used by header
+        if self.style.extra_space == 'header':
+            cr.translate(0, extra_space)
+
         # draw compartments and stereotype compartments
+        extra_used = False
         for comp in self._compartments:
             if not comp.visible:
                 continue
+
             cr.save()
             cr.move_to(0, 0)
             cr.line_to(self.width, 0)
@@ -435,7 +449,15 @@ class ClassifierItem(NamedItem):
                 comp.draw(context)
             finally:
                 cr.restore()
-            cr.translate(0, comp.height)
+
+            d = comp.height
+            if not extra_used and comp.use_extra_space \
+                    and self.style.extra_space == 'compartment':
+                d += extra_space
+                extra_used = True
+            cr.translate(0, d)
+
+        # if extra space is used by last compartment, then do nothing
 
 
     def item_at(self, x, y):
