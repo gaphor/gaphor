@@ -232,9 +232,9 @@ class DiagramToolbox(object):
     # Components:
 
     def toolbox_component(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.ComponentItem,
-                                                          UML.Component),
+                    UML.Component),
                 handle_index=SE,
                 after_handler=self._after_handler)
 
