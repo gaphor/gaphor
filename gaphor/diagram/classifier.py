@@ -274,7 +274,7 @@ class ClassifierItem(NamedItem):
 #                    request_resolve(h.y)
 
         if self._drawing_style == self.DRAW_COMPARTMENT:
-            self.draw       = self.draw_compartment
+            self.draw = self.draw_compartment
             self.pre_update = self.pre_update_compartment
             self.post_update = self.post_update_compartment
 
@@ -284,9 +284,9 @@ class ClassifierItem(NamedItem):
             self.post_update     = self.post_update_compartment_icon
 
         elif self._drawing_style == self.DRAW_ICON:
-            self.draw       = self.draw_icon
+            self.draw = self.draw_icon
             self.pre_update = self.pre_update_icon
-            self.post_update     = self.post_update_icon
+            self.post_update = self.post_update_icon
 
 
     drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
