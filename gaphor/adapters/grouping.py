@@ -1,3 +1,20 @@
+"""
+Grouping functionality allows to nest one item within another item (parent
+item). This is useful in several use cases
+
+- artifact deployed within a node
+- a class within a package or a component
+- composite structures (i.e. component within a node)
+
+The grouping adapters has to implement three methods, see `AbstractGroup`
+class.
+
+It is important to note, that grouping adapters can be queried before
+instance of an item to be grouped is created. This happens when item
+is about to be created. Therefore `AbstractGroup.can_contain` has
+to be aware that `AbstractGroup.item` can be null.
+"""
+
 from zope import interface, component
 
 from gaphor import UML
@@ -14,7 +31,9 @@ class AbstractGroup(object):
      parent
         Parent item, which groups other items.
      item
-        Item to be groupped.
+        Item to be grouped.
+     item_class
+        Class of item to be grouped.
     """
     interface.implements(IGroup)
 
@@ -23,21 +42,31 @@ class AbstractGroup(object):
     def __init__(self, parent, item):
         self.parent = parent
         self.item = item
+        self.item_class = type(self.item)
 
-
-    def pre_can_contain(self):
-        raise NotImplemented, 'This is abstract method'
+        if isinstance(item, DiagramItemMeta):
+            self.item_class = item
+            self.item = None
 
 
     def can_contain(self):
+        """
+        Check if parent can contain an item.
+        """
         raise NotImplemented, 'This is abstract method'
 
 
     def group(self):
+        """
+        Group an item within parent.
+        """
         raise NotImplemented, 'This is abstract method'
 
 
     def ungroup(self):
+        """
+        Remove item from parent.
+        """
         raise NotImplemented, 'This is abstract method'
 
 
@@ -46,15 +75,9 @@ class InteractionLifelineGroup(AbstractGroup):
     """
     Add lifeline to interaction.
     """
-
-    def pre_can_contain(self):
-        return isinstance(self.parent, items.InteractionItem) \
-                and issubclass(self.item, items.LifelineItem)
-
-
     def can_contain(self):
         return isinstance(self.parent, items.InteractionItem) \
-                and isinstance(self.item, items.LifelineItem)
+            and issubclass(self.item_class, items.LifelineItem)
 
 
     def group(self):
@@ -77,14 +100,9 @@ class NodeGroup(AbstractGroup):
     """
     Add node to another node.
     """
-    def pre_can_contain(self):
-        return isinstance(self.parent, items.NodeItem) \
-                and issubclass(self.item, items.NodeItem)
-
-
     def can_contain(self):
         return isinstance(self.parent, items.NodeItem) \
-                and isinstance(self.item, items.NodeItem)
+                and issubclass(self.item_class, items.NodeItem)
 
 
     def group(self):
@@ -107,13 +125,10 @@ class NodeComponentGroup(AbstractGroup):
     """
     Add components to another node using internal structures.
     """
-    def pre_can_contain(self):
-        return isinstance(self.parent, items.NodeItem) \
-                and issubclass(self.item, items.ComponentItem)
-
     def can_contain(self):
         return isinstance(self.parent, items.NodeItem) \
-                and isinstance(self.item, items.ComponentItem)
+                and issubclass(self.item_class, items.ComponentItem)
+
 
     def group(self):
         node = self.parent.subject
