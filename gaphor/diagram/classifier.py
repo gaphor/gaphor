@@ -191,7 +191,7 @@ class ClassifierItem(NamedItem):
                 and self._show_stereotypes_attrs:
 
             comp = self._find_stereotype_compartment(event.element)
-            if not comp:
+            if comp is None:
                 log.debug('No compartment found for %s' % event.element)
                 return
 
@@ -202,8 +202,9 @@ class ClassifierItem(NamedItem):
 
 
     def _create_stereotype_compartment(self, obj):
-        c = Compartment(obj.classifier[0].name, self, obj)
-        c.title = UML.model.STEREOTYPE_FMT % obj.classifier[0].name
+        st = obj.classifier[0].name
+        c = Compartment(st, self, obj)
+        c.title = UML.model.STEREOTYPE_FMT % st
         self._update_stereotype_compartment(c, obj)
         self._compartments.append(c)
         self.request_update()
