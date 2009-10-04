@@ -15351,9 +15351,6 @@ namespace]]></val>
 <class_>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </class_>
-<isDerived>
-<val>1</val>
-</isDerived>
 <lowerValue>
 <ref refid="DCE:2399A2F4-DB15-11D7-8BD0-27F1E06F5E9F"/>
 </lowerValue>
@@ -15365,7 +15362,7 @@ namespace]]></val>
 </presentation>
 <taggedValue>
 <reflist>
-<ref refid="DCE:A9F54842-44B0-11DA-9223-000D936B094A"/>
+<ref refid="e2ab4372-b11b-11de-9312-000d93868322"/>
 </reflist>
 </taggedValue>
 <type>
@@ -15374,9 +15371,6 @@ namespace]]></val>
 <upperValue>
 <ref refid="DCE:EDD1C5D0-4864-11D8-A4FB-20895068F46E"/>
 </upperValue>
-<visibility>
-<val><![CDATA[public]]></val>
-</visibility>
 </Property>
 <LiteralString id="DCE:BC90B666-2E06-11D8-A169-52D559F3DAB9">
 <value>
@@ -40359,11 +40353,6 @@ subsets ownedMember]]></val>
 <val><![CDATA[subsets ownedElement]]></val>
 </value>
 </LiteralSpecification>
-<LiteralSpecification id="DCE:A9F54842-44B0-11DA-9223-000D936B094A">
-<value>
-<val><![CDATA[subsets redefinitionContext]]></val>
-</value>
-</LiteralSpecification>
 <LiteralSpecification id="DCE:A9F68734-44B0-11DA-9223-000D936B094A">
 <value>
 <val><![CDATA[ordered]]></val>
@@ -46907,6 +46896,11 @@ subsets ownedMember]]></val>
 <LiteralSpecification id="f9a49d20-b0ae-11de-8491-000d93868322">
 <value>
 <val><![CDATA[subsets ownedMember]]></val>
+</value>
+</LiteralSpecification>
+<LiteralSpecification id="e2ab4372-b11b-11de-9312-000d93868322">
+<value>
+<val><![CDATA[subsets redefinitionContext]]></val>
 </value>
 </LiteralSpecification>
 </gaphor>
