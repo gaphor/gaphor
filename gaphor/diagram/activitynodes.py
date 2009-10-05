@@ -265,8 +265,8 @@ class ForkNodeItem(Item, DiagramItem):
 
         h1, h2 = self._handles
         cadd = self.canvas.solver.add_constraint
-        c1 = EqualsConstraint(a=h1.x, b=h2.x)
-        c2 = LessThanConstraint(smaller=h1.y, bigger=h2.y, delta=30)
+        c1 = EqualsConstraint(a=h1.pos.x, b=h2.pos.x)
+        c2 = LessThanConstraint(smaller=h1.pos.y, bigger=h2.pos.y, delta=30)
         self._constraints.extend((cadd(c1), cadd(c2)))
 
 
@@ -286,7 +286,7 @@ class ForkNodeItem(Item, DiagramItem):
     def text_align(self, extents, align, padding, outside):
         h1, h2 = self._handles
         w, _ = self.style.min_size
-        h = h2.y - h1.y
+        h = h2.pos.y - h1.pos.y
         x, y = get_text_point(extents, w, h, align, padding, outside)
 
         return x, y
@@ -315,8 +315,8 @@ class ForkNodeItem(Item, DiagramItem):
 
         cr.set_line_width(6)
         h1, h2 = self._handles
-        cr.move_to(h1.x, h1.y)
-        cr.line_to(h2.x, h2.y)
+        cr.move_to(h1.pos.x, h1.pos.y)
+        cr.line_to(h2.pos.x, h2.pos.y)
 
         cr.stroke()
 

@@ -456,7 +456,7 @@ class AssemblyConnectorTestCase(TestCase):
         # connect to provided port
         self.connect(conn1, conn1.tail, iface, pport)
         self.connect(conn2, conn2.tail, iface, pport)
-        # no UML data model yet (no connection on provided port)
+        # no UML data model yet (no connection on required port)
         self.assertTrue(conn1.subject is None)
         self.assertTrue(conn2.subject is None)
         self.assertTrue(conn1.end is None)

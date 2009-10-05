@@ -85,12 +85,12 @@ class DiagramLine(LineItem):
         save_func('points', points)
 
         canvas = self.canvas
-        c = canvas.get_connected_to(self, self.head)[0]
+        c = canvas.get_connected_to(self, self.head)
         if c:
-            save_func('head-connection', c, reference=True)
-        c = canvas.get_connected_to(self, self.tail)[0]
+            save_func('head-connection', c[0], reference=True)
+        c = canvas.get_connected_to(self, self.tail)
         if c:
-            save_func('tail-connection', c, reference=True)
+            save_func('tail-connection', c[0], reference=True)
 
     def load (self, name, value):
         if name == 'matrix':
@@ -161,8 +161,8 @@ class DiagramLine(LineItem):
         the middle segment is also returned.
         """
         h0, h1 = self._get_middle_segment()
-        pos = (h0.x + h1.x) / 2, (h0.y + h1.y) / 2
-        angle = atan2(h1.y - h0.y, h1.x - h0.x)
+        pos = (h0.pos.x + h1.pos.x) / 2, (h0.pos.y + h1.pos.y) / 2
+        angle = atan2(h1.pos.y - h0.pos.y, h1.pos.x - h0.pos.x)
         if inverted:
             angle += pi
         return pos, angle

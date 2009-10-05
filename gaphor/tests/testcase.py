@@ -69,19 +69,19 @@ class TestCase(unittest.TestCase):
 
         If port is not provided, then first port is used.
         """
+        canvas = self.diagram.canvas
+
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
 
-        handle.connected_to = item
-        handle.connected_port = port
+        canvas.connect_item(line, handle, item, port, None)
 
         query = (item, line)
         adapter = component.queryMultiAdapter(query, IConnect)
-        old_disconnect = handle.disconnect
         connected = adapter.connect(handle, port)
 
-        assert handle.connected_to is item
-        assert handle.disconnect is not old_disconnect
+        it, pt = canvas.get_connected_to(line, handle)
+        assert it is item and pt is port
 
         return connected
 
@@ -90,14 +90,31 @@ class TestCase(unittest.TestCase):
         """
         Disconnect line's handle.
         """
-        query = (handle.connected_to, line)
+        canvas = self.diagram.canvas
+        item, port = canvas.get_connected_to(line, handle)
+        query = (item, line)
         adapter = component.queryMultiAdapter(query, IConnect)
         adapter.disconnect(line.head)
 
-        handle.connected_to = None
-        handle.connected_port = None
+        canvas.disconnect_item(line, handle)
+        assert not canvas.get_connected_to(line, handle)
 
-        assert handle.connected_to is None
+
+    def get_connected_to_item(self, line, handle):
+        """
+        Get item connected to line via handle.
+        """
+        data = self.diagram.canvas.get_connected_to(line, handle)
+        if data:
+            return data[0]
+        return None
+
+
+    def get_connected_to(self, line, handle):
+        """
+        Get connection information.
+        """
+        return self.diagram.canvas.get_connected_to(line, handle)
 
 
     def kindof(self, cls):

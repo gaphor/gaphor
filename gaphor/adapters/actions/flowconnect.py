@@ -31,8 +31,9 @@ class FlowConnect(RelationshipConnect):
         element = self.element
         # TODO: connect opposite side again (in case it's a join/fork or
         #       decision/merge node)
-        if isinstance(line.head.connected_to, items.ObjectNodeItem) \
-           or isinstance(line.tail.connected_to, items.ObjectNodeItem):
+        hct = self.get_connected_to_item(line.head)
+        tct = self.get_connected_to_item(line.tail)
+        if isinstance(hct, items.ObjectNodeItem) or isinstance(tct, items.ObjectNodeItem):
             relation = self.relationship_or_new(UML.ObjectFlow,
                         ('source', 'outgoing'),
                         ('target', 'incoming'))
@@ -44,16 +45,18 @@ class FlowConnect(RelationshipConnect):
             relation.guard = self.element_factory.create(UML.LiteralSpecification)
         line.subject = relation
         opposite = line.opposite(handle)
-        if opposite and isinstance(opposite.connected_to, (items.ForkNodeItem, items.DecisionNodeItem)):
-            adapter = component.queryMultiAdapter((opposite.connected_to, line), IConnect)
+        otc = self.get_connected_to_item(opposite)
+        if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
+            adapter = component.queryMultiAdapter((otc, line), IConnect)
             adapter.combine_nodes()
 
     def disconnect_subject(self, handle):
         super(FlowConnect, self).disconnect_subject(handle)
         line = self.line
         opposite = line.opposite(handle)
-        if opposite and isinstance(opposite.connected_to, (items.ForkNodeItem, items.DecisionNodeItem)):
-            adapter = component.queryMultiAdapter((opposite.connected_to, line), IConnect)
+        otc = self.get_connected_to_item(opposite)
+        if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
+            adapter = component.queryMultiAdapter((otc, line), IConnect)
             adapter.decombine_nodes()
 
 component.provideAdapter(factory=FlowConnect,
@@ -74,8 +77,10 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         head, tail = self.line.head, self.line.tail
         subject = self.element.subject
         
-        if handle is head and tail.connected_to and tail.connected_to.subject is subject \
-           or handle is tail and head.connected_to and head.connected_to.subject is subject:
+        hct = self.get_connected_to_item(head)
+        tct = self.get_connected_to_item(tail)
+        if handle is head and tct and tct.subject is subject \
+           or handle is tail and hct and hct.subject is subject:
             return None
 
         return super(FlowForkDecisionNodeConnect, self).glue(handle, port)

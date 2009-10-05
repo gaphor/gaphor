@@ -30,8 +30,11 @@ class CommentLineItem(DiagramLine):
 
 
     def unlink(self):
-        if self.head.connected_to and self.tail.connected_to:
-            query = (self.head.connected_to, self)
+        canvas = self.canvas
+        hct = canvas.get_connected_to(self, self.head)
+        tct = canvas.get_connected_to(self, self.tail)
+        if hct and tct:
+            query = (hct[0], self)
             adapter = component.queryMultiAdapter(query, IConnect)
             adapter.disconnect(self.head)
         super(CommentLineItem, self).unlink()

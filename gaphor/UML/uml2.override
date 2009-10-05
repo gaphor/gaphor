@@ -224,3 +224,13 @@ Message.messageKind = property(message_messageKind, doc="""
     """)
 del message_messageKind
 
+
+%%
+override StructuredClassifier.part
+def structuredclassifier_part(self):
+    return tuple(a for a in self.ownedAttribute if a.isComposite)
+
+StructuredClassifier.part = property(structuredclassifier_part, doc="""
+    Properties owned by a classifier by composition.
+""")
+del structuredclassifier_part

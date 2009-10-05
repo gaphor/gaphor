@@ -45,6 +45,8 @@ class AbstractConnect(object):
     def __init__(self, element, line):
         self.element = element
         self.line = line
+        self.canvas = self.element.canvas
+        assert self.canvas == self.element.canvas == self.line.canvas
 
 
     def get_connected_to(self, handle):
@@ -52,8 +54,7 @@ class AbstractConnect(object):
         Get connection information (connected item and port) for connection
         realized with specified handle.
         """
-        canvas = self.element.canvas
-        return canvas.get_connected_to(self.line, handle)
+        return self.canvas.get_connected_to(self.line, handle)
 
 
     def get_connected_to_item(self, handle):
@@ -63,6 +64,15 @@ class AbstractConnect(object):
         data = self.get_connected_to(handle)
         if data is not None:
             return data[0]
+
+
+    def get_connected_to_port(self, handle):
+        """
+        Get port of item connected to connecting item via specified handle.
+        """
+        data = self.get_connected_to(handle)
+        if data is not None:
+            return data[1]
 
 
     def glue(self, handle, port):
@@ -77,9 +87,9 @@ class AbstractConnect(object):
         """
         iface = self.element
         if isinstance(iface, items.InterfaceItem) and iface.folded:
-            canvas = iface.canvas
-            count = len(canvas.get_connected_items(iface))
-            return count == 0 and isinstance(self.line, (items.DependencyItem, items.ImplementationItem))
+            canvas = self.canvas
+            count = any(canvas.get_connected_items(iface))
+            return not count and isinstance(self.line, (items.DependencyItem, items.ImplementationItem))
         return True
 
 
@@ -199,19 +209,22 @@ class CommentLineLineConnect(AbstractConnect):
     def connect(self, handle, port):
         if super(CommentLineLineConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
-            if opposite.connected_to and self.element.subject:
-                if isinstance(opposite.connected_to.subject, UML.Comment):
-                    opposite.connected_to.subject.annotatedElement = self.element.subject
+            c = self.get_connected_to_item(opposite)
+            if c and self.element.subject:
+                if isinstance(c.subject, UML.Comment):
+                    c.subject.annotatedElement = self.element.subject
                 else:
-                    self.element.subject.annotatedElement = opposite.connected_to.subject
+                    self.element.subject.annotatedElement = c.subject
 
     def disconnect(self, handle):
+        c1 = self.get_connected_to_item(handle)
         opposite = self.line.opposite(handle)
-        if handle.connected_to and opposite.connected_to:
-            if isinstance(handle.connected_to.subject, UML.Comment):
-                del handle.connected_to.subject.annotatedElement[opposite.connected_to.subject]
-            elif opposite.connected_to.subject:
-                del opposite.connected_to.subject.annotatedElement[handle.connected_to.subject]
+        c2 = self.get_connected_to_item(opposite)
+        if c1 and c2:
+            if isinstance(c1.subject, UML.Comment):
+                del c1.subject.annotatedElement[c2.subject]
+            elif c2.subject:
+                del c2.subject.annotatedElement[c1.subject]
         super(CommentLineLineConnect, self).disconnect(handle)
 
 component.provideAdapter(CommentLineLineConnect)
@@ -329,7 +342,7 @@ class RelationshipConnect(AbstractConnect):
         establish or destroy relationships at model level.
         """
         line = self.line
-        canvas = line.canvas
+        canvas = self.canvas
         solver = canvas.solver
 
         # First make sure coordinates match
@@ -352,12 +365,12 @@ class RelationshipConnect(AbstractConnect):
         list can be used to connect items again with connect_connected_items()).
         """
         line = self.line
-        canvas = line.canvas
+        canvas = self.canvas
         solver = canvas.solver
 
         # First make sure coordinates match
         solver.solve()
-        connected_items = list(line.canvas.get_connected_items(line))
+        connected_items = list(canvas.get_connected_items(line))
         for item, handle in connected_items:
             adapter = component.queryMultiAdapter((line, item), IConnect)
             assert adapter

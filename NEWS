@@ -2,6 +2,16 @@
 ------
 
 - Fixed bug when loading diagrams.
+------
+- node can group
+  - other nodes
+  - artifacts
+  - components
+
+0.14.0
+------
+- reintroduced assembly connections
+- stereotypes can have attributes
 
 0.13.1
 ------

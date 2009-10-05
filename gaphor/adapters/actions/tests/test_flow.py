@@ -315,6 +315,7 @@ class FlowItemDesisionAndForkNodes:
 
         Flow `flow4` will force the node to become a combined node.
         """
+        canvas = self.diagram.canvas
 
         flow1 = self.create(items.FlowItem)
         flow2 = self.create(items.FlowItem)
@@ -346,7 +347,7 @@ class FlowItemDesisionAndForkNodes:
 
         # test disconnection
         self.disconnect(flow4, flow4.head)
-        assert flow4.head.connected_to is None
+        assert canvas.get_connected_to(flow4, flow4.head) is None
         self.assertTrue(jn.combined is None)
 
         flows = self.kindof(UML.ControlFlow)

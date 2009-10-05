@@ -242,8 +242,8 @@ class InterfaceItem(ClassItem):
             # constraints
             h_nw = self._handles[NW]
             h_se = self._handles[SE]
-            h_se.x = h_nw.x + self.min_width
-            h_se.y = h_nw.y + self.min_height
+            h_se.pos.x = h_nw.pos.x + self.min_width
+            h_se.pos.y = h_nw.pos.y + self.min_height
 
             movable = False
             draw_mode = self.DRAW_ICON
@@ -266,7 +266,7 @@ class InterfaceItem(ClassItem):
     def draw_icon(self, context):
         cr = context.cairo
         h_nw = self._handles[NW]
-        cx, cy = h_nw.x + self.width/2, h_nw.y + self.height/2
+        cx, cy = h_nw.pos.x + self.width / 2, h_nw.pos.y + self.height / 2
         required = self._folded == self.FOLDED_REQUIRED or self._folded == self.FOLDED_ASSEMBLY
         provided = self._folded == self.FOLDED_PROVIDED or self._folded == self.FOLDED_ASSEMBLY
         if required:

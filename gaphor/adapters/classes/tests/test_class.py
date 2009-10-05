@@ -39,8 +39,11 @@ class DependencyTestCase(TestCase):
         self.assertTrue(dep.subject is not None)
         self.assertTrue(isinstance(dep.subject, UML.Dependency))
         self.assertTrue(dep.subject in self.element_factory.select())
-        self.assertTrue(dep.head.connected_to is actor1)
-        self.assertTrue(dep.tail.connected_to is actor2)
+
+        hct = self.get_connected_to_item(dep, dep.head)
+        tct = self.get_connected_to_item(dep, dep.tail)
+        self.assertTrue(hct is actor1)
+        self.assertTrue(tct is actor2)
 
         self.assertTrue(actor1.subject in dep.subject.supplier)
         self.assertTrue(actor2.subject in dep.subject.client)
@@ -60,7 +63,7 @@ class DependencyTestCase(TestCase):
         self.disconnect(dep, dep.tail)
 
         self.assertTrue(dep.subject is None)
-        self.assertTrue(dep.tail.connected_to is None)
+        self.assertTrue(self.get_connected_to(dep, dep.tail) is None)
         self.assertTrue(dep_subj not in self.element_factory.select())
         self.assertTrue(dep_subj not in actor1.subject.supplierDependency)
         self.assertTrue(dep_subj not in actor2.subject.clientDependency)
@@ -144,7 +147,7 @@ class GeneralizationTestCase(TestCase):
         self.assertTrue(glued)
 
         self.connect(gen, gen.tail, c1)
-        self.assertTrue(gen.tail.connected_to is c1)
+        self.assertTrue(self.get_connected_to_item(gen, gen.tail) is c1)
         self.assertTrue(gen.subject is None)
 
         glued = self.glue(gen, gen.head, c2)
@@ -159,7 +162,7 @@ class GeneralizationTestCase(TestCase):
         c2 = self.create(items.ClassItem, UML.Class)
 
         self.connect(gen, gen.tail, c1)
-        assert gen.tail.connected_to is c1
+        assert self.get_connected_to_item(gen, gen.tail) is c1
 
         self.connect(gen, gen.head, c2)
         self.assertTrue(gen.subject is not None)

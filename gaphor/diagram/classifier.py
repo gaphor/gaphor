@@ -26,6 +26,7 @@ class Compartment(list):
         self.height = 0
         self.title = None
         self.title_height = 0
+        self.use_extra_space = False
 
     def save(self, save_func):
         #log.debug('Compartment.save: %s' % self)
@@ -154,6 +155,10 @@ class ClassifierItem(NamedItem):
         'compartment-vspacing': 3,
         'name-padding': (10, 10, 10, 10),
         'stereotype-padding': (10, 10, 2, 10),
+        # extra space can be used by header or a compartment;
+        # we don't want to consume the extra space by compartments, which
+        # contain stereotype information
+        'extra-space': 'header',  # 'header' or 'compartment'
     }
     # Default size for small icons
     ICON_WIDTH    = 15
@@ -170,6 +175,7 @@ class ClassifierItem(NamedItem):
             .watch('subject.appliedStereotype', self.on_stereotype_change)\
             .watch('subject.appliedStereotype.slot', self.on_stereotype_attr_change)
         self._name.font = font.FONT_NAME
+        self._extra_space = 0
 
 
     def on_stereotype_change(self, event):
@@ -191,7 +197,7 @@ class ClassifierItem(NamedItem):
                 and self._show_stereotypes_attrs:
 
             comp = self._find_stereotype_compartment(event.element)
-            if not comp:
+            if comp is None:
                 log.debug('No compartment found for %s' % event.element)
                 return
 
@@ -202,8 +208,9 @@ class ClassifierItem(NamedItem):
 
 
     def _create_stereotype_compartment(self, obj):
-        c = Compartment(obj.classifier[0].name, self, obj)
-        c.title = UML.model.STEREOTYPE_FMT % obj.classifier[0].name
+        st = obj.classifier[0].name
+        c = Compartment(st, self, obj)
+        c.title = UML.model.STEREOTYPE_FMT % st
         self._update_stereotype_compartment(c, obj)
         self._compartments.append(c)
         self.request_update()
@@ -273,7 +280,7 @@ class ClassifierItem(NamedItem):
 #                    request_resolve(h.y)
 
         if self._drawing_style == self.DRAW_COMPARTMENT:
-            self.draw       = self.draw_compartment
+            self.draw = self.draw_compartment
             self.pre_update = self.pre_update_compartment
             self.post_update = self.post_update_compartment
 
@@ -283,9 +290,9 @@ class ClassifierItem(NamedItem):
             self.post_update     = self.post_update_compartment_icon
 
         elif self._drawing_style == self.DRAW_ICON:
-            self.draw       = self.draw_icon
+            self.draw = self.draw_icon
             self.pre_update = self.pre_update_icon
-            self.post_update     = self.post_update_icon
+            self.post_update = self.post_update_icon
 
 
     drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
@@ -366,7 +373,7 @@ class ClassifierItem(NamedItem):
         for comp in self._compartments:
             comp.pre_update(context)
 
-        sizes = [comp.get_size() for comp in self._compartments]
+        sizes = [comp.get_size() for comp in self._compartments if comp.visible]
         sizes.append((self.min_width, self._header_size[1]))
 
         self.min_width = max(size[0] for size in sizes)
@@ -418,10 +425,18 @@ class ClassifierItem(NamedItem):
         else:
             width = self.width
 
+        extra_space = self.height - self.min_height
+
+        # extra space is used by header
+        if self.style.extra_space == 'header':
+            cr.translate(0, extra_space)
+
         # draw compartments and stereotype compartments
+        extra_used = False
         for comp in self._compartments:
             if not comp.visible:
                 continue
+
             cr.save()
             cr.move_to(0, 0)
             cr.line_to(self.width, 0)
@@ -434,7 +449,15 @@ class ClassifierItem(NamedItem):
                 comp.draw(context)
             finally:
                 cr.restore()
-            cr.translate(0, comp.height)
+
+            d = comp.height
+            if not extra_used and comp.use_extra_space \
+                    and self.style.extra_space == 'compartment':
+                d += extra_space
+                extra_used = True
+            cr.translate(0, d)
+
+        # if extra space is used by last compartment, then do nothing
 
 
     def item_at(self, x, y):

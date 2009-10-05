@@ -1,11 +1,27 @@
 """
 Node item.
+
+Grouping
+========
+Node item can group following items
+
+- other nodes, which are represented with Node.nestedNode on UML metamodel
+  level
+- deployed artifacts using deployment
+- components, which are parts of a node acting as structured classifier
+  (nodes may have internal structures)
+
+Node item grouping logic is implemented in `gaphor.adapters.grouping`
+module.
 """
 
 from gaphor import UML
 from gaphor.diagram.classifier import ClassifierItem
 
 class NodeItem(ClassifierItem):
+    """
+    Representation of node specified in Deployment package.
+    """
 
     __uml__ = UML.Node
 

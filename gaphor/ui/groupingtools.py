@@ -72,7 +72,7 @@ class GroupPlacementTool(PlacementTool):
 
         if parent:
             adapter = component.queryMultiAdapter((parent, self._factory.item_class), IGroup)
-            if adapter and adapter.pre_can_contain():
+            if adapter and adapter.can_contain():
                 view.dropzone_item = parent
                 view.window.set_cursor(IN_CURSOR)
             else:
@@ -131,14 +131,14 @@ class GroupItemTool(ItemTool):
                 return
 
             if parent and not over:  # are we going to remove from parent?
-                adapter = component.queryMultiAdapter((parent, item.__class__), IGroup)
-                if adapter and adapter.pre_can_contain():
+                adapter = component.queryMultiAdapter((parent, item), IGroup)
+                if adapter:
                     view.window.set_cursor(OUT_CURSOR)
                     view.dropzone_item = parent
 
             if over:       # are we going to add to parent?
-                adapter = component.queryMultiAdapter((over, item.__class__), IGroup)
-                if adapter and adapter.pre_can_contain():
+                adapter = component.queryMultiAdapter((over, item), IGroup)
+                if adapter and adapter.can_contain():
                     view.dropzone_item = over
                     view.window.set_cursor(IN_CURSOR)
 
@@ -162,7 +162,7 @@ class GroupItemTool(ItemTool):
 
             if parent: # remove from parent
                 adapter = component.queryMultiAdapter((parent, item), IGroup)
-                if adapter and adapter.can_contain():
+                if adapter:
                     adapter.ungroup()
 
                     canvas = view.canvas
