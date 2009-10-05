@@ -7,6 +7,7 @@ Node item can group following items
 
 - other nodes, which are represented with Node.nestedNode on UML metamodel
   level
+- deployed artifacts using deployment
 - components, which are parts of a node acting as structured classifier
   (nodes may have internal structures)
 

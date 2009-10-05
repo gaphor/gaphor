@@ -1,6 +1,7 @@
 ------
 - node can group
   - other nodes
+  - artifacts
   - components
 
 0.14.0

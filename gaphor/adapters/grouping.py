@@ -123,7 +123,7 @@ component.provideAdapter(factory=NodeGroup,
 
 class NodeComponentGroup(AbstractGroup):
     """
-    Add components to another node using internal structures.
+    Add components to node using internal structures.
     """
     def can_contain(self):
         return isinstance(self.parent, items.NodeItem) \
@@ -168,11 +168,46 @@ class NodeComponentGroup(AbstractGroup):
                 e1.unlink()
                 e2.unlink()
                 connector.unlink()
-                log.debug('Removed %s from node %s' % (self.item.subject, node))
+                log.debug('Removed %s from node %s' % (component, node))
 
 
 component.provideAdapter(factory=NodeComponentGroup,
         adapts=(items.NodeItem, DiagramItemMeta))
 component.provideAdapter(factory=NodeComponentGroup,
         adapts=(items.NodeItem, items.ComponentItem))
+
+
+
+class NodeArtifactGroup(AbstractGroup):
+    """
+    Deploy artifact on node.
+    """
+    def can_contain(self):
+        return isinstance(self.parent, items.NodeItem) \
+                and issubclass(self.item_class, items.ArtifactItem)
+
+
+    def group(self):
+        node = self.parent.subject
+        artifact = self.item.subject
+
+        # deploy artifact on node
+        deployment = self.element_factory.create(UML.Deployment)
+        node.deployment = deployment
+        deployment.deployedArtifact = artifact
+
+
+    def ungroup(self):
+        node = self.parent.subject
+        artifact = self.item.subject
+        for deployment in node.deployment:
+            if deployment.deployedArtifact[0] is artifact:
+                deployment.unlink()
+                log.debug('Removed %s from node %s' % (artifact, node))
+
+
+component.provideAdapter(factory=NodeArtifactGroup,
+        adapts=(items.NodeItem, DiagramItemMeta))
+component.provideAdapter(factory=NodeArtifactGroup,
+        adapts=(items.NodeItem, items.ArtifactItem))
 

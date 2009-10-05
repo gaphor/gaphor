@@ -67,3 +67,47 @@ class NodeComponentGroupTestCase(TestCase):
         self.assertEquals(0, len(self.kindof(UML.Connector)))
         self.assertEquals(0, len(self.kindof(UML.ConnectorEnd)))
 
+
+class NodeArtifactGroupTestCase(TestCase):
+    def group(self, parent, item):
+        """
+        Group item within a parent.
+        """
+        query = (parent, item)
+        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter.group()
+
+
+    def ungroup(self, parent, item):
+        """
+        Remove item from a parent.
+        """
+        query = (parent, item)
+        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter.ungroup()
+
+
+    def test_grouping(self):
+        """Test artifact within node deployment
+        """
+        n = self.create(items.NodeItem, UML.Node)
+        a = self.create(items.ArtifactItem, UML.Artifact)
+
+        self.group(n, a)
+
+        self.assertEquals(1, len(n.subject.deployment))
+        self.assertTrue(n.subject.deployment[0].deployedArtifact[0] is a.subject)
+
+
+    def test_ungrouping(self):
+        """Test removal of artifact from node
+        """
+        n = self.create(items.NodeItem, UML.Node)
+        a = self.create(items.ArtifactItem, UML.Artifact)
+
+        query = self.group(n, a)
+        query = self.ungroup(n, a)
+
+        self.assertEquals(0, len(n.subject.deployment))
+        self.assertEquals(0, len(self.kindof(UML.Deployment)))
+
