@@ -1,3 +1,7 @@
+0.14.1
+------
+
+- Fixed bug when loading diagrams.
 ------
 - node can group
   - other nodes
