@@ -36,6 +36,7 @@ TOOLBOX_ACTIONS = (
     )), (_('Components'), (
         ('toolbox-component', _('Component'), 'gaphor-component'),
         ('toolbox-node', _('Node'), 'gaphor-node'),
+        ('toolbox-device', _('Device'), 'gaphor-device'),
         ('toolbox-artifact', _('Artifact'), 'gaphor-artifact'),
         ('toolbox-connector', _('Connector'), 'gaphor-connector'),
     )), (_('Actions'), (
@@ -242,6 +243,13 @@ class DiagramToolbox(object):
         return GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.NodeItem,
                     UML.Node),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_device(self):
+        return PlacementTool(
+                item_factory=self._namespace_item_factory(items.NodeItem,
+                                                          UML.Device),
                 handle_index=SE,
                 after_handler=self._after_handler)
 

@@ -1,5 +1,5 @@
 """
-Node item.
+Node item may represent a node or a device UML metamodel classes.
 
 Grouping
 ========
@@ -20,10 +20,13 @@ from gaphor.diagram.classifier import ClassifierItem
 
 class NodeItem(ClassifierItem):
     """
-    Representation of node specified in Deployment package.
+    Representation of node or device from UML Deployment package.
     """
 
-    __uml__ = UML.Node
+    __uml__ = UML.Node, UML.Device
+    __stereotype__ = {
+        'device': UML.Device,
+    }
 
     DEPTH = 10
 
