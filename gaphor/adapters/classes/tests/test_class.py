@@ -40,8 +40,8 @@ class DependencyTestCase(TestCase):
         self.assertTrue(isinstance(dep.subject, UML.Dependency))
         self.assertTrue(dep.subject in self.element_factory.select())
 
-        hct = self.get_connected_to_item(dep, dep.head)
-        tct = self.get_connected_to_item(dep, dep.tail)
+        hct = self.get_connected(dep.head)
+        tct = self.get_connected(dep.tail)
         self.assertTrue(hct is actor1)
         self.assertTrue(tct is actor2)
 
@@ -63,7 +63,7 @@ class DependencyTestCase(TestCase):
         self.disconnect(dep, dep.tail)
 
         self.assertTrue(dep.subject is None)
-        self.assertTrue(self.get_connected_to(dep, dep.tail) is None)
+        self.assertTrue(self.get_connected(dep.tail) is None)
         self.assertTrue(dep_subj not in self.element_factory.select())
         self.assertTrue(dep_subj not in actor1.subject.supplierDependency)
         self.assertTrue(dep_subj not in actor2.subject.clientDependency)
@@ -123,7 +123,7 @@ class DependencyTestCase(TestCase):
 
         self.connect(dep2, dep2.head, actoritem3)
         self.connect(dep2, dep2.tail, actoritem4)
-        self.assertTrue(dep2.subject)
+        self.assertTrue(dep2.subject is not None)
         self.assertEquals(1, len(actor1.supplierDependency))
         self.assertTrue(actor1.supplierDependency[0] is dep.subject)
         self.assertEquals(1, len(actor2.clientDependency))
@@ -147,7 +147,7 @@ class GeneralizationTestCase(TestCase):
         self.assertTrue(glued)
 
         self.connect(gen, gen.tail, c1)
-        self.assertTrue(self.get_connected_to_item(gen, gen.tail) is c1)
+        self.assertTrue(self.get_connected(gen.tail) is c1)
         self.assertTrue(gen.subject is None)
 
         glued = self.glue(gen, gen.head, c2)
@@ -162,7 +162,7 @@ class GeneralizationTestCase(TestCase):
         c2 = self.create(items.ClassItem, UML.Class)
 
         self.connect(gen, gen.tail, c1)
-        assert self.get_connected_to_item(gen, gen.tail) is c1
+        assert self.get_connected(gen.tail) is c1
 
         self.connect(gen, gen.head, c2)
         self.assertTrue(gen.subject is not None)

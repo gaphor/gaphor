@@ -49,30 +49,29 @@ class AbstractConnect(object):
         assert self.canvas == self.element.canvas == self.line.canvas
 
 
-    def get_connected_to(self, handle):
+    def get_connection(self, handle):
         """
-        Get connection information (connected item and port) for connection
-        realized with specified handle.
+        Get connection information
         """
-        return self.canvas.get_connected_to(self.line, handle)
+        return self.canvas.get_connection(handle) 
 
 
-    def get_connected_to_item(self, handle):
+    def get_connected(self, handle):
         """
-        Get item connected to connecting item via specified handle.
+        Get item connected to a handle.
         """
-        data = self.get_connected_to(handle)
-        if data is not None:
-            return data[0]
+        cinfo = self.canvas.get_connection(handle) 
+        if cinfo is not None:
+            return cinfo.connected
 
 
-    def get_connected_to_port(self, handle):
+    def get_connected_port(self, handle):
         """
         Get port of item connected to connecting item via specified handle.
         """
-        data = self.get_connected_to(handle)
-        if data is not None:
-            return data[1]
+        cinfo = self.canvas.get_connection(handle)
+        if cinfo is not None:
+            return cinfo.port
 
 
     def glue(self, handle, port):
@@ -88,7 +87,7 @@ class AbstractConnect(object):
         iface = self.element
         if isinstance(iface, items.InterfaceItem) and iface.folded:
             canvas = self.canvas
-            count = any(canvas.get_connected_items(iface))
+            count = any(canvas.get_connections(connected=iface))
             return not count and isinstance(self.line, (items.DependencyItem, items.ImplementationItem))
         return True
 
@@ -126,7 +125,7 @@ class CommentLineElementConnect(AbstractConnect):
         One of the ends should be connected to a UML.Comment element.
         """
         opposite = self.line.opposite(handle)
-        connected_to = self.get_connected_to_item(opposite)
+        connected_to = self.get_connected(opposite)
         element = self.element
 
         if connected_to is element:
@@ -150,7 +149,7 @@ class CommentLineElementConnect(AbstractConnect):
     def connect(self, handle, port):
         if super(CommentLineElementConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
-            connected_to = self.get_connected_to_item(opposite)
+            connected_to = self.get_connected(opposite)
             if connected_to:
                 if isinstance(connected_to.subject, UML.Comment):
                     connected_to.subject.annotatedElement = self.element.subject
@@ -159,8 +158,8 @@ class CommentLineElementConnect(AbstractConnect):
 
     def disconnect(self, handle):
         opposite = self.line.opposite(handle)
-        oct = self.get_connected_to_item(opposite)
-        hct = self.get_connected_to_item(handle)
+        oct = self.get_connected(opposite)
+        hct = self.get_connected(handle)
 
         if hct and oct:
             if isinstance(oct.subject, UML.Comment):
@@ -209,7 +208,7 @@ class CommentLineLineConnect(AbstractConnect):
     def connect(self, handle, port):
         if super(CommentLineLineConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
-            c = self.get_connected_to_item(opposite)
+            c = self.get_connected(opposite)
             if c and self.element.subject:
                 if isinstance(c.subject, UML.Comment):
                     c.subject.annotatedElement = self.element.subject
@@ -217,9 +216,9 @@ class CommentLineLineConnect(AbstractConnect):
                     self.element.subject.annotatedElement = c.subject
 
     def disconnect(self, handle):
-        c1 = self.get_connected_to_item(handle)
+        c1 = self.get_connected(handle)
         opposite = self.line.opposite(handle)
-        c2 = self.get_connected_to_item(opposite)
+        c2 = self.get_connected(opposite)
         if c1 and c2:
             if isinstance(c1.subject, UML.Comment):
                 del c1.subject.annotatedElement[c2.subject]
@@ -255,7 +254,7 @@ class RelationshipConnect(AbstractConnect):
             opposite = self.line.opposite(handle)
             line = self.line
             element = self.element
-            connected_to = self.get_connected_to_item(opposite)
+            connected_to = self.get_connected(opposite)
 
             # Element can not be a parent for itself.
             if connected_to is element:
@@ -283,8 +282,8 @@ class RelationshipConnect(AbstractConnect):
         line = self.line
         element = self.element
 
-        head_subject = self.get_connected_to_item(line.head).subject
-        tail_subject = self.get_connected_to_item(line.tail).subject
+        head_subject = self.get_connected(line.head).subject
+        tail_subject = self.get_connected(line.tail).subject
 
         edge_head_name = head[0]
         node_head_name = head[1]
@@ -332,11 +331,11 @@ class RelationshipConnect(AbstractConnect):
         if not relation:
             line = self.line
             relation = self.element_factory.create(type)
-            setattr(relation, head[0], self.get_connected_to_item(line.head).subject)
-            setattr(relation, tail[0], self.get_connected_to_item(line.tail).subject)
+            setattr(relation, head[0], self.get_connected(line.head).subject)
+            setattr(relation, tail[0], self.get_connected(line.tail).subject)
         return relation
 
-    def connect_connected_items(self, connected_items=None):
+    def connect_connected_items(self, connections=None):
         """
         Cause items connected to ``line`` to reconnect, allowing them to
         establish or destroy relationships at model level.
@@ -347,10 +346,10 @@ class RelationshipConnect(AbstractConnect):
 
         # First make sure coordinates match
         solver.solve()
-        for item, handle in connected_items or canvas.get_connected_items(line):
-            port = find_closest_port(item,
-                    canvas.get_matrix_i2c(line).transform_point(*handle.pos),
-                    canvas.get_matrix_i2c(item).transform_point)
+        for cinfo in connections or canvas.get_connections(connected=line):
+            port = find_closest_port(cinfo.item,
+                    canvas.get_matrix_i2c(line).transform_point(*cinfo.handle.pos),
+                    canvas.get_matrix_i2c(cinfo.item).transform_point)
                 
             adapter = component.queryMultiAdapter((line, item), IConnect)
             assert adapter
@@ -370,12 +369,12 @@ class RelationshipConnect(AbstractConnect):
 
         # First make sure coordinates match
         solver.solve()
-        connected_items = list(canvas.get_connected_items(line))
-        for item, handle in connected_items:
-            adapter = component.queryMultiAdapter((line, item), IConnect)
+        connections = list(canvas.get_connections(connected=line))
+        for cinfo in connections:
+            adapter = component.queryMultiAdapter((line, cinfo.item), IConnect)
             assert adapter
             adapter.disconnect(handle)
-        return connected_items
+        return connections
 
     def connect_subject(self, handle):
         """
@@ -402,7 +401,7 @@ class RelationshipConnect(AbstractConnect):
         """
         if super(RelationshipConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
-            oct = self.get_connected_to_item(opposite)
+            oct = self.get_connected(opposite)
             if oct:
                 self.connect_subject(handle)
                 line = self.line
@@ -417,16 +416,16 @@ class RelationshipConnect(AbstractConnect):
         """
         line = self.line
         opposite = line.opposite(handle)
-        oct = self.get_connected_to_item(opposite)
-        hct = self.get_connected_to_item(handle)
+        oct = self.get_connected(opposite)
+        hct = self.get_connected(handle)
         if hct and oct:
             old = line.subject
              
-            connected_items = self.disconnect_connected_items()
+            connections = self.disconnect_connected_items()
             
             self.disconnect_subject(handle)
             if old:
-                self.connect_connected_items(connected_items)
+                self.connect_connected_items(connections)
 
         super(RelationshipConnect, self).disconnect(handle)
 
