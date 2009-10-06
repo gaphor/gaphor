@@ -336,9 +336,9 @@ class AssemblyConnectorTestCase(TestCase):
         # ends of connector point to components 
         p1 = end1.partWithPort
         p2 = end2.partWithPort
-        self.assertEquals(p1, c1.subject.ownedPort,
+        self.assertEquals(p1, c1.subject.ownedPort[0],
             '%s != %s' % (p1, c1.subject.ownedPort))
-        self.assertEquals(p2, c2.subject.ownedPort,
+        self.assertEquals(p2, c2.subject.ownedPort[0],
             '%s != %s' % (p2, c2.subject.ownedPort))
 
 
@@ -515,7 +515,7 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertEquals(end3.role, iface.subject)
         # ends of connector point to components 
         p3 = end3.partWithPort
-        self.assertEquals(p3, c3.subject.ownedPort,
+        self.assertEquals(p3, c3.subject.ownedPort[0],
             '%s != %s' % (p3, c3.subject.ownedPort))
 
 

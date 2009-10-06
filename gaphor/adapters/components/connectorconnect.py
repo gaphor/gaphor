@@ -42,10 +42,10 @@ class ConnectorConnectBase(AbstractConnect):
             If true, then filter out one-side connections.
         """
         canvas = iface.canvas
-        connected = canvas.get_connected_items(iface)
+        connected = canvas.get_connections(connected=iface)
         if both:
-            connected = [(l, h) for l, h in connected
-                    if canvas.get_connected_to(l, l.opposite(h))]
+            connected = [c for c in connected
+                    if canvas.get_connection(c.item.opposite(c.handle))]
         return connected
 
 
@@ -54,9 +54,9 @@ class ConnectorConnectBase(AbstractConnect):
         Get component connected by connector.
         """
         canvas = connector.canvas
-        item = canvas.get_connected_to(connector, connector.head)[0]
+        item = canvas.get_connection(connector.head).connected
         if not isinstance(item, items.ComponentItem):
-            item = connector.get_connected_to(connector, connector.tail)[0]
+            item = connector.get_connection(connector.tail).connected
         if not isinstance(item, items.ComponentItem):
             item = None
         return item
@@ -99,7 +99,8 @@ class ConnectorConnectBase(AbstractConnect):
          component
             Component item.
         """
-        component.subject.ownedPort.unlink()
+        p = component.subject.ownedPort[0]
+        p.unlink()
         connector.end.unlink()
         connector.end = None
         connector.subject = None
@@ -109,7 +110,7 @@ class ConnectorConnectBase(AbstractConnect):
         glue_ok = super(ConnectorConnectBase, self).glue(handle, port)
 
         iface = self.element
-        component = self.get_connected_to_item(self.line.opposite(handle))
+        component = self.get_connected(self.line.opposite(handle))
 
         if isinstance(component, items.InterfaceItem):
             component, iface = iface, component
@@ -142,8 +143,8 @@ class ConnectorConnectBase(AbstractConnect):
         line = self.line
         canvas = line.canvas
 
-        c1 = self.get_connected_to_item(line.head)
-        c2 = self.get_connected_to_item(line.tail)
+        c1 = self.get_connected(line.head)
+        c2 = self.get_connected(line.tail)
         if c1 and c2:
             # reference interface and component correctly
             iface = c1
@@ -152,25 +153,26 @@ class ConnectorConnectBase(AbstractConnect):
                 assert isinstance(iface, items.ComponentItem)
                 component, iface = iface, component
 
-            connected = self.get_connecting(iface, both=True)
-            ports = set(canvas.get_connected_to(l, h)[1] for l, h in connected)
+            connections = self.get_connecting(iface, both=True)
+            ports = set(c.port for c in connections)
 
             # to make an assembly at least two connector ends need to exist
             # also, two different ports of interface need to be connected
-            if len(connected) > 1 and len(ports) == 2:
+            if len(connections) > 1 and len(ports) == 2:
                 # find assembly connector
                 assembly = None
-                for conn, h in connected:
-                    if conn.subject:
-                        assembly = conn.subject
+                for c in connections:
+                    if c.item.subject:
+                        assembly = c.item.subject
                         assert assembly.kind == 'assembly'
                         break
 
                 if assembly is None:
                     assembly =  self.element_factory.create(UML.Connector)
                     assembly.kind = 'assembly'
-                    for c, h in connected:
-                        self.create_uml(c, self.get_component(c), assembly, iface.subject)
+                    for c in connections:
+                        connector = c.item
+                        self.create_uml(connector, self.get_component(connector), assembly, iface.subject)
                 else:
                     self.create_uml(line, component, assembly, iface.subject)
 
@@ -181,21 +183,21 @@ class ConnectorConnectBase(AbstractConnect):
         if line.subject is None:
             return
 
-        iface = self.get_connected_to_item(line.head)
+        iface = self.get_connected(line.head)
         if not isinstance(iface, items.InterfaceItem):
-            iface = self.get_connected_to_item(line.tail)
+            iface = self.get_connected(line.tail)
 
-        connected = self.get_connecting(iface, both=True)
+        connections = list(self.get_connecting(iface, both=True))
         # find ports, which will stay connected after disconnection
-        ports = set(self.get_connected_to_port(h) for c, h in connected if c is not self.line)
+        ports = set(c.port for c in connections if c.item is not self.line)
 
         # destroy whole assembly if one connected item stays
         # or only one port will stay connected
-        if len(connected) == 2 or len(ports) == 1:
+        if len(connections) == 2 or len(ports) == 1:
             connector = line.subject
-            for conn, h in connected:
-                c = self.get_component(conn)
-                self.drop_uml(conn, c)
+            for ci in connections:
+                c = self.get_component(ci.item)
+                self.drop_uml(ci.item, c)
                 conn.request_update(matrix=False)
             connector.unlink()
         else:
@@ -235,8 +237,8 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         if glue_ok:
             # find connected items, which are not connectors
             canvas = self.element.canvas
-            connected = self.get_connecting(self.element)
-            lines = [l for l, h in connected if not isinstance(l, items.ConnectorItem)]
+            connections = self.get_connecting(self.element)
+            lines = [c.item for c in connections if not isinstance(c.item, items.ConnectorItem)]
             glue_ok = len(lines) == 0
 
         return glue_ok
@@ -254,7 +256,7 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         index = ports.index(port)
         rport = ports[(index + 2) % 4]
         if not port.provided and not port.required:
-            component = self.get_connected_to_item(self.line.opposite(handle))
+            component = self.get_connected(self.line.opposite(handle))
             if component is not None and iface.subject in component.subject.required:
                 pport, rport = rport, pport
 
