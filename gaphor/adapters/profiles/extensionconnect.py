@@ -29,8 +29,8 @@ class ExtensionConnect(RelationshipConnect):
         element = self.element
         line = self.line
 
-        c1 = self.get_connected_to_item(line.head)
-        c2 = self.get_connected_to_item(line.tail)
+        c1 = self.get_connected(line.head)
+        c2 = self.get_connected(line.tail)
         if c1 and c2:
             head_type = c1.subject
             tail_type = c2.subject
@@ -76,8 +76,8 @@ class ExtensionConnect(RelationshipConnect):
         Extension
         """
         opposite = self.line.opposite(handle)
-        hct = self.get_connected_to_item(handle)
-        oct = self.get_connected_to_item(opposite)
+        hct = self.get_connected(handle)
+        oct = self.get_connected(opposite)
         if hct and oct:
             old = self.line.subject
             del self.line.subject
