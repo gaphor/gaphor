@@ -59,11 +59,11 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        c = self.get_connected_to_item(a, a.head)
+        c = self.get_connected(a.head)
         self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        c = self.get_connected_to_item(a, a.tail)
+        c = self.get_connected(a.tail)
         self.assertTrue(c is c2)
 
         head = a._head_end
@@ -89,11 +89,11 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        c = self.get_connected_to_item(a, a.head)
+        c = self.get_connected(a.head)
         self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        c = self.get_connected_to_item(a, a.tail)
+        c = self.get_connected(a.tail)
         self.assertTrue(c is c2)
 
         head = a._head_end
@@ -119,11 +119,11 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        c = self.get_connected_to_item(a, a.head)
+        c = self.get_connected(a.head)
         self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        c = self.get_connected_to_item(a, a.tail)
+        c = self.get_connected(a.tail)
         self.assertTrue(c is c2)
 
         head = a._head_end
@@ -149,11 +149,11 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        c = self.get_connected_to_item(a, a.head)
+        c = self.get_connected(a.head)
         self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        c = self.get_connected_to_item(a, a.tail)
+        c = self.get_connected(a.tail)
         self.assertTrue(c is c2)
 
         head = a._head_end
@@ -180,11 +180,11 @@ class AssociationItemTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        c = self.get_connected_to_item(a, a.head)
+        c = self.get_connected(a.head)
         self.assertTrue(c is c1)
 
         self.connect(a, a.tail, c2)
-        c = self.get_connected_to_item(a, a.tail)
+        c = self.get_connected(a.tail)
         self.assertTrue(c is c2)
 
         assert a.subject.memberEnd, a.subject.memberEnd
