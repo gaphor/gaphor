@@ -73,9 +73,9 @@ class LifetimeItem(object):
         """
         Set lifeline's lifetime length.
         """
-        self.bottom.y = self.top.y + length
+        self.bottom.pos.y = self.top.pos.y + length
 
-    length = property(lambda s: s.bottom.y - s.top.y, _set_length)
+    length = property(lambda s: s.bottom.pos.y - s.top.pos.y, _set_length)
 
     def _set_min_length(self, length):
         assert self._c_min_length is not None
@@ -98,9 +98,9 @@ class LifetimeItem(object):
         Set lifetime visibility.
         """
         if visible:
-            self.bottom.y = self.top.y + 3 * self.MIN_LENGTH
+            self.bottom.pos.y = self.top.pos.y + 3 * self.MIN_LENGTH
         else:
-            self.bottom.y = self.top.y + self.MIN_LENGTH
+            self.bottom.pos.y = self.top.pos.y + self.MIN_LENGTH
 
     visible = property(_is_visible, _set_visible)
 
@@ -142,7 +142,7 @@ class LifelineItem(NamedItem):
         # create constraints to:
         # - keep bottom handle below top handle
         # - keep top and bottom handle in the middle of the head
-        self._constraints.append(CenterConstraint(self._handles[SW].x, self._handles[SE].x, bottom.x))
+        self._constraints.append(CenterConstraint(self._handles[SW].pos.x, self._handles[SE].pos.x, bottom.pos.x))
         self.constraint(vertical=(top.pos, bottom.pos))
         self.constraint(horizontal=(self._handles[SW].pos, top.pos))
         self.lifetime._c_min_length = self.constraint(above=(top.pos, bottom.pos),
@@ -156,7 +156,7 @@ class LifelineItem(NamedItem):
 
     def load(self, name, value):
         if name == 'lifetime-length':
-            self.lifetime.bottom.y = self.height + float(value)
+            self.lifetime.bottom.pos.y = self.height + float(value)
         else:
             super(LifelineItem, self).load(name, value)
 
@@ -180,8 +180,8 @@ class LifelineItem(NamedItem):
             cr = context.cairo
             cr.save()
             cr.set_dash((7.0, 5.0), 0)
-            cr.move_to(top.x, top.y)
-            cr.line_to(bottom.x, bottom.y)
+            cr.move_to(top.pos.x, top.pos.y)
+            cr.line_to(bottom.pos.x, bottom.pos.y)
             cr.stroke()
             cr.restore()
 
@@ -189,10 +189,10 @@ class LifelineItem(NamedItem):
             if self.is_destroyed:
                 d1 = 8
                 d2 = d1 * 2
-                cr.move_to(bottom.x - d1, bottom.y - d2)
-                cr.line_to(bottom.x + d1, bottom.y)
-                cr.move_to(bottom.x - d1, bottom.y)
-                cr.line_to(bottom.x + d1, bottom.y - d2)
+                cr.move_to(bottom.pos.x - d1, bottom.pos.y - d2)
+                cr.line_to(bottom.pos.x + d1, bottom.pos.y)
+                cr.move_to(bottom.pos.x - d1, bottom.pos.y)
+                cr.line_to(bottom.pos.x + d1, bottom.pos.y - d2)
                 cr.stroke()
 
 

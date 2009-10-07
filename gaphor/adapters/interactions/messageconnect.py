@@ -51,8 +51,8 @@ class MessageLifelineConnect(AbstractConnect):
         there are no lifelines connected on both ends, then remove the message
         from the data model.
         """
-        send = line.head.connected_to
-        received = line.tail.connected_to
+        send = self.get_connected(line.head)
+        received = self.get_connected(line.tail)
 
         if send:
             event = line.subject.receiveEvent
@@ -91,8 +91,9 @@ class MessageLifelineConnect(AbstractConnect):
         line = self.line
         opposite = line.opposite(handle)
 
-        if opposite.connected_to:
-            opposite_is_visible = opposite.connected_to.lifetime.visible
+        ol = self.get_connected(opposite)
+        if ol:
+            opposite_is_visible = ol.lifetime.visible
             # connect lifetimes if both are visible or both invisible
             return not (lifetime.visible ^ opposite_is_visible)
 
@@ -103,8 +104,8 @@ class MessageLifelineConnect(AbstractConnect):
         super(MessageLifelineConnect, self).connect(handle, port)
 
         line = self.line
-        send = line.head.connected_to
-        received = line.tail.connected_to
+        send = self.get_connected(line.head)
+        received = self.get_connected(line.tail)
         self.connect_lifelines(line, send, received)
 
         lifetime = self.element.lifetime
@@ -120,8 +121,8 @@ class MessageLifelineConnect(AbstractConnect):
         super(MessageLifelineConnect, self).disconnect(handle)
 
         line = self.line
-        send = line.head.connected_to
-        received = line.tail.connected_to
+        send = self.get_connected(line.head)
+        received = self.get_connected(line.tail)
         lifeline = self.element
         lifetime = lifeline.lifetime
 
@@ -134,7 +135,7 @@ class MessageLifelineConnect(AbstractConnect):
 
         self.disconnect_lifelines(line)
 
-        if len(line.canvas.get_connected_items(lifeline)) == 1:
+        if len(list(self.canvas.get_connections(connected=lifeline))) == 1:
             # after disconnection count of connected items will be
             # zero, so allow connections to lifeline's lifetime
             lifetime.connectable = True
