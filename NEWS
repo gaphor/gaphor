@@ -1,12 +1,12 @@
 0.14.1
 ------
-
-- Fixed bug when loading diagrams.
-------
-- node can group
+- Fixed bug related to diagrams loading.
+- Node can group
   - other nodes
   - artifacts
   - components
+- Stereotype names shown in stereotype attribute compartments are centered
+  now.
 
 0.14.0
 ------
