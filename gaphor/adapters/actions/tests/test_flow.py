@@ -347,7 +347,7 @@ class FlowItemDesisionAndForkNodes:
 
         # test disconnection
         self.disconnect(flow4, flow4.head)
-        assert canvas.get_connected_to(flow4, flow4.head) is None
+        assert self.get_connected(flow4.head) is None
         self.assertTrue(jn.combined is None)
 
         flows = self.kindof(UML.ControlFlow)

@@ -31,8 +31,8 @@ class FlowConnect(RelationshipConnect):
         element = self.element
         # TODO: connect opposite side again (in case it's a join/fork or
         #       decision/merge node)
-        hct = self.get_connected_to_item(line.head)
-        tct = self.get_connected_to_item(line.tail)
+        hct = self.get_connected(line.head)
+        tct = self.get_connected(line.tail)
         if isinstance(hct, items.ObjectNodeItem) or isinstance(tct, items.ObjectNodeItem):
             relation = self.relationship_or_new(UML.ObjectFlow,
                         ('source', 'outgoing'),
@@ -45,7 +45,7 @@ class FlowConnect(RelationshipConnect):
             relation.guard = self.element_factory.create(UML.LiteralSpecification)
         line.subject = relation
         opposite = line.opposite(handle)
-        otc = self.get_connected_to_item(opposite)
+        otc = self.get_connected(opposite)
         if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
             adapter = component.queryMultiAdapter((otc, line), IConnect)
             adapter.combine_nodes()
@@ -54,7 +54,7 @@ class FlowConnect(RelationshipConnect):
         super(FlowConnect, self).disconnect_subject(handle)
         line = self.line
         opposite = line.opposite(handle)
-        otc = self.get_connected_to_item(opposite)
+        otc = self.get_connected(opposite)
         if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
             adapter = component.queryMultiAdapter((otc, line), IConnect)
             adapter.decombine_nodes()
@@ -77,8 +77,8 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         head, tail = self.line.head, self.line.tail
         subject = self.element.subject
         
-        hct = self.get_connected_to_item(head)
-        tct = self.get_connected_to_item(tail)
+        hct = self.get_connected(head)
+        tct = self.get_connected(tail)
         if handle is head and tct and tct.subject is subject \
            or handle is tail and hct and hct.subject is subject:
             return None
