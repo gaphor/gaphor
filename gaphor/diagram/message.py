@@ -279,10 +279,11 @@ class MessageItem(NamedLine):
         Check if message is connecting to lifelines on communication
         diagram.
         """
-        lf1 = self.head.connected_to
-        lf2 = self.tail.connected_to
-        return lf1 and not lf1.lifetime.visible \
-                or lf2 and not lf2.lifetime.visible
+        canvas = self.canvas
+        c1 = canvas.get_connection(self.head)
+        c2 = canvas.get_connection(self.tail)
+        return c1 and not c1.connected.lifetime.visible \
+                or c2 and not c2.connected.lifetime.visible
 
 
     def add_message(self, message, inverted):
