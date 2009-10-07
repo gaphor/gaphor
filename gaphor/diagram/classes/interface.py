@@ -117,8 +117,8 @@ class InterfacePort(LinePort):
         connection to the middle point of a port.
         """
         if self.iface.folded:
-            px = (self.start[0] + self.end[0]) / 2
-            py = (self.start[1] + self.end[1]) / 2
+            px = (self.start.x + self.end.x) / 2
+            py = (self.start.y + self.end.y) / 2
             d = distance_point_point((px, py), pos)
             return (px, py), d
         else:
@@ -184,10 +184,10 @@ class InterfaceItem(ClassItem):
 
         # edge of element define default element ports
         self._ports = [
-            InterfacePort(h_nw, h_ne, self, 0),
-            InterfacePort(h_ne, h_se, self, pi / 2),
-            InterfacePort(h_se, h_sw, self, pi),
-            InterfacePort(h_sw, h_nw, self, pi * 1.5)
+            InterfacePort(h_nw.pos, h_ne.pos, self, 0),
+            InterfacePort(h_ne.pos, h_se.pos, self, pi / 2),
+            InterfacePort(h_se.pos, h_sw.pos, self, pi),
+            InterfacePort(h_sw.pos, h_nw.pos, self, pi * 1.5)
         ]
 
         self.watch('subject<Interface>.ownedAttribute', self.on_class_owned_attribute) \
