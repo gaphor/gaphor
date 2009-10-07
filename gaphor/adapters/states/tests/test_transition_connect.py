@@ -89,7 +89,7 @@ class TransitionConnectorTestCase(TestCase):
         # to `t`
         glued = self.glue(t2, t2.head, v1)
         self.assertFalse(glued)
-        self.assertTrue(t2.head.connected_to is None)
+        self.assertTrue(self.get_connected(t2.head) is None)
 
 
     def test_initial_pseudostate_disconnect(self):
@@ -103,11 +103,11 @@ class TransitionConnectorTestCase(TestCase):
 
         # connect head of transition to an initial pseudostate
         self.connect(t, t.head, v1)
-        self.assertTrue(t.head.connected_to)
+        self.assertTrue(self.get_connected(t.head))
 
         # perform the test
         self.disconnect(t, t.head)
-        self.assertFalse(t.head.connected_to)
+        self.assertFalse(self.get_connected(t.head))
 
 
     def test_initial_pseudostate_tail_glue(self):
