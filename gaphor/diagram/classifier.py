@@ -218,7 +218,7 @@ class ClassifierItem(NamedItem):
 
     def _remove_stereotype_compartment(self, obj):
         comp = self._find_stereotype_compartment(obj)
-        if comp:
+        if comp is not None:
             self._compartments.remove(comp)
             self.request_update()
 
