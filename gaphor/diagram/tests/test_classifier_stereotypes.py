@@ -73,7 +73,7 @@ class StereotypesAttributesTestCase(TestCase):
 
         compartment = c._compartments[0]
         self.assertTrue(compartment.visible)
-        self.assertEquals(2, len(compartment))
+        self.assertEquals(1, len(compartment))
 
 
     def test_removing_last_slot(self):
