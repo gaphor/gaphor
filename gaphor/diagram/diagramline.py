@@ -88,7 +88,7 @@ class DiagramLine(LineItem):
         c = canvas.get_connection(self.head)
         if c:
             save_func('head-connection', c.connected, reference=True)
-        c = canvas.get_connection(self, self.tail)
+        c = canvas.get_connection(self.tail)
         if c:
             save_func('tail-connection', c.connected, reference=True)
 
