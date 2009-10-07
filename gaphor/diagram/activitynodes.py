@@ -231,7 +231,7 @@ class ForkNodeItem(Item, DiagramItem):
 
     def save(self, save_func):
         save_func('matrix', tuple(self.matrix))
-        save_func('height', float(self._handles[1].y))
+        save_func('height', float(self._handles[1].pos.y))
         if self._combined:
             save_func('combined', self._combined, reference=True)
         DiagramItem.save(self, save_func)
@@ -240,7 +240,7 @@ class ForkNodeItem(Item, DiagramItem):
         if name == 'matrix':
             self.matrix = eval(value)
         elif name == 'height':
-            self._handles[1].y = eval(value)
+            self._handles[1].pos.y = eval(value)
         elif name == 'combined':
             self._combined = value
         else:
