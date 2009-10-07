@@ -124,7 +124,7 @@
     <element>Node</element>
   </icon>
   <icon id="gaphor-device">
-    <file>node24.png</file>
+    <file>device24.png</file>
     <element>Device</element>
   </icon>
   <icon id="gaphor-operation">
