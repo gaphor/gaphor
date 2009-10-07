@@ -693,7 +693,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
         button.connect('toggled', self._on_fold_change)
         item = self.context
 
-        connected_items = [c[0] for c in item.canvas.get_connected_items(item)]
+        connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
         allowed = (items.DependencyItem, items.ImplementationItem)
         can_fold = len(connected_items) == 0 \
             or len(connected_items) == 1 and isinstance(connected_items[0], allowed)
@@ -711,7 +711,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
     def _on_fold_change(self, button):
         item = self.context
 
-        connected_items = [c[0] for c in item.canvas.get_connected_items(item)]
+        connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
         assert len(connected_items) <= 1
 
         line = None
