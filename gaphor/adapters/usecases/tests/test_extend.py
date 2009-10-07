@@ -25,10 +25,10 @@ class ExtendItemTestCase(TestCase):
         extend = self.create(items.ExtendItem)
 
         self.connect(extend, extend.head, uc1)
-        self.assertTrue(extend.head.connected_to, uc1)
+        self.assertTrue(self.get_connected(extend.head), uc1)
 
         self.connect(extend, extend.tail, uc2)
-        self.assertTrue(extend.tail.connected_to, uc2)
+        self.assertTrue(self.get_connected(extend.tail), uc2)
 
 
     def test_use_case_disconnect(self):
@@ -42,11 +42,11 @@ class ExtendItemTestCase(TestCase):
         self.connect(extend, extend.tail, uc2)
 
         self.disconnect(extend, extend.head)
-        self.assertTrue(extend.head.connected_to is None)
+        self.assertTrue(self.get_connected(extend.head) is None)
         self.assertTrue(extend.subject is None)
 
         self.disconnect(extend, extend.tail)
-        self.assertTrue(extend.tail.connected_to is None)
+        self.assertTrue(self.get_connected(extend.tail) is None)
 
 
 
