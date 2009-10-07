@@ -114,7 +114,7 @@ class ConnectorConnectBase(AbstractConnect):
 
         if isinstance(component, items.InterfaceItem):
             component, iface = iface, component
-            port = self.get_connected_to_port(self.line.opposite(handle))
+            port = self.get_connected_port(self.line.opposite(handle))
 
         # connect only components and interfaces but not two interfaces nor
         # two components

@@ -23,7 +23,7 @@ class CommentLineTestCase(TestCase):
 
         self.connect(line, line.head, comment)
         # connected, but no annotated element yet
-        self.assertTrue(self.get_connected_to_item(line, line.head) is not None)
+        self.assertTrue(self.get_connected(line.head) is not None)
         self.assertFalse(comment.subject.annotatedElement)
 
 
@@ -47,7 +47,7 @@ class CommentLineTestCase(TestCase):
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
-        self.assertTrue(self.get_connected_to_item(line, line.tail) is ac)
+        self.assertTrue(self.get_connected(line.tail) is ac)
         self.assertEquals(1, len(comment.subject.annotatedElement))
         self.assertTrue(ac.subject in comment.subject.annotatedElement)
 
@@ -62,10 +62,10 @@ class CommentLineTestCase(TestCase):
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
 
-        self.assertTrue(self.get_connected_to_item(line, line.tail) is ac)
+        self.assertTrue(self.get_connected(line.tail) is ac)
 
         self.disconnect(line, line.tail)
-        self.assertFalse(self.get_connected_to_item(line, line.tail) is ac)
+        self.assertFalse(self.get_connected(line.tail) is ac)
 
         
     def test_commentline_unlink(self):
