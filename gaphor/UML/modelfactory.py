@@ -181,7 +181,7 @@ def set_navigability(assoc, end, nav):
     - if A is a class or an interface, then A.x is an attribute owned by A
     - if A is other classifier, then association is more general
       relationship; it may mean that participating instance of B can be
-      "accessed efficiently";
+      "accessed efficiently"
       - i.e. when A is a Component, then association may be some compositing
         relationship
       - when A and B are instances of Node class, then it is a
