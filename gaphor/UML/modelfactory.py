@@ -186,6 +186,11 @@ def set_navigability(assoc, end, nav):
         relationship
       - when A and B are instances of Node class, then it is a
         communication path
+
+    Therefore navigable association end may be stored as one of
+    - {Class,Interface}.ownedAttribute due to Gaphor capabilities of
+      editing owned members
+    - Association.navigableOwnedEnd
     """
 
 
