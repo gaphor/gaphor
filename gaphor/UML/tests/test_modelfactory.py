@@ -126,5 +126,29 @@ class StereotypesTest(unittest.TestCase):
         self.assertEquals(('st1', 'st2'), result)
 
 
+class AssociationEndNavigabilityTestCase(unittest.TestCase):
+    def setUp(self):
+        Application.init_components()
+        self.factory = UML.ElementFactory()
+        self.factory.init(Application)
+
+    
+    def test_attribute_navigability(self):
+        """Test navigable attribute of a class or an interface
+        """
+        self.assertTrue(false)
+
+
+    def test_relationship_navigability(self):
+        """Test navigable relationship of a classifier
+        """
+        self.assertTrue(false)
+
+
+    def test_actor_navigability(self):
+        """Test navigable relationship of an actor
+        """
+        self.assertTrue(false)
+
 
 # vim:sw=4:et
