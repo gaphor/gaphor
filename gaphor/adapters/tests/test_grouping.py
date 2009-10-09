@@ -3,6 +3,7 @@ Tests for grouping functionality in Gaphor.
 """
 
 from gaphor import UML
+from gaphor.ui.namespace import NamespaceModel
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IGroup
 from zope import component
@@ -145,6 +146,19 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         self.assertEquals(1, len(uc2.subject.subject))
 
         self.assertEquals(2, len(s.subject.useCase))
+
+
+    def test_grouping_with_namespace(self):
+        """Test adding an use case to a subsystem (with namespace)
+        """
+        s = self.create(items.SubsystemItem, UML.Component)
+        uc = self.create(items.UseCaseItem, UML.UseCase)
+
+        namespace = NamespaceModel(self.element_factory)
+
+        self.group(s, uc)
+        self.assertEquals(1, len(uc.subject.subject))
+        self.assertTrue(uc.subject not in s.subject.namespace)
 
 
     def test_ungrouping(self):
