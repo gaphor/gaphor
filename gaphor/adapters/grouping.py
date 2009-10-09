@@ -211,3 +211,31 @@ component.provideAdapter(factory=NodeArtifactGroup,
 component.provideAdapter(factory=NodeArtifactGroup,
         adapts=(items.NodeItem, items.ArtifactItem))
 
+
+
+class SubsystemUseCaseGroup(AbstractGroup):
+    """
+    Make subsystem a subject of an use case.
+    """
+    def can_contain(self):
+        return isinstance(self.parent, items.SubsystemItem) \
+                and issubclass(self.item_class, items.UseCaseItem)
+
+
+    def group(self):
+        component = self.parent.subject
+        usecase = self.item.subject
+        usecase.subject = component
+
+
+    def ungroup(self):
+        component = self.parent.subject
+        usecase = self.item.subject
+        usecase.subject.remove(component)
+
+
+component.provideAdapter(factory=SubsystemUseCaseGroup,
+        adapts=(items.SubsystemItem, DiagramItemMeta))
+component.provideAdapter(factory=SubsystemUseCaseGroup,
+        adapts=(items.SubsystemItem, items.UseCaseItem))
+

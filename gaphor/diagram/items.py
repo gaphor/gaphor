@@ -30,6 +30,7 @@ from gaphor.diagram.artifact import ArtifactItem
 from gaphor.diagram.connector import ConnectorItem
 from gaphor.diagram.component import ComponentItem
 from gaphor.diagram.node import NodeItem
+from gaphor.diagram.components.subsystem import SubsystemItem
 
 # Actions:
 from gaphor.diagram.action import ActionItem

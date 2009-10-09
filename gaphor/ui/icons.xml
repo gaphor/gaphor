@@ -171,4 +171,8 @@
     <file>usecase24.png</file>
     <element>UseCase</element>
   </icon>
+  <icon id="gaphor-subsystem">
+    <file>subsystem24.png</file>
+    <element>Component</element>
+  </icon>
 </stock-icons>

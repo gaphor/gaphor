@@ -35,9 +35,10 @@ TOOLBOX_ACTIONS = (
         ('toolbox-implementation', _('Implementation'), 'gaphor-implementation'),
     )), (_('Components'), (
         ('toolbox-component', _('Component'), 'gaphor-component'),
+        ('toolbox-artifact', _('Artifact'), 'gaphor-artifact'),
         ('toolbox-node', _('Node'), 'gaphor-node'),
         ('toolbox-device', _('Device'), 'gaphor-device'),
-        ('toolbox-artifact', _('Artifact'), 'gaphor-artifact'),
+        ('toolbox-subsystem', _('Subsystem'), 'gaphor-subsystem'),
         ('toolbox-connector', _('Connector'), 'gaphor-connector'),
     )), (_('Actions'), (
         ('toolbox-action', _('Action'), 'gaphor-action'),
@@ -239,6 +240,13 @@ class DiagramToolbox(object):
                 handle_index=SE,
                 after_handler=self._after_handler)
 
+    def toolbox_artifact(self):
+        return PlacementTool(
+                item_factory=self._namespace_item_factory(items.ArtifactItem,
+                                                          UML.Artifact),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
     def toolbox_node(self):
         return GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.NodeItem,
@@ -253,10 +261,10 @@ class DiagramToolbox(object):
                 handle_index=SE,
                 after_handler=self._after_handler)
 
-    def toolbox_artifact(self):
-        return PlacementTool(
-                item_factory=self._namespace_item_factory(items.ArtifactItem,
-                                                          UML.Artifact),
+    def toolbox_subsystem(self):
+        return GroupPlacementTool(
+                item_factory=self._namespace_item_factory(items.SubsystemItem,
+                    UML.Component),
                 handle_index=SE,
                 after_handler=self._after_handler)
 

@@ -111,3 +111,58 @@ class NodeArtifactGroupTestCase(TestCase):
         self.assertEquals(0, len(n.subject.deployment))
         self.assertEquals(0, len(self.kindof(UML.Deployment)))
 
+
+
+class SubsystemUseCaseGroupTestCase(TestCase):
+    def group(self, parent, item):
+        """
+        Group item within a parent.
+        """
+        query = (parent, item)
+        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter.group()
+
+
+    def ungroup(self, parent, item):
+        """
+        Remove item from a parent.
+        """
+        query = (parent, item)
+        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter.ungroup()
+
+
+    def test_grouping(self):
+        """Test adding an use case to a subsystem
+        """
+        s = self.create(items.SubsystemItem, UML.Component)
+        uc1 = self.create(items.UseCaseItem, UML.UseCase)
+        uc2 = self.create(items.UseCaseItem, UML.UseCase)
+
+        self.group(s, uc1)
+        self.assertEquals(1, len(uc1.subject.subject))
+        self.group(s, uc2)
+        self.assertEquals(1, len(uc2.subject.subject))
+
+        self.assertEquals(2, len(s.subject.useCase))
+
+
+    def test_ungrouping(self):
+        """Test removal of use case from subsystem
+        """
+        s = self.create(items.SubsystemItem, UML.Component)
+        uc1 = self.create(items.UseCaseItem, UML.UseCase)
+        uc2 = self.create(items.UseCaseItem, UML.UseCase)
+
+        self.group(s, uc1)
+        self.group(s, uc2)
+
+        self.ungroup(s, uc1)
+        self.assertEquals(0, len(uc1.subject.subject))
+        self.assertEquals(1, len(s.subject.useCase))
+
+        self.ungroup(s, uc2)
+        self.assertEquals(0, len(uc2.subject.subject))
+        self.assertEquals(0, len(s.subject.useCase))
+
+
