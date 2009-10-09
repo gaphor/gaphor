@@ -151,10 +151,9 @@ class SubsystemUseCaseGroupTestCase(TestCase):
     def test_grouping_with_namespace(self):
         """Test adding an use case to a subsystem (with namespace)
         """
+        namespace = NamespaceModel(self.element_factory)
         s = self.create(items.SubsystemItem, UML.Component)
         uc = self.create(items.UseCaseItem, UML.UseCase)
-
-        namespace = NamespaceModel(self.element_factory)
 
         self.group(s, uc)
         self.assertEquals(1, len(uc.subject.subject))
