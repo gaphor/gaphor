@@ -20910,6 +20910,7 @@ ownedMember]]></val>
 <ref refid="DCE:BFC7B66E-4B37-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:38A9AE44-4B54-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:E1377E1A-4B34-11D7-B391-02BBFE4396CE"/>
+<ref refid="DCE:3EEBCC18-6698-11D7-A84E-6C8643AD0CA4"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -25364,6 +25365,9 @@ classifier]]></val>
 <association>
 <ref refid="DCE:3EEB934C-6698-11D7-A84E-6C8643AD0CA4"/>
 </association>
+<class_>
+<ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
+</class_>
 <lowerValue>
 <ref refid="DCE:23B973F4-DB15-11D7-8BD0-27F1E06F5E9F"/>
 </lowerValue>
