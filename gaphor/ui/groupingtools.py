@@ -86,25 +86,21 @@ class GroupPlacementTool(PlacementTool):
         view.dropzone_item = None
         view.window.set_cursor(None)
 
-        # if no parent, then create with parent placement tool
-        if not self._parent:
-            return super(GroupPlacementTool, self)._create_item(context, pos)
+        parent = self._parent
+        if parent:
+            adapter = component.queryMultiAdapter((parent, self._factory.item_class()), IGroup)
+            if adapter and adapter.can_contain():
+                item = self._factory(parent)
+                adapter.item = item
+                adapter.group()
+                # get item position through parent world
+                x, y = view.canvas.get_matrix_c2i(parent).transform_point(*pos)
+                item.matrix.translate(x, y)
+                return item
 
-        item = self._factory(self._parent)
-
-        adapter = component.queryMultiAdapter((self._parent, item), IGroup)
-        if adapter and adapter.can_contain():
-            adapter.group()
-            # get item position through parent world
-            x, y = view.canvas.get_matrix_c2i(self._parent).transform_point(*pos)
-        else:
-            view.canvas.reparent(item, None)
-            # get item position through its world
-            x, y = view.get_matrix_v2i(item).transform_point(*pos)
-
-        item.matrix.translate(x, y)
-
-        return item
+        # if no parent or cannot group with an adapter, then create with
+        # parent placement tool
+        return super(GroupPlacementTool, self)._create_item(context, pos)
 
 
 class GroupItemTool(ItemTool):
