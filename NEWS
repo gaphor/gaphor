@@ -11,8 +11,9 @@
 
 0.14.0
 ------
-- reintroduced assembly connections
-- stereotypes can have attributes
+- Reintroduced assembly connections.
+- Stereotypes can have attributes.
+- Major speed improvements due to new notification system.
 
 0.13.1
 ------
