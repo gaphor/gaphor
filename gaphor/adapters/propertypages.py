@@ -1299,7 +1299,7 @@ class FlowPropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        self.context.set_guard(value)
+        self.context.subject.guard.value = value
 
 
 component.provideAdapter(FlowPropertyPage, name='Properties')
