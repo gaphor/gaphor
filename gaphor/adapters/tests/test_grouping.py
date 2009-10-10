@@ -155,9 +155,14 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         s = self.create(items.SubsystemItem, UML.Component)
         uc = self.create(items.UseCaseItem, UML.UseCase)
 
+        # manipulate namespace
+        c = self.element_factory.create(UML.Class)
+        attribute = self.element_factory.create(UML.Property)
+        c.ownedAttribute = attribute
+
         self.group(s, uc)
         self.assertEquals(1, len(uc.subject.subject))
-        self.assertTrue(uc.subject not in s.subject.namespace)
+        self.assertTrue(s.subject.namespace is not uc.subject)
 
 
     def test_ungrouping(self):
