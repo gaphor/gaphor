@@ -21,33 +21,39 @@ class PartitionItem(NamedItem):
     }
     def __init__(self, id=None):
         super(PartitionItem, self).__init__(id)
+        self._superpart = False
+        self._subpart = False
+        self._hdmax = 0 # maximum subpartition header height
 
 
     def pre_update(self, context):
         super(PartitionItem, self).pre_update(context)
+        
+        if not self.subject:
+            self._header_size = self._header_size[0], 30
 
         # get subpartitions
         children = list(k for k in self.canvas.get_children(self)
                 if isinstance(k, PartitionItem))
 
-        has_parent = self.canvas.get_parent(self) is not None
-        has_children = len(children) > 0
+        self._superpart = self.canvas.get_parent(self) is not None
+        self._subpart = len(children) > 0
 
         handles = self.handles()
         for h in handles:
-            h.movable = not (has_children or has_parent)
-        if has_parent and not has_children:
+            h.movable = not (self._subpart or self._superpart)
+        if self._superpart and not self._subpart:
             h = handles[2]
             h.movable = True
 
 
-        if has_children:
+        if self._subpart:
             wsum = sum(sl.width for sl in children)
             hmax = max(sl.height for sl in children)
-            hdmax = max(sl._header_size[1] for sl in children)
+            self._hdmax = max(sl._header_size[1] for sl in children)
 
             self.width = wsum
-            self.height = hmax + self._header_size[1] + 10
+            self.height = hmax + self._header_size[1] + 30
 
             dp = 0
             for sl in self.canvas.get_children(self):
@@ -56,7 +62,7 @@ class PartitionItem(NamedItem):
 
                 # line up headers
                 x = x - x1
-                y = y - y1 + self._header_size[1] + hdmax - sl._header_size[1]
+                y = y - y1 + self._header_size[1] + self._hdmax - sl._header_size[1]
                 sl.matrix.translate(x, y)
 
                 sl.height = hmax
@@ -75,9 +81,7 @@ class PartitionItem(NamedItem):
         cr = context.cairo
         cr.set_line_width(2.5)
 
-        has_parent = self.canvas.get_parent(self) is None
-
-        if self.subject and not self.subject.isDimension and has_parent:
+        if self.subject and not self.subject.isDimension and not self._superpart:
             cr.move_to(0, 0)
             cr.line_to(self.width, 0)
 
@@ -85,15 +89,32 @@ class PartitionItem(NamedItem):
         cr.move_to(0, h)
         cr.line_to(self.width, h)
 
-        if has_parent:
-            cr.move_to(0, 0)
-            cr.line_to(0, self.height)
+        # draw lanes if this item is superpartition
+        if self._subpart or not self._superpart:
+            dp = 0
+            for sl in self.canvas.get_children(self):
+                cr.move_to(dp, h)
+                cr.line_to(dp, self.height)
+                dp += sl.width
+            else:
+                cr.move_to(dp, h)
+                cr.line_to(dp, self.height)
+            cr.move_to(self.width, h)
+            cr.line_to(self.width, self.height)
 
-        # but if is not last
-        cr.move_to(self.width, 0)
-        cr.line_to(self.width, self.height)
-
+            # header line for all subparitions
+            h += self._hdmax
+            cr.move_to(0, h)
+            cr.line_to(self.width, h)
         cr.stroke()
+
+        if context.hovered or context.dropzone:
+            cr.save()
+            cr.set_dash((1.0, 5.0), 0)
+            cr.set_line_width(1.0)
+            cr.rectangle(0, 0, self.width, self.height)
+            cr.stroke()
+            cr.restore()
 
 
 # vim:sw=4:et

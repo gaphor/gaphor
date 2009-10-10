@@ -211,6 +211,7 @@ class ActivityPartitionsGroup(AbstractGroup):
         p = self.parent.subject
         sp = self.element_factory.create(UML.ActivityPartition)
         self.item.subject = sp
+        sp.name = 'Swimlane'
         if p:
             p.subpartition = sp
         self.parent.request_update()
