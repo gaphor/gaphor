@@ -192,6 +192,10 @@ def set_navigability(assoc, end, nav):
       editing owned members
     - Association.navigableOwnedEnd
     """
+    if isinstance(end.owner, (UML.Class, UML.Interface)):
+        end.owner.ownedAttribute = end
+    else:
+        assoc.navigableOwnedEnd = end
 
 
 def get_navigability(assoc, end):

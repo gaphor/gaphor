@@ -41,6 +41,7 @@ from gaphor.diagram.activitynodes import DecisionNodeItem
 from gaphor.diagram.activitynodes import ForkNodeItem
 from gaphor.diagram.flow import FlowItem
 from gaphor.diagram.objectnode import ObjectNodeItem
+from gaphor.diagram.actions.partition import PartitionItem
 
 # Interactions
 from gaphor.diagram.interaction import InteractionItem

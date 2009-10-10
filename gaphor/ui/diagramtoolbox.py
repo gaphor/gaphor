@@ -48,6 +48,7 @@ TOOLBOX_ACTIONS = (
         ('toolbox-decision-node', _('Decision/merge node'), 'gaphor-decision-node'),
         ('toolbox-fork-node', _('Fork/join node'), 'gaphor-fork-node'),
         ('toolbox-object-node', _('Object node'), 'gaphor-object-node'),
+        ('toolbox-partition', _('Partition'), 'gaphor-partition'),
         ('toolbox-flow', _('Control/object flow'), 'gaphor-control-flow'),
     )), (_('Interactions'), (
         ('toolbox-lifeline', _('Lifeline'), 'gaphor-lifeline'),
@@ -276,51 +277,58 @@ class DiagramToolbox(object):
     # Actions:
 
     def toolbox_action(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.ActionItem,
                                                           UML.Action),
                 handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_initial_node(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._item_factory(items.InitialNodeItem,
                                                 UML.InitialNode),
                 handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_activity_final_node(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._item_factory(items.ActivityFinalNodeItem,
                                                 UML.ActivityFinalNode),
                 handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_flow_final_node(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._item_factory(items.FlowFinalNodeItem,
                                                 UML.FlowFinalNode),
                 handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_decision_node(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._item_factory(items.DecisionNodeItem,
                                                 UML.DecisionNode),
                 handle_index=SE,
                 after_handler=self._after_handler)
 
     def toolbox_fork_node(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._item_factory(items.ForkNodeItem,
                                                 UML.JoinNode),
                 handle_index=1,
                 after_handler=self._after_handler)
 
     def toolbox_object_node(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.ObjectNodeItem,
                                                           UML.ObjectNode),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_partition(self):
+        return GroupPlacementTool(
+                item_factory=self._namespace_item_factory(items.PartitionItem,
+                                                          UML.ActivityPartition),
                 handle_index=SE,
                 after_handler=self._after_handler)
 

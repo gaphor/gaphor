@@ -175,4 +175,8 @@
     <file>subsystem24.png</file>
     <element>Component</element>
   </icon>
+  <icon id="gaphor-partition">
+    <file>partition24.png</file>
+    <element>ActivityPartition</element>
+  </icon>
 </stock-icons>

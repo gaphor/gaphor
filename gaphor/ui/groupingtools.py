@@ -158,6 +158,8 @@ class GroupItemTool(ItemTool):
             assert over is not item
 
             if over is parent:
+                if parent is not None:
+                    parent.request_update(matrix=False)
                 return
 
             if parent: # remove from parent

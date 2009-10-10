@@ -3,6 +3,8 @@ Support for editable text, a part of a diagram item, i.e. name of named
 item, guard of flow item, etc.
 """
 
+import math
+
 from gaphor.diagram.style import Style
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 import gaphor.diagram.font as font
@@ -281,6 +283,11 @@ class EditableTextSupport(object):
         """
         cr = context.cairo
         cr.save()
+
+        # fixme: do it on per group basis
+        if any(txt._style.text_rotated for txt in self._get_visible_texts(self._texts)):
+            cr.rotate(-math.pi/2)
+
         for txt in self._get_visible_texts(self._texts):
             bounds = txt.bounds
             x, y = bounds.x, bounds.y
@@ -349,6 +356,7 @@ class TextElement(object):
         self._style.add('text-padding', (2, 2, 2, 2))
         self._style.add('text-align', (ALIGN_CENTER, ALIGN_TOP))
         self._style.add('text-outside', False)
+        self._style.add('text-rotated', False)
         self._style.add('text-align-str', None)
         if style:
             self._style.update(style)

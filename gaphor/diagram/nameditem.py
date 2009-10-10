@@ -18,6 +18,7 @@ class NamedItem(ElementItem):
         'name-padding': (5, 10, 5, 10),
         'name-outside': False,
         'name-align-str': None,
+        'name-rotated': False,
     }
 
     def __init__(self, id=None):
@@ -38,6 +39,7 @@ class NamedItem(ElementItem):
                     'text-align': self.style.name_align,
                     'text-padding': self.style.name_padding,
                     'text-outside': self.style.name_outside,
+                    'text-rotated': self.style.name_rotated,
                     'text-align-str': self.style.name_align_str,
                     'text-align-group': 'stereotype',
                 }, editable=True)

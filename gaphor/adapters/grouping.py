@@ -239,3 +239,73 @@ component.provideAdapter(factory=SubsystemUseCaseGroup,
 component.provideAdapter(factory=SubsystemUseCaseGroup,
         adapts=(items.SubsystemItem, items.UseCaseItem))
 
+
+
+class ActivityPartitionsGroup(AbstractGroup):
+    """
+    Group activity partitions.
+    """
+    def can_contain(self):
+        return isinstance(self.parent, items.PartitionItem) \
+                and issubclass(self.item_class, items.PartitionItem)
+
+
+    def group(self):
+        partition = self.parent.subject
+        subpartition = self.item.subject
+        partition.subpartition = subpartition
+        self.parent.request_update()
+        self.item.request_update()
+
+
+    def ungroup(self):
+        partition = self.parent.subject
+        subpartition = self.item.subject
+        partition.subpartition.remove(subpartition)
+        self.parent.request_update()
+        self.item.request_update()
+
+
+component.provideAdapter(factory=ActivityPartitionsGroup,
+        adapts=(items.PartitionItem, DiagramItemMeta))
+component.provideAdapter(factory=ActivityPartitionsGroup,
+        adapts=(items.PartitionItem, items.PartitionItem))
+
+
+
+class ActivityNodePartitionGroup(AbstractGroup):
+    """
+    Group activity nodes within activity partition.
+    """
+    def can_contain(self):
+        return isinstance(self.parent, items.PartitionItem) \
+                and issubclass(self.item_class, (items.ActivityNodeItem,
+                    items.ActionItem,
+                    items.ObjectNodeItem))
+
+
+    def group(self):
+        partition = self.parent.subject
+        node = self.item.subject
+        partition.node = node
+        self.parent.request_update()
+        self.item.request_update()
+
+
+    def ungroup(self):
+        partition = self.parent.subject
+        node = self.item.subject
+        partition.node.remove(node)
+        self.parent.request_update()
+        self.item.request_update()
+
+
+component.provideAdapter(factory=ActivityNodePartitionGroup,
+        adapts=(items.PartitionItem, DiagramItemMeta))
+component.provideAdapter(factory=ActivityNodePartitionGroup,
+        adapts=(items.PartitionItem, items.ActivityNodeItem))
+component.provideAdapter(factory=ActivityNodePartitionGroup,
+        adapts=(items.PartitionItem, items.ActionItem))
+component.provideAdapter(factory=ActivityNodePartitionGroup,
+        adapts=(items.PartitionItem, items.ObjectNodeItem))
+
