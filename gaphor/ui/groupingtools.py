@@ -59,6 +59,7 @@ class GroupPlacementTool(PlacementTool):
         object to be created.
         """
         view = context.view
+        parent = None
 
         if view.focused_item:
             view.unselect_item(view.focused_item)
@@ -78,7 +79,10 @@ class GroupPlacementTool(PlacementTool):
             else:
                 view.dropzone_item = None
                 view.window.set_cursor(None)
+            parent.request_update(matrix=False)
         else:
+            if view.dropzone_item:
+                view.dropzone_item.request_update(matrix=False)
             view.dropzone_item = None
             view.window.set_cursor(None)
 
@@ -135,12 +139,14 @@ class GroupItemTool(ItemTool):
                 if adapter:
                     view.window.set_cursor(OUT_CURSOR)
                     view.dropzone_item = parent
+                    parent.request_update(matrix=False)
 
             if over:       # are we going to add to parent?
                 adapter = component.queryMultiAdapter((over, item), IGroup)
                 if adapter and adapter.can_contain():
                     view.dropzone_item = over
                     view.window.set_cursor(IN_CURSOR)
+                    over.request_update(matrix=False)
 
 
     def on_button_release(self, context, event):

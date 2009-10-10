@@ -89,6 +89,14 @@ class ElementItem(gaphas.Element, DiagramItem):
 
 
     def draw(self, context):
+        if context.dropzone:
+            cr = context.cairo
+            cr.save()
+            cr.set_source_rgba(0.0, 1.0, 0.0, 0.05)
+            cr.rectangle(0, 0, self.width, self.height)
+            cr.fill_preserve()
+            cr.stroke()
+            cr.restore()
         gaphas.Element.draw(self, context)
         DiagramItem.draw(self, context)
 
