@@ -4,19 +4,15 @@ Activity partition item.
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.style import ALIGN_LEFT, ALIGN_MIDDLE
-
 
 class PartitionItem(NamedItem):
     __uml__ = UML.ActivityPartition
 
-#    __stereotype__ = {
-#        'external': lambda self: self.isExternal,
-#    }
+    __stereotype__ = {
+        'external': lambda self: self.subject and self.subject.isExternal,
+    }
 
     __style__   = {
-#        'name-align': (ALIGN_LEFT, ALIGN_MIDDLE),
-#        'name-rotated': True,
         'min-size': (100, 400),
     }
     def __init__(self, id=None):

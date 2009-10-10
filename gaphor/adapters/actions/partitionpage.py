@@ -7,9 +7,10 @@ from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
 from gaphor import UML
+from gaphor.adapters.propertypages import NamedItemPropertyPage
 
 
-class PartitionPropertyPage(object):
+class PartitionPropertyPage(NamedItemPropertyPage):
     """
     Partition property page.
     """
@@ -17,31 +18,38 @@ class PartitionPropertyPage(object):
     component.adapts(items.PartitionItem)
 
     element_factory = inject('element_factory')
-    order = 0
-
-    def __init__(self, context):
-        self.context = context
 
     def construct(self):
-        subject = self.context.subject
-        page = gtk.VBox()
+        item = self.context
 
-        hbox = gtk.HBox(spacing=12)
-        button = gtk.CheckButton(_('Dimension'))
-        hbox.pack_start(button)
-        page.pack_start(hbox, expand=False)
-        #button.set_active(self.context.show_stereotypes_attrs)
-        #button.connect('toggled', self._on_show_stereotypes_attrs_change)
+        page = super(PartitionPropertyPage, self).construct()
 
-        hbox = gtk.HBox(spacing=12)
-        button = gtk.CheckButton(_('External'))
-        hbox.pack_start(button)
-        page.pack_start(hbox, expand=False)
-        page.show_all()
+        if item.subject:
+            if item._superpart:
+                hbox = gtk.HBox(spacing=12)
+                button = gtk.CheckButton(_('External'))
+                button.set_active(item.subject.isExternal)
+                button.connect('toggled', self._on_external_change)
+                hbox.pack_start(button)
+                page.pack_start(hbox, expand=False)
+            else:
+                pass
+                #hbox = gtk.HBox(spacing=12)
+                #button = gtk.CheckButton(_('Dimension'))
+                #button.set_active(item.subject.isDimension)
+                #button.connect('toggled', self._on_dimension_change)
 
         return page
 
+    @transactional
+    def _on_external_change(self, button):
+        item = self.context
+        if item.subject:
+            item.subject.isExternal = button.get_active()
+        item.request_update()
+
 
 component.provideAdapter(PartitionPropertyPage, name='Properties')
+
 
 # vim:sw=4:et:ai
