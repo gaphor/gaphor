@@ -247,7 +247,9 @@ class ActivityPartitionsGroup(AbstractGroup):
     """
     def can_contain(self):
         return isinstance(self.parent, items.PartitionItem) \
-                and issubclass(self.item_class, items.PartitionItem)
+                and issubclass(self.item_class, items.PartitionItem) \
+                and self.parent.subject \
+                and len(self.parent.subject.node) == 0
 
 
     def group(self):
@@ -281,7 +283,9 @@ class ActivityNodePartitionGroup(AbstractGroup):
         return isinstance(self.parent, items.PartitionItem) \
                 and issubclass(self.item_class, (items.ActivityNodeItem,
                     items.ActionItem,
-                    items.ObjectNodeItem))
+                    items.ObjectNodeItem)) \
+                and self.parent.subject \
+                and len(self.parent.subject.subpartition) == 0
 
 
     def group(self):
