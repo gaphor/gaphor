@@ -77,7 +77,7 @@ class PartitionItem(NamedItem):
 
         has_parent = self.canvas.get_parent(self) is None
 
-        if not self.subject.isDimension and has_parent:
+        if self.subject and not self.subject.isDimension and has_parent:
             cr.move_to(0, 0)
             cr.line_to(self.width, 0)
 

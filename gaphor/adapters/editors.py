@@ -57,7 +57,8 @@ class NamedItemEditor(object):
         return True
 
     def get_text(self):
-        return self._item.subject.name
+        s = self._item.subject
+        return s.name if s else ''
 
     def get_bounds(self):
         return None

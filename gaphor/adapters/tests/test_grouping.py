@@ -216,20 +216,22 @@ class PartitionGroupTestCase(TestCase):
     def test_no_subpartition_when_nodes_in(self):
         """Test adding subpartition when nodes added
         """
-        p = self.create(items.PartitionItem, UML.ActivityPartition)
+        p = self.create(items.PartitionItem)
         a1 = self.create(items.ActionItem, UML.Action)
-        p1 = self.create(items.PartitionItem, UML.ActivityPartition)
+        p1 = self.create(items.PartitionItem)
+        p2 = self.create(items.PartitionItem)
 
-        self.group(p, a1)
-        self.assertFalse(self.can_group(p, p1))
+        self.group(p, p1)
+        self.group(p1, a1)
+        self.assertFalse(self.can_group(p1, p2))
 
 
     def test_no_nodes_when_subpartition_in(self):
         """Test adding nodes when subpartition added
         """
-        p = self.create(items.PartitionItem, UML.ActivityPartition)
+        p = self.create(items.PartitionItem)
         a1 = self.create(items.ActionItem, UML.Action)
-        p1 = self.create(items.PartitionItem, UML.ActivityPartition)
+        p1 = self.create(items.PartitionItem)
 
         self.group(p, p1)
         self.assertFalse(self.can_group(p, a1))
@@ -238,43 +240,60 @@ class PartitionGroupTestCase(TestCase):
     def test_action_grouping(self):
         """Test adding action to partition
         """
-        p = self.create(items.PartitionItem, UML.ActivityPartition)
+        p1 = self.create(items.PartitionItem)
+        p2 = self.create(items.PartitionItem)
         a1 = self.create(items.ActionItem, UML.Action)
         a2 = self.create(items.ActionItem, UML.Action)
 
-        self.group(p, a1)
-        self.assertEquals(1, len(p.subject.node))
-        self.group(p, a2)
-        self.assertEquals(2, len(p.subject.node))
+        self.assertFalse(self.can_group(p1, a1)) # cannot add to dimension
+
+        self.group(p1, p2)
+        self.group(p2, a1)
+
+        self.assertTrue(self.can_group(p2, a1))
+        self.assertEquals(1, len(p2.subject.node))
+        self.group(p2, a2)
+        self.assertEquals(2, len(p2.subject.node))
 
 
     def test_subpartition_grouping(self):
         """Test adding subpartition to partition
         """
-        p = self.create(items.PartitionItem, UML.ActivityPartition)
-        p1 = self.create(items.PartitionItem, UML.ActivityPartition)
-        p2 = self.create(items.PartitionItem, UML.ActivityPartition)
+        p = self.create(items.PartitionItem)
+        p1 = self.create(items.PartitionItem)
+        p2 = self.create(items.PartitionItem)
 
         self.group(p, p1)
-        self.assertEquals(1, len(p.subject.subpartition))
+        self.assertTrue(p.subject is None)
+        self.assertTrue(p1.subject is not None)
+
         self.group(p, p2)
-        self.assertEquals(2, len(p.subject.subpartition))
-        self.assertEquals(0, len(p.subject.node))
+        self.assertTrue(p.subject is None)
+        self.assertTrue(p2.subject is not None)
 
 
     def test_ungrouping(self):
-        """Test removal of use case from subsystem
+        """Test subpartition removal
         """
-        p = self.create(items.PartitionItem, UML.ActivityPartition)
+        p1 = self.create(items.PartitionItem)
+        p2 = self.create(items.PartitionItem)
         a1 = self.create(items.ActionItem, UML.Action)
         a2 = self.create(items.ActionItem, UML.Action)
 
-        self.group(p, a1)
-        self.group(p, a2)
+        self.group(p1, p2)
 
-        self.ungroup(p, a1)
-        self.assertEquals(1, len(p.subject.node))
-        self.ungroup(p, a2)
-        self.assertEquals(0, len(p.subject.node))
+        # group to p2, it is disallowed to p1
+        self.group(p2, a1)
+        self.group(p2, a2)
+
+        self.ungroup(p2, a1)
+        self.assertEquals(1, len(p2.subject.node))
+        self.ungroup(p2, a2)
+        self.assertEquals(0, len(p2.subject.node))
+
+        self.ungroup(p1, p2)
+        self.assertTrue(p1.subject is None)
+        self.assertTrue(p2.subject is None)
+        self.assertEquals(0, len(self.kindof(UML.ActivityPartition)))
 
 

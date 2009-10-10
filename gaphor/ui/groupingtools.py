@@ -38,19 +38,8 @@ class GroupPlacementTool(PlacementTool):
             view = context.view
             self._parent = view.get_item_at_point((event.x, event.y))
 
-        # now, place the new item
-        placed = PlacementTool.on_button_press(self, context, event)
-
-        # if there is a parent, then try to group item and parent
-        if placed and self._parent:
-            view = context.view
-            item = view.focused_item
-            
-            adapter = component.queryMultiAdapter((self._parent, item), IGroup)
-            if adapter and adapter.can_contain():
-                adapter.group()
-
-        return placed
+        # place the new item
+        return PlacementTool.on_button_press(self, context, event)
 
 
     def on_motion_notify(self, context, event):
@@ -72,7 +61,7 @@ class GroupPlacementTool(PlacementTool):
             return
 
         if parent:
-            adapter = component.queryMultiAdapter((parent, self._factory.item_class), IGroup)
+            adapter = component.queryMultiAdapter((parent, self._factory.item_class()), IGroup)
             if adapter and adapter.can_contain():
                 view.dropzone_item = parent
                 view.window.set_cursor(IN_CURSOR)
@@ -91,19 +80,29 @@ class GroupPlacementTool(PlacementTool):
         """
         Create diagram item and place it within parent's boundaries.
         """
+        view = context.view
+        if view.dropzone_item:
+            view.dropzone_item.request_update(matrix=False)
+        view.dropzone_item = None
+        view.window.set_cursor(None)
+
         # if no parent, then create with parent placement tool
         if not self._parent:
             return super(GroupPlacementTool, self)._create_item(context, pos)
 
         item = self._factory(self._parent)
-        
-        view = context.view
-        # get item position through parent world
-        x, y = view.canvas.get_matrix_c2i(self._parent).transform_point(*pos)
-        item.matrix.translate(x, y)
 
-        view.dropzone_item = None
-        view.window.set_cursor(None)
+        adapter = component.queryMultiAdapter((self._parent, item), IGroup)
+        if adapter and adapter.can_contain():
+            adapter.group()
+            # get item position through parent world
+            x, y = view.canvas.get_matrix_c2i(self._parent).transform_point(*pos)
+        else:
+            view.canvas.reparent(item, None)
+            # get item position through its world
+            x, y = view.get_matrix_v2i(item).transform_point(*pos)
+
+        item.matrix.translate(x, y)
 
         return item
 
@@ -194,6 +193,8 @@ class GroupItemTool(ItemTool):
                     item.matrix.translate(-x, -y)
 
 
+        if view.dropzone_item:
+            view.dropzone_item.request_update(matrix=False)
         view.dropzone_item = None
         view.window.set_cursor(None)
 

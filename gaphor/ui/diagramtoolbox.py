@@ -131,6 +131,7 @@ class DiagramToolbox(object):
                     parent=parent)
             if extra_func: extra_func(item)
             return item
+        factory_method.item_class = item_class
         return factory_method
 
     def _namespace_item_factory(self, item_class, subject_class,):
@@ -242,7 +243,7 @@ class DiagramToolbox(object):
                 after_handler=self._after_handler)
 
     def toolbox_artifact(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.ArtifactItem,
                                                           UML.Artifact),
                 handle_index=SE,
@@ -256,7 +257,7 @@ class DiagramToolbox(object):
                 after_handler=self._after_handler)
 
     def toolbox_device(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.NodeItem,
                                                           UML.Device),
                 handle_index=SE,
@@ -326,9 +327,9 @@ class DiagramToolbox(object):
                 after_handler=self._after_handler)
 
     def toolbox_partition(self):
+        # note no subject, which is created by grouping adapter
         return GroupPlacementTool(
-                item_factory=self._namespace_item_factory(items.PartitionItem,
-                                                          UML.ActivityPartition),
+                item_factory=self._item_factory(items.PartitionItem),
                 handle_index=SE,
                 after_handler=self._after_handler)
 
@@ -407,7 +408,7 @@ class DiagramToolbox(object):
     # Use cases:
 
     def toolbox_usecase(self):
-        return PlacementTool(
+        return GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.UseCaseItem,
                                                           UML.UseCase),
                 handle_index=SE,

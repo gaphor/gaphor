@@ -20,7 +20,6 @@ from zope import interface, component
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
-from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.interfaces import IGroup
 
 class AbstractGroup(object):
@@ -32,8 +31,6 @@ class AbstractGroup(object):
         Parent item, which groups other items.
      item
         Item to be grouped.
-     item_class
-        Class of item to be grouped.
     """
     interface.implements(IGroup)
 
@@ -42,18 +39,13 @@ class AbstractGroup(object):
     def __init__(self, parent, item):
         self.parent = parent
         self.item = item
-        self.item_class = type(self.item)
-
-        if isinstance(item, DiagramItemMeta):
-            self.item_class = item
-            self.item = None
 
 
     def can_contain(self):
         """
-        Check if parent can contain an item.
+        Check if parent can contain an item. True by default.
         """
-        raise NotImplemented, 'This is abstract method'
+        return True
 
 
     def group(self):
@@ -75,11 +67,6 @@ class InteractionLifelineGroup(AbstractGroup):
     """
     Add lifeline to interaction.
     """
-    def can_contain(self):
-        return isinstance(self.parent, items.InteractionItem) \
-            and issubclass(self.item_class, items.LifelineItem)
-
-
     def group(self):
         self.parent.subject.lifeline = self.item.subject
         self.parent.canvas.reparent(self.item, self.parent)
@@ -90,8 +77,6 @@ class InteractionLifelineGroup(AbstractGroup):
 
 
 component.provideAdapter(factory=InteractionLifelineGroup,
-        adapts=(items.InteractionItem, DiagramItemMeta))
-component.provideAdapter(factory=InteractionLifelineGroup,
         adapts=(items.InteractionItem, items.LifelineItem))
 
 
@@ -100,11 +85,6 @@ class NodeGroup(AbstractGroup):
     """
     Add node to another node.
     """
-    def can_contain(self):
-        return isinstance(self.parent, items.NodeItem) \
-                and issubclass(self.item_class, items.NodeItem)
-
-
     def group(self):
         self.parent.subject.nestedNode = self.item.subject
         self.parent.canvas.reparent(self.item, self.parent)
@@ -115,8 +95,6 @@ class NodeGroup(AbstractGroup):
 
 
 component.provideAdapter(factory=NodeGroup,
-        adapts=(items.NodeItem, DiagramItemMeta))
-component.provideAdapter(factory=NodeGroup,
         adapts=(items.NodeItem, items.NodeItem))
 
 
@@ -125,11 +103,6 @@ class NodeComponentGroup(AbstractGroup):
     """
     Add components to node using internal structures.
     """
-    def can_contain(self):
-        return isinstance(self.parent, items.NodeItem) \
-                and issubclass(self.item_class, items.ComponentItem)
-
-
     def group(self):
         node = self.parent.subject
         component = self.item.subject
@@ -172,8 +145,6 @@ class NodeComponentGroup(AbstractGroup):
 
 
 component.provideAdapter(factory=NodeComponentGroup,
-        adapts=(items.NodeItem, DiagramItemMeta))
-component.provideAdapter(factory=NodeComponentGroup,
         adapts=(items.NodeItem, items.ComponentItem))
 
 
@@ -182,11 +153,6 @@ class NodeArtifactGroup(AbstractGroup):
     """
     Deploy artifact on node.
     """
-    def can_contain(self):
-        return isinstance(self.parent, items.NodeItem) \
-                and issubclass(self.item_class, items.ArtifactItem)
-
-
     def group(self):
         node = self.parent.subject
         artifact = self.item.subject
@@ -207,8 +173,6 @@ class NodeArtifactGroup(AbstractGroup):
 
 
 component.provideAdapter(factory=NodeArtifactGroup,
-        adapts=(items.NodeItem, DiagramItemMeta))
-component.provideAdapter(factory=NodeArtifactGroup,
         adapts=(items.NodeItem, items.ArtifactItem))
 
 
@@ -217,11 +181,6 @@ class SubsystemUseCaseGroup(AbstractGroup):
     """
     Make subsystem a subject of an use case.
     """
-    def can_contain(self):
-        return isinstance(self.parent, items.SubsystemItem) \
-                and issubclass(self.item_class, items.UseCaseItem)
-
-
     def group(self):
         component = self.parent.subject
         usecase = self.item.subject
@@ -235,8 +194,6 @@ class SubsystemUseCaseGroup(AbstractGroup):
 
 
 component.provideAdapter(factory=SubsystemUseCaseGroup,
-        adapts=(items.SubsystemItem, DiagramItemMeta))
-component.provideAdapter(factory=SubsystemUseCaseGroup,
         adapts=(items.SubsystemItem, items.UseCaseItem))
 
 
@@ -246,30 +203,31 @@ class ActivityPartitionsGroup(AbstractGroup):
     Group activity partitions.
     """
     def can_contain(self):
-        return isinstance(self.parent, items.PartitionItem) \
-                and issubclass(self.item_class, items.PartitionItem) \
-                and self.parent.subject \
-                and len(self.parent.subject.node) == 0
+        return not self.parent.subject \
+            or (self.parent.subject and len(self.parent.subject.node) == 0)
 
 
     def group(self):
-        partition = self.parent.subject
-        subpartition = self.item.subject
-        partition.subpartition = subpartition
+        p = self.parent.subject
+        sp = self.element_factory.create(UML.ActivityPartition)
+        self.item.subject = sp
+        if p:
+            p.subpartition = sp
         self.parent.request_update()
         self.item.request_update()
 
 
     def ungroup(self):
-        partition = self.parent.subject
-        subpartition = self.item.subject
-        partition.subpartition.remove(subpartition)
+        p = self.parent.subject
+        sp = self.item.subject
+        if p:
+            p.subpartition.remove(sp)
+        else:
+            sp.unlink()
         self.parent.request_update()
         self.item.request_update()
 
 
-component.provideAdapter(factory=ActivityPartitionsGroup,
-        adapts=(items.PartitionItem, DiagramItemMeta))
 component.provideAdapter(factory=ActivityPartitionsGroup,
         adapts=(items.PartitionItem, items.PartitionItem))
 
@@ -280,12 +238,8 @@ class ActivityNodePartitionGroup(AbstractGroup):
     Group activity nodes within activity partition.
     """
     def can_contain(self):
-        return isinstance(self.parent, items.PartitionItem) \
-                and issubclass(self.item_class, (items.ActivityNodeItem,
-                    items.ActionItem,
-                    items.ObjectNodeItem)) \
-                and self.parent.subject \
-                and len(self.parent.subject.subpartition) == 0
+        return self.parent.subject \
+            and len(self.parent.subject.subpartition) == 0
 
 
     def group(self):
@@ -305,11 +259,11 @@ class ActivityNodePartitionGroup(AbstractGroup):
 
 
 component.provideAdapter(factory=ActivityNodePartitionGroup,
-        adapts=(items.PartitionItem, DiagramItemMeta))
-component.provideAdapter(factory=ActivityNodePartitionGroup,
         adapts=(items.PartitionItem, items.ActivityNodeItem))
 component.provideAdapter(factory=ActivityNodePartitionGroup,
         adapts=(items.PartitionItem, items.ActionItem))
 component.provideAdapter(factory=ActivityNodePartitionGroup,
         adapts=(items.PartitionItem, items.ObjectNodeItem))
+component.provideAdapter(factory=ActivityNodePartitionGroup,
+        adapts=(items.PartitionItem, items.ForkNodeItem))
 
