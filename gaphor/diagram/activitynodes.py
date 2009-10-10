@@ -208,7 +208,7 @@ class ForkNodeItem(Item, DiagramItem):
         h1, h2 = Handle(), Handle()
         self._handles.append(h1)
         self._handles.append(h2)
-        self._ports.append(LinePort(h1, h2))
+        self._ports.append(LinePort(h1.pos, h2.pos))
 
         self._combined = None
 
