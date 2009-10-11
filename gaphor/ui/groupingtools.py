@@ -93,8 +93,7 @@ class GroupPlacementTool(PlacementTool):
                 item = self._factory(parent)
                 adapter.item = item
                 adapter.group()
-                # get item position through parent world
-                x, y = view.canvas.get_matrix_c2i(parent).transform_point(*pos)
+                x, y = view.get_matrix_v2i(item).transform_point(*pos)
                 item.matrix.translate(x, y)
                 return item
 
