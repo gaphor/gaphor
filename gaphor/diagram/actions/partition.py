@@ -84,27 +84,27 @@ class PartitionItem(NamedItem):
 
         h = self._header_size[1]
 
-        # draw lanes if this item is toplevel partition
+        # draw outside lines if this item is toplevel partition
         if not self._superpart:
-            cr.move_to(0, h)
+            cr.move_to(0, self.height)
+            cr.line_to(0, h)
             cr.line_to(self.width, h)
-
-            dp = 0
-            for sl in self.canvas.get_children(self):
-                cr.move_to(dp, h)
-                cr.line_to(dp, self.height)
-                dp += sl.width
-            else:
-                cr.move_to(dp, h)
-                cr.line_to(dp, self.height)
-            cr.move_to(self.width, h)
             cr.line_to(self.width, self.height)
 
-        # header line for all subparitions
         if self._subpart or not self._superpart:
-            h += self._hdmax
-            cr.move_to(0, h)
-            cr.line_to(self.width, h)
+            # header line for all subparitions
+            hd = h + self._hdmax
+            cr.move_to(0, hd)
+            cr.line_to(self.width, hd)
+
+        if self._subpart:
+            # draw inside lines for all children but last one
+            dp = 0
+            for sl in self.canvas.get_children(self)[:-1]:
+                dp += sl.width
+                cr.move_to(dp, h)
+                cr.line_to(dp, self.height)
+
         cr.stroke()
 
         if context.hovered or context.dropzone:

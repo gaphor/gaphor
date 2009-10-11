@@ -22,6 +22,7 @@ class GroupPlacementTool(PlacementTool):
                 after_handler,
                 handle_index)
         self._parent = None
+        self._adapter = None
 
 
     def on_motion_notify(self, context, event):
@@ -31,6 +32,7 @@ class GroupPlacementTool(PlacementTool):
         """
         view = context.view
         parent = None
+        self._adapter = None
 
         if view.focused_item:
             view.unselect_item(view.focused_item)
@@ -49,9 +51,11 @@ class GroupPlacementTool(PlacementTool):
             if adapter and adapter.can_contain():
                 view.dropzone_item = parent
                 view.window.set_cursor(IN_CURSOR)
+                self._adapter = adapter
             else:
                 view.dropzone_item = None
                 view.window.set_cursor(None)
+                self._parent = None
             parent.request_update(matrix=False)
         else:
             if view.dropzone_item:
@@ -66,21 +70,26 @@ class GroupPlacementTool(PlacementTool):
         """
         parent = self._parent
         try:
-            kw['parent'] = parent
+            if parent and self._adapter:
+                kw['parent'] = parent
+
             item = super(GroupPlacementTool, self)._create_item(context, pos, **kw)
-            if parent:
-                adapter = component.queryMultiAdapter((parent, item), IGroup)
-                if adapter and adapter.can_contain():
-                    adapter.group()
+
+            if parent and item and self._adapter:
+                self._adapter.item = item
+                self._adapter.group()
+
+                canvas = context.view.canvas
+                p = parent
+                while p is not None:
+                    p.request_update()
+                    p = canvas.get_parent(p)
+                item.request_update()
         finally:
             self._parent = None
             view = context.view
-            item = view.dropzone_item
             view.dropzone_item = None
             view.window.set_cursor(None)
-
-            if item:
-                item.request_update(matrix=False)
         return item
 
 
@@ -133,47 +142,48 @@ class GroupItemTool(ItemTool):
         """
         super(GroupItemTool, self).on_button_release(context, event)
         view = context.view
-        if event.button == 1 and len(view.selected_items) == 1:
-            item = list(view.selected_items)[0]
-            parent = view.canvas.get_parent(item)
-            over = view.get_item_at_point((event.x, event.y), selected=False)
-            assert over is not item
+        try:
+            if event.button == 1 and len(view.selected_items) == 1:
+                item = list(view.selected_items)[0]
+                parent = view.canvas.get_parent(item)
+                over = view.get_item_at_point((event.x, event.y), selected=False)
+                assert over is not item
 
-            if over is parent:
-                if parent is not None:
-                    parent.request_update(matrix=False)
-                return
+                if over is parent:
+                    if parent is not None:
+                        parent.request_update(matrix=False)
+                    return
 
-            if parent: # remove from parent
-                adapter = component.queryMultiAdapter((parent, item), IGroup)
-                if adapter:
-                    adapter.ungroup()
+                if parent: # remove from parent
+                    adapter = component.queryMultiAdapter((parent, item), IGroup)
+                    if adapter:
+                        adapter.ungroup()
 
-                    canvas = view.canvas
-                    canvas.reparent(item, None)
+                        canvas = view.canvas
+                        canvas.reparent(item, None)
 
-                    # reset item's position
-                    px, py = canvas.get_matrix_c2i(parent).transform_point(0, 0)
-                    item.matrix.translate(-px, -py)
-
-
-            if over: # add to over (over becomes parent)
-                adapter = component.queryMultiAdapter((over, item), IGroup)
-                if adapter and adapter.can_contain():
-                    adapter.group()
-
-                    canvas = view.canvas
-                    canvas.reparent(item, over)
-
-                    # reset item's position
-                    x, y = canvas.get_matrix_i2c(over).transform_point(0, 0)
-                    item.matrix.translate(-x, -y)
+                        # reset item's position
+                        px, py = canvas.get_matrix_c2i(parent).transform_point(0, 0)
+                        item.matrix.translate(-px, -py)
 
 
-        if view.dropzone_item:
-            view.dropzone_item.request_update(matrix=False)
-        view.dropzone_item = None
-        view.window.set_cursor(None)
+                if over: # add to over (over becomes parent)
+                    adapter = component.queryMultiAdapter((over, item), IGroup)
+                    if adapter and adapter.can_contain():
+                        adapter.group()
+
+                        canvas = view.canvas
+                        canvas.reparent(item, over)
+
+                        # reset item's position
+                        x, y = canvas.get_matrix_i2c(over).transform_point(0, 0)
+                        item.matrix.translate(-x, -y)
+        finally:
+            item = view.dropzone_item
+            view.dropzone_item = None
+            view.window.set_cursor(None)
+            if item:
+                item.request_update()
 
 
 # vim:sw=4:et:ai

@@ -214,8 +214,6 @@ class ActivityPartitionsGroup(AbstractGroup):
         sp.name = 'Swimlane'
         if p:
             p.subpartition = sp
-        self.parent.request_update()
-        self.item.request_update()
 
 
     def ungroup(self):
@@ -225,8 +223,6 @@ class ActivityPartitionsGroup(AbstractGroup):
             p.subpartition.remove(sp)
         else:
             sp.unlink()
-        self.parent.request_update()
-        self.item.request_update()
 
 
 component.provideAdapter(factory=ActivityPartitionsGroup,
@@ -247,16 +243,12 @@ class ActivityNodePartitionGroup(AbstractGroup):
         partition = self.parent.subject
         node = self.item.subject
         partition.node = node
-        self.parent.request_update()
-        self.item.request_update()
 
 
     def ungroup(self):
         partition = self.parent.subject
         node = self.item.subject
         partition.node.remove(node)
-        self.parent.request_update()
-        self.item.request_update()
 
 
 component.provideAdapter(factory=ActivityNodePartitionGroup,
