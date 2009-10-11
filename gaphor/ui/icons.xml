@@ -172,11 +172,11 @@
     <element>UseCase</element>
   </icon>
   <icon id="gaphor-subsystem">
-    <file>subsystem24.png</file>
+    <file>subsystem.png</file>
     <element>Component</element>
   </icon>
   <icon id="gaphor-partition">
-    <file>partition24.png</file>
+    <file>partition.png</file>
     <element>ActivityPartition</element>
   </icon>
 </stock-icons>
