@@ -21,25 +21,7 @@ class GroupPlacementTool(PlacementTool):
         super(GroupPlacementTool, self).__init__(item_factory,
                 after_handler,
                 handle_index)
-
         self._parent = None
-
-
-    def on_button_press(self, context, event):
-        """
-        If new item was placed onto diagram, then try to group it with
-        parent using grouping adapter.
-        """
-
-        # first get parent
-        self._parent = None
-        if event.button == 1:
-            context.ungrab()
-            view = context.view
-            self._parent = view.get_item_at_point((event.x, event.y))
-
-        # place the new item
-        return PlacementTool.on_button_press(self, context, event)
 
 
     def on_motion_notify(self, context, event):
@@ -59,6 +41,8 @@ class GroupPlacementTool(PlacementTool):
         except KeyError:
             # No bounding box yet.
             return
+
+        self._parent = parent
 
         if parent:
             adapter = component.queryMultiAdapter((parent, self._factory.item_class()), IGroup)
@@ -84,17 +68,19 @@ class GroupPlacementTool(PlacementTool):
         try:
             kw['parent'] = parent
             item = super(GroupPlacementTool, self)._create_item(context, pos, **kw)
+            if parent:
+                adapter = component.queryMultiAdapter((parent, item), IGroup)
+                if adapter and adapter.can_contain():
+                    adapter.group()
         finally:
+            self._parent = None
             view = context.view
-            if view.dropzone_item:
-                view.dropzone_item.request_update(matrix=False)
+            item = view.dropzone_item
             view.dropzone_item = None
             view.window.set_cursor(None)
 
-        if parent:
-            adapter = component.queryMultiAdapter((parent, item), IGroup)
-            if adapter and adapter.can_contain():
-                adapter.group()
+            if item:
+                item.request_update(matrix=False)
         return item
 
 
