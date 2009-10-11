@@ -80,11 +80,7 @@ class GroupPlacementTool(PlacementTool):
                 self._adapter.group()
 
                 canvas = context.view.canvas
-                p = parent
-                while p is not None:
-                    p.request_update()
-                    p = canvas.get_parent(p)
-                item.request_update()
+                parent.request_update(matrix=False)
         finally:
             self._parent = None
             view = context.view
