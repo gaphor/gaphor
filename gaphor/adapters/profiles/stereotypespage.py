@@ -99,7 +99,6 @@ class StereotypePage(object):
         page = gtk.VBox()
         subject = self.context.subject
         if subject is None:
-            page.pack_start(gtk.Label('No data'), expand=False)
             return page
 
         applied = set(UML.model.get_applied_stereotypes(subject))
