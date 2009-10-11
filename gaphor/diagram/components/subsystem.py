@@ -21,7 +21,7 @@ class SubsystemItem(NamedItem):
     __stereotype__ = 'subsystem'
 
     __style__   = {
-        'min-size': (150, 100),
+        'min-size': (200, 400),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
     }
     def __init__(self, id=None):
