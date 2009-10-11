@@ -76,30 +76,26 @@ class GroupPlacementTool(PlacementTool):
             view.window.set_cursor(None)
 
 
-    def _create_item(self, context, pos):
+    def _create_item(self, context, pos, **kw):
         """
         Create diagram item and place it within parent's boundaries.
         """
-        view = context.view
-        if view.dropzone_item:
-            view.dropzone_item.request_update(matrix=False)
-        view.dropzone_item = None
-        view.window.set_cursor(None)
-
         parent = self._parent
-        if parent:
-            adapter = component.queryMultiAdapter((parent, self._factory.item_class()), IGroup)
-            if adapter and adapter.can_contain():
-                item = self._factory(parent)
-                adapter.item = item
-                adapter.group()
-                x, y = view.get_matrix_v2i(item).transform_point(*pos)
-                item.matrix.translate(x, y)
-                return item
+        try:
+            kw['parent'] = parent
+            item = super(GroupPlacementTool, self)._create_item(context, pos, **kw)
+        finally:
+            view = context.view
+            if view.dropzone_item:
+                view.dropzone_item.request_update(matrix=False)
+            view.dropzone_item = None
+            view.window.set_cursor(None)
 
-        # if no parent or cannot group with an adapter, then create with
-        # parent placement tool
-        return super(GroupPlacementTool, self)._create_item(context, pos)
+        if parent:
+            adapter = component.queryMultiAdapter((parent, item), IGroup)
+            if adapter and adapter.can_contain():
+                adapter.group()
+        return item
 
 
 class GroupItemTool(ItemTool):
