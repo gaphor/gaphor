@@ -15,6 +15,9 @@ class PartitionItem(NamedItem):
     __style__   = {
         'min-size': (100, 400),
     }
+
+    DELTA = 30
+
     def __init__(self, id=None):
         super(PartitionItem, self).__init__(id)
         self._superpart = False
@@ -26,7 +29,7 @@ class PartitionItem(NamedItem):
         super(PartitionItem, self).pre_update(context)
         
         if not self.subject:
-            self._header_size = self._header_size[0], 30
+            self._header_size = self._header_size[0], self.DELTA
 
         # get subpartitions
         children = list(k for k in self.canvas.get_children(self)
@@ -49,7 +52,7 @@ class PartitionItem(NamedItem):
             self._hdmax = max(sl._header_size[1] for sl in children)
 
             self.width = wsum
-            self.height = hmax + self._header_size[1] + 30
+            self.height = hmax + self._header_size[1] + self.DELTA
 
             dp = 0
             for sl in self.canvas.get_children(self):
@@ -62,9 +65,6 @@ class PartitionItem(NamedItem):
                 sl.matrix.translate(x, y)
 
                 sl.height = hmax
-
-                sl.request_update()
-
                 dp += sl.width
 
 
@@ -91,7 +91,7 @@ class PartitionItem(NamedItem):
             cr.line_to(self.width, h)
             cr.line_to(self.width, self.height)
 
-        if self._subpart or not self._superpart:
+        if self._subpart:
             # header line for all subparitions
             hd = h + self._hdmax
             cr.move_to(0, hd)
@@ -112,6 +112,9 @@ class PartitionItem(NamedItem):
             cr.set_dash((1.0, 5.0), 0)
             cr.set_line_width(1.0)
             cr.rectangle(0, 0, self.width, self.height)
+            d = self.height - self.DELTA
+            cr.move_to(0, d)
+            cr.line_to(self.width, d)
             cr.stroke()
             cr.restore()
 

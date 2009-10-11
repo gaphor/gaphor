@@ -12,6 +12,7 @@ from zope import component
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.diagram.interfaces import IConnect
+from gaphor.diagram.interfaces import IGroup
 
 # Increment log level
 log.set_log_level(log.WARNING)
@@ -115,6 +116,36 @@ class TestCase(unittest.TestCase):
         Get connection information.
         """
         return self.diagram.canvas.get_connection(handle)
+
+
+    def can_group(self, parent, item):
+        """
+        Check if an item can be grouped by parent.
+        """
+        query = (parent, item)
+        adapter = component.queryMultiAdapter(query, IGroup)
+        return adapter.can_contain()
+
+
+    def group(self, parent, item):
+        """
+        Group item within a parent.
+        """
+        self.diagram.canvas.reparent(item, parent)
+        query = (parent, item)
+        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter.group()
+
+
+    def ungroup(self, parent, item):
+        """
+        Remove item from a parent.
+        """
+        query = (parent, item)
+        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter.ungroup()
+        self.diagram.canvas.reparent(item, None)
+
 
 
     def kindof(self, cls):

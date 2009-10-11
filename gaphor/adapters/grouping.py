@@ -214,6 +214,8 @@ class ActivityPartitionsGroup(AbstractGroup):
         sp.name = 'Swimlane'
         if p:
             p.subpartition = sp
+        for k in self.item.canvas.get_children(self.item):
+            sp.subpartition = k.subject
 
 
     def ungroup(self):
@@ -221,8 +223,10 @@ class ActivityPartitionsGroup(AbstractGroup):
         sp = self.item.subject
         if p:
             p.subpartition.remove(sp)
-        else:
-            sp.unlink()
+        self.item.subject = None
+        for s in sp.subpartition:
+            sp.subpartition.remove(s)
+        sp.unlink()
 
 
 component.provideAdapter(factory=ActivityPartitionsGroup,

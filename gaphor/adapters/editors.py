@@ -64,7 +64,8 @@ class NamedItemEditor(object):
         return None
 
     def update_text(self, text):
-        self._item.subject.name = text
+        if self._item.subject:
+            self._item.subject.name = text
         self._item.request_update()
 
     def key_pressed(self, pos, key):

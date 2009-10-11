@@ -48104,6 +48104,23 @@ subsets ownedMember]]></val>
 <ref refid="92e3ba88-b592-11de-8278-000d93868322"/>
 </tail-subject>
 </item>
+<item type="CommentItem" id="f6bb070a-b619-11de-86be-000d93868322">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 103.0, 382.0)</val>
+</matrix>
+<width>
+<val>210.0</val>
+</width>
+<height>
+<val>64.0</val>
+</height>
+<subject>
+<ref refid="f6b9acac-b619-11de-86be-000d93868322"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
 </canvas>
 </Diagram>
 <Class id="22e2685c-b591-11de-8278-000d93868322">
@@ -48440,7 +48457,7 @@ subsets ownedMember]]></val>
 <LiteralSpecification id="35dd604a-b593-11de-8278-000d93868322"/>
 <Property id="35df738a-b593-11de-8278-000d93868322">
 <aggregation>
-<val><![CDATA[composite]]></val>
+<val><![CDATA[shared]]></val>
 </aggregation>
 <association>
 <ref refid="35dad4a6-b593-11de-8278-000d93868322"/>
@@ -48490,4 +48507,16 @@ subsets ownedMember]]></val>
 <val><![CDATA[subsets superGroup]]></val>
 </value>
 </LiteralSpecification>
+<Comment id="f6b9acac-b619-11de-86be-000d93868322">
+<body>
+<val><![CDATA[ActivitiyPartition.subpartition cannot
+be composite, so we can rearrange
+swimlanes]]></val>
+</body>
+<presentation>
+<reflist>
+<ref refid="f6bb070a-b619-11de-86be-000d93868322"/>
+</reflist>
+</presentation>
+</Comment>
 </gaphor>

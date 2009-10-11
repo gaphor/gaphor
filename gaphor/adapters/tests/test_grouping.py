@@ -5,29 +5,10 @@ Tests for grouping functionality in Gaphor.
 from gaphor import UML
 from gaphor.ui.namespace import NamespaceModel
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import IGroup
-from zope import component
 
 from gaphor.tests import TestCase 
 
 class NodeComponentGroupTestCase(TestCase):
-    def group(self, parent, item):
-        """
-        Group item within a parent.
-        """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
-        adapter.group()
-
-
-    def ungroup(self, parent, item):
-        """
-        Remove item from a parent.
-        """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
-        adapter.ungroup()
-
 
     def test_grouping(self):
         """Test component within node composition
@@ -70,23 +51,6 @@ class NodeComponentGroupTestCase(TestCase):
 
 
 class NodeArtifactGroupTestCase(TestCase):
-    def group(self, parent, item):
-        """
-        Group item within a parent.
-        """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
-        adapter.group()
-
-
-    def ungroup(self, parent, item):
-        """
-        Remove item from a parent.
-        """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
-        adapter.ungroup()
-
 
     def test_grouping(self):
         """Test artifact within node deployment
@@ -115,23 +79,6 @@ class NodeArtifactGroupTestCase(TestCase):
 
 
 class SubsystemUseCaseGroupTestCase(TestCase):
-    def group(self, parent, item):
-        """
-        Group item within a parent.
-        """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
-        adapter.group()
-
-
-    def ungroup(self, parent, item):
-        """
-        Remove item from a parent.
-        """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
-        adapter.ungroup()
-
 
     def test_grouping(self):
         """Test adding an use case to a subsystem
@@ -186,33 +133,6 @@ class SubsystemUseCaseGroupTestCase(TestCase):
 
 
 class PartitionGroupTestCase(TestCase):
-    def group(self, parent, item):
-        """
-        Group item within a parent.
-        """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
-        adapter.group()
-
-
-    def ungroup(self, parent, item):
-        """
-        Remove item from a parent.
-        """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
-        adapter.ungroup()
-
-
-    def can_group(self, parent, item):
-        """
-        Check if an item can be grouped by parent.
-        """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
-        return adapter.can_contain()
-
-
     def test_no_subpartition_when_nodes_in(self):
         """Test adding subpartition when nodes added
         """
@@ -273,7 +193,7 @@ class PartitionGroupTestCase(TestCase):
 
 
     def test_ungrouping(self):
-        """Test subpartition removal
+        """Test action and subpartition removal
         """
         p1 = self.create(items.PartitionItem)
         p2 = self.create(items.PartitionItem)
@@ -292,8 +212,62 @@ class PartitionGroupTestCase(TestCase):
         self.assertEquals(0, len(p2.subject.node))
 
         self.ungroup(p1, p2)
-        self.assertTrue(p1.subject is None)
-        self.assertTrue(p2.subject is None)
+        self.assertTrue(p1.subject is None, p1.subject)
+        self.assertTrue(p2.subject is None, p2.subject)
         self.assertEquals(0, len(self.kindof(UML.ActivityPartition)))
+
+
+    def test_nested_subpartition_ungrouping(self):
+        """Test removal of subpartition with swimlanes
+        """
+        p1 = self.create(items.PartitionItem)
+        p2 = self.create(items.PartitionItem)
+        p3 = self.create(items.PartitionItem)
+        p4 = self.create(items.PartitionItem)
+
+        self.group(p1, p2)
+        self.group(p2, p3)
+        self.group(p2, p4)
+        self.assertTrue(p2.subject is not None, p2.subject)
+        self.assertTrue(p3.subject is not None, p3.subject)
+        self.assertTrue(p4.subject is not None, p4.subject)
+
+        self.ungroup(p1, p2)
+        self.assertTrue(p1.subject is None, p1.subject)
+        self.assertTrue(p2.subject is None, p2.subject)
+        self.assertTrue(p3.subject is not None, p3.subject)
+        self.assertTrue(p4.subject is not None, p4.subject)
+        self.assertEquals(2, len(self.kindof(UML.ActivityPartition)))
+
+
+    def test_nested_subpartition_regrouping(self):
+        """Test regrouping of subpartition with swimlanes
+        """
+        p1 = self.create(items.PartitionItem)
+        p2 = self.create(items.PartitionItem)
+        p3 = self.create(items.PartitionItem)
+        p4 = self.create(items.PartitionItem)
+
+        self.group(p1, p2)
+        self.group(p2, p3)
+        self.group(p2, p4)
+        self.assertTrue(p2.subject is not None, p2.subject)
+        self.assertTrue(p3.subject is not None, p3.subject)
+        self.assertTrue(p4.subject is not None, p4.subject)
+
+        self.ungroup(p1, p2)
+        self.assertTrue(p1.subject is None, p1.subject)
+        self.assertTrue(p2.subject is None, p2.subject)
+        self.assertTrue(p3.subject is not None, p3.subject)
+        self.assertTrue(p4.subject is not None, p4.subject)
+        self.assertEquals(2, len(self.kindof(UML.ActivityPartition)))
+
+        self.group(p1, p2)
+        self.assertEquals(3, len(self.kindof(UML.ActivityPartition)))
+        self.assertTrue(p2.subject is not None, p2.subject)
+        self.assertTrue(p3.subject is not None, p3.subject)
+        self.assertTrue(p4.subject is not None, p4.subject)
+        self.assertTrue(p3.subject in p2.subject.subpartition, p2.subject.subpartition)
+        self.assertTrue(p4.subject in p2.subject.subpartition, p2.subject.subpartition)
 
 

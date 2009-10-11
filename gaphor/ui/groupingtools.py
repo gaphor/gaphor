@@ -161,6 +161,7 @@ class GroupItemTool(ItemTool):
                         # reset item's position
                         px, py = canvas.get_matrix_c2i(parent).transform_point(0, 0)
                         item.matrix.translate(-px, -py)
+                        parent.request_update()
 
 
                 if over: # add to over (over becomes parent)
@@ -174,6 +175,7 @@ class GroupItemTool(ItemTool):
                         # reset item's position
                         x, y = canvas.get_matrix_i2c(over).transform_point(0, 0)
                         item.matrix.translate(-x, -y)
+                        over.request_update()
         finally:
             item = view.dropzone_item
             view.dropzone_item = None
