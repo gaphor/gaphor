@@ -75,18 +75,20 @@ class PartitionItem(NamedItem):
         """
         super(PartitionItem, self).draw(context)
         cr = context.cairo
-        cr.set_line_width(2.2)
+        cr.set_line_width(2.4)
 
         if self.subject and not self.subject.isDimension and not self._superpart:
             cr.move_to(0, 0)
             cr.line_to(self.width, 0)
 
+
         h = self._header_size[1]
-        cr.move_to(0, h)
-        cr.line_to(self.width, h)
 
         # draw lanes if this item is toplevel partition
         if not self._superpart:
+            cr.move_to(0, h)
+            cr.line_to(self.width, h)
+
             dp = 0
             for sl in self.canvas.get_children(self):
                 cr.move_to(dp, h)
