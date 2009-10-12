@@ -150,6 +150,22 @@ def add_slot(factory, obj, attr):
     return slot
 
 
+def create_association(factory, a, b):
+    """
+    Create an association between two items.
+    """
+    assoc = factory.create(Association)
+    end_a = factory.create(Property)
+    end_a.lowerValue = factory.create(LiteralSpecification)
+    end_b = factory.create(Property)
+    end_b.lowerValue = factory.create(LiteralSpecification)
+    assoc.memberEnd = end_a
+    assoc.memberEnd = end_b
+    end_a.type = a
+    end_b.type = b
+    return assoc
+
+
 def set_navigability(assoc, end, nav):
     """
     Set navigability of an association end (property).

@@ -126,7 +126,32 @@ class StereotypesTest(unittest.TestCase):
         self.assertEquals(('st1', 'st2'), result)
 
 
+class AssociationTestCase(unittest.TestCase):
+    """
+    Association tests.
+    """
+    def setUp(self):
+        Application.init_components()
+        self.factory = UML.ElementFactory()
+        self.factory.init(Application)
+
+
+    def test_creation(self):
+        """Test association creation
+        """
+        c1 = self.factory.create(UML.Class)
+        c2 = self.factory.create(UML.Class)
+        assoc = UML.model.create_association(self.factory, c1, c2)
+        types = [p.type for p in assoc.memberEnd]
+        self.assertTrue(c1 in types, assoc.memberEnd)
+        self.assertTrue(c2 in types, assoc.memberEnd)
+
+
+
 class AssociationEndNavigabilityTestCase(unittest.TestCase):
+    """
+    Association navigability changes tests.
+    """
     def setUp(self):
         Application.init_components()
         self.factory = UML.ElementFactory()
@@ -136,7 +161,7 @@ class AssociationEndNavigabilityTestCase(unittest.TestCase):
     def test_attribute_navigability(self):
         """Test navigable attribute of a class or an interface
         """
-        self.assertTrue(false)
+        assoc = self.factory.create(UML.Association)
 
 
     def test_relationship_navigability(self):
