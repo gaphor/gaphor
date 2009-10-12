@@ -111,7 +111,7 @@ class AbstractConnect(object):
         handle.connected_to property. Also the connection at UML level
         still exists.
         """
-        pass
+        self.connect(handle, port)
 
 
     def disconnect(self, handle):

@@ -37,7 +37,7 @@ class FlowConnect(RelationshipConnect):
             line.subject.target = c2.subject
         else:
             raise ValueError('Incorrect handle passed to adapter')
-        print line.subject, line.subject.guard.value
+        log.debug('Reconnection of %s (guard %s)' % (line.subject, line.subject.guard.value))
 
 
     def connect_subject(self, handle):
