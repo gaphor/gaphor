@@ -26,14 +26,28 @@ class FlowConnect(RelationshipConnect):
 
         return super(FlowConnect, self).glue(handle, port)
 
+
+    def reconnect(self, handle, port):
+        line = self.line
+        c1 = self.get_connected(line.head)
+        c2 = self.get_connected(line.tail)
+        if line.head is handle:
+            line.subject.source = c1.subject
+        elif line.tail is handle:
+            line.subject.target = c2.subject
+        else:
+            raise ValueError('Incorrect handle passed to adapter')
+        print line.subject, line.subject.guard.value
+
+
     def connect_subject(self, handle):
         line = self.line
         element = self.element
         # TODO: connect opposite side again (in case it's a join/fork or
         #       decision/merge node)
-        hct = self.get_connected(line.head)
-        tct = self.get_connected(line.tail)
-        if isinstance(hct, items.ObjectNodeItem) or isinstance(tct, items.ObjectNodeItem):
+        c1 = self.get_connected(line.head)
+        c2 = self.get_connected(line.tail)
+        if isinstance(c1, items.ObjectNodeItem) or isinstance(c2, items.ObjectNodeItem):
             relation = self.relationship_or_new(UML.ObjectFlow,
                         ('source', 'outgoing'),
                         ('target', 'incoming'))
