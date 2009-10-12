@@ -1399,7 +1399,10 @@ class MessagePropertyPage(NamedItemPropertyPage):
             hbox = create_hbox_label(self, page, _('Message sort'))
 
             sort_data = self.MESSAGE_SORT
-            lifeline = context.tail.connected_to
+            lifeline = None
+            cinfo = context.canvas.get_connection(context.tail)
+            if cinfo:
+                lifeline = cinfo.connected
 
             # disallow connecting two delete messages to a lifeline
             if lifeline and lifeline.is_destroyed \
@@ -1428,7 +1431,10 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
         context = self.context
         subject = context.subject
-        lifeline = context.tail.connected_to
+        lifeline = None
+        cinfo = context.canvas.get_connection(context.tail)
+        if cinfo:
+            lifeline = cinfo.connected
 
         #
         # allow only one delete message to connect to lifeline's lifetime
