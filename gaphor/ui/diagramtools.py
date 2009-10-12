@@ -34,6 +34,7 @@ class ConnectHandleTool(_ConnectHandleTool):
     It also adds handles to lines when a line is grabbed on the middle of
     a line segment (points are drawn by the LineSegmentPainter).
     """
+    reconnect = False
 
     def can_glue(self, view, item, handle, glue_item, port):
         """
@@ -45,7 +46,16 @@ class ConnectHandleTool(_ConnectHandleTool):
         return adapter and adapter.glue(handle, port)
 
 
-    def post_connect(self, item, handle, glue_item, port):
+    def move_connection(self, view, item, handle, connected, port):
+        """
+        Update disconnection callback DisconnectHandle, that reconnection
+        will happen.
+        """
+        cinfo = view.canvas.get_connection(handle)
+        self.reconnect = cinfo.callback.reconnect = True
+
+
+    def post_connect(self, item, handle, connected, port):
         """
         Connecting requires the handles to be connected before the model
         level connection is made.
@@ -53,14 +63,20 @@ class ConnectHandleTool(_ConnectHandleTool):
         Note that once this method is called, the glue() method has done that
         for us.
         """
-        super(ConnectHandleTool, self).post_connect(item, handle, glue_item, port)
-        adapter = component.queryMultiAdapter((glue_item, item), IConnect)
+        super(ConnectHandleTool, self).post_connect(item, handle, connected, port)
+        cinfo = item.canvas.get_connection(handle)
+        try:
+            adapter = component.queryMultiAdapter((connected, item), IConnect)
+            assert adapter is not None
+            assert handle in adapter.line.handles()
+            assert port in adapter.element.ports()
 
-        assert adapter is not None
-        assert handle in adapter.line.handles()
-        assert port in adapter.element.ports()
-
-        adapter.connect(handle, port)
+            if self.reconnect:
+                adapter.reconnect(handle, port)
+            else:
+                adapter.connect(handle, port)
+        finally:
+            self.reconnect = cinfo.callback.reconnect = False
 
 
     def connect_handle(self, line, handle, item, port, callback=None):
@@ -79,10 +95,13 @@ class DisconnectHandle(object):
         Connecting item.
      handle
         Handle of connecting item.
+     reconnect
+        Reconnection indicator.
     """
     def __init__(self, item, handle):
         self.item = item
         self.handle = handle
+        self.reconnect = None
 
 
     def __call__(self):
@@ -90,9 +109,11 @@ class DisconnectHandle(object):
         item = self.item
         canvas = self.item.canvas
         cinfo = canvas.get_connection(handle)
-        if cinfo:
+
+        if cinfo and not self.reconnect:
             adapter = component.queryMultiAdapter((cinfo.connected, item), IConnect)
             adapter.disconnect(handle)
+
 
 
 class TextEditTool(Tool):

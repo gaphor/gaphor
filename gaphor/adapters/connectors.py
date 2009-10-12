@@ -104,6 +104,16 @@ class AbstractConnect(object):
         return True
 
 
+    def reconnect(self, handle, port):
+        """
+        Reconnect to an element. Note that at this point the line may
+        be connected to some other, or the same element by means of the
+        handle.connected_to property. Also the connection at UML level
+        still exists.
+        """
+        pass
+
+
     def disconnect(self, handle):
         """
         Disconnect UML model level connections.
