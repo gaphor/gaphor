@@ -46,11 +46,12 @@ class FlowItem(NamedLine):
 
 
     def on_control_flow_guard(self, event):
-        print 'on_control_flow_guard', self.subject, event
+        log.debug('Flow guard about to change %s, %s' % (self.subject, event))
         try:
             self._guard.text = self.subject.guard.value
+            log.debug('Flow %s guard set to %s' % (self.subject, self._guard.text))
         except AttributeError, e:
-            print 'error', e
+            log.error('Error while updating flow guard', e)
             self._guard.text = ''
         self.request_update()
 
