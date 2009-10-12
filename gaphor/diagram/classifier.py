@@ -248,7 +248,7 @@ class ClassifierItem(NamedItem):
                 self._create_stereotype_compartment(obj)
             log.debug('Showing stereotypes attributes enabled')
         else:
-            log.debug('Showing stereotypes attributes disabled')
+            log.trace('Showing stereotypes attributes disabled')
 
 
     def save(self, save_func):

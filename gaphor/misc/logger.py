@@ -17,6 +17,7 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 class Logger(object):
+    TRACE = 0
     DEBUG = logging.DEBUG
     INFO = logging.INFO
     WARNING = logging.WARNING
@@ -35,7 +36,10 @@ class Logger(object):
     log_level = property(get_log_level, get_log_level, None, 'Log level')
 
     def log(self, level, message, exc=None):
-	self.logger.log(level, message, exc_info=exc)
+        self.logger.log(level, message, exc_info=exc)
+
+    def trace(self, message, exc=None):
+        self.log(Logger.TRACE, message, exc)
 
     def debug(self, message, exc=None):
         self.log(Logger.DEBUG, message, exc)

@@ -158,7 +158,7 @@ class DependencyItem(DiagramLine):
         """
         dt = UML.Dependency
 
-        log.debug('Determine dependency type for %s (tail)' \
+        log.trace('Determine dependency type for %s (tail)' \
                 ' and %s (head)' % (ts, hs))
 
         if DependencyItem.is_usage(hs):
