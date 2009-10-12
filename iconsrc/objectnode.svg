@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="96.000000px"
    height="96.000000px"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.42.2"
-   sodipodi:docbase="/home/users/wrobell/projects/gaphor/data/pixmaps"
+   inkscape:version="0.47pre3 r22311"
    sodipodi:docname="objectnode.svg"
-   inkscape:export-filename="/home/users/wrobell/projects/gaphor/data/pixmaps/objectnode.png"
+   inkscape:export-filename="/home/users/wrobell/objectnode.png"
    inkscape:export-xdpi="22.500000"
-   inkscape:export-ydpi="22.500000">
+   inkscape:export-ydpi="22.500000"
+   version="1.1">
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 48 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="96 : 48 : 1"
+       inkscape:persp3d-origin="48 : 32 : 1"
+       id="perspective4492" />
     <linearGradient
        id="linearGradient2971">
       <stop
@@ -91,6 +98,13 @@
          offset="1"
          id="stop2051" />
     </linearGradient>
+    <inkscape:perspective
+       id="perspective5020"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -99,21 +113,37 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.7500000"
-     inkscape:cx="48.000000"
-     inkscape:cy="47.178927"
+     inkscape:zoom="4.8958333"
+     inkscape:cx="48"
+     inkscape:cy="48"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-points="true"
      gridtolerance="1.0000000px"
-     gridempspacing="3"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:window-width="960"
-     inkscape:window-height="722"
-     inkscape:window-x="0"
-     inkscape:window-y="0" />
+     inkscape:window-height="719"
+     inkscape:window-x="50"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       id="GridFromPre046Settings"
+       type="xygrid"
+       originx="0px"
+       originy="0px"
+       spacingx="1px"
+       spacingy="1px"
+       color="#0000ff"
+       empcolor="#0000ff"
+       opacity="0.2"
+       empopacity="0.4"
+       empspacing="3"
+       visible="true"
+       enabled="false"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -122,6 +152,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -129,24 +160,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <g
-       id="g1342">
-      <use
-         style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125.00000%;writing-mode:lr-tb;text-anchor:start;opacity:0.49999997;stroke-width:4.0000000;stroke-miterlimit:4.0000000;stroke-dasharray:none;font-family:Arial"
-         height="96.000000"
-         width="96.000000"
-         transform="translate(4.237351,3.412154)"
-         id="use2072"
-         xlink:href="#rect1316"
-         y="0.0000000"
-         x="0.0000000" />
-      <rect
-         y="26.587847"
-         x="7.8892498"
-         height="39.258190"
-         width="74.873398"
-         id="rect1316"
-         style="font-size:24.000000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125.00000%;writing-mode:lr-tb;text-anchor:start;opacity:1.0000000;fill:#e1e4e6;fill-opacity:1.0000000;fill-rule:evenodd;stroke:#000000;stroke-width:4.0000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;font-family:Arial" />
-    </g>
+    <rect
+       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#e1e4e6;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3.86943841;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;font-family:Arial"
+       id="rect1316-8"
+       width="76.130562"
+       height="36.130562"
+       x="13.934719"
+       y="33.934719" />
+    <rect
+       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#e1e4e6;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3.86943841;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;font-family:Arial"
+       id="rect1316"
+       width="76.130562"
+       height="36.130562"
+       x="9.9347191"
+       y="29.934719" />
   </g>
 </svg>
