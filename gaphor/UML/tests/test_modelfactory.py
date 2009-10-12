@@ -146,6 +146,13 @@ class AssociationTestCase(unittest.TestCase):
         self.assertTrue(c1 in types, assoc.memberEnd)
         self.assertTrue(c2 in types, assoc.memberEnd)
 
+        c1 = self.factory.create(UML.Interface)
+        c2 = self.factory.create(UML.Interface)
+        assoc = UML.model.create_association(self.factory, c1, c2)
+        types = [p.type for p in assoc.memberEnd]
+        self.assertTrue(c1 in types, assoc.memberEnd)
+        self.assertTrue(c2 in types, assoc.memberEnd)
+
 
 
 class AssociationEndNavigabilityTestCase(unittest.TestCase):
@@ -161,19 +168,91 @@ class AssociationEndNavigabilityTestCase(unittest.TestCase):
     def test_attribute_navigability(self):
         """Test navigable attribute of a class or an interface
         """
-        assoc = self.factory.create(UML.Association)
+        c1 = self.factory.create(UML.Class)
+        c2 = self.factory.create(UML.Class)
+        assoc = UML.model.create_association(self.factory, c1, c2)
+
+        end = assoc.memberEnd[0]
+        assert end.type is c1
+
+        UML.model.set_navigability(assoc, end, True)
+
+        # class/interface navigablity, Association.navigableOwnedEnd not
+        # involved
+        self.assertTrue(end not in assoc.navigableOwnedEnd)
+        self.assertTrue(end not in assoc.ownedEnd)
+        self.assertTrue(end in c1.ownedAttribute)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is True)
+
+        # uknown navigability
+        UML.model.set_navigability(assoc, end, None)
+        self.assertTrue(end not in assoc.navigableOwnedEnd)
+        self.assertTrue(end in assoc.ownedEnd)
+        self.assertTrue(end not in c1.ownedAttribute)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is None)
+
+        # non-navigability
+        UML.model.set_navigability(assoc, end, False)
+        self.assertTrue(end not in assoc.navigableOwnedEnd)
+        self.assertTrue(end not in assoc.ownedEnd)
+        self.assertTrue(end not in c1.ownedAttribute)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is False)
+
+        # check other navigability change possibilities
+        UML.model.set_navigability(assoc, end, None)
+        self.assertTrue(end not in assoc.navigableOwnedEnd)
+        self.assertTrue(end in assoc.ownedEnd)
+        self.assertTrue(end not in c1.ownedAttribute)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is None)
+
+        UML.model.set_navigability(assoc, end, True)
+        self.assertTrue(end not in assoc.navigableOwnedEnd)
+        self.assertTrue(end not in assoc.ownedEnd)
+        self.assertTrue(end in c1.ownedAttribute)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is True)
 
 
     def test_relationship_navigability(self):
         """Test navigable relationship of a classifier
         """
-        self.assertTrue(false)
+        n1 = self.factory.create(UML.Node)
+        n2 = self.factory.create(UML.Node)
+        assoc = UML.model.create_association(self.factory, n1, n2)
 
+        end = assoc.memberEnd[0]
+        assert end.type is n1
 
-    def test_actor_navigability(self):
-        """Test navigable relationship of an actor
-        """
-        self.assertTrue(false)
+        UML.model.set_navigability(assoc, end, True)
+
+        # class/interface navigablity, Association.navigableOwnedEnd not
+        # involved
+        self.assertTrue(end in assoc.navigableOwnedEnd)
+        self.assertTrue(end not in assoc.ownedEnd)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is True)
+
+        # uknown navigability
+        UML.model.set_navigability(assoc, end, None)
+        self.assertTrue(end not in assoc.navigableOwnedEnd)
+        self.assertTrue(end in assoc.ownedEnd)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is None)
+
+        # non-navigability
+        UML.model.set_navigability(assoc, end, False)
+        self.assertTrue(end not in assoc.navigableOwnedEnd)
+        self.assertTrue(end not in assoc.ownedEnd)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is False)
+
+        # check other navigability change possibilities
+        UML.model.set_navigability(assoc, end, None)
+        self.assertTrue(end not in assoc.navigableOwnedEnd)
+        self.assertTrue(end in assoc.ownedEnd)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is None)
+
+        UML.model.set_navigability(assoc, end, True)
+        self.assertTrue(end in assoc.navigableOwnedEnd)
+        self.assertTrue(end not in assoc.ownedEnd)
+        self.assertTrue(UML.model.get_navigability(assoc, end) is True)
+
 
 
 # vim:sw=4:et

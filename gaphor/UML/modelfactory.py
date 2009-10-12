@@ -204,14 +204,34 @@ def set_navigability(assoc, end, nav):
         communication path
 
     Therefore navigable association end may be stored as one of
-    - {Class,Interface}.ownedAttribute due to Gaphor capabilities of
+    - {Class,Interface}.ownedAttribute due to their capabilities of
       editing owned members
     - Association.navigableOwnedEnd
+
+    When an end has unknown (unspecified) navigability, then it is owned by
+    association (but not by classifier).
+
+    When an end is non-navigable, then it is just member of an association.
     """
-    if isinstance(end.owner, (UML.Class, UML.Interface)):
-        end.owner.ownedAttribute = end
-    else:
-        assoc.navigableOwnedEnd = end
+    # remove "navigable" and "unspecified" navigation indicators first
+    if type(end.type) in (Class, Interface):
+        if end in end.type.ownedAttribute:
+            end.type.ownedAttribute.remove(end)
+    if end in assoc.ownedEnd:
+        assoc.ownedEnd.remove(end)
+    if end in assoc.navigableOwnedEnd:
+        assoc.navigableOwnedEnd.remove(end)
+    assert end not in assoc.ownedEnd
+    assert end not in assoc.navigableOwnedEnd
+
+    if nav is True:
+        if type(end.type) in (Class, Interface):
+            end.type.ownedAttribute = end
+        else:
+            assoc.navigableOwnedEnd = end
+    elif nav is None:
+        assoc.ownedEnd = end
+    # elif nav is False, non-navigable
 
 
 def get_navigability(assoc, end):
@@ -220,6 +240,14 @@ def get_navigability(assoc, end):
 
     For navigability semantics see `set_navigability`.
     """
+    if (type(end.type) in (Class, Interface) and end in end.type.ownedAttribute) \
+            or end in assoc.navigableOwnedEnd:
+        return True
+    elif end in assoc.ownedEnd:
+        return None
+    else:
+        return False
+
 
 
 # vim:sw=4:et
