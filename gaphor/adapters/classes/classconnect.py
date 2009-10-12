@@ -135,6 +135,11 @@ class AssociationConnect(RelationshipConnect):
 
                 line.head_end.subject = head_end
                 line.tail_end.subject = tail_end
+
+                # set default navigability (unknown)
+                UML.model.set_navigability(relation, head_end, None)
+                UML.model.set_navigability(relation, tail_end, None)
+
                 # Do subject itself last, so event handlers can trigger
                 line.subject = relation
 

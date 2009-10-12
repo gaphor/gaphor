@@ -971,6 +971,8 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
     component.adapts(items.AssociationItem)
 
+    NAVIGABILITY = [None, False, True]
+
     def __init__(self, context):
         super(AssociationPropertyPage, self).__init__(context)
         #self.context = context
@@ -1022,7 +1024,8 @@ Enter attribute name and multiplicity, for example
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
             combo.append_text(t)
         
-        combo.set_active([None, False, True].index(end.navigability))
+        nav = UML.model.get_navigability(self.context.subject, end.subject)
+        combo.set_active(self.NAVIGABILITY.index(nav))
 
         combo.connect('changed', self._on_navigability_change, end)
         hbox.pack_start(combo, expand=False)
@@ -1094,7 +1097,8 @@ Enter attribute name and multiplicity, for example
 
     @transactional
     def _on_navigability_change(self, combo, end):
-        end.navigability = (None, False, True)[combo.get_active()]
+        nav = self.NAVIGABILITY[combo.get_active()]
+        UML.model.set_navigability(self.context.subject, end.subject, nav)
 
     @transactional
     def _on_aggregation_change(self, combo, end):

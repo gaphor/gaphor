@@ -55,7 +55,11 @@ class AssociationItem(NamedLine):
             .watch(base + 'lowerValue<LiteralSpecification>.value', self.on_association_end_value)\
             .watch(base + 'upperValue<LiteralSpecification>.value', self.on_association_end_value)\
             .watch(base + 'taggedValue<LiteralSpecification>.value', self.on_association_end_value)\
-            .watch(base + 'owningAssociation', self.on_association_end_value)
+            .watch(base + 'owningAssociation', self.on_association_end_value) \
+            .watch(base + 'type<Class>.ownedAttribute', self.on_association_end_value) \
+            .watch(base + 'type<Interface>.ownedAttribute', self.on_association_end_value) \
+            .watch('subject<Association>.ownedEnd') \
+            .watch('subject<Association>.navigableOwnedEnd')
 
     def set_show_direction(self, dir):
         self._show_direction = dir
@@ -166,9 +170,9 @@ class AssociationItem(NamedLine):
                 self.draw_head = self.draw_head_composite
             elif tail_subject.aggregation == intern('shared'):
                 self.draw_head = self.draw_head_shared
-            elif self._head_end.navigability:
+            elif UML.model.get_navigability(self.subject, self._head_end.subject) is True:
                 self.draw_head = self.draw_head_navigable
-            elif self._head_end.navigability == False:
+            elif UML.model.get_navigability(self.subject, self._head_end.subject) is False:
                 self.draw_head = self.draw_head_none
             else:
                 self.draw_head = self.draw_head_undefined
@@ -177,9 +181,9 @@ class AssociationItem(NamedLine):
                 self.draw_tail = self.draw_tail_composite
             elif head_subject.aggregation == intern('shared'):
                 self.draw_tail = self.draw_tail_shared
-            elif self._tail_end.navigability:
+            elif UML.model.get_navigability(self.subject, self._tail_end.subject) is True:
                 self.draw_tail = self.draw_tail_navigable
-            elif self._tail_end.navigability == False:
+            elif UML.model.get_navigability(self.subject, self._tail_end.subject) is False:
                 self.draw_tail = self.draw_tail_none
             else:
                 self.draw_tail = self.draw_tail_undefined
@@ -416,112 +420,6 @@ class AssociationEnd(UML.Presentation):
                 self._name = n
                 self._mult = m
                 self.request_update()
-
-    def _get_navigability(self):
-        """
-        Check navigability of the AssociationEnd. If property is owned by
-        class via ownedAttribute, then it is navigable. If property is
-        owned by association by ownedEnd, then it is not navigable.
-        Otherwise the navigability is unknown.
-
-        Returned navigability values:
-            - None  - unknown
-            - False - not navigable
-            - True  - navigable
-        """
-        navigability = None # unknown navigability as default
-        subject = self.subject
-
-        if subject and subject.opposite:
-            #
-            # WARNING! see bug http://gaphor.devjavu.com/ticket/110
-            #
-            opposite = subject.opposite
-            if isinstance(opposite.type, UML.Interface):
-                type = subject.interface_
-            elif isinstance(opposite.type, UML.Class):
-                type = subject.class_
-            elif isinstance(opposite.type, UML.Actor):
-                type = subject.actor
-            elif isinstance(opposite.type, UML.UseCase):
-                type = subject.useCase
-            else:
-                assert 0, 'Should never be reached'
-
-            if type and subject in type.ownedAttribute:
-                navigability = True
-            elif subject.association and subject in subject.association.ownedEnd:
-                navigability = False
-
-        return navigability
-                
-
-    def _set_navigability(self, navigable):
-        """
-        Change the AssociationEnd's navigability.
-
-        A warning is issued if the subject or opposite property is missing.
-        """
-        subject = self.subject
-        if subject and subject.opposite:
-            opposite = subject.opposite
-
-            #
-            # Remove any navigability info, so unknown navigability state
-            # is the default.
-            #
-
-            # if navigable
-            #
-            # WARNING! see bug http://gaphor.devjavu.com/ticket/110
-            #
-            if isinstance(opposite.type, UML.Class):
-                if subject.class_:
-                    del subject.class_
-            elif isinstance(opposite.type, UML.Interface):
-                if subject.interface_:
-                    del subject.interface_
-            elif isinstance(opposite.type, UML.Actor):
-                if subject.actor:
-                    del subject.actor
-            elif isinstance(opposite.type, UML.UseCase):
-                if subject.useCase:
-                    del subject.useCase
-            else:
-                assert 0, 'Should never be reached'
-
-            # if not navigable
-            if subject.owningAssociation:
-                del subject.owningAssociation
-
-
-            #
-            # Set navigability.
-            #
-            #
-            # WARNING! see bug http://gaphor.devjavu.com/ticket/110
-            #
-            if navigable:
-                if isinstance(opposite.type, UML.Class):
-                    subject.class_ = opposite.type
-                elif isinstance(opposite.type, UML.Interface):
-                    subject.interface_ = opposite.type
-                elif isinstance(opposite.type, UML.Actor):
-                    subject.actor = opposite.type
-                elif isinstance(opposite.type, UML.UseCase):
-                    subject.useCase = opposite.type
-                else:
-                    assert 0, 'Should never be reached'
-            elif navigable == False:
-                subject.owningAssociation = subject.association
-
-            # else navigability is unknown
-
-        else:
-            log.warning('AssociationEnd.set_navigable: %s missing' % \
-                        (subject and 'subject' or 'opposite Property'))
-
-    navigability = property(_get_navigability, _set_navigability)
 
 
     def point_name(self, pos):
