@@ -92,7 +92,8 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         self.group(s, uc2)
         self.assertEquals(1, len(uc2.subject.subject))
 
-        self.assertEquals(2, len(s.subject.useCase))
+        # Classifier.useCase is not navigable to UseCase
+        #self.assertEquals(2, len(s.subject.useCase))
 
 
     def test_grouping_with_namespace(self):
@@ -124,11 +125,13 @@ class SubsystemUseCaseGroupTestCase(TestCase):
 
         self.ungroup(s, uc1)
         self.assertEquals(0, len(uc1.subject.subject))
-        self.assertEquals(1, len(s.subject.useCase))
+        # Classifier.useCase is not navigable to UseCase
+        #self.assertEquals(1, len(s.subject.useCase))
 
         self.ungroup(s, uc2)
         self.assertEquals(0, len(uc2.subject.subject))
-        self.assertEquals(0, len(s.subject.useCase))
+        # Classifier.useCase is not navigable to UseCase
+        #self.assertEquals(0, len(s.subject.useCase))
 
 
 
