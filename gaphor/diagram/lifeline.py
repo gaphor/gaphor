@@ -24,11 +24,26 @@ from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG
 from gaphas.geometry import distance_line_point, Rectangle
-from gaphas.constraint import LessThanConstraint, EqualsConstraint, CenterConstraint
+from gaphas.constraint import LessThanConstraint, EqualsConstraint, CenterConstraint, LineAlignConstraint
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
+
+
+class LifetimePort(LinePort):
+    def constraint(self, canvas, item, handle, glue_item):
+        """
+        Create connection line constraint between item's handle and the
+        port.
+        """
+        line = canvas.project(glue_item, self.start, self.end)
+        point = canvas.project(item, handle.pos)
+
+        x, y = canvas.get_matrix_i2c(item).transform_point(*handle.pos)
+        x, y = canvas.get_matrix_c2i(glue_item).transform_point(x, y)
+        return LineAlignConstraint(line, point, 0, y - self.start.y)
+
 
 
 class LifetimeItem(object):
@@ -64,7 +79,7 @@ class LifetimeItem(object):
         self.top.movable = False
         self.top.visible = False
 
-        self.port = LinePort(self.top.pos, self.bottom.pos)
+        self.port = LifetimePort(self.top.pos, self.bottom.pos)
         self.visible = False
 
         self._c_min_length = None # to be set by lifeline item
