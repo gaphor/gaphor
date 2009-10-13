@@ -12,14 +12,10 @@ use cases diagram.
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
-from gaphor.diagram import font
+from gaphor.diagram import font, uml
 
-
+@uml(UML.Component, stereotype='subsystem')
 class SubsystemItem(NamedItem):
-    __uml__ = UML.Component
-
-    __stereotype__ = 'subsystem'
-
     __style__   = {
         'min-size': (200, 400),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
