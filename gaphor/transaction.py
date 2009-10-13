@@ -9,9 +9,10 @@ from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollbac
 
 def transactional(func):
     def _transactional(*args, **kwargs):
+        r = None
         tx = Transaction()
         try:
-	    func(*args, **kwargs)
+            r = func(*args, **kwargs)
         except Exception, e:
             log.error('Transaction terminated due to an exception, performing a rollback', e)
             try:
@@ -21,6 +22,7 @@ def transactional(func):
             raise
         else:
             tx.commit()
+        return r
     return _transactional
 
 
