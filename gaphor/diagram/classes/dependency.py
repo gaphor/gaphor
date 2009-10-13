@@ -99,6 +99,10 @@ class DependencyItem(DiagramLine):
             c2 = self.canvas.get_connection(self.head)
             if c1 and c2:
                 dt = self.determine_dependency_type(c1.item.subject, c2.item.subject)
+        elif dependency_type is not None:
+            dt = dependency_type
+        else:
+            dt = UML.Dependency
         self._dependency_type = dt
         self.request_update()
 
