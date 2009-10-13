@@ -130,8 +130,6 @@ class AssociationConnect(RelationshipConnect):
                 relation.memberEnd = tail_end
                 head_end.type = head_type
                 tail_end.type = tail_type
-                head_type.ownedAttribute = tail_end
-                tail_type.ownedAttribute = head_end
 
                 line.head_end.subject = head_end
                 line.tail_end.subject = tail_end
