@@ -494,6 +494,9 @@ class derived(umlproperty):
         u = self.filter(obj)
         if self.upper <= 1:
             assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
+            # maybe code below is better instead the assertion above?
+            #if len(u) > 1:
+            #    log.warning('Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u)))
             if u:
                 u = iter(u).next()
             else:
