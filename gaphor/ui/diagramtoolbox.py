@@ -68,7 +68,7 @@ TOOLBOX_ACTIONS = (
         ('toolbox-extend', _('Extend'), 'gaphor-extend'),
     )), (_('Profiles'), (
         ('toolbox-profile', _('Profile'), 'gaphor-profile'),
-        ('toolbox-metaclass', _('Metaclass'), 'gaphor-class'),
+        ('toolbox-metaclass', _('Metaclass'), 'gaphor-metaclass'),
         ('toolbox-stereotype', _('Stereotype'), 'gaphor-stereotype'),
         ('toolbox-extension', _('Extension'), 'gaphor-extension'),
     )),
@@ -134,7 +134,7 @@ class DiagramToolbox(object):
         factory_method.item_class = item_class
         return factory_method
 
-    def _namespace_item_factory(self, item_class, subject_class,):
+    def _namespace_item_factory(self, item_class, subject_class, stereotype=None):
         """
         Returns a factory method for Namespace classes.
         To be used by the PlacementTool.
@@ -143,7 +143,10 @@ class DiagramToolbox(object):
             subject = self.element_factory.create(subject_class)
             item = self.diagram.create(item_class, subject=subject, parent=parent)
             subject.package = self.namespace
-            subject.name = 'New%s' % subject_class.__name__
+            if stereotype:
+                subject.name = 'New%s' % stereotype.capitalize()
+            else:
+                subject.name = 'New%s' % subject_class.__name__
             return item
         factory_method.item_class = item_class
         return factory_method
@@ -266,7 +269,7 @@ class DiagramToolbox(object):
     def toolbox_subsystem(self):
         return GroupPlacementTool(
                 item_factory=self._namespace_item_factory(items.SubsystemItem,
-                    UML.Component),
+                    UML.Component, 'subsystem'),
                 handle_index=SE,
                 after_handler=self._after_handler)
 
@@ -448,7 +451,7 @@ class DiagramToolbox(object):
     def toolbox_metaclass(self):
         return PlacementTool(
                 item_factory=self._namespace_item_factory(items.ClassItem,
-                                                          UML.Class),
+                    UML.Class, 'metaclass'),
                 handle_index=SE,
                 after_handler=self._after_handler)
 

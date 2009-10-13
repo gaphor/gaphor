@@ -36,6 +36,11 @@
     <file>class24.png</file>
     <element>Class</element>
   </icon>
+  <icon id="gaphor-metaclass">
+    <file>class24.png</file>
+    <element>Class</element>
+    <stereotype>metaclass</stereotype>
+  </icon>
   <icon id="gaphor-comment">
     <file>comment24.png</file>
     <element>Comment</element>
@@ -174,6 +179,7 @@
   <icon id="gaphor-subsystem">
     <file>subsystem.png</file>
     <element>Component</element>
+    <stereotype>subsystem</stereotype>
   </icon>
   <icon id="gaphor-partition">
     <file>partition.png</file>

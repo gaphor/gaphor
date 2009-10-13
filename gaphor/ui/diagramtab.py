@@ -245,12 +245,16 @@ class DiagramTab(object):
             context.finish(True, False, time)
         elif data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
             #print 'drag_data_received:', data.data, info
-            element = self.element_factory.lookup(data.data)
+            n, p = data.data.split('#')
+            element = self.element_factory.lookup(n)
             assert element
 
             # TODO: use adapters to execute code below
 
-            item_class = get_diagram_item(type(element))
+            q = type(element)
+            if p:
+                q = q, p
+            item_class = get_diagram_item(q)
             if isinstance(element, UML.Diagram):
                 self.action_manager.execute('OpenModelElement')
             elif item_class:

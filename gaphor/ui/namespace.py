@@ -38,6 +38,11 @@ _default_filter_list = (
     UML.Operation
     )
 
+_presentation_options = set([
+    'metaclass',
+    'subsystem',
+])
+
 # TODO: update tree sorter:
 # Diagram before Class & Package.
 # Property before Operation
@@ -489,17 +494,44 @@ class NamespaceView(gtk.TreeView):
         self.expand_row((0,), False)
 
 
+    def get_presentation_option(self, value):
+        items = (p for p in value.presentation if hasattr(type(p), '__stereotype__'))
+        keys = []
+        for item in items:
+            t = type(item)
+            st = t.__stereotype__
+            # fixme: compare this code with StereotypeSupport.parse_stereotype
+            # and clean up this mess using @uml class decorator
+            if isinstance(st, basestring):
+                keys.append(st)
+            elif isinstance(st, dict):
+                for k, f in st.items():
+                    if f(item):
+                        keys.append(k)
+        k = set(keys) & _presentation_options
+        if len(k) == 1: # we know how to handle only one presentation option at the moment
+            return k.pop()
+        else:
+            return None
+
+
     def _set_pixbuf(self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)
+        q = t = type(value)
+
+        p = self.get_presentation_option(value)
+        if p is not None:
+            q = (t, p)
+
         try:
-            icon = self.icon_cache[type(value)]
+            icon = self.icon_cache[q]
         except KeyError:
-            stock_id = stock.get_stock_id(type(value))
+            stock_id = stock.get_stock_id(t, p)
             if stock_id:
                 icon = self.render_icon(stock_id, gtk.ICON_SIZE_MENU, '')
             else:
                 icon = None
-            self.icon_cache[type(value)] = icon
+            self.icon_cache[q] = icon
         cell.set_property('pixbuf', icon)
 
 
@@ -550,10 +582,12 @@ class NamespaceView(gtk.TreeView):
         model, iter = selection.get_selected()
         if iter:
             element = model.get_value(iter, 0)
+            p = self.get_presentation_option(element)
+            p = p if p else ''
             if info == NamespaceView.TARGET_ELEMENT_ID:
-                selection_data.set(selection_data.target, 8, str(element.id))
+                selection_data.set(selection_data.target, 8, '%s#%s' % (element.id, p))
             else:
-                selection_data.set(selection_data.target, 8, element.name)
+                selection_data.set(selection_data.target, 8, '%s#%s' % (element.name, p))
 
 
     def on_drag_data_delete (self, context):
