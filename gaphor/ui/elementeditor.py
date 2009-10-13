@@ -20,7 +20,8 @@ class ElementEditor(UtilityWindow):
     properties = inject('properties')
 
     title = _("Element Editor")
-    size = (200, -1)
+    size = (275, -1)
+    resizable = True
     menu_xml = """
       <ui>
         <toolbar action="mainwindow-toolbar">
