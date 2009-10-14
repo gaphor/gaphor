@@ -87,7 +87,6 @@ class NodeGroup(AbstractGroup):
     """
     def group(self):
         self.parent.subject.nestedNode = self.item.subject
-        self.parent.canvas.reparent(self.item, self.parent)
 
 
     def ungroup(self):
