@@ -1,5 +1,10 @@
 """
-Activity partition item.
+Activity Partition item.
+
+TODO: partition can be resized only horizontally or vertically, therefore
+- define constraints for horizontal and vertical handles
+- reallocate handles in such way, so they clearly indicate horizontal
+  or vertical size change
 """
 
 from gaphor import UML
