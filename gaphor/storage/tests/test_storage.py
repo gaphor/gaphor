@@ -137,8 +137,8 @@ class StorageTestCase(TestCase):
         a = self.diagram.create(items.AssociationItem)
         a.handles()[0].pos = (10, 20)
         a.handles()[1].pos = (50, 60)
-        assert 10 == a.handles()[0].x, a.handles()[0].pos
-        assert a.handles()[0].y == 20, a.handles()[0].pos
+        assert 10 == a.handles()[0].pos.x, a.handles()[0].pos
+        assert a.handles()[0].pos.y == 20, a.handles()[0].pos
         assert a.handles()[1].pos == (50, 60), a.handles()[1].pos
 
         data = self.save()
@@ -185,8 +185,8 @@ class StorageTestCase(TestCase):
 
         self.diagram.canvas.update_now()
 
-        assert a.head.y == 0, a.head.pos
-        assert a.tail.x == 10, a.tail.pos
+        assert a.head.pos.y == 0, a.head.pos
+        assert a.tail.pos.x == 10, a.tail.pos
         #assert a.tail.y == 200, a.tail.pos
         assert a.subject
 
