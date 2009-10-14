@@ -196,7 +196,10 @@ class NamespaceModel(gtk.GenericTreeModel):
         # Add children
         if isinstance(element, UML.Namespace):
             for e in element.ownedMember:
-                self._add_elements(e)
+                # check if owned member is indeed within parent's namespace
+                # the check is important in case on Node classes
+                if element is e.namespace:
+                    self._add_elements(e)
 
 
     def _remove_element(self, element):
