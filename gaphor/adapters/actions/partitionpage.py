@@ -25,7 +25,7 @@ class PartitionPropertyPage(NamedItemPropertyPage):
         page = super(PartitionPropertyPage, self).construct()
 
         if item.subject:
-            if item._superpart:
+            if not item._toplevel:
                 hbox = gtk.HBox(spacing=12)
                 button = gtk.CheckButton(_('External'))
                 button.set_active(item.subject.isExternal)

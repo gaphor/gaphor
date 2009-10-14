@@ -13,46 +13,56 @@ class PartitionItem(NamedItem):
     }
 
     __style__   = {
-        'min-size': (100, 400),
+        'min-size': (100, 300),
     }
 
     DELTA = 30
 
     def __init__(self, id=None):
         super(PartitionItem, self).__init__(id)
-        self._superpart = False
+        self._toplevel = False
+        self._bottom = False
         self._subpart = False
         self._hdmax = 0 # maximum subpartition header height
 
 
     def pre_update(self, context):
         super(PartitionItem, self).pre_update(context)
-        
-        if not self.subject:
-            self._header_size = self._header_size[0], self.DELTA
 
         # get subpartitions
         children = list(k for k in self.canvas.get_children(self)
                 if isinstance(k, PartitionItem))
 
-        self._superpart = self.canvas.get_parent(self) is not None
+        self._toplevel = self.canvas.get_parent(self) is None
         self._subpart = len(children) > 0
+        self._bottom = not self._toplevel and not self._subpart
+        
+        if self._toplevel:
+            self._header_size = self._header_size[0], self.DELTA
 
         handles = self.handles()
+        
+        # toplevel partition controls the height
+        # partitions at the very bottom control the width
+        # middle partitions control nothing
         for h in handles:
-            h.movable = not (self._subpart or self._superpart)
-        if self._superpart and not self._subpart:
-            h = handles[2]
-            h.movable = True
-
+            h.movable = False
+            h.visible = False
+        if self._bottom:
+            h = handles[1]
+            h.visible = h.movable = True
+        if self._toplevel:
+            h1, h2 = handles[2:4]
+            h1.visible = h1.movable = True
+            h2.visible = h2.movable = True
 
         if self._subpart:
             wsum = sum(sl.width for sl in children)
-            hmax = max(sl.height for sl in children)
             self._hdmax = max(sl._header_size[1] for sl in children)
 
+            # extend width of swimline due the children but keep the height
+            # untouched
             self.width = wsum
-            self.height = hmax + self._header_size[1] + self.DELTA
 
             dp = 0
             for sl in self.canvas.get_children(self):
@@ -64,8 +74,10 @@ class PartitionItem(NamedItem):
                 y = y - y1 + self._header_size[1] + self._hdmax - sl._header_size[1]
                 sl.matrix.translate(x, y)
 
-                sl.height = hmax
+                sl.height = sl.min_height = max(0, self.height - self._header_size[1])
                 dp += sl.width
+            if not self._toplevel:
+                self.canvas.get_parent(self).request_update()
 
 
     def draw(self, context):
@@ -77,7 +89,7 @@ class PartitionItem(NamedItem):
         cr = context.cairo
         cr.set_line_width(2.4)
 
-        if self.subject and not self.subject.isDimension and not self._superpart:
+        if self.subject and not self.subject.isDimension and self._toplevel:
             cr.move_to(0, 0)
             cr.line_to(self.width, 0)
 
@@ -85,7 +97,7 @@ class PartitionItem(NamedItem):
         h = self._header_size[1]
 
         # draw outside lines if this item is toplevel partition
-        if not self._superpart:
+        if self._toplevel:
             cr.move_to(0, self.height)
             cr.line_to(0, h)
             cr.line_to(self.width, h)
@@ -112,9 +124,6 @@ class PartitionItem(NamedItem):
             cr.set_dash((1.0, 5.0), 0)
             cr.set_line_width(1.0)
             cr.rectangle(0, 0, self.width, self.height)
-            d = self.height - self.DELTA
-            cr.move_to(0, d)
-            cr.line_to(self.width, d)
             cr.stroke()
             cr.restore()
 
