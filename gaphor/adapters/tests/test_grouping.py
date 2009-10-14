@@ -8,6 +8,37 @@ from gaphor.diagram import items
 
 from gaphor.tests import TestCase 
 
+class NodesGroupTestCase(TestCase):
+    """
+    Nodes grouping tests.
+    """
+
+    def test_grouping(self):
+        """Test node within another node composition
+        """
+        n1 = self.create(items.NodeItem, UML.Node)
+        n2 = self.create(items.NodeItem, UML.Node)
+
+        self.group(n1, n2)
+
+        self.assertTrue(n2.subject in n1.subject.nestedNode)
+        self.assertFalse(n1.subject in n2.subject.nestedNode)
+
+
+    def test_ungrouping(self):
+        """Test decomposition of component from node
+        """
+        n1 = self.create(items.NodeItem, UML.Node)
+        n2 = self.create(items.NodeItem, UML.Node)
+
+        self.group(n1, n2)
+        self.ungroup(n1, n2)
+
+        self.assertFalse(n2.subject in n1.subject.nestedNode)
+        self.assertFalse(n1.subject in n2.subject.nestedNode)
+
+
+
 class NodeComponentGroupTestCase(TestCase):
 
     def test_grouping(self):
