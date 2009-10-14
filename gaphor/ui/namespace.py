@@ -587,6 +587,7 @@ class NamespaceView(gtk.TreeView):
             element = model.get_value(iter, 0)
             p = self.get_presentation_option(element)
             p = p if p else ''
+            # 'id#stereotype' is being send
             if info == NamespaceView.TARGET_ELEMENT_ID:
                 selection_data.set(selection_data.target, 8, '%s#%s' % (element.id, p))
             else:
@@ -607,12 +608,12 @@ class NamespaceView(gtk.TreeView):
         """
         self.emit_stop_by_name('drag-data-received')
         #print 'drag_data_received'
-        data = selection.data
+        n, p = selection.data.split('#')
         drop_info = self.get_dest_row_at_pos(x, y)
         if drop_info:
             #print 'drop_info', drop_info
             model = self.get_model()
-            element = self.factory.lookup(data)
+            element = self.factory.lookup(n)
             path, position = drop_info
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)
