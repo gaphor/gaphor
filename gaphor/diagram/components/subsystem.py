@@ -17,7 +17,6 @@ from gaphor.diagram import font, uml
 @uml(UML.Component, stereotype='subsystem')
 class SubsystemItem(ComponentItem):
     __style__   = {
-        'min-size': (200, 400),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
     }
     def __init__(self, id=None):
