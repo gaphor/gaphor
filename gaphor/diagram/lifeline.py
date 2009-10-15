@@ -42,7 +42,17 @@ class LifetimePort(LinePort):
 
         x, y = canvas.get_matrix_i2c(item).transform_point(*handle.pos)
         x, y = canvas.get_matrix_c2i(glue_item).transform_point(x, y)
-        return LineAlignConstraint(line, point, 0, y - self.start.y)
+
+        # keep message at the same distance from head or bottom of lifetime
+        # line depending on situation
+        height = self.end.y - self.start.y
+        if y / height < 0.5:
+            delta = y - self.start.y
+            align = 0
+        else:
+            delta = y - self.end.y
+            align = 1
+        return LineAlignConstraint(line, point, align, delta)
 
 
 
