@@ -459,7 +459,7 @@ def create_hbox_label(adapter, page, label):
     Create a HBox with a label for given property page adapter and page
     itself.
     """
-    hbox = gtk.HBox()
+    hbox = gtk.HBox(spacing=12)
     label = gtk.Label(label)
     label.set_alignment(0.0, 0.5)
     adapter.size_group.add_widget(label)
