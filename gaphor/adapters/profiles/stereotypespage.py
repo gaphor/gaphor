@@ -99,10 +99,13 @@ class StereotypePage(object):
         page = gtk.VBox()
         subject = self.context.subject
         if subject is None:
-            return page
+            return None
+
+        stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
+        if len(stereotypes) == 0:
+            return None
 
         applied = set(UML.model.get_applied_stereotypes(subject))
-        stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
         for i, stereotype in enumerate(stereotypes):
             if (i % 3) == 0:
                 hbox = gtk.HBox(spacing=20)
