@@ -51,6 +51,8 @@ class PropertyEditor(object):
         for _, name, adapter in adapters:
             try:
                 page = adapter.construct()
+                if page is None:
+                    continue
                 expander = gtk.Expander()
                 expander.set_label(name)
                 expander.add(page)
