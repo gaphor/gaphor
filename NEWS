@@ -1,4 +1,4 @@
-0.14.1
+0.15.0
 ------
 - Fixed bug related to diagrams loading.
 - Subsystem item is added (part of components).
