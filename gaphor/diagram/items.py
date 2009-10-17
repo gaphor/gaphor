@@ -63,4 +63,5 @@ from gaphor.diagram.extend import ExtendItem
 
 # Stereotypes:
 from gaphor.diagram.extension import ExtensionItem
+from gaphor.diagram.profiles.metaclass import MetaclassItem
 
