@@ -9,10 +9,6 @@ The layout is done like this:
  - Lines are reconnected to the nodes, so everything looks pretty.
 """
 
-__plugin__ = 'diagram_layout'
-__version__ = '0.1'
-__author__ = 'Arjan Molenaar'
-
 from zope import interface, component
 from gaphor.core import _, inject, action, build_action_group, transactional
 from gaphor.interfaces import IService, IActionProvider

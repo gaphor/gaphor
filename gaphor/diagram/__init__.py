@@ -4,10 +4,6 @@ The diagram package contains items (to be drawn on the diagram), tools
 diagram).
 """
 
-__version__ = '$revision$'
-__author__ = 'Arjan J. Molenaar'
-__date__ = '$date$'
-
 import inspect
 import gobject
 import uuid
