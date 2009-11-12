@@ -13,22 +13,18 @@ from zope import component
 
 from gaphas.geometry import distance_point_point, distance_point_point_fast, \
                             distance_line_point, distance_rectangle_point
-from gaphas.item import Line
 from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool, \
-    ToolChain, HoverTool, ItemTool, RubberbandTool, \
-    ConnectHandleTool as _ConnectHandleTool
-from gaphas.canvas import Context
-
+    ToolChain, HoverTool, ItemTool, RubberbandTool, ConnectHandleTool
+from gaphas.aspect import aspect, Connector
 from gaphor.core import inject, Transaction, transactional
 
 from gaphor.diagram.interfaces import IEditor, IConnect
-
-__version__ = '$Revision$'
+from gaphor.diagram.diagramline import DiagramLine
 
 
 # TODO: Move code to aspect
-
-class ConnectHandleTool(_ConnectHandleTool):
+@aspect(DiagramLine)
+class DiagramItemConnector(Connector):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
     to connect items to one-another.
@@ -38,25 +34,24 @@ class ConnectHandleTool(_ConnectHandleTool):
     """
     reconnect = False
 
-    def can_glue(self, item, handle, glue_item, port):
+    def allow(self, sink):
         """
         Determine if item and glue item can glue/connect using connection
         adapters.
         """
-        adapter = component.queryMultiAdapter((glue_item, item), IConnect)
-        return adapter and adapter.glue(handle, port)
+        adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
+        return adapter and adapter.glue(self.handle, sink.port)
 
 
-    def move_connection(self, item, handle, connected, port):
+    def connect(self, sink):
         """
-        Update disconnection callback DisconnectHandle, that reconnection
-        will happen.
+        Create connection at handle level and at model level.
         """
-        cinfo = self.view.canvas.get_connection(handle)
-        self.reconnect = cinfo.callback.reconnect = True
-        super(ConnectHandleTool, self).move_connection(item, handle, connected, port)
+        super(DiagramItemConnector, self).connect(sink)
+        self.model_connect(sink)
 
-    def post_connect(self, item, handle, connected, port):
+
+    def model_connect(self, sink):
         """
         Connecting requires the handles to be connected before the model
         level connection is made.
@@ -64,27 +59,26 @@ class ConnectHandleTool(_ConnectHandleTool):
         Note that once this method is called, the glue() method has done that
         for us.
         """
-        super(ConnectHandleTool, self).post_connect(item, handle, connected, port)
+        handle = self.handle
+        item = self.item
         cinfo = item.canvas.get_connection(handle)
         try:
-            adapter = component.queryMultiAdapter((connected, item), IConnect)
+            adapter = component.queryMultiAdapter((sink.item, item), IConnect)
             assert adapter is not None
             assert handle in adapter.line.handles()
-            assert port in adapter.element.ports()
+            assert sink.port in adapter.element.ports()
 
             if self.reconnect:
-                adapter.reconnect(handle, port)
+                adapter.reconnect(handle, sink.port)
             else:
-                adapter.connect(handle, port)
+                adapter.connect(handle, sink.port)
         finally:
             self.reconnect = cinfo.callback.reconnect = False
 
 
-    def connect_handle(self, line, handle, item, port, callback=None):
-        callback = DisconnectHandle(line, handle)
-        super(ConnectHandleTool, self).connect_handle(line, handle,
-                item, port,
-                callback)
+    def connect_handle(self, sink, callback=None):
+        callback = DisconnectHandle(self.item, self.handle)
+        super(DiagramItemConnector, self).connect_handle(sink, callback)
 
 
 class DisconnectHandle(object):
