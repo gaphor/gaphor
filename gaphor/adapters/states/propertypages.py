@@ -37,7 +37,7 @@ class TransitionPropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
         entry = gtk.Entry()        
-        entry.set_text(subject.guard and subject.guard.value or '')
+        entry.set_text(subject.guard.specification.value if subject.guard else '')
         entry.connect('changed', self._on_guard_change)
         hbox.pack_start(entry)
 

@@ -1,4 +1,4 @@
-0.14.1
+0.15.0
 ------
 - Fixed bug related to diagrams loading.
 - Subsystem item is added (part of components).
@@ -9,6 +9,7 @@
   - components
 - Stereotype names shown in stereotype attribute compartments are centered
   now.
+- Creating stereotypes is a bit simpler, now.
 
 0.14.0
 ------
