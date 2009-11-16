@@ -70,28 +70,30 @@ class CopyService(object):
             self.copy_buffer = set(items)
             self.action_group.get_action('edit-paste').props.sensitive = True
 
-    def _load_element(self, name, value):
+
+    def copy_func(self, name, value, reference=False):
         """
         Copy an element, preferbly from the list of new items,
         otherwise from the element factory.
         If it does not exist there, do not copy it!
         """
-        item = self._new_items.get(value.id)
-        if item:
-            self._item.load(name, item)
-        else:
-            item = self.element_factory.lookup(value.id)
+        def load_element():
+            item = self._new_items.get(value.id)
             if item:
                 self._item.load(name, item)
+            else:
+                item = self.element_factory.lookup(value.id)
+                if item:
+                    self._item.load(name, item)
 
-    def copy_func(self, name, value, reference=False):
         if reference or isinstance(value, Element):
-            self._load_element(name, value)
+            load_element()
         elif isinstance(value, collection):
-            for item in value:
-                self._load_element(name, item)
+            values = value
+            for value in values:
+                load_element()
         elif isinstance(value, gaphas.Item):
-            self._load_element(name, value)
+            load_element()
         else:
             # Plain attribute
             self._item.load(name, str(value))

@@ -248,6 +248,9 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         p1.name = 'othername'
         assert len(self.events) == 2, self.events
 
+        p1.name = 'othername'
+        assert len(self.events) == 2, self.events
+
 
     def test_association_notification_complex(self):
         """
