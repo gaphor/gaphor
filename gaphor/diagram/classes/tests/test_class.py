@@ -38,7 +38,7 @@ class ClassTestCase(TestCase):
 
         diagram.canvas.update()
         self.assertEqual(1, len(klass._compartments[0]))
-        self.assertEqual((40.0, 21.0), klass._compartments[0].get_size())
+        self.assertEqual((44.0, 21.0), klass._compartments[0].get_size())
 
         oper = element_factory.create(UML.Operation)
         oper.name = 'method'
@@ -46,7 +46,7 @@ class ClassTestCase(TestCase):
 
         diagram.canvas.update()
         self.assertEqual(1, len(klass._compartments[1]))
-        self.assertEqual((65.0, 22.0), klass._compartments[1].get_size())
+        self.assertEqual((71.0, 23.0), klass._compartments[1].get_size())
 
     def test_attribute_removal(self):
 
