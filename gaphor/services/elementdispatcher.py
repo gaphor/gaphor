@@ -151,11 +151,12 @@ class ElementDispatcher(object):
         if not handlers:
             return
 
-        for remainder in handlers[handler]:
-            if property.upper > 1:
+        if property.upper > 1:
+            for remainder in handlers[handler]:
                 for e in property._get(element):
                     self._remove_handlers(e, remainder[0], handler)
-            else:
+        else:
+            for remainder in handlers[handler]:
                 e = property._get(element)
                 if e:
                     self._remove_handlers(e, remainder[0], handler)
