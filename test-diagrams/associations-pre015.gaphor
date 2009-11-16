@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor version="3.0" gaphor-version="0.13.0">
+  <Package id="DCE:1EE26582-D171-11DE-BA31-000D936B094A">
+    <name>
+      <val><![CDATA[New model]]></val>
+    </name>
+    <ownedClassifier>
+      <reflist>
+        <ref refid="DCE:8AC29AEC-D171-11DE-BA31-000D936B094A"/>
+        <ref refid="DCE:8CBC0098-D171-11DE-BA31-000D936B094A"/>
+        <ref refid="DCE:9B168034-D171-11DE-BA31-000D936B094A"/>
+        <ref refid="DCE:AA2C0358-D171-11DE-BA31-000D936B094A"/>
+        <ref refid="DCE:B0C5D806-D171-11DE-BA31-000D936B094A"/>
+        <ref refid="DCE:B73C27BC-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </ownedClassifier>
+    <ownedDiagram>
+      <reflist>
+        <ref refid="DCE:1EE43E0A-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </ownedDiagram>
+  </Package>
+  <Diagram id="DCE:1EE43E0A-D171-11DE-BA31-000D936B094A">
+    <name>
+      <val><![CDATA[main]]></val>
+    </name>
+    <package>
+      <ref refid="DCE:1EE26582-D171-11DE-BA31-000D936B094A"/>
+    </package>
+    <canvas>
+      <item type="ClassItem" id="DCE:8AC3F4C6-D171-11DE-BA31-000D936B094A">
+        <show-attributes>
+          <val>1</val>
+        </show-attributes>
+        <show-operations>
+          <val>1</val>
+        </show-operations>
+        <drawing-style>
+          <val>1</val>
+        </drawing-style>
+        <matrix>
+          <val>(1.0, 0.0, 0.0, 1.0, 104.0, 87.0)</val>
+        </matrix>
+        <width>
+          <val>100.0</val>
+        </width>
+        <height>
+          <val>50.0</val>
+        </height>
+        <subject>
+          <ref refid="DCE:8AC29AEC-D171-11DE-BA31-000D936B094A"/>
+        </subject>
+      </item>
+      <item type="InterfaceItem" id="DCE:8CBD3026-D171-11DE-BA31-000D936B094A">
+        <show-attributes>
+          <val>1</val>
+        </show-attributes>
+        <show-operations>
+          <val>1</val>
+        </show-operations>
+        <drawing-style>
+          <val>1</val>
+        </drawing-style>
+        <matrix>
+          <val>(1.0, 0.0, 0.0, 1.0, 407.0, 81.0)</val>
+        </matrix>
+        <width>
+          <val>100.0</val>
+        </width>
+        <height>
+          <val>58.0</val>
+        </height>
+        <subject>
+          <ref refid="DCE:8CBC0098-D171-11DE-BA31-000D936B094A"/>
+        </subject>
+      </item>
+      <item type="AssociationItem" id="DCE:93CB09E2-D171-11DE-BA31-000D936B094A">
+        <subject>
+          <ref refid="DCE:9B168034-D171-11DE-BA31-000D936B094A"/>
+        </subject>
+        <matrix>
+          <val>(1.0, 0.0, 0.0, 1.0, 407.0, 98.0)</val>
+        </matrix>
+        <orthogonal>
+          <val>0</val>
+        </orthogonal>
+        <horizontal>
+          <val>0</val>
+        </horizontal>
+        <points>
+          <val>[(0.0, 0.0), (-203.0, 2.0)]</val>
+        </points>
+        <head-connection>
+          <ref refid="DCE:8CBD3026-D171-11DE-BA31-000D936B094A"/>
+        </head-connection>
+        <tail-connection>
+          <ref refid="DCE:8AC3F4C6-D171-11DE-BA31-000D936B094A"/>
+        </tail-connection>
+        <show-direction>
+          <val>0</val>
+        </show-direction>
+        <head-subject>
+          <ref refid="DCE:9B16B112-D171-11DE-BA31-000D936B094A"/>
+        </head-subject>
+        <tail-subject>
+          <ref refid="DCE:9B1829F0-D171-11DE-BA31-000D936B094A"/>
+        </tail-subject>
+      </item>
+      <item type="UseCaseItem" id="DCE:AA2D0120-D171-11DE-BA31-000D936B094A">
+        <drawing-style>
+          <val>-1</val>
+        </drawing-style>
+        <matrix>
+          <val>(1.0, 0.0, 0.0, 1.0, 108.0, 188.0)</val>
+        </matrix>
+        <width>
+          <val>91.0</val>
+        </width>
+        <height>
+          <val>30.0</val>
+        </height>
+        <subject>
+          <ref refid="DCE:AA2C0358-D171-11DE-BA31-000D936B094A"/>
+        </subject>
+      </item>
+      <item type="AssociationItem" id="DCE:AE280F4C-D171-11DE-BA31-000D936B094A">
+        <subject>
+          <ref refid="DCE:B73C27BC-D171-11DE-BA31-000D936B094A"/>
+        </subject>
+        <matrix>
+          <val>(1.0, 0.0, 0.0, 1.0, 199.0, 203.0)</val>
+        </matrix>
+        <orthogonal>
+          <val>0</val>
+        </orthogonal>
+        <horizontal>
+          <val>0</val>
+        </horizontal>
+        <points>
+          <val>[(0.0, 0.0), (210.0, 0.0)]</val>
+        </points>
+        <head-connection>
+          <ref refid="DCE:AA2D0120-D171-11DE-BA31-000D936B094A"/>
+        </head-connection>
+        <tail-connection>
+          <ref refid="DCE:B0C6A060-D171-11DE-BA31-000D936B094A"/>
+        </tail-connection>
+        <show-direction>
+          <val>0</val>
+        </show-direction>
+        <head-subject>
+          <ref refid="DCE:B73C5AD2-D171-11DE-BA31-000D936B094A"/>
+        </head-subject>
+        <tail-subject>
+          <ref refid="DCE:B73E01E2-D171-11DE-BA31-000D936B094A"/>
+        </tail-subject>
+      </item>
+      <item type="ActorItem" id="DCE:B0C6A060-D171-11DE-BA31-000D936B094A">
+        <drawing-style>
+          <val>3</val>
+        </drawing-style>
+        <matrix>
+          <val>(1.0, 0.0, 0.0, 1.0, 409.0, 170.0)</val>
+        </matrix>
+        <width>
+          <val>38.0</val>
+        </width>
+        <height>
+          <val>60.0</val>
+        </height>
+        <subject>
+          <ref refid="DCE:B0C5D806-D171-11DE-BA31-000D936B094A"/>
+        </subject>
+      </item>
+      <item type="CommentItem" id="DCE:C43028CE-D171-11DE-BA31-000D936B094A">
+        <matrix>
+          <val>(1.0, 0.0, 0.0, 1.0, 601.0, 95.0)</val>
+        </matrix>
+        <width>
+          <val>121.0</val>
+        </width>
+        <height>
+          <val>86.0</val>
+        </height>
+        <subject>
+          <ref refid="DCE:C42FCDAC-D171-11DE-BA31-000D936B094A"/>
+        </subject>
+      </item>
+    </canvas>
+  </Diagram>
+  <Class id="DCE:8AC29AEC-D171-11DE-BA31-000D936B094A">
+    <name>
+      <val><![CDATA[c1]]></val>
+    </name>
+    <ownedAttribute>
+      <reflist>
+        <ref refid="DCE:9B16B112-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </ownedAttribute>
+    <package>
+      <ref refid="DCE:1EE26582-D171-11DE-BA31-000D936B094A"/>
+    </package>
+    <presentation>
+      <reflist>
+        <ref refid="DCE:8AC3F4C6-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </presentation>
+  </Class>
+  <Interface id="DCE:8CBC0098-D171-11DE-BA31-000D936B094A">
+    <name>
+      <val><![CDATA[i1]]></val>
+    </name>
+    <ownedAttribute>
+      <reflist>
+        <ref refid="DCE:9B1829F0-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </ownedAttribute>
+    <package>
+      <ref refid="DCE:1EE26582-D171-11DE-BA31-000D936B094A"/>
+    </package>
+    <presentation>
+      <reflist>
+        <ref refid="DCE:8CBD3026-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </presentation>
+  </Interface>
+  <Association id="DCE:9B168034-D171-11DE-BA31-000D936B094A">
+    <memberEnd>
+      <reflist>
+        <ref refid="DCE:9B16B112-D171-11DE-BA31-000D936B094A"/>
+        <ref refid="DCE:9B1829F0-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </memberEnd>
+    <package>
+      <ref refid="DCE:1EE26582-D171-11DE-BA31-000D936B094A"/>
+    </package>
+    <presentation>
+      <reflist>
+        <ref refid="DCE:93CB09E2-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </presentation>
+  </Association>
+  <Property id="DCE:9B16B112-D171-11DE-BA31-000D936B094A">
+    <association>
+      <ref refid="DCE:9B168034-D171-11DE-BA31-000D936B094A"/>
+    </association>
+    <class_>
+      <ref refid="DCE:8AC29AEC-D171-11DE-BA31-000D936B094A"/>
+    </class_>
+    <lowerValue>
+      <ref refid="DCE:9B171B32-D171-11DE-BA31-000D936B094A"/>
+    </lowerValue>
+    <name>
+      <val><![CDATA[t1]]></val>
+    </name>
+    <presentation>
+      <reflist/>
+    </presentation>
+    <type>
+      <ref refid="DCE:8CBC0098-D171-11DE-BA31-000D936B094A"/>
+    </type>
+  </Property>
+  <LiteralSpecification id="DCE:9B171B32-D171-11DE-BA31-000D936B094A"/>
+  <Property id="DCE:9B1829F0-D171-11DE-BA31-000D936B094A">
+    <association>
+      <ref refid="DCE:9B168034-D171-11DE-BA31-000D936B094A"/>
+    </association>
+    <interface_>
+      <ref refid="DCE:8CBC0098-D171-11DE-BA31-000D936B094A"/>
+    </interface_>
+    <lowerValue>
+      <ref refid="DCE:9B189318-D171-11DE-BA31-000D936B094A"/>
+    </lowerValue>
+    <name>
+      <val><![CDATA[t2]]></val>
+    </name>
+    <presentation>
+      <reflist/>
+    </presentation>
+    <type>
+      <ref refid="DCE:8AC29AEC-D171-11DE-BA31-000D936B094A"/>
+    </type>
+  </Property>
+  <LiteralSpecification id="DCE:9B189318-D171-11DE-BA31-000D936B094A"/>
+  <UseCase id="DCE:AA2C0358-D171-11DE-BA31-000D936B094A">
+    <name>
+      <val><![CDATA[uc1]]></val>
+    </name>
+    <ownedAttribute>
+      <reflist>
+        <ref refid="DCE:B73E01E2-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </ownedAttribute>
+    <package>
+      <ref refid="DCE:1EE26582-D171-11DE-BA31-000D936B094A"/>
+    </package>
+    <presentation>
+      <reflist>
+        <ref refid="DCE:AA2D0120-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </presentation>
+  </UseCase>
+  <Actor id="DCE:B0C5D806-D171-11DE-BA31-000D936B094A">
+    <name>
+      <val><![CDATA[a1]]></val>
+    </name>
+    <ownedAttribute>
+      <reflist>
+        <ref refid="DCE:B73C5AD2-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </ownedAttribute>
+    <package>
+      <ref refid="DCE:1EE26582-D171-11DE-BA31-000D936B094A"/>
+    </package>
+    <presentation>
+      <reflist>
+        <ref refid="DCE:B0C6A060-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </presentation>
+  </Actor>
+  <Association id="DCE:B73C27BC-D171-11DE-BA31-000D936B094A">
+    <memberEnd>
+      <reflist>
+        <ref refid="DCE:B73C5AD2-D171-11DE-BA31-000D936B094A"/>
+        <ref refid="DCE:B73E01E2-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </memberEnd>
+    <package>
+      <ref refid="DCE:1EE26582-D171-11DE-BA31-000D936B094A"/>
+    </package>
+    <presentation>
+      <reflist>
+        <ref refid="DCE:AE280F4C-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </presentation>
+  </Association>
+  <Property id="DCE:B73C5AD2-D171-11DE-BA31-000D936B094A">
+    <actor>
+      <ref refid="DCE:B0C5D806-D171-11DE-BA31-000D936B094A"/>
+    </actor>
+    <association>
+      <ref refid="DCE:B73C27BC-D171-11DE-BA31-000D936B094A"/>
+    </association>
+    <lowerValue>
+      <ref refid="DCE:B73CD31C-D171-11DE-BA31-000D936B094A"/>
+    </lowerValue>
+    <presentation>
+      <reflist/>
+    </presentation>
+    <type>
+      <ref refid="DCE:AA2C0358-D171-11DE-BA31-000D936B094A"/>
+    </type>
+  </Property>
+  <LiteralSpecification id="DCE:B73CD31C-D171-11DE-BA31-000D936B094A"/>
+  <Property id="DCE:B73E01E2-D171-11DE-BA31-000D936B094A">
+    <association>
+      <ref refid="DCE:B73C27BC-D171-11DE-BA31-000D936B094A"/>
+    </association>
+    <lowerValue>
+      <ref refid="DCE:B73E6A10-D171-11DE-BA31-000D936B094A"/>
+    </lowerValue>
+    <presentation>
+      <reflist/>
+    </presentation>
+    <type>
+      <ref refid="DCE:B0C5D806-D171-11DE-BA31-000D936B094A"/>
+    </type>
+    <useCase>
+      <ref refid="DCE:AA2C0358-D171-11DE-BA31-000D936B094A"/>
+    </useCase>
+  </Property>
+  <LiteralSpecification id="DCE:B73E6A10-D171-11DE-BA31-000D936B094A"/>
+  <Comment id="DCE:C42FCDAC-D171-11DE-BA31-000D936B094A">
+    <body>
+      <val><![CDATA[this file should
+be saved with
+gaphor 0.14 as
+it is used in unit
+tests to check
+association navigability 
+changes in gaphor 0.15]]></val>
+    </body>
+    <presentation>
+      <reflist>
+        <ref refid="DCE:C43028CE-D171-11DE-BA31-000D936B094A"/>
+      </reflist>
+    </presentation>
+  </Comment>
+</gaphor>

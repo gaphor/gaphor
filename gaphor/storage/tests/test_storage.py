@@ -238,4 +238,24 @@ class StorageTestCase(TestCase):
         assert copy == orig, copy + ' != ' + orig
 
 
+class FileUpgradeTestCase(TestCase):
+    def test_association_upgrade(self):
+        """Test association navigability upgrade in Gaphor 0.15.0
+        """
+        f = open('test-diagrams/associations-pre015.gaphor')
+        storage.load(f, factory=self.element_factory)
+        f.close()
+
+        diagrams = list(self.kindof(UML.Diagram))
+        self.assertEquals(1, len(diagrams))
+        diagram = diagrams[0]
+        assocs = diagram.canvas.select(lambda e: isinstance(e, items.AssociationItem))
+        assert len(assocs) == 2
+        a1, a2 = assocs
+        self.assertTrue(UML.model.get_navigability(a1.subject, a1.head_end.subject))
+        self.assertTrue(UML.model.get_navigability(a1.subject, a1.tail_end.subject))
+        self.assertTrue(UML.model.get_navigability(a2.subject, a2.head_end.subject))
+        self.assertTrue(UML.model.get_navigability(a2.subject, a2.tail_end.subject))
+
+
 # vim:sw=4:et:ai
