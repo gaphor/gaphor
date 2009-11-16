@@ -1,2 +1,5 @@
 build
+dist
 gaphor/UML/uml2.py
+*.swp
+*.egg
