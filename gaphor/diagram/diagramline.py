@@ -79,7 +79,7 @@ class DiagramLine(LineItem):
         save_func('matrix', tuple(self.matrix))
         for prop in ('orthogonal', 'horizontal'):
             save_func(prop, getattr(self, prop))
-        points = [ ]
+        points = []
         for h in self.handles():
             points.append(tuple(map(float, h.pos)))
         save_func('points', points)
@@ -111,16 +111,40 @@ class DiagramLine(LineItem):
         else:
             LineItem.load(self, name, value)
 
+    def _get_sink(self, handle, item):
+        """
+        Instant port finder.
 
-    def _connect(self, handle, item):
-        # we need connection tool, here;
-        # can we move that to storage module?
-        from gaphor.ui.diagramtools import ConnectHandleTool
-        tool = ConnectHandleTool()
+        This is not the nicest place for such method.
+        
+        TODO: figure out if part of this functionality can be provided by
+        the storage code.
+        """
+        from gaphas.aspect import ConnectionSink
 
-        port = tool.find_port(self, handle, item)
-        tool.connect_handle(self, handle, item, port)
-        tool.post_connect(self, handle, item, port)
+        hpos = self.canvas.get_matrix_i2i(self, item).transform_point(*handle.pos)
+        port = None
+        dist = 10e6
+        for p in item.ports():
+            pos, d = p.glue(hpos)   
+            if not port or d < dist:
+                port = p
+                dist = d
+                
+        return ConnectionSink(item, port)
+
+
+    def _postload_connect(self, handle, item):
+        """
+        Postload connect method.
+        """
+        from gaphas.aspect import Connector
+
+        connector = Connector(self, handle, None)
+
+        sink = self._get_sink(handle, item)
+
+        connector.connect(sink)
 
 
     def postload(self):
@@ -135,11 +159,11 @@ class DiagramLine(LineItem):
         self.canvas.solver.solve()
 
         if hasattr(self, '_load_head_connection'):
-            self._connect(self.head, self._load_head_connection)
+            self._postload_connect(self.head, self._load_head_connection)
             del self._load_head_connection
 
         if hasattr(self, '_load_tail_connection'):
-            self._connect(self.tail, self._load_tail_connection)
+            self._postload_connect(self.tail, self._load_tail_connection)
             del self._load_tail_connection
 
         LineItem.postload(self)
@@ -219,4 +243,4 @@ class NamedLine(DiagramLine):
         self.request_update()
 
 
-# vim:sw=4:et
+# vim:sw=4:et:ai

@@ -2,7 +2,7 @@
 Unittest the storage and parser modules
 """
 
-import os
+import os, re
 from gaphor.tests.testcase import TestCase
 from gaphor import UML
 from gaphor.UML.elementfactory import ElementFactory
@@ -139,7 +139,7 @@ class StorageTestCase(TestCase):
         a.handles()[1].pos = (50, 60)
         assert 10 == a.handles()[0].pos.x, a.handles()[0].pos
         assert a.handles()[0].pos.y == 20, a.handles()[0].pos
-        assert a.handles()[1].pos == (50, 60), a.handles()[1].pos
+        assert tuple(a.handles()[1].pos) == (50, 60), a.handles()[1].pos
 
         data = self.save()
         self.load(data)
@@ -209,9 +209,11 @@ class StorageTestCase(TestCase):
         a = d.canvas.select(lambda e: isinstance(e, items.AssociationItem))[0]
         self.assertTrue(a.subject is not None)
         self.assertEquals(old_a_subject_id, a.subject.id)
-        self.assertTrue(a.head.connected_to is not None)
-        self.assertTrue(a.tail.connected_to is not None)
-        self.assertTrue(not a.head.connected_to is a.tail.connected_to)
+        cinfo_head = a.canvas.get_connection(a.head)
+        self.assertTrue(cinfo_head.connected is not None)
+        cinfo_tail = a.canvas.get_connection(a.tail)
+        self.assertTrue(cinfo_tail.connected is not None)
+        self.assertTrue(not cinfo_head.connected is cinfo_tail.connected)
         #assert a.head_end._name
 
     def test_load_save(self):
@@ -227,14 +229,16 @@ class StorageTestCase(TestCase):
         f.close()
 
         copy = pf.data
+
+        expr = re.compile('gaphor-version="[0-9\.]*"')
+        orig = expr.sub('%VER%', orig)
+        copy = expr.sub('%VER%', copy)
+
         f = open('tmp.gaphor', 'w')
         f.write(copy)
         f.close()
 
         assert len(copy) == len(orig), "%d != %d:\n%s" % (len(copy), len(orig), copy)
-        orig = orig.replace('0.11.1', '%VER%')
-        copy = copy.replace('0.13.1', '%VER%')
-
         assert copy == orig, copy + ' != ' + orig
 
 
