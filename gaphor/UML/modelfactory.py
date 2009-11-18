@@ -161,8 +161,8 @@ def create_association(factory, a, b):
     end_b.lowerValue = factory.create(LiteralSpecification)
     assoc.memberEnd = end_a
     assoc.memberEnd = end_b
-    end_a.type = a
-    end_b.type = b
+    end_a.type = b
+    end_b.type = a
     return assoc
 
 
@@ -215,8 +215,9 @@ def set_navigability(assoc, end, nav):
     """
     # remove "navigable" and "unspecified" navigation indicators first
     if type(end.type) in (Class, Interface):
-        if end in end.type.ownedAttribute:
-            end.type.ownedAttribute.remove(end)
+        owner = end.opposite.type
+        if end in owner.ownedAttribute:
+            owner.ownedAttribute.remove(end)
     if end in assoc.ownedEnd:
         assoc.ownedEnd.remove(end)
     if end in assoc.navigableOwnedEnd:
@@ -226,7 +227,8 @@ def set_navigability(assoc, end, nav):
 
     if nav is True:
         if type(end.type) in (Class, Interface):
-            end.type.ownedAttribute = end
+            owner = end.opposite.type
+            owner.ownedAttribute = end
         else:
             assoc.navigableOwnedEnd = end
     elif nav is None:
@@ -240,7 +242,8 @@ def get_navigability(assoc, end):
 
     For navigability semantics see `set_navigability`.
     """
-    if (type(end.type) in (Class, Interface) and end in end.type.ownedAttribute) \
+    owner = end.opposite.type
+    if (type(end.type) in (Class, Interface) and end in owner.ownedAttribute) \
             or end in assoc.navigableOwnedEnd:
         return True
     elif end in assoc.ownedEnd:

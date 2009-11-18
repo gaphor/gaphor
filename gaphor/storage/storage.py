@@ -201,6 +201,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     version_0_7_2(elements, factory, gaphor_version)
     version_0_9_0(elements, factory, gaphor_version)
     version_0_14_0(elements, factory, gaphor_version)
+    version_0_15_0(elements, factory, gaphor_version)
 
     #log.debug("Still have %d elements" % len(elements))
 
@@ -367,6 +368,50 @@ def load_generator(filename, factory):
     except Exception, e:
         log.info('file %s could not be loaded' % filename, e)
         raise
+
+
+def version_0_15_0(elements, factory, gaphor_version):
+    """
+    Fix association navigability UML metamodel. Before Gaphor 0.15.0
+    navigability used 
+
+    This function is called before the actual elements are constructed.
+    """
+    ATTRS = set(['class_', 'interface_', 'actor', 'useCase', 'owningAssociation'])
+    if tuple(map(int, gaphor_version.split('.'))) < (0, 15, 0):
+        values = (v for v in elements.values()
+                if type(v) is parser.element
+                    and v.type == 'Property'
+                    and 'association' in v.references)
+        for et in values:
+            # get association
+            assoc = elements[et.references['association']]
+
+            attrs = set(set(ATTRS) & set(et.references))
+            if attrs:
+                assert len(attrs) == 1
+
+                attr = attrs.pop()
+
+                if attr == 'owningAssociation':
+                    assoc.references['ownedEnd'].remove(et.id)
+                    if not assoc.references['ownedEnd']:
+                        del assoc.references['ownedEnd']
+                elif attr in ('actor', 'useCase'):
+                    if 'navigableOwnedEnd' not in assoc.references:
+                        assoc.references['navigableOwnedEnd'] = []
+                    assoc.references['navigableOwnedEnd'].append(et.id)
+
+                    el = elements[et.references[attr]]
+                    el.references['ownedAttribute'].remove(et.id)
+                    if not el.references['ownedAttribute']:
+                        del el.references['ownedAttribute']
+
+                del et.references[attr]
+            else:
+                if 'ownedEnd' not in assoc.references:
+                    assoc.references['ownedEnd'] = []
+                assoc.references['ownedEnd'].append(et.id)
 
 
 def version_0_14_0(elements, factory, gaphor_version):

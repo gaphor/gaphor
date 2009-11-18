@@ -250,12 +250,45 @@ class FileUpgradeTestCase(TestCase):
         self.assertEquals(1, len(diagrams))
         diagram = diagrams[0]
         assocs = diagram.canvas.select(lambda e: isinstance(e, items.AssociationItem))
-        assert len(assocs) == 2
-        a1, a2 = assocs
+        assert len(assocs) == 8
+        a1, a2 = [a for a in assocs if a.subject.name == 'nav']
+
         self.assertTrue(UML.model.get_navigability(a1.subject, a1.head_end.subject))
         self.assertTrue(UML.model.get_navigability(a1.subject, a1.tail_end.subject))
         self.assertTrue(UML.model.get_navigability(a2.subject, a2.head_end.subject))
         self.assertTrue(UML.model.get_navigability(a2.subject, a2.tail_end.subject))
 
+        self.assertTrue(len(a1.head_end.subject.type.ownedAttribute) == 1)
+        self.assertTrue(len(a1.tail_end.subject.type.ownedAttribute) == 2) # association end and an attribute
+
+        # use cases and actors - no owned attributes as navigability is realized
+        # by association's navigable owned ends
+        self.assertTrue(len(a2.head_end.subject.type.ownedAttribute) == 0)
+        self.assertTrue(len(a2.tail_end.subject.type.ownedAttribute) == 0)
+
+        a1, a2 = [a for a in assocs if a.subject.name == 'nonnav']
+        self.assertTrue(UML.model.get_navigability(a1.subject, a1.head_end.subject) is False)
+        self.assertTrue(UML.model.get_navigability(a1.subject, a1.tail_end.subject) is False)
+        self.assertTrue(UML.model.get_navigability(a2.subject, a2.head_end.subject) is False)
+        self.assertTrue(UML.model.get_navigability(a2.subject, a2.tail_end.subject) is False)
+
+
+        a1, a2 = [a for a in assocs if a.subject.name == 'unk']
+        self.assertTrue(UML.model.get_navigability(a1.subject, a1.head_end.subject) is None)
+        self.assertTrue(UML.model.get_navigability(a1.subject, a1.tail_end.subject) is None)
+        self.assertTrue(UML.model.get_navigability(a2.subject, a2.head_end.subject) is None)
+        self.assertTrue(UML.model.get_navigability(a2.subject, a2.tail_end.subject) is None)
+
+        a, = [a for a in assocs if a.subject.name == 'sided']
+        assert a.head_end.subject.name == 'cs'
+        assert a.tail_end.subject.name == 'int'
+        self.assertTrue(UML.model.get_navigability(a.subject, a.head_end.subject) is False)
+        self.assertTrue(UML.model.get_navigability(a.subject, a.tail_end.subject) is True)
+
+        a, = [a for a in assocs if a.subject.name == 'sided2']
+        assert a.head_end.subject.name == 'cs'
+        assert a.tail_end.subject.name == 'int'
+        self.assertTrue(UML.model.get_navigability(a.subject, a.head_end.subject) is None)
+        self.assertTrue(UML.model.get_navigability(a.subject, a.tail_end.subject) is True)
 
 # vim:sw=4:et:ai

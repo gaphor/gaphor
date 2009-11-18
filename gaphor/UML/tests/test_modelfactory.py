@@ -173,7 +173,7 @@ class AssociationEndNavigabilityTestCase(unittest.TestCase):
         assoc = UML.model.create_association(self.factory, c1, c2)
 
         end = assoc.memberEnd[0]
-        assert end.type is c1
+        assert end.type is c2
 
         UML.model.set_navigability(assoc, end, True)
 
@@ -220,7 +220,7 @@ class AssociationEndNavigabilityTestCase(unittest.TestCase):
         assoc = UML.model.create_association(self.factory, n1, n2)
 
         end = assoc.memberEnd[0]
-        assert end.type is n1
+        assert end.type is n2
 
         UML.model.set_navigability(assoc, end, True)
 
