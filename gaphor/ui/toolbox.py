@@ -103,18 +103,12 @@ class Toolbox(gtk.VBox):
 
 
     def _construct(self):
-
-        #self.set_border_width(3)
-
-        #self.tooltips = gtk.Tooltips()
-
         for title, items in self.toolboxdef:
             wrapbox = Wrapbox()
             for action_name, label, stock_id in items:
                 button = self.toolbox_button(action_name, stock_id)
                 if label:
-                    #self.tooltips.set_tip(button, label)
-                    button.set_tooltip(label)
+                    button.set_tooltip_text(label)
                 self.buttons.append(button)
                 wrapbox.add(button)
                 button.show()
@@ -124,8 +118,6 @@ class Toolbox(gtk.VBox):
             else:
                 self.pack_start(wrapbox, expand=False)
                 wrapbox.show()
-
-        #self.tooltips.enable()
 
 
     def _button_drag_data_get(self, button, context, selection_data, info, time):
