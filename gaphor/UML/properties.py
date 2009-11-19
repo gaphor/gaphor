@@ -160,6 +160,8 @@ class enumeration(umlproperty):
         self._name = intern('_' + name)
         self.values = values
         self.default = default
+        self.lower = 0
+        self.upper = 1
 
     def __str__(self):
         return '<enumeration %s: %s = %s>' % (self.name, self.values, self.default)
