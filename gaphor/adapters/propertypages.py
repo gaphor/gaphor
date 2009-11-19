@@ -979,14 +979,21 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         #self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
         
     def construct_end(self, title, end):
-        hbox = gtk.VBox()
-        if not end.subject:
-            return hbox
 
-        label = gtk.Label(title)
-        label.set_alignment(0.0, 0.5)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        if not end.subject:
+            return None
+
+        # TODO: use gtk.Frame here
+        frame = gtk.Frame(title)
+        hbox = gtk.VBox()
+        hbox.set_border_width(6)
+        hbox.set_spacing(6)
+        frame.add(hbox)
+
+        #label = gtk.Label(title)
+        #label.set_alignment(0.0, 0.5)
+        #self.size_group.add_widget(label)
+        #hbox.pack_start(label, expand=False)
 
         entry = gtk.Entry()
         entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
@@ -1039,7 +1046,7 @@ Enter attribute name and multiplicity, for example
         combo.connect('changed', self._on_aggregation_change, end)
         hbox.pack_start(combo, expand=False)
         
-        return hbox
+        return frame
 
     def construct(self):
         page = super(AssociationPropertyPage, self).construct()
@@ -1064,11 +1071,13 @@ Enter attribute name and multiplicity, for example
 
         page.pack_start(hbox, expand=False)
 
-        hbox = self.construct_end(_('Head'), self.context.head_end)
-        page.pack_start(hbox, expand=False)
+        box = self.construct_end(_('Head'), self.context.head_end)
+        if box:
+            page.pack_start(box, expand=False)
 
-        hbox = self.construct_end(_('Tail'), self.context.tail_end)
-        page.pack_start(hbox, expand=False)
+        box = self.construct_end(_('Tail'), self.context.tail_end)
+        if box:
+            page.pack_start(box, expand=False)
 
         page.show_all()
 

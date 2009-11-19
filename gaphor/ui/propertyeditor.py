@@ -54,7 +54,10 @@ class PropertyEditor(object):
                 if page is None:
                     continue
                 expander = gtk.Expander()
-                expander.set_label(name)
+                expander.set_use_markup(True)
+                expander.set_label('<b>%s</b>' % name)
+                if isinstance(page, gtk.Container):
+                    page.set_border_width(6)
                 expander.add(page)
                 expander.show_all()
                 expander.set_expanded(self._expanded_pages.get(name, False))
