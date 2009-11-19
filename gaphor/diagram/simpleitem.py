@@ -103,7 +103,7 @@ class Box(Element):
         cr = context.cairo
         nw = self._handles[NW]
         style = self.style
-        cr.rectangle(nw.x, nw.y, self.width, self.height)
+        cr.rectangle(nw.pos.x, nw.pos.y, self.width, self.height)
         cr.set_source_rgba(*style.fill_color)
         cr.fill_preserve()
         cr.set_source_rgba(*style.border_color)
