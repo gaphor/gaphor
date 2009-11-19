@@ -13,20 +13,18 @@ from zope import component
 
 from gaphas.geometry import distance_point_point, distance_point_point_fast, \
                             distance_line_point, distance_rectangle_point
-from gaphas.item import Line
 from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool, \
-    ToolChain, HoverTool, ItemTool, RubberbandTool, \
-    ConnectHandleTool as _ConnectHandleTool, LineSegmentTool
-from gaphas.canvas import Context
-
+    ToolChain, HoverTool, ItemTool, RubberbandTool, ConnectHandleTool
+from gaphas.aspect import aspect, Connector
 from gaphor.core import inject, Transaction, transactional
 
 from gaphor.diagram.interfaces import IEditor, IConnect
+from gaphor.diagram.diagramline import DiagramLine
 
-__version__ = '$Revision$'
 
-
-class ConnectHandleTool(_ConnectHandleTool):
+# TODO: Move code to aspect
+@aspect(DiagramLine)
+class DiagramItemConnector(Connector):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
     to connect items to one-another.
@@ -36,26 +34,24 @@ class ConnectHandleTool(_ConnectHandleTool):
     """
     reconnect = False
 
-    def can_glue(self, view, item, handle, glue_item, port):
+    def allow(self, sink):
         """
         Determine if item and glue item can glue/connect using connection
         adapters.
         """
-        can_glue = False
-        adapter = component.queryMultiAdapter((glue_item, item), IConnect)
-        return adapter and adapter.glue(handle, port)
+        adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
+        return adapter and adapter.glue(self.handle, sink.port)
 
 
-    def move_connection(self, view, item, handle, connected, port):
+    def connect(self, sink):
         """
-        Update disconnection callback DisconnectHandle, that reconnection
-        will happen.
+        Create connection at handle level and at model level.
         """
-        cinfo = view.canvas.get_connection(handle)
-        self.reconnect = cinfo.callback.reconnect = True
+        super(DiagramItemConnector, self).connect(sink)
+        self.model_connect(sink)
 
 
-    def post_connect(self, item, handle, connected, port):
+    def model_connect(self, sink):
         """
         Connecting requires the handles to be connected before the model
         level connection is made.
@@ -63,27 +59,26 @@ class ConnectHandleTool(_ConnectHandleTool):
         Note that once this method is called, the glue() method has done that
         for us.
         """
-        super(ConnectHandleTool, self).post_connect(item, handle, connected, port)
+        handle = self.handle
+        item = self.item
         cinfo = item.canvas.get_connection(handle)
         try:
-            adapter = component.queryMultiAdapter((connected, item), IConnect)
+            adapter = component.queryMultiAdapter((sink.item, item), IConnect)
             assert adapter is not None
             assert handle in adapter.line.handles()
-            assert port in adapter.element.ports()
+            assert sink.port in adapter.element.ports()
 
             if self.reconnect:
-                adapter.reconnect(handle, port)
+                adapter.reconnect(handle, sink.port)
             else:
-                adapter.connect(handle, port)
+                adapter.connect(handle, sink.port)
         finally:
             self.reconnect = cinfo.callback.reconnect = False
 
 
-    def connect_handle(self, line, handle, item, port, callback=None):
-        callback = DisconnectHandle(line, handle)
-        super(ConnectHandleTool, self).connect_handle(line, handle,
-                item, port,
-                callback)
+    def connect_handle(self, sink, callback=None):
+        callback = DisconnectHandle(self.item, self.handle)
+        super(DiagramItemConnector, self).connect_handle(sink, callback)
 
 
 class DisconnectHandle(object):
@@ -122,10 +117,11 @@ class TextEditTool(Tool):
     IEditable interface to be edited.
     """
 
-    def create_edit_window(self, view, x, y, text, *args):
+    def create_edit_window(self, x, y, text, *args):
         """
         Create a popup window with some editable text.
         """
+        view = self.view
         window = gtk.Window()
         window.set_property('decorated', False)
         window.set_resize_mode(gtk.RESIZE_IMMEDIATE)
@@ -175,8 +171,8 @@ class TextEditTool(Tool):
         editor.update_text(text)
         widget.get_toplevel().destroy()
 
-    def on_double_click(self, context, event):
-        view = context.view
+    def on_double_click(self, event):
+        view = self.view
         item = view.hovered_item
         if item:
             try:
@@ -188,7 +184,7 @@ class TextEditTool(Tool):
             if editor.is_editable(x, y):
                 text = editor.get_text()
                 # get item at cursor
-                self.create_edit_window(context.view, event.x, event.y,
+                self.create_edit_window(event.x, event.y,
                                         text, editor)
                 return True
 
@@ -208,26 +204,26 @@ class PlacementTool(_PlacementTool):
     PlacementTool is used to place items on the canvas.
     """
 
-    def __init__(self, item_factory, after_handler=None, handle_index=-1):
+    def __init__(self, view, item_factory, after_handler=None, handle_index=-1):
         """
         item_factory is a callable. It is used to create a CanvasItem
         that is displayed on the diagram.
         """
-        _PlacementTool.__init__(self, factory=item_factory,
+        _PlacementTool.__init__(self, view, factory=item_factory,
                                       handle_tool=ConnectHandleTool(),
                                       handle_index=handle_index)
         self.after_handler = after_handler
         self._tx = None
 
     @transactional
-    def create_item(self, view, pos):
-        self._create_item(Context(view=view), pos)
+    def create_item(self, pos):
+        return self._create_item(pos)
 
-    def on_button_press(self, context, event):
+    def on_button_press(self, event):
         self._tx = Transaction()
-        view = context.view
+        view = self.view
         view.unselect_all()
-        if _PlacementTool.on_button_press(self, context, event):
+        if _PlacementTool.on_button_press(self, event):
             try:
                 opposite = self.new_item.opposite(self.new_item.handles()[self._handle_index])
             except (KeyError, AttributeError):
@@ -242,17 +238,17 @@ class PlacementTool(_PlacementTool):
 
                 vpos = event.x, event.y
 
-                item = self.handle_tool.glue(view, self.new_item, opposite, vpos)
+                item = self.handle_tool.glue(self.new_item, opposite, vpos)
                 if item:
-                    self.handle_tool.connect(view, self.new_item, opposite, vpos)
+                    self.handle_tool.connect(self.new_item, opposite, vpos)
             return True
         return False
             
-    def on_button_release(self, context, event):
+    def on_button_release(self, event):
         try:
             if self.after_handler:
                 self.after_handler(self.new_item)
-            return _PlacementTool.on_button_release(self, context, event)
+            return _PlacementTool.on_button_release(self, event)
         finally:
             self._tx.commit()
             self._tx = None
@@ -265,33 +261,33 @@ class TransactionalToolChain(ToolChain):
     at button-press and commits the transaction at button-release.
     """
 
-    def __init__(self):
-        ToolChain.__init__(self)
+    def __init__(self, view=None):
+        super(TransactionalToolChain, self).__init__(view)
         self._tx = None
 
-    def on_button_press(self, context, event):
+    def on_button_press(self, event):
         self._tx = Transaction()
-        return ToolChain.on_button_press(self, context, event)
+        return ToolChain.on_button_press(self, event)
 
-    def on_button_release(self, context, event):
+    def on_button_release(self, event):
         try:
-            return ToolChain.on_button_release(self, context, event)
+            return ToolChain.on_button_release(self, event)
         finally:
             if self._tx:
                 self._tx.commit()
                 self._tx = None
 
-    def on_double_click(self, context, event):
+    def on_double_click(self, event):
         tx = Transaction()
         try:
-            return ToolChain.on_double_click(self, context, event)
+            return ToolChain.on_double_click(self, event)
         finally:
             tx.commit()
 
-    def on_triple_click(self, context, event):
+    def on_triple_click(self, event):
         tx = Transaction()
         try:
-            return ToolChain.on_triple_click(self, context, event)
+            return ToolChain.on_triple_click(self, event)
         finally:
             tx.commit()
 
@@ -305,7 +301,6 @@ def DefaultTool():
     chain = TransactionalToolChain()
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
-    chain.append(LineSegmentTool())
     chain.append(GroupItemTool())
     chain.append(TextEditTool())
     chain.append(RubberbandTool())

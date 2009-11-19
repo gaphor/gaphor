@@ -2,10 +2,6 @@
 This plugin extends Gaphor with XMI export functionality.
 """
 
-__plugin__ = "XMI Export"
-__version__ = "0.1"
-__author__ = "Jeroen Vloothuis"
-
 import gtk
 from zope import interface, component
 from gaphor.core import _, inject, action, build_action_group

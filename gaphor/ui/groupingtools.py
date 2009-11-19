@@ -17,20 +17,19 @@ class GroupPlacementTool(PlacementTool):
     Try to group items when placing them on diagram.
     """
 
-    def __init__(self, item_factory, after_handler=None, handle_index=-1):
-        super(GroupPlacementTool, self).__init__(item_factory,
-                after_handler,
-                handle_index)
+    def __init__(self, view, item_factory, after_handler=None, handle_index=-1):
+        super(GroupPlacementTool, self).__init__(view,
+                item_factory, after_handler, handle_index)
         self._parent = None
         self._adapter = None
 
 
-    def on_motion_notify(self, context, event):
+    def on_motion_notify(self, event):
         """
         Change parent item to dropzone state if it can accept diagram item
         object to be created.
         """
-        view = context.view
+        view = self.view
         parent = None
         self._adapter = None
 
@@ -64,26 +63,26 @@ class GroupPlacementTool(PlacementTool):
             view.window.set_cursor(None)
 
 
-    def _create_item(self, context, pos, **kw):
+    def _create_item(self, pos, **kw):
         """
         Create diagram item and place it within parent's boundaries.
         """
         parent = self._parent
+        view = self.view
         try:
             if parent and self._adapter:
                 kw['parent'] = parent
 
-            item = super(GroupPlacementTool, self)._create_item(context, pos, **kw)
+            item = super(GroupPlacementTool, self)._create_item(pos, **kw)
 
             if parent and item and self._adapter:
                 self._adapter.item = item
                 self._adapter.group()
 
-                canvas = context.view.canvas
+                canvas = view.canvas
                 parent.request_update(matrix=False)
         finally:
             self._parent = None
-            view = context.view
             view.dropzone_item = None
             view.window.set_cursor(None)
         return item
@@ -96,12 +95,12 @@ class GroupItemTool(ItemTool):
     Works only for one selected item, now.
     """
 
-    def on_motion_notify(self, context, event):
+    def on_motion_notify(self, event):
         """
         Indicate possibility of grouping/ungrouping of selected item.
         """
-        super(GroupItemTool, self).on_motion_notify(context, event)
-        view = context.view
+        super(GroupItemTool, self).on_motion_notify(event)
+        view = self.view
 
         if event.state & gtk.gdk.BUTTON_PRESS_MASK and len(view.selected_items) == 1:
             item = list(view.selected_items)[0]
@@ -130,14 +129,14 @@ class GroupItemTool(ItemTool):
                     over.request_update(matrix=False)
 
 
-    def on_button_release(self, context, event):
+    def on_button_release(self, event):
         """
         Group item if it is dropped on parent's item. Ungroup item if it is
         moved out of its parent boundaries. Method also moves item from old
         parent to new one (regrouping).
         """
-        super(GroupItemTool, self).on_button_release(context, event)
-        view = context.view
+        super(GroupItemTool, self).on_button_release(event)
+        view = self.view
         try:
             if event.button == 1 and len(view.selected_items) == 1:
                 item = list(view.selected_items)[0]

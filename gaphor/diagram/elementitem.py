@@ -10,7 +10,6 @@ from gaphor.UML.event import ElementDeleteEvent
 from diagramitem import DiagramItem
 from gaphor.diagram.style import get_text_point
 
-__version__ = '$Revision$'
 
 class ElementItem(gaphas.Element, DiagramItem):
     __style__ = {

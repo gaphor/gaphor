@@ -9,12 +9,51 @@ from gaphor import UML
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.actor import ActorItem
-from gaphor.ui.diagramtools import ConnectHandleTool
+from gaphor.ui.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphas.canvas import Context
-
+from gaphas.aspect import Connector, ConnectionSink
 from gaphor.application import Application
 
 Event = Context
+
+class DiagramItemConnectorTestCase(unittest.TestCase):
+
+    def setUp(self):
+        Application.init(services=['adapter_loader', 'element_factory', 'gui_manager', 'properties_manager', 'action_manager', 'properties', 'element_dispatcher'])
+        self.main_window = Application.get_service('gui_manager').main_window
+        self.element_factory = Application.get_service('element_factory')
+        self.diagram = self.element_factory.create(UML.Diagram)
+        self.comment = self.diagram.create(CommentItem,
+                subject=self.element_factory.create(UML.Comment))
+        self.commentline = self.diagram.create(CommentLineItem)
+        self.view = self.main_window.show_diagram(self.diagram).view
+
+    def test_aspect_type(self):
+        aspect = Connector(self.commentline, self.commentline.handles()[0], self.view)
+        assert type(aspect) is DiagramItemConnector
+
+    def test_query(self):
+        from zope import component
+        from gaphor.diagram.interfaces import IConnect
+        assert component.queryMultiAdapter((self.comment, self.commentline), IConnect)
+
+    def test_allow(self):
+        aspect = Connector(self.commentline, self.commentline.handles()[0], self.view)
+        assert aspect.item is self.commentline
+        assert aspect.handle is self.commentline.handles()[0]
+        assert aspect.view is self.view
+
+        sink = ConnectionSink(self.comment, self.comment.ports()[0])
+        assert aspect.allow(sink)
+
+    def test_connect(self):
+
+        sink = ConnectionSink(self.comment, self.comment.ports()[0])
+        aspect = Connector(self.commentline, self.commentline.handles()[0], self.view)
+        aspect.connect(sink)
+        canvas = self.diagram.canvas
+        cinfo = canvas.get_connection(self.commentline.handles()[0])
+        assert cinfo, cinfo
 
 
 class HandleToolTestCase(unittest.TestCase):
@@ -52,18 +91,19 @@ class HandleToolTestCase(unittest.TestCase):
         diagram = element_factory.create(UML.Diagram)
 
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-        assert comment.height == 50
-        assert comment.width == 100
+        #assert comment.height == 50
+        #assert comment.width == 100
 
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
 
         line = diagram.create(CommentLineItem)
-        tool = ConnectHandleTool()
 
         view = self.get_diagram_view(diagram)
         assert view, 'View should be available here'
+
+        tool = ConnectHandleTool(view)
 
         # select handle:
         handle = line.handles()[-1]
@@ -72,20 +112,22 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Should glue to (238, 248)
         handle.pos = 245, 248
-        item = tool.glue(view, line, handle, (245, 248))
+        item = tool.glue(line, handle, (245, 248))
         self.assertTrue(item is not None)
         self.assertEquals((238, 248), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
 
-        handle.x, handle.y = 245, 248
-        tool.connect(view, line, handle, (245, 248))
-        self.assertTrue(handle.connection_data is not None)
-        self.assertTrue(handle.connected_to is actor, handle.connected_to)
+        handle.pos = 245, 248
+        tool.connect(line, handle, (245, 248))
+        cinfo = diagram.canvas.get_connection(handle)
+        self.assertTrue(cinfo.constraint is not None)
+        self.assertTrue(cinfo.connected is actor, cinfo.connected)
         self.assertEquals((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
-        tool.disconnect(view, line, handle)
+        tool.disconnect(line, handle)
         
-        self.assertTrue(handle.connected_to is None)
-        self.assertTrue(handle.connection_data is None)
+        cinfo = diagram.canvas.get_connection(handle)
+
+        self.assertTrue(cinfo is None)
 
 
     def test_iconnect_2(self):
@@ -95,21 +137,16 @@ class HandleToolTestCase(unittest.TestCase):
         diagram = element_factory.create(UML.Diagram)
         #self.main_window.show_diagram(diagram)
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-        assert comment.width == 100
-        assert comment.height == 50
-
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
-        #print diagram.canvas.get_matrix_i2c(actor), actor.matrix
-        assert actor.width == 38, actor.width
-        assert actor.height == 60, actor.height
         line = diagram.create(CommentLineItem)
-        tool = ConnectHandleTool()
 
         view = self.get_diagram_view(diagram)
 
         assert view, 'View should be available here'
+
+        tool = ConnectHandleTool(view)
 
         # select handle:
         handle = line.handles()[0]
@@ -117,10 +154,11 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Connect one end to the Comment
         handle.pos = view.get_matrix_v2i(line).transform_point(45, 48)
-        tool.connect(view, line, handle, (45, 48))
-        self.assertTrue(hasattr(handle, 'connection_data'))
-        self.assertTrue(handle.connection_data is not None)
-        self.assertTrue(handle.connected_to is comment)
+        tool.glue(line, handle, (45, 48))
+        tool.connect(line, handle, (45, 48))
+        cinfo = diagram.canvas.get_connection(handle)
+        self.assertTrue(cinfo is not None, None)
+        self.assertTrue(cinfo.connected is comment)
         pos = view.get_matrix_i2v(line).transform_point(handle.x, handle.y)
         self.assertAlmostEquals(45, pos[0], 0.00001)
         self.assertAlmostEquals(50, pos[1], 0.00001)
@@ -129,10 +167,10 @@ class HandleToolTestCase(unittest.TestCase):
         handle = line.handles()[-1]
         tool.grab_handle(line, handle)
 
-        handle.x, handle.y = 140, 150
-        glued, port = tool.glue(view, line, handle, (200, 200))
+        handle.pos = 140, 150
+        glued, port = tool.glue(line, handle, (200, 200))
         self.assertTrue(glued is actor)
-        tool.connect(view, line, handle, (200, 200))
+        tool.connect(line, handle, (200, 200))
         self.assertTrue(hasattr(handle, 'connection_data'))
         self.assertTrue(handle.connection_data is not None)
         self.assertTrue(handle.connected_to is actor)
@@ -142,10 +180,10 @@ class HandleToolTestCase(unittest.TestCase):
         self.assertEquals(len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
-        item, port = tool.glue(view, line, handle, (500, 500))
+        item, port = tool.glue(line, handle, (500, 500))
         self.assertTrue(item is None, item)
         self.assertTrue(port is None, port)
-        tool.connect(view, line, handle, (500, 500))
+        tool.connect(line, handle, (500, 500))
 
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         self.assertTrue(handle.connected_to is None)
@@ -159,69 +197,71 @@ class HandleToolTestCase(unittest.TestCase):
         diagram = element_factory.create(UML.Diagram)
 
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-        assert comment.height == 50
-        assert comment.width == 100
+        #self.assertEquals(30, comment.height)
+        #self.assertEquals(100, comment.width)
 
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
-        assert actor.height == 60, actor.height
-        assert actor.width == 38, actor.width
+        #assert actor.height == 60, actor.height
+        #assert actor.width == 38, actor.width
 
         line = diagram.create(CommentLineItem)
         assert line.handles()[0].pos, (0.0, 0.0)
         assert line.handles()[-1].pos, (10.0, 10.0)
-        tool = ConnectHandleTool()
 
         view = self.get_diagram_view(diagram)
         assert view, 'View should be available here'
 
-        # Add extra methods so the Context can impersonate a ToolChainContext
-        def dummy_grab(): pass
-        context = Context(view=view, grab=dummy_grab, ungrab=dummy_grab)
+        tool = ConnectHandleTool(view)
 
-        tool.on_button_press(context, Event(x=0, y=0, state=0))
-        tool.on_button_release(context, Event(x=0, y=0, state=0))
+        tool.on_button_press(Event(x=0, y=0, state=0))
+        tool.on_button_release(Event(x=0, y=0, state=0))
 
         handle = line.handles()[0]
-        self.assertEquals((0, 0), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        self.assertTrue(handle.connected_to is comment, 'c = ' + str(handle.connected_to))
-        self.assertTrue(handle.connection_data is not None)
+        self.assertEquals((.0, .0), view.canvas.get_matrix_i2c(line).transform_point(*handle.pos))
+        cinfo = diagram.canvas.get_connection(handle)
+        self.assertTrue(cinfo.connected is comment)
+        #self.assertTrue(handle.connected_to is comment, 'c = ' + str(handle.connected_to))
+        #self.assertTrue(handle.connection_data is not None)
 
         # Grab the second handle and drag it to the actor
 
-        tool.on_button_press(context, Event(x=10, y=10, state=0))
-        tool.on_motion_notify(context, Event(x=200, y=200, state=0xffff))
-        tool.on_button_release(context, Event(x=200, y=200, state=0))
+        tool.on_button_press(Event(x=10, y=10, state=0))
+        tool.on_motion_notify(Event(x=200, y=200, state=0xffff))
+        tool.on_button_release(Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        self.assertTrue(handle.connected_to is actor)
-        self.assertTrue(handle.connection_data is not None)
+        cinfo = diagram.canvas.get_connection(handle)
+        self.assertTrue(cinfo.connected is actor)
+        #self.assertTrue(handle.connection_data is not None)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
         # Press, release, nothing should change
 
-        tool.on_button_press(context, Event(x=200, y=200, state=0))
-        tool.on_motion_notify(context, Event(x=200, y=200, state=0xffff))
-        tool.on_button_release(context, Event(x=200, y=200, state=0))
+        tool.on_button_press(Event(x=200, y=200, state=0))
+        tool.on_motion_notify(Event(x=200, y=200, state=0xffff))
+        tool.on_button_release(Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        self.assertTrue(handle.connected_to is actor)
-        self.assertTrue(handle.connection_data is not None)
+        cinfo = diagram.canvas.get_connection(handle)
+        self.assertTrue(cinfo.connected is actor)
+        #self.assertTrue(handle.connection_data is not None)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
         # Move second handle away from the actor. Should remove connection
 
-        tool.on_button_press(context, Event(x=200, y=200, state=0))
-        tool.on_motion_notify(context, Event(x=500, y=500, state=0xffff))
-        tool.on_button_release(context, Event(x=500, y=500, state=0))
+        tool.on_button_press(Event(x=200, y=200, state=0))
+        tool.on_motion_notify(Event(x=500, y=500, state=0xffff))
+        tool.on_button_release(Event(x=500, y=500, state=0))
 
         handle = line.handles()[-1]
         self.assertEquals((500, 500), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        self.assertTrue(handle.connected_to is None)
-        self.assertTrue(handle.connection_data is None)
+        cinfo = diagram.canvas.get_connection(handle)
+        self.assertTrue(cinfo is None)
+        #self.assertTrue(handle.connection_data is None)
         self.assertEquals(len(comment.subject.annotatedElement), 0)
 
 

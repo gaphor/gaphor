@@ -4,10 +4,6 @@ This module contains a model element Diagram which is the abstract
 representation of a UML diagram. Diagrams can be visualized and edited.
 """
 
-__author__ = 'Arjan Molenaar'
-__version__ = '$revision$'
-__date__ = '$date$'
-
 from zope import component
 import gobject
 import gaphas
