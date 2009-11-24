@@ -514,7 +514,7 @@ def create_tree_view(model, names, tip='', ro_cols=None):
 Press ENTER to edit item, BS/DEL to remove item.
 Use -/= to move items up or down.\
     """
-    tree_view.set_toolip_text(tip)
+    tree_view.set_tooltip_text(tip)
 
     return tree_view
 
@@ -1007,7 +1007,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
         hbox.pack_start(entry)
 
-        entry.set_toolip_text("""\
+        entry.set_tooltip_text("""\
 Enter attribute name and multiplicity, for example
 - name
 - name [1]
