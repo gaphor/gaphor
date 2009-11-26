@@ -123,7 +123,8 @@ class HandleToolTestCase(unittest.TestCase):
         self.assertTrue(cinfo.connected is actor, cinfo.connected)
         self.assertEquals((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
-        tool.disconnect(line, handle)
+        Connector(line, handle).disconnect()
+        #tool.disconnect(line, handle)
         
         cinfo = diagram.canvas.get_connection(handle)
 
