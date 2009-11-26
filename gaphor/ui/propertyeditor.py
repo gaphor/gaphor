@@ -38,15 +38,29 @@ class PropertyEditor(object):
         
         return self.vbox
 
+    def get_adapters(self, item):
+        """
+        Return an ordered list of (order, name, adapter).
+        """
+        adaptermap = {}
+        try:
+            if item.subject:
+                for name, adapter in component.getAdapters([item.subject,], IPropertyPage):
+                    adaptermap[name] = (adapter.order, name, adapter)
+        except AttributeError:
+            pass
+        for name, adapter in component.getAdapters([item,], IPropertyPage):
+            adaptermap[name] = (adapter.order, name, adapter)
+
+        adapters = adaptermap.values()
+        adapters.sort()
+        return adapters
+
     def create_pages(self, item):
         """
         Load all tabs that can operate on the given item.
         """
-        adapters = []
-        for name, adapter in component.getAdapters([item,], IPropertyPage):
-            adapters.append((adapter.order, name, adapter))
-
-        adapters.sort()
+        adapters = self.get_adapters(item)
 
         for _, name, adapter in adapters:
             try:

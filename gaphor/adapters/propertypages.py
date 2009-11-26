@@ -525,15 +525,15 @@ class CommentItemPropertyPage(object):
     Property page for Comments
     """
     interface.implements(IPropertyPage)
-    component.adapts(items.CommentItem)
+    component.adapts(UML.Comment)
 
     order = 0
 
-    def __init__(self, context):
-        self.context = context
+    def __init__(self, subject):
+        self.subject = subject
 
     def construct(self):
-        subject = self.context.subject
+        subject = self.subject
         page = gtk.VBox()
 
         if not subject:
@@ -567,7 +567,7 @@ class CommentItemPropertyPage(object):
 
     @transactional
     def _on_body_change(self, buffer):
-        self.context.subject.body = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
+        self.subject.body = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
         
 component.provideAdapter(CommentItemPropertyPage, name='Properties')
 
@@ -585,14 +585,14 @@ class NamedItemPropertyPage(object):
 
     NAME_LABEL = _('Name')
 
-    def __init__(self, context):
-        self.context = context
+    def __init__(self, subject):
+        self.subject = subject
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
     
     def construct(self):
         page = gtk.VBox()
 
-        subject = self.context.subject
+        subject = self.subject
         if not subject:
             return page
 
@@ -617,13 +617,10 @@ class NamedItemPropertyPage(object):
 
     @transactional
     def _on_name_change(self, entry):
-        self.context.subject.name = entry.get_text()
+        self.subject.name = entry.get_text()
         
 component.provideAdapter(NamedItemPropertyPage,
-                         adapts=[items.NamedItem], name='Properties')
-component.provideAdapter(NamedItemPropertyPage,
-                         adapts=[items.NamedLine], name='Properties')
-
+                         adapts=[UML.NamedElement], name='Properties')
 
 
 class ClassPropertyPage(NamedItemPropertyPage):
@@ -631,15 +628,15 @@ class ClassPropertyPage(NamedItemPropertyPage):
     Adapter which shows a property page for a class view.
     """
 
-    component.adapts(items.ClassItem)
+    component.adapts(UML.Class)
 
-    def __init__(self, context):
-        super(ClassPropertyPage, self).__init__(context)
+    def __init__(self, subject):
+        super(ClassPropertyPage, self).__init__(subject)
         
     def construct(self):
         page = super(ClassPropertyPage, self).construct()
 
-        if not self.context.subject:
+        if not self.subject:
             return page
 
         # Abstract toggle
@@ -649,7 +646,7 @@ class ClassPropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
         button = gtk.CheckButton(_("Abstract"))
-        button.set_active(self.context.subject.isAbstract)
+        button.set_active(self.subject.isAbstract)
         
         button.connect('toggled', self._on_abstract_change)
         hbox.pack_start(button)
@@ -662,7 +659,7 @@ class ClassPropertyPage(NamedItemPropertyPage):
 
     @transactional
     def _on_abstract_change(self, button):
-        self.context.subject.isAbstract = button.get_active()
+        self.subject.isAbstract = button.get_active()
 
 component.provideAdapter(ClassPropertyPage, name='Properties')
 
@@ -674,23 +671,24 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
     component.adapts(items.InterfaceItem)
 
-    def __init__(self, context):
-        super(InterfacePropertyPage, self).__init__(context)
+    def __init__(self, item):
+        super(InterfacePropertyPage, self).__init__(item.subject)
+        self.item = item
         
     def construct(self):
         page = super(InterfacePropertyPage, self).construct()
+        item = self.item
 
         # Fold toggle
         hbox = gtk.HBox()
-        label = gtk.Label("")
+        label = gtk.Label('')
         label.set_justify(gtk.JUSTIFY_LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, expand=False)
 
         button = gtk.CheckButton(_("Folded"))
-        button.set_active(self.context.folded)
+        button.set_active(item.folded)
         button.connect('toggled', self._on_fold_change)
-        item = self.context
 
         connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
         allowed = (items.DependencyItem, items.ImplementationItem)
@@ -708,7 +706,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
     @transactional
     def _on_fold_change(self, button):
-        item = self.context
+        item = self.item
 
         connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
         assert len(connected_items) <= 1
@@ -737,6 +735,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
 
 component.provideAdapter(InterfacePropertyPage, name='Properties')
+
 
 
 
@@ -1112,6 +1111,8 @@ Enter attribute name and multiplicity, for example
         end.subject.aggregation = ('none', 'shared', 'composite')[combo.get_active()]
 
 component.provideAdapter(AssociationPropertyPage, name='Properties')
+
+
 
 
 class LineStylePage(object):
