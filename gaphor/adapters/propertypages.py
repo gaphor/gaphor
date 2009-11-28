@@ -239,37 +239,6 @@ class ClassOperations(EditableTreeModel):
 
 
 
-class TaggedValues(EditableTreeModel):
-    """
-    GTK tree model to edit tagged values.
-    """
-    def __init__(self, item):
-        super(TaggedValues, self).__init__(item, [str, str, object])
-
-
-    def _get_rows(self):
-        for tv in self._item.subject.taggedValue:
-            tag, value = tv.value.split("=")
-            yield [tag, value, tv]
-
-
-    def _create_object(self):
-        tv = self.element_factory.create(UML.LiteralSpecification)
-        self._item.subject.taggedValue.append(tv)
-        return tv
-
-
-    def _set_object_value(self, row, col, value):
-        tv = row[-1]
-        row[col] = value
-        tv.value = '%s=%s' % (row[0], row[1])
-
-
-    def _swap_objects(self, o1, o2):
-        return self._item.subject.taggedValue.swap(o1, o2)
-
-
-
 class CommunicationMessageModel(EditableTreeModel):
     """
     GTK tree model for list of messages on communication diagram.
@@ -853,46 +822,10 @@ Add and edit class operations according to UML syntax. Operation syntax examples
 component.provideAdapter(OperationsPage, name='Operations')
 
 
-class TaggedValuePage(object):
-    """
-    An editor for tagged values associated with elements.
-
-    Tagged values are stored in a ListSore: tag, value, taggedValue. taggedValue
-    is an UML model element (hidden).
-    """
-
-    interface.implements(IPropertyPage)
-    component.adapts(items.NamedItem)
-
-    order = 200
-
-    element_factory = inject('element_factory')
-    def __init__(self, context):
-        super(TaggedValuePage, self).__init__()
-        self.context = context
-        
-    def construct(self):
-        page = gtk.VBox()
-
-        tagged_values = gtk.ListStore(str, str, object)
-
-        if self.context.subject is None:
-            return page
-        
-        model = TaggedValues(self.context)
-        tree_view = create_tree_view(model, (_('Tag'), _('Value')))
-        page.pack_start(tree_view)
-        return page
-        
-component.provideAdapter(TaggedValuePage, name='Tagged values')
-
 
 class DependencyPropertyPage(object):
     """
-    An editor for tagged values associated with elements.
-
-    Tagged values are stored in a ListSore: tag, value, taggedValue. taggedValue
-    is an UML model element (hidden).
+    Dependency item editor.
     """
 
     interface.implements(IPropertyPage)
