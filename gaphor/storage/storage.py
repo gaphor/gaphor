@@ -372,8 +372,9 @@ def load_generator(filename, factory):
 
 def version_0_15_0(elements, factory, gaphor_version):
     """
-    Fix association navigability UML metamodel. Before Gaphor 0.15.0
-    navigability used 
+    Fix association navigability UML metamodel to comply with UML 2.2
+    using Association.navigableOwnedEnd among others (see model factory
+    for details).
 
     This function is called before the actual elements are constructed.
     """
