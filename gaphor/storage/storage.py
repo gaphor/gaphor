@@ -372,13 +372,21 @@ def load_generator(filename, factory):
 
 def version_0_15_0(elements, factory, gaphor_version):
     """
-    Fix association navigability UML metamodel. Before Gaphor 0.15.0
-    navigability used 
+    Fix association navigability UML metamodel to comply with UML 2.2
+    using Association.navigableOwnedEnd among others (see model factory
+    for details).
+
+    Convert tagged values into comment items as tagged values are no longer
+    supported by UML specification (stereotypes attributes shall be used
+    instead). Comment item contains information about used tagged values.
+    It means, that full conversion of tagged values into stereotype
+    attributes is not supported at the moment.
 
     This function is called before the actual elements are constructed.
     """
     ATTRS = set(['class_', 'interface_', 'actor', 'useCase', 'owningAssociation'])
     if tuple(map(int, gaphor_version.split('.'))) < (0, 15, 0):
+        # update associations
         values = (v for v in elements.values()
                 if type(v) is parser.element
                     and v.type == 'Property'
@@ -412,6 +420,33 @@ def version_0_15_0(elements, factory, gaphor_version):
                 if 'ownedEnd' not in assoc.references:
                     assoc.references['ownedEnd'] = []
                 assoc.references['ownedEnd'].append(et.id)
+
+        # get rid of tagged values
+        import uuid
+        diagrams = [e for e in elements.values() if e.type == 'Diagram']
+
+        for d in diagrams:
+            titems = [i for i in d.canvas.canvasitems
+                    if 'taggedValue' in elements[i.subject].references]
+            for et in titems:
+                m = eval(et.values['matrix'])
+                w = eval(et.values['width'])
+                tv = [elements[i] for i in elements[et.subject].references['taggedValue']]
+                tagged = 'upgrade to stereotype attributes' \
+                    ' following tagged values:\n%s' % '\n'.join(t.values['value'] for t in tv)
+
+                item = parser.canvasitem(str(uuid.uuid1()), 'CommentItem')
+                comment = parser.element(str(uuid.uuid1()), 'Comment')
+
+                item.references['subject'] = comment.id
+                item.values['matrix'] = str((1.0, 0.0, 0.0, 1.0, m[4] + w + 10.0, m[5]))
+
+                comment.references['presentation'] = [item.id]
+                comment.values['body'] = tagged
+
+                elements[item.id] = item
+                elements[comment.id] = comment
+                d.canvas.canvasitems.append(item)
 
 
 def version_0_14_0(elements, factory, gaphor_version):

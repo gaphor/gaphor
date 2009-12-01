@@ -295,4 +295,27 @@ class FileUpgradeTestCase(TestCase):
         self.assertTrue(UML.model.get_navigability(a.subject, a.head_end.subject) is None)
         self.assertTrue(UML.model.get_navigability(a.subject, a.tail_end.subject) is True)
 
+
+    def test_tagged_values_upgrade(self):
+        """Test tagged values upgrade in Gaphor 0.15.0
+        """
+        f = open('test-diagrams/taggedvalues-pre015.gaphor')
+        storage.load(f, factory=self.element_factory)
+        f.close()
+
+        diagrams = list(self.kindof(UML.Diagram))
+        self.assertEquals(1, len(diagrams))
+        diagram = diagrams[0]
+        classes = diagram.canvas.select(lambda e: isinstance(e, items.ClassItem))
+        comments = diagram.canvas.select(lambda e: isinstance(e, items.CommentItem))
+
+        self.assertEquals(2, len(classes))
+        c1, c2 = classes
+
+        self.assertEquals(2, len(comments))
+        c1, c2 = comments
+        self.assertTrue('t1=v1\nt2=v2' in c1.subject.body)
+        self.assertTrue('t5=v5\nt6=v6\nt7=v7' in c2.subject.body)
+
+
 # vim:sw=4:et:ai
