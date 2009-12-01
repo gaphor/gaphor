@@ -106,8 +106,8 @@ class ConnectorConnectBase(AbstractConnect):
         connector.subject = None
 
 
-    def glue(self, handle, port):
-        glue_ok = super(ConnectorConnectBase, self).glue(handle, port)
+    def allow(self, handle, port):
+        glue_ok = super(ConnectorConnectBase, self).allow(handle, port)
 
         iface = self.element
         component = self.get_connected(self.line.opposite(handle))
@@ -226,12 +226,12 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
     """
     component.adapts(items.InterfaceItem, items.ConnectorItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         """
         Allow glueing to folded interface only and when only connectors are
         connected.
         """
-        glue_ok = super(InterfaceConnectorConnect, self).glue(handle, port)
+        glue_ok = super(InterfaceConnectorConnect, self).allow(handle, port)
         iface = self.element
         glue_ok = glue_ok and iface.folded != iface.FOLDED_NONE
         if glue_ok:

@@ -152,10 +152,7 @@ class StereotypePage(object):
 
         
 component.provideAdapter(StereotypePage,
-        adapts=[items.ElementItem],
-        name='Stereotypes')
-component.provideAdapter(StereotypePage,
-        adapts=[items.LineItem],
+        adapts=[UML.Element],
         name='Stereotypes')
 
 

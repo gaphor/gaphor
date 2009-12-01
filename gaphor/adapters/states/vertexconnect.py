@@ -31,7 +31,7 @@ class TransitionConnect(VertexConnect):
     """
     component.adapts(items.VertexItem, items.TransitionItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         """
         Glue transition handle and vertex item. Guard from connecting
         transition's head with final state.
@@ -42,7 +42,7 @@ class TransitionConnect(VertexConnect):
         is_final = isinstance(subject, UML.FinalState)
         if isinstance(subject, UML.State) and not is_final \
                 or handle is line.tail and is_final:
-            return super(TransitionConnect, self).glue(handle, port)
+            return super(TransitionConnect, self).allow(handle, port)
         else:
             return None
 
@@ -58,7 +58,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
     """
     component.adapts(items.InitialPseudostateItem, items.TransitionItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         """
         Glue to initial pseudostate with transition's head and when there are
         no transitions connected.
@@ -71,7 +71,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         connections = self.canvas.get_connections(connected=element)
         connected_items = filter(lambda c: isinstance(c.item, items.TransitionItem) and c.item is not line, connections)
         if handle is line.head and not any(connected_items):
-            return super(InitialPseudostateTransitionConnect, self).glue(handle, port)
+            return super(InitialPseudostateTransitionConnect, self).allow(handle, port)
         else:
             return None
 
@@ -86,10 +86,10 @@ class HistoryPseudostateTransitionConnect(VertexConnect):
     """
     component.adapts(items.HistoryPseudostateItem, items.TransitionItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         """
         """
-        return super(HistoryPseudostateTransitionConnect, self).glue(handle, port)
+        return super(HistoryPseudostateTransitionConnect, self).allow(handle, port)
 
 component.provideAdapter(HistoryPseudostateTransitionConnect)
 

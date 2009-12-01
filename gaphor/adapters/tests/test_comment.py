@@ -34,7 +34,7 @@ class CommentLineTestCase(TestCase):
         line = self.create(items.CommentLineItem)
 
         self.connect(line, line.head, comment)
-        glued = self.glue(line, line.tail, comment)
+        glued = self.allow(line, line.tail, comment)
         self.assertFalse(glued)
 
 

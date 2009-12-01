@@ -87,7 +87,7 @@ class TransitionConnectorTestCase(TestCase):
         t2 = self.create(items.TransitionItem)
         # connection to `t2` should not be possible as v1 is already connected
         # to `t`
-        glued = self.glue(t2, t2.head, v1)
+        glued = self.allow(t2, t2.head, v1)
         self.assertFalse(glued)
         self.assertTrue(self.get_connected(t2.head) is None)
 
@@ -118,7 +118,7 @@ class TransitionConnectorTestCase(TestCase):
         assert t.subject is None
 
         # no tail connection should be possible
-        glued = self.glue(t, t.tail, v1)
+        glued = self.allow(t, t.tail, v1)
         self.assertFalse(glued)
 
 
@@ -133,7 +133,7 @@ class TransitionConnectorTestCase(TestCase):
         self.connect(t, t.head, v1)
 
         # check if transition can connect to final state
-        glued = self.glue(t, t.tail, v2)
+        glued = self.allow(t, t.tail, v2)
         self.assertTrue(glued)
         # and connect tail of transition to final state
         self.connect(t, t.tail, v2)
@@ -153,7 +153,7 @@ class TransitionConnectorTestCase(TestCase):
         v = self.create(items.FinalStateItem, UML.FinalState)
         t = self.create(items.TransitionItem)
 
-        glued = self.glue(t, t.head, v)
+        glued = self.allow(t, t.head, v)
         self.assertFalse(glued)
 
 

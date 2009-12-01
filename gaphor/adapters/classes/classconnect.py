@@ -13,7 +13,7 @@ class DependencyConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.DependencyItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         line = self.line
         element = self.element
 
@@ -22,7 +22,7 @@ class DependencyConnect(RelationshipConnect):
            not isinstance(element.subject, UML.NamedElement):
             return None
 
-        return super(DependencyConnect, self).glue(handle, port)
+        return super(DependencyConnect, self).allow(handle, port)
 
     def connect_subject(self, handle):
         """
@@ -69,14 +69,14 @@ class AssociationConnect(RelationshipConnect):
 
     CAN_BE_UNARY = True    # allow one classifier to be connected by association
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         element = self.element
 
         # Element should be a Classifier
         if not isinstance(element.subject, UML.Classifier):
             return None
 
-        return super(AssociationConnect, self).glue(handle, port)
+        return super(AssociationConnect, self).allow(handle, port)
 
     def connect_subject(self, handle):
         element = self.element
@@ -171,7 +171,7 @@ class ImplementationConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.ImplementationItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         line = self.line
         element = self.element
 
@@ -185,7 +185,7 @@ class ImplementationConnect(RelationshipConnect):
            not isinstance(element.subject, UML.BehavioredClassifier):
             return None
 
-        return super(ImplementationConnect, self).glue(handle, port)
+        return super(ImplementationConnect, self).allow(handle, port)
 
 
     def connect_subject(self, handle):

@@ -10,19 +10,19 @@ class ExtensionConnect(RelationshipConnect):
     """
     component.adapts(items.ClassifierItem, items.ExtensionItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         line = self.line
         subject = self.element.subject
 
         if handle is line.head:
             # Element at the head should be a class
             # (implies stereotype as well)
-            glue = isinstance(subject, UML.Class)
+            allow = isinstance(subject, UML.Class)
         elif handle is line.tail:
             # Element at the tail should be a stereotype
-            glue = isinstance(subject, UML.Stereotype)
+            allow = isinstance(subject, UML.Stereotype)
 
-        return glue and super(ExtensionConnect, self).glue(handle, port)
+        return allow and super(ExtensionConnect, self).allow(handle, port)
 
 
     def connect_subject(self, handle):

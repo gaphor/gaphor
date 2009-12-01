@@ -16,7 +16,7 @@ class FlowConnect(RelationshipConnect):
 
     CAN_BE_UNARY = True   # flow can connect same actions
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         line = self.line
         subject = self.element.subject
 
@@ -24,7 +24,7 @@ class FlowConnect(RelationshipConnect):
            or handle is line.tail and isinstance(subject, UML.InitialNode):
             return None
 
-        return super(FlowConnect, self).glue(handle, port)
+        return super(FlowConnect, self).allow(handle, port)
 
 
     def reconnect(self, handle, port):
@@ -86,7 +86,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Abstract class with common behaviour for Fork/Join node and
     Decision/Merge node.
     """
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         # No cyclic connect is possible on a Flow/Decision node:
         head, tail = self.line.head, self.line.tail
         subject = self.element.subject
@@ -97,7 +97,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
            or handle is tail and hct and hct.subject is subject:
             return None
 
-        return super(FlowForkDecisionNodeConnect, self).glue(handle, port)
+        return super(FlowForkDecisionNodeConnect, self).allow(handle, port)
 
     def combine_nodes(self):
         """

@@ -17,12 +17,12 @@ class DependencyTestCase(TestCase):
         actor2 = self.create(items.ActorItem, UML.Actor)
         dep = self.create(items.DependencyItem)
 
-        glued = self.glue(dep, dep.head, actor1)
+        glued = self.allow(dep, dep.head, actor1)
         self.assertTrue(glued)
 
         self.connect(dep, dep.head, actor1)
 
-        glued = self.glue(dep, dep.tail, actor2)
+        glued = self.allow(dep, dep.tail, actor2)
         self.assertTrue(glued)
 
 
@@ -143,14 +143,14 @@ class GeneralizationTestCase(TestCase):
         c1 = self.create(items.ClassItem, UML.Class)
         c2 = self.create(items.ClassItem, UML.Class)
 
-        glued = self.glue(gen, gen.tail, c1)
+        glued = self.allow(gen, gen.tail, c1)
         self.assertTrue(glued)
 
         self.connect(gen, gen.tail, c1)
         self.assertTrue(self.get_connected(gen.tail) is c1)
         self.assertTrue(gen.subject is None)
 
-        glued = self.glue(gen, gen.head, c2)
+        glued = self.allow(gen, gen.head, c2)
         self.assertTrue(glued)
 
 
@@ -182,12 +182,12 @@ class AssociationConnectorTestCase(TestCase):
         c1 = self.create(items.ClassItem, UML.Class)
         c2 = self.create(items.ClassItem, UML.Class)
 
-        glued = self.glue(asc, asc.head, c1)
+        glued = self.allow(asc, asc.head, c1)
         self.assertTrue(glued)
 
         self.connect(asc, asc.head, c1)
 
-        glued = self.glue(asc, asc.tail, c2)
+        glued = self.allow(asc, asc.tail, c2)
         self.assertTrue(glued)
 
 

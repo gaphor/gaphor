@@ -81,7 +81,7 @@ class MessageLifelineConnect(AbstractConnect):
                 message.unlink()
 
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         """
         Glue to lifeline's head or lifetime. If lifeline's lifetime is
         visible then disallow connection to lifeline's head.

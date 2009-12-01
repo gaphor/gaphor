@@ -17,11 +17,11 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
         node = self.create(items.InitialNodeItem, UML.InitialNode)
 
         # tail may not connect to initial node item
-        glued = self.glue(flow, flow.tail, node)
-        self.assertFalse(glued)
+        allowed = self.allow(flow, flow.tail, node)
+        self.assertFalse(allowed)
 
-        glued = self.glue(flow, flow.head, node)
-        self.assertTrue(glued)
+        allowed = self.allow(flow, flow.head, node)
+        self.assertTrue(allowed)
 
 
     def test_flow_final_node_glue(self):
@@ -31,11 +31,11 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
         node = self.create(items.FlowFinalNodeItem, UML.FlowFinalNode)
 
         # head may not connect to flow final node item
-        glued = self.glue(flow, flow.head, node)
-        self.assertFalse(glued)
+        allowed = self.allow(flow, flow.head, node)
+        self.assertFalse(allowed)
 
-        glued = self.glue(flow, flow.tail, node)
-        self.assertTrue(glued)
+        allowed = self.allow(flow, flow.tail, node)
+        self.assertTrue(allowed)
 
 
     def test_activity_final_node_glue(self):
@@ -45,10 +45,10 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
         node = self.create(items.ActivityFinalNodeItem, UML.ActivityFinalNode)
 
         # head may not connect to activity final node item
-        glued = self.glue(flow, flow.head, node)
+        glued = self.allow(flow, flow.head, node)
         self.assertFalse(glued)
 
-        glued = self.glue(flow, flow.tail, node)
+        glued = self.allow(flow, flow.tail, node)
         self.assertTrue(glued)
 
 
@@ -61,7 +61,7 @@ class FlowItemObjectNodeTestCase(TestCase):
         """
         flow = self.create(items.FlowItem)
         onode = self.create(items.ObjectNodeItem, UML.ObjectNode)
-        glued = self.glue(flow, flow.head, onode)
+        glued = self.allow(flow, flow.head, onode)
         self.assertTrue(glued)
 
 
@@ -99,12 +99,12 @@ class FlowItemActionTestCase(TestCase):
         a1 = self.create(items.ActionItem, UML.Action)
         a2 = self.create(items.ActionItem, UML.Action)
 
-        glued = self.glue(flow, flow.head, a1)
+        glued = self.allow(flow, flow.head, a1)
         self.assertTrue(glued)
 
         self.connect(flow, flow.head, a1)
 
-        glued = self.glue(flow, flow.tail, a2)
+        glued = self.allow(flow, flow.tail, a2)
         self.assertTrue(glued)
 
 
@@ -175,12 +175,12 @@ class FlowItemDesisionAndForkNodes:
         action = self.create(items.ActionItem, UML.Action)
         node = self.create(self.item_cls, self.join_node_cls)
 
-        glued = self.glue(flow, flow.head, node)
+        glued = self.allow(flow, flow.head, node)
         self.assertTrue(glued)
 
         self.connect(flow, flow.head, action)
 
-        glued = self.glue(flow, flow.tail, node)
+        glued = self.allow(flow, flow.tail, node)
         self.assertTrue(glued)
 
 

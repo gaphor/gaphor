@@ -74,7 +74,7 @@ class AbstractConnect(object):
             return cinfo.port
 
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         """
         Determine if items can be connected.
 
@@ -128,7 +128,7 @@ class CommentLineElementConnect(AbstractConnect):
     """
     component.adapts(items.ElementItem, items.CommentLineItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -154,7 +154,7 @@ class CommentLineElementConnect(AbstractConnect):
         if connected_to and not glue_ok:
             return None
 
-        return super(CommentLineElementConnect, self).glue(handle, port)
+        return super(CommentLineElementConnect, self).allow(handle, port)
 
     def connect(self, handle, port):
         if super(CommentLineElementConnect, self).connect(handle, port):
@@ -187,7 +187,7 @@ class CommentLineLineConnect(AbstractConnect):
     """
     component.adapts(items.DiagramLine, items.CommentLineItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
@@ -213,7 +213,7 @@ class CommentLineLineConnect(AbstractConnect):
         if connected_to and not glue_ok:
             return None
 
-        return super(CommentLineLineConnect, self).glue(handle, port)
+        return super(CommentLineLineConnect, self).allow(handle, port)
 
     def connect(self, handle, port):
         if super(CommentLineLineConnect, self).connect(handle, port):
@@ -255,7 +255,7 @@ class RelationshipConnect(AbstractConnect):
     # override in deriving class to allow unary relationship
     CAN_BE_UNARY = False
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         """
         In addition to the normal check, both relationship ends may not be
         connected to the same element. Same goes for subjects.
@@ -276,7 +276,7 @@ class RelationshipConnect(AbstractConnect):
                      and connected_to.subject is element.subject:
                 return None
 
-        return super(RelationshipConnect, self).glue(handle, port)
+        return super(RelationshipConnect, self).allow(handle, port)
 
 
     def relationship(self, required_type, head, tail):

@@ -13,7 +13,7 @@ class ExtendItemTestCase(TestCase):
         uc1 = self.create(items.UseCaseItem, UML.UseCase)
         extend = self.create(items.ExtendItem)
 
-        glued = self.glue(extend, extend.head, uc1)
+        glued = self.allow(extend, extend.head, uc1)
         self.assertTrue(glued)
 
 

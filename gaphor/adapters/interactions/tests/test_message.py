@@ -15,7 +15,7 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # get head port
         port = ll.ports()[0]
-        glued = self.glue(msg, msg.head, ll, port)
+        glued = self.allow(msg, msg.head, ll, port)
         self.assertTrue(glued)
 
 
@@ -25,7 +25,7 @@ class BasicMessageConnectionsTestCase(TestCase):
         ll = self.create(items.LifelineItem)
         msg = self.create(items.MessageItem)
 
-        glued = self.glue(msg, msg.head, ll, ll.lifetime.port)
+        glued = self.allow(msg, msg.head, ll, ll.lifetime.port)
 
         assert not ll.lifetime.visible
         self.assertFalse(glued)
@@ -39,7 +39,7 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         ll.lifetime.visible = True
 
-        glued = self.glue(msg, msg.head, ll, ll.lifetime.port)
+        glued = self.allow(msg, msg.head, ll, ll.lifetime.port)
         self.assertTrue(glued)
 
 
@@ -203,7 +203,7 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         # connect head of message to lifeline's head
         self.connect(message, message.head, lifeline1)
 
-        glued = self.glue(message, message.tail, lifeline2, lifeline2.lifetime.port)
+        glued = self.allow(message, message.tail, lifeline2, lifeline2.lifetime.port)
         # no connection possible as 2nd lifeline is in sequence diagram
         # mode
         self.assertFalse(glued)
@@ -223,7 +223,7 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         # connect lifetime of message to lifeline's lifetime
         self.connect(msg, msg.head, ll1, ll1.lifetime.port)
 
-        glued = self.glue(msg, msg.tail, ll2)
+        glued = self.allow(msg, msg.tail, ll2)
         # no connection possible as 2nd lifeline is in communication
         # diagram mode
         self.assertFalse(glued)

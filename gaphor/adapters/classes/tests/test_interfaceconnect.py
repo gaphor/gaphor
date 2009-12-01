@@ -108,7 +108,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
 
         for cls in LINES:
             line = self.create(cls)
-            glued = self.glue(line, line.head, self.iface)
+            glued = self.allow(line, line.head, self.iface)
             # no additional lines (specified above) can be glued
             self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
 
@@ -121,7 +121,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
 
         for cls in LINES:
             line = self.create(cls)
-            glued = self.glue(line, line.head, self.iface)
+            glued = self.allow(line, line.head, self.iface)
             # no additional lines (specified above) can be glued
             self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
 
@@ -140,7 +140,7 @@ class FoldedInterfaceSingleLineTestCase(TestCase):
 
         for cls in LINES[2:]:
             line = self.create(cls)
-            glued = self.glue(line, line.head, iface)
+            glued = self.allow(line, line.head, iface)
             # no additional lines (specified above) can be glued
             self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
 

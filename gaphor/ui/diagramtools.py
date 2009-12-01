@@ -33,13 +33,16 @@ class DiagramItemConnector(ItemConnector):
     """
     reconnect = False
 
-    def allow(self, sink):
+    def glue(self, vpos):
         """
         Determine if item and glue item can glue/connect using connection
         adapters.
         """
-        adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
-        return adapter and adapter.glue(self.handle, sink.port)
+        sink = super(DiagramItemConnector, self).glue(vpos)
+        if sink:
+            adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
+            if adapter and adapter.allow(self.handle, sink.port):
+                return sink
 
 
     def connect(self, sink):

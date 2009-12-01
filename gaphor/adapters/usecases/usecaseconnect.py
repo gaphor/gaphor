@@ -14,14 +14,14 @@ class IncludeConnect(RelationshipConnect):
     """
     component.adapts(items.UseCaseItem, items.IncludeItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         line = self.line
         element = self.element
 
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(IncludeConnect, self).glue(handle, port)
+        return super(IncludeConnect, self).allow(handle, port)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Include,
@@ -38,14 +38,14 @@ class ExtendConnect(RelationshipConnect):
     """
     component.adapts(items.UseCaseItem, items.ExtendItem)
 
-    def glue(self, handle, port):
+    def allow(self, handle, port):
         line = self.line
         element = self.element
         
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(ExtendConnect, self).glue(handle, port)
+        return super(ExtendConnect, self).allow(handle, port)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Extend,

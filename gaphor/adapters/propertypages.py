@@ -541,7 +541,7 @@ class CommentItemPropertyPage(object):
 component.provideAdapter(CommentItemPropertyPage, name='Properties')
 
 
-class NamedItemPropertyPage(object):
+class NamedElementPropertyPage(object):
     """
     An adapter which works for any named item view.
 
@@ -588,11 +588,21 @@ class NamedItemPropertyPage(object):
     def _on_name_change(self, entry):
         self.subject.name = entry.get_text()
         
-component.provideAdapter(NamedItemPropertyPage,
+component.provideAdapter(NamedElementPropertyPage,
                          adapts=[UML.NamedElement], name='Properties')
 
 
-class ClassPropertyPage(NamedItemPropertyPage):
+class NamedItemPropertyPage(NamedElementPropertyPage):
+    """
+    Helper class for item based name property pages.
+    """
+
+    def __init__(self, item):
+        self.item = item
+        super(NamedItemPropertyPage, self).__init__(item.subject)
+
+
+class ClassPropertyPage(NamedElementPropertyPage):
     """
     Adapter which shows a property page for a class view.
     """
@@ -640,10 +650,6 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
     component.adapts(items.InterfaceItem)
 
-    def __init__(self, item):
-        super(InterfacePropertyPage, self).__init__(item.subject)
-        self.item = item
-        
     def construct(self):
         page = super(InterfacePropertyPage, self).construct()
         item = self.item
@@ -904,11 +910,6 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
     NAVIGABILITY = [None, False, True]
 
-    def __init__(self, context):
-        super(AssociationPropertyPage, self).__init__(context)
-        #self.context = context
-        #self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
-        
     def construct_end(self, title, end):
 
         if not end.subject:
@@ -961,7 +962,7 @@ Enter attribute name and multiplicity, for example
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
             combo.append_text(t)
         
-        nav = UML.model.get_navigability(self.context.subject, end.subject)
+        nav = UML.model.get_navigability(self.subject, end.subject)
         combo.set_active(self.NAVIGABILITY.index(nav))
 
         combo.connect('changed', self._on_navigability_change, end)
@@ -981,7 +982,7 @@ Enter attribute name and multiplicity, for example
     def construct(self):
         page = super(AssociationPropertyPage, self).construct()
         
-        if not self.context.subject:
+        if not self.subject:
             return page
 
         hbox = gtk.HBox()
@@ -991,7 +992,7 @@ Enter attribute name and multiplicity, for example
         hbox.pack_start(label, expand=False)
 
         button = gtk.CheckButton(_('Show direction'))
-        button.set_active(self.context.show_direction)
+        button.set_active(self.item.show_direction)
         button.connect('toggled', self._on_show_direction_change)
         hbox.pack_start(button)
 
@@ -1001,11 +1002,11 @@ Enter attribute name and multiplicity, for example
 
         page.pack_start(hbox, expand=False)
 
-        box = self.construct_end(_('Head'), self.context.head_end)
+        box = self.construct_end(_('Head'), self.item.head_end)
         if box:
             page.pack_start(box, expand=False)
 
-        box = self.construct_end(_('Tail'), self.context.tail_end)
+        box = self.construct_end(_('Tail'), self.item.tail_end)
         if box:
             page.pack_start(box, expand=False)
 
@@ -1020,11 +1021,11 @@ Enter attribute name and multiplicity, for example
 
     @transactional
     def _on_show_direction_change(self, button):
-        self.context.show_direction = button.get_active()
+        self.item.show_direction = button.get_active()
 
     @transactional
     def _on_invert_direction_change(self, button):
-        self.context.invert_direction()
+        self.item.invert_direction()
 
     @transactional
     def _on_end_name_change(self, entry, end):
@@ -1037,7 +1038,7 @@ Enter attribute name and multiplicity, for example
     @transactional
     def _on_navigability_change(self, combo, end):
         nav = self.NAVIGABILITY[combo.get_active()]
-        UML.model.set_navigability(self.context.subject, end.subject, nav)
+        UML.model.set_navigability(self.item.subject, end.subject, nav)
 
     @transactional
     def _on_aggregation_change(self, combo, end):
@@ -1058,9 +1059,9 @@ class LineStylePage(object):
 
     order = 400
 
-    def __init__(self, context):
+    def __init__(self, item):
         super(LineStylePage, self).__init__()
-        self.context = context
+        self.item = item
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
         
     def construct(self):
@@ -1073,7 +1074,7 @@ class LineStylePage(object):
         hbox.pack_start(label, expand=False)
 
         button = gtk.CheckButton(_('Orthogonal'))
-        button.set_active(self.context.orthogonal)
+        button.set_active(self.item.orthogonal)
         button.connect('toggled', self._on_orthogonal_change)
         hbox.pack_start(button)
 
@@ -1086,7 +1087,7 @@ class LineStylePage(object):
         hbox.pack_start(label, expand=False)
 
         button = gtk.CheckButton(_('Horizontal'))
-        button.set_active(self.context.horizontal)
+        button.set_active(self.item.horizontal)
         button.connect('toggled', self._on_horizontal_change)
         hbox.pack_start(button)
 
@@ -1098,11 +1099,11 @@ class LineStylePage(object):
 
     @transactional
     def _on_orthogonal_change(self, button):
-        self.context.orthogonal = button.get_active()
+        self.item.orthogonal = button.get_active()
 
     @transactional
     def _on_horizontal_change(self, button):
-        self.context.horizontal = button.get_active()
+        self.item.horizontal = button.get_active()
 
 component.provideAdapter(LineStylePage, name='Style')
 
@@ -1118,7 +1119,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     def construct(self):
         page = super(ObjectNodePropertyPage, self).construct()
 
-        subject = self.context.subject
+        subject = self.subject
         
         if not subject:
             return page
@@ -1138,7 +1139,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         hbox.pack_start(combo, expand=False)
 
         button = gtk.CheckButton(_('Ordering'))
-        button.set_active(self.context.show_ordering)
+        button.set_active(self.item.show_ordering)
         button.connect('toggled', self._on_ordering_show_change)
         hbox.pack_start(button, expand=False)
 
@@ -1156,17 +1157,17 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
-        self.context.set_upper_bound(value)
+        self.item.set_upper_bound(value)
 
     @transactional
     def _on_ordering_change(self, combo):
         value = self.ORDERING_VALUES[combo.get_active()]
-        self.context.subject.ordering = value
+        self.subject.ordering = value
 
     @transactional
     def _on_ordering_show_change(self, button):
-        self.context.show_ordering = button.get_active()
-        self.context.set_ordering(self.context.subject.ordering)
+        self.item.show_ordering = button.get_active()
+        self.item.set_ordering(self.subject.ordering)
 
 
 component.provideAdapter(ObjectNodePropertyPage, name='Properties')
@@ -1181,7 +1182,7 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     def construct(self):
         page = super(JoinNodePropertyPage, self).construct()
 
-        subject = self.context.subject
+        subject = self.subject
         
         if not subject:
             return page
@@ -1204,17 +1205,17 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_join_spec_change(self, entry):
         value = entry.get_text().strip()
-        self.context.set_join_spec(value)
+        self.item.set_join_spec(value)
 
 
 component.provideAdapter(JoinNodePropertyPage, name='Properties')
 
 
-class FlowPropertyPage(NamedItemPropertyPage):
+class FlowPropertyPage(NamedElementPropertyPage):
     """
     """
 
-    component.adapts(items.FlowItem)
+    component.adapts(UML.ControlFlow)
 
     def construct(self):
         page = super(FlowPropertyPage, self).construct()
@@ -1244,13 +1245,13 @@ class FlowPropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        self.context.subject.guard.value = value
+        self.subject.guard.value = value
 
 
 component.provideAdapter(FlowPropertyPage, name='Properties')
 
 
-class ComponentPropertyPage(NamedItemPropertyPage):
+class ComponentPropertyPage(NamedElementPropertyPage):
     """
     """
 
@@ -1259,7 +1260,7 @@ class ComponentPropertyPage(NamedItemPropertyPage):
     def construct(self):
         page = super(ComponentPropertyPage, self).construct()
 
-        subject = self.context.subject
+        subject = self.subject
         
         if not subject:
             return page
@@ -1282,7 +1283,7 @@ class ComponentPropertyPage(NamedItemPropertyPage):
         """
         Called when user clicks "Indirectly instantiated" check button.
         """
-        subject = self.context.subject
+        subject = self.subject
         if subject:
             subject.isIndirectlyInstantiated = button.get_active()
 
@@ -1311,23 +1312,23 @@ class MessagePropertyPage(NamedItemPropertyPage):
     def construct(self):
         page = super(MessagePropertyPage, self).construct()
 
-        context = self.context
-        subject = context.subject
+        item = self.item
+        subject = item.subject
 
         if not subject:
             return page
 
-        if context.is_communication():
+        if item.is_communication():
             hbox = gtk.HBox()
 
-            self._messages = CommunicationMessageModel(context)
+            self._messages = CommunicationMessageModel(item)
             tree_view = create_tree_view(self._messages, (_('Message'),))
             tree_view.set_headers_visible(False)
             frame = gtk.Frame(label=_('Additional Messages'))
             frame.add(tree_view)
             hbox.pack_start(frame)
 
-            self._inverted_messages = CommunicationMessageModel(context, inverted=True)
+            self._inverted_messages = CommunicationMessageModel(item, inverted=True)
             tree_view = create_tree_view(self._inverted_messages, (_('Message'),))
             tree_view.set_headers_visible(False)
             frame = gtk.Frame(label=_('Inverted Messages'))
@@ -1341,7 +1342,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
             sort_data = self.MESSAGE_SORT
             lifeline = None
-            cinfo = context.canvas.get_connection(context.tail)
+            cinfo = item.canvas.get_connection(item.tail)
             if cinfo:
                 lifeline = cinfo.connected
 
@@ -1370,10 +1371,10 @@ class MessagePropertyPage(NamedItemPropertyPage):
         combo = self.combo
         ms = combo.get_model().get_value(combo.get_active())
 
-        context = self.context
-        subject = context.subject
+        item = self.item
+        subject = item.subject
         lifeline = None
-        cinfo = context.canvas.get_connection(context.tail)
+        cinfo = item.canvas.get_connection(item.tail)
         if cinfo:
             lifeline = cinfo.connected
 
@@ -1389,7 +1390,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
                 lifeline.request_update()
 
         subject.messageSort = ms
-        context.request_update()
+        item.request_update()
          
 
 component.provideAdapter(MessagePropertyPage, name='Properties')

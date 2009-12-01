@@ -50,7 +50,7 @@ class TestCase(unittest.TestCase):
         return item
 
 
-    def glue(self, line, handle, item, port=None):
+    def allow(self, line, handle, item, port=None):
         """
         Glue line's handle to an item.
 
@@ -61,7 +61,7 @@ class TestCase(unittest.TestCase):
             
         query = (item, line)
         adapter = component.queryMultiAdapter(query, IConnect)
-        return adapter.glue(handle, port)
+        return adapter.allow(handle, port)
 
 
     def connect(self, line, handle, item, port=None):

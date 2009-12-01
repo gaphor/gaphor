@@ -13,7 +13,7 @@ class ImplementationTestCase(TestCase):
         impl = self.create(items.ImplementationItem)
         clazz = self.create(items.ClassItem, UML.Class)
 
-        glued = self.glue(impl, impl.head, clazz)
+        glued = self.allow(impl, impl.head, clazz)
         # connecting head to non-interface item is disallowed
         self.assertFalse(glued)
 
@@ -24,7 +24,7 @@ class ImplementationTestCase(TestCase):
         iface = self.create(items.InterfaceItem, UML.Interface)
         impl = self.create(items.ImplementationItem)
 
-        glued = self.glue(impl, impl.head, iface)
+        glued = self.allow(impl, impl.head, iface)
         self.assertTrue(glued)
 
 
@@ -34,7 +34,7 @@ class ImplementationTestCase(TestCase):
         impl = self.create(items.ImplementationItem)
         clazz = self.create(items.ClassItem, UML.Class)
 
-        glued = self.glue(impl, impl.tail, clazz)
+        glued = self.allow(impl, impl.tail, clazz)
         self.assertTrue(glued)
 
 

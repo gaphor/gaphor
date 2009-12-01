@@ -17,7 +17,7 @@ class ComponentConnectTestCase(TestCase):
         component = self.create(items.ComponentItem, UML.Component)
         line = self.create(items.ConnectorItem)
 
-        glued = self.glue(line, line.head, component)
+        glued = self.allow(line, line.head, component)
         self.assertTrue(glued)
 
 
@@ -40,7 +40,7 @@ class ComponentConnectTestCase(TestCase):
         line = self.create(items.ConnectorItem)
 
         self.connect(line, line.head, c1)
-        glued = self.glue(line, line.tail, c2)
+        glued = self.allow(line, line.tail, c2)
         self.assertFalse(glued)
 
 
@@ -55,7 +55,7 @@ class InterfaceConnectTestCase(TestCase):
         iface = self.create(items.InterfaceItem, UML.Component)
         line = self.create(items.ConnectorItem)
 
-        glued = self.glue(line, line.head, iface)
+        glued = self.allow(line, line.head, iface)
         self.assertFalse(glued)
 
 
@@ -66,7 +66,7 @@ class InterfaceConnectTestCase(TestCase):
         line = self.create(items.ConnectorItem)
 
         iface.folded = iface.FOLDED_REQUIRED
-        glued = self.glue(line, line.head, iface)
+        glued = self.allow(line, line.head, iface)
         self.assertTrue(glued)
 
 
@@ -80,7 +80,7 @@ class InterfaceConnectTestCase(TestCase):
         self.connect(dep, dep.head, iface)
 
         iface.folded = iface.FOLDED_REQUIRED
-        glued = self.glue(line, line.head, iface)
+        glued = self.allow(line, line.head, iface)
         self.assertFalse(glued)
 
 
@@ -94,7 +94,7 @@ class InterfaceConnectTestCase(TestCase):
         self.connect(impl, impl.head, iface)
 
         iface.folded = iface.FOLDED_REQUIRED
-        glued = self.glue(line, line.head, iface)
+        glued = self.allow(line, line.head, iface)
         self.assertFalse(glued)
 
 
@@ -110,7 +110,7 @@ class InterfaceConnectTestCase(TestCase):
         self.connect(line1, line1.head, iface)
         self.assertEquals(iface.FOLDED_ASSEMBLY, iface.folded)
 
-        glued = self.glue(line2, line2.head, iface)
+        glued = self.allow(line2, line2.head, iface)
         self.assertTrue(glued)
 
 
@@ -364,7 +364,7 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn2, conn2.head, c2)
 
         self.connect(conn1, conn1.tail, iface, pport)
-        glued = self.glue(conn2, conn2.tail, iface, rport)
+        glued = self.allow(conn2, conn2.tail, iface, rport)
         self.assertTrue(glued)
 
 
@@ -395,13 +395,13 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn1, conn1.tail, iface, pport)
         self.connect(conn3, conn3.tail, iface, pport)
 
-        # cannot glue to provided port of interface, which is required
-        glued = self.glue(conn2, conn2.tail, iface, pport)
+        # cannot allow to provided port of interface, which is required
+        glued = self.allow(conn2, conn2.tail, iface, pport)
         self.assertFalse(glued)
 
-        # cannot glue component, which requires an interface, when
+        # cannot allow component, which requires an interface, when
         # connector is connected to to provided port
-        glued = self.glue(conn3, conn3.head, c3)
+        glued = self.allow(conn3, conn3.head, c3)
         self.assertFalse(glued)
 
 
