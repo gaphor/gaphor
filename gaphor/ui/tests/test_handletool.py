@@ -123,7 +123,7 @@ class HandleToolTestCase(unittest.TestCase):
         self.assertTrue(cinfo.connected is actor, cinfo.connected)
         self.assertEquals((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
-        Connector(line, handle).disconnect()
+        Connector(line, handle, view).disconnect()
         #tool.disconnect(line, handle)
         
         cinfo = diagram.canvas.get_connection(handle)
@@ -154,41 +154,47 @@ class HandleToolTestCase(unittest.TestCase):
         tool.grab_handle(line, handle)
 
         # Connect one end to the Comment
-        handle.pos = view.get_matrix_v2i(line).transform_point(45, 48)
-        tool.glue(line, handle, (45, 48))
-        tool.connect(line, handle, (45, 48))
+        #handle.pos = view.get_matrix_v2i(line).transform_point(45, 48)
+        sink = tool.glue(line, handle, (0, 0))
+        assert sink is not None
+        assert sink.item is comment
+
+        tool.connect(line, handle, (0, 0))
         cinfo = diagram.canvas.get_connection(handle)
         self.assertTrue(cinfo is not None, None)
+        self.assertTrue(cinfo.item is line)
         self.assertTrue(cinfo.connected is comment)
+
         pos = view.get_matrix_i2v(line).transform_point(handle.x, handle.y)
-        self.assertAlmostEquals(45, pos[0], 0.00001)
-        self.assertAlmostEquals(50, pos[1], 0.00001)
+        self.assertAlmostEquals(0, pos[0], 0.00001)
+        self.assertAlmostEquals(0, pos[1], 0.00001)
 
         # Connect the other end to the actor:
         handle = line.handles()[-1]
         tool.grab_handle(line, handle)
 
         handle.pos = 140, 150
-        glued, port = tool.glue(line, handle, (200, 200))
-        self.assertTrue(glued is actor)
+        sink = tool.glue(line, handle, (200, 200))
+        self.assertTrue(sink.item is actor)
         tool.connect(line, handle, (200, 200))
-        self.assertTrue(hasattr(handle, 'connection_data'))
-        self.assertTrue(handle.connection_data is not None)
-        self.assertTrue(handle.connected_to is actor)
+
+        cinfo = view.canvas.get_connection(handle)
+        self.assertTrue(cinfo.item is line)
+        self.assertTrue(cinfo.connected is actor)
+
         self.assertEquals((200, 200), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
         
         # Try to connect far away from any item will only do a full disconnect
         self.assertEquals(len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
-        item, port = tool.glue(line, handle, (500, 500))
-        self.assertTrue(item is None, item)
-        self.assertTrue(port is None, port)
+        sink = tool.glue(line, handle, (500, 500))
+        self.assertTrue(sink is None, sink)
         tool.connect(line, handle, (500, 500))
 
         self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
-        self.assertTrue(handle.connected_to is None)
-        self.assertTrue(handle.connection_data is None)
+        cinfo = view.canvas.get_connection(handle)
+        self.assertTrue(cinfo is None)
 
 
     def test_connect_3(self):

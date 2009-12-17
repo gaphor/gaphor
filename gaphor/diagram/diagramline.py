@@ -140,7 +140,7 @@ class DiagramLine(LineItem):
         """
         from gaphas.aspect import Connector
 
-        connector = Connector(self, handle, None)
+        connector = Connector(self, handle)
 
         sink = self._get_sink(handle, item)
 

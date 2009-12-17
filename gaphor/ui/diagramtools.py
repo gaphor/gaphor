@@ -31,26 +31,36 @@ class DiagramItemConnector(ItemConnector):
     It also adds handles to lines when a line is grabbed on the middle of
     a line segment (points are drawn by the LineSegmentPainter).
     """
-    reconnect = False
-
-    def glue(self, vpos):
-        """
-        Determine if item and glue item can glue/connect using connection
-        adapters.
-        """
-        sink = super(DiagramItemConnector, self).glue(vpos)
-        if sink:
-            adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
-            if adapter and adapter.allow(self.handle, sink.port):
-                return sink
 
 
+    def allow(self, sink):
+        adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
+        return adapter and adapter.allow(self.handle, sink.port)
+
+
+    @transactional
     def connect(self, sink):
         """
         Create connection at handle level and at model level.
         """
-        super(DiagramItemConnector, self).connect(sink)
-        self.model_connect(sink)
+        handle = self.handle
+        item = self.item
+        cinfo = item.canvas.get_connection(handle)
+
+        try:
+            callback = DisconnectHandle(self.item, self.handle)
+            if cinfo and cinfo.connected is sink.item:
+                # reconnect only constraint - leave model intact
+                log.debug('performing reconnect constraint')
+                item.canvas.disconnect_item(item, handle, call_callback=False)
+                self.connect_handle(sink, callback=callback)
+            else:
+                # new connection
+                self.connect_handle(sink, callback=callback)
+                # adapter requires both ends to be connected.
+                self.model_connect(sink)
+        except Exception, e:
+            log.error('Error during connect', e)
 
 
     def model_connect(self, sink):
@@ -64,41 +74,44 @@ class DiagramItemConnector(ItemConnector):
         handle = self.handle
         item = self.item
         cinfo = item.canvas.get_connection(handle)
-        try:
-            adapter = component.queryMultiAdapter((sink.item, item), IConnect)
-            assert adapter is not None
-            assert handle in adapter.line.handles()
-            assert sink.port in adapter.element.ports()
 
-            if self.reconnect:
-                adapter.reconnect(handle, sink.port)
-            else:
-                adapter.connect(handle, sink.port)
-        finally:
-            self.reconnect = cinfo.callback.reconnect = False
+        adapter = component.queryMultiAdapter((sink.item, item), IConnect)
+        log.debug('Connect on model level ' + str(adapter))
 
+        assert adapter is not None
+        assert handle in adapter.line.handles()
+        assert sink.port in adapter.element.ports()
 
-    def connect_handle(self, sink, callback=None):
-        callback = DisconnectHandle(self.item, self.handle)
-        super(DiagramItemConnector, self).connect_handle(sink, callback)
+        if cinfo:
+            #   reconnect handle and model (no disconnect)
+            log.debug('performing reconnect handle + model')
+            adapter.reconnect(handle, sink.port)
+        else:
+            #   just connect, create new elements and stuff like that.
+            log.debug('performing connect')
+            adapter.connect(handle, sink.port)
+
+    @transactional
+    def disconnect(self):
+        print 'performing disconnect'
+        super(DiagramItemConnector, self).disconnect()
 
 
 class DisconnectHandle(object):
     """
     Callback for items disconnection using the adapters.
 
+    (this is an object so it can be serialized using pickle)
+
     :Variables:
      item
         Connecting item.
      handle
         Handle of connecting item.
-     reconnect
-        Reconnection indicator.
     """
     def __init__(self, item, handle):
         self.item = item
         self.handle = handle
-        self.reconnect = None
 
 
     def __call__(self):
@@ -107,7 +120,7 @@ class DisconnectHandle(object):
         canvas = self.item.canvas
         cinfo = canvas.get_connection(handle)
 
-        if cinfo and not self.reconnect:
+        if cinfo:
             adapter = component.queryMultiAdapter((cinfo.connected, item), IConnect)
             adapter.disconnect(handle)
 
