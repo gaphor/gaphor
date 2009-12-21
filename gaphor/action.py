@@ -38,8 +38,6 @@ class action(object):
 
     def __call__(self, func):
         func.__action__ = self
-        #for n, v in self.kwargs.items():
-        #    setattr(func, n, v)
         return func
         
 
@@ -69,7 +67,7 @@ def is_action(func):
 
 def build_action_group(obj, name=None):
     """
-    Build actions and an ActionGroup for each Action instance found in obj()
+    Build actions and a gtk.ActionGroup for each Action instance found in obj()
     (that's why Action is a class ;) ). This function requires GTK+.
 
     >>> class A(object):
