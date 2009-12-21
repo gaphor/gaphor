@@ -155,7 +155,7 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
         # properties, which should be saved in file
         self._persistent_props = set()
-        # Old style: remove
+
         self._watched_paths = dict()
 
         self.watch('subject') \
@@ -252,16 +252,15 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
             self.update_stereotype()
             self.request_update()
 
-    def on_subject_changed(self, event):
-        if event and self.subject and self.subject is event.element:
-            self.request_update()
-
 
     def watch(self, path, handler=None):
         """
         Watch a certain path of elements starting with the DiagramItem.
         The handler is optional and will default to a simple
         self.request_update().
+        
+        Watches should be set in the constructor, so they can be registered
+        and unregistered in one shot.
 
         This interface is fluent(returns self).
         """
