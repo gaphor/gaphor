@@ -14,19 +14,6 @@ from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
 
 
-def find_closest_port(item, point, converter):
-    closest = None
-    max_dist = 10000
-    for p in item.ports():
-        if not p.connectable: continue
-        ip = converter(*point)
-        pg, d = p.glue(ip)
-        if d >= max_dist: continue
-        closest = p
-        max_dist = d
-    return closest
-
-
 class AbstractConnect(object):
     """
     Connection adapter for Gaphor diagram items.
@@ -290,24 +277,18 @@ class RelationshipConnect(AbstractConnect):
         tail - tuple (association name on line, association name on element)
         """
         line = self.line
-        element = self.element
 
         head_subject = self.get_connected(line.head).subject
         tail_subject = self.get_connected(line.tail).subject
 
-        edge_head_name = head[0]
-        node_head_name = head[1]
-        edge_tail_name = tail[0]
-        node_tail_name = tail[1]
+        edge_head_name, node_head_name = head
+        edge_tail_name, node_tail_name = tail
 
         # First check if the right subject is already connected:
         if line.subject \
            and getattr(line.subject, edge_head_name) is head_subject \
            and getattr(line.subject, edge_tail_name) is tail_subject:
             return line.subject
-
-        # This is the type of the relationship we're looking for
-        #required_type = getattr(type(tail_subject), node_tail_name).type
 
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram.
@@ -323,7 +304,7 @@ class RelationshipConnect(AbstractConnect):
                 if not gen_head is head_subject:
                     continue
 
-            # check for this entry on line.canvas
+            # Check for this entry on line.canvas
             for item in gen.presentation:
                 # Allow line to be returned. Avoids strange
                 # behaviour during loading
@@ -357,13 +338,9 @@ class RelationshipConnect(AbstractConnect):
         # First make sure coordinates match
         solver.solve()
         for cinfo in connections or canvas.get_connections(connected=line):
-            port = find_closest_port(cinfo.item,
-                    canvas.get_matrix_i2c(line).transform_point(*cinfo.handle.pos),
-                    canvas.get_matrix_i2c(cinfo.item).transform_point)
-                
-            adapter = component.queryMultiAdapter((line, item), IConnect)
+            adapter = component.queryMultiAdapter((line, cinfo.connected), IConnect)
             assert adapter
-            adapter.connect(handle, port)
+            adapter.connect(cinfo.handle, cinfo.port)
         
     def disconnect_connected_items(self):
         """
@@ -381,9 +358,9 @@ class RelationshipConnect(AbstractConnect):
         solver.solve()
         connections = list(canvas.get_connections(connected=line))
         for cinfo in connections:
-            adapter = component.queryMultiAdapter((line, cinfo.item), IConnect)
+            adapter = component.queryMultiAdapter((cinfo.item, cinfo.connected), IConnect)
             assert adapter
-            adapter.disconnect(handle)
+            adapter.disconnect(cinfo.handle)
         return connections
 
     def connect_subject(self, handle):
@@ -428,7 +405,9 @@ class RelationshipConnect(AbstractConnect):
         opposite = line.opposite(handle)
         oct = self.get_connected(opposite)
         hct = self.get_connected(handle)
+        
         if hct and oct:
+            # Both sides of line are connected => disconnect
             old = line.subject
              
             connections = self.disconnect_connected_items()

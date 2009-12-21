@@ -73,7 +73,7 @@ class ExtensionConnect(RelationshipConnect):
         """
         Disconnect model element.
         Disconnect property (memberEnd) too, in case of end of life for
-        Extension
+        Extension.
         """
         opposite = self.line.opposite(handle)
         hct = self.get_connected(handle)
