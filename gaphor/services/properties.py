@@ -8,6 +8,7 @@ import os
 import pprint
 from zope import interface
 from gaphor.interfaces import IService
+from gaphas.decorators import async
 
 if os.name == 'nt':
     home = 'USERPROFILE'
@@ -37,8 +38,8 @@ class Properties(object):
     def shutdown(self):
         self._backend.save(self._resources)
 
-    def __call__(self, r, default=_no_default):
-        return self.get(r, default)
+    def __call__(self, key, default=_no_default):
+        return self.get(key, default)
 
     def save(self):
         self._backend.save(self._resources)
@@ -54,40 +55,33 @@ class Properties(object):
         import pprint
         pprint.pprint(self._resources.items(), stream)
 
-    def get(self, r, default=_no_default):
+    def get(self, key, default=_no_default):
         """
         Locate a property.
 
         Resource should be the class of the resource to look for or a string. In
         case of a string the resource will be looked up in the GConf configuration.
         """
-        _resources = self._resources
-
-        # Return the existing resource
         try:
-            return _resources[r]
+            return self._resources[key]
         except KeyError:
             pass
 
         if default is not _no_default:
-            self.set(r, default)
+            self.set(key, default)
             return default
-        raise KeyError, 'No resource with name "%s"' % r
+        raise KeyError, 'No resource with name "%s"' % key
 
-    def set(self, r, value):
+    def set(self, key, value):
         """
         Set a property to a specific value.
 
         No smart things are done with classes and class names (like the
         resource() method does).
         """
-        self._resources[r] = value
-
-#    def persist(self, r, value):
-#        """
-#        Save the property to a persistent storage.
-#        """
-#        self._backend.update(r, value)
+        resources = self._resources
+        resources[key] = value
+        self._backend.update(resources, key, value)
 
 
 class FileBackend(object):
@@ -97,10 +91,11 @@ class FileBackend(object):
     """
     RESOURCE_FILE='resources'
    
-    def __init__(self):
-        pass
+    def __init__(self, datadir=user_data_dir):
+        self.datadir = datadir
 
-    def get_filename(self, datadir, create=False):
+    def get_filename(self, create=False):
+        datadir = self.datadir
         if create and not os.path.exists(datadir):
             os.mkdir(datadir)
         return os.path.join(datadir, self.RESOURCE_FILE)
@@ -110,7 +105,7 @@ class FileBackend(object):
         Load resources from a file. Resources are saved like you do with
         a dict().
         """
-        filename = self.get_filename(user_data_dir)
+        filename = self.get_filename()
         if os.path.exists(filename) and os.path.isfile(filename):
             f = open(filename)
             d = f.read()
@@ -124,12 +119,16 @@ class FileBackend(object):
         @resource is the Resource instance
         @persistent is a list of persistent resource names.
         """
-        filename = self.get_filename(user_data_dir, create=True)
+        filename = self.get_filename(create=True)
         f = open(filename, 'w')
-        pprint.pprint(resource, f)
+        try:
+            pprint.pprint(resource, f)
+        finally:
+            f.close()
 
-    def update(self, r, value):
-        pass
+    @async(single=True, timeout=500)
+    def update(self, resource, key, value):
+        self.save(resource)
 
 
-# vim:sw=4:et
+# vim:sw=4:et:ai
