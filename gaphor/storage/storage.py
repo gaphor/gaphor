@@ -427,7 +427,8 @@ def version_0_15_0(elements, factory, gaphor_version):
 
         for d in diagrams:
             titems = [i for i in d.canvas.canvasitems
-                    if 'taggedValue' in elements[i.subject].references]
+                        if i.get('subject') \
+                            and 'taggedValue' in elements[i.subject].references]
             for et in titems:
                 m = eval(et.values['matrix'])
                 w = eval(et.values['width'])
