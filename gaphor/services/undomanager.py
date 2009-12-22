@@ -9,9 +9,7 @@ An undo action should be a callable object (called with no arguments).
 An undo action should return a callable object that acts as redo function.
 If None is returned the undo action is considered to be the redo action as well.
 
-NOTE: it would be nice to use actions in conjunction with functools.partial,
-      but that's Python2.5 stuff..
-      A replacement is available in gaphor.misc.partial.
+NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
 from zope import interface, component
