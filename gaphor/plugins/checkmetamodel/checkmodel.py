@@ -35,6 +35,7 @@ def check_classes(element_factory):
     
 
 def check_association_end_subsets(element_factory, end):
+    # TODO: don't use Tagged values, use Stereotype values or something
     subsets = get_subsets(end.taggedValue and end.taggedValue[0].value or '')
     opposite_subsets = get_subsets(end.opposite.taggedValue and end.opposite.taggedValue[0].value or '')
     subset_properties = element_factory.select(lambda e: e.isKindOf(UML.Property) and e.name in subsets)

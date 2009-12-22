@@ -125,6 +125,15 @@ class StorageTestCase(TestCase):
         assert d1
         #print d1, d1.subject
 
+    def test_load_uml_metamodel(self):
+        """
+        Test if the meta model can be loaded.
+        """
+        try:
+            f = open('gaphor/UML/uml2.gaphor')
+            storage.load(f, factory=self.element_factory)
+        finally:
+            f.close()
 
     def test_load_uml_relationships(self):
         """

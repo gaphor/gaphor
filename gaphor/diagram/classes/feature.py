@@ -143,15 +143,9 @@ class OperationItem(FeatureItem):
 
 
 class SlotItem(FeatureItem):
+
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
-
-#    def on_feature_value(self, event):
-#        element = event.element
-#        subject = self.subject
-#        if subject and element in (subject.lowerValue, subject.upperValue, subject.defaultValue, subject.typeValue, subject.taggedValue):
-#            self.request_update()
-
 
     def _render_slot(self):
         slot = self.subject

@@ -428,11 +428,12 @@ def version_0_15_0(elements, factory, gaphor_version):
         for d in diagrams:
             titems = [i for i in d.canvas.canvasitems
                         if i.get('subject') \
-                            and 'taggedValue' in elements[i.subject].references]
+                            and u'taggedValue' in elements[i.subject].references]
             for et in titems:
                 m = eval(et.values['matrix'])
                 w = eval(et.values['width'])
                 tv = [elements[i] for i in elements[et.subject].references['taggedValue']]
+
                 tagged = 'upgrade to stereotype attributes' \
                     ' following tagged values:\n%s' % '\n'.join(t.values['value'] for t in tv)
 
@@ -449,11 +450,10 @@ def version_0_15_0(elements, factory, gaphor_version):
                 elements[comment.id] = comment
                 d.canvas.canvasitems.append(item)
 
-        # remove taggedValue fields:
-        for e in elements.itervalues():
-            if 'taggedValue' in e.references:
-                del e.references['taggedValue']
-
+                # Remove obsolete elements
+                del elements[et.subject].references['taggedValue']
+                for t in tv:
+                    del elements[t.id]
 
 def version_0_14_0(elements, factory, gaphor_version):
     """
