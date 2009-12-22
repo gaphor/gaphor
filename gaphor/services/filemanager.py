@@ -10,7 +10,7 @@ from gaphor.core import _, inject, action, build_action_group
 from gaphor import UML
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
-from gaphor.misc.errorhandler import error_handler, ErrorHandlerAspect, weave_method
+from gaphor.misc.errorhandler import error_handler
 DEFAULT_EXT='.gaphor'
 
 class FileManagerStateChanged(object):

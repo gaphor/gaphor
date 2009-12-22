@@ -10,7 +10,6 @@ import sys
 import pdb
 
 from gaphor.i18n import _
-from gaphor.misc.aspects import Aspect, weave_method
 
 def error_handler(message=None, exc_info=None):
     exc_type, exc_value, exc_traceback = exc_info or sys.exc_info()
@@ -37,35 +36,4 @@ def error_handler(message=None, exc_info=None):
     if answer == gtk.RESPONSE_YES:
         pdb.post_mortem(exc_traceback)
 
-
-class ErrorHandlerAspect(Aspect):
-    """This aspect raises a Error dialog when the method wrapped by this
-    aspect raises an exception. If the application is started from the
-    command line, an option is presented to do post-mortem analysis of the
-    error.
-    """
-
-    def __init__(self, method, message=None):
-        self.method = method
-        self.message = message
-
-    def after(self, retval, exc):
-        if exc:
-            error_handler(message=self.message)
-
-
-if __name__ == '__main__':
-
-    def func(x, y):
-        if x == 0:
-            raise Exception, 'Raised'
-        func(x-1, y)
-
-    try:
-        func(5,5)
-    except Exception:
-        error_handler()
-
-    print 'a'
-    print 'a'
-    print 'a'
+# vim:sw=4:et:ai
