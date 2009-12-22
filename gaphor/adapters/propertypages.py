@@ -549,12 +549,14 @@ class NamedElementPropertyPage(object):
     """
 
     interface.implements(IPropertyPage)
+    component.adapts(UML.NamedElement)
 
     order = 10
 
     NAME_LABEL = _('Name')
 
     def __init__(self, subject):
+        assert isinstance(subject, UML.NamedElement)
         self.subject = subject
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
     
@@ -588,13 +590,12 @@ class NamedElementPropertyPage(object):
     def _on_name_change(self, entry):
         self.subject.name = entry.get_text()
         
-component.provideAdapter(NamedElementPropertyPage,
-                         adapts=[UML.NamedElement], name='Properties')
+component.provideAdapter(NamedElementPropertyPage, name='Properties')
 
 
 class NamedItemPropertyPage(NamedElementPropertyPage):
     """
-    Helper class for item based name property pages.
+    Base class for named item based adapters.
     """
 
     def __init__(self, item):
@@ -1138,15 +1139,11 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         combo.connect('changed', self._on_ordering_change)
         hbox.pack_start(combo, expand=False)
 
+        hbox = create_hbox_label(self, page, '')
         button = gtk.CheckButton(_('Ordering'))
         button.set_active(self.item.show_ordering)
         button.connect('toggled', self._on_ordering_show_change)
         hbox.pack_start(button, expand=False)
-
-        label = gtk.Label(_('Show'))
-        label.set_alignment(0.0, 0.5)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
 
         return page
 
@@ -1220,7 +1217,7 @@ class FlowPropertyPage(NamedElementPropertyPage):
     def construct(self):
         page = super(FlowPropertyPage, self).construct()
 
-        subject = self.context.subject
+        subject = self.subject
         
         if not subject:
             return page
@@ -1251,7 +1248,7 @@ class FlowPropertyPage(NamedElementPropertyPage):
 component.provideAdapter(FlowPropertyPage, name='Properties')
 
 
-class ComponentPropertyPage(NamedElementPropertyPage):
+class ComponentPropertyPage(NamedItemPropertyPage):
     """
     """
 
