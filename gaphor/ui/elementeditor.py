@@ -24,6 +24,12 @@ class ElementEditor(UtilityWindow):
     resizable = True
     menu_xml = """
       <ui>
+        <menubar name="mainwindow">
+          <menu action="edit">
+            <menuitem action="ElementEditor:open" />
+            <separator />
+          </menu>
+        </menubar>
         <toolbar action="mainwindow-toolbar">
           <placeholder name="right">
             <toolitem action="ElementEditor:open" position="bot" />
@@ -38,7 +44,7 @@ class ElementEditor(UtilityWindow):
         self.property_editor = PropertyEditor()
         self.widget = self.property_editor.construct()
 
-    @toggle_action(name='ElementEditor:open', stock_id='gtk-edit')
+    @toggle_action(name='ElementEditor:open', label=_('Editor'), stock_id='gtk-edit', accel='<Control>e')
     def elementeditor(self, active):
         if active:
             if not self.window:

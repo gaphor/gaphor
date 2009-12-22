@@ -24,10 +24,13 @@ class DiagramTab(object):
       <ui>
         <menubar action="mainwindow">
           <menu action="edit">
-            <menuitem action="diagram-delete" />
-            <separator />
-            <menuitem action="diagram-select-all" />
-            <menuitem action="diagram-unselect-all" />
+            <placeholder name="ternary">
+              <menuitem action="diagram-delete" />
+              <separator />
+              <menuitem action="diagram-select-all" />
+              <menuitem action="diagram-unselect-all" />
+              <separator />
+            </placeholder>
           </menu>
           <menu action="diagram">
             <placeholder name="secondary">
