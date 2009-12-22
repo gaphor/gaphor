@@ -110,10 +110,6 @@ def parse_attribute(self, s):
             self.upperValue.value = None
         if self.defaultValue:
             self.defaultValue.value = None
-        #if self.taggedValue:
-        #    self.taggedValue.value = None
-        while self.taggedValue:
-            self.taggedValue[0].unlink()
     else:
         from uml2 import LiteralSpecification
         g = m.group
@@ -133,14 +129,13 @@ def parse_attribute(self, s):
         if not self.defaultValue:
             self.defaultValue = create(LiteralSpecification)
         self.defaultValue.value = g('default')
-        while self.taggedValue:
-            self.taggedValue[0].unlink()
-        tags = g('tags')
-        if tags:
-            for t in map(str.strip, tags.split(',')):
-                tv = create(LiteralSpecification)
-                tv.value = t
-                self.taggedValue = tv
+        # Skip tags: should do something with stereotypes?
+        #tags = g('tags')
+        #if tags:
+        #    for t in map(str.strip, tags.split(',')):
+        #        tv = create(LiteralSpecification)
+        #        tv.value = t
+        #        self.taggedValue = tv
 
 
 def parse_association_end(self, s):
@@ -172,14 +167,12 @@ def parse_association_end(self, s):
         if not self.upperValue:
             self.upperValue = create(LiteralSpecification)
         self.upperValue.value = g('mult_u')
-        while self.taggedValue:
-            self.taggedValue[0].unlink()
-        tags = g('tags')
-        if tags:
-            for t in map(str.strip, tags.split(',')):
-                tv = create(LiteralSpecification)
-                tv.value = t
-                self.taggedValue = tv
+        #tags = g('tags')
+        #if tags:
+        #    for t in map(str.strip, tags.split(',')):
+        #        tv = create(LiteralSpecification)
+        #        tv.value = t
+        #        self.taggedValue = tv
     else:
         m = association_end_name_pat.match(s)
         g = m.group
@@ -204,14 +197,14 @@ def parse_association_end(self, s):
                     self.upperValue = create(LiteralSpecification)
                 self.upperValue.value = g('mult_u')
 
-            tags = g('tags')
-            if tags:
-                while self.taggedValue:
-                    self.taggedValue[0].unlink()
-                for t in map(str.strip, tags.split(',')):
-                    tv = create(LiteralSpecification)
-                    tv.value = t
-                    self.taggedValue = tv
+            #tags = g('tags')
+            #if tags:
+            #    while self.taggedValue:
+            #        self.taggedValue[0].unlink()
+            #    for t in map(str.strip, tags.split(',')):
+            #        tv = create(LiteralSpecification)
+            #        tv.value = t
+            #        self.taggedValue = tv
 
 def parse_property(self, s):
     if self.association:
@@ -250,14 +243,12 @@ def parse_operation(self, s):
             p.upperValue = create(LiteralSpecification)
         p.upperValue.value = g('mult_u')
         # FIXME: Maybe add to Operation.ownedRule?
-        while self.taggedValue:
-            self.taggedValue[0].unlink()
-        tags = g('tags')
-        if tags:
-            for t in map(str.strip, tags.split(',')):
-                tv = create(LiteralSpecification)
-                tv.value = t
-                p.taggedValue = tv
+        #tags = g('tags')
+        #if tags:
+        #    for t in map(str.strip, tags.split(',')):
+        #        tv = create(LiteralSpecification)
+        #        tv.value = t
+        #        p.taggedValue = tv
         
         pindex = 0
         params = g('params')
@@ -284,14 +275,12 @@ def parse_operation(self, s):
             if not p.defaultValue:
                 p.defaultValue = create(LiteralSpecification)
             p.defaultValue.value = g('default')
-            while p.taggedValue:
-                p.taggedValue[0].unlink()
-            tags = g('tags')
-            if tags:
-                for t in map(str.strip, tags.split(',')):
-                    tv = create(LiteralSpecification)
-                    tv.value = t
-                    p.taggedValue = tv
+            #tags = g('tags')
+            #if tags:
+            #    for t in map(str.strip, tags.split(',')):
+            #        tv = create(LiteralSpecification)
+            #        tv.value = t
+            #        p.taggedValue = tv
             self.formalParameter = p
 
             # Do the next parameter:
@@ -380,11 +369,11 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
     if default and self.defaultValue and self.defaultValue.value:
         s.write(' = %s' % self.defaultValue.value)
 
-    if self.taggedValue:
-        tvs = ', '.join(filter(None, map(getattr, self.taggedValue,
-                                          ['value'] * len(self.taggedValue))))
-        if tvs:
-            s.write(' { %s }' % tvs)
+    #if self.taggedValue:
+    #    tvs = ', '.join(filter(None, map(getattr, self.taggedValue,
+    #                                      ['value'] * len(self.taggedValue))))
+    #    if tvs:
+    #        s.write(' { %s }' % tvs)
     s.reset()
     return s.read()
 
@@ -410,11 +399,11 @@ def render_association_end(self):
             m.write('%s..%s' % (self.lowerValue.value, self.upperValue.value))
         else:
             m.write('%s' % self.upperValue.value)
-    if self.taggedValue:
-        tvs = ',\n '.join(filter(None, map(getattr, self.taggedValue,
-                                     ['value'] * len(self.taggedValue))))
-        if tvs:
-            m.write(' { %s }' % tvs)
+    #if self.taggedValue:
+    #    tvs = ',\n '.join(filter(None, map(getattr, self.taggedValue,
+    #                                 ['value'] * len(self.taggedValue))))
+    #    if tvs:
+    #        m.write(' { %s }' % tvs)
     m.reset()
     mult = m.read()
 
@@ -472,10 +461,10 @@ def render_operation(self, visibility=False, type=False, multiplicity=False,
                 s.write('[%s]' % p.upperValue.value)
         if default and p.defaultValue and p.defaultValue.value:
             s.write(' = %s' % p.defaultValue.value)
-        if p.taggedValue:
-             tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
-                                              ['value'] * len(p.taggedValue))))
-             s.write(' { %s }' % tvs)
+        #if p.taggedValue:
+        #     tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
+        #                                      ['value'] * len(p.taggedValue))))
+        #     s.write(' { %s }' % tvs)
         if p is not self.formalParameter[-1]:
             s.write(', ')
 
@@ -490,11 +479,11 @@ def render_operation(self, visibility=False, type=False, multiplicity=False,
                 s.write('[%s..%s]' % (rr.lowerValue.value, rr.upperValue.value))
             else:
                 s.write('[%s]' % rr.upperValue.value)
-        if rr.taggedValue:
-            tvs = ', '.join(filter(None, map(getattr, rr.taggedValue,
-                                             ['value'] * len(rr.taggedValue))))
-            if tvs:
-                s.write(' { %s }' % tvs)
+        #if rr.taggedValue:
+        #    tvs = ', '.join(filter(None, map(getattr, rr.taggedValue,
+        #                                     ['value'] * len(rr.taggedValue))))
+        #    if tvs:
+        #        s.write(' { %s }' % tvs)
     s.reset()
     return s.read()
 

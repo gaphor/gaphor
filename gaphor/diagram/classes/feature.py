@@ -97,8 +97,7 @@ class AttributeItem(FeatureItem):
             .watch('subject<Property>.lowerValue<LiteralSpecification>.value') \
             .watch('subject<Property>.upperValue<LiteralSpecification>.value') \
             .watch('subject<Property>.defaultValue<LiteralSpecification>.value') \
-            .watch('subject<Property>.typeValue<LiteralSpecification>.value') \
-            .watch('subject<Property>.taggedValue<LiteralSpecification>.value')
+            .watch('subject<Property>.typeValue<LiteralSpecification>.value')
 
 
     def postload(self):
@@ -122,16 +121,13 @@ class OperationItem(FeatureItem):
         self.watch('subject.name') \
             .watch('subject.isAbstract', self.on_operation_is_abstract) \
             .watch('subject.visibility') \
-            .watch('subject.taggedValue<LiteralSpecification>.value') \
             .watch('subject.returnResult.lowerValue<LiteralSpecification>.value') \
             .watch('subject.returnResult.upperValue<LiteralSpecification>.value') \
             .watch('subject.returnResult.typeValue<LiteralSpecification>.value') \
-            .watch('subject.returnResult.taggedValue<LiteralSpecification>.value') \
             .watch('subject.formalParameter.lowerValue<LiteralSpecification>.value') \
             .watch('subject.formalParameter.upperValue<LiteralSpecification>.value') \
             .watch('subject.formalParameter.typeValue<LiteralSpecification>.value') \
             .watch('subject.formalParameter.defaultValue<LiteralSpecification>.value') \
-            .watch('subject.formalParameter.taggedValue<LiteralSpecification>.value')
 
 
     def postload(self):

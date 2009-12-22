@@ -449,6 +449,11 @@ def version_0_15_0(elements, factory, gaphor_version):
                 elements[comment.id] = comment
                 d.canvas.canvasitems.append(item)
 
+        # remove taggedValue fields:
+        for e in elements.itervalues():
+            if 'taggedValue' in e.references:
+                del e.references['taggedValue']
+
 
 def version_0_14_0(elements, factory, gaphor_version):
     """
