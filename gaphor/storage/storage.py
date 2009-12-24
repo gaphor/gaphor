@@ -425,14 +425,17 @@ def version_0_15_0(elements, factory, gaphor_version):
         import uuid
         diagrams = [e for e in elements.values() if e.type == 'Diagram']
 
-        for d in diagrams:
-            titems = [i for i in d.canvas.canvasitems
-                        if i.get('subject') \
-                            and u'taggedValue' in elements[i.subject].references]
-            for et in titems:
+        for e in elements.values():
+            # Short way out:
+            if not 'taggedValue' in e.references:
+                continue
+
+            tv = [elements[i] for i in e.references['taggedValue']]
+            presentation = e.get('presentation') or []
+            for et in presentation:
+                et = elements[et]
                 m = eval(et.values['matrix'])
                 w = eval(et.values['width'])
-                tv = [elements[i] for i in elements[et.subject].references['taggedValue']]
 
                 tagged = 'upgrade to stereotype attributes' \
                     ' following tagged values:\n%s' % '\n'.join(t.values['value'] for t in tv)
@@ -448,12 +451,14 @@ def version_0_15_0(elements, factory, gaphor_version):
 
                 elements[item.id] = item
                 elements[comment.id] = comment
+                # TODO: Where to place the comment? How to find the Diagram?
                 d.canvas.canvasitems.append(item)
 
-                # Remove obsolete elements
-                del elements[et.subject].references['taggedValue']
-                for t in tv:
-                    del elements[t.id]
+            # Remove obsolete elements
+            del e.references['taggedValue']
+            for t in tv:
+                del elements[t.id]
+
 
 def version_0_14_0(elements, factory, gaphor_version):
     """
@@ -618,4 +623,4 @@ def version_0_5_2(elements, factory, gaphor_version):
                 log.error('Error while updating Association', e)
 
 
-# vim: sw=4:et
+# vim: sw=4:et:ai
