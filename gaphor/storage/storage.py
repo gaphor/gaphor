@@ -422,43 +422,55 @@ def version_0_15_0(elements, factory, gaphor_version):
                 assoc.references['ownedEnd'].append(et.id)
 
         # get rid of tagged values
-        import uuid
-        diagrams = [e for e in elements.values() if e.type == 'Diagram']
 
         for e in elements.values():
             # Short way out:
-            if not 'taggedValue' in e.references:
-                continue
+            if 'taggedValue' in e.references:
 
-            tv = [elements[i] for i in e.references['taggedValue']]
-            presentation = e.get('presentation') or []
-            for et in presentation:
-                et = elements[et]
-                m = eval(et.values['matrix'])
-                w = eval(et.values['width'])
+                convert_tagged_value(e, elements, factory)
 
-                tagged = 'upgrade to stereotype attributes' \
-                    ' following tagged values:\n%s' % '\n'.join(t.values['value'] for t in tv)
+                # Remove obsolete elements
+                for t in e.references['taggedValue']:
+                    del elements[t]
+                del e.references['taggedValue']
 
-                item = parser.canvasitem(str(uuid.uuid1()), 'CommentItem')
-                comment = parser.element(str(uuid.uuid1()), 'Comment')
 
-                item.references['subject'] = comment.id
-                item.values['matrix'] = str((1.0, 0.0, 0.0, 1.0, m[4] + w + 10.0, m[5]))
+def convert_tagged_value(element, elements, factory):
+    """
+    Convert ``element.taggedValue`` to something supported by the
+    UML 2.2 model (since Gaphor version 0.15).
+    """
+    import uuid
+    diagrams = [e for e in elements.values() if e.type == 'Diagram']
 
-                comment.references['presentation'] = [item.id]
-                comment.values['body'] = tagged
+    presentation = element.get('presentation') or []
+    tv = [elements[i] for i in element.references['taggedValue']]
+    for et in presentation:
+        et = elements[et]
+        m = eval(et.values['matrix'])
+        w = eval(et.values['width'])
 
-                elements[item.id] = item
-                elements[comment.id] = comment
-                # TODO: Where to place the comment? How to find the Diagram?
-                d.canvas.canvasitems.append(item)
+        tagged = 'upgrade to stereotype attributes' \
+            ' following tagged values:\n%s' % '\n'.join(t.values['value'] for t in tv)
 
-            # Remove obsolete elements
-            del e.references['taggedValue']
-            for t in tv:
-                del elements[t.id]
+        item = parser.canvasitem(str(uuid.uuid1()), 'CommentItem')
+        comment = parser.element(str(uuid.uuid1()), 'Comment')
 
+        item.references['subject'] = comment.id
+        item.values['matrix'] = str((1.0, 0.0, 0.0, 1.0, m[4] + w + 10.0, m[5]))
+
+        comment.references['presentation'] = [item.id]
+        comment.values['body'] = tagged
+
+        elements[item.id] = item
+        elements[comment.id] = comment
+
+        # Where to place the comment? How to find the Diagram?
+        for d in diagrams:
+            for ci in d.canvas.canvasitems:
+                if ci.id == et.id:
+                    d.canvas.canvasitems.append(item)
+                    break
 
 def version_0_14_0(elements, factory, gaphor_version):
     """
