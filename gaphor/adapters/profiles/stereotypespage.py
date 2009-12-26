@@ -101,6 +101,10 @@ def create_stereotype_tree_view(model):
     renderer.set_property('activatable', True)
     renderer.connect('toggled', on_bool_cell_edited, model, 0)
     col.pack_start(renderer, 0)
+    def show_checkbox(column, cell, model, iter, data):
+        value = model.get_value(iter, 3)
+        cell.set_property('visible', isinstance(value, UML.Stereotype))
+    col.set_cell_data_func(renderer, show_checkbox, None)
 
     renderer = gtk.CellRendererText()
     renderer.set_property('editable', False)
@@ -112,11 +116,14 @@ def create_stereotype_tree_view(model):
     # TODO: use col.set_cell_data_func(renderer, func, None) to toggle visibility
     # Value
     renderer = gtk.CellRendererText()
-    renderer.set_property('editable', True)
     renderer.set_property('is-expanded', True)
     renderer.connect('edited', on_text_cell_edited, model, 1)
     col = gtk.TreeViewColumn(_('Value'), renderer, text=1)
     col.set_expand(True)
+    def set_editable(column, cell, model, iter, data):
+        value = model.get_value(iter, 3)
+        cell.set_property('editable', not isinstance(value, UML.Stereotype))
+    col.set_cell_data_func(renderer, set_editable, None)
     tree_view.append_column(col)
 
     #tree_view.connect('key_press_event', remove_on_keypress)
