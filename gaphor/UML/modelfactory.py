@@ -114,7 +114,7 @@ def get_applied_stereotypes(element):
     """
     Get collection of applied stereotypes to an element.
     """
-    return (obj.classifier[0] for obj in element.appliedStereotype)
+    return element.appliedStereotype[:].classifier
 
 
 def extend_with_stereotype(factory, element, stereotype):
