@@ -917,7 +917,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
             return None
 
         # TODO: use gtk.Frame here
-        frame = gtk.Frame(title)
+        frame = gtk.Frame('%s (: %s)' % (title, end.subject.type.name))
         hbox = gtk.VBox()
         hbox.set_border_width(6)
         hbox.set_spacing(6)
