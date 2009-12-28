@@ -62,21 +62,26 @@ class PropertyEditor(object):
         """
         adapters = self.get_adapters(item)
 
+        first = True
         for _, name, adapter in adapters:
             try:
                 page = adapter.construct()
                 if page is None:
                     continue
-                expander = gtk.Expander()
-                expander.set_use_markup(True)
-                expander.set_label('<b>%s</b>' % name)
-                if isinstance(page, gtk.Container):
+                elif isinstance(page, gtk.Container):
                     page.set_border_width(6)
-                expander.add(page)
-                expander.show_all()
-                expander.set_expanded(self._expanded_pages.get(name, False))
-                expander.connect_after('activate', self.on_expand, name)
-                self.vbox.pack_start(expander, expand=False)
+                if first:
+                    self.vbox.pack_start(page, expand=False)
+                    first = False
+                else:
+                    expander = gtk.Expander()
+                    expander.set_use_markup(True)
+                    expander.set_label('<b>%s</b>' % name)
+                    expander.add(page)
+                    expander.show_all()
+                    expander.set_expanded(self._expanded_pages.get(name, False))
+                    expander.connect_after('activate', self.on_expand, name)
+                    self.vbox.pack_start(expander, expand=False)
             except Exception, e:
                 log.error('Could not construct property page for ' + name, e)
         

@@ -6,6 +6,7 @@ import gtk
 from gaphor.core import _, inject, transactional
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
+from gaphor.diagram.diagramitem import StereotypeSupport
 from zope import interface, component
 from gaphor import UML
 from gaphor.adapters.propertypages import on_text_cell_edited, on_bool_cell_edited
@@ -211,14 +212,15 @@ class StereotypePage(object):
         #    hbox.pack_start(button, expand=False)
 
         # show stereotypes attributes toggle
-        hbox = gtk.HBox()
-        label = gtk.Label('')
-        hbox.pack_start(label, expand=False)
-        button = gtk.CheckButton(_('Show stereotypes attributes'))
-        button.set_active(self.item.show_stereotypes_attrs)
-        button.connect('toggled', self._on_show_stereotypes_attrs_change)
-        hbox.pack_start(button)
-        page.pack_start(hbox, expand=False)
+        if isinstance(self.item, StereotypeSupport):
+            hbox = gtk.HBox()
+            label = gtk.Label('')
+            hbox.pack_start(label, expand=False)
+            button = gtk.CheckButton(_('Show stereotypes attributes'))
+            button.set_active(self.item.show_stereotypes_attrs)
+            button.connect('toggled', self._on_show_stereotypes_attrs_change)
+            hbox.pack_start(button)
+            page.pack_start(hbox, expand=False)
 
         # stereotype attributes
         self.model = StereotypeAttributes(self.item.subject)

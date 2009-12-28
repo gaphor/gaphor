@@ -921,8 +921,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         vbox.set_spacing(6)
         frame.add(vbox)
 
-        adapter = AssociationEndPropertyPage(end.subject)
-        vbox.pack_start(adapter.construct())
+        self.create_pages(end, vbox)
 
         return frame
 
@@ -974,6 +973,51 @@ class AssociationPropertyPage(NamedItemPropertyPage):
     def _on_invert_direction_change(self, button):
         self.item.invert_direction()
 
+    def get_adapters(self, item):
+        """
+        Return an ordered list of (order, name, adapter).
+        """
+        adaptermap = {}
+        try:
+            if item.subject:
+                for name, adapter in component.getAdapters([item.subject,], IPropertyPage):
+                    adaptermap[name] = (adapter.order, name, adapter)
+        except AttributeError:
+            pass
+        for name, adapter in component.getAdapters([item,], IPropertyPage):
+            adaptermap[name] = (adapter.order, name, adapter)
+
+        adapters = adaptermap.values()
+        adapters.sort()
+        return adapters
+
+    def create_pages(self, item, vbox):
+        """
+        Load all tabs that can operate on the given item.
+
+        The first item will not contain a title.
+        """
+        adapters = self.get_adapters(item)
+
+        first = True
+        for _, name, adapter in adapters:
+            try:
+                page = adapter.construct()
+                if page is None:
+                    continue
+                if first:
+                    vbox.pack_start(page, expand=False)
+                    first = False
+                else:
+                    expander = gtk.Expander()
+                    expander.set_use_markup(True)
+                    expander.set_label('<b>%s</b>' % name)
+                    expander.add(page)
+                    expander.show_all()
+                    vbox.pack_start(expander, expand=False)
+            except Exception, e:
+                log.error('Could not construct property page for ' + name, e)
+
 component.provideAdapter(AssociationPropertyPage, name='Properties')
 
 
@@ -981,6 +1025,11 @@ class AssociationEndPropertyPage(object):
     """
     Property page for association end properties.
     """
+
+    interface.implements(IPropertyPage)
+    component.adapts(UML.Property)
+
+    order = 0
 
     NAVIGABILITY = [None, False, True]
 
@@ -1059,6 +1108,7 @@ Enter attribute name and multiplicity, for example
     def _on_aggregation_change(self, combo):
         self.subject.aggregation = ('none', 'shared', 'composite')[combo.get_active()]
 
+component.provideAdapter(AssociationEndPropertyPage, name='Properties')
 
 class LineStylePage(object):
     """
