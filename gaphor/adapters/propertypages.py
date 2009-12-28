@@ -909,8 +909,6 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
     component.adapts(items.AssociationItem)
 
-    NAVIGABILITY = [None, False, True]
-
     def construct_end(self, title, end):
 
         if not end.subject:
@@ -923,61 +921,9 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         vbox.set_spacing(6)
         frame.add(vbox)
 
-        #label = gtk.Label(title)
-        #label.set_alignment(0.0, 0.5)
-        #self.size_group.add_widget(label)
-        #vbox.pack_start(label, expand=False)
+        adapter = AssociationEndPropertyPage(end.subject)
+        vbox.pack_start(adapter.construct())
 
-        entry = gtk.Entry()
-        entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
-
-        # monitor subject attribute (all, cause it contains many children)
-        changed_id = entry.connect('changed', self._on_end_name_change, end)
-        def handler(event):
-            entry.handler_block(changed_id)
-            entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
-            entry.handler_unblock(changed_id)
-        watch_attribute(None, entry, handler)
-
-        vbox.pack_start(entry)
-
-        entry.set_tooltip_text("""\
-Enter attribute name and multiplicity, for example
-- name
-- name [1]
-- name [1..2]
-- 1..2
-- [1..2]\
-""")
-
-        combo = gtk.combo_box_new_text()
-        for t in ('public (+)', 'protected (#)', 'package (~)', 'private (-)'):
-            combo.append_text(t)
-        
-        combo.set_active(['public', 'protected', 'package', 'private'].index(end.subject.visibility))
-
-        combo.connect('changed', self._on_visibility_change, end)
-        vbox.pack_start(combo, expand=False)
-
-        combo = gtk.combo_box_new_text()
-        for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
-            combo.append_text(t)
-        
-        nav = UML.model.get_navigability(self.subject, end.subject)
-        combo.set_active(self.NAVIGABILITY.index(nav))
-
-        combo.connect('changed', self._on_navigability_change, end)
-        vbox.pack_start(combo, expand=False)
-
-        combo = gtk.combo_box_new_text()
-        for t in ('No aggregation', 'Shared', 'Composite'):
-            combo.append_text(t)
-        
-        combo.set_active(['none', 'shared', 'composite'].index(end.subject.aggregation))
-
-        combo.connect('changed', self._on_aggregation_change, end)
-        vbox.pack_start(combo, expand=False)
-        
         return frame
 
     def construct(self):
@@ -1028,26 +974,90 @@ Enter attribute name and multiplicity, for example
     def _on_invert_direction_change(self, button):
         self.item.invert_direction()
 
-    @transactional
-    def _on_end_name_change(self, entry, end):
-        end.subject.parse(entry.get_text())
-
-    @transactional
-    def _on_visibility_change(self, combo, end):
-        end.subject.visibility = ('public', 'protected', 'package', 'private')[combo.get_active()]
-
-    @transactional
-    def _on_navigability_change(self, combo, end):
-        nav = self.NAVIGABILITY[combo.get_active()]
-        UML.model.set_navigability(self.item.subject, end.subject, nav)
-
-    @transactional
-    def _on_aggregation_change(self, combo, end):
-        end.subject.aggregation = ('none', 'shared', 'composite')[combo.get_active()]
-
 component.provideAdapter(AssociationPropertyPage, name='Properties')
 
 
+class AssociationEndPropertyPage(object):
+    """
+    Property page for association end properties.
+    """
+
+    NAVIGABILITY = [None, False, True]
+
+    def __init__(self, subject):
+        self.subject = subject
+
+    def construct(self):
+        vbox = gtk.VBox()
+
+        entry = gtk.Entry()
+        entry.set_text(render_attribute(self.subject, multiplicity=True) or '')
+
+        # monitor subject attribute (all, cause it contains many children)
+        changed_id = entry.connect('changed', self._on_end_name_change)
+        def handler(event):
+            entry.handler_block(changed_id)
+            entry.set_text(render_attribute(self.subject, multiplicity=True) or '')
+            entry.handler_unblock(changed_id)
+        watch_attribute(None, entry, handler)
+
+        vbox.pack_start(entry)
+
+        entry.set_tooltip_text("""\
+Enter attribute name and multiplicity, for example
+- name
+- name [1]
+- name [1..2]
+- 1..2
+- [1..2]\
+""")
+
+        combo = gtk.combo_box_new_text()
+        for t in ('public (+)', 'protected (#)', 'package (~)', 'private (-)'):
+            combo.append_text(t)
+        
+        combo.set_active(['public', 'protected', 'package', 'private'].index(self.subject.visibility))
+
+        combo.connect('changed', self._on_visibility_change)
+        vbox.pack_start(combo, expand=False)
+
+        combo = gtk.combo_box_new_text()
+        for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
+            combo.append_text(t)
+        
+        nav = UML.model.get_navigability(self.subject.association, self.subject)
+        combo.set_active(self.NAVIGABILITY.index(nav))
+
+        combo.connect('changed', self._on_navigability_change)
+        vbox.pack_start(combo, expand=False)
+
+        combo = gtk.combo_box_new_text()
+        for t in ('No aggregation', 'Shared', 'Composite'):
+            combo.append_text(t)
+        
+        combo.set_active(['none', 'shared', 'composite'].index(self.subject.aggregation))
+
+        combo.connect('changed', self._on_aggregation_change)
+        vbox.pack_start(combo, expand=False)
+     
+        return vbox
+
+    @transactional
+    def _on_end_name_change(self, entry):
+        self.subject.parse(entry.get_text())
+
+    @transactional
+    def _on_visibility_change(self, combo):
+        self.subject.visibility = ('public', 'protected', 'package', 'private')[combo.get_active()]
+
+    @transactional
+    def _on_navigability_change(self, combo):
+        nav = self.NAVIGABILITY[combo.get_active()]
+        UML.model.set_navigability(self.subject.association, self.subject, nav)
+
+    @transactional
+    def _on_aggregation_change(self, combo):
+        self.subject.aggregation = ('none', 'shared', 'composite')[combo.get_active()]
 
 
 class LineStylePage(object):
