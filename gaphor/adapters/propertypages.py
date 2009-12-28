@@ -918,15 +918,15 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
         # TODO: use gtk.Frame here
         frame = gtk.Frame('%s (: %s)' % (title, end.subject.type.name))
-        hbox = gtk.VBox()
-        hbox.set_border_width(6)
-        hbox.set_spacing(6)
-        frame.add(hbox)
+        vbox = gtk.VBox()
+        vbox.set_border_width(6)
+        vbox.set_spacing(6)
+        frame.add(vbox)
 
         #label = gtk.Label(title)
         #label.set_alignment(0.0, 0.5)
         #self.size_group.add_widget(label)
-        #hbox.pack_start(label, expand=False)
+        #vbox.pack_start(label, expand=False)
 
         entry = gtk.Entry()
         entry.set_text(render_attribute(end.subject, multiplicity=True) or '')
@@ -939,7 +939,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
             entry.handler_unblock(changed_id)
         watch_attribute(None, entry, handler)
 
-        hbox.pack_start(entry)
+        vbox.pack_start(entry)
 
         entry.set_tooltip_text("""\
 Enter attribute name and multiplicity, for example
@@ -957,7 +957,7 @@ Enter attribute name and multiplicity, for example
         combo.set_active(['public', 'protected', 'package', 'private'].index(end.subject.visibility))
 
         combo.connect('changed', self._on_visibility_change, end)
-        hbox.pack_start(combo, expand=False)
+        vbox.pack_start(combo, expand=False)
 
         combo = gtk.combo_box_new_text()
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
@@ -967,7 +967,7 @@ Enter attribute name and multiplicity, for example
         combo.set_active(self.NAVIGABILITY.index(nav))
 
         combo.connect('changed', self._on_navigability_change, end)
-        hbox.pack_start(combo, expand=False)
+        vbox.pack_start(combo, expand=False)
 
         combo = gtk.combo_box_new_text()
         for t in ('No aggregation', 'Shared', 'Composite'):
@@ -976,7 +976,7 @@ Enter attribute name and multiplicity, for example
         combo.set_active(['none', 'shared', 'composite'].index(end.subject.aggregation))
 
         combo.connect('changed', self._on_aggregation_change, end)
-        hbox.pack_start(combo, expand=False)
+        vbox.pack_start(combo, expand=False)
         
         return frame
 
