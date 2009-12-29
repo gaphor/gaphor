@@ -24,7 +24,7 @@ class TransitionPropertyPage(NamedItemPropertyPage):
     def construct(self):
         page = super(TransitionPropertyPage, self).construct()
 
-        subject = self.context.subject
+        subject = self.subject
         
         if not subject:
             return page
@@ -49,7 +49,7 @@ class TransitionPropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        subject = self.context.subject
+        subject = self.subject
         if subject.guard is None:
             subject.guard = self.element_factory.create(UML.Constraint)
             subject.guard.specification = self.element_factory.create(UML.LiteralSpecification)
