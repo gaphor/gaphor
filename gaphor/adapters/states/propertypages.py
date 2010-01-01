@@ -11,7 +11,7 @@ from gaphor.core import _, inject, transactional
 from gaphor import UML
 from gaphor.diagram import items
 from zope import interface, component
-from gaphor.adapters.propertypages import NamedItemPropertyPage
+from gaphor.adapters.propertypages import NamedItemPropertyPage, create_hbox_label
 
 class TransitionPropertyPage(NamedItemPropertyPage):
     """
@@ -29,17 +29,12 @@ class TransitionPropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = gtk.HBox()
-        page.pack_start(hbox, expand=False)
-
-        label = gtk.Label(_('Guard'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox = create_hbox_label(self, page, _('Guard'))
         entry = gtk.Entry()        
         entry.set_text(subject.guard.specification.value if subject.guard else '')
         entry.connect('changed', self._on_guard_change)
         hbox.pack_start(entry)
+        hbox.show_all()
 
         return page
 

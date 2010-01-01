@@ -556,7 +556,7 @@ class NamedElementPropertyPage(object):
     NAME_LABEL = _('Name')
 
     def __init__(self, subject):
-        assert isinstance(subject, UML.NamedElement)
+        assert subject is None or isinstance(subject, UML.NamedElement), '%s' % type(subject)
         self.subject = subject
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
     
