@@ -479,6 +479,9 @@ class derived(umlproperty):
         raise ValueError, 'Derivedunion: Properties should not be loaded in a derived union %s: %s' % (self.name, value)
 
 
+    def postload(self, obj):
+        self.version += 1
+
     def save(self, obj, save_func):
         pass
 
@@ -628,23 +631,24 @@ class derivedunion(derived):
             if not IAssociationChangeEvent.providedBy(event):
                 return
                 
-            # mimic the events for Set/Add/Delete
+            values = self._union(event.element, exclude=event.property)
+
             if self.upper > 1:
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
-                    if old_value and old_value not in self._union(event.element, exclude=event.property):
+                    if old_value and old_value not in values:
                         component.handle(DerivedDeleteEvent(event.element, self, old_value))
-                    if new_value and new_value not in self._union(event.element, exclude=event.property):
+                    if new_value and new_value not in values:
                         component.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationAddEvent.providedBy(event):
                     new_value = event.new_value
-                    if new_value not in self._union(event.element, exclude=event.property):
+                    if new_value not in values:
                         component.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationDeleteEvent.providedBy(event):
                     old_value = event.old_value
-                    if old_value not in self._union(event.element, exclude=event.property):
+                    if old_value not in values:
                         component.handle(DerivedDeleteEvent(event.element, self, old_value))
 
                 elif IAssociationChangeEvent.providedBy(event):
@@ -659,8 +663,6 @@ class derivedunion(derived):
                     # Only one subset element, so pass the values on
                     component.handle(DerivedSetEvent(event.element, self, old_value, new_value))
                 else:
-                    values = self._union(event.element, exclude=event.property)
-
                     new_values = set(values)
                     if new_value:
                         new_values.add(new_value)
