@@ -17380,7 +17380,7 @@ namespace]]></val>
 </Property>
 <LiteralSpecification id="DCE:EEB5289A-4864-11D8-A4FB-20895068F46E">
 <value>
-<val><![CDATA[subset members]]></val>
+<val><![CDATA[subsets members]]></val>
 </value>
 </LiteralSpecification>
 <LiteralString id="DCE:BC952728-2E06-11D8-A169-52D559F3DAB9"/>
@@ -17588,7 +17588,7 @@ featuringClassifier]]></val>
 <LiteralString id="DCE:BC2585EE-2E06-11D8-A169-52D559F3DAB9"/>
 <LiteralSpecification id="DCE:ED3034E8-4864-11D8-A4FB-20895068F46E">
 <value>
-<val><![CDATA[substes source, owner]]></val>
+<val><![CDATA[subsets source, owner]]></val>
 </value>
 </LiteralSpecification>
 <Property id="DCE:54A3FC76-78D6-11D7-B68E-7835A4497977">
@@ -37454,11 +37454,6 @@ some elements to have a stereotype]]></val>
 <val><![CDATA[*]]></val>
 </value>
 </LiteralSpecification>
-<LiteralSpecification id="DCE:8B90E0C8-5FE4-11D9-BE08-000D936B094A">
-<value>
-<val><![CDATA[union, subsets member]]></val>
-</value>
-</LiteralSpecification>
 <Diagram id="DCE:0176213A-5FE5-11D9-A512-000D936B094A">
 <name>
 <val><![CDATA[Connectors]]></val>
@@ -39710,7 +39705,7 @@ subsets ownedMember]]></val>
 </LiteralSpecification>
 <LiteralSpecification id="DCE:A96468D6-44B0-11DA-9223-000D936B094A">
 <value>
-<val><![CDATA[subset members]]></val>
+<val><![CDATA[subsets members]]></val>
 </value>
 </LiteralSpecification>
 <LiteralSpecification id="DCE:A965E59C-44B0-11DA-9223-000D936B094A">
@@ -40125,7 +40120,7 @@ subsets ownedMember]]></val>
 </LiteralSpecification>
 <LiteralSpecification id="DCE:A9E60FF0-44B0-11DA-9223-000D936B094A">
 <value>
-<val><![CDATA[substes source]]></val>
+<val><![CDATA[subsets source]]></val>
 </value>
 </LiteralSpecification>
 <LiteralSpecification id="DCE:A9E742CC-44B0-11DA-9223-000D936B094A">
