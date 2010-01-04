@@ -201,7 +201,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     version_0_7_2(elements, factory, gaphor_version)
     version_0_9_0(elements, factory, gaphor_version)
     version_0_14_0(elements, factory, gaphor_version)
-    version_0_15_0(elements, factory, gaphor_version)
+    version_0_15_0_pre(elements, factory, gaphor_version)
 
     #log.debug("Still have %d elements" % len(elements))
 
@@ -282,6 +282,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # Fix version inconsistencies
     version_0_5_2(elements, factory, gaphor_version)
     version_0_7_1(elements, factory, gaphor_version)
+    version_0_15_0_post(elements, factory, gaphor_version)
 
     # Before version 0.7.2 there was only decision node (no merge nodes).
     # This node could have many incoming and outgoing flows (edges).
@@ -370,7 +371,7 @@ def load_generator(filename, factory):
         raise
 
 
-def version_0_15_0(elements, factory, gaphor_version):
+def version_0_15_0_pre(elements, factory, gaphor_version):
     """
     Fix association navigability UML metamodel to comply with UML 2.2
     using Association.navigableOwnedEnd among others (see model factory
@@ -424,21 +425,102 @@ def version_0_15_0(elements, factory, gaphor_version):
         # get rid of tagged values
 
         for e in elements.values():
-            # Short way out:
             if 'taggedValue' in e.references:
-
-                convert_tagged_value(e, elements, factory)
+                e.taggedvalue = [elements[i].values['value'] for i in e.references['taggedValue'] if elements[i].values.get('value')]
+                #convert_tagged_value(e, elements, factory)
 
                 # Remove obsolete elements
                 for t in e.references['taggedValue']:
                     del elements[t]
                 del e.references['taggedValue']
 
+def version_0_15_0_post(elements, factory, gaphor_version):
+    """
+    Part two: create stereotypes and what more for the elements that have a
+    taggedvalue property.
+    """
+    def update_elements(element):
+        e = elements[element.id] = parser.element(element.id, element.__class__.__name__)
+        e.element = element
+
+    if tuple(map(int, gaphor_version.split('.'))) < (0, 15, 0):
+        stereotypes = {}
+        profile = None
+        for e in elements.values():
+            if hasattr(e, 'taggedvalue'):
+                if not profile:
+                    profile = factory.create(UML.Profile)
+                    profile.name = 'version 0.15 conversion'
+                    update_elements(profile)
+                st = stereotypes.get(e.type)
+                if not st:
+                    st = stereotypes[e.type] = factory.create(UML.Stereotype)
+                    st.name = 'Tagged'
+                    st.package = profile
+                    update_elements(st)
+                    cl = factory.create(UML.Class)
+                    cl.name = str(e.type)
+                    cl.package = profile
+                    update_elements(cl)
+                    ext = UML.model.extend_with_stereotype(factory, cl, st)
+                    update_elements(ext)
+                    for me in ext.memberEnd: update_elements(me)
+                # Create instance specification for the stereotype:
+                instspec = UML.model.apply_stereotype(factory, e.element, st)
+                update_elements(instspec)
+
+                def create_slot(key, val):
+                    for attr in st.ownedAttribute:
+                        if attr.name == key:
+                            break
+                    else:
+                        attr = st.ownedAttribute = factory.create(UML.Property)
+                        attr.name = str(key)
+                        update_elements(attr)
+                    slot = UML.model.add_slot(factory, instspec, attr)
+                    slot.value.value = str(val)
+                    update_elements(slot)
+
+                tviter = iter(e.taggedvalue)
+                for tv in tviter:
+                    try:
+                        try:
+                            key, val = tv.split('=', 1)
+                            key = key.strip()
+                        except ValueError:
+                            log.info('Tagged value "%s" has no key=value format, trying key_value ' % tv)
+                            try:
+                                key, val = tv.split(' ', 1)
+                                key = key.strip()
+                            except ValueError:
+                                # Fallback, deal with it as if it were a boolean
+                                key = tv.strip()
+                                val = 'true'
+
+                            # This syntax is used with the UML meta model:
+                            if key in ('subsets', 'redefines'):
+                                rest = ', '.join(tviter)
+                                val = ', '.join([val, rest]) if rest else val
+                                val = val.replace('\n', ' ')
+                                log.info('Special case: UML metamodel "%s %s"' % (key, val))
+                        create_slot(key, val)
+                    except Exception, e:
+                        log.warning('Unable to process tagged value "%s" as key=value pair' % tv, e)
+
 
 def convert_tagged_value(element, elements, factory):
     """
     Convert ``element.taggedValue`` to something supported by the
     UML 2.2 model (since Gaphor version 0.15).
+
+    For each item having a Tagged value a Stereotype is linked. This is done
+    like this:
+
+      item -> InstanceSpecification -> Stereotype
+
+    Each tagged value will be replaced by a Slot:
+
+      item -> InstanceSpecification -> Slot -> Attribute -> Stereotype
     """
     import uuid
     diagrams = [e for e in elements.values() if e.type == 'Diagram']

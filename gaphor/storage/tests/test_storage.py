@@ -316,15 +316,29 @@ class FileUpgradeTestCase(TestCase):
         self.assertEquals(1, len(diagrams))
         diagram = diagrams[0]
         classes = diagram.canvas.select(lambda e: isinstance(e, items.ClassItem))
-        comments = diagram.canvas.select(lambda e: isinstance(e, items.CommentItem))
+        profiles = self.element_factory.lselect(lambda e: isinstance(e, UML.Profile))
+        stereotypes = self.element_factory.lselect(lambda e: isinstance(e, UML.Stereotype))
 
         self.assertEquals(2, len(classes))
         c1, c2 = classes
 
-        self.assertEquals(2, len(comments))
-        c1, c2 = comments
-        self.assertTrue('t1=v1\nt2=v2' in c1.subject.body)
-        self.assertTrue('t5=v5\nt6=v6\nt7=v7' in c2.subject.body)
+        self.assertEquals(1, len(profiles))
+        profile = profiles[0]
+        self.assertEquals('version 0.15 conversion', profile.name)
+
+        self.assertEquals(1, len(stereotypes))
+        stereotype = stereotypes[0]
+        self.assertEquals('Tagged', stereotype.name)
+        self.assertEquals(profile, stereotype.namespace)
+        self.assertEquals('c1', c1.subject.name)
+        self.assertEquals('c2', c2.subject.name)
+        self.assertEquals(stereotype, c1.subject.appliedStereotype[0].classifier[0])
+        self.assertEquals(stereotype, c2.subject.appliedStereotype[0].classifier[0])
+        self.assertEquals('t1', c1.subject.appliedStereotype[0].slot[0].definingFeature.name)
+        self.assertEquals('t2', c1.subject.appliedStereotype[0].slot[1].definingFeature.name)
+        self.assertEquals('t5', c2.subject.appliedStereotype[0].slot[0].definingFeature.name)
+        self.assertEquals('t6', c2.subject.appliedStereotype[0].slot[1].definingFeature.name)
+        self.assertEquals('t7', c2.subject.appliedStereotype[0].slot[2].definingFeature.name)
 
 
 # vim:sw=4:et:ai
