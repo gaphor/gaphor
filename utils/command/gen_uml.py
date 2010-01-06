@@ -248,33 +248,26 @@ def parse_association_name(name):
     return derived, name
 
 
-def parse_association_tags(tag):
+def parse_association_tags(appliedStereotypes):
     subsets = []
     redefines = None
 
-    # subsets has a comma separated syntax. Add all taggedValues together
-    if type(tag) is type([]):
-        tag = ', '.join(filter(None, map(getattr, tag, ['value'] * len(tag))))
-    elif tag:
-        tag = tag.value
+    for stereotype in appliedStereotypes or []:
+        for slot in stereotype.slot or []:
+         
 
-    #print 'scanning tags: %s' % tag
+            #msg('scanning %s = %s' %  (slot.definingFeature.name, slot.value.value))
 
-    if tag and tag.find('subsets') != -1:
-        # find the text after 'subsets':
-        subsets = tag[tag.find('subsets') + len('subsets'):]
-        # remove all whitespaces and stuff
-        subsets = subsets.replace(' ', '').replace('\n', '').replace('\r', '')
-        subsets = subsets.split(',')
+            if slot.definingFeature.name == 'subsets':
+                value = slot.value.value
+                # remove all whitespaces and stuff
+                value = value.replace(' ', '').replace('\n', '').replace('\r', '')
+                subsets = value.split(',')
 
-    if tag and tag.find('redefines') != -1:
-        # find the text after 'redefines':
-        redefines = tag[tag.find('redefines') + len('redefines'):]
-        # remove all whitespaces and stuff
-        redefines = redefines.replace(' ', '').replace('\n', '').replace('\r', '')
-        l = redefines.split(',')
-        assert len(l) == 1
-        redefines = l[0]
+            if slot.definingFeature.name == 'redefines':
+                value = slot.value.value
+                # remove all whitespaces and stuff
+                redefines = value.replace(' ', '').replace('\n', '').replace('\r', '')
 
     #print 'found', subsets, redefines
     return subsets, redefines
@@ -307,7 +300,7 @@ def parse_association_end(head, tail):
     lower = head.lowerValue and head.lowerValue.value or upper
     if lower == '*':
         lower = 0
-    subsets, redefines = parse_association_tags(head.taggedValue)
+    subsets, redefines = parse_association_tags(head.appliedStereotype)
 
     # Add the values found. These are used later to generate derived unions.
     head.class_name = head.class_['name']
@@ -378,7 +371,12 @@ def generate(filename, outfile=None, overridesfile=None):
                 resolve(val, 'defaultValue')
                 resolve(val, 'lowerValue')
                 resolve(val, 'upperValue')
-                resolve(val, 'taggedValue')
+                resolve(val, 'appliedStereotype')
+                for st in val.appliedStereotype or []:
+                    resolve(st, 'slot')
+                    for slot in st.slot or []:
+                        resolve(slot, 'value')
+                        resolve(slot, 'definingFeature')
                 val.written = False
             elif val.type == 'Operation':
                 operations[key] = val
@@ -406,10 +404,13 @@ def generate(filename, outfile=None, overridesfile=None):
         ends = []
         for end in e.memberEnd:
             end = all_elements[end]
+            if not end['type']:
+                continue
             end.type = all_elements[end['type']]
             ends.append(end)
         e.memberEnd = ends
-        del classes[e.memberEnd[0].type.id]
+        if ends:
+            del classes[e.memberEnd[0].type.id]
 
 
     # create file header
