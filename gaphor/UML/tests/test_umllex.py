@@ -74,7 +74,6 @@ class AttributeTestCase(unittest.TestCase):
         assert a.lowerValue.value is None, a.lowerValue.value 
         assert a.upperValue.value is None, a.upperValue.value 
         assert a.defaultValue.value is None, a.defaultValue.value 
-        assert not a.taggedValue, a.taggedValue
         s = render_property(a)
         parse_property(a, s)
         assert s == render_property(a)
@@ -93,7 +92,6 @@ class AttributeTestCase(unittest.TestCase):
         assert a.lowerValue.value == '0', a.lowerValue.value 
         assert a.upperValue.value == '*', a.upperValue.value 
         assert a.defaultValue.value == '"aap"', a.defaultValue.value 
-        assert a.taggedValue[0].value == 'static', a.taggedValue[0].value 
         s = render_property(a)
         parse_property(a, s)
         assert s == render_property(a)
@@ -113,7 +111,6 @@ class AttributeTestCase(unittest.TestCase):
         assert not a.lowerValue or a.lowerValue.value is None, a.lowerValue.value 
         assert not a.upperValue or a.upperValue.value is None, a.upperValue.value 
         assert not a.defaultValue or a.defaultValue.value is None, a.defaultValue.value 
-        assert not a.taggedValue or a.taggedValue.value is None, a.taggedValue.value 
         s = render_property(a)
         parse_property(a, s)
         assert s == render_property(a)
@@ -138,7 +135,6 @@ class AttributeTestCase(unittest.TestCase):
         assert not p.lowerValue or p.lowerValue.value is None, p.lowerValue.value 
         assert not p.upperValue or p.upperValue.value is None, p.upperValue.value 
         assert not p.defaultValue or p.defaultValue.value is None, p.defaultValue.value 
-        assert not p.taggedValue or p.taggedValue.value is None, p.taggedValue.value 
         p.unlink()
         a.unlink()
 
@@ -153,7 +149,6 @@ class AttributeTestCase(unittest.TestCase):
         assert not p.lowerValue or p.lowerValue.value is None, p.lowerValue.value 
         assert not p.upperValue or p.upperValue.value is None, p.upperValue.value 
         assert not p.defaultValue or p.defaultValue.value is None, p.defaultValue.value 
-        assert not p.taggedValue or p.taggedValue.value is None, p.taggedValue.value 
         p.unlink()
         a.unlink()
 
@@ -168,7 +163,6 @@ class AttributeTestCase(unittest.TestCase):
         assert p.lowerValue.value == '0', p.lowerValue.value 
         assert p.upperValue.value == '2', p.upperValue.value 
         assert not p.defaultValue or p.defaultValue.value is None, p.defaultValue.value 
-        assert p.taggedValue[0].value == 'tag', p.taggedValue[0].value 
         p.unlink()
         a.unlink()
 
@@ -184,8 +178,6 @@ class AttributeTestCase(unittest.TestCase):
         assert p.lowerValue.value == '0', p.lowerValue.value 
         assert p.upperValue.value == '2', p.upperValue.value 
         assert not p.defaultValue or p.defaultValue.value is None, p.defaultValue.value 
-        assert p.taggedValue[0].value == 'tag1', p.taggedValue[0].value
-        assert p.taggedValue[1].value == 'tag2', p.taggedValue[1].value 
         p.unlink()
         a.unlink()
 
@@ -201,7 +193,6 @@ class AttributeTestCase(unittest.TestCase):
         assert not p.lowerValue or p.lowerValue.value is None, p.lowerValue.value 
         assert p.upperValue.value == '*', p.upperValue.value 
         assert not p.defaultValue or p.defaultValue.value is None, p.defaultValue.value 
-        assert p.taggedValue[0].value == 'mytag', p.taggedValue[0].value 
         p.unlink()
 
         a.unlink()
@@ -257,14 +248,12 @@ class OperationTestCase(unittest.TestCase):
         assert o.formalParameter[0].name == 'a', o.formalParameter[0].typeValue
         assert o.formalParameter[0].typeValue.value == 'str', o.formalParameter[0].typeValue.value
         assert o.formalParameter[0].defaultValue.value is None, o.formalParameter[0].defaultValue.value
-        assert not o.formalParameter[0].taggedValue, o.formalParameter[0].taggedValue
         assert o.formalParameter[1].name == 'b', o.formalParameter[1].name
         assert o.formalParameter[1].typeValue.value == 'int', o.formalParameter[1].typeValue.value
         assert o.formalParameter[1].defaultValue.value == '3', o.formalParameter[1].defaultValue.value
-        assert o.formalParameter[1].taggedValue[0].value == 'static', o.formalParameter[1].taggedValue[0].value
         # 1 operation, 3 parameters, 4 + 5*2 literal strings
-        assert len(element_factory.lselect(lambda e: isinstance(e, LiteralSpecification))) == 12, len(element_factory.lselect(lambda e: isinstance(e, LiteralSpecification)))
-        assert len(element_factory.values()) == 16, len(element_factory.values())
+        assert len(element_factory.lselect(lambda e: isinstance(e, LiteralSpecification))) == 11, len(element_factory.lselect(lambda e: isinstance(e, LiteralSpecification)))
+        assert len(element_factory.values()) == 15, len(element_factory.values())
         s = render_operation(o)
         parse_operation(o, s)
         assert s == render_operation(o)
@@ -281,7 +270,6 @@ class OperationTestCase(unittest.TestCase):
         assert o.formalParameter[0].name == 'a', o.formalParameter[0].typeValue
         assert o.formalParameter[0].typeValue.value == 'node', o.formalParameter[0].typeValue.value
         assert o.formalParameter[0].defaultValue.value is None, o.formalParameter[0].defaultValue.value
-        assert not o.formalParameter[0].taggedValue, o.formalParameter[0].taggedValue
         # 1 operation, 2 parameters, 4 + 5 literal strings
         assert len(element_factory.lselect(lambda e: isinstance(e, Operation))) == 1, len(element_factory.values())
         assert len(element_factory.lselect(lambda e: isinstance(e, Parameter))) == 2, len(element_factory.values())

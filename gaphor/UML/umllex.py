@@ -343,8 +343,8 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
         name = ''
 
     # Render all fields if they all are set to False
-    if not (visibility or is_derived or type or multiplicity or default or tags):
-       visibility = is_derived = type = multiplicity = default = tags = True
+    if not (visibility or is_derived or type or multiplicity or default):
+       visibility = is_derived = type = multiplicity = default = True
 
     s = StringIO()
 
@@ -369,11 +369,13 @@ def render_attribute(self, visibility=False, is_derived=False, type=False,
     if default and self.defaultValue and self.defaultValue.value:
         s.write(' = %s' % self.defaultValue.value)
 
-    #if self.taggedValue:
-    #    tvs = ', '.join(filter(None, map(getattr, self.taggedValue,
-    #                                      ['value'] * len(self.taggedValue))))
-    #    if tvs:
-    #        s.write(' { %s }' % tvs)
+    if tags:
+        slots = []
+        for slot in self.appliedStereotype[:].slot:
+            if slot.value:
+                slots.append('%s=%s' % (slot.definingFeature.name, slot.value.value))
+        if slots:
+            s.write(' { %s }' % ', '.join(slots))
     s.reset()
     return s.read()
 
@@ -399,11 +401,13 @@ def render_association_end(self):
             m.write('%s..%s' % (self.lowerValue.value, self.upperValue.value))
         else:
             m.write('%s' % self.upperValue.value)
-    #if self.taggedValue:
-    #    tvs = ',\n '.join(filter(None, map(getattr, self.taggedValue,
-    #                                 ['value'] * len(self.taggedValue))))
-    #    if tvs:
-    #        m.write(' { %s }' % tvs)
+
+    slots = []
+    for slot in self.appliedStereotype[:].slot:
+        if slot.value:
+            slots.append('%s=%s' % (slot.definingFeature.name, slot.value.value))
+    if slots:
+        m.write(' { %s }' % ',\n'.join(slots))
     m.reset()
     mult = m.read()
 
