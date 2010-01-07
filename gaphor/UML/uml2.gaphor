@@ -7812,7 +7812,7 @@ namespace, featuringClassifier]]></val>
 </Association>
 <Package id="DCE:DA01D45A-45CE-11D7-B5CA-613352B2821F">
 <name>
-<val><![CDATA[UML2 DataModel]]></val>
+<val><![CDATA[UML]]></val>
 </name>
 <nestedPackage>
 <reflist>
