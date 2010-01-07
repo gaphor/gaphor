@@ -76,8 +76,9 @@ class Toolbox(gtk.VBox):
 
 
     def on_expander_toggled(self, widget, prop):
-        # Save the property:
-        self.properties.set(prop, widget.get_expanded())
+        # Save the property (inverse value as handler is called before the
+        # action takes place):
+        self.properties.set(prop, not widget.get_expanded())
         
 
     def toolbox_button(self, action_name, stock_id,
