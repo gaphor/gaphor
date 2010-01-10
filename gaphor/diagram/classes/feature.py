@@ -36,7 +36,7 @@ class FeatureItem(DiagramItem):
 
     def postload(self):
         if self.subject:
-            self.text = self.subject.render()
+            self.text = self.render()
         self.on_feature_is_static(None)
 
 
@@ -70,7 +70,7 @@ class FeatureItem(DiagramItem):
 
 
     def pre_update(self, context):
-        self.update_size(self.subject.render(), context)
+        self.update_size(self.render(), context)
 
 
     def point(self, pos):
@@ -78,11 +78,16 @@ class FeatureItem(DiagramItem):
         """
         return distance_rectangle_point((0, 0, self.width, self.height), pos)
 
+    def render(self):
+        """
+        Return a rendered feature, as a string.
+        """
+        return self.subject.render() or ''
 
     def draw(self, context):
         cr = context.cairo
         text_set_font(cr, self.font)
-        text_align(cr, 0, 0, self.subject.render() or '', align_x=1, align_y=1)
+        text_align(cr, 0, 0, self.render(), align_x=1, align_y=1)
 
 
 class AttributeItem(FeatureItem):
@@ -102,13 +107,13 @@ class AttributeItem(FeatureItem):
 
     def postload(self):
         if self.subject:
-            self.text = self.subject.render()
+            self.text = self.render()
 
     def draw(self, context):
         if self.subject.isStatic:
             cr = context.cairo
             text_set_font(cr, self.font)
-            text_underline(cr, 0, 0, self.subject.render() or '')
+            text_underline(cr, 0, 0, self.render() or '')
         else:
             super(AttributeItem, self).draw(context)
 
@@ -132,7 +137,7 @@ class OperationItem(FeatureItem):
 
     def postload(self):
         if self.subject:
-            self.text = self.subject.render()
+            self.text = self.render()
         self.on_operation_is_abstract(None)
 
     def on_operation_is_abstract(self, event):
@@ -140,6 +145,8 @@ class OperationItem(FeatureItem):
                 and font.FONT_ABSTRACT_NAME or font.FONT_NAME
         self.request_update()
 
+    def render(self):
+        return self.subject.render(type=True, multiplicity=True, default=True) or ''
 
 
 class SlotItem(FeatureItem):
