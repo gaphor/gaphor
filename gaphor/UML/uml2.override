@@ -27,6 +27,21 @@ override MultiplicityElement.upper derives MultiplicityElement.upperValue
 MultiplicityElement.upper = derived('upper', object, 0, 1, MultiplicityElement.upperValue, LiteralSpecification.value, LiteralString.value)
 MultiplicityElement.upper.filter = lambda obj: [ obj.upperValue and obj.upperValue.value ]
 %%
+override NamedElement.qualifiedName
+
+def namedelement_qualifiedname(self):
+    """
+    Returns the qualified name of the element as a tuple
+    """
+    if self.namespace:
+        return self.namespace.qualifiedName + (self.name,)
+    else:
+        return (self.name,)
+
+NamedElement.qualifiedName = property(namedelement_qualifiedname, doc=namedelement_qualifiedname.__doc__)
+
+del namedelement_qualifiedname
+%%
 override Association.endType derives Association.memberEnd Property.type
 
 # References the classifiers that are used as types of the ends of the

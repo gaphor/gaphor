@@ -188,6 +188,19 @@ class TestUML2(unittest.TestCase):
         assert a.memberEnd[0].navigability is False
         assert a.memberEnd[1].navigability is None
 
+    def test_namedelement_qualifiedname(self):
+        factory = UML.ElementFactory()
+        p = factory.create(UML.Package)
+        p.name = 'Package'
+        c = factory.create(UML.Class)
+        c.name = 'Class'
+
+        self.assertEquals(('Class',), c.qualifiedName)
+
+        p.ownedClassifier = c
+
+        self.assertEquals(('Package', 'Class'), c.qualifiedName)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -504,6 +504,7 @@ class MainWindow(ToplevelWindow):
 
     @action(name='file-quit', stock_id='gtk-quit')
     def quit(self):
+        # TODO: check for changes (e.g. undo manager), fault-save
         self.ask_to_close() and gtk.main_quit()
         self._tree_view.get_model().close()
         Application.unregister_handler(self._action_executed)
