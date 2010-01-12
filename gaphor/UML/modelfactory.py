@@ -117,7 +117,7 @@ def get_applied_stereotypes(element):
     return element.appliedStereotype[:].classifier
 
 
-def extend_with_stereotype(factory, element, stereotype):
+def create_extension(factory, element, stereotype):
     """
     Extend an element with a stereotype.
     """
@@ -138,19 +138,44 @@ def extend_with_stereotype(factory, element, stereotype):
 
     return ext
 
+extend_with_stereotype = create_extension
 
-def add_slot(factory, obj, attr):
+def add_slot(factory, instance, definingFeature):
     """
     Add slot to instance specification for an attribute.
     """
     slot = factory.create(Slot)
-    slot.definingFeature = attr
+    slot.definingFeature = definingFeature
     slot.value = factory.create(LiteralSpecification)
-    obj.slot = slot
+    instance.slot = slot
     return slot
 
 
-def create_association(factory, a, b):
+def create_dependency(factory, supplier, client):
+    dep = factory.create(Dependency)
+    dep.supplier = supplier
+    dep.client = client
+    return dep
+
+def create_realization(factory, realizingClassifier, abstraction):
+    dep = factory.create(Realization)
+    dep.realizingClassifier = realizingClassifier
+    dep.abstraction = abstraction
+    return dep
+
+def create_generalization(factory, general, specific):
+    gen = factory.create(Generalization)
+    gen.general = general
+    gen.specific = specific
+    return gen
+
+def create_implementation(factory, contract, implementatingClassifier):
+    impl = factory.create(Implementation)
+    impl.contract = contract
+    impl.implementatingClassifier = implementatingClassifier
+    return impl
+
+def create_association(factory, type_a, type_b):
     """
     Create an association between two items.
     """
@@ -161,8 +186,11 @@ def create_association(factory, a, b):
     end_b.lowerValue = factory.create(LiteralSpecification)
     assoc.memberEnd = end_a
     assoc.memberEnd = end_b
-    end_a.type = b
-    end_b.type = a
+    end_a.type = type_b
+    end_b.type = type_a
+    # set default navigability (unknown)
+    set_navigability(assoc, end_a, None)
+    set_navigability(assoc, end_b, None)
     return assoc
 
 
@@ -242,6 +270,7 @@ def get_navigability(assoc, end):
 
     For navigability semantics see `set_navigability`.
     """
+    assert end.association is assoc
     owner = end.opposite.type
     if (type(end.type) in (Class, Interface) and end in owner.ownedAttribute) \
             or end in assoc.navigableOwnedEnd:
@@ -251,6 +280,4 @@ def get_navigability(assoc, end):
     else:
         return False
 
-
-
-# vim:sw=4:et
+#vim:sw=4:et:ai

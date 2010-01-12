@@ -119,24 +119,11 @@ class AssociationConnect(RelationshipConnect):
                                 line.tail_end.subject = end1
                             return
             else:
-                # Create a new Extension relationship
-                relation = self.element_factory.create(UML.Association)
-                head_end = self.element_factory.create(UML.Property)
-                head_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
-                tail_end = self.element_factory.create(UML.Property)
-                tail_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
+                relation = UML.model.create_association(self.element_factory, head_type, tail_type)
                 relation.package = element.canvas.diagram.namespace
-                relation.memberEnd = head_end
-                relation.memberEnd = tail_end
-                head_end.type = head_type
-                tail_end.type = tail_type
 
-                line.head_end.subject = head_end
-                line.tail_end.subject = tail_end
-
-                # set default navigability (unknown)
-                UML.model.set_navigability(relation, head_end, None)
-                UML.model.set_navigability(relation, tail_end, None)
+                line.head_end.subject = relation.memberEnd[0]
+                line.tail_end.subject = relation.memberEnd[1]
 
                 # Do subject itself last, so event handlers can trigger
                 line.subject = relation
