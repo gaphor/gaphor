@@ -264,20 +264,4 @@ def set_navigability(assoc, end, nav):
     # elif nav is False, non-navigable
 
 
-def get_navigability(assoc, end):
-    """
-    Get navigability of an association end.
-
-    For navigability semantics see `set_navigability`.
-    """
-    assert end.association is assoc
-    owner = end.opposite.type
-    if (type(end.type) in (Class, Interface) and end in owner.ownedAttribute) \
-            or end in assoc.navigableOwnedEnd:
-        return True
-    elif end in assoc.ownedEnd:
-        return None
-    else:
-        return False
-
 #vim:sw=4:et:ai

@@ -1074,7 +1074,7 @@ Enter attribute name and multiplicity, for example
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
             combo.append_text(t)
         
-        nav = UML.model.get_navigability(self.subject.association, self.subject)
+        nav = self.subject.navigability
         combo.set_active(self.NAVIGABILITY.index(nav))
 
         combo.connect('changed', self._on_navigability_change)

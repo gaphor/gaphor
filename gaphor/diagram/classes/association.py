@@ -169,9 +169,9 @@ class AssociationItem(NamedLine):
                 self.draw_head = self.draw_head_composite
             elif tail_subject.aggregation == intern('shared'):
                 self.draw_head = self.draw_head_shared
-            elif UML.model.get_navigability(self.subject, self._head_end.subject) is True:
+            elif self._head_end.subject.navigability is True:
                 self.draw_head = self.draw_head_navigable
-            elif UML.model.get_navigability(self.subject, self._head_end.subject) is False:
+            elif self._head_end.subject.navigability is False:
                 self.draw_head = self.draw_head_none
             else:
                 self.draw_head = self.draw_head_undefined
@@ -180,9 +180,9 @@ class AssociationItem(NamedLine):
                 self.draw_tail = self.draw_tail_composite
             elif head_subject.aggregation == intern('shared'):
                 self.draw_tail = self.draw_tail_shared
-            elif UML.model.get_navigability(self.subject, self._tail_end.subject) is True:
+            elif self._tail_end.subject.navigability is True:
                 self.draw_tail = self.draw_tail_navigable
-            elif UML.model.get_navigability(self.subject, self._tail_end.subject) is False:
+            elif self._tail_end.subject.navigability is False:
                 self.draw_tail = self.draw_tail_none
             else:
                 self.draw_tail = self.draw_tail_undefined
