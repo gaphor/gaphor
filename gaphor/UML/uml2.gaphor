@@ -23879,6 +23879,7 @@ namespace]]></val>
 <ref refid="DCE:E46BF7B4-4B52-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:1C6D178A-CFD8-11D8-8513-996A34E468FA"/>
 <ref refid="DCE:22F8862C-CFD8-11D8-8513-996A34E468FA"/>
+<ref refid="2219719a-ff42-11de-8fc8-00224128e79d"/>
 </reflist>
 </ownedAttribute>
 <ownedOperation>
@@ -54339,4 +54340,38 @@ swimlanes]]></val>
 <LiteralSpecification id="5410bcb8-fa91-11de-bd51-00224128e79d"/>
 <LiteralSpecification id="541106be-fa91-11de-bd51-00224128e79d"/>
 <LiteralSpecification id="5411515a-fa91-11de-bd51-00224128e79d"/>
+<Property id="2219719a-ff42-11de-8fc8-00224128e79d">
+<class_>
+<ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
+</class_>
+<defaultValue>
+<ref refid="221d1a52-ff42-11de-8fc8-00224128e79d"/>
+</defaultValue>
+<isDerived>
+<val>1</val>
+</isDerived>
+<lowerValue>
+<ref refid="221cb774-ff42-11de-8fc8-00224128e79d"/>
+</lowerValue>
+<name>
+<val><![CDATA[navigability]]></val>
+</name>
+<presentation>
+<reflist/>
+</presentation>
+<typeValue>
+<ref refid="221c5586-ff42-11de-8fc8-00224128e79d"/>
+</typeValue>
+<upperValue>
+<ref refid="221ce852-ff42-11de-8fc8-00224128e79d"/>
+</upperValue>
+</Property>
+<LiteralSpecification id="221c5586-ff42-11de-8fc8-00224128e79d">
+<value>
+<val><![CDATA[Boolean]]></val>
+</value>
+</LiteralSpecification>
+<LiteralSpecification id="221cb774-ff42-11de-8fc8-00224128e79d"/>
+<LiteralSpecification id="221ce852-ff42-11de-8fc8-00224128e79d"/>
+<LiteralSpecification id="221d1a52-ff42-11de-8fc8-00224128e79d"/>
 </gaphor>

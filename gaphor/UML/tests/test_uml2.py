@@ -169,6 +169,25 @@ class TestUML2(unittest.TestCase):
         assert UML.Class.extension.version > 6, UML.Class.extension.version
         assert e in c.extension
 
+    def test_property_navigability(self):
+        factory = UML.ElementFactory()
+        p = factory.create(UML.Property)
+        assert p.navigability is None
+
+        c1 = factory.create(UML.Class)
+        c2 = factory.create(UML.Class)
+        a = UML.model.create_association(factory, c1, c2)
+        assert a.memberEnd[0].navigability is None
+        assert a.memberEnd[1].navigability is None
+
+        UML.model.set_navigability(a, a.memberEnd[0], True)
+        assert a.memberEnd[0].navigability is True
+        assert a.memberEnd[1].navigability is None
+
+        UML.model.set_navigability(a, a.memberEnd[0], False)
+        assert a.memberEnd[0].navigability is False
+        assert a.memberEnd[1].navigability is None
+
 
 if __name__ == '__main__':
     unittest.main()

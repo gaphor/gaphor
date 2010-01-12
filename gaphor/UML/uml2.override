@@ -107,6 +107,30 @@ Property.isComposite.filter = lambda obj: [obj.aggregation == intern('composite'
 override Constraint.context
 Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
+override Property.navigability
+
+def property_navigability(self):
+    """
+    Get navigability of an association end.
+    If no association is related to the property, None is returned.
+    """
+    assoc = self.association
+    if not assoc:
+        return None
+    owner = self.opposite.type
+    if (type(self.type) in (Class, Interface) \
+                and self in owner.ownedAttribute) \
+            or self in assoc.navigableOwnedEnd:
+        return True
+    elif self in assoc.ownedEnd:
+        return None
+    else:
+        return False
+
+Property.navigability = property(property_navigability, doc=property_navigability.__doc__)
+
+del property_navigability
+%%
 override Property.parse
 from umllex import parse_property
 Property.parse = parse_property
