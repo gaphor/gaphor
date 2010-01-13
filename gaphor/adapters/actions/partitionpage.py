@@ -20,7 +20,7 @@ class PartitionPropertyPage(NamedItemPropertyPage):
     element_factory = inject('element_factory')
 
     def construct(self):
-        item = self.context
+        item = self.item
 
         page = super(PartitionPropertyPage, self).construct()
 
@@ -43,7 +43,7 @@ class PartitionPropertyPage(NamedItemPropertyPage):
 
     @transactional
     def _on_external_change(self, button):
-        item = self.context
+        item = self.item
         if item.subject:
             item.subject.isExternal = button.get_active()
         item.request_update()
