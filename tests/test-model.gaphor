@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.14.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.15.0">
 <Package id="4b5510d6-3bcb-11de-ac7f-00224128e79d">
 <name>
 <val><![CDATA[New model]]></val>
@@ -128,7 +128,7 @@
 <val>100.0</val>
 </width>
 <height>
-<val>58.423828125</val>
+<val>60.0</val>
 </height>
 <subject>
 <ref refid="5c361be8-3bcb-11de-ac7f-00224128e79d"/>
@@ -154,7 +154,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (111.0, -1.4837109375000068)]</val>
+<val>[(0.0, 0.0), (111.0, -1.1999999999999886)]</val>
 </points>
 <head-connection>
 <ref refid="51362968-3bcb-11de-ac7f-00224128e79d"/>
@@ -177,7 +177,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 364.0, 15.0)</val>
 </matrix>
 <width>
-<val>249.0</val>
+<val>318.0</val>
 </width>
 <height>
 <val>146.0</val>
@@ -223,7 +223,7 @@
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 484.0, 298.423828125)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 484.0, 300.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -232,7 +232,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-1.0, 50.576171875)]</val>
+<val>[(0.0, 0.0), (-1.0, 49.0)]</val>
 </points>
 <head-connection>
 <ref refid="5c363eca-3bcb-11de-ac7f-00224128e79d"/>
@@ -258,7 +258,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (111.0, 0.0)]</val>
+<val>[(0.0, 0.0), (111.0, 0.91726005415705458)]</val>
 </points>
 <head-connection>
 <ref refid="51362968-3bcb-11de-ac7f-00224128e79d"/>
@@ -377,10 +377,10 @@
 <val>(1.0, 0.0, 0.0, 1.0, 33.4140625, 237.0)</val>
 </matrix>
 <width>
-<val>100.0</val>
+<val>114.0</val>
 </width>
 <height>
-<val>60.7841796875</val>
+<val>62.0</val>
 </height>
 <subject>
 <ref refid="3c27e05c-3eb9-11de-9595-00224128e79d"/>
@@ -406,7 +406,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-94.585937499999986, 0.0)]</val>
+<val>[(0.0, 0.0), (-80.5859375, 0.68007647446302144)]</val>
 </points>
 <head-connection>
 <ref refid="51362968-3bcb-11de-ac7f-00224128e79d"/>
@@ -438,10 +438,10 @@
 <val>(1.0, 0.0, 0.0, 1.0, 27.0, 392.0)</val>
 </matrix>
 <width>
-<val>109.765625</val>
+<val>134.0</val>
 </width>
 <height>
-<val>50.501953125</val>
+<val>51.0</val>
 </height>
 <subject>
 <ref refid="840447a4-3fe4-11de-89d3-00224128e79d"/>
@@ -458,7 +458,7 @@
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 80.0, 297.7841796875)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 80.0, 299.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -467,7 +467,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-1.41015625, 94.2158203125)]</val>
+<val>[(0.0, 0.0), (9.9799999999999898, 93.0)]</val>
 </points>
 <head-connection>
 <ref refid="3c283bc4-3eb9-11de-9595-00224128e79d"/>
@@ -760,6 +760,11 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 </presentation>
 </Association>
 <Property id="f8d556d4-3bcc-11de-aa0c-00224128e79d">
+<appliedStereotype>
+<reflist>
+<ref refid="f98989e6-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</appliedStereotype>
 <association>
 <ref refid="f8d54cac-3bcc-11de-aa0c-00224128e79d"/>
 </association>
@@ -775,17 +780,17 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 <presentation>
 <reflist/>
 </presentation>
-<taggedValue>
-<reflist>
-<ref refid="071fd318-3bcd-11de-aa0c-00224128e79d"/>
-</reflist>
-</taggedValue>
 <type>
 <ref refid="5135fd3a-3bcb-11de-ac7f-00224128e79d"/>
 </type>
 </Property>
 <LiteralSpecification id="f8d56502-3bcc-11de-aa0c-00224128e79d"/>
 <Property id="f8d5b6b0-3bcc-11de-aa0c-00224128e79d">
+<appliedStereotype>
+<reflist>
+<ref refid="f989d798-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</appliedStereotype>
 <association>
 <ref refid="f8d54cac-3bcc-11de-aa0c-00224128e79d"/>
 </association>
@@ -801,11 +806,6 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 <presentation>
 <reflist/>
 </presentation>
-<taggedValue>
-<reflist>
-<ref refid="16662318-3bcd-11de-aa0c-00224128e79d"/>
-</reflist>
-</taggedValue>
 <type>
 <ref refid="cd7829da-3bcc-11de-aa0c-00224128e79d"/>
 </type>
@@ -814,19 +814,9 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 </upperValue>
 </Property>
 <LiteralSpecification id="f8d5c998-3bcc-11de-aa0c-00224128e79d"/>
-<LiteralSpecification id="071fd318-3bcd-11de-aa0c-00224128e79d">
-<value>
-<val><![CDATA[subsets base]]></val>
-</value>
-</LiteralSpecification>
 <LiteralSpecification id="1665b18a-3bcd-11de-aa0c-00224128e79d">
 <value>
 <val><![CDATA[*]]></val>
-</value>
-</LiteralSpecification>
-<LiteralSpecification id="16662318-3bcd-11de-aa0c-00224128e79d">
-<value>
-<val><![CDATA[subsets abstract]]></val>
 </value>
 </LiteralSpecification>
 <Association id="1af26fd6-3bcd-11de-aa0c-00224128e79d">
@@ -867,6 +857,11 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 </Property>
 <LiteralSpecification id="1af287dc-3bcd-11de-aa0c-00224128e79d"/>
 <Property id="1af2bc98-3bcd-11de-aa0c-00224128e79d">
+<appliedStereotype>
+<reflist>
+<ref refid="f989f854-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</appliedStereotype>
 <association>
 <ref refid="1af26fd6-3bcd-11de-aa0c-00224128e79d"/>
 </association>
@@ -882,21 +877,11 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 <presentation>
 <reflist/>
 </presentation>
-<taggedValue>
-<reflist>
-<ref refid="4bef554a-3bcd-11de-aa0c-00224128e79d"/>
-</reflist>
-</taggedValue>
 <type>
 <ref refid="cd7829da-3bcc-11de-aa0c-00224128e79d"/>
 </type>
 </Property>
 <LiteralSpecification id="1af2c7ec-3bcd-11de-aa0c-00224128e79d"/>
-<LiteralSpecification id="4bef554a-3bcd-11de-aa0c-00224128e79d">
-<value>
-<val><![CDATA[redefines name2]]></val>
-</value>
-</LiteralSpecification>
 <Diagram id="6fda9a22-3e53-11de-bb80-00224128e79d">
 <name>
 <val><![CDATA[Gaphor diagram]]></val>
@@ -922,7 +907,7 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 <val>100.0</val>
 </width>
 <height>
-<val>56.9072265625</val>
+<val>58.0</val>
 </height>
 <subject>
 <ref refid="ceb3a390-3e53-11de-bb80-00224128e79d"/>
@@ -945,10 +930,10 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 <val>(1.0, 0.0, 0.0, 1.0, 109.0, 269.0)</val>
 </matrix>
 <width>
-<val>100.0</val>
+<val>119.0</val>
 </width>
 <height>
-<val>60.3935546875</val>
+<val>62.0</val>
 </height>
 <subject>
 <ref refid="d1ae83da-3e53-11de-bb80-00224128e79d"/>
@@ -965,7 +950,7 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 159.0, 169.9072265625)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 159.0, 171.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -974,13 +959,91 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 99.0927734375)]</val>
+<val>[(0.0, 0.0), (9.5, 98.0)]</val>
 </points>
 <head-connection>
 <ref refid="ceb3c2f8-3e53-11de-bb80-00224128e79d"/>
 </head-connection>
 <tail-connection>
 <ref refid="d1aeabb2-3e53-11de-bb80-00224128e79d"/>
+</tail-connection>
+</item>
+<item type="ClassItem" id="07043ab2-00d1-11df-b659-00224128e79d">
+<show-attributes>
+<val>1</val>
+</show-attributes>
+<show-operations>
+<val>1</val>
+</show-operations>
+<drawing-style>
+<val>1</val>
+</drawing-style>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 344.0, 106.0)</val>
+</matrix>
+<width>
+<val>147.0</val>
+</width>
+<height>
+<val>69.0</val>
+</height>
+<subject>
+<ref refid="f98926b8-00d0-11df-b659-00224128e79d"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
+<item type="ClassItem" id="0a2ccefc-00d1-11df-b659-00224128e79d">
+<show-attributes>
+<val>1</val>
+</show-attributes>
+<show-operations>
+<val>1</val>
+</show-operations>
+<drawing-style>
+<val>1</val>
+</drawing-style>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 340.0, 235.0)</val>
+</matrix>
+<width>
+<val>147.0</val>
+</width>
+<height>
+<val>93.0</val>
+</height>
+<subject>
+<ref refid="f9890264-00d0-11df-b659-00224128e79d"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
+<item type="ExtensionItem" id="1de21e16-00d1-11df-b659-00224128e79d">
+<subject>
+<ref refid="f9894756-00d0-11df-b659-00224128e79d"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 413.0, 175.0)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (0.0, 60.0)]</val>
+</points>
+<head-connection>
+<ref refid="07043ab2-00d1-11df-b659-00224128e79d"/>
+</head-connection>
+<tail-connection>
+<ref refid="0a2ccefc-00d1-11df-b659-00224128e79d"/>
 </tail-connection>
 </item>
 </canvas>
@@ -993,6 +1056,8 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 <reflist>
 <ref refid="ceb3a390-3e53-11de-bb80-00224128e79d"/>
 <ref refid="d1ae83da-3e53-11de-bb80-00224128e79d"/>
+<ref refid="f98926b8-00d0-11df-b659-00224128e79d"/>
+<ref refid="f9890264-00d0-11df-b659-00224128e79d"/>
 </reflist>
 </ownedClassifier>
 <ownedDiagram>
@@ -1228,4 +1293,184 @@ Task: moved tagged values to stereotyp[e attributes]]></val>
 <ref refid="840447a4-3fe4-11de-89d3-00224128e79d"/>
 </specific>
 </Generalization>
+<Stereotype id="f9890264-00d0-11df-b659-00224128e79d">
+<name>
+<val><![CDATA[Tagged]]></val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="f9895d86-00d0-11df-b659-00224128e79d"/>
+<ref refid="f989a656-00d0-11df-b659-00224128e79d"/>
+<ref refid="f98a0998-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</ownedAttribute>
+<package>
+<ref refid="5cd6c27a-3e53-11de-bb80-00224128e79d"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="0a2ccefc-00d1-11df-b659-00224128e79d"/>
+</reflist>
+</presentation>
+</Stereotype>
+<Class id="f98926b8-00d0-11df-b659-00224128e79d">
+<name>
+<val><![CDATA[Property]]></val>
+</name>
+<package>
+<ref refid="5cd6c27a-3e53-11de-bb80-00224128e79d"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="07043ab2-00d1-11df-b659-00224128e79d"/>
+</reflist>
+</presentation>
+</Class>
+<Extension id="f9894756-00d0-11df-b659-00224128e79d">
+<memberEnd>
+<reflist>
+<ref refid="f9895d86-00d0-11df-b659-00224128e79d"/>
+<ref refid="f9896952-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</memberEnd>
+<ownedEnd>
+<ref refid="f9896952-00d0-11df-b659-00224128e79d"/>
+</ownedEnd>
+<presentation>
+<reflist>
+<ref refid="1de21e16-00d1-11df-b659-00224128e79d"/>
+</reflist>
+</presentation>
+</Extension>
+<Property id="f9895d86-00d0-11df-b659-00224128e79d">
+<association>
+<ref refid="f9894756-00d0-11df-b659-00224128e79d"/>
+</association>
+<class_>
+<ref refid="f9890264-00d0-11df-b659-00224128e79d"/>
+</class_>
+<name>
+<val><![CDATA[baseClass]]></val>
+</name>
+<type>
+<ref refid="f98926b8-00d0-11df-b659-00224128e79d"/>
+</type>
+</Property>
+<ExtensionEnd id="f9896952-00d0-11df-b659-00224128e79d">
+<aggregation>
+<val><![CDATA[composite]]></val>
+</aggregation>
+<association>
+<ref refid="f9894756-00d0-11df-b659-00224128e79d"/>
+</association>
+<type>
+<ref refid="f9890264-00d0-11df-b659-00224128e79d"/>
+</type>
+</ExtensionEnd>
+<InstanceSpecification id="f98989e6-00d0-11df-b659-00224128e79d">
+<classifier>
+<reflist>
+<ref refid="f9890264-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</classifier>
+<slot>
+<reflist>
+<ref refid="f989b506-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</slot>
+</InstanceSpecification>
+<Property id="f989a656-00d0-11df-b659-00224128e79d">
+<class_>
+<ref refid="f9890264-00d0-11df-b659-00224128e79d"/>
+</class_>
+<name>
+<val><![CDATA[subsets]]></val>
+</name>
+<presentation>
+<reflist/>
+</presentation>
+</Property>
+<Slot id="f989b506-00d0-11df-b659-00224128e79d">
+<definingFeature>
+<ref refid="f989a656-00d0-11df-b659-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="f98989e6-00d0-11df-b659-00224128e79d"/>
+</owningInstance>
+<value>
+<ref refid="f989c12c-00d0-11df-b659-00224128e79d"/>
+</value>
+</Slot>
+<LiteralSpecification id="f989c12c-00d0-11df-b659-00224128e79d">
+<value>
+<val><![CDATA[base]]></val>
+</value>
+</LiteralSpecification>
+<InstanceSpecification id="f989d798-00d0-11df-b659-00224128e79d">
+<classifier>
+<reflist>
+<ref refid="f9890264-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</classifier>
+<slot>
+<reflist>
+<ref refid="f989e832-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</slot>
+</InstanceSpecification>
+<Slot id="f989e832-00d0-11df-b659-00224128e79d">
+<definingFeature>
+<ref refid="f989a656-00d0-11df-b659-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="f989d798-00d0-11df-b659-00224128e79d"/>
+</owningInstance>
+<value>
+<ref refid="f989ed64-00d0-11df-b659-00224128e79d"/>
+</value>
+</Slot>
+<LiteralSpecification id="f989ed64-00d0-11df-b659-00224128e79d">
+<value>
+<val><![CDATA[abstract]]></val>
+</value>
+</LiteralSpecification>
+<InstanceSpecification id="f989f854-00d0-11df-b659-00224128e79d">
+<classifier>
+<reflist>
+<ref refid="f9890264-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</classifier>
+<slot>
+<reflist>
+<ref refid="f98a1834-00d0-11df-b659-00224128e79d"/>
+</reflist>
+</slot>
+</InstanceSpecification>
+<Property id="f98a0998-00d0-11df-b659-00224128e79d">
+<class_>
+<ref refid="f9890264-00d0-11df-b659-00224128e79d"/>
+</class_>
+<name>
+<val><![CDATA[redefines]]></val>
+</name>
+<presentation>
+<reflist/>
+</presentation>
+</Property>
+<Slot id="f98a1834-00d0-11df-b659-00224128e79d">
+<definingFeature>
+<ref refid="f98a0998-00d0-11df-b659-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="f989f854-00d0-11df-b659-00224128e79d"/>
+</owningInstance>
+<value>
+<ref refid="f98a1dd4-00d0-11df-b659-00224128e79d"/>
+</value>
+</Slot>
+<LiteralSpecification id="f98a1dd4-00d0-11df-b659-00224128e79d">
+<value>
+<val><![CDATA[name2]]></val>
+</value>
+</LiteralSpecification>
 </gaphor>

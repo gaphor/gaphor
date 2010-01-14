@@ -29,7 +29,7 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
         self.view = self.main_window.show_diagram(self.diagram).view
 
     def test_aspect_type(self):
-        aspect = Connector(self.commentline, self.commentline.handles()[0], self.view)
+        aspect = Connector(self.commentline, self.commentline.handles()[0])
         assert type(aspect) is DiagramItemConnector
 
     def test_query(self):
@@ -38,10 +38,9 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
         assert component.queryMultiAdapter((self.comment, self.commentline), IConnect)
 
     def test_allow(self):
-        aspect = Connector(self.commentline, self.commentline.handles()[0], self.view)
+        aspect = Connector(self.commentline, self.commentline.handles()[0])
         assert aspect.item is self.commentline
         assert aspect.handle is self.commentline.handles()[0]
-        assert aspect.view is self.view
 
         sink = ConnectionSink(self.comment, self.comment.ports()[0])
         assert aspect.allow(sink)
@@ -49,7 +48,7 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
     def test_connect(self):
 
         sink = ConnectionSink(self.comment, self.comment.ports()[0])
-        aspect = Connector(self.commentline, self.commentline.handles()[0], self.view)
+        aspect = Connector(self.commentline, self.commentline.handles()[0])
         aspect.connect(sink)
         canvas = self.diagram.canvas
         cinfo = canvas.get_connection(self.commentline.handles()[0])
@@ -123,7 +122,7 @@ class HandleToolTestCase(unittest.TestCase):
         self.assertTrue(cinfo.connected is actor, cinfo.connected)
         self.assertEquals((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
-        Connector(line, handle, view).disconnect()
+        Connector(line, handle).disconnect()
         #tool.disconnect(line, handle)
         
         cinfo = diagram.canvas.get_connection(handle)
