@@ -58,12 +58,12 @@ class DiagramItemConnector(ItemConnector):
                 # new connection
                 self.connect_handle(sink, callback=callback)
                 # adapter requires both ends to be connected.
-                self.model_connect(sink)
+                self.model_connect(sink, cinfo)
         except Exception, e:
             log.error('Error during connect', e)
 
 
-    def model_connect(self, sink):
+    def model_connect(self, sink, cinfo):
         """
         Connecting requires the handles to be connected before the model
         level connection is made.
@@ -73,7 +73,7 @@ class DiagramItemConnector(ItemConnector):
         """
         handle = self.handle
         item = self.item
-        cinfo = item.canvas.get_connection(handle)
+        #cinfo = item.canvas.get_connection(handle)
 
         adapter = component.queryMultiAdapter((sink.item, item), IConnect)
         log.debug('Connect on model level ' + str(adapter))

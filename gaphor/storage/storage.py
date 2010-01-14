@@ -426,9 +426,11 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
 
         for e in elements.values():
             if 'taggedValue' in e.references:
-                e.taggedvalue = [elements[i].values['value'] for i in e.references['taggedValue'] if elements[i].values.get('value')]
+                taggedvalue = [elements[i].values['value'] for i in e.references['taggedValue'] if elements[i].values.get('value')]
                 #convert_tagged_value(e, elements, factory)
-
+                if taggedvalue:
+                    e.taggedvalue = taggedvalue
+                
                 # Remove obsolete elements
                 for t in e.references['taggedValue']:
                     del elements[t]
@@ -481,7 +483,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                     slot.value.value = str(val)
                     update_elements(slot)
 
-                tviter = iter(e.taggedvalue)
+                tviter = iter(e.taggedvalue or [])
                 for tv in tviter:
                     try:
                         try:
