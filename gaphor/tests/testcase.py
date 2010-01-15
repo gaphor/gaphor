@@ -17,8 +17,23 @@ from gaphor.diagram.interfaces import IGroup
 # Increment log level
 log.set_log_level(log.WARNING)
 
+class TestCaseExtras(object):
+    """
+    Mixin for some extra tests.
+    """
 
-class TestCase(unittest.TestCase):
+    def failUnlessIdentityEqual(self, first, second, msg=None):
+        """Fail if the two objects are equal as determined by the '=='
+           operator.
+        """
+        if first is not second:
+            raise self.failureException, \
+                  (msg or '%r is not %r' % (first, second))
+
+    assertIsEquals = assertIsEqual = failUnlessIdentityEqual
+
+
+class TestCase(TestCaseExtras, unittest.TestCase):
     
     services = ['element_factory', 'adapter_loader', 'element_dispatcher']
     
@@ -82,7 +97,8 @@ class TestCase(unittest.TestCase):
         connected = adapter.connect(handle, port)
 
         cinfo = canvas.get_connection(handle)
-        assert cinfo.connected is item and cinfo.port is port
+        self.assertIsEquals(cinfo.connected, item)
+        self.assertIsEquals(cinfo.port, port)
 
         return connected
 

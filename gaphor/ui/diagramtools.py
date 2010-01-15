@@ -52,9 +52,12 @@ class DiagramItemConnector(ItemConnector):
             if cinfo and cinfo.connected is sink.item:
                 # reconnect only constraint - leave model intact
                 log.debug('performing reconnect constraint')
-                item.canvas.disconnect_item(item, handle, call_callback=False)
-                self.connect_handle(sink, callback=callback)
+                constraint = sink.port.constraint(item.canvas, item, handle, sink.item)
+                item.canvas.reconnect_item(item, handle, constraint=constraint)
             else:
+                if cinfo:
+                    # first disconnect
+                    self.disconnect()
                 # new connection
                 self.connect_handle(sink, callback=callback)
                 # adapter requires both ends to be connected.
@@ -82,14 +85,14 @@ class DiagramItemConnector(ItemConnector):
         assert handle in adapter.line.handles()
         assert sink.port in adapter.element.ports()
 
-        if cinfo:
-            #   reconnect handle and model (no disconnect)
-            log.debug('performing reconnect handle + model')
-            adapter.reconnect(handle, sink.port)
-        else:
+        #if cinfo:
+        #    #   reconnect handle and model (no disconnect)
+        #    log.debug('performing reconnect handle + model')
+        #    adapter.reconnect(handle, sink.port)
+        #else:
             #   just connect, create new elements and stuff like that.
-            log.debug('performing connect')
-            adapter.connect(handle, sink.port)
+        #log.debug('performing connect')
+        adapter.connect(handle, sink.port)
 
     @transactional
     def disconnect(self):
