@@ -91,16 +91,6 @@ class AbstractConnect(object):
         return True
 
 
-    def reconnect(self, handle, port):
-        """
-        Reconnect to an element. Note that at this point the line may
-        be connected to some other, or the same element by means of the
-        handle.connected_to property. Also the connection at UML level
-        still exists.
-        """
-        self.connect(handle, port)
-
-
     def disconnect(self, handle):
         """
         Disconnect UML model level connections.
@@ -320,6 +310,7 @@ class RelationshipConnect(AbstractConnect):
         """
         relation = self.relationship(type, head, tail)
         if not relation:
+            print 'no existing rel found'
             line = self.line
             relation = self.element_factory.create(type)
             setattr(relation, head[0], self.get_connected(line.head).subject)

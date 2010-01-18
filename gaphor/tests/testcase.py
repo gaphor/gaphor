@@ -22,15 +22,25 @@ class TestCaseExtras(object):
     Mixin for some extra tests.
     """
 
+    def failIfIdentityEqual(self, first, second, msg=None):
+        """Fail if the two objects are equal as determined by the 'is
+           operator.
+        """
+        if first is second:
+            raise self.failureException, \
+                  (msg or '%r is not %r' % (first, second))
+
+    assertNotSame = failIfIdentityEqual
+
     def failUnlessIdentityEqual(self, first, second, msg=None):
-        """Fail if the two objects are equal as determined by the '=='
+        """Fail if the two objects are not equal as determined by the 'is
            operator.
         """
         if first is not second:
             raise self.failureException, \
                   (msg or '%r is not %r' % (first, second))
 
-    assertIsEquals = assertIsEqual = failUnlessIdentityEqual
+    assertSame = failUnlessIdentityEqual
 
 
 class TestCase(TestCaseExtras, unittest.TestCase):
@@ -85,7 +95,8 @@ class TestCase(TestCaseExtras, unittest.TestCase):
 
         If port is not provided, then first port is used.
         """
-        canvas = self.diagram.canvas
+        canvas = line.canvas
+        assert line.canvas is item.canvas
 
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
@@ -97,8 +108,8 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         connected = adapter.connect(handle, port)
 
         cinfo = canvas.get_connection(handle)
-        self.assertIsEquals(cinfo.connected, item)
-        self.assertIsEquals(cinfo.port, port)
+        self.assertSame(cinfo.connected, item)
+        self.assertSame(cinfo.port, port)
 
         return connected
 

@@ -52,9 +52,11 @@ class GeneralizationConnect(RelationshipConnect):
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
     def connect_subject(self, handle):
+        print 'connect_subject', handle
         relation = self.relationship_or_new(UML.Generalization,
                     ('general', None),
                     ('specific', 'generalization'))
+        print 'found', relation
         self.line.subject = relation
 
 component.provideAdapter(GeneralizationConnect)
@@ -96,37 +98,15 @@ class AssociationConnect(RelationshipConnect):
                    or (end2.type is head_type and end1.type is tail_type):
                     return
                     
-            # Find all associations and determine if the properties on
-            # the association ends have a type that points to the class.
-            for assoc in self.element_factory.select():
-                if isinstance(assoc, UML.Association):
-                    end1 = assoc.memberEnd[0]
-                    end2 = assoc.memberEnd[1]
-                    if (end1.type is head_type and end2.type is tail_type) \
-                       or (end2.type is head_type and end1.type is tail_type):
-                        # check if this entry is not yet in the diagram
-                        # Return if the association is not (yet) on the canvas
-                        for item in assoc.presentation:
-                            if item.canvas is element.canvas:
-                                break
-                        else:
-                            line.subject = assoc
-                            if (end1.type is head_type and end2.type is tail_type):
-                                line.head_end.subject = end1
-                                line.tail_end.subject = end2
-                            else:
-                                line.head_end.subject = end2
-                                line.tail_end.subject = end1
-                            return
-            else:
-                relation = UML.model.create_association(self.element_factory, head_type, tail_type)
-                relation.package = element.canvas.diagram.namespace
+            # Create new association
+            relation = UML.model.create_association(self.element_factory, head_type, tail_type)
+            relation.package = element.canvas.diagram.namespace
 
-                line.head_end.subject = relation.memberEnd[0]
-                line.tail_end.subject = relation.memberEnd[1]
+            line.head_end.subject = relation.memberEnd[0]
+            line.tail_end.subject = relation.memberEnd[1]
 
-                # Do subject itself last, so event handlers can trigger
-                line.subject = relation
+            # Do subject itself last, so event handlers can trigger
+            line.subject = relation
 
     def disconnect_subject(self, handle):
         """

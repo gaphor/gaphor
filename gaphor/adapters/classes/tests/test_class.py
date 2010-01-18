@@ -2,6 +2,7 @@
 Classes related adapter connection tests.
 """
 
+from gaphas.canvas import ConnectionError
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
@@ -122,14 +123,17 @@ class DependencyTestCase(TestCase):
         dep2 = diagram2.create(items.DependencyItem)
 
         self.connect(dep2, dep2.head, actoritem3)
+        cinfo = diagram2.canvas.get_connection(dep2.head)
+        self.assertNotSame(None, cinfo)
+        self.assertSame(cinfo.connected, actoritem3)
         self.connect(dep2, dep2.tail, actoritem4)
-        self.assertTrue(dep2.subject is not None)
+        self.assertNotSame(dep2.subject, None)
         self.assertEquals(1, len(actor1.supplierDependency))
         self.assertTrue(actor1.supplierDependency[0] is dep.subject)
         self.assertEquals(1, len(actor2.clientDependency))
         self.assertTrue(actor2.clientDependency[0] is dep.subject)
 
-        self.assertTrue(dep.subject is dep2.subject)
+        self.assertSame(dep.subject, dep2.subject)
 
 
 class GeneralizationTestCase(TestCase):
@@ -169,6 +173,38 @@ class GeneralizationTestCase(TestCase):
         self.assertTrue(gen.subject.general is c2.subject)
         self.assertTrue(gen.subject.specific is c1.subject)
 
+    def test_reconnection(self):
+        """Test generalization item connection using two classes
+        """
+        gen = self.create(items.GeneralizationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+
+        self.connect(gen, gen.tail, c1)
+        assert self.get_connected(gen.tail) is c1
+
+        self.connect(gen, gen.head, c2)
+        self.assertTrue(gen.subject is not None)
+        self.assertTrue(gen.subject.general is c2.subject)
+        self.assertTrue(gen.subject.specific is c1.subject)
+
+        # Now do the same on a new diagram:
+        diagram2 = self.element_factory.create(UML.Diagram)
+        c3 = diagram2.create(items.ClassItem, subject=c1.subject)
+        c4 = diagram2.create(items.ClassItem, subject=c2.subject)
+        gen2 = diagram2.create(items.GeneralizationItem)
+
+        self.connect(gen2, gen2.head, c3)
+        cinfo = diagram2.canvas.get_connection(gen2.head)
+        self.assertNotSame(None, cinfo)
+        self.assertSame(cinfo.connected, c3)
+
+        self.connect(gen2, gen2.tail, c4)
+        self.assertSame(gen.subject, gen2.subject)
+        self.assertEquals(1, len(c1.subject.generalization))
+        self.assertSame(c1.subject.generalization[0], gen.subject)
+        #self.assertEquals(1, len(actor2.clientDependency))
+        #self.assertTrue(actor2.clientDependency[0] is dep.subject)
 
 
 class AssociationConnectorTestCase(TestCase):
@@ -191,7 +227,7 @@ class AssociationConnectorTestCase(TestCase):
         self.assertTrue(glued)
 
 
-    def test_connection(self):
+    def test_connect(self):
         """Test association item connection
         """
         asc = self.create(items.AssociationItem)
@@ -210,7 +246,35 @@ class AssociationConnectorTestCase(TestCase):
         self.assertTrue(asc.tail_end.subject is not None)
 
 
-    def test_disconnection(self):
+    def test_reconnect(self):
+        """Test association item connection
+        """
+        asc = self.create(items.AssociationItem)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+        c3 = self.create(items.ClassItem, UML.Class)
+
+        self.connect(asc, asc.head, c1)
+        self.assertTrue(asc.subject is None) # no UML metaclass yet
+
+        self.connect(asc, asc.tail, c2)
+        self.assertTrue(asc.subject is not None)
+        a = asc.subject
+
+        try:
+            self.connect(asc, asc.tail, c3)
+        except ConnectionError:
+            pass # as expected
+        else:
+            assert False, "expected ConnectionError to be raised"
+
+        self.disconnect(asc, asc.tail)
+        self.connect(asc, asc.tail, c3)
+        self.assertTrue(asc.subject is not None)
+        self.assertTrue(asc.subject is not a)
+
+
+    def test_disconnect(self):
         """Test association item disconnection
         """
         asc = self.create(items.AssociationItem)
