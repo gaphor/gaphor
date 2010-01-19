@@ -3,7 +3,7 @@ Test actions.
 """
 
 from gaphor import UML
-from gaphor.diagram.action import ActionItem
+from gaphor.diagram.actions.action import ActionItem
 from gaphor.tests.testcase import TestCase
 
 

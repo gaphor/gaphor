@@ -33,14 +33,14 @@ from gaphor.diagram.node import NodeItem
 from gaphor.diagram.components.subsystem import SubsystemItem
 
 # Actions:
-from gaphor.diagram.action import ActionItem
 from gaphor.diagram.activitynodes import ActivityNodeItem
 from gaphor.diagram.activitynodes import InitialNodeItem, ActivityFinalNodeItem
 from gaphor.diagram.activitynodes import FlowFinalNodeItem
 from gaphor.diagram.activitynodes import DecisionNodeItem
 from gaphor.diagram.activitynodes import ForkNodeItem
-from gaphor.diagram.flow import FlowItem
 from gaphor.diagram.objectnode import ObjectNodeItem
+from gaphor.diagram.actions.action import ActionItem
+from gaphor.diagram.actions.flow import FlowItem
 from gaphor.diagram.actions.partition import PartitionItem
 
 # Interactions
