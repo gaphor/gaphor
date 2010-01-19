@@ -207,6 +207,19 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
+
+    def create_canvasitems(canvas, canvasitems, parent=None):
+        """
+        Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
+        """
+        for item in canvasitems:
+            print 'create item', item.type, 'with parent', parent
+            cls = getattr(items, item.type)
+            item.element = diagram.create_as(cls, item.id)
+            canvas.add(item.element, parent=parent)
+            assert canvas.get_parent(item.element) is parent
+            create_canvasitems(canvas, item.canvasitems, parent=item.element)
+
     for id, elem in elements.items():
         st = update_status_queue()
         if st: yield st
@@ -216,16 +229,9 @@ def load_elements_generator(elements, factory, gaphor_version=None):
             elem.element = factory.create_as(cls, id)
             if elem.canvas:
                 elem.element.canvas.block_updates = True
-        elif isinstance(elem, parser.canvasitem):
-            cls = getattr(items, elem.type)
-            #log.debug('Creating canvas item for %s (%s)' % (elem, elem.id))
-            elem.element = diagram.create_as(cls, id)
-        else:
+                create_canvasitems(elem.element.canvas, elem.canvas.canvasitems)
+        elif not isinstance(elem, parser.canvasitem):
             raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
-
-    #log.info('0% ... 33%')
-
-    #log.debug("Still have %d elements" % len(elements))
 
     # load attributes and create references:
     for id, elem in elements.items():
@@ -233,18 +239,6 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         if st: yield st
         # Ensure that all elements have their element instance ready...
         assert hasattr(elem, 'element')
-
-        # establish parent/child relations on canvas items:
-        if isinstance(elem, parser.element) and elem.canvas:
-            for item in elem.canvas.canvasitems:
-                assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
-                elem.element.canvas.add(item.element)
-
-        # Also create nested canvas items:
-        if isinstance(elem, parser.canvasitem):
-            for item in elem.canvasitems:
-                assert item in elements.values(), 'Item %s (%s) is a canvas item, but it is not in the parsed objects table' % (item, item.id)
-                elem.element.canvas.add(item.element, parent=elem.element)
 
         # load attributes and references:
         for name, value in elem.values.items():

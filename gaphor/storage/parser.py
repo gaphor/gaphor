@@ -64,7 +64,6 @@ class base(object):
             return None
 
 class element(base):
-    #__slots__ = ('id', 'type', 'canvas', 'values', 'references')
 
     def __init__(self, id, type):
         base.__init__(self)
@@ -73,14 +72,12 @@ class element(base):
         self.canvas = None
 
 class canvas(base):
-    #__slots__ = ('canvasitems', 'values', 'references')
 
     def __init__(self):
         base.__init__(self)
         self.canvasitems = []
 
 class canvasitem(base):
-    #__slots__ = ('id', 'type', 'canvasitems', 'values', 'references')
 
     def __init__(self, id, type):
         base.__init__(self)
@@ -191,9 +188,10 @@ class GaphorLoader(handler.ContentHandler):
         elif state in (CANVAS, ITEM) and name == 'item':
             id = attrs['id']
             c = canvasitem(id, attrs['type'])
-            assert id not in self.elements.keys(), '%s already defined' % (id) #, self.elements[id])
+            assert id not in self.elements.keys(), '%s already defined' % id
             self.elements[id] = c
             self.peek().canvasitems.append(c)
+            print 'push', c.type, self.peek()
             self.push(c, ITEM)
 
         # Store the attribute name on the stack, so we can use it later
