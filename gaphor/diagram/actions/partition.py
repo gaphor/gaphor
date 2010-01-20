@@ -71,11 +71,10 @@ class PartitionItem(NamedItem):
 
             dp = 0
             for sl in self.canvas.get_children(self):
-                x1, y1 = sl.matrix[4], sl.matrix[5]
+                x, y = sl.matrix[4], sl.matrix[5]
 
-                # line up headers
-                x = dp - x1
-                y =  - y1 + self._header_size[1] + self._hdmax - sl._header_size[1]
+                x = dp - x
+                y =  - y + self._header_size[1] + self._hdmax - sl._header_size[1]
                 sl.matrix.translate(x, y)
 
                 sl.height = sl.min_height = max(0, self.height - self._header_size[1])
