@@ -71,18 +71,15 @@ class PartitionItem(NamedItem):
 
             dp = 0
             for sl in self.canvas.get_children(self):
-                x, y = self.canvas.get_matrix_i2c(self).transform_point(dp, 0)
-                x1, y1 = self.canvas.get_matrix_i2c(sl).transform_point(0, 0)
+                x1, y1 = sl.matrix[4], sl.matrix[5]
 
                 # line up headers
-                x = x - x1
-                y = y - y1 + self._header_size[1] + self._hdmax - sl._header_size[1]
+                x = dp - x1
+                y =  - y1 + self._header_size[1] + self._hdmax - sl._header_size[1]
                 sl.matrix.translate(x, y)
 
                 sl.height = sl.min_height = max(0, self.height - self._header_size[1])
                 dp += sl.width
-            if not self._toplevel:
-                self.canvas.get_parent(self).request_update()
 
 
     def draw(self, context):
