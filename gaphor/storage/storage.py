@@ -213,7 +213,6 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
         """
         for item in canvasitems:
-            print 'create item', item.type, 'with parent', parent
             cls = getattr(items, item.type)
             item.element = diagram.create_as(cls, item.id)
             canvas.add(item.element, parent=parent)

@@ -1,4 +1,3 @@
-# vim:sw=4:et
 """Gaphor file reader.
 
 This module contains only one interesting function:
@@ -191,7 +190,6 @@ class GaphorLoader(handler.ContentHandler):
             assert id not in self.elements.keys(), '%s already defined' % id
             self.elements[id] = c
             self.peek().canvasitems.append(c)
-            print 'push', c.type, self.peek()
             self.push(c, ITEM)
 
         # Store the attribute name on the stack, so we can use it later
@@ -254,9 +252,6 @@ class GaphorLoader(handler.ContentHandler):
         self.pop()
 
     def startElementNS(self, name, qname, attrs):
-        #print 'name=', name
-        #print 'qname=', qname
-        #print 'attrs=', attrs
         if not name[0] or name[0] == XMLNS:
             a = { }
             for key, val in attrs.items():
@@ -271,12 +266,10 @@ class GaphorLoader(handler.ContentHandler):
         """Read characters."""
         if self.in_cdata:
             self.text = self.text + content
-            #print 'characters: "%s"' % self.text
 
     # Lexical handler stuff:
 
     def comment(self, comment):
-        #print 'comment: "%s"' % comment
         pass
 
     def startCDATA(self):
@@ -350,7 +343,4 @@ def parse_file(filename, parser):
     if not is_fd:
         f.close()
 
-if __name__ == '__main__':
-    parse('ns.xml')
-    #parser.parse('ns2.xml')
-    #print len(ch.elements)
+# vim:sw=4:et:ai
