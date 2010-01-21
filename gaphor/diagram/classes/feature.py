@@ -84,10 +84,19 @@ class FeatureItem(DiagramItem):
         """
         return self.subject.render() or ''
 
+#    def draw(self, context):
+#        cr = context.cairo
+#        text_set_font(cr, self.font)
+#        text_align(cr, 0, 0, self.render(), align_x=1, align_y=1)
+
     def draw(self, context):
         cr = context.cairo
         text_set_font(cr, self.font)
-        text_align(cr, 0, 0, self.render(), align_x=1, align_y=1)
+        if self.subject.isStatic:
+            text_underline(cr, 0, 0, self.render() or '')
+        else:
+            text_align(cr, 0, 0, self.render(), align_x=1, align_y=1)
+
 
 
 class AttributeItem(FeatureItem):
@@ -108,14 +117,6 @@ class AttributeItem(FeatureItem):
     def postload(self):
         if self.subject:
             self.text = self.render()
-
-    def draw(self, context):
-        if self.subject.isStatic:
-            cr = context.cairo
-            text_set_font(cr, self.font)
-            text_underline(cr, 0, 0, self.render() or '')
-        else:
-            super(AttributeItem, self).draw(context)
 
 
 class OperationItem(FeatureItem):
@@ -146,7 +147,7 @@ class OperationItem(FeatureItem):
         self.request_update()
 
     def render(self):
-        return self.subject.render(type=True, multiplicity=True, default=True) or ''
+        return self.subject.render(visibility=True, type=True, multiplicity=True, default=True) or ''
 
 
 class SlotItem(FeatureItem):

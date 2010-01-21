@@ -185,6 +185,7 @@ class ClassAttributes(EditableTreeModel):
     """
     GTK tree model to edit class attributes.
     """
+
     def _get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
@@ -216,9 +217,10 @@ class ClassOperations(EditableTreeModel):
     """
     GTK tree model to edit class operations.
     """
+
     def _get_rows(self):
         for operation in self._item.subject.ownedOperation:
-            yield [operation.render(), operation]
+            yield [operation.render(), operation.isStatic, operation]
 
 
     def _create_object(self):
@@ -230,9 +232,12 @@ class ClassOperations(EditableTreeModel):
     @transactional
     def _set_object_value(self, row, col, value):
         operation = row[-1]
-        operation.parse(value)
-        row[0] = operation.render()
-
+        if col == 0:
+            operation.parse(value)
+            row[0] = operation.render()
+        elif col == 1:
+            operation.isStatic = not operation.isStatic
+            row[1] = operation.isStatic
 
     def _swap_objects(self, o1, o2):
         return self._item.subject.ownedOperation.swap(o1, o2)
@@ -758,7 +763,6 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 - # /attr: int
 """
         tree_view = create_tree_view(self.model, (_('Attributes'), _('S')), tip)
-
         page.pack_start(tree_view)
 
         return page
@@ -807,14 +811,14 @@ class OperationsPage(object):
         hbox.show_all()
         page.pack_start(hbox, expand=False)
 
-        self.model = ClassOperations(self.context)
+        self.model = ClassOperations(self.context, (str, bool, object))
         tip = """\
 Add and edit class operations according to UML syntax. Operation syntax examples
 - call()
 - + call(a: int, b: str)
 - # call(a: int: b: str): bool
 """
-        tree_view = create_tree_view(self.model, (_('Operation'),), tip)
+        tree_view = create_tree_view(self.model, (_('Operation'), _('S')), tip)
         page.pack_start(tree_view)
 
         return page
