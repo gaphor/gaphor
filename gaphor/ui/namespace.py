@@ -500,7 +500,6 @@ class NamespaceView(gtk.TreeView):
             q = (t, p)
 
         try:
-            print 'get icon', q
             icon = self.icon_cache[q]
         except KeyError:
             stock_id = stock.get_stock_id(t, p)
