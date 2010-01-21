@@ -79,8 +79,11 @@ class UtilityWindow(ToplevelWindow):
 
         main_window = self.gui_manager.main_window.window
         self.window.set_transient_for(main_window)
-        self.window.set_keep_above(True)
+        #self.window.set_keep_above(True)
+        self.window.set_property('skip-taskbar-hint', True)
+        self.window.set_position(gtk.WIN_POS_MOUSE)
         self.window.show()
+       #self.window.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
 
 
 # vim:sw=4:et:ai

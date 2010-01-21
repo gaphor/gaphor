@@ -142,6 +142,7 @@ class TextEditTool(Tool):
         view = self.view
         window = gtk.Window()
         window.set_property('decorated', False)
+        window.set_property('skip-taskbar-hint', True)
         window.set_resize_mode(gtk.RESIZE_IMMEDIATE)
         #window.set_modal(True)
         window.set_parent_window(view.window)
