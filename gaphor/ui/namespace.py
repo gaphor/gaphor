@@ -13,11 +13,10 @@ from zope import component
 
 from gaphor.application import Application
 from gaphor import UML
-from gaphor.UML.event import ElementCreateEvent, ModelFactoryEvent, FlushFactoryEvent
+from gaphor.UML.event import ElementCreateEvent, ModelFactoryEvent, FlushFactoryEvent, DerivedSetEvent
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
-from gaphor.UML.event import DerivedSetEvent
 from gaphor.transaction import Transaction
-
+from iconoption import get_icon_option
 
 # The following items will not be shown in the treeview, although they
 # are UML.Namespace elements.
@@ -37,11 +36,6 @@ _default_filter_list = (
     UML.Property,
     UML.Operation
     )
-
-_presentation_options = set([
-    'metaclass',
-    'subsystem',
-])
 
 # TODO: update tree sorter:
 # Diagram before Class & Package.
@@ -497,36 +491,16 @@ class NamespaceView(gtk.TreeView):
         self.expand_row((0,), False)
 
 
-    def get_presentation_option(self, value):
-        items = (p for p in value.presentation if hasattr(type(p), '__stereotype__'))
-        keys = []
-        for item in items:
-            t = type(item)
-            st = t.__stereotype__
-            # fixme: compare this code with StereotypeSupport.parse_stereotype
-            # and clean up this mess using @uml class decorator
-            if isinstance(st, basestring):
-                keys.append(st)
-            elif isinstance(st, dict):
-                for k, f in st.items():
-                    if f(item):
-                        keys.append(k)
-        k = set(keys) & _presentation_options
-        if len(k) == 1: # we know how to handle only one presentation option at the moment
-            return k.pop()
-        else:
-            return None
-
-
     def _set_pixbuf(self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)
         q = t = type(value)
 
-        p = self.get_presentation_option(value)
+        p = get_icon_option(value)
         if p is not None:
             q = (t, p)
 
         try:
+            print 'get icon', q
             icon = self.icon_cache[q]
         except KeyError:
             stock_id = stock.get_stock_id(t, p)
@@ -585,7 +559,7 @@ class NamespaceView(gtk.TreeView):
         model, iter = selection.get_selected()
         if iter:
             element = model.get_value(iter, 0)
-            p = self.get_presentation_option(element)
+            p = get_icon_option(element)
             p = p if p else ''
             # 'id#stereotype' is being send
             if info == NamespaceView.TARGET_ELEMENT_ID:

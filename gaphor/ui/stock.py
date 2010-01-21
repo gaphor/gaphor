@@ -16,17 +16,17 @@ _icon_factory.add_default()
 
 _uml_to_stock_id_map = { }
 
-def get_stock_id(element, stereotype=None):
+def get_stock_id(element, option=None):
     global _uml_to_stock_id_map
     if issubclass(element, UML.Element):
-        t = element, stereotype
+        t = element, option
         if t in _uml_to_stock_id_map:
             return _uml_to_stock_id_map[t]
         else:
-            log.warning('Stock id for %s (%s) not found' % (element, stereotype))
+            log.warning('Stock id for %s (%s) not found' % (element, option))
             return None #STOCK_POINTER
 
-def add_stock_icon(id, icon_dir, icon_files, uml_class=None, stereotype=None):
+def add_stock_icon(id, icon_dir, icon_files, uml_class=None, option=None):
     global _uml_to_stock_id_map
     global _icon_factory
     set = gtk.IconSet()
@@ -42,7 +42,7 @@ def add_stock_icon(id, icon_dir, icon_files, uml_class=None, stereotype=None):
         set.add_source(source)
     _icon_factory.add(id, set)
     if uml_class:
-        _uml_to_stock_id_map[(uml_class, stereotype)] = id
+        _uml_to_stock_id_map[(uml_class, option)] = id
 
 
 class StockIconLoader(handler.ContentHandler):
@@ -63,7 +63,7 @@ class StockIconLoader(handler.ContentHandler):
         self.files = []
         self.data = ''
         self.element = None
-        self.stereotype = None
+        self.option = None
 
     def endDocument(self):
         pass
@@ -77,24 +77,22 @@ class StockIconLoader(handler.ContentHandler):
             self.files = []
             self.element = None
 
-        elif name in ('element', 'stereotype', 'file', 'stock-icons'):
-            pass
-        else:
+        elif name not in ('element', 'option', 'file', 'stock-icons'):
             raise ParserException, 'Invalid XML: tag <%s> not known' % name
 
     def endElement(self, name):
         if name == 'icon':
             assert self.id
             assert self.files
-            add_stock_icon(self.id, self.icon_dir, self.files, self.element, self.stereotype)
-            self.stereotype = None
+            add_stock_icon(self.id, self.icon_dir, self.files, self.element, self.option)
+            self.option = None
         elif name == 'element':
             try:
                 self.element = getattr(UML, self.data)
             except:
                 raise ParserException, 'No element found with name %s' % self.data
-        elif name == 'stereotype':
-            self.stereotype = self.data
+        elif name == 'option':
+            self.option = self.data
         elif name == 'file':
             self.files.append(self.data)
         elif name == 'stock-icons':

@@ -82,7 +82,5 @@ class UtilityWindow(ToplevelWindow):
         self.window.set_keep_above(True)
         self.window.show()
 
-        print self.window.get_property('default-width')
-        print self.window.get_property('default-height')
 
 # vim:sw=4:et:ai
