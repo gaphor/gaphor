@@ -6,9 +6,9 @@ import operator
 
 from gaphor import UML
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP
-from math import pi
 from gaphor.diagram.states import VertexItem
 from gaphor.diagram.classifier import CompartmentItem
+from gaphor.diagram.compartment import NamedFeatureItem
 from gaphor.core import inject
 
 DX = 15
@@ -16,13 +16,7 @@ DY = 8
 DDX = 0.4 * DX
 DDY = 0.4 * DY
 
-
-from gaphas.util import text_extents, text_set_font, text_align, text_underline
-from gaphor.diagram import font
-from gaphor.diagram.compartment import NamedFeatureItem
-
-
-class StateItem(CompartmentItem):
+class StateItem(CompartmentItem, VertexItem):
     element_factory = inject('element_factory')
     __uml__   = UML.State
     __style__ = {
