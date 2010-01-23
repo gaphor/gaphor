@@ -2,32 +2,96 @@
 State diagram item.
 """
 
+import operator
+
 from gaphor import UML
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
+from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP
 from math import pi
 from gaphor.diagram.states import VertexItem
+from gaphor.diagram.classifier import CompartmentItem
+from gaphor.core import inject
 
 DX = 15
 DY = 8
 DDX = 0.4 * DX
 DDY = 0.4 * DY
 
-class StateItem(VertexItem):
+
+from gaphas.util import text_extents, text_set_font, text_align, text_underline
+from gaphor.diagram import font
+from gaphor.diagram.compartment import NamedFeatureItem
+
+
+class StateItem(CompartmentItem):
+    element_factory = inject('element_factory')
     __uml__   = UML.State
     __style__ = {
         'min-size':   (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_TOP),
+        'extra-space': 'compartment',
     }
 
+    def __init__(self, id):
+        super(StateItem, self).__init__(id)
+        self.drawing_style = self.DRAW_COMPARTMENT
+        self._activities = self.create_compartment('activities')
+        self._activities.use_extra_space = True
+        # non-visible by default, show when at least one item is visible
+        self._activities.visible = False
 
-    def draw(self, context):
-        """
-        Draw state symbol.
-        """
-        super(StateItem, self).draw(context)
+        self._entry = NamedFeatureItem(pattern='entry / %s', order=1)
+        self._exit = NamedFeatureItem(pattern='exit / %s', order=2)
+        self._do_activity = NamedFeatureItem(pattern='do / %s', order=3)
+#        self.watch('subject<ControlFlow>.guard<LiteralSpecification>.value', self.on_control_flow_guard)
 
+
+    def _set_activity(self, act, attr, text):
+        if text and act not in self._activities:
+            self._activities.append(act)
+            act.subject = self.element_factory.create(UML.Activity)
+            act.subject.name = text
+            setattr(self.subject, attr, act.subject)
+
+            # sort the activities according to defined order
+            self._activities.sort(key=operator.attrgetter('order'))
+
+        elif text and act in self._activities:
+            act.subject.name = text
+        elif not text and act in self._activities:
+            self._activities.remove(act)
+            act.subject.unlink()
+
+        self._activities.visible = len(self._activities) > 0
+        self.request_update()
+
+
+    def set_entry(self, text):
+        self._set_activity(self._entry, 'entry', text)
+
+
+    def set_exit(self, text):
+        self._set_activity(self._exit, 'exit', text)
+
+
+    def set_do_activity(self, text):
+        self._set_activity(self._do_activity, 'doActivity', text)
+
+
+    def postload(self):
+        super(StateItem, self).postload()
+        if self.subject.entry:
+            self.set_entry(self.subject.entry.name)
+        if self.subject.exit:
+            self.set_exit(self.subject.exit.name)
+        if self.subject.doActivity:
+            self.set_do_activity(self.subject.doActivity.name)
+
+
+    def draw_compartment_border(self, context):
+        """
+        Draw state item.
+        """
         c = context.cairo
-
 
         c.move_to(0, DY)
         c.curve_to(0, DDY, DDX, 0, DX, 0)
