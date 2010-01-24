@@ -111,6 +111,32 @@ class StereotypesAttributesTestCase(TestCase):
         UML.model.remove_stereotype(c.subject, self.st1)
         self.assertEquals(0, len(c._compartments))
 
+
+    def test_removing_stereotype_attribute(self):
+        """Test if stereotype instance specification is destroyed when stereotype attribute is removed
+        """
+        factory = self.element_factory
+        c = self.create(ComponentItem, UML.Component)
+
+        c.show_stereotypes_attrs = True
+
+        obj = UML.model.apply_stereotype(factory, c.subject, self.st1)
+
+        # test precondition
+        assert len(c._compartments) == 1
+
+        attr = self.st1.ownedAttribute[0]
+        slot = UML.model.add_slot(factory, obj, attr)
+        assert len(obj.slot) == 1
+
+        compartment = c._compartments[0]
+        assert compartment.visible
+
+        attr.unlink()
+        self.assertEquals(0, len(obj.slot))
+        self.assertEquals(0, len(c._compartments))
+        self.assertFalse(compartment.visible)
+
     
     def test_stereotype_attributes_status_saving(self):
         """Test stereotype attributes status saving
