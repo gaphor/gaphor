@@ -25,12 +25,12 @@ class TransitionPropertyPage(NamedItemPropertyPage):
         page = super(TransitionPropertyPage, self).construct()
 
         subject = self.subject
-        
+
         if not subject:
             return page
 
         hbox = create_hbox_label(self, page, _('Guard'))
-        entry = gtk.Entry()        
+        entry = gtk.Entry()
         entry.set_text(subject.guard.specification.value if subject.guard else '')
         entry.connect('changed', self._on_guard_change)
         hbox.pack_start(entry)
@@ -66,26 +66,26 @@ class StatePropertyPage(NamedItemPropertyPage):
         page = super(StatePropertyPage, self).construct()
 
         subject = self.subject
-        
+ 
         if not subject:
             return page
 
         hbox = create_hbox_label(self, page, _('Entry'))
-        entry = gtk.Entry()        
+        entry = gtk.Entry()
         if self.item._entry.subject:
             entry.set_text(self.item._entry.subject.name)
         entry.connect('changed', self._on_text_change, self.item.set_entry)
         hbox.pack_start(entry)
 
         hbox = create_hbox_label(self, page, _('Exit'))
-        entry = gtk.Entry()        
+        entry = gtk.Entry()
         if self.item._exit.subject:
             entry.set_text(self.item._exit.subject.name)
         entry.connect('changed', self._on_text_change, self.item.set_exit)
         hbox.pack_start(entry)
 
         hbox = create_hbox_label(self, page, _('Do Activity'))
-        entry = gtk.Entry()        
+        entry = gtk.Entry()
         if self.item._do_activity.subject:
             entry.set_text(self.item._do_activity.subject.name)
         entry.connect('changed', self._on_text_change, self.item.set_do_activity)
