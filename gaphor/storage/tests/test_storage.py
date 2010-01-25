@@ -30,6 +30,19 @@ class PseudoFile(object):
 
 class StorageTestCase(TestCase):
 
+    def test_version_check(self):
+        from gaphor.storage.storage import version_lower_than
+        self.assertTrue(version_lower_than('0.3.0', (0, 15, 0)))
+        self.assertTrue(version_lower_than('0', (0, 15, 0)))
+        self.assertTrue(version_lower_than('0.14', (0, 15, 0)))
+        self.assertTrue(version_lower_than('0.14.1111', (0, 15, 0)))
+        self.assertFalse(version_lower_than('0.15.0', (0, 15, 0)))
+        self.assertFalse(version_lower_than('1.33.0', (0, 15, 0)))
+        self.assertTrue(version_lower_than('0.15.0.b123', (0, 15, 0)))
+        self.assertTrue(version_lower_than('0.14.0.b1', (0, 15, 0)))
+        self.assertTrue(version_lower_than('0.15.b1', (0, 15, 0)))
+        self.assertFalse(version_lower_than('0.16.b1', (0, 15, 0)))
+
     def test_save_uml(self):
         """Saving gaphor.UML model elements.
         """

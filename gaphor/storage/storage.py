@@ -149,8 +149,6 @@ def save_generator(writer, factory):
 
     writer.startDocument()
     writer.startPrefixMapping('', NAMESPACE_MODEL)
-#    writer.startElement('gaphor', { 'version': FILE_FORMAT_VERSION,
-#                                    'gaphor-version': Application.distribution.version })
     writer.startElementNS((NAMESPACE_MODEL, 'gaphor'), None,
             { (NAMESPACE_MODEL, 'version'): FILE_FORMAT_VERSION,
               (NAMESPACE_MODEL, 'gaphor-version'): Application.distribution.version })
@@ -363,6 +361,19 @@ def load_generator(filename, factory):
         log.info('file %s could not be loaded' % filename, e)
         raise
 
+def version_lower_than(gaphor_version, version):
+    """
+    if version_lower_than('0.3.0', (0, 15, 0)):
+       ...
+    """
+    parts = gaphor_version.split('.')
+    try:
+        return tuple(map(int, parts)) < version
+    except ValueError:
+        # We're having a -pre, -beta, -alpha or whatever version
+        parts = parts[:-1]
+        return tuple(map(int, parts)) <= version
+    
 
 def version_0_15_0_pre(elements, factory, gaphor_version):
     """
@@ -379,7 +390,7 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
     This function is called before the actual elements are constructed.
     """
     ATTRS = set(['class_', 'interface_', 'actor', 'useCase', 'owningAssociation'])
-    if tuple(map(int, gaphor_version.split('.'))) < (0, 15, 0):
+    if version_lower_than(gaphor_version, (0, 15, 0)):
         # update associations
         values = (v for v in elements.values()
                 if type(v) is parser.element
@@ -438,7 +449,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
         e = elements[element.id] = parser.element(element.id, element.__class__.__name__)
         e.element = element
 
-    if tuple(map(int, gaphor_version.split('.'))) < (0, 15, 0):
+    if version_lower_than(gaphor_version, (0, 15, 0)):
         stereotypes = {}
         profile = None
         for e in elements.values():
@@ -558,7 +569,7 @@ def version_0_14_0(elements, factory, gaphor_version):
     This function is called before the actual elements are constructed.
     """
     import uuid
-    if tuple(map(int, gaphor_version.split('.'))) < (0, 14, 0):
+    if version_lower_than(gaphor_version, (0, 14, 0)):
         values = (v for v in elements.values() if type(v) is parser.element)
         for et in values:
             try:
@@ -592,7 +603,7 @@ def version_0_9_0(elements, factory, gaphor_version):
 
     This function is called before the actual elements are constructed.
     """
-    if tuple(map(int, gaphor_version.split('.'))) < (0, 9, 0):
+    if version_lower_than(gaphor_version, (0, 9, 0)):
         for elem in elements.values():
             try:
                 if type(elem) is parser.canvasitem:
@@ -616,7 +627,7 @@ def version_0_7_2(elements, factory, gaphor_version):
     """
     import uuid
 
-    if tuple(map(int, gaphor_version.split('.'))) < (0, 7, 2):
+    if version_lower_than(gaphor_version, (0, 7, 2)):
         for elem in elements.values():
             try:
                 if type(elem) is parser.element \
@@ -658,7 +669,7 @@ def version_0_7_1(elements, factory, gaphor_version):
         if not (type and end1 in type.ownedAttribute):
             del end1.owningAssociation
 
-    if tuple(map(int, gaphor_version.split('.'))) < (0, 7, 1):
+    if version_lower_than(gaphor_version, (0, 7, 1)):
         log.info('Fix navigability of Associations (file version: %s)' % gaphor_version)
         for elem in elements.values():
             try:
@@ -678,7 +689,7 @@ def version_0_6_2(elements, factory, gaphor_version):
     Before 0.6.2 an Interface could be represented by a ClassItem and
     a InterfaceItem. Now only InterfaceItems are used.
     """
-    if tuple(map(int, gaphor_version.split('.'))) < (0, 6, 2):
+    if version_lower_than(gaphor_version, (0, 6, 2)):
         for elem in elements.values():
             try:
                 if type(elem) is parser.element and elem.type == 'Interface':
@@ -698,7 +709,7 @@ def version_0_5_2(elements, factory, gaphor_version):
     Before version 0.5.2, the wrong memberEnd of the association was
     holding the aggregation information.
     """
-    if tuple(map(int, gaphor_version.split('.'))) < (0, 5, 2):
+    if version_lower_than(gaphor_version, (0, 5, 2)):
         log.info('Fix composition on Associations (file version: %s)' % gaphor_version)
         for elem in elements.values():
             try:
