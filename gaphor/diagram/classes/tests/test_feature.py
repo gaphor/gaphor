@@ -2,7 +2,8 @@
 from gaphor.tests.testcase import TestCase
 from gaphor import UML
 from gaphor.diagram.classes.klass import ClassItem
-from gaphor.diagram.classes.feature import AttributeItem, OperationItem, SlotItem
+from gaphor.diagram.classes.feature import AttributeItem, OperationItem
+from gaphor.diagram.compartment import SlotItem
 from gaphor.UML.diagram import DiagramCanvas
 
 

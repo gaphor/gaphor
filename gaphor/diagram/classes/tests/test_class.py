@@ -46,7 +46,7 @@ class ClassTestCase(TestCase):
 
         diagram.canvas.update()
         self.assertEqual(1, len(klass._compartments[1]))
-        self.assertEqual((59.0, 23.0), klass._compartments[1].get_size())
+        self.assertEqual((71.0, 23.0), klass._compartments[1].get_size())
 
     def test_attribute_removal(self):
 

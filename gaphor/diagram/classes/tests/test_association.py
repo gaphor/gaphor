@@ -83,4 +83,20 @@ class AssociationItemTestCase(TestCase):
 
         assert a.head_end._name == '+ blah', a.head_end.get_name()
 
+    def test_association_orthogonal(self):
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
+        a = self.create(AssociationItem)
+
+        self.connect(a, a.head, c1)
+        c = self.get_connected(a.head)
+        self.assertTrue(c is c1)
+
+        a.matrix.translate(100, 100)
+        self.connect(a, a.tail, c2)
+        c = self.get_connected(a.tail)
+        self.assertTrue(c is c2)
+
+        a.orthogonal = True
+
 # vim:sw=4:et:ai
