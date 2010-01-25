@@ -175,6 +175,8 @@ class GeneralizationTestCase(TestCase):
 
     def test_reconnection(self):
         """Test generalization item connection using two classes
+
+        On reconnection a new Generalization is created.
         """
         gen = self.create(items.GeneralizationItem)
         c1 = self.create(items.ClassItem, UML.Class)
@@ -200,7 +202,7 @@ class GeneralizationTestCase(TestCase):
         self.assertSame(cinfo.connected, c3)
 
         self.connect(gen2, gen2.tail, c4)
-        self.assertSame(gen.subject, gen2.subject)
+        self.assertNotSame(gen.subject, gen2.subject)
         self.assertEquals(1, len(c1.subject.generalization))
         self.assertSame(c1.subject.generalization[0], gen.subject)
         #self.assertEquals(1, len(actor2.clientDependency))
