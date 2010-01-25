@@ -125,7 +125,7 @@ else:
 setup(
     name='gaphor',
     version=VERSION,
-    url='http://gaphor.devjavu.com',
+    url='http://gaphor.sourceforge.net',
     author='Arjan J. Molenaar',
     author_email='arjanmol@users.sourceforge.net',
     license='GNU General Public License',
