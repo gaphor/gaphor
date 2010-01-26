@@ -1,0 +1,25 @@
+= Linux Distro Packages =
+Examples of Gaphor and Gaphas RPM spec files can be found in
+[http://www.pld-linux.org/ PLD Linux]
+[http://cvs.pld-linux.org/cgi-bin/cvsweb/SPECS/ repository]
+   * [http://cvs.pld-linux.org/cgi-bin/cvsweb/SPECS/python-gaphas.spec gaphas]
+   * [http://cvs.pld-linux.org/cgi-bin/cvsweb/SPECS/gaphor.spec gaphor]
+
+Please, do not hesistate to contact us if you need help to create Linux package
+for Gaphor or Gaphas.
+
+= Dependencies =
+
+Gaphor depends on Zope libraries
+   * component
+   * interface
+and
+   * gaphas (of course :)
+   * pygtk
+
+Above Zope modules require
+   * deferredimport
+   * deprecation
+   * event
+   * proxy
+   * testing
