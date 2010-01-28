@@ -6,7 +6,7 @@ There is little difference in writing a plugin or a service.
 Accessing model related data
 ----------------------------
 
-The datamodel classes are located in the {{{gaphor.UML}}} module. Data objects can be accessed through the ElementFactory. This is a special class for creating and managing data objects. Items can be queried using this element factory. It's registered in the application as {{{element_factory}}}. When writing a service or plugin the element factory can be injected into the service like this::
+The datamodel classes are located in the `gaphor.UML` module. Data objects can be accessed through the ElementFactory. This is a special class for creating and managing data objects. Items can be queried using this element factory. It's registered in the application as `element_factory`. When writing a service or plugin the element factory can be injected into the service like this::
 
   class MyThing(object):
 
@@ -15,7 +15,8 @@ The datamodel classes are located in the {{{gaphor.UML}}} module. Data objects c
       def do_something(self):
 	  items = element_factory.select()
 
- '''NOTE:''' in the console window services can be retrieved by using the {{{service()}}} function. E.g.::
+NOTE: in the console window services can be retrieved by using the `service()` function. E.g.::
+
    ef = service('element_factory')
 
 Querying the data model
@@ -23,8 +24,8 @@ Querying the data model
 
 Two methods are used for querying:
 
- * `select(query=None)` -> returns an iterator
- * `lselect(query=None)` -> returns a list
+* `select(query=None)` -> returns an iterator
+* `lselect(query=None)` -> returns a list
 
 query is a lambda function with the element as parameter. E.g.::
 
@@ -42,7 +43,7 @@ Once some classes are obtained It's common to traverse through a few related obj
       for p in o.ownedParameter:
           do_something(p)
 
-Using the `[:]` operator items can be traversed more easely [1]_
+Using the `[:]` operator items can be traversed more easely [1]
 
   for o in classes.ownedOperation[:].ownedParameter:
       do_something(p)
@@ -57,4 +58,4 @@ It's also possible to provide a query as part of the selection::
 The variable `it` in the query refers to the evaluated object (in this case all operations with a return parameter are taken into account).
 
 
-.. _[1]: See /gaphor/misc/listmixins.py
+.. [1] See http://github.com/amolenaar/gaphor/blobs/master/gaphor/misc/listmixins.py
