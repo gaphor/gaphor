@@ -1,11 +1,11 @@
-^[wiki:Manual] / Creating models^
+Creating models
+===============
 
-= Creating models =
+.. image:: oneclass.png
 
-[[Image(oneclass.png, align=right, margin=4px)]]
-Once Gaphor is started a new empty model is automatically created. The ''main'' diagram is already open in the [wiki:Manual/Working#Diagramsection Diagram section].
+Once Gaphor is started a new empty model is automatically created. The ''main'' diagram is already open in the `Diagram section <working.html#Diagramsection>`.
 
-Select an element you want to place (e.g. a class) by clicking on the icon in the [wiki:Manual/Working#Toolbox Toolbox] and click on the diagram. This will place a new Class item instance on the diagram and add a new Class to the model (it shows up in the [wiki:Manual/Working#Navigation Navigation]). The selected tool will reset itself to the Pointer tool if the option ''Diagram -> Reset tool'' is selected.
+Select an element you want to place (e.g. a class) by clicking on the icon in the `Toolbox <working#Toolbox >` and click on the diagram. This will place a new Class item instance on the diagram and add a new Class to the model (it shows up in the `Navigation <working#Navigation>`). The selected tool will reset itself to the Pointer tool if the option ''Diagram -> Reset tool'' is selected.
 
 It's simple to add elements to a diagram. 
 
@@ -13,21 +13,23 @@ Some elements are not directly visible. The section in the toolbox is collapsed 
 
 Gaphor does not make any assumptions about which elements should be placed on a diagram. A diagram is a diagram. UML defines all different kinds of diagrams, such as Class diagrams, Component diagrams, Action diagrams, Sequence diagrams. But Gaphor does not restrict the user.
 
-== Creating new diagrams ==
+Creating new diagrams
+=====================
 
-[[Image(navpopup.png, align=left, margin=4px)]]
+.. image:: navpopup.png
 
-To create a new diagram, use the Navigation. Select an element that can contain a diagram (a Package or Profile) and right-click^1^. Select ''New diagram'' and a new diagram is created.
+To create a new diagram, use the Navigation. Select an element that can contain a diagram (a Package or Profile) and right-click[1]_. Select ''New diagram'' and a new diagram is created.
 
-== Copy and paste ==
+Copy and paste
+==============
 
 Items in a diagram can be copied and pasted (in the same diagram or another). A paste will create new items in the diagrams, the items they represent (e.g. the Class that's shown in the Naviagtion) is '''not''' copied (call it a shallow copy if you like).
 
-== Drag and drop ==
+Drag and drop
+=============
 
 Adding an existing element to a diagram is simple: drag the element from the Navigation section onto a diagram. Not all element that show up in the Navigation can be added: Diagrams and attribute/operations of a Class can not be added.
 
 Elements can also be dragged within the Navigation section. This way classes and packages can be rearranged for example.
 
-----
-1. Command-Click for !MacOS X users running Gaphor in X11.
+.. _[1] Command-Click for MacOS X users running Gaphor in X11.

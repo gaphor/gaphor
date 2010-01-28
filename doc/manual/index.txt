@@ -1,10 +1,16 @@
-^Manual^
-
-= The new Gaphor manual =
+The new Gaphor manual
+=====================
 
 
 This section of the site is dedicated to some user documentation. Although most users will have previous experience with Gaphor, it is evident that some aspects of the application need a little more explanation.
 
-[[TOC(depth=2, inline, Manual/Introduction, Manual/Working, Manual/Modelling, Manual/Plugins )]]
 
+.. toctree::
+   :maxdepth: 2
+
+   introduction
+   working
+   modelling
+   plugins
+   stereotypes
 

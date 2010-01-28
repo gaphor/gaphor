@@ -1,7 +1,7 @@
 
 
 UndoManager
-==========
+===========
 
 Fine grained undo: undo specific properties.
 
@@ -56,7 +56,7 @@ tasks (properties set and a constraint created).
 
 For methods, it should be possible to create a decorator (@reversible) that
 schedules a method with the same signature as the calling operation, but with
-the inverse effect (e.g. the gaphas.tree module):
+the inverse effect (e.g. the gaphas.tree module)::
 
   Tree(object):
 
@@ -104,17 +104,17 @@ order.
 
 To start a transaction:
 
-  1. A Transaction object has been created.
-  2. This results in the emission of a TransactionBegin event.
-  3. The TransactionBegin event is a trigger for the UndoManager to start
-     listening for IUndoEvent actions.
+1. A Transaction object has been created.
+2. This results in the emission of a TransactionBegin event.
+3. The TransactionBegin event is a trigger for the UndoManager to start
+   listening for IUndoEvent actions.
 
 Now, that should be done when a model element or diagram item sends a state
 change:
 
-  1. The event is handled by the "reverse-handler"
-  2. Reverse handler generates a IUndoEvent signal 
-  3. The signal is received and stored as part of the undo-transaction.
+1. The event is handled by the "reverse-handler"
+2. Reverse handler generates a IUndoEvent signal 
+3. The signal is received and stored as part of the undo-transaction.
 
 (Maybe step 2 and 3 can be merged, since only one function is not of any
 interest to the rest of the application - creates nasty dependencies)
@@ -123,16 +123,16 @@ If nested transaction are created a simple counter is incremented.
 
 When the topmost Transaction is committed:
 
-  1. A TransactionCommit event is emitted
-  2. This triggers the UndoManager to close and store the transaction.
+1. A TransactionCommit event is emitted
+2. This triggers the UndoManager to close and store the transaction.
 
 When a transaction is rolled back:
  
-  1. The main transaction is marked for rollback
-  2. When the toplevel tx is rolled back or commited a
-     TransactionRollback event is emitted
-  2. This triggers the UndoManager to play back all recorded actions and
-     stop listening.
+1. The main transaction is marked for rollback
+2. When the toplevel tx is rolled back or commited a
+   TransactionRollback event is emitted
+2. This triggers the UndoManager to play back all recorded actions and
+   stop listening.
 
 
 References

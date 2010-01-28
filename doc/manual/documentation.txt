@@ -1,5 +1,5 @@
-= Documentation =
-
+Documentation
+=============
 
 
   ''The source is the documentation.''
@@ -8,20 +8,23 @@ Well, not for us.
 
 Currently, there's not a lot of documentation though. For those of you interested in Gaphor there's
 
- * A [http://gaphor.sourceforge.net/manual manual]. It outlines some of the ideas in and behind Gaphor.
- * The [wiki:Tech] section contains some interesting articles about the technology that drives Gaphor and Gaphas, Gaphor's canvas widget.
- * We're working on a [wiki:Manual new manual].
+ * A manual_. It outlines some of the ideas in and behind Gaphor.
+ * The Tech section contains some interesting articles about the technology that drives Gaphor and Gaphas, Gaphor's canvas widget.
+ * We're working on a `new manual`_.
 
 If you're into writing plug-ins for Gaphor you should have a look at our fabulous [source:/gaphor-plugins/gaphor.plugins.helloworld Hello world] plug-in.
 
-== External links ==
+External links
+==============
 
  * You should definitely check out http://www.agilemodeling.com.
-    * The [http://www.agilemodeling.com/essays/umlDiagrams.htm UML diagrams] (although Gaphor does not see it that black-and-white).
+    * The `UML diagrams <http://www.agilemodeling.com/essays/umlDiagrams.htm>`_ (although Gaphor does not see it that black-and-white).
     * http://www.agilemodeling.com/essays/
- * The [http://www.omg.org/technology/documents/modeling_spec_catalog.htm#UML official UML metamodel specification]. This ''is'' our data model.
+ * The `official UML metamodel specification <http://www.omg.org/technology/documents/modeling_spec_catalog.htm#UML>`_. This ''is'' our data model.
 
-== Odds and ends ==
+Odds and ends
+=============
 
- * A somewhat older document about [wiki:Documentation/GtkWin32 how to get GTK+ with Python bindings working on Win32].
+* A somewhat older document about [wiki:Documentation/GtkWin32 how to get GTK+ with Python bindings working on Win32].
 
+.. _manual: manual.html

@@ -1,0 +1,30 @@
+######################
+Documentation contents
+######################
+
+.. toctree::
+   :maxdepth: 2
+
+   actions
+   manual/index
+   connect
+   custominstall
+   datamodel
+   framework
+   gaphor
+   linux
+   manual/documentation
+   model
+   plugins
+   relationships
+   services
+   so
+   stereotypes
+   storage
+   undo
+   win32
+   xml-format
+   
+
+..
+   # vim:syntax=rst

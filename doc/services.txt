@@ -1,26 +1,25 @@
 Services
 ========
 
-Gaphor should be modeled around the concept of Services. Each service can
+Gaphor is be modeled around the concept of Services. Each service can
 be registered on the application and be used by other services or other
 objects living within the application.
 
-Since Gaphor already uses the zope.component adapters, it seems like a good
-choise to use zope.interface too as starting point for services.
+Since Gaphor already uses the `zope.component` adapters, it seems like a good
+choise to use `zope.interface` too as starting point for services.
 
 Each service should implement the IService interface. This interface defines
-one method:
+one method::
 
    init(application)
 
-where `application' is the Application object for Gaphor (which is a service
-itself and therefore implements IService too.
+where `application` is the Application object for Gaphor (which is a service
+itself and therefore implements `IService` too.
 
-Each service is allowed to define it's own interface, as long as IService is
+Each service is allowed to define it's own interface, as long as `IService` is
 implemented too.
 
-Services should be defined as entry_points in the Egg info file (yes, Gaphor
-should be executable as egg some day).
+Services should be defined as `entry_points` in the Egg info file.
 
 Typically a service does some work in the background.
 
@@ -45,6 +44,4 @@ Plugins
 Currently a plugin is defined by an XML file. This will change as plugins
 should be distributable as Egg's too. A plugin will contain user interface
 information along with it's service definition.
-
-Plugins are managed by a PluginManager (which is a Service).
 

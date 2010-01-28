@@ -15,7 +15,7 @@ Each section has it's own specific function.
 Navigation
 ==========
 
-[[Image(Images:gaphor-treeview.png, align=left)]]
+.. image:: gaphor-treeview.png
 
 In Gaphor, you use the ''navigation'' section of the interface to get a hierarchical view of your model.  Every model element you create will be inserted in the ''navigation'' section.  This view acts as a tree where you can expand and collapse different elements of your model.  This provides an easy way to view the elements of your model from an ''elided'' perspective.  That is, you can collapse those model elements that are irrelevant to the task at hand.
 
@@ -28,7 +28,7 @@ Double clicking on a diagram element will open it in the Diagram section. Elemen
 Diagram section
 ===============
 
-The diagram section takes up the most space. Multiple diagrams can be opened at once: they are shown in tabs. Tabs can be close from the file menu (Close) and by pressing {{{Ctrl+w}}}.
+The diagram section takes up the most space. Multiple diagrams can be opened at once: they are shown in tabs. Tabs can be close from the file menu (Close) and by pressing `Ctrl+w`.
 
 Most element have "hot zones", shown as gray rectangles that are only visible when the item is selected. Double clicking on those rectangles allows you to directly edit the item. E.g. change it's name or change the name of an association end.
 
