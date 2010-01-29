@@ -3,6 +3,7 @@ Stereotypes
 Stereotypes is quite another story. In order to create a stereotype
 one should create a Profile. Within this profile a Diagram can be created.
 This diagram should accept only items that are useful within a profile:
+
 - Classes, which will function as <<metaclass>>.
 - Stereotype, which wil be the defined <<stereotypes>>.
 - Extensions, connecting metaclasses and stereotypes.
@@ -10,6 +11,7 @@ This diagram should accept only items that are useful within a profile:
 and of course the usual: Comment, Association, Generalization and Dependency.
 
 Thoughts:
+
 - Profiles are reusable and its common to share them with different models.
 - Stereotypes can only be owned by Profiles, not by (normal) Packages.
 - We have to do a lookup if a MetaClass is actually part of the model.

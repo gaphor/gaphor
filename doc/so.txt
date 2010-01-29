@@ -1,8 +1,9 @@
-= Service Oriented Architecture =
+Service Oriented Architecture
+=============================
 
 Gaphor has a service oriented architecture. What does this mean? Well, Gaphor is build as a set of small islands (services). Each island provides a specific piece of functionality. For example: a service is responsible for loading/saving models, another for the menu structure, yet another service handles the undo system.
 
-Service are defined as [http://peak.telecommunity.com/DevCenter/setuptools#dynamic-discovery-of-services-and-plugins Egg entry points]. With entry points applications can register functionality for specific purposes. entry points are grouped in so called 'entry point groups". For example the {{{console_scripts}}} entry point group is used to start an application from the command line. 
+Service are defined as `Egg entry points <http://peak.telecommunity.com/DevCenter/setuptools#dynamic-discovery-of-services-and-plugins>`_. With entry points applications can register functionality for specific purposes. entry points are grouped in so called 'entry point groups". For example the `console_scripts` entry point group is used to start an application from the command line. 
 
 Entry points, as well as all major components in Gaphor, are defined around [http://www.zope.org/Products/ZopeInterface Zope interfaces]. An interface defines specific methods and attributes that should be implemented by the class.
 
