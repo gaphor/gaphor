@@ -23,7 +23,7 @@ def get_option_class(element):
 @get_icon_option.when_type(UML.Component)
 def get_option_component(element):
     for p in element.presentation:
-        if p.__stereotype__ == 'subsystem':
+        if hasattr(p, '__stereotype__') and p.__stereotype__ == 'subsystem':
             return 'subsystem'
 
 
