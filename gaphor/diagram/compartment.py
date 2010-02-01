@@ -504,8 +504,8 @@ class CompartmentItem(NamedItem):
     def post_update_compartment(self, context):
         super(CompartmentItem, self).post_update(context)
 
-        assert self.width >= self.min_width, 'failed %s >= %s' % (self.width, self.min_width)
-        assert self.height >= self.min_height, 'failed %s >= %s' % (self.height, self.min_height)
+        assert abs(self.width - self.min_width) >= 0, 'failed %s >= %s' % (self.width, self.min_width)
+        assert abs(self.height - self.min_height) >= 0, 'failed %s >= %s' % (self.height, self.min_height)
 
 
     def get_icon_pos(self):
