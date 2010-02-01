@@ -18,13 +18,14 @@ from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.transaction import Transaction
 from iconoption import get_icon_option
 
-# The following items will not be shown in the treeview, although they
+# The following items will be shown in the treeview, although they
 # are UML.Namespace elements.
 _default_filter_list = (
     UML.Class,
     UML.Interface,
     UML.Package,
     UML.Component,
+    UML.Device,
     UML.Node,
     UML.Artifact,
     UML.Interaction,

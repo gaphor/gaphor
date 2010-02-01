@@ -9,6 +9,7 @@ from gaphor.ui.interfaces import IPropertyPage
 from zope import interface, component
 from gaphor.diagram import items
 from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
+from gaphor import UML
 
 class MetaclassNameEditor(object):
     """
@@ -22,14 +23,8 @@ class MetaclassNameEditor(object):
 
     NAME_LABEL = _('Name')
 
-    CLASSES = [
-        'Artifact',
-        'Association',
-        'Class',
-        'Component',
-        'Dependency',
-        'Node',
-    ]
+    CLASSES = list(sorted(n for n in dir(UML)
+        if type(getattr(UML, n)) is type and n[0].isupper()))
 
 
     def __init__(self, item):
