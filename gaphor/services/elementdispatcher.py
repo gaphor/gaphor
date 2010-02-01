@@ -8,6 +8,59 @@ from gaphor.UML.interfaces import IElementChangeEvent, IModelFactoryEvent
 from gaphor import UML
 from gaphor.UML.interfaces import IAssociationSetEvent, IAssociationAddEvent, IAssociationDeleteEvent
 
+
+class EventWatcher(object):
+    """
+    A helper for easy registering and unregistering event handlers.
+    """
+
+    element_dispatcher = inject('element_dispatcher')
+
+    def __init__(self, element, default_handler=None):
+        super(EventWatcher, self).__init__()
+        self.element = element
+        self.default_handler = default_handler
+        self._watched_paths = dict()
+
+
+    def watch(self, path, handler=None):
+        """
+        Watch a certain path of elements starting with the DiagramItem.
+        The handler is optional and will default to a simple
+        self.request_update().
+        
+        Watches should be set in the constructor, so they can be registered
+        and unregistered in one shot.
+
+        This interface is fluent(returns self).
+        """
+        if handler:
+            self._watched_paths[path] = handler
+        elif self.default_handler:
+            self._watched_paths[path] = self.default_handler
+        else:
+            raise ValueError('No handler provided for path ' + path)
+        return self
+
+
+    def register_handlers(self):
+        dispatcher = self.element_dispatcher
+        element = self.element
+        for path, handler in self._watched_paths.iteritems():
+            dispatcher.register_handler(handler, element, path)
+
+
+    def unregister_handlers(self, *args):
+        """
+        Unregister handlers. Extra arguments are ignored (makes connecting to
+        destroy signals much easier though).
+        """
+        dispatcher = self.element_dispatcher
+        for path, handler in self._watched_paths.iteritems():
+            dispatcher.unregister_handler(handler)
+
+
+
 class ElementDispatcher(object):
     """
     The Element based Dispatcher allows handlers to receive only events

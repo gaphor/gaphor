@@ -7,6 +7,7 @@ from zope import component
 from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.application import Application
+from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.core import inject
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
@@ -156,7 +157,7 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         # properties, which should be saved in file
         self._persistent_props = set()
 
-        self._watched_paths = dict()
+        self.watcher = EventWatcher(self, default_handler=self.request_update)
 
         self.watch('subject') \
             .watch('subject.appliedStereotype.classifier.name', self.on_element_applied_stereotype)
@@ -171,7 +172,7 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         self._persistent_props.add(name)
 
 
-    # UML.Element interface used by properties:
+    
 
     # TODO: Use adapters for load/save functionality
     def save(self, save_func):
@@ -264,21 +265,15 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
         This interface is fluent(returns self).
         """
-        self._watched_paths[path] = handler or self.request_update
+        self.watcher.watch(path, handler)
         return self
 
 
     def register_handlers(self):
-        dispatcher = self.dispatcher
-        for path, handler in self._watched_paths.iteritems():
-            #log.debug('registering handler on ' + path + ' for ' + str(self))
-            dispatcher.register_handler(handler, self, path)
+        self.watcher.register_handlers()
 
 
     def unregister_handlers(self):
-        dispatcher = self.dispatcher
-        for path, handler in self._watched_paths.iteritems():
-            dispatcher.unregister_handler(handler)
-
+        self.watcher.unregister_handlers()
 
 # vim:sw=4:et:ai

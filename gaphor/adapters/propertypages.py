@@ -30,6 +30,7 @@ import gobject
 import gtk
 from gaphor.core import _, inject, transactional
 from gaphor.application import Application
+from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
@@ -79,8 +80,11 @@ class EditableTreeModel(gtk.ListStore):
         for row in self:
             print 'refresh for', obj
             if row[-1] is obj:
-                self._set_object_value(row, len(row) - 1, obj)
+                seIlf._set_object_value(row, len(row) - 1, obj)
+                self.row_changed(row.path, row.iter)
                 print 'found!'
+                return
+            
 
     def _get_rows(self):
         """
@@ -421,75 +425,6 @@ def create_uml_combo(data, callback):
     return combo
 
 
-def watch_attribute(attribute, widget, handler):
-    """
-    Watch attribute ``attribute`` for changes. If it changes
-    ``handler(event)`` is called. When ``widget`` is destroyed, the
-    handler is unregistered.
-    If ``attribute`` is None, all attribute events are propagated to teh handler.
-    """
-    @component.adapter(IAttributeChangeEvent)
-    def attribute_watcher(event):
-        if attribute is None or event.property is attribute:
-            if widget.props.has_focus:
-                return
-            handler(event)
-
-    Application.register_handler(attribute_watcher)
-
-    def destroy_handler(_widget):
-        Application.unregister_handler(attribute_watcher)
-    widget.connect('destroy', destroy_handler)
-
-
-class EventWatcher(object):
-
-    element_dispatcher = inject('element_dispatcher')
-
-    def __init__(self, element, default_handler=None):
-        super(EventWatcher, self).__init__()
-        self.element = element
-        self.default_handler = default_handler
-        self._watched_paths = dict()
-
-
-    def watch(self, path, handler=None):
-        """
-        Watch a certain path of elements starting with the DiagramItem.
-        The handler is optional and will default to a simple
-        self.request_update().
-        
-        Watches should be set in the constructor, so they can be registered
-        and unregistered in one shot.
-
-        This interface is fluent(returns self).
-        """
-        if handler:
-            self._watched_paths[path] = handler
-        elif self.default_handler:
-            self._watched_paths[path] = self.default_handler
-        else:
-            raise ValueError('No handler provided for path ' + path)
-        return self
-
-
-    def register_handlers(self):
-        dispatcher = self.element_dispatcher
-        element = self.element
-        for path, handler in self._watched_paths.iteritems():
-            dispatcher.register_handler(handler, element, path)
-
-
-    def unregister_handlers(self, *args):
-        """
-        Unregister handlers. Extra arguments are ignored (makes connecting to
-        destroy signals much easier though).
-        """
-        dispatcher = self.element_dispatcher
-        for path, handler in self._watched_paths.iteritems():
-            dispatcher.unregister_handler(handler)
-
-
 def create_hbox_label(adapter, page, label):
     """
     Create a HBox with a label for given property page adapter and page
@@ -800,8 +735,6 @@ class AttributesPage(object):
 
     order = 20
 
-    element_factory = inject('element_factory')
-
     def __init__(self, item):
         super(AttributesPage, self).__init__()
         self.item = item
@@ -825,7 +758,10 @@ class AttributesPage(object):
         hbox.show_all()
         page.pack_start(hbox, expand=False)
 
-        self.model = ClassAttributes(self.item, (str, bool, object))
+        def create_model():
+            return ClassAttributes(self.item, (str, bool, object))
+
+        self.model = create_model()
         
         tip = """\
 Add and edit class attributes according to UML syntax. Attribute syntax examples
@@ -838,7 +774,8 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 
         def handler(event):
             if not tree_view.props.has_focus:
-                self.model.refresh(event.element)
+                self.model = create_model()
+                tree_view.set_model(self.model)
 
         self.watcher.watch('ownedAttribute.name', handler) \
             .watch('ownedAttribute.isDerived', handler) \
@@ -871,11 +808,10 @@ class OperationsPage(object):
 
     order = 30
 
-    element_factory = inject('element_factory')
-
     def __init__(self, item):
         super(OperationsPage, self).__init__()
         self.item = item
+        print 'item.subject', item.subject
         self.watcher = EventWatcher(item.subject)
         
     def construct(self):
@@ -896,7 +832,10 @@ class OperationsPage(object):
         hbox.show_all()
         page.pack_start(hbox, expand=False)
 
-        self.model = ClassOperations(self.item, (str, bool, object))
+        def create_model():
+            return ClassOperations(self.item, (str, bool, object))
+
+        self.model = create_model()
         tip = """\
 Add and edit class operations according to UML syntax. Operation syntax examples
 - call()
@@ -907,8 +846,10 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         page.pack_start(tree_view)
 
         def handler(event):
+            print 'recieved event', event, event.element
             if not tree_view.props.has_focus:
-                self.model.refresh(event.element)
+                self.model = create_model()
+                tree_view.set_model(self.model)
 
         self.watcher.watch('ownedOperation.name', handler) \
             .watch('ownedOperation.isAbstract', handler) \

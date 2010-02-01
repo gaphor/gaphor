@@ -8,6 +8,9 @@ import gtk
 
 class EditorTestCase(TestCase):
 
+    def setUp(self):
+        super(EditorTestCase, self).setUp()
+
     def test_association_editor(self):
         assoc = self.create(items.AssociationItem)
         adapter = IEditor(assoc)
@@ -105,6 +108,39 @@ class EditorTestCase(TestCase):
         attr = self.element_factory.create(UML.Property)
         attr.name = "blah"
         klass.subject.ownedAttribute = attr
-
         
+        self.assertSame(attr, tree_view.get_model()[0][-1])
+        self.assertEquals("+ blah", tree_view.get_model()[0][0])
+        
+        attr.name = "foo"
+        self.assertEquals("+ foo", tree_view.get_model()[0][0])
+        attr.typeValue = self.element_factory.create(UML.LiteralSpecification)
+        attr.typeValue.value = 'int'
+        self.assertEquals("+ foo: int", tree_view.get_model()[0][0])
+        attr.isDerived = True
+        self.assertEquals("+ /foo: int", tree_view.get_model()[0][0])
+        page.destroy()
+
+    def test_class_operation_editor(self):
+        klass = self.create(items.ClassItem, UML.Class)
+        klass.subject.name = 'Class1'
+        
+        editor = OperationsPage(klass)
+        page = editor.construct()
+        tree_view = page.get_children()[1]
+        self.assertSame(gtk.TreeView, type(tree_view))
+
+        oper = self.element_factory.create(UML.Operation)
+        oper.name = 'o'
+        klass.subject.ownedOperation = oper
+
+        self.assertSame(oper, tree_view.get_model()[0][-1])
+        self.assertEquals("+ o()", tree_view.get_model()[0][0])
+        p = self.element_factory.create(UML.Parameter)
+        p.name = 'blah'
+        oper.formalParameter = p
+        self.assertEquals("+ o(in blah)", tree_view.get_model()[0][0])
+
+        page.destroy()
+
 # vim:sw=4:et:ai
