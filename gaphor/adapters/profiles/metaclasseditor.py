@@ -8,7 +8,7 @@ from gaphor.core import _, inject, transactional
 from gaphor.ui.interfaces import IPropertyPage
 from zope import interface, component
 from gaphor.diagram import items
-from gaphor.adapters.propertypages import create_hbox_label, watch_attribute
+from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
 
 class MetaclassNameEditor(object):
     """
@@ -32,14 +32,15 @@ class MetaclassNameEditor(object):
     ]
 
 
-    def __init__(self, context):
-        self.context = context
+    def __init__(self, item):
+        self.item = item
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        self.watcher = EventWatcher(item.subject)
     
     def construct(self):
         page = gtk.VBox()
 
-        subject = self.context.subject
+        subject = self.item.subject
         if not subject:
             return page
 
@@ -69,16 +70,17 @@ class MetaclassNameEditor(object):
                 entry.handler_block(changed_id)
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
-        watch_attribute(type(subject).name, entry, handler)
-
+        self.watcher.watch('name', handler) \
+            .register_handlers()
+        entry.connect('destroy', self.watcher.unregister_handlers)
         page.show_all()
         return page
 
     @transactional
     def _on_name_change(self, entry):
-        self.context.subject.name = entry.get_text()
+        self.item.subject.name = entry.get_text()
         
 component.provideAdapter(MetaclassNameEditor,
         adapts=[items.MetaclassItem], name='Properties')
 
-
+# vim:sw=4:et:ai

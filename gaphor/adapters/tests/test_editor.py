@@ -3,8 +3,11 @@ from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IEditor
+from gaphor.adapters.propertypages import AttributesPage, OperationsPage
+import gtk
 
 class EditorTestCase(TestCase):
+
     def test_association_editor(self):
         assoc = self.create(items.AssociationItem)
         adapter = IEditor(assoc)
@@ -90,4 +93,18 @@ class EditorTestCase(TestCase):
         self.assertEqual('+ method()', edit.get_text())
 
 
+    def test_class_attribute_editor(self):
+        klass = self.create(items.ClassItem, UML.Class)
+        klass.subject.name = 'Class1'
+        
+        editor = AttributesPage(klass)
+        page = editor.construct()
+        tree_view = page.get_children()[1]
+        self.assertSame(gtk.TreeView, type(tree_view))
+
+        attr = self.element_factory.create(UML.Property)
+        attr.name = "blah"
+        klass.subject.ownedAttribute = attr
+
+        
 # vim:sw=4:et:ai

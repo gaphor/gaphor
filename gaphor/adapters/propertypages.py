@@ -75,10 +75,16 @@ class EditableTreeModel(gtk.ListStore):
             self.append(data)
         self._add_empty()
 
+    def refresh(self, obj):
+        for row in self:
+            print 'refresh for', obj
+            if row[-1] is obj:
+                self._set_object_value(row, len(row) - 1, obj)
+                print 'found!'
 
     def _get_rows(self):
         """
-        Return rows to be edited. Last row has to contain object being
+        Return rows to be edited. Last column has to contain object being
         edited.
         """
         raise NotImplemented
@@ -207,6 +213,11 @@ class ClassAttributes(EditableTreeModel):
         elif col == 1:
             attr.isStatic = not attr.isStatic
             row[1] = attr.isStatic
+        elif col == 2:
+            # Value in attribute object changed:
+            row[0] = attr.render()
+            row[1] = attr.isStatic
+
 
     def _swap_objects(self, o1, o2):
         return self._item.subject.ownedAttribute.swap(o1, o2)
@@ -238,6 +249,10 @@ class ClassOperations(EditableTreeModel):
         elif col == 1:
             operation.isStatic = not operation.isStatic
             row[1] = operation.isStatic
+        elif col == 2:
+            row[0] = operation.render()
+            row[1] = operation.isStatic
+
 
     def _swap_objects(self, o1, o2):
         return self._item.subject.ownedOperation.swap(o1, o2)
@@ -427,6 +442,53 @@ def watch_attribute(attribute, widget, handler):
     widget.connect('destroy', destroy_handler)
 
 
+class EventWatcher(object):
+
+    element_dispatcher = inject('element_dispatcher')
+
+    def __init__(self, element, default_handler=None):
+        super(EventWatcher, self).__init__()
+        self.element = element
+        self.default_handler = default_handler
+        self._watched_paths = dict()
+
+
+    def watch(self, path, handler=None):
+        """
+        Watch a certain path of elements starting with the DiagramItem.
+        The handler is optional and will default to a simple
+        self.request_update().
+        
+        Watches should be set in the constructor, so they can be registered
+        and unregistered in one shot.
+
+        This interface is fluent(returns self).
+        """
+        if handler:
+            self._watched_paths[path] = handler
+        elif self.default_handler:
+            self._watched_paths[path] = self.default_handler
+        else:
+            raise ValueError('No handler provided for path ' + path)
+        return self
+
+
+    def register_handlers(self):
+        dispatcher = self.element_dispatcher
+        element = self.element
+        for path, handler in self._watched_paths.iteritems():
+            dispatcher.register_handler(handler, element, path)
+
+
+    def unregister_handlers(self, *args):
+        """
+        Unregister handlers. Extra arguments are ignored (makes connecting to
+        destroy signals much easier though).
+        """
+        dispatcher = self.element_dispatcher
+        for path, handler in self._watched_paths.iteritems():
+            dispatcher.unregister_handler(handler)
+
 
 def create_hbox_label(adapter, page, label):
     """
@@ -505,6 +567,7 @@ class CommentItemPropertyPage(object):
 
     def __init__(self, subject):
         self.subject = subject
+        self.watcher = EventWatcher(subject)
 
     def construct(self):
         subject = self.subject
@@ -530,11 +593,14 @@ class CommentItemPropertyPage(object):
         changed_id = buffer.connect('changed', self._on_body_change)
 
         def handler(event):
-            if event.element is subject and event.new_value is not None:
+            if not text_view.props.has_focus:
                 buffer.handler_block(changed_id)
                 buffer.set_text(event.new_value)
                 buffer.handler_unblock(changed_id)
-        watch_attribute(type(subject).body, text_view, handler)
+
+        self.watcher.watch('body', handler) \
+                    .register_handlers()
+        text_view.connect("destroy", self.watcher.unregister_handlers)
 
         page.show_all()
         return page
@@ -563,6 +629,7 @@ class NamedElementPropertyPage(object):
     def __init__(self, subject):
         assert subject is None or isinstance(subject, UML.NamedElement), '%s' % type(subject)
         self.subject = subject
+        self.watcher = EventWatcher(subject)
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
     
     def construct(self):
@@ -586,7 +653,10 @@ class NamedElementPropertyPage(object):
                 entry.handler_block(changed_id)
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
-        watch_attribute(type(subject).name, entry, handler)
+
+        self.watcher.watch('name', handler) \
+                    .register_handlers()
+        entry.connect("destroy", self.watcher.unregister_handlers)
 
         page.show_all()
         return page
@@ -732,14 +802,15 @@ class AttributesPage(object):
 
     element_factory = inject('element_factory')
 
-    def __init__(self, context):
+    def __init__(self, item):
         super(AttributesPage, self).__init__()
-        self.context = context
+        self.item = item
+        self.watcher = EventWatcher(item.subject)
         
     def construct(self):
         page = gtk.VBox()
 
-        if not self.context.subject:
+        if not self.item.subject:
             return page
 
         # Show attributes toggle
@@ -748,13 +819,13 @@ class AttributesPage(object):
         label.set_justify(gtk.JUSTIFY_LEFT)
         hbox.pack_start(label, expand=False)
         button = gtk.CheckButton(_('Show attributes'))
-        button.set_active(self.context.show_attributes)
+        button.set_active(self.item.show_attributes)
         button.connect('toggled', self._on_show_attributes_change)
         hbox.pack_start(button)
         hbox.show_all()
         page.pack_start(hbox, expand=False)
 
-        self.model = ClassAttributes(self.context, (str, bool, object))
+        self.model = ClassAttributes(self.item, (str, bool, object))
         
         tip = """\
 Add and edit class attributes according to UML syntax. Attribute syntax examples
@@ -765,13 +836,26 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
         tree_view = create_tree_view(self.model, (_('Attributes'), _('S')), tip)
         page.pack_start(tree_view)
 
+        def handler(event):
+            if not tree_view.props.has_focus:
+                self.model.refresh(event.element)
+
+        self.watcher.watch('ownedAttribute.name', handler) \
+            .watch('ownedAttribute.isDerived', handler) \
+            .watch('ownedAttribute.visibility', handler) \
+            .watch('ownedAttribute.isStatic', handler) \
+            .watch('ownedAttribute.lowerValue<LiteralSpecification>.value', handler) \
+            .watch('ownedAttribute.upperValue<LiteralSpecification>.value', handler) \
+            .watch('ownedAttribute.defaultValue<LiteralSpecification>.value', handler) \
+            .watch('ownedAttribute.typeValue<LiteralSpecification>.value', handler) \
+            .register_handlers()
+        tree_view.connect('destroy', self.watcher.unregister_handlers)
         return page
         
-
     @transactional
     def _on_show_attributes_change(self, button):
-        self.context.show_attributes = button.get_active()
-        self.context.request_update()
+        self.item.show_attributes = button.get_active()
+        self.item.request_update()
         
 
 component.provideAdapter(AttributesPage, name='Attributes')
@@ -789,14 +873,15 @@ class OperationsPage(object):
 
     element_factory = inject('element_factory')
 
-    def __init__(self, context):
+    def __init__(self, item):
         super(OperationsPage, self).__init__()
-        self.context = context
+        self.item = item
+        self.watcher = EventWatcher(item.subject)
         
     def construct(self):
         page = gtk.VBox()
 
-        if not self.context.subject:
+        if not self.item.subject:
             return page
 
         # Show operations toggle
@@ -805,13 +890,13 @@ class OperationsPage(object):
         label.set_justify(gtk.JUSTIFY_LEFT)
         hbox.pack_start(label, expand=False)
         button = gtk.CheckButton(_("Show operations"))
-        button.set_active(self.context.show_operations)
+        button.set_active(self.item.show_operations)
         button.connect('toggled', self._on_show_operations_change)
         hbox.pack_start(button)
         hbox.show_all()
         page.pack_start(hbox, expand=False)
 
-        self.model = ClassOperations(self.context, (str, bool, object))
+        self.model = ClassOperations(self.item, (str, bool, object))
         tip = """\
 Add and edit class operations according to UML syntax. Operation syntax examples
 - call()
@@ -821,12 +906,29 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         tree_view = create_tree_view(self.model, (_('Operation'), _('S')), tip)
         page.pack_start(tree_view)
 
+        def handler(event):
+            if not tree_view.props.has_focus:
+                self.model.refresh(event.element)
+
+        self.watcher.watch('ownedOperation.name', handler) \
+            .watch('ownedOperation.isAbstract', handler) \
+            .watch('ownedOperation.visibility', handler) \
+            .watch('ownedOperation.returnResult.lowerValue<LiteralSpecification>.value', handler) \
+            .watch('ownedOperation.returnResult.upperValue<LiteralSpecification>.value', handler) \
+            .watch('ownedOperation.returnResult.typeValue<LiteralSpecification>.value', handler) \
+            .watch('ownedOperation.formalParameter.lowerValue<LiteralSpecification>.value', handler) \
+            .watch('ownedOperation.formalParameter.upperValue<LiteralSpecification>.value', handler) \
+            .watch('ownedOperation.formalParameter.typeValue<LiteralSpecification>.value', handler) \
+            .watch('ownedOperation.formalParameter.defaultValue<LiteralSpecification>.value', handler) \
+            .register_handlers()
+        tree_view.connect('destroy', self.watcher.unregister_handlers)
+
         return page
         
     @transactional
     def _on_show_operations_change(self, button):
-        self.context.show_operations = button.get_active()
-        self.context.request_update()
+        self.item.show_operations = button.get_active()
+        self.item.request_update()
 
 
 component.provideAdapter(OperationsPage, name='Operations')
@@ -1039,6 +1141,7 @@ class AssociationEndPropertyPage(object):
 
     def __init__(self, subject):
         self.subject = subject
+        self.watcher = EventWatcher(subject)
 
     def construct(self):
         vbox = gtk.VBox()
@@ -1049,10 +1152,18 @@ class AssociationEndPropertyPage(object):
         # monitor subject attribute (all, cause it contains many children)
         changed_id = entry.connect('changed', self._on_end_name_change)
         def handler(event):
-            entry.handler_block(changed_id)
-            entry.set_text(render_attribute(self.subject, multiplicity=True) or '')
-            entry.handler_unblock(changed_id)
-        watch_attribute(None, entry, handler)
+            if not entry.props.has_focus:
+                entry.handler_block(changed_id)
+                entry.set_text(render_attribute(self.subject, multiplicity=True) or '')
+                entry.handler_unblock(changed_id)
+        base = 'subject<Association>.memberEnd<Property>.'
+        self.watcher.watch('name', handler) \
+                    .watch(base + 'aggregation', handler)\
+                    .watch(base + 'visibility', handler)\
+                    .watch(base + 'lowerValue<LiteralSpecification>.value', handler)\
+                    .watch(base + 'upperValue<LiteralSpecification>.value', handler)\
+                    .register_handlers()
+        entry.connect("destroy", self.watcher.unregister_handlers)
 
         vbox.pack_start(entry)
 
