@@ -11,6 +11,13 @@ from gaphor.diagram import items
 from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
 from gaphor import UML
 
+def _issubclass(c, b):
+    try:
+        return issubclass(c, b)
+    except TypeError:
+        return False
+
+
 class MetaclassNameEditor(object):
     """
     Metaclass name editor. Provides editable combo box entry with
@@ -24,7 +31,7 @@ class MetaclassNameEditor(object):
     NAME_LABEL = _('Name')
 
     CLASSES = list(sorted(n for n in dir(UML)
-        if type(getattr(UML, n)) is type and n[0].isupper()))
+        if _issubclass(getattr(UML, n), UML.Element)))
 
 
     def __init__(self, item):
