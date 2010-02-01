@@ -42,6 +42,7 @@ class StorageTestCase(TestCase):
         self.assertTrue(version_lower_than('0.14.0.b1', (0, 15, 0)))
         self.assertTrue(version_lower_than('0.15.b1', (0, 15, 0)))
         self.assertFalse(version_lower_than('0.16.b1', (0, 15, 0)))
+        self.assertFalse(version_lower_than('0.15.0.b2', (0, 14, 99)))
 
     def test_save_uml(self):
         """Saving gaphor.UML model elements.

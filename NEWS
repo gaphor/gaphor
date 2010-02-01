@@ -1,15 +1,13 @@
 0.15.0
 ------
-- Fixed bug related to diagrams loading.
+- Fixed bugs related to diagrams loading.
 - Subsystem item is added (part of components).
 - Partition item, known as swimlanes, is added (part of actions).
-- Node can group
-  - other nodes
-  - artifacts
-  - components
-- Stereotype names shown in stereotype attribute compartments are centered
-  now.
-- Creating stereotypes is a bit simpler, now.
+- Node item can group other nodes, artifacts and components.
+- Stereotype names shown in stereotype attribute compartments are centered.
+- Stereotype creating and applying is simplified.
+- Association ends stereotype editing is supported.
+- State item support entry, exit and do activities.
 
 0.14.0
 ------

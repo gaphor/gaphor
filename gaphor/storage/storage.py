@@ -390,7 +390,7 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
     This function is called before the actual elements are constructed.
     """
     ATTRS = set(['class_', 'interface_', 'actor', 'useCase', 'owningAssociation'])
-    if version_lower_than(gaphor_version, (0, 15, 0)):
+    if version_lower_than(gaphor_version, (0, 14, 99)):
         # update associations
         values = (v for v in elements.values()
                 if type(v) is parser.element
