@@ -1097,12 +1097,11 @@ class AssociationEndPropertyPage(object):
                 entry.handler_block(changed_id)
                 entry.set_text(render_attribute(self.subject, multiplicity=True) or '')
                 entry.handler_unblock(changed_id)
-        base = 'subject<Association>.memberEnd<Property>.'
         self.watcher.watch('name', handler) \
-                    .watch(base + 'aggregation', handler)\
-                    .watch(base + 'visibility', handler)\
-                    .watch(base + 'lowerValue<LiteralSpecification>.value', handler)\
-                    .watch(base + 'upperValue<LiteralSpecification>.value', handler)\
+                    .watch('aggregation', handler)\
+                    .watch('visibility', handler)\
+                    .watch('lowerValue<LiteralSpecification>.value', handler)\
+                    .watch('upperValue<LiteralSpecification>.value', handler)\
                     .register_handlers()
         entry.connect("destroy", self.watcher.unregister_handlers)
 
