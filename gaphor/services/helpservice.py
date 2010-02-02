@@ -86,8 +86,8 @@ class HelpService(object):
         
         add_label('Gaphor is written by:\n'
                   'Arjan Molenaar\n'
-                  'Jeroen Vloothuis\n'
-                  'wrobell')
+                  'Artur Wroblewski\n'
+                  'Jeroen Vloothuis')
         add_label('')
         notebook.append_page(tab_vbox, gtk.Label('Authors'))
 
