@@ -73,6 +73,14 @@ def apply_stereotype(factory, element, stereotype):
     return obj
 
 
+def find_instances(factory, element):
+    """
+    Find instance specification which extend classifier `element`.
+    """
+    return factory.select(lambda e: e.isKindOf(InstanceSpecification) \
+            and e.classifier[0] == element)
+
+
 def remove_stereotype(element, stereotype):
     """
     Remove a stereotype from an element.

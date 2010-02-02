@@ -8,6 +8,7 @@ from zope import component
 from gaphor import UML
 from gaphor.UML.interfaces import IElementDeleteEvent
 from gaphor.interfaces import IService
+from gaphor.core import inject
 
 
 class SanitizerService(object):
@@ -17,15 +18,19 @@ class SanitizerService(object):
     """
     interface.implements(IService)
 
+    element_factory = inject('element_factory')
+
     def __init__(self):
         pass
 
     def init(self, app):
         self._app = app
         app.register_handler(self._unlink_on_presentation_delete)
+        app.register_handler(self._unlink_on_stereotype_attribute)
 
     def shutdown(self):
         self._app.unregister_handler(self._unlink_on_presentation_delete)
+        self._app.unregister_handler(self._unlink_on_stereotype_attribute)
         
     @component.adapter(UML.Presentation, IElementDeleteEvent)
     def _unlink_on_presentation_delete(self, item, event):
@@ -39,6 +44,21 @@ class SanitizerService(object):
             if not presentation or \
                     (len(presentation) == 1 and presentation[0] is item):
                 subject.unlink()
+        
 
+    @component.adapter(UML.Property, IElementDeleteEvent)
+    def _unlink_on_stereotype_attribute(self, st_attr, event):
+        """
+        Unlink the model element if no more presentations link to the `item`'s
+        subject or the to-be-deleted item is the only item currently linked.
+        """
+        if st_attr is not None and st_attr.class_.isKindOf(UML.Stereotype):
+            st = st_attr.class_
+            instances = UML.model.find_instances(self.element_factory, st)
+            for obj in instances:
+                for slot in obj.slot:
+                    if slot.definingFeature == st_attr:
+                        del obj.slot[slot]
+                        #slot.unlink()
 
 # vim:sw=4:et:ai

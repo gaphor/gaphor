@@ -120,21 +120,25 @@ class StereotypesAttributesTestCase(TestCase):
 
         c.show_stereotypes_attrs = True
 
+        # test precondition
+        assert len(c._compartments) == 0
         obj = UML.model.apply_stereotype(factory, c.subject, self.st1)
-
         # test precondition
         assert len(c._compartments) == 1
+
+        assert len(self.kindof(UML.Slot)) == 0
 
         attr = self.st1.ownedAttribute[0]
         slot = UML.model.add_slot(factory, obj, attr)
         assert len(obj.slot) == 1
+        assert len(self.kindof(UML.Slot)) == 1
 
         compartment = c._compartments[0]
         assert compartment.visible
 
         attr.unlink()
         self.assertEquals(0, len(obj.slot))
-        self.assertEquals(0, len(c._compartments))
+        self.assertEquals(0, len(self.kindof(UML.Slot)))
         self.assertFalse(compartment.visible)
 
     

@@ -45,7 +45,8 @@ class TestCaseExtras(object):
 
 class TestCase(TestCaseExtras, unittest.TestCase):
     
-    services = ['element_factory', 'adapter_loader', 'element_dispatcher']
+    services = ['element_factory', 'adapter_loader', 'element_dispatcher',
+            'sanitizer']
     
     def setUp(self):
         Application.init(services=self.services)

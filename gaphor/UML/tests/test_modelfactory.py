@@ -126,6 +126,27 @@ class StereotypesTest(unittest.TestCase):
         self.assertEquals(('st1', 'st2'), result)
 
 
+    def test_finding_stereotype_instances(self):
+        """Test finding stereotype instances
+        """
+        s1 = self.factory.create(UML.Stereotype)
+        s2 = self.factory.create(UML.Stereotype)
+        s1.name = 's1'
+        s2.name = 's2'
+
+        c1 = self.factory.create(UML.Class)
+        c2 = self.factory.create(UML.Class)
+        UML.model.apply_stereotype(self.factory, c1, s1)
+        UML.model.apply_stereotype(self.factory, c1, s2)
+        UML.model.apply_stereotype(self.factory, c2, s1)
+
+        result = [e.classifier[0].name for e in UML.model.find_instances(self.factory, s1)]
+        self.assertEquals(2, len(result))
+        self.assertTrue('s1' in result, result)
+        self.assertFalse('s2' in result, result)
+
+
+
 class AssociationTestCase(unittest.TestCase):
     """
     Association tests.
