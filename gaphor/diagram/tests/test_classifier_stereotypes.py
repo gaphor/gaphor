@@ -34,8 +34,8 @@ class StereotypesAttributesTestCase(TestCase):
         attr.name = 'st2_attr_1'
         st2.ownedAttribute = attr
 
-        UML.model.extend_with_stereotype(factory, cls, st1)
-        UML.model.extend_with_stereotype(factory, cls, st2)
+        self.ext1 = UML.model.extend_with_stereotype(factory, cls, st1)
+        self.ext2 = UML.model.extend_with_stereotype(factory, cls, st2)
 
     def tearDown(self):
         del self.st1
@@ -109,6 +109,27 @@ class StereotypesAttributesTestCase(TestCase):
         assert len(c._compartments) == 1
 
         UML.model.remove_stereotype(c.subject, self.st1)
+        self.assertEquals(0, len(c._compartments))
+
+
+    def test_deleting_extension(self):
+        """Test if stereotype is removed when extension is deleteded
+        """
+        factory = self.element_factory
+        c = self.create(ComponentItem, UML.Component)
+
+        c.show_stereotypes_attrs = True
+
+        st1 = self.st1
+        ext1 = self.ext1
+        UML.model.apply_stereotype(factory, c.subject, st1)
+
+        # test precondition
+        assert len(c._compartments) == 1
+        assert len(c.subject.appliedStereotype) == 1
+
+        ext1.unlink()
+        self.assertEquals(0, len(c.subject.appliedStereotype))
         self.assertEquals(0, len(c._compartments))
 
 
