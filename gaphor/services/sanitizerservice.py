@@ -27,11 +27,15 @@ class SanitizerService(object):
         self._app = app
         app.register_handler(self._unlink_on_presentation_delete)
         app.register_handler(self._unlink_on_stereotype_attribute_delete)
+        app.register_handler(self._unlink_on_stereotype_delete)
+
 
     def shutdown(self):
         self._app.unregister_handler(self._unlink_on_presentation_delete)
         self._app.unregister_handler(self._unlink_on_stereotype_attribute_delete)
+        self._app.unregister_handler(self._unlink_on_stereotype_delete)
         
+
     @component.adapter(UML.Presentation, IElementDeleteEvent)
     def _unlink_on_presentation_delete(self, item, event):
         """
@@ -44,6 +48,16 @@ class SanitizerService(object):
             if not presentation or \
                     (len(presentation) == 1 and presentation[0] is item):
                 subject.unlink()
+
+
+    @component.adapter(UML.Stereotype, IElementDeleteEvent)
+    def _unlink_on_stereotype_delete(self, st, event):
+        """
+        Remove applied stereotypes when stereotype is deleted.
+        """
+        instances = UML.model.find_instances(self.element_factory, st)
+        for obj in list(instances):
+            UML.model.remove_stereotype(obj.extended[0], obj.classifier[0])
 
 
     @component.adapter(UML.Property, IElementDeleteEvent)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.15.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.15.0.b3">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -14077,6 +14077,7 @@ featuringClassifier]]></val>
 <ref refid="DCE:DF527520-4B32-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:81F41A0A-4B32-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:BCEB8FB0-4B32-11D7-B391-02BBFE4396CE"/>
+<ref refid="DCE:53659F26-E81E-11DD-BD54-000D936B094A"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -45978,11 +45979,6 @@ subsets ownedMember]]></val>
 <ref refid="DCE:53659F26-E81E-11DD-BD54-000D936B094A"/>
 </reflist>
 </memberEnd>
-<ownedEnd>
-<reflist>
-<ref refid="DCE:53659F26-E81E-11DD-BD54-000D936B094A"/>
-</reflist>
-</ownedEnd>
 <package>
 <ref refid="DCE:81009F78-B7DE-11D8-8AD1-9AC43285B64C"/>
 </package>
@@ -46017,12 +46013,15 @@ subsets ownedMember]]></val>
 <association>
 <ref refid="DCE:535FC86C-E81E-11DD-BD54-000D936B094A"/>
 </association>
+<class_>
+<ref refid="DCE:22B3AA56-4B32-11D7-B391-02BBFE4396CE"/>
+</class_>
 <lowerValue>
 <ref refid="DCE:5366D44A-E81E-11DD-BD54-000D936B094A"/>
 </lowerValue>
-<owningAssociation>
-<ref refid="DCE:535FC86C-E81E-11DD-BD54-000D936B094A"/>
-</owningAssociation>
+<name>
+<val><![CDATA[extended]]></val>
+</name>
 <presentation>
 <reflist/>
 </presentation>
