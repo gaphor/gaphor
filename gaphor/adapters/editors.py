@@ -103,6 +103,7 @@ class DiagramItemTextEditor(object):
         return None
 
     def update_text(self, text):
+        log.debug('Updating text to %s' % text)
         if self._text_element:
             self._text_element.text = text
             rsetattr(self._item.subject, self._text_element.attr, text)
@@ -143,8 +144,10 @@ class ClassifierItemEditor(object):
 
     def update_text(self, text):
         if hasattr(self._edit.subject, 'parse'):
+            print 'parsing text...', text
             return self._edit.subject.parse(text)
         else:
+            print 'Simply assign to name', text
             self._item.subject.name = text
 
     def key_pressed(self, pos, key):

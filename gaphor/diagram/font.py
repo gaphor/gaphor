@@ -5,6 +5,9 @@ Font definitions.
 # Default font
 FONT = 'sans 10'
 
+# Default font for abstract named (e.g. attributes)
+FONT_ABSTRACT = 'sans italic 10'
+
 # Font for names of elements (such as classes)
 FONT_NAME = 'sans bold 10'
 

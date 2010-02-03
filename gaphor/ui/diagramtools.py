@@ -135,7 +135,7 @@ class TextEditTool(Tool):
     IEditable interface to be edited.
     """
 
-    def create_edit_window(self, x, y, text, *args):
+    def create_edit_window(self, x, y, text, editor):
         """
         Create a popup window with some editable text.
         """
@@ -172,9 +172,9 @@ class TextEditTool(Tool):
         cursor_pos = view.get_toplevel().get_screen().get_display().get_pointer()
         window.move(cursor_pos[1], cursor_pos[2])
         window.connect('focus-out-event', self._on_focus_out_event,
-                       buffer, *args)
+                       buffer, editor)
         text_view.connect('key-press-event', self._on_key_press_event,
-                          buffer, *args)
+                          buffer, editor)
         #text_view.set_size_request(50, 50)
         window.show()
         #text_view.grab_focus()
@@ -199,6 +199,7 @@ class TextEditTool(Tool):
             except TypeError:
                 # Could not adapt to IEditor
                 return False
+            log.debug('Found editor %r' % editor)
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
             if editor.is_editable(x, y):
                 text = editor.get_text()

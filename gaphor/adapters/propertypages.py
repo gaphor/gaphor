@@ -38,7 +38,7 @@ from gaphor import UML
 from gaphor.UML.interfaces import IAttributeChangeEvent
 from gaphor.UML.umllex import parse_attribute, render_attribute
 import gaphas.item
-
+from gaphas.decorators import async
 
 class EditableTreeModel(gtk.ListStore):
     """
@@ -772,6 +772,7 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
         tree_view = create_tree_view(self.model, (_('Attributes'), _('S')), tip)
         page.pack_start(tree_view)
 
+        @async(single=True)
         def handler(event):
             if not tree_view.props.has_focus:
                 self.model = create_model()
@@ -845,6 +846,7 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         tree_view = create_tree_view(self.model, (_('Operation'), _('S')), tip)
         page.pack_start(tree_view)
 
+        @async(single=True)
         def handler(event):
             print 'recieved event', event, event.element
             if not tree_view.props.has_focus:

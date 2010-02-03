@@ -26,8 +26,8 @@ class EventWatcher(object):
     def watch(self, path, handler=None):
         """
         Watch a certain path of elements starting with the DiagramItem.
-        The handler is optional and will default to a simple
-        self.request_update().
+        The handler is optional and will default the default provided at
+        construction time.
         
         Watches should be set in the constructor, so they can be registered
         and unregistered in one shot.

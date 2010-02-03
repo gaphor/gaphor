@@ -13,10 +13,9 @@ class AttributeItem(FeatureItem):
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
 
-        self.watch('subject<NamedItem>.name') \
+        self.watch('subject<NamedElement>.name') \
             .watch('subject<Property>.isDerived') \
             .watch('subject<Property>.visibility') \
-            .watch('subject<Property>.isStatic') \
             .watch('subject<Property>.lowerValue<LiteralSpecification>.value') \
             .watch('subject<Property>.upperValue<LiteralSpecification>.value') \
             .watch('subject<Property>.defaultValue<LiteralSpecification>.value') \
@@ -33,16 +32,16 @@ class OperationItem(FeatureItem):
     def __init__(self, id=None):
         FeatureItem.__init__(self, id)
         
-        self.watch('subject.name') \
-            .watch('subject.isAbstract', self.on_operation_is_abstract) \
-            .watch('subject.visibility') \
-            .watch('subject.returnResult.lowerValue<LiteralSpecification>.value') \
-            .watch('subject.returnResult.upperValue<LiteralSpecification>.value') \
-            .watch('subject.returnResult.typeValue<LiteralSpecification>.value') \
-            .watch('subject.formalParameter.lowerValue<LiteralSpecification>.value') \
-            .watch('subject.formalParameter.upperValue<LiteralSpecification>.value') \
-            .watch('subject.formalParameter.typeValue<LiteralSpecification>.value') \
-            .watch('subject.formalParameter.defaultValue<LiteralSpecification>.value') \
+        self.watch('subject<NamedElement>.name') \
+            .watch('subject<Operation>.isAbstract', self.on_operation_is_abstract) \
+            .watch('subject<Operation>.visibility') \
+            .watch('subject<Operation>.returnResult.lowerValue<LiteralSpecification>.value') \
+            .watch('subject<Operation>.returnResult.upperValue<LiteralSpecification>.value') \
+            .watch('subject<Operation>.returnResult.typeValue<LiteralSpecification>.value') \
+            .watch('subject<Operation>.formalParameter.lowerValue<LiteralSpecification>.value') \
+            .watch('subject<Operation>.formalParameter.upperValue<LiteralSpecification>.value') \
+            .watch('subject<Operation>.formalParameter.typeValue<LiteralSpecification>.value') \
+            .watch('subject<Operation>.formalParameter.defaultValue<LiteralSpecification>.value') \
 
 
     def postload(self):

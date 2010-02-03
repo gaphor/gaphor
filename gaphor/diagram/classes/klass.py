@@ -83,6 +83,7 @@ class ClassItem(ClassifierItem):
         new = AttributeItem()
         new.subject = attribute
         self._attributes.append(new)
+        new.register_handlers()
 
 
     def _create_operation(self, operation):
@@ -92,6 +93,7 @@ class ClassItem(ClassifierItem):
         new = OperationItem()
         new.subject = operation
         self._operations.append(new)
+        new.register_handlers()
 
     def unregister_handlers(self):
         super(ClassItem, self).unregister_handlers()

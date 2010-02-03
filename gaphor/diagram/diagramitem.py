@@ -157,7 +157,10 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         # properties, which should be saved in file
         self._persistent_props = set()
 
-        self.watcher = EventWatcher(self, default_handler=self.request_update)
+        def update(event):
+            print 'Updating event', event
+            self.request_update()
+        self.watcher = EventWatcher(self, default_handler=update)
 
         self.watch('subject') \
             .watch('subject.appliedStereotype.classifier.name', self.on_element_applied_stereotype)

@@ -30,11 +30,15 @@ class ElementDispatcherTestCase(TestCase):
 
         # Add some properties:
 
+        # 1:
         element.ownedOperation = UML.Operation()
+        # 2:
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        # 3:
         p.name = 'func'
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
-        assert len(dispatcher._handlers) == 3
+        self.assertEquals(3, len(self.events))
+        self.assertEquals(3, len(dispatcher._handlers))
 
 
     def test_register_handler_2(self):

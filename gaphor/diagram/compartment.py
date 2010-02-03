@@ -8,7 +8,7 @@ from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphas.util import text_extents, text_set_font, text_align, text_underline
-from gaphor.diagram.font import FONT, FONT_ABSTRACT_NAME, FONT_NAME
+from gaphor.diagram.font import FONT, FONT_ABSTRACT, FONT, FONT_NAME
 
 class FeatureItem(DiagramItem):
     """
@@ -26,7 +26,7 @@ class FeatureItem(DiagramItem):
         self.font = FONT
         # Fool unlink code (attribute is not a gaphas.Item):
         self.canvas = None
-        self.watch('subject.isStatic', self.on_feature_is_static)
+        self.watch('subject<Feature>.isStatic', self.on_feature_is_static)
 
 
     def save(self, save_func):
@@ -40,11 +40,8 @@ class FeatureItem(DiagramItem):
 
 
     def on_feature_is_static(self, event):
-        ##
-        ## TODO: How do I underline text??
-        ##
         self.font = (self.subject and self.subject.isStatic) \
-                and FONT_ABSTRACT_NAME or FONT_NAME
+                and FONT_ABSTRACT or FONT
         self.request_update()
 
 
