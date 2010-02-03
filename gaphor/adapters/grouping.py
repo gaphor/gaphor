@@ -225,6 +225,15 @@ class ActivityPartitionsGroup(AbstractGroup):
         self.item.subject = None
         for s in sp.subpartition:
             sp.subpartition.remove(s)
+
+        # ungroup activity nodes
+        canvas = self.item.canvas
+        nodes = [n for n in canvas.get_children(self.item) if 
+            isinstance(n, (items.ActivityNodeItem, items.ActionItem, items.ObjectNodeItem, items.ForkNodeItem))]
+        for n in nodes:
+            canvas.reparent(n, None)
+            sp.node.remove(n.subject)
+
         sp.unlink()
 
 

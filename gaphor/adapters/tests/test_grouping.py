@@ -251,6 +251,30 @@ class PartitionGroupTestCase(TestCase):
         self.assertEquals(0, len(self.kindof(UML.ActivityPartition)))
 
 
+    def test_ungrouping_with_actions(self):
+        """Test subpartition with actions removal
+        """
+        p1 = self.create(items.PartitionItem)
+        p2 = self.create(items.PartitionItem)
+        a1 = self.create(items.ActionItem, UML.Action)
+        a2 = self.create(items.ActionItem, UML.Action)
+
+        self.group(p1, p2)
+
+        # group to p2, it is disallowed to p1
+        self.group(p2, a1)
+        self.group(p2, a2)
+
+        partition = p2.subject
+        assert len(partition.node) == 2, partition.node
+        assert 2 == len(p2.canvas.get_children(p2)), p2.canvas.get_children(p2)
+
+        self.ungroup(p1, p2)
+
+        self.assertEquals(0, len(partition.node))
+        self.assertEquals(0, len(p2.canvas.get_children(p2)))
+
+
     def test_nested_subpartition_ungrouping(self):
         """Test removal of subpartition with swimlanes
         """
