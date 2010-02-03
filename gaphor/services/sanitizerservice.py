@@ -71,10 +71,10 @@ class SanitizerService(object):
 
             st = st_attr.class_
             instances = UML.model.find_instances(self.element_factory, st)
-            for obj in instances:
+            for obj in list(instances):
                 for slot in obj.slot:
                     if slot.definingFeature == st_attr:
                         del obj.slot[slot]
-                        #slot.unlink()
+                        slot.unlink()
 
 # vim:sw=4:et:ai
