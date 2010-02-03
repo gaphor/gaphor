@@ -47,10 +47,10 @@ class SanitizerService(object):
         
 
     @component.adapter(UML.Property, IElementDeleteEvent)
-    def _unlink_on_stereotype_attribute(self, st_attr, event):
+    def _unlink_on_stereotype_attribute_delete(self, st_attr, event):
         """
-        Unlink the model element if no more presentations link to the `item`'s
-        subject or the to-be-deleted item is the only item currently linked.
+        Remove slots of instance specification (created due to applied
+        stereotype) if stereotype’s attribute is deleted.
         """
         if st_attr is not None and st_attr.class_.isKindOf(UML.Stereotype):
             st = st_attr.class_
