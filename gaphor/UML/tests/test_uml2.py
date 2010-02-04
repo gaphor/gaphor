@@ -1,4 +1,3 @@
-# vim:sw=4:et:ai
 
 import unittest
 
@@ -79,19 +78,6 @@ class TestUML2(unittest.TestCase):
         factory.shutdown()
 
 
-    def test_class_extension(self):
-        factory = UML.ElementFactory()
-        factory.init(Application)
-        c = factory.create(UML.Class)
-        s = factory.create(UML.Stereotype)
-
-        # Create stereotype connection, return Extension instance
-        e = UML.model.extend_with_stereotype(factory, c, s)
-
-        assert len(c.extension) == 1
-        assert e in c.extension
-        assert e.ownedEnd.type is s
-        
     def test_lower_upper(self):
         """
         Test MultiplicityElement.{lower|upper}
@@ -149,26 +135,6 @@ class TestUML2(unittest.TestCase):
 
 
 
-    def skip_test_class_extension(self):
-        factory = UML.ElementFactory()
-        c = factory.create(UML.Class)
-        s = factory.create(UML.Stereotype)
-        e = UML.model.extend_with_stereotype(factory, c, s)
-
-        assert e in c.extension
-        assert UML.Class.extension.version >= 1, UML.Class.extension.version
-        
-        assert len(c.extension) == 1
-        assert e in c.extension
-
-        s = factory.create(UML.Stereotype)
-        e = UML.model.extend_with_stereotype(factory, c, s)
-
-        #assert len(c.ownedAttribute) == 2
-        assert len(c.extension) == 2
-        assert UML.Class.extension.version > 6, UML.Class.extension.version
-        assert e in c.extension
-
     def test_property_navigability(self):
         factory = UML.ElementFactory()
         p = factory.create(UML.Property)
@@ -202,5 +168,30 @@ class TestUML2(unittest.TestCase):
         self.assertEquals(('Package', 'Class'), c.qualifiedName)
 
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_extension_metaclass(self):
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
+        c.name = 'Class'
+        s = factory.create(UML.Stereotype)
+        s.name = 'Stereotype'
+
+        e = UML.model.create_extension(factory, c, s)
+
+        self.assertEquals(c, e.metaclass)
+
+    def test_metaclass_extension(self):
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
+        c.name = 'Class'
+        s = factory.create(UML.Stereotype)
+        s.name = 'Stereotype'
+
+        e = UML.model.create_extension(factory, c, s)
+
+        print e.memberEnd
+        self.assertEquals([e], c.extension)
+        self.assertEquals([], s.extension)
+        assert e.ownedEnd.type is s
+
+
+# vim:sw=4:et:ai

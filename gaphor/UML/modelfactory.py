@@ -142,8 +142,6 @@ def create_extension(factory, element, stereotype):
     p.name = 'baseClass'
     stereotype.ownedAttribute = p
 
-    assert ext in element.extension
-
     return ext
 
 extend_with_stereotype = create_extension

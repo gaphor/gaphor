@@ -51,11 +51,11 @@ Association.endType = derived('endType', Type, 0, '*', Association.memberEnd, Pr
 Association.endType.filter = lambda self: [end.type for end in self.memberEnd if end]
 
 %%
-override Class.extension derives Association.endType
+override Class.extension derives Extension.metaclass
 def class_extension(self):
-    return list(self._factory.select(lambda e: e.isKindOf(Extension) and self in e.endType))
+    return list(self._factory.select(lambda e: e.isKindOf(Extension) and self is e.metaclass))
 
-Class.extension = derived('extension', Extension, 0, '*', Association.endType)
+Class.extension = derived('extension', Extension, 0, '*', Extension.metaclass)
 Class.extension.filter = class_extension
 
 #Class.extension = property(class_extension, doc="""
@@ -64,11 +64,15 @@ Class.extension.filter = class_extension
 #    are typed by the Class.""")
 del class_extension
 %%
-override Extension.metaclass
+override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
 def extension_metaclass(self):
     ownedEnd = self.ownedEnd
-    return [c for c in self.memberEnd if c not in ownedEnd][0].type
+    return [e for e in self.memberEnd if e is not ownedEnd][0].type
 
+# Don't use derived now, as derived() does not properly propagate the events
+# NOTE: let function return a list once this can be turned on
+#Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
+#Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(extension_metaclass, doc="""
     References the Class that is extended through an Extension. The
     property is derived from the type of the memberEnd that is not the
