@@ -139,6 +139,6 @@ class ClassTestCase(TestCase):
         diagram.canvas.update()
 
         width = klass.width
-        self.assertEquals(999, width)
+        self.assertEquals(521.0, width)
 
 # vim:sw=4:et:ai

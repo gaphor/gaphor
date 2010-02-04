@@ -72,7 +72,9 @@ class SanitizerService(object):
         """
         instances = UML.model.find_instances(self.element_factory, st)
         for obj in list(instances):
-            UML.model.remove_stereotype(obj.extended[0], obj.classifier[0])
+            e = obj.extended[0]
+            c = obj.classifier[0]
+            UML.model.remove_stereotype(e, c)
 
 
     @component.adapter(UML.Property, IElementDeleteEvent)

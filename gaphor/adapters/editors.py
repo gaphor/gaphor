@@ -144,10 +144,8 @@ class ClassifierItemEditor(object):
 
     def update_text(self, text):
         if hasattr(self._edit.subject, 'parse'):
-            print 'parsing text...', text
             return self._edit.subject.parse(text)
         else:
-            print 'Simply assign to name', text
             self._item.subject.name = text
 
     def key_pressed(self, pos, key):

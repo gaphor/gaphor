@@ -135,7 +135,7 @@ class EditableTreeModel(gtk.ListStore):
         o1 = self[a][-1]
         o2 = self[b][-1]
         if o1 and o2 and self._swap_objects(o1, o2):
-            self._item.request_update(matrix=False)
+            #self._item.request_update(matrix=False)
             super(EditableTreeModel, self).swap(a, b)
 
 
@@ -174,7 +174,7 @@ class EditableTreeModel(gtk.ListStore):
 
         elif row[-1]:
             self._set_object_value(row, col, value)
-        self._item.request_update(matrix=False)
+        #self._item.request_update(matrix=False)
 
 
     def remove(self, iter):
@@ -1501,9 +1501,11 @@ class MessagePropertyPage(NamedItemPropertyPage):
                     or not lifeline.is_destroyed:
                 is_destroyed = ms == 'deleteMessage'
                 lifeline.is_destroyed = is_destroyed
+                # TODO: is required here?
                 lifeline.request_update()
 
         subject.messageSort = ms
+        # TODO: is required here?
         item.request_update()
          
 
