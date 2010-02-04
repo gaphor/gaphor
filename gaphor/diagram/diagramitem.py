@@ -158,7 +158,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         self._persistent_props = set()
 
         def update(event):
-            print 'Updating event', event
             self.request_update()
         self.watcher = EventWatcher(self, default_handler=update)
 

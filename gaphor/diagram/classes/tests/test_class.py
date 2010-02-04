@@ -115,4 +115,30 @@ class ClassTestCase(TestCase):
         assert klass.item_at(x, y) is not None, klass.item_at(x, y)
         assert klass.item_at(x, y).subject is oper, klass.item_at(x, y).subject
 
+    def test_compartment_resizing(self):
+        element_factory = self.element_factory
+        diagram = element_factory.create(UML.Diagram)
+        klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        klass.subject.name = 'Class1'
+
+        diagram.canvas.update()
+
+        attr = element_factory.create(UML.Property)
+        attr.name = "blah"
+        klass.subject.ownedAttribute = attr
+
+        oper = element_factory.create(UML.Operation)
+        oper.name = 'method'
+        klass.subject.ownedOperation = oper
+
+        self.assertEquals(100, klass.width)
+
+        attr.name = 'abc' * 25
+        log.debug('name: %s' % attr.name)
+
+        diagram.canvas.update()
+
+        width = klass.width
+        self.assertEquals(999, width)
+
 # vim:sw=4:et:ai
