@@ -38,7 +38,7 @@ from gaphor import UML
 from gaphor.UML.interfaces import IAttributeChangeEvent
 from gaphor.UML.umllex import parse_attribute, render_attribute
 import gaphas.item
-
+from gaphas.decorators import async
 
 class EditableTreeModel(gtk.ListStore):
     """
@@ -135,7 +135,7 @@ class EditableTreeModel(gtk.ListStore):
         o1 = self[a][-1]
         o2 = self[b][-1]
         if o1 and o2 and self._swap_objects(o1, o2):
-            self._item.request_update(matrix=False)
+            #self._item.request_update(matrix=False)
             super(EditableTreeModel, self).swap(a, b)
 
 
@@ -174,7 +174,7 @@ class EditableTreeModel(gtk.ListStore):
 
         elif row[-1]:
             self._set_object_value(row, col, value)
-        self._item.request_update(matrix=False)
+        #self._item.request_update(matrix=False)
 
 
     def remove(self, iter):
@@ -772,6 +772,7 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
         tree_view = create_tree_view(self.model, (_('Attributes'), _('S')), tip)
         page.pack_start(tree_view)
 
+        @async(single=True)
         def handler(event):
             if not tree_view.props.has_focus:
                 self.model = create_model()
@@ -845,6 +846,7 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         tree_view = create_tree_view(self.model, (_('Operation'), _('S')), tip)
         page.pack_start(tree_view)
 
+        @async(single=True)
         def handler(event):
             print 'recieved event', event, event.element
             if not tree_view.props.has_focus:
@@ -1499,9 +1501,11 @@ class MessagePropertyPage(NamedItemPropertyPage):
                     or not lifeline.is_destroyed:
                 is_destroyed = ms == 'deleteMessage'
                 lifeline.is_destroyed = is_destroyed
+                # TODO: is required here?
                 lifeline.request_update()
 
         subject.messageSort = ms
+        # TODO: is required here?
         item.request_update()
          
 

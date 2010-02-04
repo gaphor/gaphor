@@ -490,6 +490,9 @@ class derived(umlproperty):
         return '<derived %s: %s>' % (self.name, str(map(str, self.subsets))[1:-1])
 
     def filter(self, obj):
+        """
+        Filter should return something iterable.
+        """
         raise NotImplementedError, 'Implement this in the property.'
 
     def _update(self, obj):
@@ -573,6 +576,7 @@ class derived(umlproperty):
                     log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
             else:        
                 # This is a [0..1] event
+                # TODO: This is an error: [0..*] associations may be used for updating [0..1] associations
                 assert IAssociationSetEvent.providedBy(event)
                 old_value, new_value = event.old_value, event.new_value
                 component.handle(DerivedSetEvent(event.element, self, old_value, new_value))

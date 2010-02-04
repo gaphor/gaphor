@@ -8,9 +8,10 @@ from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphas.util import text_extents, text_set_font, text_align, text_underline
-from gaphor.diagram.font import FONT, FONT_ABSTRACT_NAME, FONT_NAME
+from gaphor.diagram.font import FONT, FONT_ABSTRACT, FONT, FONT_NAME
 
-class FeatureItem(DiagramItem):
+#class FeatureItem(UML.Presentation):
+class FeatureItem(object):
     """
     FeatureItems are model elements who recide inside a ClassifierItem, such
     as methods and attributes. Those items can have comments attached, but only
@@ -18,15 +19,13 @@ class FeatureItem(DiagramItem):
     Note that features can also be used inside objects.
     """
 
-    def __init__(self, id=None):
-        DiagramItem.__init__(self, id)
+    def __init__(self):
+        super(FeatureItem, self).__init__()
         self.width = 0
         self.height = 0
         self.text = ''
         self.font = FONT
-        # Fool unlink code (attribute is not a gaphas.Item):
-        self.canvas = None
-        self.watch('subject.isStatic', self.on_feature_is_static)
+        self.subject = None
 
 
     def save(self, save_func):
@@ -37,15 +36,6 @@ class FeatureItem(DiagramItem):
         if self.subject:
             self.text = self.render()
         self.on_feature_is_static(None)
-
-
-    def on_feature_is_static(self, event):
-        ##
-        ## TODO: How do I underline text??
-        ##
-        self.font = (self.subject and self.subject.isStatic) \
-                and FONT_ABSTRACT_NAME or FONT_NAME
-        self.request_update()
 
 
     def get_size(self, update=False):
@@ -83,11 +73,6 @@ class FeatureItem(DiagramItem):
         """
         return self.subject.render() or ''
 
-#    def draw(self, context):
-#        cr = context.cairo
-#        text_set_font(cr, self.font)
-#        text_align(cr, 0, 0, self.render(), align_x=1, align_y=1)
-
     def draw(self, context):
         cr = context.cairo
         text_set_font(cr, self.font)
@@ -101,8 +86,8 @@ class NamedFeatureItem(FeatureItem):
     """
     Compartment item to render named element.
     """
-    def __init__(self, id=None, pattern='', order=1):
-        FeatureItem.__init__(self, id)
+    def __init__(self, pattern='', order=1):
+        super(NamedFeatureItem, self).__init__()
         self.pattern = pattern
         self.order = order
 
@@ -292,7 +277,9 @@ class CompartmentItem(NamedItem):
 
         self._drawing_style = CompartmentItem.DRAW_NONE
         self.watch('subject.appliedStereotype', self.on_stereotype_change) \
-            .watch('subject.appliedStereotype.slot', self.on_stereotype_attr_change)
+            .watch('subject.appliedStereotype.slot', self.on_stereotype_attr_change) \
+            .watch('subject.appliedStereotype.slot.definingFeature.name') \
+            .watch('subject.appliedStereotype.slot.value<LiteralSpecification>.value')
         self._name.font = FONT_NAME
         self._extra_space = 0
 

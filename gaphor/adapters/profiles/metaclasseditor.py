@@ -31,7 +31,7 @@ class MetaclassNameEditor(object):
     NAME_LABEL = _('Name')
 
     CLASSES = list(sorted(n for n in dir(UML)
-        if _issubclass(getattr(UML, n), UML.Element)))
+        if _issubclass(getattr(UML, n), UML.Element) and n != 'Stereotype'))
 
 
     def __init__(self, item):

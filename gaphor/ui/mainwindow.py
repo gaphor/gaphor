@@ -521,7 +521,7 @@ class MainWindow(ToplevelWindow):
             log.debug('No action defined for element %s' % type(element).__name__)
 
 
-    @action(name='tree-view-rename', label=_('Rename'))
+    @action(name='tree-view-rename', label=_('Rename'), accel='F2')
     def tree_view_rename_selected(self):
         view = self._tree_view
         element = view.get_selected_element()

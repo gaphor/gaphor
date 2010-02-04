@@ -103,6 +103,7 @@ class DiagramItemTextEditor(object):
         return None
 
     def update_text(self, text):
+        log.debug('Updating text to %s' % text)
         if self._text_element:
             self._text_element.text = text
             rsetattr(self._item.subject, self._text_element.attr, text)

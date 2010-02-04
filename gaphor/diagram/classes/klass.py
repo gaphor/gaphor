@@ -40,7 +40,26 @@ class ClassItem(ClassifierItem):
         self._operations.use_extra_space = True
 
         self.watch('subject<Class>.ownedOperation', self.on_class_owned_operation)\
-            .watch('subject<Class>.ownedAttribute.association', self.on_class_owned_attribute)
+            .watch('subject<Class>.ownedAttribute.association', self.on_class_owned_attribute) \
+            .watch('subject<Class>.ownedAttribute.name') \
+            .watch('subject<Class>.ownedAttribute.isStatic') \
+            .watch('subject<Class>.ownedAttribute.isDerived') \
+            .watch('subject<Class>.ownedAttribute.visibility') \
+            .watch('subject<Class>.ownedAttribute.lowerValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedAttribute.upperValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedAttribute.defaultValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedAttribute.typeValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedOperation.name') \
+            .watch('subject<Class>.ownedOperation.isAbstract', self.on_operation_is_abstract) \
+            .watch('subject<Class>.ownedOperation.isStatic') \
+            .watch('subject<Class>.ownedOperation.visibility') \
+            .watch('subject<Class>.ownedOperation.returnResult.lowerValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedOperation.returnResult.upperValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedOperation.returnResult.typeValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedOperation.formalParameter.lowerValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedOperation.formalParameter.upperValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedOperation.formalParameter.typeValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedOperation.formalParameter.defaultValue<LiteralSpecification>.value')
 
 
     def save(self, save_func):
@@ -93,12 +112,6 @@ class ClassItem(ClassifierItem):
         new.subject = operation
         self._operations.append(new)
 
-    def unregister_handlers(self):
-        super(ClassItem, self).unregister_handlers()
-        for a in self._attributes:
-            a.unregister_handlers() 
-        for o in self._operations:
-            o.unregister_handlers() 
 
     def sync_attributes(self):
         """
@@ -129,5 +142,12 @@ class ClassItem(ClassifierItem):
         if self.subject:
             self.sync_operations()
 
+    def on_operation_is_abstract(self, event):
+        o = [o for o in self._operations if o.subject is event.element]
+        if o:
+            o = o[0]
+            o.font = (o.subject and o.subject.isAbstract) \
+                    and font.FONT_ABSTRACT_NAME or font.FONT_NAME
+            self.request_update()
 
 # vim:sw=4:et:ai
