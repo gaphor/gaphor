@@ -277,7 +277,9 @@ class CompartmentItem(NamedItem):
 
         self._drawing_style = CompartmentItem.DRAW_NONE
         self.watch('subject.appliedStereotype', self.on_stereotype_change) \
-            .watch('subject.appliedStereotype.slot', self.on_stereotype_attr_change)
+            .watch('subject.appliedStereotype.slot', self.on_stereotype_attr_change) \
+            .watch('subject.appliedStereotype.slot.definingFeature.name') \
+            .watch('subject.appliedStereotype.slot.value<LiteralSpecification>.value')
         self._name.font = FONT_NAME
         self._extra_space = 0
 
