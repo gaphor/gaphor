@@ -178,6 +178,8 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         if type(element) not in self.filter:
             return
+        if type(element) == UML.Property and element.namespace is None:
+            return
         if element.namespace and type(element.namespace) not in self.filter:
             return
 
