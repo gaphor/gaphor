@@ -49,17 +49,20 @@ class ConnectorConnectBase(AbstractConnect):
         return connected
 
 
-    def get_component(self, connector):
+    @staticmethod
+    def get_component(connector):
         """
         Get component connected by connector.
         """
         canvas = connector.canvas
-        item = canvas.get_connection(connector.head).connected
-        if not isinstance(item, items.ComponentItem):
-            item = connector.get_connection(connector.tail).connected
-        if not isinstance(item, items.ComponentItem):
-            item = None
-        return item
+        c1 = canvas.get_connection(connector.head)
+        c2 = canvas.get_connection(connector.tail)
+        component = None
+        if c1 and isinstance(c1.connected, items.ComponentItem):
+            component = c1.connected
+        elif c2 and isinstance(c2.connected, items.ComponentItem):
+            component = c2.connected
+        return component
 
 
     def create_uml(self, connector, component, assembly, iface):

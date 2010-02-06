@@ -5,6 +5,7 @@ Test connector item connectors.
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
+from gaphor.adapters.components.connectorconnect import ConnectorConnectBase
 
 
 class ComponentConnectTestCase(TestCase):
@@ -284,6 +285,23 @@ class AssemblyConnectorTestCase(TestCase):
         usage = self.element_factory.create(UML.Usage)
         component.clientDependency = usage
         usage.supplier = interface
+
+
+    def test_getting_component(self):
+        """Test getting component
+        """
+        conn1 = self.create(items.ConnectorItem)
+        conn2 = self.create(items.ConnectorItem)
+
+        c1 = self.create(items.ComponentItem, UML.Component)
+        c2 = self.create(items.ComponentItem, UML.Component)
+
+        # connect component
+        self.connect(conn1, conn1.tail, c1)
+        self.connect(conn2, conn2.head, c2)
+
+        self.assertTrue(c1 is ConnectorConnectBase.get_component(conn1))
+        self.assertTrue(c2 is ConnectorConnectBase.get_component(conn2))
 
 
     def test_connection(self):
