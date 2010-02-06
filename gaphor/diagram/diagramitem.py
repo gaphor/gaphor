@@ -203,6 +203,7 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
     def postload(self):
         if self.subject:
+            self.update_stereotype()
             self.update_stereotypes_attrs()
 
 

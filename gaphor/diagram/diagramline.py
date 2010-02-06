@@ -238,6 +238,10 @@ class NamedLine(DiagramLine):
         self.watch('subject<NamedElement>.name', self.on_named_element_name)
 
 
+    def postload(self):
+        super(NamedLine, self).postload()
+        self.on_named_element_name(None)
+
     def on_named_element_name(self, event):
         self._name.text = self.subject and self.subject.name or ''
         self.request_update()

@@ -137,6 +137,10 @@ class ConnectorItem(NamedLine):
         self.watch('subject<Connector>.end.role.name', self.on_interface_name)
 
 
+    def postload(self):
+        super(ConnectorItem, self).postload()
+        self.on_interface_name(None)
+
     def _set_end(self, end):
         self._end = end
         if end and end.role:

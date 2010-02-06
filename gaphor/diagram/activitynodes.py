@@ -251,6 +251,7 @@ class ForkNodeItem(Item, DiagramItem):
         subject = self.subject
         if subject and isinstance(subject, UML.JoinNode) and subject.joinSpec:
             self._join_spec.text = self.subject.joinSpec.value
+        self.on_named_element_name(None)
         super(ForkNodeItem, self).postload()
 
     @observed

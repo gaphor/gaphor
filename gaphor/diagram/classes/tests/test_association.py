@@ -97,6 +97,11 @@ class AssociationItemTestCase(TestCase):
         c = self.get_connected(a.tail)
         self.assertTrue(c is c2)
 
-        a.orthogonal = True
+        try:
+            a.orthogonal = True
+        except ValueError:
+            pass # Expected, hanve only 2 handles, need 3 or more
+        else:
+            assert False, 'Can not set line to orthogonal with less than 3 handles'
 
 # vim:sw=4:et:ai
