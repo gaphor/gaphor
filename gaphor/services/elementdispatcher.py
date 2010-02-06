@@ -283,7 +283,7 @@ class ElementDispatcher(object):
             for h, remainders in value.items():
                 for remainder in remainders:
                     self._add_handlers(key[0], (key[1],) + remainder, h)
-        for h in self._reverse.iterkeys():
-            h(None)
+#        for h in self._reverse.iterkeys():
+#            h(None)
 
 # vim:sw=4:et:ai

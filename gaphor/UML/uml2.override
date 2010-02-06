@@ -137,9 +137,9 @@ def property_navigability(self):
     if not assoc:
         return None
     owner = self.opposite.type
-    if (type(self.type) in (Class, Interface) \
+    if owner and ((type(self.type) in (Class, Interface) \
                 and self in owner.ownedAttribute) \
-            or self in assoc.navigableOwnedEnd:
+            or self in assoc.navigableOwnedEnd):
         return True
     elif self in assoc.ownedEnd:
         return None

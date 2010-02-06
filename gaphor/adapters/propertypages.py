@@ -78,11 +78,11 @@ class EditableTreeModel(gtk.ListStore):
 
     def refresh(self, obj):
         for row in self:
-            print 'refresh for', obj
+            #print 'refresh for', obj
             if row[-1] is obj:
                 seIlf._set_object_value(row, len(row) - 1, obj)
                 self.row_changed(row.path, row.iter)
-                print 'found!'
+                #print 'found!'
                 return
             
 
@@ -812,7 +812,6 @@ class OperationsPage(object):
     def __init__(self, item):
         super(OperationsPage, self).__init__()
         self.item = item
-        print 'item.subject', item.subject
         self.watcher = EventWatcher(item.subject)
         
     def construct(self):

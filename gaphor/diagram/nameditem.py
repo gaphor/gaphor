@@ -50,6 +50,11 @@ class NamedItem(ElementItem):
             .watch('subject<Namespace>.namespace', self.on_named_element_namespace)
 
 
+    def postload(self):
+        self.on_named_element_name(None)
+        self.on_named_element_namespace(None)
+        super(NamedItem, self).postload()
+
     def is_namespace_info_visible(self):
         """
         Display name space info when it is different, then diagram's or
