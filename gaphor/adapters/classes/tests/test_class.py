@@ -27,6 +27,17 @@ class DependencyTestCase(TestCase):
         self.assertTrue(glued)
 
 
+    def test_realization_glue(self):
+        """Test realization glue to non-component item
+        """
+        cls = self.create(items.ClassItem, UML.Class)
+        dep = self.create(items.DependencyItem)
+        dep.dependency_type = UML.Realization
+
+        glued = self.allow(dep, dep.tail, cls)
+        self.assertFalse(glued)
+
+
     def test_dependency_connect(self):
         """Test dependency connecting to two actor items
         """
@@ -134,6 +145,23 @@ class DependencyTestCase(TestCase):
         self.assertTrue(actor2.clientDependency[0] is dep.subject)
 
         self.assertSame(dep.subject, dep2.subject)
+
+
+    def test_dependency_type_auto(self):
+        """Test dependency type automatic determination
+        """
+        cls = self.create(items.ClassItem, UML.Class)
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        dep = self.create(items.DependencyItem)
+
+        assert dep.auto_dependency
+
+        self.connect(dep, dep.tail, cls) # connect client
+        self.connect(dep, dep.head, iface) # connect supplier
+
+        self.assertTrue(dep.subject is not None)
+        self.assertTrue(isinstance(dep.subject, UML.Usage), dep.subject)
+        self.assertTrue(dep.subject in self.element_factory.select())
 
 
 class GeneralizationTestCase(TestCase):

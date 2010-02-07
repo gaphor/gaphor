@@ -270,4 +270,27 @@ def set_navigability(assoc, end, nav):
     # elif nav is False, non-navigable
 
 
+def dependency_type(client, supplier):
+    """
+    Determine dependency type between client (tail) and supplier
+    (arrowhead).
+
+    There can be different dependencies detected automatically
+
+    - usage when supplier is an interface
+    - realization when client is component and supplier is a classifier
+
+    If none of above is detected then standard dependency is determined.
+    """
+    dt = Dependency
+        
+    # test interface first as it is a classifier
+    if isinstance(supplier, Interface):
+        dt = Usage
+    elif isinstance(client, Component) and isinstance(supplier, Classifier):
+        dt = Realization
+
+    return dt
+
+
 #vim:sw=4:et:ai

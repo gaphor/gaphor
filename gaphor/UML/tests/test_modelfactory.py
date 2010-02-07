@@ -4,11 +4,14 @@ from gaphor.UML.modelfactory import STEREOTYPE_FMT as fmt
 
 import unittest
 
-class StereotypesTest(unittest.TestCase):
+class TestCaseBase(unittest.TestCase):
     def setUp(self):
         Application.init_components()
         self.factory = UML.ElementFactory()
         self.factory.init(Application)
+
+
+class StereotypesTestCase(TestCaseBase):
 
     def test_stereotype_name(self):
         """Test stereotype name
@@ -147,16 +150,10 @@ class StereotypesTest(unittest.TestCase):
 
 
 
-class AssociationTestCase(unittest.TestCase):
+class AssociationTestCase(TestCaseBase):
     """
     Association tests.
     """
-    def setUp(self):
-        Application.init_components()
-        self.factory = UML.ElementFactory()
-        self.factory.init(Application)
-
-
     def test_creation(self):
         """Test association creation
         """
@@ -176,16 +173,10 @@ class AssociationTestCase(unittest.TestCase):
 
 
 
-class AssociationEndNavigabilityTestCase(unittest.TestCase):
+class AssociationEndNavigabilityTestCase(TestCaseBase):
     """
     Association navigability changes tests.
     """
-    def setUp(self):
-        Application.init_components()
-        self.factory = UML.ElementFactory()
-        self.factory.init(Application)
-
-    
     def test_attribute_navigability(self):
         """Test navigable attribute of a class or an interface
         """
@@ -273,6 +264,40 @@ class AssociationEndNavigabilityTestCase(unittest.TestCase):
         self.assertTrue(end in assoc.navigableOwnedEnd)
         self.assertTrue(end not in assoc.ownedEnd)
         self.assertTrue(end.navigability is True)
+
+
+
+class DependencyTypeTestCase(TestCaseBase):
+    """
+    Tests for automatic dependency discovery
+    """
+    def test_usage(self):
+        """Test automatic dependency: usage
+        """
+        cls = self.factory.create(UML.Class)
+        iface = self.factory.create(UML.Interface)
+        dt = UML.model.dependency_type(cls, iface)
+        self.assertEquals(UML.Usage, dt)
+
+
+    def test_usage_by_component(self):
+        """Test automatic dependency: usage (by component)
+        """
+        c = self.factory.create(UML.Component)
+        iface = self.factory.create(UML.Interface)
+        dt = UML.model.dependency_type(c, iface)
+        # it should be usage not realization (interface is classifier as
+        # well)
+        self.assertEquals(UML.Usage, dt)
+
+
+    def test_realization(self):
+        """Test automatic dependency: realization
+        """
+        c = self.factory.create(UML.Component)
+        cls = self.factory.create(UML.Class)
+        dt = UML.model.dependency_type(c, cls)
+        self.assertEquals(UML.Realization, dt)
 
 
 

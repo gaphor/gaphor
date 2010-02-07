@@ -56,7 +56,9 @@ class DependencyInterfaceConnect(DependencyConnect):
         """
         super(DependencyInterfaceConnect, self).connect(handle, port)
         line = self.line
-        if handle is line.head and line.is_usage(self.element.subject):
+        # connecting to the interface, which is supplier - assuming usage
+        # dependency
+        if handle is line.head:
             if self.element.folded != self.element.FOLDED_NONE:
                 line._solid = True
                 self.element.folded = self.element.FOLDED_REQUIRED

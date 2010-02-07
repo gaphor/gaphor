@@ -895,9 +895,9 @@ class DependencyPropertyPage(object):
         (_('Realization'), UML.Realization),
         (_('Implementation'), UML.Implementation))
 
-    def __init__(self, context):
+    def __init__(self, item):
         super(DependencyPropertyPage, self).__init__()
-        self.context = context
+        self.item = item
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
         
     def construct(self):
@@ -912,7 +912,7 @@ class DependencyPropertyPage(object):
         hbox = create_hbox_label(self, page, '')
 
         button = gtk.CheckButton(_('Automatic'))
-        button.set_active(self.context.auto_dependency)
+        button.set_active(self.item.auto_dependency)
         button.connect('toggled', self._on_auto_dependency_change)
         hbox.pack_start(button)
 
@@ -928,24 +928,26 @@ class DependencyPropertyPage(object):
         Update dependency type combo box.
         """
         combo = self.combo
-        context = self.context
-        index = combo.get_model().get_index(context.dependency_type)
+        item = self.item
+        index = combo.get_model().get_index(item.dependency_type)
+        combo.set_sensitive(not item.auto_dependency)
         combo.set_active(index)
 
 
     @transactional
     def _on_dependency_type_change(self, combo):
-        subject = self.context.subject
+        subject = self.item.subject
         if subject:
             combo = self.combo
             cls = combo.get_model().get_value(combo.get_active())
             self.element_factory.swap_element(subject, cls)
-            self.context.dependency_type = cls
+            self.item.dependency_type = cls
 
 
     @transactional
     def _on_auto_dependency_change(self, button):
-        self.context.auto_dependency = button.get_active()
+        self.item.auto_dependency = button.get_active()
+        self.combo.set_sensitive(not self.item.auto_dependency)
 
 
 component.provideAdapter(DependencyPropertyPage, name='Properties')

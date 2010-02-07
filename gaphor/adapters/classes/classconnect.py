@@ -19,8 +19,13 @@ class DependencyConnect(RelationshipConnect):
 
         # Element should be a NamedElement
         if not element.subject or \
-           not isinstance(element.subject, UML.NamedElement):
-            return None
+                not isinstance(element.subject, UML.NamedElement):
+                    return False
+
+        if handle is line.tail \
+                and line.dependency_type is UML.Realization \
+                and not isinstance(element.subject, UML.Component):
+            return False
 
         return super(DependencyConnect, self).allow(handle, port)
 
@@ -29,8 +34,19 @@ class DependencyConnect(RelationshipConnect):
         TODO: cleck for existing relationships (use self.relation())
         """
         line = self.line
+
         if line.auto_dependency:
-            line.set_dependency_type()
+            canvas = line.canvas
+            opposite = line.opposite(handle)
+
+            if handle is line.head:
+                client = self.get_connected(opposite).subject
+                supplier = self.element.subject
+            else:
+                client = self.element.subject
+                supplier = self.get_connected(opposite).subject
+            line.dependency_type = UML.model.dependency_type(client, supplier)
+
         if line.dependency_type is UML.Realization:
             relation = self.relationship_or_new(line.dependency_type,
                                 head=('realizingClassifier', None),
@@ -52,11 +68,11 @@ class GeneralizationConnect(RelationshipConnect):
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
     def connect_subject(self, handle):
-        print 'connect_subject', handle
+        log.debug('connect_subject: ' % handle)
         relation = self.relationship_or_new(UML.Generalization,
                     ('general', None),
                     ('specific', 'generalization'))
-        print 'found', relation
+        log.debug('found: ' % relation)
         self.line.subject = relation
 
 component.provideAdapter(GeneralizationConnect)
