@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import os
 import gtk
 from zope import interface
 from gaphor.application import Application
@@ -9,7 +10,7 @@ from gaphor.ui.interfaces import IUIComponent
 from gaphor.action import action, build_action_group
 from gaphor.misc.console import GTKInterpreterConsole
 from toplevelwindow import UtilityWindow
-
+from gaphor.services.properties import user_data_dir
 
 class ConsoleWindow(UtilityWindow):
     
@@ -40,13 +41,27 @@ class ConsoleWindow(UtilityWindow):
                 'service': Application.get_service
                 })
         console.show()
+        self.console = console
         return console
+
+    def load_console_py(self):
+        """
+        Load default script for console. Saves some repetative typing.
+        """
+        console_py = os.path.join(user_data_dir, 'console.py')
+        try:
+            with open(console_py) as f:
+                for line in f:
+                    self.console.push(line)
+        except IOError:
+            log.info('No initiation script %s' % console_py)
 
     @action(name='ConsoleWindow:open', label='_Console')
     def open(self):
         if not self.window:
             self.construct()
             self.window.connect('destroy', self.close)
+            self.load_console_py()
         else:
             self.window.show_all()
 
