@@ -63,7 +63,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
 
 
     def save (self, save_func):
-        LineItem.save(self, save_func)
+        DiagramItem.save(self, save_func)
         save_func('matrix', tuple(self.matrix))
         for prop in ('orthogonal', 'horizontal'):
             save_func(prop, getattr(self, prop))
@@ -98,7 +98,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         elif name in ('tail_connection', 'tail-connection'):
             self._load_tail_connection = value
         else:
-            LineItem.load(self, name, value)
+            DiagramItem.load(self, name, value)
 
 
     def _get_sink(self, handle, item):
@@ -156,7 +156,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
             self._postload_connect(self.tail, self._load_tail_connection)
             del self._load_tail_connection
 
-        LineItem.postload(self)
+        DiagramItem.postload(self)
 
 
     def _get_middle_segment(self):
