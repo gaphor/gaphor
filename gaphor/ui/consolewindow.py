@@ -10,7 +10,7 @@ from gaphor.ui.interfaces import IUIComponent
 from gaphor.action import action, build_action_group
 from gaphor.misc.console import GTKInterpreterConsole
 from toplevelwindow import UtilityWindow
-from gaphor.services.properties import user_data_dir
+from gaphor.application import user_data_dir
 
 class ConsoleWindow(UtilityWindow):
     

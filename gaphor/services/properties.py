@@ -9,14 +9,7 @@ import pprint
 from zope import interface
 from gaphor.interfaces import IService
 from gaphas.decorators import async
-
-if os.name == 'nt':
-    home = 'USERPROFILE'
-else:
-    home = 'HOME'
-
-user_data_dir = os.path.join(os.getenv(home), '.gaphor')
-
+from gaphor.application import user_data_dir
 
 _no_default = object()
 
