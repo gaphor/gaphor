@@ -1199,6 +1199,10 @@ class LineStylePage(object):
 
         page.pack_start(hbox, expand=False)
 
+        if len(self.item.handles()) < 3:
+            # Only one segment
+            button.props.sensitive = False
+
         hbox = gtk.HBox()
         label = gtk.Label('')
         label.set_justify(gtk.JUSTIFY_LEFT)
