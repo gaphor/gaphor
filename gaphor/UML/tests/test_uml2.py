@@ -186,6 +186,9 @@ class TestUML2(unittest.TestCase):
         s = factory.create(UML.Stereotype)
         s.name = 'Stereotype'
 
+        self.assertEquals([], c.extension)
+        self.assertEquals([], s.extension)
+
         e = UML.model.create_extension(factory, c, s)
 
         print e.memberEnd

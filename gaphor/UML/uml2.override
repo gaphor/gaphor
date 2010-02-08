@@ -55,13 +55,14 @@ override Class.extension derives Extension.metaclass
 def class_extension(self):
     return list(self._factory.select(lambda e: e.isKindOf(Extension) and self is e.metaclass))
 
-Class.extension = derived('extension', Extension, 0, '*', Extension.metaclass)
-Class.extension.filter = class_extension
+# TODO: use those as soon as Extension.metaclass can be used.
+#Class.extension = derived('extension', Extension, 0, '*', Extension.metaclass)
+#Class.extension.filter = class_extension
 
-#Class.extension = property(class_extension, doc="""
-#    References the Extensions that specify additional properties of the
-#    metaclass. The property is derived from the extensions whose memberEnds
-#    are typed by the Class.""")
+Class.extension = property(class_extension, doc=\
+"""References the Extensions that specify additional properties of the
+metaclass. The property is derived from the extensions whose memberEnds
+are typed by the Class.""")
 del class_extension
 %%
 override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
@@ -73,10 +74,10 @@ def extension_metaclass(self):
 # NOTE: let function return a list once this can be turned on
 #Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 #Extension.metaclass.filter = extension_metaclass
-Extension.metaclass = property(extension_metaclass, doc="""
-    References the Class that is extended through an Extension. The
-    property is derived from the type of the memberEnd that is not the
-    ownedEnd.""")
+Extension.metaclass = property(extension_metaclass, doc=\
+"""References the Class that is extended through an Extension. The
+property is derived from the type of the memberEnd that is not the
+ownedEnd.""")
 del extension_metaclass
 %%
 override Classifier.inheritedMember
