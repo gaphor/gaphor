@@ -1,0 +1,23 @@
+Gaphor Diagram Items
+====================
+The Gaphor diagram items (or in short `items`) represent UML metamodel on a
+diagram.
+
+Basic items
+
+    DiagramItem
+        Basic diagram item supporting item style, text elements
+        and stereotypes.
+    ElementItem
+        Rectangular canvas item.
+    NamedItem
+        NamedElement (UML metamodel) representation.
+    CompartmentItem
+        An item with compartments (i.e. Class or State)
+    ClassifierItem
+        Classifer (UML metamodel) representation.
+    DiagramLine
+        Line canvas item.
+    NamedLine
+        NamedElement (UML metamodel) representation.
+
