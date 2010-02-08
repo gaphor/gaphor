@@ -253,7 +253,7 @@ class StorageTestCase(TestCase):
 
         copy = pf.data
 
-        expr = re.compile('gaphor-version="[0-9\.]*"')
+        expr = re.compile('gaphor-version="[^"]*"')
         orig = expr.sub('%VER%', orig)
         copy = expr.sub('%VER%', copy)
 
@@ -261,8 +261,8 @@ class StorageTestCase(TestCase):
         f.write(copy)
         f.close()
 
-        assert len(copy) == len(orig), "%d != %d:\n%s" % (len(copy), len(orig), copy)
-        assert copy == orig, copy + ' != ' + orig
+
+        self.assertEquals(copy, orig)
 
 
 class FileUpgradeTestCase(TestCase):
