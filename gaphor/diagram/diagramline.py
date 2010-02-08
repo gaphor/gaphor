@@ -15,11 +15,10 @@ from gaphor.diagram.style import get_text_point_at_line, \
     ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 
-class LineItem(gaphas.Line, DiagramItem):
+class DiagramLine(gaphas.Line, DiagramItem):
     """
     Base class for diagram lines.
     """
-
     def __init__(self, id = None):
         gaphas.Line.__init__(self)
         DiagramItem.__init__(self, id)
@@ -43,19 +42,16 @@ class LineItem(gaphas.Line, DiagramItem):
         # first, update stereotype to know its text
         self.update_stereotype()
 
-        #super(LineItem, self).pre_update(context)
         gaphas.Line.pre_update(self, context)
         DiagramItem.pre_update(self, context)
 
 
     def post_update(self, context):
-        #super(LineItem, self).update(context)
         gaphas.Line.post_update(self, context)
         DiagramItem.post_update(self, context)
 
 
     def draw(self, context):
-        #super(LineItem, self).draw(context)
         gaphas.Line.draw(self, context)
         DiagramItem.draw(self, context)
 
@@ -65,14 +61,6 @@ class LineItem(gaphas.Line, DiagramItem):
         d2 = DiagramItem.point(self, pos)
         return min(d1, d2)
 
-
-class DiagramLine(LineItem):
-    """
-    Gaphor lines. This line is serializable and has a popup
-    menu.
-
-    TODO: put serializability and popup in separate adapters.
-    """
 
     def save (self, save_func):
         LineItem.save(self, save_func)
@@ -92,6 +80,7 @@ class DiagramLine(LineItem):
         if c:
             save_func('tail-connection', c.connected, reference=True)
 
+
     def load (self, name, value):
         if name == 'matrix':
             self.matrix = eval(value)
@@ -110,6 +99,7 @@ class DiagramLine(LineItem):
             self._load_tail_connection = value
         else:
             LineItem.load(self, name, value)
+
 
     def _get_sink(self, handle, item):
         """
