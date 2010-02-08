@@ -175,7 +175,7 @@ It uses the GTK+ environment for user interaction.
         ],
         'gaphor.services': [
             #'component_registry = gaphor.services.componentregistry:ZopeComponentRegistry',
-            #'event_dispatcher = gaphor.services.eventdispatcher:EventDispatcher',
+            'event_dispatcher = gaphor.services.eventdispatcher:EventDispatcher',
             'adapter_loader = gaphor.services.adapterloader:AdapterLoader',
             'properties = gaphor.services.properties:Properties',
             'undo_manager = gaphor.services.undomanager:UndoManager',

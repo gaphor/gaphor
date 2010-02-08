@@ -8,16 +8,18 @@ from zope import component
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.interfaces import IService
+from gaphor.UML.interfaces import IElementEvent
 
 
 class EventDispatcher(object):
     """
-    Does some background cleanup jobs, such as removing elements from the
-    model that have no presentations (and should have some).
+    Do slightly more complex event dispatching.
+
+    This service should take over the dispatching capabilities of Application.
     """
     interface.implements(IService)
 
-    component_registry = inject('component_registry')
+#    component_registry = inject('component_registry')
 
 
     def __init__(self):
@@ -25,33 +27,44 @@ class EventDispatcher(object):
 
 
     def init(self, app=None):
-        pass
+        self._app = app
+        app.register_handler(self._element_notify)
 
 
     def shutdown(self):
-        pass
+        self._app.unregister_handler(self._element_notify)
         
 
-    def register_handler(self, factory, adapts=None):
+    @component.adapter(IElementEvent)
+    def _element_notify(self, event):
         """
-        Register a handler. Handlers are triggered (executed) when specific
-        events are emitted through the handle() method.
+        Dispatch IElementEvent events to interested adapters registered
+        by (class, event).
         """
-        self.component_registry.register_handler(factory, adapts)
+        if self._app:
+            self._app.handle(event.element, event)
 
 
-    def unregister_handler(self, factory=None, required=None):
-        """
-        Unregister a previously registered handler.
-        """
-        self.component_registry.unregister_handler(factory, required)
+#    def register_handler(self, factory, adapts=None):
+#        """
+#        Register a handler. Handlers are triggered (executed) when specific
+#        events are emitted through the handle() method.
+#        """
+#        self.component_registry.register_handler(factory, adapts)
 
 
-    def fire(self, *events):
-        """
-        Send out one or more events.
-        """
-        self.component_registry.handle(events)
+#    def unregister_handler(self, factory=None, required=None):
+#        """
+#        Unregister a previously registered handler.
+#        """
+#        self.component_registry.unregister_handler(factory, required)
+
+
+#    def fire(self, *events):
+#        """
+#        Send out one or more events.
+#        """
+#        self.component_registry.handle(events)
 
 
 # vim:sw=4:et:ai

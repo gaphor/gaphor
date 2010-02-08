@@ -58,13 +58,10 @@ class ElementFactory(object):
 
     def init(self, app):
         self._app = app
-        app.register_handler(self._element_notify)
         app.register_handler(self._element_deleted)
 
     def shutdown(self):
         # unregister after flush: the handler is needed to empty the _elements
-        if self._app:
-            self._app.unregister_handler(self._element_notify)
         self.flush()
         if self._app:
             self._app.unregister_handler(self._element_deleted)
@@ -227,16 +224,6 @@ class ElementFactory(object):
         """
         if self._app:
             self._app.handle(ModelFactoryEvent(self))
-
-
-    @component.adapter(IElementEvent)
-    def _element_notify(self, event):
-        """
-        Dispatch IElementEvent events to interested adapters registered
-        by (class, event).
-        """
-        if self._app:
-            self._app.handle(event.element, event)
 
 
     @component.adapter(IElementDeleteEvent)
