@@ -8,6 +8,7 @@ from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.diagramline import DiagramLine, NamedLine
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.compartment import CompartmentItem
 from gaphor.diagram.classifier import ClassifierItem
 
 # General:

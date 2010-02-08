@@ -114,13 +114,12 @@ class DiagramItemTextEditor(object):
 component.provideAdapter(DiagramItemTextEditor)
 
 
-class ClassifierItemEditor(object):
+class CompartmentItemEditor(object):
     """
-    Text editor support for Classifiers. Also features contained in Classifiers'
-    compartments are edited through this interface.
+    Text editor support for compartment items.
     """
     interface.implements(IEditor)
-    component.adapts(items.ClassifierItem)
+    component.adapts(items.CompartmentItem)
 
     def __init__(self, item):
         self._item = item
@@ -151,7 +150,7 @@ class ClassifierItemEditor(object):
     def key_pressed(self, pos, key):
         pass
 
-component.provideAdapter(ClassifierItemEditor)
+component.provideAdapter(CompartmentItemEditor)
  
 
 class AssociationItemEditor(object):
