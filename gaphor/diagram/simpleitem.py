@@ -44,6 +44,7 @@ class Line(_Line):
                 self._handles.insert(1, h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
+            self._update_ports()
         elif name == 'horizontal':
             self.horizontal = eval(value)
         elif name == 'orthogonal':

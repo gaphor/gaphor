@@ -91,6 +91,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
                 self._handles.insert(1, h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
+            self._update_ports()
         elif name == 'orthogonal':
             self._load_orthogonal = eval(value)
         elif name in ('head_connection', 'head-connection'):
@@ -157,11 +158,6 @@ class DiagramLine(gaphas.Line, DiagramItem):
             del self._load_tail_connection
 
         DiagramItem.postload(self)
-
-        # Update connection ports of the line. Only handles are saved in
-        # Gaphor file therefore ports need to be recreated after handles
-        # information is loaded.
-        self._update_ports()
 
 
     def _get_middle_segment(self):
