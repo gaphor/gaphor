@@ -1,5 +1,5 @@
 """
-Common dependencies like dependency, usage and realization.
+Common dependencies like dependency, usage, implementation and realization.
 
 Dependency Type
 ===============
