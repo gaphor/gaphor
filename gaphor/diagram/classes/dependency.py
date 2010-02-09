@@ -1,5 +1,18 @@
 """
-Common dependencies likeq dependency, usage, realization and implementation.
+Common dependencies like dependency, usage and realization.
+
+Dependency Type
+===============
+Dependency type should be determined automatically by default. User should
+be able to override the dependency type.
+
+When dependency item is connected between two items, then type of the
+dependency cannot be changed. For example, if two class items are
+connected, then dependency type cannot be changed to realization as this
+dependency type can only exist between a component and a classifier.
+
+Function dependency_type in model factory should be used to determine
+type of a dependency in automatic way.
 """
 
 from gaphor import UML
@@ -8,24 +21,15 @@ from gaphor.diagram.diagramline import DiagramLine
 
 class DependencyItem(DiagramLine):
     """
-    This class represents all types of dependencies.
+    Dependency item represents several types of dependencies, i.e. normal
+    dependency or usage.
 
-    Normally a dependency looks like a dashed line with an arrow head.
+    Usually a dependency looks like a dashed line with an arrow head.
     The dependency can have a stereotype attached to it, stating the kind of
-    dependency we're dealing with. The dependency kind can only be changed if
-    the dependency is not connected to two items.
+    dependency we're dealing with.
 
-    In the special case of an Usage dependency, where one end is
-    connected to an InterfaceItem: the line is drawn as a solid line without
-    arrowhead.  The Interface will draw a half a circle on the side where the
-    Usage dep. is connected.
-
-    Although it is possible to add multiple Implementation and Usage
-    dependencies to an interface, it will probably not be very explaining
-    (esp. Usage dependencies).
-
-    Function dependency_type in model factory should be used to determine
-    automatically type of a dependency.
+    In case of usage dependency connected to folded interface, the line is
+    drawn as solid line without arrow head.
     """
 
     __uml__ = UML.Dependency
