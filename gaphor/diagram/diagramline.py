@@ -159,7 +159,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         DiagramItem.postload(self)
 
         # Update connection ports of the line. Only handles are saved in
-        # Gaphor file and ports needs to be recreated after handles
+        # Gaphor file therefore ports need to be recreated after handles
         # information is loaded.
         self._update_ports()
 
