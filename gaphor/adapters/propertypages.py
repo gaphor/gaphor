@@ -947,12 +947,9 @@ class DependencyPropertyPage(object):
 
     @transactional
     def _on_dependency_type_change(self, combo):
-        subject = self.item.subject
-        if subject:
-            combo = self.combo
-            cls = combo.get_model().get_value(combo.get_active())
-            self.element_factory.swap_element(subject, cls)
-            self.item.dependency_type = cls
+        combo = self.combo
+        cls = combo.get_model().get_value(combo.get_active())
+        self.item.dependency_type = cls
 
 
     @transactional
