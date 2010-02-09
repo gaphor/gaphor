@@ -899,6 +899,8 @@ class DependencyPropertyPage(object):
         super(DependencyPropertyPage, self).__init__()
         self.item = item
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        self.watcher = EventWatcher(self.item)
+
         
     def construct(self):
         page = gtk.VBox()
@@ -918,19 +920,28 @@ class DependencyPropertyPage(object):
 
         page.show_all()
 
+        self.watcher.watch('subject', self._on_subject_change).register_handlers()
+        button.connect('destroy', self.watcher.unregister_handlers)
+
         self.update()
 
         return page
 
 
+    def _on_subject_change(self, event):
+        self.update()
+
+
     def update(self):
         """
         Update dependency type combo box.
+
+        Disallow dependency type when dependency is established.
         """
         combo = self.combo
         item = self.item
         index = combo.get_model().get_index(item.dependency_type)
-        combo.set_sensitive(not item.auto_dependency)
+        combo.props.sensitive = not item.auto_dependency and item.subject is None
         combo.set_active(index)
 
 
@@ -947,7 +958,7 @@ class DependencyPropertyPage(object):
     @transactional
     def _on_auto_dependency_change(self, button):
         self.item.auto_dependency = button.get_active()
-        self.combo.set_sensitive(not self.item.auto_dependency)
+        self.update()
 
 
 component.provideAdapter(DependencyPropertyPage, name='Properties')
