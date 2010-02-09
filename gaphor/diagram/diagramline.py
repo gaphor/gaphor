@@ -62,7 +62,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         return min(d1, d2)
 
 
-    def save (self, save_func):
+    def save(self, save_func):
         DiagramItem.save(self, save_func)
         save_func('matrix', tuple(self.matrix))
         for prop in ('orthogonal', 'horizontal'):
@@ -81,7 +81,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
             save_func('tail-connection', c.connected, reference=True)
 
 
-    def load (self, name, value):
+    def load(self, name, value):
         if name == 'matrix':
             self.matrix = eval(value)
         elif name == 'points':
@@ -91,7 +91,12 @@ class DiagramLine(gaphas.Line, DiagramItem):
                 self._handles.insert(1, h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
+
+            # Update connection ports of the line. Only handles are saved
+            # in Gaphor file therefore ports need to be recreated after
+            # handles information is loaded.
             self._update_ports()
+
         elif name == 'orthogonal':
             self._load_orthogonal = eval(value)
         elif name in ('head_connection', 'head-connection'):
