@@ -158,6 +158,11 @@ class DiagramLine(gaphas.Line, DiagramItem):
 
         DiagramItem.postload(self)
 
+        # Update connection ports of the line. Only handles are saved in
+        # Gaphor file and ports needs to be recreated after handles
+        # information is loaded.
+        self._update_ports()
+
 
     def _get_middle_segment(self):
         """
