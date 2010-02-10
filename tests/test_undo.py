@@ -1,0 +1,44 @@
+
+from gaphor.tests import TestCase
+from gaphor import UML
+from gaphor.diagram import items
+from gaphor.core import transactional
+
+class UndoTest(TestCase):
+
+    services = TestCase.services + [ 'undo_manager' ]
+
+    def test_class_association_undo_redo(self):
+        factory = self.element_factory
+        undo_manager = self.get_service('undo_manager')
+
+        ci1 = self.create(items.ClassItem, UML.Class)
+        ci2 = self.create(items.ClassItem, UML.Class)
+
+        a = self.create(items.AssociationItem)
+
+        self.connect(a, a.head, ci1)
+        self.connect(a, a.tail, ci2)
+
+        # Diagram, Association, 2x Class, Property, LiteralSpecification
+        self.assertEquals(8, len(factory.lselect()))
+
+        @transactional
+        def delete_class():
+            ci2.unlink()
+
+        self.assertFalse(undo_manager.can_undo())
+
+        delete_class()
+
+        self.assertTrue(undo_manager.can_undo())
+
+        self.assertEquals(ci1, self.get_connected(a.head))
+        self.assertEquals(None, self.get_connected(a.tail))
+        #self.assertEquals(None, a.subject)
+
+        # Diagram, Class
+        self.assertEquals(2, len(factory.lselect()), factory.lselect())
+
+        
+# vim:sw=4:et:ai
