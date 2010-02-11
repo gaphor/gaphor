@@ -68,7 +68,9 @@ del class_extension
 override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
 def extension_metaclass(self):
     ownedEnd = self.ownedEnd
-    return [e for e in self.memberEnd if e is not ownedEnd][0].type
+    metaend = [e for e in self.memberEnd if e is not ownedEnd]
+    if metaend:
+        return metaend[0].type
 
 # Don't use derived now, as derived() does not properly propagate the events
 # NOTE: let function return a list once this can be turned on
