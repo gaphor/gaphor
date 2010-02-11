@@ -78,7 +78,7 @@ def find_instances(factory, element):
     Find instance specification which extend classifier `element`.
     """
     return factory.select(lambda e: e.isKindOf(InstanceSpecification) \
-            and e.classifier[0] == element)
+            and e.classifier and e.classifier[0] == element)
 
 
 def remove_stereotype(element, stereotype):
@@ -92,7 +92,7 @@ def remove_stereotype(element, stereotype):
         UML metamodel stereotype instance.
     """
     for obj in element.appliedStereotype:
-        if obj.classifier[0] is stereotype:
+        if obj.classifier and obj.classifier[0] is stereotype:
             del element.appliedStereotype[obj]
             obj.unlink()
             break
