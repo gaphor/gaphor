@@ -13,8 +13,11 @@ class UndoTest(TestCase):
         undo_manager = self.get_service('undo_manager')
 
         ci1 = self.create(items.ClassItem, UML.Class)
-        ci2 = self.create(items.ClassItem, UML.Class)
+        self.assertEquals(6, len(self.diagram.canvas.solver.constraints))
 
+        ci2 = self.create(items.ClassItem, UML.Class)
+        self.assertEquals(12, len(self.diagram.canvas.solver.constraints))
+        
         a = self.create(items.AssociationItem)
 
         self.connect(a, a.head, ci1)
@@ -22,11 +25,13 @@ class UndoTest(TestCase):
 
         # Diagram, Association, 2x Class, Property, LiteralSpecification
         self.assertEquals(8, len(factory.lselect()))
+        self.assertEquals(14, len(self.diagram.canvas.solver.constraints))
 
         @transactional
         def delete_class():
             ci2.unlink()
 
+        undo_manager.clear_undo_stack()
         self.assertFalse(undo_manager.can_undo())
 
         delete_class()
@@ -35,10 +40,18 @@ class UndoTest(TestCase):
 
         self.assertEquals(ci1, self.get_connected(a.head))
         self.assertEquals(None, self.get_connected(a.tail))
-        #self.assertEquals(None, a.subject)
 
         # Diagram, Class
         self.assertEquals(2, len(factory.lselect()), factory.lselect())
 
-        
+        self.assertEquals(7, len(self.diagram.canvas.solver.constraints))
+
+        undo_manager.undo_transaction()
+
+        self.assertEquals(14, len(self.diagram.canvas.solver.constraints))
+
+        self.assertEquals(ci1, self.get_connected(a.head))
+        self.assertEquals(ci2, self.get_connected(a.tail))
+
+
 # vim:sw=4:et:ai

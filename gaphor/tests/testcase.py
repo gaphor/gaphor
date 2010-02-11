@@ -9,10 +9,15 @@ import unittest
 from cStringIO import StringIO
 from zope import component
 
+from gaphas.aspect import ConnectionSink, Connector
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram.interfaces import IGroup
+
+# For DiagramItemConnector aspect:
+import gaphor.ui.diagramtools
+
 
 # Increment log level
 log.set_log_level(log.WARNING)
@@ -102,17 +107,22 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
 
-        canvas.connect_item(line, handle, item, port)
+        sink = ConnectionSink(item, port)
+        connector = Connector(line, handle)
 
-        query = (item, line)
-        adapter = component.queryMultiAdapter(query, IConnect)
-        connected = adapter.connect(handle, port)
+        connector.connect(sink)
+
+        #canvas.connect_item(line, handle, item, port)
+
+        #query = (item, line)
+        #adapter = component.queryMultiAdapter(query, IConnect)
+        #connected = adapter.connect(handle, port)
 
         cinfo = canvas.get_connection(handle)
         self.assertSame(cinfo.connected, item)
         self.assertSame(cinfo.port, port)
 
-        return connected
+        #return connected
 
 
     def disconnect(self, line, handle):
