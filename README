@@ -2,14 +2,23 @@ Gaphor - The Pythonic UML modelling tool
 ========================================
 
 Gaphor is a UML modelling tool, written in Python. This makes it very easy to
-use (and very easy to extend (and to write ;-).
+use (and very easy to extend -- and to write ;-) ).
 
 Install gaphor simply using easy-install:
 
   $ easy-install gaphor
 
-You can find the sources at GitHub: http://github.com/amolenaar/gaphor/.
-For documentation refer to our project website: http://gaphor.sourceforge.net.
+You can find the sources at GitHub:
+
+  http://github.com/amolenaar/gaphor/.
+
+For documentation refer to our project website:
+
+  http://gaphor.sourceforge.net/.
+
+Issue tracking is done at Lighthouse:
+
+  http://gaphor.lighthouseapp.com/.
 
 Have fun,
 
