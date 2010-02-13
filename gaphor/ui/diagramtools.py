@@ -15,7 +15,7 @@ from gaphas.geometry import distance_point_point, distance_point_point_fast, \
                             distance_line_point, distance_rectangle_point
 from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool, \
     ToolChain, HoverTool, ItemTool, RubberbandTool, ConnectHandleTool
-from gaphas.aspect import Connector, ItemConnector
+from gaphas.aspect import Connector
 from gaphor.core import inject, Transaction, transactional
 
 from gaphor.diagram.interfaces import IEditor, IConnect
@@ -23,7 +23,7 @@ from gaphor.diagram.diagramline import DiagramLine
 
 
 @Connector.when_type(DiagramLine)
-class DiagramItemConnector(ItemConnector):
+class DiagramItemConnector(Connector.default):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
     to connect items to one-another.
