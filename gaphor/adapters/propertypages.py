@@ -36,7 +36,6 @@ from gaphor.diagram import items
 from zope import interface, component
 from gaphor import UML
 from gaphor.UML.interfaces import IAttributeChangeEvent
-from gaphor.UML.umllex import parse_attribute
 import gaphas.item
 from gaphas.decorators import async
 
@@ -212,7 +211,7 @@ class ClassAttributes(EditableTreeModel):
     def _set_object_value(self, row, col, value):
         attr = row[-1]
         if col == 0:
-            attr.parse(value)
+            UML.parse(attr, value)
             row[0] = UML.format(attr)
         elif col == 1:
             attr.isStatic = not attr.isStatic
@@ -248,7 +247,7 @@ class ClassOperations(EditableTreeModel):
     def _set_object_value(self, row, col, value):
         operation = row[-1]
         if col == 0:
-            operation.parse(value)
+            UML.parse(operation, value)
             row[0] = UML.format(operation)
         elif col == 1:
             operation.isStatic = not operation.isStatic
@@ -1159,7 +1158,7 @@ Enter attribute name and multiplicity, for example
 
     @transactional
     def _on_end_name_change(self, entry):
-        self.subject.parse(entry.get_text())
+        UML.parse(self.subject, entry.get_text())
 
     @transactional
     def _on_visibility_change(self, combo):

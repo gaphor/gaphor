@@ -153,18 +153,8 @@ Property.navigability = property(property_navigability, doc=property_navigabilit
 
 del property_navigability
 %%
-override Property.parse
-from umllex import parse_property
-Property.parse = parse_property
-del parse_property
-%%
 override Operation.type
 Operation.type = derivedunion('type', DataType, 0, 1)
-%%
-override Operation.parse
-from umllex import parse_operation
-Operation.parse = parse_operation
-del parse_operation
 %%
 override Lifeline.parse
 from umllex import parse_lifeline

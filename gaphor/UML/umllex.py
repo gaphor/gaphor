@@ -12,7 +12,19 @@ __all__ = [
         ]
 
 import re
-import gaphor
+from simplegeneric import generic
+
+#from gaphor.UML import uml2 as UML
+import uml2 as UML
+
+
+@generic
+def parse(el, text):
+    """
+    Parser for an UML element.
+    """
+    raise NotImplemented('Parsing routine for type %s not implemented yet' \
+            % type(el))
 
 # Visibility (optional) ::= '+' | '-' | '#'
 vis_subpat = r'\s*(?P<vis>[-+#])?'
@@ -75,176 +87,176 @@ parameter_pat = compile(r'^' + dir_subpat + name_subpat + type_subpat + default_
 #  [name] [: type]
 lifeline_pat = compile('^' + name_subpat + type_subpat + garbage_subpat)
 
-def _set_visibility(self, vis):
+def _set_visibility(el, vis):
     if vis == '+':
-        self.visibility = 'public'
+        el.visibility = 'public'
     elif vis == '#':
-        self.visibility = 'protected'
+        el.visibility = 'protected'
     elif vis == '~':
-        self.visibility = 'package'
+        el.visibility = 'package'
     elif vis == '-':
-        self.visibility = 'private'
+        el.visibility = 'private'
     else:
         try:
-            del self.visibility
+            del el.visibility
         except AttributeError:
             pass
 
-def parse_attribute(self, s):
+def parse_attribute(el, s):
     """
     Parse string s in the property. Tagged values, multiplicity and stuff
     like that is altered to reflect the data in the property string.
     """
     m = attribute_pat.match(s)
     if not m or m.group('garbage'):
-        self.name = s
-        del self.visibility
-        del self.isDerived
-        if self.typeValue:
-            self.typeValue.value = None
-        if self.lowerValue:
-            self.lowerValue.value = None
-        if self.upperValue:
-            self.upperValue.value = None
-        if self.defaultValue:
-            self.defaultValue.value = None
+        el.name = s
+        del el.visibility
+        del el.isDerived
+        if el.typeValue:
+            el.typeValue.value = None
+        if el.lowerValue:
+            el.lowerValue.value = None
+        if el.upperValue:
+            el.upperValue.value = None
+        if el.defaultValue:
+            el.defaultValue.value = None
     else:
-        from uml2 import LiteralSpecification
         g = m.group
-        create = self._factory.create
-        _set_visibility(self, g('vis'))
-        self.isDerived = g('derived') and True or False
-        self.name = g('name')
-        if not self.typeValue:
-            self.typeValue = create(LiteralSpecification)
-        self.typeValue.value = g('type')
-        if not self.lowerValue:
-            self.lowerValue = create(LiteralSpecification)
-        self.lowerValue.value = g('mult_l')
-        if not self.upperValue:
-            self.upperValue = create(LiteralSpecification)
-        self.upperValue.value = g('mult_u')
-        if not self.defaultValue:
-            self.defaultValue = create(LiteralSpecification)
-        self.defaultValue.value = g('default')
+        create = el._factory.create
+        _set_visibility(el, g('vis'))
+        el.isDerived = g('derived') and True or False
+        el.name = g('name')
+        if not el.typeValue:
+            el.typeValue = create(UML.LiteralSpecification)
+        el.typeValue.value = g('type')
+        if not el.lowerValue:
+            el.lowerValue = create(UML.LiteralSpecification)
+        el.lowerValue.value = g('mult_l')
+        if not el.upperValue:
+            el.upperValue = create(UML.LiteralSpecification)
+        el.upperValue.value = g('mult_u')
+        if not el.defaultValue:
+            el.defaultValue = create(UML.LiteralSpecification)
+        el.defaultValue.value = g('default')
         # Skip tags: should do something with stereotypes?
         #tags = g('tags')
         #if tags:
         #    for t in map(str.strip, tags.split(',')):
-        #        tv = create(LiteralSpecification)
+        #        tv = create(UML.LiteralSpecification)
         #        tv.value = t
-        #        self.taggedValue = tv
+        #        el.taggedValue = tv
 
 
-def parse_association_end(self, s):
+def parse_association_end(el, s):
     """
     Parse the text at one end of an association. The association end holds
     two strings. It is automattically figured out which string is fed to the
     parser.
     """
-    from uml2 import LiteralSpecification
-    create = self._factory.create
+    create = el._factory.create
 
     # if no name, then clear as there could be some garbage
     # due to previous parsing (i.e. '[1'
     m = association_end_name_pat.match(s)
     if m and not m.group('name'):
-        self.name = None
+        el.name = None
 
     # clear also multiplicity if no characters in ``s``
     m = association_end_mult_pat.match(s)
     if m and not m.group('mult_u'):
-        if self.upperValue:
-            self.upperValue.value = None
+        if el.upperValue:
+            el.upperValue.value = None
 
     if m and m.group('mult_u') or m.group('tags'):
         g = m.group
-        if not self.lowerValue:
-            self.lowerValue = create(LiteralSpecification)
-        self.lowerValue.value = g('mult_l')
-        if not self.upperValue:
-            self.upperValue = create(LiteralSpecification)
-        self.upperValue.value = g('mult_u')
+        if not el.lowerValue:
+            el.lowerValue = create(UML.LiteralSpecification)
+        el.lowerValue.value = g('mult_l')
+        if not el.upperValue:
+            el.upperValue = create(UML.LiteralSpecification)
+        el.upperValue.value = g('mult_u')
         #tags = g('tags')
         #if tags:
         #    for t in map(str.strip, tags.split(',')):
-        #        tv = create(LiteralSpecification)
+        #        tv = create(UML.LiteralSpecification)
         #        tv.value = t
-        #        self.taggedValue = tv
+        #        el.taggedValue = tv
     else:
         m = association_end_name_pat.match(s)
         g = m.group
         if g('garbage'):
-            self.name = s
-            del self.visibility
-            del self.isDerived
+            el.name = s
+            del el.visibility
+            del el.isDerived
         else:
-            _set_visibility(self, g('vis'))
-            self.isDerived = g('derived') and True or False
-            self.name = g('name')
+            _set_visibility(el, g('vis'))
+            el.isDerived = g('derived') and True or False
+            el.name = g('name')
             # Optionally, the multiplicity and tagged values may be defined:
             if g('mult_l'):
-                if not self.lowerValue:
-                    self.lowerValue = create(LiteralSpecification)
-                self.lowerValue.value = g('mult_l')
+                if not el.lowerValue:
+                    el.lowerValue = create(UML.LiteralSpecification)
+                el.lowerValue.value = g('mult_l')
 
             if g('mult_u'):
-                if not g('mult_l') and self.lowerValue:
-                    self.lowerValue.value = None
-                if not self.upperValue:
-                    self.upperValue = create(LiteralSpecification)
-                self.upperValue.value = g('mult_u')
+                if not g('mult_l') and el.lowerValue:
+                    el.lowerValue.value = None
+                if not el.upperValue:
+                    el.upperValue = create(UML.LiteralSpecification)
+                el.upperValue.value = g('mult_u')
 
             #tags = g('tags')
             #if tags:
-            #    while self.taggedValue:
-            #        self.taggedValue[0].unlink()
+            #    while el.taggedValue:
+            #        el.taggedValue[0].unlink()
             #    for t in map(str.strip, tags.split(',')):
-            #        tv = create(LiteralSpecification)
+            #        tv = create(UML.LiteralSpecification)
             #        tv.value = t
-            #        self.taggedValue = tv
+            #        el.taggedValue = tv
 
-def parse_property(self, s):
-    if self.association:
-        parse_association_end(self, s)
+@parse.when_type(UML.Property)
+def parse_property(el, s):
+    if el.association:
+        parse_association_end(el, s)
     else:
-        parse_attribute(self, s)
+        parse_attribute(el, s)
 
-def parse_operation(self, s):
+
+@parse.when_type(UML.Operation)
+def parse_operation(el, s):
     """
     Parse string s in the operation. Tagged values, parameters and
     visibility is altered to reflect the data in the operation string.
     """
-    from uml2 import Parameter, LiteralSpecification
     m = operation_pat.match(s)
     if not m or m.group('garbage'):
-        self.name = s
-        del self.visibility
-        map(Parameter.unlink, list(self.returnResult))
-        map(Parameter.unlink, list(self.formalParameter))
+        el.name = s
+        del el.visibility
+        map(UML.Parameter.unlink, list(el.returnResult))
+        map(UML.Parameter.unlink, list(el.formalParameter))
     else:
         g = m.group
-        create = self._factory.create
-        _set_visibility(self, g('vis'))
-        self.name = g('name')
-        if not self.returnResult:
-            self.returnResult = create(Parameter)
-        p = self.returnResult[0]
+        create = el._factory.create
+        _set_visibility(el, g('vis'))
+        el.name = g('name')
+        if not el.returnResult:
+            el.returnResult = create(UML.Parameter)
+        p = el.returnResult[0]
         p.direction = 'return'
         if not p.typeValue:
-            p.typeValue = create(LiteralSpecification)
+            p.typeValue = create(UML.LiteralSpecification)
         p.typeValue.value = g('type')
         if not p.lowerValue:
-            p.lowerValue = create(LiteralSpecification)
+            p.lowerValue = create(UML.LiteralSpecification)
         p.lowerValue.value = g('mult_l')
         if not p.upperValue:
-            p.upperValue = create(LiteralSpecification)
+            p.upperValue = create(UML.LiteralSpecification)
         p.upperValue.value = g('mult_u')
         # FIXME: Maybe add to Operation.ownedRule?
         #tags = g('tags')
         #if tags:
         #    for t in map(str.strip, tags.split(',')):
-        #        tv = create(LiteralSpecification)
+        #        tv = create(UML.LiteralSpecification)
         #        tv.value = t
         #        p.taggedValue = tv
         
@@ -256,40 +268,40 @@ def parse_operation(self, s):
                 break
             g = m.group
             try:
-                p = self.formalParameter[pindex]
+                p = el.formalParameter[pindex]
             except IndexError:
-                p = create(Parameter)
+                p = create(UML.Parameter)
             p.direction = g('dir') or 'in'
             p.name = g('name')
             if not p.typeValue:
-                p.typeValue = create(LiteralSpecification)
+                p.typeValue = create(UML.LiteralSpecification)
             p.typeValue.value = g('type')
             if not p.lowerValue:
-                p.lowerValue = create(LiteralSpecification)
+                p.lowerValue = create(UML.LiteralSpecification)
             p.lowerValue.value = g('mult_l')
             if not p.upperValue:
-                p.upperValue = create(LiteralSpecification)
+                p.upperValue = create(UML.LiteralSpecification)
             p.upperValue.value = g('mult_u')
             if not p.defaultValue:
-                p.defaultValue = create(LiteralSpecification)
+                p.defaultValue = create(UML.LiteralSpecification)
             p.defaultValue.value = g('default')
             #tags = g('tags')
             #if tags:
             #    for t in map(str.strip, tags.split(',')):
-            #        tv = create(LiteralSpecification)
+            #        tv = create(UML.LiteralSpecification)
             #        tv.value = t
             #        p.taggedValue = tv
-            self.formalParameter = p
+            el.formalParameter = p
 
             # Do the next parameter:
             params = g('rest')
             pindex += 1
 
         # Remove remaining parameters:
-        for fp in self.formalParameter[pindex:]:
+        for fp in el.formalParameter[pindex:]:
             fp.unlink()
 
-def parse_lifeline(self, s):
+def parse_lifeline(el, s):
     """
     Parse string s in a lifeline. If a class is defined and can be found
     in the datamodel, then a class is connected to the lifelines 'represents'
@@ -298,24 +310,23 @@ def parse_lifeline(self, s):
     m = lifeline_pat.match(s)
     g = m.group
     if not m or g('garbage'):
-        self.name = s
-        if hasattr(self, 'represents'):
-            del self.represents
+        el.name = s
+        if hasattr(el, 'represents'):
+            del el.represents
     else:
-        from uml2 import LiteralSpecification
-        self.name = g('name') + ": "
+        el.name = g('name') + ": "
         t = g('type')
         if t:
-            self.name += ': ' + t
+            el.name += ': ' + t
         # In the near future the data model should be extended with 
         # Lifeline.represents: ConnectableElement
 
 
 
-def render_lifeline(self):
+def render_lifeline(el):
     """
     """
-    return self.name
+    return el.name
 
 
 # vim:sw=4:et:ai

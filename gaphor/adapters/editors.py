@@ -140,10 +140,8 @@ class CompartmentItemEditor(object):
         return None
 
     def update_text(self, text):
-        if hasattr(self._edit.subject, 'parse'):
-            return self._edit.subject.parse(text)
-        else:
-            self._item.subject.name = text
+        UML.parse(self._edit.subject, text)
+        #self._item.subject.name = text
 
     def key_pressed(self, pos, key):
         pass
@@ -184,10 +182,8 @@ class AssociationItemEditor(object):
         return None
 
     def update_text(self, text):
-        if hasattr(self._edit.subject, 'parse'):
-            return self._edit.subject.parse(text)
-        else:
-            self._item.subject.name = text
+        UML.parse(self._edit.subject, text)
+        #self._item.subject.name = text
 
     def key_pressed(self, pos, key):
         pass
