@@ -7,7 +7,7 @@
 - Stereotype names shown in stereotype attribute compartments are centered.
 - Stereotype creating and applying is simplified.
 - Association ends stereotype editing is supported.
-- State item support entry, exit and do activities.
+- State item supports entry, exit and do activities.
 
 0.14.0
 ------
