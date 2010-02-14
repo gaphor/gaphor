@@ -8,7 +8,12 @@ from gaphor import UML
 from gaphor.i18n import _
 
 from gaphor.diagram.classifier import ClassifierItem
-from gaphor.diagram.classes.feature import AttributeItem, OperationItem
+from gaphor.diagram.compartment import FeatureItem
+
+
+class OperationItem(FeatureItem):
+    def render(self):
+        return UML.format(self.subject, visibility=True, type=True, multiplicity=True, default=True) or ''
 
         
 class ClassItem(ClassifierItem):
@@ -99,7 +104,7 @@ class ClassItem(ClassifierItem):
         """
         Create a new attribute item.
         """
-        new = AttributeItem()
+        new = FeatureItem()
         new.subject = attribute
         self._attributes.append(new)
 
