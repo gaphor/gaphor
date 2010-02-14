@@ -6,6 +6,7 @@ Methods.
 
 from gaphor.diagram.compartment import FeatureItem
 from gaphor.diagram import font
+from gaphor import UML
 
 
 class AttributeItem(FeatureItem):
@@ -27,7 +28,7 @@ class OperationItem(FeatureItem):
 
 
     def render(self):
-        return self.subject.render(visibility=True, type=True, multiplicity=True, default=True) or ''
+        return UML.format(self.subject, visibility=True, type=True, multiplicity=True, default=True) or ''
 
 
 # vim:sw=4:et:ai

@@ -9,7 +9,6 @@ from gaphas import geometry
 from gaphas import constraint
 from gaphor import UML
 from gaphor.core import inject
-from gaphor.UML.umllex import render_attribute
 from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
 from gaphor.misc.rattr import rgetattr, rsetattr
@@ -134,9 +133,8 @@ class CompartmentItemEditor(object):
         return bool(self._edit and self._edit.subject)
 
     def get_text(self):
-        if hasattr(self._edit.subject, 'render'):
-            return self._edit.subject.render()
-        return self._edit.subject.name
+        return UML.format(self._edit.subject)
+        #return self._edit.subject.name
 
     def get_bounds(self):
         return None

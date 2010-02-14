@@ -158,11 +158,6 @@ from umllex import parse_property
 Property.parse = parse_property
 del parse_property
 %%
-override Property.render
-from umllex import render_property
-Property.render = render_property
-del render_property
-%%
 override Operation.type
 Operation.type = derivedunion('type', DataType, 0, 1)
 %%
@@ -170,11 +165,6 @@ override Operation.parse
 from umllex import parse_operation
 Operation.parse = parse_operation
 del parse_operation
-%%
-override Operation.render
-from umllex import render_operation
-Operation.render = render_operation
-del render_operation
 %%
 override Lifeline.parse
 from umllex import parse_lifeline

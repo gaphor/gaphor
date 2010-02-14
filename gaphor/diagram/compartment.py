@@ -71,7 +71,7 @@ class FeatureItem(object):
         """
         Return a rendered feature, as a string.
         """
-        return self.subject.render() or ''
+        return UML.format(self.subject) or ''
 
     def draw(self, context):
         cr = context.cairo

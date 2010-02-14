@@ -36,7 +36,7 @@ from gaphor.diagram import items
 from zope import interface, component
 from gaphor import UML
 from gaphor.UML.interfaces import IAttributeChangeEvent
-from gaphor.UML.umllex import parse_attribute, render_attribute
+from gaphor.UML.umllex import parse_attribute
 import gaphas.item
 from gaphas.decorators import async
 
@@ -199,7 +199,7 @@ class ClassAttributes(EditableTreeModel):
     def _get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
-                yield [attr.render(), attr.isStatic, attr]
+                yield [UML.format(attr), attr.isStatic, attr]
 
 
     def _create_object(self):
@@ -213,13 +213,13 @@ class ClassAttributes(EditableTreeModel):
         attr = row[-1]
         if col == 0:
             attr.parse(value)
-            row[0] = attr.render()
+            row[0] = UML.format(attr)
         elif col == 1:
             attr.isStatic = not attr.isStatic
             row[1] = attr.isStatic
         elif col == 2:
             # Value in attribute object changed:
-            row[0] = attr.render()
+            row[0] = UML.format(attr)
             row[1] = attr.isStatic
 
 
@@ -235,7 +235,7 @@ class ClassOperations(EditableTreeModel):
 
     def _get_rows(self):
         for operation in self._item.subject.ownedOperation:
-            yield [operation.render(), operation.isStatic, operation]
+            yield [UML.format(operation), operation.isStatic, operation]
 
 
     def _create_object(self):
@@ -249,12 +249,12 @@ class ClassOperations(EditableTreeModel):
         operation = row[-1]
         if col == 0:
             operation.parse(value)
-            row[0] = operation.render()
+            row[0] = UML.format(operation)
         elif col == 1:
             operation.isStatic = not operation.isStatic
             row[1] = operation.isStatic
         elif col == 2:
-            row[0] = operation.render()
+            row[0] = UML.format(operation)
             row[1] = operation.isStatic
 
 
@@ -1099,14 +1099,14 @@ class AssociationEndPropertyPage(object):
         vbox = gtk.VBox()
 
         entry = gtk.Entry()
-        entry.set_text(render_attribute(self.subject, multiplicity=True) or '')
+        entry.set_text(UML.format(self.subject, multiplicity=True) or '')
 
         # monitor subject attribute (all, cause it contains many children)
         changed_id = entry.connect('changed', self._on_end_name_change)
         def handler(event):
             if not entry.props.has_focus:
                 entry.handler_block(changed_id)
-                entry.set_text(render_attribute(self.subject, multiplicity=True) or '')
+                entry.set_text(UML.format(self.subject, multiplicity=True) or '')
                 entry.handler_unblock(changed_id)
         self.watcher.watch('name', handler) \
                     .watch('aggregation', handler)\
