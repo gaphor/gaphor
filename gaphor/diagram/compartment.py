@@ -182,7 +182,12 @@ class Compartment(list):
             return None
         
         padding = self.owner.style.compartment_padding
+        vspacing = self.owner.style.compartment_vspacing
         height = padding[0]
+
+        if self.title:
+            height += self.title_height + vspacing
+
         if y < height:
             return None
 
