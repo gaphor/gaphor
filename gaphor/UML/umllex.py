@@ -26,6 +26,7 @@ def parse(el, text):
     raise NotImplementedError('Parsing routine for type %s not implemented yet' \
             % type(el))
 
+
 # Visibility (optional) ::= '+' | '-' | '#'
 vis_subpat = r'\s*(?P<vis>[-+#])?'
 
@@ -335,6 +336,14 @@ def parse_namedelement(el, text):
     Parse named element by simply assigning text to its name.
     """
     el.name = text
+
+
+@parse.when_type(UML.LiteralSpecification)
+def parse_literalspecification(el, text):
+    """
+    Parse literal specification element.
+    """
+    el.value = text
 
 
 # vim:sw=4:et:ai

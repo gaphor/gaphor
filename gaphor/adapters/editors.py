@@ -12,6 +12,25 @@ from gaphor.core import inject
 from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
 from gaphor.misc.rattr import rgetattr, rsetattr
+from simplegeneric import generic
+
+
+@generic
+def editable(el):
+    """
+    Return editable part of UML element.
+
+    It returns element itself by default.
+    """
+    return el
+    
+
+@editable.when_type(UML.Slot)
+def editable_slot(el):
+    """
+    Return editable part of a slot.
+    """
+    return el.value
 
 
 class CommentItemEditor(object):
@@ -133,13 +152,13 @@ class CompartmentItemEditor(object):
         return bool(self._edit and self._edit.subject)
 
     def get_text(self):
-        return UML.format(self._edit.subject)
+        return UML.format(editable(self._edit.subject))
 
     def get_bounds(self):
         return None
 
     def update_text(self, text):
-        UML.parse(self._edit.subject, text)
+        UML.parse(editable(self._edit.subject), text)
 
     def key_pressed(self, pos, key):
         pass

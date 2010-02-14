@@ -215,3 +215,12 @@ def format_namedelement(el, pattern='%s'):
     return pattern % el.name
 
 
+@format.when_type(UML.LiteralSpecification)
+def format_literalspecification(el, pattern='%s'):
+    """
+    Format literal specification element.
+    """
+    return pattern % el.value
+
+
+# vim:sw=4:et:ai
