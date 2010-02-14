@@ -8,7 +8,7 @@ from gaphor import UML
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP
 from gaphor.diagram.states import VertexItem
 from gaphor.diagram.classifier import CompartmentItem
-from gaphor.diagram.compartment import NamedFeatureItem
+from gaphor.diagram.compartment import FeatureItem
 from gaphor.core import inject
 
 DX = 15
@@ -33,9 +33,9 @@ class StateItem(CompartmentItem, VertexItem):
         # non-visible by default, show when at least one item is visible
         self._activities.visible = False
 
-        self._entry = NamedFeatureItem(pattern='entry / %s', order=1)
-        self._exit = NamedFeatureItem(pattern='exit / %s', order=2)
-        self._do_activity = NamedFeatureItem(pattern='do / %s', order=3)
+        self._entry = FeatureItem(pattern='entry / %s', order=1)
+        self._exit = FeatureItem(pattern='exit / %s', order=2)
+        self._do_activity = FeatureItem(pattern='do / %s', order=3)
 #        self.watch('subject<ControlFlow>.guard<LiteralSpecification>.value', self.on_control_flow_guard)
 
 

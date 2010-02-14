@@ -134,14 +134,12 @@ class CompartmentItemEditor(object):
 
     def get_text(self):
         return UML.format(self._edit.subject)
-        #return self._edit.subject.name
 
     def get_bounds(self):
         return None
 
     def update_text(self, text):
         UML.parse(self._edit.subject, text)
-        #self._item.subject.name = text
 
     def key_pressed(self, pos, key):
         pass
@@ -175,7 +173,7 @@ class AssociationItemEditor(object):
     def get_text(self):
         if self._edit is self._item:
             return self._edit.subject.name
-        return render_attribute(self._edit.subject, visibility=True,
+        return UML.format(self._edit.subject, visibility=True,
                                 is_derived=True, type=True,
                                 multiplicity=True, default=True)
     def get_bounds(self):
@@ -183,7 +181,6 @@ class AssociationItemEditor(object):
 
     def update_text(self, text):
         UML.parse(self._edit.subject, text)
-        #self._item.subject.name = text
 
     def key_pressed(self, pos, key):
         pass

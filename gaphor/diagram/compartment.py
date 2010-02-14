@@ -19,13 +19,15 @@ class FeatureItem(object):
     Note that features can also be used inside objects.
     """
 
-    def __init__(self):
+    def __init__(self, pattern='%s', order=0):
         super(FeatureItem, self).__init__()
         self.width = 0
         self.height = 0
         self.text = ''
         self.font = FONT
         self.subject = None
+        self.order = order
+        self.pattern = pattern
 
 
     def save(self, save_func):
@@ -71,7 +73,7 @@ class FeatureItem(object):
         """
         Return a rendered feature, as a string.
         """
-        return UML.format(self.subject) or ''
+        return UML.format(self.subject, pattern=self.pattern) or ''
 
     def draw(self, context):
         cr = context.cairo
@@ -80,27 +82,6 @@ class FeatureItem(object):
             text_underline(cr, 0, 0, self.render() or '')
         else:
             text_align(cr, 0, 0, self.render(), align_x=1, align_y=1)
-
-
-class NamedFeatureItem(FeatureItem):
-    """
-    Compartment item to render named element.
-    """
-    def __init__(self, pattern='', order=1):
-        super(NamedFeatureItem, self).__init__()
-        self.pattern = pattern
-        self.order = order
-
-    def _render_item(self):
-        return self.pattern % self.subject.name
-
-    def pre_update(self, context):
-        self.update_size(self._render_item(), context)
-
-    def draw(self, context):
-        cr = context.cairo
-        text_set_font(cr, FONT)
-        text_align(cr, 0, 0, self._render_item(), align_x=1, align_y=1)
 
 
 

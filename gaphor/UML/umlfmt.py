@@ -10,11 +10,11 @@ from gaphor.UML import uml2 as UML
 
 
 @generic
-def format(el):
+def format(el, pattern=None):
     """
     Format an UML element.
     """
-    raise NotImplemented('Format routine for type %s not implemented yet' \
+    raise NotImplementedError('Format routine for type %s not implemented yet' \
             % type(el))
 
 
@@ -137,7 +137,7 @@ def format_association_end(el):
 
 
 @format.when_type(UML.Operation)
-def format_operation(el, visibility=False, type=False, multiplicity=False,
+def format_operation(el, pattern=None, visibility=False, type=False, multiplicity=False,
                            default=False, tags=False, direction=False):
     """
     Create a OCL representation of the operation,
@@ -203,7 +203,15 @@ def format_operation(el, visibility=False, type=False, multiplicity=False,
 
 
 @format.when_type(UML.Slot)
-def format_slot(el):
+def format_slot(el, pattern=None):
     return '%s = "%s"' % (el.definingFeature.name, el.value.value)
+
+
+@format.when_type(UML.NamedElement)
+def format_namedelement(el, pattern='%s'):
+    """
+    Format named element.
+    """
+    return pattern % el.name
 
 

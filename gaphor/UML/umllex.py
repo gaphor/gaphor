@@ -23,7 +23,7 @@ def parse(el, text):
     """
     Parser for an UML element.
     """
-    raise NotImplemented('Parsing routine for type %s not implemented yet' \
+    raise NotImplementedError('Parsing routine for type %s not implemented yet' \
             % type(el))
 
 # Visibility (optional) ::= '+' | '-' | '#'
@@ -327,6 +327,14 @@ def render_lifeline(el):
     """
     """
     return el.name
+
+
+@parse.when_type(UML.NamedElement)
+def parse_namedelement(el, text):
+    """
+    Parse named element by simply assigning text to its name.
+    """
+    el.name = text
 
 
 # vim:sw=4:et:ai
