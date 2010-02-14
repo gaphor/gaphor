@@ -76,7 +76,7 @@ class FeatureItem(object):
     def draw(self, context):
         cr = context.cairo
         text_set_font(cr, self.font)
-        if self.subject.isStatic:
+        if hasattr(self.subject, 'isStatic') and self.subject.isStatic:
             text_underline(cr, 0, 0, self.render() or '')
         else:
             text_align(cr, 0, 0, self.render(), align_x=1, align_y=1)
@@ -101,16 +101,6 @@ class NamedFeatureItem(FeatureItem):
         cr = context.cairo
         text_set_font(cr, FONT)
         text_align(cr, 0, 0, self._render_item(), align_x=1, align_y=1)
-
-
-
-class SlotItem(NamedFeatureItem):
-    """
-    Stereotype slot item visualized in compartments.
-    """
-    def _render_item(self):
-        slot = self.subject
-        return '%s = "%s"' % (slot.definingFeature.name, slot.value.value)
 
 
 
@@ -332,7 +322,7 @@ class CompartmentItem(NamedItem):
     def _update_stereotype_compartment(self, comp, obj):
         del comp[:]
         for slot in obj.slot:
-            item = SlotItem()
+            item = FeatureItem()
             item.subject = slot
             comp.append(item)
         comp.visible = len(obj.slot) > 0

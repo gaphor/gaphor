@@ -201,3 +201,9 @@ def format_operation(el, visibility=False, type=False, multiplicity=False,
     s.reset()
     return s.read()
 
+
+@format.when_type(UML.Slot)
+def format_slot(el):
+    return '%s = "%s"' % (el.definingFeature.name, el.value.value)
+
+
