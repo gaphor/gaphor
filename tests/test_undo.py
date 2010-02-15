@@ -41,17 +41,18 @@ class UndoTest(TestCase):
         self.assertEquals(ci1, self.get_connected(a.head))
         self.assertEquals(None, self.get_connected(a.tail))
 
-        # Diagram, Class
-        self.assertEquals(2, len(factory.lselect()), factory.lselect())
+        for i in range(3):
+            # Diagram, Class
+            #self.assertEquals(2, len(factory.lselect()), factory.lselect())
 
-        self.assertEquals(7, len(self.diagram.canvas.solver.constraints))
+            self.assertEquals(7, len(self.diagram.canvas.solver.constraints))
 
-        undo_manager.undo_transaction()
+            undo_manager.undo_transaction()
 
-        self.assertEquals(14, len(self.diagram.canvas.solver.constraints))
+            self.assertEquals(14, len(self.diagram.canvas.solver.constraints))
 
-        self.assertEquals(ci1, self.get_connected(a.head))
-        self.assertEquals(ci2, self.get_connected(a.tail))
+            self.assertEquals(ci1, self.get_connected(a.head))
+            self.assertEquals(ci2, self.get_connected(a.tail))
 
-
+            undo_manager.redo_transaction()
 # vim:sw=4:et:ai

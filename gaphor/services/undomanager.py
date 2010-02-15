@@ -306,7 +306,6 @@ class UndoManager(object):
         self._app.unregister_handler(self.undo_association_add_event)
         self._app.unregister_handler(self.undo_association_delete_event)
 
-        from gaphas import state
         state.observers.discard(state.revert_handler)
 
         state.subscribers.discard(self._gaphas_undo_handler)

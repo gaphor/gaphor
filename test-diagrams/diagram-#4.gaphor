@@ -571,7 +571,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (2.0, 148.0)]</val>
+<val>[(0.0, 0.0), (0.0, 0.0), (2.0, 148.0)]</val>
 </points>
 <head-connection>
 <ref refid="8ee4b5a4-8973-11de-8bcf-00508de79d8e"/>
@@ -857,7 +857,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-0.90000000000000568, 180.0)]</val>
+<val>[(0.0, 0.0), (0.0, 0.0), (-0.90000000000000568, 180.0)]</val>
 </points>
 <head-connection>
 <ref refid="746aba2e-8979-11de-8bcf-00508de79d8e"/>
