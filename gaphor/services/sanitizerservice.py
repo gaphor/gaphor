@@ -6,10 +6,10 @@ the model clean and in sync with diagrams.
 from zope import interface
 from zope import component
 from gaphor import UML
-from gaphor.UML.interfaces import IElementDeleteEvent
+from gaphor.UML.interfaces import IElementDeleteEvent, IAssociationDeleteEvent
 from gaphor.interfaces import IService
 from gaphor.core import inject
-
+from gaphor.diagram import items
 
 class SanitizerService(object):
     """
@@ -19,6 +19,7 @@ class SanitizerService(object):
     interface.implements(IService)
 
     element_factory = inject('element_factory')
+    property_dispatcher = inject('property_dispatcher')
 
     def __init__(self):
         pass
@@ -38,18 +39,16 @@ class SanitizerService(object):
         self._app.unregister_handler(self._unlink_on_extension_delete)
         
 
-    @component.adapter(UML.Presentation, IElementDeleteEvent)
-    def _unlink_on_presentation_delete(self, item, event):
+    @component.adapter(IAssociationDeleteEvent)
+    def _unlink_on_presentation_delete(self, event):
         """
         Unlink the model element if no more presentations link to the `item`'s
-        subject or the to-be-deleted item is the only item currently linked.
+        subject or the deleted item was the only item currently linked.
         """
-        subject = item.subject
-        if subject:
-            presentation = subject.presentation
-            if not presentation or \
-                    (len(presentation) == 1 and presentation[0] is item):
-                subject.unlink()
+        if event.property is UML.Element.presentation:
+            old_presentation = event.old_value
+            if old_presentation and not event.element.presentation:
+                event.element.unlink()
 
 
     @component.adapter(UML.Extension, IElementDeleteEvent)
