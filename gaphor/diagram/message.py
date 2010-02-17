@@ -308,6 +308,7 @@ class MessageItem(NamedLine):
         txt = self.add_text('name', style=style)
         txt.text = message.name
         messages[message] = txt
+        self.request_update()
 
 
     def remove_message(self, message, inverted):
@@ -321,6 +322,7 @@ class MessageItem(NamedLine):
         txt = messages[message]
         self.remove_text(txt)
         del messages[message]
+        self.request_update()
 
 
     def set_message_text(self, message, text, inverted):
@@ -332,6 +334,7 @@ class MessageItem(NamedLine):
         else:
             messages = self._messages
         messages[message].text = text
+        self.request_update()
 
 
     def swap_messages(self, m1, m2, inverted):
@@ -346,6 +349,7 @@ class MessageItem(NamedLine):
         t2 = messages[m2]
         self.swap_texts(t1, t2)
         messages.swap(m1, m2)
+        self.request_update()
         return True
 
 
