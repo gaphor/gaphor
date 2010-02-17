@@ -1419,6 +1419,10 @@ component.provideAdapter(ComponentPropertyPage, name='Properties')
 
 class MessagePropertyPage(NamedItemPropertyPage):
     """
+    Property page for editing message items.
+
+    When message is on communication diagram, then additional messages can
+    be added. On sequence diagram sort of message can be changed.
     """
 
     component.adapts(items.MessageItem)
@@ -1485,6 +1489,8 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
             index = combo.get_model().get_index(subject.messageSort)
             combo.set_active(index)
+
+        page.show_all()
 
         return page
 
