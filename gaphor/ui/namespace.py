@@ -226,6 +226,8 @@ class NamespaceModel(gtk.GenericTreeModel):
     @catchall
     def _on_element_delete(self, event):
         element = event.element
+        if type(element) is UML.Property and element.namespace is None:
+            return
         if event.service is self.factory and \
                 type(element) in self.filter:
             path = self.path_from_element(element)
