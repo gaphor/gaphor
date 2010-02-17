@@ -287,31 +287,16 @@ class TransactionalToolChain(ToolChain):
         super(TransactionalToolChain, self).__init__(view)
         self._tx = None
 
-    def on_button_press(self, event):
-        self._tx = Transaction()
-        return ToolChain.on_button_press(self, event)
+    def handle(self, event):
+        if self.EVENT_HANDLERS.get(event.type) in ('on_button_press', 'on_double_click', 'on_triple_click'):
+            self._tx = Transaction()
 
-    def on_button_release(self, event):
         try:
-            return ToolChain.on_button_release(self, event)
+            super(TransactionalToolChain, self).handle(event)
         finally:
-            if self._tx:
+            if self.EVENT_HANDLERS.get(event.type) in ('on_button_release', 'on_double_click', 'on_triple_click'):
                 self._tx.commit()
                 self._tx = None
-
-    def on_double_click(self, event):
-        tx = Transaction()
-        try:
-            return ToolChain.on_double_click(self, event)
-        finally:
-            tx.commit()
-
-    def on_triple_click(self, event):
-        tx = Transaction()
-        try:
-            return ToolChain.on_triple_click(self, event)
-        finally:
-            tx.commit()
 
 
 def DefaultTool():
