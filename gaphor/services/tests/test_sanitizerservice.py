@@ -16,14 +16,14 @@ class SanitizerServiceTest(TestCase):
         klassitem = self.create(items.ClassItem, UML.Class)
         klass = klassitem.subject
 
-        assert klassitem.subject.presentation[0] is klassitem
-        assert klassitem.canvas
+        self.assertTrue(klassitem.subject.presentation[0] is klassitem)
+        self.assertTrue(klassitem.canvas is not None)
 
         # Delete presentation here:
 
         klassitem.unlink()
 
-        assert not klassitem.canvas
-        assert klass not in self.element_factory.lselect()
+        self.assertTrue(not klassitem.canvas)
+        self.assertTrue(klass not in self.element_factory.lselect())
 
 # vim:sw=4:et:ai
