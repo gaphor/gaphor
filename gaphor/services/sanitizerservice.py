@@ -27,14 +27,12 @@ class SanitizerService(object):
     def init(self, app):
         self._app = app
         app.register_handler(self._unlink_on_presentation_delete)
-        app.register_handler(self._unlink_on_stereotype_attribute_delete)
         app.register_handler(self._unlink_on_stereotype_delete)
         app.register_handler(self._unlink_on_extension_delete)
 
 
     def shutdown(self):
         self._app.unregister_handler(self._unlink_on_presentation_delete)
-        self._app.unregister_handler(self._unlink_on_stereotype_attribute_delete)
         self._app.unregister_handler(self._unlink_on_stereotype_delete)
         self._app.unregister_handler(self._unlink_on_extension_delete)
         
@@ -74,22 +72,5 @@ class SanitizerService(object):
             e = obj.extended[0]
             UML.model.remove_stereotype(e, st)
 
-
-    @component.adapter(UML.Property, IElementDeleteEvent)
-    def _unlink_on_stereotype_attribute_delete(self, st_attr, event):
-        """
-        Remove slots of instance specification (created due to applied
-        stereotype) if stereotype's attribute is deleted.
-        """
-        if st_attr is not None and st_attr.class_ is not None \
-                and st_attr.class_.isKindOf(UML.Stereotype):
-
-            st = st_attr.class_
-            instances = UML.model.find_instances(self.element_factory, st)
-            for obj in list(instances):
-                for slot in obj.slot:
-                    if slot.definingFeature == st_attr:
-                        del obj.slot[slot]
-                        slot.unlink()
 
 # vim:sw=4:et:ai

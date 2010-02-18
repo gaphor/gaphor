@@ -7405,6 +7405,7 @@ namespace, featuringClassifier]]></val>
 <ownedAttribute>
 <reflist>
 <ref refid="DCE:00501E12-4B38-11D7-B391-02BBFE4396CE"/>
+<ref refid="DCE:3A81BC34-4B3E-11D7-B391-02BBFE4396CE"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -24600,6 +24601,46 @@ specially for Gaphor]]></val>
 <val>0</val>
 </show_stereotypes_attrs>
 </item>
+<item type="CommentItem" id="8996d432-1cae-11df-b8ca-00224128e79d">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 675.95642201834858, 121.0)</val>
+</matrix>
+<width>
+<val>163.0</val>
+</width>
+<height>
+<val>86.0</val>
+</height>
+<subject>
+<ref refid="89968efa-1cae-11df-b8ca-00224128e79d"/>
+</subject>
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+</item>
+<item type="CommentLineItem" id="f481e64a-1cb0-11df-b8ca-00224128e79d">
+<show_stereotypes_attrs>
+<val>0</val>
+</show_stereotypes_attrs>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 643.96147757123572, 262.59355363042829)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (66.994944447112914, -55.593553630428289)]</val>
+</points>
+<head-connection>
+<ref refid="DCE:08F51022-4B33-11D7-B391-02BBFE4396CE"/>
+</head-connection>
+<tail-connection>
+<ref refid="8996d432-1cae-11df-b8ca-00224128e79d"/>
+</tail-connection>
+</item>
 </canvas>
 </Diagram>
 <LiteralSpecification id="DCE:EEA67CE4-4864-11D8-A4FB-20895068F46E">
@@ -24915,11 +24956,11 @@ classifier]]></val>
 <ref refid="DCE:3A81EE0C-4B3E-11D7-B391-02BBFE4396CE"/>
 </reflist>
 </memberEnd>
-<ownedEnd>
+<ownedComment>
 <reflist>
-<ref refid="DCE:3A81BC34-4B3E-11D7-B391-02BBFE4396CE"/>
+<ref refid="89968efa-1cae-11df-b8ca-00224128e79d"/>
 </reflist>
-</ownedEnd>
+</ownedComment>
 <package>
 <ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
 </package>
@@ -30893,24 +30934,27 @@ classifier]]></val>
 </Association>
 <LiteralSpecification id="DCE:0BD18208-8403-11D8-82A2-7B88E55A3BEC"/>
 <Property id="DCE:3A81BC34-4B3E-11D7-B391-02BBFE4396CE">
+<aggregation>
+<val><![CDATA[composite]]></val>
+</aggregation>
 <association>
 <ref refid="DCE:3A818386-4B3E-11D7-B391-02BBFE4396CE"/>
 </association>
-<isDerived>
-<val>0</val>
-</isDerived>
+<class_>
+<ref refid="DCE:F91A720A-4B37-11D7-B391-02BBFE4396CE"/>
+</class_>
 <name>
-<val><![CDATA[]]></val>
+<val><![CDATA[slot]]></val>
 </name>
-<owningAssociation>
-<ref refid="DCE:3A818386-4B3E-11D7-B391-02BBFE4396CE"/>
-</owningAssociation>
 <presentation>
 <reflist/>
 </presentation>
 <type>
 <ref refid="DCE:309D5284-4B32-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<ref refid="d6136384-1cae-11df-b8ca-00224128e79d"/>
+</upperValue>
 </Property>
 <LiteralString id="DCE:BB5E8B54-2E06-11D8-A169-52D559F3DAB9"/>
 <LiteralSpecification id="DCE:EE8D3D9C-4864-11D8-A4FB-20895068F46E">
@@ -45916,6 +45960,9 @@ subsets ownedMember]]></val>
 </show_stereotypes_attrs>
 </item>
 <item type="ExtensionItem" id="9c64e5c6-fa90-11de-bd51-00224128e79d">
+<subject>
+<ref refid="16f75630-fa90-11de-bd51-00224128e79d"/>
+</subject>
 <show_stereotypes_attrs>
 <val>0</val>
 </show_stereotypes_attrs>
@@ -47775,6 +47822,11 @@ swimlanes]]></val>
 <ownedEnd>
 <ref refid="16f7a3b0-fa90-11de-bd51-00224128e79d"/>
 </ownedEnd>
+<presentation>
+<reflist>
+<ref refid="9c64e5c6-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</presentation>
 </Extension>
 <Property id="16f781f0-fa90-11de-bd51-00224128e79d">
 <association>
@@ -47831,6 +47883,171 @@ swimlanes]]></val>
 <name>
 <val><![CDATA[subsets]]></val>
 </name>
+<slot>
+<reflist>
+<ref refid="16f9250a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="16f9d3d8-fa90-11de-bd51-00224128e79d"/>
+<ref refid="16fa7d6a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="16fb5a0a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="16fbfcd0-fa90-11de-bd51-00224128e79d"/>
+<ref refid="16fc9ad2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="16fd75ba-fa90-11de-bd51-00224128e79d"/>
+<ref refid="16fe0ff2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="16ff6f5a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17004a88-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1700e844-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1702b584-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17034ff8-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1703ede6-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17049930-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17055064-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1706d664-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17077b82-fa90-11de-bd51-00224128e79d"/>
+<ref refid="170ae650-fa90-11de-bd51-00224128e79d"/>
+<ref refid="170bee88-fa90-11de-bd51-00224128e79d"/>
+<ref refid="170cc29a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="170d5dd6-fa90-11de-bd51-00224128e79d"/>
+<ref refid="170ee656-fa90-11de-bd51-00224128e79d"/>
+<ref refid="170ff96a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1710a68a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1711e14e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17127b54-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17135240-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17143e12-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17155504-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1716ee6e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1717da40-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1718b078-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17194b82-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1719e498-fa90-11de-bd51-00224128e79d"/>
+<ref refid="171a8164-fa90-11de-bd51-00224128e79d"/>
+<ref refid="171c2a78-fa90-11de-bd51-00224128e79d"/>
+<ref refid="171cdcfc-fa90-11de-bd51-00224128e79d"/>
+<ref refid="171d8a80-fa90-11de-bd51-00224128e79d"/>
+<ref refid="171e2d78-fa90-11de-bd51-00224128e79d"/>
+<ref refid="171fb058-fa90-11de-bd51-00224128e79d"/>
+<ref refid="172051ca-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1720f54e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1722ee94-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1723f988-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1724960e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="172630b8-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17274db8-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1727e7d2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1728eea2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1729d4c0-fa90-11de-bd51-00224128e79d"/>
+<ref refid="172ba796-fa90-11de-bd51-00224128e79d"/>
+<ref refid="172c81ac-fa90-11de-bd51-00224128e79d"/>
+<ref refid="172ed18c-fa90-11de-bd51-00224128e79d"/>
+<ref refid="172f772c-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173104ca-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1731a470-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17323f8e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17335612-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1733effa-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17349c02-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1735cc8a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173671b2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17371568-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1737b3ba-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173855e0-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1738fa36-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173b4052-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173bfd8a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173c9dee-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173d75c0-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173e6f20-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173f12c2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173fecce-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17413502-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17429eba-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17443784-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17473a10-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1747eb90-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1749cfd2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="174a6eb0-fa90-11de-bd51-00224128e79d"/>
+<ref refid="174b648c-fa90-11de-bd51-00224128e79d"/>
+<ref refid="174bfdb6-fa90-11de-bd51-00224128e79d"/>
+<ref refid="174ca8ba-fa90-11de-bd51-00224128e79d"/>
+<ref refid="174d9630-fa90-11de-bd51-00224128e79d"/>
+<ref refid="174e7ce4-fa90-11de-bd51-00224128e79d"/>
+<ref refid="174f5772-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17507134-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17510b08-fa90-11de-bd51-00224128e79d"/>
+<ref refid="175248ce-fa90-11de-bd51-00224128e79d"/>
+<ref refid="175347ba-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17542aae-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1756f252-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17578cc6-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17595164-fa90-11de-bd51-00224128e79d"/>
+<ref refid="175a7f76-fa90-11de-bd51-00224128e79d"/>
+<ref refid="175b9f32-fa90-11de-bd51-00224128e79d"/>
+<ref refid="175d1a42-fa90-11de-bd51-00224128e79d"/>
+<ref refid="175db9d4-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1760098c-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1760e55a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17618f0a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1762acfa-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1763574a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1763f876-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17656eb8-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17696734-fa90-11de-bd51-00224128e79d"/>
+<ref refid="176a0586-fa90-11de-bd51-00224128e79d"/>
+<ref refid="176b9f40-fa90-11de-bd51-00224128e79d"/>
+<ref refid="176c5f66-fa90-11de-bd51-00224128e79d"/>
+<ref refid="176d0ec0-fa90-11de-bd51-00224128e79d"/>
+<ref refid="176dae48-fa90-11de-bd51-00224128e79d"/>
+<ref refid="176e95ba-fa90-11de-bd51-00224128e79d"/>
+<ref refid="176f93c0-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177030be-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1771a8c2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177404dc-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1774a6a8-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177549b4-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1777a060-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1778404c-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1778e3a8-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1779801a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177b37a2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177e679c-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177f3f28-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1780418e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1783d290-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1784ff80-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1785bbd2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17865ab0-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1786fd30-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17879894-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17883538-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1788dc0e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17899298-fa90-11de-bd51-00224128e79d"/>
+<ref refid="178a47e2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="178af71e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="178b9336-fa90-11de-bd51-00224128e79d"/>
+<ref refid="178c37aa-fa90-11de-bd51-00224128e79d"/>
+<ref refid="178cd3e0-fa90-11de-bd51-00224128e79d"/>
+<ref refid="178d6f9e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="178e0fc6-fa90-11de-bd51-00224128e79d"/>
+<ref refid="178eb0ca-fa90-11de-bd51-00224128e79d"/>
+<ref refid="178fdeaa-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17908efe-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17912d50-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1791c9a4-fa90-11de-bd51-00224128e79d"/>
+<ref refid="179269ea-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1793162e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1795afc4-fa90-11de-bd51-00224128e79d"/>
+<ref refid="179658fc-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1796ff50-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1797ae50-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17984e1e-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1798ecde-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17999044-fa90-11de-bd51-00224128e79d"/>
+<ref refid="179a2d38-fa90-11de-bd51-00224128e79d"/>
+<ref refid="179ad21a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="179c1832-fa90-11de-bd51-00224128e79d"/>
+<ref refid="179cc732-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</slot>
 <typeValue>
 <ref refid="50a654ac-fa91-11de-bd51-00224128e79d"/>
 </typeValue>
@@ -48140,6 +48357,23 @@ swimlanes]]></val>
 <name>
 <val><![CDATA[ordered]]></val>
 </name>
+<slot>
+<reflist>
+<ref refid="16ff0d62-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17062b06-fa90-11de-bd51-00224128e79d"/>
+<ref refid="170b8e66-fa90-11de-bd51-00224128e79d"/>
+<ref refid="171bc722-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17218fc2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="172397ae-fa90-11de-bd51-00224128e79d"/>
+<ref refid="172e5b58-fa90-11de-bd51-00224128e79d"/>
+<ref refid="173e0eea-fa90-11de-bd51-00224128e79d"/>
+<ref refid="174b05fa-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177ad5d2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177d5a14-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177dfffa-fa90-11de-bd51-00224128e79d"/>
+<ref refid="177fd8d4-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</slot>
 <typeValue>
 <ref refid="22ed9c64-fa91-11de-bd51-00224128e79d"/>
 </typeValue>
@@ -48635,6 +48869,23 @@ swimlanes]]></val>
 <name>
 <val><![CDATA[redefines]]></val>
 </name>
+<slot>
+<reflist>
+<ref refid="1708a444-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1709407a-fa90-11de-bd51-00224128e79d"/>
+<ref refid="171145c2-fa90-11de-bd51-00224128e79d"/>
+<ref refid="171ec832-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1744d4c8-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1745ed54-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1751ab12-fa90-11de-bd51-00224128e79d"/>
+<ref refid="175650cc-fa90-11de-bd51-00224128e79d"/>
+<ref refid="175c4388-fa90-11de-bd51-00224128e79d"/>
+<ref refid="175f5b18-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1793b318-fa90-11de-bd51-00224128e79d"/>
+<ref refid="17944f76-fa90-11de-bd51-00224128e79d"/>
+<ref refid="1794f50c-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</slot>
 <typeValue>
 <ref refid="541042b0-fa91-11de-bd51-00224128e79d"/>
 </typeValue>
@@ -53717,6 +53968,11 @@ swimlanes]]></val>
 <name>
 <val><![CDATA[union]]></val>
 </name>
+<slot>
+<reflist>
+<ref refid="177735ee-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</slot>
 <typeValue>
 <ref refid="4ac4e468-fa91-11de-bd51-00224128e79d"/>
 </typeValue>
@@ -55607,4 +55863,28 @@ swimlanes]]></val>
 <LiteralSpecification id="221cb774-ff42-11de-8fc8-00224128e79d"/>
 <LiteralSpecification id="221ce852-ff42-11de-8fc8-00224128e79d"/>
 <LiteralSpecification id="221d1a52-ff42-11de-8fc8-00224128e79d"/>
+<Comment id="89968efa-1cae-11df-b8ca-00224128e79d">
+<annotatedElement>
+<reflist>
+<ref refid="DCE:3A818386-4B3E-11D7-B391-02BBFE4396CE"/>
+</reflist>
+</annotatedElement>
+<body>
+<val><![CDATA[Made this relationship
+an aggregate so Slots
+are removed as soon as
+the definingFeature is
+removed.]]></val>
+</body>
+<presentation>
+<reflist>
+<ref refid="8996d432-1cae-11df-b8ca-00224128e79d"/>
+</reflist>
+</presentation>
+</Comment>
+<LiteralSpecification id="d6136384-1cae-11df-b8ca-00224128e79d">
+<value>
+<val><![CDATA[*]]></val>
+</value>
+</LiteralSpecification>
 </gaphor>
