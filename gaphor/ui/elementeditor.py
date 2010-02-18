@@ -2,6 +2,7 @@
 The file service is responsible for loading and saving the user data.
 """
 
+import gtk
 from zope import interface
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.core import _, inject, action, toggle_action, build_action_group
@@ -50,7 +51,7 @@ class ElementEditor(UtilityWindow):
             if not self.window:
                 self.construct()
                 self.window.connect('delete-event', self.close)
-                self.window.connect('delete-event', self.window.hide_on_delete)
+                self.window.connect('key-press-event', self.on_key_press_event)
             else:
                 self.window.show_all()
         else:
@@ -64,5 +65,12 @@ class ElementEditor(UtilityWindow):
 
     def close(self, widget=None, event=None):
         self.action_group.get_action('ElementEditor:open').set_active(False)
+        self.window.hide()
+        return True
+
+    def on_key_press_event(self, widget, event):
+        if event.keyval == gtk.keysyms.Escape:
+            self.close()
+
 
 # vim:sw=4:et:ai
