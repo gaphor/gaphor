@@ -1,9 +1,12 @@
+"""
+Parsing of UML model elements from string tests.
+"""
 
 import unittest
 from gaphor.application import Application
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.UML import *
-from gaphor.UML.umllex import *
+from gaphor.UML.umllex import parse
 from gaphor.UML.umllex import attribute_pat, operation_pat, parameter_pat
 
 def dump_prop(prop):
@@ -35,34 +38,25 @@ dump_oper('   myfunc2 ( ): type')
 dump_oper('myfunc(aap:str[1] = "aap" { tag1, tag2 }, out two {tag3}): type')
 
 
-element_factory = ElementFactory()
+factory = ElementFactory()
 
 class AttributeTestCase(unittest.TestCase):
 
     def setUp(self):
-        element_factory.init(Application)
-        element_factory.flush()
+        factory.init(Application)
+        factory.flush()
 
 
     def tearDown(self):
-        element_factory.shutdown()
-
-
-    def test_render(self):
-        a = element_factory.create(Property)
-        parse_property(a, 'myattr')
-        assert a.render() == '+ myattr', a.render()
-
-        parse_property(a, 'myattr: int')
-        assert a.render() == '+ myattr: int', a.render()
+        factory.shutdown()
 
 
     def test_parse_property_1(self):
         #log.set_log_level(log.INFO)
 
         #print 'testing parse_property()...'
-        a = element_factory.create(Property)
-        assert len(element_factory.values()) == 1
+        a = factory.create(Property)
+        assert len(factory.values()) == 1
 
         # Very simple:
 
@@ -82,7 +76,7 @@ class AttributeTestCase(unittest.TestCase):
 
     def test_parse_property_2(self):
         # All features:
-        a = element_factory.create(Property)
+        a = factory.create(Property)
 
         parse_property(a,'+ / name : str[0..*] = "aap" { static }')
         assert a.visibility == 'public'
@@ -101,7 +95,7 @@ class AttributeTestCase(unittest.TestCase):
 
     def test_parse_property_3(self):
         # Invalid syntax:
-        a = element_factory.create(Property)
+        a = factory.create(Property)
 
         parse_property(a, '+ name = str[*] = "aap" { static }')
         #assert a.visibility == 'protected'
@@ -119,14 +113,14 @@ class AttributeTestCase(unittest.TestCase):
         # Cleanup
 
         a.unlink()
-        assert len(element_factory.values()) == 0
+        assert len(factory.values()) == 0
 
     def test_parse_property_4(self):
         # Association end:
 
-        a = element_factory.create(Association)
+        a = factory.create(Association)
 
-        p = element_factory.create(Property)
+        p = factory.create(Property)
         p.association = a
         parse_property(p, 'end')
         #assert p.visibility == 'protected', p.visibility
@@ -139,8 +133,8 @@ class AttributeTestCase(unittest.TestCase):
         a.unlink()
 
     def test_parse_property_5(self):
-        a = element_factory.create(Association)
-        p = element_factory.create(Property)
+        a = factory.create(Association)
+        p = factory.create(Property)
         p.association = a
         parse_property(p, 'end')
         #assert p.visibility == 'protected', p.visibility
@@ -153,8 +147,8 @@ class AttributeTestCase(unittest.TestCase):
         a.unlink()
 
     def test_parse_property_6(self):
-        a = element_factory.create(Association)
-        p = element_factory.create(Property)
+        a = factory.create(Association)
+        p = factory.create(Property)
         p.association = a
         parse_property(p, '0..2 { tag }')
         #assert p.visibility == 'protected', p.visibility
@@ -167,8 +161,8 @@ class AttributeTestCase(unittest.TestCase):
         a.unlink()
 
     def test_parse_property_7(self):
-        a = element_factory.create(Association)
-        p = element_factory.create(Property)
+        a = factory.create(Association)
+        p = factory.create(Property)
         p.association = a
         parse_property(p, '''0..2 { tag1,
         tag2}''')
@@ -182,8 +176,8 @@ class AttributeTestCase(unittest.TestCase):
         a.unlink()
 
     def test_parse_property_8(self):
-        a = element_factory.create(Association)
-        p = element_factory.create(Property)
+        a = factory.create(Association)
+        p = factory.create(Property)
         p.association = a
         parse_property(p, '-/end[*] { mytag}')
         assert p.visibility == 'private', p.visibility
@@ -201,14 +195,14 @@ class AttributeTestCase(unittest.TestCase):
 class OperationTestCase(unittest.TestCase):
 
     def setUp(self):
-        element_factory.flush()
+        factory.flush()
 
     def tearDown(self):
-        element_factory.flush()
+        factory.flush()
 
     def test_parse_operation_1(self):
-        o = element_factory.create(Operation)
-        assert len(element_factory.values()) == 1
+        o = factory.create(Operation)
+        assert len(factory.values()) == 1
 
         # Very simple procedure:
 
@@ -218,7 +212,7 @@ class OperationTestCase(unittest.TestCase):
         assert o.returnResult[0].typeValue.value is None, o.returnResult[0].typeValue.value
         assert not o.formalParameter, o.formalParameter
         # 1 operation, 1 parameter, 4 literal strings.
-        assert len(element_factory.values()) == 5, len(element_factory.values())
+        assert len(factory.values()) == 5, len(factory.values())
         s = render_operation(o)
         #print render_operation(o)
         parse_operation(o, s)
@@ -231,7 +225,7 @@ class OperationTestCase(unittest.TestCase):
         assert o.returnResult[0].typeValue.value == 'myType', o.returnResult[0].typeValue.value
         assert o.visibility == 'public'
         assert not o.formalParameter, o.formalParameter
-        assert len(element_factory.values()) == 5, element_factory.values()
+        assert len(factory.values()) == 5, factory.values()
         s = render_operation(o)
         parse_operation(o, s)
         assert s == render_operation(o), render_operation(o)
@@ -239,7 +233,7 @@ class OperationTestCase(unittest.TestCase):
     def test_parse_operation_2_params(self):
         # Change the operation to support two parameters:
 
-        o = element_factory.create(Operation)
+        o = factory.create(Operation)
         parse_operation(o, '# myfunc2 (a: str, b: int = 3 {  static}): myType2')
         assert o.name == 'myfunc2', o.name
         assert o.returnResult[0].typeValue.value == 'myType2', o.returnResult[0].typeValue.value
@@ -252,8 +246,8 @@ class OperationTestCase(unittest.TestCase):
         assert o.formalParameter[1].typeValue.value == 'int', o.formalParameter[1].typeValue.value
         assert o.formalParameter[1].defaultValue.value == '3', o.formalParameter[1].defaultValue.value
         # 1 operation, 3 parameters, 4 + 5*2 literal strings
-        assert len(element_factory.lselect(lambda e: isinstance(e, LiteralSpecification))) == 11, len(element_factory.lselect(lambda e: isinstance(e, LiteralSpecification)))
-        assert len(element_factory.values()) == 15, len(element_factory.values())
+        assert len(factory.lselect(lambda e: isinstance(e, LiteralSpecification))) == 11, len(factory.lselect(lambda e: isinstance(e, LiteralSpecification)))
+        assert len(factory.values()) == 15, len(factory.values())
         s = render_operation(o)
         parse_operation(o, s)
         assert s == render_operation(o)
@@ -271,10 +265,10 @@ class OperationTestCase(unittest.TestCase):
         assert o.formalParameter[0].typeValue.value == 'node', o.formalParameter[0].typeValue.value
         assert o.formalParameter[0].defaultValue.value is None, o.formalParameter[0].defaultValue.value
         # 1 operation, 2 parameters, 4 + 5 literal strings
-        assert len(element_factory.lselect(lambda e: isinstance(e, Operation))) == 1, len(element_factory.values())
-        assert len(element_factory.lselect(lambda e: isinstance(e, Parameter))) == 2, len(element_factory.values())
-        assert len(element_factory.lselect(lambda e: isinstance(e, LiteralSpecification))) == 7, len(element_factory.lselect(lambda e: isinstance(e, LiteralSpecification)))
-        assert len(element_factory.values()) == 10, len(element_factory.values())
+        assert len(factory.lselect(lambda e: isinstance(e, Operation))) == 1, len(factory.values())
+        assert len(factory.lselect(lambda e: isinstance(e, Parameter))) == 2, len(factory.values())
+        assert len(factory.lselect(lambda e: isinstance(e, LiteralSpecification))) == 7, len(factory.lselect(lambda e: isinstance(e, LiteralSpecification)))
+        assert len(factory.values()) == 10, len(factory.values())
         #print render_operation(o)
         s = render_operation(o)
         parse_operation(o, s)
