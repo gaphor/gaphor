@@ -1105,7 +1105,8 @@ class AssociationEndPropertyPage(object):
         def handler(event):
             if not entry.props.has_focus:
                 entry.handler_block(changed_id)
-                entry.set_text(UML.format(self.subject, multiplicity=True) or '')
+                entry.set_text(UML.umlfmt.format_attribute(self.subject, multiplicity=True) or '')
+                #entry.set_text(UML.format(self.subject, multiplicity=True) or '')
                 entry.handler_unblock(changed_id)
         self.watcher.watch('name', handler) \
                     .watch('aggregation', handler)\
