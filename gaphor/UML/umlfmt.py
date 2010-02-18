@@ -19,7 +19,7 @@ def format(el, pattern=None):
 
 
 @format.when_type(UML.Property)
-def format_attribute(el, pattern=None, *args, **kwargs):
+def format_property(el, pattern=None, *args, **kwargs):
     """
     Format property or an association end.
     """

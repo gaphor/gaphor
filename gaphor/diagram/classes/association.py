@@ -410,7 +410,7 @@ class AssociationEnd(UML.Presentation):
         """
         if self.subject:
             try:
-                n, m = self.subject.render()
+                n, m = UML.format(self.subject)
             except ValueError:
                 # need more than 0 values to unpack: property was rendered as
                 # attribute while in a UNDO action for example.

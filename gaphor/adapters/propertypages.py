@@ -1098,7 +1098,7 @@ class AssociationEndPropertyPage(object):
         vbox = gtk.VBox()
 
         entry = gtk.Entry()
-        entry.set_text(UML.format(self.subject, multiplicity=True) or '')
+        entry.set_text(UML.umlfmt.format_attribute(self.subject, multiplicity=True) or '')
 
         # monitor subject attribute (all, cause it contains many children)
         changed_id = entry.connect('changed', self._on_end_name_change)

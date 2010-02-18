@@ -397,6 +397,7 @@ class RelationshipConnect(AbstractConnect):
         oct = self.get_connected(opposite)
         hct = self.get_connected(handle)
         
+        print 'Any need for a disconnect:', oct, hct
         if hct and oct:
             # Both sides of line are connected => disconnect
             old = line.subject
