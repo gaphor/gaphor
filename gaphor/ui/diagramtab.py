@@ -224,14 +224,12 @@ class DiagramTab(object):
         edit stuff.
         """
         if view.is_focus():
-            if event.keyval == 0xFFFF and \
-                    (event.state == 0 or event.state & gtk.gdk.MOD2_MASK): # Delete
+            if event.keyval == gtk.keysyms.Delete and \
+                    (event.state == 0 or event.state & gtk.gdk.MOD2_MASK):
                 self.delete_selected_items()
-            elif event.keyval == 0xFF08 and \
-                    (event.state == 0 or event.state & gtk.gdk.MOD2_MASK): # Backspace
+            elif event.keyval == gtk.keysyms.BackSpace and \
+                    (event.state == 0 or event.state & gtk.gdk.MOD2_MASK):
                 self.delete_selected_items()
-            else:
-                log.debug('keyval=%x, state=%x' % (event.keyval, event.state))
 
 
     def _on_view_selection_changed(self, view, selection_or_focus):
