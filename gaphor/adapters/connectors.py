@@ -172,7 +172,7 @@ class CommentLineLineConnect(AbstractConnect):
         """
         opposite = self.line.opposite(handle)
         element = self.element
-        connected_to = opposite.connected_to
+        connected_to = self.get_connected(opposite)
 
         # do not connect to the same item nor connect to other comment line
         if connected_to is element or isinstance(element, items.CommentLineItem):
