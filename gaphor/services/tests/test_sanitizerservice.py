@@ -29,6 +29,10 @@ class SanitizerServiceTest(TestCase):
 
 
     def test_stereotype_attribute_delete(self):
+        """
+        This test was applicable to the Sanitizer service, but is now resolved
+        by a tweak in the data model (Instances diagram).
+        """
         factory = self.element_factory
         create = factory.create
         
@@ -53,5 +57,28 @@ class SanitizerServiceTest(TestCase):
 
         self.assertEquals([], list(stereotype.ownedMember))
         self.assertEquals([], list(instspec.slot))
+
+    def test_extension_deletion(self):
+        factory = self.element_factory
+        create = factory.create
+        
+        # Set the stage
+        metaklass = create(UML.Class)
+        metaklass.name = 'Class'
+        klass = create(UML.Class)
+        stereotype = create(UML.Stereotype)
+        st_attr = self.element_factory.create(UML.Property)
+        stereotype.ownedAttribute = st_attr
+        ext = UML.model.create_extension(factory, metaklass, stereotype)
+
+        # Apply stereotype to class and create slot
+        instspec = UML.model.apply_stereotype(factory, klass, stereotype)
+        slot = UML.model.add_slot(factory, instspec, st_attr)
+
+        self.assertTrue(stereotype in klass.appliedStereotype[:].classifier)
+
+        ext.unlink()
+
+        self.assertEquals([], list(klass.appliedStereotype))
 
 # vim:sw=4:et:ai
