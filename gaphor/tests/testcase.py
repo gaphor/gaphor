@@ -129,9 +129,10 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         """
         Disconnect line's handle.
         """
+        canvas = self.diagram.canvas
         # disconnection on adapter level is performed due to callback, so
         # no adapter look up here
-        self.diagram.canvas.disconnect_item(line, handle)
+        canvas.disconnect_item(line, handle)
         assert not canvas.get_connection(handle)
 
 
