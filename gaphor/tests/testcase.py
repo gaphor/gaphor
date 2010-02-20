@@ -129,13 +129,9 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         """
         Disconnect line's handle.
         """
-        canvas = self.diagram.canvas
-        cinfo = canvas.get_connection(handle)
-        query = (cinfo.connected, line)
-        adapter = component.queryMultiAdapter(query, IConnect)
-        adapter.disconnect(line.head)
-
-        canvas.disconnect_item(line, handle)
+        # disconnection on adapter level is performed due to callback, so
+        # no adapter look up here
+        self.diagram.canvas.disconnect_item(line, handle)
         assert not canvas.get_connection(handle)
 
 
