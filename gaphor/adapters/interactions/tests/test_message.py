@@ -56,7 +56,7 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEquals(msg.subject.messageKind, 'lost')
 
         messages = self.kindof(UML.Message)
-        occurences = self.kindof(UML.EventOccurrence)
+        occurences = self.kindof(UML.MessageOccurrenceSpecification)
 
         self.assertEquals(1, len(messages))
         self.assertEquals(1, len(occurences))
@@ -77,7 +77,7 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEquals(msg.subject.messageKind, 'found')
 
         messages = self.kindof(UML.Message)
-        occurences = self.kindof(UML.EventOccurrence)
+        occurences = self.kindof(UML.MessageOccurrenceSpecification)
 
         self.assertEquals(1, len(messages))
         self.assertEquals(1, len(occurences))
@@ -100,7 +100,7 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEquals(msg.subject.messageKind, 'complete')
 
         messages = self.kindof(UML.Message)
-        occurences = self.kindof(UML.EventOccurrence)
+        occurences = self.kindof(UML.MessageOccurrenceSpecification)
 
         self.assertEquals(1, len(messages))
         self.assertEquals(2, len(occurences))
@@ -242,37 +242,42 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         factory = self.element_factory
         subject = msg.subject
 
+        assert subject.sendEvent and subject.receiveEvent
+
         # add some more messages
-        m1 = factory.create(UML.Message)
-        m1.sendEvent = subject.sendEvent
-        m1.receiveEvent = subject.receiveEvent
-
-        m2 = factory.create(UML.Message)
-        m2.sendEvent = subject.sendEvent
-        m2.receiveEvent = subject.receiveEvent
-
+        m1 = UML.model.create_message(factory, subject)
+        m2 = UML.model.create_message(factory, subject)
         msg.add_message(m1, False)
         msg.add_message(m2, False)
 
         # add some inverted messages
-        m3 = factory.create(UML.Message)
-        m3.sendEvent = subject.receiveEvent
-        m3.receiveEvent = subject.sendEvent
-
-        m4 = factory.create(UML.Message)
-        m4.sendEvent = subject.receiveEvent
-        m4.receiveEvent = subject.sendEvent
-
+        m3 = UML.model.create_message(factory, subject, True)
+        m4 = UML.model.create_message(factory, subject, True)
         msg.add_message(m3, True)
         msg.add_message(m4, True)
 
-        assert len(self.kindof(UML.Message)) == 5
+        messages = list(self.kindof(UML.Message))
+        occurences = set(self.kindof(UML.MessageOccurrenceSpecification))
 
-        # disconnect
+        # verify integrity of messages
+        self.assertEquals(5, len(messages))
+        self.assertEquals(10, len(occurences))
+        for m in messages:
+            self.assertTrue(m.sendEvent in occurences)
+            self.assertTrue(m.receiveEvent in occurences)
+
+        # lost/received messages
         self.disconnect(msg, msg.head)
-        self.disconnect(msg, msg.tail)
+        self.assertEquals(5, len(messages))
 
-        # we expect no messages
+        # verify integrity of messages
+        self.assertEquals(10, len(occurences))
+        for m in messages:
+            self.assertTrue(m.sendEvent is None or m.sendEvent in occurences)
+            self.assertTrue(m.receiveEvent is None or m.receiveEvent in occurences)
+
+        # no message after full disconnection
+        self.disconnect(msg, msg.tail)
         self.assertEquals(0, len(self.kindof(UML.Message)))
 
 

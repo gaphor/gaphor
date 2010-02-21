@@ -426,8 +426,7 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
                     assoc.references['ownedEnd'] = []
                 assoc.references['ownedEnd'].append(et.id)
 
-        # get rid of tagged values
-
+        # - get rid of tagged values
         for e in elements.values():
             if 'taggedValue' in e.references:
                 taggedvalue = [elements[i].values['value'] for i in e.references['taggedValue'] if elements[i].values.get('value')]
@@ -439,6 +438,14 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
                 for t in e.references['taggedValue']:
                     del elements[t]
                 del e.references['taggedValue']
+
+        # - rename EventOccurrence to MessageOccurrenceSpecification
+        values = (v for v in elements.values()
+                if type(v) is parser.element
+                    and v.type == 'EventOccurrence')
+        for et in values:
+            et.type = 'MessageOccurrenceSpecification'
+
 
 def version_0_15_0_post(elements, factory, gaphor_version):
     """
@@ -512,6 +519,50 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                         create_slot(key, val)
                     except Exception, e:
                         log.warning('Unable to process tagged value "%s" as key=value pair' % tv, e)
+
+        def find(messages, attr):
+            occurrences = set(getattr(m, attr) for m in messages
+                    if hasattr(m, attr) and getattr(m, attr))
+            assert len(occurrences) <= 1
+            if occurrences:
+                return occurrences.pop()
+            else:
+                return None
+
+        def update_msg(msg, sl, rl):
+            if sl:
+                s = factory.create(UML.MessageOccurrenceSpecification)
+                s.covered = sl
+                m.sendEvent = s
+            if rl:
+                r = factory.create(UML.MessageOccurrenceSpecification)
+                r.covered = rl
+                m.receiveEvent = r
+
+        for e in elements.values():
+            if e.type == 'MessageItem':
+                msg = e.element
+                send = msg.subject.sendEvent
+                receive = msg.subject.receiveEvent
+
+                if not send:
+                    send = find(msg._messages.keys(), 'sendEvent')
+                if not receive:
+                    receive = find(msg._messages.keys(), 'receiveEvent')
+                if not send:
+                    send = find(msg._inverted_messages.keys(), 'reveiveEvent')
+                if not receive:
+                    receive = find(msg._inverted_messages.keys(), 'sendEvent')
+
+                sl = send.covered if send else None
+                rl = receive.covered if receive else None
+
+                for m in msg._messages:
+                    update_msg(m, sl, rl)
+                for m in msg._inverted_messages:
+                    update_msg(m, rl, sl)
+                msg.subject.sendEvent = send
+                msg.subject.receiveEvent = receive
 
 
 def convert_tagged_value(element, elements, factory):

@@ -355,4 +355,81 @@ class FileUpgradeTestCase(TestCase):
         self.assertEquals('t7', c2.subject.appliedStereotype[0].slot[2].definingFeature.name)
 
 
+    def test_lifeline_messages_upgrade(self):
+        """Test message occurrence specification upgrade in Gaphor 0.15.0
+        """
+        f = open('test-diagrams/lifelines-pre015.gaphor')
+        storage.load(f, factory=self.element_factory)
+        f.close()
+
+        diagrams = list(self.kindof(UML.Diagram))
+        self.assertEquals(1, len(diagrams))
+        diagram = diagrams[0]
+
+        lifelines = diagram.canvas.select(lambda e: isinstance(e, items.LifelineItem))
+        occurrences = self.kindof(UML.MessageOccurrenceSpecification)
+        messages = self.kindof(UML.Message)
+
+        self.assertEquals(2, len(lifelines))
+        self.assertEquals(12, len(messages))
+        # 2 * 12 but there are 4 lost/found messages
+        self.assertEquals(20, len(set(occurrences)))
+
+        l1, l2 = lifelines
+        if l1.subject.name == 'a2':
+            l1, l2 = l2, l1
+        def find(name):
+            return (m for m in messages if m.name == name).next()
+        m1 = find('call()')
+        m2 = find('callx()')
+        m3 = find('cally()')
+        # inverted messages
+        m4 = find('calla()')
+        m5 = find('callb()')
+
+        self.assertTrue(m1.sendEvent.covered is l1.subject)
+        self.assertTrue(m2.sendEvent.covered is l1.subject)
+        self.assertTrue(m3.sendEvent.covered is l1.subject)
+
+        self.assertTrue(m1.receiveEvent.covered is l2.subject)
+        self.assertTrue(m2.receiveEvent.covered is l2.subject)
+        self.assertTrue(m3.receiveEvent.covered is l2.subject)
+
+        # test inverted messages
+        self.assertTrue(m4.sendEvent.covered is l2.subject)
+        self.assertTrue(m5.sendEvent.covered is l2.subject)
+
+        self.assertTrue(m4.receiveEvent.covered is l1.subject)
+        self.assertTrue(m5.receiveEvent.covered is l1.subject)
+
+        m = find('simple()')
+        self.assertTrue(m.sendEvent.covered is l1.subject)
+        self.assertTrue(m.receiveEvent.covered is l2.subject)
+
+        m = find('found1()')
+        self.assertTrue(m.sendEvent is None)
+        self.assertTrue(m.receiveEvent.covered is l1.subject)
+
+        m = find('found2()')
+        self.assertTrue(m.sendEvent is None)
+        self.assertTrue(m.receiveEvent.covered is l1.subject)
+
+        m = find('rfound1()')
+        self.assertTrue(m.sendEvent.covered is l1.subject)
+        self.assertTrue(m.receiveEvent is None)
+
+        m = find('lost1()')
+        self.assertTrue(m.sendEvent.covered is l1.subject)
+        self.assertTrue(m.receiveEvent is None)
+
+        m = find('lost2()')
+        self.assertTrue(m.sendEvent.covered is l1.subject)
+        self.assertTrue(m.receiveEvent is None)
+
+        m = find('rlost1()')
+        self.assertTrue(m.sendEvent is None)
+        self.assertTrue(m.receiveEvent.covered is l1.subject)
+
+
+
 # vim:sw=4:et:ai

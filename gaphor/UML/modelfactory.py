@@ -293,4 +293,34 @@ def dependency_type(client, supplier):
     return dt
 
 
+def create_message(factory, msg, inverted=False):
+    """
+    Create new message based on speciied message.
+
+    If inverted is set to True, then inverted message is created.
+    """
+    message = factory.create(Message)
+    send = None
+    receive = None
+
+    if msg.sendEvent:
+        send = factory.create(MessageOccurrenceSpecification)
+        sl = msg.sendEvent.covered
+        send.covered = sl
+    if msg.receiveEvent:
+        receive = factory.create(MessageOccurrenceSpecification)
+        rl = msg.receiveEvent.covered
+        receive.covered = rl
+
+    if inverted:
+        # inverted message goes in different direction, than original
+        # message
+        message.sendEvent = receive
+        message.receiveEvent = send
+    else:
+        message.sendEvent = send
+        message.receiveEvent = receive
+    return message
+
+
 #vim:sw=4:et:ai

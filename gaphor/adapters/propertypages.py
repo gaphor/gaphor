@@ -292,15 +292,7 @@ class CommunicationMessageModel(EditableTreeModel):
     def _create_object(self):
         item = self._item
         subject = item.subject
-        message = self.element_factory.create(UML.Message)
-        if self.inverted:
-            # inverted message goes in different direction, than subject
-            message.sendEvent = subject.receiveEvent
-            message.receiveEvent = subject.sendEvent
-        else:
-            # additional message goes in the same direction as subject
-            message.sendEvent = subject.sendEvent
-            message.receiveEvent = subject.receiveEvent
+        message = UML.model.create_message(self.element_factory, subject, self.inverted)
         item.add_message(message, self.inverted)
         return message
 

@@ -300,5 +300,33 @@ class DependencyTypeTestCase(TestCaseBase):
         self.assertEquals(UML.Realization, dt)
 
 
+class MessageTestCase(TestCaseBase):
+    """
+    Tests for interaction messages.
+    """
+    def test_create(self):
+        """Test message creation
+        """
+        m = self.factory.create(UML.Message)
+        send = self.factory.create(UML.MessageOccurrenceSpecification)
+        receive = self.factory.create(UML.MessageOccurrenceSpecification)
+        sl = self.factory.create(UML.Lifeline)
+        rl = self.factory.create(UML.Lifeline)
+
+        send.covered = sl
+        receive.covered = rl
+
+        m.sendEvent = send
+        m.receiveEvent = receive
+
+        m1 = UML.model.create_message(self.factory, m, False)
+        m2 = UML.model.create_message(self.factory, m, True)
+
+        self.assertTrue(m1.sendEvent.covered is sl)
+        self.assertTrue(m1.receiveEvent.covered is rl)
+
+        self.assertTrue(m2.sendEvent.covered is rl)
+        self.assertTrue(m2.receiveEvent.covered is sl)
+
 
 # vim:sw=4:et

@@ -33,14 +33,14 @@ class MessageLifelineConnect(AbstractConnect):
         if send:
             message = get_subject()
             if not message.sendEvent:
-                event = self.element_factory.create(UML.EventOccurrence)
+                event = self.element_factory.create(UML.MessageOccurrenceSpecification)
                 event.sendMessage = message
                 event.covered = send.subject
 
         if received:
             message = get_subject()
             if not message.receiveEvent:
-                event = self.element_factory.create(UML.EventOccurrence)
+                event = self.element_factory.create(UML.MessageOccurrenceSpecification)
                 event.receiveMessage = message
                 event.covered = received.subject
 
