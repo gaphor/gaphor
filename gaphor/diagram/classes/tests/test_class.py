@@ -15,7 +15,7 @@ class ClassTestCase(TestCase):
 
     def test_compartments(self):
         """
-        Test creation of classes and working of compartments.
+        Test creation of classes and working of compartments
         """
         element_factory = self.element_factory
         diagram = element_factory.create(UML.Diagram)
@@ -33,20 +33,25 @@ class ClassTestCase(TestCase):
         self.assertEqual(100, float(klass.min_width))
 
         attr = element_factory.create(UML.Property)
-        attr.name = 'blah'
+        attr.name = 4 * 'x' # about 44 pixels
         klass.subject.ownedAttribute = attr
 
         diagram.canvas.update()
         self.assertEqual(1, len(klass._compartments[0]))
-        self.assertEqual((44.0, 21.0), klass._compartments[0].get_size())
+        self.assertEqual((44.0, 20.0), klass._compartments[0].get_size())
 
         oper = element_factory.create(UML.Operation)
-        oper.name = 'method'
+        oper.name = 4 * 'x' # about 44 pixels
+        klass.subject.ownedOperation = oper
+
+        oper = element_factory.create(UML.Operation)
+        oper.name = 6 * 'x' # about 66 pixels
         klass.subject.ownedOperation = oper
 
         diagram.canvas.update()
-        self.assertEqual(1, len(klass._compartments[1]))
-        self.assertEqual((71.0, 23.0), klass._compartments[1].get_size())
+        self.assertEqual(2, len(klass._compartments[1]))
+        self.assertEqual((63.0, 34.0), klass._compartments[1].get_size())
+
 
     def test_attribute_removal(self):
 
@@ -78,7 +83,7 @@ class ClassTestCase(TestCase):
 
     def test_item_at(self):
         """
-        Test working of item_at method.
+        Test working of item_at method
         """
         element_factory = self.element_factory
         diagram = element_factory.create(UML.Diagram)
@@ -124,7 +129,7 @@ class ClassTestCase(TestCase):
         diagram.canvas.update()
 
         attr = element_factory.create(UML.Property)
-        attr.name = "blah"
+        attr.name = 'blah'
         klass.subject.ownedAttribute = attr
 
         oper = element_factory.create(UML.Operation)
@@ -133,12 +138,12 @@ class ClassTestCase(TestCase):
 
         self.assertEquals(100, klass.width)
 
-        attr.name = 'abc' * 25
+        attr.name = 'x' * 25
         log.debug('name: %s' % attr.name)
 
         diagram.canvas.update()
 
         width = klass.width
-        self.assertEquals(521.0, width)
+        self.assertEquals(170.0, width)
 
 # vim:sw=4:et:ai
