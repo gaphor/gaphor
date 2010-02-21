@@ -449,7 +449,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
         e = elements[element.id] = parser.element(element.id, element.__class__.__name__)
         e.element = element
 
-    if version_lower_than(gaphor_version, (0, 15, 0)):
+    if version_lower_than(gaphor_version, (0, 14, 99)):
         stereotypes = {}
         profile = None
         for e in elements.values():
