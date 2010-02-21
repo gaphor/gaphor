@@ -277,7 +277,7 @@ class AssociationConnectorTestCase(TestCase):
 
 
     def test_reconnect(self):
-        """Test association item connection
+        """Test association item reconnection
         """
         asc = self.create(items.AssociationItem)
         c1 = self.create(items.ClassItem, UML.Class)
