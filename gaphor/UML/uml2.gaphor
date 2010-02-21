@@ -32950,7 +32950,6 @@ some elements to have a stereotype]]></val>
 <ref refid="DCE:FA613950-3B13-11D9-83CE-A0BAF22E8A12"/>
 <ref refid="DCE:2CB46C1A-3B14-11D9-83CE-A0BAF22E8A12"/>
 <ref refid="DCE:62945412-3B14-11D9-83CE-A0BAF22E8A12"/>
-<ref refid="DCE:88B68F22-3B14-11D9-83CE-A0BAF22E8A12"/>
 <ref refid="DCE:92EAD020-3B14-11D9-83CE-A0BAF22E8A12"/>
 <ref refid="DCE:AE644012-3B14-11D9-83CE-A0BAF22E8A12"/>
 <ref refid="DCE:FF9F4292-3B14-11D9-83CE-A0BAF22E8A12"/>
@@ -33345,58 +33344,6 @@ some elements to have a stereotype]]></val>
 <ref refid="DCE:6290FC2E-3B14-11D9-83CE-A0BAF22E8A12"/>
 </tail-connection>
 </item>
-<item type="ClassItem" id="DCE:88B335A0-3B14-11D9-83CE-A0BAF22E8A12">
-<show-attributes>
-<val>1</val>
-</show-attributes>
-<show-operations>
-<val>1</val>
-</show-operations>
-<drawing-style>
-<val>0</val>
-</drawing-style>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 496.0, 469.0)</val>
-</matrix>
-<width>
-<val>100.0</val>
-</width>
-<height>
-<val>59.0</val>
-</height>
-<subject>
-<ref refid="DCE:88B68F22-3B14-11D9-83CE-A0BAF22E8A12"/>
-</subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
-</item>
-<item type="GeneralizationItem" id="DCE:8D3865F0-3B14-11D9-83CE-A0BAF22E8A12">
-<subject>
-<ref refid="DCE:1B28A386-4227-11D9-B6C2-00C00C03A405"/>
-</subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 543.98871252204572, 415.0)</val>
-</matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>1</val>
-</horizontal>
-<points>
-<val>[(0.0, 0.0), (0.011287477954283531, 54.0)]</val>
-</points>
-<head-connection>
-<ref refid="DCE:0EAA96C8-4227-11D9-B6C2-00C00C03A405"/>
-</head-connection>
-<tail-connection>
-<ref refid="DCE:88B335A0-3B14-11D9-83CE-A0BAF22E8A12"/>
-</tail-connection>
-</item>
 <item type="ClassItem" id="DCE:92E69B90-3B14-11D9-83CE-A0BAF22E8A12">
 <show-attributes>
 <val>1</val>
@@ -33788,24 +33735,6 @@ some elements to have a stereotype]]></val>
 <ref refid="DCE:62945412-3B14-11D9-83CE-A0BAF22E8A12"/>
 </specific>
 </Generalization>
-<Class id="DCE:88B68F22-3B14-11D9-83CE-A0BAF22E8A12">
-<generalization>
-<reflist>
-<ref refid="DCE:1B28A386-4227-11D9-B6C2-00C00C03A405"/>
-</reflist>
-</generalization>
-<name>
-<val><![CDATA[Stop]]></val>
-</name>
-<package>
-<ref refid="DCE:2AF6FCEA-3B13-11D9-83CE-A0BAF22E8A12"/>
-</package>
-<presentation>
-<reflist>
-<ref refid="DCE:88B335A0-3B14-11D9-83CE-A0BAF22E8A12"/>
-</reflist>
-</presentation>
-</Class>
 <Class id="DCE:92EAD020-3B14-11D9-83CE-A0BAF22E8A12">
 <generalization>
 <reflist>
@@ -36942,19 +36871,6 @@ some elements to have a stereotype]]></val>
 <val><![CDATA[*]]></val>
 </value>
 </LiteralSpecification>
-<Generalization id="DCE:1B28A386-4227-11D9-B6C2-00C00C03A405">
-<general>
-<ref refid="DCE:442364E0-3B8B-11D9-96AF-B1C16A765BD4"/>
-</general>
-<presentation>
-<reflist>
-<ref refid="DCE:8D3865F0-3B14-11D9-83CE-A0BAF22E8A12"/>
-</reflist>
-</presentation>
-<specific>
-<ref refid="DCE:88B68F22-3B14-11D9-83CE-A0BAF22E8A12"/>
-</specific>
-</Generalization>
 <Operation id="DCE:661940B0-5C8F-11D9-A349-00306EB655C9">
 <class_>
 <ref refid="DCE:FF9F4292-3B14-11D9-83CE-A0BAF22E8A12"/>
