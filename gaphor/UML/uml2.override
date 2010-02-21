@@ -134,11 +134,12 @@ override Property.navigability
 def property_navigability(self):
     """
     Get navigability of an association end.
-    If no association is related to the property, None is returned.
+    If no association is related to the property, then unknown navigability
+    is assumed.
     """
     assoc = self.association
-    if not assoc:
-        return None
+    if not assoc or not self.opposite:
+        return None # assume unknown
     owner = self.opposite.type
     if owner and ((type(self.type) in (Class, Interface) \
                 and self in owner.ownedAttribute) \
