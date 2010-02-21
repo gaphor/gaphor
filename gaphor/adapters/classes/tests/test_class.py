@@ -291,12 +291,7 @@ class AssociationConnectorTestCase(TestCase):
         self.assertTrue(asc.subject is not None)
         a = asc.subject
 
-        try:
-            self.connect(asc, asc.tail, c3)
-        except ConnectionError:
-            pass # as expected
-        else:
-            assert False, "expected ConnectionError to be raised"
+        self.assertRaises(ConnectionError, self.connect, asc, asc.tail, c3)
 
         self.disconnect(asc, asc.tail)
         self.connect(asc, asc.tail, c3)
