@@ -294,7 +294,7 @@ class TransactionalToolChain(ToolChain):
         try:
             super(TransactionalToolChain, self).handle(event)
         finally:
-            if self.EVENT_HANDLERS.get(event.type) in ('on_button_release', 'on_double_click', 'on_triple_click'):
+            if self._tx and self.EVENT_HANDLERS.get(event.type) in ('on_button_release', 'on_double_click', 'on_triple_click'):
                 self._tx.commit()
                 self._tx = None
 
