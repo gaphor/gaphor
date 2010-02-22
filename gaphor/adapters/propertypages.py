@@ -1316,6 +1316,7 @@ component.provideAdapter(JoinNodePropertyPage, name='Properties')
 
 class FlowPropertyPage(NamedElementPropertyPage):
     """
+    Flow item element editor.
     """
 
     component.adapts(UML.ControlFlow)
@@ -1331,13 +1332,18 @@ class FlowPropertyPage(NamedElementPropertyPage):
         hbox = create_hbox_label(self, page, _('Guard'))
         entry = gtk.Entry()        
         entry.set_text(subject.guard and subject.guard.value or '')
-        entry.connect('changed', self._on_guard_change)
+        changed_id = entry.connect('changed', self._on_guard_change)
         hbox.pack_start(entry)
 
-        return page
+        def handler(event):
+            entry.handler_block(changed_id)
+            entry.set_text(event.new_value)
+            entry.handler_unblock(changed_id)
 
-    def update(self):
-        pass
+        self.watcher.watch('guard', handler).register_handlers()
+        entry.connect('destroy', self.watcher.unregister_handlers)
+
+        return page
 
     @transactional
     def _on_guard_change(self, entry):
