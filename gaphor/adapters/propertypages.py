@@ -1328,13 +1328,7 @@ class FlowPropertyPage(NamedElementPropertyPage):
         if not subject:
             return page
 
-        hbox = gtk.HBox()
-        page.pack_start(hbox, expand=False)
-
-        label = gtk.Label(_('Guard'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox = create_hbox_label(self, page, _('Guard'))
         entry = gtk.Entry()        
         entry.set_text(subject.guard and subject.guard.value or '')
         entry.connect('changed', self._on_guard_change)
