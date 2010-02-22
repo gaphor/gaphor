@@ -2,8 +2,7 @@
 from gaphor.tests.testcase import TestCase
 from gaphor import UML
 from gaphor.diagram.classes.klass import ClassItem
-from gaphor.diagram.classes.feature import AttributeItem, OperationItem
-from gaphor.diagram.compartment import SlotItem
+from gaphor.diagram.compartment import FeatureItem
 from gaphor.UML.diagram import DiagramCanvas
 
 
@@ -17,31 +16,26 @@ class FeatureTestCase(TestCase):
 
     def testAttribute(self):
         """
-        Test how attribute is updated.
+        Test how attribute is updated
         """
         attr = self.element_factory.create(UML.Property)
-        attr.parse('-name:myType')
-
-        self.assertEquals('- name: myType', attr.render())
+        UML.parse(attr, '-name:myType')
 
         clazzitem = self.create(ClassItem, UML.Class)
-
         clazzitem.subject.ownedAttribute = attr
-        assert len(clazzitem._compartments[0]) == 1
+        self.assertEquals(1, len(clazzitem._compartments[0]))
 
         item = clazzitem._compartments[0][0]
-        assert isinstance(item, AttributeItem)
+        self.assertTrue(isinstance(item, FeatureItem))
 
-        assert item.get_size() != (0, 0), item.get_size()
         size = item.get_size()
+        self.assertNotEquals((0, 0), size)
 
         attr.defaultValue = self.element_factory.create(UML.LiteralSpecification)
         attr.defaultValue.value = 'myDefault'
 
-        self.assertEquals('- name: myType = myDefault', attr.render())
-        
         self.diagram.canvas.update()
-        #assert size != item.get_size(), item.get_size()
+        self.assertTrue(size < item.get_size())
 
 
 
