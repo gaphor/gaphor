@@ -82,6 +82,7 @@ class PropertyEditor(object):
                     expander.set_expanded(self._expanded_pages.get(name, False))
                     expander.connect_after('activate', self.on_expand, name)
                     self.vbox.pack_start(expander, expand=False)
+                page.show_all()
             except Exception, e:
                 log.error('Could not construct property page for ' + name, e)
         

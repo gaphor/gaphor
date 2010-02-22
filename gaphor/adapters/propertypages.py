@@ -528,7 +528,6 @@ class CommentItemPropertyPage(object):
                     .register_handlers()
         text_view.connect("destroy", self.watcher.unregister_handlers)
 
-        page.show_all()
         return page
 
     @transactional
@@ -584,7 +583,6 @@ class NamedElementPropertyPage(object):
                     .register_handlers()
         entry.connect("destroy", self.watcher.unregister_handlers)
 
-        page.show_all()
         return page
 
     @transactional
@@ -631,10 +629,7 @@ class ClassPropertyPage(NamedElementPropertyPage):
         
         button.connect('toggled', self._on_abstract_change)
         hbox.pack_start(button)
-        hbox.show_all()
         page.pack_start(hbox, expand=False)
-
-        hbox.show_all()
 
         return page
 
@@ -674,10 +669,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
         button.set_sensitive(can_fold)
         hbox.pack_start(button)
-        hbox.show_all()
         page.pack_start(hbox, expand=False)
-
-        hbox.show_all()
 
         return page
 
@@ -746,7 +738,6 @@ class AttributesPage(object):
         button.set_active(self.item.show_attributes)
         button.connect('toggled', self._on_show_attributes_change)
         hbox.pack_start(button)
-        hbox.show_all()
         page.pack_start(hbox, expand=False)
 
         def create_model():
@@ -820,7 +811,6 @@ class OperationsPage(object):
         button.set_active(self.item.show_operations)
         button.connect('toggled', self._on_show_operations_change)
         hbox.pack_start(button)
-        hbox.show_all()
         page.pack_start(hbox, expand=False)
 
         def create_model():
@@ -908,8 +898,6 @@ class DependencyPropertyPage(object):
         button.set_active(self.item.auto_dependency)
         button.connect('toggled', self._on_auto_dependency_change)
         hbox.pack_start(button)
-
-        page.show_all()
 
         self.watcher.watch('subject', self._on_subject_change).register_handlers()
         button.connect('destroy', self.watcher.unregister_handlers)
@@ -1004,8 +992,6 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         box = self.construct_end(_('Tail'), self.item.tail_end)
         if box:
             page.pack_start(box, expand=False)
-
-        page.show_all()
 
         self.update()
 
@@ -1215,8 +1201,6 @@ class LineStylePage(object):
         hbox.pack_start(button)
 
         page.pack_start(hbox, expand=False)
-
-        page.show_all()
 
         return page
 
@@ -1482,8 +1466,6 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
             index = combo.get_model().get_index(subject.messageSort)
             combo.set_active(index)
-
-        page.show_all()
 
         return page
 
