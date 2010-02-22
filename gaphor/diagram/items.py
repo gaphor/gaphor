@@ -8,7 +8,7 @@ from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.diagramline import DiagramLine, NamedLine
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.compartment import CompartmentItem
+from gaphor.diagram.compartment import CompartmentItem, FeatureItem
 from gaphor.diagram.classifier import ClassifierItem
 
 # General:
@@ -17,8 +17,7 @@ from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.simpleitem import Line, Box, Ellipse
 
 # Classes:
-from gaphor.diagram.classes.feature import FeatureItem, AttributeItem, OperationItem
-from gaphor.diagram.classes.klass import ClassItem
+from gaphor.diagram.classes.klass import ClassItem, OperationItem
 from gaphor.diagram.classes.interface import InterfaceItem
 from gaphor.diagram.classes.package import PackageItem
 from gaphor.diagram.classes.association import AssociationItem
