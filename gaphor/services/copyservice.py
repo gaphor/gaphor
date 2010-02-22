@@ -139,7 +139,7 @@ class CopyService(object):
 
 
     @action(name='edit-copy', stock_id='gtk-copy')
-    def _copy(self):
+    def copy_action(self):
         view = self.gui_manager.main_window.get_current_diagram_view()
         if view.is_focus():
             items = view.selected_items
