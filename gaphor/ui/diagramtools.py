@@ -206,8 +206,7 @@ class TextEditTool(Tool):
             if editor.is_editable(x, y):
                 text = editor.get_text()
                 # get item at cursor
-                self.create_edit_window(event.x, event.y,
-                                        text, editor)
+                self.create_edit_window(event.x, event.y, text, editor)
                 return True
 
     def _on_key_press_event(self, widget, event, buffer, editor):
