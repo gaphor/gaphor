@@ -75,7 +75,7 @@ class EditorTestCase(TestCase):
 
         edit = IEditor(klass)
 
-        self.assertEqual('ClassifierItemEditor', edit.__class__.__name__)
+        self.assertEqual('CompartmentItemEditor', edit.__class__.__name__)
 
         self.assertEqual(True, edit.is_editable(10, 10))
 
