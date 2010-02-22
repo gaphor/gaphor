@@ -138,8 +138,9 @@ class EditableTextSupport(object):
         """
         cr = context.cairo
         for txt in texts:
-            extents = text_extents(cr, txt.text, font=txt.font, multiline=True)
-            txt.bounds.width, txt.bounds.height = extents
+            w, h = text_extents(cr, txt.text, font=txt.font, multiline=True)
+            txt.bounds.width = max(15, w)
+            txt.bounds.height = max(10, h)
 
 
     def _set_text_group_size(self, context, name, texts):
@@ -302,8 +303,6 @@ class EditableTextSupport(object):
                     and (context.hovered or context.focused):
 
                 cr.save()
-                width = max(15, width)
-                height = max(10, height)
                 cr.set_source_rgb(0.6, 0.6, 0.6)
                 cr.set_line_width(0.5)
                 cr.rectangle(x - 5, y - 1, width + 10, height + 2)
@@ -351,7 +350,7 @@ class TextElement(object):
         """
         super(TextElement, self).__init__()
 
-        self._bounds = Rectangle(0, 0, width=10, height=0)
+        self._bounds = Rectangle(0, 0, width=15, height=10)
 
         # create default style for a text element
         self._style = Style()
