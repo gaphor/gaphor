@@ -273,6 +273,7 @@ class PartitionGroupTestCase(TestCase):
 
         self.assertEquals(0, len(partition.node))
         self.assertEquals(0, len(p2.canvas.get_children(p2)))
+        self.assertEquals(0, len(partition.node))
 
 
     def test_nested_subpartition_ungrouping(self):
