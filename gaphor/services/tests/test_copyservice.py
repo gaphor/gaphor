@@ -18,7 +18,8 @@ class CopyServiceTestCase(TestCase):
     def test_copy(self):
         service = CopyService()
         service.init(Application)
-        ef = Application.get_service('element_factory')
+
+        ef = self.element_factory
         diagram = ef.create(UML.Diagram)
         ci = diagram.create(items.CommentItem, subject=ef.create(UML.Comment))
 
@@ -33,11 +34,11 @@ class CopyServiceTestCase(TestCase):
         service = CopyService()
         service.init(Application)
 
-        ef = Application.get_service('element_factory')
+        ef = self.element_factory
         diagram = ef.create(UML.Diagram)
         c = diagram.create(items.ClassItem, subject=ef.create(UML.Class))
 
-        c.name = 'Name'
+        c.subject.name = 'Name'
 
         import gobject
         self.assertEquals(0, gobject.main_depth())
