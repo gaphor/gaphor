@@ -41,7 +41,10 @@ class ElementDispatcherTestCase(TestCase):
         self.assertEquals(3, len(dispatcher._handlers))
 
 
-    def test_register_handler_2(self):
+    def test_register_handler_twice(self):
+        """
+        Multiple registrations have no effect.
+        """
         dispatcher = self.dispatcher
         element = UML.Class()
 
@@ -51,11 +54,18 @@ class ElementDispatcherTestCase(TestCase):
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
 
-        assert len(self.events) == 0, len(self.events)
+        n_handlers = len(dispatcher._handlers)
+
+        self.assertEquals(0, len(self.events))
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        self.assertEquals(n_handlers, len(dispatcher._handlers))
+        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        self.assertEquals(n_handlers, len(dispatcher._handlers))
+        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        self.assertEquals(n_handlers, len(dispatcher._handlers))
 
         p.name = 'func'
-        assert len(self.events) == 1, len(self.events)
+        self.assertEquals(1, len(self.events))
 
 
     def test_unregister_handler(self):
