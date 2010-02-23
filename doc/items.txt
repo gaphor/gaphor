@@ -11,7 +11,8 @@ Basic items
     ElementItem
         Rectangular canvas item.
     NamedItem
-        NamedElement (UML metamodel) representation.
+        NamedElement (UML metamodel) representation using rectangular
+        canvas item.
     CompartmentItem
         An item with compartments (i.e. Class or State)
     ClassifierItem
@@ -19,5 +20,8 @@ Basic items
     DiagramLine
         Line canvas item.
     NamedLine
-        NamedElement (UML metamodel) representation.
+        NamedElement (UML metamodel) representation using line canvas item.
+    FeatureItem
+        Diagram representation of UML metamodel classes like property,
+        operation, stereotype attribute, etc.
 
