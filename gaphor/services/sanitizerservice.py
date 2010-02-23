@@ -6,7 +6,7 @@ the model clean and in sync with diagrams.
 from zope import interface
 from zope import component
 from gaphor import UML
-from gaphor.UML.interfaces import IElementDeleteEvent, IAssociationDeleteEvent
+from gaphor.UML.interfaces import IAssociationDeleteEvent, IAssociationSetEvent
 from gaphor.interfaces import IService
 from gaphor.core import inject
 from gaphor.diagram import items
@@ -29,12 +29,13 @@ class SanitizerService(object):
         app.register_handler(self._unlink_on_presentation_delete)
         app.register_handler(self._unlink_on_stereotype_delete)
         app.register_handler(self._unlink_on_extension_delete)
-
+        app.register_handler(self._disconnect_extension_end)
 
     def shutdown(self):
         self._app.unregister_handler(self._unlink_on_presentation_delete)
         self._app.unregister_handler(self._unlink_on_stereotype_delete)
         self._app.unregister_handler(self._unlink_on_extension_delete)
+        self._app.unregister_handler(self._disconnect_extension_end)
         
 
     @component.adapter(IAssociationDeleteEvent)
@@ -48,29 +49,54 @@ class SanitizerService(object):
             if old_presentation and not event.element.presentation:
                 event.element.unlink()
 
+    def perform_unlink_for_instances(self, st, meta):
+        inst = UML.model.find_instances(self.element_factory, st)
+        log.debug('Unlinking instances of stereotype %s' % st)
+        for i in list(inst):
+            for e in i.extended:
+                if isinstance(e, meta):
+                    i.unlink()
 
-    @component.adapter(UML.Extension, IElementDeleteEvent)
-    def _unlink_on_extension_delete(self, ext, event):
+
+    @component.adapter(IAssociationDeleteEvent)
+    def _unlink_on_extension_delete(self, event):
         """
         Remove applied stereotypes when extension is deleted.
         """
-        for end in ext.memberEnd:
-            st = end.type
-            if isinstance(st, UML.Stereotype):
-                instances = UML.model.find_instances(self.element_factory, st)
-                for obj in list(instances):
-                    UML.model.remove_stereotype(obj.extended[0], st)
+        if isinstance(event.element, UML.Extension) and \
+                event.property is UML.Association.memberEnd and \
+                event.element.memberEnd:
+            p = event.element.memberEnd[0]
+            ext = event.old_value
+            if isinstance(p, UML.ExtensionEnd):
+                p, ext = ext, p
+            st = ext.type
+            meta = getattr(UML, p.type.name)
+            self.perform_unlink_for_instances(st, meta)
 
 
-    @component.adapter(UML.Stereotype, IElementDeleteEvent)
-    def _unlink_on_stereotype_delete(self, st, event):
+    @component.adapter(IAssociationSetEvent)
+    def _disconnect_extension_end(self, event):
+        #print event.property, event.element
+        if event.property is UML.ExtensionEnd.type and event.old_value:
+            ext = event.element
+            p = ext.opposite
+            if not p:
+                return
+            st = event.old_value
+            meta = getattr(UML, p.type.name)
+            self.perform_unlink_for_instances(st, meta)
+
+
+    @component.adapter(IAssociationDeleteEvent)
+    def _unlink_on_stereotype_delete(self, event):
         """
         Remove applied stereotypes when stereotype is deleted.
         """
-        instances = UML.model.find_instances(self.element_factory, st)
-        for obj in list(instances):
-            e = obj.extended[0]
-            UML.model.remove_stereotype(e, st)
+        if event.property is UML.InstanceSpecification.classifier:
+            if isinstance(event.old_value, UML.Stereotype):
+                log.debug('Unlinking instances of stereotype %s' % event.old_value)
+                event.element.unlink()
 
 
 # vim:sw=4:et:ai
