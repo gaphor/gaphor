@@ -22,11 +22,6 @@ class DependencyConnect(RelationshipConnect):
                 not isinstance(element.subject, UML.NamedElement):
                     return False
 
-        if handle is line.tail \
-                and line.dependency_type is UML.Realization \
-                and not isinstance(element.subject, UML.Component):
-            return False
-
         return super(DependencyConnect, self).allow(handle, port)
 
     def connect_subject(self, handle):
@@ -47,14 +42,9 @@ class DependencyConnect(RelationshipConnect):
                 supplier = self.get_connected(opposite).subject
             line.dependency_type = UML.model.dependency_type(client, supplier)
 
-        if line.dependency_type is UML.Realization:
-            relation = self.relationship_or_new(line.dependency_type,
-                                head=('realizingClassifier', None),
-                                tail=('abstraction', 'realization'))
-        else:
-            relation = self.relationship_or_new(line.dependency_type,
-                                ('supplier', 'supplierDependency'),
-                                ('client', 'clientDependency'))
+        relation = self.relationship_or_new(line.dependency_type,
+                            ('supplier', 'supplierDependency'),
+                            ('client', 'clientDependency'))
         line.subject = relation
 
 component.provideAdapter(DependencyConnect)

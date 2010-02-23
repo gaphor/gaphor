@@ -27,17 +27,6 @@ class DependencyTestCase(TestCase):
         self.assertTrue(glued)
 
 
-    def test_realization_glue(self):
-        """Test realization glue to non-component item
-        """
-        cls = self.create(items.ClassItem, UML.Class)
-        dep = self.create(items.DependencyItem)
-        dep.dependency_type = UML.Realization
-
-        glued = self.allow(dep, dep.tail, cls)
-        self.assertFalse(glued)
-
-
     def test_dependency_connect(self):
         """Test dependency connecting to two actor items
         """
