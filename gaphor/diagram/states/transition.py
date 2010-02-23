@@ -19,26 +19,34 @@ class TransitionItem(NamedLine):
             'name-padding': (5, 15, 5, 5),
     }
 
+    element_factory = inject('element_factory')
+
     def __init__(self, id = None):
         NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.specification.value', editable=True)
-        self.watch('subject<Transition>.guard.specification<LiteralSpecification>.value', self.on_guard)
+        self.watch('subject<Transition>.guard<Constraint>.specification<LiteralSpecification>.value', self.on_guard)
 
 
     def postload(self):
         """
         Load guard specification information.
         """
-        if self.subject and self.subject.guard:
-            self._guard.text = self.subject.guard.specification.value
+        try:
+            self._guard.text = self.subject.guard.specification.value or ''
+        except AttributeError:
+            self._guard.text = ''
         super(TransitionItem, self).postload()
 
 
     def on_guard(self, event):
+        subject = self.subject
+        if subject.guard is None:
+            subject.guard = self.element_factory.create(UML.Constraint)
+            subject.guard.specification = self.element_factory.create(UML.LiteralSpecification)
+
         try:
             self._guard.text = self.subject.guard.specification.value or ''
         except AttributeError:
-            # Have a no-value here
             self._guard.text = ''
         self.request_update()
 

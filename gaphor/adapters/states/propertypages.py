@@ -31,10 +31,19 @@ class TransitionPropertyPage(NamedItemPropertyPage):
 
         hbox = create_hbox_label(self, page, _('Guard'))
         entry = gtk.Entry()
-        entry.set_text(subject.guard.specification.value if subject.guard else '')
+        v = subject.guard.specification.value
+        entry.set_text(v if v else '')
         entry.connect('changed', self._on_guard_change)
+        changed_id = entry.connect('changed', self._on_guard_change)
         hbox.pack_start(entry)
-        hbox.show_all()
+
+        def handler(event):
+            entry.handler_block(changed_id)
+            entry.set_text(event.new_value)
+            entry.handler_unblock(changed_id)
+
+        self.watcher.watch('guard<Constraint>.specification<LiteralSpecification>.value', handler).register_handlers()
+        entry.connect('destroy', self.watcher.unregister_handlers)
 
         return page
 
@@ -44,11 +53,7 @@ class TransitionPropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        subject = self.subject
-        if subject.guard is None:
-            subject.guard = self.element_factory.create(UML.Constraint)
-            subject.guard.specification = self.element_factory.create(UML.LiteralSpecification)
-        subject.guard.specification.value = value
+        self.subject.guard.specification.value = value
 
 
 component.provideAdapter(TransitionPropertyPage, name='Properties')
