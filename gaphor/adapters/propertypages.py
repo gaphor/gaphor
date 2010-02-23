@@ -756,7 +756,8 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 
         @async(single=True)
         def handler(event):
-            if not tree_view.props.has_focus:
+            # Single it's asynchronous, make sure all properties are still there
+            if not tree_view.props.has_focus and self.item and self.item.subject:
                 self.model = create_model()
                 tree_view.set_model(self.model)
 
@@ -828,8 +829,7 @@ Add and edit class operations according to UML syntax. Operation syntax examples
 
         @async(single=True)
         def handler(event):
-            print 'recieved event', event, event.element
-            if not tree_view.props.has_focus:
+            if not tree_view.props.has_focus and self.item and self.item.subject:
                 self.model = create_model()
                 tree_view.set_model(self.model)
 
