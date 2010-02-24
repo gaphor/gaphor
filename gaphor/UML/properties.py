@@ -706,9 +706,19 @@ class redefine(umlproperty):
             self.original.load(obj, value)
 
 
+    def postload(self, obj):
+        if self.original.name == self.name:
+            self.original.postload(obj)
+
+
     def save(self, obj, save_func):
         if self.original.name == self.name:
             self.original.save(obj, save_func)
+
+
+    def unlink(self, obj):
+        if self.original.name == self.name:
+            self.original.unlink(obj)
 
 
     def __str__(self):
