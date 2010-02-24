@@ -196,5 +196,16 @@ class TestUML2(unittest.TestCase):
         self.assertEquals([], s.extension)
         assert e.ownedEnd.type is s
 
+    def test_operation_parameter_deletion(self):
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
+        c.name = 'Class'
+        o = factory.create(UML.Operation)
+        c.ownedOperation = o
+        UML.parse(o, 'a(x: int, y: int)')
+
+        c.unlink()
+
+        self.assertEquals(0, len(factory.lselect()))
 
 # vim:sw=4:et:ai
