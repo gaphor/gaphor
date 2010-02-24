@@ -41,8 +41,7 @@ class GIdleThread(object):
     ...     for x in xrange(max):
     ...         yield x
     >>> t = GIdleThread(counter(123))
-    >>> t.start()
-    2
+    >>> id = t.start()
     >>> main = gobject.main_context_default()
     >>> while t.is_alive():
     ...     main.iteration(False) # doctest: +ELLIPSIS
