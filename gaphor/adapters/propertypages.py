@@ -1426,24 +1426,19 @@ class MessagePropertyPage(NamedItemPropertyPage):
             return page
 
         if item.is_communication():
-            hbox = gtk.HBox()
-
             self._messages = CommunicationMessageModel(item)
             tree_view = create_tree_view(self._messages, (_('Message'),))
             tree_view.set_headers_visible(False)
             frame = gtk.Frame(label=_('Additional Messages'))
             frame.add(tree_view)
-            hbox.pack_start(frame)
+            page.pack_start(frame)
 
             self._inverted_messages = CommunicationMessageModel(item, inverted=True)
             tree_view = create_tree_view(self._inverted_messages, (_('Message'),))
             tree_view.set_headers_visible(False)
             frame = gtk.Frame(label=_('Inverted Messages'))
             frame.add(tree_view)
-            hbox.pack_end(frame)
-
-            page.pack_start(hbox)
-
+            page.pack_end(frame)
         else:
             hbox = create_hbox_label(self, page, _('Message sort'))
 
