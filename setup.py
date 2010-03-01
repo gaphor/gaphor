@@ -86,25 +86,30 @@ class build_doc(Command):
 
 data_files = []
 
-if sys.platform != 'win32':
-    data_files = [
-        ('share/pixmaps', ['gaphor/ui/pixmaps/gaphor-48x48.png']),
-        ('share/applications', ['gaphor.desktop']),
-    ]
-
 if sys.platform == 'darwin' and 'py2app' in sys.argv:
     # Mac OS X
     import pkg_resources
     pkg_resources.require('zope.component')
     platform_setup_requires=['py2app']
     platform_setup = dict(
-        app=['gaphor-osx.py'],
+        app=['gaphor/__init__.py'],
         )
+
 elif sys.platform == 'win32' and 'py2exe' in sys.argv:
     # Windows
     import py2exe
-    platform_setup_requires = ['py2exe']
-    platform_setup= { 'app': ['gaphor'], }
+    from glob import glob
+    #platform_setup_requires = ['py2exe']
+    platform_setup_requires = []
+    platform_setup= {
+            'console': ['go-gaphor.py'], 
+            }
+
+    data_files = [
+        ('gaphor.egg-info', glob('gaphor.egg-info/*')),
+#        ('share/pixmaps', ['gaphor/ui/pixmaps/gaphor-48x48.png']),
+#        ('share/applications', ['gaphor.desktop']),
+    ]
 
     import pkg_resources
     eggs = pkg_resources.require("gaphor")
@@ -113,7 +118,7 @@ elif sys.platform == 'win32' and 'py2exe' in sys.argv:
             sys.path.insert(0, egg.location)
             continue
         else:
-            print 'Can only handle unpacked eggs.'
+            print 'Can only handle unpacked eggs (%s)' % egg.location
     egg_names = []
     for egg in eggs:
         egg_names.append(egg.project_name)
@@ -229,12 +234,13 @@ It uses the GTK+ environment for user interaction.
             packages=['gaphor', 'zope'],
             plist=dict(
                 CFBundleGetInfoString='Gaphor',
-                CFBundleIdentifier='com.devjavu.gaphor'
+                CFBundleIdentifier='net.sf.gaphor'
                 )
         ),
         py2exe = dict(
-            packages='gaphas, decorator',
-            includes='cairo, pango, pangocairo, atk',
+            unbuffered=True,
+            packages='gaphas, decorator, zope, gaphor',
+            includes='cairo, pango, pangocairo, atk, gio',
         ),
         
         build_pot = dict(
