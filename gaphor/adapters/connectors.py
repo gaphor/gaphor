@@ -91,6 +91,13 @@ class AbstractConnect(object):
         return True
 
 
+    def reconnect(self, handle, port):
+        """
+        UML model reconnection method.
+        """
+        raise NotImplementedError('Reconnection not implemented')
+
+
     def disconnect(self, handle):
         """
         Disconnect UML model level connections.

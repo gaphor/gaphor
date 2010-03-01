@@ -31,8 +31,6 @@ class DiagramItemConnector(Connector.default):
     It also adds handles to lines when a line is grabbed on the middle of
     a line segment (points are drawn by the LineSegmentPainter).
     """
-
-
     def allow(self, sink):
         adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
         return adapter and adapter.allow(self.handle, sink.port)
@@ -56,17 +54,20 @@ class DiagramItemConnector(Connector.default):
                 item.canvas.reconnect_item(item, handle, constraint=constraint)
             else:
                 if cinfo:
-                    # first disconnect
+                    # first disconnect but disable disconnection handle as
+                    # reconnection is going to happen
+                    cinfo.callback.disable = True
                     self.disconnect()
                 # new connection
                 self.connect_handle(sink, callback=callback)
                 # adapter requires both ends to be connected.
-                self.model_connect(sink, cinfo)
+                reconnect = cinfo is not None
+                self.model_connect(sink, reconnect)
         except Exception, e:
             log.error('Error during connect', e)
 
 
-    def model_connect(self, sink, cinfo):
+    def model_connect(self, sink, reconnect):
         """
         Connecting requires the handles to be connected before the model
         level connection is made.
@@ -76,7 +77,6 @@ class DiagramItemConnector(Connector.default):
         """
         handle = self.handle
         item = self.item
-        #cinfo = item.canvas.get_connection(handle)
 
         adapter = component.queryMultiAdapter((sink.item, item), IConnect)
         log.debug('Connect on model level ' + str(adapter))
@@ -85,36 +85,39 @@ class DiagramItemConnector(Connector.default):
         assert handle in adapter.line.handles()
         assert sink.port in adapter.element.ports()
 
-        #if cinfo:
-        #    #   reconnect handle and model (no disconnect)
-        #    log.debug('performing reconnect handle + model')
-        #    adapter.reconnect(handle, sink.port)
-        #else:
-            #   just connect, create new elements and stuff like that.
-        #log.debug('performing connect')
-        adapter.connect(handle, sink.port)
+        if reconnect:
+            log.debug('Performing reconnection')
+            adapter.reconnect(handle, sink.port)
+        else:
+            log.debug('Performing connection')
+            adapter.connect(handle, sink.port)
+
 
     @transactional
     def disconnect(self):
-        print 'performing disconnect'
         super(DiagramItemConnector, self).disconnect()
+
 
 
 class DisconnectHandle(object):
     """
     Callback for items disconnection using the adapters.
 
-    (this is an object so it can be serialized using pickle)
+    This is an object so disconnection data can be serialized/deserialized
+    using pickle.
 
     :Variables:
      item
         Connecting item.
      handle
         Handle of connecting item.
+     disable
+        If set, then disconnection is disabled.
     """
     def __init__(self, item, handle):
         self.item = item
         self.handle = handle
+        self.disable = False
 
 
     def __call__(self):
@@ -123,11 +126,13 @@ class DisconnectHandle(object):
         canvas = self.item.canvas
         cinfo = canvas.get_connection(handle)
 
-        log.debug('Disconnecting %s.%s' % (item, handle))
-
-        if cinfo:
-            adapter = component.queryMultiAdapter((cinfo.connected, item), IConnect)
-            adapter.disconnect(handle)
+        if self.disable:
+            log.debug('Not disconnecting %s.%s (disabled)' % (item, handle))
+        else:
+            log.debug('Disconnecting %s.%s' % (item, handle))
+            if cinfo:
+                adapter = component.queryMultiAdapter((cinfo.connected, item), IConnect)
+                adapter.disconnect(handle)
 
 
 
