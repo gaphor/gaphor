@@ -112,17 +112,9 @@ class TestCase(TestCaseExtras, unittest.TestCase):
 
         connector.connect(sink)
 
-        #canvas.connect_item(line, handle, item, port)
-
-        #query = (item, line)
-        #adapter = component.queryMultiAdapter(query, IConnect)
-        #connected = adapter.connect(handle, port)
-
         cinfo = canvas.get_connection(handle)
         self.assertSame(cinfo.connected, item)
         self.assertSame(cinfo.port, port)
-
-        #return connected
 
 
     def disconnect(self, line, handle):
