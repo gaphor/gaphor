@@ -87,6 +87,38 @@ class FlowItemObjectNodeTestCase(TestCase):
         self.assertTrue(isinstance(flow.subject, UML.ObjectFlow))
 
 
+    def test_reconnection(self):
+        """Test object flow reconnection
+        """
+        flow = self.create(items.FlowItem)
+        a1 = self.create(items.ActionItem, UML.Action)
+        o1 = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        o2 = self.create(items.ObjectNodeItem, UML.ObjectNode)
+
+        # connect: a1 -> o1
+        self.connect(flow, flow.head, a1)
+        self.connect(flow, flow.tail, o1)
+
+        f = flow.subject
+
+        # reconnect: a1 -> o2
+        self.connect(flow, flow.tail, o2)
+
+        self.assertEquals(0, len(a1.subject.incoming))
+        self.assertEquals(1, len(a1.subject.outgoing))
+        # no connections to o1
+        self.assertEquals(0, len(o1.subject.incoming))
+        self.assertEquals(0, len(o1.subject.outgoing))
+        # connections to o2 instead
+        self.assertEquals(1, len(o2.subject.incoming))
+        self.assertEquals(0, len(o2.subject.outgoing))
+
+        self.assertSame(f, flow.subject)
+        self.assertEquals(1, len(self.kindof(UML.ObjectFlow)))
+        # one guard
+        self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
+
+
     
 class FlowItemActionTestCase(TestCase):
     """
