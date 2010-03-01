@@ -149,6 +149,37 @@ class FlowItemActionTestCase(TestCase):
         self.assertEquals(0, len(a2.subject.outgoing))
 
 
+    def test_reconnect(self):
+        """Test flow item reconnection
+        """
+        flow = self.create(items.FlowItem)
+        a1 = self.create(items.ActionItem, UML.Action)
+        a2 = self.create(items.ActionItem, UML.Action)
+        a3 = self.create(items.ActionItem, UML.Action)
+
+        # a1 -> a2
+        self.connect(flow, flow.head, a1)
+        self.connect(flow, flow.tail, a2)
+        f = flow.subject
+
+        # reconnect: a1 -> a3
+        self.connect(flow, flow.tail, a3)
+
+        self.assertEquals(0, len(a1.subject.incoming))
+        self.assertEquals(1, len(a1.subject.outgoing))
+        # no connections to a2
+        self.assertEquals(0, len(a2.subject.incoming))
+        self.assertEquals(0, len(a2.subject.outgoing))
+        # connections to a3 instead
+        self.assertEquals(1, len(a3.subject.incoming))
+        self.assertEquals(0, len(a3.subject.outgoing))
+
+        self.assertSame(f, flow.subject)
+        self.assertEquals(1, len(self.kindof(UML.ControlFlow)))
+        # one guard
+        self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
+
+
 class FlowItemDesisionAndForkNodes:
     """
     Base class for flow connecting to decision and fork nodes.
