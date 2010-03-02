@@ -251,6 +251,29 @@ class GeneralizationTestCase(TestCase):
         #self.assertTrue(actor2.clientDependency[0] is dep.subject)
 
 
+    def test_reconnection2(self):
+        """Test reconnection of generalization
+        """
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+        c3 = self.create(items.ClassItem, UML.Class)
+        gen = self.create(items.GeneralizationItem)
+
+        # connect: c1 -> c2
+        self.connect(gen, gen.head, c1)
+        self.connect(gen, gen.tail, c2)
+
+        s = gen.subject
+
+        # reconnect: c2 -> c3
+        self.connect(gen, gen.tail, c3)
+
+        self.assertSame(s, gen.subject)
+        self.assertSame(c1.subject, gen.subject.general)
+        self.assertSame(c3.subject, gen.subject.specific)
+        self.assertNotSame(c2.subject, gen.subject.specific)
+
+
 class AssociationConnectorTestCase(TestCase):
     """
     Association item connection adapters tests.

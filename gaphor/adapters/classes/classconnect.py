@@ -70,6 +70,11 @@ class GeneralizationConnect(RelationshipConnect):
     # FixMe: Both ends of the generalization should be of the same  type?
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
+
+    def reconnect(self, handle, port):
+        self.reconnect_relationship(handle, 'general', 'specific')
+
+
     def connect_subject(self, handle):
         log.debug('connect_subject: ' % handle)
         relation = self.relationship_or_new(UML.Generalization,
@@ -172,6 +177,18 @@ class ImplementationConnect(RelationshipConnect):
             return None
 
         return super(ImplementationConnect, self).allow(handle, port)
+
+
+    def reconnect(self, handle, port):
+        line = self.line
+        impl = line.subject
+        if handle is line.head:
+            for s in impl.contract:
+                del impl.contract[s]
+        elif handle is line.tail:
+            for c in impl.implementatingClassifier:
+                del impl.implementatingClassifier[c]
+        self.reconnect_relationship(handle, 'contract', 'implementatingClassifier')
 
 
     def connect_subject(self, handle):
