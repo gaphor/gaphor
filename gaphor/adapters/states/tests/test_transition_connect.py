@@ -35,6 +35,39 @@ class TransitionConnectorTestCase(TestCase):
         self.assertEquals(t.subject.target, v2.subject)
 
 
+    def test_vertex_reconnect(self):
+        """Test transition to state vertex reconnection
+        """
+        v1 = self.create(items.StateItem, UML.State)
+        v2 = self.create(items.StateItem, UML.State)
+        v3 = self.create(items.StateItem, UML.State)
+
+        t = self.create(items.TransitionItem)
+        assert t.subject is None
+
+        # connect: v1 -> v2
+        self.connect(t, t.head, v1)
+        self.connect(t, t.tail, v2)
+
+        s = t.subject
+        s.name = 'tname'
+        s.guard.specification.value = 'tguard'
+
+        # reconnect: v1 -> v3
+        self.connect(t, t.tail, v3)
+        
+        self.assertSame(s, t.subject)
+        self.assertEquals(1, len(self.kindof(UML.Transition)))
+        
+        self.assertEquals(t.subject, v1.subject.outgoing[0])
+        self.assertEquals(t.subject, v3.subject.incoming[0])
+        self.assertEquals(t.subject.source, v1.subject)
+        self.assertEquals(t.subject.target, v3.subject)
+
+        self.assertEquals(0, len(v2.subject.incoming))
+        self.assertEquals(0, len(v2.subject.outgoing))
+
+
     def test_vertex_disconnect(self):
         """Test transition and state vertices disconnection
         """
