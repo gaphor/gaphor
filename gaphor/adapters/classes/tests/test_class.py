@@ -50,6 +50,31 @@ class DependencyTestCase(TestCase):
         self.assertTrue(actor2.subject in dep.subject.client)
 
 
+    def test_dependency_reconnection(self):
+        """Test dependency reconnection
+        """
+        a1 = self.create(items.ActorItem, UML.Actor)
+        a2 = self.create(items.ActorItem, UML.Actor)
+        a3 = self.create(items.ActorItem, UML.Actor)
+        dep = self.create(items.DependencyItem)
+
+        # connect: a1 -> a2
+        self.connect(dep, dep.head, a1)
+        self.connect(dep, dep.tail, a2)
+
+        d = dep.subject
+
+        # reconnect: a1 -> a3
+        self.connect(dep, dep.tail, a3)
+
+        self.assertSame(d, dep.subject)
+        self.assertEquals(1, len(dep.subject.supplier))
+        self.assertEquals(1, len(dep.subject.client))
+        self.assertTrue(a1.subject in dep.subject.supplier)
+        self.assertTrue(a3.subject in dep.subject.client)
+        self.assertTrue(a2.subject not in dep.subject.client, dep.subject.client)
+
+
     def test_dependency_disconnect(self):
         """Test dependency disconnecting using two actor items
         """

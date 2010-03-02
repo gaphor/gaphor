@@ -24,6 +24,19 @@ class DependencyConnect(RelationshipConnect):
 
         return super(DependencyConnect, self).allow(handle, port)
 
+
+    def reconnect(self, handle, port):
+        line = self.line
+        dep = line.subject
+        if handle is line.head:
+            for s in dep.supplier:
+                del dep.supplier[s]
+        elif handle is line.tail:
+            for c in dep.client:
+                del dep.client[c]
+        self.reconnect_relationship(handle, 'supplier', 'client')
+
+
     def connect_subject(self, handle):
         """
         TODO: cleck for existing relationships (use self.relation())
