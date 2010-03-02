@@ -1337,7 +1337,8 @@ class FlowPropertyPage(NamedElementPropertyPage):
 
         def handler(event):
             entry.handler_block(changed_id)
-            entry.set_text(event.new_value)
+            v = event.new_value
+            entry.set_text(v if v else '')
             entry.handler_unblock(changed_id)
 
         self.watcher.watch('guard<LiteralSpecification>.value', handler).register_handlers()

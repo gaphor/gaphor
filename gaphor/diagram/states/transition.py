@@ -39,11 +39,6 @@ class TransitionItem(NamedLine):
 
 
     def on_guard(self, event):
-        subject = self.subject
-        if subject.guard is None:
-            subject.guard = self.element_factory.create(UML.Constraint)
-            subject.guard.specification = self.element_factory.create(UML.LiteralSpecification)
-
         try:
             self._guard.text = self.subject.guard.specification.value or ''
         except AttributeError:
