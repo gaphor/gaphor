@@ -100,6 +100,8 @@ class FlowItemObjectNodeTestCase(TestCase):
         self.connect(flow, flow.tail, o1)
 
         f = flow.subject
+        f.name = 'tname'
+        f.guard.value = 'tguard'
 
         # reconnect: a1 -> o2
         self.connect(flow, flow.tail, o2)
@@ -113,10 +115,47 @@ class FlowItemObjectNodeTestCase(TestCase):
         self.assertEquals(1, len(o2.subject.incoming))
         self.assertEquals(0, len(o2.subject.outgoing))
 
-        self.assertSame(f, flow.subject)
         self.assertEquals(1, len(self.kindof(UML.ObjectFlow)))
         # one guard
         self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
+        self.assertEquals('tname', flow.subject.name)
+        self.assertEquals('tguard', flow.subject.guard.value)
+
+
+    def test_control_flow_reconnection(self):
+        """Test control flow becoming object flow due to reconnection
+        """
+        flow = self.create(items.FlowItem)
+        a1 = self.create(items.ActionItem, UML.Action)
+        a2 = self.create(items.ActionItem, UML.Action)
+        o1 = self.create(items.ObjectNodeItem, UML.ObjectNode)
+
+        # connect with control flow: a1 -> a2
+        self.connect(flow, flow.head, a1)
+        self.connect(flow, flow.tail, a2)
+
+        f = flow.subject
+        f.name = 'tname'
+        f.guard.value = 'tguard'
+
+        # reconnect with object flow: a1 -> o1
+        self.connect(flow, flow.tail, o1)
+
+        self.assertEquals(0, len(a1.subject.incoming))
+        self.assertEquals(1, len(a1.subject.outgoing))
+        # no connections to a2
+        self.assertEquals(0, len(a2.subject.incoming))
+        self.assertEquals(0, len(a2.subject.outgoing))
+        # connections to o1 instead
+        self.assertEquals(1, len(o1.subject.incoming))
+        self.assertEquals(0, len(o1.subject.outgoing))
+
+        self.assertEquals(0, len(self.kindof(UML.ControlFlow)))
+        self.assertEquals(1, len(self.kindof(UML.ObjectFlow)))
+        # one guard, not changed
+        self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
+        self.assertEquals('tname', flow.subject.name)
+        self.assertEquals('tguard', flow.subject.guard.value)
 
 
     
@@ -193,6 +232,8 @@ class FlowItemActionTestCase(TestCase):
         self.connect(flow, flow.head, a1)
         self.connect(flow, flow.tail, a2)
         f = flow.subject
+        f.name = 'tname'
+        f.guard.value = 'tguard'
 
         # reconnect: a1 -> a3
         self.connect(flow, flow.tail, a3)
@@ -206,10 +247,47 @@ class FlowItemActionTestCase(TestCase):
         self.assertEquals(1, len(a3.subject.incoming))
         self.assertEquals(0, len(a3.subject.outgoing))
 
-        self.assertSame(f, flow.subject)
         self.assertEquals(1, len(self.kindof(UML.ControlFlow)))
         # one guard
         self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
+        self.assertEquals('tname', flow.subject.name)
+        self.assertEquals('tguard', flow.subject.guard.value)
+
+
+    def test_object_flow_reconnection(self):
+        """Test object flow becoming control flow due to reconnection
+        """
+        flow = self.create(items.FlowItem)
+        a1 = self.create(items.ActionItem, UML.Action)
+        a2 = self.create(items.ActionItem, UML.Action)
+        o1 = self.create(items.ObjectNodeItem, UML.ObjectNode)
+
+        # connect with control flow: a1 -> o1
+        self.connect(flow, flow.head, a1)
+        self.connect(flow, flow.tail, o1)
+
+        f = flow.subject
+        f.name = 'tname'
+        f.guard.value = 'tguard'
+
+        # reconnect with object flow: a1 -> a2
+        self.connect(flow, flow.tail, a2)
+
+        self.assertEquals(0, len(a1.subject.incoming))
+        self.assertEquals(1, len(a1.subject.outgoing))
+        # no connections to o1
+        self.assertEquals(0, len(o1.subject.incoming))
+        self.assertEquals(0, len(o1.subject.outgoing))
+        # connections to a2 instead
+        self.assertEquals(1, len(a2.subject.incoming))
+        self.assertEquals(0, len(a2.subject.outgoing))
+
+        self.assertEquals(1, len(self.kindof(UML.ControlFlow)))
+        self.assertEquals(0, len(self.kindof(UML.ObjectFlow)))
+        # one guard, not changed
+        self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
+        self.assertEquals('tname', flow.subject.name)
+        self.assertEquals('tguard', flow.subject.guard.value)
 
 
 class FlowItemDesisionAndForkNodes:

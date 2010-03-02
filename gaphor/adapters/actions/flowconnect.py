@@ -28,21 +28,16 @@ class FlowConnect(RelationshipConnect):
 
 
     def reconnect(self, handle, port):
+        self.connect_subject(handle)
         line = self.line
-        c1 = self.get_connected(line.head)
-        c2 = self.get_connected(line.tail)
-        if line.head is handle:
-            line.subject.source = c1.subject
-        elif line.tail is handle:
-            line.subject.target = c2.subject
-        else:
-            raise ValueError('Incorrect handle passed to adapter')
         log.debug('Reconnection of %s (guard %s)' % (line.subject, line.subject.guard.value))
 
 
-    def connect_subject(self, handle):
+    def connect_subject(self, handle, old=None):
         line = self.line
         element = self.element
+        old_flow = line.subject
+
         # TODO: connect opposite side again (in case it's a join/fork or
         #       decision/merge node)
         c1 = self.get_connected(line.head)
@@ -57,12 +52,18 @@ class FlowConnect(RelationshipConnect):
                         ('target', 'incoming'))
         if not relation.guard:
             relation.guard = self.element_factory.create(UML.LiteralSpecification)
+        if old_flow:
+            relation.guard.value = old_flow.guard.value
+            relation.name = old_flow.name
         line.subject = relation
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
         if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
             adapter = component.queryMultiAdapter((otc, line), IConnect)
             adapter.combine_nodes()
+        if old_flow:
+            old_flow.unlink()
+
 
     def disconnect_subject(self, handle):
         super(FlowConnect, self).disconnect_subject(handle)
