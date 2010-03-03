@@ -56,7 +56,9 @@ class DiagramItemConnector(Connector.default):
                 if cinfo:
                     # first disconnect but disable disconnection handle as
                     # reconnection is going to happen
-                    cinfo.callback.disable = True
+                    adapter = component.queryMultiAdapter((sink.item, item), IConnect)
+                    if adapter and adapter.CAN_RECONNECT:
+                        cinfo.callback.disable = True
                     self.disconnect()
                 # new connection
                 self.connect_handle(sink, callback=callback)
@@ -85,7 +87,7 @@ class DiagramItemConnector(Connector.default):
         assert handle in adapter.line.handles()
         assert sink.port in adapter.element.ports()
 
-        if reconnect:
+        if reconnect and adapter.CAN_RECONNECT:
             log.debug('Performing reconnection')
             adapter.reconnect(handle, sink.port)
         else:

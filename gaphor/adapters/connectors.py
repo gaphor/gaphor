@@ -29,6 +29,8 @@ class AbstractConnect(object):
 
     element_factory = inject('element_factory')
 
+    CAN_RECONNECT = False
+
     def __init__(self, element, line):
         self.element = element
         self.line = line

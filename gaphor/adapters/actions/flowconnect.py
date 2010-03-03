@@ -15,6 +15,8 @@ class FlowConnect(RelationshipConnect):
     """
 
     CAN_BE_UNARY = True   # flow can connect same actions
+    
+    CAN_RECONNECT = True
 
     def allow(self, handle, port):
         line = self.line

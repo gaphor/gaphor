@@ -13,6 +13,8 @@ class DependencyConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.DependencyItem)
 
+    CAN_RECONNECT = True
+
     def allow(self, handle, port):
         line = self.line
         element = self.element
@@ -70,6 +72,7 @@ class GeneralizationConnect(RelationshipConnect):
     # FixMe: Both ends of the generalization should be of the same  type?
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
+    CAN_RECONNECT = True
 
     def reconnect(self, handle, port):
         self.reconnect_relationship(handle, 'general', 'specific')
@@ -161,6 +164,8 @@ class ImplementationConnect(RelationshipConnect):
     Connect Interface and a BehavioredClassifier using an Implementation.
     """
     component.adapts(items.NamedItem, items.ImplementationItem)
+
+    CAN_RECONNECT = True
 
     def allow(self, handle, port):
         line = self.line
