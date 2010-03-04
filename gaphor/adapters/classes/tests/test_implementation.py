@@ -57,5 +57,30 @@ class ImplementationTestCase(TestCase):
         self.assertTrue(impl.subject.implementatingClassifier[0] is clazz.subject)
 
 
+    def test_reconnection(self):
+        """Test reconnection of class and interface with implementation
+        """
+        iface = self.create(items.InterfaceItem, UML.Interface)
+        c1 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(items.ClassItem, UML.Class)
+        impl = self.create(items.ImplementationItem)
+
+        # connect: iface -> c1
+        self.connect(impl, impl.head, iface)
+        self.connect(impl, impl.tail, c1)
+
+        s = impl.subject
+
+        # reconnect: iface -> c2
+        self.connect(impl, impl.tail, c2)
+
+        self.assertSame(s, impl.subject)
+        self.assertEquals(1, len(impl.subject.contract))
+        self.assertEquals(1, len(impl.subject.implementatingClassifier))
+        self.assertTrue(iface.subject in impl.subject.contract)
+        self.assertTrue(c2.subject in impl.subject.implementatingClassifier)
+        self.assertTrue(c1.subject not in impl.subject.implementatingClassifier, impl.subject.implementatingClassifier)
+
+
 
 # vim:sw=4:et:ai

@@ -17,16 +17,11 @@ class VertexConnect(RelationshipConnect):
     """
     Abstract relationship between two state vertices.
     """
+
+    CAN_RECONNECT = True
+
     def reconnect(self, handle, port):
-         line = self.line
-         c1 = self.get_connected(line.head)
-         c2 = self.get_connected(line.tail)
-         if line.head is handle:
-             line.subject.source = c1.subject
-         elif line.tail is handle:
-             line.subject.target = c2.subject
-         else:
-             raise ValueError('Incorrect handle passed to adapter')
+        self.reconnect_relationship(handle, 'source', 'target')
 
 
     def connect_subject(self, handle):

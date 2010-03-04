@@ -14,6 +14,8 @@ class IncludeConnect(RelationshipConnect):
     """
     component.adapts(items.UseCaseItem, items.IncludeItem)
 
+    CAN_RECONNECT = True
+
     def allow(self, handle, port):
         line = self.line
         element = self.element
@@ -22,6 +24,11 @@ class IncludeConnect(RelationshipConnect):
             return None
 
         return super(IncludeConnect, self).allow(handle, port)
+
+
+    def reconnect(self, handle, port):
+        self.reconnect_relationship(handle, 'addition', 'includingCase')
+
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Include,
@@ -38,6 +45,8 @@ class ExtendConnect(RelationshipConnect):
     """
     component.adapts(items.UseCaseItem, items.ExtendItem)
 
+    CAN_RECONNECT = True
+
     def allow(self, handle, port):
         line = self.line
         element = self.element
@@ -46,6 +55,9 @@ class ExtendConnect(RelationshipConnect):
             return None
 
         return super(ExtendConnect, self).allow(handle, port)
+
+    def reconnect(self, handle, port):
+        self.reconnect_relationship(handle, 'extendedCase', 'extension')
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Extend,

@@ -13,6 +13,8 @@ class DependencyConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.DependencyItem)
 
+    CAN_RECONNECT = True
+
     def allow(self, handle, port):
         line = self.line
         element = self.element
@@ -23,6 +25,19 @@ class DependencyConnect(RelationshipConnect):
                     return False
 
         return super(DependencyConnect, self).allow(handle, port)
+
+
+    def reconnect(self, handle, port):
+        line = self.line
+        dep = line.subject
+        if handle is line.head:
+            for s in dep.supplier:
+                del dep.supplier[s]
+        elif handle is line.tail:
+            for c in dep.client:
+                del dep.client[c]
+        self.reconnect_relationship(handle, 'supplier', 'client')
+
 
     def connect_subject(self, handle):
         """
@@ -56,6 +71,12 @@ class GeneralizationConnect(RelationshipConnect):
     """
     # FixMe: Both ends of the generalization should be of the same  type?
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
+
+    CAN_RECONNECT = True
+
+    def reconnect(self, handle, port):
+        self.reconnect_relationship(handle, 'general', 'specific')
+
 
     def connect_subject(self, handle):
         log.debug('connect_subject: ' % handle)
@@ -144,6 +165,8 @@ class ImplementationConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.ImplementationItem)
 
+    CAN_RECONNECT = True
+
     def allow(self, handle, port):
         line = self.line
         element = self.element
@@ -159,6 +182,18 @@ class ImplementationConnect(RelationshipConnect):
             return None
 
         return super(ImplementationConnect, self).allow(handle, port)
+
+
+    def reconnect(self, handle, port):
+        line = self.line
+        impl = line.subject
+        if handle is line.head:
+            for s in impl.contract:
+                del impl.contract[s]
+        elif handle is line.tail:
+            for c in impl.implementatingClassifier:
+                del impl.implementatingClassifier[c]
+        self.reconnect_relationship(handle, 'contract', 'implementatingClassifier')
 
 
     def connect_subject(self, handle):

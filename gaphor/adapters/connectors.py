@@ -29,6 +29,8 @@ class AbstractConnect(object):
 
     element_factory = inject('element_factory')
 
+    CAN_RECONNECT = False
+
     def __init__(self, element, line):
         self.element = element
         self.line = line
@@ -323,6 +325,30 @@ class RelationshipConnect(AbstractConnect):
             setattr(relation, head[0], self.get_connected(line.head).subject)
             setattr(relation, tail[0], self.get_connected(line.tail).subject)
         return relation
+
+
+    def reconnect_relationship(self, handle, head, tail):
+        """
+        Reconnect relationship for given handle.
+
+        :Parameters:
+         handle
+            Handle at which reconnection happens.
+         head
+            Relationship head attribute name.
+         tail
+            Relationship tail attribute name.
+        """
+        line = self.line
+        c1 = self.get_connected(line.head)
+        c2 = self.get_connected(line.tail)
+        if line.head is handle:
+            setattr(line.subject, head, c1.subject)
+        elif line.tail is handle:
+            setattr(line.subject, tail, c2.subject)
+        else:
+            raise ValueError('Incorrect handle passed to adapter')
+
 
     def connect_connected_items(self, connections=None):
         """
