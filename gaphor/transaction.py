@@ -33,6 +33,29 @@ class TransactionError(Exception):
 
 
 class Transaction(object):
+    """
+    The transaction. On start and end of a transaction an event is emited.
+
+    Transactions can be nested. If the outermost transaction is committed or
+    rolled back, an event is emitted.
+
+    Events can be handled programmatically:
+
+    >>> tx = Transaction()
+    >>> tx.commit()
+
+    It can be assigned as decorator:
+
+    >>> @transactional
+    ... def foo():
+    ...     pass
+
+    Or with the ``with`` statement:
+
+    >>> with Transaction:
+    ...     pass
+    """
+
     interface.implements(ITransaction)
 
     _stack= []
@@ -68,5 +91,16 @@ class Transaction(object):
             self._stack.append(last)
             raise TransactionError, 'Transaction on stack is not the transaction being closed.'
 
+    @classmethod
+    def __enter__(cls):
+        return cls()
+
+    @classmethod
+    def __exit__(cls, exc_type=None, exc_val=None, exc_tb=None):
+        tx = cls._stack[-1]
+        if exc_type:
+            tx.rollback()
+        else:
+            tx.commit()
 
 # vim: sw=4:et:ai
