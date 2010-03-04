@@ -230,7 +230,11 @@ class FileManager(object):
     def _open_dialog(self, title):
         filesel = gtk.FileChooserDialog(title=title,
                                         action=gtk.FILE_CHOOSER_ACTION_OPEN,
-                                        buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
+                                        buttons=(gtk.STOCK_CANCEL,
+                                                 gtk.RESPONSE_CANCEL,
+                                                 gtk.STOCK_OPEN,
+                                                 gtk.RESPONSE_OK))
+        filesel.set_transient_for(self.gui_manager.main_window.window)
 
         filter = gtk.FileFilter()
         filter.set_name("Gaphor models")
@@ -287,7 +291,12 @@ class FileManager(object):
         filename = self.filename
         filesel = gtk.FileChooserDialog(title=_('Save Gaphor model as'),
                                         action=gtk.FILE_CHOOSER_ACTION_SAVE,
-                                        buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
+                                        buttons=(gtk.STOCK_CANCEL,
+                                                 gtk.RESPONSE_CANCEL,
+                                                 gtk.STOCK_SAVE,
+                                                 gtk.RESPONSE_OK))
+        filesel.set_transient_for(self.gui_manager.main_window.window)
+
         if filename:
             filesel.set_current_name(filename)
         response = filesel.run()
