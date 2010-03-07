@@ -97,6 +97,7 @@ class AssociationConnect(RelationshipConnect):
     component.adapts(items.ClassifierItem, items.AssociationItem)
 
     CAN_BE_UNARY = True    # allow one classifier to be connected by association
+    CAN_RECONNECT = True
 
     def allow(self, handle, port):
         element = self.element
@@ -134,6 +135,26 @@ class AssociationConnect(RelationshipConnect):
 
             # Do subject itself last, so event handlers can trigger
             line.subject = relation
+
+    def reconnect(self, handle, port):
+        line = self.line
+        c = self.get_connected(handle)
+        if handle is line.head:
+            end = line.tail_end
+            oend = line.head_end
+        elif handle is line.tail:
+            end = line.head_end
+            oend = line.tail_end
+        else:
+            raise ValueError('Incorrect handle passed to adapter')
+
+        nav = oend.subject.navigability
+
+        UML.model.set_navigability(line.subject, end.subject, None) # clear old data
+
+        end.subject.type = c.subject
+        UML.model.set_navigability(line.subject, oend.subject, nav)
+
 
     def disconnect_subject(self, handle):
         """

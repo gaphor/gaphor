@@ -2,7 +2,6 @@
 Classes related adapter connection tests.
 """
 
-from gaphas.canvas import ConnectionError
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
@@ -322,18 +321,19 @@ class AssociationConnectorTestCase(TestCase):
         c3 = self.create(items.ClassItem, UML.Class)
 
         self.connect(asc, asc.head, c1)
-        self.assertTrue(asc.subject is None) # no UML metaclass yet
-
         self.connect(asc, asc.tail, c2)
-        self.assertTrue(asc.subject is not None)
+        UML.model.set_navigability(asc.subject, asc.tail_end.subject, True)
+
         a = asc.subject
 
-        self.assertRaises(ConnectionError, self.connect, asc, asc.tail, c3)
-
-        self.disconnect(asc, asc.tail)
         self.connect(asc, asc.tail, c3)
-        self.assertTrue(asc.subject is not None)
-        self.assertTrue(asc.subject is not a)
+
+        self.assertSame(a, asc.subject)
+        ends = [p.type for p in asc.subject.memberEnd]
+        self.assertTrue(c1.subject in ends)
+        self.assertTrue(c3.subject in ends)
+        self.assertTrue(c2.subject not in ends)
+        self.assertTrue(asc.tail_end.subject.navigability)
 
 
     def test_disconnect(self):
