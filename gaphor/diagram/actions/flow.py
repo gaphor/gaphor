@@ -40,15 +40,19 @@ class FlowItem(NamedLine):
 
 
     def postload(self):
-        if self.subject and self.subject.guard:
+        try:
             self._guard.text = self.subject.guard.value
+        except AttributeError, e:
+            self._guard.text = ''
         super(FlowItem, self).postload()
 
 
     def on_control_flow_guard(self, event):
         subject = self.subject
-        self._guard.text = subject.guard.value if subject and subject.guard else ''
-        log.debug('Flow %s guard set to %s' % (self.subject, self._guard.text))
+        try:
+            self._guard.text = subject.guard.value if subject and subject.guard else ''
+        except AttributeError, e:
+            self._guard.text = ''
         self.request_update()
 
 
