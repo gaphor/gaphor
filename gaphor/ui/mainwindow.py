@@ -290,6 +290,7 @@ class MainWindow(ToplevelWindow):
         l = gtk.Label(label)
         # Note: append_page() emits switch-page event
         self.notebook.append_page(contents, l)
+        self.notebook.set_tab_reorderable(contents, True)
         page_num = self.notebook.page_num(contents)
         #self.notebook.set_current_page(page_num)
         return page_num
