@@ -93,12 +93,12 @@ class DiagramToolbox(object):
     properties = inject('properties')
 
 
-    def __init__(self, view=None):
+    def __init__(self, diagram, view):
         self.view = view
+        self.diagram = diagram
         self.action_group = build_action_group(self)
 
-    diagram = property(lambda s: s.view.diagram)
-    namespace = property(lambda s: s.view.diagram.namespace)
+    namespace = property(lambda s: s.diagram.namespace)
 
 
     def get_tool(self, tool_name):

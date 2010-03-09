@@ -4,6 +4,7 @@ import gtk
 from cairo import Matrix
 
 from zope import component
+from gaphas.view import GtkView
 from gaphor import UML
 from gaphor.core import _, inject, transactional, action, build_action_group
 from gaphor.application import Application
@@ -11,7 +12,6 @@ from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.diagram import get_diagram_item
 from gaphor.diagram.items import DiagramItem
 from gaphor.transaction import Transaction
-from gaphor.ui.diagramview import DiagramView
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from event import DiagramSelectionChange
 
@@ -53,6 +53,14 @@ class DiagramTab(object):
       </ui>
     """
 
+    VIEW_TARGET_STRING = 0
+    VIEW_TARGET_ELEMENT_ID = 1
+    VIEW_TARGET_TOOLBOX_ACTION = 2
+    VIEW_DND_TARGETS = [
+        ('gaphor/element-id', 0, VIEW_TARGET_ELEMENT_ID),
+        ('gaphor/toolbox-action', 0, VIEW_TARGET_TOOLBOX_ACTION)]
+
+
     def __init__(self, owning_window):
         self.diagram = None
         self.view = None
@@ -89,7 +97,10 @@ class DiagramTab(object):
         """
         assert self.diagram
 
-        view = DiagramView(diagram=self.diagram)
+        view = GtkView(canvas=self.diagram.canvas)
+        view.drag_dest_set(gtk.DEST_DEFAULT_ALL, DiagramTab.VIEW_DND_TARGETS,
+                           gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
@@ -105,7 +116,7 @@ class DiagramTab(object):
 
         self.widget = scrolled_window
         
-        self.toolbox = DiagramToolbox(view)
+        self.toolbox = DiagramToolbox(self.diagram, view)
         
         return scrolled_window
 
@@ -129,13 +140,8 @@ class DiagramTab(object):
         Tab is destroyed. Do the same thing that would
         be done if File->Close was pressed.
         """
-        # Set diagram to None, so all refrences to the diagram are destroyed.
-        #self.widget.destroy()
-
         self.owning_window.remove_tab(self)
         self.set_diagram(None)
-        # We need this to get the view deleted properly:
-        #del self.view.diagram
         Application.unregister_handler(self._on_element_delete)
         Application.unregister_handler(self._on_element_change)
         del self.view
@@ -240,11 +246,11 @@ class DiagramTab(object):
         """
         Handle data dropped on the canvas.
         """
-        if data and data.format == 8 and info == DiagramView.TARGET_TOOLBOX_ACTION:
+        if data and data.format == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
             tool = self.toolbox.get_tool(data.data)
             tool.create_item((x, y))
             context.finish(True, False, time)
-        elif data and data.format == 8 and info == DiagramView.TARGET_ELEMENT_ID:
+        elif data and data.format == 8 and info == DiagramTab.VIEW_TARGET_ELEMENT_ID:
             #print 'drag_data_received:', data.data, info
             n, p = data.data.split('#')
             element = self.element_factory.lookup(n)
