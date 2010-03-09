@@ -91,16 +91,13 @@ class Transaction(object):
             self._stack.append(last)
             raise TransactionError, 'Transaction on stack is not the transaction being closed.'
 
-    @classmethod
-    def __enter__(cls):
-        return cls()
+    def __enter__(self):
+        return self
 
-    @classmethod
-    def __exit__(cls, exc_type=None, exc_val=None, exc_tb=None):
-        tx = cls._stack[-1]
+    def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
         if exc_type:
-            tx.rollback()
+            self.rollback()
         else:
-            tx.commit()
+            self.commit()
 
 # vim: sw=4:et:ai

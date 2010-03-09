@@ -100,7 +100,7 @@ class TransactionTestCase(TestCase):
 
 
     def test_transaction_context(self):
-        with Transaction as tx:
+        with Transaction() as tx:
             self.assertTrue(isinstance(tx, Transaction))
             self.assertTrue(Transaction._stack)
         self.assertFalse(Transaction._stack)
@@ -108,7 +108,7 @@ class TransactionTestCase(TestCase):
 
     def test_transaction_context_error(self):
         try:
-            with Transaction:
+            with Transaction():
                 self.assertTrue(Transaction._stack)
                 raise TypeError('some error')
         except TypeError, e:
