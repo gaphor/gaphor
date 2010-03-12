@@ -113,7 +113,7 @@ It uses the GTK+ environment for user interaction.
             'diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout',
             'pynsource = gaphor.plugins.pynsource:PyNSource',
             #'check_metamodel = gaphor.plugins.checkmetamodel:CheckModelWindow',
-            'live_object_browser = gaphor.plugins.liveobjectbrowser:LiveObjectBrowser',
+            #'live_object_browser = gaphor.plugins.liveobjectbrowser:LiveObjectBrowser',
             'alignment = gaphor.plugins.alignment:Alignment',
             'help = gaphor.services.helpservice:HelpService',
         ],
