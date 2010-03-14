@@ -141,14 +141,17 @@ class ConnectorItem(NamedLine):
         super(ConnectorItem, self).postload()
         self.on_interface_name(None)
 
-    def _set_end(self, end):
-        self._end = end
-        if end and end.role:
-            self._interface.text = self.end.role.name
-        else:
-            self._interface.text = ''
-
-    end = property(attrgetter('_end'), _set_end, doc='Connector.end reference')
+#    def _set_end(self, end):
+#        raise NotImplementedError
+#    def _get_end(self):
+#        try:
+#            for e in self.subject.end:
+#                if e.role.isKindOf(UML.Interface):
+#                    return e
+#        except AttributeError:
+#            pass
+#
+#    end = property(attrgetter('_end'), _set_end, doc='Connector.end reference')
 
 
     def on_interface_name(self, event):

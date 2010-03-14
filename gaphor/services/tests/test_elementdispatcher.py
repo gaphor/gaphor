@@ -302,4 +302,47 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(self.events) == 2, self.events
 
 
+    def test_assembly_connector(self):
+        """
+        Assembly connector has a problem with its handlers.
+        """
+        from gaphor.diagram import items
+
+        dispatcher = self.dispatcher
+        factory = self.get_service('element_factory')
+
+        iface = factory.create(UML.Interface)
+        iface.name = 'Foo'
+
+        connector = self.create(items.ConnectorItem)
+
+        dispatcher.register_handler(self._handler, connector, 'subject<Connector>.end.role.name')
+
+        self.assertEquals(1, len(dispatcher._handlers))
+
+        connector.subject = factory.create(UML.Connector)
+
+        self.assertEquals(4, len(dispatcher._handlers))
+
+        connector.subject.end = factory.create(UML.ConnectorEnd)
+        connector.subject.end[0].role = iface
+
+        self.assertEquals(6, len(dispatcher._handlers))
+        self.assertEquals(3, len(self.events))
+
+        connector.subject.end = factory.create(UML.ConnectorEnd)
+        connector.subject.end[1].role = iface
+
+        self.assertEquals(7, len(dispatcher._handlers))
+        self.assertEquals(5, len(self.events))
+
+        connector.subject.unlink()
+        
+        self.assertSame(None, connector.subject)
+
+        #dispatcher.unregister_handler(self._handler)
+
+        self.assertEquals(1, len(dispatcher._handlers))
+        self.assertEquals(8, len(self.events))
+
 # vim: sw=4:et:ai

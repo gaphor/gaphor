@@ -87,7 +87,6 @@ class ConnectorConnectBase(AbstractConnect):
         end.partWithPort = self.element_factory.create(UML.Port)
         assembly.end = end
 
-        connector.end = end
         component.subject.ownedPort = end.partWithPort
 
 
@@ -104,8 +103,6 @@ class ConnectorConnectBase(AbstractConnect):
         """
         p = component.subject.ownedPort[0]
         p.unlink()
-        connector.end.unlink()
-        connector.end = None
         connector.subject = None
 
 
@@ -201,7 +198,7 @@ class ConnectorConnectBase(AbstractConnect):
             for ci in connections:
                 c = self.get_component(ci.item)
                 self.drop_uml(ci.item, c)
-                conn.request_update(matrix=False)
+                line.request_update(matrix=False)
             connector.unlink()
         else:
             c = self.get_component(line)
