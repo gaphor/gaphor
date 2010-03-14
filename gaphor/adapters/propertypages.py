@@ -1314,15 +1314,12 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
 component.provideAdapter(JoinNodePropertyPage, name='Properties')
 
 
-class FlowPropertyPage(NamedElementPropertyPage):
+class FlowPropertyPageAbstract(NamedElementPropertyPage):
     """
     Flow item element editor.
     """
-
-    component.adapts(UML.ControlFlow)
-
     def construct(self):
-        page = super(FlowPropertyPage, self).construct()
+        page = super(FlowPropertyPageAbstract, self).construct()
 
         subject = self.subject
         
@@ -1352,7 +1349,17 @@ class FlowPropertyPage(NamedElementPropertyPage):
         self.subject.guard.value = value
 
 
-component.provideAdapter(FlowPropertyPage, name='Properties')
+# fixme: unify ObjectFlowPropertyPage and ControlFlowPropertyPage
+# after introducing common class for element editors
+class ControlFlowPropertyPage(FlowPropertyPageAbstract):
+    component.adapts(UML.ControlFlow)
+
+class ObjectFlowPropertyPage(FlowPropertyPageAbstract):
+    component.adapts(UML.ObjectFlow)
+
+
+component.provideAdapter(ControlFlowPropertyPage, name='Properties')
+component.provideAdapter(ObjectFlowPropertyPage, name='Properties')
 
 
 class ComponentPropertyPage(NamedItemPropertyPage):

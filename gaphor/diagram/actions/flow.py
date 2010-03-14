@@ -37,6 +37,7 @@ class FlowItem(NamedLine):
         NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.value', editable=True)
         self.watch('subject<ControlFlow>.guard<LiteralSpecification>.value', self.on_control_flow_guard)
+        self.watch('subject<ObjectFlow>.guard<LiteralSpecification>.value', self.on_control_flow_guard)
 
 
     def postload(self):
