@@ -697,7 +697,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
                 item.folded = item.FOLDED_REQUIRED
 
             line._solid = fold
-            constraint = line.head.connection_data
+            constraint = line.canvas.get_connection(line.head).constraint
             constraint.ratio_x = 0.5
             constraint.ratio_y = 0.5
             line.request_update()
