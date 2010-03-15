@@ -130,7 +130,6 @@ class ConnectorItem(NamedLine):
 
     def __init__(self, id):
         super(ConnectorItem, self).__init__(id)
-        self._end = None
         self._interface = self.add_text('end.role.name', style={
             'text-align-group': 'stereotype',
         })
@@ -141,30 +140,19 @@ class ConnectorItem(NamedLine):
         super(ConnectorItem, self).postload()
         self.on_interface_name(None)
 
-#    def _set_end(self, end):
-#        raise NotImplementedError
-#    def _get_end(self):
-#        try:
-#            for e in self.subject.end:
-#                if e.role.isKindOf(UML.Interface):
-#                    return e
-#        except AttributeError:
-#            pass
-#
-#    end = property(attrgetter('_end'), _set_end, doc='Connector.end reference')
-
 
     def on_interface_name(self, event):
         """
         Callback used, when interface name changes (interface is referenced
-        by `ConnectorItem.end.role`).
+        by `ConnectorItem.subject.end.role`).
         """
         try:
-            #self._interface.text = self.subject.end[0].role.name
-            self._interface.text = self.end.role.name
-            self.request_update(matrix=False)
+            self._interface.text = self.subject.end['it.role', 0].role.name
         except (IndexError, AttributeError), e:
+            log.debug(e)
             self._interface.text = ''
+        else:
+            self.request_update(matrix=False)
 
 
     def draw_tail(self, context):
@@ -178,12 +166,12 @@ class ConnectorItem(NamedLine):
 
     def save(self, save_func):
         super(ConnectorItem, self).save(save_func)
-        save_func('end', self.end)
+        #save_func('end', self.end)
 
 
     def load(self, name, value):
         if name == 'end':
-            self.end = value
+            pass #self.end = value
         else:
             super(ConnectorItem, self).load(name, value)
 
