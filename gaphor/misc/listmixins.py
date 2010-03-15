@@ -52,7 +52,7 @@ class Matcher(object):
 
     def __call__(self, element):
         try:
-            return eval(self.expr, { 'it': element }, {})
+            return eval(self.expr, {}, { 'it': element })
         except (AttributeError, NameError):
             # attribute does not (yet) exist
             #print 'No attribute', expr, d
