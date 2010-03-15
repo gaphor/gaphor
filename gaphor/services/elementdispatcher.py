@@ -207,13 +207,13 @@ class ElementDispatcher(object):
         if property.upper > 1:
             for remainder in handlers[handler]:
                 for e in property._get(element):
-                    log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
+                    #log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
         else:
             for remainder in handlers[handler]:
                 e = property._get(element)
                 if e:
-                    log.debug('*Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
+                    #log.debug('*Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
         del handlers[handler]
         if not handlers:
@@ -253,12 +253,12 @@ class ElementDispatcher(object):
     def on_element_change_event(self, event):
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
-            log.debug('')
-            log.debug('Element change for %s %s [%s]' % (str(type(event)), event.element, event.property))
-            if hasattr(event, 'old_value'):
-                log.debug('    old value: %s' % (event.old_value))
-            if hasattr(event, 'new_value'):
-                log.debug('    new value: %s' % (event.new_value))
+            #log.debug('')
+            #log.debug('Element change for %s %s [%s]' % (str(type(event)), event.element, event.property))
+            #if hasattr(event, 'old_value'):
+            #    log.debug('    old value: %s' % (event.old_value))
+            #if hasattr(event, 'new_value'):
+            #    log.debug('    new value: %s' % (event.new_value))
             for handler in handlers.iterkeys():
                 try:
                     handler(event)
