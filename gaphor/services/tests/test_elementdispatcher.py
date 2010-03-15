@@ -199,6 +199,17 @@ class ElementDispatcherTestCase(TestCase):
         assert len(self.events) == 2, self.events
 
 
+
+from gaphor.UML import Element
+from gaphor.UML.properties import association
+from gaphor.services.elementdispatcher import EventWatcher
+
+class A(Element):
+    pass
+A.one = association('one', A, lower=0, upper=1, composite=True)
+A.two = association('two', A, lower=0, upper=2, composite=True)
+
+ 
 class ElementDispatcherAsServiceTestCase(TestCase):
 
     services = TestCase.services + ['element_dispatcher']
@@ -302,47 +313,108 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(self.events) == 2, self.events
 
 
-    def test_assembly_connector(self):
+    def test_diamond(self):
         """
-        Assembly connector has a problem with its handlers.
+        Test diamond shaped dependencies a -> b -> c, a -> b' -> c
         """
-        from gaphor.diagram import items
+        a = A()
+        watcher = EventWatcher(a, self._handler)
+        watcher.watch('one.two.one.two')
+        #watcher.watch('one.one.one.one')
+        watcher.register_handlers()
 
-        dispatcher = self.dispatcher
-        factory = self.get_service('element_factory')
+        a.one = A()
+        a.one.two = A()
+        a.one.two = A()
+        a.one.two[0].one = A()
+        a.one.two[1].one = a.one.two[0].one
+        a.one.two[0].one.two = A()
 
-        iface = factory.create(UML.Interface)
-        iface.name = 'Foo'
+        self.assertEquals(6, len(self.events))
 
-        connector = self.create(items.ConnectorItem)
+        a.unlink()
+        watcher.unregister_handlers()
+        watcher.unregister_handlers()
 
-        dispatcher.register_handler(self._handler, connector, 'subject<Connector>.end.role.name')
 
-        self.assertEquals(1, len(dispatcher._handlers))
+    def test_big_diamond(self):
+        """
+        Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' -> d
+        """
+        a = A()
+        watcher = EventWatcher(a, self._handler)
+        watcher.watch('one.two.one.two')
+        #watcher.watch('one.one.one.one')
+        watcher.register_handlers()
 
-        connector.subject = factory.create(UML.Connector)
+        a.one = A()
+        a.one.two = A()
+        a.one.two = A()
+        a.one.two[0].one = A()
+        a.one.two[1].one = A()
+        a.one.two[0].one.two = A()
+        a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        self.assertEquals(4, len(dispatcher._handlers))
+        self.assertEquals(7, len(self.events))
 
-        connector.subject.end = factory.create(UML.ConnectorEnd)
-        connector.subject.end[0].role = iface
+        a.unlink()
+        watcher.unregister_handlers()
+        watcher.unregister_handlers()
+        self.assertEquals(0, len(self.dispatcher._handlers))
 
-        self.assertEquals(6, len(dispatcher._handlers))
-        self.assertEquals(3, len(self.events))
 
-        connector.subject.end = factory.create(UML.ConnectorEnd)
-        connector.subject.end[1].role = iface
+    def test_braking_big_diamond(self):
+        """
+        Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' -> d
+        """
+        a = A()
+        watcher = EventWatcher(a, self._handler)
+        watcher.watch('one.two.one.two')
+        #watcher.watch('one.one.one.one')
+        watcher.register_handlers()
 
-        self.assertEquals(7, len(dispatcher._handlers))
-        self.assertEquals(5, len(self.events))
+        a.one = A()
+        a.one.two = A()
+        a.one.two = A()
+        a.one.two[0].one = A()
+        a.one.two[1].one = A()
+        a.one.two[0].one.two = A()
+        a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        connector.subject.unlink()
-        
-        self.assertSame(None, connector.subject)
+        self.assertEquals(7, len(self.events))
+        self.assertEquals(6, len(self.dispatcher._handlers))
 
-        #dispatcher.unregister_handler(self._handler)
+        del a.one.two[0].one
+        #a.unlink()
+        watcher.unregister_handlers()
+        watcher.unregister_handlers()
+        self.assertEquals(0, len(self.dispatcher._handlers))
 
-        self.assertEquals(1, len(dispatcher._handlers))
-        self.assertEquals(8, len(self.events))
+
+
+    def test_cyclic(self):
+        """
+        Test cyclic dependency a -> b -> c -> a.
+        """
+        a = A()
+        watcher = EventWatcher(a, self._handler)
+        watcher.watch('one.two.one.two')
+        #watcher.watch('one.one.one.one')
+        watcher.register_handlers()
+
+        a.one = A()
+        a.one.two = A()
+        a.one.two = A()
+        a.one.two[0].one = a
+
+        self.assertEquals(4, len(self.events))
+
+        #a.one.two[0].one.two = A()
+        #a.one.two[0].one.two = A()
+
+        a.unlink()
+        self.assertEquals(1, len(self.dispatcher._handlers))
+
+
 
 # vim: sw=4:et:ai

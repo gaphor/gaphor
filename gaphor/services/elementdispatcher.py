@@ -205,17 +205,21 @@ class ElementDispatcher(object):
             return
 
         if property.upper > 1:
-            for remainder in handlers[handler]:
+            for remainder in handlers.get(handler, ()):
                 for e in property._get(element):
                     #log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
         else:
-            for remainder in handlers[handler]:
+            for remainder in handlers.get(handler, ()):
                 e = property._get(element)
                 if e:
                     #log.debug('*Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
-        del handlers[handler]
+        try:
+            del handlers[handler]
+        except KeyError:
+            log.warning('Handler %s is not registered for %s.%s' % (handler, element, property))
+
         if not handlers:
             del self._handlers[key]
 
@@ -263,7 +267,7 @@ class ElementDispatcher(object):
                 try:
                     handler(event)
                 except Exception, e:
-                    log.error('problem executing handler %s' % handler, e)
+                    log.error('Problem executing handler %s' % handler, e)
         
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
