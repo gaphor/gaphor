@@ -438,7 +438,12 @@ class associationstub(umlproperty):
             setattr(obj, self._name, set([value]))
             
     def _del(self, obj, value, from_opposite=False):
-        getattr(obj, self._name).discard(value)
+        try:
+            c = getattr(obj, self._name)
+        except AttributeError:
+            pass
+        else:
+            c.discard(value)
 
 
 class unioncache(object):
