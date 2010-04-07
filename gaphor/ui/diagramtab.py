@@ -15,6 +15,8 @@ from gaphor.transaction import Transaction
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from event import DiagramSelectionChange
 
+from gaphas import segment, guide
+
 class DiagramTab(object):
     
     element_factory = inject('element_factory')
