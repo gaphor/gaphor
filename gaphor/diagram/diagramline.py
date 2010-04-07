@@ -145,6 +145,10 @@ class DiagramLine(gaphas.Line, DiagramItem):
 
     def postload(self):
         if hasattr(self, '_load_orthogonal'):
+            # Ensure there are enough handles
+            if self._load_orthogonal and len(self._handles) < 3:
+                p0 = self._handles[-1].pos
+                self._handles.insert(1, self._create_handle(p0))
             self.orthogonal = self._load_orthogonal
             del self._load_orthogonal
 
