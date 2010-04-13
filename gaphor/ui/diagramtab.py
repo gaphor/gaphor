@@ -6,7 +6,7 @@ from cairo import Matrix
 from zope import component
 from gaphas.view import GtkView
 from gaphor import UML
-from gaphor.core import _, inject, transactional, action, build_action_group
+from gaphor.core import _, inject, transactional, action, toggle_action, build_action_group
 from gaphor.application import Application
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.diagram import get_diagram_item
@@ -36,6 +36,8 @@ class DiagramTab(object):
           </menu>
           <menu action="diagram">
             <placeholder name="secondary">
+              <menuitem action="diagram-drawing-style" />
+              <separator />
               <menuitem action="diagram-zoom-in" />
               <menuitem action="diagram-zoom-out" />
               <menuitem action="diagram-zoom-100" />
@@ -115,6 +117,7 @@ class DiagramTab(object):
         view.connect('drag-data-received', self._on_drag_data_received)
 
         self.view = view
+        self.hand_drawn_style(False)
 
         self.widget = scrolled_window
         
@@ -188,6 +191,29 @@ class DiagramTab(object):
                     i.canvas.remove(i)
 
 
+    @toggle_action(name='diagram-drawing-style', label='Hand drawn style', active=False)
+    def hand_drawn_style(self, active):
+        from gaphas.painter import *
+        from gaphas.freehand import FreeHandPainter
+        view = self.view
+        sloppiness = 0.5
+        if active:
+            view.painter = PainterChain(). \
+                append(FreeHandPainter(ItemPainter(), sloppiness=sloppiness)). \
+                append(HandlePainter()). \
+                append(FocusedItemPainter()). \
+                append(ToolPainter())
+            view.bounding_box_painter = FreeHandPainter(BoundingBoxPainter(), sloppiness=sloppiness)
+        else:
+            view.painter = PainterChain(). \
+                append(ItemPainter()). \
+                append(HandlePainter()). \
+                append(FocusedItemPainter()). \
+                append(ToolPainter())
+            view.bounding_box_painter = BoundingBoxPainter()
+        view.queue_draw_refresh()
+
+            
     def may_remove_from_model(self, view):
         """
         Check if there are items which will be deleted from the model
