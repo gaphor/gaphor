@@ -9,7 +9,8 @@ from gaphor.interfaces import IService, IActionProvider
 
 import cairo
 from gaphas.view import View
-from gaphas.painter import ItemPainter
+from gaphas.painter import ItemPainter, BoundingBoxPainter
+from gaphas.freehand import FreeHandPainter
 from gaphas.geometry import Rectangle
 
 class DiagramExportManager(object):
@@ -20,6 +21,7 @@ class DiagramExportManager(object):
     interface.implements(IService, IActionProvider)
 
     gui_manager = inject('gui_manager')
+    properties = inject('properties')
 
     menu_xml = """
       <ui>
@@ -87,11 +89,19 @@ class DiagramExportManager(object):
             return filename
         return None
 
+    def update_painters(self, view):
+        sloppiness = self.properties('diagram.sloppiness', 0)
+        if sloppiness:
+            view.painter = FreeHandPainter(ItemPainter(), sloppiness)
+            view.bounding_box_painter = FreeHandPainter(BoundingBoxPainter(), sloppiness)
+        else:
+            view.painter = ItemPainter()
 
     def save_svg(self, filename, canvas):
         log.debug('Exporting SVG image to: %s' % filename)
         view = View(canvas)
-        view.painter = ItemPainter()
+
+        self.update_painters(view)
 
         # Update bounding boxes with a temporaly CairoContext
         # (used for stuff like calculating font metrics)
@@ -114,7 +124,8 @@ class DiagramExportManager(object):
     def save_png(self, filename, canvas):
         log.debug('Exporting PNG image to: %s' % filename)
         view = View(canvas)
-        view.painter = ItemPainter()
+
+        self.update_painters(view)
 
         # Update bounding boxes with a temporaly CairoContext
         # (used for stuff like calculating font metrics)
@@ -135,7 +146,8 @@ class DiagramExportManager(object):
     def save_pdf(self, filename, canvas):
         log.debug('Exporting PDF image to: %s' % filename)
         view = View(canvas)
-        view.painter = ItemPainter()
+
+        self.update_painters(view)
 
         # Update bounding boxes with a temporaly CairoContext
         # (used for stuff like calculating font metrics)

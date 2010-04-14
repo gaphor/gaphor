@@ -14,6 +14,7 @@ from gaphor.diagram.items import DiagramItem
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from event import DiagramSelectionChange
+from gaphor.services.properties import IPropertyChangeEvent
 
 from gaphas import segment, guide
 
@@ -36,8 +37,6 @@ class DiagramTab(object):
           </menu>
           <menu action="diagram">
             <placeholder name="secondary">
-              <menuitem action="diagram-drawing-style" />
-              <separator />
               <menuitem action="diagram-zoom-in" />
               <menuitem action="diagram-zoom-out" />
               <menuitem action="diagram-zoom-100" />
@@ -117,7 +116,6 @@ class DiagramTab(object):
         view.connect('drag-data-received', self._on_drag_data_received)
 
         self.view = view
-        self.hand_drawn_style(False)
 
         self.widget = scrolled_window
         
@@ -191,13 +189,16 @@ class DiagramTab(object):
                     i.canvas.remove(i)
 
 
-    @toggle_action(name='diagram-drawing-style', label='Hand drawn style', active=False)
-    def hand_drawn_style(self, active):
-        from gaphas.painter import *
+    def set_drawing_style(self, sloppiness=0.0):
+        """
+        Set the drawing style for the diagram. 0.0 is straight, 2.0 is very sloppy.
+        """
+        assert self.view, 'First construct() the diagram tab'
+        from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \
+                                   FocusedItemPainter, ToolPainter, BoundingBoxPainter
         from gaphas.freehand import FreeHandPainter
         view = self.view
-        sloppiness = 0.5
-        if active:
+        if sloppiness:
             view.painter = PainterChain(). \
                 append(FreeHandPainter(ItemPainter(), sloppiness=sloppiness)). \
                 append(HandlePainter()). \
@@ -213,7 +214,6 @@ class DiagramTab(object):
             view.bounding_box_painter = BoundingBoxPainter()
         view.queue_draw_refresh()
 
-            
     def may_remove_from_model(self, view):
         """
         Check if there are items which will be deleted from the model

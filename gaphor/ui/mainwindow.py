@@ -68,6 +68,7 @@ class MainWindow(ToplevelWindow):
             <menuitem action="tree-view-delete-package" />
             <separator />
             <menuitem action="reset-tool-after-create" />
+            <menuitem action="diagram-drawing-style" />
             <separator />
             <placeholder name="primary" />
             <placeholder name="secondary" />
@@ -132,6 +133,7 @@ class MainWindow(ToplevelWindow):
             self.action_group.add_action(a)
         self._tab_ui_settings = None
         self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
+        self.action_group.get_action('diagram-drawing-style').set_active(self.properties('diagram.sloppiness', 0) != 0)
 
     tree_model = property(lambda s: s.tree_view.get_model())
 
@@ -199,6 +201,7 @@ class MainWindow(ToplevelWindow):
         tab = DiagramTab(self)
         tab.set_diagram(diagram)
         widget = tab.construct()
+        tab.set_drawing_style(self.properties('diagram.sloppiness', 0))
         self.add_tab(tab, widget, tab.title)
         self.set_current_page(tab)
 
@@ -605,6 +608,20 @@ class MainWindow(ToplevelWindow):
     @toggle_action(name='reset-tool-after-create', label=_('_Reset tool'), active=False)
     def reset_tool_after_create(self, active):
         self.properties.set('reset-tool-after-create', active)
+
+
+    @toggle_action(name='diagram-drawing-style', label='Hand drawn style', active=False)
+    def hand_drawn_style(self, active):
+        """
+        Toggle between straight diagrams and "hand drawn" diagram style.
+        """
+        if active:
+            sloppiness = 0.5
+        else:
+            sloppiness = 0.0
+        for tab in self.get_tabs():
+            tab.set_drawing_style(sloppiness)
+        self.properties.set('diagram.sloppiness', sloppiness)
 
 
 gtk.accel_map_add_filter('gaphor')
