@@ -11,7 +11,25 @@ from gaphor.interfaces import IService
 from gaphas.decorators import async
 from gaphor.application import user_data_dir
 
+
+class IPropertyChangeEvent(interface.Interface):
+
+    name = interface.Attribute("The property name")
+    old_value = interface.Attribute("The property value before the change")
+    new_value = interface.Attribute("The property value after the change")
+
+
+class PropertyChangeEvent(object):
+    interface.implements(IPropertyChangeEvent)
+
+    def __init__(self, name, old_value, new_value):
+        self.name = name
+        self.old_value = old_value
+        self.new_value = new_value
+
+
 _no_default = object()
+
 
 class Properties(object):
     """
@@ -22,10 +40,12 @@ class Properties(object):
     interface.implements(IService)
 
     def __init__(self, backend=None):
+        self._app = None
         self._resources = {}
         self._backend = backend or FileBackend()
 
     def init(self, app):
+        self._app = app
         self._backend.load(self._resources)
     
     def shutdown(self):
@@ -58,12 +78,11 @@ class Properties(object):
         try:
             return self._resources[key]
         except KeyError:
-            pass
+            if default is _no_default:
+                raise KeyError, 'No resource with name "%s"' % key
 
-        if default is not _no_default:
             self.set(key, default)
             return default
-        raise KeyError, 'No resource with name "%s"' % key
 
     def set(self, key, value):
         """
@@ -73,8 +92,11 @@ class Properties(object):
         resource() method does).
         """
         resources = self._resources
-        resources[key] = value
-        self._backend.update(resources, key, value)
+        old_value = resources.get(key)
+        if value != old_value:
+            resources[key] = value
+            self._app.handle(PropertyChangeEvent(key, old_value, value))
+            self._backend.update(resources, key, value)
 
 
 class FileBackend(object):
