@@ -47,8 +47,8 @@ class Toolbox(gtk.VBox):
         """
         self.__gobject_init__()
         self.toolboxdef = toolboxdef
-        #self.boxes = []
         self.buttons = []
+        self.shortcuts = {}
         self._construct()
 
 
@@ -104,15 +104,17 @@ class Toolbox(gtk.VBox):
 
 
     def _construct(self):
+        shortcuts = self.shortcuts
         for title, items in self.toolboxdef:
             wrapbox = Wrapbox()
-            for action_name, label, stock_id in items:
+            for action_name, label, stock_id, shortcut in items:
                 button = self.toolbox_button(action_name, stock_id)
                 if label:
-                    button.set_tooltip_text(label)
+                    button.set_tooltip_text('%s (%s)' % (label, shortcut))
                 self.buttons.append(button)
                 wrapbox.add(button)
                 button.show()
+                shortcuts[shortcut] = action_name
             if title:
                 wrapbox_dec = self.make_wrapbox_decorator(title, wrapbox)
                 self.pack_start(wrapbox_dec, expand=False)

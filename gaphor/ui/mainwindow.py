@@ -268,6 +268,7 @@ class MainWindow(ToplevelWindow):
         self.window.set_property('allow-shrink', True)
         self.window.connect('size-allocate', self._on_window_size_allocate)
         self.window.connect('destroy', self._on_window_destroy)
+        self.window.connect_after('key-press-event', self._on_key_press_event)
 
         Application.register_handler(self._action_executed)
         Application.register_handler(self._new_model_content)
@@ -490,6 +491,22 @@ class MainWindow(ToplevelWindow):
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
 
 
+    def _on_key_press_event(self, view, event):
+        """
+        Grab top level window events and select the appropriate tool based on the event.
+        """
+        if event.state == 0 or event.state & gtk.gdk.SHIFT_MASK:
+            keyval = event.keyval
+            if keyval == gtk.keysyms.Escape:
+                keyval = '<ESC>'
+            else:
+                # All other shortcuts are simply characters (l, c, o, m, etc.)
+                try:
+                    keyval = '%c' % keyval
+                except OverflowError:
+                    return
+            self.set_active_tool(shortcut=keyval)
+
     def _update_toolbox(self, action_group):
         """
         Update the buttons in the toolbox. Each button should be connected
@@ -610,6 +627,19 @@ class MainWindow(ToplevelWindow):
         self.properties.set('reset-tool-after-create', active)
 
 
+    def set_active_tool(self, action_name=None, shortcut=None):
+        """
+        Set the tool based on the name of the action
+        """
+        if shortcut:
+            action_name = self._toolbox.shortcuts.get(shortcut)
+            log.debug('Action for shortcut %s: %s' % (shortcut, action_name))
+            if not action_name:
+                return
+
+        self.get_current_diagram_tab().toolbox.action_group.get_action(action_name).activate()
+            
+        
     @toggle_action(name='diagram-drawing-style', label='Hand drawn style', active=False)
     def hand_drawn_style(self, active):
         """

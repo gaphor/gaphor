@@ -3,7 +3,7 @@ import gtk
 from gaphor.tests.testcase import TestCase
 from gaphor.application import Application
 from gaphor.ui.diagramtab import DiagramTab
-from gaphor.ui.diagramtoolbox import DiagramToolbox
+from gaphor.ui.diagramtoolbox import DiagramToolbox, TOOLBOX_ACTIONS
 from gaphor import UML
 
 class WindowOwner(object):
@@ -30,6 +30,19 @@ class DiagramToolboxTestCase(TestCase):
 
     def tearDown(self):
         TestCase.tearDown(self)
+
+    def test_toolbox_actions_shortcut_unique(self):
+        shortcuts = {}
+        for category, items in TOOLBOX_ACTIONS:
+            for action_name, label, stock_id, shortcut in items:
+                try:
+                    shortcuts[shortcut].append(action_name)
+                except KeyError:
+                    shortcuts[shortcut] = [action_name]
+
+        for key, val in shortcuts.items():
+            assert len(val) == 1, 'key %s has val %s' % (key, val)
+
 
     def test_standalone_construct_with_diagram(self):
         pass # is setUp()
