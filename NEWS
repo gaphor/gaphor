@@ -1,3 +1,9 @@
+0.16.0
+------
+- Guides support from Gaphas 0.7.0
+- "hand written" drawing style
+- Keyboard shortcuts for toolbox selection
+
 0.15.0
 ------
 - Fixed bugs related to diagrams loading.
