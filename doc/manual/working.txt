@@ -37,6 +37,9 @@ Toolbox
 
 The toolbox is mainly used to add new diagram items to a diagram. Select the element you want to add by clicking on it. When you click on the diagram, the selected element is created. The "arrow" is selected again, so the element can be manipulated.
 
+Tools can be selected by simply clicking on them. By deault the pointer tool is selected after every item placement. This can be changed by disabling the Diagram > Reset tool option.
+Tools can also be selected by a keyboard shortcut. The actual character is displayed as part of the tooltip. Finally it is also possible to drag elements on the canvas from the toolbox.
+
 Element Editor
 ==============
 
