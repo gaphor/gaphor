@@ -19,7 +19,7 @@ __all__ = [ 'DiagramToolbox', 'TOOLBOX_ACTIONS' ]
 
 TOOLBOX_ACTIONS = (
     ('', (
-        ('toolbox-pointer', _('Pointer'), 'gaphor-pointer', '<ESC>'),
+        ('toolbox-pointer', _('Pointer'), 'gaphor-pointer', 'Escape'),
         ('toolbox-line', _('Line'), 'gaphor-line', 'l'),
         ('toolbox-box', _('Box'), 'gaphor-box', 'b'),
         ('toolbox-ellipse', _('Ellipse'), 'gaphor-ellipse', 'e'),

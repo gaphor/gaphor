@@ -386,7 +386,6 @@ class MainWindow(ToplevelWindow):
     @component.adapter(FileManagerStateChanged)
     def _action_executed(self, event):
         # We're only interested in file operations
-        print 'action:', event.service
         if event.service is self.file_manager:
             filename = self.file_manager.filename
             if self.window:
@@ -495,16 +494,9 @@ class MainWindow(ToplevelWindow):
         """
         Grab top level window events and select the appropriate tool based on the event.
         """
-        if event.state == 0 or event.state & gtk.gdk.SHIFT_MASK:
-            keyval = event.keyval
-            if keyval == gtk.keysyms.Escape:
-                keyval = '<ESC>'
-            else:
-                # All other shortcuts are simply characters (l, c, o, m, etc.)
-                try:
-                    keyval = '%c' % keyval
-                except OverflowError:
-                    return
+        if event.state & gtk.gdk.SHIFT_MASK or \
+	        (event.state == 0 or event.state & gtk.gdk.MOD2_MASK):
+            keyval = gtk.gdk.keyval_name(event.keyval)
             self.set_active_tool(shortcut=keyval)
 
     def _update_toolbox(self, action_group):
