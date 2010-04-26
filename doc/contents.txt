@@ -12,7 +12,7 @@ Currently, there's not a lot of documentation though. For those of you intereste
 * A :doc:`manual <manual/index>`. It outlines some of the ideas in and behind Gaphor.
 * The :ref:`tech-section` contains some interesting articles about the technology that drives Gaphor and Gaphas, Gaphor's canvas widget.
 
-If you're into writing plug-ins for Gaphor you should have a look at our fabulous `Hello world <http://github.com/amolenaar/gaphor.plugins.helloworld>` plug-in.
+If you're into writing plug-ins for Gaphor you should have a look at our fabulous :url:`Hello world <http://github.com/amolenaar/gaphor.plugins.helloworld>` plug-in.
 
 .. toctree::
    :maxdepth: 2
