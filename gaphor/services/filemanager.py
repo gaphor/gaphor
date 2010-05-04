@@ -278,16 +278,29 @@ class FileManager(object):
 
     @action(name='file-save', stock_id='gtk-save')
     def save(self):
+        """
+        Save the file. Depending on if there is a file name, either perform
+        the save directly or present the user with a save dialog box.
+
+        Returns True if the saving actually succeeded.
+        """
         filename = self.filename
         if filename:
             self._save(filename)
             self._app.handle(FileManagerStateChanged(self))
+            return True
         else:
-            self.save_as()
+            return self.save_as()
 
 
     @action(name='file-save-as', stock_id='gtk-save-as')
     def save_as(self):
+        """
+        Save the model in the element_factory by allowing the
+        user to select a file name.
+
+        Returns True if the saving actually happened.
+        """
         filename = self.filename
         filesel = gtk.FileChooserDialog(title=_('Save Gaphor model as'),
                                         action=gtk.FILE_CHOOSER_ACTION_SAVE,
@@ -299,14 +312,19 @@ class FileManager(object):
 
         if filename:
             filesel.set_current_name(filename)
-        response = filesel.run()
-        filename = None
-        if response == gtk.RESPONSE_OK:
-            filename = filesel.get_filename()
-        filesel.destroy()
-        self._save(filename)
-        self._app.handle(FileManagerStateChanged(self))
-
+        try:
+            response = filesel.run()
+            filename = None
+            filesel.hide()
+            if response == gtk.RESPONSE_OK:
+                filename = filesel.get_filename()
+                if filename:
+                    self._save(filename)
+                    self._app.handle(FileManagerStateChanged(self))
+                    return True
+        finally:
+            filesel.destroy()
+        return False
 
 def show_status_window(title, message, parent=None, queue=None):
     """

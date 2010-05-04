@@ -23,6 +23,8 @@ from gaphor.UML.event import ModelFactoryEvent
 from event import DiagramSelectionChange
 from gaphor.application import Application
 from gaphor.services.filemanager import FileManagerStateChanged
+from gaphor.services.undomanager import UndoManagerStateChanged
+
 
 class MainWindow(ToplevelWindow):
     """
@@ -114,6 +116,9 @@ class MainWindow(ToplevelWindow):
 
     def __init__(self):
         ToplevelWindow.__init__(self)
+
+        self.model_changed = False
+
         # Map tab contents to DiagramTab
         self.notebook_map = {}
         # Tree view:
@@ -176,15 +181,29 @@ class MainWindow(ToplevelWindow):
 
     def ask_to_close(self):
         """
-        Ask user to close window.
+        Ask user to close window if the model has changed.
+        The user is asked to either discard the changes, keep the
+        application running or save the model and quit afterwards.
         """
-        dialog = gtk.MessageDialog(self.window,
-            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
-            _("Quit Gaphor?"))
-        answer = dialog.run()
-        dialog.destroy()
-        return answer == gtk.RESPONSE_YES
+        if self.model_changed:
+            dialog = gtk.MessageDialog(self.window,
+                    gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                    gtk.MESSAGE_WARNING,
+                    gtk.BUTTONS_NONE,
+                    _('Save changed to your model before closing?'))
+            dialog.format_secondary_text(
+                    _('If you close without saving, your changes will be discarded.'))
+            dialog.add_buttons('Close _without saving', gtk.RESPONSE_REJECT,
+                    gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                    gtk.STOCK_SAVE, gtk.RESPONSE_YES)
+            response = dialog.run()
+            dialog.destroy()
+
+            if response == gtk.RESPONSE_YES:
+                # On filedialog.cancel, the application should not close.
+                return self.file_manager.save()
+            return response == gtk.RESPONSE_REJECT
+        return True
 
 
     def show_diagram(self, diagram):
@@ -270,7 +289,8 @@ class MainWindow(ToplevelWindow):
         self.window.connect('destroy', self._on_window_destroy)
         self.window.connect_after('key-press-event', self._on_key_press_event)
 
-        Application.register_handler(self._action_executed)
+        Application.register_handler(self._on_file_manager_state_changed)
+        Application.register_handler(self._on_undo_manager_state_changed)
         Application.register_handler(self._new_model_content)
 
 
@@ -280,6 +300,20 @@ class MainWindow(ToplevelWindow):
         Gaphor.
         """
         pass
+
+    def set_title(self):
+        """
+        Sets the window title.
+        """
+        filename = self.file_manager.filename
+        if self.window:
+            if filename:
+                title = '%s - %s' % (self.title, filename)
+            else:
+                title = self.title
+            if self.model_changed:
+                title += ' *'
+            self.window.set_title(title)
 
 
     # Notebook methods:
@@ -383,17 +417,23 @@ class MainWindow(ToplevelWindow):
                         self.show_diagram(e)
                     iter = model.iter_next(iter)
     
+
     @component.adapter(FileManagerStateChanged)
-    def _action_executed(self, event):
+    def _on_file_manager_state_changed(self, event):
         # We're only interested in file operations
         if event.service is self.file_manager:
-            filename = self.file_manager.filename
-            if self.window:
-                if filename:
-                    title = '%s - %s' % (self.title, filename)
-                else:
-                    title = self.title
-                self.window.set_title(title)
+            self.model_changed = False
+            self.set_title()
+
+
+    @component.adapter(UndoManagerStateChanged)
+    def _on_undo_manager_state_changed(self, event):
+        """
+        """
+        undo_manager = event.service
+        if not self.model_changed and undo_manager.can_undo():
+            self.model_changed = True
+            self.set_title()
 
 
     def _on_window_destroy(self, window):
@@ -404,7 +444,8 @@ class MainWindow(ToplevelWindow):
         self.window = None
         if gobject.main_depth() > 0:
             gtk.main_quit()
-        Application.unregister_handler(self._action_executed)
+        Application.unregister_handler(self._on_undo_manager_state_changed)
+        Application.unregister_handler(self._on_file_manager_state_changed)
         Application.unregister_handler(self._new_model_content)
 
     def _on_tab_destroy(self, widget):
@@ -520,7 +561,7 @@ class MainWindow(ToplevelWindow):
         # TODO: check for changes (e.g. undo manager), fault-save
         self.ask_to_close() and gtk.main_quit()
         self._tree_view.get_model().close()
-        Application.unregister_handler(self._action_executed)
+        Application.unregister_handler(self._on_file_manager_state_changed)
         Application.unregister_handler(self._new_model_content)
 
 
