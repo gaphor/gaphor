@@ -28,9 +28,9 @@ class Toolbox(gtk.VBox):
     TARGET_STRING = 0
     TARGET_TOOLBOX_ACTION = 1
     DND_TARGETS = [
-        ('STRING', 0, TARGET_STRING),
-        ('text/plain', 0, TARGET_STRING),
-        ('gaphor/toolbox-action', 0, TARGET_TOOLBOX_ACTION)]
+        ('STRING', gtk.TARGET_SAME_APP, TARGET_STRING),
+        ('text/plain', gtk.TARGET_SAME_APP, TARGET_STRING),
+        ('gaphor/toolbox-action', gtk.TARGET_SAME_APP, TARGET_TOOLBOX_ACTION)]
 
     __gsignals__ = {
         'toggled': (gobject.SIGNAL_RUN_FIRST,
