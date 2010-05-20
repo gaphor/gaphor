@@ -196,6 +196,7 @@ class MainWindow(ToplevelWindow):
             dialog.add_buttons('Close _without saving', gtk.RESPONSE_REJECT,
                     gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                     gtk.STOCK_SAVE, gtk.RESPONSE_YES)
+            dialog.set_default_response(gtk.RESPONSE_YES)
             response = dialog.run()
             dialog.destroy()
 
