@@ -248,6 +248,7 @@ class PlacementTool(_PlacementTool):
         return self._create_item(pos)
 
     def on_button_press(self, event):
+        assert not self._tx
         self._tx = Transaction()
         view = self.view
         view.unselect_all()
@@ -294,12 +295,16 @@ class TransactionalToolChain(ToolChain):
         self._tx = None
 
     def handle(self, event):
-        if self.EVENT_HANDLERS.get(event.type) in ('on_button_press', 'on_double_click', 'on_triple_click'):
+        # For double click: button_press, double_click, button_release
+        #print 'event', self.EVENT_HANDLERS.get(event.type)
+        if self.EVENT_HANDLERS.get(event.type) in ('on_button_press',):
+            assert not self._tx
             self._tx = Transaction()
 
         try:
             super(TransactionalToolChain, self).handle(event)
         finally:
+            # TODO: check here:
             if self._tx and self.EVENT_HANDLERS.get(event.type) in ('on_button_release', 'on_double_click', 'on_triple_click'):
                 self._tx.commit()
                 self._tx = None
