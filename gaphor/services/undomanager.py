@@ -151,7 +151,6 @@ class UndoManager(object):
         """
         Add an action to the current transaction
         """
-        log.debug('Begin undo tx')
         assert not self._current_transaction
         self._current_transaction = ActionStack()
 
@@ -169,7 +168,6 @@ class UndoManager(object):
 
     @component.adapter(TransactionCommit)
     def commit_transaction(self, event=None):
-        log.debug('Commit undo tx')
         assert self._current_transaction
 
         if self._current_transaction.can_execute():
