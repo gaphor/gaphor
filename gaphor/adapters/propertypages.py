@@ -1076,16 +1076,20 @@ class AssociationEndPropertyPage(object):
         vbox = gtk.VBox()
 
         entry = gtk.Entry()
-        entry.set_text(UML.umlfmt.format_attribute(self.subject, multiplicity=True) or '')
+        #entry.set_text(UML.format(self.subject, visibility=True, is_derived=Truemultiplicity=True) or '')
 
         # monitor subject attribute (all, cause it contains many children)
         changed_id = entry.connect('changed', self._on_end_name_change)
         def handler(event):
             if not entry.props.has_focus:
                 entry.handler_block(changed_id)
-                entry.set_text(UML.umlfmt.format_attribute(self.subject, multiplicity=True) or '')
+                entry.set_text(UML.format(self.subject,
+                                          visibility=True, is_derived=True,
+                                          multiplicity=True) or '')
                 #entry.set_text(UML.format(self.subject, multiplicity=True) or '')
                 entry.handler_unblock(changed_id)
+        handler(None)
+
         self.watcher.watch('name', handler) \
                     .watch('aggregation', handler)\
                     .watch('visibility', handler)\
@@ -1099,20 +1103,11 @@ class AssociationEndPropertyPage(object):
         entry.set_tooltip_text("""\
 Enter attribute name and multiplicity, for example
 - name
-- name [1]
++ name [1]
 - name [1..2]
-- 1..2
+~ 1..2
 - [1..2]\
 """)
-
-        combo = gtk.combo_box_new_text()
-        for t in ('public (+)', 'protected (#)', 'package (~)', 'private (-)'):
-            combo.append_text(t)
-        
-        combo.set_active(['public', 'protected', 'package', 'private'].index(self.subject.visibility))
-
-        combo.connect('changed', self._on_visibility_change)
-        vbox.pack_start(combo, expand=False)
 
         combo = gtk.combo_box_new_text()
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
@@ -1138,10 +1133,6 @@ Enter attribute name and multiplicity, for example
     @transactional
     def _on_end_name_change(self, entry):
         UML.parse(self.subject, entry.get_text())
-
-    @transactional
-    def _on_visibility_change(self, combo):
-        self.subject.visibility = ('public', 'protected', 'package', 'private')[combo.get_active()]
 
     @transactional
     def _on_navigability_change(self, combo):
