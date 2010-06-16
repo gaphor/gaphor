@@ -275,7 +275,8 @@ class CompartmentItem(NamedItem):
 
 
     def on_stereotype_attr_change(self, event):
-        if event and event.element in self.subject.appliedStereotype \
+        if event and self.subject \
+                and event.element in self.subject.appliedStereotype \
                 and self._show_stereotypes_attrs:
 
             comp = self._find_stereotype_compartment(event.element)
