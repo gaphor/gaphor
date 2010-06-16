@@ -54,7 +54,7 @@ class SanitizerService(object):
         log.debug('Unlinking instances of stereotype %s' % st)
         for i in list(inst):
             for e in i.extended:
-                if isinstance(e, meta):
+                if not meta or isinstance(e, meta):
                     i.unlink()
 
 
@@ -71,7 +71,7 @@ class SanitizerService(object):
             if isinstance(p, UML.ExtensionEnd):
                 p, ext = ext, p
             st = ext.type
-            meta = getattr(UML, p.type.name)
+            meta = p.type and getattr(UML, p.type.name)
             self.perform_unlink_for_instances(st, meta)
 
 
