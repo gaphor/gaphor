@@ -24,7 +24,7 @@ TOOLBOX_ACTIONS = (
         ('toolbox-box', _('Box'), 'gaphor-box', 'b'),
         ('toolbox-ellipse', _('Ellipse'), 'gaphor-ellipse', 'e'),
         ('toolbox-comment', _('Comment'), 'gaphor-comment', 'k'),
-        ('toolbox-comment-line', _('Comment line'), 'gaphor-comment-line', 'L'),
+        ('toolbox-comment-line', _('Comment line'), 'gaphor-comment-line', 'K'),
     )), (_('Classes'), (
         ('toolbox-class', _('Class'), 'gaphor-class', 'c'),
         ('toolbox-interface', _('Interface'), 'gaphor-interface', 'i'),
