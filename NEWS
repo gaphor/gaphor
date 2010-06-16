@@ -3,6 +3,8 @@
 - Guides support from Gaphas 0.7.0
 - "hand written" drawing style
 - Keyboard shortcuts for toolbox selection
+- Fixed issue in undo transaction handling
+- Proper dialog when exiting with changed model
 
 0.15.0
 ------
