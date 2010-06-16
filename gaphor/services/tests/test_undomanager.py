@@ -251,6 +251,27 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
 
+    def test_element_factory_rollback(self):
+        from gaphor.UML.elementfactory import ElementFactory
+        from gaphor.UML.element import Element
+        undo_manager = UndoManager()
+        undo_manager.init(Application)
+        undo_manager.begin_transaction()
+        ef = ElementFactory()
+        ef.init(Application)
+        p = ef.create(Element)
+
+        assert undo_manager._current_transaction
+        assert undo_manager._current_transaction._actions
+        assert undo_manager.can_undo()
+
+        undo_manager.rollback_transaction()
+        assert not undo_manager.can_undo()
+        assert ef.size() == 0
+
+        undo_manager.shutdown()
+
+
     def test_uml_associations(self):
 
         from zope import component
@@ -354,7 +375,7 @@ class TestUndoManager(TestCase):
         assert not undo_manager.can_redo()
         assert ef.size() == 2
         
-        assert ef.lselect()[0] is p
+        assert p in ef.lselect()
         
         undo_manager.shutdown()
 

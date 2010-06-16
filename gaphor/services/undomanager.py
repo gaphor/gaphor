@@ -190,17 +190,20 @@ class UndoManager(object):
         """
         assert self._current_transaction
 
+        # Store stacks
+        undo_stack = list(self._undo_stack)
+
         errorous_tx = self._current_transaction
         self._current_transaction = None
-        self.begin_transaction()
         try:
-            try:
-                errorous_tx.execute()
-            except Exception, e:
-                log.error('Error while rolling back', e)
+            with Transaction():
+                try:
+                    errorous_tx.execute()
+                except Exception, e:
+                    log.error('Error while rolling back', e)
         finally:
             # Discard all data collected in the rollback "transaction"
-            self.discard_transaction()
+            self._undo_stack = undo_stack
 
         self._app.handle(UndoManagerStateChanged(self))
         self._action_executed()
