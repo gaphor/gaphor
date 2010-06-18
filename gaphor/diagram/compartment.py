@@ -2,6 +2,7 @@
 Diagram item with compartments.
 """
 
+import cairo
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
@@ -485,14 +486,26 @@ class CompartmentItem(NamedItem):
         Standard classifier border is a rectangle.
         """
         cr = context.cairo
+
         cr.rectangle(0, 0, self.width, self.height)
+
+        g = cairo.LinearGradient(0, 0, self.width, self.height)
+        g.add_color_stop_rgba(0, 0.8, 0.8, 0.8, 0.5)
+        g.add_color_stop_rgba(1, 1.0, 1.0, 1.0, 0.5)
+        cr.save()
+        #cr.rectangle(0, 0, self.width, self.height)
+        cr.set_source(g)
+        cr.fill_preserve()
+        cr.restore()
+
         cr.stroke()
 
 
-    def draw_compartment(self, context):
-        super(CompartmentItem, self).draw(context)
 
+    def draw_compartment(self, context):
         self.draw_compartment_border(context)
+
+        super(CompartmentItem, self).draw(context)
 
         cr = context.cairo
 
