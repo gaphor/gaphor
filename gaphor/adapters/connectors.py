@@ -158,9 +158,10 @@ class CommentLineElementConnect(AbstractConnect):
         hct = self.get_connected(handle)
 
         if hct and oct:
-            if isinstance(oct.subject, UML.Comment):
+            log.debug('Disconnecting %s and %s' % (hct, oct))
+            if hct.subject and isinstance(oct.subject, UML.Comment):
                 del oct.subject.annotatedElement[hct.subject]
-            elif oct.subject:
+            elif hct.subject and oct.subject:
                 del hct.subject.annotatedElement[oct.subject]
         super(CommentLineElementConnect, self).disconnect(handle)
 
