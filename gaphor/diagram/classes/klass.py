@@ -7,9 +7,9 @@ from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.i18n import _
 
+from gaphor.diagram import font
 from gaphor.diagram.classifier import ClassifierItem
 from gaphor.diagram.compartment import FeatureItem
-
 
 class OperationItem(FeatureItem):
     def render(self):
@@ -152,7 +152,7 @@ class ClassItem(ClassifierItem):
         if o:
             o = o[0]
             o.font = (o.subject and o.subject.isAbstract) \
-                    and font.FONT_ABSTRACT_NAME or font.FONT_NAME
+                    and font.FONT_ABSTRACT or font.FONT
             self.request_update()
 
 # vim:sw=4:et:ai

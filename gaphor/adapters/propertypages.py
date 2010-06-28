@@ -234,7 +234,7 @@ class ClassOperations(EditableTreeModel):
 
     def _get_rows(self):
         for operation in self._item.subject.ownedOperation:
-            yield [UML.format(operation), operation.isStatic, operation]
+            yield [UML.format(operation), operation.isAbstract, operation.isStatic, operation]
 
 
     def _create_object(self):
@@ -250,11 +250,15 @@ class ClassOperations(EditableTreeModel):
             UML.parse(operation, value)
             row[0] = UML.format(operation)
         elif col == 1:
-            operation.isStatic = not operation.isStatic
-            row[1] = operation.isStatic
+            operation.isAbstract = not operation.isAbstract
+            row[1] = operation.isAbstract
         elif col == 2:
+            operation.isStatic = not operation.isStatic
+            row[2] = operation.isStatic
+        elif col == 3:
             row[0] = UML.format(operation)
-            row[1] = operation.isStatic
+            row[1] = operation.isAbstract
+            row[2] = operation.isStatic
 
 
     def _swap_objects(self, o1, o2):
@@ -815,7 +819,7 @@ class OperationsPage(object):
         page.pack_start(hbox, expand=False)
 
         def create_model():
-            return ClassOperations(self.item, (str, bool, object))
+            return ClassOperations(self.item, (str, bool, bool, object))
 
         self.model = create_model()
         tip = """\
@@ -824,7 +828,7 @@ Add and edit class operations according to UML syntax. Operation syntax examples
 - + call(a: int, b: str)
 - # call(a: int: b: str): bool
 """
-        tree_view = create_tree_view(self.model, (_('Operation'), _('S')), tip)
+        tree_view = create_tree_view(self.model, (_('Operation'), _('A'), _('S')), tip)
         page.pack_start(tree_view)
 
         @async(single=True)
