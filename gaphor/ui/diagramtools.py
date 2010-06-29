@@ -31,6 +31,7 @@ class DiagramItemConnector(Connector.default):
     It also adds handles to lines when a line is grabbed on the middle of
     a line segment (points are drawn by the LineSegmentPainter).
     """
+
     def allow(self, sink):
         adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
         return adapter and adapter.allow(self.handle, sink.port)
@@ -313,8 +314,6 @@ def DefaultTool():
     """
     The default tool chain build from HoverTool, ItemTool and HandleTool.
     """
-    from gaphor.ui.groupingtools import GroupItemTool
-
     chain = TransactionalToolChain()
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
