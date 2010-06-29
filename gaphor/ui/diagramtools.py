@@ -304,7 +304,6 @@ class TransactionalToolChain(ToolChain):
         try:
             super(TransactionalToolChain, self).handle(event)
         finally:
-            # TODO: check here:
             if self._tx and self.EVENT_HANDLERS.get(event.type) in ('on_button_release', 'on_double_click', 'on_triple_click'):
                 self._tx.commit()
                 self._tx = None
@@ -319,7 +318,7 @@ def DefaultTool():
     chain = TransactionalToolChain()
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
-    chain.append(GroupItemTool())
+    chain.append(ItemTool())
     chain.append(TextEditTool())
     chain.append(RubberbandTool())
     return chain

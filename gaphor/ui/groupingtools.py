@@ -5,6 +5,9 @@ import gtk
 from gaphor.diagram.interfaces import IGroup
 from gaphor.ui.diagramtools import PlacementTool
 from gaphas.tool import ItemTool
+from gaphas.aspect import InMotion
+from gaphas.guide import GuidedItemInMotion
+from gaphor.diagram.elementitem import ElementItem
 
 # cursor to indicate grouping
 IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.DIAMOND_CROSS)
@@ -183,4 +186,82 @@ class GroupItemTool(ItemTool):
                 item.request_update()
 
 
+@InMotion.when_type(ElementItem)
+class DropZoneInMotion(GuidedItemInMotion):
+
+
+    def move(self, pos):
+        """
+        Move the item. x and y are in view coordinates.
+        """
+        super(DropZoneInMotion, self).move(pos)
+        item = self.item
+        view = self.view
+        x, y = pos
+
+        current_parent = view.canvas.get_parent(item)
+        over_item = view.get_item_at_point((x, y), selected=False)
+
+        if not over_item:
+            view.dropzone_item = None
+            view.window.set_cursor(None)
+            return
+
+        if current_parent and not over_item:  # are we going to remove from parent?
+            adapter = component.queryMultiAdapter((current_parent, item), IGroup)
+            if adapter:
+                view.window.set_cursor(OUT_CURSOR)
+                view.dropzone_item = current_parent
+                current_parent.request_update(matrix=False)
+
+        if over_item:
+            # are we going to add to parent?
+            adapter = component.queryMultiAdapter((over_item, item), IGroup)
+            if adapter and adapter.can_contain():
+                view.dropzone_item = over_item
+                view.window.set_cursor(IN_CURSOR)
+                over_item.request_update(matrix=False)
+
+
+    def stop_move(self):
+        """
+        Motion stops: drop!
+        """
+        super(DropZoneInMotion, self).stop_move()
+        item = self.item
+        view = self.view
+        canvas = view.canvas
+        old_parent = view.canvas.get_parent(item)
+        new_parent = view.dropzone_item
+        try:
+
+            if new_parent is old_parent:
+                if old_parent is not None:
+                    old_parent.request_update(matrix=False)
+                return
+
+            if old_parent:
+                adapter = component.queryMultiAdapter((old_parent, item), IGroup)
+                if adapter:
+                    adapter.ungroup()
+
+                canvas.reparent(item, None)
+                m = canvas.get_matrix_i2c(old_parent)
+                item.matrix *= m
+                old_parent.request_update()
+
+            if new_parent:
+                adapter = component.queryMultiAdapter((new_parent, item), IGroup)
+                if adapter and adapter.can_contain():
+                    adapter.group()
+
+                canvas.reparent(item, new_parent)
+                m = canvas.get_matrix_c2i(new_parent)
+                item.matrix *= m
+                new_parent.request_update()
+        finally:
+            view.dropzone_item = None
+            view.window.set_cursor(None)
+
+    
 # vim:sw=4:et:ai
