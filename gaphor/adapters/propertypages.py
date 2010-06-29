@@ -924,7 +924,7 @@ class DependencyPropertyPage(object):
         combo = self.combo
         item = self.item
         index = combo.get_model().get_index(item.dependency_type)
-        combo.props.sensitive = not item.auto_dependency and item.subject is None
+        combo.props.sensitive = not item.auto_dependency
         combo.set_active(index)
 
 
@@ -933,6 +933,9 @@ class DependencyPropertyPage(object):
         combo = self.combo
         cls = combo.get_model().get_value(combo.get_active())
         self.item.dependency_type = cls
+        if self.item.subject:
+            self.element_factory.swap_element(self.item.subject, cls)
+            self.item.request_update()
 
 
     @transactional
