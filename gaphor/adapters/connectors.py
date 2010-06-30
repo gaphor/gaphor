@@ -131,7 +131,6 @@ class CommentLineElementConnect(AbstractConnect):
         if connected_to and \
                 (not (connected_to.subject or element.subject)) \
                  and connected_to.subject is element.subject:
-            #print 'Subjects none or match:', connected_to.subject, element.subject
             return None
 
         # One end should be connected to a CommentItem:
@@ -320,7 +319,6 @@ class RelationshipConnect(AbstractConnect):
         """
         relation = self.relationship(type, head, tail)
         if not relation:
-            print 'no existing rel found'
             line = self.line
             relation = self.element_factory.create(type)
             setattr(relation, head[0], self.get_connected(line.head).subject)
