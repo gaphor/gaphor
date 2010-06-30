@@ -28,7 +28,7 @@ from utils.command.build_uml import build_uml
 from utils.command.install_lib import install_lib
 from utils.command.run import run
 
-LINGUAS = [ 'ca', 'es', 'nl', 'sv' ]
+LINGUAS = [ 'ca', 'es', 'fr', 'nl', 'sv' ]
 
 
 # Wrap setuptools' build_py command, so we're sure build_uml is performed
