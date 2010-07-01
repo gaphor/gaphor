@@ -7,7 +7,6 @@ from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.i18n import _
 
-from gaphor.diagram import font
 from gaphor.diagram.classifier import ClassifierItem
 from gaphor.diagram.compartment import FeatureItem
 
@@ -35,6 +34,7 @@ class ClassItem(ClassifierItem):
     
     __style__ = {
         'extra-space': 'compartment',
+        'abstract-feature-font': 'sans italic 10',
     }
 
     def __init__(self, id=None):
@@ -106,6 +106,7 @@ class ClassItem(ClassifierItem):
         """
         new = FeatureItem()
         new.subject = attribute
+        new.font = self.style.feature_font
         self._attributes.append(new)
 
 
@@ -114,6 +115,7 @@ class ClassItem(ClassifierItem):
         Create a new operation item.
         """
         new = OperationItem()
+        new.font = self.style.feature_font
         new.subject = operation
         self._operations.append(new)
 
@@ -152,7 +154,7 @@ class ClassItem(ClassifierItem):
         if o:
             o = o[0]
             o.font = (o.subject and o.subject.isAbstract) \
-                    and font.FONT_ABSTRACT or font.FONT
+                    and self.style.abstract_feature_font or self.style.feature_font
             self.request_update()
 
 # vim:sw=4:et:ai

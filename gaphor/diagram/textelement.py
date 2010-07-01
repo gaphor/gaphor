@@ -7,11 +7,12 @@ import math
 
 from gaphor.diagram.style import Style
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
-import gaphor.diagram.font as font
 
 from gaphas.geometry import distance_rectangle_point, Rectangle
 from gaphas.util import text_extents, text_align, text_multiline, \
     text_set_font
+
+DEFAULT_TEXT_FONT = 'sans 10'
 
 
 def swap(list, el1, el2):
@@ -49,7 +50,7 @@ class EditableTextSupport(object):
 
 
     def add_text(self, attr, style=None, pattern=None, visible=None,
-            editable=False, font=font.FONT):
+            editable=False):
         """
         Create and add a text element.
 
@@ -62,7 +63,7 @@ class EditableTextSupport(object):
         Returns created text element.
         """
         txt = TextElement(attr, style=style, pattern=pattern,
-                visible=visible, editable=editable, font=font)
+                visible=visible, editable=editable)
         self._texts.append(txt)
 
         # try to group text element
@@ -138,7 +139,7 @@ class EditableTextSupport(object):
         """
         cr = context.cairo
         for txt in texts:
-            w, h = text_extents(cr, txt.text, font=txt.font, multiline=True)
+            w, h = text_extents(cr, txt.text, font=txt.style.font, multiline=True)
             txt.bounds.width = max(15, w)
             txt.bounds.height = max(10, h)
 
@@ -235,7 +236,7 @@ class EditableTextSupport(object):
         chunks = txt.text.split(style.text_align_str, 1)
         hint = 0
         if len(chunks) > 1:
-            hint, _ = text_extents(cr, chunks[0], font=txt.font)
+            hint, _ = text_extents(cr, chunks[0], font=txt.style.font)
         return hint
 
 
@@ -254,7 +255,7 @@ class EditableTextSupport(object):
         # align ungrouped text elements
         texts = self._get_visible_texts(self._text_groups[None])
         for txt in texts:
-            style = txt._style
+            style = txt.style
             extents = txt.bounds.width, txt.bounds.height
             x, y = self.text_align(extents, style.text_align,
                     style.text_padding, style.text_outside)
@@ -289,25 +290,9 @@ class EditableTextSupport(object):
         if any(txt._style.text_rotated for txt in self._get_visible_texts(self._texts)):
             cr.rotate(-math.pi/2)
 
-        for txt in self._get_visible_texts(self._texts):
-            bounds = txt.bounds
-            x, y = bounds.x, bounds.y
-            width, height = bounds.width, bounds.height
-
-            if self.subject:
-                text_set_font(cr, txt.font)
-                text_multiline(cr, x, y, txt.text)
-                cr.stroke()
-
-            if self.subject and txt.editable \
-                    and (context.hovered or context.focused):
-
-                cr.save()
-                cr.set_source_rgb(0.6, 0.6, 0.6)
-                cr.set_line_width(0.5)
-                cr.rectangle(x - 5, y - 1, width + 10, height + 2)
-                cr.stroke()
-                cr.restore()
+        if self.subject:
+            for txt in self._get_visible_texts(self._texts):
+                txt.draw(context)
 
         cr.restore()
 
@@ -332,7 +317,6 @@ class TextElement(object):
      - text:     rendered string to be displayed
      - pattern:  print pattern of text
      - editable: True if text should be editable
-     - font:     text font
 
     See also EditableTextSupport.add_text.
     """
@@ -340,7 +324,7 @@ class TextElement(object):
     bounds = property(lambda self: self._bounds)
 
     def __init__(self, attr, style=None, pattern=None, visible=None,
-            editable=False, font=font.FONT):
+            editable=False):
         """
         Create new text element with bounds (0, 0, 10, 10) and empty text.
 
@@ -359,6 +343,7 @@ class TextElement(object):
         self._style.add('text-outside', False)
         self._style.add('text-rotated', False)
         self._style.add('text-align-str', None)
+        self._style.add('font', DEFAULT_TEXT_FONT)
         if style:
             self._style.update(style)
 
@@ -374,8 +359,6 @@ class TextElement(object):
             self._pattern = '%s'
 
         self.editable = editable
-        self.font = font
-
 
     def _set_text(self, value):
         """
@@ -394,6 +377,25 @@ class TextElement(object):
         Display text by default.
         """
         return True
+
+
+    def draw(self, context):
+        bounds = self.bounds
+        x, y = bounds.x, bounds.y
+        width, height = bounds.width, bounds.height
+
+        cr = context.cairo
+        text_set_font(cr, self._style.font)
+        text_multiline(cr, x, y, self.text)
+        cr.stroke()
+        if self.editable and (context.hovered or context.focused):
+            cr.save()
+            cr.set_source_rgb(0.6, 0.6, 0.6)
+            cr.set_line_width(0.5)
+            cr.rectangle(x - 5, y - 1, width + 10, height + 2)
+            cr.stroke()
+            cr.restore()
+
 
 
 # vim:sw=4:et:ai

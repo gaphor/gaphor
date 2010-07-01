@@ -16,10 +16,9 @@ class InteractionItem(NamedItem):
     }
 
     def draw(self, context):
-        super(InteractionItem, self).draw(context)
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
-        
+        super(InteractionItem, self).draw(context)
         # draw pentagon
         w, h = self._header_size
         h2 = h / 2.0
