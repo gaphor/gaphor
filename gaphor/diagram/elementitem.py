@@ -18,7 +18,7 @@ class ElementItem(gaphas.Element, DiagramItem):
         'stereotype-padding': (5, 10, 5, 10),
 	'background': 'solid',
 	'background-color': (1, 1, 1, 0.8),
-	'drop-color': (0, 0, 1, 0.4),
+	'highlight-color': (0, 0, 1, 0.4),
 	'background-gradient': ((0.8, 0.8, 0.8, 0.5), (1.0, 1.0, 1.0, 0.5))
     }
 
@@ -97,10 +97,6 @@ class ElementItem(gaphas.Element, DiagramItem):
 	cr = context.cairo
 	cr.save()
 	try:
-	    if context.dropzone:
-		cr.set_source_rgba(*self.style.drop_color)
-		cr.set_line_width(cr.get_line_width() * 3.141)
-		cr.stroke_preserve()
 	    if self.style.background == 'solid':
 		cr.set_source_rgba(*self.style.background_color)
 		cr.fill_preserve()
@@ -115,9 +111,20 @@ class ElementItem(gaphas.Element, DiagramItem):
 	finally:
 	    cr.restore()
 
- 
+    def highlight(self, context):
+	cr = context.cairo
+	cr.save()
+	try:
+	    if context.dropzone:
+		cr.set_source_rgba(*self.style.highlight_color)
+		cr.set_line_width(cr.get_line_width() * 3.141)
+		cr.stroke_preserve()
+	finally:
+	    cr.restore()
+
     def draw(self, context):
 	self.fill_background(context)
+        self.highlight(context)
         gaphas.Element.draw(self, context)
         DiagramItem.draw(self, context)
 

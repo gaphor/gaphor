@@ -19,6 +19,7 @@ class PartitionItem(NamedItem):
 
     __style__   = {
         'min-size': (100, 300),
+        'line-width': 2.4,
     }
 
     DELTA = 30
@@ -86,9 +87,8 @@ class PartitionItem(NamedItem):
         By default horizontal partition is drawn. It is open on right side
         (or bottom side when horizontal).
         """
-        super(PartitionItem, self).draw(context)
         cr = context.cairo
-        cr.set_line_width(2.4)
+        cr.set_line_width(self.style.line_width)
 
         if self.subject and not self.subject.isDimension and self._toplevel:
             cr.move_to(0, 0)
@@ -104,6 +104,8 @@ class PartitionItem(NamedItem):
             cr.line_to(self.width, h)
             cr.line_to(self.width, self.height)
 
+        super(PartitionItem, self).draw(context)
+
         if self._subpart:
             # header line for all subparitions
             hd = h + self._hdmax
@@ -118,6 +120,7 @@ class PartitionItem(NamedItem):
                 cr.move_to(dp, h)
                 cr.line_to(dp, self.height)
 
+
         cr.stroke()
 
         if context.hovered or context.dropzone:
@@ -125,6 +128,7 @@ class PartitionItem(NamedItem):
             cr.set_dash((1.0, 5.0), 0)
             cr.set_line_width(1.0)
             cr.rectangle(0, 0, self.width, self.height)
+            self.highlight(context)
             cr.stroke()
             cr.restore()
 
