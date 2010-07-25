@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
-"POT-Creation-Date: Wed Apr  4 07:15:29 2007\n"
+"POT-Creation-Date: Thu Jun 10 15:59:38 2010\n"
 "PO-Revision-Date: 2006-02-13 16:11+0100\n"
 "Last-Translator: Jordi Vilalta Prat <jvprat@gmail.com>\n"
 "Language-Team: ca <ca@li.org>\n"
@@ -14,112 +14,172 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: gaphor/actions/mainactions.py:72
-msgid "_New"
+#: gaphor/adapters/actions/partitionpage.py:30
+msgid "External"
 msgstr ""
 
-#: gaphor/actions/mainactions.py:85
-msgid ""
-"Opening a new model will flush the currently loaded model.\n"
-"Any changes made will not be saved. Do you want to continue?"
-msgstr ""
-"L'obertura d'un nou model descartarà el model actualment carregat.\n"
-"Els darrers canvis no es desaran. Voleu continuar?"
-
-#: gaphor/actions/mainactions.py:94
-msgid "New model"
+#: gaphor/adapters/profiles/metaclasseditor.py:31
+#: gaphor/adapters/propertypages.py:552
+msgid "Name"
 msgstr ""
 
-#: gaphor/actions/mainactions.py:101
-msgid "Created a new model"
-msgstr "S'ha creat un nou model"
-
-#: gaphor/actions/mainactions.py:113
-msgid "_Revert..."
+#: gaphor/adapters/profiles/stereotypespage.py:140
+msgid "Attribute"
 msgstr ""
 
-#: gaphor/actions/mainactions.py:135
-msgid "Loading model from %s"
-msgstr "Carregant el model de %s"
+#: gaphor/adapters/profiles/stereotypespage.py:140
+#: gaphor/ui/diagramtoolbox.py:72
+msgid "Stereotype"
+msgstr ""
 
-#: gaphor/actions/mainactions.py:135
-msgid "Loading..."
-msgstr "Carregant"
+#: gaphor/adapters/profiles/stereotypespage.py:167
+msgid "Value"
+msgstr ""
 
-#: gaphor/actions/mainactions.py:166
-msgid "Could not load model file."
-msgstr "No s'ha pogut carregar el fitxer del model."
+#: gaphor/adapters/profiles/stereotypespage.py:219
+msgid "Show stereotypes attributes"
+msgstr ""
 
-#: gaphor/actions/mainactions.py:173
-msgid "_Open..."
-msgstr "_Obre..."
-
-#: gaphor/actions/mainactions.py:210
-msgid "Save the model to a new file"
-msgstr "Desa el model a un nou fitxer"
-
-#: gaphor/actions/mainactions.py:262
-msgid "Save Gaphor model as"
-msgstr "Desa el model de Gaphor com a"
-
-#: gaphor/actions/mainactions.py:327
+#: gaphor/adapters/propertypages.py:505 gaphor/ui/diagramtoolbox.py:26
 #, fuzzy
-msgid "_Editor"
+msgid "Comment"
+msgstr "Components"
+
+#: gaphor/adapters/propertypages.py:627
+msgid "Abstract"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:661
+msgid "Folded"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:737
+msgid "Show attributes"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:754
+msgid "Attributes"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:754 gaphor/adapters/propertypages.py:827
+msgid "S"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:811
+msgid "Show operations"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:827
+#, fuzzy
+msgid "Operation"
+msgstr "Interaccions"
+
+#: gaphor/adapters/propertypages.py:874 gaphor/ui/diagramtoolbox.py:33
+msgid "Dependency"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:875
+msgid "Usage"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:876
+msgid "Realization"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:877 gaphor/ui/diagramtoolbox.py:35
+#, fuzzy
+msgid "Implementation"
+msgstr "Interaccions"
+
+#: gaphor/adapters/propertypages.py:889
+msgid "Dependency type"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:897
+msgid "Automatic"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:977
+msgid "Show direction"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:982
+#, fuzzy
+msgid "Invert Direction"
+msgstr "Interaccions"
+
+#: gaphor/adapters/propertypages.py:988
+msgid "Head"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:992
+msgid "Tail"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1181
+msgid "Orthogonal"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1198
+msgid "Horizontal"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1234
+msgid "Upper bound"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1249
+msgid "Ordering"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1297
+msgid "Join specification"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1329
+#: gaphor/adapters/states/propertypages.py:32
+msgid "Guard"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1382
+msgid "Indirectly instantiated"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1417 gaphor/adapters/propertypages.py:1438
+#: gaphor/adapters/propertypages.py:1445 gaphor/ui/diagramtoolbox.py:55
+msgid "Message"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1440
+msgid "Additional Messages"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1447
+msgid "Inverted Messages"
+msgstr ""
+
+#: gaphor/adapters/propertypages.py:1451
+msgid "Message sort"
+msgstr ""
+
+#: gaphor/adapters/states/propertypages.py:79
+msgid "Entry"
+msgstr ""
+
+#: gaphor/adapters/states/propertypages.py:86
+#, fuzzy
+msgid "Exit"
 msgstr "_Edita"
 
-#: gaphor/actions/mainactions.py:346
-msgid "_Console"
+#: gaphor/adapters/states/propertypages.py:93
+msgid "Do Activity"
 msgstr ""
 
-#: gaphor/actions/mainactions.py:364
-msgid "_Manual"
-msgstr ""
-
-#: gaphor/actions/mainactions.py:384
-msgid "_About"
-msgstr ""
-
-#: gaphor/actions/mainactions.py:451
-#, fuzzy
-msgid "_New diagram"
-msgstr "_Diagrama"
-
-#: gaphor/actions/mainactions.py:477
-#, fuzzy
-msgid "_Delete diagram"
-msgstr "_Diagrama"
-
-#: gaphor/actions/mainactions.py:506
-#, fuzzy
-msgid "_Open"
-msgstr "_Obre..."
-
-#: gaphor/actions/mainactions.py:527
-msgid "_Rename"
-msgstr ""
-
-#: gaphor/actions/mainactions.py:555
-msgid "_Refresh"
-msgstr ""
-
-#: gaphor/actions/mainactions.py:570
-msgid "_Delete"
-msgstr ""
-
-#: gaphor/actions/mainactions.py:616
-#, fuzzy
-msgid "_Undo"
-msgstr "_Finestra"
-
-#: gaphor/diagram/classifier.py:248
-msgid "(from %s)"
-msgstr "(des de %s)"
-
-#: gaphor/misc/errorhandler.py:22
+#: gaphor/misc/errorhandler.py:21
 msgid "An error occured."
 msgstr "S'ha produït un error."
 
-#: gaphor/misc/errorhandler.py:29
+#: gaphor/misc/errorhandler.py:28
 msgid ""
 "\n"
 "\n"
@@ -131,79 +191,354 @@ msgstr ""
 "Voleu depurar?\n"
 "(S'haurà d'haver engegat Gaphor des de la línia de comandes)"
 
-#: gaphor/plugin.py:90
+#: gaphor/plugins/xmiexport/__init__.py:39
+#, fuzzy
+msgid "Export to XMI"
+msgstr "_Exporta"
+
+#: gaphor/plugins/xmiexport/__init__.py:40
+msgid "Export model to XMI (XML Model Interchange) format"
+msgstr ""
+
+#: gaphor/services/diagramexportmanager.py:74
 msgid ""
 "The file %s already exists. Do you want to replace it with the file you are "
 "exporting to?"
 msgstr ""
 
-#: gaphor/storage.py:164
+#: gaphor/services/filemanager.py:135
+msgid ""
+"Opening a new model will flush the currently loaded model.\n"
+"Any changes made will not be saved. Do you want to continue?"
+msgstr ""
+"L'obertura d'un nou model descartarà el model actualment carregat.\n"
+"Els darrers canvis no es desaran. Voleu continuar?"
+
+#: gaphor/services/filemanager.py:144
+msgid "New model"
+msgstr ""
+
+#: gaphor/services/filemanager.py:147
+msgid "main"
+msgstr ""
+
+#: gaphor/services/filemanager.py:163
+msgid "Loading model from %s"
+msgstr "Carregant el model de %s"
+
+#: gaphor/services/filemanager.py:163
+msgid "Loading..."
+msgstr "Carregant"
+
+#: gaphor/services/filemanager.py:193
+msgid ""
+"The model contains some references to items that are not maintained. Do you "
+"want to clean this before saving the model?"
+msgstr ""
+
+#: gaphor/services/filemanager.py:260
+msgid "New from template"
+msgstr ""
+
+#: gaphor/services/filemanager.py:305
+msgid "Save Gaphor model as"
+msgstr "Desa el model de Gaphor com a"
+
+#: gaphor/storage/storage.py:186
 msgid "Loading %d elements..."
 msgstr "Carregant %d elements..."
 
-#: gaphor/ui/diagramtab.py:49
+#: gaphor/ui/diagramtab.py:76
 msgid "<None>"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:33
+#: gaphor/ui/diagramtoolbox.py:22
+msgid "Pointer"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:23
+msgid "Line"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:24
+msgid "Box"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:25
+msgid "Ellipse"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:27
+msgid "Comment line"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:28
 msgid "Classes"
 msgstr "Classes"
 
-#: gaphor/ui/mainwindow.py:41
+#: gaphor/ui/diagramtoolbox.py:29
+#, fuzzy
+msgid "Class"
+msgstr "Classes"
+
+#: gaphor/ui/diagramtoolbox.py:30
+#, fuzzy
+msgid "Interface"
+msgstr "Interaccions"
+
+#: gaphor/ui/diagramtoolbox.py:31
+msgid "Package"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:32 gaphor/ui/diagramtoolbox.py:66
+#, fuzzy
+msgid "Association"
+msgstr "Accions"
+
+#: gaphor/ui/diagramtoolbox.py:34
+#, fuzzy
+msgid "Generalization"
+msgstr "Interaccions"
+
+#: gaphor/ui/diagramtoolbox.py:36
 msgid "Components"
 msgstr "Components"
 
-#: gaphor/ui/mainwindow.py:48
+#: gaphor/ui/diagramtoolbox.py:37
+#, fuzzy
+msgid "Component"
+msgstr "Components"
+
+#: gaphor/ui/diagramtoolbox.py:38
+msgid "Artifact"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:39
+msgid "Node"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:40
+msgid "Device"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:41
+msgid "Subsystem"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:42
+msgid "Connector"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:43
 msgid "Actions"
 msgstr "Accions"
 
-#: gaphor/ui/mainwindow.py:61
+#: gaphor/ui/diagramtoolbox.py:44
+#, fuzzy
+msgid "Action"
+msgstr "Accions"
+
+#: gaphor/ui/diagramtoolbox.py:45
+msgid "Initial node"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:46
+msgid "Activity final node"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:47
+msgid "Flow final node"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:48
+msgid "Decision/merge node"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:49
+msgid "Fork/join node"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:50
+msgid "Object node"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:51
+msgid "Partition"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:52
+msgid "Control/object flow"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:53
+msgid "Interactions"
+msgstr "Interaccions"
+
+#: gaphor/ui/diagramtoolbox.py:54
+msgid "Lifeline"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:56
+#, fuzzy
+msgid "Interaction"
+msgstr "Interaccions"
+
+#: gaphor/ui/diagramtoolbox.py:57
+msgid "States"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:58
+msgid "State"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:59
+msgid "Initial Pseudostate"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:60
+msgid "Final State"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:61
+msgid "History Pseudostate"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:62
+msgid "Transition"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:63
 msgid "Use Cases"
 msgstr "Casos d'Ús"
 
-#: gaphor/ui/mainwindow.py:67
+#: gaphor/ui/diagramtoolbox.py:64
+#, fuzzy
+msgid "Use case"
+msgstr "Casos d'Ús"
+
+#: gaphor/ui/diagramtoolbox.py:65
+#, fuzzy
+msgid "Actor"
+msgstr "Accions"
+
+#: gaphor/ui/diagramtoolbox.py:67
+msgid "Include"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:68
+msgid "Extend"
+msgstr ""
+
+#: gaphor/ui/diagramtoolbox.py:69
 msgid "Profiles"
 msgstr "Perfils"
 
-#: gaphor/ui/mainwindow.py:74
-msgid "_File"
-msgstr "_Fitxer"
+#: gaphor/ui/diagramtoolbox.py:70
+#, fuzzy
+msgid "Profile"
+msgstr "Perfils"
 
-#: gaphor/ui/mainwindow.py:78
-msgid "Recent files"
-msgstr "Fitxers recents"
-
-#: gaphor/ui/mainwindow.py:85
-msgid "_Import"
-msgstr "_Importa"
-
-#: gaphor/ui/mainwindow.py:87
-msgid "_Export"
-msgstr "_Exporta"
-
-#: gaphor/ui/mainwindow.py:94
-msgid "_Edit"
-msgstr "_Edita"
-
-#: gaphor/ui/mainwindow.py:108
-msgid "_Diagram"
-msgstr "_Diagrama"
-
-#: gaphor/ui/mainwindow.py:120
-msgid "Tools"
-msgstr "Eines"
-
-#: gaphor/ui/mainwindow.py:124
-msgid "_Window"
-msgstr "_Finestra"
-
-#: gaphor/ui/mainwindow.py:128
-msgid "_Help"
-msgstr "_Ajuda"
-
-#: gaphor/ui/mainwindow.py:224
-msgid "Quit Gaphor?"
+#: gaphor/ui/diagramtoolbox.py:71
+msgid "Metaclass"
 msgstr ""
 
-#~ msgid "Interactions"
-#~ msgstr "Interaccions"
+#: gaphor/ui/diagramtoolbox.py:73
+msgid "Extension"
+msgstr ""
+
+#: gaphor/ui/elementeditor.py:23
+msgid "Element Editor"
+msgstr ""
+
+#: gaphor/ui/elementeditor.py:48
+#, fuzzy
+msgid "Editor"
+msgstr "_Edita"
+
+#: gaphor/ui/mainwindow.py:193
+msgid "Save changed to your model before closing?"
+msgstr ""
+
+#: gaphor/ui/mainwindow.py:195
+msgid "If you close without saving, your changes will be discarded."
+msgstr ""
+
+#: gaphor/ui/mainwindow.py:579
+msgid "Rename"
+msgstr ""
+
+#: gaphor/ui/mainwindow.py:592
+#, fuzzy
+msgid "_New diagram"
+msgstr "_Diagrama"
+
+#: gaphor/ui/mainwindow.py:609
+#, fuzzy
+msgid "_Delete diagram"
+msgstr "_Diagrama"
+
+#: gaphor/ui/mainwindow.py:630
+msgid "New _package"
+msgstr ""
+
+#: gaphor/ui/mainwindow.py:646
+#, fuzzy
+msgid "Delete pac_kage"
+msgstr "_Diagrama"
+
+#: gaphor/ui/mainwindow.py:654
+msgid "_Refresh"
+msgstr ""
+
+#: gaphor/ui/mainwindow.py:659
+msgid "_Reset tool"
+msgstr ""
+
+#: gaphor/ui/propertyeditor.py:28
+#, fuzzy
+msgid "Properties"
+msgstr "Perfils"
+
+#~ msgid "Created a new model"
+#~ msgstr "S'ha creat un nou model"
+
+#~ msgid "Could not load model file."
+#~ msgstr "No s'ha pogut carregar el fitxer del model."
+
+#~ msgid "_Open..."
+#~ msgstr "_Obre..."
+
+#~ msgid "Save the model to a new file"
+#~ msgstr "Desa el model a un nou fitxer"
+
+#, fuzzy
+#~ msgid "_Open"
+#~ msgstr "_Obre..."
+
+#, fuzzy
+#~ msgid "_Undo"
+#~ msgstr "_Finestra"
+
+#~ msgid "(from %s)"
+#~ msgstr "(des de %s)"
+
+#~ msgid "_File"
+#~ msgstr "_Fitxer"
+
+#~ msgid "Recent files"
+#~ msgstr "Fitxers recents"
+
+#~ msgid "_Import"
+#~ msgstr "_Importa"
+
+#~ msgid "_Diagram"
+#~ msgstr "_Diagrama"
+
+#~ msgid "Tools"
+#~ msgstr "Eines"
+
+#~ msgid "_Window"
+#~ msgstr "_Finestra"
+
+#~ msgid "_Help"
+#~ msgstr "_Ajuda"
