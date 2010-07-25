@@ -23,6 +23,7 @@ class StereotypeSupport(object):
         'text-padding': (5, 10, 2, 10),
         'text-outside': False,
         'text-align-group': 'stereotype',
+        'line-width': 2,
     }
 
     def __init__(self):

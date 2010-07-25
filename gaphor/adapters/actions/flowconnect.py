@@ -30,15 +30,25 @@ class FlowConnect(RelationshipConnect):
 
 
     def reconnect(self, handle, port):
-        self.connect_subject(handle)
         line = self.line
         log.debug('Reconnection of %s (guard %s)' % (line.subject, line.subject.guard.value))
+        old_flow = line.subject
+        # Secure properties before old_flow is removed:
+        name = old_flow.name
+        guard_value = old_flow.guard.value
+        self.connect_subject(handle)
+        relation = line.subject
+        if old_flow:
+            relation.name = name
+            if guard_value:
+                relation.guard.value = guard_value
+            log.debug('unlinking old flow instance %s' % old_flow)
+            #old_flow.unlink()
 
 
-    def connect_subject(self, handle, old=None):
+    def connect_subject(self, handle):
         line = self.line
         element = self.element
-        old_flow = line.subject
 
         # TODO: connect opposite side again (in case it's a join/fork or
         #       decision/merge node)
@@ -54,20 +64,16 @@ class FlowConnect(RelationshipConnect):
                         ('target', 'incoming'))
         if not relation.guard:
             relation.guard = self.element_factory.create(UML.LiteralSpecification)
-        if old_flow:
-            relation.guard.value = old_flow.guard.value
-            relation.name = old_flow.name
         line.subject = relation
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
         if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
             adapter = component.queryMultiAdapter((otc, line), IConnect)
             adapter.combine_nodes()
-        if old_flow:
-            old_flow.unlink()
 
 
     def disconnect_subject(self, handle):
+        log.debug('Performing disconnect for handle %s' % handle)
         super(FlowConnect, self).disconnect_subject(handle)
         line = self.line
         opposite = line.opposite(handle)

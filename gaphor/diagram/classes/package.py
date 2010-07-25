@@ -4,7 +4,6 @@ Package diagram item.
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
-import gaphor.diagram.font as font
 
 
 class PackageItem(NamedItem):
@@ -15,6 +14,7 @@ class PackageItem(NamedItem):
     }
     __style__ = {
         'min-size': (NamedItem.style.min_size[0], 70),
+        'name-font': 'sans bold 10',
         'name-padding': (25, 10, 5, 10),
         'tab-x': 50,
         'tab-y': 20,
@@ -22,8 +22,6 @@ class PackageItem(NamedItem):
 
     def __init__(self, id=None):
         super(PackageItem, self).__init__(id)
-
-        self._name.font = font.FONT_NAME
 
 
     def draw(self, context):

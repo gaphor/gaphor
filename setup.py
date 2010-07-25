@@ -17,6 +17,10 @@ use_setuptools()
 
 from setuptools import setup, find_packages
 from distutils.cmd import Command
+#try:
+from sphinx.setup_command import BuildDoc
+#except ImportError, e:
+#    print 'No Sphynx found'
 
 from utils.command.build_mo import build_mo
 from utils.command.build_pot import build_pot
@@ -24,7 +28,7 @@ from utils.command.build_uml import build_uml
 from utils.command.install_lib import install_lib
 from utils.command.run import run
 
-LINGUAS = [ 'ca', 'es', 'nl', 'sv' ]
+LINGUAS = [ 'ca', 'es', 'fr', 'nl', 'sv' ]
 
 
 # Wrap setuptools' build_py command, so we're sure build_uml is performed
@@ -127,6 +131,7 @@ It uses the GTK+ environment for user interaction.
     cmdclass = {
               'build_py': build_py_with_sub_commands,
               'build_uml': build_uml,
+              'build_doc': BuildDoc,
               'build_mo': build_mo,
               'build_pot': build_pot,
               'install_lib': install_lib,
@@ -134,6 +139,7 @@ It uses the GTK+ environment for user interaction.
     },
 
     setup_requires = [
+        'Sphinx >= 0.6.4',
         'nose >= 0.10.4',
         'setuptools-git >= 0.3.4'
     ],

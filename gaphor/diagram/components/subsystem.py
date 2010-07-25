@@ -12,7 +12,7 @@ use cases diagram.
 from gaphor import UML
 from gaphor.diagram.component import ComponentItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
-from gaphor.diagram import font, uml
+from gaphor.diagram import uml
 
 @uml(UML.Component, stereotype='subsystem')
 class SubsystemItem(ComponentItem):
@@ -21,7 +21,6 @@ class SubsystemItem(ComponentItem):
     }
     def __init__(self, id=None):
         super(SubsystemItem, self).__init__(id)
-        self._name.font = font.FONT_NAME
 
 
     def draw(self, context):

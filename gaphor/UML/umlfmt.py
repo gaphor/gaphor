@@ -23,7 +23,7 @@ def format_property(el, pattern=None, *args, **kwargs):
     """
     Format property or an association end.
     """
-    if el.association:
+    if el.association and not (args or kwargs):
         return format_association_end(el)
     else:
         return format_attribute(el, *args, **kwargs)

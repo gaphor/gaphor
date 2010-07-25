@@ -17,7 +17,7 @@ from zope import interface, component
 from gaphas import state
 from gaphor.interfaces import IService, IServiceEvent, IActionProvider
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor.transaction import TransactionError, transactional
+from gaphor.transaction import Transaction, transactional
 
 from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
                              ModelFactoryEvent, AssociationSetEvent, \
@@ -107,8 +107,8 @@ class UndoManager(object):
         self._redo_stack = []
         self._stack_depth = 20
         self._current_transaction = None
-        self._transaction_depth = 0
         self.action_group = build_action_group(self)
+
 
     def init(self, app):
         self._app = app
@@ -120,6 +120,7 @@ class UndoManager(object):
         self._register_undo_handlers()
         self._action_executed()
 
+
     def shutdown(self):
         self._app.unregister_handler(self.reset)
         self._app.unregister_handler(self.begin_transaction)
@@ -128,31 +129,30 @@ class UndoManager(object):
         self._app.unregister_handler(self._action_executed)
         self._unregister_undo_handlers()
 
+
     def clear_undo_stack(self):
         self._undo_stack = []
         self._current_transaction = None
 
+
     def clear_redo_stack(self):
         del self._redo_stack[:]
     
+
     @component.adapter(IModelFactoryEvent)
     def reset(self, event=None):
         self.clear_redo_stack()
         self.clear_undo_stack()
         self._action_executed()
 
+
     @component.adapter(TransactionBegin)
     def begin_transaction(self, event=None):
         """
         Add an action to the current transaction
         """
-        if self._current_transaction:
-            self._transaction_depth += 1
-            #raise TransactionError, 'Already in a transaction'
-            return
-
+        assert not self._current_transaction
         self._current_transaction = ActionStack()
-        self._transaction_depth += 1
 
     def add_undo_action(self, action):
         """
@@ -165,60 +165,57 @@ class UndoManager(object):
             # TODO: should this be placed here?
             self._action_executed()
 
+
     @component.adapter(TransactionCommit)
     def commit_transaction(self, event=None):
-        if not self._current_transaction:
-            return #raise TransactionError, 'No transaction to commit'
+        assert self._current_transaction
 
-        self._transaction_depth -= 1
-        if self._transaction_depth == 0:
-            if self._current_transaction.can_execute():
-                self.clear_redo_stack()
-                self._undo_stack.append(self._current_transaction)
-                while len(self._undo_stack) > self._stack_depth:
-                    del self._undo_stack[0]
-            else:
-                pass
+        if self._current_transaction.can_execute():
+            # Here:
+            self.clear_redo_stack()
+            self._undo_stack.append(self._current_transaction)
+            while len(self._undo_stack) > self._stack_depth:
+                del self._undo_stack[0]
 
-            self._current_transaction = None
+        self._current_transaction = None
+
         self._app.handle(UndoManagerStateChanged(self))
         self._action_executed()
+
 
     @component.adapter(TransactionRollback)
     def rollback_transaction(self, event=None):
         """
         Roll back the transaction we're in.
         """
-        if not self._current_transaction:
-            raise TransactionError, 'No transaction to rollback'
+        assert self._current_transaction
 
-        self._transaction_depth -= 1
-        if self._transaction_depth == 0:
-            errorous_tx = self._current_transaction
-            self._current_transaction = None
-            self.begin_transaction()
-            try:
+        # Store stacks
+        undo_stack = list(self._undo_stack)
+
+        errorous_tx = self._current_transaction
+        self._current_transaction = None
+        try:
+            with Transaction():
                 try:
                     errorous_tx.execute()
                 except Exception, e:
                     log.error('Error while rolling back', e)
-            finally:
-                # Discard all data collected in the rollback "transaction"
-                self.discard_transaction()
+        finally:
+            # Discard all data collected in the rollback "transaction"
+            self._undo_stack = undo_stack
 
-            self._app.handle(UndoManagerStateChanged(self))
-
-        self._action_executed()
-
-    def discard_transaction(self):
-        if not self._current_transaction:
-            raise TransactionError, 'No transaction to discard'
-
-        self._transaction_depth -= 1
-        if self._transaction_depth == 0:
-            self._current_transaction = None
         self._app.handle(UndoManagerStateChanged(self))
         self._action_executed()
+
+
+    def discard_transaction(self):
+
+        self._current_transaction = None
+
+        self._app.handle(UndoManagerStateChanged(self))
+        self._action_executed()
+
 
     @action(name='edit-undo', stock_id='gtk-undo', accel='<Control>z')
     def undo_transaction(self):
@@ -230,17 +227,27 @@ class UndoManager(object):
             self.commit_transaction()
         transaction = self._undo_stack.pop()
 
-        self._current_transaction = ActionStack()
-        self._transaction_depth += 1
+        # Store stacks
+        undo_stack = list(self._undo_stack)
+        redo_stack = list(self._redo_stack)
+        self._undo_stack = []
 
-        transaction.execute()
+        try:
+            with Transaction():
+                transaction.execute()
+        finally:
+            # Restore stacks and put latest tx on the redo stack
+            self._redo_stack = redo_stack
+            if self._undo_stack:
+                self._redo_stack.extend(self._undo_stack)
+            self._undo_stack = undo_stack
 
-        assert self._transaction_depth == 1
-        self._redo_stack.append(self._current_transaction)
-        self._current_transaction = None
-        self._transaction_depth = 0
+        while len(self._redo_stack) > self._stack_depth:
+            del self._redo_stack[0]
+
         self._app.handle(UndoManagerStateChanged(self))
         self._action_executed()
+
 
     @action(name='edit-redo', stock_id='gtk-redo', accel='<Control>y')
     def redo_transaction(self):
@@ -249,24 +256,24 @@ class UndoManager(object):
 
         transaction = self._redo_stack.pop()
 
-        self._current_transaction = ActionStack()
-        self._transaction_depth += 1
-
-        transaction.execute()
-
-        assert self._transaction_depth == 1
-        self._undo_stack.append(self._current_transaction)
-        self._current_transaction = None
-        self._transaction_depth = 0
+        redo_stack = list(self._redo_stack)
+        try:
+            with Transaction():
+                transaction.execute()
+        finally:
+            self._redo_stack = redo_stack
 
         self._app.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
+
     def in_transaction(self):
         return self._current_transaction is not None
 
+
     def can_undo(self):
         return bool(self._current_transaction or self._undo_stack)
+
 
     def can_redo(self):
         return bool(self._redo_stack)
@@ -284,6 +291,7 @@ class UndoManager(object):
     def _gaphas_undo_handler(self, event):
         self.add_undo_action(lambda: state.saveapply(*event));
 
+
     def _register_undo_handlers(self):
         self._app.register_handler(self.undo_create_event)
         self._app.register_handler(self.undo_delete_event)
@@ -297,6 +305,7 @@ class UndoManager(object):
         state.observers.add(state.revert_handler)
 
         state.subscribers.add(self._gaphas_undo_handler)
+
 
     def _unregister_undo_handlers(self):
         self._app.unregister_handler(self.undo_create_event)

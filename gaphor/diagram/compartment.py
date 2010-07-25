@@ -2,15 +2,15 @@
 Diagram item with compartments.
 """
 
+import cairo
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphas.util import text_extents, text_set_font, text_align, text_underline
-from gaphor.diagram.font import FONT, FONT_ABSTRACT, FONT, FONT_NAME
 
-#class FeatureItem(UML.Presentation):
+
 class FeatureItem(object):
     """
     FeatureItems are model elements who recide inside a ClassifierItem, such
@@ -24,7 +24,7 @@ class FeatureItem(object):
         self.width = 0
         self.height = 0
         self.text = ''
-        self.font = FONT
+        self.font = None
         self.subject = None
         self.order = order
         self.pattern = pattern
@@ -77,7 +77,8 @@ class FeatureItem(object):
 
     def draw(self, context):
         cr = context.cairo
-        text_set_font(cr, self.font)
+        if self.font:
+            text_set_font(cr, self.font)
         if hasattr(self.subject, 'isStatic') and self.subject.isStatic:
             text_underline(cr, 0, 0, self.render() or '')
         else:
@@ -231,6 +232,7 @@ class CompartmentItem(NamedItem):
     __style__ = {
         'min-size': (100, 50),
         'icon-size': (20, 20),
+        'feature-font': 'sans 10',
         'from-padding': (7, 2, 7, 2),
         'compartment-padding': (5, 5, 5, 5), # (top, right, bottom, left)
         'compartment-vspacing': 3,
@@ -256,7 +258,6 @@ class CompartmentItem(NamedItem):
             .watch('subject.appliedStereotype.slot', self.on_stereotype_attr_change) \
             .watch('subject.appliedStereotype.slot.definingFeature.name') \
             .watch('subject.appliedStereotype.slot.value<LiteralSpecification>.value')
-        self._name.font = FONT_NAME
         self._extra_space = 0
 
 
@@ -275,7 +276,8 @@ class CompartmentItem(NamedItem):
 
 
     def on_stereotype_attr_change(self, event):
-        if event and event.element in self.subject.appliedStereotype \
+        if event and self.subject \
+                and event.element in self.subject.appliedStereotype \
                 and self._show_stereotypes_attrs:
 
             comp = self._find_stereotype_compartment(event.element)
@@ -484,14 +486,19 @@ class CompartmentItem(NamedItem):
         Standard classifier border is a rectangle.
         """
         cr = context.cairo
+
         cr.rectangle(0, 0, self.width, self.height)
+
+        self.fill_background(context)
+
         cr.stroke()
 
 
-    def draw_compartment(self, context):
-        super(CompartmentItem, self).draw(context)
 
+    def draw_compartment(self, context):
         self.draw_compartment_border(context)
+
+        super(CompartmentItem, self).draw(context)
 
         cr = context.cairo
 

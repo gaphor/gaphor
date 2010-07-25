@@ -8,12 +8,13 @@ from gaphor.UML.interfaces import IAttributeChangeEvent
 from gaphor.application import Application
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
-import gaphor.diagram.font as font
 
 class NamedItem(ElementItem):
 
     __style__ = {
         'min-size'    : (100, 50),
+        'from-font'   : 'sans 8',
+        'name-font'   : 'sans 10',
         'name-align'  : (ALIGN_CENTER, ALIGN_TOP),
         'name-padding': (5, 10, 5, 10),
         'name-outside': False,
@@ -31,11 +32,12 @@ class NamedItem(ElementItem):
         # different namespace
         self._from = self.add_text('from',
                 pattern='(from %s)',
-                style={'text-align-group': 'stereotype'},
-                visible=self.is_namespace_info_visible,
-                font=font.FONT_SMALL)
+                style={'text-align-group': 'stereotype',
+                       'font': self.style.from_font },
+                visible=self.is_namespace_info_visible)
 
         self._name = self.add_text('name', style={
+                    'font': self.style.name_font,
                     'text-align': self.style.name_align,
                     'text-padding': self.style.name_padding,
                     'text-outside': self.style.name_outside,

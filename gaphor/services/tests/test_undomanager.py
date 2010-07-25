@@ -15,31 +15,30 @@ class TestUndoManager(TestCase):
         undo_manager = UndoManager()
         undo_manager.init(Application)
 
-        assert undo_manager._transaction_depth == 0
         assert not undo_manager._current_transaction
 
         #undo_manager.begin_transaction()
         tx = Transaction()
 
-        assert undo_manager._transaction_depth == 1
+        #assert undo_manager._transaction_depth == 1
         assert undo_manager._current_transaction
 
         current = undo_manager._current_transaction
         #undo_manager.begin_transaction()
         tx2 = Transaction()
         #assert undo_manager._transaction_depth == 2
-        assert undo_manager._transaction_depth == 1
+        #assert undo_manager._transaction_depth == 1
         assert undo_manager._current_transaction is current
 
         #undo_manager.commit_transaction()
         tx2.commit()
 
-        assert undo_manager._transaction_depth == 1
+        #assert undo_manager._transaction_depth == 1
         assert undo_manager._current_transaction is current
 
         #undo_manager.commit_transaction()
         tx.commit()
-        assert undo_manager._transaction_depth == 0
+        #assert undo_manager._transaction_depth == 0
         assert undo_manager._current_transaction is None
 
         undo_manager.shutdown()
@@ -252,6 +251,27 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
 
+    def test_element_factory_rollback(self):
+        from gaphor.UML.elementfactory import ElementFactory
+        from gaphor.UML.element import Element
+        undo_manager = UndoManager()
+        undo_manager.init(Application)
+        undo_manager.begin_transaction()
+        ef = ElementFactory()
+        ef.init(Application)
+        p = ef.create(Element)
+
+        assert undo_manager._current_transaction
+        assert undo_manager._current_transaction._actions
+        assert undo_manager.can_undo()
+
+        undo_manager.rollback_transaction()
+        assert not undo_manager.can_undo()
+        assert ef.size() == 0
+
+        undo_manager.shutdown()
+
+
     def test_uml_associations(self):
 
         from zope import component
@@ -303,6 +323,62 @@ class TestUndoManager(TestCase):
         finally:
             Application.unregister_handler(handler)
             undo_manager.shutdown()
+
+    def test_redo_stack(self):
+        from gaphor.UML.elementfactory import ElementFactory
+        from gaphor.UML.element import Element
+        undo_manager = UndoManager()
+        undo_manager.init(Application)
+        undo_manager.begin_transaction()
+        ef = ElementFactory()
+        ef.init(Application)
+        p = ef.create(Element)
+
+        assert undo_manager._current_transaction
+        assert undo_manager._current_transaction._actions
+        assert undo_manager.can_undo()
+
+        undo_manager.commit_transaction()
+        assert undo_manager.can_undo()
+        assert ef.size() == 1
+
+        with Transaction():
+            q = ef.create(Element)
+
+        assert undo_manager.can_undo()
+        assert not undo_manager.can_redo()
+        assert ef.size() == 2
+
+        undo_manager.undo_transaction()
+        assert undo_manager.can_undo()
+        self.assertEquals(1, len(undo_manager._undo_stack))
+        self.assertEquals(1, len(undo_manager._redo_stack))
+        assert undo_manager.can_redo()
+        assert ef.size() == 1
+
+        undo_manager.undo_transaction()
+        assert not undo_manager.can_undo()
+        assert undo_manager.can_redo()
+        self.assertEquals(0, len(undo_manager._undo_stack))
+        self.assertEquals(2, len(undo_manager._redo_stack))
+        assert ef.size() == 0
+
+        undo_manager.redo_transaction()
+        self.assertEquals(1, len(undo_manager._undo_stack))
+        self.assertEquals(1, len(undo_manager._redo_stack))
+        assert undo_manager.can_undo()
+        assert undo_manager.can_redo()
+        assert ef.size() == 1
+        
+        undo_manager.redo_transaction()
+        assert undo_manager.can_undo()
+        assert not undo_manager.can_redo()
+        assert ef.size() == 2
+        
+        assert p in ef.lselect()
+        
+        undo_manager.shutdown()
+
 
 
 # vim:sw=4:et:ai

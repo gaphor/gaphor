@@ -234,7 +234,7 @@ class ClassOperations(EditableTreeModel):
 
     def _get_rows(self):
         for operation in self._item.subject.ownedOperation:
-            yield [UML.format(operation), operation.isStatic, operation]
+            yield [UML.format(operation), operation.isAbstract, operation.isStatic, operation]
 
 
     def _create_object(self):
@@ -250,11 +250,15 @@ class ClassOperations(EditableTreeModel):
             UML.parse(operation, value)
             row[0] = UML.format(operation)
         elif col == 1:
-            operation.isStatic = not operation.isStatic
-            row[1] = operation.isStatic
+            operation.isAbstract = not operation.isAbstract
+            row[1] = operation.isAbstract
         elif col == 2:
+            operation.isStatic = not operation.isStatic
+            row[2] = operation.isStatic
+        elif col == 3:
             row[0] = UML.format(operation)
-            row[1] = operation.isStatic
+            row[1] = operation.isAbstract
+            row[2] = operation.isStatic
 
 
     def _swap_objects(self, o1, o2):
@@ -815,7 +819,7 @@ class OperationsPage(object):
         page.pack_start(hbox, expand=False)
 
         def create_model():
-            return ClassOperations(self.item, (str, bool, object))
+            return ClassOperations(self.item, (str, bool, bool, object))
 
         self.model = create_model()
         tip = """\
@@ -824,7 +828,7 @@ Add and edit class operations according to UML syntax. Operation syntax examples
 - + call(a: int, b: str)
 - # call(a: int: b: str): bool
 """
-        tree_view = create_tree_view(self.model, (_('Operation'), _('S')), tip)
+        tree_view = create_tree_view(self.model, (_('Operation'), _('A'), _('S')), tip)
         page.pack_start(tree_view)
 
         @async(single=True)
@@ -920,7 +924,7 @@ class DependencyPropertyPage(object):
         combo = self.combo
         item = self.item
         index = combo.get_model().get_index(item.dependency_type)
-        combo.props.sensitive = not item.auto_dependency and item.subject is None
+        combo.props.sensitive = not item.auto_dependency
         combo.set_active(index)
 
 
@@ -929,6 +933,9 @@ class DependencyPropertyPage(object):
         combo = self.combo
         cls = combo.get_model().get_value(combo.get_active())
         self.item.dependency_type = cls
+        if self.item.subject:
+            self.element_factory.swap_element(self.item.subject, cls)
+            self.item.request_update()
 
 
     @transactional
@@ -1076,16 +1083,20 @@ class AssociationEndPropertyPage(object):
         vbox = gtk.VBox()
 
         entry = gtk.Entry()
-        entry.set_text(UML.umlfmt.format_attribute(self.subject, multiplicity=True) or '')
+        #entry.set_text(UML.format(self.subject, visibility=True, is_derived=Truemultiplicity=True) or '')
 
         # monitor subject attribute (all, cause it contains many children)
         changed_id = entry.connect('changed', self._on_end_name_change)
         def handler(event):
             if not entry.props.has_focus:
                 entry.handler_block(changed_id)
-                entry.set_text(UML.umlfmt.format_attribute(self.subject, multiplicity=True) or '')
+                entry.set_text(UML.format(self.subject,
+                                          visibility=True, is_derived=True,
+                                          multiplicity=True) or '')
                 #entry.set_text(UML.format(self.subject, multiplicity=True) or '')
                 entry.handler_unblock(changed_id)
+        handler(None)
+
         self.watcher.watch('name', handler) \
                     .watch('aggregation', handler)\
                     .watch('visibility', handler)\
@@ -1099,20 +1110,11 @@ class AssociationEndPropertyPage(object):
         entry.set_tooltip_text("""\
 Enter attribute name and multiplicity, for example
 - name
-- name [1]
++ name [1]
 - name [1..2]
-- 1..2
+~ 1..2
 - [1..2]\
 """)
-
-        combo = gtk.combo_box_new_text()
-        for t in ('public (+)', 'protected (#)', 'package (~)', 'private (-)'):
-            combo.append_text(t)
-        
-        combo.set_active(['public', 'protected', 'package', 'private'].index(self.subject.visibility))
-
-        combo.connect('changed', self._on_visibility_change)
-        vbox.pack_start(combo, expand=False)
 
         combo = gtk.combo_box_new_text()
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
@@ -1138,10 +1140,6 @@ Enter attribute name and multiplicity, for example
     @transactional
     def _on_end_name_change(self, entry):
         UML.parse(self.subject, entry.get_text())
-
-    @transactional
-    def _on_visibility_change(self, combo):
-        self.subject.visibility = ('public', 'protected', 'package', 'private')[combo.get_active()]
 
     @transactional
     def _on_navigability_change(self, combo):
