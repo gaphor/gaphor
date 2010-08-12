@@ -50,20 +50,36 @@ def main():
     """
     Main from the command line
     """
-    import sys
-    if len(sys.argv) > 1:
-        if sys.argv[1] in ('-p', '--profile'):
-            print 'Starting profiler...'
-            import cProfile
-            import pstats
-            cProfile.run('import gaphor; gaphor.launch()', 'gaphor.prof')
-            p = pstats.Stats('gaphor.prof')
-            p.strip_dirs().sort_stats('time').print_stats(50)
-        else:
-            launch(sys.argv[1])
-    else:
-        launch()
 
+    from optparse import OptionParser
+
+    parser = OptionParser()
+
+    parser.add_option('-p',\
+		      '--profile',\
+		      action='store_true',\
+		      help='Run in profile')
+
+    options, args = parser.parse_args()
+
+    if options.profile:
+	print 'Starting profiler...'
+        import cProfile
+        import pstats
+        if len(args)==1:
+	    cProfile.run('import gaphor; gaphor.launch("%s")'%args[0],\
+            	         'gaphor.prof')
+	else:
+	    cProfile.run('import gaphor; gaphor.launch()',\
+                         'gaphor.prof')
+        p = pstats.Stats('gaphor.prof')
+        p.strip_dirs().sort_stats('time').print_stats(50)
+
+    elif len(args) == 1:
+	launch(args[0])
+
+    else:
+	launch()
 
 # TODO: Remove this
 import __builtin__
