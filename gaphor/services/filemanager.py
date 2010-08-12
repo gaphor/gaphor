@@ -17,6 +17,7 @@ class FileManagerStateChanged(object):
     """
     Event class used to send state changes on the ndo Manager.
     """
+
     interface.implements(IServiceEvent)
 
     def __init__(self, service):
@@ -80,7 +81,9 @@ class FileManager(object):
     def init(self, app):
 	"""File manager service initialization.  Builds the
 	action group in the file menu."""
-
+	
+	log.info('Initializing file manager service')
+	
         self._app = app
         self.action_group = build_action_group(self)
         for name, label in (('file-recent-files', '_Recent files'),):
@@ -99,10 +102,13 @@ class FileManager(object):
     def shutdown(self):
 	"""Called when shutting down the file manager service."""
 
-        pass
+        log.info('Shutting down file manager service')
 
     def _set_filename(self, filename):
 	"""Sets the current file name of the file manager service."""
+
+	log.info('Setting current file')
+	log.debug(filename)
 
         if filename != self._filename:
             self._filename = filename
@@ -113,6 +119,8 @@ class FileManager(object):
     def update_recent_files(self, new_filename=None):
 	"""Updates the list of recent files.  If the new_filename
 	parameter is supplied, it is added to the list of recent files."""
+
+	log.info('Updating recent files')
 
         recent_files = self.properties.get('recent-files', []) 
         if new_filename and new_filename not in recent_files:
@@ -134,8 +142,13 @@ class FileManager(object):
 	"""Load the recent file at the specified index.  This will trigger
 	a FileManagerStateChanged event."""
 
+	log.info('Loading recent')
+
         recent_files = self.properties.get('recent-files', []) 
         filename = recent_files[index]
+
+	log.debug(filename)
+
         self.load(filename)
         self._app.handle(FileManagerStateChanged(self))
         
@@ -143,6 +156,8 @@ class FileManager(object):
     def new(self):
 	"""The new model menu action.  This action will create a new
 	UML model.  This will trigger a FileManagerStateChange event."""
+
+	log.info('New model')
 
         element_factory = self.element_factory
         main_window = self.gui_manager.main_window
@@ -286,7 +301,12 @@ class FileManager(object):
     def new_from_template(self):
 	"""This menu action opens the new model from template dialog."""
 
+	log.info('Creating from template')
+
         filename = self._open_dialog('New Gaphor model from template')
+
+	log.debug(filename)
+
         if filename:
             self.load(filename)
 
@@ -299,7 +319,12 @@ class FileManager(object):
     def open(self):
 	"""This menu action opens the standard model open dialog."""
 
+	log.info('Opening file')
+
         filename = self._open_dialog('Open Gaphor model')
+
+	log.debug(filename)
+
         if filename:
             self.load(filename)
             self._app.handle(FileManagerStateChanged(self))
@@ -313,7 +338,13 @@ class FileManager(object):
 
         Returns True if the saving actually succeeded.
         """
+
+	log.info('Saving file')
+
         filename = self.filename
+
+	log.debug(filename)
+
         if filename:
             self._save(filename)
             self._app.handle(FileManagerStateChanged(self))
@@ -330,7 +361,13 @@ class FileManager(object):
 
         Returns True if the saving actually happened.
         """
+	
+	log.info('Saving file')
+
         filename = self.filename
+
+	log.debug(filename)
+
         filesel = gtk.FileChooserDialog(title=_('Save Gaphor model as'),
                                         action=gtk.FILE_CHOOSER_ACTION_SAVE,
                                         buttons=(gtk.STOCK_CANCEL,
