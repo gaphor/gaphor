@@ -73,9 +73,14 @@ class FileManager(object):
     """
 
     def __init__(self):
+	"""File manager constructor."""
+
         self._filename = None
 
     def init(self, app):
+	"""File manager service initialization.  Builds the
+	action group in the file menu."""
+
         self._app = app
         self.action_group = build_action_group(self)
         for name, label in (('file-recent-files', '_Recent files'),):
@@ -92,9 +97,13 @@ class FileManager(object):
         self.update_recent_files()
 
     def shutdown(self):
+	"""Called when shutting down the file manager service."""
+
         pass
 
     def _set_filename(self, filename):
+	"""Sets the current file name of the file manager service."""
+
         if filename != self._filename:
             self._filename = filename
             self.update_recent_files(filename)
@@ -102,6 +111,9 @@ class FileManager(object):
     filename = property(lambda s: s._filename, _set_filename)
 
     def update_recent_files(self, new_filename=None):
+	"""Updates the list of recent files.  If the new_filename
+	parameter is supplied, it is added to the list of recent files."""
+
         recent_files = self.properties.get('recent-files', []) 
         if new_filename and new_filename not in recent_files:
             recent_files.insert(0, new_filename)
@@ -119,6 +131,9 @@ class FileManager(object):
             a.props.visible = True
 
     def load_recent(self, action, index):
+	"""Load the recent file at the specified index.  This will trigger
+	a FileManagerStateChanged event."""
+
         recent_files = self.properties.get('recent-files', []) 
         filename = recent_files[index]
         self.load(filename)
@@ -126,6 +141,9 @@ class FileManager(object):
         
     @action(name='file-new', stock_id='gtk-new')
     def new(self):
+	"""The new model menu action.  This action will create a new
+	UML model.  This will trigger a FileManagerStateChange event."""
+
         element_factory = self.element_factory
         main_window = self.gui_manager.main_window
         if element_factory.size():
@@ -155,6 +173,8 @@ class FileManager(object):
 
 
     def load(self, filename):
+	"""Load the specified filename."""
+
         try:
             from gaphor.storage import storage
             log.debug('Loading from: %s' % filename)
@@ -182,6 +202,8 @@ class FileManager(object):
 
 
     def _save(self, filename):
+	"""Save the current UML model to the specified file name."""
+
         if filename and len(filename) > 0:
             from gaphor.storage import verify
             orphans = verify.orphan_references(self.element_factory)
@@ -228,6 +250,9 @@ class FileManager(object):
                 win.destroy()
 
     def _open_dialog(self, title):
+	"""Open a file chooser dialog to select a model
+	file to open."""
+
         filesel = gtk.FileChooserDialog(title=title,
                                         action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                         buttons=(gtk.STOCK_CANCEL,
@@ -259,6 +284,8 @@ class FileManager(object):
 
     @action(name='file-new-template', label=_('New from template'))
     def new_from_template(self):
+	"""This menu action opens the new model from template dialog."""
+
         filename = self._open_dialog('New Gaphor model from template')
         if filename:
             self.load(filename)
@@ -270,6 +297,8 @@ class FileManager(object):
 
     @action(name='file-open', stock_id='gtk-open')
     def open(self):
+	"""This menu action opens the standard model open dialog."""
+
         filename = self._open_dialog('Open Gaphor model')
         if filename:
             self.load(filename)
