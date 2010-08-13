@@ -11,6 +11,7 @@ from gaphor import UML
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.misc.errorhandler import error_handler
+from gaphor.ui.statuswindow import StatusWindow
 DEFAULT_EXT='.gaphor'
 
 class FileManagerStateChanged(object):
@@ -74,16 +75,16 @@ class FileManager(object):
     """
 
     def __init__(self):
-	"""File manager constructor."""
+        """File manager constructor."""
 
         self._filename = None
 
     def init(self, app):
-	"""File manager service initialization.  Builds the
-	action group in the file menu."""
-	
-	log.info('Initializing file manager service')
-	
+        """File manager service initialization.  Builds the
+        action group in the file menu."""
+    
+        log.info('Initializing file manager service')
+    
         self._app = app
         self.action_group = build_action_group(self)
         for name, label in (('file-recent-files', '_Recent files'),):
@@ -100,15 +101,15 @@ class FileManager(object):
         self.update_recent_files()
 
     def shutdown(self):
-	"""Called when shutting down the file manager service."""
+        """Called when shutting down the file manager service."""
 
         log.info('Shutting down file manager service')
 
     def _set_filename(self, filename):
-	"""Sets the current file name of the file manager service."""
+        """Sets the current file name of the file manager service."""
 
-	log.info('Setting current file')
-	log.debug(filename)
+        log.info('Setting current file')
+        log.debug(filename)
 
         if filename != self._filename:
             self._filename = filename
@@ -117,10 +118,10 @@ class FileManager(object):
     filename = property(lambda s: s._filename, _set_filename)
 
     def update_recent_files(self, new_filename=None):
-	"""Updates the list of recent files.  If the new_filename
-	parameter is supplied, it is added to the list of recent files."""
+        """Updates the list of recent files.  If the new_filename
+        parameter is supplied, it is added to the list of recent files."""
 
-	log.info('Updating recent files')
+        log.info('Updating recent files')
 
         recent_files = self.properties.get('recent-files', []) 
         if new_filename and new_filename not in recent_files:
@@ -139,25 +140,25 @@ class FileManager(object):
             a.props.visible = True
 
     def load_recent(self, action, index):
-	"""Load the recent file at the specified index.  This will trigger
-	a FileManagerStateChanged event."""
+        """Load the recent file at the specified index.  This will trigger
+        a FileManagerStateChanged event."""
 
-	log.info('Loading recent')
+        log.info('Loading recent')
 
         recent_files = self.properties.get('recent-files', []) 
         filename = recent_files[index]
 
-	log.debug(filename)
+        log.debug(filename)
 
         self.load(filename)
         self._app.handle(FileManagerStateChanged(self))
         
     @action(name='file-new', stock_id='gtk-new')
     def new(self):
-	"""The new model menu action.  This action will create a new
-	UML model.  This will trigger a FileManagerStateChange event."""
+        """The new model menu action.  This action will create a new
+        UML model.  This will trigger a FileManagerStateChange event."""
 
-	log.info('New model')
+        log.info('New model')
 
         element_factory = self.element_factory
         main_window = self.gui_manager.main_window
@@ -188,14 +189,17 @@ class FileManager(object):
 
 
     def load(self, filename):
-	"""Load the specified filename."""
+        """Load the specified filename."""
 
         try:
             from gaphor.storage import storage
             log.debug('Loading from: %s' % filename)
             main_window = self.gui_manager.main_window
             queue = Queue()
-            win = show_status_window(_('Loading...'), _('Loading model from %s') % filename, main_window.window, queue)
+            status_window = StatusWindow(_('Loading...'),\
+                                         _('Loading model from %s') % filename,\
+                                         parent=main_window.window,\
+                                         queue=queue)
             gc.collect()
             worker = GIdleThread(storage.load_generator(filename, self.element_factory), queue)
             #self._window.action_pool.insensivate_actions()
@@ -211,13 +215,13 @@ class FileManager(object):
 
         finally:
             try:
-                win.destroy()
+                status_window.destroy()
             except:
                 pass
 
 
     def _save(self, filename):
-	"""Save the current UML model to the specified file name."""
+        """Save the current UML model to the specified file name."""
 
         if filename and len(filename) > 0:
             from gaphor.storage import verify
@@ -241,9 +245,13 @@ class FileManager(object):
             if not filename.endswith(DEFAULT_EXT):
                 filename = filename + DEFAULT_EXT
 
+            main_window = self.gui_manager.main_window
             queue = Queue()
             log.debug('Saving to: %s' % filename)
-            win = show_status_window('Saving...', 'Saving model to %s' % filename, self.gui_manager.main_window.window, queue)
+            status_window = StatusWindow('Saving...',\
+                                         'Saving model to %s' % filename,\
+                                         parent=main_window.window,\
+                                         queue=queue)
             try:
                 out = open(filename, 'w')
 
@@ -262,11 +270,11 @@ class FileManager(object):
                 # Restore states of actions
                 #self._window.action_pool.set_action_states(action_states)
             finally:
-                win.destroy()
+                status_window.destroy()
 
     def _open_dialog(self, title):
-	"""Open a file chooser dialog to select a model
-	file to open."""
+        """Open a file chooser dialog to select a model
+        file to open."""
 
         filesel = gtk.FileChooserDialog(title=title,
                                         action=gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -299,13 +307,13 @@ class FileManager(object):
 
     @action(name='file-new-template', label=_('New from template'))
     def new_from_template(self):
-	"""This menu action opens the new model from template dialog."""
+        """This menu action opens the new model from template dialog."""
 
-	log.info('Creating from template')
+        log.info('Creating from template')
 
         filename = self._open_dialog('New Gaphor model from template')
 
-	log.debug(filename)
+        log.debug(filename)
 
         if filename:
             self.load(filename)
@@ -317,13 +325,13 @@ class FileManager(object):
 
     @action(name='file-open', stock_id='gtk-open')
     def open(self):
-	"""This menu action opens the standard model open dialog."""
+        """This menu action opens the standard model open dialog."""
 
-	log.info('Opening file')
+        log.info('Opening file')
 
         filename = self._open_dialog('Open Gaphor model')
 
-	log.debug(filename)
+        log.debug(filename)
 
         if filename:
             self.load(filename)
@@ -339,11 +347,11 @@ class FileManager(object):
         Returns True if the saving actually succeeded.
         """
 
-	log.info('Saving file')
+        log.info('Saving file')
 
         filename = self.filename
 
-	log.debug(filename)
+        log.debug(filename)
 
         if filename:
             self._save(filename)
@@ -361,12 +369,12 @@ class FileManager(object):
 
         Returns True if the saving actually happened.
         """
-	
-	log.info('Saving file')
+    
+        log.info('Saving file')
 
         filename = self.filename
 
-	log.debug(filename)
+        log.debug(filename)
 
         filesel = gtk.FileChooserDialog(title=_('Save Gaphor model as'),
                                         action=gtk.FILE_CHOOSER_ACTION_SAVE,
@@ -391,56 +399,5 @@ class FileManager(object):
         finally:
             filesel.destroy()
         return False
-
-def show_status_window(title, message, parent=None, queue=None):
-    """
-    Create a borderless window on the parent (main window), with a label and
-    a progress bar.
-    """
-    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    win.set_title(title)
-    win.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
-    win.set_transient_for(parent)
-    win.set_modal(True)
-    win.set_resizable(False)
-    win.set_decorated(False)
-    win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_SPLASHSCREEN)
-    frame = gtk.Frame()
-    win.add(frame)
-    frame.set_shadow_type(gtk.SHADOW_ETCHED_IN)
-    vbox = gtk.VBox(spacing=12)
-    frame.add(vbox)
-    vbox.set_border_width(12)
-    label = gtk.Label(message)
-    label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
-    vbox.pack_start(label)
-    progress_bar = gtk.ProgressBar()
-    progress_bar.set_size_request(400, -1)
-    vbox.pack_start(progress_bar, expand=False, fill=False, padding=0)
-
-    def progress_idle_handler(progress_bar, queue):
-        #print '.',
-        percentage = 0
-        try:
-            while True:
-                percentage = queue.get()
-        except QueueEmpty:
-            pass
-        if percentage:
-            progress_bar.set_fraction(min(percentage / 100.0, 100.0))
-        return True
-
-    if queue:
-        idle_id = gobject.idle_add(progress_idle_handler, progress_bar, queue,
-                                   priority=gobject.PRIORITY_LOW)
-        # Make sure the idle fucntion is removed as soon as the window
-        # is destroyed.
-        def remove_progress_idle_handler(window, idle_id):
-            #print 'remove_progress_idle_handler', idle_id
-            gobject.source_remove(idle_id)
-        win.connect('destroy', remove_progress_idle_handler, idle_id)
-
-    win.show_all()
-    return win
 
 # vim:sw=4:et:ai
