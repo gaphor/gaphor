@@ -105,9 +105,14 @@ class FileManager(object):
         """Called when shutting down the file manager service."""
 
         log.info('Shutting down file manager service')
+        
+    def get_filename(self):
+        """Return the current file name.  This method is used by the filename
+        property."""
 
-    def _set_filename(self, filename):
-        """Sets the current file name of the file manager service."""
+    def set_filename(self, filename):
+        """Sets the current file name.  This method is used by the filename
+        property."""
 
         log.info('Setting current file')
         log.debug(filename)
@@ -116,7 +121,21 @@ class FileManager(object):
             self._filename = filename
             self.update_recent_files(filename)
 
-    filename = property(lambda s: s._filename, _set_filename)
+    filename = property(get_filename, set_filename)
+    
+    def get_recent_files(self):
+        """Returns the recent file list from the properties service.  This
+        method is used by the recent_files property."""
+        
+        return self.properties.get('recent-files', [])
+        
+    def set_recent_files(self, recent_files):
+        """Updates the properties service with the supplied list of recent 
+        files.  This method is used by the recent_files property."""
+        
+        self.properties.set('recent-files', recent_files)
+        
+    recent_files = property(get_recent_files, set_recent_files)
 
     def update_recent_files(self, new_filename=None):
         """Updates the list of recent files.  If the new_filename
@@ -124,11 +143,11 @@ class FileManager(object):
 
         log.info('Updating recent files')
 
-        recent_files = self.properties.get('recent-files', []) 
+        recent_files = self.recent_files
         if new_filename and new_filename not in recent_files:
             recent_files.insert(0, new_filename)
             recent_files = recent_files[0:9]
-            self.properties.set('recent-files', recent_files)
+            self.recent_files = recent_files
 
         for i in xrange(0, 9):
             self.action_group.get_action('file-recent-%d' % i).set_property('visible', False)
