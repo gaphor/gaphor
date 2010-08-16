@@ -12,6 +12,7 @@ from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.misc.errorhandler import error_handler
 from gaphor.ui.statuswindow import StatusWindow
+from gaphor.ui.questiondialog import QuestionDialog
 DEFAULT_EXT='.gaphor'
 
 class FileManagerStateChanged(object):
@@ -163,13 +164,16 @@ class FileManager(object):
         element_factory = self.element_factory
         main_window = self.gui_manager.main_window
         if element_factory.size():
-            dialog = gtk.MessageDialog(main_window.window,
-                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
-                _("Opening a new model will flush the currently loaded model.\nAny changes made will not be saved. Do you want to continue?"))
-            answer = dialog.run()
+            dialog = QuestionDialog(_("Opening a new model will flush the"\
+                                      " currently loaded model.\nAny changes"\
+                                      " made will not be saved. Do you want to"\
+                                      " continue?"),\
+                                    parent=main_window.window)
+           
+            answer = dialog.answer
             dialog.destroy()
-            if answer != gtk.RESPONSE_YES:
+            
+            if not answer:
                 return
 
         element_factory.flush()
@@ -228,15 +232,17 @@ class FileManager(object):
             orphans = verify.orphan_references(self.element_factory)
             if orphans:
                 main_window = self.gui_manager.main_window
-                dialog = gtk.MessageDialog(main_window.window,
-                    gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                    gtk.MESSAGE_WARNING, gtk.BUTTONS_YES_NO,
-                    _("The model contains some references to items that are "
-                    "not maintained. Do you want to clean this before saving the model?"))
-                #dialog.format_secondary_text("The 
-                answer = dialog.run()
+
+                dialog = QuestionDialog(_("The model contains some references"\
+                                          " to items that are not maintained."\
+                                          " Do you want to clean this before"\
+                                          " saving the model?"),\
+                                        parent=main_window.window)
+              
+                answer = dialog.answer
                 dialog.destroy()
-                if answer != gtk.RESPONSE_YES:
+                
+                if not answer:
                     for o in orphans:
                         o.unlink()
                     assert not verify.orphan_references(self.element_factory)
