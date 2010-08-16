@@ -139,25 +139,28 @@ class FileManager(object):
 
     def update_recent_files(self, new_filename=None):
         """Updates the list of recent files.  If the new_filename
-        parameter is supplied, it is added to the list of recent files."""
-
-        log.info('Updating recent files')
+        parameter is supplied, it is added to the list of recent files.
+        
+        The default recent file placeholder actions are hidden.  The real
+        actions are then built using the recent file list."""
 
         recent_files = self.recent_files
+        
         if new_filename and new_filename not in recent_files:
             recent_files.insert(0, new_filename)
             recent_files = recent_files[0:9]
             self.recent_files = recent_files
 
         for i in xrange(0, 9):
-            self.action_group.get_action('file-recent-%d' % i).set_property('visible', False)
+            action = self.action_group.get_action('file-recent-%d' % i)
+            action.set_property('visible', False)
 
-        for i, f in enumerate(recent_files):
+        for i, filename in enumerate(recent_files):
             id = 'file-recent%d' % i
-            a = self.action_group.get_action('file-recent-%d' % i)
-            a.props.label = '_%d. %s' % (i+1, f.replace('_', '__'))
-            a.props.tooltip = 'Load %s.' % f
-            a.props.visible = True
+            action = self.action_group.get_action('file-recent-%d' % i)
+            action.props.label = '_%d. %s' % (i+1, filename.replace('_', '__'))
+            action.props.tooltip = 'Load %s.' % filename
+            action.props.visible = True
 
     def load_recent(self, action, index):
         """Load the recent file at the specified index.  This will trigger
