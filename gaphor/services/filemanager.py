@@ -7,6 +7,7 @@ import gobject, pango, gtk
 from zope import interface, component
 from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
+from gaphor.storage import storage, verify
 from gaphor import UML
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
@@ -178,36 +179,34 @@ class FileManager(object):
         self._app.handle(FileManagerStateChanged(self))
         
     def load(self, filename):
-        """Load the specified filename."""
+        """Load the Gaphor model from the supplied file name.  A status window
+        displays the loading progress.  The load generator updates the progress
+        queue.  The loader is passed to a GIdleThread which executes the load
+        generator.  If loading is successful, the filename is set."""
 
-        try:
-            from gaphor.storage import storage
-            log.debug('Loading from: %s' % filename)
-            main_window = self.gui_manager.main_window
-            queue = Queue()
-            status_window = StatusWindow(_('Loading...'),\
-                                         _('Loading model from %s') % filename,\
-                                         parent=main_window.window,\
-                                         queue=queue)
-            gc.collect()
-            worker = GIdleThread(storage.load_generator(filename, self.element_factory), queue)
-            #self._window.action_pool.insensivate_actions()
-            #undo_manager.clear_undo_stack()
-            #get_undo_manager().clear_redo_stack()
-            worker.start()
-            worker.wait()
-            if worker.error:
-                log.error('Error while loading model from file %s: %s' % (filename, worker.error))
-                error_handler(message='Error while loading model from file %s' % filename, exc_info=worker.exc_info)
+        log.debug('Loading from: %s' % filename)
 
-            self.filename = filename
+        main_window = self.gui_manager.main_window
 
-        finally:
-            try:
-                status_window.destroy()
-            except:
-                pass
+        queue = Queue()
+        status_window = StatusWindow(_('Loading...'),\
+                                     _('Loading model from %s') % filename,\
+                                     parent=main_window.window,\
+                                     queue=queue)
 
+        loader = storage.load_generator(filename, self.element_factory)
+        worker = GIdleThread(loader, queue)
+
+        worker.start()
+        worker.wait()
+        
+        if worker.error:
+            log.error('Error while loading model from file %s: %s' %\
+            (filename, worker.error))
+
+        self.filename = filename
+
+        status_window.destroy()
 
     def _save(self, filename):
         """Save the current UML model to the specified file name."""
