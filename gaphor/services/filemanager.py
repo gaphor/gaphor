@@ -13,7 +13,9 @@ from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.misc.errorhandler import error_handler
 from gaphor.ui.statuswindow import StatusWindow
 from gaphor.ui.questiondialog import QuestionDialog
-DEFAULT_EXT='.gaphor'
+
+DEFAULT_EXT = '.gaphor'
+MAX_RECENT = 10
 
 class FileManagerStateChanged(object):
     """
@@ -148,10 +150,10 @@ class FileManager(object):
         
         if new_filename and new_filename not in recent_files:
             recent_files.insert(0, new_filename)
-            recent_files = recent_files[0:9]
+            recent_files = recent_files[0:(MAX_RECENT-1)]
             self.recent_files = recent_files
 
-        for i in xrange(0, 9):
+        for i in xrange(0, (MAX_RECENT-1)):
             action = self.action_group.get_action('file-recent-%d' % i)
             action.set_property('visible', False)
 
