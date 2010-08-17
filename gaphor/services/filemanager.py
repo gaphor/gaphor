@@ -78,29 +78,30 @@ class FileManager(object):
     """
 
     def __init__(self):
-        """File manager constructor."""
+        """File manager constructor.  There is no current filename yet."""
 
         self._filename = None
 
     def init(self, app):
-        """File manager service initialization.  Builds the
-        action group in the file menu."""
-    
-        log.info('Initializing file manager service')
+        """File manager service initialization.  The app parameter
+        is the main application object.  This method builds the
+        action group in the file menu.  The list of recent
+        Gaphor files is then updated in the file menu."""
     
         self._app = app
         self.action_group = build_action_group(self)
-        for name, label in (('file-recent-files', '_Recent files'),):
-            a = gtk.Action(name, label, None, None)
-            a.set_property('hide-if-empty', False)
-            self.action_group.add_action(a)
 
-        #recent_files = self.properties('recent-files', [])
-        for i in xrange(0, 9):
-            a = gtk.Action('file-recent-%d' % i, None, None, None)
-            a.set_property('visible', False)
-            self.action_group.add_action(a)
-            a.connect('activate', self.load_recent, i)
+        for name, label in (('file-recent-files', '_Recent files'),):
+            action = gtk.Action(name, label, None, None)
+            action.set_property('hide-if-empty', False)
+            self.action_group.add_action(action)
+
+        for i in xrange(0, (MAX_RECENT-1)):
+            action = gtk.Action('file-recent-%d' % i, None, None, None)
+            action.set_property('visible', False)
+            self.action_group.add_action(action)
+            action.connect('activate', self.load_recent, i)
+            
         self.update_recent_files()
 
     def shutdown(self):
@@ -111,10 +112,12 @@ class FileManager(object):
     def get_filename(self):
         """Return the current file name.  This method is used by the filename
         property."""
+        return self._filename
 
     def set_filename(self, filename):
         """Sets the current file name.  This method is used by the filename
-        property."""
+        property.  Setting the current filename will update the recent file
+        list."""
 
         log.info('Setting current file')
         log.debug(filename)
