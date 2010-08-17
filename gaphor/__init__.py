@@ -46,7 +46,7 @@ def launch(gaphor_file=None, options=None):
     if gaphor_file:
         file_manager.load(gaphor_file)
     else:
-        file_manager.new()
+        file_manager.action_new()
 
     Application.run()
     #Application.shutdown()

@@ -174,44 +174,6 @@ class FileManager(object):
         self.load(filename)
         self._app.handle(FileManagerStateChanged(self))
         
-    @action(name='file-new', stock_id='gtk-new')
-    def new(self):
-        """The new model menu action.  This action will create a new
-        UML model.  This will trigger a FileManagerStateChange event."""
-
-        log.info('New model')
-
-        element_factory = self.element_factory
-        main_window = self.gui_manager.main_window
-        if element_factory.size():
-            dialog = QuestionDialog(_("Opening a new model will flush the"\
-                                      " currently loaded model.\nAny changes"\
-                                      " made will not be saved. Do you want to"\
-                                      " continue?"),\
-                                    parent=main_window.window)
-           
-            answer = dialog.answer
-            dialog.destroy()
-            
-            if not answer:
-                return
-
-        element_factory.flush()
-        gc.collect()
-        model = element_factory.create(UML.Package)
-        model.name = _('New model')
-        diagram = element_factory.create(UML.Diagram)
-        diagram.package = model
-        diagram.name= _('main')
-        self.filename = None
-        element_factory.notify_model()
-
-        #main_window.select_element(diagram)
-        #main_window.show_diagram(diagram)
-
-        self._app.handle(FileManagerStateChanged(self))
-
-
     def load(self, filename):
         """Load the specified filename."""
 
@@ -330,9 +292,45 @@ class FileManager(object):
             return
         return filename
 
+    @action(name='file-new', stock_id='gtk-new')
+    def action_new(self):
+        """The new model menu action.  This action will create a new
+        UML model.  This will trigger a FileManagerStateChange event."""
+
+        log.info('New model')
+
+        element_factory = self.element_factory
+        main_window = self.gui_manager.main_window
+        if element_factory.size():
+            dialog = QuestionDialog(_("Opening a new model will flush the"\
+                                      " currently loaded model.\nAny changes"\
+                                      " made will not be saved. Do you want to"\
+                                      " continue?"),\
+                                    parent=main_window.window)
+           
+            answer = dialog.answer
+            dialog.destroy()
+            
+            if not answer:
+                return
+
+        element_factory.flush()
+        gc.collect()
+        model = element_factory.create(UML.Package)
+        model.name = _('New model')
+        diagram = element_factory.create(UML.Diagram)
+        diagram.package = model
+        diagram.name= _('main')
+        self.filename = None
+        element_factory.notify_model()
+
+        #main_window.select_element(diagram)
+        #main_window.show_diagram(diagram)
+
+        self._app.handle(FileManagerStateChanged(self))
 
     @action(name='file-new-template', label=_('New from template'))
-    def new_from_template(self):
+    def action_new_from_template(self):
         """This menu action opens the new model from template dialog."""
 
         log.info('Creating from template')
@@ -350,7 +348,7 @@ class FileManager(object):
 
 
     @action(name='file-open', stock_id='gtk-open')
-    def open(self):
+    def action_open(self):
         """This menu action opens the standard model open dialog."""
 
         log.info('Opening file')
@@ -365,7 +363,7 @@ class FileManager(object):
 
 
     @action(name='file-save', stock_id='gtk-save')
-    def save(self):
+    def action_save(self):
         """
         Save the file. Depending on if there is a file name, either perform
         the save directly or present the user with a save dialog box.
@@ -384,11 +382,11 @@ class FileManager(object):
             self._app.handle(FileManagerStateChanged(self))
             return True
         else:
-            return self.save_as()
+            return self.action_save_as()
 
 
     @action(name='file-save-as', stock_id='gtk-save-as')
-    def save_as(self):
+    def action_save_as(self):
         """
         Save the model in the element_factory by allowing the
         user to select a file name.
