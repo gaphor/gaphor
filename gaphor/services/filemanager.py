@@ -164,14 +164,10 @@ class FileManager(object):
 
     def load_recent(self, action, index):
         """Load the recent file at the specified index.  This will trigger
-        a FileManagerStateChanged event."""
+        a FileManagerStateChanged event.  The recent files are stored in
+        the recent_files property."""
 
-        log.info('Loading recent')
-
-        recent_files = self.properties.get('recent-files', []) 
-        filename = recent_files[index]
-
-        log.debug(filename)
+        filename = self.recent_files[index]
 
         self.load(filename)
         self._app.handle(FileManagerStateChanged(self))
