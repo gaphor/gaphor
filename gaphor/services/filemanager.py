@@ -207,60 +207,77 @@ class FileManager(object):
         self.filename = filename
 
         status_window.destroy()
-
-    def _save(self, filename):
-        """Save the current UML model to the specified file name."""
-
-        if filename and len(filename) > 0:
-            from gaphor.storage import verify
-            orphans = verify.orphan_references(self.element_factory)
-            if orphans:
-                main_window = self.gui_manager.main_window
-
-                dialog = QuestionDialog(_("The model contains some references"\
-                                          " to items that are not maintained."\
-                                          " Do you want to clean this before"\
-                                          " saving the model?"),\
-                                        parent=main_window.window)
-              
-                answer = dialog.answer
-                dialog.destroy()
-                
-                if not answer:
-                    for o in orphans:
-                        o.unlink()
-                    assert not verify.orphan_references(self.element_factory)
-
-            from gaphor.storage import storage
-            if not filename.endswith(DEFAULT_EXT):
-                filename = filename + DEFAULT_EXT
-
+        
+    def verify_orphans(self):
+        """Verify that no orphaned elements are saved.  This method checks
+        of there are any orphan references in the element factory.  If orphans
+        are found, a dialog is displayed asking the user if it is OK to
+        unlink them."""
+        
+        orphans = verify.orphan_references(self.element_factory)
+        
+        if orphans:
             main_window = self.gui_manager.main_window
-            queue = Queue()
-            log.debug('Saving to: %s' % filename)
-            status_window = StatusWindow('Saving...',\
-                                         'Saving model to %s' % filename,\
-                                         parent=main_window.window,\
-                                         queue=queue)
-            try:
-                out = open(filename, 'w')
 
-                worker = GIdleThread(storage.save_generator(XMLWriter(out), self.element_factory), queue)
-                #action_states = self._window.action_pool.get_action_states()
-                #self._window.action_pool.insensivate_actions()
-                worker.start()
-                worker.wait()
-                if worker.error:
-                    log.error('Error while saving model to file %s: %s' % (filename, worker.error))
-                    error_handler(message='Error while saving model to file %s' % filename, exc_info=worker.exc_info)
-                out.close()
+            dialog = QuestionDialog(_("The model contains some references"\
+                                      " to items that are not maintained."\
+                                      " Do you want to clean this before"\
+                                      " saving the model?"),\
+                                    parent=main_window.window)
+          
+            answer = dialog.answer
+            dialog.destroy()
+            
+            if not answer:
+                for orphan in orphans:
+                    orphan.unlink()
+                    
+    def verify_filename(self, filename):
+        """Verify that the supplied filename is using the proper default
+        extension.  If not, the extension is added to the filename
+        and returned."""
+        
+        if not filename.endswith(DEFAULT_EXT):
+            filename = filename + DEFAULT_EXT
+            
+        return filename
 
-                self.filename = filename
+    def save(self, filename):
+        """Save the current UML model to the specified file name.  Before
+        writing the model file, this will verify that there are no orphan
+        references.  It will also verify that the filename has the correct
+        extension.  A status window is displayed while the GIdleThread
+        is executed.  This thread actually saves the model."""
 
-                # Restore states of actions
-                #self._window.action_pool.set_action_states(action_states)
-            finally:
-                status_window.destroy()
+        if not filename or not len(filename):
+            return
+
+        log.debug('Saving to: %s' % filename)
+        
+        self.verify_orphans()
+        filename = self.verify_filename(filename)
+
+        main_window = self.gui_manager.main_window
+        queue = Queue()
+        status_window = StatusWindow('Saving...',\
+                                     'Saving model to %s' % filename,\
+                                     parent=main_window.window,\
+                                     queue=queue)
+
+        out = open(filename, 'w')
+
+        saver = storage.save_generator(XMLWriter(out), self.element_factory)
+        worker = GIdleThread(saver, queue)
+        worker.start()
+        worker.wait()
+        
+        if worker.error:
+            log.error('Error while saving model to file %s: %s' %\
+            (filename, worker.error))
+        
+        out.close()
+        status_window.destroy()
+        self.filename = filename
 
     def _open_dialog(self, title):
         """Open a file chooser dialog to select a model
@@ -380,7 +397,7 @@ class FileManager(object):
         log.debug(filename)
 
         if filename:
-            self._save(filename)
+            self.save(filename)
             self._app.handle(FileManagerStateChanged(self))
             return True
         else:
@@ -419,7 +436,7 @@ class FileManager(object):
             if response == gtk.RESPONSE_OK:
                 filename = filesel.get_filename()
                 if filename:
-                    self._save(filename)
+                    self.save(filename)
                     self._app.handle(FileManagerStateChanged(self))
                     return True
         finally:
