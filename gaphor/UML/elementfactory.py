@@ -180,36 +180,40 @@ class ElementFactory(object):
 
 
     def flush(self):
-        """
-        Flush all elements (remove them from the factory).
-        """
+        """Flush all elements (remove them from the factory).  First test
+        if the element factory has a Gaphor application instance.  If yes,
+        the application will handle a FlushFactoryEvent and will register
+        a ElementChangedEventBlocker adapter.
+        
+        Diagram elements are flushed first.  This is so that canvas updates
+        are blocked.  The remaining elements are then flushed.  Finally,
+        the ElementChangedEventBlocker adapter is unregistered if the factory
+        has an application instance."""
+        
         app = self._app
+        
         if app:
             app.handle(FlushFactoryEvent(self))
             app.register_subscription_adapter(ElementChangedEventBlocker)
 
         try:
-            # First flush all diagrams:
-            for value in list(self.select(lambda e: isinstance(e, Diagram))):
-                # Make sure no updates happen while destroying the canvas
-                value.canvas.block_updates = True
-                value.unlink()
-                if not app:
-                    self._element_deleted(ElementDeleteEvent(self, value))
-            for key, value in self._elements.items():
-                value.unlink()
-                if not app:
-                    self._element_deleted(ElementDeleteEvent(self, value))
+            for element in self.lselect(lambda e: isinstance(e, Diagram)):
+                element.canvas.block_updates = True
+                element.unlink()
+                if app:
+                    self._element_deleted(ElementDeleteEvent(self, element))
+                else:
+                    app.handle(ElementDeleteEvent(self, element))
+                    
+            for element in self.lselect():
+                element.unlink()
+                if app:
+                    app.handle(ElementDeleteEvent(self, element))
+                else:
+                    self._element_deleted(ElementDeleteEvent(self, element))
         finally:
             if app:
                 app.unregister_subscription_adapter(ElementChangedEventBlocker)
-
-        assert len(self._elements) == 0, 'Still items in the factory: %s' % str(self._elements.values())
-
-        # Force Garbage collection, so memory allocated by items is freed.
-        import gc
-        for i in range(4): gc.collect()
-
 
     def swap_element(self, element, new_class):
 	assert element in self._elements.values()
