@@ -14,6 +14,7 @@ from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.misc.errorhandler import error_handler
 from gaphor.ui.statuswindow import StatusWindow
 from gaphor.ui.questiondialog import QuestionDialog
+from gaphor.ui.filedialog import FileDialog
 
 DEFAULT_EXT = '.gaphor'
 MAX_RECENT = 10
@@ -354,14 +355,18 @@ class FileManager(object):
 
         log.info('Creating from template')
 
-        filename = self._open_dialog('New Gaphor model from template')
+        filters = [{'name':'Gaphor Models', 'pattern':'*.gaphor'},\
+                   {'name':'All Files', 'pattern':'*'}]
 
+        file_dialog = FileDialog('New Gaphor Model From Template',\
+                                 filters = filters)
+        
+        filename = file_dialog.selection
+        
         log.debug(filename)
 
         if filename:
             self.load(filename)
-
-            # It's a template: unset filename
             self.filename = None
             self._app.handle(FileManagerStateChanged(self))
 
@@ -372,7 +377,13 @@ class FileManager(object):
 
         log.info('Opening file')
 
-        filename = self._open_dialog('Open Gaphor model')
+        filters = [{'name':'Gaphor Models', 'pattern':'*.gaphor'},\
+                   {'name':'All Files', 'pattern':'*'}]
+
+        file_dialog = FileDialog('Open Gaphor Model',\
+                                 filters = filters)
+        
+        filename = file_dialog.selection
 
         log.debug(filename)
 
@@ -394,8 +405,6 @@ class FileManager(object):
 
         filename = self.filename
 
-        log.debug(filename)
-
         if filename:
             self.save(filename)
             self._app.handle(FileManagerStateChanged(self))
@@ -415,32 +424,17 @@ class FileManager(object):
     
         log.info('Saving file')
 
-        filename = self.filename
-
-        log.debug(filename)
-
-        filesel = gtk.FileChooserDialog(title=_('Save Gaphor model as'),
-                                        action=gtk.FILE_CHOOSER_ACTION_SAVE,
-                                        buttons=(gtk.STOCK_CANCEL,
-                                                 gtk.RESPONSE_CANCEL,
-                                                 gtk.STOCK_SAVE,
-                                                 gtk.RESPONSE_OK))
-        filesel.set_transient_for(self.gui_manager.main_window.window)
-
+        file_dialog = FileDialog('Save Gaphor Model As',\
+                                 action='save',\
+                                 filename=self.filename)
+        
+        filename = file_dialog.selection
+        
         if filename:
-            filesel.set_current_name(filename)
-        try:
-            response = filesel.run()
-            filename = None
-            filesel.hide()
-            if response == gtk.RESPONSE_OK:
-                filename = filesel.get_filename()
-                if filename:
-                    self.save(filename)
-                    self._app.handle(FileManagerStateChanged(self))
-                    return True
-        finally:
-            filesel.destroy()
+            self.save(filename)
+            self._app.handle(FileManagerStateChanged(self))
+            return True
+
         return False
 
 # vim:sw=4:et:ai
