@@ -155,8 +155,13 @@ class DiagramToolbox(object):
     def _after_handler(self, new_item):
         if self.properties('reset-tool-after-create', False):
             self.action_group.get_action('toolbox-pointer').activate()
-        component.handle(DiagramItemCreateEvent(new_item))
-
+            
+        app = self.element_factory._app
+        
+        if app:
+            app.handle(DiagramItemCreateEvent(new_item))
+        else:
+            component.handle(DiagramItemCreateEvent(new_item))
 
     ##
     ## Toolbox actions
