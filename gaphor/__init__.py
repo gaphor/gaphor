@@ -9,6 +9,9 @@ import os
 
 import misc.logger
 
+import pygtk
+pygtk.require('2.0')
+
 if os.name == 'nt':
     home = 'USERPROFILE'
 else:
