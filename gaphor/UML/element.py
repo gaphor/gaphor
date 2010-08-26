@@ -34,23 +34,14 @@ class Element(object):
         # The factory this element belongs to.
         self._factory = factory
         self.__in_unlink = mutex.mutex()
-        
+
+
     id = property(lambda self: self._id, doc='Id')
 
-    factory = property(lambda self: self._factory,\
+
+    factory = property(lambda self: self._factory,
                        doc="The factory that created this element")
-                       
-    def get_app(self):
-        """Return the Gaphor application instance if exists.  Otherwise,
-        return None.  If this element isn't bound to a factory, the application
-        instance is always None since this method accesses it through the
-        factory.  This method is used by the app property."""
-        
-        if self.factory:
-            return self.factory._app
-                       
-    app = property(get_app,\
-                   doc="The Gaphor application object.")
+
 
     def umlproperties(self):
         """
@@ -104,10 +95,7 @@ class Element(object):
             try:
                 for prop in self.umlproperties():
                     prop.unlink(self)
-                if self.app:
-                    self.app.handle(ElementDeleteEvent(self._factory, self))
-                else:
-                    component.handle(ElementDeleteEvent(self._factory, self))
+                component.handle(ElementDeleteEvent(self._factory, self))
             finally:
                 self.__in_unlink.unlock()
 
