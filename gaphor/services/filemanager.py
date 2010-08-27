@@ -2,8 +2,7 @@
 The file service is responsible for loading and saving the user data.
 """
 
-import gc
-import gobject, pango, gtk
+import gtk
 from zope import interface, component
 from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
@@ -11,7 +10,6 @@ from gaphor.storage import storage, verify
 from gaphor import UML
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
-from gaphor.misc.errorhandler import error_handler
 from gaphor.ui.statuswindow import StatusWindow
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.filedialog import FileDialog
