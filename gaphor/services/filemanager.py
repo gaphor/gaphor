@@ -333,7 +333,6 @@ class FileManager(object):
                 return
 
         element_factory.flush()
-        gc.collect()
         model = element_factory.create(UML.Package)
         model.name = _('New model')
         diagram = element_factory.create(UML.Diagram)
