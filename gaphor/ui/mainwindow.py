@@ -495,9 +495,10 @@ class MainWindow(ToplevelWindow):
             action_group, ui_id = self._tab_ui_settings
             self.ui_manager.remove_action_group(action_group)
             self.ui_manager.remove_ui(ui_id)
-            self._insensivate_toolbox()
             self._tab_ui_settings = None
-            if notebook.get_current_page() != -1:
+            if notebook.get_current_page() == -1:
+                self._insensivate_toolbox()
+            else:
                 self._on_notebook_switch_page(notebook, None, notebook.get_current_page())
 
     def _on_notebook_switch_page(self, notebook, tab, page_num):
