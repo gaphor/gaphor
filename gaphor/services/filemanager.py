@@ -258,8 +258,8 @@ class FileManager(object):
 
         main_window = self.gui_manager.main_window
         queue = Queue()
-        status_window = StatusWindow('Saving...',\
-                                     'Saving model to %s' % filename,\
+        status_window = StatusWindow(_('Saving...'),\
+                                     _('Saving model to %s') % filename,\
                                      parent=main_window.window,\
                                      queue=queue)
 
@@ -352,10 +352,10 @@ class FileManager(object):
 
         log.info('Creating from template')
 
-        filters = [{'name':'Gaphor Models', 'pattern':'*.gaphor'},\
-                   {'name':'All Files', 'pattern':'*'}]
+        filters = [{'name':_('Gaphor Models'), 'pattern':'*.gaphor'},\
+                   {'name':_('All Files'), 'pattern':'*'}]
 
-        file_dialog = FileDialog('New Gaphor Model From Template',\
+        file_dialog = FileDialog(_('New Gaphor Model From Template'),\
                                  filters = filters)
         
         filename = file_dialog.selection
@@ -374,10 +374,10 @@ class FileManager(object):
 
         log.info('Opening file')
 
-        filters = [{'name':'Gaphor Models', 'pattern':'*.gaphor'},\
-                   {'name':'All Files', 'pattern':'*'}]
+        filters = [{'name':_('Gaphor Models'), 'pattern':'*.gaphor'},\
+                   {'name':_('All Files'), 'pattern':'*'}]
 
-        file_dialog = FileDialog('Open Gaphor Model',\
+        file_dialog = FileDialog(_('Open Gaphor Model'),\
                                  filters = filters)
         
         filename = file_dialog.selection
@@ -421,7 +421,7 @@ class FileManager(object):
     
         log.info('Saving file')
 
-        file_dialog = FileDialog('Save Gaphor Model As',\
+        file_dialog = FileDialog(_('Save Gaphor Model As'),\
                                  action='save',\
                                  filename=self.filename)
         
