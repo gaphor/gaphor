@@ -8,6 +8,7 @@ from gaphor import UML
 from gaphor.diagram import items
 from gaphor.core import inject
 from gaphor.diagram.interfaces import IConnect
+from gaphas.aspect import ConnectionSink, Connector
 
 from pynsource import PySourceAsText
 
@@ -106,15 +107,34 @@ class Engineer(object):
                 geni = self.diagram.create(items.GeneralizationItem)
                 #geni.subject = gen
                 
-                adapter = component.queryMultiAdapter((superclass_item, geni), IConnect)
-                assert adapter
-                handle = geni.handles()[0]
-                adapter.connect(handle)
+                self.connect(geni, geni.tail, clazz.gaphor_class_item)
+                self.connect(geni, geni.head, superclass_item)
+                
+                #adapter = component.queryMultiAdapter((superclass_item, geni), IConnect)
+                #assert adapter
+                #handle = geni.handles()[0]
+                #adapter.connect(handle)
                 #clazz.gaphor_class_item.connect_handle(geni.handles[-1])
-                adapter = component.queryMultiAdapter((clazz.gaphor_class_item, geni), IConnect)
-                assert adapter
-                handle = geni.handles()[-1]
-                adapter.connect(handle)
+                #adapter = component.queryMultiAdapter((clazz.gaphor_class_item, geni), IConnect)
+                #assert adapter
+                #handle = geni.handles()[-1]
+                #adapter.connect(handle)
+                
+    def connect(self, line, handle, item, port=None):
+        """
+        Connect line's handle to an item.
+
+        If port is not provided, then first port is used.
+        """
+        canvas = line.canvas
+
+        if port is None and len(item.ports()) > 0:
+            port = item.ports()[0]
+
+        sink = ConnectionSink(item, port)
+        connector = Connector(line, handle)
+
+        connector.connect(sink)
 
     def _create_attributes(self, clazz):
         for attrobj in clazz.attrs:
