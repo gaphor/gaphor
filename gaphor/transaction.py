@@ -6,8 +6,12 @@ from zope import interface, component
 from gaphor.interfaces import ITransaction
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 
-
 def transactional(func):
+    """The transactional decorator makes a function transactional.  A
+    Transaction instance is created before the decorated function is called.
+    If calling the function leads to an exception being raised, the transaction
+    is rolled-back.  Otherwise, it is committed."""
+    
     def _transactional(*args, **kwargs):
         r = None
         tx = Transaction()
@@ -25,12 +29,10 @@ def transactional(func):
         return r
     return _transactional
 
-
 class TransactionError(Exception):
     """
     Errors related to the transaction module.
     """
-
 
 class Transaction(object):
     """
@@ -61,12 +63,19 @@ class Transaction(object):
     _stack= []
 
     def __init__(self):
+        """Initialize the transaction.  If this is the first transaction in
+        the stack, a TransactionBegin event is emited."""
+        
         self._need_rollback = False
         if not self._stack:
             component.handle(TransactionBegin())
         self._stack.append(self)
 
     def commit(self):
+        """Commit the transaction.  First, the transaction is closed.
+        If it needs to be rolled-back, a TransactionRollback event is emited.
+        Otherwise, a TransactionCommit event is emited."""
+        
         self._close()
         if not self._stack:
             if self._need_rollback:
@@ -75,14 +84,21 @@ class Transaction(object):
                 component.handle(TransactionCommit())
 
     def rollback(self):
+        """Roll-back the transaction.  First, the transaction is closed.
+        Every transaction on the stack is then marked for roll-back.  If
+        the stack is empty, a TransactionRollback event is emited."""
+        
         self._close()
-        # Mark every tx on the stack for rollback
         for tx in self._stack:
             tx._need_rollback = True
         if not self._stack:
             component.handle(TransactionRollback())
 
     def _close(self):
+        """Close the transaction.  If the stack is empty, a TransactionError
+        is raised.  If the last transaction on the stack isn't this transaction,
+        a Transaction error is raised."""
+        
         try:
             last = self._stack.pop()
         except IndexError:
@@ -92,9 +108,13 @@ class Transaction(object):
             raise TransactionError, 'Transaction on stack is not the transaction being closed.'
 
     def __enter__(self):
+        """Provide with-statement transaction support."""
         return self
 
     def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
+        """Provide with-statement transaction support.  If an error occured,
+        the transaction is rolled back.  Otherwise, it is committed."""
+        
         if exc_type:
             self.rollback()
         else:
