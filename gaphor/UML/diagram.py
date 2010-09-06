@@ -5,7 +5,6 @@ representation of a UML diagram. Diagrams can be visualized and edited.
 """
 
 from zope import component
-import gobject
 import gaphas
 import uuid
 from uml2 import Namespace, PackageableElement

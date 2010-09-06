@@ -9,6 +9,9 @@ import os
 
 import misc.logger
 
+import pygtk
+pygtk.require('2.0')
+
 if os.name == 'nt':
     home = 'USERPROFILE'
 else:
@@ -26,10 +29,16 @@ class GaphorError(Exception):
             self.args = args
 
 
-def launch(gaphor_file=None):
+def launch(gaphor_file=None, options=None):
     """
     Start the main application by initiating and running
     gaphor.application.Application. 
+
+    The gaphor_file parameter is a model to load when
+    Gaphor is first launched.
+
+    The options parameter is an object with the parsed
+    command line options passed to the 
     """
     import pkg_resources
 
@@ -40,7 +49,7 @@ def launch(gaphor_file=None):
     if gaphor_file:
         file_manager.load(gaphor_file)
     else:
-        file_manager.new()
+        file_manager.action_new()
 
     Application.run()
     #Application.shutdown()
@@ -50,23 +59,50 @@ def main():
     """
     Main from the command line
     """
-    import sys
-    if len(sys.argv) > 1:
-        if sys.argv[1] in ('-p', '--profile'):
-            print 'Starting profiler...'
-            import cProfile
-            import pstats
-            cProfile.run('import gaphor; gaphor.launch()', 'gaphor.prof')
-            p = pstats.Stats('gaphor.prof')
-            p.strip_dirs().sort_stats('time').print_stats(50)
-        else:
-            launch(sys.argv[1])
-    else:
-        launch()
 
+    from optparse import OptionParser
+
+    parser = OptionParser()
+
+    parser.add_option('-p',\
+		      '--profile',\
+		      action='store_true',\
+		      help='Run in profile')
+
+    parser.add_option('-l',\
+		      '--logging',\
+		      default='DEBUG',\
+		      help='Logging level')
+
+    options, args = parser.parse_args()
+
+    try:
+	log.log_level = misc.logger.Logger.level_map[options.logging]
+    except KeyError:
+	pass
+
+    if options.profile:
+	print 'Starting profiler...'
+        import cProfile
+        import pstats
+        if len(args)==1:
+	    cProfile.run('import gaphor; gaphor.launch("%s")'%args[0],\
+            	         'gaphor.prof')
+	else:
+	    cProfile.run('import gaphor; gaphor.launch()',\
+                         'gaphor.prof')
+        p = pstats.Stats('gaphor.prof')
+        p.strip_dirs().sort_stats('time').print_stats(50)
+
+    elif len(args) == 1:
+	launch(args[0], options=options)
+
+    else:
+	launch(options=options)
 
 # TODO: Remove this
 import __builtin__
+
 __builtin__.__dict__['log'] = misc.logger.Logger()
 
 if __debug__: 

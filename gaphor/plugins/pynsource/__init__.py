@@ -212,16 +212,23 @@ class PyNSource(object):
             iter = view.get_iter('0')
         except ValueError:
             pass
-        self.execute_button.set_property('sensitive', bool(iter))
+        #self.execute_button.set_property('sensitive', bool(iter))
 
     def on_add_dir_clicked(self, button):
         import os
-        filesel = gtk.FileSelection('Add Source Code')
-        filesel.hide_fileop_buttons()
+        
+        filesel = gtk.FileChooserDialog(title='Add Source Code',
+                                        action=gtk.FILE_CHOOSER_ACTION_OPEN,
+                                        buttons=(gtk.STOCK_CANCEL,
+                                                 gtk.RESPONSE_CANCEL,
+                                                 gtk.STOCK_OPEN,
+                                                 gtk.RESPONSE_OK))
+
         filesel.set_select_multiple(True)
         filesel.set_filename('~/')
+
         response = filesel.run()
-        selection = filesel.get_selections()
+        selection = filesel.get_filenames()        
         filesel.destroy()
 
         if response == gtk.RESPONSE_OK:

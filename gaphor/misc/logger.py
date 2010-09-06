@@ -24,6 +24,13 @@ class Logger(object):
     ERROR = logging.ERROR
     CRITICAL = logging.CRITICAL
 
+    level_map = dict(TRACE = 0,\
+	     	     DEBUG = logging.DEBUG,\
+	       	     INFO = logging.INFO,\
+		     WARNING = logging.WARNING,\
+		     ERROR = logging.ERROR,\
+		     CRITICAL = logging.CRITICAL)
+
     def __init__(self):
         self.logger = logging.getLogger('')
 
@@ -33,7 +40,7 @@ class Logger(object):
     def get_log_level(self, level):
         return self.logger.getEffectiveLevel()
 
-    log_level = property(get_log_level, get_log_level, None, 'Log level')
+    log_level = property(get_log_level, set_log_level, None, 'Log level')
 
     def log(self, level, message, exc=None):
         self.logger.log(level, message, exc_info=exc)
