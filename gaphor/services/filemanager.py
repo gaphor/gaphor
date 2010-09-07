@@ -360,6 +360,8 @@ class FileManager(object):
         
         filename = file_dialog.selection
         
+        file_dialog.destroy()
+        
         log.debug(filename)
 
         if filename:
@@ -381,6 +383,8 @@ class FileManager(object):
                                  filters = filters)
         
         filename = file_dialog.selection
+        
+        file_dialog.destroy()
 
         log.debug(filename)
 
@@ -426,6 +430,8 @@ class FileManager(object):
                                  filename=self.filename)
         
         filename = file_dialog.selection
+        
+        file_dialog.destroy()
         
         if filename:
             self.save(filename)

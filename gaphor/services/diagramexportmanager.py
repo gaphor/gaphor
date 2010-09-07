@@ -6,6 +6,8 @@ import os
 from zope import interface, component
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
+from gaphor.ui.filedialog import FileDialog
+from gaphor.ui.questiondialog import QuestionDialog
 
 import cairo
 from gaphas.view import View
@@ -53,42 +55,32 @@ class DiagramExportManager(object):
 
 
     def save_dialog(self, diagram, title, ext):
-        import gtk
+        
         filename = (diagram.name or 'export') + ext
-
-        filesel = gtk.FileChooserDialog(title = title,
-            action = gtk.FILE_CHOOSER_ACTION_SAVE,
-            buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK))
-        filesel.set_current_name(filename)
-
+        file_dialog = FileDialog(title, action='save', filename=filename)
+        
         save = False
         while True:
-            response = filesel.run()
-            filename = filesel.get_filename()
-
-            if response == gtk.RESPONSE_OK:
-                if os.path.exists(filename):
-                    dialog = gtk.MessageDialog(filesel,
-                        gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                        gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO,
-                        _("The file %s already exists. Do you want to replace it with the file you are exporting to?") % filename)
-                    answer = dialog.run()
-                    dialog.destroy()
-                    if answer == gtk.RESPONSE_YES:
-                        save = True
-                        break
-                else:
+            filename = file_dialog.selection
+            if os.path.exists(filename):
+                question = _("The file %s already exists. Do you want to "\
+                             "replace it with the file you are exporting "\
+                             "to?") % filename
+                question_dialog = QuestionDialog(question)
+                answer = question_dialog.answer
+                question_dialog.destroy()
+                if answer:
                     save = True
                     break
             else:
+                save = True
                 break
-
-        filesel.destroy()
-
+                
+        file_dialog.destroy()
+        
         if save and filename:
-            return filename
-        return None
-
+            return filename                
+        
     def update_painters(self, view):
         sloppiness = self.properties('diagram.sloppiness', 0)
         if sloppiness:
