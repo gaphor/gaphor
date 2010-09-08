@@ -310,37 +310,62 @@ def parse_generator(filename, loader):
     for percentage in parse_file(filename, parser):
         yield percentage
 
+class ProgressGenerator(object):
+    """A generator that yields the progress of taking from a file input object 
+    and feeding it into an output object.  The supplied file object is neither
+    opened not closed by this generator.  The file object is assumed to
+    already be opened for reading and that it will be closed elsewhere."""
+    
+    def __init__(self, input, output, block_size=512):
+        """Initialize the progress generator.  The input parameter is a file
+        object.  The ouput parameter is usually a SAX parser but can be 
+        anything that implements a feed() method.  The block size is the size
+        of each block that is read from the input."""
+        
+        self.input = input
+        self.output = output
+        self.block_size = block_size
+        if isinstance(self.input, types.FileType):
+            self.file_size = os.fstat(self.input.fileno())[6]
+        elif isinstance(self.input, InputType):
+            self.file_size = len(self.input.getvalue())
+            self.input.reset()
+                
+    def __iter__(self):
+        """Return a generator that yields the progress of reading data
+        from the input and feeding it into the output.  The progress
+        yielded in each iteration is the percentage of data read, relative
+        to the to input file size."""
+        
+        block = self.input.read(self.block_size)
+        read_size = len(block)
+        
+        while block:
+            self.output.feed(block)
+            block = self.input.read(self.block_size)
+            read_size += len(block)
+            yield (read_size * 100) / self.file_size
 
 def parse_file(filename, parser):
-    """
-    Parse the file filename with parser.
-    """
+    """Parse the supplied file using the supplied parser.  The parser parameter
+    should be a GaphorLoader instance.  The filename parameter can be an
+    open file descriptor instance or the name of a file.  The progress
+    percentage of the parser is yielded."""
+    
     is_fd = True
-    if isinstance(filename, types.FileType):
-        f = filename
-        file_size = os.fstat(f.fileno())[6]
-    elif isinstance(filename, InputType):
-        f = filename
-        data = f.getvalue()
-        file_size = len(data)
-        f.reset()
+    
+    if isinstance(filename, (types.FileType, InputType)):
+        file_obj = filename
     else:
-        file_size = os.stat(filename)[6]
-        f = open(filename, 'rb')
         is_fd = False
-
-    block_size = 512
-
-    block = f.read(block_size)
-    read_size = len(block)
-    while block:
-        parser.feed(block)
-        block = f.read(block_size)
-        read_size = read_size + len(block)
-        yield (read_size * 100) / file_size
-
+        file_obj = open(filename, 'rb')
+        
+    for progress in ProgressGenerator(file_obj, parser):
+        yield progress
+    
     parser.close()
+    
     if not is_fd:
-        f.close()
+        file_obj.close()
 
 # vim:sw=4:et:ai

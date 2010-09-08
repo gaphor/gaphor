@@ -62,8 +62,11 @@ class FileDialog(object):
             else:
                 selection = self.dialog.get_filename()
             
-        self.dialog.destroy()
-        
         return selection
+        
+    def destroy(self):
+        """Destroy the GTK dialog."""
+        
+        self.dialog.destroy()
                 
     selection = property(get_selection)

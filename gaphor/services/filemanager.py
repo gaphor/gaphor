@@ -2,8 +2,7 @@
 The file service is responsible for loading and saving the user data.
 """
 
-import gc
-import gobject, pango, gtk
+import gtk
 from zope import interface, component
 from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
@@ -11,7 +10,6 @@ from gaphor.storage import storage, verify
 from gaphor import UML
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
-from gaphor.misc.errorhandler import error_handler
 from gaphor.ui.statuswindow import StatusWindow
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.filedialog import FileDialog
@@ -260,8 +258,8 @@ class FileManager(object):
 
         main_window = self.gui_manager.main_window
         queue = Queue()
-        status_window = StatusWindow('Saving...',\
-                                     'Saving model to %s' % filename,\
+        status_window = StatusWindow(_('Saving...'),\
+                                     _('Saving model to %s') % filename,\
                                      parent=main_window.window,\
                                      queue=queue)
 
@@ -335,7 +333,6 @@ class FileManager(object):
                 return
 
         element_factory.flush()
-        gc.collect()
         model = element_factory.create(UML.Package)
         model.name = _('New model')
         diagram = element_factory.create(UML.Diagram)
@@ -355,13 +352,15 @@ class FileManager(object):
 
         log.info('Creating from template')
 
-        filters = [{'name':'Gaphor Models', 'pattern':'*.gaphor'},\
-                   {'name':'All Files', 'pattern':'*'}]
+        filters = [{'name':_('Gaphor Models'), 'pattern':'*.gaphor'},\
+                   {'name':_('All Files'), 'pattern':'*'}]
 
-        file_dialog = FileDialog('New Gaphor Model From Template',\
+        file_dialog = FileDialog(_('New Gaphor Model From Template'),\
                                  filters = filters)
         
         filename = file_dialog.selection
+        
+        file_dialog.destroy()
         
         log.debug(filename)
 
@@ -377,13 +376,15 @@ class FileManager(object):
 
         log.info('Opening file')
 
-        filters = [{'name':'Gaphor Models', 'pattern':'*.gaphor'},\
-                   {'name':'All Files', 'pattern':'*'}]
+        filters = [{'name':_('Gaphor Models'), 'pattern':'*.gaphor'},\
+                   {'name':_('All Files'), 'pattern':'*'}]
 
-        file_dialog = FileDialog('Open Gaphor Model',\
+        file_dialog = FileDialog(_('Open Gaphor Model'),\
                                  filters = filters)
         
         filename = file_dialog.selection
+        
+        file_dialog.destroy()
 
         log.debug(filename)
 
@@ -424,11 +425,13 @@ class FileManager(object):
     
         log.info('Saving file')
 
-        file_dialog = FileDialog('Save Gaphor Model As',\
+        file_dialog = FileDialog(_('Save Gaphor Model As'),\
                                  action='save',\
                                  filename=self.filename)
         
         filename = file_dialog.selection
+        
+        file_dialog.destroy()
         
         if filename:
             self.save(filename)
