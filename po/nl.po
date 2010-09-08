@@ -6,7 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.6.0\n"
+<<<<<<< HEAD
+"POT-Creation-Date: Thu Jun 10 15:59:38 2010\n"
+=======
 "POT-Creation-Date: Thu Jun 10 08:04:28 2010\n"
+>>>>>>> 5389ac12651b2036100bea5ca846114b01feb0c9
 "PO-Revision-Date: 2004-06-10 08:00+001\n"
 "Last-Translator: Arjan Molenaar <arjanmol_at_users.sourceforge.net>\n"
 "Language-Team: nl\n"
