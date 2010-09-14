@@ -178,9 +178,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         if type(element) not in self.filter:
             return
-        if type(element) is UML.Property and element.namespace is None:
-            return
-        if element.namespace and type(element.namespace) not in self.filter:
+        if element.namespace not in self._nodes:
             return
 
         self._nodes.setdefault(element, [])
@@ -226,11 +224,14 @@ class NamespaceModel(gtk.GenericTreeModel):
     @catchall
     def _on_element_delete(self, event):
         element = event.element
-        if type(element) is UML.Property and element.namespace is None:
-            return
+
+        #log.debug('Namespace received deleting element %s' % element)
+
         if event.service is self.factory and \
                 type(element) in self.filter:
             path = self.path_from_element(element)
+
+            #log.debug('Deleting element %s from path %s' % (element, path))
 
             # Remove all sub-elements:
             if path:
@@ -277,6 +278,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 
             # Add to new place. This may fail if the type of the new place is
             # not in the tree model (because it's filtered)
+            log.debug('Trying to add %s to %s' % (element, new_value))
             if self._nodes.has_key(new_value):
                 if self._nodes.has_key(element):
                     parent = self._nodes[new_value]
