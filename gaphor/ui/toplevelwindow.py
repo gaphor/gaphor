@@ -30,6 +30,9 @@ class ToplevelWindow(object):
     def __init__(self):
         self.window = None
 
+    def ui_component(self):
+        raise NotImplementedError
+
     def construct(self):
 
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -83,7 +86,7 @@ class UtilityWindow(ToplevelWindow):
         self.window.set_property('skip-taskbar-hint', True)
         self.window.set_position(gtk.WIN_POS_MOUSE)
         self.window.show()
-       #self.window.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
+        #self.window.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
 
 
 # vim:sw=4:et:ai

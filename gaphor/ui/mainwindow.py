@@ -4,6 +4,7 @@ The main application window.
 
 import gobject, gtk
 
+import pkg_resources
 from zope import interface, component
 from gaphor.interfaces import IActionProvider
 from interfaces import IUIComponent
@@ -15,7 +16,7 @@ from diagramtab import DiagramTab
 from toolbox import Toolbox
 from diagramtoolbox import TOOLBOX_ACTIONS
 from toplevelwindow import ToplevelWindow
-
+from etk.docking.dockstore import deserialize, get_main_frames, finish
 
 from interfaces import IDiagramSelectionChange
 from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
@@ -227,52 +228,75 @@ class MainWindow(ToplevelWindow):
 
         return tab
 
-
-    def ui_component(self):
-        """
-        Create the widgets that make up the main window.
-        """
+    def _create_namespace(self):
         model = NamespaceModel(self.element_factory)
         view = NamespaceView(model, self.element_factory)
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
         scrolled_window.add(view)
+        scrolled_window.show()
         view.show()
         
         view.connect_after('event-after', self._on_view_event)
         view.connect('row-activated', self._on_view_row_activated)
         view.connect_after('cursor-changed', self._on_view_cursor_changed)
 
+        self._tree_view = view
+        return scrolled_window
+
+    def _create_notebook(self):
+        notebook = gtk.Notebook()
+        notebook.set_scrollable(True)
+        notebook.set_show_border(False)
+        notebook.show()
+
+        notebook.connect_after('switch-page', self._on_notebook_switch_page)
+        notebook.connect_after('page-removed', self._on_notebook_page_removed)
+
+        self.notebook = notebook
+        return notebook
+
+    def _create_toolbox(self):
+        toolbox = Toolbox(TOOLBOX_ACTIONS)
+        toolbox.show()
+
+        self._toolbox = toolbox
+        return toolbox
+
+    def ui_component(self):
+        def _factory(name):
+            return getattr(self, '_create_%s' % name)()
+
+        filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
+        with open(filename) as f:
+            layout = deserialize(f.read(), _factory)
+        main_frames = list(get_main_frames(layout))
+        assert len(main_frames) == 1
+        
+        for f in layout.frames:
+            f.get_toplevel().show_all()
+
+        self.layout = layout
+
+        return main_frames[0]
+
+    def xui_component(self):
+        """
+        Create the widgets that make up the main window.
+        """
         vbox = gtk.VBox()
-        vbox.pack_start(scrolled_window, expand=True, padding=3)
-        scrolled_window.show()
+        vbox.pack_start(self._create_namespace(), expand=True, padding=3)
 
         paned = gtk.HPaned()
         paned.set_property('position', 160)
         paned.pack1(vbox)
         vbox.show()
         
-        notebook = gtk.Notebook()
-        notebook.set_scrollable(True)
-        notebook.set_show_border(False)
-
-        notebook.connect_after('switch-page', self._on_notebook_switch_page)
-        notebook.connect_after('page-removed', self._on_notebook_page_removed)
-
-        
-        paned.pack2(notebook)
-        notebook.show()
+        paned.pack2(self._create_notebook())
         paned.show()
 
-        self.notebook = notebook
-        self._tree_view = view
-       
-        toolbox = Toolbox(TOOLBOX_ACTIONS)
-        vbox.pack_start(toolbox, expand=False)
-        toolbox.show()
-
-        self._toolbox = toolbox
+        vbox.pack_start(self._create_toolbox(), expand=False)
 
         self.open_welcome_page()
 
