@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout>
+  <dockframe height="565" width="788">
+    <dockpaned orientation="horizontal">
+      <dockpaned expand="true" orientation="vertical" weight="179">
+        <dockgroup expand="true" weight="264">
+          <dockitem icon="" title="Namespace" tooltip="Namespace view">
+            <widget name="namespace"/>
+          </dockitem>
+        </dockgroup>
+        <dockgroup expand="true" weight="264">
+          <dockitem icon="toolbox" title="Toolbox" tooltip="Toolbox">
+            <widget name="toolbox"/>
+          </dockitem>
+        </dockgroup>
+      </dockpaned>
+      <dockgroup expand="true" weight="585">
+        <dockitem icon="main" title="Main" tooltip="Main">
+          <widget name="notebook"/>
+        </dockitem>
+      </dockgroup>
+    </dockpaned>
+  </dockframe>
+</layout>
