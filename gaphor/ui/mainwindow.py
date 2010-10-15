@@ -202,7 +202,7 @@ class MainWindow(ToplevelWindow):
 
             if response == gtk.RESPONSE_YES:
                 # On filedialog.cancel, the application should not close.
-                return self.file_manager.save()
+                return self.file_manager.action_save()
             return response == gtk.RESPONSE_REJECT
         return True
 
