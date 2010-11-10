@@ -203,7 +203,7 @@ class MainWindow(ToplevelWindow):
 
             if response == gtk.RESPONSE_YES:
                 # On filedialog.cancel, the application should not close.
-                return self.file_manager.save()
+                return self.file_manager.action_save()
             return response == gtk.RESPONSE_REJECT
         return True
 
@@ -343,16 +343,34 @@ class MainWindow(ToplevelWindow):
 
     # Notebook methods:
 
-    def add_tab(self, tab_id, contents, label):
+    def add_tab(self, tab, contents, label):
         """
         Create a new tab on the notebook with window as its contents.
         Returns: The page number of the tab.
         """
-        self.notebook_map[contents] = tab_id
+        self.notebook_map[contents] = tab
         #contents.connect('destroy', self._on_tab_destroy)
         l = gtk.Label(label)
+
+        style = gtk.RcStyle()
+        style.xthickness = 0
+        style.ythickness = 0
+        button = gtk.Button()
+        button.set_relief(gtk.RELIEF_NONE)
+        button.set_focus_on_click(False)
+        button.modify_style(style)
+        button.connect("clicked", self._on_tab_close_button_pressed, tab)
+
+        close_image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
+        button.add(close_image)
+
+        box = gtk.HBox()
+        box.pack_start(l)
+        box.pack_start(button, False, False)
+        box.show_all()
+
         # Note: append_page() emits switch-page event
-        self.notebook.append_page(contents, l)
+        self.notebook.append_page(contents, box)
         self.notebook.set_tab_reorderable(contents, True)
         page_num = self.notebook.page_num(contents)
         #self.notebook.set_current_page(page_num)
@@ -472,6 +490,9 @@ class MainWindow(ToplevelWindow):
         Application.unregister_handler(self._on_undo_manager_state_changed)
         Application.unregister_handler(self._on_file_manager_state_changed)
         Application.unregister_handler(self._new_model_content)
+
+    def _on_tab_close_button_pressed(self, event, tab):
+        tab.close()
 
     def _on_tab_destroy(self, widget):
         tab = self.notebook_map[widget]
@@ -635,7 +656,6 @@ class MainWindow(ToplevelWindow):
     @transactional
     def tree_view_delete_diagram(self):
         diagram = self._tree_view.get_selected_element()
-        assert isinstance(diagram, UML.Diagram)
         m = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_QUESTION,
                               gtk.BUTTONS_YES_NO,
                               'Do you really want to delete diagram %s?\n\n'

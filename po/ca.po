@@ -5,11 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
-<<<<<<< HEAD
 "POT-Creation-Date: Thu Jun 10 15:59:38 2010\n"
-=======
-"POT-Creation-Date: Thu Jun 10 08:04:28 2010\n"
->>>>>>> 5389ac12651b2036100bea5ca846114b01feb0c9
 "PO-Revision-Date: 2006-02-13 16:11+0100\n"
 "Last-Translator: Jordi Vilalta Prat <jvprat@gmail.com>\n"
 "Language-Team: ca <ca@li.org>\n"
