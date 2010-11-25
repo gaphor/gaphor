@@ -46,22 +46,28 @@ class XMIExport(object):
     def handleClass(self, xmi, element, idref=False):
         
         attributes = dict()
-        attributes['%s:id'%self.XMI_PREFIX] = element.id
-        attributes['name'] = element.name
-        attributes['isAbstract'] = str(element.isAbstract)
+        
+        if idref:
+            attributes['%s:idref'%self.XMI_PREFIX] = element.id
+        else:
+            attributes['%s:id'%self.XMI_PREFIX] = element.id
+            attributes['name'] = element.name
+            attributes['isAbstract'] = str(element.isAbstract)
         
         xmi.startElement('%s:Class'%self.UML_PREFIX, attrs=attributes)
         
-        for ownedAttribute in element.ownedAttribute:
-            xmi.startElement('ownedAttribute', attrs=dict())
-            self.handle(xmi, ownedAttribute)
-            xmi.endElement('ownedAttribute')
-            
-        for ownedOperation in element.ownedOperation:
-            xmi.startElement('ownedOperation', attrs=dict())
-            self.handle(xmi, ownedOperation)
-            xmi.endElement('ownedOperation')
+        if not idref:
         
+            for ownedAttribute in element.ownedAttribute:
+                xmi.startElement('ownedAttribute', attrs=dict())
+                self.handle(xmi, ownedAttribute)
+                xmi.endElement('ownedAttribute')
+                
+            for ownedOperation in element.ownedOperation:
+                xmi.startElement('ownedOperation', attrs=dict())
+                self.handle(xmi, ownedOperation)
+                xmi.endElement('ownedOperation')
+            
         xmi.endElement('%s:Class'%self.UML_PREFIX)
         
     def handleProperty(self, xmi, element, idref=False):
@@ -74,10 +80,12 @@ class XMIExport(object):
         attributes['isDerived'] = str(element.isDerived)
         attributes['isDerivedUnion'] = str(element.isDerivedUnion)
         attributes['isReadOnly'] = str(element.isReadOnly)                
-        attributes['name'] = element.name
+        
+        if element.name is not None:
+            attributes['name'] = element.name
         
         xmi.startElement('%s:Property'%self.UML_PREFIX, attrs=attributes)
-
+        
         #TODO: This should be type, not typeValue.
         if element.typeValue is not None:
             xmi.startElement('type', attrs=dict())
@@ -157,7 +165,7 @@ class XMIExport(object):
         for client in element.client:
             xmi.startElement('client', attrs=dict())
             self.handle(xmi, client)
-            xmi.startElement('client')
+            xmi.endElement('client')
             
         for supplier in element.supplier:
             xmi.startElement('supplier', attrs=dict())
@@ -174,18 +182,56 @@ class XMIExport(object):
         
         xmi.startElement('%s:Generalization'%self.UML_PREFIX, attrs=attributes)
         
-        for general in element.general:
+        if element.general:
             xmi.startElement('general', attrs=dict())
-            self.handle(xmi, general)
+            self.handle(xmi, element.general)
             xmi.endElement('general')
             
-        for specific in element.specific:
+        if element.specific:
             xmi.startElement('specific', attrs=dict())
-            self.handle(xmi, specific)
+            self.handle(xmi, element.specific)
             xmi.endElement('specific')
         
         xmi.endElement('%s:Generalization'%self.UML_PREFIX)
+        
+    def handleRealization(self, xmi, element, idref=False):
+        
+        attributes = dict()
+        attributes['%s:id'%self.XMI_PREFIX] = element.id
+        
+        xmi.startElement('%s:Realization'%self.UML_PREFIX, attrs=attributes)
+        
+        for client in element.client:
+            xmi.startElement('client', attrs=dict())
+            self.handle(xmi, client)
+            xmi.endElement('client')
             
+        for supplier in element.supplier:
+            xmi.startElement('supplier', attrs=dict())
+            self.handle(xmi, supplier)
+            xmi.endElement('supplier')
+        
+        xmi.endElement('%s:Realization'%self.UML_PREFIX)        
+        
+    def handleInterface(self, xmi, element, idref=False):
+        
+        attributes = dict()
+        attributes['%s:id'%self.XMI_PREFIX] = element.id
+        
+        xmi.startElement('%s:Interface'%self.UML_PREFIX, attrs=attributes)
+        
+        for ownedAttribute in element.ownedAttribute:
+            xmi.startElement('ownedAttribute', attrs=dict())
+            self.handle(ownedAttribute)
+            xmi.endElement('ownedAttribute')
+            
+        for ownedOperation in element.ownedOperation:
+            xmi.startElement('ownedOperation', attrs=dict())
+            self.handle(ownedOperation)
+            xmi.endElement('ownedOperation')
+        
+        xmi.endElement('%s:Interface'%self.UML_PREFIX)
+        
     def export(self, filename):
         out = open(filename, 'w')
 
@@ -200,6 +246,12 @@ class XMIExport(object):
         
         for package in self.element_factory.select(self.select_package):
             self.handle(xmi, package)
+            
+        for generalization in self.element_factory.select(self.select_generalization):
+            self.handle(xmi, generalization)
+            
+        for realization in self.element_factory.select(self.select_realization):
+            self.handle(xmi, realization)
         
         xmi.endElement('XMI')
         
@@ -207,3 +259,9 @@ class XMIExport(object):
         
     def select_package(self, element):
         return element.__class__.__name__ == 'Package'
+        
+    def select_generalization(self, element):
+        return element.__class__.__name__ == 'Generalization'
+        
+    def select_realization(self, element):
+        return element.__class__.name__ == 'Implementation'
