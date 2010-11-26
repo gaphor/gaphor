@@ -119,13 +119,16 @@ class FileBackend(object):
         Load resources from a file. Resources are saved like you do with
         a dict().
         """
+        
         filename = self.get_filename()
+        
         if os.path.exists(filename) and os.path.isfile(filename):
-            f = open(filename)
-            d = f.read()
-            f.close()
-            for k, v in eval(d).iteritems():
-                resource[k] = v
+
+            with open(filename) as ifile:
+                data = ifile.read()
+                
+            for key, value in eval(data).iteritems():
+                resource[key] = value
 
     def save(self, resource):
         """
@@ -133,12 +136,11 @@ class FileBackend(object):
         @resource is the Resource instance
         @persistent is a list of persistent resource names.
         """
+        
         filename = self.get_filename(create=True)
-        f = open(filename, 'w')
-        try:
-            pprint.pprint(resource, f)
-        finally:
-            f.close()
+        
+        with open(filename, 'w') as ofile:
+            pprint.pprint(resource, ofile)
 
     @async(single=True, timeout=500)
     def update(self, resource, key, value):
