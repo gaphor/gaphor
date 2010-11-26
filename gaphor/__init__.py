@@ -8,20 +8,12 @@ passes them to the main Application instance."""
 
 __all__ = [ 'main', 'GaphorError' ]
 
-import os
 from optparse import OptionParser
 import pygtk
 
 from gaphor.application import Application
 
 pygtk.require('2.0')
-
-if os.name == 'nt':
-    home = 'USERPROFILE'
-else:
-    home = 'HOME'
-
-user_data_dir = os.path.join(os.getenv(home), '.gaphor')
 
 class GaphorError(Exception):
     """Generic Gaphor exception."""

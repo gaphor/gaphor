@@ -9,7 +9,6 @@ All important services are present in the application object:
  - action sets
 """
 
-import os
 import pkg_resources
 from zope import component
 
@@ -17,13 +16,6 @@ from gaphor.misc.logger import Logger
 from gaphor.interfaces import IService, IEventFilter
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 import gaphor.UML
-
-if os.name == 'nt':
-    home = 'USERPROFILE'
-else:
-    home = 'HOME'
-
-user_data_dir = os.path.join(os.getenv(home), '.gaphor')
 
 class _Application(object):
     """

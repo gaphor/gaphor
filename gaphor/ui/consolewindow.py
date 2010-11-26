@@ -10,7 +10,7 @@ from gaphor.ui.interfaces import IUIComponent
 from gaphor.action import action, build_action_group
 from gaphor.misc.console import GTKInterpreterConsole
 from toplevelwindow import UtilityWindow
-from gaphor.application import user_data_dir
+from gaphor.misc import get_user_data_dir
 
 class ConsoleWindow(UtilityWindow):
     
@@ -48,7 +48,7 @@ class ConsoleWindow(UtilityWindow):
         """
         Load default script for console. Saves some repetative typing.
         """
-        console_py = os.path.join(user_data_dir, 'console.py')
+        console_py = os.path.join(get_user_data_dir(), 'console.py')
         try:
             with open(console_py) as f:
                 for line in f:

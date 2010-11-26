@@ -9,8 +9,7 @@ import pprint
 from zope import interface
 from gaphor.interfaces import IService
 from gaphas.decorators import async
-from gaphor.application import user_data_dir
-
+from gaphor.misc import get_user_data_dir
 
 class IPropertyChangeEvent(interface.Interface):
 
@@ -106,7 +105,7 @@ class FileBackend(object):
     """
     RESOURCE_FILE='resources'
    
-    def __init__(self, datadir=user_data_dir):
+    def __init__(self, datadir=get_user_data_dir()):
         self.datadir = datadir
 
     def get_filename(self, create=False):
