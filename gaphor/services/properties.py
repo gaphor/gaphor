@@ -73,11 +73,12 @@ class Properties(object):
         Resource should be the class of the resource to look for or a string. In
         case of a string the resource will be looked up in the GConf configuration.
         """
+        
         try:
             return self._resources[key]
         except KeyError:
             if default is _no_default:
-                raise KeyError, 'No resource with name "%s"' % key
+                raise KeyError('No resource with name "%s"' % key)
 
             self.set(key, default)
             return default
