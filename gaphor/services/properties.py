@@ -3,10 +3,10 @@
 """
 
 import sys
-import types
 import os
 import pprint
 from zope import interface
+
 from gaphor.interfaces import IService
 from gaphas.decorators import async
 from gaphor.misc import get_user_data_dir
@@ -64,7 +64,6 @@ class Properties(object):
         TODO: define resources that are persistent (have to be saved
         and loaded.
         """
-        import pprint
         pprint.pprint(self._resources.items(), stream)
 
     def get(self, key, default=_no_default):
