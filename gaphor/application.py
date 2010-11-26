@@ -12,6 +12,8 @@ All important services are present in the application object:
 import os
 import pkg_resources
 from zope import component
+
+from gaphor.misc.logger import Logger
 from gaphor.interfaces import IService, IEventFilter
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 import gaphor.UML
@@ -45,13 +47,19 @@ class _Application(object):
         self.init_components()
         self._event_filter = None
 
-    def init(self, services=None):
+    def init(self, services=None, opt_parser=None):
         """
         Initialize the application.
         """
+        self.opt_parser = opt_parser
         self.load_services(services)
         self.init_all_services()
-
+        self.options, self.args = self.opt_parser.parse_args()
+        
+        print 'LOGGING IS', self.options.logging
+        
+        log.log_level = Logger.level_map[self.options.logging]
+        
     def init_components(self):
         """
         Initialize application level component registry.
