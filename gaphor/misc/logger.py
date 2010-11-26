@@ -1,20 +1,11 @@
-"""
-Logger
+"""Logger is a simple entry point for writing log messages.
 
-Logger is a simple entry point for writing log messages.
-
-It wraps the logging module and adds some basic configuration.
-"""
+It wraps the logging module and adds some basic configuration."""
 
 import logging
 
-
 logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(levelname)s %(message)s')
-                    #format='%(asctime)s %(module)s:%(lineno)s %(levelname)s %(message)s')
-                    #filename='/tmp/myapp.log',
-                    #filemode='w')
-
+                    format='%(name)s %(levelname)s %(message)s')
 
 class Logger(object):
     TRACE = 0
@@ -25,14 +16,17 @@ class Logger(object):
     CRITICAL = logging.CRITICAL
 
     level_map = dict(TRACE = 0,\
-	     	     DEBUG = logging.DEBUG,\
-	       	     INFO = logging.INFO,\
-		     WARNING = logging.WARNING,\
-		     ERROR = logging.ERROR,\
-		     CRITICAL = logging.CRITICAL)
+                     DEBUG = logging.DEBUG,\
+                     INFO = logging.INFO,\
+                     WARNING = logging.WARNING,\
+                     ERROR = logging.ERROR,\
+                     CRITICAL = logging.CRITICAL)
+                     
+    level = logging.DEBUG
 
-    def __init__(self):
-        self.logger = logging.getLogger('')
+    def __init__(self, name='GAPHOR'):
+        self.logger = logging.getLogger(name)
+        self.log_level = self.level
 
     def set_log_level(self, level):
         self.logger.setLevel(level)

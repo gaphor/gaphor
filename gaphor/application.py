@@ -25,7 +25,6 @@ else:
 
 user_data_dir = os.path.join(os.getenv(home), '.gaphor')
 
-
 class _Application(object):
     """
     The Gaphor application is started from the Application instance. It behaves
@@ -55,8 +54,6 @@ class _Application(object):
         self.load_services(services)
         self.init_all_services()
         self.options, self.args = self.opt_parser.parse_args()
-        
-        print 'LOGGING IS', self.options.logging
         
         log.log_level = Logger.level_map[self.options.logging]
         
