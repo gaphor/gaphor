@@ -74,11 +74,13 @@ class ClassItem(ClassifierItem):
         # attributes or operations.
         self.save_property(save_func, 'show-attributes')
         self.save_property(save_func, 'show-operations')
-        ClassifierItem.save(self, save_func)
+        
+        super(ClassItem, self).save(save_func)
 
 
     def postload(self):
-        ClassifierItem.postload(self)
+        super(ClassItem, self).postload()
+        
         self.sync_attributes()
         self.sync_operations()
 
