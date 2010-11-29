@@ -3,10 +3,13 @@
 
 import gtk
 from zope import interface, component
+
+from gaphor.misc.logger import Logger
 from gaphor.core import inject
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.event import ServiceInitializedEvent, ActionExecuted
 
+logger = Logger(name='ACTIONMANAGER')
 
 class ActionManager(object):
     """
@@ -21,10 +24,14 @@ class ActionManager(object):
     def init(self, app):
         self._app = app
         self.ui_manager = gtk.UIManager()
-        log.info('Loading not yet registered action provider services')
+        
+        logger.info('Loading not yet registered action provider services')
+        
         for name, service in component.getUtilitiesFor(IService):
+            
             if IActionProvider.providedBy(service):
-                log.debug('Loading already registered service %s' % str(service))
+                
+                logger.debug('Loading already registered service %s' % str(service))
                 self.register_action_provider(service)
 
         app.register_handler(self._service_initialized_handler)
@@ -38,7 +45,7 @@ class ActionManager(object):
             a.activate()
             self._app.handle(ActionExecuted(action_id, a))
         else:
-            log.warning('Unknown action: %s' % action_id)
+            logger.warning('Unknown action: %s' % action_id)
 
     def update_actions(self):
         self.ui_manager.ensure_update()
@@ -54,7 +61,7 @@ class ActionManager(object):
             # Check if the action provider is not already registered
             action_provider.__ui_merge_id
         except AttributeError:
-            log.debug('Registering actions for %s' % str(action_provider))
+            logger.debug('Registering actions for %s' % str(action_provider))
             
             assert action_provider.action_group
             self.ui_manager.insert_action_group(action_provider.action_group, -1)
@@ -65,7 +72,7 @@ class ActionManager(object):
     @component.adapter(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
         if IActionProvider.providedBy(event.service):
-            log.debug('Loading registered service %s' % str(event.service))
+            logger.debug('Loading registered service %s' % str(event.service))
             self.register_action_provider(event.service)
 
 
