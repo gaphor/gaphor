@@ -17,6 +17,8 @@ from gaphor.interfaces import IService, IEventFilter
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 import gaphor.UML
 
+logger = Logger()
+
 class _Application(object):
     """
     The Gaphor application is started from the Application instance. It behaves
@@ -47,7 +49,7 @@ class _Application(object):
         self.init_all_services()
         self.options, self.args = self.opt_parser.parse_args()
         
-        log.log_level = Logger.level_map[self.options.logging]
+        Logger.log_level = Logger.level_map[self.options.logging]
         
     def init_components(self):
         """
@@ -83,7 +85,7 @@ class _Application(object):
         Service should provide an interface gaphor.interfaces.IService.
         """
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
-            log.debug('found entry point service.%s' % ep.name)
+            logger.debug('found entry point service.%s' % ep.name)
             cls = ep.load()
             if not IService.implementedBy(cls):
                 raise 'MisConfigurationException', 'Entry point %s doesn''t provide IService' % ep.name
@@ -106,7 +108,7 @@ class _Application(object):
         except KeyError:
             raise component.ComponentLookupError(IService, name)
         else:
-            log.info('initializing service service.%s' % name)
+            logger.info('initializing service service.%s' % name)
             srv.init(self)
             self._components.registerUtility(srv, IService, name)
             self.handle(ServiceInitializedEvent(name, srv))
