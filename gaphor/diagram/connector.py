@@ -100,11 +100,14 @@ Therefore, code of connector items is written with assumption, that
 interfaces are connectable elements.
 """
 
+from gaphor.misc.logger import Logger
 from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
 from operator import attrgetter
+
+logger = Logger(name='CONNECTOR')
 
 class ConnectorItem(NamedLine):
     """
@@ -149,7 +152,7 @@ class ConnectorItem(NamedLine):
         try:
             self._interface.text = self.subject.end['it.role', 0].role.name
         except (IndexError, AttributeError), e:
-            log.debug(e)
+            logger.error(e)
             self._interface.text = ''
         else:
             self.request_update(matrix=False)
