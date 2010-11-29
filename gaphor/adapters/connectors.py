@@ -8,11 +8,14 @@ gaphor.adapter package.
 from zope import interface, component
 
 from gaphas import geometry
+
+from gaphor.misc.logger import Logger
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
 
+logger = Logger(name='CONNECTOR')
 
 class AbstractConnect(object):
     """
@@ -157,7 +160,7 @@ class CommentLineElementConnect(AbstractConnect):
         hct = self.get_connected(handle)
 
         if hct and oct:
-            log.debug('Disconnecting %s and %s' % (hct, oct))
+            logger.debug('Disconnecting %s and %s' % (hct, oct))
             if hct.subject and isinstance(oct.subject, UML.Comment):
                 del oct.subject.annotatedElement[hct.subject]
             elif hct.subject and oct.subject:
