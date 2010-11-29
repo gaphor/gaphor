@@ -38,7 +38,8 @@ class ClassItem(ClassifierItem):
     }
 
     def __init__(self, id=None):
-        ClassifierItem.__init__(self, id)
+        super(ClassItem, self).__init__(id)
+        
         self.drawing_style = self.DRAW_COMPARTMENT
         self._attributes = self.create_compartment('attributes')
         self._operations = self.create_compartment('operations')
