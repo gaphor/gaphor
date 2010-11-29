@@ -5,6 +5,8 @@ Such as a modifier 'subject' property and a unique id.
 
 from zope import component
 from gaphas.state import observed, reversible_property
+
+from gaphor.misc.logger import Logger
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.services.elementdispatcher import EventWatcher
@@ -13,6 +15,7 @@ from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 
+logger = Logger(name='DIAGRAM')
 
 class StereotypeSupport(object):
     """
@@ -174,9 +177,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         """
         self._persistent_props.add(name)
 
-
-    
-
     # TODO: Use adapters for load/save functionality
     def save(self, save_func):
         if self.subject:
@@ -188,19 +188,17 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
         for p in self._persistent_props:
             save_func(p, getattr(self, p.replace('-', '_')))
 
-
     def load(self, name, value):
         if name == 'subject':
             type(self).subject.load(self, value)
         elif name == 'show_stereotypes_attrs':
             self._show_stereotypes_attrs = eval(value)
         else:
-            #log.debug('Setting unknown property "%s" -> "%s"' % (name, value))
             try:
                 setattr(self, name.replace('-', '_'), eval(value))
             except:
-                log.warning('%s has no property named %s (value %s)' % (self, name, value))
-
+                logger.warning('%s has no property named %s (value %s)'%\
+                (self, name, value))
 
     def postload(self):
         if self.subject:
