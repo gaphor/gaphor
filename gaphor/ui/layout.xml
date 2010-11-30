@@ -15,9 +15,6 @@
         </dockgroup>
       </dockpaned>
       <dockgroup name="diagrams" weight="80">
-        <dockitem icon="main" title="Main" tooltip="Main">
-          <widget name="notebook"/>
-        </dockitem>
       </dockgroup>
     </dockpaned>
   </dockframe>
