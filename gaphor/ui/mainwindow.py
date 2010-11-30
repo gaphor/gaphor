@@ -25,7 +25,13 @@ from event import DiagramSelectionChange
 from gaphor.application import Application
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
+from etk.docking import settings
 
+settings['diagrams'].expand = True
+settings['diagrams'].auto_remove = False
+settings['diagrams'].inherit_settings = False
+settings['EtkDockGroup'].expand = False
+settings['EtkDockPaned'].expand = False
 
 class MainWindow(ToplevelWindow):
     """
