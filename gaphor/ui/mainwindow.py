@@ -16,7 +16,7 @@ from diagramtab import DiagramTab
 from toolbox import Toolbox
 from diagramtoolbox import TOOLBOX_ACTIONS
 from toplevelwindow import ToplevelWindow
-from etk.docking import DockItem, settings
+from etk.docking import settings
 from etk.docking.dockstore import deserialize, get_main_frames, finish
 
 from interfaces import IDiagramSelectionChange
@@ -127,9 +127,10 @@ class MainWindow(ToplevelWindow):
         self.model_changed = False
 
         # Map tab contents to DiagramTab
-        self.notebook_map = {}
+        #self.notebook_map = {}
         # Tree view:
         self._tree_view = None 
+        self.layout = None
 
         self.action_group = build_action_group(self)
         for name, label in (('file', '_File'),
@@ -165,9 +166,9 @@ class MainWindow(ToplevelWindow):
         side of the main window.
         See also: get_current_diagram(), get_current_diagram_view().
         """
-        current = self.notebook.get_current_page()
-        content = self.notebook.get_nth_page(current)
-        return self.notebook_map.get(content)
+        #current = self.notebook.get_current_page()
+        #content = self.notebook.get_nth_page(current)
+        #return self.notebook_map.get(content)
 
 
     def get_current_diagram(self):
@@ -227,12 +228,14 @@ class MainWindow(ToplevelWindow):
                 self.set_current_page(tab)
                 return tab
 
-        tab = DiagramTab(self)
-        tab.set_diagram(diagram)
-        widget = tab.construct()
+        tab = DiagramTab(diagram)
+        dock_item = tab.construct()
+        dock_item.set_name('diagram-tab')
+        dock_item.diagram_tab = tab
+        assert dock_item.get_name() == 'diagram-tab'
         tab.set_drawing_style(self.properties('diagram.sloppiness', 0))
-        self.add_tab(tab, widget)
-        self.set_current_page(tab)
+
+        self.add_tab(dock_item)
 
         return tab
 
@@ -253,18 +256,6 @@ class MainWindow(ToplevelWindow):
         self._tree_view = view
         return scrolled_window
 
-#    def _create_notebook(self):
-#        notebook = gtk.Notebook()
-#        notebook.set_scrollable(True)
-#        notebook.set_show_border(False)
-#        notebook.show()
-#
-#        notebook.connect_after('switch-page', self._on_notebook_switch_page)
-#        notebook.connect_after('page-removed', self._on_notebook_page_removed)
-#
-#        self.notebook = notebook
-#        return notebook
-
     def _create_toolbox(self):
         toolbox = Toolbox(TOOLBOX_ACTIONS)
         toolbox.show()
@@ -284,6 +275,9 @@ class MainWindow(ToplevelWindow):
         
         for f in layout.frames:
             f.get_toplevel().show_all()
+
+        layout.connect('item-closed', self._on_item_closed)
+        layout.connect('item-selected', self._on_item_selected)
 
         self.layout = layout
 
@@ -330,48 +324,26 @@ class MainWindow(ToplevelWindow):
 
     # Notebook methods:
 
-    def add_tab(self, tab, contents):
+    def add_tab(self, item):
         """
         Create a new tab on the notebook with window as its contents.
         Returns: The page number of the tab.
         """
-        #contents.connect('destroy', self._on_tab_destroy)
-        #l = gtk.Label(title)
-
-        #style = gtk.RcStyle()
-        #style.xthickness = 0
-        #style.ythickness = 0
-        #button = gtk.Button()
-        #button.set_relief(gtk.RELIEF_NONE)
-        #button.set_focus_on_click(False)
-        #button.modify_style(style)
-        #button.connect("clicked", self._on_tab_close_button_pressed, tab)
-
-        #close_image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
-        #button.add(close_image)
-
-        #box = gtk.HBox()
-        #box.pack_start(l)
-        #box.pack_start(button, False, False)
-        #box.show_all()
-
-        # Note: append_page() emits switch-page event
-        #self.notebook.append_page(contents, box)
-        #self.notebook.set_tab_reorderable(contents, True)
-        #page_num = self.notebook.page_num(contents)
-
-        item = DockItem(title=tab.title)
-        item.add(contents)
         group = list(self.layout.get_widgets('diagrams'))[0]
         group.insert_item(item)
-        item.show()
-
-        self.notebook_map[item] = tab
+        item.show_all()
+        #item.diagram_tab = tab
+        #self.notebook_map[item] = tab
 
     def set_current_page(self, tab):
         """
         Force a specific tab (DiagramTab) to the foreground.
         """
+        for i in self.layout.get_widgets('diagram-tab'):
+            if i.diagram_tab is tab:
+                g = i.get_parent()
+                g.set_current_item(g.item_num(i))
+                return
         #for p, t in self.notebook_map.iteritems():
         #    if tab is t:
         #        num = self.notebook.page_num(p)
@@ -380,6 +352,7 @@ class MainWindow(ToplevelWindow):
         pass
 
     def set_tab_label(self, tab, label):
+        
         #for p, t in self.notebook_map.iteritems():
         #    if tab is t:
         #        l = gtk.Label(label)
@@ -388,19 +361,9 @@ class MainWindow(ToplevelWindow):
         pass
 
     def get_tabs(self):
-        return self.notebook_map.values()
-
-    def remove_tab(self, tab):
-        """
-        Remove the tab from the notebook. Tab is such a thing as
-        a DiagramTab.
-        """
-        for p, t in self.notebook_map.iteritems():
-            if tab is t:
-                num = self.notebook.page_num(p)
-                self.notebook.remove_page(num)
-                del self.notebook_map[p]
-                return
+        tabs = map(lambda i: i.diagram_tab, self.layout.get_widgets('diagram-tab'))
+        print 'found tabs', tabs
+        return tabs
 
     def select_element(self, element):
         """
@@ -479,10 +442,10 @@ class MainWindow(ToplevelWindow):
     def _on_tab_close_button_pressed(self, event, tab):
         tab.close()
 
-    def _on_tab_destroy(self, widget):
-        tab = self.notebook_map[widget]
-        assert isinstance(tab, DiagramTab)
-        self.remove_tab(tab)
+#    def _on_tab_destroy(self, widget):
+#        tab = self.notebook_map[widget]
+#        assert isinstance(tab, DiagramTab)
+#        self.remove_tab(tab)
 
     def _on_window_delete(self, window = None, event = None):
         return not self.ask_to_close()
@@ -520,18 +483,20 @@ class MainWindow(ToplevelWindow):
         for button in self._toolbox.buttons:
             button.set_property('sensitive', False)
 
-    def _on_notebook_page_removed(self, notebook, tab, page_num):
+    def _clear_ui_settings(self):
         if self._tab_ui_settings:
             action_group, ui_id = self._tab_ui_settings
             self.ui_manager.remove_action_group(action_group)
             self.ui_manager.remove_ui(ui_id)
             self._tab_ui_settings = None
-            if notebook.get_current_page() == -1:
-                self._insensivate_toolbox()
-            else:
-                self._on_notebook_switch_page(notebook, None, notebook.get_current_page())
 
-    def _on_notebook_switch_page(self, notebook, tab, page_num):
+    def _on_item_closed(self, layout, group, item):
+        self._clear_ui_settings()
+        if not group.get_current_item():
+            self._insensivate_toolbox()
+        item.destroy()
+
+    def _on_item_selected(self, layout, group, item):
         """
         Another page (tab) is put on the front of the diagram notebook.
         A dummy action is executed.
@@ -539,15 +504,17 @@ class MainWindow(ToplevelWindow):
         # TODO: Here the magic happens!
         # TODO: Need to see what the active view is, or make toolbox actions global
 
-        if self._tab_ui_settings:
-            action_group, ui_id = self._tab_ui_settings
-            self.ui_manager.remove_action_group(action_group)
-            self.ui_manager.remove_ui(ui_id)
-            self._tab_ui_settings = None
+        self._clear_ui_settings()
 
-        content = self.notebook.get_nth_page(page_num)
-        tab = self.notebook_map.get(content)
-        assert isinstance(tab, DiagramTab), str(tab)
+        try:
+            tab = item.diagram_tab
+        except AttributeError:
+            # Not a diagram tab
+            return
+
+        #content = self.notebook.get_nth_page(page_num)
+        #tab = self.notebook_map.get(content)
+        #assert isinstance(tab, DiagramTab), str(tab)
         
         self.ui_manager.insert_action_group(tab.action_group, -1)
         ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)

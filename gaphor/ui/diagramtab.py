@@ -15,6 +15,7 @@ from gaphor.transaction import Transaction
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from event import DiagramSelectionChange
 from gaphor.services.properties import IPropertyChangeEvent
+from etk.docking import DockItem
 
 from gaphas import segment, guide
 
@@ -64,14 +65,15 @@ class DiagramTab(object):
         ('gaphor/toolbox-action', 0, VIEW_TARGET_TOOLBOX_ACTION)]
 
 
-    def __init__(self, owning_window):
-        self.diagram = None
+    def __init__(self, diagram):
+        self.diagram = diagram
         self.view = None
-        self.owning_window = owning_window
+        #self.owning_window = owning_window
         self.action_group = build_action_group(self)
         self.toolbox = None
         Application.register_handler(self._on_element_change)
         Application.register_handler(self._on_element_delete)
+        #self._construct()
 
     title = property(lambda s: s.diagram and s.diagram.name or _('<None>'))
 
@@ -84,25 +86,17 @@ class DiagramTab(object):
     def get_canvas(self):
         return self.diagram.canvas
 
-    def set_diagram(self, diagram):
-        self.diagram = diagram
-
-        if diagram and self.view:
-            self.view.hadjustment.set_value(0.0)
-            self.view.vadjustment.set_value(0.0)
-
-
     def construct(self):
         """
         Create the widget.
         
-        Returns: the newly created widget.
+        Returns: the newly created widget, a DockItem.
         """
         assert self.diagram
 
         view = GtkView(canvas=self.diagram.canvas)
-        view.drag_dest_set(gtk.DEST_DEFAULT_ALL, DiagramTab.VIEW_DND_TARGETS,
-                           gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+        view.drag_dest_set(gtk.DEST_DEFAULT_MOTION, DiagramTab.VIEW_DND_TARGETS,
+                           gtk.gdk.ACTION_MOVE | gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
 
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -113,22 +107,26 @@ class DiagramTab(object):
         view.connect('focus-changed', self._on_view_selection_changed)
         view.connect('selection-changed', self._on_view_selection_changed)
         view.connect_after('key-press-event', self._on_key_press_event)
+        view.connect('drag-drop', self._on_drag_drop)
         view.connect('drag-data-received', self._on_drag_data_received)
 
         self.view = view
-
-        self.widget = scrolled_window
         
         self.toolbox = DiagramToolbox(self.diagram, view)
         
-        return scrolled_window
+        item = DockItem(icon_name='gaphor-diagram', title=self.title)
+        item.add(scrolled_window)
+
+        self.widget = item
+
+        return item
 
 
     @component.adapter(IAttributeChangeEvent)
     def _on_element_change(self, event):
         if event.element is self.diagram and \
                 event.property is UML.Diagram.name:
-           self.owning_window.set_tab_label(self, self.title) 
+           self.widget.title = self.title
 
 
     @component.adapter(IElementDeleteEvent)
@@ -143,8 +141,7 @@ class DiagramTab(object):
         Tab is destroyed. Do the same thing that would
         be done if File->Close was pressed.
         """
-        self.owning_window.remove_tab(self)
-        self.set_diagram(None)
+        self.widget.destroy()
         Application.unregister_handler(self._on_element_delete)
         Application.unregister_handler(self._on_element_change)
         del self.view
@@ -243,7 +240,7 @@ class DiagramTab(object):
                 gtk.BUTTONS_YES_NO,
                 'This will remove the following selected items from the model:\n%s\nAre you sure?' % s
                 )
-        dialog.set_transient_for(self.owning_window.window)
+        dialog.set_transient_for(self.get_toplevel())
         value = dialog.run()
         dialog.destroy()
         if value == gtk.RESPONSE_YES:
@@ -270,10 +267,23 @@ class DiagramTab(object):
         Application.handle(DiagramSelectionChange(view, view.focused_item, view.selected_items))
 
 
+    def _on_drag_drop(self, view, context, x, y, time):
+        print 'drag_drop on', context.targets
+        if self.VIEW_DND_TARGETS[0][0] in context.targets:
+            target = gtk.gdk.atom_intern(self.VIEW_DND_TARGETS[0][0])
+            view.drag_get_data(context, target, time)
+            return True
+        elif self.VIEW_DND_TARGETS[1][0] in context.targets:
+            target = gtk.gdk.atom_intern(self.VIEW_DND_TARGETS[1][0])
+            view.drag_get_data(context, target, time)
+            return True
+        return False
+
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
         """
         Handle data dropped on the canvas.
         """
+        print 'DND data received', view
         if data and data.format == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
             tool = self.toolbox.get_tool(data.data)
             tool.create_item((x, y))
@@ -307,7 +317,7 @@ class DiagramTab(object):
             else:
                 log.warning('No graphical representation for UML element %s' % type(element).__name__)
             context.finish(True, False, time)
-        else:
-            context.finish(False, False, time)
+        #else:
+        #    context.finish(False, False, time)
 
 # vim: sw=4:et:ai
