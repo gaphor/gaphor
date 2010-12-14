@@ -185,7 +185,8 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         assoc = UML.model.create_association(self.factory, c1, c2)
 
         end = assoc.memberEnd[0]
-        assert end.type is c2
+        assert end.type is c1
+        assert end.type is c1
 
         UML.model.set_navigability(assoc, end, True)
 
@@ -193,34 +194,38 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         # involved
         self.assertTrue(end not in assoc.navigableOwnedEnd)
         self.assertTrue(end not in assoc.ownedEnd)
-        self.assertTrue(end in c1.ownedAttribute)
+        self.assertTrue(end in c2.ownedAttribute)
         self.assertTrue(end.navigability is True)
 
         # uknown navigability
         UML.model.set_navigability(assoc, end, None)
         self.assertTrue(end not in assoc.navigableOwnedEnd)
         self.assertTrue(end in assoc.ownedEnd)
-        self.assertTrue(end not in c1.ownedAttribute)
+        self.assertTrue(end not in c2.ownedAttribute)
+        self.assertTrue(end.owner is assoc)
         self.assertTrue(end.navigability is None)
 
         # non-navigability
         UML.model.set_navigability(assoc, end, False)
         self.assertTrue(end not in assoc.navigableOwnedEnd)
         self.assertTrue(end not in assoc.ownedEnd)
-        self.assertTrue(end not in c1.ownedAttribute)
+        self.assertTrue(end not in c2.ownedAttribute)
+        self.assertTrue(end.owner is None)
         self.assertTrue(end.navigability is False)
 
         # check other navigability change possibilities
         UML.model.set_navigability(assoc, end, None)
         self.assertTrue(end not in assoc.navigableOwnedEnd)
         self.assertTrue(end in assoc.ownedEnd)
-        self.assertTrue(end not in c1.ownedAttribute)
+        self.assertTrue(end not in c2.ownedAttribute)
+        self.assertTrue(end.owner is assoc)
         self.assertTrue(end.navigability is None)
 
         UML.model.set_navigability(assoc, end, True)
         self.assertTrue(end not in assoc.navigableOwnedEnd)
         self.assertTrue(end not in assoc.ownedEnd)
-        self.assertTrue(end in c1.ownedAttribute)
+        self.assertTrue(end in c2.ownedAttribute)
+        self.assertTrue(end.owner is c2)
         self.assertTrue(end.navigability is True)
 
 
@@ -232,7 +237,7 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         assoc = UML.model.create_association(self.factory, n1, n2)
 
         end = assoc.memberEnd[0]
-        assert end.type is n2
+        assert end.type is n1
 
         UML.model.set_navigability(assoc, end, True)
 

@@ -192,8 +192,8 @@ def create_association(factory, type_a, type_b):
     end_b.lowerValue = factory.create(LiteralSpecification)
     assoc.memberEnd = end_a
     assoc.memberEnd = end_b
-    end_a.type = type_b
-    end_b.type = type_a
+    end_a.type = type_a
+    end_b.type = type_b
     # set default navigability (unknown)
     set_navigability(assoc, end_a, None)
     set_navigability(assoc, end_b, None)
