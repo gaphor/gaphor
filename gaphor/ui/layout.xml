@@ -4,12 +4,12 @@
     <dockpaned orientation="horizontal">
       <dockpaned orientation="vertical" weight="20">
         <dockgroup weight="50">
-          <dockitem icon="" title="Namespace" tooltip="Namespace view">
+          <dockitem title="Namespace" tooltip="Namespace view">
             <widget name="namespace"/>
           </dockitem>
         </dockgroup>
         <dockgroup weight="50">
-          <dockitem icon="toolbox" title="Toolbox" tooltip="Toolbox">
+          <dockitem stock_id="toolbox" title="Toolbox" tooltip="Toolbox">
             <widget name="toolbox"/>
           </dockitem>
         </dockgroup>

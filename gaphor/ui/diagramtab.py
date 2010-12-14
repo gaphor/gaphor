@@ -114,7 +114,7 @@ class DiagramTab(object):
         
         self.toolbox = DiagramToolbox(self.diagram, view)
         
-        item = DockItem(icon_name='gaphor-diagram', title=self.title)
+        item = DockItem(title=self.title, stock_id='gaphor-diagram')
         item.add(scrolled_window)
 
         self.widget = item
