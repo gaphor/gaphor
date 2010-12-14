@@ -38,7 +38,7 @@ class ClassTestCase(TestCase):
 
         diagram.canvas.update()
         self.assertEqual(1, len(klass._compartments[0]))
-        self.assertEqual((45.0, 20.0), klass._compartments[0].get_size())
+        self.assertEqual((44.0, 20.0), klass._compartments[0].get_size())
 
         oper = element_factory.create(UML.Operation)
         oper.name = 4 * 'x' # about 44 pixels
@@ -50,7 +50,7 @@ class ClassTestCase(TestCase):
 
         diagram.canvas.update()
         self.assertEqual(2, len(klass._compartments[1]))
-        self.assertEqual((64.0, 36.0), klass._compartments[1].get_size())
+        self.assertEqual((63.0, 34.0), klass._compartments[1].get_size())
 
 
     def test_attribute_removal(self):
@@ -144,6 +144,6 @@ class ClassTestCase(TestCase):
         diagram.canvas.update()
 
         width = klass.width
-        self.assertEquals(171.0, width)
+        self.assertEquals(170.0, width)
 
 # vim:sw=4:et:ai
