@@ -5,6 +5,8 @@ the model clean and in sync with diagrams.
 
 from zope import interface
 from zope import component
+
+from gaphor.misc.logger import Logger
 from gaphor import UML
 from gaphor.UML.interfaces import IAssociationDeleteEvent, IAssociationSetEvent
 from gaphor.interfaces import IService
@@ -20,11 +22,15 @@ class SanitizerService(object):
 
     element_factory = inject('element_factory')
     property_dispatcher = inject('property_dispatcher')
+    logger = Logger(name='SANITIZER')
 
     def __init__(self):
         pass
 
     def init(self, app):
+        
+        self.logger.info('Starting')
+        
         self._app = app
         app.register_handler(self._unlink_on_presentation_delete)
         app.register_handler(self._unlink_on_stereotype_delete)
@@ -32,6 +38,9 @@ class SanitizerService(object):
         app.register_handler(self._disconnect_extension_end)
 
     def shutdown(self):
+        
+        self.logger.info('Shutting down')
+        
         self._app.unregister_handler(self._unlink_on_presentation_delete)
         self._app.unregister_handler(self._unlink_on_stereotype_delete)
         self._app.unregister_handler(self._unlink_on_extension_delete)
@@ -44,14 +53,25 @@ class SanitizerService(object):
         Unlink the model element if no more presentations link to the `item`'s
         subject or the deleted item was the only item currently linked.
         """
+        
+        self.logger.info('Handling IAssociationDeleteEvent')
+        self.logger.debug('Property is %s' % event.property)
+        self.logger.debug('Element is %s' % event.element)
+        self.logger.debug('Old value is %s' % event.old_value)
+        
         if event.property is UML.Element.presentation:
             old_presentation = event.old_value
             if old_presentation and not event.element.presentation:
                 event.element.unlink()
 
     def perform_unlink_for_instances(self, st, meta):
+        
+        self.logger.info('Performing unlink for instances')
+        self.logger.debug('Stereotype is %s' % st)
+        self.logger.debug('Meta is %s' % meta)
+                
         inst = UML.model.find_instances(self.element_factory, st)
-        log.debug('Unlinking instances of stereotype %s' % st)
+
         for i in list(inst):
             for e in i.extended:
                 if not meta or isinstance(e, meta):
@@ -63,6 +83,12 @@ class SanitizerService(object):
         """
         Remove applied stereotypes when extension is deleted.
         """
+        
+        self.logger.info('Handling IAssociationDeleteEvent')
+        self.logger.debug('Property is %s' % event.property)
+        self.logger.debug('Element is %s' % event.element)
+        self.logger.debug('Old value is %s' % event.old_value)
+        
         if isinstance(event.element, UML.Extension) and \
                 event.property is UML.Association.memberEnd and \
                 event.element.memberEnd:
@@ -77,7 +103,12 @@ class SanitizerService(object):
 
     @component.adapter(IAssociationSetEvent)
     def _disconnect_extension_end(self, event):
-        #print event.property, event.element
+        
+        self.logger.info('Handling IAssociationSetEvent')
+        self.logger.debug('Property is %s' % event.property)
+        self.logger.debug('Element is %s' % event.element)
+        self.logger.debug('Old value is %s' % event.old_value)
+        
         if event.property is UML.ExtensionEnd.type and event.old_value:
             ext = event.element
             p = ext.opposite
@@ -93,9 +124,14 @@ class SanitizerService(object):
         """
         Remove applied stereotypes when stereotype is deleted.
         """
+        
+        self.logger.info('Handling IAssociationDeleteEvent')
+        self.logger.debug('Property is %s' % event.property)
+        self.logger.debug('Element is %s' % event.element)
+        self.logger.debug('Old value is %s' % event.old_value)
+        
         if event.property is UML.InstanceSpecification.classifier:
             if isinstance(event.old_value, UML.Stereotype):
-                log.debug('Unlinking instances of stereotype %s' % event.old_value)
                 event.element.unlink()
 
 

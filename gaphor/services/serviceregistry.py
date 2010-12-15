@@ -6,21 +6,28 @@ Our good old NameServicer.
 """
 
 from zope import interface, component
+
+from gaphor.misc.logger import Logger
 from gaphor.interfaces import IService
 from gaphor.core import inject
 
 class ServiceRegistry(object):
 
     component_registry = inject('component_registry')
+    logger = Logger(name='SERVICEREGISTRY')
 
     def __init__(self):
         self._uninitialized_services = {}
 
     def init(self, app=None):
+        
+        self.logger.info('Starting')
+        
         self._app = app
 
     def shutdown(self):
-        pass
+        
+        self.logger.info('Shutting down')
 
     def load_services(self, services=None):
         """
@@ -29,8 +36,10 @@ class ServiceRegistry(object):
         Services are registered as utilities in zope.component.
         Service should provide an interface gaphor.interfaces.IService.
         """
+        
+        self.logger.info('Loading services')
+        
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
-            log.debug('found entry point service.%s' % ep.name)
             cls = ep.load()
             if not IService.implementedBy(cls):
                 raise 'MisConfigurationException', 'Entry point %s doesn''t provide IService' % ep.name
@@ -38,11 +47,12 @@ class ServiceRegistry(object):
                 srv = cls()
                 self._uninitialized_services[ep.name] = srv
 
-
     def init_all_services(self):
+        
+        self.logger.info('Initializing services')
+        
         while self._uninitialized_services:
             self.init_service(self._uninitialized_services.iterkeys().next())
-
 
     def init_service(self, name):
         """
@@ -50,17 +60,19 @@ class ServiceRegistry(object):
 
         Raises ComponentLookupError if the service has nor been found
         """
+        
+        self.logger.info('Initializing service')
+        self.logger.debug('Service name is %s' % name)
+        
         try:
             srv = self._uninitialized_services.pop(name)
         except KeyError:
             raise component.ComponentLookupError(IService, name)
         else:
-            log.info('initializing service service.%s' % name)
             srv.init(self)
             self.component_registry.register_utility(srv, IService, name)
             self.handle(ServiceInitializedEvent(name, srv))
             return srv
-
 
     def get_service(self, name):
         try:

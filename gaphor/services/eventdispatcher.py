@@ -5,6 +5,8 @@ the model clean and in sync with diagrams.
 
 from zope import interface
 from zope import component
+
+from gaphor.misc.logger import Logger
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.interfaces import IService
@@ -17,7 +19,9 @@ class EventDispatcher(object):
 
     This service should take over the dispatching capabilities of Application.
     """
+    
     interface.implements(IService)
+    logger = Logger(name='EVENTDISPATCHER')
 
 #    component_registry = inject('component_registry')
 
@@ -32,15 +36,21 @@ class EventDispatcher(object):
 
 
     def shutdown(self):
+        
+        self.logger.info('Shutting down')
+        
         self._app.unregister_handler(self._element_notify)
         
-
     @component.adapter(IElementEvent)
     def _element_notify(self, event):
         """
         Dispatch IElementEvent events to interested adapters registered
         by (class, event).
         """
+        
+        self.logger.info('Handling IElementEvent event')
+        self.logger.debug('App is %s' %self._app)
+        
         if self._app:
             self._app.handle(event.element, event)
 

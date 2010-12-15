@@ -3,13 +3,16 @@ Service dedicated to exporting diagrams to a varyity of file formats.
 """
 
 import os
+import cairo
+
 from zope import interface, component
+
+from gaphor.misc.logger import Logger
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 
-import cairo
 from gaphas.view import View
 from gaphas.painter import ItemPainter, BoundingBoxPainter
 from gaphas.freehand import FreeHandPainter
@@ -24,6 +27,7 @@ class DiagramExportManager(object):
 
     gui_manager = inject('gui_manager')
     properties = inject('properties')
+    logger = Logger(name='EXPORTMANAGER')
 
     menu_xml = """
       <ui>
@@ -50,9 +54,11 @@ class DiagramExportManager(object):
         pass
 
     def update(self):
+        
+        self.logger.info('Updating')
+        
         tab = self.get_window().get_current_diagram_tab()
         self.sensitive = tab and True or False
-
 
     def save_dialog(self, diagram, title, ext):
         
@@ -82,7 +88,14 @@ class DiagramExportManager(object):
             return filename                
         
     def update_painters(self, view):
+        
+        self.logger.info('Updating painters')
+        self.logger.debug('View is %s' % view)
+        
         sloppiness = self.properties('diagram.sloppiness', 0)
+        
+        self.logger.debug('Sloppiness is %s' % sloppiness)
+        
         if sloppiness:
             view.painter = FreeHandPainter(ItemPainter(), sloppiness)
             view.bounding_box_painter = FreeHandPainter(BoundingBoxPainter(), sloppiness)
@@ -90,7 +103,10 @@ class DiagramExportManager(object):
             view.painter = ItemPainter()
 
     def save_svg(self, filename, canvas):
-        log.debug('Exporting SVG image to: %s' % filename)
+        
+        self.logger.info('Exporting to SVG')
+        self.logger.debug('SVG path is %s' % filename)
+        
         view = View(canvas)
 
         self.update_painters(view)
@@ -114,7 +130,10 @@ class DiagramExportManager(object):
 
 
     def save_png(self, filename, canvas):
-        log.debug('Exporting PNG image to: %s' % filename)
+        
+        self.logger.info('Exporting to PNG')
+        self.logger.debug('PNG path is %s' % filename)
+        
         view = View(canvas)
 
         self.update_painters(view)
@@ -136,7 +155,10 @@ class DiagramExportManager(object):
         surface.write_to_png(filename)
 
     def save_pdf(self, filename, canvas):
-        log.debug('Exporting PDF image to: %s' % filename)
+        
+        self.logger.info('Exporting to PDF')
+        self.logger.debug('PDF path is %s' % filename)
+        
         view = View(canvas)
 
         self.update_painters(view)

@@ -4,10 +4,12 @@ The file service is responsible for loading and saving the user data.
 
 import gtk
 from zope import interface, component
+
 from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.storage import storage, verify
 from gaphor import UML
+from gaphor.misc.logger import Logger
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.ui.statuswindow import StatusWindow
@@ -38,6 +40,7 @@ class FileManager(object):
     element_factory = inject('element_factory')
     gui_manager = inject('gui_manager')
     properties = inject('properties')
+    logger = Logger(name='FILEMANAGER')
 
     menu_xml = """
       <ui>
@@ -107,7 +110,7 @@ class FileManager(object):
     def shutdown(self):
         """Called when shutting down the file manager service."""
 
-        log.info('Shutting down file manager service')
+        self.logger.info('Shutting down')
         
     def get_filename(self):
         """Return the current file name.  This method is used by the filename
@@ -119,8 +122,8 @@ class FileManager(object):
         property.  Setting the current filename will update the recent file
         list."""
 
-        log.info('Setting current file')
-        log.debug(filename)
+        self.logger.info('Setting current file')
+        self.logger.debug('Filename is %s' % filename)
 
         if filename != self._filename:
             self._filename = filename
@@ -138,6 +141,9 @@ class FileManager(object):
         """Updates the properties service with the supplied list of recent 
         files.  This method is used by the recent_files property."""
         
+        self.logger.info('Storing recent files')
+        self.logger.debug('Recent files are %s' % recent_files)
+        
         self.properties.set('recent-files', recent_files)
         
     recent_files = property(get_recent_files, set_recent_files)
@@ -148,6 +154,9 @@ class FileManager(object):
         
         The default recent file placeholder actions are hidden.  The real
         actions are then built using the recent file list."""
+        
+        self.logger.info('Updating recent files')
+        self.logger.debug('New file is %s' % new_filename)
 
         recent_files = self.recent_files
         
@@ -171,6 +180,10 @@ class FileManager(object):
         """Load the recent file at the specified index.  This will trigger
         a FileManagerStateChanged event.  The recent files are stored in
         the recent_files property."""
+        
+        self.logger.info('Loading recent file')
+        self.logger.debug('Action is %s' % action)
+        self.logger.debug('Index is %s' % index)
 
         filename = self.recent_files[index]
 
@@ -183,7 +196,8 @@ class FileManager(object):
         queue.  The loader is passed to a GIdleThread which executes the load
         generator.  If loading is successful, the filename is set."""
 
-        log.debug('Loading from: %s' % filename)
+        self.logger.info('Loading file')
+        self.logger.debug('Path is %s' % filename)
 
         main_window = self.gui_manager.main_window
 
@@ -200,8 +214,8 @@ class FileManager(object):
         worker.wait()
         
         if worker.error:
-            log.error('Error while loading model from file %s: %s' %\
-            (filename, worker.error))
+            self.logger.error('Error loading file')
+            self.logger.error(worker.error)
 
         self.filename = filename
 
@@ -236,6 +250,9 @@ class FileManager(object):
         extension.  If not, the extension is added to the filename
         and returned."""
         
+        self.logger.debug('Verifying file name')
+        self.logger.debug('File name is %s' % filename)
+        
         if not filename.endswith(DEFAULT_EXT):
             filename = filename + DEFAULT_EXT
             
@@ -247,12 +264,13 @@ class FileManager(object):
         references.  It will also verify that the filename has the correct
         extension.  A status window is displayed while the GIdleThread
         is executed.  This thread actually saves the model."""
+        
+        self.logger.info('Saving file')
+        self.logger.debug('File name is %s' % filename)
 
         if not filename or not len(filename):
             return
 
-        log.debug('Saving to: %s' % filename)
-        
         self.verify_orphans()
         filename = self.verify_filename(filename)
 
@@ -271,8 +289,8 @@ class FileManager(object):
         worker.wait()
         
         if worker.error:
-            log.error('Error while saving model to file %s: %s' %\
-            (filename, worker.error))
+            self.logger.error('Error saving file')
+            self.logger.error(worker.error)
         
         out.close()
         status_window.destroy()
@@ -315,10 +333,9 @@ class FileManager(object):
         """The new model menu action.  This action will create a new
         UML model.  This will trigger a FileManagerStateChange event."""
 
-        log.info('New model')
-
         element_factory = self.element_factory
         main_window = self.gui_manager.main_window
+        
         if element_factory.size():
             dialog = QuestionDialog(_("Opening a new model will flush the"\
                                       " currently loaded model.\nAny changes"\
@@ -350,8 +367,6 @@ class FileManager(object):
     def action_new_from_template(self):
         """This menu action opens the new model from template dialog."""
 
-        log.info('Creating from template')
-
         filters = [{'name':_('Gaphor Models'), 'pattern':'*.gaphor'},\
                    {'name':_('All Files'), 'pattern':'*'}]
 
@@ -373,8 +388,6 @@ class FileManager(object):
     @action(name='file-open', stock_id='gtk-open')
     def action_open(self):
         """This menu action opens the standard model open dialog."""
-
-        log.info('Opening file')
 
         filters = [{'name':_('Gaphor Models'), 'pattern':'*.gaphor'},\
                    {'name':_('All Files'), 'pattern':'*'}]
@@ -402,8 +415,6 @@ class FileManager(object):
         Returns True if the saving actually succeeded.
         """
 
-        log.info('Saving file')
-
         filename = self.filename
 
         if filename:
@@ -422,8 +433,6 @@ class FileManager(object):
 
         Returns True if the saving actually happened.
         """
-    
-        log.info('Saving file')
 
         file_dialog = FileDialog(_('Save Gaphor Model As'),\
                                  action='save',\
