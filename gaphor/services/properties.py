@@ -103,7 +103,7 @@ class Properties(object):
         
         self.logger.info('Getting property')
         self.logger.debug('Key is %s' % key)
-        self.logger.debug('Default is %s' % default)
+        self.logger.debug('Default is %s' % (default,))
         
         try:
             return self._resources[key]
@@ -122,7 +122,7 @@ class Properties(object):
         
         self.logger.info('Setting property')
         self.logger.debug('Key is %s' % key)
-        self.logger.debug('Value is %s' % value)
+        self.logger.debug('Value is %s' % (value,))
         
         resources = self._resources
         old_value = resources.get(key)
