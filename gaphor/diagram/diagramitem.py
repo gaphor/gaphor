@@ -152,8 +152,9 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
     dispatcher = inject('element_dispatcher')
 
     def __init__(self, id=None):
-
-        super(DiagramItem, self).__init__(self)
+        UML.Presentation.__init__(self)
+        EditableTextSupport.__init__(self)
+        StereotypeSupport.__init__(self)
 
         self._id = id
 
