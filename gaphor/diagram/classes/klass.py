@@ -85,16 +85,13 @@ class ClassItem(ClassifierItem):
         
         self.save_property(save_func, 'show-attributes')
         self.save_property(save_func, 'show-operations')
-        
-        super(ClassItem, self).save(save_func)
+        ClassifierItem.save(self, save_func)
 
     def postload(self):
         """Called once the ClassItem has been loaded.  First the ClassifierItem
         is "post-loaded", then the attributes and operations are
         synchronized."""
-        
         super(ClassItem, self).postload()
-        
         self.sync_attributes()
         self.sync_operations()
 
