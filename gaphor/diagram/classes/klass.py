@@ -49,8 +49,7 @@ class ClassItem(ClassifierItem):
         The drawing style is set here as well.  The class item will create
         two compartments - one for attributes and another for operations."""
         
-        super(ClassItem, self).__init__(id)
-        
+        ClassifierItem.__init__(self, id)
         self.drawing_style = self.DRAW_COMPARTMENT
         self._attributes = self.create_compartment('attributes')
         self._operations = self.create_compartment('operations')
