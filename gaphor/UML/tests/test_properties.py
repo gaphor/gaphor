@@ -440,6 +440,26 @@ class PropertiesTestCase(unittest.TestCase):
         e.a = a
         assert e.notified == True
 
+
+    def test_derivedunion_listmixins(self):
+        class A(Element): pass
+
+        A.a = association('a', A)
+        A.b = association('b', A)
+        A.u = derivedunion('u', A, 0, '*', A.a, A.b)
+        A.name = attribute('name', str, 'default')
+
+        a = A()
+        a.a = A()
+        a.a = A()
+        a.b = A()
+        a.a[0].name = 'foo'
+        a.a[1].name = 'bar'
+        a.b[0].name = 'baz'
+
+        assert list(a.a[:].name) == ['foo', 'bar']
+        assert list(a.u[:].name) == ['foo', 'bar', 'baz']
+
     def test_composite(self):
         class A(Element):
             is_unlinked = False

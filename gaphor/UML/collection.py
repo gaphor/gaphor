@@ -5,10 +5,10 @@
 import inspect
 from zope import component
 from event import AssociationChangeEvent
-from gaphor.misc.listmixins import querymixin, recursemixin, recurseproxy
+from gaphor.misc.listmixins import querymixin, recursemixin, recurseproxy, getslicefix
 
 
-class collectionlist(recursemixin, querymixin, list):
+class collectionlist(recursemixin, querymixin, getslicefix, list):
     """
     >>> c = collectionlist()
     >>> c.append('a')

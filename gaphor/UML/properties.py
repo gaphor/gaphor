@@ -27,7 +27,7 @@ methods:
 __all__ = [ 'attribute', 'enumeration', 'association', 'derivedunion', 'redefine' ]
 
 from zope import component
-from collection import collection
+from collection import collection, collectionlist
 from event import AttributeChangeEvent, AssociationSetEvent, \
                   AssociationAddEvent, AssociationDeleteEvent
 from event import DerivedChangeEvent, DerivedSetEvent, \
@@ -614,7 +614,7 @@ class derivedunion(derived):
                     except TypeError:
                         # [0..1] property
                         u.add(tmp)
-            return u
+            return collectionlist(u)
 
     # Filter is our default filter
     filter = _union
