@@ -6,6 +6,7 @@ import os
 import pprint
 from zope import interface
 
+from gaphor.core import inject
 from gaphor.misc.logger import Logger
 from gaphor.interfaces import IService
 from gaphas.decorators import async
@@ -40,6 +41,9 @@ class Properties(object):
     Properties are persisted to the local file system."""
     
     interface.implements(IService)
+
+    component_registry = inject('component_registry')
+
     logger = Logger(name='PROPERTIES')
 
     def __init__(self, backend=None):
@@ -47,7 +51,6 @@ class Properties(object):
         dictionary for storing properties in memory, and the storage backend.
         This defaults to FileBackend"""
         
-        self._app = None
         self._resources = {}
         self._backend = backend or FileBackend()
 
@@ -57,7 +60,6 @@ class Properties(object):
         
         self.logger.info('Starting')
         
-        self._app = app
         self._backend.load(self._resources)
     
     def shutdown(self):
@@ -129,7 +131,7 @@ class Properties(object):
         
         if value != old_value:
             resources[key] = value
-            self._app.handle(PropertyChangeEvent(key, old_value, value))
+            self.component_registry.handle(PropertyChangeEvent(key, old_value, value))
             self._backend.update(resources, key, value)
 
 class FileBackend(object):

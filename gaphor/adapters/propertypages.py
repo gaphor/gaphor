@@ -29,7 +29,6 @@ TODO:
 import gobject
 import gtk
 from gaphor.core import _, inject, transactional
-from gaphor.application import Application
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items

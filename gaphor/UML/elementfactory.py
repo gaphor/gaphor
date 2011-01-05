@@ -6,6 +6,7 @@ Factory for and registration of model elements.
 from zope import interface
 from zope import component
 import uuid
+from gaphor.core import inject
 from gaphor.misc import odict
 from gaphor.interfaces import IService, IEventFilter
 from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
@@ -51,28 +52,26 @@ class ElementFactory(object):
     """
     interface.implements(IService)
 
+    component_registry = inject('component_registry')
+
     def __init__(self):
         self._elements = odict.odict()
         self._observers = list()
-        self._app = None
 
     def init(self, app):
-        self._app = app
-        app.register_handler(self._element_deleted)
+        self.component_registry.register_handler(self._element_deleted)
 
     def shutdown(self):
         # unregister after flush: the handler is needed to empty the _elements
         self.flush()
-        if self._app:
-            self._app.unregister_handler(self._element_deleted)
+        self.component_registry.unregister_handler(self._element_deleted)
 
     def create(self, type):
         """
         Create a new model element of type ``type``.
         """
         obj = self.create_as(type, str(uuid.uuid1()))
-        if self._app:
-            self._app.handle(ElementCreateEvent(self, obj))
+        self.component_registry.handle(ElementCreateEvent(self, obj))
         return obj
 
     def create_as(self, type, id):
@@ -173,10 +172,7 @@ class ElementFactory(object):
         """
         Returns True if the factory holds no elements.
         """
-        if self._elements:
-            return False
-        else:
-            return True
+        return bool(self._elements)
 
 
     def flush(self):
@@ -190,30 +186,26 @@ class ElementFactory(object):
         the ElementChangedEventBlocker adapter is unregistered if the factory
         has an application instance."""
         
-        app = self._app
-        
-        if app:
-            app.handle(FlushFactoryEvent(self))
-            app.register_subscription_adapter(ElementChangedEventBlocker)
+        self.component_registry.handle(FlushFactoryEvent(self))
+        self.component_registry.register_subscription_adapter(ElementChangedEventBlocker)
 
         try:
             for element in self.lselect(lambda e: isinstance(e, Diagram)):
                 element.canvas.block_updates = True
                 element.unlink()
-                if app:
-                    self._element_deleted(ElementDeleteEvent(self, element))
-                else:
-                    app.handle(ElementDeleteEvent(self, element))
+                #if app:
+                #    self._element_deleted(ElementDeleteEvent(self, element))
+                #else:
+                self.component_registry.handle(ElementDeleteEvent(self, element))
                     
             for element in self.lselect():
                 element.unlink()
-                if app:
-                    app.handle(ElementDeleteEvent(self, element))
-                else:
-                    self._element_deleted(ElementDeleteEvent(self, element))
+                #if app:
+                self.component_registry.handle(ElementDeleteEvent(self, element))
+                #else:
+                #    self._element_deleted(ElementDeleteEvent(self, element))
         finally:
-            if app:
-                app.unregister_subscription_adapter(ElementChangedEventBlocker)
+            self.component_registry.unregister_subscription_adapter(ElementChangedEventBlocker)
 
     def swap_element(self, element, new_class):
 	assert element in self._elements.values()
@@ -226,8 +218,7 @@ class ElementFactory(object):
         Send notification that a new model has been loaded by means of the
         ModelFactoryEvent event from gaphor.UML.event.
         """
-        if self._app:
-            self._app.handle(ModelFactoryEvent(self))
+        self.component_registry.handle(ModelFactoryEvent(self))
 
 
     @component.adapter(IElementDeleteEvent)

@@ -5,7 +5,6 @@ from NamedElement.
 
 from gaphor import UML
 from gaphor.UML.interfaces import IAttributeChangeEvent
-from gaphor.application import Application
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 

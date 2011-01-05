@@ -36,7 +36,7 @@ class BackupService(object):
 
 
     def init(self, app):
-        self._app = app
+        pass
 
 
     def shutdown(self):

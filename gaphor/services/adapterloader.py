@@ -12,7 +12,6 @@ class AdapterLoader(object):
     interface.implements(IService)
 
     def init(self, app):
-        self._app = app
         import gaphor.adapters
         import gaphor.adapters.connectors
         import gaphor.adapters.editors

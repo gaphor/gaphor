@@ -12,6 +12,7 @@ class Alignment(object):
 
     interface.implements(IService, IActionProvider)
 
+    component_registry = inject('component_registry')
     gui_manager = inject('gui_manager')
 
     menu_xml = """
@@ -37,11 +38,10 @@ class Alignment(object):
         self._last_update = None
 
     def init(self, app):
-	self._app = app
-        app.register_handler(self.update)
+        self.component_registry.register_handler(self.update)
     
     def shutdown(self):
-        self._app.unregister_handler(self.update)
+        self.component_registry.unregister_handler(self.update)
 
     @component.adapter(IDiagramSelectionChange)
     def update(self, event=None):
