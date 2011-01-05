@@ -15,7 +15,6 @@ from zope import component
 from gaphor.misc.logger import Logger
 from gaphor.interfaces import IService, IEventFilter
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
-import gaphor.UML
 
 logger = Logger()
 
