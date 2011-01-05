@@ -22,8 +22,6 @@ class GUIManager(object):
     main_window = property(lambda s: s._main_window)
 
     def init(self, app):
-        self._app = app
-
         #self.init_pygtk()
         self.init_stock_icons()
         self.init_ui_components()

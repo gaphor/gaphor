@@ -29,6 +29,7 @@ class CopyService(object):
 
     interface.implements(IService, IActionProvider)
 
+    component_registry = inject('component_registry')
     element_factory = inject('element_factory')
     gui_manager = inject('gui_manager')
 
@@ -50,15 +51,14 @@ class CopyService(object):
         self.action_group = build_action_group(self)
 
     def init(self, app):
-        self._app = app
         self.action_group.get_action('edit-copy').props.sensitive = False
         self.action_group.get_action('edit-paste').props.sensitive = False
         
-        app.register_handler(self._update)
+        self.component_registry.register_handler(self._update)
 
     def shutdown(self):
         self.copy_buffer = set()
-        self._app.unregister_handler(self._update)
+        self.component_registry.unregister_handler(self._update)
 
     @component.adapter(IDiagramSelectionChange)
     def _update(self, event):

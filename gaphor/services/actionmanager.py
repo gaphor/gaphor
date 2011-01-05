@@ -17,11 +17,13 @@ class ActionManager(object):
     interface.implements(IService)
     logger = Logger(name='ACTIONMANAGER')
 
+    component_registry = inject('component_registry')
+
     def __init__(self):
         pass
 
+
     def init(self, app):
-        self._app = app
         self.ui_manager = gtk.UIManager()
         
         self.logger.info('Loading action provider services')
@@ -34,13 +36,13 @@ class ActionManager(object):
                 
                 self.register_action_provider(service)
 
-        app.register_handler(self._service_initialized_handler)
+        self.component_registry.register_handler(self._service_initialized_handler)
 
     def shutdown(self):
         
         self.logger.info('Shutting down')
         
-        self._app.unregister_handler(self._service_initialized_handler)
+        self.component_registry.unregister_handler(self._service_initialized_handler)
 
     def execute(self, action_id, active=None):
         
@@ -50,7 +52,7 @@ class ActionManager(object):
         a = self.get_action(action_id)
         if a:
             a.activate()
-            self._app.handle(ActionExecuted(action_id, a))
+            self.component_registry.handle(ActionExecuted(action_id, a))
         else:
             self.logger.warning('Unknown action %s' % action_id)
 
