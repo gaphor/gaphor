@@ -4,7 +4,7 @@ import sys
 import os
 import gtk
 from zope import interface
-from gaphor.application import Application
+from gaphor.core import inject
 from gaphor.interfaces import IActionProvider
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.action import action, build_action_group
@@ -15,6 +15,8 @@ from gaphor.misc import get_user_data_dir
 class ConsoleWindow(UtilityWindow):
     
     interface.implements(IActionProvider)
+
+    component_registry = inject('component_registry')
 
     menu_xml = """
         <ui>
@@ -38,7 +40,7 @@ class ConsoleWindow(UtilityWindow):
 
     def ui_component(self):
         console = GTKInterpreterConsole(locals={
-                'service': Application.get_service
+                'service': self.component_registry.get_service
                 })
         console.show()
         self.console = console

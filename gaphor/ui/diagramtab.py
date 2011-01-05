@@ -7,7 +7,6 @@ from zope import component
 from gaphas.view import GtkView
 from gaphor import UML
 from gaphor.core import _, inject, transactional, action, toggle_action, build_action_group
-from gaphor.application import Application
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.diagram import get_diagram_item
 from gaphor.diagram.items import DiagramItem
@@ -20,6 +19,7 @@ from gaphas import segment, guide
 
 class DiagramTab(object):
     
+    component_registry = inject('component_registry')
     element_factory = inject('element_factory')
     action_manager = inject('action_manager')
 
@@ -70,8 +70,8 @@ class DiagramTab(object):
         self.owning_window = owning_window
         self.action_group = build_action_group(self)
         self.toolbox = None
-        Application.register_handler(self._on_element_change)
-        Application.register_handler(self._on_element_delete)
+        self.component_registry.register_handler(self._on_element_change)
+        self.component_registry.register_handler(self._on_element_delete)
 
     title = property(lambda s: s.diagram and s.diagram.name or _('<None>'))
 
@@ -145,8 +145,8 @@ class DiagramTab(object):
         """
         self.owning_window.remove_tab(self)
         self.set_diagram(None)
-        Application.unregister_handler(self._on_element_delete)
-        Application.unregister_handler(self._on_element_change)
+        self.component_registry.unregister_handler(self._on_element_delete)
+        self.component_registry.unregister_handler(self._on_element_change)
         del self.view
 
 
@@ -267,7 +267,7 @@ class DiagramTab(object):
 
 
     def _on_view_selection_changed(self, view, selection_or_focus):
-        Application.handle(DiagramSelectionChange(view, view.focused_item, view.selected_items))
+        self.component_registry.handle(DiagramSelectionChange(view, view.focused_item, view.selected_items))
 
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):

@@ -21,7 +21,6 @@ from interfaces import IDiagramSelectionChange
 from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
 from gaphor.UML.event import ModelFactoryEvent
 from event import DiagramSelectionChange
-from gaphor.application import Application
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 
@@ -33,6 +32,7 @@ class MainWindow(ToplevelWindow):
     """
     interface.implements(IActionProvider)
 
+    component_registry = inject('component_registry')
     properties = inject('properties')
     element_factory = inject('element_factory')
     action_manager = inject('action_manager')
@@ -290,9 +290,10 @@ class MainWindow(ToplevelWindow):
         self.window.connect('destroy', self._on_window_destroy)
         self.window.connect_after('key-press-event', self._on_key_press_event)
 
-        Application.register_handler(self._on_file_manager_state_changed)
-        Application.register_handler(self._on_undo_manager_state_changed)
-        Application.register_handler(self._new_model_content)
+        cr = self.component_registry
+        cr.register_handler(self._on_file_manager_state_changed)
+        cr.register_handler(self._on_undo_manager_state_changed)
+        cr.register_handler(self._new_model_content)
 
 
     def open_welcome_page(self):
@@ -463,9 +464,10 @@ class MainWindow(ToplevelWindow):
         self.window = None
         if gobject.main_depth() > 0:
             gtk.main_quit()
-        Application.unregister_handler(self._on_undo_manager_state_changed)
-        Application.unregister_handler(self._on_file_manager_state_changed)
-        Application.unregister_handler(self._new_model_content)
+        cr = self.component_registry
+        cr.unregister_handler(self._on_undo_manager_state_changed)
+        cr.unregister_handler(self._on_file_manager_state_changed)
+        cr.unregister_handler(self._new_model_content)
 
     def _on_tab_close_button_pressed(self, event, tab):
         tab.close()
@@ -544,7 +546,7 @@ class MainWindow(ToplevelWindow):
         self._update_toolbox(tab.toolbox.action_group)
 
         # Make sure everyone knows the selection has changed.
-        Application.handle(DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
+        self.component_registry.handle(DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
 
 
     def _on_window_size_allocate(self, window, allocation):
@@ -584,8 +586,8 @@ class MainWindow(ToplevelWindow):
         # TODO: check for changes (e.g. undo manager), fault-save
         self.ask_to_close() and gtk.main_quit()
         self._tree_view.get_model().close()
-        Application.unregister_handler(self._on_file_manager_state_changed)
-        Application.unregister_handler(self._new_model_content)
+        self.component_registry.unregister_handler(self._on_file_manager_state_changed)
+        self.component_registry.unregister_handler(self._new_model_content)
 
 
     @action(name='tree-view-open', label='_Open')
