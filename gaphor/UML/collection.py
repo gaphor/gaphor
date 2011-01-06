@@ -3,7 +3,6 @@
 """
 
 import inspect
-from zope import component
 from event import AssociationChangeEvent
 from gaphor.misc.listmixins import querymixin, recursemixin, recurseproxy, getslicefix
 
@@ -238,7 +237,9 @@ class collection(object):
             self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
 
             # send a notification that this list has changed
-            component.handle(AssociationChangeEvent(self.object, self.property))
+            factory = self.object.factory
+            if factory:
+                factory._handle(AssociationChangeEvent(self.object, self.property))
             return True
         except IndexError, ex:
             return False

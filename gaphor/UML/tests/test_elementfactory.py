@@ -140,25 +140,5 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
         ef.flush()
         self.assertTrue(IFlushFactoryEvent.providedBy(last_event) )
 
-    def test_deriveduntion_notify(self):
-        from gaphor.UML.properties import association, derivedunion
-        from gaphor.UML.element import Element
-        
-        class A(Element): pass
-        class E(Element):
-            notified=False
-            def notify(self, name, pspec):
-                if name == 'u':
-                    self.notified = True
-
-        E.a = association('a', A)
-        E.u = derivedunion('u', A, 0, '*', E.a)
-
-        e = self.factory.create(E)
-        assert e.notified == False
-        e.a = self.factory.create(A)
-        assert e.notified == True
-
-
 
 # vim:sw=4:et:ai
