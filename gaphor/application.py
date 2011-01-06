@@ -49,7 +49,7 @@ class _Application(object):
         self.init_all_services()
         if opt_parser:
             self.options, self.args = opt_parser.parse_args()
-        
+            
             Logger.log_level = Logger.level_map[self.options.logging]
         
 
@@ -73,7 +73,7 @@ class _Application(object):
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
             cls = ep.load()
             if not IService.implementedBy(cls):
-                raise 'MisConfigurationException', 'Entry point %s doesn''t provide IService' % ep.name
+                raise NameError, 'Entry point %s doesn''t provide IService' % ep.name
             if not services or ep.name in services:
                 logger.debug('found service entry point "%s"' % ep.name)
                 srv = cls()
