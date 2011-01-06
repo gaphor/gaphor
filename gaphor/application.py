@@ -46,9 +46,10 @@ class _Application(object):
         self.opt_parser = opt_parser
         self.load_services(services)
         self.init_all_services()
-        self.options, self.args = self.opt_parser.parse_args()
-        
-        Logger.log_level = Logger.level_map[self.options.logging]
+        if opt_parser:
+            self.options, self.args = self.opt_parser.parse_args()
+            
+            Logger.log_level = Logger.level_map[self.options.logging]
         
     def init_components(self):
         """

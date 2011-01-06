@@ -241,7 +241,7 @@ class ElementDispatcher(object):
         try:
             del handlers[handler]
         except KeyError:
-            logger.warning('Handler %s is not registered for %s.%s' % (handler, element, property))
+            self.logger.warning('Handler %s is not registered for %s.%s' % (handler, element, property))
 
         if not handlers:
             del self._handlers[key]
