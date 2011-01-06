@@ -28,7 +28,7 @@ class ActionManager(object):
         
         self.logger.info('Loading action provider services')
         
-        for name, service in component.getUtilitiesFor(IService):
+        for name, service in self.component_registry.get_utilities(IService):
             
             if IActionProvider.providedBy(service):
                 

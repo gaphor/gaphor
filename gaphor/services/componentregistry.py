@@ -34,15 +34,19 @@ class ZopeComponentRegistry(object):
         # Make sure component.handle() and query methods works.
         # TODO: eventually all queries should be done through the Application
         # instance.
+        # Used in collection.py, transaction.py, diagramtoolbox.py:
         component.handle = self.handle
-        component.getMultiAdapter = self._components.getMultiAdapter
+        #component.getMultiAdapter = self._components.getMultiAdapter
+        # Used all over the place:
         component.queryMultiAdapter = self._components.queryMultiAdapter
-        component.getAdapter = self._components.getAdapter
-        component.queryAdapter = self._components.queryAdapter
+        #component.getAdapter = self._components.getAdapter
+        #component.queryAdapter = self._components.queryAdapter
+        # Used in propertyeditor.py:
         component.getAdapters = self._components.getAdapters
-        component.getUtility = self._components.getUtility
+        #component.getUtility = self._components.getUtility
+        # Used in test cases (test_application.py)
         component.queryUtility = self._components.queryUtility
-        component.getUtilitiesFor = self._components.getUtilitiesFor
+        #component.getUtilitiesFor = self._components.getUtilitiesFor
 
 
     def shutdown(self):
@@ -98,6 +102,17 @@ class ZopeComponentRegistry(object):
         """
         self._components.unregisterAdapter(factory,
                               required, provided, name)
+
+    def get_adapter(self, objects, interface):
+        """
+        Obtain an adapter that adheres to a specific interface. Objects can be either
+        a single object or a tuple of objects (multi adapter).
+
+        If nothing is found `None` is returned.
+        """
+        if isinstance(objects, (list, tuple)):
+            return self._components.queryMultiAdapter(objects, interface)
+        return self._components.queryAdapter(objects, interface)
 
     def register_subscription_adapter(self, factory, adapts=None, provides=None):
         """
