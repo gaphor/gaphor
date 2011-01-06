@@ -5,11 +5,9 @@ Base class for UML model elements.
 
 __all__ = [ 'Element' ]
 
-import types, mutex
-from zope import component
-from event import ElementDeleteEvent
+import mutex
 import uuid
-from properties import umlproperty, association
+from properties import umlproperty
 
 
 class Element(object):
@@ -95,7 +93,8 @@ class Element(object):
             try:
                 for prop in self.umlproperties():
                     prop.unlink(self)
-                component.handle(ElementDeleteEvent(self._factory, self))
+                if self._factory:
+                    self._factory._unlink_element(self)
             finally:
                 self.__in_unlink.unlock()
 

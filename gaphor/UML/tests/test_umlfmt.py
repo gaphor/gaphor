@@ -14,12 +14,10 @@ factory = ElementFactory()
 class AttributeTestCase(unittest.TestCase):
 
     def setUp(self):
-        factory.init(Application)
-        factory.flush()
-
+        pass
 
     def tearDown(self):
-        factory.shutdown()
+        factory.flush()
 
 
     def test_simple_format(self):

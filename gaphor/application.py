@@ -48,8 +48,8 @@ class _Application(object):
         self.load_services(services)
         self.init_all_services()
         if opt_parser:
-            self.options, self.args = self.opt_parser.parse_args()
-            
+            self.options, self.args = opt_parser.parse_args()
+        
             Logger.log_level = Logger.level_map[self.options.logging]
         
 

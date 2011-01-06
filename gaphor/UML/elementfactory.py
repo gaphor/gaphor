@@ -18,25 +18,6 @@ from gaphor.UML.element import Element
 from gaphor.UML.diagram import Diagram
 
 
-class ElementChangedEventBlocker(object):
-    """
-    Blocks all events of type IElementChangeEvent.
-
-    This filter is placed when the the element factory flushes it's content.
-    """
-    component.adapts(IElementChangeEvent)
-    interface.implements(IEventFilter)
-
-    def __init__(self, event):
-        self._event = event
-
-    def filter(self):
-        """
-        Return the event or None if the event is not to be emitted.
-        """
-        return 'Blocked by ElementFactory.flush()'
-
-
 class ElementFactory(object):
     """
     The ElementFactory is used to create elements and do lookups to
@@ -50,28 +31,15 @@ class ElementFactory(object):
     flush - model is flushed: all element are removed from the factory
             (element is None)
     """
-    interface.implements(IService)
-
-    component_registry = inject('component_registry')
-
     def __init__(self):
         self._elements = odict.odict()
         self._observers = list()
-
-    def init(self, app):
-        self.component_registry.register_handler(self._element_deleted)
-
-    def shutdown(self):
-        # unregister after flush: the handler is needed to empty the _elements
-        self.flush()
-        self.component_registry.unregister_handler(self._element_deleted)
 
     def create(self, type):
         """
         Create a new model element of type ``type``.
         """
         obj = self.create_as(type, str(uuid.uuid1()))
-        self.component_registry.handle(ElementCreateEvent(self, obj))
         return obj
 
     def create_as(self, type, id):
@@ -176,6 +144,72 @@ class ElementFactory(object):
 
 
     def flush(self):
+        """Flush all elements (remove them from the factory). 
+        
+        Diagram elements are flushed first.  This is so that canvas updates
+        are blocked.  The remaining elements are then flushed.  Finally,
+        the ElementChangedEventBlocker adapter is unregistered if the factory
+        has an application instance."""
+        
+        flush_element = self._flush_element
+        for element in self.lselect(lambda e: isinstance(e, Diagram)):
+            element.canvas.block_updates = True
+            flush_element(element)
+                
+        for element in self.lselect():
+            flush_element(element)
+
+    def _flush_element(self, element):
+        element.unlink()
+
+    def _unlink_element(self, element):
+        """
+        NOTE: Invoked from Element.unlink() to perform an element unlink.
+        """
+        try:
+            del self._elements[element.id]
+        except KeyError:
+            pass
+
+    def swap_element(self, element, new_class):
+	assert element in self._elements.values()
+        if element.__class__ is not new_class:
+            element.__class__ = new_class
+
+    def _handle(self, event):
+        """
+        Handle events coming from elements.
+        """
+        # Invoke default handler, so properties get updated.
+        component.handle(event)
+
+
+class ElementFactoryService(ElementFactory):
+    """
+    Service version of the ElementFctory.
+    """
+    interface.implements(IService)
+
+    component_registry = inject('component_registry')
+
+    def init(self, app):
+        #self.component_registry.register_handler(self._element_deleted)
+        pass
+
+    def shutdown(self):
+        # unregister after flush: the handler is needed to empty the _elements
+        self.flush()
+        #self.component_registry.unregister_handler(self._element_deleted)
+
+    def create(self, type):
+        """
+        Create a new model element of type ``type``.
+        """
+        obj = super(ElementFactoryService, self).create(type)
+        self.component_registry.handle(ElementCreateEvent(self, obj))
+        return obj
+
+    def flush(self):
         """Flush all elements (remove them from the factory).  First test
         if the element factory has a Gaphor application instance.  If yes,
         the application will handle a FlushFactoryEvent and will register
@@ -190,28 +224,9 @@ class ElementFactory(object):
         self.component_registry.register_subscription_adapter(ElementChangedEventBlocker)
 
         try:
-            for element in self.lselect(lambda e: isinstance(e, Diagram)):
-                element.canvas.block_updates = True
-                element.unlink()
-                #if app:
-                #    self._element_deleted(ElementDeleteEvent(self, element))
-                #else:
-                self.component_registry.handle(ElementDeleteEvent(self, element))
-                    
-            for element in self.lselect():
-                element.unlink()
-                #if app:
-                self.component_registry.handle(ElementDeleteEvent(self, element))
-                #else:
-                #    self._element_deleted(ElementDeleteEvent(self, element))
+            super(ElementFactoryService, self).flush()
         finally:
             self.component_registry.unregister_subscription_adapter(ElementChangedEventBlocker)
-
-    def swap_element(self, element, new_class):
-	assert element in self._elements.values()
-        if element.__class__ is not new_class:
-            element.__class__ = new_class
-
 
     def notify_model(self):
         """
@@ -220,17 +235,38 @@ class ElementFactory(object):
         """
         self.component_registry.handle(ModelFactoryEvent(self))
 
+    def _unlink_element(self, element):
+        """
+        NOTE: Invoked from Element.unlink() to perform an element unlink.
+        """
+        self.component_registry.handle(ElementDeleteEvent(self, element))
+        super(ElementFactoryService, self)._unlink_element(element)
 
-    @component.adapter(IElementDeleteEvent)
-    def _element_deleted(self, event):
+    def _handle(self, event):
         """
-        Remove an element from the factory.
+        Handle events coming from elements (used internally).
         """
-        element = event.element
-        try:
-            del self._elements[element.id]
-        except KeyError:
-            pass
+        self.component_registry.handle(event)
+
+
+class ElementChangedEventBlocker(object):
+    """
+    Blocks all events of type IElementChangeEvent.
+
+    This filter is placed when the the element factory flushes it's content.
+    """
+    component.adapts(IElementChangeEvent)
+    interface.implements(IEventFilter)
+
+    def __init__(self, event):
+        self._event = event
+
+    def filter(self):
+        """
+        Return the event or None if the event is not to be emitted.
+        """
+        return 'Blocked by ElementFactory.flush()'
+
 
 
 # vim:sw=4:et
