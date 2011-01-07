@@ -139,7 +139,7 @@ It uses the GTK+ environment for user interaction.
     },
 
     setup_requires = [
-        'Sphinx >= 0.6.4',
+        'Sphinx >= 1.0.6',
         'nose >= 0.10.4',
         'setuptools-git >= 0.3.4'
     ],
