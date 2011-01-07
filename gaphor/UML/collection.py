@@ -92,7 +92,7 @@ class collection(object):
         if value in self.items:
             self.property.__delete__(self.object, value)
         else:
-            raise AttributeError, '%s not in collection' % value
+            raise ValueError, '%s not in collection' % value
 
 
     def index(self, key):
