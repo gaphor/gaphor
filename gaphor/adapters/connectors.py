@@ -161,10 +161,14 @@ class CommentLineElementConnect(AbstractConnect):
 
         if hct and oct:
             logger.debug('Disconnecting %s and %s' % (hct, oct))
-            if hct.subject and isinstance(oct.subject, UML.Comment):
-                del oct.subject.annotatedElement[hct.subject]
-            elif hct.subject and oct.subject:
-                del hct.subject.annotatedElement[oct.subject]
+            try:
+                if hct.subject and isinstance(oct.subject, UML.Comment):
+                    del oct.subject.annotatedElement[hct.subject]
+                elif hct.subject and oct.subject:
+                    del hct.subject.annotatedElement[oct.subject]
+            except ValueError:
+                logger.debug('Invoked CommentLineElementConnect.disconnect() for nonexistant relationship')
+                
         super(CommentLineElementConnect, self).disconnect(handle)
 
 component.provideAdapter(CommentLineElementConnect)
