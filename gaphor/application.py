@@ -18,6 +18,9 @@ from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 
 logger = Logger()
 
+class NotInitializedError(Exception):
+    pass
+
 class _Application(object):
     """
     The Gaphor application is started from the Application instance. It behaves
@@ -38,6 +41,7 @@ class _Application(object):
     def __init__(self):
         self._uninitialized_services = {}
         self._event_filter = None
+        self.component_registry = None
 
 
     def init(self, services=None, opt_parser=None):
@@ -111,6 +115,9 @@ class _Application(object):
                             doc='Get the PkgResources distribution for Gaphor')
 
     def get_service(self, name):
+        if not self.component_registry:
+            raise NotInitializedError('First call Application.init() to load services')
+
         try:
             return self.component_registry.get_service(name)
         except component.ComponentLookupError:

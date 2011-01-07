@@ -6,7 +6,7 @@ This module allows Gaphor to be launched from the command line.
 The main() function sets up the command-line options and arguments and
 passes them to the main Application instance."""
 
-__all__ = [ 'main', 'GaphorError' ]
+__all__ = [ 'main' ]
 
 from optparse import OptionParser
 import pygtk
@@ -15,15 +15,6 @@ from gaphor.application import Application
 
 pygtk.require('2.0')
 
-class GaphorError(Exception):
-    """Generic Gaphor exception."""
-    
-    def __init__(self, args=None):
-        """Constructor.  Initialize base exception and store passed
-        arguments."""
-
-        super(GaphorError, self).__init__()
-        self.args = args
 
 def launch():
     """Start the main application by initiating and running Application.

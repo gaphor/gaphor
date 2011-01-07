@@ -22,7 +22,7 @@ from gaphor.UML.collection import collection
 from gaphor.UML.elementfactory import ElementChangedEventBlocker
 from gaphor import diagram
 from gaphor.storage import parser
-from gaphor.application import Application
+from gaphor.application import Application, NotInitializedError
 from gaphor.diagram import items
 from gaphor.i18n import _
 #from gaphor.misc.xmlwriter import XMLWriter
@@ -305,7 +305,6 @@ def load(filename, factory, status_queue=None):
     Load a file and create a model if possible.
     Optionally, a status queue function can be given, to which the
     progress is written (as status_queue(progress)).
-    Exceptions: GaphorError.
     """
     for status in load_generator(filename, factory):
         if status_queue:
@@ -316,8 +315,6 @@ def load_generator(filename, factory):
     Load a file and create a model if possible.
     This function is a generator. It will yield values from 0 to 100 (%)
     to indicate its progression.
-
-    Exceptions: GaphorError.
     """
     if isinstance(filename, (file, InputType)):
         log.info('Loading file from file descriptor')
@@ -341,10 +338,16 @@ def load_generator(filename, factory):
         raise
 
     try:
+        component_registry = Application.get_service('component_registry')
+    except NotInitializedError:
+        component_registry = None
+
+    try:
         factory.flush()
         gc.collect()
         log.info("Read %d elements from file" % len(elements))
-        Application.register_subscription_adapter(ElementChangedEventBlocker)
+        if component_registry:
+            component_registry.register_subscription_adapter(ElementChangedEventBlocker)
         try:
             for percentage in load_elements_generator(elements, factory, gaphor_version):
                 if percentage:
@@ -352,9 +355,11 @@ def load_generator(filename, factory):
                 else:
                     yield percentage
         except Exception, e:
-            Application.unregister_subscription_adapter(ElementChangedEventBlocker)
             raise
-        Application.unregister_subscription_adapter(ElementChangedEventBlocker)
+        finally:
+            if component_registry:
+                component_registry.unregister_subscription_adapter(ElementChangedEventBlocker)
+
         gc.collect()
         yield 100
     except Exception, e:
