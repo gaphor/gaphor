@@ -57,7 +57,6 @@ class IActionProvider(interface.Interface):
     An action provider is a special service that provides actions
     (see gaphor/action.py) and the accompanying XML for the UI manager.
     """
-
     menu_xml = interface.Attribute("The menu XML")
 
     action_group = interface.Attribute("The accompanying ActionGroup")
@@ -68,19 +67,19 @@ class IActionExecutedEvent(interface.Interface):
     An event emited when an action has been performed.
     """
     name = interface.Attribute("Name of the action performed, if any")
+
     action = interface.Attribute("The performed action")
 
 
 class IEventFilter(interface.Interface):
     """
-    Filter events when they're about to be handled. Events can be changed or
-    blocked.
+    Filter events when they're about to be handled.
     """
 
     def filter(self):
         """
         Return a value (e.g. message/reason) why the event is filtered.
-        Returning `None` or `False` will propagate event emission.
+        Returning `None` or `False` will propagate the event.
         """
 
 

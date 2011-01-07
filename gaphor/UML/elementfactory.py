@@ -147,9 +147,8 @@ class ElementFactory(object):
         """Flush all elements (remove them from the factory). 
         
         Diagram elements are flushed first.  This is so that canvas updates
-        are blocked.  The remaining elements are then flushed.  Finally,
-        the ElementChangedEventBlocker adapter is unregistered if the factory
-        has an application instance."""
+        are blocked.  The remaining elements are then flushed.
+        """
         
         flush_element = self._flush_element
         for element in self.lselect(lambda e: isinstance(e, Diagram)):
@@ -193,13 +192,10 @@ class ElementFactoryService(ElementFactory):
     component_registry = inject('component_registry')
 
     def init(self, app):
-        #self.component_registry.register_handler(self._element_deleted)
         pass
 
     def shutdown(self):
-        # unregister after flush: the handler is needed to empty the _elements
         self.flush()
-        #self.component_registry.unregister_handler(self._element_deleted)
 
     def create(self, type):
         """
@@ -263,7 +259,7 @@ class ElementChangedEventBlocker(object):
 
     def filter(self):
         """
-        Return the event or None if the event is not to be emitted.
+        Returns something that evaluates to `True` so events are blocked.
         """
         return 'Blocked by ElementFactory.flush()'
 
