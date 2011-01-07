@@ -152,7 +152,7 @@ class AssociationConnect(RelationshipConnect):
 
         UML.model.set_navigability(line.subject, end.subject, None) # clear old data
 
-        end.subject.type = c.subject
+        oend.subject.type = c.subject
         UML.model.set_navigability(line.subject, oend.subject, nav)
 
 
