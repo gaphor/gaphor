@@ -27,7 +27,6 @@ class ZopeComponentRegistry(object):
         pass
 
     def init(self, app):
-        self._app = app
         self._components = component.registry.Components(
                                name='component_registry',
                                bases=(component.getGlobalSiteManager(),))
@@ -35,22 +34,28 @@ class ZopeComponentRegistry(object):
         # Make sure component.handle() and query methods works.
         # TODO: eventually all queries should be done through the Application
         # instance.
-        
-        # NOTE: We do not want those statements here, as they polute the
-        # environment. Stuff should inject() 'component_registry' instead.
-        #component.handle = self.handle
+        # Used in collection.py, transaction.py, diagramtoolbox.py:
+        component.handle = self.handle
         #component.getMultiAdapter = self._components.getMultiAdapter
-        #component.queryMultiAdapter = self._components.queryMultiAdapter
+        # Used all over the place:
+        component.queryMultiAdapter = self._components.queryMultiAdapter
         #component.getAdapter = self._components.getAdapter
         #component.queryAdapter = self._components.queryAdapter
-        #component.getAdapters = self._components.getAdapters
+        # Used in propertyeditor.py:
+        component.getAdapters = self._components.getAdapters
         #component.getUtility = self._components.getUtility
-        #component.queryUtility = self._components.queryUtility
+        # Used in test cases (test_application.py)
+        component.queryUtility = self._components.queryUtility
         #component.getUtilitiesFor = self._components.getUtilitiesFor
 
 
     def shutdown(self):
-        self._app = None
+        pass
+
+
+    def get_service(self, name):
+        return self.get_utility(IService, name)
+
 
     # Wrap zope.component's Components methods
 
@@ -98,6 +103,17 @@ class ZopeComponentRegistry(object):
         self._components.unregisterAdapter(factory,
                               required, provided, name)
 
+    def get_adapter(self, objects, interface):
+        """
+        Obtain an adapter that adheres to a specific interface. Objects can be either
+        a single object or a tuple of objects (multi adapter).
+
+        If nothing is found `None` is returned.
+        """
+        if isinstance(objects, (list, tuple)):
+            return self._components.queryMultiAdapter(objects, interface)
+        return self._components.queryAdapter(objects, interface)
+
     def register_subscription_adapter(self, factory, adapts=None, provides=None):
         """
         Register a subscription adapter. See registerAdapter().
@@ -112,6 +128,9 @@ class ZopeComponentRegistry(object):
         """
         self._components.unregisterSubscriptionAdapter(factory,
                               required, provided, name)
+
+    def subscribers(self, objects, interface):
+        return self._components.subscribers(objects, interface)
 
     def register_handler(self, factory, adapts=None):
         """

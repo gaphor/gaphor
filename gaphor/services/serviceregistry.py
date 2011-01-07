@@ -19,15 +19,15 @@ class ServiceRegistry(object):
     def __init__(self):
         self._uninitialized_services = {}
 
+
     def init(self, app=None):
-        
         self.logger.info('Starting')
         
-        self._app = app
 
     def shutdown(self):
         
         self.logger.info('Shutting down')
+
 
     def load_services(self, services=None):
         """

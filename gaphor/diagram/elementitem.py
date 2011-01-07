@@ -6,8 +6,6 @@ import gobject
 import cairo
 import gaphas
 from zope import component
-from gaphor.application import Application
-#from gaphor.UML.event import ElementDeleteEvent
 from diagramitem import DiagramItem
 from gaphor.diagram.style import get_text_point
 
@@ -53,26 +51,6 @@ class ElementItem(gaphas.Element, DiagramItem):
     def teardown_canvas(self):
         gaphas.Element.teardown_canvas(self)
         self.unregister_handlers()
-
-
-#    def register_handlers(self):
-#	super(ElementItem, self).register_handlers()
-#	Application.register_handler(self._on_element_delete)
-
-
-#    def unregister_handlers(self):
-#	super(ElementItem, self).unregister_handlers()
-#	Application.unregister_handler(self._on_element_delete)
-
-
-## TODO: Not working anymore. subject is already cleared
-#    @component.adapter(ElementDeleteEvent)
-#    def _on_element_delete(self, event):
-#	"""
-#	Delete the item if the subject is deleted.
-#	"""
-#	if event and event.element is self.subject:
-#	    self.unlink()
 
 
     def pre_update(self, context):

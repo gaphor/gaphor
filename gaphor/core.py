@@ -17,8 +17,8 @@ class inject(object):
 
     Usage::
 
-      class A(object):
-        gui_manager = inject('gui_manager')
+    >>>  class A(object):
+    ...      gui_manager = inject('gui_manager')
     """
     
     def __init__(self, name):

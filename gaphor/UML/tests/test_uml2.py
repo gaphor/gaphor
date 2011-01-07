@@ -2,34 +2,28 @@
 import unittest
 
 import gaphor.UML as UML
-from gaphor.application import Application
 
 class Uml2TestCase(unittest.TestCase):
 
     def test_ids(self):
         factory = UML.ElementFactory()
-        factory.init(Application)
         c = factory.create(UML.Class)
         assert c.id
         p = factory.create_as(UML.Class, id=False)
         assert p.id is False, p.id
-        factory.shutdown()
 
 
     def test1(self):
         factory = UML.ElementFactory()
-        factory.init(Application)
         c = factory.create(UML.Class)
         p = factory.create(UML.Package)
         c.package = p
         self.assertEquals(c.package, p)
         self.assertEquals(c.namespace, p)
         self.failUnless(c in p.ownedElement)
-        factory.shutdown()
         
     def testOwnedMember_Unlink(self):
         factory = UML.ElementFactory()
-        factory.init(Application)
         c = factory.create(UML.Class)
         p = factory.create(UML.Package)
         c.package = p
@@ -37,8 +31,6 @@ class Uml2TestCase(unittest.TestCase):
         c.unlink()
 
         self.assertEquals([p], factory.lselect())
-
-        factory.shutdown()
 
 
     def test_lower_upper(self):
@@ -160,9 +152,7 @@ class Uml2TestCase(unittest.TestCase):
         assert e.ownedEnd.type is s
 
     def test_operation_parameter_deletion(self):
-        from gaphor.application import Application
         factory = UML.ElementFactory()
-        factory.init(Application)
         self.assertEquals(0, len(factory.lselect()))
 
         c = factory.create(UML.Class)
@@ -174,8 +164,6 @@ class Uml2TestCase(unittest.TestCase):
         c.unlink()
 
         self.assertEquals(0, len(factory.lselect()), factory.lselect())
-
-        factory.shutdown()
 
 
 # vim:sw=4:et:ai

@@ -45,12 +45,11 @@ class AttributeTestCase(unittest.TestCase):
     Parsing an attribute tests.
     """
     def setUp(self):
-        factory.init(Application)
-        factory.flush()
+        pass
 
 
     def tearDown(self):
-        factory.shutdown()
+        factory.flush()
 
 
     def test_parse_property_simple(self):
@@ -101,12 +100,10 @@ class AssociationEndTestCase(unittest.TestCase):
     Parsing association end tests.
     """
     def setUp(self):
-        factory.init(Application)
-        factory.flush()
-
+        pass
 
     def tearDown(self):
-        factory.shutdown()
+        factory.flush()
 
     def test_parse_association_end(self):
         """Test parsing of association end

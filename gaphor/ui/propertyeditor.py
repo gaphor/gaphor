@@ -5,8 +5,7 @@
 import gtk
 from zope import interface, component
 
-from gaphor.core import _
-from gaphor.application import Application
+from gaphor.core import _, inject
 from gaphor.UML.interfaces import IElementCreateEvent, IAssociationChangeEvent
 from gaphor.UML import Presentation
 from interfaces import IPropertyPage, IDiagramSelectionChange
@@ -20,6 +19,8 @@ class PropertyEditor(object):
     TODO: Save expanded pages
     """
 
+    component_registry = inject('component_registry')
+
     def __init__(self):
         super(PropertyEditor, self).__init__()
         self._current_item = None
@@ -32,9 +33,9 @@ class PropertyEditor(object):
         self._selection_change()
 
         # Make sure we recieve 
-        Application.register_handler(self._selection_change)
-        Application.register_handler(self._element_changed)
-        #Application.register_handler(self._new_item_on_diagram)
+        self.component_registry.register_handler(self._selection_change)
+        self.component_registry.register_handler(self._element_changed)
+        #self.component_registry.register_handler(self._new_item_on_diagram)
         
         return self.vbox
 

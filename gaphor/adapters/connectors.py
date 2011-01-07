@@ -161,10 +161,14 @@ class CommentLineElementConnect(AbstractConnect):
 
         if hct and oct:
             logger.debug('Disconnecting %s and %s' % (hct, oct))
-            if hct.subject and isinstance(oct.subject, UML.Comment):
-                del oct.subject.annotatedElement[hct.subject]
-            elif hct.subject and oct.subject:
-                del hct.subject.annotatedElement[oct.subject]
+            try:
+                if hct.subject and isinstance(oct.subject, UML.Comment):
+                    del oct.subject.annotatedElement[hct.subject]
+                elif hct.subject and oct.subject:
+                    del hct.subject.annotatedElement[oct.subject]
+            except ValueError:
+                logger.debug('Invoked CommentLineElementConnect.disconnect() for nonexistant relationship')
+                
         super(CommentLineElementConnect, self).disconnect(handle)
 
 component.provideAdapter(CommentLineElementConnect)
@@ -187,7 +191,8 @@ class CommentLineLineConnect(AbstractConnect):
         connected_to = self.get_connected(opposite)
 
         # do not connect to the same item nor connect to other comment line
-        if connected_to is element or isinstance(element, items.CommentLineItem):
+        if connected_to is element or not element.subject or \
+                isinstance(element, items.CommentLineItem):
             return None
 
         # Same goes for subjects:
@@ -195,6 +200,8 @@ class CommentLineLineConnect(AbstractConnect):
                 (not (connected_to.subject or element.subject)) \
                  and connected_to.subject is element.subject:
             return None
+
+        print 'Connecting', element, 'with', element.subject
 
         # One end should be connected to a CommentItem:
         cls = items.CommentItem

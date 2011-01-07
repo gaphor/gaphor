@@ -113,6 +113,8 @@ class ElementDispatcher(object):
     interface.implements(IService)
     logger = Logger(name='ELEMENTDISPATCHER')
 
+    component_registry = inject('component_registry')
+
     def __init__(self):
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
@@ -124,15 +126,13 @@ class ElementDispatcher(object):
 
 
     def init(self, app):
-        self._app = app
-        app.register_handler(self.on_model_loaded)
-        app.register_handler(self.on_element_change_event)
+        self.component_registry.register_handler(self.on_model_loaded)
+        self.component_registry.register_handler(self.on_element_change_event)
 
 
     def shutdown(self):
-        self._app.unregister_handler(self.on_element_change_event)
-        self._app.unregister_handler(self.on_model_loaded)
-        self._app = None
+        self.component_registry.unregister_handler(self.on_element_change_event)
+        self.component_registry.unregister_handler(self.on_model_loaded)
 
 
     def _path_to_properties(self, element, path):

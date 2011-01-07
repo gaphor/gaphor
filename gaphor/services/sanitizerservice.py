@@ -20,9 +20,11 @@ class SanitizerService(object):
     """
     interface.implements(IService)
 
+    logger = Logger(name='SANITIZER')
+
+    component_registry = inject('component_registry')
     element_factory = inject('element_factory')
     property_dispatcher = inject('property_dispatcher')
-    logger = Logger(name='SANITIZER')
 
     def __init__(self):
         pass
@@ -31,20 +33,19 @@ class SanitizerService(object):
         
         self.logger.info('Starting')
         
-        self._app = app
-        app.register_handler(self._unlink_on_presentation_delete)
-        app.register_handler(self._unlink_on_stereotype_delete)
-        app.register_handler(self._unlink_on_extension_delete)
-        app.register_handler(self._disconnect_extension_end)
+        self.component_registry.register_handler(self._unlink_on_presentation_delete)
+        self.component_registry.register_handler(self._unlink_on_stereotype_delete)
+        self.component_registry.register_handler(self._unlink_on_extension_delete)
+        self.component_registry.register_handler(self._disconnect_extension_end)
 
     def shutdown(self):
         
         self.logger.info('Shutting down')
         
-        self._app.unregister_handler(self._unlink_on_presentation_delete)
-        self._app.unregister_handler(self._unlink_on_stereotype_delete)
-        self._app.unregister_handler(self._unlink_on_extension_delete)
-        self._app.unregister_handler(self._disconnect_extension_end)
+        self.component_registry.unregister_handler(self._unlink_on_presentation_delete)
+        self.component_registry.unregister_handler(self._unlink_on_stereotype_delete)
+        self.component_registry.unregister_handler(self._unlink_on_extension_delete)
+        self.component_registry.unregister_handler(self._disconnect_extension_end)
         
 
     @component.adapter(IAssociationDeleteEvent)

@@ -23,7 +23,7 @@ class EventDispatcher(object):
     interface.implements(IService)
     logger = Logger(name='EVENTDISPATCHER')
 
-#    component_registry = inject('component_registry')
+    component_registry = inject('component_registry')
 
 
     def __init__(self):
@@ -31,15 +31,13 @@ class EventDispatcher(object):
 
 
     def init(self, app=None):
-        self._app = app
-        app.register_handler(self._element_notify)
+        self.component_registry.register_handler(self._element_notify)
 
 
     def shutdown(self):
-        
         self.logger.info('Shutting down')
         
-        self._app.unregister_handler(self._element_notify)
+        self.component_registry.unregister_handler(self._element_notify)
         
     @component.adapter(IElementEvent)
     def _element_notify(self, event):
@@ -49,32 +47,8 @@ class EventDispatcher(object):
         """
         
         self.logger.info('Handling IElementEvent event')
-        self.logger.debug('App is %s' %self._app)
         
-        if self._app:
-            self._app.handle(event.element, event)
-
-
-#    def register_handler(self, factory, adapts=None):
-#        """
-#        Register a handler. Handlers are triggered (executed) when specific
-#        events are emitted through the handle() method.
-#        """
-#        self.component_registry.register_handler(factory, adapts)
-
-
-#    def unregister_handler(self, factory=None, required=None):
-#        """
-#        Unregister a previously registered handler.
-#        """
-#        self.component_registry.unregister_handler(factory, required)
-
-
-#    def fire(self, *events):
-#        """
-#        Send out one or more events.
-#        """
-#        self.component_registry.handle(events)
+        self.component_registry.handle(event.element, event)
 
 
 # vim:sw=4:et:ai

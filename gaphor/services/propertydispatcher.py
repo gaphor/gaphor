@@ -22,6 +22,8 @@ class PropertyDispatcher(object):
     interface.implements(IService)
     logger = Logger(name='PROPERTYDISPATCHER')
 
+    component_registry = inject('component_registry')
+
     def __init__(self):
         # Handlers is a dict of sets
         self._handlers = {}
@@ -30,15 +32,13 @@ class PropertyDispatcher(object):
         
         self.logger.info('Starting')
         
-        self._app = app
-        app.register_handler(self.on_element_change_event)
+        self.component_registry.register_handler(self.on_element_change_event)
 
     def shutdown(self):
         
         self.logger.info('Shutting down')
         
-        self._app.unregister_handler(self.on_element_change_event)
-        self._app = None
+        self.component_registry.unregister_handler(self.on_element_change_event)
 
     def register_handler(self, property, handler, exact=False):
         

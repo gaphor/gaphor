@@ -196,7 +196,7 @@ class HandleToolTestCase(unittest.TestCase):
         self.assertTrue(cinfo is None)
 
 
-    def test_connect_3(self):
+    def skiptest_connect_3(self):
         """Test connecting through events (button press/release, motion).
         """
         element_factory = Application.get_service('element_factory')

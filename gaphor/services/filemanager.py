@@ -37,6 +37,7 @@ class FileManager(object):
 
     interface.implements(IService, IActionProvider)
 
+    component_registry = inject('component_registry')
     element_factory = inject('element_factory')
     gui_manager = inject('gui_manager')
     properties = inject('properties')
@@ -91,7 +92,6 @@ class FileManager(object):
         action group in the file menu.  The list of recent
         Gaphor files is then updated in the file menu."""
     
-        self._app = app
         self.action_group = build_action_group(self)
 
         for name, label in (('file-recent-files', '_Recent files'),):
@@ -188,7 +188,7 @@ class FileManager(object):
         filename = self.recent_files[index]
 
         self.load(filename)
-        self._app.handle(FileManagerStateChanged(self))
+        self.component_registry.handle(FileManagerStateChanged(self))
         
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.  A status window
@@ -361,7 +361,7 @@ class FileManager(object):
         #main_window.select_element(diagram)
         #main_window.show_diagram(diagram)
 
-        self._app.handle(FileManagerStateChanged(self))
+        self.component_registry.handle(FileManagerStateChanged(self))
 
     @action(name='file-new-template', label=_('New from template'))
     def action_new_from_template(self):
@@ -382,7 +382,7 @@ class FileManager(object):
         if filename:
             self.load(filename)
             self.filename = None
-            self._app.handle(FileManagerStateChanged(self))
+            self.component_registry.handle(FileManagerStateChanged(self))
 
 
     @action(name='file-open', stock_id='gtk-open')
@@ -403,7 +403,7 @@ class FileManager(object):
 
         if filename:
             self.load(filename)
-            self._app.handle(FileManagerStateChanged(self))
+            self.component_registry.handle(FileManagerStateChanged(self))
 
 
     @action(name='file-save', stock_id='gtk-save')
@@ -419,7 +419,7 @@ class FileManager(object):
 
         if filename:
             self.save(filename)
-            self._app.handle(FileManagerStateChanged(self))
+            self.component_registry.handle(FileManagerStateChanged(self))
             return True
         else:
             return self.action_save_as()
@@ -444,7 +444,7 @@ class FileManager(object):
         
         if filename:
             self.save(filename)
-            self._app.handle(FileManagerStateChanged(self))
+            self.component_registry.handle(FileManagerStateChanged(self))
             return True
 
         return False

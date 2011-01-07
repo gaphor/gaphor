@@ -8,7 +8,6 @@ from gaphas.state import observed, reversible_property
 
 from gaphor.misc.logger import Logger
 from gaphor import UML
-from gaphor.application import Application
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.core import inject
 from gaphor.diagram import DiagramItemMeta

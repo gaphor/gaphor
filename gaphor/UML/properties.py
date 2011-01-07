@@ -36,11 +36,6 @@ from event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
 from interfaces import IElementChangeEvent, \
                        IAssociationChangeEvent, IAssociationSetEvent, \
                        IAssociationAddEvent, IAssociationDeleteEvent
-import operator
-import time
-
-# Stamping version time on derivedunions
-stamp = time.clock
 
 
 class umlproperty(object):
@@ -50,6 +45,9 @@ class umlproperty(object):
     The subclasses should define a ``name`` attribute that contains the name
     of the property. Derived properties (derivedunion and redefine) can be
     connected, they will be notified when the value changes.
+
+    In some cases properties call out and delegate actions to the ElementFactory,
+    for example in the case of event handling.
     """
 
     def __get__(self, obj, class_=None):
@@ -79,6 +77,12 @@ class umlproperty(object):
         """
         pass
 
+    def handle(self, event):
+        factory = event.element.factory
+        if factory:
+            factory._handle(event)
+        else:
+            component.handle(event)
 
 class attribute(umlproperty):
     """
@@ -129,7 +133,7 @@ class attribute(umlproperty):
             delattr(obj, self._name)
         else:
             setattr(obj, self._name, value)
-        component.handle(AttributeChangeEvent(obj, self, old, value))
+        self.handle(AttributeChangeEvent(obj, self, old, value))
 
     def _del(self, obj, value=None):
         old = self._get(obj)
@@ -139,7 +143,7 @@ class attribute(umlproperty):
         except AttributeError:
             pass
         else:
-            component.handle(AttributeChangeEvent(obj, self, old, self.default))
+            self.handle(AttributeChangeEvent(obj, self, old, self.default))
 
 
 class enumeration(umlproperty):
@@ -188,7 +192,7 @@ class enumeration(umlproperty):
             delattr(obj, self._name)
         else:
             setattr(obj, self._name, value)
-        component.handle(AttributeChangeEvent(obj, self, old, value))
+        self.handle(AttributeChangeEvent(obj, self, old, value))
 
     def _del(self, obj, value=None):
         old = self._get(obj)
@@ -197,7 +201,7 @@ class enumeration(umlproperty):
         except AttributeError:
             pass
         else:
-            component.handle(AttributeChangeEvent(obj, self, old, self.default))
+            self.handle(AttributeChangeEvent(obj, self, old, self.default))
 
 
 class association(umlproperty):
@@ -295,7 +299,7 @@ class association(umlproperty):
 
             if value is None:
                 if do_notify:
-                    component.handle(event)
+                    self.handle(event)
                 return
 
             setattr(obj, self._name, value)
@@ -325,7 +329,7 @@ class association(umlproperty):
             self.stub._set(value, obj)
 
         if do_notify:
-            component.handle(event)
+            self.handle(event)
 
     def _del(self, obj, value, from_opposite=False, do_notify=True):
         """
@@ -373,7 +377,7 @@ class association(umlproperty):
                     event = AssociationSetEvent(obj, self, value, None)
 
         if do_notify and event:
-            component.handle(event)
+            self.handle(event)
 
     def unlink(self, obj):
         values = self._get(obj)
@@ -564,19 +568,19 @@ class derived(umlproperty):
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
                     # Do a filter? Change to 
-                    component.handle(DerivedDeleteEvent(event.element, self, old_value))
-                    component.handle(DerivedAddEvent(event.element, self, new_value))
+                    self.handle(DerivedDeleteEvent(event.element, self, old_value))
+                    self.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationAddEvent.providedBy(event):
                     new_value = event.new_value
-                    component.handle(DerivedAddEvent(event.element, self, new_value))
+                    self.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationDeleteEvent.providedBy(event):
                     old_value = event.old_value
-                    component.handle(DerivedDeleteEvent(event.element, self, old_value))
+                    self.handle(DerivedDeleteEvent(event.element, self, old_value))
 
                 elif IAssociationChangeEvent.providedBy(event):
-                    component.handle(DerivedChangeEvent(event.element, self))
+                    self.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
             else:        
@@ -584,7 +588,7 @@ class derived(umlproperty):
                 # TODO: This is an error: [0..*] associations may be used for updating [0..1] associations
                 assert IAssociationSetEvent.providedBy(event)
                 old_value, new_value = event.old_value, event.new_value
-                component.handle(DerivedSetEvent(event.element, self, old_value, new_value))
+                self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
 
 
 class derivedunion(derived):
@@ -646,22 +650,22 @@ class derivedunion(derived):
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
                     if old_value and old_value not in values:
-                        component.handle(DerivedDeleteEvent(event.element, self, old_value))
+                        self.handle(DerivedDeleteEvent(event.element, self, old_value))
                     if new_value and new_value not in values:
-                        component.handle(DerivedAddEvent(event.element, self, new_value))
+                        self.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationAddEvent.providedBy(event):
                     new_value = event.new_value
                     if new_value not in values:
-                        component.handle(DerivedAddEvent(event.element, self, new_value))
+                        self.handle(DerivedAddEvent(event.element, self, new_value))
 
                 elif IAssociationDeleteEvent.providedBy(event):
                     old_value = event.old_value
                     if old_value not in values:
-                        component.handle(DerivedDeleteEvent(event.element, self, old_value))
+                        self.handle(DerivedDeleteEvent(event.element, self, old_value))
 
                 elif IAssociationChangeEvent.providedBy(event):
-                    component.handle(DerivedChangeEvent(event.element, self))
+                    self.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
             else:        
@@ -670,7 +674,7 @@ class derivedunion(derived):
                 # This is a [0..1] event
                 if self.single:
                     # Only one subset element, so pass the values on
-                    component.handle(DerivedSetEvent(event.element, self, old_value, new_value))
+                    self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
                 else:
                     new_values = set(values)
                     if new_value:
@@ -680,7 +684,7 @@ class derivedunion(derived):
                         return
                     if values:
                         new_value = iter(values).next()
-                    component.handle(DerivedSetEvent(event.element, self, old_value, new_value))
+                    self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
 
 
 class redefine(umlproperty):
@@ -766,11 +770,11 @@ class redefine(umlproperty):
         if event.property is self.original and isinstance(event.element, self.decl_class):
             # mimic the events for Set/Add/Delete
             if IAssociationSetEvent.providedBy(event):
-                component.handle(RedefineSetEvent(event.element, self, event.old_value, event.new_value))
+                self.handle(RedefineSetEvent(event.element, self, event.old_value, event.new_value))
             elif IAssociationAddEvent.providedBy(event):
-                component.handle(RedefineAddEvent(event.element, self, event.new_value))
+                self.handle(RedefineAddEvent(event.element, self, event.new_value))
             elif IAssociationDeleteEvent.providedBy(event):
-                component.handle(RedefineDeleteEvent(event.element, self, event.old_value))
+                self.handle(RedefineDeleteEvent(event.element, self, event.old_value))
             else:
                 log.error('Don''t know how to handle event ' + str(event) + ' for redefined association')
 

@@ -6,9 +6,7 @@ import unittest
 
 class TestCaseBase(unittest.TestCase):
     def setUp(self):
-        Application.init_components()
         self.factory = UML.ElementFactory()
-        self.factory.init(Application)
 
 
 class StereotypesTestCase(TestCaseBase):

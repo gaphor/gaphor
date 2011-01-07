@@ -33,11 +33,12 @@ class _Application(object):
     """
 
     # interface.implements(IApplication)
+    _ESSENTIAL_SERVICES = ['component_registry']
     
     def __init__(self):
         self._uninitialized_services = {}
-        self.init_components()
         self._event_filter = None
+
 
     def init(self, services=None, opt_parser=None):
         """
@@ -47,35 +48,14 @@ class _Application(object):
         self.load_services(services)
         self.init_all_services()
         if opt_parser:
-            self.options, self.args = self.opt_parser.parse_args()
+            self.options, self.args = opt_parser.parse_args()
             
             Logger.log_level = Logger.level_map[self.options.logging]
         
-    def init_components(self):
-        """
-        Initialize application level component registry.
 
-        Frequently used query methods are overridden on the zope.component
-        module.
-        """
-        #self._components = component.getGlobalSiteManager()
-        #return
-
-        self._components = component.registry.Components(name='app',
-                               bases=(component.getGlobalSiteManager(),))
-
-        # Make sure component.handle() and query methods works.
-        # TODO: eventually all queries should be done through the Application
-        # instance.
-        component.handle = self.handle
-        component.getMultiAdapter = self._components.getMultiAdapter
-        component.queryMultiAdapter = self._components.queryMultiAdapter
-        component.getAdapter = self._components.getAdapter
-        component.queryAdapter = self._components.queryAdapter
-        component.getAdapters = self._components.getAdapters
-        component.getUtility = self._components.getUtility
-        component.queryUtility = self._components.queryUtility
-        component.getUtilitiesFor = self._components.getUtilitiesFor
+    essential_services = property(lambda s: s._ESSENTIAL_SERVICES, doc= """
+        Provide an ordered list of services that need to be loaded first.
+        """)
 
     def load_services(self, services=None):
         """
@@ -84,16 +64,24 @@ class _Application(object):
         Services are registered as utilities in zope.component.
         Service should provide an interface gaphor.interfaces.IService.
         """
+        # Ensure essential services are always loaded.
+        if services:
+            for name in self.essential_services:
+               if name not in services:
+                    services.append(name)
+
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
-            logger.debug('found entry point service.%s' % ep.name)
             cls = ep.load()
             if not IService.implementedBy(cls):
-                raise 'MisConfigurationException', 'Entry point %s doesn''t provide IService' % ep.name
-            if services is None or ep.name in services:
+                raise NameError, 'Entry point %s doesn''t provide IService' % ep.name
+            if not services or ep.name in services:
+                logger.debug('found service entry point "%s"' % ep.name)
                 srv = cls()
                 self._uninitialized_services[ep.name] = srv
 
     def init_all_services(self):
+        for name in self.essential_services:
+            self.init_service(name)
         while self._uninitialized_services:
             self.init_service(self._uninitialized_services.iterkeys().next())
 
@@ -101,7 +89,7 @@ class _Application(object):
         """
         Initialize a not yet initialized service.
 
-        Raises ComponentLookupError if the service has nor been found
+        Raises ComponentLookupError if the service has not been found
         """
         try:
             srv = self._uninitialized_services.pop(name)
@@ -110,8 +98,13 @@ class _Application(object):
         else:
             logger.info('initializing service service.%s' % name)
             srv.init(self)
-            self._components.registerUtility(srv, IService, name)
-            self.handle(ServiceInitializedEvent(name, srv))
+
+            # Bootstrap symptoms
+            if name in self.essential_services:
+                setattr(self, name, srv)
+
+            self.component_registry.register_utility(srv, IService, name)
+            self.component_registry.handle(ServiceInitializedEvent(name, srv))
             return srv
 
     distribution = property(lambda s: pkg_resources.get_distribution('gaphor'),
@@ -119,87 +112,31 @@ class _Application(object):
 
     def get_service(self, name):
         try:
-            return self._components.getUtility(IService, name)
+            return self.component_registry.get_service(name)
         except component.ComponentLookupError:
             return self.init_service(name)
+
 
     def run(self):
         import gtk
         gtk.main()
 
+
     def shutdown(self):
-        for name, srv in self._components.getUtilitiesFor(IService):
-            srv.shutdown()
-            self.handle(ServiceShutdownEvent(name, srv))
-            self._components.unregisterUtility(srv, IService, name)
+        for name, srv in self.component_registry.get_utilities(IService):
+            if name not in self.essential_services:
+                self.shutdown_service(name)
 
-        # Re-initialize components registry
-        self.init_components()
+        for name in reversed(self.essential_services):
+            self.shutdown_service(name)
+            setattr(self, name, None)
 
-    # Wrap zope.component's Components methods
 
-    def register_adapter(self, factory, adapts=None, provides=None, name=''):
-        """
-        Register an adapter (factory) that adapts objects to a specific
-        interface. A name can be used to distinguish between different adapters
-        that adapt to the same interfaces.
-        """
-        self._components.registerAdapter(factory, adapts, provides,
-                              name, event=False)
-
-    def unregister_adapter(self, factory=None,
-                          required=None, provided=None, name=u''):
-        """
-        Unregister a previously registered adapter.
-        """
-        self._components.unregisterAdapter(factory,
-                              required, provided, name)
-
-    def register_subscription_adapter(self, factory, adapts=None, provides=None):
-        """
-        Register a subscription adapter. See registerAdapter().
-        """
-        self._components.registerSubscriptionAdapter(factory, adapts,
-                              provides, event=False)
-
-    def unregister_subscription_adapter(self, factory=None,
-                          required=None, provided=None, name=u''):
-        """
-        Unregister a previously registered subscription adapter.
-        """
-        self._components.unregisterSubscriptionAdapter(factory,
-                              required, provided, name)
-
-    def register_handler(self, factory, adapts=None):
-        """
-        Register a handler. Handlers are triggered (executed) when specific
-        events are emitted through the handle() method.
-        """
-        self._components.registerHandler(factory, adapts, event=False)
-
-    def unregister_handler(self, factory=None, required=None):
-        """
-        Unregister a previously registered handler.
-        """
-        self._components.unregisterHandler(factory, required)
- 
-    def _filter(self, objects):
-        filtered = list(objects)
-        for o in objects:
-            for adapter in self._components.subscribers(objects, IEventFilter):
-                if adapter.filter():
-                    # event is blocked
-                    filtered.remove(o)
-                    break
-        return filtered
-
-    def handle(self, *events):
-        """
-        Send event notifications to registered handlers.
-        """
-        objects = self._filter(events)
-        if objects:
-            self._components.handle(*events)
+    def shutdown_service(self, name):
+        srv = self.component_registry.get_service(name)
+        self.component_registry.handle(ServiceShutdownEvent(name, srv))
+        self.component_registry.unregister_utility(srv, IService, name)
+        srv.shutdown()
 
 
 # Make sure there is only one!

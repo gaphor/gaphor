@@ -11,7 +11,7 @@ import stock
 
 from zope import component
 
-from gaphor.application import Application
+from gaphor.core import inject
 from gaphor import UML
 from gaphor.UML.event import ElementCreateEvent, ModelFactoryEvent, FlushFactoryEvent, DerivedSetEvent
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
@@ -69,6 +69,7 @@ class NamespaceModel(gtk.GenericTreeModel):
     
     """
 
+    component_registry = inject('component_registry')
 
     def __init__(self, factory):
         # Init parent:
@@ -83,12 +84,13 @@ class NamespaceModel(gtk.GenericTreeModel):
 
         self.filter = _default_filter_list
 
-        Application.register_handler(self.flush)
-        Application.register_handler(self.refresh)
-        Application.register_handler(self._on_element_change)
-        Application.register_handler(self._on_element_create)
-        Application.register_handler(self._on_element_delete)
-        Application.register_handler(self._on_association_set)
+        cr = self.component_registry
+        cr.register_handler(self.flush)
+        cr.register_handler(self.refresh)
+        cr.register_handler(self._on_element_change)
+        cr.register_handler(self._on_element_create)
+        cr.register_handler(self._on_element_delete)
+        cr.register_handler(self._on_association_set)
 
         self._build_model()
 
@@ -97,12 +99,13 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         Close the namespace model, unregister handlers.
         """
-        Application.unregister_handler(self.flush)
-        Application.unregister_handler(self.refresh)
-        Application.unregister_handler(self._on_element_change)
-        Application.unregister_handler(self._on_element_create)
-        Application.unregister_handler(self._on_element_delete)
-        Application.unregister_handler(self._on_association_set)
+        cr = self.component_registry
+        cr.unregister_handler(self.flush)
+        cr.unregister_handler(self.refresh)
+        cr.unregister_handler(self._on_element_change)
+        cr.unregister_handler(self._on_element_create)
+        cr.unregister_handler(self._on_element_delete)
+        cr.unregister_handler(self._on_association_set)
 
 
     def path_from_element(self, e):
