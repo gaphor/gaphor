@@ -175,4 +175,27 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(gen.subject is None)
 
 
+    def test_commentline_linked_to_same_element_twice(self):
+        """
+        It is not allowed to create two commentlines between the same elements.
+        """
+        clazz = self.create(items.ClassItem, UML.Class)
+
+        # now, connect comment to a generalization (relationship)
+        comment = self.create(items.CommentItem, UML.Comment)
+        line1 = self.create(items.CommentLineItem)
+        self.connect(line1, line1.head, comment)
+        self.connect(line1, line1.tail, clazz)
+
+        self.assertTrue(clazz.subject in comment.subject.annotatedElement)
+        self.assertTrue(comment.subject in clazz.subject.ownedComment)
+
+        # Now add another line
+
+        line2 = self.create(items.CommentLineItem)
+        self.connect(line2, line2.head, comment)
+
+        self.assertFalse(self.allow(line2, line2.tail, clazz))
+
+
 # vim: sw=4:et:ai

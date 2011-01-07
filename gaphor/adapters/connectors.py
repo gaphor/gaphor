@@ -142,6 +142,13 @@ class CommentLineElementConnect(AbstractConnect):
         if connected_to and not glue_ok:
             return None
 
+        # Do not allow to links between the comment and the element
+        if connected_to and element and \
+                ((isinstance(connected_to.subject, UML.Comment) and \
+                    self.element.subject in connected_to.subject.annotatedElement) or \
+                 connected_to.subject in self.element.subject.annotatedElement):
+            return None
+
         return super(CommentLineElementConnect, self).allow(handle, port)
 
     def connect(self, handle, port):
