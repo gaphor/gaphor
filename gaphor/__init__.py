@@ -53,6 +53,10 @@ def main():
                       default='DEBUG',\
                       help='Logging level')
                       
+    # Make sure gui is loaded ASAP.
+    # This prevents menu items from appearing at unwanted places.
+    Application.essential_services.append('gui_manager')
+
     Application.init(opt_parser=parser)
    
     if Application.options.profile:
@@ -75,3 +79,4 @@ import __builtin__
 
 __builtin__.__dict__['log'] = misc.logger.Logger()
 
+# vim:sw=4:et:ai
