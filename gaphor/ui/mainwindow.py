@@ -126,13 +126,13 @@ class MainWindow(ToplevelWindow):
 
         self.action_group = build_action_group(self)
         for name, label in (('file', '_File'),
-                             ('file-export', '_Export'),
-                             ('file-import', '_Import'),
-                             ('edit', '_Edit'),
-                             ('diagram', '_Diagram'),
-                             ('tools', '_Tools'),
-                             ('window', '_Window'),
-                             ('help', '_Help')):
+                            ('file-export', '_Export'),
+                            ('file-import', '_Import'),
+                            ('edit', '_Edit'),
+                            ('diagram', '_Diagram'),
+                            ('tools', '_Tools'),
+                            ('window', '_Window'),
+                            ('help', '_Help')):
             a = gtk.Action(name, label, None, None)
             a.set_property('hide-if-empty', False)
             self.action_group.add_action(a)
