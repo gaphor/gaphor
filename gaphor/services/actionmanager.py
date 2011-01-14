@@ -29,11 +29,8 @@ class ActionManager(object):
         self.logger.info('Loading action provider services')
         
         for name, service in self.component_registry.get_utilities(IService):
-            
             if IActionProvider.providedBy(service):
-                
                 self.logger.debug('Service is %s' % service)
-                
                 self.register_action_provider(service)
 
         self.component_registry.register_handler(self._service_initialized_handler)
