@@ -650,8 +650,5 @@ class NamespaceView(gtk.TreeView):
             return True
         return False
 
-gobject.type_register(NamespaceModel)
-gobject.type_register(NamespaceView)
-
 
 # vim: sw=4:et:ai

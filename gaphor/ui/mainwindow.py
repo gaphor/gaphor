@@ -16,7 +16,7 @@ from diagramtab import DiagramTab
 from toolbox import Toolbox
 from diagramtoolbox import TOOLBOX_ACTIONS
 from toplevelwindow import ToplevelWindow
-from etk.docking import settings
+from etk.docking import DockItem, DockGroup, add_new_group_left, settings
 from etk.docking.dockstore import deserialize, get_main_frames, finish
 
 from interfaces import IDiagramSelectionChange
@@ -79,6 +79,9 @@ class MainWindow(ToplevelWindow):
             <menuitem action="reset-tool-after-create" />
             <menuitem action="diagram-drawing-style" />
             <separator />
+            <menuitem action="open-namespace" />
+            <menuitem action="open-toolbox" />
+            <separator />
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
@@ -129,7 +132,8 @@ class MainWindow(ToplevelWindow):
         # Map tab contents to DiagramTab
         #self.notebook_map = {}
         # Tree view:
-        self._tree_view = None 
+        self._namespace = None 
+        self._active_diagram = None
         self.layout = None
 
         self.action_group = build_action_group(self)
@@ -150,7 +154,7 @@ class MainWindow(ToplevelWindow):
 
     tree_model = property(lambda s: s.tree_view.get_model())
 
-    tree_view = property(lambda s: s._tree_view)
+    tree_view = property(lambda s: s._namespace)
 
 
     def get_filename(self):
@@ -252,14 +256,15 @@ class MainWindow(ToplevelWindow):
         view.connect_after('event-after', self._on_view_event)
         view.connect('row-activated', self._on_view_row_activated)
         view.connect_after('cursor-changed', self._on_view_cursor_changed)
-
-        self._tree_view = view
+        view.connect('destroy', self._on_view_destroyed)
+        self._namespace = view
         return scrolled_window
 
     def _create_toolbox(self):
         toolbox = Toolbox(TOOLBOX_ACTIONS)
         toolbox.show()
 
+        toolbox.connect('destroy', self._on_toolbox_destroyed)
         self._toolbox = toolbox
         return toolbox
 
@@ -375,10 +380,10 @@ class MainWindow(ToplevelWindow):
         path = self.tree_model.path_from_element(element)
         # Expand the first row:
         if len(path) > 1:
-            self._tree_view.expand_row(path[:-1], False)
-        selection = self._tree_view.get_selection()
+            self._namespace.expand_row(path[:-1], False)
+        selection = self._namespace.get_selection()
         selection.select_path(path)
-        self._on_view_cursor_changed(self._tree_view)
+        self._on_view_cursor_changed(self._namespace)
 
     # Signal callbacks:
 
@@ -431,7 +436,7 @@ class MainWindow(ToplevelWindow):
         """
         Window is destroyed... Quit the application.
         """
-        self._tree_view = None
+        self._namespace = None
         self.window = None
         if gobject.main_depth() > 0:
             gtk.main_quit()
@@ -479,9 +484,14 @@ class MainWindow(ToplevelWindow):
 
         self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
 
-    def _insensivate_toolbox(self):
-        for button in self._toolbox.buttons:
-            button.set_property('sensitive', False)
+
+    def _on_view_destroyed(self, widget):
+        self._namespace = None
+
+
+    def _on_toolbox_destroyed(self, widget):
+        self._toolbox = None
+
 
     def _clear_ui_settings(self):
         if self._tab_ui_settings:
@@ -490,10 +500,15 @@ class MainWindow(ToplevelWindow):
             self.ui_manager.remove_ui(ui_id)
             self._tab_ui_settings = None
 
+    #def _insensivate_toolbox(self):
+    #    for button in self._toolbox.buttons:
+    #        button.set_property('sensitive', False)
+
     def _on_item_closed(self, layout, group, item):
         self._clear_ui_settings()
-        if not group.get_current_item():
-            self._insensivate_toolbox()
+        # TODO: find diagrams
+        #if not group.get_current_item():
+        #    self._insensivate_toolbox()
         item.destroy()
 
     def _on_item_selected(self, layout, group, item):
@@ -511,6 +526,8 @@ class MainWindow(ToplevelWindow):
         except AttributeError:
             # Not a diagram tab
             return
+
+        self._active_diagram = tab
 
         #content = self.notebook.get_nth_page(page_num)
         #tab = self.notebook_map.get(content)
@@ -548,6 +565,9 @@ class MainWindow(ToplevelWindow):
         by an action. Each button is assigned a special _action_name_
         attribute that can be used to fetch the action from the ui manager.
         """
+        if not self._toolbox:
+            return
+
         for button in self._toolbox.buttons:
             
             action_name = button.action_name
@@ -562,14 +582,14 @@ class MainWindow(ToplevelWindow):
     def quit(self):
         # TODO: check for changes (e.g. undo manager), fault-save
         self.ask_to_close() and gtk.main_quit()
-        self._tree_view.get_model().close()
+        self._namespace.get_model().close()
         Application.unregister_handler(self._on_file_manager_state_changed)
         Application.unregister_handler(self._new_model_content)
 
 
     @action(name='tree-view-open', label='_Open')
     def tree_view_open_selected(self):
-        element = self._tree_view.get_selected_element()
+        element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
             self.show_diagram(element)
@@ -579,7 +599,7 @@ class MainWindow(ToplevelWindow):
 
     @action(name='tree-view-rename', label=_('Rename'), accel='F2')
     def tree_view_rename_selected(self):
-        view = self._tree_view
+        view = self._namespace
         element = view.get_selected_element()
         path = view.get_model().path_from_element(element)
         column = view.get_column(0)
@@ -593,7 +613,7 @@ class MainWindow(ToplevelWindow):
     @action(name='tree-view-create-diagram', label=_('_New diagram'), stock_id='gaphor-diagram')
     @transactional
     def tree_view_create_diagram(self):
-        element = self._tree_view.get_selected_element()
+        element = self._namespace.get_selected_element()
         diagram = self.element_factory.create(UML.Diagram)
         diagram.package = element
 
@@ -610,7 +630,7 @@ class MainWindow(ToplevelWindow):
     @action(name='tree-view-delete-diagram', label=_('_Delete diagram'), stock_id='gtk-delete')
     @transactional
     def tree_view_delete_diagram(self):
-        diagram = self._tree_view.get_selected_element()
+        diagram = self._namespace.get_selected_element()
         m = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_QUESTION,
                               gtk.BUTTONS_YES_NO,
                               'Do you really want to delete diagram %s?\n\n'
@@ -630,7 +650,7 @@ class MainWindow(ToplevelWindow):
     @action(name='tree-view-create-package', label=_('New _package'), stock_id='gaphor-package')
     @transactional
     def tree_view_create_package(self):
-        element = self._tree_view.get_selected_element()
+        element = self._namespace.get_selected_element()
         package = self.element_factory.create(UML.Package)
         package.package = element
 
@@ -646,14 +666,14 @@ class MainWindow(ToplevelWindow):
     @action(name='tree-view-delete-package', label=_('Delete pac_kage'), stock_id='gtk-delete')
     @transactional
     def tree_view_delete_package(self):
-        package = self._tree_view.get_selected_element()
+        package = self._namespace.get_selected_element()
         assert isinstance(package, UML.Package)
         package.unlink()
 
 
     @action(name='tree-view-refresh', label=_('_Refresh'))
     def tree_view_refresh(self):
-        self._tree_view.get_model().refresh()
+        self._namespace.get_model().refresh()
 
 
     @toggle_action(name='reset-tool-after-create', label=_('_Reset tool'), active=False)
@@ -665,7 +685,7 @@ class MainWindow(ToplevelWindow):
         """
         Set the tool based on the name of the action
         """
-        if shortcut:
+        if shortcut and self._toolbox:
             action_name = self._toolbox.shortcuts.get(shortcut)
             log.debug('Action for shortcut %s: %s' % (shortcut, action_name))
             if not action_name:
@@ -687,6 +707,28 @@ class MainWindow(ToplevelWindow):
             tab.set_drawing_style(sloppiness)
         self.properties.set('diagram.sloppiness', sloppiness)
 
+
+    @action(name='open-namespace', label=_('_Namespace'))
+    def open_namespace(self):
+        if not self._namespace:
+            item = DockItem(_('Namespace'))
+            item.add(self._create_namespace())
+            group = DockGroup()
+            group.insert_item(item)
+            diagrams = self.layout.get_widgets('diagrams')[0]
+            add_new_group_left(diagrams, group)
+
+
+    @action(name='open-toolbox', label=_('_Toolbox'))
+    def open_toolbox(self):
+        if not self._toolbox:
+            item = DockItem(_('Toolbox'))
+            item.add(self._create_toolbox())
+            diagrams = self.layout.get_widgets('diagrams')[0]
+            group = DockGroup()
+            group.insert_item(item)
+            add_new_group_left(diagrams, group)
+            self._update_toolbox(self._active_diagram.toolbox.action_group)
 
 gtk.accel_map_add_filter('gaphor')
 
