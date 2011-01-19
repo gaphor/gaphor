@@ -249,10 +249,10 @@ class ElementDispatcher(object):
 
     def register_handler(self, handler, element, path):
         
-        self.logger.info('Registering handler')
-        self.logger.debug('Handler is %s' % handler)
-        self.logger.debug('Element is %s' % element)
-        self.logger.debug('Path is %s' % path)
+        #self.logger.info('Registering handler')
+        #self.logger.debug('Handler is %s' % handler)
+        #self.logger.debug('Element is %s' % element)
+        #self.logger.debug('Path is %s' % path)
         
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
@@ -263,8 +263,8 @@ class ElementDispatcher(object):
         Unregister a handler from the registy.
         """
         
-        self.logger.info('Unregistering handler')
-        self.logger.debug('Handler is %s' % handler)
+        #self.logger.info('Unregistering handler')
+        #self.logger.debug('Handler is %s' % handler)
         
         try:
             reverse = reversed(self._reverse[handler])
@@ -289,9 +289,9 @@ class ElementDispatcher(object):
     @component.adapter(IElementChangeEvent)
     def on_element_change_event(self, event):
         
-        self.logger.info('Handling IElementChangeEvent')
-        self.logger.debug('Element is %s' % event.element)
-        self.logger.debug('Property is %s' % event.property)
+        #self.logger.info('Handling IElementChangeEvent')
+        #self.logger.debug('Element is %s' % event.element)
+        #self.logger.debug('Property is %s' % event.property)
         
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
@@ -305,7 +305,7 @@ class ElementDispatcher(object):
                 try:
                     handler(event)
                 except Exception, e:
-                    logger.error('Problem executing handler %s' % handler, e)
+                    self.logger.error('Problem executing handler %s' % handler, e)
         
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
@@ -330,8 +330,8 @@ class ElementDispatcher(object):
     @component.adapter(IModelFactoryEvent)
     def on_model_loaded(self, event):
         
-        self.logger.info('Handling IModelFactoryEvent')
-        self.logger.debug('Event is %s' % event)
+        #self.logger.info('Handling IModelFactoryEvent')
+        #self.logger.debug('Event is %s' % event)
         
         for key, value in self._handlers.items():
             for h, remainders in value.items():

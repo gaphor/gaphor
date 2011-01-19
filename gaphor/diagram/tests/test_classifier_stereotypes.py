@@ -173,6 +173,7 @@ class StereotypesAttributesTestCase(TestCase):
         slot = UML.model.add_slot(factory, obj, attr)
         assert len(obj.slot) == 1
         assert len(self.kindof(UML.Slot)) == 1
+        self.assertTrue(slot.definingFeature)
 
         compartment = c._compartments[0]
         assert compartment.visible
