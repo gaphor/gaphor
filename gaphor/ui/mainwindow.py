@@ -177,7 +177,7 @@ class MainWindow(object):
             log.debug('found entry point uicomponent.%s' % ep.name)
             cls = ep.load()
             if not IUIComponent.implementedBy(cls):
-                raise 'MisConfigurationException', 'Entry point %s doesn''t provide IUIComponent' % ep.name
+                raise NameError, 'Entry point %s doesn''t provide IUIComponent' % ep.name
             uicomp = cls()
             # TODO: Work around this after merge
             Application._components.registerUtility(uicomp, IUIComponent, ep.name)
