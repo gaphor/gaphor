@@ -55,6 +55,7 @@ class MainWindow(object):
     element_factory = inject('element_factory')
     action_manager = inject('action_manager')
     file_manager = inject('file_manager')
+    ui_manager = inject('ui_manager')
 
     title = 'Gaphor'
     size = property(lambda s: s.properties.get('ui.window-size', (760, 580)))
@@ -146,12 +147,12 @@ class MainWindow(object):
         self._namespace = None 
         self._active_diagram = None
         self.layout = None
-        self.init_action_group()
 
 
     def init(self, app=None):
         #self.init_pygtk()
         self.init_stock_icons()
+        self.init_action_group()
         self.init_ui_components()
         self.init_main_window()
 
@@ -172,15 +173,12 @@ class MainWindow(object):
 
 
     def init_ui_components(self):
-        ui_manager = self.action_manager.ui_manager
-        self.ui_manager = ui_manager
         for ep in pkg_resources.iter_entry_points('gaphor.uicomponents'):
             log.debug('found entry point uicomponent.%s' % ep.name)
             cls = ep.load()
             if not IUIComponent.implementedBy(cls):
                 raise 'MisConfigurationException', 'Entry point %s doesn''t provide IUIComponent' % ep.name
             uicomp = cls()
-            uicomp.ui_manager = ui_manager
             # TODO: Work around this after merge
             Application._components.registerUtility(uicomp, IUIComponent, ep.name)
             if IActionProvider.providedBy(uicomp):
@@ -210,6 +208,8 @@ class MainWindow(object):
         self._tab_ui_settings = None
         self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
         self.action_group.get_action('diagram-drawing-style').set_active(self.properties('diagram.sloppiness', 0) != 0)
+
+        self.action_manager.register_action_provider(self)
 
     tree_model = property(lambda s: s.tree_view.get_model())
 

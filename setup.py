@@ -109,6 +109,7 @@ It uses the GTK+ environment for user interaction.
             #'backup_service = gaphor.services.backupservice:BackupService',
             'diagram_export_manager = gaphor.services.diagramexportmanager:DiagramExportManager',
             'action_manager = gaphor.services.actionmanager:ActionManager',
+            'ui_manager = gaphor.services.actionmanager:UIManager',
             'main_window = gaphor.ui.mainwindow:MainWindow',
             'copy = gaphor.services.copyservice:CopyService',
             'sanitizer = gaphor.services.sanitizerservice:SanitizerService',

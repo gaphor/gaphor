@@ -19,13 +19,13 @@ class ActionManager(object):
 
     component_registry = inject('component_registry')
 
+    ui_manager = inject('ui_manager')
+
     def __init__(self):
         pass
 
 
     def init(self, app):
-        self.ui_manager = gtk.UIManager()
-        
         self.logger.info('Loading action provider services')
         
         for name, service in self.component_registry.get_utilities(IService):
@@ -102,6 +102,21 @@ class ActionManager(object):
             self.logger.debug('Loading registered service %s' % event.service)
             
             self.register_action_provider(event.service)
+
+
+class UIManager(gtk.UIManager):
+    """
+    Service version of gtk.UIManager.
+    """
+
+    interface.implements(IService)
+
+
+    def init(self, app=None):
+        pass
+
+    def shutdown(self):
+        pass
 
 
 # vim:sw=4:et:ai
