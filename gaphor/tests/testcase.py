@@ -50,7 +50,7 @@ class TestCaseExtras(object):
 
 class TestCase(TestCaseExtras, unittest.TestCase):
     
-    services = ['element_factory', 'adapter_loader', 'event_dispatcher',
+    services = ['element_factory', 'adapter_loader',
             'element_dispatcher', 'sanitizer']
     
     def setUp(self):
