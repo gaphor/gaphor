@@ -10,8 +10,8 @@ from gaphor.ui.mainwindow import MainWindow
 class DiagramTabTestCase(unittest.TestCase):
 
     def setUp(self):
-        Application.init(services=['element_factory', 'gui_manager', 'action_manager', 'properties', 'element_dispatcher'])
-        main_window = Application.get_service('gui_manager').main_window
+        Application.init(services=['element_factory', 'main_window', 'action_manager', 'properties', 'element_dispatcher'])
+        main_window = Application.get_service('main_window')
         element_factory = Application.get_service('element_factory')
         self.element_factory = element_factory
         self.diagram = element_factory.create(UML.Diagram)

@@ -6,7 +6,7 @@ from gaphor.services.diagramexportmanager import DiagramExportManager
 class DiagramExportManagerTestCase(unittest.TestCase):
     
     def setUp(self):
-        Application.init(services=['gui_manager', 'properties', 'element_factory', 'diagram_export_manager', 'action_manager' ])
+        Application.init(services=['main_window', 'properties', 'element_factory', 'diagram_export_manager', 'action_manager' ])
 
     def shutDown(self):
         Application.shutdown()
@@ -17,7 +17,7 @@ class DiagramExportManagerTestCase(unittest.TestCase):
 
     def test_init_from_application(self):
         Application.get_service('diagram_export_manager')
-        Application.get_service('gui_manager')
+        Application.get_service('main_window')
 
 
 # vim:sw=4:et:ai

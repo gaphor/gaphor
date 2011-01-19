@@ -13,7 +13,6 @@ class Alignment(object):
     interface.implements(IService, IActionProvider)
 
     component_registry = inject('component_registry')
-    gui_manager = inject('gui_manager')
 
     menu_xml = """
       <ui>

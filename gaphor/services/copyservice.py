@@ -31,7 +31,7 @@ class CopyService(object):
 
     component_registry = inject('component_registry')
     element_factory = inject('element_factory')
-    gui_manager = inject('gui_manager')
+    main_window = inject('main_window')
 
     menu_xml = """
       <ui>
@@ -140,7 +140,7 @@ class CopyService(object):
 
     @action(name='edit-copy', stock_id='gtk-copy')
     def copy_action(self):
-        view = self.gui_manager.main_window.get_current_diagram_view()
+        view = self.main_window.get_current_diagram_view()
         if view.is_focus():
             items = view.selected_items
             copy_items = []
@@ -150,8 +150,8 @@ class CopyService(object):
 
     @action(name='edit-paste', stock_id='gtk-paste')
     def paste_action(self):
-        view = self.gui_manager.main_window.get_current_diagram_view()
-        diagram = self.gui_manager.main_window.get_current_diagram()
+        view = self.main_window.get_current_diagram_view()
+        diagram = self.main_window.get_current_diagram()
         if not view:
             return
 

@@ -19,7 +19,7 @@ class CheckModelWindow(object):
     interface.implements(IService, IActionProvider)
 
     element_factory = inject('element_factory')
-    gui_manager = inject('gui_manager')
+    main_window = inject('main_window')
 
     menu_xml = """
       <ui>
@@ -108,7 +108,7 @@ class CheckModelWindow(object):
         element = self.model.get_value(iter, PYELEMENT_COLUMN)
         print 'Looking for element', element
         if element.presentation:
-            main_window = self.gui_manager.main_window
+            main_window = self.main_window
             presentation = element.presentation[0]
             try:
                 diagram = presentation.canvas.diagram

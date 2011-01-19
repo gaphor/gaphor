@@ -4,7 +4,7 @@ from gaphor.tests.testcase import TestCase
 
 class ConsoleWindowTestCase(TestCase):
 
-    services = TestCase.services + ['gui_manager', 'action_manager', 'properties']
+    services = TestCase.services + ['main_window', 'action_manager', 'properties']
 
     def test1(self):
         import gtk

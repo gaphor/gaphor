@@ -11,13 +11,13 @@ Event = Context
 logging.basicConfig(level=logging.DEBUG)
 
 class DiagramItemConnectorTestCase(TestCase):
-    services = TestCase.services + [ 'gui_manager', 'action_manager', 'properties' ]
+    services = TestCase.services + [ 'main_window', 'action_manager', 'properties' ]
 
     def setUp(self):
         super(DiagramItemConnectorTestCase, self).setUp()
-        gm = self.get_service('gui_manager')
-        gm.main_window.show_diagram(self.diagram)
-        self.main_window = gm.main_window
+        mw = self.get_service('main_window')
+        mw.show_diagram(self.diagram)
+        self.main_window = mw
 
     def test_item_reconnect(self):
         # Setting the stage:

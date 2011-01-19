@@ -22,7 +22,7 @@ class DiagramLayout(object):
 
     interface.implements(IService, IActionProvider)
 
-    gui_manager = inject('gui_manager')
+    main_window = inject('main_window')
 
     menu_xml = """
       <ui>
@@ -48,7 +48,7 @@ class DiagramLayout(object):
     @action(name='diagram-layout', label='Layout diagram',
             tooltip='simple diagram layout')
     def execute(self):
-        d = self.gui_manager.main_window.get_current_diagram()
+        d = self.main_window.get_current_diagram()
         self.layout_diagram(d)
 
     @transactional

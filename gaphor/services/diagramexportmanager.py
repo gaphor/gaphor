@@ -25,7 +25,7 @@ class DiagramExportManager(object):
 
     interface.implements(IService, IActionProvider)
 
-    gui_manager = inject('gui_manager')
+    main_window = inject('main_window')
     properties = inject('properties')
     logger = Logger(name='EXPORTMANAGER')
 
@@ -185,7 +185,7 @@ class DiagramExportManager(object):
     def save_svg_action(self):
         title = 'Export diagram to SVG'
         ext = '.svg'
-        diagram = self.gui_manager.main_window.get_current_diagram()
+        diagram = self.main_window.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_svg(filename, diagram.canvas)
@@ -196,7 +196,7 @@ class DiagramExportManager(object):
     def save_png_action(self):
         title = 'Export diagram to PNG'
         ext = '.png'
-        diagram = self.gui_manager.main_window.get_current_diagram()
+        diagram = self.main_window.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_png(filename, diagram.canvas)
@@ -207,7 +207,7 @@ class DiagramExportManager(object):
     def save_pdf_action(self):
         title = 'Export diagram to PDF'
         ext = '.pdf'
-        diagram = self.gui_manager.main_window.get_current_diagram()
+        diagram = self.main_window.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_pdf(filename, diagram.canvas)

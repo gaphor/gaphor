@@ -76,13 +76,13 @@ class UtilityWindow(object):
 
     interface.implements(IUIComponent)
 
-    gui_manager = inject('gui_manager')
+    main_window = inject('main_window')
 
     title = '<<Gaphor>>'
     resizable = False
 
     def construct(self):
-        layout = self.gui_manager.main_window.layout
+        layout = self.main_window.layout
         new_group = DockGroup()
         new_item = DockItem(self.title)
         new_group.insert_item(new_item)

@@ -27,7 +27,7 @@ class HelpService(object):
       </ui>
     """
 
-    gui_manager = inject('gui_manager')
+    main_window = inject('main_window')
 
     def __init__(self):
         pass
@@ -43,7 +43,7 @@ class HelpService(object):
         logo_file =  os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'ui', 'pixmaps', 'logo.png')
         logo = gtk.gdk.pixbuf_new_from_file(logo_file)
         version = Application.distribution.version
-        about = gtk.Dialog("About Gaphor", self.gui_manager.main_window.window, gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
+        about = gtk.Dialog("About Gaphor", self.main_window.window, gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
         about.set_default_response(gtk.RESPONSE_OK)
         vbox = about.vbox
 

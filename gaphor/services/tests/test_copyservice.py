@@ -8,7 +8,7 @@ from gaphor.tests.testcase import TestCase
 
 class CopyServiceTestCase(TestCase):
 
-    services = TestCase.services + ['gui_manager', 'action_manager', 'properties', 'undo_manager']
+    services = TestCase.services + ['main_window', 'action_manager', 'properties', 'undo_manager']
 
     def test_init(self):
         service = CopyService()

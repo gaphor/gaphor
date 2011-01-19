@@ -2,12 +2,16 @@
 The main application window.
 """
 
+import os.path
 import gobject, gtk
 
 import pkg_resources
 from zope import interface, component
-from gaphor.interfaces import IActionProvider
+from gaphor.interfaces import IService, IActionProvider
 from interfaces import IUIComponent
+
+from etk.docking import DockGroup, DockItem
+from etk.docking.docklayout import add_new_group_floating
 
 from gaphor import UML
 from gaphor.core import _, inject, action, toggle_action, build_action_group, transactional
@@ -15,7 +19,6 @@ from namespace import NamespaceModel, NamespaceView
 from diagramtab import DiagramTab
 from toolbox import Toolbox
 from diagramtoolbox import TOOLBOX_ACTIONS
-from toplevelwindow import ToplevelWindow
 from etk.docking import DockItem, DockGroup, add_new_group_left, settings
 from etk.docking.dockstore import deserialize, get_main_frames, finish
 
@@ -25,6 +28,14 @@ from gaphor.UML.event import ModelFactoryEvent
 from event import DiagramSelectionChange
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
+from gaphor.ui.accelmap import load_accel_map, save_accel_map
+
+ICONS = (
+    'gaphor-24x24.png',
+    'gaphor-48x48.png',
+    'gaphor-96x96.png',
+    'gaphor-256x256.png',
+)
 
 settings['diagrams'].expand = True
 settings['diagrams'].auto_remove = False
@@ -32,12 +43,12 @@ settings['diagrams'].inherit_settings = False
 settings['EtkDockGroup'].expand = False
 settings['EtkDockPaned'].expand = False
 
-class MainWindow(ToplevelWindow):
+class MainWindow(object):
     """
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
-    interface.implements(IActionProvider)
+    interface.implements(IService, IActionProvider)
 
     component_registry = inject('component_registry')
     properties = inject('properties')
@@ -49,6 +60,7 @@ class MainWindow(ToplevelWindow):
     size = property(lambda s: s.properties.get('ui.window-size', (760, 580)))
     menubar_path = '/mainwindow'
     toolbar_path = '/mainwindow-toolbar'
+    resizable = True
 
     menu_xml = """
       <ui>
@@ -125,8 +137,7 @@ class MainWindow(ToplevelWindow):
     """
 
     def __init__(self):
-        ToplevelWindow.__init__(self)
-
+        self.window = None
         self.model_changed = False
 
         # Map tab contents to DiagramTab
@@ -135,7 +146,55 @@ class MainWindow(ToplevelWindow):
         self._namespace = None 
         self._active_diagram = None
         self.layout = None
+        self.init_action_group()
 
+
+    def init(self, app=None):
+        #self.init_pygtk()
+        self.init_stock_icons()
+        self.init_ui_components()
+        self.init_main_window()
+
+
+    def init_pygtk(self):
+        """
+        Make sure we have GTK+ >= 2.0
+        """
+        import pygtk
+        pygtk.require('2.0')
+        del pygtk
+
+
+    def init_stock_icons(self):
+        # Load stock items
+        import gaphor.ui.stock
+        gaphor.ui.stock.load_stock_icons()
+
+
+    def init_ui_components(self):
+        ui_manager = self.action_manager.ui_manager
+        self.ui_manager = ui_manager
+        for ep in pkg_resources.iter_entry_points('gaphor.uicomponents'):
+            log.debug('found entry point uicomponent.%s' % ep.name)
+            cls = ep.load()
+            if not IUIComponent.implementedBy(cls):
+                raise 'MisConfigurationException', 'Entry point %s doesn''t provide IUIComponent' % ep.name
+            uicomp = cls()
+            uicomp.ui_manager = ui_manager
+            # TODO: Work around this after merge
+            Application._components.registerUtility(uicomp, IUIComponent, ep.name)
+            if IActionProvider.providedBy(uicomp):
+                self.action_manager.register_action_provider(uicomp)
+                
+
+    def shutdown(self):
+        if self.window:
+            self.window.destroy()
+            self.window = None
+        save_accel_map()
+
+
+    def init_action_group(self):
         self.action_group = build_action_group(self)
         for name, label in (('file', '_File'),
                             ('file-export', '_Export'),
@@ -289,8 +348,42 @@ class MainWindow(ToplevelWindow):
         return main_frames[0]
 
 
-    def construct(self):
-        super(MainWindow, self).construct()
+    def init_main_window(self):
+
+        load_accel_map()
+
+        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.window.set_title(self.title)
+        self.window.set_size_request(*self.size)
+        self.window.set_resizable(self.resizable)
+
+        # set default icons of gaphor windows
+        icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
+        icons = (gtk.gdk.pixbuf_new_from_file(os.path.join(icon_dir, f)) for f in ICONS)
+        self.window.set_icon_list(*icons)
+
+        self.window.add_accel_group(self.ui_manager.get_accel_group())
+
+        
+        # Create a full featured window.
+        vbox = gtk.VBox()
+        self.window.add(vbox)
+        vbox.show()
+
+        menubar = self.ui_manager.get_widget(self.menubar_path)
+        if menubar:
+            vbox.pack_start(menubar, expand=False)
+        
+        toolbar = self.ui_manager.get_widget(self.toolbar_path)
+        if toolbar:
+            vbox.pack_start(toolbar, expand=False)
+
+        vbox.pack_end(self.ui_component(), expand=self.resizable)
+        vbox.show()
+        # TODO: add statusbar
+
+        self.window.show()
+
 
         self.window.connect('delete-event', self._on_window_delete)
 

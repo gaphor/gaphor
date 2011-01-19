@@ -39,7 +39,7 @@ class FileManager(object):
 
     component_registry = inject('component_registry')
     element_factory = inject('element_factory')
-    gui_manager = inject('gui_manager')
+    main_window = inject('main_window')
     properties = inject('properties')
     logger = Logger(name='FILEMANAGER')
 
@@ -199,7 +199,7 @@ class FileManager(object):
         self.logger.info('Loading file')
         self.logger.debug('Path is %s' % filename)
 
-        main_window = self.gui_manager.main_window
+        main_window = self.main_window
 
         queue = Queue()
         status_window = StatusWindow(_('Loading...'),\
@@ -230,7 +230,7 @@ class FileManager(object):
         orphans = verify.orphan_references(self.element_factory)
         
         if orphans:
-            main_window = self.gui_manager.main_window
+            main_window = self.main_window
 
             dialog = QuestionDialog(_("The model contains some references"\
                                       " to items that are not maintained."\
@@ -274,7 +274,7 @@ class FileManager(object):
         self.verify_orphans()
         filename = self.verify_filename(filename)
 
-        main_window = self.gui_manager.main_window
+        main_window = self.main_window
         queue = Queue()
         status_window = StatusWindow(_('Saving...'),\
                                      _('Saving model to %s') % filename,\
@@ -306,7 +306,7 @@ class FileManager(object):
                                                  gtk.RESPONSE_CANCEL,
                                                  gtk.STOCK_OPEN,
                                                  gtk.RESPONSE_OK))
-        filesel.set_transient_for(self.gui_manager.main_window.window)
+        filesel.set_transient_for(self.main_window.window)
 
         filter = gtk.FileFilter()
         filter.set_name("Gaphor models")
@@ -334,8 +334,8 @@ class FileManager(object):
         UML model.  This will trigger a FileManagerStateChange event."""
 
         element_factory = self.element_factory
-        main_window = self.gui_manager.main_window
-        
+        main_window = self.main_window
+
         if element_factory.size():
             dialog = QuestionDialog(_("Opening a new model will flush the"\
                                       " currently loaded model.\nAny changes"\

@@ -15,7 +15,7 @@ class XMIExport(object):
     interface.implements(IService, IActionProvider)
 
     element_factory = inject('element_factory')
-    gui_manager = inject('gui_manager')
+    main_window = inject('main_window')
 
     menu_xml = """
       <ui>
@@ -40,7 +40,7 @@ class XMIExport(object):
     @action(name='file-export-xmi', label=_('Export to XMI'),
             tooltip=_('Export model to XMI (XML Model Interchange) format'))
     def execute(self):
-        filename = self.gui_manager.main_window.get_filename()
+        filename = self.main_window.get_filename()
         if filename:
             filename = filename.replace('.gaphor', '.xmi')
         else:

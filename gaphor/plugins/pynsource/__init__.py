@@ -23,7 +23,7 @@ class PyNSource(object):
 
     interface.implements(IService, IActionProvider)
 
-    gui_manager = inject('gui_manager')
+    main_window = inject('main_window')
 
     menu_xml = """
       <ui>
@@ -72,14 +72,14 @@ class PyNSource(object):
         engineer = Engineer()
         engineer.process(files)
 
-        main_window = self.gui_manager.main_window
+        main_window = self.main_window
         # Open and select the new diagram in the main window:
         main_window.select_element(engineer.diagram)
         main_window.show_diagram(engineer.diagram)
 
     def create_dialog(self):
         dialog = gtk.Dialog("Import Python files",
-                            self.gui_manager.main_window.window,
+                            self.main_window.window,
                             gtk.DIALOG_MODAL,
                             (gtk.STOCK_OK, gtk.RESPONSE_OK,
                              gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
