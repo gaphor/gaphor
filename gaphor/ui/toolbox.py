@@ -46,10 +46,9 @@ class Toolbox(gtk.VBox):
         using the menu_factory and based on the toolboxdef definition.
         """
         self.__gobject_init__()
-        self.toolboxdef = toolboxdef
         self.buttons = []
         self.shortcuts = {}
-        self._construct()
+        self._construct(toolboxdef)
 
 
     def make_wrapbox_decorator(self, title, content):
@@ -103,9 +102,9 @@ class Toolbox(gtk.VBox):
         return button
 
 
-    def _construct(self):
+    def _construct(self, toolboxdef):
         shortcuts = self.shortcuts
-        for title, items in self.toolboxdef:
+        for title, items in toolboxdef:
             wrapbox = Wrapbox()
             for action_name, label, stock_id, shortcut in items:
                 button = self.toolbox_button(action_name, stock_id)

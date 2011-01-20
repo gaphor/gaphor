@@ -30,8 +30,6 @@ class ConsoleWindow(UtilityWindow):
 
     title = 'Gaphor Console'
     size = (400, 400)
-    menubar_path = ''
-    toolbar_path = ''
 
     def __init__(self):
         self.action_group = build_action_group(self)
@@ -62,14 +60,14 @@ class ConsoleWindow(UtilityWindow):
     def open(self):
         if not self.window:
             self.construct()
-            self.window.connect('destroy', self.close)
+            self.dock_item.connect('close', self.close)
             self.load_console_py()
         else:
             self.window.show_all()
 
     @action(name='ConsoleWindow:close', stock_id='gtk-close', accel='<Control><Shift>w')
-    def close(self, window=None):
-        self.window.destroy()
-        self.window = None
+    def close(self, dock_item=None):
+        self.dock_item.destroy()
+        self.dock_item = None
 
 # vim:sw=4:et:ai

@@ -1,55 +1,55 @@
 <?xml version="1.0"?>
 <stock-icons>
   <icon id="gaphor-pointer">
-    <file>pointer24.png</file>
+    <file>pointer.png</file>
   </icon>
   <icon id="gaphor-line">
-    <file>line24.png</file>
+    <file>line.png</file>
   </icon>
   <icon id="gaphor-box">
-    <file>box24.png</file>
+    <file>box.png</file>
   </icon>
   <icon id="gaphor-ellipse">
-    <file>ellipse24.png</file>
+    <file>ellipse.png</file>
   </icon>
   <icon id="gaphor-activity-final-node">
-    <file>activityfinalnode24.png</file>
+    <file>activity-final-node.png</file>
     <element>ActivityFinalNode</element>
   </icon>
   <icon id="gaphor-action">
-    <file>action24.png</file>
+    <file>action.png</file>
     <element>Action</element>
   </icon>
   <icon id="gaphor-actor">
-    <file>actor24.png</file>
+    <file>actor.png</file>
     <element>Actor</element>
   </icon>
   <icon id="gaphor-association">
-    <file>association24.png</file>
+    <file>association.png</file>
     <element>Association</element>
   </icon>
   <icon id="gaphor-artifact">
-    <file>artifact24.png</file>
+    <file>artifact.png</file>
     <element>Artifact</element>
   </icon>
   <icon id="gaphor-class">
-    <file>class24.png</file>
+    <file>class.png</file>
     <element>Class</element>
   </icon>
   <icon id="gaphor-metaclass">
-    <file>class24.png</file>
+    <file>class.png</file>
     <element>Class</element>
     <option>metaclass</option>
   </icon>
   <icon id="gaphor-comment">
-    <file>comment24.png</file>
+    <file>comment.png</file>
     <element>Comment</element>
   </icon>
   <icon id="gaphor-comment-line">
-    <file>commentline24.png</file>
+    <file>comment-line.png</file>
   </icon>
   <icon id="gaphor-component">
-    <file>component24.png</file>
+    <file>component.png</file>
     <element>Component</element>
   </icon>
   <icon id="gaphor-connector">
@@ -57,128 +57,128 @@
     <element>Connector</element>
   </icon>
   <icon id="gaphor-control-flow">
-    <file>controlflow24.png</file>
+    <file>control-flow.png</file>
     <element>ControlFlow</element>
   </icon>
   <icon id="gaphor-decision-node">
-    <file>decisionnode24.png</file>
+    <file>decision-node.png</file>
     <element>DecisionNode</element>
   </icon>
   <icon id="gaphor-fork-node">
-    <file>forknode.png</file>
+    <file>fork-node.png</file>
     <element>ForkNode</element>
   </icon>
   <icon id="gaphor-object-node">
-    <file>objectnode.png</file>
+    <file>object-node.png</file>
     <element>ObjectNode</element>
   </icon>
   <icon id="gaphor-flow-final-node">
-    <file>flowfinalnode.png</file>
+    <file>flow-final-node.png</file>
     <element>FlowFinalNode</element>
   </icon>
   <icon id="gaphor-dependency">
-    <file>dependency24.png</file>
+    <file>dependency.png</file>
     <element>Dependency</element>
   </icon>
   <icon id="gaphor-diagram">
-    <file>diagram16.png</file>
+    <file>diagram.png</file>
     <element>Diagram</element>
   </icon>
   <icon id="gaphor-extend">
-    <file>extend24.png</file>
+    <file>extend.png</file>
     <element>Extend</element>
   </icon>
   <icon id="gaphor-extension">
-    <file>extension24.png</file>
+    <file>extension.png</file>
     <element>Extension</element>
   </icon>
   <icon id="gaphor-generalization">
-    <file>generalization24.png</file>
+    <file>generalization.png</file>
     <element>Generalization</element>
   </icon>
   <icon id="gaphor-implementation">
-    <file>implementation24.png</file>
+    <file>implementation.png</file>
     <element>Implementation</element>
   </icon>
   <icon id="gaphor-include">
-    <file>include24.png</file>
+    <file>include.png</file>
     <element>Include</element>
   </icon>
   <icon id="gaphor-initial-node">
-    <file>initialnode24.png</file>
+    <file>initial-node.png</file>
     <element>InitialNode</element>
   </icon>
   <icon id="gaphor-interaction">
-    <file>interaction24.png</file>
+    <file>interaction.png</file>
     <element>Interaction</element>
   </icon>
   <icon id="gaphor-interface">
-    <file>interface24.png</file>
+    <file>interface.png</file>
     <element>Interface</element>
   </icon>
   <icon id="gaphor-lifeline">
-    <file>lifeline24.png</file>
+    <file>lifeline.png</file>
     <element>Lifeline</element>
   </icon>
   <icon id="gaphor-message">
-    <file>message24.png</file>
+    <file>message.png</file>
     <element>Message</element>
   </icon>
   <icon id="gaphor-node">
-    <file>node24.png</file>
+    <file>node.png</file>
     <element>Node</element>
   </icon>
   <icon id="gaphor-device">
-    <file>device24.png</file>
+    <file>device.png</file>
     <element>Device</element>
   </icon>
   <icon id="gaphor-operation">
-    <file>operation24.png</file>
+    <file>operation.png</file>
     <element>Operation</element>
   </icon>
   <icon id="gaphor-package">
-    <file>package24.png</file>
+    <file>package.png</file>
     <element>Package</element>
   </icon>
   <icon id="gaphor-parameter">
-    <file>pointer24.png</file>
+    <file>pointer.png</file>
     <element>Parameter</element>
   </icon>
   <icon id="gaphor-profile">
-    <file>profile24.png</file>
+    <file>profile.png</file>
     <element>Profile</element>
   </icon>
   <icon id="gaphor-property">
-    <file>attribute24.png</file>
+    <file>attribute.png</file>
     <element>Property</element>
   </icon>
   <icon id="gaphor-association-end">
-    <file>association24.png</file>
+    <file>association.png</file>
     <element>Property</element>
     <option>association-end</option>
   </icon>
   <icon id="gaphor-state">
-    <file>state24.png</file>
+    <file>state.png</file>
     <element>State</element>
   </icon>
   <icon id="gaphor-final-state">
-    <file>finalstate24.png</file>
+    <file>final-state.png</file>
     <element>FinalState</element>
   </icon>
   <icon id="gaphor-initial-pseudostate">
-    <file>initialpseudostate24.png</file>
+    <file>pseudostate.png</file>
     <element>Pseudostate</element>
   </icon>
   <icon id="gaphor-transition">
-    <file>transition24.png</file>
+    <file>transition.png</file>
     <element>Transition</element>
   </icon>
   <icon id="gaphor-stereotype">
-    <file>stereotype24.png</file>
+    <file>stereotype.png</file>
     <element>Stereotype</element>
   </icon>
   <icon id="gaphor-usecase">
-    <file>usecase24.png</file>
+    <file>use-case.png</file>
     <element>UseCase</element>
   </icon>
   <icon id="gaphor-subsystem">
@@ -187,7 +187,7 @@
     <option>subsystem</option>
   </icon>
   <icon id="gaphor-partition">
-    <file>partition.png</file>
+    <file>activity-partition.png</file>
     <element>ActivityPartition</element>
   </icon>
 </stock-icons>

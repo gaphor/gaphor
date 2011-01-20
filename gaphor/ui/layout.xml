@@ -2,22 +2,19 @@
 <layout>
   <dockframe height="565" width="788">
     <dockpaned orientation="horizontal">
-      <dockpaned expand="true" orientation="vertical" weight="179">
-        <dockgroup expand="true" weight="264">
-          <dockitem icon="" title="Namespace" tooltip="Namespace view">
+      <dockpaned orientation="vertical" weight="20">
+        <dockgroup weight="50">
+          <dockitem title="Namespace" tooltip="Namespace view">
             <widget name="namespace"/>
           </dockitem>
         </dockgroup>
-        <dockgroup expand="true" weight="264">
-          <dockitem icon="toolbox" title="Toolbox" tooltip="Toolbox">
+        <dockgroup weight="50">
+          <dockitem stock_id="toolbox" title="Toolbox" tooltip="Toolbox">
             <widget name="toolbox"/>
           </dockitem>
         </dockgroup>
       </dockpaned>
-      <dockgroup expand="true" weight="585">
-        <dockitem icon="main" title="Main" tooltip="Main">
-          <widget name="notebook"/>
-        </dockitem>
+      <dockgroup name="diagrams" weight="80">
       </dockgroup>
     </dockpaned>
   </dockframe>

@@ -589,10 +589,14 @@ class NamespaceView(gtk.TreeView):
         """
         Drop the data send by on_drag_data_get().
         """
-        self.emit_stop_by_name('drag-data-received')
-        #print 'drag_data_received'
-        n, p = selection.data.split('#')
-        drop_info = self.get_dest_row_at_pos(x, y)
+        if NamespaceView.TARGET_ELEMENT_ID in context.targets:
+            self.emit_stop_by_name('drag-data-received')
+            #print 'drag_data_received'
+            n, p = selection.data.split('#')
+            drop_info = self.get_dest_row_at_pos(x, y)
+        else:
+            drop_info = None
+
         if drop_info:
             #print 'drop_info', drop_info
             model = self.get_model()
@@ -643,13 +647,11 @@ class NamespaceView(gtk.TreeView):
         """
         DnD magic. do not touch
         """
-        self.emit_stop_by_name('drag-drop')
-        self.drag_get_data(context, context.targets[-1], time)
-        return 1
-
-
-gobject.type_register(NamespaceModel)
-gobject.type_register(NamespaceView)
+        if NamespaceView.TARGET_ELEMENT_ID in context.targets:
+            self.emit_stop_by_name('drag-drop')
+            self.drag_get_data(context, context.targets[-1], time)
+            return True
+        return False
 
 
 # vim: sw=4:et:ai

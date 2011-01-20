@@ -4,6 +4,7 @@ The main application window.
 
 import gobject, gtk
 
+import pkg_resources
 from zope import interface, component
 from gaphor.interfaces import IActionProvider
 from interfaces import IUIComponent
@@ -15,7 +16,8 @@ from diagramtab import DiagramTab
 from toolbox import Toolbox
 from diagramtoolbox import TOOLBOX_ACTIONS
 from toplevelwindow import ToplevelWindow
-
+from etk.docking import DockItem, DockGroup, add_new_group_left, settings
+from etk.docking.dockstore import deserialize, get_main_frames, finish
 
 from interfaces import IDiagramSelectionChange
 from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
@@ -24,6 +26,11 @@ from event import DiagramSelectionChange
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 
+settings['diagrams'].expand = True
+settings['diagrams'].auto_remove = False
+settings['diagrams'].inherit_settings = False
+settings['EtkDockGroup'].expand = False
+settings['EtkDockPaned'].expand = False
 
 class MainWindow(ToplevelWindow):
     """
@@ -71,6 +78,9 @@ class MainWindow(ToplevelWindow):
             <separator />
             <menuitem action="reset-tool-after-create" />
             <menuitem action="diagram-drawing-style" />
+            <separator />
+            <menuitem action="open-namespace" />
+            <menuitem action="open-toolbox" />
             <separator />
             <placeholder name="primary" />
             <placeholder name="secondary" />
@@ -120,9 +130,11 @@ class MainWindow(ToplevelWindow):
         self.model_changed = False
 
         # Map tab contents to DiagramTab
-        self.notebook_map = {}
+        #self.notebook_map = {}
         # Tree view:
-        self._tree_view = None 
+        self._namespace = None 
+        self._active_diagram = None
+        self.layout = None
 
         self.action_group = build_action_group(self)
         for name, label in (('file', '_File'),
@@ -142,7 +154,7 @@ class MainWindow(ToplevelWindow):
 
     tree_model = property(lambda s: s.tree_view.get_model())
 
-    tree_view = property(lambda s: s._tree_view)
+    tree_view = property(lambda s: s._namespace)
 
 
     def get_filename(self):
@@ -158,7 +170,9 @@ class MainWindow(ToplevelWindow):
         side of the main window.
         See also: get_current_diagram(), get_current_diagram_view().
         """
-        return self.get_current_tab()
+        #current = self.notebook.get_current_page()
+        #content = self.notebook.get_nth_page(current)
+        #return self.notebook_map.get(content)
 
 
     def get_current_diagram(self):
@@ -218,65 +232,61 @@ class MainWindow(ToplevelWindow):
                 self.set_current_page(tab)
                 return tab
 
-        tab = DiagramTab(self)
-        tab.set_diagram(diagram)
-        widget = tab.construct()
+        tab = DiagramTab(diagram)
+        dock_item = tab.construct()
+        dock_item.set_name('diagram-tab')
+        dock_item.diagram_tab = tab
+        assert dock_item.get_name() == 'diagram-tab'
         tab.set_drawing_style(self.properties('diagram.sloppiness', 0))
-        self.add_tab(tab, widget, tab.title)
-        self.set_current_page(tab)
+
+        self.add_tab(dock_item)
 
         return tab
 
-
-    def ui_component(self):
-        """
-        Create the widgets that make up the main window.
-        """
+    def _create_namespace(self):
         model = NamespaceModel(self.element_factory)
         view = NamespaceView(model, self.element_factory)
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
         scrolled_window.add(view)
+        scrolled_window.show()
         view.show()
         
         view.connect_after('event-after', self._on_view_event)
         view.connect('row-activated', self._on_view_row_activated)
         view.connect_after('cursor-changed', self._on_view_cursor_changed)
+        view.connect('destroy', self._on_view_destroyed)
+        self._namespace = view
+        return scrolled_window
 
-        vbox = gtk.VBox()
-        vbox.pack_start(scrolled_window, expand=True, padding=3)
-        scrolled_window.show()
-
-        paned = gtk.HPaned()
-        paned.set_property('position', 160)
-        paned.pack1(vbox)
-        vbox.show()
-        
-        notebook = gtk.Notebook()
-        notebook.set_scrollable(True)
-        notebook.set_show_border(False)
-
-        notebook.connect_after('switch-page', self._on_notebook_switch_page)
-        notebook.connect_after('page-removed', self._on_notebook_page_removed)
-
-        
-        paned.pack2(notebook)
-        notebook.show()
-        paned.show()
-
-        self.notebook = notebook
-        self._tree_view = view
-       
+    def _create_toolbox(self):
         toolbox = Toolbox(TOOLBOX_ACTIONS)
-        vbox.pack_start(toolbox, expand=False)
         toolbox.show()
 
+        toolbox.connect('destroy', self._on_toolbox_destroyed)
         self._toolbox = toolbox
+        return toolbox
 
-        self.open_welcome_page()
+    def ui_component(self):
+        def _factory(name):
+            return getattr(self, '_create_%s' % name)()
 
-        return paned
+        filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
+        with open(filename) as f:
+            layout = deserialize(f.read(), _factory)
+        main_frames = list(get_main_frames(layout))
+        assert len(main_frames) == 1
+        
+        for f in layout.frames:
+            f.get_toplevel().show_all()
+
+        layout.connect('item-closed', self._on_item_closed)
+        layout.connect('item-selected', self._on_item_selected)
+
+        self.layout = layout
+
+        return main_frames[0]
 
 
     def construct(self):
@@ -320,79 +330,46 @@ class MainWindow(ToplevelWindow):
 
     # Notebook methods:
 
-    def add_tab(self, tab, contents, label):
+    def add_tab(self, item):
         """
         Create a new tab on the notebook with window as its contents.
         Returns: The page number of the tab.
         """
-        self.notebook_map[contents] = tab
-        #contents.connect('destroy', self._on_tab_destroy)
-        l = gtk.Label(label)
-
-        style = gtk.RcStyle()
-        style.xthickness = 0
-        style.ythickness = 0
-        button = gtk.Button()
-        button.set_relief(gtk.RELIEF_NONE)
-        button.set_focus_on_click(False)
-        button.modify_style(style)
-        button.connect("clicked", self._on_tab_close_button_pressed, tab)
-
-        close_image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
-        button.add(close_image)
-
-        box = gtk.HBox()
-        box.pack_start(l)
-        box.pack_start(button, False, False)
-        box.show_all()
-
-        # Note: append_page() emits switch-page event
-        self.notebook.append_page(contents, box)
-        self.notebook.set_tab_reorderable(contents, True)
-        page_num = self.notebook.page_num(contents)
-        #self.notebook.set_current_page(page_num)
-        return page_num
-
-    def get_current_tab(self):
-        """
-        Return the window (DiagramTab) that is currently visible on the
-        notebook.
-        """
-        current = self.notebook.get_current_page()
-        content = self.notebook.get_nth_page(current)
-        return self.notebook_map.get(content)
+        group = list(self.layout.get_widgets('diagrams'))[0]
+        group.insert_item(item)
+        item.show_all()
+        #item.diagram_tab = tab
+        #self.notebook_map[item] = tab
 
     def set_current_page(self, tab):
         """
         Force a specific tab (DiagramTab) to the foreground.
         """
-        for p, t in self.notebook_map.iteritems():
-            if tab is t:
-                num = self.notebook.page_num(p)
-                self.notebook.set_current_page(num)
+        for i in self.layout.get_widgets('diagram-tab'):
+            if i.diagram_tab is tab:
+                g = i.get_parent()
+                g.set_current_item(g.item_num(i))
                 return
+        #for p, t in self.notebook_map.iteritems():
+        #    if tab is t:
+        #        num = self.notebook.page_num(p)
+        #        self.notebook.set_current_page(num)
+        #        return
+        pass
 
     def set_tab_label(self, tab, label):
-        for p, t in self.notebook_map.iteritems():
-            if tab is t:
-                l = gtk.Label(label)
-                l.show()
-                self.notebook.set_tab_label(p, l)
+        
+        #for p, t in self.notebook_map.iteritems():
+        #    if tab is t:
+        #        l = gtk.Label(label)
+        #        l.show()
+        #        self.notebook.set_tab_label(p, l)
+        pass
 
     def get_tabs(self):
-        return self.notebook_map.values()
-
-    def remove_tab(self, tab):
-        """
-        Remove the tab from the notebook. Tab is such a thing as
-        a DiagramTab.
-        """
-        for p, t in self.notebook_map.iteritems():
-            if tab is t:
-                num = self.notebook.page_num(p)
-                self.notebook.remove_page(num)
-                del self.notebook_map[p]
-                return
+        tabs = map(lambda i: i.diagram_tab, self.layout.get_widgets('diagram-tab'))
+        print 'found tabs', tabs
+        return tabs
 
     def select_element(self, element):
         """
@@ -404,10 +381,10 @@ class MainWindow(ToplevelWindow):
         path = self.tree_model.path_from_element(element)
         # Expand the first row:
         if len(path) > 1:
-            self._tree_view.expand_row(path[:-1], False)
-        selection = self._tree_view.get_selection()
+            self._namespace.expand_row(path[:-1], False)
+        selection = self._namespace.get_selection()
         selection.select_path(path)
-        self._on_view_cursor_changed(self._tree_view)
+        self._on_view_cursor_changed(self._namespace)
 
     # Signal callbacks:
 
@@ -460,7 +437,7 @@ class MainWindow(ToplevelWindow):
         """
         Window is destroyed... Quit the application.
         """
-        self._tree_view = None
+        self._namespace = None
         self.window = None
         if gobject.main_depth() > 0:
             gtk.main_quit()
@@ -472,10 +449,10 @@ class MainWindow(ToplevelWindow):
     def _on_tab_close_button_pressed(self, event, tab):
         tab.close()
 
-    def _on_tab_destroy(self, widget):
-        tab = self.notebook_map[widget]
-        assert isinstance(tab, DiagramTab)
-        self.remove_tab(tab)
+#    def _on_tab_destroy(self, widget):
+#        tab = self.notebook_map[widget]
+#        assert isinstance(tab, DiagramTab)
+#        self.remove_tab(tab)
 
     def _on_window_delete(self, window = None, event = None):
         return not self.ask_to_close()
@@ -509,35 +486,54 @@ class MainWindow(ToplevelWindow):
 
         self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
 
-    def _insensivate_toolbox(self):
-        for button in self._toolbox.buttons:
-            button.set_property('sensitive', False)
 
-    def _on_notebook_page_removed(self, notebook, tab, page_num):
+    def _on_view_destroyed(self, widget):
+        self._namespace = None
+
+
+    def _on_toolbox_destroyed(self, widget):
+        self._toolbox = None
+
+
+    def _clear_ui_settings(self):
         if self._tab_ui_settings:
             action_group, ui_id = self._tab_ui_settings
             self.ui_manager.remove_action_group(action_group)
             self.ui_manager.remove_ui(ui_id)
             self._tab_ui_settings = None
-            if notebook.get_current_page() == -1:
-                self._insensivate_toolbox()
-            else:
-                self._on_notebook_switch_page(notebook, None, notebook.get_current_page())
 
-    def _on_notebook_switch_page(self, notebook, tab, page_num):
+    #def _insensivate_toolbox(self):
+    #    for button in self._toolbox.buttons:
+    #        button.set_property('sensitive', False)
+
+    def _on_item_closed(self, layout, group, item):
+        self._clear_ui_settings()
+        # TODO: find diagrams
+        #if not group.get_current_item():
+        #    self._insensivate_toolbox()
+        item.destroy()
+
+    def _on_item_selected(self, layout, group, item):
         """
         Another page (tab) is put on the front of the diagram notebook.
         A dummy action is executed.
         """
-        if self._tab_ui_settings:
-            action_group, ui_id = self._tab_ui_settings
-            self.ui_manager.remove_action_group(action_group)
-            self.ui_manager.remove_ui(ui_id)
-            self._tab_ui_settings = None
+        # TODO: Here the magic happens!
+        # TODO: Need to see what the active view is, or make toolbox actions global
 
-        content = self.notebook.get_nth_page(page_num)
-        tab = self.notebook_map.get(content)
-        assert isinstance(tab, DiagramTab), str(tab)
+        self._clear_ui_settings()
+
+        try:
+            tab = item.diagram_tab
+        except AttributeError:
+            # Not a diagram tab
+            return
+
+        self._active_diagram = tab
+
+        #content = self.notebook.get_nth_page(page_num)
+        #tab = self.notebook_map.get(content)
+        #assert isinstance(tab, DiagramTab), str(tab)
         
         self.ui_manager.insert_action_group(tab.action_group, -1)
         ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
@@ -571,6 +567,9 @@ class MainWindow(ToplevelWindow):
         by an action. Each button is assigned a special _action_name_
         attribute that can be used to fetch the action from the ui manager.
         """
+        if not self._toolbox:
+            return
+
         for button in self._toolbox.buttons:
             
             action_name = button.action_name
@@ -585,14 +584,14 @@ class MainWindow(ToplevelWindow):
     def quit(self):
         # TODO: check for changes (e.g. undo manager), fault-save
         self.ask_to_close() and gtk.main_quit()
-        self._tree_view.get_model().close()
+        self._namespace.get_model().close()
         self.component_registry.unregister_handler(self._on_file_manager_state_changed)
         self.component_registry.unregister_handler(self._new_model_content)
 
 
     @action(name='tree-view-open', label='_Open')
     def tree_view_open_selected(self):
-        element = self._tree_view.get_selected_element()
+        element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
             self.show_diagram(element)
@@ -602,7 +601,7 @@ class MainWindow(ToplevelWindow):
 
     @action(name='tree-view-rename', label=_('Rename'), accel='F2')
     def tree_view_rename_selected(self):
-        view = self._tree_view
+        view = self._namespace
         element = view.get_selected_element()
         path = view.get_model().path_from_element(element)
         column = view.get_column(0)
@@ -616,7 +615,7 @@ class MainWindow(ToplevelWindow):
     @action(name='tree-view-create-diagram', label=_('_New diagram'), stock_id='gaphor-diagram')
     @transactional
     def tree_view_create_diagram(self):
-        element = self._tree_view.get_selected_element()
+        element = self._namespace.get_selected_element()
         diagram = self.element_factory.create(UML.Diagram)
         diagram.package = element
 
@@ -633,7 +632,7 @@ class MainWindow(ToplevelWindow):
     @action(name='tree-view-delete-diagram', label=_('_Delete diagram'), stock_id='gtk-delete')
     @transactional
     def tree_view_delete_diagram(self):
-        diagram = self._tree_view.get_selected_element()
+        diagram = self._namespace.get_selected_element()
         m = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_QUESTION,
                               gtk.BUTTONS_YES_NO,
                               'Do you really want to delete diagram %s?\n\n'
@@ -653,7 +652,7 @@ class MainWindow(ToplevelWindow):
     @action(name='tree-view-create-package', label=_('New _package'), stock_id='gaphor-package')
     @transactional
     def tree_view_create_package(self):
-        element = self._tree_view.get_selected_element()
+        element = self._namespace.get_selected_element()
         package = self.element_factory.create(UML.Package)
         package.package = element
 
@@ -669,14 +668,14 @@ class MainWindow(ToplevelWindow):
     @action(name='tree-view-delete-package', label=_('Delete pac_kage'), stock_id='gtk-delete')
     @transactional
     def tree_view_delete_package(self):
-        package = self._tree_view.get_selected_element()
+        package = self._namespace.get_selected_element()
         assert isinstance(package, UML.Package)
         package.unlink()
 
 
     @action(name='tree-view-refresh', label=_('_Refresh'))
     def tree_view_refresh(self):
-        self._tree_view.get_model().refresh()
+        self._namespace.get_model().refresh()
 
 
     @toggle_action(name='reset-tool-after-create', label=_('_Reset tool'), active=False)
@@ -688,7 +687,7 @@ class MainWindow(ToplevelWindow):
         """
         Set the tool based on the name of the action
         """
-        if shortcut:
+        if shortcut and self._toolbox:
             action_name = self._toolbox.shortcuts.get(shortcut)
             log.debug('Action for shortcut %s: %s' % (shortcut, action_name))
             if not action_name:
@@ -710,6 +709,28 @@ class MainWindow(ToplevelWindow):
             tab.set_drawing_style(sloppiness)
         self.properties.set('diagram.sloppiness', sloppiness)
 
+
+    @action(name='open-namespace', label=_('_Namespace'))
+    def open_namespace(self):
+        if not self._namespace:
+            item = DockItem(_('Namespace'))
+            item.add(self._create_namespace())
+            group = DockGroup()
+            group.insert_item(item)
+            diagrams = self.layout.get_widgets('diagrams')[0]
+            add_new_group_left(diagrams, group)
+
+
+    @action(name='open-toolbox', label=_('_Toolbox'))
+    def open_toolbox(self):
+        if not self._toolbox:
+            item = DockItem(_('Toolbox'))
+            item.add(self._create_toolbox())
+            diagrams = self.layout.get_widgets('diagrams')[0]
+            group = DockGroup()
+            group.insert_item(item)
+            add_new_group_left(diagrams, group)
+            self._update_toolbox(self._active_diagram.toolbox.action_group)
 
 gtk.accel_map_add_filter('gaphor')
 

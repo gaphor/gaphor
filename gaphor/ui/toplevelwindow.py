@@ -6,7 +6,8 @@ import os.path
 import pkg_resources
 
 import gtk
-
+from etk.docking import DockGroup, DockItem
+from etk.docking.docklayout import add_new_group_floating
 from zope import interface
 from interfaces import IUIComponent
 from gaphor.core import inject
@@ -29,6 +30,9 @@ class ToplevelWindow(object):
 
     def __init__(self):
         self.window = None
+
+    def ui_component(self):
+        raise NotImplementedError
 
     def construct(self):
 
@@ -68,22 +72,26 @@ class ToplevelWindow(object):
         self.window.show()
 
 
-class UtilityWindow(ToplevelWindow):
+class UtilityWindow(object):
+
+    interface.implements(IUIComponent)
 
     gui_manager = inject('gui_manager')
 
+    title = '<<Gaphor>>'
     resizable = False
 
     def construct(self):
-        super(UtilityWindow, self).construct()
-
-        main_window = self.gui_manager.main_window.window
-        self.window.set_transient_for(main_window)
-        #self.window.set_keep_above(True)
-        self.window.set_property('skip-taskbar-hint', True)
-        self.window.set_position(gtk.WIN_POS_MOUSE)
-        self.window.show()
-       #self.window.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
+        layout = self.gui_manager.main_window.layout
+        new_group = DockGroup()
+        new_item = DockItem(self.title)
+        new_group.insert_item(new_item)
+        self.dock_item = new_item
+        ui_component = self.ui_component()
+        if ui_component:
+            new_item.add(ui_component)
+        add_new_group_floating(new_group, layout, self.size)
+        return new_item
 
 
 # vim:sw=4:et:ai

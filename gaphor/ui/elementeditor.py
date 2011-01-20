@@ -3,7 +3,7 @@
 import gtk
 from zope import interface
 from gaphor.interfaces import IService, IActionProvider
-from gaphor.core import _, inject, action, toggle_action, build_action_group
+from gaphor.core import _, inject, action, build_action_group
 from gaphor.ui.toplevelwindow import UtilityWindow
 from gaphor.ui.propertyeditor import PropertyEditor
 
@@ -24,15 +24,10 @@ class ElementEditor(UtilityWindow):
       <ui>
         <menubar name="mainwindow">
           <menu action="edit">
-            <menuitem action="ElementEditor:open" />
             <separator />
+            <menuitem action="ElementEditor:open" />
           </menu>
         </menubar>
-        <toolbar action="mainwindow-toolbar">
-          <placeholder name="right">
-            <toolitem action="ElementEditor:open" position="bot" />
-          </placeholder>
-        </toolbar>
       </ui>
     """
 
@@ -42,24 +37,18 @@ class ElementEditor(UtilityWindow):
         The widget attribute is a PropertyEditor."""
         
         self.action_group = build_action_group(self)
-        self.window = None
+        self.dock_item = None
         self.property_editor = PropertyEditor()
         self.widget = self.property_editor.construct()
 
-    @toggle_action(name='ElementEditor:open', label=_('Editor'), stock_id='gtk-edit', accel='<Control>e')
-    def elementeditor(self, active):
+    @action(name='ElementEditor:open', label=_('Editor'), stock_id='gtk-edit', accel='<Control>e')
+    def elementeditor(self):
         """Display the element editor when the toolbar button is toggled.  If
         active, the element editor is displayed.  Otherwise, it is hidden."""
         
-        if active:
-            if not self.window:
-                self.construct()
-                self.window.connect('delete-event', self.close)
-                self.window.connect('key-press-event', self.on_key_press_event)
-            else:
-                self.window.show_all()
-        else:
-            self.window.hide()
+        if not self.widget.get_parent():
+            self.construct()
+            self.dock_item.connect('close', self.on_close)
 
     def ui_component(self):
         """Display and return the PropertyEditor widget."""
@@ -67,19 +56,21 @@ class ElementEditor(UtilityWindow):
         self.widget.show()
         return self.widget
 
-    def close(self, widget=None, event=None):
+    def on_close(self, item):
         """Hide the element editor window and deactivate the toolbar button.
         Both the widget and event parameters default to None and are
         idempotent if set."""
         
+        log.debug('ElementEditor.close')
         self.action_group.get_action('ElementEditor:open').set_active(False)
-        self.window.hide()
+        self.widget.unparent()
+        self.dock_item.destroy()
         return True
 
-    def on_key_press_event(self, widget, event):
-        """Close the element editor window if the escape key was pressed."""
-        
-        if event.keyval == gtk.keysyms.Escape:
-            self.close()
+#    def on_key_press_event(self, widget, event):
+#        """Close the element editor window if the escape key was pressed."""
+#        
+#        if event.keyval == gtk.keysyms.Escape:
+#            self.close()
 
 # vim:sw=4:et:ai
