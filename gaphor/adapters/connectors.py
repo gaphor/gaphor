@@ -146,7 +146,8 @@ class CommentLineElementConnect(AbstractConnect):
         if connected_to and element and \
                 ((isinstance(connected_to.subject, UML.Comment) and \
                     self.element.subject in connected_to.subject.annotatedElement) or \
-                 connected_to.subject in self.element.subject.annotatedElement):
+                 (isinstance(self.element.subject, UML.Comment) and \
+                    connected_to.subject in self.element.subject.annotatedElement)):
             return None
 
         return super(CommentLineElementConnect, self).allow(handle, port)
