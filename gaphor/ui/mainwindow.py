@@ -17,7 +17,7 @@ from gaphor import UML
 from gaphor.core import _, inject, action, toggle_action, build_action_group, transactional
 from namespace import NamespaceModel, NamespaceView
 from diagramtab import DiagramTab
-from toolbox import Toolbox
+from toolbox import Toolbox as _Toolbox
 from diagramtoolbox import TOOLBOX_ACTIONS
 from etk.docking import DockItem, DockGroup, add_new_group_left, settings
 from etk.docking.dockstore import deserialize, get_main_frames, finish
@@ -83,12 +83,6 @@ class MainWindow(object):
             <placeholder name="ternary" />
           </menu>
           <menu action="diagram">
-            <menuitem action="tree-view-create-diagram" />
-            <menuitem action="tree-view-create-package" />
-            <separator />
-            <menuitem action="tree-view-delete-diagram" />
-            <menuitem action="tree-view-delete-package" />
-            <separator />
             <menuitem action="reset-tool-after-create" />
             <menuitem action="diagram-drawing-style" />
             <separator />
@@ -122,18 +116,6 @@ class MainWindow(object):
         </toolbar>
         <toolbar action="tools">
         </toolbar>
-        <popup action="namespace-popup">
-          <menuitem action="tree-view-open" />
-          <menuitem action="tree-view-rename" />
-          <separator />
-          <menuitem action="tree-view-create-diagram" />
-          <menuitem action="tree-view-create-package" />
-          <separator />
-          <menuitem action="tree-view-delete-diagram" />
-          <menuitem action="tree-view-delete-package" />
-          <separator />
-          <menuitem action="tree-view-refresh" />
-        </popup>
       </ui>
     """
 
@@ -143,8 +125,6 @@ class MainWindow(object):
 
         # Map tab contents to DiagramTab
         #self.notebook_map = {}
-        # Tree view:
-        self._namespace = None 
         self._active_diagram = None
         self.layout = None
 
@@ -212,10 +192,11 @@ class MainWindow(object):
 
         self.action_manager.register_action_provider(self)
 
+
+    # HACK:
+    tree_view = property(lambda s: s.component_registry.get_utility(IUIComponent, 'namespace')._namespace)
+
     tree_model = property(lambda s: s.tree_view.get_model())
-
-    tree_view = property(lambda s: s._namespace)
-
 
     def get_filename(self):
         """
@@ -303,34 +284,10 @@ class MainWindow(object):
 
         return tab
 
-    def _create_namespace(self):
-        model = NamespaceModel(self.element_factory)
-        view = NamespaceView(model, self.element_factory)
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
-        scrolled_window.add(view)
-        scrolled_window.show()
-        view.show()
-        
-        view.connect_after('event-after', self._on_view_event)
-        view.connect('row-activated', self._on_view_row_activated)
-        view.connect_after('cursor-changed', self._on_view_cursor_changed)
-        view.connect('destroy', self._on_view_destroyed)
-        self._namespace = view
-        return scrolled_window
-
-    def _create_toolbox(self):
-        toolbox = Toolbox(TOOLBOX_ACTIONS)
-        toolbox.show()
-
-        toolbox.connect('destroy', self._on_toolbox_destroyed)
-        self._toolbox = toolbox
-        return toolbox
-
     def ui_component(self):
         def _factory(name):
-            return getattr(self, '_create_%s' % name)()
+            comp = self.component_registry.get_utility(IUIComponent, name)
+            return comp.construct()
 
         filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
         with open(filename) as f:
@@ -398,6 +355,7 @@ class MainWindow(object):
         cr.register_handler(self._on_file_manager_state_changed)
         cr.register_handler(self._on_undo_manager_state_changed)
         cr.register_handler(self._new_model_content)
+        # TODO: register on ElementCreate/Delete event
 
 
     def open_welcome_page(self):
@@ -465,21 +423,6 @@ class MainWindow(object):
         print 'found tabs', tabs
         return tabs
 
-    def select_element(self, element):
-        """
-        Select an element from the Namespace view.
-        The element is selected. After this an action may be executed,
-        such as OpenModelElement, which will try to open the element (if it's
-        a Diagram).
-        """
-        path = self.tree_model.path_from_element(element)
-        # Expand the first row:
-        if len(path) > 1:
-            self._namespace.expand_row(path[:-1], False)
-        selection = self._namespace.get_selection()
-        selection.select_path(path)
-        self._on_view_cursor_changed(self._namespace)
-
     # Signal callbacks:
 
     @component.adapter(ModelFactoryEvent)
@@ -531,7 +474,6 @@ class MainWindow(object):
         """
         Window is destroyed... Quit the application.
         """
-        self._namespace = None
         self.window = None
         if gobject.main_depth() > 0:
             gtk.main_quit()
@@ -551,54 +493,12 @@ class MainWindow(object):
     def _on_window_delete(self, window = None, event = None):
         return not self.ask_to_close()
 
-    def _on_view_event(self, view, event):
-        """
-        Show a popup menu if button3 was pressed on the TreeView.
-        """
-        # handle mouse button 3:
-        if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
-            menu = self.ui_manager.get_widget('/namespace-popup')
-            menu.popup(None, None, None, event.button, event.time)
-
-
-    def _on_view_row_activated(self, view, path, column):
-        """
-        Double click on an element in the tree view.
-        """
-        self.action_manager.execute('tree-view-open')
-
-    def _on_view_cursor_changed(self, view):
-        """
-        Another row is selected, execute a dummy action.
-        """
-        element = view.get_selected_element()
-        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, UML.Package)
-        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, UML.Package)
-
-        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, UML.Diagram)
-        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, UML.Package) and not element.presentation
-
-        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
-
-
-    def _on_view_destroyed(self, widget):
-        self._namespace = None
-
-
-    def _on_toolbox_destroyed(self, widget):
-        self._toolbox = None
-
-
     def _clear_ui_settings(self):
         if self._tab_ui_settings:
             action_group, ui_id = self._tab_ui_settings
             self.ui_manager.remove_action_group(action_group)
             self.ui_manager.remove_ui(ui_id)
             self._tab_ui_settings = None
-
-    #def _insensivate_toolbox(self):
-    #    for button in self._toolbox.buttons:
-    #        button.set_property('sensitive', False)
 
     def _on_item_closed(self, layout, group, item):
         self._clear_ui_settings()
@@ -661,15 +561,7 @@ class MainWindow(object):
         by an action. Each button is assigned a special _action_name_
         attribute that can be used to fetch the action from the ui manager.
         """
-        if not self._toolbox:
-            return
-
-        for button in self._toolbox.buttons:
-            
-            action_name = button.action_name
-            action = action_group.get_action(action_name)
-            if action:
-                action.connect_proxy(button)
+        self.component_registry.get_utility(IUIComponent, 'toolbox').update_toolbox(action_group)
 
 
     # Actions:
@@ -678,9 +570,186 @@ class MainWindow(object):
     def quit(self):
         # TODO: check for changes (e.g. undo manager), fault-save
         self.ask_to_close() and gtk.main_quit()
-        self._namespace.get_model().close()
+        self.tree_model.close()
         self.component_registry.unregister_handler(self._on_file_manager_state_changed)
         self.component_registry.unregister_handler(self._new_model_content)
+
+    @toggle_action(name='reset-tool-after-create', label=_('_Reset tool'), active=False)
+    def reset_tool_after_create(self, active):
+        self.properties.set('reset-tool-after-create', active)
+
+
+    def set_active_tool(self, action_name=None, shortcut=None):
+        """
+        Set the tool based on the name of the action
+        """
+        # HACK:
+        toolbox = self.component_registry.get_utility(IUIComponent, 'toolbox')._toolbox
+        if shortcut and toolbox:
+            action_name = toolbox.shortcuts.get(shortcut)
+            log.debug('Action for shortcut %s: %s' % (shortcut, action_name))
+            if not action_name:
+                return
+
+        self.get_current_diagram_tab().toolbox.action_group.get_action(action_name).activate()
+            
+        
+    @toggle_action(name='diagram-drawing-style', label='Hand drawn style', active=False)
+    def hand_drawn_style(self, active):
+        """
+        Toggle between straight diagrams and "hand drawn" diagram style.
+        """
+        if active:
+            sloppiness = 0.5
+        else:
+            sloppiness = 0.0
+        for tab in self.get_tabs():
+            tab.set_drawing_style(sloppiness)
+        self.properties.set('diagram.sloppiness', sloppiness)
+
+    def create_item(self, widget, title, placement=None):
+        item = DockItem(title)
+        item.add(widget)
+        group = DockGroup()
+        group.insert_item(item)
+        if placement:
+            if placement == 'floating':
+                add_new_group_floating(group)
+            else:
+                location = self.layout.get_widgets(placement[1])[0]
+                { 'left': add_new_group_left }[placement[0]](location, group)
+        else:
+            add_new_group_floating(group)
+        item.show()
+        group.show()
+
+    @action(name='open-namespace', label=_('_Namespace'))
+    def open_namespace(self):
+        if not self.tree_view:
+            comp = self.component_registry.get_utility(IUIComponent, 'namespace')
+            self.create_item(comp.construct(), comp.title, comp.placement)
+            self.action_manager.register_action_provider(comp)
+
+
+    @action(name='open-toolbox', label=_('_Toolbox'))
+    def open_toolbox(self):
+        toolbox = self.component_registry.get_utility(IUIComponent, 'toolbox')._toolbox
+        if not toolbox:
+            comp = self.component_registry.get_utility(IUIComponent, 'toolbox')
+            self.create_item(comp.construct(), comp.title, comp.placement)
+            # TODO: connect to active diagram
+
+gtk.accel_map_add_filter('gaphor')
+
+
+
+class Namespace(object):
+
+    interface.implements(IUIComponent, IActionProvider)
+
+    title = _('Namespace')
+    placement = ('left', 'diagrams')
+
+    element_factory = inject('element_factory')
+    ui_manager = inject('ui_manager')
+
+    menu_xml = """
+      <ui>
+        <menubar name="mainwindow">
+          <menu action="diagram">
+            <menuitem action="tree-view-create-diagram" />
+            <menuitem action="tree-view-create-package" />
+            <separator />
+            <menuitem action="tree-view-delete-diagram" />
+            <menuitem action="tree-view-delete-package" />
+            <separator />
+          </menu>
+        </menubar>
+        <popup action="namespace-popup">
+          <menuitem action="tree-view-open" />
+          <menuitem action="tree-view-rename" />
+          <separator />
+          <menuitem action="tree-view-create-diagram" />
+          <menuitem action="tree-view-create-package" />
+          <separator />
+          <menuitem action="tree-view-delete-diagram" />
+          <menuitem action="tree-view-delete-package" />
+          <separator />
+          <menuitem action="tree-view-refresh" />
+        </popup>
+      </ui>
+    """
+    def __init__(self):
+        self._namespace = None
+        self.action_group = build_action_group(self)
+
+    def construct(self):
+        model = NamespaceModel(self.element_factory)
+        view = NamespaceView(model, self.element_factory)
+        scrolled_window = gtk.ScrolledWindow()
+        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
+        scrolled_window.add(view)
+        scrolled_window.show()
+        view.show()
+        
+        view.connect_after('event-after', self._on_view_event)
+        view.connect('row-activated', self._on_view_row_activated)
+        view.connect_after('cursor-changed', self._on_view_cursor_changed)
+        view.connect('destroy', self._on_view_destroyed)
+        self._namespace = view
+        return scrolled_window
+      
+
+    def _on_view_event(self, view, event):
+        """
+        Show a popup menu if button3 was pressed on the TreeView.
+        """
+        # handle mouse button 3:
+        if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
+            menu = self.ui_manager.get_widget('/namespace-popup')
+            menu.popup(None, None, None, event.button, event.time)
+
+
+    def _on_view_row_activated(self, view, path, column):
+        """
+        Double click on an element in the tree view.
+        """
+        self.action_manager.execute('tree-view-open')
+
+
+    def _on_view_cursor_changed(self, view):
+        """
+        Another row is selected, execute a dummy action.
+        """
+        element = view.get_selected_element()
+        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, UML.Package)
+        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, UML.Package)
+
+        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, UML.Diagram)
+        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, UML.Package) and not element.presentation
+
+        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
+
+
+    def _on_view_destroyed(self, widget):
+        self._namespace = None
+
+
+    def select_element(self, element):
+        """
+        Select an element from the Namespace view.
+        The element is selected. After this an action may be executed,
+        such as OpenModelElement, which will try to open the element (if it's
+        a Diagram).
+        """
+        path = self._namespace.get_model().path_from_element(element)
+        # Expand the first row:
+        if len(path) > 1:
+            self._namespace.expand_row(path[:-1], False)
+        selection = self._namespace.get_selection()
+        selection.select_path(path)
+        self._on_view_cursor_changed(self._namespace)
 
 
     @action(name='tree-view-open', label='_Open')
@@ -719,7 +788,7 @@ class MainWindow(object):
             diagram.name = 'New diagram'
 
         self.select_element(diagram)
-        self.show_diagram(diagram)
+        # TODO: self.show_diagram(diagram)
         self.tree_view_rename_selected()
 
 
@@ -769,64 +838,53 @@ class MainWindow(object):
 
     @action(name='tree-view-refresh', label=_('_Refresh'))
     def tree_view_refresh(self):
-        self._namespace.get_model().refresh()
+        self.tree_model.refresh()
 
 
-    @toggle_action(name='reset-tool-after-create', label=_('_Reset tool'), active=False)
-    def reset_tool_after_create(self, active):
-        self.properties.set('reset-tool-after-create', active)
+
+class Toolbox(object):
+
+    interface.implements(IUIComponent)
+
+    title = _('Toolbox')
+    placement = ('left', 'diagrams')
+
+    def __init__(self):
+        self._toolbox = None
+
+    def construct(self):
+        toolbox = _Toolbox(TOOLBOX_ACTIONS)
+        toolbox.show()
+
+        toolbox.connect('destroy', self._on_toolbox_destroyed)
+        self._toolbox = toolbox
+        return toolbox
+
+    
+    def _on_toolbox_destroyed(self, widget):
+        self._toolbox = None
 
 
-    def set_active_tool(self, action_name=None, shortcut=None):
+    #def _insensivate_toolbox(self):
+    #    for button in self._toolbox.buttons:
+    #        button.set_property('sensitive', False)
+
+    def update_toolbox(self, action_group):
         """
-        Set the tool based on the name of the action
+        Update the buttons in the toolbox. Each button should be connected
+        by an action. Each button is assigned a special _action_name_
+        attribute that can be used to fetch the action from the ui manager.
         """
-        if shortcut and self._toolbox:
-            action_name = self._toolbox.shortcuts.get(shortcut)
-            log.debug('Action for shortcut %s: %s' % (shortcut, action_name))
-            if not action_name:
-                return
-
-        self.get_current_diagram_tab().toolbox.action_group.get_action(action_name).activate()
-            
-        
-    @toggle_action(name='diagram-drawing-style', label='Hand drawn style', active=False)
-    def hand_drawn_style(self, active):
-        """
-        Toggle between straight diagrams and "hand drawn" diagram style.
-        """
-        if active:
-            sloppiness = 0.5
-        else:
-            sloppiness = 0.0
-        for tab in self.get_tabs():
-            tab.set_drawing_style(sloppiness)
-        self.properties.set('diagram.sloppiness', sloppiness)
-
-
-    @action(name='open-namespace', label=_('_Namespace'))
-    def open_namespace(self):
-        if not self._namespace:
-            item = DockItem(_('Namespace'))
-            item.add(self._create_namespace())
-            group = DockGroup()
-            group.insert_item(item)
-            diagrams = self.layout.get_widgets('diagrams')[0]
-            add_new_group_left(diagrams, group)
-
-
-    @action(name='open-toolbox', label=_('_Toolbox'))
-    def open_toolbox(self):
         if not self._toolbox:
-            item = DockItem(_('Toolbox'))
-            item.add(self._create_toolbox())
-            diagrams = self.layout.get_widgets('diagrams')[0]
-            group = DockGroup()
-            group.insert_item(item)
-            add_new_group_left(diagrams, group)
-            self._update_toolbox(self._active_diagram.toolbox.action_group)
+            return
 
-gtk.accel_map_add_filter('gaphor')
+        for button in self._toolbox.buttons:
+            
+            action_name = button.action_name
+            action = action_group.get_action(action_name)
+            if action:
+                action.connect_proxy(button)
+
 
 
 # vim:sw=4:et:ai

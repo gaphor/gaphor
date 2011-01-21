@@ -125,8 +125,8 @@ It uses the GTK+ environment for user interaction.
         ],
         'gaphor.uicomponents': [
             #'mainwindow = gaphor.ui.mainwindow:MainWindow',
-            #'namespace = gaphor.ui.namespace:NamespaceView',
-            #'toolbox = gaphor.ui.toolbox:ToolBox',
+            'namespace = gaphor.ui.mainwindow:Namespace',
+            'toolbox = gaphor.ui.mainwindow:Toolbox',
             'consolewindow = gaphor.ui.consolewindow:ConsoleWindow',
             'elementeditor = gaphor.ui.elementeditor:ElementEditor',
         ],
