@@ -55,7 +55,7 @@ def main():
                       
     # Make sure gui is loaded ASAP.
     # This prevents menu items from appearing at unwanted places.
-    Application.essential_services.append('gui_manager')
+    Application.essential_services.append('main_window')
 
     Application.init(opt_parser=parser)
    

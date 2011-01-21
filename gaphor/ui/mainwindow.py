@@ -173,6 +173,7 @@ class MainWindow(object):
 
 
     def init_ui_components(self):
+        component_registry = self.component_registry
         for ep in pkg_resources.iter_entry_points('gaphor.uicomponents'):
             log.debug('found entry point uicomponent.%s' % ep.name)
             cls = ep.load()
@@ -180,7 +181,7 @@ class MainWindow(object):
                 raise NameError, 'Entry point %s doesn''t provide IUIComponent' % ep.name
             uicomp = cls()
             # TODO: Work around this after merge
-            Application._components.registerUtility(uicomp, IUIComponent, ep.name)
+            component_registry.register_utility(uicomp, IUIComponent, ep.name)
             if IActionProvider.providedBy(uicomp):
                 self.action_manager.register_action_provider(uicomp)
                 
