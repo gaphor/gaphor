@@ -18,13 +18,18 @@ class IDiagramSelectionChange(interface.Interface):
 
 class IUIComponent(interface.Interface):
     """
-    A user interface component
+    A user interface component.
     """
     
-    ui_manager = interface.Attribute("The gtk.UIManager, set after construction")
-    def construct(self):
+    def open(self):
         """
         Create and display the UI components (windows).
+        """
+
+    def close(self):
+        """
+        Close the UI component. The component can decide to hide or destroy the UI
+        components.
         """
 
 
@@ -48,4 +53,4 @@ class IPropertyPage(interface.Interface):
         """
 
 
-# vim:sw=4:et
+# vim:sw=4:et:ai

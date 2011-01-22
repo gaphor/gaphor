@@ -28,10 +28,9 @@ class ActionManager(object):
     def init(self, app):
         self.logger.info('Loading action provider services')
         
-        for name, service in self.component_registry.get_utilities(IService):
-            if IActionProvider.providedBy(service):
-                self.logger.debug('Service is %s' % service)
-                self.register_action_provider(service)
+        for name, service in self.component_registry.get_utilities(IActionProvider):
+            self.logger.debug('Service is %s' % service)
+            self.register_action_provider(service)
 
         self.component_registry.register_handler(self._service_initialized_handler)
 
@@ -55,14 +54,9 @@ class ActionManager(object):
 
     def update_actions(self):
         
-        self.logger.info('Updating actions')
-        
         self.ui_manager.ensure_update()
 
     def get_action(self, action_id):
-        
-        self.logger.info('Getting action')
-        self.logger.debug('Action ID is %s' % action_id)
         
         for g in self.ui_manager.get_action_groups():
             a = g.get_action(action_id)
