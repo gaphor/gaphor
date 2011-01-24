@@ -130,7 +130,7 @@ class MainWindow(object):
 
         # Map tab contents to DiagramTab
         #self.notebook_map = {}
-        self._active_diagram = None
+        self._current_diagram_tab = None
         self.layout = None
 
 
@@ -215,9 +215,7 @@ class MainWindow(object):
         side of the main window.
         See also: get_current_diagram(), get_current_diagram_view().
         """
-        #current = self.notebook.get_current_page()
-        #content = self.notebook.get_nth_page(current)
-        #return self.notebook_map.get(content)
+        return self._current_diagram_tab
 
 
     def get_current_diagram(self):
@@ -225,7 +223,7 @@ class MainWindow(object):
         Return the Diagram associated with the viewed DiagramTab.
         See also: get_current_diagram_tab(), get_current_diagram_view().
         """
-        tab = self.get_current_diagram_tab()
+        tab = self._current_diagram_tab
         return tab and tab.get_diagram()
 
 
@@ -234,7 +232,7 @@ class MainWindow(object):
         Return the DiagramView associated with the viewed DiagramTab.
         See also: get_current_diagram_tab(), get_current_diagram().
         """
-        tab = self.get_current_diagram_tab()
+        tab = self._current_diagram_tab
         return tab and tab.get_view()
 
 
@@ -434,12 +432,6 @@ class MainWindow(object):
         """
         Open the toplevel element and load toplevel diagrams.
         """
-        # Expand all root elements:
-        # TODO: remove this line:
-        #self.tree_view.expand_root_nodes()
-
-        # Open all diagrams under root node.
-        # TODO: move this! This is generic code.
         # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
         for diagram in self.element_factory.select(lambda e: e.isKindOf(UML.Diagram) and not (e.namespace and e.namespace.namespace)):
             self.show_diagram(diagram)
@@ -478,11 +470,6 @@ class MainWindow(object):
     def _on_tab_close_button_pressed(self, event, tab):
         tab.close()
 
-#    def _on_tab_destroy(self, widget):
-#        tab = self.notebook_map[widget]
-#        assert isinstance(tab, DiagramTab)
-#        self.remove_tab(tab)
-
     def _on_window_delete(self, window = None, event = None):
         return not self.ask_to_close()
 
@@ -507,16 +494,16 @@ class MainWindow(object):
         """
         # TODO: Here the magic happens!
         # TODO: Need to see what the active view is, or make toolbox actions global
-
         self._clear_ui_settings()
 
+        # Is it a diagram view?
         try:
             tab = item.diagram_tab
         except AttributeError:
             # Not a diagram tab
             return
 
-        self._active_diagram = tab
+        self._current_diagram_tab = tab
 
         #content = self.notebook.get_nth_page(page_num)
         #tab = self.notebook_map.get(content)
@@ -625,13 +612,12 @@ class Namespace(object):
     action_manager = inject('action_manager')
     main_window = inject('main_window')
 
-    static_menu_xml = STATIC_MENU_XML % ('diagram', 'open-namespace')
+    menu_xml = STATIC_MENU_XML % ('window', 'open-namespace')
 
-    menu_xml = """
+    _menu_xml = """
       <ui>
         <menubar name="mainwindow">
           <menu action="diagram">
-            <menuitem action="open-namespace" />
             <separator />
             <menuitem action="tree-view-create-diagram" />
             <menuitem action="tree-view-create-package" />
@@ -657,6 +643,7 @@ class Namespace(object):
     """
     def __init__(self):
         self._namespace = None
+        self._ui_id = None
         self.action_group = build_action_group(self)
 
 
@@ -671,10 +658,14 @@ class Namespace(object):
         if self._namespace:
             self._namespace.destroy()
             self._namespace = None
+
+            self.ui_manager.remove_ui(self._ui_id)
         self.component_registry.unregister_handler(self.expand_root_nodes)
 
 
     def construct(self):
+        self._ui_id = self.ui_manager.add_ui_from_string(self._menu_xml)
+
         model = NamespaceModel(self.element_factory)
         view = NamespaceView(model, self.element_factory)
         scrolled_window = gtk.ScrolledWindow()
@@ -846,20 +837,25 @@ class Namespace(object):
 
 class Toolbox(object):
 
-    interface.implements(IUIComponent)
+    interface.implements(IUIComponent, IActionProvider)
 
     title = _('Toolbox')
     placement = ('left', 'diagrams')
 
     main_window = inject('main_window')
+    ui_manager = inject('ui_manager')
     properties = inject('properties')
 
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
           <menu action="diagram">
-            <menuitem action="open-toolbox" />
+            <separator/>
             <menuitem action="reset-tool-after-create" />
+            <separator/>
+          </menu>
+          <menu action="window">
+            <menuitem action="open-toolbox" />
           </menu>
         </menubar>
       </ui>
@@ -874,12 +870,16 @@ class Toolbox(object):
     @action(name='open-toolbox', label=_('_Toolbox'))
     def open(self):
         if not self._toolbox:
-            self.create_item(self.construct(), self.title, self.placement)
-            # TODO: connect to active diagram
+            self.main_window.create_item(self.construct(), self.title, self.placement)
+
+            if self.main_window.get_current_diagram_tab():
+                self.update_toolbox(self.main_window.get_current_diagram_tab().toolbox.action_group)
 
 
     def close(self):
-        pass
+        if self._toolbox:
+            self._toolbox.destroy()
+            self._toolbox = None
 
 
     def construct(self):

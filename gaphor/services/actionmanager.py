@@ -80,10 +80,13 @@ class ActionManager(object):
             
             self.ui_manager.insert_action_group(action_provider.action_group, -1)
             
-            if action_provider.menu_xml:
-            
+            try:
+                menu_xml = action_provider.menu_xml
+            except AttributeError:
+                pass
+            else:
                 action_provider.__ui_merge_id = \
-                        self.ui_manager.add_ui_from_string(action_provider.menu_xml)
+                        self.ui_manager.add_ui_from_string(menu_xml)
 
     @component.adapter(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
