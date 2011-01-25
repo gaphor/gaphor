@@ -23,6 +23,10 @@ def launch():
     specified on the command line.  Otherwise, a new model is created and
     the Gaphor GUI is started."""
 
+    main_window = Application.get_service('main_window')
+
+    main_window.open()
+
     file_manager = Application.get_service('file_manager')
 
     if len(Application.args) == 1:

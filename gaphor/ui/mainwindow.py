@@ -29,6 +29,7 @@ from event import DiagramTabChange, DiagramSelectionChange
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
+from gaphor.misc.logger import Logger
 
 ICONS = (
     'gaphor-24x24.png',
@@ -60,6 +61,8 @@ class MainWindow(object):
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
     interface.implements(IService, IActionProvider)
+
+    logger = Logger(name='MAINWINDOW')
 
     component_registry = inject('component_registry')
     properties = inject('properties')
@@ -139,7 +142,6 @@ class MainWindow(object):
         self.init_stock_icons()
         self.init_action_group()
         self.init_ui_components()
-        self.init_main_window()
 
 
     def init_pygtk(self):
@@ -287,7 +289,7 @@ class MainWindow(object):
         return tab
 
 
-    def init_main_window(self):
+    def open(self):
 
         load_accel_map()
 
@@ -319,27 +321,22 @@ class MainWindow(object):
 
         def _factory(name):
             comp = self.component_registry.get_utility(IUIComponent, name)
-            return comp.construct()
+            self.logger.debug('open comp %s', comp)
+            return comp.open()
 
         filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
-        layout = DockLayout()
+        self.layout = DockLayout()
+
         with open(filename) as f:
-            deserialize(layout, self.window, f.read(), _factory)
+            deserialize(self.layout, vbox, f.read(), _factory)
         
-        layout.connect('item-closed', self._on_item_closed)
-        layout.connect('item-selected', self._on_item_selected)
-
-        # TODO: Emit DiagramTabChange for current selected diagram!
-
-        self.layout = layout
-
-        vbox.pack_end(self.layout.get_main_frames().next(), expand=self.resizable)
+        self.layout.connect('item-closed', self._on_item_closed)
+        self.layout.connect('item-selected', self._on_item_selected)
 
         vbox.show()
         # TODO: add statusbar
 
         self.window.show()
-
 
         self.window.connect('delete-event', self._on_window_delete)
 
@@ -629,10 +626,15 @@ class Namespace(object):
 
 
     @action(name='open-namespace', label=_('_Namespace'))
-    def open(self):
+    def open_namespace(self):
         if not self._namespace:
-            self.main_window.create_item(self.construct(), self.title, self.placement)
-            self.component_registry.register_handler(self.expand_root_nodes)
+            self.main_window.create_item(self.open(), self.title, self.placement)
+
+
+    def open(self):
+        widget = self.construct()
+        self.component_registry.register_handler(self.expand_root_nodes)
+        return widget
 
 
     def close(self):
@@ -850,16 +852,18 @@ class Toolbox(object):
 
 
     @action(name='open-toolbox', label=_('_Toolbox'))
-    def open(self):
+    def open_toolbox(self):
         if not self._toolbox:
-            self.main_window.create_item(self.construct(), self.title, self.placement)
-            # Move this line to construct()
-            self.main_window.window.connect_after('key-press-event', self._on_key_press_event)
+            self.main_window.create_item(self.open(), self.title, self.placement)
 
-            self.component_registry.register_handler(self._on_diagram_tab_change)
-            if self.main_window.get_current_diagram_tab():
-                self.update_toolbox(self.main_window.get_current_diagram_tab().toolbox.action_group)
+    def open(self):
+        widget = self.construct()
+        self.main_window.window.connect_after('key-press-event', self._on_key_press_event)
 
+        self.component_registry.register_handler(self._on_diagram_tab_change)
+        if self.main_window.get_current_diagram_tab():
+            self.update_toolbox(self.main_window.get_current_diagram_tab().toolbox.action_group)
+        return widget
 
     def close(self):
         if self._toolbox:
@@ -876,7 +880,7 @@ class Toolbox(object):
         self._toolbox = toolbox
         return toolbox
 
-    
+
     def _on_key_press_event(self, view, event):
         """
         Grab top level window events and select the appropriate tool based on the event.
@@ -902,9 +906,6 @@ class Toolbox(object):
 
     @component.adapter(IDiagramTabChange)
     def _on_diagram_tab_change(self, event):
-        print '*' * 80
-        print 'event', event.diagram_tab
-        print '*' * 80
         self.update_toolbox(event.diagram_tab.toolbox.action_group)
 
     def update_toolbox(self, action_group):
