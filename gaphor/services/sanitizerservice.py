@@ -29,19 +29,13 @@ class SanitizerService(object):
     def __init__(self):
         pass
 
-    def init(self, app):
-        
-        self.logger.info('Starting')
-        
+    def init(self, app=None):
         self.component_registry.register_handler(self._unlink_on_presentation_delete)
         self.component_registry.register_handler(self._unlink_on_stereotype_delete)
         self.component_registry.register_handler(self._unlink_on_extension_delete)
         self.component_registry.register_handler(self._disconnect_extension_end)
 
     def shutdown(self):
-        
-        self.logger.info('Shutting down')
-        
         self.component_registry.unregister_handler(self._unlink_on_presentation_delete)
         self.component_registry.unregister_handler(self._unlink_on_stereotype_delete)
         self.component_registry.unregister_handler(self._unlink_on_extension_delete)
@@ -56,7 +50,7 @@ class SanitizerService(object):
         """
         
         self.logger.info('Handling IAssociationDeleteEvent')
-        self.logger.debug('Property is %s' % event.property)
+        self.logger.debug('Property is %s' % event.property.name)
         self.logger.debug('Element is %s' % event.element)
         self.logger.debug('Old value is %s' % event.old_value)
         
@@ -86,7 +80,7 @@ class SanitizerService(object):
         """
         
         self.logger.info('Handling IAssociationDeleteEvent')
-        self.logger.debug('Property is %s' % event.property)
+        self.logger.debug('Property is %s' % event.property.name)
         self.logger.debug('Element is %s' % event.element)
         self.logger.debug('Old value is %s' % event.old_value)
         
@@ -106,7 +100,7 @@ class SanitizerService(object):
     def _disconnect_extension_end(self, event):
         
         self.logger.info('Handling IAssociationSetEvent')
-        self.logger.debug('Property is %s' % event.property)
+        self.logger.debug('Property is %s' % event.property.name)
         self.logger.debug('Element is %s' % event.element)
         self.logger.debug('Old value is %s' % event.old_value)
         

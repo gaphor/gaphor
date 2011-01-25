@@ -58,15 +58,11 @@ class Properties(object):
         """Initialize the properties service.  This will load any stored 
         properties from the file system."""
         
-        self.logger.info('Starting')
-        
         self._backend.load(self._resources)
     
     def shutdown(self):
         """Shutdown the properties service.  This will ensure that all 
         properties are saved."""
-        
-        self.logger.info('Shutting down')
         
         self._backend.save(self._resources)
 
@@ -79,8 +75,6 @@ class Properties(object):
     def save(self):
         """Save all properties by calling save() on the properties storage
         backend."""
-        
-        self.logger.info('Saving')
         
         self._backend.save(self._resources)
 
@@ -103,10 +97,6 @@ class Properties(object):
         case of a string the resource will be looked up in the GConf
         configuration."""
         
-        self.logger.info('Getting property')
-        self.logger.debug('Key is %s' % key)
-        self.logger.debug('Default is %s' % (default,))
-        
         try:
             return self._resources[key]
         except KeyError:
@@ -121,10 +111,6 @@ class Properties(object):
 
         No smart things are done with classes and class names (like the
         resource() method does)."""
-        
-        self.logger.info('Setting property')
-        self.logger.debug('Key is %s' % key)
-        self.logger.debug('Value is %s' % (value,))
         
         resources = self._resources
         old_value = resources.get(key)
