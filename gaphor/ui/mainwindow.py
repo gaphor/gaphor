@@ -10,7 +10,7 @@ from zope import interface, component
 from gaphor.interfaces import IService, IActionProvider
 from interfaces import IUIComponent
 
-from etk.docking import DockGroup, DockItem
+from etk.docking import DockLayout, DockGroup, DockItem
 from etk.docking.docklayout import add_new_group_floating
 
 from gaphor import UML
@@ -20,12 +20,12 @@ from diagramtab import DiagramTab
 from toolbox import Toolbox as _Toolbox
 from diagramtoolbox import TOOLBOX_ACTIONS
 from etk.docking import DockItem, DockGroup, add_new_group_left, settings
-from etk.docking.dockstore import deserialize, get_main_frames, finish
+from layout import deserialize
 
-from interfaces import IDiagramSelectionChange
+from interfaces import IDiagramTabChange
 from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
 from gaphor.UML.event import ModelFactoryEvent
-from event import DiagramSelectionChange
+from event import DiagramTabChange, DiagramSelectionChange
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
@@ -165,7 +165,6 @@ class MainWindow(object):
             if not IUIComponent.implementedBy(cls):
                 raise NameError, 'Entry point %s doesn''t provide IUIComponent' % ep.name
             uicomp = cls()
-            # TODO: Work around this after merge
             component_registry.register_utility(uicomp, IUIComponent, ep.name)
             if IActionProvider.providedBy(uicomp):
                 self.action_manager.register_action_provider(uicomp)
@@ -181,6 +180,7 @@ class MainWindow(object):
         cr.unregister_handler(self._on_file_manager_state_changed)
         cr.unregister_handler(self._on_undo_manager_state_changed)
         cr.unregister_handler(self._new_model_content)
+        self.ui_manager.remove_action_group(self.action_group)
 
 
     def init_action_group(self):
@@ -286,27 +286,6 @@ class MainWindow(object):
 
         return tab
 
-    def ui_component(self):
-        def _factory(name):
-            comp = self.component_registry.get_utility(IUIComponent, name)
-            return comp.construct()
-
-        filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
-        with open(filename) as f:
-            layout = deserialize(f.read(), _factory)
-        main_frames = list(get_main_frames(layout))
-        assert len(main_frames) == 1
-        
-        for f in layout.frames:
-            f.get_toplevel().show_all()
-
-        layout.connect('item-closed', self._on_item_closed)
-        layout.connect('item-selected', self._on_item_selected)
-
-        self.layout = layout
-
-        return main_frames[0]
-
 
     def init_main_window(self):
 
@@ -338,7 +317,24 @@ class MainWindow(object):
         if toolbar:
             vbox.pack_start(toolbar, expand=False)
 
-        vbox.pack_end(self.ui_component(), expand=self.resizable)
+        def _factory(name):
+            comp = self.component_registry.get_utility(IUIComponent, name)
+            return comp.construct()
+
+        filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
+        layout = DockLayout()
+        with open(filename) as f:
+            deserialize(layout, self.window, f.read(), _factory)
+        
+        layout.connect('item-closed', self._on_item_closed)
+        layout.connect('item-selected', self._on_item_selected)
+
+        # TODO: Emit DiagramTabChange for current selected diagram!
+
+        self.layout = layout
+
+        vbox.pack_end(self.layout.get_main_frames().next(), expand=self.resizable)
+
         vbox.show()
         # TODO: add statusbar
 
@@ -351,7 +347,7 @@ class MainWindow(object):
         self.window.set_property('allow-shrink', True)
         self.window.connect('size-allocate', self._on_window_size_allocate)
         self.window.connect('destroy', self._on_window_destroy)
-        self.window.connect_after('key-press-event', self._on_key_press_event)
+        #self.window.connect_after('key-press-event', self._on_key_press_event)
 
         cr = self.component_registry
         cr.register_handler(self._on_file_manager_state_changed)
@@ -513,10 +509,12 @@ class MainWindow(object):
         ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
         self._tab_ui_settings = tab.action_group, ui_id
         log.debug('Menus updated with %s, %d' % self._tab_ui_settings)
+
+        #self.component_registry.handle(DiagramTabChange(item))
         self._update_toolbox(tab.toolbox.action_group)
 
         # Make sure everyone knows the selection has changed.
-        self.component_registry.handle(DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
+        self.component_registry.handle(DiagramTabChange(item), DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
 
 
     def _on_window_size_allocate(self, window, allocation):
@@ -525,15 +523,6 @@ class MainWindow(object):
         """
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
 
-
-    def _on_key_press_event(self, view, event):
-        """
-        Grab top level window events and select the appropriate tool based on the event.
-        """
-        if event.state & gtk.gdk.SHIFT_MASK or \
-	        (event.state == 0 or event.state & gtk.gdk.MOD2_MASK):
-            keyval = gtk.gdk.keyval_name(event.keyval)
-            self.set_active_tool(shortcut=keyval)
 
     def _update_toolbox(self, action_group):
         """
@@ -552,14 +541,6 @@ class MainWindow(object):
         self.ask_to_close() and gtk.main_quit()
         self.shutdown()
 
-
-    def set_active_tool(self, action_name=None, shortcut=None):
-        """
-        Set the tool based on the name of the action
-        """
-        # HACK:
-        toolbox = self.component_registry.get_utility(IUIComponent, 'toolbox').set_active_tool(action_name, shortcut)
- 
 
     @toggle_action(name='diagram-drawing-style', label='Hand drawn style', active=False)
     def hand_drawn_style(self, active):
@@ -842,6 +823,7 @@ class Toolbox(object):
     title = _('Toolbox')
     placement = ('left', 'diagrams')
 
+    component_registry = inject('component_registry')
     main_window = inject('main_window')
     ui_manager = inject('ui_manager')
     properties = inject('properties')
@@ -871,13 +853,17 @@ class Toolbox(object):
     def open(self):
         if not self._toolbox:
             self.main_window.create_item(self.construct(), self.title, self.placement)
+            # Move this line to construct()
+            self.main_window.window.connect_after('key-press-event', self._on_key_press_event)
 
+            self.component_registry.register_handler(self._on_diagram_tab_change)
             if self.main_window.get_current_diagram_tab():
                 self.update_toolbox(self.main_window.get_current_diagram_tab().toolbox.action_group)
 
 
     def close(self):
         if self._toolbox:
+            self.component_registry.unregister_handler(self._on_diagram_tab_change)
             self._toolbox.destroy()
             self._toolbox = None
 
@@ -891,6 +877,16 @@ class Toolbox(object):
         return toolbox
 
     
+    def _on_key_press_event(self, view, event):
+        """
+        Grab top level window events and select the appropriate tool based on the event.
+        """
+        if event.state & gtk.gdk.SHIFT_MASK or \
+	        (event.state == 0 or event.state & gtk.gdk.MOD2_MASK):
+            keyval = gtk.gdk.keyval_name(event.keyval)
+            self.set_active_tool(shortcut=keyval)
+
+
     def _on_toolbox_destroyed(self, widget):
         self._toolbox = None
 
@@ -903,6 +899,13 @@ class Toolbox(object):
     #def _insensivate_toolbox(self):
     #    for button in self._toolbox.buttons:
     #        button.set_property('sensitive', False)
+
+    @component.adapter(IDiagramTabChange)
+    def _on_diagram_tab_change(self, event):
+        print '*' * 80
+        print 'event', event.diagram_tab
+        print '*' * 80
+        self.update_toolbox(event.diagram_tab.toolbox.action_group)
 
     def update_toolbox(self, action_group):
         """

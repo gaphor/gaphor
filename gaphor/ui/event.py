@@ -1,6 +1,15 @@
 from zope import interface
 from interfaces import *
 
+class DiagramTabChange(object):
+
+    interface.implements(IDiagramTabChange)
+    
+    def __init__(self, item):
+        self.item = item
+        self.diagram_tab = item.diagram_tab
+
+
 class DiagramSelectionChange(object):
 
     interface.implements(IDiagramSelectionChange)

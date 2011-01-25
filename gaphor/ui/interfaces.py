@@ -5,6 +5,14 @@ Interfaces related to the user interface.
 from zope import interface
 
 
+class IDiagramTabChange(interface.Interface):
+    """
+    The selected diagram changes.
+    """
+    item = interface.Attribute('The newly selected DockItem')
+
+    diagram_tab = interface.Attribute('The newly selected diagram tab')
+
 class IDiagramSelectionChange(interface.Interface):
     """
     The selection of a diagram changed.
