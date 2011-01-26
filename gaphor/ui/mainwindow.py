@@ -19,7 +19,8 @@ from namespace import NamespaceModel, NamespaceView
 from diagramtab import DiagramTab
 from toolbox import Toolbox as _Toolbox
 from diagramtoolbox import TOOLBOX_ACTIONS
-from etk.docking import DockItem, DockGroup, add_new_group_left, settings
+from etk.docking import DockItem, DockGroup, add_new_group_left, add_new_group_right, \
+        add_new_group_above, add_new_group_below, add_new_group_floating, settings
 from layout import deserialize
 
 from interfaces import IDiagramTabChange
@@ -167,6 +168,7 @@ class MainWindow(object):
             if not IUIComponent.implementedBy(cls):
                 raise NameError, 'Entry point %s doesn''t provide IUIComponent' % ep.name
             uicomp = cls()
+            uicomp.ui_name = ep.name
             component_registry.register_utility(uicomp, IUIComponent, ep.name)
             if IActionProvider.providedBy(uicomp):
                 self.action_manager.register_action_provider(uicomp)
@@ -404,14 +406,6 @@ class MainWindow(object):
         #        return
         pass
 
-    def set_tab_label(self, tab, label):
-        
-        #for p, t in self.notebook_map.iteritems():
-        #    if tab is t:
-        #        l = gtk.Label(label)
-        #        l.show()
-        #        self.notebook.set_tab_label(p, l)
-        pass
 
     def get_tabs(self):
         tabs = map(lambda i: i.diagram_tab, self.layout.get_widgets('diagram-tab'))
@@ -460,9 +454,6 @@ class MainWindow(object):
         cr.unregister_handler(self._on_file_manager_state_changed)
         cr.unregister_handler(self._new_model_content)
 
-    def _on_tab_close_button_pressed(self, event, tab):
-        tab.close()
-
     def _on_window_delete(self, window = None, event = None):
         return not self.ask_to_close()
 
@@ -475,9 +466,12 @@ class MainWindow(object):
 
     def _on_item_closed(self, layout, group, item):
         self._clear_ui_settings()
-        # TODO: find diagrams
-        #if not group.get_current_item():
-        #    self._insensivate_toolbox()
+        try:
+            ui_component = item.ui_component
+        except AttributeError:
+            pass
+        else:
+            ui_component.close()
         item.destroy()
 
     def _on_item_selected(self, layout, group, item):
@@ -508,7 +502,7 @@ class MainWindow(object):
         log.debug('Menus updated with %s, %d' % self._tab_ui_settings)
 
         #self.component_registry.handle(DiagramTabChange(item))
-        self._update_toolbox(tab.toolbox.action_group)
+        #self._update_toolbox(tab.toolbox.action_group)
 
         # Make sure everyone knows the selection has changed.
         self.component_registry.handle(DiagramTabChange(item), DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
@@ -553,23 +547,28 @@ class MainWindow(object):
         self.properties.set('diagram.sloppiness', sloppiness)
 
 
-    def create_item(self, widget, title, placement=None):
+    def create_item(self, ui_component): #, widget, title, placement=None):
         """
         Create an item for a ui component. This method can be called from UIComponents.
         """
-        item = DockItem(title)
-        item.add(widget)
+        item = DockItem(ui_component.title)
+        item.add(ui_component.open())
         group = DockGroup()
         group.insert_item(item)
+        placement = ui_component.placement
         if placement:
             if placement == 'floating':
-                add_new_group_floating(group)
+                add_new_group_floating(group, self.layout, ui_component.size)
             else:
                 location = self.layout.get_widgets(placement[1])[0]
-                { 'left': add_new_group_left }[placement[0]](location, group)
+                { 'left': add_new_group_left,
+                  'right': add_new_group_right,
+                  'above': add_new_group_above,
+                  'below': add_new_group_below }[placement[0]](location, group)
         else:
             add_new_group_floating(group)
         item.show()
+        item.ui_component = ui_component
         group.show()
 
 
@@ -628,8 +627,9 @@ class Namespace(object):
     @action(name='open-namespace', label=_('_Namespace'))
     def open_namespace(self):
         if not self._namespace:
-            self.main_window.create_item(self.open(), self.title, self.placement)
-
+            self.main_window.create_item(self) #self.open(), self.title, self.placement)
+        else:
+            self._namespace.set_property('has-focus', True)
 
     def open(self):
         widget = self.construct()
@@ -675,6 +675,7 @@ class Namespace(object):
         print 'expand root node elements'
         # Expand all root elements:
         self._namespace.expand_root_nodes()
+        self._on_view_cursor_changed(self._namespace)
 
 
     def _on_view_event(self, view, event):
@@ -827,7 +828,6 @@ class Toolbox(object):
 
     component_registry = inject('component_registry')
     main_window = inject('main_window')
-    ui_manager = inject('ui_manager')
     properties = inject('properties')
 
     menu_xml = """
@@ -851,10 +851,12 @@ class Toolbox(object):
         self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
 
 
-    @action(name='open-toolbox', label=_('_Toolbox'))
+    @action(name='open-toolbox', label=_('T_oolbox'))
     def open_toolbox(self):
         if not self._toolbox:
-            self.main_window.create_item(self.open(), self.title, self.placement)
+            self.main_window.create_item(self) #.open(), self.title, self.placement)
+        else:
+            self._toolbox.set_property('has-focus', True)
 
     def open(self):
         widget = self.construct()

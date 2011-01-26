@@ -28,7 +28,7 @@ from xml.etree.ElementTree import Element, SubElement, tostring, fromstring
 import gtk
 
 from etk.docking import DockFrame, DockPaned, DockGroup, DockItem
-
+from gaphor.core import _
 
 SERIALIZABLE = ( DockFrame, DockPaned, DockGroup, DockItem )
 
@@ -142,7 +142,7 @@ def factory(typename):
 
 @factory('dockitem')
 def dock_item_factory(parent, title, tooltip, icon_name=None, stock_id=None, pos=None, vispos=None, current=None, name=None):
-    item = DockItem(title, tooltip, icon_name, stock_id)
+    item = DockItem(_(title), _(tooltip), icon_name, stock_id)
     if name:
         item.set_name(name)
     if pos:

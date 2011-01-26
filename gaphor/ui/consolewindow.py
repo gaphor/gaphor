@@ -9,14 +9,14 @@ from gaphor.interfaces import IActionProvider
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.action import action, build_action_group
 from gaphor.misc.console import GTKInterpreterConsole
-from toplevelwindow import UtilityWindow
 from gaphor.misc import get_user_data_dir
 
-class ConsoleWindow(UtilityWindow):
+class ConsoleWindow(object):
     
-    interface.implements(IActionProvider)
+    interface.implements(IUIComponent, IActionProvider)
 
     component_registry = inject('component_registry')
+    main_window = inject('main_window')
 
     menu_xml = """
         <ui>
@@ -30,19 +30,12 @@ class ConsoleWindow(UtilityWindow):
 
     title = 'Gaphor Console'
     size = (400, 400)
+    placement = 'floating'
 
     def __init__(self):
         self.action_group = build_action_group(self)
-        self.window = None
+        self.console = None
         self.ui_manager = None # injected
-
-    def ui_component(self):
-        console = GTKInterpreterConsole(locals={
-                'service': self.component_registry.get_service
-                })
-        console.show()
-        self.console = console
-        return console
 
     def load_console_py(self):
         """
@@ -57,17 +50,28 @@ class ConsoleWindow(UtilityWindow):
             log.info('No initiation script %s' % console_py)
 
     @action(name='ConsoleWindow:open', label='_Console')
-    def open(self):
-        if not self.window:
-            self.construct()
-            self.dock_item.connect('close', self.close)
-            self.load_console_py()
+    def open_console(self):
+        if not self.console:
+            self.main_window.create_item(self)
         else:
-            self.window.show_all()
+            self.console.set_property('has-focus', True)
+
+    def open(self):
+        self.construct()
+        self.load_console_py()
+        return self.console
 
     @action(name='ConsoleWindow:close', stock_id='gtk-close', accel='<Control><Shift>w')
     def close(self, dock_item=None):
-        self.dock_item.destroy()
-        self.dock_item = None
+        self.console.destroy()
+        self.console = None
+
+    def construct(self):
+        console = GTKInterpreterConsole(locals={
+                'service': self.component_registry.get_service
+                })
+        console.show()
+        self.console = console
+        return console
 
 # vim:sw=4:et:ai
