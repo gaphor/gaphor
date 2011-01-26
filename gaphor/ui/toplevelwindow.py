@@ -72,26 +72,4 @@ class ToplevelWindow(object):
         self.window.show()
 
 
-class UtilityWindow(object):
-
-    interface.implements(IUIComponent)
-
-    main_window = inject('main_window')
-
-    title = '<<Gaphor>>'
-    resizable = False
-
-    def construct(self):
-        layout = self.main_window.layout
-        new_group = DockGroup()
-        new_item = DockItem(self.title)
-        new_group.insert_item(new_item)
-        self.dock_item = new_item
-        ui_component = self.ui_component()
-        if ui_component:
-            new_item.add(ui_component)
-        add_new_group_floating(new_group, layout, self.size)
-        return new_item
-
-
 # vim:sw=4:et:ai
