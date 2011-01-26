@@ -52,7 +52,21 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(ac.subject in comment.subject.annotatedElement)
 
 
-    def test_commentline_element_reconnect(self):
+    def test_commentline_element_connect(self):
+        """Test comment line connecting to comment and actor items.
+        """
+        comment = self.create(items.CommentItem, UML.Comment)
+        line = self.create(items.CommentLineItem)
+        ac = self.create(items.ActorItem, UML.Actor)
+
+        self.connect(line, line.head, comment)
+        self.connect(line, line.tail, ac)
+        self.assertTrue(self.get_connected(line.tail) is ac)
+        self.assertEquals(1, len(comment.subject.annotatedElement))
+        self.assertTrue(ac.subject in comment.subject.annotatedElement)
+
+
+     def test_commentline_element_reconnect(self):
         """Test comment line connecting to comment and actor items.
         """
         comment = self.create(items.CommentItem, UML.Comment)
