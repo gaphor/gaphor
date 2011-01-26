@@ -4,6 +4,11 @@ Support for actions in generic files.
 See also gaphor/service/actionmanager.py for the management module.
 """
 
+from __future__ import absolute_import
+
+from .application import Application
+
+
 class action(object):
     """
     Decorator. Turns a regular function (/method) into a full blown
@@ -59,6 +64,33 @@ class radio_action(action):
     """
     def __init__(self, names, labels=None, tooltips=None, stock_ids=None, accels=None, active=0):
         super(radio_action, self).__init__(names[0], names=names, labels=labels, tooltips=tooltips, stock_ids=stock_ids, accels=accels, active=active)
+
+
+def open_action(name, label=None, tooltip=None, stock_id=None, accel=None, **kwargs):
+    """
+    Special action used to indicate the action that is used to open (show) a UI component.
+
+    >>> class A(object):
+    ...     @open_action(name="my_action", label="my action")
+    ...     def myaction(self):
+    ...         print 'action called'
+    >>> a = A()
+    >>> a.myaction()
+    action called
+    >>> is_action(a.myaction)
+    True
+    >>> for method in dir(A):
+    ...     if is_action(getattr(A, method)):
+    ...         print method
+    myaction
+    >>> A.myaction.__action__.name
+    'my_action'
+    >>> A.myaction.__action__.label
+    'my action'
+    >>> A.myaction.__action__.opening
+    True
+    """
+    return action(name, label, tooltip, stock_id, accel, opening=True)
 
 
 def is_action(func):
@@ -137,7 +169,12 @@ def build_action_group(obj, name=None):
 
         elif isinstance(act, action):
             gtkact = gtk.Action(act.name, act.label, act.tooltip, act.stock_id)
-            gtkact.connect('activate', _action_activate, obj, attrname)
+            try:
+                activate = act.opening and _action_opening or _action_activate
+            except AttributeError:
+                activate = _action_activate
+                
+            gtkact.connect('activate', activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
 
         elif act is not None:
@@ -148,6 +185,17 @@ def build_action_group(obj, name=None):
 def _action_activate(action, obj, name):
     method = getattr(obj, name)
     method()
+
+
+def _action_opening(action, obj, name):
+    """
+    Open a new UI component if it is returned from the opening action.
+    Otherwise do nothing.
+    """
+    method = getattr(obj, name)
+    ui_comp = method()
+    if ui_comp:
+        Application.get_service('main_window').create_item(ui_comp)
 
 
 def _toggle_action_activate(action, obj, name):

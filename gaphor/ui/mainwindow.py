@@ -14,7 +14,7 @@ from etk.docking import DockLayout, DockGroup, DockItem
 from etk.docking.docklayout import add_new_group_floating
 
 from gaphor import UML
-from gaphor.core import _, inject, action, toggle_action, build_action_group, transactional
+from gaphor.core import _, inject, action, toggle_action, open_action, build_action_group, transactional
 from namespace import NamespaceModel, NamespaceView
 from diagramtab import DiagramTab
 from toolbox import Toolbox as _Toolbox
@@ -409,7 +409,6 @@ class MainWindow(object):
 
     def get_tabs(self):
         tabs = map(lambda i: i.diagram_tab, self.layout.get_widgets('diagram-tab'))
-        print 'found tabs', tabs
         return tabs
 
     # Signal callbacks:
@@ -501,9 +500,6 @@ class MainWindow(object):
         self._tab_ui_settings = tab.action_group, ui_id
         log.debug('Menus updated with %s, %d' % self._tab_ui_settings)
 
-        #self.component_registry.handle(DiagramTabChange(item))
-        #self._update_toolbox(tab.toolbox.action_group)
-
         # Make sure everyone knows the selection has changed.
         self.component_registry.handle(DiagramTabChange(item), DiagramSelectionChange(tab.view, tab.view.focused_item, tab.view.selected_items))
 
@@ -513,15 +509,6 @@ class MainWindow(object):
         Store the window size in a property.
         """
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
-
-
-    def _update_toolbox(self, action_group):
-        """
-        Update the buttons in the toolbox. Each button should be connected
-        by an action. Each button is assigned a special _action_name_
-        attribute that can be used to fetch the action from the ui manager.
-        """
-        self.component_registry.get_utility(IUIComponent, 'toolbox').update_toolbox(action_group)
 
 
     # Actions:
@@ -624,10 +611,11 @@ class Namespace(object):
         self.action_group = build_action_group(self)
 
 
-    @action(name='open-namespace', label=_('_Namespace'))
+    @open_action(name='open-namespace', label=_('_Namespace'))
     def open_namespace(self):
         if not self._namespace:
-            self.main_window.create_item(self) #self.open(), self.title, self.placement)
+            #self.main_window.create_item(self) #self.open(), self.title, self.placement)
+            return self
         else:
             self._namespace.set_property('has-focus', True)
 
@@ -672,7 +660,6 @@ class Namespace(object):
     def expand_root_nodes(self, event=None):
         """
         """
-        print 'expand root node elements'
         # Expand all root elements:
         self._namespace.expand_root_nodes()
         self._on_view_cursor_changed(self._namespace)
@@ -851,10 +838,11 @@ class Toolbox(object):
         self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
 
 
-    @action(name='open-toolbox', label=_('T_oolbox'))
+    @open_action(name='open-toolbox', label=_('T_oolbox'))
     def open_toolbox(self):
         if not self._toolbox:
-            self.main_window.create_item(self) #.open(), self.title, self.placement)
+            #self.main_window.create_item(self) #.open(), self.title, self.placement)
+            return self
         else:
             self._toolbox.set_property('has-focus', True)
 

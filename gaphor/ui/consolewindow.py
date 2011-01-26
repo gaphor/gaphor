@@ -7,7 +7,7 @@ from zope import interface
 from gaphor.core import inject
 from gaphor.interfaces import IActionProvider
 from gaphor.ui.interfaces import IUIComponent
-from gaphor.action import action, build_action_group
+from gaphor.action import action, open_action, build_action_group
 from gaphor.misc.console import GTKInterpreterConsole
 from gaphor.misc import get_user_data_dir
 
@@ -16,7 +16,6 @@ class ConsoleWindow(object):
     interface.implements(IUIComponent, IActionProvider)
 
     component_registry = inject('component_registry')
-    main_window = inject('main_window')
 
     menu_xml = """
         <ui>
@@ -49,10 +48,10 @@ class ConsoleWindow(object):
         except IOError:
             log.info('No initiation script %s' % console_py)
 
-    @action(name='ConsoleWindow:open', label='_Console')
+    @open_action(name='ConsoleWindow:open', label='_Console')
     def open_console(self):
         if not self.console:
-            self.main_window.create_item(self)
+            return self
         else:
             self.console.set_property('has-focus', True)
 

@@ -3,7 +3,7 @@
 import gtk
 from zope import interface
 from gaphor.interfaces import IService, IActionProvider
-from gaphor.core import _, inject, action, build_action_group
+from gaphor.core import _, inject, open_action, build_action_group
 from gaphor.ui.propertyeditor import PropertyEditor
 from gaphor.ui.interfaces import IUIComponent
 
@@ -15,7 +15,6 @@ class ElementEditor(object):
     interface.implements(IUIComponent, IActionProvider)
 
     element_factory = inject('element_factory')
-    main_window = inject('main_window')
     properties = inject('properties')
 
     title = _("Element Editor")
@@ -42,13 +41,13 @@ class ElementEditor(object):
         self.property_editor = PropertyEditor()
         self.widget = self.property_editor.construct()
 
-    @action(name='ElementEditor:open', label=_('Editor'), stock_id='gtk-edit', accel='<Control>e')
+    @open_action(name='ElementEditor:open', label=_('Editor'), stock_id='gtk-edit', accel='<Control>e')
     def open_elementeditor(self):
         """Display the element editor when the toolbar button is toggled.  If
         active, the element editor is displayed.  Otherwise, it is hidden."""
         
         if not self.widget.get_parent():
-            self.main_window.create_item(self)
+            return self
 
     def open(self):
         """Display and return the PropertyEditor widget."""
