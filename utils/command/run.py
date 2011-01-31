@@ -17,7 +17,7 @@ class run(Command):
         ('doctest=', 'd', 'execute doctests in module (e.g. gaphor.geometry)'),
         ('unittest=', 'u', 'execute unittest file (e.g. tests/test-ns.py)'),
         ('model=', 'm', 'load a model file'),
-        ('coverage', None, 'Calculate coverage (utils/coverage.py)'),
+        ('coverage', None, 'Calculate coverage (requires coverage.py)'),
         ('profile', 'p', 'Run with profiling enabled'),
     ]
 
@@ -50,7 +50,7 @@ class run(Command):
         import gaphor
         #os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
         if self.coverage:
-            from utils import coverage
+            import coverage
             coverage.start()
 
         if self.command:
