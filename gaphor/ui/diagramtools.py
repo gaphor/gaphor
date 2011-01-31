@@ -61,47 +61,30 @@ class DiagramItemConnector(Connector.default):
                 log.debug('performing reconnect constraint')
                 constraint = sink.port.constraint(item.canvas, item, handle, sink.item)
                 item.canvas.reconnect_item(item, handle, constraint=constraint)
-            else:
-                if cinfo:
-                    # first disconnect but disable disconnection handle as
-                    # reconnection is going to happen
-                    adapter = component.queryMultiAdapter((sink.item, item), IConnect)
-                    if adapter and adapter.CAN_RECONNECT:
-                        cinfo.callback.disable = True
-                    self.disconnect()
+            elif cinfo:
+                # first disconnect but disable disconnection handle as
+                # reconnection is going to happen
+                adapter = component.queryMultiAdapter((sink.item, item), IConnect)
+                try:
+                    connect = adapter.reconnect
+                except AttributeError:
+                    connect = adapter.connect
+                else:
+                    cinfo.callback.disable = True
+                self.disconnect()
+
                 # new connection
                 self.connect_handle(sink, callback=callback)
+
                 # adapter requires both ends to be connected.
-                reconnect = cinfo is not None
-                self.model_connect(sink, reconnect)
+                connect(handle, sink.port)
+            else:
+                # new connection
+                adapter = component.queryMultiAdapter((sink.item, item), IConnect)
+                self.connect_handle(sink, callback=callback)
+                adapter.connect(handle, sink.port)
         except Exception, e:
             log.error('Error during connect', e)
-
-
-    def model_connect(self, sink, reconnect):
-        """
-        Connecting requires the handles to be connected before the model
-        level connection is made.
-
-        Note that once this method is called, the glue() method has done that
-        for us.
-        """
-        handle = self.handle
-        item = self.item
-
-        adapter = component.queryMultiAdapter((sink.item, item), IConnect)
-        log.debug('Connect on model level ' + str(adapter))
-
-        assert adapter is not None
-        assert handle in adapter.line.handles()
-        assert sink.port in adapter.element.ports()
-
-        if reconnect and adapter.CAN_RECONNECT:
-            log.debug('Performing reconnection')
-            adapter.reconnect(handle, sink.port)
-        else:
-            log.debug('Performing connection')
-            adapter.connect(handle, sink.port)
 
 
     @transactional

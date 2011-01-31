@@ -14,8 +14,6 @@ class IncludeConnect(RelationshipConnect):
     """
     component.adapts(items.UseCaseItem, items.IncludeItem)
 
-    CAN_RECONNECT = True
-
     def allow(self, handle, port):
         line = self.line
         element = self.element
@@ -44,8 +42,6 @@ class ExtendConnect(RelationshipConnect):
     Connect use cases with an extend item relationship.
     """
     component.adapts(items.UseCaseItem, items.ExtendItem)
-
-    CAN_RECONNECT = True
 
     def allow(self, handle, port):
         line = self.line

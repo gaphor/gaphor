@@ -2,7 +2,7 @@
 Classes related (dependency, implementation) adapter connections.
 """
 
-from gaphor.adapters.connectors import RelationshipConnect
+from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
 from zope import interface, component
 from gaphor import UML
 from gaphor.diagram import items
@@ -12,8 +12,6 @@ class DependencyConnect(RelationshipConnect):
     Connect two NamedItem elements using a Dependency
     """
     component.adapts(items.NamedItem, items.DependencyItem)
-
-    CAN_RECONNECT = True
 
     def allow(self, handle, port):
         line = self.line
@@ -72,7 +70,6 @@ class GeneralizationConnect(RelationshipConnect):
     # FixMe: Both ends of the generalization should be of the same  type?
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
-    CAN_RECONNECT = True
 
     def reconnect(self, handle, port):
         self.reconnect_relationship(handle, 'general', 'specific')
@@ -90,14 +87,11 @@ component.provideAdapter(GeneralizationConnect)
 
 
 
-class AssociationConnect(RelationshipConnect):
+class AssociationConnect(UnaryRelationshipConnect):
     """
     Connect association to classifier.
     """
     component.adapts(items.ClassifierItem, items.AssociationItem)
-
-    CAN_BE_UNARY = True    # allow one classifier to be connected by association
-    CAN_RECONNECT = True
 
     def allow(self, handle, port):
         element = self.element
@@ -186,7 +180,6 @@ class ImplementationConnect(RelationshipConnect):
     """
     component.adapts(items.NamedItem, items.ImplementationItem)
 
-    CAN_RECONNECT = True
 
     def allow(self, handle, port):
         line = self.line

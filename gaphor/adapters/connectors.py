@@ -27,12 +27,24 @@ class AbstractConnect(object):
 
     - line: connecting item
     - element: connectable item
+
+    The following methods are required to make this work:
+
+    - `allow()`: is the connection allowed at all (during mouse movement for example).
+      
+    - `connect()`: Establish a connection between element and line. Also takes care of
+      disconnects, if required (e.g. 1:1 relationships)
+    - `disconnect()`: Break connection, called when dropping a handle on a
+       point where it can not connect.
+    - `reconnect()`: Connect to another item (only used if present)
+
+    By convention the adapters are registered by (element, line) -- in that order.
+
     """
     interface.implements(IConnect)
 
     element_factory = inject('element_factory')
 
-    CAN_RECONNECT = False
 
     def __init__(self, element, line):
         self.element = element
@@ -87,20 +99,19 @@ class AbstractConnect(object):
     def connect(self, handle, port):
         """
         Connect to an element. Note that at this point the line may
-        be connected to some other, or the same element by means of the
-        handle.connected_to property. Also the connection at UML level
-        still exists.
+        be connected to some other, or the same element.
+        Also the connection at UML level still exists.
         
         Returns `True` if a connection is established.
         """
         return True
 
 
-    def reconnect(self, handle, port):
-        """
-        UML model reconnection method.
-        """
-        raise NotImplementedError('Reconnection not implemented')
+#    def reconnect(self, handle, port):
+#        """
+#        UML model reconnection method.
+#        """
+#        raise NotImplementedError('Reconnection not implemented')
 
 
     def disconnect(self, handle):
@@ -243,10 +254,12 @@ class CommentLineLineConnect(AbstractConnect):
 component.provideAdapter(CommentLineLineConnect)
 
 
-class RelationshipConnect(AbstractConnect):
+class UnaryRelationshipConnect(AbstractConnect):
     """
     Base class for relationship connections, such as associations,
     dependencies and implementations.
+
+    Unary relationships are allowed to connect both ends to the same element
 
     This class introduces a new method: relationship() which is used to
     find an existing relationship in the model that does not yet exist
@@ -254,33 +267,6 @@ class RelationshipConnect(AbstractConnect):
     """
 
     element_factory = inject('element_factory')
-
-    # relationships can sometimes by unary, i.e. association, flow
-    # override in deriving class to allow unary relationship
-    CAN_BE_UNARY = False
-
-    def allow(self, handle, port):
-        """
-        In addition to the normal check, both relationship ends may not be
-        connected to the same element. Same goes for subjects.
-        """
-        if not self.CAN_BE_UNARY:
-            opposite = self.line.opposite(handle)
-            line = self.line
-            element = self.element
-            connected_to = self.get_connected(opposite)
-
-            # Element can not be a parent for itself.
-            if connected_to is element:
-                return None
-
-            # Same goes for subjects:
-            if connected_to and \
-                    (not (connected_to.subject or element.subject)) \
-                     and connected_to.subject is element.subject:
-                return None
-
-        return super(RelationshipConnect, self).allow(handle, port)
 
 
     def relationship(self, required_type, head, tail):
@@ -427,7 +413,7 @@ class RelationshipConnect(AbstractConnect):
         Connect the items to each other. The model level relationship
         is created by create_subject()
         """
-        if super(RelationshipConnect, self).connect(handle, port):
+        if super(UnaryRelationshipConnect, self).connect(handle, port):
             opposite = self.line.opposite(handle)
             oct = self.get_connected(opposite)
             if oct:
@@ -457,7 +443,34 @@ class RelationshipConnect(AbstractConnect):
             if old:
                 self.connect_connected_items(connections)
 
-        super(RelationshipConnect, self).disconnect(handle)
+        super(UnaryRelationshipConnect, self).disconnect(handle)
+
+
+class RelationshipConnect(UnaryRelationshipConnect):
+    """
+    """
+
+    def allow(self, handle, port):
+        """
+        In addition to the normal check, both relationship ends may not be
+        connected to the same element. Same goes for subjects.
+        """
+        opposite = self.line.opposite(handle)
+        line = self.line
+        element = self.element
+        connected_to = self.get_connected(opposite)
+
+        # Element can not be a parent for itself.
+        if connected_to is element:
+            return None
+
+        # Same goes for subjects:
+        if connected_to and \
+                (not (connected_to.subject or element.subject)) \
+                 and connected_to.subject is element.subject:
+            return None
+
+        return super(RelationshipConnect, self).allow(handle, port)
 
 
 # vim:sw=4:et:ai

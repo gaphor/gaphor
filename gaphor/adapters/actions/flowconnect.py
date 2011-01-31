@@ -2,21 +2,17 @@
 Flow item adapter connections.
 """
 
-from gaphor.adapters.connectors import RelationshipConnect
+from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
 from zope import interface, component
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
 
-class FlowConnect(RelationshipConnect):
+class FlowConnect(UnaryRelationshipConnect):
     """
     Connect FlowItem and Action/ObjectNode, initial/final nodes.
     """
-
-    CAN_BE_UNARY = True   # flow can connect same actions
-    
-    CAN_RECONNECT = True
 
     def allow(self, handle, port):
         line = self.line

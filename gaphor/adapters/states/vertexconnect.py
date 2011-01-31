@@ -18,8 +18,6 @@ class VertexConnect(RelationshipConnect):
     Abstract relationship between two state vertices.
     """
 
-    CAN_RECONNECT = True
-
     def reconnect(self, handle, port):
         self.reconnect_relationship(handle, 'source', 'target')
 
