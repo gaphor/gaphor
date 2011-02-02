@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.15.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.17.dev-20110202">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -3360,6 +3360,11 @@ BehavioredClassifier.]]></val>
 </visibility>
 </Property>
 <Class id="DCE:BDC038A2-4A88-11D7-B08D-133D836EF880">
+<appliedStereotype>
+<reflist>
+<ref refid="f77117b8-2e9d-11e0-9e8a-0021e9e5a3cd"/>
+</reflist>
+</appliedStereotype>
 <generalization>
 <reflist>
 <ref refid="DCE:E5BD5AF6-4A88-11D7-B08E-133D836EF880"/>
@@ -55606,4 +55611,16 @@ removed.]]></val>
 <ref refid="8fe711d2-1ed7-11df-9455-000d93868322"/>
 </specific>
 </Generalization>
+<InstanceSpecification id="f77117b8-2e9d-11e0-9e8a-0021e9e5a3cd">
+<classifier>
+<reflist>
+<ref refid="a38a6700-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</classifier>
+<extended>
+<reflist>
+<ref refid="DCE:BDC038A2-4A88-11D7-B08D-133D836EF880"/>
+</reflist>
+</extended>
+</InstanceSpecification>
 </gaphor>

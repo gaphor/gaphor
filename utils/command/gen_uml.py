@@ -460,16 +460,18 @@ def generate(filename, outfile=None, overridesfile=None):
             end = properties[end]
             end.type = classes[end['type']]
             end.class_ = end.get('class_') and classes[end['class_']] or None
-#            if end.type and end.type.stereotypeName == 'SimpleAttribute':
-#                writer.write("# '%s' is a simple attribute\n" % (end.name, ))
-#                a.asAttribute = end
+            if end.type:
+                print 'Stereotype for %s is %s' % (end.type, end.type.stereotypeName)
+            if end.type and end.type.stereotypeName == 'SimpleAttribute':
+                writer.write("# '%s' is a simple attribute\n" % (end.name, ))
+                a.asAttribute = end
             ends.append(end)
 
-#        if getattr(a, 'asAttribute', None):
-#            writer.write("# '%s: %s' is a simple attribute\n" % (a.asAttribute.name, a.asAttribute.type.name))
-            #writer.write_attribute(a.asAttribute, enumerations)
+        if getattr(a, 'asAttribute', None):
+            writer.write("# '%s: %s' is a simple attribute\n" % (a.asAttribute.name, a.asAttribute.type.name))
+            writer.write_attribute(a.asAttribute, enumerations)
             # Skip the association creation.
-        #    continue
+            continue
 
         for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
             if e1.type and e1.type.stereotypeName == 'SimpleAttribute':
