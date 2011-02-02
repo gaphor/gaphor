@@ -18,7 +18,7 @@ use_setuptools()
 from setuptools import setup, find_packages
 from distutils.cmd import Command
 #try:
-from sphinx.setup_command import BuildDoc
+#from sphinx.setup_command import BuildDoc
 #except ImportError, e:
 #    print 'No Sphynx found'
 
@@ -45,6 +45,21 @@ class build_py_with_sub_commands(build_py):
         build_py.run(self)
     
 build_py_with_sub_commands.sub_commands.append(('build_uml', None))
+
+mainscript='gaphor/__init__.py'
+if sys.platform == 'darwin':
+    extra_setup = dict(
+         #setup_requires=['py2app'],
+         app=[mainscript],
+    )
+    extra_options = dict(
+         # Cross-platform applications generally expect sys.argv to
+         # be used for opening files.
+         py2app=dict(argv_emulation=True, site_packages=True),
+    )
+else:
+    extra_setup = {}
+    extra_options = {}
 
 
 setup(
@@ -135,7 +150,7 @@ It uses the GTK+ environment for user interaction.
     cmdclass = {
               'build_py': build_py_with_sub_commands,
               'build_uml': build_uml,
-              'build_doc': BuildDoc,
+              #'build_doc': BuildDoc,
               'build_mo': build_mo,
               'build_pot': build_pot,
               'install_lib': install_lib,
@@ -157,8 +172,9 @@ It uses the GTK+ environment for user interaction.
         build_mo = dict(
             all_linguas = ','.join(LINGUAS),
         ),
-
+        **extra_options
     ),
+    **extra_setup
 )
  
 # vim:sw=4:et:ai
