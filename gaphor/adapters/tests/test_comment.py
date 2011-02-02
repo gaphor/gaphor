@@ -66,7 +66,7 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(ac.subject in comment.subject.annotatedElement)
 
 
-     def test_commentline_element_reconnect(self):
+    def test_commentline_element_reconnect(self):
         """Test comment line connecting to comment and actor items.
         """
         comment = self.create(items.CommentItem, UML.Comment)
