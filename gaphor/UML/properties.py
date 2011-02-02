@@ -708,7 +708,7 @@ class redefine(umlproperty):
 
     upper = property(lambda s: s.original.upper)
     lower = property(lambda s: s.original.lower)
-
+    opposite = property(lambda s: s.original.opposite)
 
     def load(self, obj, value):
         if self.original.name == self.name:

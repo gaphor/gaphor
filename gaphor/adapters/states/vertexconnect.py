@@ -19,13 +19,13 @@ class VertexConnect(RelationshipConnect):
     """
 
     def reconnect(self, handle, port):
-        self.reconnect_relationship(handle, 'source', 'target')
+        self.reconnect_relationship(handle, UML.Transition.source, UML.Transition.target)
 
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Transition,
-                    ('source', 'outgoing'),
-                    ('target', 'incoming'))
+                    UML.Transition.source,
+                    UML.Transition.target)
         self.line.subject = relation
         if relation.guard is None:
             relation.guard = self.element_factory.create(UML.Constraint)

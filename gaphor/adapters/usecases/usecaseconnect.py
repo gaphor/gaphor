@@ -25,13 +25,13 @@ class IncludeConnect(RelationshipConnect):
 
 
     def reconnect(self, handle, port):
-        self.reconnect_relationship(handle, 'addition', 'includingCase')
+        self.reconnect_relationship(handle, UML.Include.addition, UML.Include.includingCase)
 
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Include,
-                    ('addition', None),
-                    ('includingCase', 'include'))
+                    UML.Include.addition,
+                    UML.Include.includingCase)
         self.line.subject = relation
 
 component.provideAdapter(IncludeConnect)
@@ -53,12 +53,12 @@ class ExtendConnect(RelationshipConnect):
         return super(ExtendConnect, self).allow(handle, port)
 
     def reconnect(self, handle, port):
-        self.reconnect_relationship(handle, 'extendedCase', 'extension')
+        self.reconnect_relationship(handle, UML.Extend.extendedCase, UML.Extend.extension)
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(UML.Extend,
-                    ('extendedCase', None),
-                    ('extension', 'extend'))
+                    UML.Extend.extendedCase,
+                    UML.Extend.extension)
         self.line.subject = relation
 
 component.provideAdapter(ExtendConnect)

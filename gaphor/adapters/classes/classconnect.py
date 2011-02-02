@@ -34,7 +34,7 @@ class DependencyConnect(RelationshipConnect):
         elif handle is line.tail:
             for c in dep.client:
                 del dep.client[c]
-        self.reconnect_relationship(handle, 'supplier', 'client')
+        self.reconnect_relationship(handle, line.dependency_type.supplier, line.dependency_type.client)
 
 
     def connect_subject(self, handle):
@@ -56,8 +56,8 @@ class DependencyConnect(RelationshipConnect):
             line.dependency_type = UML.model.dependency_type(client, supplier)
 
         relation = self.relationship_or_new(line.dependency_type,
-                            ('supplier', 'supplierDependency'),
-                            ('client', 'clientDependency'))
+                            line.dependency_type.supplier,
+                            line.dependency_type.client)
         line.subject = relation
 
 component.provideAdapter(DependencyConnect)
@@ -72,14 +72,14 @@ class GeneralizationConnect(RelationshipConnect):
 
 
     def reconnect(self, handle, port):
-        self.reconnect_relationship(handle, 'general', 'specific')
+        self.reconnect_relationship(handle, UML.Generalization.general, UML.Generalization.specific)
 
 
     def connect_subject(self, handle):
         log.debug('connect_subject: ' % handle)
         relation = self.relationship_or_new(UML.Generalization,
-                    ('general', None),
-                    ('specific', 'generalization'))
+                    UML.Generalization.general,
+                    UML.Generalization.specific)
         log.debug('found: ' % relation)
         self.line.subject = relation
 
@@ -207,7 +207,7 @@ class ImplementationConnect(RelationshipConnect):
         elif handle is line.tail:
             for c in impl.implementatingClassifier:
                 del impl.implementatingClassifier[c]
-        self.reconnect_relationship(handle, 'contract', 'implementatingClassifier')
+        self.reconnect_relationship(handle, UML.Implementation.contract, UML.Implementation.implementatingClassifier)
 
 
     def connect_subject(self, handle):
@@ -215,8 +215,8 @@ class ImplementationConnect(RelationshipConnect):
         Perform implementation relationship connection.
         """
         relation = self.relationship_or_new(UML.Implementation,
-                    ('contract', None),
-                    ('implementatingClassifier', 'implementation'))
+                    UML.Implementation.contract,
+                    UML.Implementation.implementatingClassifier)
         self.line.subject = relation
 
 

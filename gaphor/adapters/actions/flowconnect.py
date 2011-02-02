@@ -52,12 +52,12 @@ class FlowConnect(UnaryRelationshipConnect):
         c2 = self.get_connected(line.tail)
         if isinstance(c1, items.ObjectNodeItem) or isinstance(c2, items.ObjectNodeItem):
             relation = self.relationship_or_new(UML.ObjectFlow,
-                        ('source', 'outgoing'),
-                        ('target', 'incoming'))
+                        UML.ObjectFlow.source,
+                        UML.ObjectFlow.target)
         else:
             relation = self.relationship_or_new(UML.ControlFlow,
-                        ('source', 'outgoing'),
-                        ('target', 'incoming'))
+                        UML.ControlFlow.source,
+                        UML.ControlFlow.target)
         if not relation.guard:
             relation.guard = self.element_factory.create(UML.LiteralSpecification)
         line.subject = relation

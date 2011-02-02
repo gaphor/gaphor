@@ -284,22 +284,19 @@ class UnaryRelationshipConnect(AbstractConnect):
         head_subject = self.get_connected(line.head).subject
         tail_subject = self.get_connected(line.tail).subject
 
-        edge_head_name, node_head_name = head
-        edge_tail_name, node_tail_name = tail
-
         # First check if the right subject is already connected:
         if line.subject \
-           and getattr(line.subject, edge_head_name) is head_subject \
-           and getattr(line.subject, edge_tail_name) is tail_subject:
+           and getattr(line.subject, head.name) is head_subject \
+           and getattr(line.subject, tail.name) is tail_subject:
             return line.subject
 
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram.
-        for gen in getattr(tail_subject, node_tail_name):
+        for gen in getattr(tail_subject, tail.opposite):
             if not isinstance(gen, required_type):
                 continue
                 
-            gen_head = getattr(gen, edge_head_name)
+            gen_head = getattr(gen, head.name)
             try:
                 if not head_subject in gen_head:
                     continue
@@ -325,8 +322,8 @@ class UnaryRelationshipConnect(AbstractConnect):
         if not relation:
             line = self.line
             relation = self.element_factory.create(type)
-            setattr(relation, head[0], self.get_connected(line.head).subject)
-            setattr(relation, tail[0], self.get_connected(line.tail).subject)
+            setattr(relation, head.name, self.get_connected(line.head).subject)
+            setattr(relation, tail.name, self.get_connected(line.tail).subject)
         return relation
 
 
@@ -346,9 +343,9 @@ class UnaryRelationshipConnect(AbstractConnect):
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
         if line.head is handle:
-            setattr(line.subject, head, c1.subject)
+            setattr(line.subject, head.name, c1.subject)
         elif line.tail is handle:
-            setattr(line.subject, tail, c2.subject)
+            setattr(line.subject, tail.name, c2.subject)
         else:
             raise ValueError('Incorrect handle passed to adapter')
 
