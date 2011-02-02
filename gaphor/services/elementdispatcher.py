@@ -38,9 +38,9 @@ class EventWatcher(object):
         This interface is fluent(returns self).
         """
         
-        self.logger.info('Watching element path')
-        self.logger.debug('Path is %s' % path)
-        self.logger.debug('Handler is %s' % handler)
+        #self.logger.info('Watching element path')
+        #self.logger.debug('Path is %s' % path)
+        #self.logger.debug('Handler is %s' % handler)
         
         if handler:
             self._watched_paths[path] = handler
@@ -53,15 +53,15 @@ class EventWatcher(object):
 
     def register_handlers(self):
         
-        self.logger.info('Registering handlers')
+        #self.logger.info('Registering handlers')
         
         dispatcher = self.element_dispatcher
         element = self.element
         
         for path, handler in self._watched_paths.iteritems():
             
-            self.logger.debug('Path is %s' % path)
-            self.logger.debug('Handler is %s' % handler)
+            #self.logger.debug('Path is %s' % path)
+            #self.logger.debug('Handler is %s' % handler)
             
             dispatcher.register_handler(handler, element, path)
 
@@ -72,14 +72,14 @@ class EventWatcher(object):
         destroy signals much easier though).
         """
         
-        self.logger.info('Unregistering handlers')
+        #self.logger.info('Unregistering handlers')
         
         dispatcher = self.element_dispatcher
         
         for path, handler in self._watched_paths.iteritems():
             
-            self.logger.debug('Path is %s' % path)
-            self.logger.debug('Handler is %s' % handler)
+            #self.logger.debug('Path is %s' % path)
+            #self.logger.debug('Handler is %s' % handler)
             
             dispatcher.unregister_handler(handler)
 
