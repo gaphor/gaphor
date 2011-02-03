@@ -46,21 +46,6 @@ class build_py_with_sub_commands(build_py):
     
 build_py_with_sub_commands.sub_commands.append(('build_uml', None))
 
-mainscript='gaphor/__init__.py'
-if sys.platform == 'darwin':
-    extra_setup = dict(
-         #setup_requires=['py2app'],
-         app=[mainscript],
-    )
-    extra_options = dict(
-         # Cross-platform applications generally expect sys.argv to
-         # be used for opening files.
-         py2app=dict(argv_emulation=True, site_packages=True),
-    )
-else:
-    extra_setup = {}
-    extra_options = {}
-
 
 setup(
     name='gaphor',
@@ -158,7 +143,7 @@ It uses the GTK+ environment for user interaction.
     },
 
     setup_requires = [
-        'Sphinx >= 1.0.6',
+        #'Sphinx >= 1.0.6',
         'nose >= 0.10.4',
         'setuptools-git >= 0.3.4'
     ],
@@ -172,9 +157,7 @@ It uses the GTK+ environment for user interaction.
         build_mo = dict(
             all_linguas = ','.join(LINGUAS),
         ),
-        **extra_options
     ),
-    **extra_setup
 )
  
 # vim:sw=4:et:ai
