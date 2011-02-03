@@ -80,7 +80,8 @@ def main():
 
 # TODO: Remove this.  
 import __builtin__
+from gaphor.misc import logger
 
-__builtin__.__dict__['log'] = misc.logger.Logger()
+__builtin__.__dict__['log'] = logger.Logger()
 
 # vim:sw=4:et:ai
