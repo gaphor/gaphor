@@ -11,17 +11,24 @@ __all__ = [ 'main' ]
 from optparse import OptionParser
 import pygtk
 
+from gaphor.misc.logger import Logger
 from gaphor.application import Application
 
 pygtk.require('2.0')
 
 
-def launch():
+def launch(model=None):
     """Start the main application by initiating and running Application.
     
     The file_manager service is used here to load a Gaphor model if one was
     specified on the command line.  Otherwise, a new model is created and
     the Gaphor GUI is started."""
+
+    # Make sure gui is loaded ASAP.
+    # This prevents menu items from appearing at unwanted places.
+    Application.essential_services.append('main_window')
+
+    Application.init()
 
     main_window = Application.get_service('main_window')
 
@@ -29,8 +36,8 @@ def launch():
 
     file_manager = Application.get_service('file_manager')
 
-    if len(Application.args) == 1:
-        file_manager.load(Application.args[0])
+    if model:
+        file_manager.load(model)
     else:
         file_manager.action_new()
 
@@ -54,16 +61,19 @@ def main():
 
     parser.add_option('-l',\
                       '--logging',\
-                      default='DEBUG',\
+                      default='INFO',\
                       help='Logging level')
                       
-    # Make sure gui is loaded ASAP.
-    # This prevents menu items from appearing at unwanted places.
-    Application.essential_services.append('main_window')
+    options, args = parser.parse_args()
+    
+    Logger.log_level = Logger.level_map[options.logging]
 
-    Application.init(opt_parser=parser)
-   
-    if Application.options.profile:
+    try:
+        model = args[0]
+    except IndexError:
+        model = None
+
+    if options.profile:
 
         import cProfile
         import pstats
@@ -76,12 +86,11 @@ def main():
 
     else:
 	
-        launch()
+        launch(model)
 
 # TODO: Remove this.  
 import __builtin__
-from gaphor.misc import logger
 
-__builtin__.__dict__['log'] = logger.Logger()
+__builtin__.__dict__['log'] = Logger()
 
 # vim:sw=4:et:ai

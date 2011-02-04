@@ -44,18 +44,13 @@ class _Application(object):
         self.component_registry = None
 
 
-    def init(self, services=None, opt_parser=None):
+    def init(self, services=None):
         """
         Initialize the application.
         """
-        self.opt_parser = opt_parser
         self.load_services(services)
         self.init_all_services()
-        if opt_parser:
-            self.options, self.args = opt_parser.parse_args()
-            
-            Logger.log_level = Logger.level_map[self.options.logging]
-        
+
 
     essential_services = property(lambda s: s._ESSENTIAL_SERVICES, doc= """
         Provide an ordered list of services that need to be loaded first.
