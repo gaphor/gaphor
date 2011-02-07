@@ -69,7 +69,7 @@ def main():
     Logger.log_level = Logger.level_map[options.logging]
 
     try:
-        model = args[0]
+        model = args[1]
     except IndexError:
         model = None
 
