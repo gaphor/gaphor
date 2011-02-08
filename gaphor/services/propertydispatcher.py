@@ -3,7 +3,7 @@
 
 from zope import interface, component
 
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor.core import inject
 from gaphor.interfaces import IService
 from gaphor.UML.interfaces import IElementChangeEvent
@@ -20,7 +20,7 @@ class PropertyDispatcher(object):
     """
 
     interface.implements(IService)
-    logger = Logger(name='PROPERTYDISPATCHER')
+    logger = getLogger('PropertyDispatcher')
 
     component_registry = inject('component_registry')
 

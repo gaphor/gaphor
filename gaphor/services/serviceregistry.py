@@ -7,14 +7,14 @@ Our good old NameServicer.
 
 from zope import interface, component
 
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor.interfaces import IService
 from gaphor.core import inject
 
 class ServiceRegistry(object):
 
     component_registry = inject('component_registry')
-    logger = Logger(name='SERVICEREGISTRY')
+    logger = getLogger('ServiceRegistry')
 
     def __init__(self):
         self._uninitialized_services = {}

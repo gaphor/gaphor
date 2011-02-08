@@ -12,11 +12,11 @@ All important services are present in the application object:
 import pkg_resources
 from zope import component
 
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor.interfaces import IService, IEventFilter
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 
-logger = Logger()
+logger = getLogger('Application')
 
 class NotInitializedError(Exception):
     pass

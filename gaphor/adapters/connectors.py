@@ -6,16 +6,17 @@ gaphor.adapter package.
 """
 
 from zope import interface, component
+from logging import getLogger
 
 from gaphas import geometry
 
-from gaphor.misc.logger import Logger
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
 
-logger = Logger(name='CONNECTOR')
+logger = getLogger('Connector')
+
 
 class AbstractConnect(object):
     """

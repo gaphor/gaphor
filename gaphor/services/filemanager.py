@@ -9,7 +9,7 @@ from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.storage import storage, verify
 from gaphor import UML
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.ui.statuswindow import StatusWindow
@@ -41,7 +41,7 @@ class FileManager(object):
     element_factory = inject('element_factory')
     main_window = inject('main_window')
     properties = inject('properties')
-    logger = Logger(name='FILEMANAGER')
+    logger = getLogger('FileManager')
 
     menu_xml = """
       <ui>
@@ -214,8 +214,8 @@ class FileManager(object):
         worker.wait()
         
         if worker.error:
-            self.logger.error('Error loading file')
-            self.logger.error(worker.error)
+            self.logger.error('Error loading file: ', exc_info=worker.exc_info)
+            #self.logger.error(worker.error)
 
         self.filename = filename
 

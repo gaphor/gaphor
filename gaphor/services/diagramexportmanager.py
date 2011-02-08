@@ -7,7 +7,7 @@ import cairo
 
 from zope import interface, component
 
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.filedialog import FileDialog
@@ -27,7 +27,7 @@ class DiagramExportManager(object):
 
     main_window = inject('main_window')
     properties = inject('properties')
-    logger = Logger(name='EXPORTMANAGER')
+    logger = getLogger('ExportManager')
 
     menu_xml = """
       <ui>

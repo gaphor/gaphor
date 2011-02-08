@@ -17,7 +17,7 @@ from zope import interface, component
 from gaphas import state
 
 from gaphor.core import inject
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor.interfaces import IService, IServiceEvent, IActionProvider
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 from gaphor.transaction import Transaction, transactional
@@ -107,7 +107,7 @@ class UndoManager(object):
     
     component_registry = inject('component_registry')
 
-    logger = Logger(name='UNDOMANAGER')
+    logger = getLogger('UndoManager')
 
     def __init__(self):
         self._undo_stack = []

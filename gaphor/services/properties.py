@@ -7,7 +7,7 @@ import pprint
 from zope import interface
 
 from gaphor.core import inject
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor.interfaces import IService
 from gaphas.decorators import async
 from gaphor.misc import get_user_data_dir
@@ -44,7 +44,7 @@ class Properties(object):
 
     component_registry = inject('component_registry')
 
-    logger = Logger(name='PROPERTIES')
+    logger = getLogger('Properties')
 
     def __init__(self, backend=None):
         """Constructor.  Initialize the Gaphor application object, the

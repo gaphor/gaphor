@@ -3,7 +3,7 @@
 
 from zope import interface, component
 
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor.core import inject
 from gaphor.interfaces import IService
 from gaphor.UML.interfaces import IElementChangeEvent, IModelFactoryEvent
@@ -18,7 +18,7 @@ class EventWatcher(object):
     """
 
     element_dispatcher = inject('element_dispatcher')
-    logger = Logger(name='EVENTWATCHER')
+    logger = getLogger('EventWatcher')
 
     def __init__(self, element, default_handler=None):
         super(EventWatcher, self).__init__()
@@ -111,7 +111,7 @@ class ElementDispatcher(object):
     """
 
     interface.implements(IService)
-    logger = Logger(name='ELEMENTDISPATCHER')
+    logger = getLogger('ElementDispatcher')
 
     component_registry = inject('component_registry')
 

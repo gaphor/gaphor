@@ -6,7 +6,7 @@ Such as a modifier 'subject' property and a unique id.
 from zope import component
 from gaphas.state import observed, reversible_property
 
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor import UML
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.core import inject
@@ -14,7 +14,7 @@ from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 
-logger = Logger(name='DIAGRAM')
+logger = getLogger('Diagram')
 
 class StereotypeSupport(object):
     """

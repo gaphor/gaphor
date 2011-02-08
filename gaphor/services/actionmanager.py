@@ -4,7 +4,7 @@
 import gtk
 from zope import interface, component
 
-from gaphor.misc.logger import Logger
+from logging import getLogger
 from gaphor.core import inject
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.event import ServiceInitializedEvent, ActionExecuted
@@ -15,7 +15,7 @@ class ActionManager(object):
     """
 
     interface.implements(IService)
-    logger = Logger(name='ACTIONMANAGER')
+    logger = getLogger('ActionManager')
 
     component_registry = inject('component_registry')
 
@@ -42,8 +42,7 @@ class ActionManager(object):
 
     def execute(self, action_id, active=None):
         
-        self.logger.info('Executing action')
-        self.logger.debug('Action ID is %s' % action_id)
+        self.logger.debug('Executing action, action_id is %s' % action_id)
         
         a = self.get_action(action_id)
         if a:
@@ -64,8 +63,7 @@ class ActionManager(object):
 
     def register_action_provider(self, action_provider):
         
-        self.logger.info('Registering action provider')
-        self.logger.debug('Action provider is %s' % action_provider)
+        self.logger.debug('Registering action provider %s' % action_provider)
         
         action_provider = IActionProvider(action_provider)
         
@@ -73,11 +71,7 @@ class ActionManager(object):
             # Check if the action provider is not already registered
             action_provider.__ui_merge_id
         except AttributeError:
-            
-            self.logger.debug('Registering actions for %s' % action_provider)
-            
             assert action_provider.action_group
-            
             self.ui_manager.insert_action_group(action_provider.action_group, -1)
             
             try:
@@ -91,7 +85,7 @@ class ActionManager(object):
     @component.adapter(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
         
-        self.logger.info('Handling ServiceInitializedEvent')
+        self.logger.debug('Handling ServiceInitializedEvent')
         self.logger.debug('Service is %s' % event.service)
         
         if IActionProvider.providedBy(event.service):

@@ -9,12 +9,14 @@ passes them to the main Application instance."""
 __all__ = [ 'main' ]
 
 from optparse import OptionParser
+import logging
 import pygtk
 
-from gaphor.misc.logger import Logger
 from gaphor.application import Application
 
 pygtk.require('2.0')
+
+LOG_FORMAT = '%(name)s %(levelname)s %(message)s'
 
 
 def launch(model=None):
@@ -55,25 +57,31 @@ def main():
     parser = OptionParser()
 
     parser.add_option('-p',\
-                      '--profile',\
+                      '--profiler',\
                       action='store_true',\
-                      help='Run in profile')
-
-    parser.add_option('-l',\
-                      '--logging',\
-                      default='INFO',\
-                      help='Logging level')
-                      
+                      help='Run in profiler')
+    parser.add_option('-q', "--quiet",
+                      dest='quiet', help='Quiet output',
+                      default=False, action='store_true')
+    parser.add_option('-v', '--verbose',
+                      dest='verbose', help='Verbose output',
+                      default=False, action="store_true")
+    
     options, args = parser.parse_args()
     
-    Logger.log_level = Logger.level_map[options.logging]
-
+    if options.verbose:
+        logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
+    elif options.quiet:
+        logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
+    else:
+        logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+    
     try:
-        model = args[1]
+        model = args[0]
     except IndexError:
         model = None
 
-    if options.profile:
+    if options.profiler:
 
         import cProfile
         import pstats
@@ -91,6 +99,6 @@ def main():
 # TODO: Remove this.  
 import __builtin__
 
-__builtin__.__dict__['log'] = Logger()
+__builtin__.__dict__['log'] = logging.getLogger('Gaphor')
 
 # vim:sw=4:et:ai

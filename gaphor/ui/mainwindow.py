@@ -4,6 +4,7 @@ The main application window.
 
 import os.path
 import gobject, gtk
+from logging import getLogger
 
 import pkg_resources
 from zope import interface, component
@@ -30,7 +31,8 @@ from event import DiagramTabChange, DiagramSelectionChange
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
-from gaphor.misc.logger import Logger
+
+logger = getLogger(name='MainWindow')
 
 ICONS = (
     'gaphor-24x24.png',
@@ -63,7 +65,6 @@ class MainWindow(object):
     """
     interface.implements(IService, IActionProvider)
 
-    logger = Logger(name='MAINWINDOW')
 
     component_registry = inject('component_registry')
     properties = inject('properties')
@@ -323,7 +324,7 @@ class MainWindow(object):
 
         def _factory(name):
             comp = self.component_registry.get_utility(IUIComponent, name)
-            self.logger.debug('open comp %s', comp)
+            logger.debug('open component %s' % str(comp))
             return comp.open()
 
         filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
