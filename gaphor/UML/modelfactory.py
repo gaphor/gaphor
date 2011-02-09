@@ -152,7 +152,6 @@ def add_slot(factory, instance, definingFeature):
     """
     slot = factory.create(Slot)
     slot.definingFeature = definingFeature
-    slot.value = factory.create(LiteralSpecification)
     instance.slot = slot
     return slot
 
@@ -187,9 +186,7 @@ def create_association(factory, type_a, type_b):
     """
     assoc = factory.create(Association)
     end_a = factory.create(Property)
-    end_a.lowerValue = factory.create(LiteralSpecification)
     end_b = factory.create(Property)
-    end_b.lowerValue = factory.create(LiteralSpecification)
     assoc.memberEnd = end_a
     assoc.memberEnd = end_b
     end_a.type = type_a

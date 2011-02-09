@@ -138,7 +138,9 @@ class Writer:
         if lower and lower != '0':
             params['lower'] = lower
         upper = a.upperValue and a.upperValue.value
-        if upper and upper != '1':
+        if upper == '*':
+            params['upper'] = "'*'"
+        elif upper and upper != '1':
             params['upper'] = upper
 
         #kind, derived, a.name, type, default, lower, upper = parse_attribute(a)
@@ -364,6 +366,7 @@ def generate(filename, outfile=None, overridesfile=None):
             elif val.type == 'Generalization':
                 generalizations[key] = val
             elif val.type == 'Association':
+                val.asAttribute = None
                 associations[key] = val
             elif val.type == 'Property':
                 properties[key] = val
@@ -416,7 +419,7 @@ def generate(filename, outfile=None, overridesfile=None):
     # create file header
     writer.write(header)
 
-    # Tag classes with appliedStereotypes
+    # Tag classes with appliedStereotype
     for c in classes.values():
         if c.get('appliedStereotype'):
             # Figure out stereotype name through
@@ -424,22 +427,30 @@ def generate(filename, outfile=None, overridesfile=None):
             instSpec = all_elements[c.appliedStereotype[0]]
             sType = all_elements[instSpec.classifier[0]]
             c.stereotypeName = sType.name
+            print "  class '%s' has been stereotyped as '%s'" % (c.name, c.stereotypeName)
             writer.write("# class '%s' has been stereotyped as '%s'\n" % (c.name, c.stereotypeName))
-            c.written = True
+            #c.written = True
             def tag_children(me):
                 for child in me.specialization:
-                    writer.write("# class '%s' has been stereotyped as '%s' too\n" % (child.name, c.stereotypeName))
-                    child.written = True
+                    child.stereotypeName = sType.name
+                    print "  class '%s' has been stereotyped as '%s' too" % (child.name, child.stereotypeName)
+                    writer.write("# class '%s' has been stereotyped as '%s' too\n" % (child.name, child.stereotypeName))
+                    #child.written = True
                     tag_children(child)
             tag_children(c)
 
-    # create class definitions
-    for c in classes.values():
-        writer.write_classdef(c)
+    ignored_classes = set()
 
+    # create class definitions, not for SimpleAttribute
+    for c in classes.values():
+        if c.stereotypeName == 'SimpleAttribute':
+            ignored_classes.add(c)
+        else:
+            writer.write_classdef(c)
+ 
     # create attributes and enumerations
     derivedattributes = { }
-    for c in classes.values():
+    for c in filter(ignored_classes.__contains__, classes.values()):
         for p in c.get('ownedAttribute') or []:
             a = properties.get(p)
             # set class_name, since write_attribute depends on it
@@ -456,38 +467,31 @@ def generate(filename, outfile=None, overridesfile=None):
     redefines = [ ]
     for a in associations.values():
         ends = []
+        # Resolve some properties:
         for end in a.memberEnd:
             end = properties[end]
             end.type = classes[end['type']]
             end.class_ = end.get('class_') and classes[end['class_']] or None
-            if end.type:
-                print 'Stereotype for %s is %s' % (end.type, end.type.stereotypeName)
+            end.is_simple_attribute = False
             if end.type and end.type.stereotypeName == 'SimpleAttribute':
-                writer.write("# '%s' is a simple attribute\n" % (end.name, ))
+                end.is_simple_attribute = True
                 a.asAttribute = end
             ends.append(end)
-
-        if getattr(a, 'asAttribute', None):
-            writer.write("# '%s: %s' is a simple attribute\n" % (a.asAttribute.name, a.asAttribute.type.name))
-            writer.write_attribute(a.asAttribute, enumerations)
-            # Skip the association creation.
-            continue
-
-        for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
-            if e1.type and e1.type.stereotypeName == 'SimpleAttribute':
-                writer.write("# '%s.%s' is a simple attribute\n" % (e2.type.name, e1.name))
-                e1.class_name = e2.type.name
-                e1.typeValue = { 'value': 'str'}
-
-                writer.write_attribute(e1, enumerations)
-                e1.written = True
-                e2.written = True
 
         for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
             parse_association_end(e1, e2)
 
         for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
-            if e1.redefines:
+            if a.asAttribute:
+                if a.asAttribute is e1 and e1.navigable:
+                   writer.write("# '%s.%s' is a simple attribute\n" % (e2.type.name, e1.name))
+                   e1.class_name = e2.type.name
+                   e1.typeValue = { 'value': 'str'}
+
+                   writer.write_attribute(e1, enumerations)
+                   e1.written = True
+                   e2.written = True
+            elif e1.redefines:
                 redefines.append(e1)
             elif e1.derived or overrides.derives('%s.%s' % (e1.class_name, e1.name)):
                 assert not derivedunions.get(e1.name), "%s.%s is already in derived union set in class %s" % (e1.class_name, e1.name, derivedunions.get(e1.name).class_name)
@@ -499,10 +503,11 @@ def generate(filename, outfile=None, overridesfile=None):
 
 
     # create derived unions, first link the association ends to the d
-    for a in [v for v in properties.values() if v.subsets]:
+    for a in (v for v in properties.values() if v.subsets):
         for s in a.subsets or ():
             try:
-                derivedunions[s].union.append(a)
+                if not a.type in ignored_classes:
+                    derivedunions[s].union.append(a)
             except KeyError:
                 msg('not a derived union: %s.%s' % (a.class_name, s))
 
@@ -521,7 +526,7 @@ def generate(filename, outfile=None, overridesfile=None):
         writer.write_redefine(r)
 
     # create operations
-    for c in classes.values():
+    for c in filter(ignored_classes.__contains__, classes.values()):
         for p in c.get('ownedOperation') or ():
             o = operations.get(p)
             o.class_name = c['name']
