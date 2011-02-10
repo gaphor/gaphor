@@ -11,11 +11,12 @@ Event = Context
 logging.basicConfig(level=logging.DEBUG)
 
 class DiagramItemConnectorTestCase(TestCase):
-    services = TestCase.services + [ 'main_window', 'action_manager', 'properties' ]
+    services = TestCase.services + [ 'main_window', 'ui_manager', 'action_manager', 'properties' ]
 
     def setUp(self):
         super(DiagramItemConnectorTestCase, self).setUp()
         mw = self.get_service('main_window')
+        mw.open()
         mw.show_diagram(self.diagram)
         self.main_window = mw
 

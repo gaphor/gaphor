@@ -10,16 +10,14 @@ from gaphor.ui.mainwindow import MainWindow
 class DiagramTabTestCase(unittest.TestCase):
 
     def setUp(self):
-        Application.init(services=['element_factory', 'main_window', 'action_manager', 'properties', 'element_dispatcher'])
+        Application.init(services=['element_factory', 'main_window', 'ui_manager', 'action_manager', 'properties', 'element_dispatcher'])
         main_window = Application.get_service('main_window')
+        main_window.open()
         element_factory = Application.get_service('element_factory')
         self.element_factory = element_factory
         self.diagram = element_factory.create(UML.Diagram)
-        self.tab = DiagramTab(main_window)
-        self.tab.set_diagram(self.diagram)
+        self.tab = main_window.show_diagram(self.diagram)
         self.assertEquals(self.tab.diagram, self.diagram)
-        widget = self.tab.construct()
-        main_window.add_tab(self.tab, widget, 'title')
         self.assertEquals(self.tab.view.canvas, self.diagram.canvas)
         self.assertEquals(len(element_factory.lselect()), 1)
 
@@ -48,3 +46,4 @@ class DiagramTabTestCase(unittest.TestCase):
         comment = self.diagram.create(CommentItem, subject=self.element_factory.create(UML.Comment))
         self.assertEquals(len(self.element_factory.lselect()), 2)
         
+# vim:sw=4:et:ai

@@ -143,7 +143,7 @@ class DiagramTab(object):
         self.widget.destroy()
         self.component_registry.unregister_handler(self._on_element_delete)
         self.component_registry.unregister_handler(self._on_element_change)
-        del self.view
+        self.view = None
 
 
     @action(name='diagram-zoom-in', stock_id='gtk-zoom-in')

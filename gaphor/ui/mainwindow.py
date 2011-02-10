@@ -185,7 +185,7 @@ class MainWindow(object):
         cr.unregister_handler(self._on_file_manager_state_changed)
         cr.unregister_handler(self._on_undo_manager_state_changed)
         cr.unregister_handler(self._new_model_content)
-        self.ui_manager.remove_action_group(self.action_group)
+        #self.ui_manager.remove_action_group(self.action_group)
 
 
     def init_action_group(self):

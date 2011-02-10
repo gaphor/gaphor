@@ -19,8 +19,10 @@ Event = Context
 class DiagramItemConnectorTestCase(unittest.TestCase):
 
     def setUp(self):
-        Application.init(services=['adapter_loader', 'element_factory', 'main_window', 'properties_manager', 'action_manager', 'properties', 'element_dispatcher'])
+        Application.init(services=['adapter_loader', 'element_factory', 'main_window', 'ui_manager', 'properties_manager', 'action_manager', 'properties', 'element_dispatcher'])
         self.main_window = Application.get_service('main_window')
+        self.main_window.init()
+        self.main_window.open()
         self.element_factory = Application.get_service('element_factory')
         self.diagram = self.element_factory.create(UML.Diagram)
         self.comment = self.diagram.create(CommentItem,
@@ -61,8 +63,9 @@ class HandleToolTestCase(unittest.TestCase):
     """
 
     def setUp(self):
-        Application.init(services=['adapter_loader', 'element_factory', 'main_window', 'properties_manager', 'action_manager', 'properties', 'element_dispatcher'])
+        Application.init(services=['adapter_loader', 'element_factory', 'main_window', 'ui_manager', 'properties_manager', 'action_manager', 'properties', 'element_dispatcher'])
         self.main_window = Application.get_service('main_window')
+        self.main_window.open()
 
     def shutDown(self):
         Application.shutdown()
