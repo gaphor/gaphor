@@ -3,6 +3,8 @@
 - New Docking widget layout
 - Improved componentized services
 - UIComponent rewrite (due to new interface)
+- ValueSpecification and subclasses are now treated as attribute. This
+  saves a lot of object construction and Java-ish headaches.
 
 0.16.0
 ------

@@ -200,6 +200,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     version_0_9_0(elements, factory, gaphor_version)
     version_0_14_0(elements, factory, gaphor_version)
     version_0_15_0_pre(elements, factory, gaphor_version)
+    version_0_17_0(elements, factory, gaphor_version)
 
     #log.debug("Still have %d elements" % len(elements))
 
@@ -246,7 +247,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                 raise
 
         for name, refids in elem.references.items():
-            if type(refids) == type([]):
+            if type(refids) == list:
                 for refid in refids:
                     try:
                         ref = elements[refid]
@@ -375,9 +376,9 @@ def version_lower_than(gaphor_version, version):
     try:
         return tuple(map(int, parts)) < version
     except ValueError:
-        # We're having a -pre, -beta, -alpha or whatever version
+        # We're having a -dev, -pre, -beta, -alpha or whatever version
         parts = parts[:-1]
-        return tuple(map(int, parts)) <= version
+        return tuple(map(int, parts)) <= version 
     
 
 def version_0_15_0_pre(elements, factory, gaphor_version):
@@ -615,6 +616,36 @@ def convert_tagged_value(element, elements, factory):
                 if ci.id == et.id:
                     d.canvas.canvasitems.append(item)
                     break
+
+def version_0_17_0(elements, factory, gaphor_version):
+    """
+    As of version 0.17.0, ValueSpecification and subclasses is dealt
+    with as if it were attributes.
+
+    This function is called before the actual elements are constructed.
+    """
+    valspec_types = [ 'ValueSpecification', 'OpaqueExpression', 'Expression',
+        'InstanceValue', 'LiteralSpecification', 'LiteralUnlimitedNatural',
+        'LiteralInteger', 'LiteralString', 'LiteralBoolean', 'LiteralNull' ]
+    
+    print 'version', gaphor_version
+    if version_lower_than(gaphor_version, (0, 17, 0)):
+        valspecs = dict((v.id, v) for v in elements.values() if v.type in valspec_types)
+
+        for id in valspecs.keys():
+            del elements[id]
+
+        for e in elements.values():
+            for name, ref in list(e.references.items()):
+                # ValueSpecifications are always defined in 1:1 relationships
+                if type(ref) != list and ref in valspecs:
+                    del e.references[name]
+                    assert not name in e.values
+                    try:
+                        e.values[name] = valspecs[ref].values['value'];
+                    except KeyError:
+                        pass # Empty LiteralSpecification
+
 
 def version_0_14_0(elements, factory, gaphor_version):
     """
