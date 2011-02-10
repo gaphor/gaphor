@@ -33,30 +33,26 @@ class Uml2TestCase(unittest.TestCase):
         self.assertEquals([p], factory.lselect())
 
 
-    def test_lower_upper(self):
-        """
-        Test MultiplicityElement.{lower|upper}
-        """
-        assert UML.MultiplicityElement.lowerValue in UML.MultiplicityElement.lower.subsets
-        assert UML.LiteralSpecification.value in UML.MultiplicityElement.lower.subsets
-
-        e = UML.MultiplicityElement()
-        e.lowerValue = UML.LiteralString()
-        e.lowerValue.value = '2'
-        assert e.lower == '2', e.lower
-
-        assert UML.MultiplicityElement.upperValue in UML.MultiplicityElement.upper.subsets
-        assert UML.LiteralSpecification.value in UML.MultiplicityElement.upper.subsets
-
-        e.upperValue = UML.LiteralString()
-        e.upperValue.value = 'up'
-        assert UML.MultiplicityElement.upper.version == 4, UML.MultiplicityElement.upper.version
-        assert e.upper == 'up'
-        e.upperValue.value = 'down'
-        assert UML.MultiplicityElement.upper.version == 5, UML.MultiplicityElement.upper.version
-        assert e.upper == 'down', e.upper
-
-        # TODO: test signal handling
+#    def test_lower_upper(self):
+#        """
+#        Test MultiplicityElement.{lower|upper}
+#        """
+#        assert UML.MultiplicityElement.lowerValue in UML.MultiplicityElement.lower.subsets
+#
+#        e = UML.MultiplicityElement()
+#        e.lowerValue = '2'
+#        assert e.lower == '2', e.lower
+#
+#        assert UML.MultiplicityElement.upperValue in UML.MultiplicityElement.upper.subsets
+#
+#        e.upperValue = 'up'
+#        assert UML.MultiplicityElement.upper.version == 4, UML.MultiplicityElement.upper.version
+#        assert e.upper == 'up'
+#        e.upperValue = 'down'
+#        assert UML.MultiplicityElement.upper.version == 5, UML.MultiplicityElement.upper.version
+#        assert e.upper == 'down', e.upper
+#
+#        # TODO: test signal handling
 
     def test_property_is_composite(self):
         p = UML.Property()

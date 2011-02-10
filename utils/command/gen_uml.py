@@ -450,7 +450,7 @@ def generate(filename, outfile=None, overridesfile=None):
  
     # create attributes and enumerations
     derivedattributes = { }
-    for c in filter(ignored_classes.__contains__, classes.values()):
+    for c in filter(lambda c: c not in ignored_classes, classes.values()):
         for p in c.get('ownedAttribute') or []:
             a = properties.get(p)
             # set class_name, since write_attribute depends on it
@@ -458,7 +458,6 @@ def generate(filename, outfile=None, overridesfile=None):
             if not a.get('association'):
                 if overrides.derives('%s.%s' % (a.class_name, a.name)):
                     derivedattributes[a.name] = a
-                    a.written = False
                 else:
                     writer.write_attribute(a, enumerations)
 
@@ -506,7 +505,7 @@ def generate(filename, outfile=None, overridesfile=None):
     for a in (v for v in properties.values() if v.subsets):
         for s in a.subsets or ():
             try:
-                if not a.type in ignored_classes:
+                if a.type not in ignored_classes:
                     derivedunions[s].union.append(a)
             except KeyError:
                 msg('not a derived union: %s.%s' % (a.class_name, s))
@@ -526,7 +525,7 @@ def generate(filename, outfile=None, overridesfile=None):
         writer.write_redefine(r)
 
     # create operations
-    for c in filter(ignored_classes.__contains__, classes.values()):
+    for c in filter(lambda c: c not in ignored_classes, classes.values()):
         for p in c.get('ownedOperation') or ():
             o = operations.get(p)
             o.class_name = c['name']

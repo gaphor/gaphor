@@ -78,23 +78,23 @@ def format_attribute(el, visibility=False, is_derived=False, type=False,
 
     s.write(name)
     
-    if type and el.typeValue and el.typeValue.value:
-        s.write(': %s' % el.typeValue.value)
+    if type and el.typeValue:
+        s.write(': %s' % el.typeValue)
 
-    if multiplicity and el.upperValue and el.upperValue.value:  
-        if el.lowerValue and el.lowerValue.value:
-            s.write('[%s..%s]' % (el.lowerValue.value, el.upperValue.value))
+    if multiplicity and el.upperValue:
+        if el.lowerValue:
+            s.write('[%s..%s]' % (el.lowerValue, el.upperValue))
         else:
-            s.write('[%s]' % el.upperValue.value)
+            s.write('[%s]' % el.upperValue)
 
-    if default and el.defaultValue and el.defaultValue.value:
-        s.write(' = %s' % el.defaultValue.value)
+    if default and el.defaultValue:
+        s.write(' = %s' % el.defaultValue)
 
     if tags:
         slots = []
         for slot in el.appliedStereotype[:].slot:
-            if slot.value:
-                slots.append('%s=%s' % (slot.definingFeature.name, slot.value.value))
+            if slot:
+                slots.append('%s=%s' % (slot.definingFeature.name, slot.value))
         if slots:
             s.write(' { %s }' % ', '.join(slots))
     s.reset()
@@ -118,16 +118,16 @@ def format_association_end(el):
         name = n.read()
 
     m = StringIO()
-    if el.upperValue and el.upperValue.value:  
-        if el.lowerValue and el.lowerValue.value:
-            m.write('%s..%s' % (el.lowerValue.value, el.upperValue.value))
+    if el.upperValue:
+        if el.lowerValue:
+            m.write('%s..%s' % (el.lowerValue, el.upperValue))
         else:
-            m.write('%s' % el.upperValue.value)
+            m.write('%s' % el.upperValue)
 
     slots = []
     for slot in el.appliedStereotype[:].slot:
-        if slot.value:
-            slots.append('%s=%s' % (slot.definingFeature.name, slot.value.value))
+        if slot:
+            slots.append('%s=%s' % (slot.definingFeature.name, slot.value))
     if slots:
         m.write(' { %s }' % ',\n'.join(slots))
     m.reset()
@@ -166,15 +166,15 @@ def format_operation(el, pattern=None, visibility=False, type=False, multiplicit
             s.write(p.direction)
             s.write(' ')
         s.write(p.name)
-        if type and p.typeValue and p.typeValue.value:
-            s.write(': %s' % p.typeValue.value)
-        if multiplicity and p.upperValue and p.upperValue.value:  
-            if p.lowerValue and p.lowerValue.value:
-                s.write('[%s..%s]' % (p.lowerValue.value, p.upperValue.value))
+        if type and p.typeValue:
+            s.write(': %s' % p.typeValue)
+        if multiplicity and p.upperValue:
+            if p.lowerValue:
+                s.write('[%s..%s]' % (p.lowerValue, p.upperValue))
             else:
-                s.write('[%s]' % p.upperValue.value)
-        if default and p.defaultValue and p.defaultValue.value:
-            s.write(' = %s' % p.defaultValue.value)
+                s.write('[%s]' % p.upperValue)
+        if default and p.defaultValue:
+            s.write(' = %s' % p.defaultValue)
         #if p.taggedValue:
         #     tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
         #                                      ['value'] * len(p.taggedValue))))
@@ -186,13 +186,13 @@ def format_operation(el, pattern=None, visibility=False, type=False, multiplicit
 
     rr = el.returnResult and el.returnResult[0]
     if rr:
-        if type and rr.typeValue and rr.typeValue.value:
-            s.write(': %s' % rr.typeValue.value)
-        if multiplicity and rr.upperValue and rr.upperValue.value:  
-            if rr.lowerValue and rr.lowerValue.value:
-                s.write('[%s..%s]' % (rr.lowerValue.value, rr.upperValue.value))
+        if type and rr.typeValue:
+            s.write(': %s' % rr.typeValue)
+        if multiplicity and rr.upperValue:
+            if rr.lowerValue:
+                s.write('[%s..%s]' % (rr.lowerValue, rr.upperValue))
             else:
-                s.write('[%s]' % rr.upperValue.value)
+                s.write('[%s]' % rr.upperValue)
         #if rr.taggedValue:
         #    tvs = ', '.join(filter(None, map(getattr, rr.taggedValue,
         #                                     ['value'] * len(rr.taggedValue))))
@@ -204,7 +204,7 @@ def format_operation(el, pattern=None, visibility=False, type=False, multiplicit
 
 @format.when_type(UML.Slot)
 def format_slot(el, pattern=None):
-    return '%s = "%s"' % (el.definingFeature.name, el.value.value)
+    return '%s = "%s"' % (el.definingFeature.name, el.value)
 
 
 @format.when_type(UML.NamedElement)
@@ -213,14 +213,6 @@ def format_namedelement(el, pattern='%s'):
     Format named element.
     """
     return pattern % el.name
-
-
-@format.when_type(UML.LiteralSpecification)
-def format_literalspecification(el, pattern='%s'):
-    """
-    Format literal specification element.
-    """
-    return pattern % el.value
 
 
 # vim:sw=4:et:ai

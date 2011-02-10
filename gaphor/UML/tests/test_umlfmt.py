@@ -27,7 +27,6 @@ class AttributeTestCase(unittest.TestCase):
         a.name = 'myattr'
         self.assertEquals('+ myattr', format(a))
 
-        a.typeValue = factory.create(UML.LiteralSpecification)
-        a.typeValue.value = 'int'
+        a.typeValue = 'int'
         self.assertEquals('+ myattr: int', format(a))
 

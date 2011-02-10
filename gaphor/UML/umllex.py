@@ -114,31 +114,23 @@ def parse_attribute(el, s):
         del el.visibility
         del el.isDerived
         if el.typeValue:
-            el.typeValue.value = None
+            el.typeValue = None
         if el.lowerValue:
-            el.lowerValue.value = None
+            el.lowerValue = None
         if el.upperValue:
-            el.upperValue.value = None
+            el.upperValue = None
         if el.defaultValue:
-            el.defaultValue.value = None
+            el.defaultValue = None
     else:
         g = m.group
         create = el._factory.create
         _set_visibility(el, g('vis'))
         el.isDerived = g('derived') and True or False
         el.name = g('name')
-        if not el.typeValue:
-            el.typeValue = create(UML.LiteralSpecification)
-        el.typeValue.value = g('type')
-        if not el.lowerValue:
-            el.lowerValue = create(UML.LiteralSpecification)
-        el.lowerValue.value = g('mult_l')
-        if not el.upperValue:
-            el.upperValue = create(UML.LiteralSpecification)
-        el.upperValue.value = g('mult_u')
-        if not el.defaultValue:
-            el.defaultValue = create(UML.LiteralSpecification)
-        el.defaultValue.value = g('default')
+        el.typeValue = g('type')
+        el.lowerValue = g('mult_l')
+        el.upperValue = g('mult_u')
+        el.defaultValue = g('default')
         # Skip tags: should do something with stereotypes?
         #tags = g('tags')
         #if tags:
@@ -166,16 +158,12 @@ def parse_association_end(el, s):
     m = association_end_mult_pat.match(s)
     if m and not m.group('mult_u'):
         if el.upperValue:
-            el.upperValue.value = None
+            el.upperValue = None
 
     if m and m.group('mult_u') or m.group('tags'):
         g = m.group
-        if not el.lowerValue:
-            el.lowerValue = create(UML.LiteralSpecification)
-        el.lowerValue.value = g('mult_l')
-        if not el.upperValue:
-            el.upperValue = create(UML.LiteralSpecification)
-        el.upperValue.value = g('mult_u')
+        el.lowerValue = g('mult_l')
+        el.upperValue = g('mult_u')
         #tags = g('tags')
         #if tags:
         #    for t in map(str.strip, tags.split(',')):
@@ -195,16 +183,12 @@ def parse_association_end(el, s):
             el.name = g('name')
             # Optionally, the multiplicity and tagged values may be defined:
             if g('mult_l'):
-                if not el.lowerValue:
-                    el.lowerValue = create(UML.LiteralSpecification)
-                el.lowerValue.value = g('mult_l')
+                el.lowerValue = g('mult_l')
 
             if g('mult_u'):
-                if not g('mult_l') and el.lowerValue:
-                    el.lowerValue.value = None
-                if not el.upperValue:
-                    el.upperValue = create(UML.LiteralSpecification)
-                el.upperValue.value = g('mult_u')
+                if not g('mult_l'):
+                    el.lowerValue = None
+                el.upperValue = g('mult_u')
 
             #tags = g('tags')
             #if tags:
@@ -244,15 +228,9 @@ def parse_operation(el, s):
             el.returnResult = create(UML.Parameter)
         p = el.returnResult[0]
         p.direction = 'return'
-        if not p.typeValue:
-            p.typeValue = create(UML.LiteralSpecification)
-        p.typeValue.value = g('type')
-        if not p.lowerValue:
-            p.lowerValue = create(UML.LiteralSpecification)
-        p.lowerValue.value = g('mult_l')
-        if not p.upperValue:
-            p.upperValue = create(UML.LiteralSpecification)
-        p.upperValue.value = g('mult_u')
+        p.typeValue = g('type')
+        p.lowerValue = g('mult_l')
+        p.upperValue = g('mult_u')
         # FIXME: Maybe add to Operation.ownedRule?
         #tags = g('tags')
         #if tags:
@@ -274,18 +252,10 @@ def parse_operation(el, s):
                 p = create(UML.Parameter)
             p.direction = g('dir') or 'in'
             p.name = g('name')
-            if not p.typeValue:
-                p.typeValue = create(UML.LiteralSpecification)
-            p.typeValue.value = g('type')
-            if not p.lowerValue:
-                p.lowerValue = create(UML.LiteralSpecification)
-            p.lowerValue.value = g('mult_l')
-            if not p.upperValue:
-                p.upperValue = create(UML.LiteralSpecification)
-            p.upperValue.value = g('mult_u')
-            if not p.defaultValue:
-                p.defaultValue = create(UML.LiteralSpecification)
-            p.defaultValue.value = g('default')
+            p.typeValue = g('type')
+            p.lowerValue = g('mult_l')
+            p.upperValue = g('mult_u')
+            p.defaultValue = g('default')
             #tags = g('tags')
             #if tags:
             #    for t in map(str.strip, tags.split(',')):
@@ -336,14 +306,6 @@ def parse_namedelement(el, text):
     Parse named element by simply assigning text to its name.
     """
     el.name = text
-
-
-@parse.when_type(UML.LiteralSpecification)
-def parse_literalspecification(el, text):
-    """
-    Parse literal specification element.
-    """
-    el.value = text
 
 
 # vim:sw=4:et:ai

@@ -62,10 +62,9 @@ class ElementFactoryTestCase(unittest.TestCase):
         assert len(ef.values()) == 0, ef.values()
 
         p = ef.create(Parameter)
-        l = ef.create(LiteralString)
-        p.defaultValue = l
+        p.defaultValue = 'l'
 
-        assert len(ef.values()) == 2
+        assert len(ef.values()) == 1
 
         p.unlink()
         del p
