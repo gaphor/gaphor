@@ -1,6 +1,7 @@
 
 from unittest import TestCase 
 from zope.component.globalregistry import base
+from gaphor.application import Application
 from gaphor.transaction import Transaction, transactional, TransactionError
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 
@@ -21,9 +22,11 @@ def handle_rollback(ev):
 class TransactionTestCase(TestCase):
 
     def setUp(self):
-        base.registerHandler(handle_begins, [TransactionBegin], event=False)
-        base.registerHandler(handle_commits, [TransactionCommit], event=False)
-        base.registerHandler(handle_rollback, [TransactionRollback], event=False)
+        Application.init(services=['component_registry'])
+        component_registry = Application.get_service('component_registry')
+        component_registry.register_handler(handle_begins, [TransactionBegin])
+        component_registry.register_handler(handle_commits, [TransactionCommit])
+        component_registry.register_handler(handle_rollback, [TransactionRollback])
         del begins[:]
         del commits[:]
         del rollbacks[:]
@@ -33,9 +36,10 @@ class TransactionTestCase(TestCase):
 
 
     def tearDown(self):
-        base.unregisterHandler(handle_begins, [TransactionBegin])
-        base.unregisterHandler(handle_commits, [TransactionCommit])
-        base.unregisterHandler(handle_rollback, [TransactionRollback])
+        component_registry = Application.get_service('component_registry')
+        component_registry.unregister_handler(handle_begins, [TransactionBegin])
+        component_registry.unregister_handler(handle_commits, [TransactionCommit])
+        component_registry.unregister_handler(handle_rollback, [TransactionRollback])
 
 
     def test_transaction_commit(self):
@@ -118,5 +122,13 @@ class TransactionTestCase(TestCase):
             self.assertFalse(Transaction._stack)
             assert False, 'should not be reached'
 
+class TransactionWithoutComponentRegistryTestCase(TestCase):
+
+    def test_transaction(self):
+        tx = Transaction()
+        tx.rollback()
+
+        tx = Transaction()
+        tx.commit()
 
 # vim:sw=4:et:ai
