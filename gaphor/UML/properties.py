@@ -262,14 +262,14 @@ class association(umlproperty):
         try:
             return getattr(obj, self._name)
         except AttributeError:
-            if self.upper > 1:
+            if self.upper == 1:
+                return None
+            else:
                 # Create the empty collection here since it might be used to
                 # add 
                 c = collection(self, obj, self.type)
                 setattr(obj, self._name, c)
                 return c
-            else:
-                return None
 
     def _set(self, obj, value, from_opposite=False, do_notify=True):
         """
@@ -352,7 +352,15 @@ class association(umlproperty):
                 self.stub._del(value, obj, from_opposite=True)
 
         event = None
-        if self.upper > 1:
+        if self.upper == 1:
+            try:
+                delattr(obj, self._name)
+            except:
+                pass
+            else:
+                if do_notify:
+                    event = AssociationSetEvent(obj, self, value, None)
+        else:
             c = self._get(obj)
             if c:
                 items = c.items
@@ -367,14 +375,6 @@ class association(umlproperty):
                 # Remove items collection if empty
                 if not items:
                     delattr(obj, self._name)
-        else:
-            try:
-                delattr(obj, self._name)
-            except:
-                pass
-            else:
-                if do_notify:
-                    event = AssociationSetEvent(obj, self, value, None)
 
         if do_notify and event:
             self.handle(event)
@@ -564,7 +564,13 @@ class derived(umlproperty):
                 return
                 
             # mimic the events for Set/Add/Delete
-            if self.upper > 1:
+            if self.upper == 1:
+                # This is a [0..1] event
+                # TODO: This is an error: [0..*] associations may be used for updating [0..1] associations
+                assert IAssociationSetEvent.providedBy(event)
+                old_value, new_value = event.old_value, event.new_value
+                self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
+            else:        
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
                     # Do a filter? Change to 
@@ -583,12 +589,6 @@ class derived(umlproperty):
                     self.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
-            else:        
-                # This is a [0..1] event
-                # TODO: This is an error: [0..*] associations may be used for updating [0..1] associations
-                assert IAssociationSetEvent.providedBy(event)
-                old_value, new_value = event.old_value, event.new_value
-                self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
 
 
 class derivedunion(derived):
@@ -646,7 +646,24 @@ class derivedunion(derived):
                 
             values = self._union(event.element, exclude=event.property)
 
-            if self.upper > 1:
+            if self.upper == 1:
+                assert IAssociationSetEvent.providedBy(event)
+                old_value, new_value = event.old_value, event.new_value
+                # This is a [0..1] event
+                if self.single:
+                    # Only one subset element, so pass the values on
+                    self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
+                else:
+                    new_values = set(values)
+                    if new_value:
+                        new_values.add(new_value)
+                    if len(new_values) > 1:
+                        # In an in-between state. Do not emit notifications
+                        return
+                    if values:
+                        new_value = iter(values).next()
+                    self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
+            else:        
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
                     if old_value and old_value not in values:
@@ -668,23 +685,6 @@ class derivedunion(derived):
                     self.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
-            else:        
-                assert IAssociationSetEvent.providedBy(event)
-                old_value, new_value = event.old_value, event.new_value
-                # This is a [0..1] event
-                if self.single:
-                    # Only one subset element, so pass the values on
-                    self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
-                else:
-                    new_values = set(values)
-                    if new_value:
-                        new_values.add(new_value)
-                    if len(new_values) > 1:
-                        # In an in-between state. Do not emit notifications
-                        return
-                    if values:
-                        new_value = iter(values).next()
-                    self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
 
 
 class redefine(umlproperty):
