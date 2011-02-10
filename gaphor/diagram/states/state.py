@@ -36,7 +36,6 @@ class StateItem(CompartmentItem, VertexItem):
         self._entry = FeatureItem(pattern='entry / %s', order=1)
         self._exit = FeatureItem(pattern='exit / %s', order=2)
         self._do_activity = FeatureItem(pattern='do / %s', order=3)
-#        self.watch('subject<ControlFlow>.guard<LiteralSpecification>.value', self.on_control_flow_guard)
 
 
     def _set_activity(self, act, attr, text):

@@ -61,21 +61,21 @@ class ClassItem(ClassifierItem):
             .watch('subject<Class>.ownedAttribute.isStatic') \
             .watch('subject<Class>.ownedAttribute.isDerived') \
             .watch('subject<Class>.ownedAttribute.visibility') \
-            .watch('subject<Class>.ownedAttribute.lowerValue<LiteralSpecification>.value') \
-            .watch('subject<Class>.ownedAttribute.upperValue<LiteralSpecification>.value') \
-            .watch('subject<Class>.ownedAttribute.defaultValue<LiteralSpecification>.value') \
-            .watch('subject<Class>.ownedAttribute.typeValue<LiteralSpecification>.value') \
+            .watch('subject<Class>.ownedAttribute.lowerValue') \
+            .watch('subject<Class>.ownedAttribute.upperValue') \
+            .watch('subject<Class>.ownedAttribute.defaultValue') \
+            .watch('subject<Class>.ownedAttribute.typeValue') \
             .watch('subject<Class>.ownedOperation.name') \
             .watch('subject<Class>.ownedOperation.isAbstract', self.on_operation_is_abstract) \
             .watch('subject<Class>.ownedOperation.isStatic') \
             .watch('subject<Class>.ownedOperation.visibility') \
-            .watch('subject<Class>.ownedOperation.returnResult.lowerValue<LiteralSpecification>.value') \
-            .watch('subject<Class>.ownedOperation.returnResult.upperValue<LiteralSpecification>.value') \
-            .watch('subject<Class>.ownedOperation.returnResult.typeValue<LiteralSpecification>.value') \
-            .watch('subject<Class>.ownedOperation.formalParameter.lowerValue<LiteralSpecification>.value') \
-            .watch('subject<Class>.ownedOperation.formalParameter.upperValue<LiteralSpecification>.value') \
-            .watch('subject<Class>.ownedOperation.formalParameter.typeValue<LiteralSpecification>.value') \
-            .watch('subject<Class>.ownedOperation.formalParameter.defaultValue<LiteralSpecification>.value')
+            .watch('subject<Class>.ownedOperation.returnResult.lowerValue') \
+            .watch('subject<Class>.ownedOperation.returnResult.upperValue') \
+            .watch('subject<Class>.ownedOperation.returnResult.typeValue') \
+            .watch('subject<Class>.ownedOperation.formalParameter.lowerValue') \
+            .watch('subject<Class>.ownedOperation.formalParameter.upperValue') \
+            .watch('subject<Class>.ownedOperation.formalParameter.typeValue') \
+            .watch('subject<Class>.ownedOperation.formalParameter.defaultValue')
 
     def save(self, save_func):
         """Store the show- properties *before* the width/height properties,

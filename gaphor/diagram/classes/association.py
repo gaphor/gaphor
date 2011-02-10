@@ -52,8 +52,8 @@ class AssociationItem(NamedLine):
             .watch(base + 'aggregation', self.on_association_end_value)\
             .watch(base + 'classifier', self.on_association_end_value)\
             .watch(base + 'visibility', self.on_association_end_value)\
-            .watch(base + 'lowerValue<LiteralSpecification>.value', self.on_association_end_value)\
-            .watch(base + 'upperValue<LiteralSpecification>.value', self.on_association_end_value)\
+            .watch(base + 'lowerValue', self.on_association_end_value)\
+            .watch(base + 'upperValue', self.on_association_end_value)\
             .watch(base + 'owningAssociation', self.on_association_end_value) \
             .watch(base + 'type<Class>.ownedAttribute', self.on_association_end_value) \
             .watch(base + 'type<Interface>.ownedAttribute', self.on_association_end_value) \

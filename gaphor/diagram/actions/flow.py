@@ -36,8 +36,8 @@ class FlowItem(NamedLine):
     def __init__(self, id = None):
         NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.value', editable=True)
-        self.watch('subject<ControlFlow>.guard<LiteralSpecification>.value', self.on_control_flow_guard)
-        self.watch('subject<ObjectFlow>.guard<LiteralSpecification>.value', self.on_control_flow_guard)
+        self.watch('subject<ControlFlow>.guard', self.on_control_flow_guard)
+        self.watch('subject<ObjectFlow>.guard', self.on_control_flow_guard)
 
 
     def postload(self):
@@ -49,9 +49,10 @@ class FlowItem(NamedLine):
 
 
     def on_control_flow_guard(self, event):
+        log.error('Updating flow guard')
         subject = self.subject
         try:
-            self._guard.text = subject.guard.value if subject and subject.guard else ''
+            self._guard.text = subject.guard if subject else ''
         except AttributeError, e:
             self._guard.text = ''
         self.request_update()
@@ -140,8 +141,6 @@ class ACItem(object):
 #        self._connector = ACItem('value')
 #
 #        factory = resource(UML.ElementFactory)
-#        self._connector.subject = factory.create(UML.LiteralSpecification)
-#        self.add(self._connector)
 #
 #        self._opposite = None
 #

@@ -197,7 +197,7 @@ class StereotypesAttributesTestCase(TestCase):
         # change attribute of 2nd stereotype
         attr = self.st2.ownedAttribute[0]
         slot = UML.model.add_slot(self.element_factory, obj, attr)
-        slot.value.value = 'st2 test21'
+        slot.value = 'st2 test21'
 
         data = self.save()
         self.load(data)
@@ -230,9 +230,9 @@ class StereotypesAttributesTestCase(TestCase):
 
         obj = c.subject.appliedStereotype[0]
         slot = UML.model.add_slot(self.element_factory, obj, attr1)
-        slot.value.value = 'st1 test1'
+        slot.value = 'st1 test1'
         slot = UML.model.add_slot(self.element_factory, obj, attr2)
-        slot.value.value = 'st1 test2'
+        slot.value = 'st1 test2'
 
         data = self.save()
         self.load(data)
@@ -249,9 +249,9 @@ class StereotypesAttributesTestCase(TestCase):
         obj = el.appliedStereotype[0]
         self.assertEquals(2, len(obj.slot))
         self.assertEquals('st1_attr_1', obj.slot[0].definingFeature.name)
-        self.assertEquals('st1 test1', obj.slot[0].value.value)
+        self.assertEquals('st1 test1', obj.slot[0].value)
         self.assertEquals('st1_attr_2', obj.slot[1].definingFeature.name)
-        self.assertEquals('st1 test2', obj.slot[1].value.value)
+        self.assertEquals('st1 test2', obj.slot[1].value)
 
         # no stereotype st2 attribute changes, no slots
         obj = el.appliedStereotype[1]

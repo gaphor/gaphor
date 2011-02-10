@@ -226,7 +226,7 @@ class ForkNodeItem(Item, DiagramItem):
                 }, editable=True)
 
         self.watch('subject<NamedElement>.name', self.on_named_element_name)\
-            .watch('subject<JoinNode>.joinSpec<LiteralSpecification>.value', self.on_join_node_join_spec)
+            .watch('subject<JoinNode>.joinSpec', self.on_join_node_join_spec)
 
 
     def save(self, save_func):
@@ -353,13 +353,7 @@ class ForkNodeItem(Item, DiagramItem):
         if not is_join_node(subject):
             return
 
-        if not subject.joinSpec:
-            subject.joinSpec = self.element_factory.create(UML.LiteralSpecification)
-
-        if not value:
-            value = DEFAULT_JOIN_SPEC
-
-        subject.joinSpec.value = value
+        subject.joinSpec = value or DEFAULT_JOIN_SPEC
 
 
 def is_join_node(subject):

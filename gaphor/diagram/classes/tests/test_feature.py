@@ -31,8 +31,7 @@ class FeatureTestCase(TestCase):
         size = item.get_size()
         self.assertNotEquals((0, 0), size)
 
-        attr.defaultValue = self.element_factory.create(UML.LiteralSpecification)
-        attr.defaultValue.value = 'myDefault'
+        attr.defaultValue = 'myDefault'
 
         self.diagram.canvas.update()
         self.assertTrue(size < item.get_size())

@@ -18,9 +18,7 @@ class TransitionTestCase(TestCase):
         assert item._guard.text == ''
 
         c = self.element_factory.create(UML.Constraint)
-        ls = self.element_factory.create(UML.LiteralSpecification)
-        c.specification = ls
-        ls.value = 'blah'
+        c.specification = 'blah'
         assert item._guard.text == ''
 
         item.subject.guard = c
@@ -30,10 +28,7 @@ class TransitionTestCase(TestCase):
         del c.specification
         assert item._guard.text == '', item._guard.text
 
-        ls.value = 'foo'
-        assert item._guard.text == '', item._guard.text
-
-        c.specification = ls
+        c.specification = 'foo'
         assert item._guard.text == 'foo', item._guard.text
 
 # vim:sw=4:et:ai

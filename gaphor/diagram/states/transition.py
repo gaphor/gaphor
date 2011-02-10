@@ -23,8 +23,8 @@ class TransitionItem(NamedLine):
 
     def __init__(self, id = None):
         NamedLine.__init__(self, id)
-        self._guard = self.add_text('guard.specification.value', editable=True)
-        self.watch('subject<Transition>.guard<Constraint>.specification<LiteralSpecification>.value', self.on_guard)
+        self._guard = self.add_text('guard.specification', editable=True)
+        self.watch('subject<Transition>.guard<Constraint>.specification', self.on_guard)
 
 
     def postload(self):
@@ -32,7 +32,7 @@ class TransitionItem(NamedLine):
         Load guard specification information.
         """
         try:
-            self._guard.text = self.subject.guard.specification.value or ''
+            self._guard.text = self.subject.guard.specification or ''
         except AttributeError:
             self._guard.text = ''
         super(TransitionItem, self).postload()
@@ -40,7 +40,7 @@ class TransitionItem(NamedLine):
 
     def on_guard(self, event):
         try:
-            self._guard.text = self.subject.guard.specification.value or ''
+            self._guard.text = self.subject.guard.specification or ''
         except AttributeError:
             self._guard.text = ''
         self.request_update()

@@ -27,15 +27,12 @@ class FlowTestCase(TestCase):
         Test updating of flow guard text.
         """
         flow = self.create(items.FlowItem, UML.ControlFlow)
-        flow.subject.guard = self.element_factory.create(UML.LiteralSpecification)
 
         self.assertEquals('', flow._guard.text)
 
-        print 'Set Subject value '
-        flow.subject.guard.value = 'GuardMe'
+        flow.subject.guard = 'GuardMe'
         self.assertEquals('GuardMe', flow._guard.text)
 
-        print 'Subject to None'
         flow.subject = None
         self.assertEquals('', flow._guard.text)
 

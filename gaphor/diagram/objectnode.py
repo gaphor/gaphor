@@ -38,7 +38,7 @@ class ObjectNodeItem(NamedItem):
 
         self._show_ordering = False
 
-        self._upper_bound = self.add_text('upperBound.value',
+        self._upper_bound = self.add_text('upperBound',
             pattern='{ upperBound = %s }',
             style=self.STYLE_BOTTOM,
             visible=self.is_upper_bound_visible)
@@ -48,7 +48,7 @@ class ObjectNodeItem(NamedItem):
             style = self.STYLE_BOTTOM,
             visible=self._get_show_ordering)
 
-        self.watch('subject<ObjectNode>.upperBound<LiteralSpecification>.value', self.on_object_node_upper_bound)\
+        self.watch('subject<ObjectNode>.upperBound', self.on_object_node_upper_bound)\
             .watch('subject<ObjectNode>.ordering', self.on_object_node_ordering)
 
 
@@ -71,8 +71,7 @@ class ObjectNodeItem(NamedItem):
         Do not show upper bound, when it's set to default value.
         """
         subject = self.subject
-        return subject and subject.upperBound \
-                and subject.upperBound.value != DEFAULT_UPPER_BOUND
+        return subject and subject.upperBound != DEFAULT_UPPER_BOUND
 
 
     @observed
@@ -98,7 +97,7 @@ class ObjectNodeItem(NamedItem):
 
     def postload(self):
         if self.subject and self.subject.upperBound:
-            self._upper_bound.text = self.subject.upperBound.value
+            self._upper_bound.text = self.subject.upperBound
         if self.subject and self._show_ordering:
             self.set_ordering(self.subject.ordering)
         super(ObjectNodeItem, self).postload()
@@ -118,14 +117,11 @@ class ObjectNodeItem(NamedItem):
         """
         subject = self.subject
         if subject:
-            if not subject.upperBound:
-                subject.upperBound = self.element_factory.create(UML.LiteralSpecification)
-
             if not value:
                 value = DEFAULT_UPPER_BOUND
 
-            subject.upperBound.value = value
-            self._upper_bound.text = value
+            subject.upperBound = value
+            #self._upper_bound.text = value
 
 
     def set_ordering(self, value):
