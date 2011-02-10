@@ -458,18 +458,23 @@ class MainWindow(object):
         return not self.ask_to_close()
 
     def _clear_ui_settings(self):
-        if self._tab_ui_settings:
-            action_group, ui_id = self._tab_ui_settings
-            self.ui_manager.remove_action_group(action_group)
-            self.ui_manager.remove_ui(ui_id)
-            self._tab_ui_settings = None
+        try:
+            ui_manager = self.ui_manager
+        except component.ComponentLookupError, e:
+            log.warning('No UI manager service found')
+        else:
+            if self._tab_ui_settings:
+                action_group, ui_id = self._tab_ui_settings
+                self.ui_manager.remove_action_group(action_group)
+                self.ui_manager.remove_ui(ui_id)
+                self._tab_ui_settings = None
 
     def _on_item_closed(self, layout, group, item):
         self._clear_ui_settings()
         try:
             ui_component = item.ui_component
         except AttributeError:
-            pass
+            log.warning('No ui manager defined on item')
         else:
             ui_component.close()
         item.destroy()
@@ -631,7 +636,8 @@ class Namespace(object):
             self._namespace.destroy()
             self._namespace = None
 
-            self.ui_manager.remove_ui(self._ui_id)
+            # TODO: How to ensure stuff is removed properly from services?
+            #self.ui_manager.remove_ui(self._ui_id)
         self.component_registry.unregister_handler(self.expand_root_nodes)
 
 
