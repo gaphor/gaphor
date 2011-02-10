@@ -163,7 +163,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         try:
             del b1.two[a1]
-        except AttributeError:
+        except ValueError:
             pass #ok
         else:
             assert 0, 'should not be removed'
