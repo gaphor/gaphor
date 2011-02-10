@@ -29,7 +29,6 @@ class VertexConnect(RelationshipConnect):
         self.line.subject = relation
         if relation.guard is None:
             relation.guard = self.element_factory.create(UML.Constraint)
-            relation.guard.specification = self.element_factory.create(UML.LiteralSpecification)
 
 
 

@@ -51,7 +51,7 @@ class TransitionConnectorTestCase(TestCase):
 
         s = t.subject
         s.name = 'tname'
-        s.guard.specification.value = 'tguard'
+        s.guard.specification = 'tguard'
 
         # reconnect: v1 -> v3
         self.connect(t, t.tail, v3)

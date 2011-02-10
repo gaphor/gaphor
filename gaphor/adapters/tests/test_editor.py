@@ -114,8 +114,7 @@ class EditorTestCase(TestCase):
         
         attr.name = "foo"
         self.assertEquals("+ foo", tree_view.get_model()[0][0])
-        attr.typeValue = self.element_factory.create(UML.LiteralSpecification)
-        attr.typeValue.value = 'int'
+        attr.typeValue = 'int'
         self.assertEquals("+ foo: int", tree_view.get_model()[0][0])
         attr.isDerived = True
         self.assertEquals("+ /foo: int", tree_view.get_model()[0][0])

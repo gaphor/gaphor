@@ -227,7 +227,7 @@ class ForkNodeItemEditor(object):
         Get join specification text.
         """
         if self._item.subject.joinSpec:
-            return self._item.subject.joinSpec.value
+            return self._item.subject.joinSpec
         else:
             return ''
 
@@ -240,8 +240,7 @@ class ForkNodeItemEditor(object):
         """
         spec = self._item.subject.joinSpec
         if not spec:
-            spec = self._item.subject.joinSpec = self.element_factory.create(UML.LiteralSpecification)
-            spec.value = text
+            spec = text
 
     def key_pressed(self, pos, key):
         pass

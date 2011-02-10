@@ -27,17 +27,17 @@ class FlowConnect(UnaryRelationshipConnect):
 
     def reconnect(self, handle, port):
         line = self.line
-        log.debug('Reconnection of %s (guard %s)' % (line.subject, line.subject.guard.value))
+        log.debug('Reconnection of %s (guard %s)' % (line.subject, line.subject.guard))
         old_flow = line.subject
         # Secure properties before old_flow is removed:
         name = old_flow.name
-        guard_value = old_flow.guard.value
+        guard_value = old_flow.guard
         self.connect_subject(handle)
         relation = line.subject
         if old_flow:
             relation.name = name
             if guard_value:
-                relation.guard.value = guard_value
+                relation.guard = guard_value
             log.debug('unlinking old flow instance %s' % old_flow)
             #old_flow.unlink()
 
@@ -58,8 +58,6 @@ class FlowConnect(UnaryRelationshipConnect):
             relation = self.relationship_or_new(UML.ControlFlow,
                         UML.ControlFlow.source,
                         UML.ControlFlow.target)
-        if not relation.guard:
-            relation.guard = self.element_factory.create(UML.LiteralSpecification)
         line.subject = relation
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)

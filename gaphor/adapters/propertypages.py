@@ -768,10 +768,10 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
             .watch('ownedAttribute.isDerived', handler) \
             .watch('ownedAttribute.visibility', handler) \
             .watch('ownedAttribute.isStatic', handler) \
-            .watch('ownedAttribute.lowerValue<LiteralSpecification>.value', handler) \
-            .watch('ownedAttribute.upperValue<LiteralSpecification>.value', handler) \
-            .watch('ownedAttribute.defaultValue<LiteralSpecification>.value', handler) \
-            .watch('ownedAttribute.typeValue<LiteralSpecification>.value', handler) \
+            .watch('ownedAttribute.lowerValue', handler) \
+            .watch('ownedAttribute.upperValue', handler) \
+            .watch('ownedAttribute.defaultValue', handler) \
+            .watch('ownedAttribute.typeValue', handler) \
             .register_handlers()
         tree_view.connect('destroy', self.watcher.unregister_handlers)
         return page
@@ -839,13 +839,13 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         self.watcher.watch('ownedOperation.name', handler) \
             .watch('ownedOperation.isAbstract', handler) \
             .watch('ownedOperation.visibility', handler) \
-            .watch('ownedOperation.returnResult.lowerValue<LiteralSpecification>.value', handler) \
-            .watch('ownedOperation.returnResult.upperValue<LiteralSpecification>.value', handler) \
-            .watch('ownedOperation.returnResult.typeValue<LiteralSpecification>.value', handler) \
-            .watch('ownedOperation.formalParameter.lowerValue<LiteralSpecification>.value', handler) \
-            .watch('ownedOperation.formalParameter.upperValue<LiteralSpecification>.value', handler) \
-            .watch('ownedOperation.formalParameter.typeValue<LiteralSpecification>.value', handler) \
-            .watch('ownedOperation.formalParameter.defaultValue<LiteralSpecification>.value', handler) \
+            .watch('ownedOperation.returnResult.lowerValue', handler) \
+            .watch('ownedOperation.returnResult.upperValue', handler) \
+            .watch('ownedOperation.returnResult.typeValue', handler) \
+            .watch('ownedOperation.formalParameter.lowerValue', handler) \
+            .watch('ownedOperation.formalParameter.upperValue', handler) \
+            .watch('ownedOperation.formalParameter.typeValue', handler) \
+            .watch('ownedOperation.formalParameter.defaultValue', handler) \
             .register_handlers()
         tree_view.connect('destroy', self.watcher.unregister_handlers)
 
@@ -1099,8 +1099,8 @@ class AssociationEndPropertyPage(object):
         self.watcher.watch('name', handler) \
                     .watch('aggregation', handler)\
                     .watch('visibility', handler)\
-                    .watch('lowerValue<LiteralSpecification>.value', handler)\
-                    .watch('upperValue<LiteralSpecification>.value', handler)\
+                    .watch('lowerValue', handler)\
+                    .watch('upperValue', handler)\
                     .register_handlers()
         entry.connect("destroy", self.watcher.unregister_handlers)
 
@@ -1230,7 +1230,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
 
         hbox = create_hbox_label(self, page, _('Upper bound'))
         entry = gtk.Entry()        
-        entry.set_text(subject.upperBound and subject.upperBound.value or '')
+        entry.set_text(subject.upperBound or '')
         entry.connect('changed', self._on_upper_bound_change)
         hbox.pack_start(entry)
 
@@ -1293,7 +1293,7 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         if isinstance(subject, UML.JoinNode):
             hbox = create_hbox_label(self, page, _('Join specification'))
             entry = gtk.Entry()        
-            entry.set_text(subject.joinSpec and subject.joinSpec.value or '')
+            entry.set_text(subject.joinSpec or '')
             entry.connect('changed', self._on_join_spec_change)
             hbox.pack_start(entry)
 
@@ -1325,7 +1325,7 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
 
         hbox = create_hbox_label(self, page, _('Guard'))
         entry = gtk.Entry()        
-        entry.set_text(subject.guard and subject.guard.value or '')
+        entry.set_text(subject.guard or '')
         changed_id = entry.connect('changed', self._on_guard_change)
         hbox.pack_start(entry)
 
@@ -1335,7 +1335,7 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
             entry.set_text(v if v else '')
             entry.handler_unblock(changed_id)
 
-        self.watcher.watch('guard<LiteralSpecification>.value', handler).register_handlers()
+        self.watcher.watch('guard', handler).register_handlers()
         entry.connect('destroy', self.watcher.unregister_handlers)
 
         return page
@@ -1343,7 +1343,7 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        self.subject.guard.value = value
+        self.subject.guard = value
 
 
 # fixme: unify ObjectFlowPropertyPage and ControlFlowPropertyPage

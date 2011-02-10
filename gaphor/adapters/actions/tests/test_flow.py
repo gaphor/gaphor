@@ -101,7 +101,7 @@ class FlowItemObjectNodeTestCase(TestCase):
 
         f = flow.subject
         f.name = 'tname'
-        f.guard.value = 'tguard'
+        f.guard = 'tguard'
 
         # reconnect: a1 -> o2
         self.connect(flow, flow.tail, o2)
@@ -117,9 +117,8 @@ class FlowItemObjectNodeTestCase(TestCase):
 
         self.assertEquals(1, len(self.kindof(UML.ObjectFlow)))
         # one guard
-        self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
         self.assertEquals('tname', flow.subject.name)
-        self.assertEquals('tguard', flow.subject.guard.value)
+        self.assertEquals('tguard', flow.subject.guard)
 
 
     def test_control_flow_reconnection(self):
@@ -136,7 +135,7 @@ class FlowItemObjectNodeTestCase(TestCase):
 
         f = flow.subject
         f.name = 'tname'
-        f.guard.value = 'tguard'
+        f.guard = 'tguard'
 
         # reconnect with object flow: a1 -> o1
         self.connect(flow, flow.tail, o1)
@@ -153,9 +152,8 @@ class FlowItemObjectNodeTestCase(TestCase):
         self.assertEquals(0, len(self.kindof(UML.ControlFlow)))
         self.assertEquals(1, len(self.kindof(UML.ObjectFlow)))
         # one guard, not changed
-        self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
         self.assertEquals('tname', flow.subject.name)
-        self.assertEquals('tguard', flow.subject.guard.value)
+        self.assertEquals('tguard', flow.subject.guard)
 
 
     
@@ -233,7 +231,7 @@ class FlowItemActionTestCase(TestCase):
         self.connect(flow, flow.tail, a2)
         f = flow.subject
         f.name = 'tname'
-        f.guard.value = 'tguard'
+        f.guard = 'tguard'
 
         # reconnect: a1 -> a3
         self.connect(flow, flow.tail, a3)
@@ -249,9 +247,8 @@ class FlowItemActionTestCase(TestCase):
 
         self.assertEquals(1, len(self.kindof(UML.ControlFlow)))
         # one guard
-        self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
         self.assertEquals('tname', flow.subject.name)
-        self.assertEquals('tguard', flow.subject.guard.value)
+        self.assertEquals('tguard', flow.subject.guard)
 
 
     def test_object_flow_reconnection(self):
@@ -268,7 +265,7 @@ class FlowItemActionTestCase(TestCase):
 
         f = flow.subject
         f.name = 'tname'
-        f.guard.value = 'tguard'
+        f.guard = 'tguard'
 
         # reconnect with object flow: a1 -> a2
         self.connect(flow, flow.tail, a2)
@@ -285,9 +282,8 @@ class FlowItemActionTestCase(TestCase):
         self.assertEquals(1, len(self.kindof(UML.ControlFlow)))
         self.assertEquals(0, len(self.kindof(UML.ObjectFlow)))
         # one guard, not changed
-        self.assertEquals(1, len(self.kindof(UML.LiteralSpecification)))
         self.assertEquals('tname', flow.subject.name)
-        self.assertEquals('tguard', flow.subject.guard.value)
+        self.assertEquals('tguard', flow.subject.guard)
 
 
 class FlowItemDesisionAndForkNodes:
