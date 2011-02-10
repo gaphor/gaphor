@@ -58,7 +58,7 @@ class ActionStack(object):
             try:
                 action()
             except Exception, e:
-                log.error('Error while undoing action %s' % action, e)
+                log.error('Error while undoing action %s' % action, exc_info=True)
 
 
 class UndoManagerStateChanged(object):

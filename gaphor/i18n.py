@@ -22,6 +22,6 @@ try:
     #log.info('catalog = %s' % catalog.info())
     _ = catalog.gettext
 except IOError, e:
-    #log.error('Could not load locale catalog', e)
+    #log.error('Could not load locale catalog', exc_info=True)
     def _(s): return s
 

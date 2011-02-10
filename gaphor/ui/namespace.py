@@ -49,7 +49,7 @@ def catchall(func):
         try:
             func(*args, **kwargs)
         except Exception, e:
-            log.error('Exception in %s. Try to refresh the entire model' % (func,), e)
+            log.error('Exception in %s. Try to refresh the entire model' % (func,), exc_info=True)
             try:
                 args[0].refresh()
             except Exception, e:

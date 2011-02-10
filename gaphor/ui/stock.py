@@ -134,7 +134,7 @@ def load_stock_icons():
     #try:
     parser.parse(filename)
     #except IOError, e:
-    #    log.error('Unable to load icons', e)
+    #    log.error('Unable to load icons', exc_info=True)
 
 #load_stock_icons()
 

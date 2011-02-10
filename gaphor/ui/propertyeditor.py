@@ -85,7 +85,7 @@ class PropertyEditor(object):
                     self.vbox.pack_start(expander, expand=False)
                 page.show_all()
             except Exception, e:
-                log.error('Could not construct property page for ' + name, e)
+                log.error('Could not construct property page for ' + name, exc_info=True)
         
             
     def clear_pages(self):

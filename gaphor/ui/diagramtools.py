@@ -84,7 +84,7 @@ class DiagramItemConnector(Connector.default):
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
         except Exception, e:
-            log.error('Error during connect', e)
+            log.error('Error during connect', exc_info=True)
 
 
     @transactional

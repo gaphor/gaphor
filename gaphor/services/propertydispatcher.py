@@ -77,7 +77,7 @@ class PropertyDispatcher(object):
             try:
                 handler(event)
             except Exception, e:
-                log.error('problem executing handler %s' % handler, e)
+                log.error('problem executing handler %s' % handler, exc_info=True)
 
 
 # vim:sw=4:et:ai

@@ -1057,7 +1057,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                     expander.show_all()
                     vbox.pack_start(expander, expand=False)
             except Exception, e:
-                log.error('Could not construct property page for ' + name, e)
+                log.error('Could not construct property page for ' + name, exc_info=True)
 
 component.provideAdapter(AssociationPropertyPage, name='Properties')
 

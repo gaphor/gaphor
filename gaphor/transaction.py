@@ -18,11 +18,11 @@ def transactional(func):
         try:
             r = func(*args, **kwargs)
         except Exception, e:
-            log.error('Transaction terminated due to an exception, performing a rollback', e)
+            log.error('Transaction terminated due to an exception, performing a rollback', exc_info=True)
             try:
                 tx.rollback()
             except Exception, e:
-                log.error('Rollback failed', e)
+                log.error('Rollback failed', exc_info=True)
             raise
         else:
             tx.commit()

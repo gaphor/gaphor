@@ -538,7 +538,7 @@ class AssociationEnd(UML.Presentation):
 #            if d3 < 15 and d4 < 5:
 #                d3 = 0.0
 #        except Exception, e:
-#            log.error("Could not determine distance", e)
+#            log.error("Could not determine distance", exc_info=True)
         d3 = 1000.0
         return min(d1, d2, d3)
 

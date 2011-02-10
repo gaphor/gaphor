@@ -25,7 +25,7 @@ class XMIExport(object):
         except AttributeError, e:
             log.warning('Missing handler for %s:%s'%(element.__class__.__name__,e))
         except Exception, e:
-            log.error('Failed to handle %s:%s'%(element.__class__.__name__, e))        
+            log.error('Failed to handle %s:%s'%(element.__class__.__name__, e))
             
     def handlePackage(self, xmi, element, idref=False):
         

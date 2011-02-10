@@ -6,6 +6,7 @@ services and start off.
 """
 
 import unittest
+import logging
 from cStringIO import StringIO
 from zope import component
 
@@ -20,7 +21,7 @@ import gaphor.ui.diagramtools
 
 
 # Increment log level
-log.set_log_level(log.WARNING)
+log.setLevel(logging.WARNING)
 
 class TestCaseExtras(object):
     """
