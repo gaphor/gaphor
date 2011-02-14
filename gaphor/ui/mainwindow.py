@@ -474,7 +474,7 @@ class MainWindow(object):
         try:
             ui_component = item.ui_component
         except AttributeError:
-            log.warning('No ui manager defined on item')
+            log.warning('No ui component defined on item')
         else:
             ui_component.close()
         item.destroy()
