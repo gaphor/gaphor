@@ -439,11 +439,6 @@ class NamespaceView(gtk.TreeView):
         ('STRING', 0, TARGET_STRING),
         ('text/plain', 0, TARGET_STRING),
         ('gaphor/element-id', 0, TARGET_ELEMENT_ID)]
-    # Can not set signals for some reason...
-    #__gsignals__ = { 'drag-drop': 'override',
-    #                 'drag-data-get': 'override',
-    #                 'drag-data-delete': 'override',
-    #                 'drag-data-received': 'override' }
 
     def __init__(self, model, factory):
         assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
