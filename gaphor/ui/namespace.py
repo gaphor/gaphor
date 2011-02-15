@@ -76,7 +76,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         gtk.GenericTreeModel.__init__(self)
 
         # We own the references to the iterators.
-        self.set_property ('leak_references', 0)
+        self.set_property ('leak-references', 0)
 
         self.factory = factory
 
@@ -420,6 +420,17 @@ class NamespaceModel(gtk.GenericTreeModel):
         return node.namespace
 
 
+    # TreeDragDest
+
+    def row_drop_possible(self, dest_path, selection_data):
+        print 'row_drop_possible', dest_path, selection_data
+        return True
+
+
+    def drag_data_received(self, dest, selection_data):
+        print 'drag_data_received', dest_path, selection_data
+
+
 class NamespaceView(gtk.TreeView):
 
     TARGET_STRING = 0
@@ -469,24 +480,20 @@ class NamespaceView(gtk.TreeView):
         assert len (column.get_cell_renderers()) == 2
         self.append_column (column)
 
-        # DND info:
         # drag
-        self.enable_model_drag_source(gtk.gdk.BUTTON1_MASK,
-                             [NamespaceView.DND_TARGETS[-1]],
-                             gtk.gdk.ACTION_DEFAULT | gtk.gdk.ACTION_MOVE)
         self.drag_source_set(gtk.gdk.BUTTON1_MASK | gtk.gdk.BUTTON3_MASK,
                              NamespaceView.DND_TARGETS,
-                             gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+                             gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_MOVE)
+        self.connect('drag-begin', NamespaceView.on_drag_begin)
         self.connect('drag-data-get', NamespaceView.on_drag_data_get)
+        self.connect('drag-data-delete', NamespaceView.on_drag_data_delete)
 
         # drop
-        #self.drag_dest_set (gtk.DEST_DEFAULT_ALL, [NamespaceView.DND_TARGETS[-1]],
-        #                    gtk.gdk.ACTION_DEFAULT)
-        self.enable_model_drag_dest([NamespaceView.DND_TARGETS[-1]],
-                                    gtk.gdk.ACTION_DEFAULT)
-        self.connect('drag-data-received', NamespaceView.on_drag_data_received)
+        self.drag_dest_set (gtk.DEST_DEFAULT_ALL, [NamespaceView.DND_TARGETS[-1]],
+                            gtk.gdk.ACTION_MOVE)
+        self.connect('drag-motion', NamespaceView.on_drag_motion)
         self.connect('drag-drop', NamespaceView.on_drag_drop)
-        self.connect('drag-data-delete', NamespaceView.on_drag_data_delete)
+        self.connect('drag-data-received', NamespaceView.on_drag_data_received)
 
 
     def get_selected_element(self):
@@ -554,8 +561,8 @@ class NamespaceView(gtk.TreeView):
             log.error('Could not create path from string "%s"' % path_str)
 
 
-#    def do_drag_begin (self, context):
-#        print 'do_drag_begin'
+    def on_drag_begin(self, context):
+        return True
 
 
     def on_drag_data_get(self, context, selection_data, info, time):
@@ -563,7 +570,6 @@ class NamespaceView(gtk.TreeView):
         Get the data to be dropped by on_drag_data_received().
         We send the id of the dragged element.
         """
-        #log.debug('on_drag_data_get')
         selection = self.get_selection()
         model, iter = selection.get_selected()
         if iter:
@@ -575,22 +581,47 @@ class NamespaceView(gtk.TreeView):
                 selection_data.set(selection_data.target, 8, '%s#%s' % (element.id, p))
             else:
                 selection_data.set(selection_data.target, 8, '%s#%s' % (element.name, p))
+        return True
 
 
     def on_drag_data_delete (self, context):
         """
-        DnD magic. do not touch.
+        Delete data from original site, when `ACTION_MOVE` is used.
         """
         self.emit_stop_by_name('drag-data-delete')
 
 
     # Drop
+    def on_drag_motion(self, context, x, y, time):
+        try:
+            path, pos = self.get_dest_row_at_pos(x, y)
+            self.set_drag_dest_row(path, pos)
+        except TypeError:
+            self.set_drag_dest_row(len(self.get_model()) - 1, gtk.TREE_VIEW_DROP_AFTER)
+
+        kind = gtk.gdk.ACTION_COPY
+
+        context.drag_status(kind, time)
+        return True
+
+    def on_drag_drop(self, context, x, y, time):
+        """
+        Determine if drop is allowed.
+        """
+        if 'gaphor/element-id' in context.targets:
+            self.emit_stop_by_name('drag-drop')
+            self.drag_get_data(context, context.targets[-1], time)
+            return True
+        return False
+
+
     def on_drag_data_received(self, context, x, y, selection, info, time):
         """
         Drop the data send by on_drag_data_get().
         """
-        if NamespaceView.TARGET_ELEMENT_ID in context.targets:
-            self.emit_stop_by_name('drag-data-received')
+        #print 'data-received', NamespaceView.TARGET_ELEMENT_ID, 'in', context.targets
+        self.emit_stop_by_name('drag-data-received')
+        if 'gaphor/element-id' in context.targets:
             #print 'drag_data_received'
             n, p = selection.data.split('#')
             drop_info = self.get_dest_row_at_pos(x, y)
@@ -598,7 +629,6 @@ class NamespaceView(gtk.TreeView):
             drop_info = None
 
         if drop_info:
-            #print 'drop_info', drop_info
             model = self.get_model()
             element = self.factory.lookup(n)
             path, position = drop_info
@@ -631,7 +661,8 @@ class NamespaceView(gtk.TreeView):
                     element.package = dest_element
                 tx.commit()
 
-            except AttributeError:
+            except AttributeError, e:
+                #log.info('Unable to drop data', e)
                 context.drop_finish(False, time)
             else:
                 context.drop_finish(True, time)
@@ -641,17 +672,6 @@ class NamespaceView(gtk.TreeView):
                     self.expand_row(path[:-1], False)
                 selection = self.get_selection()
                 selection.select_path(path)
-
-
-    def on_drag_drop(self, context, x, y, time):
-        """
-        DnD magic. do not touch
-        """
-        if NamespaceView.TARGET_ELEMENT_ID in context.targets:
-            self.emit_stop_by_name('drag-drop')
-            self.drag_get_data(context, context.targets[-1], time)
-            return True
-        return False
 
 
 # vim: sw=4:et:ai
