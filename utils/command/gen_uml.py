@@ -112,10 +112,11 @@ class Writer:
         of enumerations, indexed by ID. These are used to identify enums.
         """
         params = { }
-        type = a.typeValue and a.typeValue.get('value')
+        type = a.typeValue
         if type is None:
             raise ValueError('ERROR! type is not specified for property %s.%s' % (a.class_name, a.name))
 
+        print a.class_name, a.name, 'type is', type
         if type.lower() == 'boolean':
             # FixMe: Should this be a boolean or an integer?
             # Integer is save and compattable with python2.2.
@@ -127,17 +128,17 @@ class Writer:
             type = 'str'
             #type = '(str, unicode)'
 
-        default = a.defaultValue and a.defaultValue.value
+        default = a.defaultValue
         # Make sure types are represented the Python way:
         if default and default.lower() in ('true', 'false'):
             default = default.title() # True or False...
         if default is not None:
             params['default'] = str(default)
 
-        lower = a.lowerValue and a.lowerValue.value
+        lower = a.lowerValue
         if lower and lower != '0':
             params['lower'] = lower
-        upper = a.upperValue and a.upperValue.value
+        upper = a.upperValue
         if upper == '*':
             params['upper'] = "'*'"
         elif upper and upper != '1':
@@ -261,13 +262,13 @@ def parse_association_tags(appliedStereotypes):
             #msg('scanning %s = %s' %  (slot.definingFeature.name, slot.value.value))
 
             if slot.definingFeature.name == 'subsets':
-                value = slot.value.value
+                value = slot.value
                 # remove all whitespaces and stuff
                 value = value.replace(' ', '').replace('\n', '').replace('\r', '')
                 subsets = value.split(',')
 
             if slot.definingFeature.name == 'redefines':
-                value = slot.value.value
+                value = slot.value
                 # remove all whitespaces and stuff
                 redefines = value.replace(' ', '').replace('\n', '').replace('\r', '')
 
@@ -298,8 +299,8 @@ def parse_association_end(head, tail):
         raise ValueError('ERROR! no name, but navigable: %s (%s.%s)' % (head.id, head.class_name, head.name))
 
     #print head.id, head.lowerValue
-    upper = head.upperValue and head.upperValue.value or '*'
-    lower = head.lowerValue and head.lowerValue.value or upper
+    upper = head.upperValue or '*'
+    lower = head.lowerValue or upper
     if lower == '*':
         lower = 0
     subsets, redefines = parse_association_tags(head.appliedStereotype)
@@ -370,10 +371,10 @@ def generate(filename, outfile=None, overridesfile=None):
                 associations[key] = val
             elif val.type == 'Property':
                 properties[key] = val
-                resolve(val, 'typeValue')
-                resolve(val, 'defaultValue')
-                resolve(val, 'lowerValue')
-                resolve(val, 'upperValue')
+                #resolve(val, 'typeValue')
+                #resolve(val, 'defaultValue')
+                #resolve(val, 'lowerValue')
+                #resolve(val, 'upperValue')
                 resolve(val, 'appliedStereotype')
                 for st in val.appliedStereotype or []:
                     resolve(st, 'slot')
@@ -485,7 +486,7 @@ def generate(filename, outfile=None, overridesfile=None):
                 if a.asAttribute is e1 and e1.navigable:
                    writer.write("# '%s.%s' is a simple attribute\n" % (e2.type.name, e1.name))
                    e1.class_name = e2.type.name
-                   e1.typeValue = { 'value': 'str'}
+                   e1.typeValue = 'str'
 
                    writer.write_attribute(e1, enumerations)
                    e1.written = True
