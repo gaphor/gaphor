@@ -20,6 +20,14 @@
     <file>action.png</file>
     <element>Action</element>
   </icon>
+  <icon id="gaphor-send-signal-action">
+    <file>send-signal-action.png</file>
+    <element>SendSignalAction</element>
+  </icon>
+  <icon id="gaphor-accept-event-action">
+    <file>accept-event-action.png</file>
+    <element>AcceptEventAction</element>
+  </icon>
   <icon id="gaphor-actor">
     <file>actor.png</file>
     <element>Actor</element>

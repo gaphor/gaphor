@@ -49,7 +49,6 @@ class FlowItem(NamedLine):
 
 
     def on_control_flow_guard(self, event):
-        log.error('Updating flow guard')
         subject = self.subject
         try:
             self._guard.text = subject.guard if subject else ''

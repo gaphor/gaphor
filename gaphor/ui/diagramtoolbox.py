@@ -16,6 +16,7 @@ from gaphas.item import SE
 
 __all__ = [ 'DiagramToolbox', 'TOOLBOX_ACTIONS' ]
 
+# Actions: ((section (name, label, stock_id, shortcut)), ...)
 TOOLBOX_ACTIONS = (
     ('', (
         ('toolbox-pointer', _('Pointer'), 'gaphor-pointer', 'Escape'),
@@ -49,6 +50,8 @@ TOOLBOX_ACTIONS = (
         ('toolbox-object-node', _('Object node'), 'gaphor-object-node', 'O'),
         ('toolbox-partition', _('Partition'), 'gaphor-partition', 'P'),
         ('toolbox-flow', _('Control/object flow'), 'gaphor-control-flow', 'F'),
+        ('toolbox-send-signal-action', _('Send signal action'), 'gaphor-send-signal-action', None),
+        ('toolbox-accept-event-action', _('Accept event action'), 'gaphor-accept-event-action', None),
     )), (_('Interactions'), (
         ('toolbox-lifeline', _('Lifeline'), 'gaphor-lifeline', 'v'),
         ('toolbox-message', _('Message'), 'gaphor-message', 'M'),
@@ -285,6 +288,20 @@ class DiagramToolbox(object):
         return GroupPlacementTool(self.view,
                 item_factory=self._namespace_item_factory(items.ActionItem,
                                                           UML.Action),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_send_signal_action(self):
+        return GroupPlacementTool(self.view,
+                item_factory=self._namespace_item_factory(items.SendSignalActionItem,
+                                                          UML.SendSignalAction),
+                handle_index=SE,
+                after_handler=self._after_handler)
+
+    def toolbox_accept_event_action(self):
+        return GroupPlacementTool(self.view,
+                item_factory=self._namespace_item_factory(items.AcceptEventActionItem,
+                                                          UML.AcceptEventAction),
                 handle_index=SE,
                 after_handler=self._after_handler)
 

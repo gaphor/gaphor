@@ -82,6 +82,10 @@ component.provideAdapter(factory=FlowConnect,
                          adapts=(items.ActivityNodeItem, items.FlowItem))
 component.provideAdapter(factory=FlowConnect,
                          adapts=(items.ObjectNodeItem, items.FlowItem))
+component.provideAdapter(factory=FlowConnect,
+                         adapts=(items.SendSignalActionItem, items.FlowItem))
+component.provideAdapter(factory=FlowConnect,
+                         adapts=(items.AcceptEventActionItem, items.FlowItem))
 
 
 class FlowForkDecisionNodeConnect(FlowConnect):

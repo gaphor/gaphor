@@ -39,4 +39,62 @@ class ActionItem(NamedItem):
         c.stroke()
 
 
-# vim:sw=4:et
+class SendSignalActionItem(NamedItem):
+    __uml__   = UML.SendSignalAction
+    __style__ = {
+        'min-size':   (50, 30),
+        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
+    }
+
+
+    def draw(self, context):
+        """
+        Draw action symbol.
+        """
+        super(SendSignalActionItem, self).draw(context)
+
+        c = context.cairo
+
+        d = 15
+        w = self.width
+        h = self.height
+        c.move_to(0, 0)
+        c.line_to(w-d, 0)
+        c.line_to(w, h/2)
+        c.line_to(w-d, h)
+        c.line_to(0, h)
+        c.close_path()
+
+        c.stroke()
+
+
+class AcceptEventActionItem(NamedItem):
+    __uml__   = UML.SendSignalAction
+    __style__ = {
+        'min-size':   (50, 30),
+        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
+    }
+
+
+    def draw(self, context):
+        """
+        Draw action symbol.
+        """
+        super(AcceptEventActionItem, self).draw(context)
+
+        c = context.cairo
+
+        d = 15
+        w = self.width
+        h = self.height
+        c.move_to(0, 0)
+        c.line_to(w, 0)
+        c.line_to(w, h)
+        c.line_to(0, h)
+        c.line_to(d, h/2)
+        c.close_path()
+
+        c.stroke()
+
+
+# vim:sw=4:et:ai
