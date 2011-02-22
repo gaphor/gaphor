@@ -139,6 +139,17 @@ class StorageTestCase(TestCase):
         assert d1
         #print d1, d1.subject
 
+    def test_load_with_whitespace_name(self):
+        difficult_name = '    with space before and after  '
+        diagram = self.element_factory.lselect()[0]
+        diagram.name = difficult_name
+        data = self.save()
+        self.load(data)
+        elements = self.element_factory.lselect()
+        assert len(elements) == 1, elements
+        assert elements[0].name == difficult_name, elements[0].name
+
+
     def test_load_uml_metamodel(self):
         """
         Test if the meta model can be loaded.
@@ -253,14 +264,13 @@ class StorageTestCase(TestCase):
 
         copy = pf.data
 
-        expr = re.compile('gaphor-version="[^"]*"')
-        orig = expr.sub('%VER%', orig)
-        copy = expr.sub('%VER%', copy)
-
         f = open('tmp.gaphor', 'w')
         f.write(copy)
         f.close()
 
+        expr = re.compile('gaphor-version="[^"]*"')
+        orig = expr.sub('%VER%', orig)
+        copy = expr.sub('%VER%', copy)
 
         self.assertEquals(copy, orig)
 

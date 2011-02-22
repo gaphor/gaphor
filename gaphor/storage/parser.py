@@ -107,9 +107,6 @@ class GaphorLoader(handler.ContentHandler):
     """Create a list of elements. an element may contain a canvas and a
     canvas may contain canvas items. Each element can have values and
     references to other elements.
-
-    Data read in non-CDATA text is stripped. If a CDATA section is found all
-    non-CDATA text is ignored.
     """
 
     def __init__(self):
@@ -151,13 +148,7 @@ class GaphorLoader(handler.ContentHandler):
         self.gaphor_version = None
         self.elements = odict() # map id: element/canvasitem
         self.__stack = []
-        self.value_is_cdata = 0
         self.text = ''
-        # may have 3 states:
-        #  2: simple data, should be stripped
-        #  1: CDATA block,
-        #  0: end CDATA, read no more data till the next element
-        self.in_cdata = 0
 
     def endDocument(self):
         if len(self.__stack) != 0:
@@ -165,7 +156,6 @@ class GaphorLoader(handler.ContentHandler):
 
     def startElement(self, name, attrs):
         self.text = ''
-        self.in_cdata = 2 # initial, just read text
         
         state = self.state()
 
@@ -196,7 +186,6 @@ class GaphorLoader(handler.ContentHandler):
         # to store the <ref>, <reflist> or <val> content:
         elif state in (ELEMENT, DIAGRAM, CANVAS, ITEM):
             # handle 'normal' attributes
-            # Note that Value may contain CDATA
             self.push(name, ATTR)
 
         # Reference list:
@@ -224,7 +213,6 @@ class GaphorLoader(handler.ContentHandler):
 
         # We need to get the text within the <val> tag:
         elif state == ATTR and name == 'val':
-            self.value_is_cdata = 1
             self.push(None, VAL)
 
         # The <gaphor> tag is the toplevel tag:
@@ -242,13 +230,10 @@ class GaphorLoader(handler.ContentHandler):
     def endElement(self, name):
         # Put the text on the value
         if self.state() == VAL:
-            if self.value_is_cdata:
-                # Two levels up: the attribute name
-                n = self.peek(2)
-                if self.in_cdata == 2:
-                    self.text = self.text.strip()
-                # Three levels up: the element instance (element or canvasitem)
-                self.peek(3).values[n] = self.text
+            # Two levels up: the attribute name
+            n = self.peek(2)
+            # Three levels up: the element instance (element or canvasitem)
+            self.peek(3).values[n] = self.text
         self.pop()
 
     def startElementNS(self, name, qname, attrs):
@@ -264,25 +249,7 @@ class GaphorLoader(handler.ContentHandler):
 
     def characters(self, content):
         """Read characters."""
-        if self.in_cdata:
-            self.text = self.text + content
-
-    # Lexical handler stuff:
-
-    def comment(self, comment):
-        pass
-
-    def startCDATA(self):
-        """Start a CDATA section. In case no CDATA section has been read
-        before, the self.text is cleared."""
-        if self.in_cdata == 2:
-            self.text = ''
-        self.in_cdata = 1
-
-    def endCDATA(self):
-        """End of CDATA section. No more data is read, unless another CDATA
-        section is opened."""
-        self.in_cdata = 0
+        self.text = self.text + content
 
 
 def parse(filename):
@@ -303,12 +270,12 @@ def parse_generator(filename, loader):
     from xml.sax import make_parser
     parser = make_parser()
 
-    parser.setProperty(handler.property_lexical_handler, loader)
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
     for percentage in parse_file(filename, parser):
         yield percentage
+
 
 class ProgressGenerator(object):
     """A generator that yields the progress of taking from a file input object 
@@ -345,6 +312,7 @@ class ProgressGenerator(object):
             block = self.input.read(self.block_size)
             read_size += len(block)
             yield (read_size * 100) / self.file_size
+
 
 def parse_file(filename, parser):
     """Parse the supplied file using the supplied parser.  The parser parameter

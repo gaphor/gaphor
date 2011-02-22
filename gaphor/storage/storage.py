@@ -47,8 +47,7 @@ def save(writer=None, factory=None, status_queue=None):
 def save_generator(writer, factory):
     """
     Save the current model using @writer, which is a
-    gaphor.misc.xmlwriter.XMLWriter instance (or at least a SAX serializer
-    with CDATA support).
+    gaphor.misc.xmlwriter.XMLWriter instance.
     """
 
     # Maintain a set of id's, one for elements, one for references.
@@ -84,15 +83,12 @@ def save_generator(writer, factory):
     def save_value(name, value):
         """
         Save a value (attribute).
-        If the value is a string, it is saves as a CDATA block.
         """
         if value is not None:
             writer.startElement(name, {})
             writer.startElement('val', {})
             if isinstance(value, types.StringTypes):
-                writer.startCDATA()
                 writer.characters(value)
-                writer.endCDATA()
             elif isinstance(value, bool):
                 # Write booleans as 0/1.
                 writer.characters(str(int(value)))

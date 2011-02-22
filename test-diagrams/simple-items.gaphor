@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.14.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.17.0.dev-20110219">
 <Package id="DCE:658E43CC-3A1D-11DC-8B61-000D93868322">
 <name>
-<val><![CDATA[New model]]></val>
+<val>New model</val>
 </name>
 <ownedDiagram>
 <reflist>
@@ -12,7 +12,7 @@
 </Package>
 <Diagram id="DCE:658E851A-3A1D-11DC-8B61-000D93868322">
 <name>
-<val><![CDATA[main]]></val>
+<val>main</val>
 </name>
 <package>
 <ref refid="DCE:658E43CC-3A1D-11DC-8B61-000D93868322"/>
