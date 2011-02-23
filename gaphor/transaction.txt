@@ -4,6 +4,11 @@ Transaction support for Gaphor
 Transaction support is located in module gaphor.transaction:
 
     >>> from gaphor import transaction
+    >>> from gaphor.application import Application
+
+Do some basic initialization, so event emission will work:
+
+    >>> Application.init(services=['component_registry'])
 
 The Transaction class is used mainly to signal the begin and end of a transaction. This is done by the TransactionBegin, TransactionCommit and TransactionRollback events:
 
@@ -106,3 +111,7 @@ All transactions are marked for rollback once an exception is raised:
     >>> tx.commit()
     tx rollback
 
+
+Cleanup:
+
+    >>> Application.shutdown()

@@ -6,7 +6,7 @@ from logging import getLogger
 from zope import interface, component
 from gaphor.interfaces import ITransaction
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor.application import inject
+from gaphor import application
 
 logger = getLogger('transaction')
 
@@ -58,13 +58,13 @@ class Transaction(object):
 
     Or with the ``with`` statement:
 
-    >>> with Transaction:
+    >>> with Transaction():
     ...     pass
     """
 
     interface.implements(ITransaction)
 
-    component_registry = inject('component_registry')
+    component_registry = application.inject('component_registry')
 
     _stack= []
 
@@ -73,13 +73,8 @@ class Transaction(object):
         the stack, a TransactionBegin event is emited."""
         
         self._need_rollback = False
-        try:
-            component_registry = self.component_registry
-        except component.ComponentLookupError:
-            logger.warning('Could not lookup component_registry. Not emiting events.')
-        else:
-            if not self._stack:
-                component_registry.handle(TransactionBegin())
+        if not self._stack:
+            self._handle(TransactionBegin())
         self._stack.append(self)
 
     def commit(self):
@@ -88,16 +83,11 @@ class Transaction(object):
         Otherwise, a TransactionCommit event is emited."""
         
         self._close()
-        try:
-            component_registry = self.component_registry
-        except component.ComponentLookupError:
-            logger.warning('Could not lookup component_registry. Not emiting events.')
-        else:
-            if not self._stack:
-                if self._need_rollback:
-                    component_registry.handle(TransactionRollback())
-                else:
-                    component_registry.handle(TransactionCommit())
+        if not self._stack:
+            if self._need_rollback:
+                self._handle(TransactionRollback())
+            else:
+                self._handle(TransactionCommit())
 
     def rollback(self):
         """Roll-back the transaction.  First, the transaction is closed.
@@ -107,13 +97,9 @@ class Transaction(object):
         self._close()
         for tx in self._stack:
             tx._need_rollback = True
-        try:
-            component_registry = self.component_registry
-        except component.ComponentLookupError:
-            logger.warning('Could not lookup component_registry. Not emiting events.')
         else:
             if not self._stack:
-                component_registry.handle(TransactionRollback())
+                self._handle(TransactionRollback())
 
     def _close(self):
         """Close the transaction.  If the stack is empty, a TransactionError
@@ -127,6 +113,14 @@ class Transaction(object):
         if last is not self:
             self._stack.append(last)
             raise TransactionError, 'Transaction on stack is not the transaction being closed.'
+
+    def _handle(self, event):
+        try:
+            component_registry = self.component_registry
+        except (application.NotInitializedError, component.ComponentLookupError):
+            logger.warning('Could not lookup component_registry. Not emiting events.')
+        else:
+            component_registry.handle(event)
 
     def __enter__(self):
         """Provide with-statement transaction support."""
