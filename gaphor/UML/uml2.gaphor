@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.17.0.dev-20110223">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.17.0.dev-20110224">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -32748,7 +32748,7 @@ some elements to have a stereotype</val>
 <val>(1.0, 0.0, 0.0, 1.0, 361.0, 253.0)</val>
 </matrix>
 <width>
-<val>100.0</val>
+<val>101.0</val>
 </width>
 <height>
 <val>70.0</val>
@@ -52305,7 +52305,7 @@ to accomodate simpleAttribute</val>
 <val>(1.0, 0.0, 0.0, 1.0, 288.0, 127.0)</val>
 </matrix>
 <width>
-<val>131.0</val>
+<val>132.0</val>
 </width>
 <height>
 <val>60.0</val>
@@ -52357,7 +52357,7 @@ to accomodate simpleAttribute</val>
 <val>(1.0, 0.0, 0.0, 1.0, 464.0, 127.0)</val>
 </matrix>
 <width>
-<val>134.0</val>
+<val>136.0</val>
 </width>
 <height>
 <val>60.0</val>
@@ -52377,7 +52377,7 @@ to accomodate simpleAttribute</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 405.0, 187.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 405.89312977099235, 187.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -52386,7 +52386,7 @@ to accomodate simpleAttribute</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 54.0)]</val>
+<val>[(0.0, 0.0), (-0.89312977099234558, 54.0)]</val>
 </points>
 <head-connection>
 <ref refid="fae5f4de-4065-11e0-b382-0019d2b28af0"/>
@@ -52403,7 +52403,7 @@ to accomodate simpleAttribute</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 478.0, 187.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 478.20895522388059, 187.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -52412,7 +52412,7 @@ to accomodate simpleAttribute</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 54.0)]</val>
+<val>[(0.0, 0.0), (-0.20895522388059362, 54.0)]</val>
 </points>
 <head-connection>
 <ref refid="14070b9c-4066-11e0-b382-0019d2b28af0"/>
@@ -52435,7 +52435,7 @@ to accomodate simpleAttribute</val>
 <val>(1.0, 0.0, 0.0, 1.0, 62.0, 241.0)</val>
 </matrix>
 <width>
-<val>135.0</val>
+<val>136.0</val>
 </width>
 <height>
 <val>60.0</val>
@@ -52455,7 +52455,7 @@ to accomodate simpleAttribute</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 197.0, 262.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 198.0, 262.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -52464,7 +52464,7 @@ to accomodate simpleAttribute</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (197.5, 0.0)]</val>
+<val>[(0.0, 0.0), (196.5, 0.0)]</val>
 </points>
 <head-connection>
 <ref refid="65c6b270-4066-11e0-b382-0019d2b28af0"/>
@@ -52620,7 +52620,7 @@ to accomodate simpleAttribute</val>
 <ref refid="0236b1ce-4066-11e0-b382-0019d2b28af0"/>
 </class_>
 <name>
-<val>collaborationRole *</val>
+<val>collaborationRole</val>
 </name>
 <presentation>
 <reflist/>
@@ -52628,6 +52628,12 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="DCE:812B6CD0-5FD3-11D9-89DE-0050040A5923"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="842f082a-4066-11e0-b382-0019d2b28af0">
 <association>
