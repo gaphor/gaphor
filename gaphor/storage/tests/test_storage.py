@@ -3,6 +3,8 @@ Unittest the storage and parser modules
 """
 
 import os, re
+import os.path
+import pkg_resources
 from gaphor.tests.testcase import TestCase
 from gaphor import UML
 from gaphor.UML.elementfactory import ElementFactory
@@ -154,11 +156,13 @@ class StorageTestCase(TestCase):
         """
         Test if the meta model can be loaded.
         """
-        try:
-            f = open('gaphor/UML/uml2.gaphor')
-            storage.load(f, factory=self.element_factory)
-        finally:
-            f.close()
+        
+        dist = pkg_resources.get_distribution('gaphor')
+        path = os.path.join(dist.location, 'gaphor/UML/uml2.gaphor')
+        
+        with open(path) as ifile:
+            
+            storage.load(ifile, factory=self.element_factory)
 
     def test_load_uml_relationships(self):
         """
