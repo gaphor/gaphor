@@ -190,6 +190,7 @@ class FileManager(object):
         self.load(filename)
         self.component_registry.handle(FileManagerStateChanged(self))
         
+
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.  A status window
         displays the loading progress.  The load generator updates the progress
@@ -206,20 +207,21 @@ class FileManager(object):
                                      _('Loading model from %s') % filename,\
                                      parent=main_window.window,\
                                      queue=queue)
+        try:
+            loader = storage.load_generator(filename, self.element_factory)
+            worker = GIdleThread(loader, queue)
 
-        loader = storage.load_generator(filename, self.element_factory)
-        worker = GIdleThread(loader, queue)
+            worker.start()
+            worker.wait()
+            
+            if worker.error:
+                self.logger.error('Error loading file: ', exc_info=worker.exc_info)
+                #self.logger.error(worker.error)
 
-        worker.start()
-        worker.wait()
-        
-        if worker.error:
-            self.logger.error('Error loading file: ', exc_info=worker.exc_info)
-            #self.logger.error(worker.error)
+            self.filename = filename
+        finally:
+            status_window.destroy()
 
-        self.filename = filename
-
-        status_window.destroy()
         
     def verify_orphans(self):
         """Verify that no orphaned elements are saved.  This method checks
@@ -280,21 +282,20 @@ class FileManager(object):
                                      _('Saving model to %s') % filename,\
                                      parent=main_window.window,\
                                      queue=queue)
-
-        out = open(filename, 'w')
-
-        saver = storage.save_generator(XMLWriter(out), self.element_factory)
-        worker = GIdleThread(saver, queue)
-        worker.start()
-        worker.wait()
-        
-        if worker.error:
-            self.logger.error('Error saving file')
-            self.logger.error(worker.error)
-        
-        out.close()
-        status_window.destroy()
-        self.filename = filename
+        try:
+            with open(filename, 'w') as out:
+                saver = storage.save_generator(XMLWriter(out), self.element_factory)
+                worker = GIdleThread(saver, queue)
+                worker.start()
+                worker.wait()
+            
+            if worker.error:
+                self.logger.error('Error saving file')
+                self.logger.error(worker.error)
+            
+            self.filename = filename
+        finally:
+            status_window.destroy()
 
     def _open_dialog(self, title):
         """Open a file chooser dialog to select a model
