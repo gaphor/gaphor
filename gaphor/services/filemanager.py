@@ -11,6 +11,7 @@ from gaphor.storage import storage, verify
 from gaphor import UML
 from logging import getLogger
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
+from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.ui.statuswindow import StatusWindow
 from gaphor.ui.questiondialog import QuestionDialog
@@ -215,10 +216,12 @@ class FileManager(object):
             worker.wait()
             
             if worker.error:
-                self.logger.error('Error loading file: ', exc_info=worker.exc_info)
-                #self.logger.error(worker.error)
+                worker.reraise()
 
             self.filename = filename
+        except:
+            error_handler(message=_('Error while loading model from file %s') % filename)
+            raise
         finally:
             status_window.destroy()
 
@@ -290,10 +293,13 @@ class FileManager(object):
                 worker.wait()
             
             if worker.error:
-                self.logger.error('Error saving file')
-                self.logger.error(worker.error)
+                worker.reraise()
+                
             
             self.filename = filename
+        except:
+            error_handler(message=_('Error while saving model to file %s') % filename)
+            raise
         finally:
             status_window.destroy()
 

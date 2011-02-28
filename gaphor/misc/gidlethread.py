@@ -54,7 +54,6 @@ class GIdleThread(object):
         self._generator = generator
         self._queue = queue
         self._idle_id = 0
-        self._error = None
         self._exc_info = (None, None, None)
 
     def start(self, priority=gobject.PRIORITY_LOW):
@@ -97,6 +96,13 @@ class GIdleThread(object):
     exc_info = property(lambda self: self._exc_info,
                      doc="Return a exception information as provided by "\
                          "sys.exc_info()")
+
+    def reraise(self):
+        """Rethrow the error that occured during execution of the idle process.
+        """
+        exc_info = self._exc_info
+        if exc_info[0]:
+            raise exc_info[0], exc_info[1], exc_info[2]
 
     def __generator_executer(self):
         try:
