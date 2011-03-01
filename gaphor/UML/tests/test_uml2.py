@@ -48,6 +48,8 @@ class ClassesTestCase(unittest.TestCase):
         
     def test_class(self):
         
+        """Testing Class elements in the meta-model"""
+        
         try:
             
             element = self.factory.create(UML.Class)
@@ -55,6 +57,18 @@ class ClassesTestCase(unittest.TestCase):
         except AttributeError:
             
             self.fail('Class elements are not part of the meta-model')
+            
+        property1 = self.factory.create(UML.Property)
+        operation1 = self.factory.create(UML.Operation)
+        
+        element.ownedAttribute = property1
+        element.ownedOperation = operation1
+        
+        self.assertTrue(property1 in element.attribute, 'Classifier.attribute does not contain ownedAttribute - %s' % element.attribute)
+        self.assertTrue(property1 in element.ownedMember, 'Namespace.ownedMember does not contain ownedAttribute - %s' % element.ownedMember)
+        
+        self.assertTrue(operation1 in element.feature, 'Classifier.feature does not contain ownedOperation - %s' % element.feature)
+        self.assertTrue(operation1 in element.ownedMember, 'Namespace.ownedMember does not contain ownedOperation' % element.ownedMember)
         
     def test_comment(self):
         
