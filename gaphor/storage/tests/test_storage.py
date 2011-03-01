@@ -255,28 +255,35 @@ class StorageTestCase(TestCase):
         #assert a.head_end._name
 
     def test_load_save(self):
-        f = open('test-diagrams/simple-items.gaphor', 'r')
-        storage.load(f, factory=self.element_factory)
-        f.close()
-
+        
+        """Test loading and saving models"""
+        
+        dist = pkg_resources.get_distribution('gaphor')
+        path = os.path.join(dist.location, 'test-diagrams/simple-items.gaphor')
+        
+        with open(path, 'r') as ifile:
+            
+            storage.load(ifile, factory=self.element_factory)
+            
         pf = PseudoFile()
+        
         storage.save(XMLWriter(pf), factory=self.element_factory)
 
-        f = open('test-diagrams/simple-items.gaphor', 'r')
-        orig = f.read()
-        f.close()
-
+        with open(path, 'r') as ifile:
+            
+            orig = ifile.read()
+            
         copy = pf.data
 
-        f = open('tmp.gaphor', 'w')
-        f.write(copy)
-        f.close()
-
+        with open('tmp.gaphor', 'w') as ofile:
+            
+            ofile.write(copy)
+            
         expr = re.compile('gaphor-version="[^"]*"')
         orig = expr.sub('%VER%', orig)
         copy = expr.sub('%VER%', copy)
 
-        self.assertEquals(copy, orig)
+        self.assertEquals(copy, orig, 'Saved model does not match copy')
 
 
 class FileUpgradeTestCase(TestCase):
