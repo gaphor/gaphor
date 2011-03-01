@@ -32,16 +32,26 @@ class DiagramToolboxTestCase(TestCase):
         TestCase.tearDown(self)
 
     def test_toolbox_actions_shortcut_unique(self):
+        
         shortcuts = {}
+        
         for category, items in TOOLBOX_ACTIONS:
+        
             for action_name, label, stock_id, shortcut in items:
+        
                 try:
+                    
                     shortcuts[shortcut].append(action_name)
+                    
                 except KeyError:
+                    
                     shortcuts[shortcut] = [action_name]
 
         for key, val in shortcuts.items():
-            assert len(val) == 1, 'key %s has val %s' % (key, val)
+            
+            if key is not None:
+                
+                self.assertEqual(len(val), 1, 'Duplicate toolbox shortcut')
 
 
     def test_standalone_construct_with_diagram(self):
