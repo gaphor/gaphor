@@ -3,6 +3,190 @@ import unittest
 
 import gaphor.UML as UML
 
+class ClassesTestCase(unittest.TestCase):
+    
+    def setUp(self):
+        
+        self.factory = UML.ElementFactory()
+
+    def tearDown(self):
+        
+        del self.factory    
+    
+    def test_association(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Association)
+            
+        except AttributeError:
+            
+            self.fail('Association elements are not part of the meta-model')
+            
+        self.assertTrue(element.isDerived, 'The isDerived property should default to True')
+        
+        property1 = self.factory.create(UML.Property)
+        property2 = self.factory.create(UML.Property)
+        
+        element.memberEnd = property1
+        element.memberEnd = property2
+        
+        self.assertEqual(element.memberEnd[0], property1, 'Association member end does not have the expected property')
+        self.assertEqual(element.memberEnd[1], property2, 'Association member end does not have the expected property')
+        
+        self.assertEqual(len(element.member), 2)
+        
+    def test_association_class(self):
+        
+        try:
+            
+            element = self.factory.create(UML.AssociationClass)
+            
+        except AttributeError:
+            
+            self.fail('AssociationClass elements are not part of the meta-model')
+        
+    def test_class(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Class)
+            
+        except AttributeError:
+            
+            self.fail('Class elements are not part of the meta-model')
+        
+    def test_comment(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Comment)
+            
+        except AttributeError:
+            
+            self.fail('Comment elements are not part of the meta-model')
+        
+    def test_constraint(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Constraint)
+            
+        except AttributeError:
+            
+            self.fail('Constraint elements are not part of the meta-model')
+        
+    def test_dependency(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Dependency)
+            
+        except AttributeError:
+            
+            self.fail('Dependency elements are not part of the meta-model')
+        
+    def test_element_import(self):
+        
+        try:
+            
+            element = self.factory.create(UML.ElementImport)
+            
+        except AttributeError:
+            
+            self.fail('ElementImport elements are not part of the meta-model')
+        
+    def test_enumeration(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Enumeration)
+            
+        except AttributeError:
+            
+            self.fail('Enumeration elements are not part of the meta-model')
+        
+    def test_generalization(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Generalization)
+            
+        except AttributeError:
+            
+            self.fail('Generalization elements are not part of the meta-model')
+            
+    def test_interface(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Interface)
+            
+        except AttributeError:
+            
+            self.fail('Interface elements are not part of the meta-model')
+            
+    def test_namespace(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Namespace)
+            
+        except AttributeError:
+            
+            self.fail('Namespace elements are not part of the meta-model')
+            
+    def test_operation(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Operation)
+            
+        except AttributeError:
+            
+            self.fail('Operation elements are not part of the meta-model')
+            
+    def test_package(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Package)
+            
+        except AttributeError:
+            
+            self.fail('Package elements are not part of the meta-model')
+            
+    def test_parameter(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Parameter)
+            
+        except AttributeError:
+            
+            self.fail('Parameter elements are not part of the meta-model')
+            
+    def test_property(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Property)
+            
+        except AttributeError:
+            
+            self.fail('Property elements are not part of the meta-model')
+            
+    def test_realization(self):
+        
+        try:
+            
+            element = self.factory.create(UML.Realization)
+            
+        except AttributeError:
+            
+            self.fail('Realization elements are not part of the meta-model')
+        
+
 class Uml2TestCase(unittest.TestCase):
 
     def test_ids(self):
