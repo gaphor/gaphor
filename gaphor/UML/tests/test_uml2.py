@@ -23,7 +23,7 @@ class ClassesTestCase(unittest.TestCase):
             
             self.fail('Association elements are not part of the meta-model')
             
-        self.assertTrue(element.isDerived, 'The isDerived property should default to True')
+        self.assertTrue(element.isDerived, 'The isDerived property should default to True - %s' % element.isDerived)
         
         property1 = self.factory.create(UML.Property)
         property2 = self.factory.create(UML.Property)
@@ -31,10 +31,10 @@ class ClassesTestCase(unittest.TestCase):
         element.memberEnd = property1
         element.memberEnd = property2
         
-        self.assertEqual(element.memberEnd[0], property1, 'Association member end does not have the expected property')
-        self.assertEqual(element.memberEnd[1], property2, 'Association member end does not have the expected property')
+        self.assertEqual(element.memberEnd[0], property1, 'Association member end does not have the expected property - %s' % element.memberEnd[0])
+        self.assertEqual(element.memberEnd[1], property2, 'Association member end does not have the expected property - %s' % element.memberEnd[1])
         
-        self.assertEqual(len(element.member), 2)
+        self.assertEqual(len(element.member), 2, 'Namespace.member does not have the correct count of 2 - %s' % len(element.member))
         
     def test_association_class(self):
         
