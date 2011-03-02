@@ -290,9 +290,13 @@ class FileUpgradeTestCase(TestCase):
     def test_association_upgrade(self):
         """Test association navigability upgrade in Gaphor 0.15.0
         """
-        f = open('test-diagrams/associations-pre015.gaphor')
-        storage.load(f, factory=self.element_factory)
-        f.close()
+        
+        dist = pkg_resources.get_distribution('gaphor')
+        path = os.path.join(dist.location, 'test-diagrams/associations-pre015.gaphor')
+        
+        with open(path) as ifile:
+            
+            storage.load(ifile, factory=self.element_factory)
 
         diagrams = list(self.kindof(UML.Diagram))
         self.assertEquals(1, len(diagrams))
