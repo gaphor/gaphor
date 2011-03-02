@@ -5,7 +5,7 @@ Base class for UML model elements.
 
 __all__ = [ 'Element' ]
 
-import mutex
+import threading
 import uuid
 from properties import umlproperty
 
@@ -31,7 +31,7 @@ class Element(object):
         self._id = id or (id is not False and str(uuid.uuid1()) or False)
         # The factory this element belongs to.
         self._factory = factory
-        self.__in_unlink = mutex.mutex()
+        self._unlink_lock = threading.Lock()
 
 
     id = property(lambda self: self._id, doc='Id')
@@ -85,19 +85,25 @@ class Element(object):
 
 
     def unlink(self):
-        """
-        Unlink the element. All the elements references are destroyed.
-        """
-        # Uses a mutex to make sure it is not called recursively
-        if self.__in_unlink.testandset():
-            try:
-                for prop in self.umlproperties():
-                    prop.unlink(self)
-                if self._factory:
-                    self._factory._unlink_element(self)
-            finally:
-                self.__in_unlink.unlock()
-
+        
+        """Unlink the element. All the elements references are destroyed.
+        
+        The unlink lock is acquired while unlinking this elements properties
+        to avoid recursion problems."""
+        
+        if self._unlink_lock.locked():
+            
+            return
+        
+        with self._unlink_lock:
+            
+            for prop in self.umlproperties():
+                
+                prop.unlink(self)
+                
+            if self._factory:
+            
+                self._factory._unlink_element(self)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
