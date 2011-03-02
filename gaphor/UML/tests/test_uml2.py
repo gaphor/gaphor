@@ -103,6 +103,8 @@ class ClassesTestCase(unittest.TestCase):
         
     def test_constraint(self):
         
+        """Testing Constraint elements in the meta-model"""
+        
         try:
             
             element = self.factory.create(UML.Constraint)
@@ -110,6 +112,14 @@ class ClassesTestCase(unittest.TestCase):
         except AttributeError:
             
             self.fail('Constraint elements are not part of the meta-model')
+            
+        constrainedElement = self.factory.create(UML.Class)
+        
+        element.constrainedElement = constrainedElement
+        element.specification = 'Constraint specification'
+        
+        self.assertTrue(constrainedElement in element.constrainedElement, 'Constraint.constrainedElement does not contain the correct element - %s' % element.constrainedElement)
+        self.assertTrue(element.specification == 'Constraint.specification is incorrect - %s' % element.specification)
         
     def test_dependency(self):
         
