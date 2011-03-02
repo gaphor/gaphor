@@ -101,12 +101,20 @@ class attribute(umlproperty):
         self.upper = upper
         
     def load(self, obj, value):
-        # FixMe: value might be a string while some other type is required:
-        #print 'attribute.load:', self.name, self.type, value,
-        if self.type is not object:
-            value = self.type(value)
-        setattr(obj, self._name, value)
-
+        
+        """Load the attribute value."""
+        
+        try:
+            
+            setattr(obj, self._name, self.type(value))
+            
+        except ValueError:
+            
+            error_msg = 'Failed to load attribute %s of type %s with value %s'\
+                        % (self._name, self.type, value)
+                        
+            raise TypeError(error_msg)
+        
     def __str__(self):
         if self.lower == self.upper:
             return '<attribute %s: %s[%s] = %s>' % (self.name, self.type, self.lower, self.default)
