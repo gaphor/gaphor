@@ -81,6 +81,8 @@ class ClassesTestCase(unittest.TestCase):
         
     def test_comment(self):
         
+        """Testing Comment elements in the meta-model"""
+        
         try:
             
             element = self.factory.create(UML.Comment)
@@ -88,6 +90,16 @@ class ClassesTestCase(unittest.TestCase):
         except AttributeError:
             
             self.fail('Comment elements are not part of the meta-model')
+            
+        element.body = 'Comment body'
+        
+        self.assertTrue(element.body == 'Comment body', 'Incorrect comment body - %s' % element.body)
+        
+        annotatedElement = self.factory.create(UML.Class)
+        
+        element.annotatedElement = annotatedElement
+        
+        self.assertTrue(element.annotatedElement == annotatedElement, 'Incorrect annotated element - %s' % element.annotatedElement)
         
     def test_constraint(self):
         
