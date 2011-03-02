@@ -15,6 +15,8 @@ class ClassesTestCase(unittest.TestCase):
     
     def test_association(self):
         
+        """Testing Association elements in the meta-model"""
+        
         try:
             
             element = self.factory.create(UML.Association)
@@ -31,10 +33,17 @@ class ClassesTestCase(unittest.TestCase):
         element.memberEnd = property1
         element.memberEnd = property2
         
-        self.assertEqual(element.memberEnd[0], property1, 'Association member end does not have the expected property - %s' % element.memberEnd[0])
-        self.assertEqual(element.memberEnd[1], property2, 'Association member end does not have the expected property - %s' % element.memberEnd[1])
+        element.ownedEnd = property1
         
-        self.assertEqual(len(element.member), 2, 'Namespace.member does not have the correct count of 2 - %s' % len(element.member))
+        element.navigableOwnedEnd = property1
+        
+        self.assertTrue(property1 in element.member, 'Namespace.member does not contain memberEnd - %s' % element.member)
+        self.assertTrue(property2 in element.member, 'Namespace.member does not contain memberEnd - %s' % element.member)
+        
+        self.assertTrue(property1 in element.feature, 'Classifier.feature does not contain ownedEnd - %s' % element.feature)
+        self.assertTrue(property1 in element.ownedMember, 'Namespace.ownedMember does not contain ownedEnd - %s' % element.ownedEnd)
+        
+        self.assertTrue(property1 in element.ownedEnd, 'Association.ownedEnd does not contain navigableOwnedEnd - %s' % element.ownedEnd)
         
     def test_association_class(self):
         
