@@ -153,10 +153,9 @@ class ElementDispatcher(object):
         Should also work for elements that use subtypes of a certain class:
 
         >>> map(str, dispatcher._path_to_properties(UML.Transition(),
-        ...         'guard.specification<LiteralSpecification>.value')) # doctest: +NORMALIZE_WHITESPACE
+        ...         'guard.specification')) # doctest: +NORMALIZE_WHITESPACE
         ['<association guard: Constraint[0..1]>',
-         '<association specification: ValueSpecification[1]>',
-         "<attribute value: <type 'object'>[0..1] = None>"]
+         "<attribute specification: <type 'str'>[0..1] = None>"]
         """
         c = type(element)
         tpath = []
