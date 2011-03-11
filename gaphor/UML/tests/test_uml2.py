@@ -25,7 +25,7 @@ class ClassesTestCase(unittest.TestCase):
             
             self.fail('Association elements are not part of the meta-model')
             
-        self.assertTrue(element.isDerived, 'The isDerived property should default to True - %s' % element.isDerived)
+        self.assertFalse(element.isDerived, 'The isDerived property should default to False - %s' % element.isDerived)
         
         property1 = self.factory.create(UML.Property)
         property2 = self.factory.create(UML.Property)
@@ -45,15 +45,11 @@ class ClassesTestCase(unittest.TestCase):
         
         self.assertTrue(property1 in element.ownedEnd, 'Association.ownedEnd does not contain navigableOwnedEnd - %s' % element.ownedEnd)
         
-    def test_association_class(self):
-        
-        try:
-            
-            element = self.factory.create(UML.AssociationClass)
-            
-        except AttributeError:
-            
-            self.fail('AssociationClass elements are not part of the meta-model')
+#    def test_association_class(self):
+#        try:
+#            element = self.factory.create(UML.AssociationClass)
+#        except AttributeError:
+#            self.fail('AssociationClass elements are not part of the meta-model')
         
     def test_class(self):
         
@@ -99,7 +95,7 @@ class ClassesTestCase(unittest.TestCase):
         
         element.annotatedElement = annotatedElement
         
-        self.assertTrue(element.annotatedElement == annotatedElement, 'Incorrect annotated element - %s' % element.annotatedElement)
+        self.assertTrue(annotatedElement in element.annotatedElement, 'Incorrect annotated element - %s' % element.annotatedElement)
         
     def test_constraint(self):
         
@@ -119,7 +115,7 @@ class ClassesTestCase(unittest.TestCase):
         element.specification = 'Constraint specification'
         
         self.assertTrue(constrainedElement in element.constrainedElement, 'Constraint.constrainedElement does not contain the correct element - %s' % element.constrainedElement)
-        self.assertTrue(element.specification == 'Constraint.specification is incorrect - %s' % element.specification)
+        self.assertTrue(element.specification == 'Constraint specification', 'Constraint.specification is incorrect - %s' % element.specification)
         
     def test_dependency(self):
         

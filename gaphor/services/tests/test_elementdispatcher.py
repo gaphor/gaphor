@@ -122,22 +122,18 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher = self.dispatcher
         element = UML.Transition()
         g = element.guard = UML.Constraint()
-        s = g.specification = UML.LiteralSpecification()
-        dispatcher.register_handler(self._handler, element, 'guard.specification<LiteralSpecification>.value')
-        assert len(dispatcher._handlers) == 3
+        dispatcher.register_handler(self._handler, element, 'guard.specification')
+        assert len(dispatcher._handlers) == 2
         assert not self.events
         assert (element.guard, UML.Constraint.specification) in dispatcher._handlers.keys(), dispatcher._handlers.keys()
 
-        s.value = 'x'
+        g.specification = 'x'
         assert len(self.events) == 1, self.events
 
         element.guard = UML.Constraint()
         assert len(self.events) == 2, self.events
         assert len(dispatcher._handlers) == 2, len(dispatcher._handlers)
         assert (element.guard, UML.Constraint.specification) in dispatcher._handlers.keys()
-        element.guard.specification = UML.LiteralSpecification()
-        assert len(self.events) == 3, self.events
-        assert len(dispatcher._handlers) == 3, len(dispatcher._handlers)
 
 
     def test_notification_of_change(self):
@@ -147,12 +143,11 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher = self.dispatcher
         element = UML.Transition()
         g = element.guard = UML.Constraint()
-        s = g.specification = UML.LiteralSpecification()
-        dispatcher.register_handler(self._handler, element, 'guard.specification<LiteralSpecification>.value')
-        assert len(dispatcher._handlers) == 3
+        dispatcher.register_handler(self._handler, element, 'guard.specification')
+        assert len(dispatcher._handlers) == 2
         assert not self.events
 
-        s.value = 'x'
+        g.specification = 'x'
         assert len(self.events) == 1, self.events
 
         element.guard = UML.Constraint()
@@ -183,19 +178,15 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher = self.dispatcher
         element = UML.Transition()
         g = element.guard = UML.Constraint()
-        s = g.specification = UML.LiteralSpecification()
-        dispatcher.register_handler(self._handler, element, 'guard.specification<LiteralSpecification>.value')
-        assert len(dispatcher._handlers) == 3
+        dispatcher.register_handler(self._handler, element, 'guard.specification')
+        assert len(dispatcher._handlers) == 2
         assert not self.events
         assert (element.guard, UML.Constraint.specification) in dispatcher._handlers.keys(), dispatcher._handlers.keys()
 
-        s.value = 'x'
+        g.specification = 'x'
         assert len(self.events) == 1, self.events
 
-        element.guard.specification = UML.ValueSpecification()
-        assert len(self.events) == 2, self.events
-
-        s.value = 'a'
+        g.specification = 'a'
         assert len(self.events) == 2, self.events
 
 
@@ -287,10 +278,10 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         element = UML.Association()
         p1 = element.memberEnd = UML.Property()
         p2 = element.memberEnd = UML.Property()
-        p1.lowerValue = UML.LiteralSpecification()
-        p1.upperValue = UML.LiteralSpecification()
-        p2.lowerValue = UML.LiteralSpecification()
-        p2.upperValue = UML.LiteralSpecification()
+        p1.lowerValue = '0'
+        p1.upperValue = '1'
+        p2.lowerValue = '1'
+        p2.upperValue = '*'
 
         assert len(element.memberEnd) == 2
         print element.memberEnd
@@ -299,15 +290,15 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         dispatcher.register_handler(self._handler, element, base + 'name')
         dispatcher.register_handler(self._handler, element, base + 'aggregation')
         dispatcher.register_handler(self._handler, element, base + 'classifier')
-        dispatcher.register_handler(self._handler, element, base + 'lowerValue<LiteralSpecification>.value')
-        dispatcher.register_handler(self._handler, element, base + 'upperValue<LiteralSpecification>.value')
+        dispatcher.register_handler(self._handler, element, base + 'lowerValue')
+        dispatcher.register_handler(self._handler, element, base + 'upperValue')
 
-        assert len(dispatcher._handlers) == 15, len(dispatcher._handlers)
+        assert len(dispatcher._handlers) == 11, len(dispatcher._handlers)
         assert not self.events
 
         p1.name = 'foo'
         assert len(self.events) == 1, (self.events, dispatcher._handlers)
-        assert len(dispatcher._handlers) == 15
+        assert len(dispatcher._handlers) == 11
         
         p1.name = 'othername'
         assert len(self.events) == 2, self.events
