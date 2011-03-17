@@ -1311,7 +1311,8 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_join_spec_change(self, entry):
         value = entry.get_text().strip()
-        self.item.set_join_spec(value)
+        print 'new joinspec', value
+        self.subject.joinSpec = value
 
     def _on_horizontal_change(self, button):
         if button.get_active():

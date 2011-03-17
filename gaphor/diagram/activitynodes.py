@@ -212,7 +212,7 @@ class ForkNodeItem(Item, DiagramItem):
 
         self._combined = None
 
-        self._join_spec = self.add_text('joinSpec.value',
+        self._join_spec = self.add_text('joinSpec',
             pattern='{ joinSpec = %s }',
             style=self.STYLE_TOP,
             visible=self.is_join_spec_visible)
@@ -250,7 +250,7 @@ class ForkNodeItem(Item, DiagramItem):
     def postload(self):
         subject = self.subject
         if subject and isinstance(subject, UML.JoinNode) and subject.joinSpec:
-            self._join_spec.text = self.subject.joinSpec.value
+            self._join_spec.text = self.subject.joinSpec
         self.on_named_element_name(None)
         super(ForkNodeItem, self).postload()
 
@@ -262,7 +262,8 @@ class ForkNodeItem(Item, DiagramItem):
     combined = reversible_property(lambda s: s._combined, _set_combined)
 
     def setup_canvas(self):
-        Item.setup_canvas(self)
+        super(ForkNodeItem, self).setup_canvas()
+        self.register_handlers()
 
         h1, h2 = self._handles
         cadd = self.canvas.solver.add_constraint
@@ -273,6 +274,7 @@ class ForkNodeItem(Item, DiagramItem):
 
     def teardown_canvas(self):
         super(ForkNodeItem, self).teardown_canvas()
+        self.unregister_handlers()
 
 
     def is_join_spec_visible(self):
@@ -281,7 +283,7 @@ class ForkNodeItem(Item, DiagramItem):
         """
         return isinstance(self.subject, UML.JoinNode) \
             and self.subject.joinSpec is not None \
-            and self.subject.joinSpec.value != DEFAULT_JOIN_SPEC
+            and self.subject.joinSpec != DEFAULT_JOIN_SPEC
 
 
     def text_align(self, extents, align, padding, outside):
@@ -338,22 +340,9 @@ class ForkNodeItem(Item, DiagramItem):
 
     def on_join_node_join_spec(self, event):
         subject = self.subject
-        try:
-            self._join_spec.text = subject.joinSpec.value
-        except AttributeError, e:
-            self.set_join_spec(DEFAULT_JOIN_SPEC)
-        self.request_update()
-
-
-    def set_join_spec(self, value):
-        """
-        Set join specification.
-        """
-        subject = self.subject
-        if not is_join_node(subject):
-            return
-
-        subject.joinSpec = value or DEFAULT_JOIN_SPEC
+        if subject:
+            self._join_spec.text = subject.joinSpec or DEFAULT_JOIN_SPEC
+            self.request_update()
 
 
 def is_join_node(subject):
