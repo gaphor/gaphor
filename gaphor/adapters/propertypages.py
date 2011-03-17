@@ -28,6 +28,7 @@ TODO:
 
 import gobject
 import gtk
+import math
 from gaphor.core import _, inject, transactional
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.ui.interfaces import IPropertyPage
@@ -1297,6 +1298,11 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
             entry.connect('changed', self._on_join_spec_change)
             hbox.pack_start(entry)
 
+        button = gtk.CheckButton(_('Horizontal'))
+        button.set_active(self.item.matrix[2] != 0)
+        button.connect('toggled', self._on_horizontal_change)
+        page.pack_start(button, expand=False)
+
         return page
 
     def update(self):
@@ -1307,6 +1313,12 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         value = entry.get_text().strip()
         self.item.set_join_spec(value)
 
+    def _on_horizontal_change(self, button):
+        if button.get_active():
+            self.item.matrix.rotate(math.pi/2)
+        else:
+            self.item.matrix.rotate(-math.pi/2)
+        self.item.request_update()
 
 component.provideAdapter(JoinNodePropertyPage, name='Properties')
 
