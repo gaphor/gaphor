@@ -1,23 +1,24 @@
 #!/usr/bin/python
 
-"""
-This script list classes and optionally attributes from UML model created
-with Gaphor.
-"""
+"""This script list classes and optionally attributes from UML model 
+created with Gaphor."""
 
-import gaphor
-from gaphor.storage import storage
+import sys
+import optparse
+
+from gaphor import Application
 import gaphor.UML as UML
 
-import optparse
-import sys
-
+#Setup command line options.
 usage = 'usage: %prog [options] file.gaphor'
 
 parser = optparse.OptionParser(usage=usage)
 
-parser.add_option('-a', '--attributes', dest='attrs', action='store_true',
-    help='print classes attributes')
+parser.add_option('-a',\
+                  '--attributes',\
+                  dest='attrs',\
+                  action='store_true',\
+                  help='Print class attributes')
 
 (options, args) = parser.parse_args()
 
@@ -25,19 +26,26 @@ if len(args) != 1:
     parser.print_help()
     sys.exit(1)
 
+#The model file to load.
 model = args[0]
 
-# create UML object factory
-factory = UML.ElementFactory()
+#Create the Gaphor application object.
+Application.init()
 
-# load model from file
-storage.load(model, factory)
+#Get services we need.
+element_factory = Application.get_service('element_factory')
+file_manager = Application.get_service('file_manager')
 
-# find all classes using factory
-for cls in factory.select(lambda e: e.isKindOf(UML.Class)):
-    print 'found class %s' % cls.name
+#Load model from file.
+file_manager.load(model)
+
+#Find all classes using factory select.
+for cls in element_factory.select(lambda e: e.isKindOf(UML.Class)):
+    
+    print 'Found class %s' % cls.name
+    
     if options.attrs:
+        
         for attr in cls.ownedAttribute:
-            print ' attr: %s' % attr.name
-
-# vim:sw=4:et:ai
+        
+            print ' Attribute: %s' % attr.name
