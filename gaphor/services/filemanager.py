@@ -2,6 +2,8 @@
 The file service is responsible for loading and saving the user data.
 """
 
+from logging import getLogger
+
 import gtk
 from zope import interface, component
 
@@ -9,7 +11,6 @@ from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.storage import storage, verify
 from gaphor import UML
-from logging import getLogger
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.xmlwriter import XMLWriter
@@ -136,7 +137,10 @@ class FileManager(object):
         """Returns the recent file list from the properties service.  This
         method is used by the recent_files property."""
         
-        return self.properties.get('recent-files', [])
+        try:
+            return self.properties.get('recent-files', [])
+        except component.interfaces.ComponentLookupError:
+            return []
         
     def set_recent_files(self, recent_files):
         """Updates the properties service with the supplied list of recent 
@@ -145,7 +149,10 @@ class FileManager(object):
         self.logger.info('Storing recent files')
         self.logger.debug('Recent files are %s' % recent_files)
         
-        self.properties.set('recent-files', recent_files)
+        try:
+            self.properties.set('recent-files', recent_files)
+        except component.interfaces.ComponentLookupError:
+            return
         
     recent_files = property(get_recent_files, set_recent_files)
 
@@ -201,13 +208,17 @@ class FileManager(object):
         self.logger.info('Loading file')
         self.logger.debug('Path is %s' % filename)
 
-        main_window = self.main_window
-
         queue = Queue()
-        status_window = StatusWindow(_('Loading...'),\
-                                     _('Loading model from %s') % filename,\
-                                     parent=main_window.window,\
-                                     queue=queue)
+        
+        try:
+            main_window = self.main_window
+            status_window = StatusWindow(_('Loading...'),\
+                                         _('Loading model from %s') % filename,\
+                                         parent=main_window.window,\
+                                         queue=queue)            
+        except component.interfaces.ComponentLookupError:
+            status_window = None
+
         try:
             loader = storage.load_generator(filename, self.element_factory)
             worker = GIdleThread(loader, queue)
@@ -223,7 +234,8 @@ class FileManager(object):
             error_handler(message=_('Error while loading model from file %s') % filename)
             raise
         finally:
-            status_window.destroy()
+            if status_window is not None:
+                status_window.destroy()
 
         
     def verify_orphans(self):
