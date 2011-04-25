@@ -2,9 +2,15 @@
 
 import gtk
 from cairo import Matrix
-
 from zope import component
+from etk.docking import DockItem
+
 from gaphas.view import GtkView
+from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \
+                           FocusedItemPainter, ToolPainter, BoundingBoxPainter
+from gaphas.freehand import FreeHandPainter
+from gaphas import segment, guide
+
 from gaphor import UML
 from gaphor.core import _, inject, transactional, action, toggle_action, build_action_group
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
@@ -12,11 +18,8 @@ from gaphor.diagram import get_diagram_item
 from gaphor.diagram.items import DiagramItem
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramtoolbox import DiagramToolbox
-from event import DiagramSelectionChange
+from gaphor.ui.event import DiagramSelectionChange
 from gaphor.services.properties import IPropertyChangeEvent
-from etk.docking import DockItem
-
-from gaphas import segment, guide
 
 class DiagramTab(object):
     
@@ -186,28 +189,35 @@ class DiagramTab(object):
 
 
     def set_drawing_style(self, sloppiness=0.0):
-        """
-        Set the drawing style for the diagram. 0.0 is straight, 2.0 is very sloppy.
-        """
-        assert self.view, 'First construct() the diagram tab'
-        from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \
-                                   FocusedItemPainter, ToolPainter, BoundingBoxPainter
-        from gaphas.freehand import FreeHandPainter
+        """Set the drawing style for the diagram. 0.0 is straight, 
+        2.0 is very sloppy.  If the sloppiness is set to be anything
+        greater than 0.0, the FreeHandPainter instances will be used
+        for both the item painter and the box painter.  Otherwise, by
+        default, the ItemPainter is used for the item and 
+        BoundingBoxPainter for the box."""
+
         view = self.view
+        
         if sloppiness:
-            view.painter = PainterChain(). \
-                append(FreeHandPainter(ItemPainter(), sloppiness=sloppiness)). \
-                append(HandlePainter()). \
-                append(FocusedItemPainter()). \
-                append(ToolPainter())
-            view.bounding_box_painter = FreeHandPainter(BoundingBoxPainter(), sloppiness=sloppiness)
+            
+            item_painter = FreeHandPainter(ItemPainter(),\
+                                           sloppiness=sloppiness)
+            box_painter = FreeHandPainter(BoundingBoxPainter(),\
+                                          sloppiness=sloppiness)
+        
         else:
-            view.painter = PainterChain(). \
-                append(ItemPainter()). \
-                append(HandlePainter()). \
-                append(FocusedItemPainter()). \
-                append(ToolPainter())
-            view.bounding_box_painter = BoundingBoxPainter()
+        
+            item_painter = ItemPainter()
+            box_painter = BoundingBoxPainter()
+            
+        view.painter = PainterChain().\
+                       append(item_painter).\
+                       append(HandlePainter()).\
+                       append(FocusedItemPainter()).\
+                       append(ToolPainter())
+                       
+        view.bounding_box_painter = box_painter
+        
         view.queue_draw_refresh()
 
     def may_remove_from_model(self, view):
