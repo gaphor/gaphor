@@ -209,7 +209,7 @@ class FileManager(object):
                                      parent=main_window.window,\
                                      queue=queue)
         try:
-            loader = storage.load_generator(filename, self.element_factory)
+            loader = storage.load_generator(filename.encode('utf-8'), self.element_factory)
             worker = GIdleThread(loader, queue)
 
             worker.start()
@@ -286,7 +286,7 @@ class FileManager(object):
                                      parent=main_window.window,\
                                      queue=queue)
         try:
-            with open(filename, 'w') as out:
+            with open(filename.encode('utf-8'), 'w') as out:
                 saver = storage.save_generator(XMLWriter(out), self.element_factory)
                 worker = GIdleThread(saver, queue)
                 worker.start()
