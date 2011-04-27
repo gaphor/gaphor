@@ -119,6 +119,8 @@ class ClassesTestCase(unittest.TestCase):
         
     def test_dependency(self):
         
+        """Testing Dependency elements in the meta-model"""
+        
         try:
             
             element = self.factory.create(UML.Dependency)
@@ -126,6 +128,15 @@ class ClassesTestCase(unittest.TestCase):
         except AttributeError:
             
             self.fail('Dependency elements are not part of the meta-model')
+            
+        client = self.factory.create(UML.Package)
+        supplier = self.factory.create(UML.Package)
+        
+        element.client = client
+        element.supplier = supplier
+        
+        self.assertTrue(client in element.source, 'DirectedRelationship.source does not contain client - %s' % element.client)
+        self.assertTrue(supplier in element.target, 'DirectedRelationship.target does not contain supplier - %s' % element.supplier)
         
     def test_element_import(self):
         
