@@ -84,7 +84,7 @@ It uses the GTK+ environment for user interaction.
 
     install_requires = [
         # 'PyGTK >= 2.8.0', - Exclude, since it will not build anyway
-        'gaphas >= 0.7.0',
+        'gaphas >= 0.7.2',
         'etk.docking >= 0.1',
         'zope.component >= 3.4.0', # - won't compile on windows.
     ],
