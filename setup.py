@@ -5,7 +5,7 @@ Run 'python setup.py develop' to set up a development environment, including
 dependencies.
 """
 
-VERSION = '0.17.0'
+VERSION = '0.17.1'
 
 import os
 import sys
@@ -61,7 +61,7 @@ Gaphor is a UML modeling tool written in Python.
 It uses the GTK+ environment for user interaction.
 """,
     classifiers = [
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: X11 Applications :: GTK',
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
