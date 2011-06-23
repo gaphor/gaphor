@@ -5,12 +5,12 @@ item, guard of flow item, etc.
 
 import math
 
+import cairo, pango, pangocairo
 from gaphor.diagram.style import Style
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 
 from gaphas.geometry import distance_rectangle_point, Rectangle
-from gaphas.util import text_extents, text_align, text_multiline, \
-    text_set_font
+
 
 DEFAULT_TEXT_FONT = 'sans 10'
 
@@ -23,6 +23,14 @@ def swap(list, el1, el2):
     i2 = list.index(el2)
     list[i1] = el2
     list[i2] = el1
+
+
+def text_extents(cr, text, font=None, multiline=False):
+    cr = pangocairo.CairoContext(cr)
+    layout = cr.create_layout()
+    layout.set_font_description(pango.FontDescription(font))
+    layout.set_text(text)
+    return layout.get_pixel_size()
 
 
 class EditableTextSupport(object):
@@ -385,9 +393,13 @@ class TextElement(object):
         width, height = bounds.width, bounds.height
 
         cr = context.cairo
-        text_set_font(cr, self._style.font)
-        text_multiline(cr, x, y, self.text)
-        cr.stroke()
+        if isinstance(cr, cairo.Context):
+            cr = pangocairo.CairoContext(context.cairo)
+            cr.move_to(x, y)
+            layout = cr.create_layout()
+            layout.set_font_description(pango.FontDescription(self._style.font))
+            layout.set_text(self.text)
+            cr.show_layout(layout)
         if self.editable and (context.hovered or context.focused):
             cr.save()
             cr.set_source_rgb(0.6, 0.6, 0.6)
