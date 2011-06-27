@@ -35,20 +35,42 @@ def text_extents(cr, text, font=None, multiline=False):
     return layout.get_pixel_size()
 
 
-def text_align(cr, x, y, text, align_x=0, align_y=0, padding_x=0, padding_y=0):
+def text_align(cr, x, y, text, font, align_x=0, align_y=0, padding_x=0, padding_y=0):
     """
     Draw text relative to (x, y).
     x, y - coordinates
     text - text to print (utf8)
+    font - The font to render in
     align_x - -1 (top), 0 (middle), 1 (bottom)
     align_y - -1 (left), 0 (center), 1 (right)
     padding_x - padding (extra offset), always > 0
     padding_y - padding (extra offset), always > 0
     """
+    if not isinstance(cr, cairo.Context):
+        return
+
     cr = pangocairo.CairoContext(cr)
     layout = cr.create_layout()
-    layout.set_font_description(pango.FontDescription(self._style.font))
-    layout.set_text(self.text)
+    print 'align with font', font
+    if font:
+        layout.set_font_description(font)
+    layout.set_text(text)
+    w, h = layout.get_pixel_size()
+
+    if align_x == 0:
+        x = 0.5 - (w / 2) + x
+    elif align_x < 0:
+        x = -w + x - padding_x
+    else:
+        x = x + padding_x
+    if align_y == 0:
+        y = 0.5 - (h / 2) + y
+    elif align_y < 0:
+        y = -h + y - padding_y
+    else:
+        y = y + padding_y
+    cr.move_to(x, y)
+    cr.update_layout(layout)
     cr.show_layout(layout)
 
 

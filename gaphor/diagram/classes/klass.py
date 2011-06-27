@@ -52,7 +52,9 @@ class ClassItem(ClassifierItem):
         ClassifierItem.__init__(self, id)
         self.drawing_style = self.DRAW_COMPARTMENT
         self._attributes = self.create_compartment('attributes')
+	self._attributes.font = self.style.feature_font
         self._operations = self.create_compartment('operations')
+	self._operations.font = self.style.feature_font
         self._operations.use_extra_space = True
 
         self.watch('subject<Class>.ownedOperation', self.on_class_owned_operation)\

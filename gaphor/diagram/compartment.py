@@ -8,8 +8,7 @@ from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
-from textelement import text_extents
-from gaphas.util import text_align
+from textelement import text_extents, text_align
 
 
 class FeatureItem(object):
@@ -108,6 +107,7 @@ class Compartment(list):
         self.width = 0
         self.height = 0
         self.title = None
+        self.font = None
         self.title_height = 0
         self.use_extra_space = False
 
@@ -173,6 +173,8 @@ class Compartment(list):
         cr.translate(padding[1], padding[0])
         offset = 0
         if self.title:
+            text_align(cr, self.owner.width / 2.0, padding[0],
+                self.title, font=self.font, align_y=1)
             offset += self.title_height + vspacing
         for item in self:
             cr.save()
@@ -534,9 +536,6 @@ class CompartmentItem(NamedItem):
             cr.line_to(self.width, 0)
             cr.stroke()
 
-            if comp.title:
-                padding = self.style.compartment_padding
-                text_align(cr, self.width / 2.0, padding[0], comp.title, align_y=1)
             try:
                 comp.draw(context)
             finally:
