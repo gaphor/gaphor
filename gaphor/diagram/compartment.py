@@ -2,13 +2,14 @@
 Diagram item with compartments.
 """
 
-import cairo
+import cairo, pango, pangocairo
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
-from gaphas.util import text_extents, text_set_font, text_align, text_underline
+from textelement import text_extents
+from gaphas.util import text_align
 
 
 class FeatureItem(object):
@@ -77,13 +78,18 @@ class FeatureItem(object):
 
     def draw(self, context):
         cr = context.cairo
-        if self.font:
-            text_set_font(cr, self.font)
-        if hasattr(self.subject, 'isStatic') and self.subject.isStatic:
-            text_underline(cr, 0, 0, self.render() or '')
-        else:
-            text_align(cr, 0, 0, self.render(), align_x=1, align_y=1)
-
+        if isinstance(cr, cairo.Context):
+            cr = pangocairo.CairoContext(cr)
+            layout = cr.create_layout()
+            layout.set_font_description(pango.FontDescription(self.font))
+            layout.set_text(self.render() or '')
+        
+            if hasattr(self.subject, 'isStatic') and self.subject.isStatic:
+                attrlist = pango.AttrList()
+                attrlist.insert(pango.AttrUnderline(pango.UNDERLINE_SINGLE,
+                                2, -1))
+                layout.set_attributes(attrlist)
+            cr.show_layout(layout)
 
 
 class Compartment(list):
@@ -577,4 +583,4 @@ class CompartmentItem(NamedItem):
         return None
 
 
-# vim:sw=4:et
+# vi:ai:sw=4:et

@@ -6,7 +6,6 @@ from math import atan2, pi
 
 import gaphas
 from gaphor import UML
-from gaphas.util import text_extents, text_align
 from diagramitem import DiagramItem
 from interfaces import IConnect
 

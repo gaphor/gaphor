@@ -26,11 +26,30 @@ def swap(list, el1, el2):
 
 
 def text_extents(cr, text, font=None, multiline=False):
+    if not multiline:
+        text = text.replace('\n', ' ')
     cr = pangocairo.CairoContext(cr)
     layout = cr.create_layout()
     layout.set_font_description(pango.FontDescription(font))
     layout.set_text(text)
     return layout.get_pixel_size()
+
+
+def text_align(cr, x, y, text, align_x=0, align_y=0, padding_x=0, padding_y=0):
+    """
+    Draw text relative to (x, y).
+    x, y - coordinates
+    text - text to print (utf8)
+    align_x - -1 (top), 0 (middle), 1 (bottom)
+    align_y - -1 (left), 0 (center), 1 (right)
+    padding_x - padding (extra offset), always > 0
+    padding_y - padding (extra offset), always > 0
+    """
+    cr = pangocairo.CairoContext(cr)
+    layout = cr.create_layout()
+    layout.set_font_description(pango.FontDescription(self._style.font))
+    layout.set_text(self.text)
+    cr.show_layout(layout)
 
 
 class EditableTextSupport(object):

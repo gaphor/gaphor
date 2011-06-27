@@ -11,7 +11,7 @@ Plan:
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
-from gaphas.util import text_extents, text_align, text_multiline
+from gaphas.util import text_extents, text_multiline
 from gaphas.state import reversible_property
 from gaphas import Item
 from gaphas.geometry import Rectangle, distance_point_point_fast

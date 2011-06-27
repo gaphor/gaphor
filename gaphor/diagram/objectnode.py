@@ -10,7 +10,7 @@ from gaphor.core import inject
 
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
-from gaphas.util import text_extents, text_multiline
+
 
 DEFAULT_UPPER_BOUND = '*'
 
