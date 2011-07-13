@@ -6,8 +6,8 @@ See also gaphor.diagram.states package description.
 
 from gaphor import UML
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
-from gaphas.util import path_ellipse, text_center
-
+from gaphas.util import path_ellipse
+from gaphor.diagram.textelement import text_center
 from gaphor.diagram.states import VertexItem
 
 
@@ -73,6 +73,6 @@ class HistoryPseudostateItem(VertexItem):
         path_ellipse(cr, r, r, d, d)
         #cr.set_line_width(1)
         cr.stroke()
-        text_center(cr, r, r, "H")
+        text_center(cr, r, r, "H", self.style.name_font)
 
 # vim:sw=4:et
