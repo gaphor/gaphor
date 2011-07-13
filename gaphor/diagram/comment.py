@@ -5,12 +5,16 @@ CommentItem diagram item
 from gaphor import UML
 from elementitem import ElementItem
 from gaphas.item import NW
-from gaphas.util import text_multiline, text_extents
+from textelement import text_multiline, text_extents
 
 
 class CommentItem(ElementItem):
 
     __uml__ = UML.Comment
+
+    __style__ = {
+        'font': 'sans 10'
+    }
 
     EAR=15
     OFFSET=5
@@ -32,11 +36,13 @@ class CommentItem(ElementItem):
         if not self.subject:
             return
         cr = context.cairo
-        w, h = text_extents(cr, self.subject.body, multiline=True, padding=2)
-        e2 = self.EAR * 2
-        self.min_width = w + e2 + self.OFFSET
-        self.min_height = h + e2
+        e = self.EAR
+        o = self.OFFSET
+        w, h = text_extents(cr, self.subject.body, self.style.font, width=self.width - e)
+        self.min_width = w + e + o * 2
+        self.min_height = h + o * 2
         ElementItem.pre_update(self, context)
+        print self.width, self.height, self.min_width, self.min_height
 
 
     def draw(self, context):
@@ -60,9 +66,10 @@ class CommentItem(ElementItem):
         line_to(w, oy + ear)
         c.stroke()
 	if self.subject.body:
+            off = self.OFFSET
 	    # Do not print empty string, since cairo-win32 can't handle it.
-            text_multiline(c, self.EAR, self.EAR, self.subject.body, padding=2)
+            text_multiline(c, off, off, self.subject.body, self.style.font, self.width - ear, self.height)
 	    #c.move_to(10, 15)
 	    #c.show_text(self.subject.body)
 
-# vim:sw=4
+# vim:sw=4:et:ai

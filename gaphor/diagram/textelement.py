@@ -25,36 +25,45 @@ def swap(list, el1, el2):
     list[i2] = el1
 
 
-def text_extents(cr, text, font=None, multiline=False):
-    if not multiline:
-        text = text.replace('\n', ' ')
+def _text_layout(cr, text, font, width):
     cr = pangocairo.CairoContext(cr)
     layout = cr.create_layout()
-    layout.set_font_description(pango.FontDescription(font))
+    if font:
+        layout.set_font_description(pango.FontDescription(font))
     layout.set_text(text)
+    layout.set_width(int(width * pango.SCALE))
+    #layout.set_height(height)
+    return layout
+
+
+def text_extents(cr, text, font=None, width=-1, height=-1):
+    if not text:
+        return 0, 0
+    layout = _text_layout(cr, text, font, width)
     return layout.get_pixel_size()
 
 
-def text_align(cr, x, y, text, font, align_x=0, align_y=0, padding_x=0, padding_y=0):
+def text_align(cr, x, y, text, font, width=-1, height=-1,
+               align_x=0, align_y=0, padding_x=0, padding_y=0):
     """
     Draw text relative to (x, y).
     x, y - coordinates
     text - text to print (utf8)
     font - The font to render in
-    align_x - -1 (top), 0 (middle), 1 (bottom)
-    align_y - -1 (left), 0 (center), 1 (right)
+    width
+    height
+    align_x - 1 (top), 0 (middle), -1 (bottom)
+    align_y - 1 (left), 0 (center), -1 (right)
     padding_x - padding (extra offset), always > 0
     padding_y - padding (extra offset), always > 0
     """
     if not isinstance(cr, cairo.Context):
         return
+    if not text:
+        return
 
-    cr = pangocairo.CairoContext(cr)
-    layout = cr.create_layout()
-    print 'align with font', font
-    if font:
-        layout.set_font_description(font)
-    layout.set_text(text)
+    layout = _text_layout(cr, text, font, width)
+
     w, h = layout.get_pixel_size()
 
     if align_x == 0:
@@ -72,6 +81,14 @@ def text_align(cr, x, y, text, font, align_x=0, align_y=0, padding_x=0, padding_
     cr.move_to(x, y)
     cr.update_layout(layout)
     cr.show_layout(layout)
+
+
+def text_center(cr, x, y, text, font):
+    text_align(cr, x, y, text, font=font, align_x=0, align_y=0)
+
+
+def text_multiline(cr, x, y, text, font, width=-1, height=-1):
+    text_align(cr, x, y, text, font=font, width=width, height=height, align_x=1, align_y=1)
 
 
 class EditableTextSupport(object):
@@ -188,7 +205,7 @@ class EditableTextSupport(object):
         """
         cr = context.cairo
         for txt in texts:
-            w, h = text_extents(cr, txt.text, font=txt.style.font, multiline=True)
+            w, h = text_extents(cr, txt.text, font=txt.style.font)
             txt.bounds.width = max(15, w)
             txt.bounds.height = max(10, h)
 
@@ -434,7 +451,7 @@ class TextElement(object):
         width, height = bounds.width, bounds.height
 
         cr = context.cairo
-        if isinstance(cr, cairo.Context):
+        if isinstance(cr, cairo.Context) and self.text:
             cr = pangocairo.CairoContext(context.cairo)
             cr.move_to(x, y)
             layout = cr.create_layout()
