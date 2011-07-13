@@ -50,13 +50,13 @@ class StereotypeAttributes(gtk.TreeStore):
                         slot = slots.get(attr)
                         value = slot.value if slot else ''
                         data = (attr.name, value, True, attr, obj, slot)
-                        print 'data', data
+                        #print 'data', data
                         self.append(parent, data)
             else:
                 for attr in st.ownedAttribute:
                     if not attr.association:
                         data = (attr.name, '', False, attr, None, None)
-                        print 'no data', data
+                        #print 'no data', data
                         self.append(parent, data)
 
     @transactional

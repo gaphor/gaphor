@@ -243,7 +243,7 @@ class CompartmentItem(NamedItem):
         'feature-font': 'sans 10',
         'from-padding': (7, 2, 7, 2),
         'compartment-padding': (5, 5, 5, 5), # (top, right, bottom, left)
-        'compartment-vspacing': 3,
+        'compartment-vspacing': 0,
         'name-padding': (10, 10, 10, 10),
         'stereotype-padding': (10, 10, 2, 10),
         # extra space can be used by header or a compartment;

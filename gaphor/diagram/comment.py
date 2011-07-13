@@ -42,7 +42,6 @@ class CommentItem(ElementItem):
         self.min_width = w + e + o * 2
         self.min_height = h + o * 2
         ElementItem.pre_update(self, context)
-        print self.width, self.height, self.min_width, self.min_height
 
 
     def draw(self, context):
@@ -69,7 +68,5 @@ class CommentItem(ElementItem):
             off = self.OFFSET
 	    # Do not print empty string, since cairo-win32 can't handle it.
             text_multiline(c, off, off, self.subject.body, self.style.font, self.width - ear, self.height)
-	    #c.move_to(10, 15)
-	    #c.show_text(self.subject.body)
 
 # vim:sw=4:et:ai
