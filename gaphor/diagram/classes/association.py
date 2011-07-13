@@ -11,7 +11,7 @@ Plan:
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
-from gaphas.util import text_extents, text_multiline
+from gaphor.diagram.textelement import text_extents, text_multiline
 from gaphas.state import reversible_property
 from gaphas import Item
 from gaphas.geometry import Rectangle, distance_point_point_fast
@@ -398,6 +398,7 @@ class AssociationEnd(UML.Presentation):
 
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
+        self.font = 'sans 10'
 
 
     def request_update(self):
@@ -460,8 +461,8 @@ class AssociationEnd(UML.Presentation):
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
         
-        name_w, name_h = map(max, text_extents(cr, self._name, multiline=True), (10, 10))
-        mult_w, mult_h = map(max, text_extents(cr, self._mult, multiline=True), (10, 10))
+        name_w, name_h = map(max, text_extents(cr, self._name, self.font), (10, 10))
+        mult_w, mult_h = map(max, text_extents(cr, self._mult, self.font), (10, 10))
 
         if dy == 0:
             rc = 1000.0 # quite a lot...
@@ -550,8 +551,8 @@ class AssociationEnd(UML.Presentation):
             return
 
         cr = context.cairo
-        text_multiline(cr, self._name_bounds[0], self._name_bounds[1], self._name)
-        text_multiline(cr, self._mult_bounds[0], self._mult_bounds[1], self._mult)
+        text_multiline(cr, self._name_bounds[0], self._name_bounds[1], self._name, self.font)
+        text_multiline(cr, self._mult_bounds[0], self._mult_bounds[1], self._mult, self.font)
         cr.stroke()
 
         if context.hovered or context.focused or context.draw_all:
