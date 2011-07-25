@@ -53,7 +53,7 @@ class StatusWindow(object):
         
         self.progress_bar.set_size_request(400, -1)
         
-        frame.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+        frame.set_shadow_type(gtk.SHADOW_IN)
         frame.add(vbox)
         
         label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
