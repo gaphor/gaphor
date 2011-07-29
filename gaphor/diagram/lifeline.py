@@ -164,14 +164,30 @@ class LifelineItem(NamedItem):
         self._handles.append(bottom)
         self._ports.append(self.lifetime.port)
 
+
+    def setup_canvas(self):
+        super(LifelineItem, self).setup_canvas()
+
+        top = self.lifetime.top
+        bottom = self.lifetime.bottom
+
         # create constraints to:
         # - keep bottom handle below top handle
         # - keep top and bottom handle in the middle of the head
-        self._constraints.append(CenterConstraint(self._handles[SW].pos.x, self._handles[SE].pos.x, bottom.pos.x))
-        self.constraint(vertical=(top.pos, bottom.pos))
-        self.constraint(horizontal=(self._handles[SW].pos, top.pos))
-        self.lifetime._c_min_length = self.constraint(above=(top.pos, bottom.pos),
-                delta=LifetimeItem.MIN_LENGTH)
+        c1 = CenterConstraint(self._handles[SW].pos.x, self._handles[SE].pos.x, bottom.pos.x)
+
+        c2 = EqualsConstraint(top.pos.x, bottom.pos.x, delta=0.0)
+
+        c3 = EqualsConstraint(self._handles[SW].pos.y, top.pos.y, delta=0.0)
+        self.lifetime._c_min_length = LessThanConstraint(top.pos.y, bottom.pos.y, delta=LifetimeItem.MIN_LENGTH)
+        self.__constraints = (c1, c2, c3, self.lifetime._c_min_length)
+
+        map(self.canvas.solver.add_constraint, self.__constraints)
+
+
+    def teardown_canvas(self):
+        super(LifelineItem, self).teardown_canvas()
+        map(self.canvas.solver.remove_constraint, self.__constraints)
 
 
     def save(self, save_func):
