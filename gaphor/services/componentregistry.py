@@ -7,6 +7,7 @@ unregister_handler, handle), a AdapterRegistry and a Subscription registry.
 """
 
 from zope import interface, component
+from zope.component import registry
 from gaphor.core import inject
 from gaphor.interfaces import IService, IEventFilter
 
@@ -27,7 +28,7 @@ class ZopeComponentRegistry(object):
         pass
 
     def init(self, app):
-        self._components = component.registry.Components(
+        self._components = registry.Components(
                                name='component_registry',
                                bases=(component.getGlobalSiteManager(),))
 
