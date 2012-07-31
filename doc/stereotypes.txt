@@ -1,5 +1,6 @@
 Stereotypes
 -----------
+
 Stereotypes is quite another story. In order to create a stereotype
 one should create a Profile. Within this profile a Diagram can be created.
 This diagram should accept only items that are useful within a profile:
@@ -47,6 +48,7 @@ implementable in an application. The point is that the stereotypes you define
 (instances of Stereotype) should be instantiated in your model when you create
 a stereotyped class.
 
-There is BTW no way to connect a stereotype with a class other than an
-Association.
+.. note::
+    There is no way to connect a stereotype with a class other than an
+    Association.
 
