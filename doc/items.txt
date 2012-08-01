@@ -1,27 +1,56 @@
 Gaphor Diagram Items
 ====================
-The Gaphor diagram items (or in short `items`) represent UML metamodel on a
-diagram.
+The diagram items (or in short `items`) represent UML metamodel on a diagram.
+The following sections present the basic items.
 
-Basic items
+DiagramItem
+-----------
+Basic diagram item supporting item style, text elements and stereotypes.
 
-    DiagramItem
-        Basic diagram item supporting item style, text elements
-        and stereotypes.
-    ElementItem
-        Rectangular canvas item.
-    NamedItem
-        NamedElement (UML metamodel) representation using rectangular
-        canvas item.
-    CompartmentItem
-        An item with compartments (i.e. Class or State)
-    ClassifierItem
-        Classifer (UML metamodel) representation.
-    DiagramLine
-        Line canvas item.
-    NamedLine
-        NamedElement (UML metamodel) representation using line canvas item.
-    FeatureItem
-        Diagram representation of UML metamodel classes like property,
-        operation, stereotype attribute, etc.
+.. autoclass:: gaphor.diagram.diagramitem.DiagramItem
+   :members:
+
+ElementItem
+-----------
+Rectangular canvas item.
+
+.. autoclass:: gaphor.diagram.elementitem.ElementItem
+
+NamedItem
+---------
+NamedElement (UML metamodel) representation using rectangular canvas item.
+
+.. autoclass:: gaphor.diagram.nameditem.NamedItem
+
+CompartmentItem
+---------------
+An item with compartments (i.e. Class or State)
+
+.. autoclass:: gaphor.diagram.compartment.CompartmentItem
+
+ClassifierItem
+--------------
+Classifer (UML metamodel) representation.
+
+.. autoclass:: gaphor.diagram.classifier.ClassifierItem
+
+DiagramLine
+-----------
+Line canvas item.
+
+.. autoclass:: gaphor.diagram.diagramline.DiagramLine
+
+NamedLine
+---------
+NamedElement (UML metamodel) representation using line canvas item.
+
+.. autoclass:: gaphor.diagram.diagramline.NamedLine
+
+FeatureItem
+-----------
+Diagram representation of UML metamodel classes like property, operation,
+stereotype attribute, etc.
+
+.. autoclass:: gaphor.diagram.compartment.FeatureItem
+
 

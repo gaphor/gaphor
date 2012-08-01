@@ -1,73 +1,63 @@
-= Get Gaphor running on Windows =
+Gaphor on Windows
+=================
 
 Gaphor even runs on windows. 
 
-  '''NOTE''': The installer is currently broken. For now, use the alternative way as described below (see #128).
+.. warning :: 
 
-Download the installer:
+  The installer is currently broken. For now, use the alternative way
+  as described below (see #128).
 
-{{{
-#!html
-<div style="float: left; height: 51px; background: #eeeeee url(/projects/gaphor/attachment/wiki/Images/arrow.png?format=raw) no-repeat top right; margin: 0; padding: 3px 36px 10px 5px; border: 1px outset #DDDDCC">
-<a href="http://downloads.sourceforge.net/gaphor/gaphor-0.13.0-py2.5.exe" style="font-size: 26px; font-weight: bold; font-family: Verdana, sans-serif">download<br/><span style="font-size: 11px; padding: 0">windows installer</span></a>
-</div>
-<br style="clear: both" />
-}}}
+Download the installer: http://downloads.sourceforge.net/gaphor/. 
+This installer will download all required files and install them (you will
+require an internet connection when running the installer).  
 
-This installer will download all required files and install them (you should have an internet
-connection when running the installer).
+Alternative
+-----------
 
+Another way is to install the `all-in-one installer <http://osl.ulpgc.es/~arc/gnome/pygtk-setup.exe>`_ from `Alberto Ruiz <http://aruiz.typepad.com/siliconisland/2006/12/allinone_win32_.html>`_. Running the PyGTK installer with default settings will install Python, GTK+ and PyGTK in ``C:\Program Files\PyGTK``.
 
-----
+After installing Python, PyGTK and the GTK+ runtime environment, you need to install `easy_install <http://peak.telecommunity.com/DevCenter/EasyInstall>`_. Download the latest version from `ez_setup.py <http://peak.telecommunity.com/dist/ez_setup.py ez_setup.py>`_ (place it in ``C:\Program Files\PyGTK`` for example) and run it: Open a command shell (''Start'' -> ''Run...'', type ``cmd`` (enter))::
 
-For those of you that do not trust installers, check out the alternatives below.
+   C:\>"c:\Program Files\PyGTK\Python\python.exe" "c:\Program Files\PyGTK\ez_setup.py"
 
-== Alternative == 
+After installing ``easy_install``, first install [http://pypi.python.org/pypi/zope.interface zope.interface]::
 
-Another way is to install the [http://osl.ulpgc.es/~arc/gnome/pygtk-setup.exe all-in-one installer] from [http://aruiz.typepad.com/siliconisland/2006/12/allinone_win32_.html Alberto Ruiz]. Running the PyGTK installer with default settings will install Python, GTK+ and PyGTK in {{{C:\Program Files\PyGTK}}}.
+   C:\>"c:\Program Files\PyGTK\Python\Scripts\easy_install.exe" zope.interface==3.3.0
 
-After installing Python, PyGTK and the GTK+ runtime environment, you need to install [http://peak.telecommunity.com/DevCenter/EasyInstall easy_install]. Download the latest version from the [http://peak.telecommunity.com/dist/ez_setup.py ez_setup.py] (place it in {{{C:\Program Files\PyGTK}}} for example) and run it: Open a command shell (''Start'' -> ''Run...'', type {{{cmd}}} (enter))
+Here version 3.3.0 is installed (instead of the latest version). This is due 
+to the fact that no binary distribution is available for the latest
+``zope.interface`` module. No problem. Gaphor will work with an older
+version of ``zope.interface`` too.
 
-{{{
-C:\>"c:\Program Files\PyGTK\Python\python.exe" "c:\Program Files\PyGTK\ez_setup.py"
-}}}
+After a successful installation of ``zope.interface`` Gaphor should be installed by executing::
 
-After installing {{{easy_install}}}, first install [http://pypi.python.org/pypi/zope.interface zope.interface]:
+   C:\>"c:\Program Files\PyGTK\Python\Scripts\easy_install.exe" gaphor
 
-{{{
-C:\>"c:\Program Files\PyGTK\Python\Scripts\easy_install.exe" zope.interface==3.3.0
-}}}
-
-Here version 3.3.0 is installed (instead of the latest version). This is due to the fact that no binary distribution is available for the latest {{{zope.interface}}} module. No problem. Gaphor will work with an older version of {{{zope.interface}}} too.
-
-After a successful installation of {{{zope.interface}}} Gaphor should be installed by executing:
-
-{{{
-C:\>"c:\Program Files\PyGTK\Python\Scripts\easy_install.exe" gaphor
-}}}
-
-Now you should be able to start Gaphor my executing {{{c:\Program Files\PyGTK\Python\Scripts\gaphor.py}}}. This work from within the explorer.
+Now you should be able to start Gaphor my executing ``C:\Program Files\PyGTK\Python\Scripts\gaphor.py``. This work from within the explorer.
 
 
-If you're a developer and already have Python 2.4 installed you can, as an alternative, check out the {{{gaphor-win32-libs}}} module from Gaphors subversion repository or download the zip file from http://svn.devjavu.com/gaphor/gaphor-win32-libs/zips/gaphor-win32-libs.zip. Follow the instructions in the {{{README.txt}}} file.
+If you're a developer and already have Python 2.4 installed you can, as an
+alternative, check out the ``gaphor-win32-libs`` module from Gaphors
+subversion repository or download the zip file from http://svn.devjavu.com/gaphor/gaphor-win32-libs/zips/gaphor-win32-libs.zip.
+Follow the instructions in the ``README.txt`` file.
 
 
-== Trouble shooting ==
+Troubleshooting
+---------------
 
-''You're getting an error message like this:''
-{{{
-error: Setup script exited with error: Python was built with Visual Studio versi
-on 7.1, and extensions need to be built with the same version of the compiler, b
-ut it isn't installed.
-}}}
+You're getting an error message like this::
 
-This is due to the fact that no binary distribution is available for the latest {{{zope.interface}}} module. Try to install an older version of zope.interface (see above).
+    error: Setup script exited with error: Python was built with Visual Studio 
+    version 7.1, and extensions need to be built with the same version of the
+    compiler, but it isn't installed.
 
-''My error is more like this:''
-{{{
-error: Setup script exited with error: command 'gcc' failed: No such file or directory
-}}}
+This is due to the fact that no binary distribution is available for the
+latest ``zope.interface`` module. Try to install an older version of zope.interface (see above).
+
+My error is more like this::
+
+    error: Setup script exited with error: command 'gcc' failed: No such file or directory
 
 Same reason as described above, you just performed the steps described on CustomInstallationLocation.
-
 

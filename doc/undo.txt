@@ -1,5 +1,3 @@
-
-
 UndoManager
 ===========
 
@@ -43,6 +41,7 @@ To update:
     tree:
       add()
       remove()
+
     request_update() (should be performed as part of undo action when called)
 
   Solver (?):
@@ -58,7 +57,7 @@ For methods, it should be possible to create a decorator (@reversible) that
 schedules a method with the same signature as the calling operation, but with
 the inverse effect (e.g. the gaphas.tree module)::
 
-  Tree(object):
+  class Tree(object):
 
     @reversable(lambda s, n, p: s.remove(n))
     def add(self, node, parent=None):
@@ -72,17 +71,18 @@ Okay, so the second case is tougher...
  
  
 So what we did:
-Add a StateManager to gaphas. All changed are send to the statemanager.
-Gaphor should implement it's own state manager.
-  + all state changes can easily be recorded
-  + fix it in one place
-  + reusable throughout Gaphas and subtypes.
+Add a StateManager to gaphas. All changes are sent to the statemanager.
+Gaphor should implement its own state manager.
+
+  * all state changes can easily be recorded
+  * fix it in one place
+  * reusable throughout Gaphas and subtypes.
 
 
 Transactions
-============
+------------
 
-Gaphor's Undo manager works transactional. Typically, methods can be 
+Gaphor's Undo manager works transactionally. Typically, methods can be 
 decorated with @transactional and undo data is stored in the current
 transaction. A new tx is created when none exists.
 
@@ -129,20 +129,19 @@ When the topmost Transaction is committed:
 When a transaction is rolled back:
  
 1. The main transaction is marked for rollback
-2. When the toplevel tx is rolled back or commited a
+2. When the toplevel tx is rolled back or committed a
    TransactionRollback event is emitted
-2. This triggers the UndoManager to play back all recorded actions and
+3. This triggers the UndoManager to play back all recorded actions and
    stop listening.
 
 
 References
-==========
+----------
 
 A Framework for Undoing Actions in Collaborative Systems
   http://www.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf
 Undoing Actions in Collaborative Work: Framework and Experience
   https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf
-
 Implementing a Selective Undo Framework in Python
   http://www.python.org/workshops/1997-10/proceedings/zukowski.html
 

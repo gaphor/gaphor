@@ -5,7 +5,7 @@ The UML method to extend UML (basic) components with a special meaning is by
 using stereotypes. A stereotype defines a special usage of a model element. For
 example: a class that's used as a controller can be assigned a stereotype::
 
-  &laquo;controller&raquo;
+  «controller»
 
 Creating a stereotype starts by the creation of a Profile normally. Although
 stereotypes can be created in every package, it's a good habit to use Profiles

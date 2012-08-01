@@ -11,13 +11,17 @@ piece of cake to generate a DTD too.
 
 These are the things that should be distinguished:
 - model elements
-- associations with other model elements (referenced by ID)
+- associations with other model elements (referenced by ID):
+
   - 0..1 relations
   - 0..* relations
+
 - attributes (always have a multiplicity of 0..1)
 - diagrams
+
   - one canvas
   - several canvas items
+
 - derived attributes and associations are not saved of course.
 
 Model elements should have their class name as tag name, e.g.::
@@ -29,8 +33,9 @@ Model elements should have their class name as tag name, e.g.::
     ...
   </Package>
 
-Associations are in two flavors: single and multiple.
-::
+
+Associations are in two flavors: single and multiple::
+
   <Class id="DCE:xxx.xxx...">
     <package>
       <ref refid="DCE:xxx.../>
@@ -45,8 +50,8 @@ Associations are in two flavors: single and multiple.
     </ownedClassifier>
   </Package>
 
-Associations contain primitive data, this can always be displayed as strings
-::
+Associations contain primitive data, this can always be displayed as strings::
+
   <Class id="DCE:xxx.xxx...">
     <name>
       <![CDATA[My name]]>
@@ -55,8 +60,8 @@ Associations contain primitive data, this can always be displayed as strings
   </Class>
 
 Canvas is the tag in which all canvas related stuff is placed. This is
-the same way it is done now:
-::
+the same way it is done now::
+
   <Diagram id="...">
     <canvas>
       <item type="AssociationItem">
