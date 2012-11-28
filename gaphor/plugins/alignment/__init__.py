@@ -86,7 +86,7 @@ class Alignment(object):
         items = self.get_items()
         min_x=min(self.getXCoordsLeft(items))
 	max_x=max(self.getXCoordsRight(items))
-	center_x = max_x - min_x
+	center_x = min_x + ((max_x - min_x) / 2)
         for item in items:
             x = center_x - (item.width / 2) - item.matrix[4]
             item.matrix.translate(x,0)
