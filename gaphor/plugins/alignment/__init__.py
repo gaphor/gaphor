@@ -55,6 +55,8 @@ class Alignment(object):
 
     def get_items(self):
         return (self._last_update and self._last_update.selected_items) or []
+    def get_focused_item(self):
+        return self._last_update.focused_item
             
     def getXCoordsLeft(self, items):
         return [item.matrix[4] for item in items]
@@ -73,7 +75,8 @@ class Alignment(object):
     @transactional
     def align_left(self):
         items = self.get_items()
-        target_x=min(self.getXCoordsLeft(items))
+        fitem = self.get_focused_item()
+        target_x= fitem.matrix[4]
         for item in items:
             x = target_x - item.matrix[4]
             item.matrix.translate(x,0)
@@ -84,9 +87,10 @@ class Alignment(object):
     @transactional
     def align_center(self):
         items = self.get_items()
+        fitem = self.get_focused_item()
         min_x=min(self.getXCoordsLeft(items))
 	max_x=max(self.getXCoordsRight(items))
-	center_x = min_x + ((max_x - min_x) / 2)
+	center_x = fitem.matrix[4] + (fitem.width / 2)
         for item in items:
             x = center_x - (item.width / 2) - item.matrix[4]
             item.matrix.translate(x,0)
@@ -97,7 +101,8 @@ class Alignment(object):
     @transactional
     def align_right(self):
         items = self.get_items()
-        target_x=max(self.getXCoordsRight(items))
+        fitem = self.get_focused_item()
+        target_x= fitem.matrix[4] + fitem.width
         for item in items:
             x = target_x - item.width - item.matrix[4]
             item.matrix.translate(x,0)
@@ -108,7 +113,8 @@ class Alignment(object):
     @transactional
     def align_top(self):
         items = self.get_items()
-        target_y = min(self.getYCoordsTop(items))
+        fitem = self.get_focused_item()
+        target_y = fitem.matrix[5]
         for item in items:
             y = target_y - item.matrix[5]
             item.matrix.translate(0,y)
@@ -119,9 +125,8 @@ class Alignment(object):
     @transactional
     def align_middle(self):
         items = self.get_items()
-        min_y = min(self.getYCoordsTop(items))
-	max_y = max(self.getYCoordsBottom(items))
-	middle_y = max_y - min_y
+        fitem = self.get_focused_item()
+        middle_y = fitem.matrix[5] + (fitem.height / 2)
         for item in items:
 	    y = middle_y - (item.height / 2) - item.matrix[5]
             item.matrix.translate(0,y)
@@ -132,7 +137,8 @@ class Alignment(object):
     @transactional
     def align_bottom(self):
         items = self.get_items()
-        target_y = min(self.getYCoordsBottom(items))
+        fitem = self.get_focused_item()
+        target_y = fitem.matrix[5] + fitem.height
         for item in items:
             y = target_y - item.height - item.matrix[5]
             item.matrix.translate(0,y)
