@@ -35,14 +35,14 @@ class FlowItem(NamedLine):
 
     def __init__(self, id = None):
         NamedLine.__init__(self, id)
-        self._guard = self.add_text('guard.value', editable=True)
+        self._guard = self.add_text('guard', editable=True)
         self.watch('subject<ControlFlow>.guard', self.on_control_flow_guard)
         self.watch('subject<ObjectFlow>.guard', self.on_control_flow_guard)
 
 
     def postload(self):
         try:
-            self._guard.text = self.subject.guard.value
+            self._guard.text = self.subject.guard
         except AttributeError, e:
             self._guard.text = ''
         super(FlowItem, self).postload()
