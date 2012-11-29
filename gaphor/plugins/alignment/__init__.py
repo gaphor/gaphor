@@ -71,7 +71,7 @@ class Alignment(object):
         return [item.matrix[5] + item.height for item in items]
 
     @action(name='align-left', label='Left',
-            tooltip="Vertically align diagram elements on the left")
+            tooltip="Vertically align diagram elements on the left", accel='<control><shift>l')
     @transactional
     def align_left(self):
         items = self.get_items()
@@ -83,7 +83,7 @@ class Alignment(object):
             item.request_update()
 	
     @action(name='align-center', label='Center',
-            tooltip="Vertically align diagram elements on their centers")
+            tooltip="Vertically align diagram elements on their centers", accel='<control><shift>c')
     @transactional
     def align_center(self):
         items = self.get_items()
@@ -97,7 +97,7 @@ class Alignment(object):
             item.request_update()
 	
     @action(name='align-right', label='Right',
-            tooltip="Vertically align diagram elements on the right")
+            tooltip="Vertically align diagram elements on the right", accel='<control><shift>r')
     @transactional
     def align_right(self):
         items = self.get_items()
@@ -109,7 +109,7 @@ class Alignment(object):
             item.request_update()
 
     @action(name='align-top', label='Top',
-            tooltip="Horizontally align diagram elements on their tops")
+            tooltip="Horizontally align diagram elements on their tops", accel='<control><shift>t')
     @transactional
     def align_top(self):
         items = self.get_items()
@@ -121,7 +121,7 @@ class Alignment(object):
             item.request_update()
 	    
     @action(name='align-middle', label='Middle',
-            tooltip="Horizontally align diagram elements on their middles")
+            tooltip="Horizontally align diagram elements on their middles", accel='<control><shift>m')
     @transactional
     def align_middle(self):
         items = self.get_items()
@@ -133,7 +133,7 @@ class Alignment(object):
             item.request_update()
 	    
     @action(name='align-bottom', label='Bottom',
-            tooltip="Horizontally align diagram elements on their bottoms")
+            tooltip="Horizontally align diagram elements on their bottoms", accel='<control><shift>b')
     @transactional
     def align_bottom(self):
         items = self.get_items()
