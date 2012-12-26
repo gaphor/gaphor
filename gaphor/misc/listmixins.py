@@ -105,7 +105,7 @@ class querymixin(object):
 
 def issafeiterable(obj):
     """
-    Checks if the object is iteable, but not a string.
+    Checks if the object is iterable, but not a string.
 
     >>> issafeiterable([])
     True
