@@ -5,7 +5,7 @@ Run 'python setup.py develop' to set up a development environment, including
 dependencies.
 """
 
-VERSION = '0.17.1'
+VERSION = '0.17.2'
 
 import os
 import sys
