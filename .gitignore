@@ -3,7 +3,6 @@ develop-eggs/
 devsrc/
 build
 dist
-gaphor/UML/uml2.py
 gaphor/data
 po/gaphor.pot
 html
