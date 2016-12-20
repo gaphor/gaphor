@@ -8,6 +8,7 @@ save(filename)
     store the current model in a file
 """
 
+from logging import getLogger
 from cStringIO import StringIO, InputType
 from xml.sax.saxutils import escape
 import types
@@ -39,26 +40,41 @@ __all__ = [ 'load', 'save' ]
 FILE_FORMAT_VERSION = '3.0'
 NAMESPACE_MODEL = 'http://gaphor.sourceforge.net/model'
 
+logger = getLogger('storage')
+
 def save(writer=None, factory=None, status_queue=None):
+    """Save the model using a writer, an element factory, and a status
+    queue for monitoring progress."""
+    
+    logger.info('Saving model')
+    logger.debug('WRITER: %s'%writer)
+    logger.debug('FACTORY: %s'%factory)
+    logger.debug('STATUS QUEUE: %s'%status_queue)
+    
     for status in save_generator(writer, factory):
         if status_queue:
             status_queue(status)
 
 def save_generator(writer, factory):
-    """
-    Save the current model using @writer, which is a
-    gaphor.misc.xmlwriter.XMLWriter instance.
-    """
+    """Save the current model using writer, which is a
+    gaphor.misc.xmlwriter.XMLWriter instance.  Ideally, we should be
+    able to plug any writer in here."""
+    
+    logger.debug('Starting save generator')
+    logger.debug('WRITER: %s'%writer)
+    logger.debug('FACTORY: %s'%factory)
 
     # Maintain a set of id's, one for elements, one for references.
     # Write only to file if references is a subset of elements
 
     def save_reference(name, value):
-        """
-        Save a value as a reference to another element in the model.
-        This applies to both UML as well as canvas items.
-        """
-        # Save a reference to the object:
+        """Save a value as a reference to another element in the model.
+        This applies to both UML as well as canvas items."""
+        
+        logger.debug('Saving reference')
+        logger.debug('NAME: %s'%name)
+        logger.debug('VALUE: %s'%value)
+
         if value.id:
             writer.startElement(name, {})
             writer.startElement('ref', { 'refid': value.id })
@@ -66,27 +82,40 @@ def save_generator(writer, factory):
             writer.endElement(name)
 
     def save_collection(name, value):
-        """
-        Save a list of references.
-        """
+        """Save a list of references."""
+        
+        logger.debug('Saving collection')
+        logger.debug('NAME: %s'%name)
+        logger.debug('VALUE: %s'%value)
+        logger.debug('COLLECTION SIZE: %s'%len(value))
+        
         if len(value) > 0:
+            
             writer.startElement(name, {})
             writer.startElement('reflist', {})
-            for v in value:
-                #save_reference(name, v)
-                if v.id:
-                    writer.startElement('ref', { 'refid': v.id })
+            
+            for collection_item in value:
+                
+                if collection_item.id:
+                    
+                    writer.startElement('ref', { 'refid': collection_item.id })
                     writer.endElement('ref')
+                    
             writer.endElement('reflist')
             writer.endElement(name)
 
     def save_value(name, value):
-        """
-        Save a value (attribute).
-        """
+        """Save a value (attribute)."""
+        
+        logger.debug('Saving value')
+        logger.debug('NAME: %s'%name)
+        logger.debug('VALUE: %s'%value)
+        
         if value is not None:
+            
             writer.startElement(name, {})
             writer.startElement('val', {})
+            
             if isinstance(value, types.StringTypes):
                 writer.characters(value)
             elif isinstance(value, bool):
@@ -94,17 +123,21 @@ def save_generator(writer, factory):
                 writer.characters(str(int(value)))
             else:
                 writer.characters(str(value))
+                
             writer.endElement('val')
             writer.endElement(name)
 
     def save_element(name, value):
-        """
-        Save attributes and references from items in the gaphor.UML module.
-        A value may be a primitive (string, int), a gaphor.UML.collection
-        (which contains a list of references to other UML elements) or a
-        gaphas.Canvas (which contains canvas items).
-        """
-        #log.debug('saving element: %s|%s %s' % (name, value, type(value)))
+        """Save attributes and references from items in the gaphor.UML 
+        module.  A value may be a primitive (string, int), a 
+        gaphor.UML.collection (which contains a list of references to 
+        other UML elements) or a gaphas.Canvas (which contains canvas 
+        items)."""
+        
+        logger.debug('Saving element')
+        logger.debug('NAME: %s'%name)
+        logger.debug('VALUE: %s'%value)
+        
         if isinstance (value, (UML.Element, gaphas.Item)):
             save_reference(name, value)
         elif isinstance(value, collection):
@@ -117,13 +150,16 @@ def save_generator(writer, factory):
             save_value(name, value)
 
     def save_canvasitem(name, value, reference=False):
-        """
-        Save attributes and references in a gaphor.diagram.* object.
-        The extra attribute reference can be used to force UML 
-        """
-        #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
+        """Save attributes and references in a gaphor.diagram.* object.
+        The extra attribute reference can be used to force UML."""
+        
+        logger.debug('Saving canvas item')
+        logger.debug('NAME: %s'%name)
+        logger.debug('VALUE: %s'%value)
+        logger.debug('REFERENCE: %s'%reference)
+        
         if isinstance(value, collection) or \
-                (isinstance(value, (list, tuple)) and reference == True):
+           (isinstance(value, (list, tuple)) and reference == True):
             save_collection(name, value)
         elif reference:
             save_reference(name, value)
@@ -132,7 +168,6 @@ def save_generator(writer, factory):
                                           'type': value.__class__.__name__ })
             value.save(save_canvasitem)
 
-            # save subitems
             for child in value.canvas.get_children(value):
                 save_canvasitem(None, child)
 
@@ -153,7 +188,6 @@ def save_generator(writer, factory):
     n = 0
     for e in factory.values():
         clazz = e.__class__.__name__
-        assert e.id
         writer.startElement(clazz, { 'id': str(e.id) })
         e.save(save_element)
         writer.endElement(clazz)
@@ -162,13 +196,20 @@ def save_generator(writer, factory):
         if n % 25 == 0:
             yield (n * 100) / size
 
-    #writer.endElement('gaphor')
     writer.endElementNS((NAMESPACE_MODEL, 'gaphor'), None)
     writer.endPrefixMapping('')
     writer.endDocument()
+    
+    logger.debug('Save generator finished')
 
 
 def load_elements(elements, factory, status_queue=None):
+    
+    logger.debug('Loading elements')
+    logger.debug('ELEMENTS: %s'%elements)
+    logger.debug('FACTORY: %s'%factory)
+    logger.debug('STATUS QUEUE: %s'%status_queue)
+    
     for status in load_elements_generator(elements, factory):
         if status_queue:
             status_queue(status)
@@ -179,10 +220,17 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     Exceptions: IOError, ValueError.
     """
     # TODO: restructure loading code, first load model, then add canvas items
-    log.debug(_('Loading %d elements...') % len(elements))
+    
+    logger.debug('Starting load elements generator')
+    logger.debug('ELEMENTS: %s'%elements)
+    logger.debug('FACTORY: %s'%factory)
+    logger.debug('GAPHOR VERSION: %s'%gaphor_version)
 
     # The elements are iterated three times:
     size = len(elements) * 3
+    
+    logger.debug('ITERATION SIZE: %s'%size)
+    
     def update_status_queue(_n=[0]):
         n = _n[0] = _n[0] + 1
         if n % 30 == 0:
@@ -198,15 +246,18 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     version_0_15_0_pre(elements, factory, gaphor_version)
     version_0_17_0(elements, factory, gaphor_version)
 
-    #log.debug("Still have %d elements" % len(elements))
-
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
 
     def create_canvasitems(canvas, canvasitems, parent=None):
-        """
-        Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
-        """
+        """Canvas is a read gaphas.Canvas, items is a list of 
+        parser.canvasitem's."""
+        
+        logger.debug('Creating canvas items')
+        logger.debug('CANVAS: %s'%canvas)
+        logger.debug('CANVAS ITEMS: %s'%canvasitems)
+        logger.debug('PARENT: %s'%parent)
+        
         for item in canvasitems:
             cls = getattr(items, item.type)
             item.element = diagram.create_as(cls, item.id)
@@ -298,25 +349,28 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
 
 def load(filename, factory, status_queue=None):
-    """
-    Load a file and create a model if possible.
-    Optionally, a status queue function can be given, to which the
-    progress is written (as status_queue(progress)).
-    """
+    """Load a file and create a model if possible.  Optionally, a 
+    status queue function can be given, to which the progress is 
+    written (as status_queue(progress))."""
+    
+    logger.info('Loading model')
+    logger.debug('FILE NAME: %s'%filename)
+    logger.debug('FACTORY: %s'%factory)
+    logger.debug('STATUS QUEUE: %s'%status_queue)
+    
     for status in load_generator(filename, factory):
         if status_queue:
             status_queue(status)
 
 def load_generator(filename, factory):
-    """
-    Load a file and create a model if possible.
-    This function is a generator. It will yield values from 0 to 100 (%)
-    to indicate its progression.
-    """
-    if isinstance(filename, (file, InputType)):
-        log.info('Loading file from file descriptor')
-    else:
-        log.info('Loading file %s' % os.path.basename(filename))
+    """Load a file and create a model if possible.  This function is a 
+    generator. It will yield values from 0 to 100 (%) to indicate its 
+    progression."""
+    
+    logger.debug('Starting load generator')
+    logger.debug('FILE NAME: %s'%filename)
+    logger.debug('FACTORY: %s'%factory)
+    
     try:
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
@@ -328,10 +382,9 @@ def load_generator(filename, factory):
                 yield percentage
         elements = loader.elements
         gaphor_version = loader.gaphor_version
-        #elements = parser.parse(filename)
-        #yield 100
+
     except Exception, e:
-        log.error('File could no be parsed', exc_info=True)
+        logger.error('File could no be parsed', exc_info=True)
         raise
 
     try:
@@ -340,9 +393,8 @@ def load_generator(filename, factory):
         component_registry = None
 
     try:
+        logger.debug('Flushing factory')
         factory.flush()
-        gc.collect()
-        log.info("Read %d elements from file" % len(elements))
         if component_registry:
             component_registry.register_subscription_adapter(ElementChangedEventBlocker)
         try:
@@ -357,10 +409,9 @@ def load_generator(filename, factory):
             if component_registry:
                 component_registry.unregister_subscription_adapter(ElementChangedEventBlocker)
 
-        gc.collect()
         yield 100
     except Exception, e:
-        log.info('file %s could not be loaded' % filename)
+        logger.error('File %s could not be loaded' % filename)
         raise
 
 def version_lower_than(gaphor_version, version):
