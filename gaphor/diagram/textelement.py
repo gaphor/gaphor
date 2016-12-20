@@ -374,7 +374,7 @@ class TextElement(object):
     class (DiagramItem.subject). Attribute name can be recursive, all
     below attribute names are valid:
      - name (named item name)
-     - guard.value (flow item guard)
+     - guard (flow item guard)
 
     Attributes and properties:
      - attr:     name of displayed and edited UML class attribute
