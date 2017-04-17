@@ -1,12 +1,18 @@
-Gaphor - The Pythonic UML modelling tool
+Gaphor - The Pythonic UML modeling tool
 ========================================
 
-Gaphor is a UML modelling tool, written in Python. This makes it very easy to
+Gaphor is a UML modeling tool, written in Python. This makes it very easy to
 use (and very easy to extend -- and to write ;-) ).
 
 Install gaphor simply using easy-install:
 
   $ easy-install gaphor
+
+In Linux recommend using a virtual environment for installation. Since pyGTK doesn't work well with a virtualenv,
+install it outside the virtual environment and then start your the virtualenv using the --system-site-packages option:
+  $ virtualenv --system-site-packages venv
+  $ source venv/bin/activate
+  $ easy_install gaphor
 
 You can find the sources at GitHub:
 
