@@ -9,7 +9,6 @@ Functions collected in this module allow to
 """
 
 from __future__ import absolute_import
-import itertools
 from gaphor.UML.uml2 import *
 
 # '<<%s>>'
