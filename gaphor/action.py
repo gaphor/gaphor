@@ -178,7 +178,7 @@ def build_action_group(obj, name=None):
             group.add_action_with_accel(gtkact, act.accel)
 
         elif act is not None:
-            raise TypeError, 'Invalid action type: %s' % action
+            raise TypeError('Invalid action type: %s' % action)
     return group
 
 

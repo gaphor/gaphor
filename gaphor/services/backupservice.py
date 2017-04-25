@@ -1,18 +1,18 @@
 """
 """
 
+from __future__ import absolute_import
 from zope import interface
-from gaphor.UML import Element
-from gaphor.application import Application
-from gaphor.interfaces import IService, IActionProvider
-from gaphor.core import _, inject
+from gaphor.UML.uml2 import Element
+from gaphor.interfaces import IService
+from gaphor.core import inject
 
 # Register application specific picklers:
-import gaphas.picklers
 from gaphor.misc.latepickle import LatePickler
 
 
 import pickle
+from six.moves import map
 class MyPickler(LatePickler):
     """
     Customize the pickler to only delay instantiations of Element objects.
@@ -59,7 +59,7 @@ class BackupService(object):
         finally:
             f.close()
         self.element_factory.flush()
-        map(self.element_factory.bind, elements)
+        list(map(self.element_factory.bind, elements))
 
 
 # vim: sw=4:et:ai

@@ -2,6 +2,7 @@
 """Provides a get_user_data_dir() function for retrieving the user's data
 directory."""
 
+from __future__ import absolute_import
 import os
 
 def get_user_data_dir():

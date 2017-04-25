@@ -2,9 +2,10 @@
 State diagram item.
 """
 
+from __future__ import absolute_import
 import operator
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP
 from gaphor.diagram.states import VertexItem
 from gaphor.diagram.classifier import CompartmentItem
@@ -18,7 +19,7 @@ DDY = 0.4 * DY
 
 class StateItem(CompartmentItem, VertexItem):
     element_factory = inject('element_factory')
-    __uml__   = UML.State
+    __uml__   = uml2.State
     __style__ = {
         'min-size':   (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_TOP),
@@ -41,7 +42,7 @@ class StateItem(CompartmentItem, VertexItem):
     def _set_activity(self, act, attr, text):
         if text and act not in self._activities:
             self._activities.append(act)
-            act.subject = self.element_factory.create(UML.Activity)
+            act.subject = self.element_factory.create(uml2.Activity)
             act.subject.name = text
             setattr(self.subject, attr, act.subject)
 

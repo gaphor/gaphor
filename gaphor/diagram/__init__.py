@@ -4,11 +4,13 @@ The diagram package contains items (to be drawn on the diagram), tools
 diagram).
 """
 
+from __future__ import absolute_import
 import inspect
 import gobject
 import uuid
 
 from gaphor.diagram.style import Style
+import six
 
 # Map UML elements to their (default) representation.
 _uml_to_item_map = { }
@@ -99,7 +101,7 @@ class DiagramItemMeta(type):
                     style.add(name, value)
 
         if '__style__' in data:
-            for (name, value) in data['__style__'].iteritems():
+            for (name, value) in six.iteritems(data['__style__']):
                 style.add(name, value)
 
         self.style = style

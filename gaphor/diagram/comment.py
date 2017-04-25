@@ -2,15 +2,16 @@
 CommentItem diagram item
 """
 
-from gaphor import UML
-from elementitem import ElementItem
+from __future__ import absolute_import
+from gaphor.UML import uml2
+from .elementitem import ElementItem
 from gaphas.item import NW
-from textelement import text_multiline, text_extents
+from .textelement import text_multiline, text_extents
 
 
 class CommentItem(ElementItem):
 
-    __uml__ = UML.Comment
+    __uml__ = uml2.Comment
 
     __style__ = {
         'font': 'sans 10'

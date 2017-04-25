@@ -3,6 +3,7 @@
 Factory for and registration of model elements.
 """
 
+from __future__ import absolute_import
 from zope import interface
 from zope import component
 import uuid
@@ -15,7 +16,8 @@ from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
 from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
                              FlushFactoryEvent, ModelFactoryEvent
 from gaphor.UML.element import Element
-from gaphor.UML.diagram import Diagram
+from gaphor.UML.uml2 import Diagram
+import six
 
 
 class ElementFactory(object):
@@ -59,9 +61,9 @@ class ElementFactory(object):
         The element may not be bound to another factory already.
         """
         if hasattr(element, '_factory') and element._factory:
-            raise AttributeError, "element is already bound"
+            raise AttributeError("element is already bound")
         if self._elements.get(element.id):
-            raise AttributeError, "an element already exists with the same id"
+            raise AttributeError("an element already exists with the same id")
 
         element._factory = self
         self._elements[element.id] = element
@@ -93,10 +95,10 @@ class ElementFactory(object):
         Iterate elements that comply with expression.
         """
         if expression is None:
-            for e in self._elements.itervalues():
+            for e in six.itervalues(self._elements):
                 yield e
         else:
-            for e in self._elements.itervalues():
+            for e in six.itervalues(self._elements):
                 if expression(e):
                     yield e
 
@@ -112,28 +114,28 @@ class ElementFactory(object):
         """
         Return a list with all id's in the factory.
         """
-        return self._elements.keys()
+        return list(self._elements.keys())
 
 
     def iterkeys(self):
         """
         Return a iterator with all id's in the factory.
         """
-        return self._elements.iterkeys()
+        return six.iterkeys(self._elements)
 
 
     def values(self):
         """
         Return a list with all elements in the factory.
         """
-        return self._elements.values()
+        return list(self._elements.values())
 
 
     def itervalues(self):
         """
         Return a iterator with all elements in the factory.
         """
-        return self._elements.itervalues()
+        return six.itervalues(self._elements)
 
 
     def is_empty(self):
@@ -171,7 +173,7 @@ class ElementFactory(object):
             pass
 
     def swap_element(self, element, new_class):
-	assert element in self._elements.values()
+	assert element in list(self._elements.values())
         if element.__class__ is not new_class:
             element.__class__ = new_class
 

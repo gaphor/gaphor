@@ -1,8 +1,9 @@
 
+from __future__ import absolute_import
 import gtk
 import logging
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 from gaphas.canvas import Context
 
@@ -22,8 +23,8 @@ class DiagramItemConnectorTestCase(TestCase):
 
     def test_item_reconnect(self):
         # Setting the stage:
-	ci1 = self.create(items.ClassItem, UML.Class)
-        ci2 = self.create(items.ClassItem, UML.Class)
+	ci1 = self.create(items.ClassItem, uml2.Class)
+        ci2 = self.create(items.ClassItem, uml2.Class)
         a = self.create(items.AssociationItem)
 
         self.connect(a, a.head, ci1)

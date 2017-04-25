@@ -2,15 +2,16 @@
 Test include item connections.
 """
 
+from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 
 class IncludeItemTestCase(TestCase):
     def test_use_case_glue(self):
         """Test "include" glueing to use cases
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
         include = self.create(items.IncludeItem)
 
         glued = self.allow(include, include.head, uc1)
@@ -20,8 +21,8 @@ class IncludeItemTestCase(TestCase):
     def test_use_case_connect(self):
         """Test connecting "include" to use cases
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc2 = self.create(items.UseCaseItem, uml2.UseCase)
         include = self.create(items.IncludeItem)
 
         self.connect(include, include.head, uc1)
@@ -34,9 +35,9 @@ class IncludeItemTestCase(TestCase):
     def test_use_case_connect(self):
         """Test reconnecting use cases with "include"
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
-        uc3 = self.create(items.UseCaseItem, UML.UseCase)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc2 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc3 = self.create(items.UseCaseItem, uml2.UseCase)
         include = self.create(items.IncludeItem)
 
         # connect: uc1 -> uc2
@@ -55,8 +56,8 @@ class IncludeItemTestCase(TestCase):
     def test_use_case_disconnect(self):
         """Test disconnecting "include" from use cases
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc2 = self.create(items.UseCaseItem, uml2.UseCase)
         include = self.create(items.IncludeItem)
 
         self.connect(include, include.head, uc1)

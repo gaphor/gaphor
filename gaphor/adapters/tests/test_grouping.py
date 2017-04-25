@@ -2,7 +2,8 @@
 Tests for grouping functionality in Gaphor.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.ui.namespace import NamespaceModel
 from gaphor.diagram import items
 
@@ -16,8 +17,8 @@ class NodesGroupTestCase(TestCase):
     def test_grouping(self):
         """Test node within another node composition
         """
-        n1 = self.create(items.NodeItem, UML.Node)
-        n2 = self.create(items.NodeItem, UML.Node)
+        n1 = self.create(items.NodeItem, uml2.Node)
+        n2 = self.create(items.NodeItem, uml2.Node)
 
         self.group(n1, n2)
 
@@ -28,8 +29,8 @@ class NodesGroupTestCase(TestCase):
     def test_ungrouping(self):
         """Test decomposition of component from node
         """
-        n1 = self.create(items.NodeItem, UML.Node)
-        n2 = self.create(items.NodeItem, UML.Node)
+        n1 = self.create(items.NodeItem, uml2.Node)
+        n2 = self.create(items.NodeItem, uml2.Node)
 
         self.group(n1, n2)
         self.ungroup(n1, n2)
@@ -44,15 +45,15 @@ class NodeComponentGroupTestCase(TestCase):
     def test_grouping(self):
         """Test component within node composition
         """
-        n = self.create(items.NodeItem, UML.Node)
-        c = self.create(items.ComponentItem, UML.Component)
+        n = self.create(items.NodeItem, uml2.Node)
+        c = self.create(items.ComponentItem, uml2.Component)
 
         self.group(n, c)
 
         self.assertEquals(1, len(n.subject.ownedAttribute))
         self.assertEquals(1, len(n.subject.ownedConnector))
         self.assertEquals(1, len(c.subject.ownedAttribute))
-        self.assertEquals(2, len(self.kindof(UML.ConnectorEnd)))
+        self.assertEquals(2, len(self.kindof(uml2.ConnectorEnd)))
 
         a1 = n.subject.ownedAttribute[0]
         a2 = c.subject.ownedAttribute[0]
@@ -68,17 +69,17 @@ class NodeComponentGroupTestCase(TestCase):
     def test_ungrouping(self):
         """Test decomposition of component from node
         """
-        n = self.create(items.NodeItem, UML.Node)
-        c = self.create(items.ComponentItem, UML.Component)
+        n = self.create(items.NodeItem, uml2.Node)
+        c = self.create(items.ComponentItem, uml2.Component)
 
         query = self.group(n, c)
         query = self.ungroup(n, c)
 
         self.assertEquals(0, len(n.subject.ownedAttribute))
         self.assertEquals(0, len(c.subject.ownedAttribute))
-        self.assertEquals(0, len(self.kindof(UML.Property)))
-        self.assertEquals(0, len(self.kindof(UML.Connector)))
-        self.assertEquals(0, len(self.kindof(UML.ConnectorEnd)))
+        self.assertEquals(0, len(self.kindof(uml2.Property)))
+        self.assertEquals(0, len(self.kindof(uml2.Connector)))
+        self.assertEquals(0, len(self.kindof(uml2.ConnectorEnd)))
 
 
 class NodeArtifactGroupTestCase(TestCase):
@@ -86,8 +87,8 @@ class NodeArtifactGroupTestCase(TestCase):
     def test_grouping(self):
         """Test artifact within node deployment
         """
-        n = self.create(items.NodeItem, UML.Node)
-        a = self.create(items.ArtifactItem, UML.Artifact)
+        n = self.create(items.NodeItem, uml2.Node)
+        a = self.create(items.ArtifactItem, uml2.Artifact)
 
         self.group(n, a)
 
@@ -98,14 +99,14 @@ class NodeArtifactGroupTestCase(TestCase):
     def test_ungrouping(self):
         """Test removal of artifact from node
         """
-        n = self.create(items.NodeItem, UML.Node)
-        a = self.create(items.ArtifactItem, UML.Artifact)
+        n = self.create(items.NodeItem, uml2.Node)
+        a = self.create(items.ArtifactItem, uml2.Artifact)
 
         query = self.group(n, a)
         query = self.ungroup(n, a)
 
         self.assertEquals(0, len(n.subject.deployment))
-        self.assertEquals(0, len(self.kindof(UML.Deployment)))
+        self.assertEquals(0, len(self.kindof(uml2.Deployment)))
 
 
 
@@ -114,9 +115,9 @@ class SubsystemUseCaseGroupTestCase(TestCase):
     def test_grouping(self):
         """Test adding an use case to a subsystem
         """
-        s = self.create(items.SubsystemItem, UML.Component)
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
+        s = self.create(items.SubsystemItem, uml2.Component)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc2 = self.create(items.UseCaseItem, uml2.UseCase)
 
         self.group(s, uc1)
         self.assertEquals(1, len(uc1.subject.subject))
@@ -131,12 +132,12 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         """Test adding an use case to a subsystem (with namespace)
         """
         namespace = NamespaceModel(self.element_factory)
-        s = self.create(items.SubsystemItem, UML.Component)
-        uc = self.create(items.UseCaseItem, UML.UseCase)
+        s = self.create(items.SubsystemItem, uml2.Component)
+        uc = self.create(items.UseCaseItem, uml2.UseCase)
 
         # manipulate namespace
-        c = self.element_factory.create(UML.Class)
-        attribute = self.element_factory.create(UML.Property)
+        c = self.element_factory.create(uml2.Class)
+        attribute = self.element_factory.create(uml2.Property)
         c.ownedAttribute = attribute
 
         self.group(s, uc)
@@ -147,9 +148,9 @@ class SubsystemUseCaseGroupTestCase(TestCase):
     def test_ungrouping(self):
         """Test removal of use case from subsystem
         """
-        s = self.create(items.SubsystemItem, UML.Component)
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
+        s = self.create(items.SubsystemItem, uml2.Component)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc2 = self.create(items.UseCaseItem, uml2.UseCase)
 
         self.group(s, uc1)
         self.group(s, uc2)
@@ -171,7 +172,7 @@ class PartitionGroupTestCase(TestCase):
         """Test adding subpartition when nodes added
         """
         p = self.create(items.PartitionItem)
-        a1 = self.create(items.ActionItem, UML.Action)
+        a1 = self.create(items.ActionItem, uml2.Action)
         p1 = self.create(items.PartitionItem)
         p2 = self.create(items.PartitionItem)
 
@@ -184,7 +185,7 @@ class PartitionGroupTestCase(TestCase):
         """Test adding nodes when subpartition added
         """
         p = self.create(items.PartitionItem)
-        a1 = self.create(items.ActionItem, UML.Action)
+        a1 = self.create(items.ActionItem, uml2.Action)
         p1 = self.create(items.PartitionItem)
 
         self.group(p, p1)
@@ -196,8 +197,8 @@ class PartitionGroupTestCase(TestCase):
         """
         p1 = self.create(items.PartitionItem)
         p2 = self.create(items.PartitionItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
+        a1 = self.create(items.ActionItem, uml2.Action)
+        a2 = self.create(items.ActionItem, uml2.Action)
 
         self.assertFalse(self.can_group(p1, a1)) # cannot add to dimension
 
@@ -231,8 +232,8 @@ class PartitionGroupTestCase(TestCase):
         """
         p1 = self.create(items.PartitionItem)
         p2 = self.create(items.PartitionItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
+        a1 = self.create(items.ActionItem, uml2.Action)
+        a2 = self.create(items.ActionItem, uml2.Action)
 
         self.group(p1, p2)
 
@@ -248,7 +249,7 @@ class PartitionGroupTestCase(TestCase):
         self.ungroup(p1, p2)
         self.assertTrue(p1.subject is None, p1.subject)
         self.assertTrue(p2.subject is None, p2.subject)
-        self.assertEquals(0, len(self.kindof(UML.ActivityPartition)))
+        self.assertEquals(0, len(self.kindof(uml2.ActivityPartition)))
 
 
     def test_ungrouping_with_actions(self):
@@ -256,8 +257,8 @@ class PartitionGroupTestCase(TestCase):
         """
         p1 = self.create(items.PartitionItem)
         p2 = self.create(items.PartitionItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
+        a1 = self.create(items.ActionItem, uml2.Action)
+        a2 = self.create(items.ActionItem, uml2.Action)
 
         self.group(p1, p2)
 
@@ -296,7 +297,7 @@ class PartitionGroupTestCase(TestCase):
         self.assertTrue(p2.subject is None, p2.subject)
         self.assertTrue(p3.subject is not None, p3.subject)
         self.assertTrue(p4.subject is not None, p4.subject)
-        self.assertEquals(2, len(self.kindof(UML.ActivityPartition)))
+        self.assertEquals(2, len(self.kindof(uml2.ActivityPartition)))
 
 
     def test_nested_subpartition_regrouping(self):
@@ -319,10 +320,10 @@ class PartitionGroupTestCase(TestCase):
         self.assertTrue(p2.subject is None, p2.subject)
         self.assertTrue(p3.subject is not None, p3.subject)
         self.assertTrue(p4.subject is not None, p4.subject)
-        self.assertEquals(2, len(self.kindof(UML.ActivityPartition)))
+        self.assertEquals(2, len(self.kindof(uml2.ActivityPartition)))
 
         self.group(p1, p2)
-        self.assertEquals(3, len(self.kindof(UML.ActivityPartition)))
+        self.assertEquals(3, len(self.kindof(uml2.ActivityPartition)))
         self.assertTrue(p2.subject is not None, p2.subject)
         self.assertTrue(p3.subject is not None, p3.subject)
         self.assertTrue(p4.subject is not None, p4.subject)

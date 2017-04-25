@@ -2,6 +2,7 @@
 Test the UndoManager.
 """
 
+from __future__ import absolute_import
 from gaphor.tests.testcase import TestCase
 from gaphor.services.undomanager import UndoManager
 from gaphor.transaction import Transaction
@@ -109,7 +110,7 @@ class TestUndoManager(TestCase):
         undo_manager.init(Application)
 
         class A(Element):
-            attr = attribute('attr', types.StringType, default='default')
+            attr = attribute('attr', bytes, default='default')
 
         a = A()
         assert a.attr == 'default', a.attr

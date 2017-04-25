@@ -19,6 +19,7 @@ There are separate diagram items for pseudostates
     we start to implement more pseudostates].
 """
 
+from __future__ import absolute_import
 from gaphor.diagram.nameditem import NamedItem
 
 class VertexItem(NamedItem):

@@ -2,10 +2,12 @@
 Style classes and constants.
 """
 
-from math import pi
+from __future__ import absolute_import
+import six
+from six.moves import range
 
 # padding
-PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = range(4)
+PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = list(range(4))
 
 # horizontal align
 ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = -1, 0, 1
@@ -66,7 +68,7 @@ class Style(object):
         """
         Return iterator of (name, value) style information items.
         """
-        return self.__dict__.iteritems()
+        return six.iteritems(self.__dict__)
 
 
 def get_min_size(width, height, padding):

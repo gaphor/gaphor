@@ -2,12 +2,13 @@
 Adapters
 """
 
+from __future__ import absolute_import
 from zope import interface, component
 
 from gaphas.item import NW, SE
 from gaphas import geometry
 from gaphas import constraint
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.core import inject
 from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
@@ -25,7 +26,7 @@ def editable(el):
     return el
     
 
-@editable.when_type(UML.Slot)
+@editable.when_type(uml2.Slot)
 def editable_slot(el):
     """
     Return editable part of a slot.
@@ -152,13 +153,13 @@ class CompartmentItemEditor(object):
         return bool(self._edit and self._edit.subject)
 
     def get_text(self):
-        return UML.format(editable(self._edit.subject))
+        return uml2.format(editable(self._edit.subject))
 
     def get_bounds(self):
         return None
 
     def update_text(self, text):
-        UML.parse(editable(self._edit.subject), text)
+        uml2.parse(editable(self._edit.subject), text)
 
     def key_pressed(self, pos, key):
         pass
@@ -192,14 +193,14 @@ class AssociationItemEditor(object):
     def get_text(self):
         if self._edit is self._item:
             return self._edit.subject.name
-        return UML.format(self._edit.subject, visibility=True,
+        return format(self._edit.subject, visibility=True,
                                 is_derived=True, type=True,
                                 multiplicity=True, default=True)
     def get_bounds(self):
         return None
 
     def update_text(self, text):
-        UML.parse(self._edit.subject, text)
+        uml2.parse(self._edit.subject, text)
 
     def key_pressed(self, pos, key):
         pass

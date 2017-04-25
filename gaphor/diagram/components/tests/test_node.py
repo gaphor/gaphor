@@ -1,5 +1,4 @@
-from gaphor.diagram import items
-from gaphor import UML
+from __future__ import absolute_import
 from gaphor.tests import TestCase
 
 class NodeTestCase(TestCase):

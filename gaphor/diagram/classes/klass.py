@@ -1,21 +1,21 @@
 """This module defines two visualization items - OperationItem and ClassItem."""
 
+from __future__ import absolute_import
 from gaphas.state import observed, reversible_property
 
-from gaphor import UML
-from gaphor.i18n import _
+from gaphor.UML import uml2
 
 from gaphor.diagram.classifier import ClassifierItem
 from gaphor.diagram.compartment import FeatureItem
 
 class OperationItem(FeatureItem):
-    """This is visualization of a class operation and is a type of 
+    """This is visualization of a class operation and is a type of
     FeatureItem."""
-    
+
     def render(self):
         """Render the OperationItem."""
         
-        return UML.format(self.subject,\
+        return format(self.subject,\
                           visibility=True,\
                           type=True,\
                           multiplicity=True,\
@@ -30,11 +30,11 @@ class ClassItem(ClassifierItem):
     Items can be added by callling class.add() and class.remove().
     This is used to handle CanvasItems, not UML objects!"""
 
-    __uml__ = UML.Class, UML.Stereotype
+    __uml__ = uml2.Class, uml2.Stereotype
     
     __stereotype__ = {
-        'stereotype': UML.Stereotype,
-        'metaclass': lambda self: (not isinstance(self.subject, UML.Stereotype)) and hasattr(self.subject, 'extension') and self.subject.extension,
+        'stereotype': uml2.Stereotype,
+        'metaclass': lambda self: (not isinstance(self.subject, uml2.Stereotype)) and hasattr(self.subject, 'extension') and self.subject.extension,
     }
     
     __style__ = {

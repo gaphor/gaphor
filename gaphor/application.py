@@ -9,12 +9,14 @@ All important services are present in the application object:
  - action sets
 """
 
+from __future__ import absolute_import
 import pkg_resources
 from zope import component
 
 from logging import getLogger
 from gaphor.interfaces import IService, IEventFilter
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
+import six
 
 logger = getLogger('Application')
 
@@ -72,7 +74,7 @@ class _Application(object):
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
             cls = ep.load()
             if not IService.implementedBy(cls):
-                raise NameError, 'Entry point %s doesn''t provide IService' % ep.name
+                raise NameError('Entry point %s doesn''t provide IService' % ep.name)
             if not services or ep.name in services:
                 logger.debug('found service entry point "%s"' % ep.name)
                 srv = cls()
@@ -82,7 +84,7 @@ class _Application(object):
         for name in self.essential_services:
             self.init_service(name)
         while self._uninitialized_services:
-            self.init_service(self._uninitialized_services.iterkeys().next())
+            self.init_service(six.iterkeys(self._uninitialized_services))
 
     def init_service(self, name):
         """

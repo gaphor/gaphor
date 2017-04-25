@@ -2,10 +2,11 @@
 Object node item.
 """
 
+from __future__ import absolute_import
 import itertools
 
 from gaphas.state import observed, reversible_property
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.core import inject
 
 from gaphor.diagram.nameditem import NamedItem
@@ -25,7 +26,7 @@ class ObjectNodeItem(NamedItem):
     
     element_factory = inject('element_factory')
 
-    __uml__ = UML.ObjectNode
+    __uml__ = uml2.ObjectNode
 
     STYLE_BOTTOM = {
         'text-align': (ALIGN_CENTER, ALIGN_BOTTOM),

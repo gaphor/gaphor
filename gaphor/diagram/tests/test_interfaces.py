@@ -2,9 +2,7 @@
 Test Interfaces.
 """
 
-import unittest
-from zope import interface
-from gaphor import diagram
+from __future__ import absolute_import
 from gaphor import diagram
 from gaphor.tests import TestCase
 

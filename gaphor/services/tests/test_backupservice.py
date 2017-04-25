@@ -2,11 +2,12 @@
 Test the backup service.
 """
 
-import unittest
+from __future__ import absolute_import
 from StringIO import StringIO
 from gaphor.storage import storage
 from gaphor.application import Application
 from gaphor.misc.xmlwriter import XMLWriter
+from six.moves import map
 
 #class BackupServiceTestCase(unittest.TestCase):
 class BackupServiceTestCase:
@@ -30,14 +31,14 @@ class BackupServiceTestCase:
         
         self.backup_service.backup()
         
-        elements = map(factory.lookup, factory.keys())
+        elements = list(map(factory.lookup, list(factory.keys())))
 
         orig = StringIO()
         storage.save(XMLWriter(orig), factory=self.element_factory)
 
         self.backup_service.restore()
 
-        restored = map(factory.lookup, factory.keys())
+        restored = list(map(factory.lookup, list(factory.keys())))
 
         assert len(elements) == len(restored)
         assert elements != restored

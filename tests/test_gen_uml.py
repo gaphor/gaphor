@@ -2,6 +2,7 @@
 Test case that checks the working of the utils/command/gen_uml.py module.
 """
 
+from __future__ import absolute_import
 import unittest
 
 from utils.command.gen_uml import generate

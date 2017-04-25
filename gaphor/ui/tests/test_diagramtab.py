@@ -1,10 +1,9 @@
 
+from __future__ import absolute_import
 import unittest
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.application import Application
-from gaphor.ui.diagramtab import DiagramTab
-from gaphor.ui.mainwindow import MainWindow
 
 
 class DiagramTabTestCase(unittest.TestCase):
@@ -15,7 +14,7 @@ class DiagramTabTestCase(unittest.TestCase):
         main_window.open()
         element_factory = Application.get_service('element_factory')
         self.element_factory = element_factory
-        self.diagram = element_factory.create(UML.Diagram)
+        self.diagram = element_factory.create(uml2.Diagram)
         self.tab = main_window.show_diagram(self.diagram)
         self.assertEquals(self.tab.diagram, self.diagram)
         self.assertEquals(self.tab.view.canvas, self.diagram.canvas)
@@ -43,7 +42,7 @@ class DiagramTabTestCase(unittest.TestCase):
         tab.view.request_update([box])
         
         from gaphor.diagram.comment import CommentItem
-        comment = self.diagram.create(CommentItem, subject=self.element_factory.create(UML.Comment))
+        comment = self.diagram.create(CommentItem, subject=self.element_factory.create(uml2.Comment))
         self.assertEquals(len(self.element_factory.lselect()), 2)
         
 # vim:sw=4:et:ai

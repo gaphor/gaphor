@@ -3,6 +3,7 @@
 Here the _() function is defined that is used to translate text into
 your native language."""
 
+from __future__ import absolute_import
 __all__ = [ '_' ]
 
 import os
@@ -18,7 +19,7 @@ try:
     catalog = gettext.Catalog('gaphor', localedir=localedir)
     _ = catalog.gettext
     
-except IOError, e:
+except IOError as e:
     
     def _(s): return s
 

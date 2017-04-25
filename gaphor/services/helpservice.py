@@ -1,5 +1,6 @@
 """About and help services. (help browser anyone?)"""
 
+from __future__ import absolute_import
 from logging import getLogger
 import os
 import pkg_resources

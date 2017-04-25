@@ -2,6 +2,7 @@
 Unittest the storage and parser modules
 """
 
+from __future__ import absolute_import
 import os, re
 import os.path
 import pkg_resources
@@ -15,6 +16,7 @@ from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 from zope import component
 from cStringIO import StringIO
+from six.moves import map
 
 #__module__ = 'test_storage'
 
@@ -196,8 +198,8 @@ class StorageTestCase(TestCase):
             if isinstance(item, items.AssociationItem):
                 aa = item
         assert aa
-        assert map(float, aa.handles()[0].pos) == [0, 0], aa.handles()[0].pos
-        assert map(float, aa.handles()[1].pos) == [40, 40], aa.handles()[1].pos
+        assert list(map(float, aa.handles()[0].pos)) == [0, 0], aa.handles()[0].pos
+        assert list(map(float, aa.handles()[1].pos)) == [40, 40], aa.handles()[1].pos
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
         #print d1, d1.subject
@@ -412,7 +414,7 @@ class FileUpgradeTestCase(TestCase):
         if l1.subject.name == 'a2':
             l1, l2 = l2, l1
         def find(name):
-            return (m for m in messages if m.name == name).next()
+            return next((m for m in messages if m.name == name))
         m1 = find('call()')
         m2 = find('callx()')
         m3 = find('cally()')

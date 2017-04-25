@@ -1,9 +1,12 @@
 
+from __future__ import absolute_import
+from __future__ import print_function
 from gaphor import UML
 from os import path
+from six.moves import map
 
 def report(element, message):
-    print '%s: %s' % (type(element).__name__, message)
+    print('%s: %s' % (type(element).__name__, message))
 
 def get_subsets(tagged_value):
     subsets = []
@@ -79,7 +82,7 @@ def check_attributes(element_factory):
 
 # TODO: Check the sanity of the generated data model.
 def check_UML_module():
-    all_classes = map(getattr, [UML] * len(dir(UML)), dir(UML))
+    all_classes = list(map(getattr, [UML] * len(dir(UML)), dir(UML)))
     for c in all_classes:
         if not isinstance(c, UML.Element):
             continue

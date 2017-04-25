@@ -1,4 +1,5 @@
 
+from __future__ import absolute_import
 import unittest
 from gaphor.UML import *
 from gaphor.UML.interfaces import *
@@ -18,21 +19,21 @@ class ElementFactoryTestCase(unittest.TestCase):
         ef = self.factory
 
         p = ef.create(Parameter)
-        assert len(ef.values()) == 1
+        assert len(list(ef.values())) == 1
 
     def testFlush(self):
         ef = self.factory
 
         p = ef.create(Parameter)
         #wp = weakref.ref(p)
-        assert len(ef.values()) == 1
+        assert len(list(ef.values())) == 1
         ef.flush()
         del p
 
         gc.collect()
 
         #assert wp() is None
-        assert len(ef.values()) == 0, ef.values()
+        assert len(list(ef.values())) == 0, list(ef.values())
 
 
     def testWithoutApplication(self):
@@ -55,21 +56,21 @@ class ElementFactoryTestCase(unittest.TestCase):
         ef = self.factory
         p = ef.create(Parameter)
 
-        assert len(ef.values()) == 1
+        assert len(list(ef.values())) == 1
 
         p.unlink()
 
-        assert len(ef.values()) == 0, ef.values()
+        assert len(list(ef.values())) == 0, list(ef.values())
 
         p = ef.create(Parameter)
         p.defaultValue = 'l'
 
-        assert len(ef.values()) == 1
+        assert len(list(ef.values())) == 1
 
         p.unlink()
         del p
 
-        assert len(ef.values()) == 0, ef.values()
+        assert len(list(ef.values())) == 0, list(ef.values())
 
 
 

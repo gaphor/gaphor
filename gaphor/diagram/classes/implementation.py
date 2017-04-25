@@ -2,12 +2,13 @@
 Implementation of interface.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import DiagramLine
 
 class ImplementationItem(DiagramLine):
 
-    __uml__          = UML.Implementation
+    __uml__          = uml2.Implementation
 
     def __init__(self, id = None):
         DiagramLine.__init__(self, id)

@@ -1,9 +1,9 @@
 
+from __future__ import absolute_import
 from gaphor.tests.testcase import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.compartment import FeatureItem
-from gaphor.UML.diagram import DiagramCanvas
 
 
 class FeatureTestCase(TestCase):
@@ -18,10 +18,10 @@ class FeatureTestCase(TestCase):
         """
         Test how attribute is updated
         """
-        attr = self.element_factory.create(UML.Property)
-        UML.parse(attr, '-name:myType')
+        attr = self.element_factory.create(uml2.Property)
+        parse(attr, '-name:myType')
 
-        clazzitem = self.create(ClassItem, UML.Class)
+        clazzitem = self.create(ClassItem, uml2.Class)
         clazzitem.subject.ownedAttribute = attr
         self.assertEquals(1, len(clazzitem._compartments[0]))
 

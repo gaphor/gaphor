@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
-import sys
+from __future__ import absolute_import
 import os
-import gtk
 from zope import interface
 from gaphor.core import inject
 from gaphor.interfaces import IActionProvider

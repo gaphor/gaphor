@@ -2,6 +2,7 @@
 Formatting of UML elements like attributes, operations, stereotypes, etc.
 """
 
+from __future__ import absolute_import
 import re
 from cStringIO import StringIO
 from simplegeneric import generic

@@ -7,6 +7,7 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
  - TextEditTool: should support adapter based edit protocol
 """
 
+from __future__ import absolute_import
 import gtk
 from zope import component
 
@@ -83,7 +84,7 @@ class DiagramItemConnector(Connector.default):
                 adapter = component.queryMultiAdapter((sink.item, item), IConnect)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
-        except Exception, e:
+        except Exception as e:
             log.error('Error during connect', exc_info=True)
 
 

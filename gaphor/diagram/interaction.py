@@ -2,13 +2,14 @@
 Interaction diagram item.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
 
 class InteractionItem(NamedItem):
 
-    __uml__ = UML.Interaction
+    __uml__ = uml2.Interaction
 
     __style__ = {
         'min-size': (150, 100),

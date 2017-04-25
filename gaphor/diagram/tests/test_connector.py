@@ -2,7 +2,8 @@
 Test connector item.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.connector import ConnectorItem
 from gaphor.tests.testcase import TestCase
 
@@ -14,7 +15,7 @@ class ConnectorItemTestCase(TestCase):
     def test_create(self):
         """Test creation of connector item
         """
-        conn = self.create(ConnectorItem, UML.Connector)
+        conn = self.create(ConnectorItem, uml2.Connector)
         self.assertFalse(conn.subject is None)
         #self.assertTrue(conn.end is None)
 
@@ -22,9 +23,9 @@ class ConnectorItemTestCase(TestCase):
     def test_name(self):
         """Test connected interface name
         """
-        conn = self.create(ConnectorItem, UML.Connector)
-        end = self.element_factory.create(UML.ConnectorEnd)
-        iface = self.element_factory.create(UML.Interface)
+        conn = self.create(ConnectorItem, uml2.Connector)
+        end = self.element_factory.create(uml2.ConnectorEnd)
+        iface = self.element_factory.create(uml2.Interface)
         end.role = iface
         conn.subject.end = end
         #conn.end = end
@@ -39,9 +40,9 @@ class ConnectorItemTestCase(TestCase):
     def test_setting_end(self):
         """Test creation of connector item
         """
-        conn = self.create(ConnectorItem, UML.Connector)
-        end = self.element_factory.create(UML.ConnectorEnd)
-        iface = self.element_factory.create(UML.Interface)
+        conn = self.create(ConnectorItem, uml2.Connector)
+        end = self.element_factory.create(uml2.ConnectorEnd)
+        iface = self.element_factory.create(uml2.Interface)
         end.role = iface
         iface.name = 'RedSea'
         conn.subject.end = end
@@ -57,9 +58,9 @@ class ConnectorItemTestCase(TestCase):
     def test_persistence(self):
         """Test connector item saving/loading
         """
-        conn = self.create(ConnectorItem, UML.Connector)
+        conn = self.create(ConnectorItem, uml2.Connector)
 
-        end = self.element_factory.create(UML.ConnectorEnd)
+        end = self.element_factory.create(uml2.ConnectorEnd)
         #conn.end = end
 
         data = self.save()
@@ -68,7 +69,7 @@ class ConnectorItemTestCase(TestCase):
         self.load(data)
 
         connectors = self.diagram.canvas.select(lambda e: isinstance(e, ConnectorItem))
-        ends = self.kindof(UML.ConnectorEnd)
+        ends = self.kindof(uml2.ConnectorEnd)
         #self.assertTrue(connectors[0].end is not None)
         #self.assertTrue(connectors[0].end is ends[0])
 

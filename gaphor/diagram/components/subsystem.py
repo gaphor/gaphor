@@ -9,12 +9,13 @@ At the moment (in the future additionally) it makes only sense to use it on
 use cases diagram.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.component import ComponentItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
 from gaphor.diagram import uml
 
-@uml(UML.Component, stereotype='subsystem')
+@uml(uml2.Component, stereotype='subsystem')
 class SubsystemItem(ComponentItem):
     __style__   = {
         'name-align': (ALIGN_LEFT, ALIGN_TOP),

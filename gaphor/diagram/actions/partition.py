@@ -7,11 +7,12 @@ TODO: partition can be resized only horizontally or vertically, therefore
   or vertical size change
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.nameditem import NamedItem
 
 class PartitionItem(NamedItem):
-    __uml__ = UML.ActivityPartition
+    __uml__ = uml2.ActivityPartition
 
     __stereotype__ = {
         'external': lambda self: self.subject and self.subject.isExternal,

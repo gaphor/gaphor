@@ -6,7 +6,8 @@ ExtensionItem -- Graphical representation of an association.
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import NamedLine
 
 class ExtensionItem(NamedLine):
@@ -16,7 +17,7 @@ class ExtensionItem(NamedLine):
     represents a Property (with Property.association == my association).
     """
 
-    __uml__ = UML.Extension
+    __uml__ = uml2.Extension
 
     def __init__(self, id=None):
         NamedLine.__init__(self, id)

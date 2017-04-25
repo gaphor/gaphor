@@ -3,6 +3,7 @@ This module contains user interface related code, such as the
 main screen and diagram windows.
 """
 
+from __future__ import absolute_import
 import os, os.path
 import gtk
 

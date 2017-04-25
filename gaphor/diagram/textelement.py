@@ -3,6 +3,7 @@ Support for editable text, a part of a diagram item, i.e. name of named
 item, guard of flow item, etc.
 """
 
+from __future__ import absolute_import
 import math
 
 import cairo, pango, pangocairo

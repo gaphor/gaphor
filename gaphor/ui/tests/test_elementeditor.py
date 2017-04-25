@@ -1,4 +1,5 @@
 
+from __future__ import absolute_import
 from gaphor.ui.elementeditor import ElementEditor
 from gaphor.tests.testcase import TestCase
 

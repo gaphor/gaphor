@@ -1,5 +1,6 @@
 
 
+from __future__ import absolute_import
 import unittest
 from gaphor import UML
 from gaphor.application import Application

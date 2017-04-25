@@ -8,6 +8,8 @@ save(filename)
     store the current model in a file
 """
 
+from __future__ import absolute_import
+from __future__ import print_function
 from cStringIO import StringIO, InputType
 from xml.sax.saxutils import escape
 import types
@@ -33,6 +35,7 @@ from gaphor.i18n import _
 # this be done using services? i.e. request storage service, which should
 # depend on connectors service?
 from gaphor.adapters import connectors
+from six.moves import map
 
 __all__ = [ 'load', 'save' ]
 
@@ -87,7 +90,7 @@ def save_generator(writer, factory):
         if value is not None:
             writer.startElement(name, {})
             writer.startElement('val', {})
-            if isinstance(value, types.StringTypes):
+            if isinstance(value, (str,)):
                 writer.characters(value)
             elif isinstance(value, bool):
                 # Write booleans as 0/1.
@@ -225,7 +228,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                 elem.element.canvas.block_updates = True
                 create_canvasitems(elem.element.canvas, elem.canvas.canvasitems)
         elif not isinstance(elem, parser.canvasitem):
-            raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
+            raise ValueError('Item with id "%s" and type %s can not be instantiated' % (id, type(elem)))
 
     # load attributes and create references:
     for id, elem in elements.items():
@@ -248,7 +251,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                     try:
                         ref = elements[refid]
                     except:
-                        raise ValueError, 'Invalid ID for reference (%s) for element %s.%s' % (refid, elem.type, name)
+                        raise ValueError('Invalid ID for reference (%s) for element %s.%s' % (refid, elem.type, name))
                     else:
                         try:
                             elem.element.load(name, ref.element)
@@ -259,7 +262,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                 try:
                     ref = elements[refids]
                 except:
-                    raise ValueError, 'Invalid ID for reference (%s)' % refids
+                    raise ValueError('Invalid ID for reference (%s)' % refids)
                 else:
                     try:
                         elem.element.load(name, ref.element)
@@ -330,7 +333,7 @@ def load_generator(filename, factory):
         gaphor_version = loader.gaphor_version
         #elements = parser.parse(filename)
         #yield 100
-    except Exception, e:
+    except Exception as e:
         log.error('File could no be parsed', exc_info=True)
         raise
 
@@ -351,7 +354,7 @@ def load_generator(filename, factory):
                     yield percentage / 2 + 50
                 else:
                     yield percentage
-        except Exception, e:
+        except Exception as e:
             raise
         finally:
             if component_registry:
@@ -359,7 +362,7 @@ def load_generator(filename, factory):
 
         gc.collect()
         yield 100
-    except Exception, e:
+    except Exception as e:
         log.info('file %s could not be loaded' % filename)
         raise
 
@@ -519,7 +522,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                                 val = val.replace('\n', ' ')
                                 log.info('Special case: UML metamodel "%s %s"' % (key, val))
                         create_slot(key, val)
-                    except Exception, e:
+                    except Exception as e:
                         log.warning('Unable to process tagged value "%s" as key=value pair' % tv, exc_info=True)
 
         def find(messages, attr):
@@ -548,13 +551,13 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                 receive = msg.subject.receiveEvent
 
                 if not send:
-                    send = find(msg._messages.keys(), 'sendEvent')
+                    send = find(list(msg._messages.keys()), 'sendEvent')
                 if not receive:
-                    receive = find(msg._messages.keys(), 'receiveEvent')
+                    receive = find(list(msg._messages.keys()), 'receiveEvent')
                 if not send:
-                    send = find(msg._inverted_messages.keys(), 'reveiveEvent')
+                    send = find(list(msg._inverted_messages.keys()), 'reveiveEvent')
                 if not receive:
-                    receive = find(msg._inverted_messages.keys(), 'sendEvent')
+                    receive = find(list(msg._inverted_messages.keys()), 'sendEvent')
 
                 sl = send.covered if send else None
                 rl = receive.covered if receive else None
@@ -624,7 +627,7 @@ def version_0_17_0(elements, factory, gaphor_version):
         'InstanceValue', 'LiteralSpecification', 'LiteralUnlimitedNatural',
         'LiteralInteger', 'LiteralString', 'LiteralBoolean', 'LiteralNull' ]
     
-    print 'version', gaphor_version
+    print('version', gaphor_version)
     if version_lower_than(gaphor_version, (0, 17, 0)):
         valspecs = dict((v.id, v) for v in elements.values() if v.type in valspec_types)
 
@@ -674,7 +677,7 @@ def version_0_14_0(elements, factory, gaphor_version):
                     assert len(applied) == len(data)
                     et.references['appliedStereotype'] = applied
 
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating stereotypes', exc_info=True)
 
 
@@ -698,7 +701,7 @@ def version_0_9_0(elements, factory, gaphor_version):
                     if elem.values.get('color'):
                         del elem.values['color']
 
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating from DiaCanvas2', exc_info=True)
 
 def version_0_7_2(elements, factory, gaphor_version):
@@ -727,7 +730,7 @@ def version_0_7_2(elements, factory, gaphor_version):
                             elements[newtv.id] = newtv
                             tvlist.append(newtv.id)
                         elem.references['taggedValue'] = tvlist
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating taggedValues', exc_info=True)
 
 
@@ -763,7 +766,7 @@ def version_0_7_1(elements, factory, gaphor_version):
                     if end1 and end2:
                         fix(end1, end2)
                         fix(end2, end1)
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating Association', exc_info=True)
 
 
@@ -783,7 +786,7 @@ def version_0_6_2(elements, factory, gaphor_version):
                             p.values['drawing-style'] = '0'
                         elif p.type == 'InterfaceItem':
                             p.values['drawing-style'] = '2'
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating InterfaceItems', exc_info=True)
 
 
@@ -802,7 +805,7 @@ def version_0_5_2(elements, factory, gaphor_version):
                     agg2 = a.memberEnd[1].aggregation
                     a.memberEnd[0].aggregation = agg2
                     a.memberEnd[1].aggregation = agg1
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating Association', exc_info=True)
 
 

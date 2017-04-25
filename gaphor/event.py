@@ -2,6 +2,7 @@
 Application wide events are managed here.
 """
 
+from __future__ import absolute_import
 from zope import interface
 from gaphor.interfaces import *
 

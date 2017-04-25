@@ -46,11 +46,11 @@ operation information in message's name.
 See also ``lifeline`` module documentation.
 """
 
+from __future__ import absolute_import
 from math import pi
 
 from gaphas.util import path_ellipse
 
-from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.misc.odict import odict
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM

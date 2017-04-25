@@ -2,7 +2,8 @@
 Test classifier stereotypes attributes using component items.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2, modelfactory
 from gaphor.diagram.component import ComponentItem
 from gaphor.tests import TestCase
 
@@ -16,26 +17,26 @@ class StereotypesAttributesTestCase(TestCase):
         """
         super(StereotypesAttributesTestCase, self).setUp()
         factory = self.element_factory
-        cls = factory.create(UML.Class)
+        cls = factory.create(uml2.Class)
         cls.name = 'Component'
-        st1 = self.st1 = factory.create(UML.Stereotype)
+        st1 = self.st1 = factory.create(uml2.Stereotype)
         st1.name = 'st1'
-        st2 = self.st2 = factory.create(UML.Stereotype)
+        st2 = self.st2 = factory.create(uml2.Stereotype)
         st2.name = 'st2'
 
-        attr = factory.create(UML.Property)
+        attr = factory.create(uml2.Property)
         attr.name = 'st1_attr_1'
         st1.ownedAttribute = attr
-        attr = factory.create(UML.Property)
+        attr = factory.create(uml2.Property)
         attr.name = 'st1_attr_2'
         st1.ownedAttribute = attr
 
-        attr = factory.create(UML.Property)
+        attr = factory.create(uml2.Property)
         attr.name = 'st2_attr_1'
         st2.ownedAttribute = attr
 
-        self.ext1 = UML.model.extend_with_stereotype(factory, cls, st1)
-        self.ext2 = UML.model.extend_with_stereotype(factory, cls, st2)
+        self.ext1 = modelfactory.extend_with_stereotype(factory, cls, st1)
+        self.ext2 = modelfactory.extend_with_stereotype(factory, cls, st2)
 
     def tearDown(self):
         del self.st1
@@ -45,14 +46,14 @@ class StereotypesAttributesTestCase(TestCase):
         """Test if stereotype compartment is created when stereotype is applied
         """
         factory = self.element_factory
-        c = self.create(ComponentItem, UML.Component)
+        c = self.create(ComponentItem, uml2.Component)
 
         # test precondition
         assert len(c._compartments) == 0
 
         c.show_stereotypes_attrs = True
 
-        UML.model.apply_stereotype(factory, c.subject, self.st1)
+        modelfactory.apply_stereotype(factory, c.subject, self.st1)
         self.assertEquals(1, len(c._compartments))
         self.assertFalse(c._compartments[0].visible)
 
@@ -61,15 +62,15 @@ class StereotypesAttributesTestCase(TestCase):
         """Test if stereotype attribute information is added when slot is added
         """
         factory = self.element_factory
-        c = self.create(ComponentItem, UML.Component)
+        c = self.create(ComponentItem, uml2.Component)
 
         c.show_stereotypes_attrs = True
-        obj = UML.model.apply_stereotype(factory, c.subject, self.st1)
+        obj = modelfactory.apply_stereotype(factory, c.subject, self.st1)
 
         # test precondition
         assert not c._compartments[0].visible
 
-        slot = UML.model.add_slot(factory, obj, self.st1.ownedAttribute[0])
+        slot = modelfactory.add_slot(factory, obj, self.st1.ownedAttribute[0])
 
         compartment = c._compartments[0]
         self.assertTrue(compartment.visible)
@@ -80,12 +81,12 @@ class StereotypesAttributesTestCase(TestCase):
         """Test removing last slot
         """
         factory = self.element_factory
-        c = self.create(ComponentItem, UML.Component)
+        c = self.create(ComponentItem, uml2.Component)
 
         c.show_stereotypes_attrs = True
-        obj = UML.model.apply_stereotype(factory, c.subject, self.st1)
+        obj = modelfactory.apply_stereotype(factory, c.subject, self.st1)
 
-        slot = UML.model.add_slot(factory, obj, self.st1.ownedAttribute[0])
+        slot = modelfactory.add_slot(factory, obj, self.st1.ownedAttribute[0])
 
         compartment = c._compartments[0]
         # test precondition
@@ -99,16 +100,16 @@ class StereotypesAttributesTestCase(TestCase):
         """Test if stereotype compartment is destroyed when stereotype is removed
         """
         factory = self.element_factory
-        c = self.create(ComponentItem, UML.Component)
+        c = self.create(ComponentItem, uml2.Component)
 
         c.show_stereotypes_attrs = True
 
-        UML.model.apply_stereotype(factory, c.subject, self.st1)
+        modelfactory.apply_stereotype(factory, c.subject, self.st1)
 
         # test precondition
         assert len(c._compartments) == 1
 
-        UML.model.remove_stereotype(c.subject, self.st1)
+        modelfactory.remove_stereotype(c.subject, self.st1)
         self.assertEquals(0, len(c._compartments))
 
 
@@ -116,13 +117,13 @@ class StereotypesAttributesTestCase(TestCase):
         """Test if stereotype is removed when extension is deleteded
         """
         factory = self.element_factory
-        c = self.create(ComponentItem, UML.Component)
+        c = self.create(ComponentItem, uml2.Component)
 
         c.show_stereotypes_attrs = True
 
         st1 = self.st1
         ext1 = self.ext1
-        UML.model.apply_stereotype(factory, c.subject, st1)
+        modelfactory.apply_stereotype(factory, c.subject, st1)
 
         # test precondition
         assert len(c._compartments) == 1
@@ -137,12 +138,12 @@ class StereotypesAttributesTestCase(TestCase):
         """Test if stereotype is removed when stereotype is deleteded
         """
         factory = self.element_factory
-        c = self.create(ComponentItem, UML.Component)
+        c = self.create(ComponentItem, uml2.Component)
 
         c.show_stereotypes_attrs = True
 
         st1 = self.st1
-        UML.model.apply_stereotype(factory, c.subject, st1)
+        modelfactory.apply_stereotype(factory, c.subject, st1)
 
         # test precondition
         assert len(c._compartments) == 1
@@ -157,22 +158,22 @@ class StereotypesAttributesTestCase(TestCase):
         """Test if stereotype instance specification is destroyed when stereotype attribute is removed
         """
         factory = self.element_factory
-        c = self.create(ComponentItem, UML.Component)
+        c = self.create(ComponentItem, uml2.Component)
 
         c.show_stereotypes_attrs = True
 
         # test precondition
         assert len(c._compartments) == 0
-        obj = UML.model.apply_stereotype(factory, c.subject, self.st1)
+        obj = modelfactory.apply_stereotype(factory, c.subject, self.st1)
         # test precondition
         assert len(c._compartments) == 1
 
-        assert len(self.kindof(UML.Slot)) == 0
+        assert len(self.kindof(uml2.Slot)) == 0
 
         attr = self.st1.ownedAttribute[0]
-        slot = UML.model.add_slot(factory, obj, attr)
+        slot = modelfactory.add_slot(factory, obj, attr)
         assert len(obj.slot) == 1
-        assert len(self.kindof(UML.Slot)) == 1
+        assert len(self.kindof(uml2.Slot)) == 1
         self.assertTrue(slot.definingFeature)
 
         compartment = c._compartments[0]
@@ -180,7 +181,7 @@ class StereotypesAttributesTestCase(TestCase):
 
         attr.unlink()
         self.assertEquals(0, len(obj.slot))
-        self.assertEquals(0, len(self.kindof(UML.Slot)))
+        self.assertEquals(0, len(self.kindof(uml2.Slot)))
         self.assertFalse(compartment.visible)
 
     
@@ -188,15 +189,15 @@ class StereotypesAttributesTestCase(TestCase):
         """Test stereotype attributes status saving
         """
         factory = self.element_factory
-        c = self.create(ComponentItem, UML.Component)
+        c = self.create(ComponentItem, uml2.Component)
 
         c.show_stereotypes_attrs = True
-        UML.model.apply_stereotype(factory, c.subject, self.st1)
-        obj = UML.model.apply_stereotype(factory, c.subject, self.st2)
+        modelfactory.apply_stereotype(factory, c.subject, self.st1)
+        obj = modelfactory.apply_stereotype(factory, c.subject, self.st2)
 
         # change attribute of 2nd stereotype
         attr = self.st2.ownedAttribute[0]
-        slot = UML.model.add_slot(self.element_factory, obj, attr)
+        slot = modelfactory.add_slot(self.element_factory, obj, attr)
         slot.value = 'st2 test21'
 
         data = self.save()
@@ -215,12 +216,12 @@ class StereotypesAttributesTestCase(TestCase):
         """Test stereotype attributes saving
         """
         factory = self.element_factory
-        c = self.create(ComponentItem, UML.Component)
+        c = self.create(ComponentItem, uml2.Component)
 
         c.show_stereotypes_attrs = True
 
-        UML.model.apply_stereotype(factory, c.subject, self.st1)
-        UML.model.apply_stereotype(factory, c.subject, self.st2)
+        modelfactory.apply_stereotype(factory, c.subject, self.st1)
+        modelfactory.apply_stereotype(factory, c.subject, self.st2)
 
         self.assertEquals(3, len(self.st1.ownedAttribute))
         attr1, attr2, attr3 = self.st1.ownedAttribute
@@ -229,9 +230,9 @@ class StereotypesAttributesTestCase(TestCase):
         assert attr3.name == 'baseClass', attr3.name
 
         obj = c.subject.appliedStereotype[0]
-        slot = UML.model.add_slot(self.element_factory, obj, attr1)
+        slot = modelfactory.add_slot(self.element_factory, obj, attr1)
         slot.value = 'st1 test1'
-        slot = UML.model.add_slot(self.element_factory, obj, attr2)
+        slot = modelfactory.add_slot(self.element_factory, obj, attr2)
         slot.value = 'st1 test2'
 
         data = self.save()

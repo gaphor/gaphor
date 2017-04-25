@@ -1,14 +1,15 @@
 
+from __future__ import absolute_import
 from gaphor.tests import TestCase
 from gaphor.adapters.profiles.metaclasseditor import MetaclassNameEditor
 from gaphor.diagram import items
-from gaphor import UML
+from gaphor.UML import uml2
 import gtk
 
 class MetaclassEditorTest(TestCase):
 
     def test_name_selection(self):
-        ci = self.create(items.MetaclassItem, UML.Class)
+        ci = self.create(items.MetaclassItem, uml2.Class)
         ci.subject.name = 'Class'
         editor = MetaclassNameEditor(ci)
         page = editor.construct()

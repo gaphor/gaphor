@@ -5,12 +5,14 @@ To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
+from __future__ import absolute_import
+from __future__ import print_function
 from zope import interface, component
 from logging import getLogger
 
 from gaphas import geometry
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.core import inject
 from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
@@ -156,9 +158,9 @@ class CommentLineElementConnect(AbstractConnect):
 
         # Do not allow to links between the comment and the element
         if connected_to and element and \
-                ((isinstance(connected_to.subject, UML.Comment) and \
+                ((isinstance(connected_to.subject, uml2.Comment) and \
                     self.element.subject in connected_to.subject.annotatedElement) or \
-                 (isinstance(self.element.subject, UML.Comment) and \
+                 (isinstance(self.element.subject, uml2.Comment) and \
                     connected_to.subject in self.element.subject.annotatedElement)):
             return None
 
@@ -169,7 +171,7 @@ class CommentLineElementConnect(AbstractConnect):
             opposite = self.line.opposite(handle)
             connected_to = self.get_connected(opposite)
             if connected_to:
-                if isinstance(connected_to.subject, UML.Comment):
+                if isinstance(connected_to.subject, uml2.Comment):
                     connected_to.subject.annotatedElement = self.element.subject
                 else:
                     self.element.subject.annotatedElement = connected_to.subject
@@ -182,7 +184,7 @@ class CommentLineElementConnect(AbstractConnect):
         if hct and oct:
             logger.debug('Disconnecting %s and %s' % (hct, oct))
             try:
-                if hct.subject and isinstance(oct.subject, UML.Comment):
+                if hct.subject and isinstance(oct.subject, uml2.Comment):
                     del oct.subject.annotatedElement[hct.subject]
                 elif hct.subject and oct.subject:
                     del hct.subject.annotatedElement[oct.subject]
@@ -204,7 +206,7 @@ class CommentLineLineConnect(AbstractConnect):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
-        One of the ends should be connected to a UML.Comment element.
+        One of the ends should be connected to a uml2.Comment element.
         """
         opposite = self.line.opposite(handle)
         element = self.element
@@ -221,7 +223,7 @@ class CommentLineLineConnect(AbstractConnect):
                  and connected_to.subject is element.subject:
             return None
 
-        print 'Connecting', element, 'with', element.subject
+        print('Connecting', element, 'with', element.subject)
 
         # One end should be connected to a CommentItem:
         cls = items.CommentItem
@@ -236,7 +238,7 @@ class CommentLineLineConnect(AbstractConnect):
             opposite = self.line.opposite(handle)
             c = self.get_connected(opposite)
             if c and self.element.subject:
-                if isinstance(c.subject, UML.Comment):
+                if isinstance(c.subject, uml2.Comment):
                     c.subject.annotatedElement = self.element.subject
                 else:
                     self.element.subject.annotatedElement = c.subject
@@ -246,7 +248,7 @@ class CommentLineLineConnect(AbstractConnect):
         opposite = self.line.opposite(handle)
         c2 = self.get_connected(opposite)
         if c1 and c2:
-            if isinstance(c1.subject, UML.Comment):
+            if isinstance(c1.subject, uml2.Comment):
                 del c1.subject.annotatedElement[c2.subject]
             elif c2.subject:
                 del c2.subject.annotatedElement[c1.subject]
@@ -392,7 +394,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         """
         Establish the relationship at model level.
         """
-        raise NotImplementedError, 'Implement connect_subject() in a subclass'
+        raise NotImplementedError('Implement connect_subject() in a subclass')
 
     def disconnect_subject(self, handle):
         """

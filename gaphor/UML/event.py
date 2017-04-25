@@ -1,6 +1,7 @@
 """The core UML metamodel events."""
 
-from interfaces import *
+from __future__ import absolute_import
+from .interfaces import *
 from zope import interface
 
 class AttributeChangeEvent(object):

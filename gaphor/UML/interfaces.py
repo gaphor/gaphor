@@ -2,6 +2,7 @@
 UML events emited on a change in the data model.
 """
 
+from __future__ import absolute_import
 from zope import interface
 from gaphor.interfaces import IServiceEvent
 

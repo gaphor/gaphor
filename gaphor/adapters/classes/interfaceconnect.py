@@ -6,9 +6,8 @@ to folded interface, see `gaphor.diagram.classes.interface` documentation
 for details.
 """
 
+from __future__ import absolute_import
 from zope import interface, component
-
-from gaphor import UML
 from gaphor.diagram import items
 from gaphor.adapters.classes.classconnect import DependencyConnect, ImplementationConnect
 

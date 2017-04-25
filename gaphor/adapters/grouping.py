@@ -15,6 +15,7 @@ is about to be created. Therefore `AbstractGroup.can_contain` has
 to be aware that `AbstractGroup.item` can be null.
 """
 
+from __future__ import absolute_import
 from zope import interface, component
 
 from gaphor import UML
@@ -52,14 +53,14 @@ class AbstractGroup(object):
         """
         Group an item within parent.
         """
-        raise NotImplemented, 'This is abstract method'
+        raise NotImplemented('This is abstract method')
 
 
     def ungroup(self):
         """
         Remove item from parent.
         """
-        raise NotImplemented, 'This is abstract method'
+        raise NotImplemented('This is abstract method')
 
 
 

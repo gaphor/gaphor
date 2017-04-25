@@ -2,7 +2,8 @@
 Test messages.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.message import MessageItem
 from gaphor.tests.testcase import TestCase
 
@@ -11,16 +12,16 @@ class MessageTestCase(TestCase):
     def test_message(self):
         """Test creation of messages
         """
-        self.create(MessageItem, UML.Message)
+        self.create(MessageItem, uml2.Message)
 
 
     def test_adding_message(self):
         """Test adding message on communication diagram
         """
         factory = self.element_factory
-        item = self.create(MessageItem, UML.Message)
+        item = self.create(MessageItem, uml2.Message)
 
-        message = factory.create(UML.Message)
+        message = factory.create(uml2.Message)
         message.name = 'test-message'
 
         item.add_message(message, False)
@@ -29,7 +30,7 @@ class MessageTestCase(TestCase):
         self.assertEquals(item._messages[message].text, 'test-message')
 
 
-        message = factory.create(UML.Message)
+        message = factory.create(uml2.Message)
         message.name = 'test-inverted-message'
         item.add_message(message, True)
         self.assertTrue(message in item._inverted_messages)
@@ -41,9 +42,9 @@ class MessageTestCase(TestCase):
         """Test changing message text
         """
         factory = self.element_factory
-        item = self.create(MessageItem, UML.Message)
+        item = self.create(MessageItem, uml2.Message)
 
-        message = factory.create(UML.Message)
+        message = factory.create(uml2.Message)
         message.name = 'test-message'
         item.add_message(message, False)
         self.assertEquals(item._messages[message].text, 'test-message')
@@ -51,7 +52,7 @@ class MessageTestCase(TestCase):
         item.set_message_text(message, 'test-message-changed', False)
         self.assertEquals(item._messages[message].text, 'test-message-changed')
 
-        message = factory.create(UML.Message)
+        message = factory.create(uml2.Message)
         message.name = 'test-message'
         item.add_message(message, True)
         self.assertEquals(item._inverted_messages[message].text, 'test-message')
@@ -64,16 +65,16 @@ class MessageTestCase(TestCase):
         """Test message removal
         """
         factory = self.element_factory
-        item = self.create(MessageItem, UML.Message)
+        item = self.create(MessageItem, uml2.Message)
 
-        message = factory.create(UML.Message)
+        message = factory.create(uml2.Message)
         item.add_message(message, False)
         self.assertTrue(message in item._messages)
 
         item.remove_message(message, False)
         self.assertTrue(message not in item._messages)
 
-        message = factory.create(UML.Message)
+        message = factory.create(uml2.Message)
         item.add_message(message, True)
         self.assertTrue(message in item._inverted_messages)
 
@@ -85,16 +86,16 @@ class MessageTestCase(TestCase):
         """Test messages swapping
         """
         factory = self.element_factory
-        item = self.create(MessageItem, UML.Message)
+        item = self.create(MessageItem, uml2.Message)
 
-        m1 = factory.create(UML.Message)
-        m2 = factory.create(UML.Message)
+        m1 = factory.create(uml2.Message)
+        m2 = factory.create(uml2.Message)
         item.add_message(m1, False)
         item.add_message(m2, False)
         item.swap_messages(m1, m2, False)
 
-        m1 = factory.create(UML.Message)
-        m2 = factory.create(UML.Message)
+        m1 = factory.create(uml2.Message)
+        m2 = factory.create(uml2.Message)
         item.add_message(m1, True)
         item.add_message(m2, True)
         item.swap_messages(m1, m2, True)
@@ -104,12 +105,12 @@ class MessageTestCase(TestCase):
         """Test message saving/loading
         """
         factory = self.element_factory
-        item = self.create(MessageItem, UML.Message)
+        item = self.create(MessageItem, uml2.Message)
 
-        m1 = factory.create(UML.Message)
-        m2 = factory.create(UML.Message)
-        m3 = factory.create(UML.Message)
-        m4 = factory.create(UML.Message)
+        m1 = factory.create(uml2.Message)
+        m2 = factory.create(uml2.Message)
+        m3 = factory.create(uml2.Message)
+        m4 = factory.create(uml2.Message)
         m1.name = 'm1'
         m2.name = 'm2'
         m3.name = 'm3'

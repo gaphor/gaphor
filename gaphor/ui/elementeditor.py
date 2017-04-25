@@ -1,6 +1,6 @@
 """The element editor is a utility window used for editing elements."""
 
-import gtk
+from __future__ import absolute_import
 from zope import interface
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.core import _, inject, open_action, build_action_group

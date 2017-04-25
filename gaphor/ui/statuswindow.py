@@ -2,6 +2,7 @@
 """Defines a status window class for displaying the progress of
 a queue."""
 
+from __future__ import absolute_import
 import gobject
 import pango
 import gtk

@@ -5,9 +5,9 @@ Implemented using interface item in assembly connector mode, see
 `gaphor.diagram.connector` module for details.
 """
 
+from __future__ import absolute_import
 from zope import component
-
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 from gaphor.adapters.connectors import AbstractConnect
 
@@ -82,9 +82,9 @@ class ConnectorConnectBase(AbstractConnect):
         """
         connector.subject = assembly
 
-        end =  self.element_factory.create(UML.ConnectorEnd)
+        end =  self.element_factory.create(uml2.ConnectorEnd)
         end.role = iface
-        end.partWithPort = self.element_factory.create(UML.Port)
+        end.partWithPort = self.element_factory.create(uml2.Port)
         assembly.end = end
 
         component.subject.ownedPort = end.partWithPort
@@ -168,7 +168,7 @@ class ConnectorConnectBase(AbstractConnect):
                         break
 
                 if assembly is None:
-                    assembly =  self.element_factory.create(UML.Connector)
+                    assembly =  self.element_factory.create(uml2.Connector)
                     assembly.kind = 'assembly'
                     for c in connections:
                         connector = c.item

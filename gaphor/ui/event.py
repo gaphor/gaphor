@@ -1,5 +1,5 @@
-from zope import interface
-from interfaces import *
+from __future__ import absolute_import
+from .interfaces import *
 
 class DiagramTabChange(object):
 

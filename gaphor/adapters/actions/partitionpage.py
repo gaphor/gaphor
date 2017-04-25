@@ -1,12 +1,12 @@
 """
 Activity partition property page.
 """
+from __future__ import absolute_import
 import gtk
 from gaphor.core import _, inject, transactional
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
-from gaphor import UML
 from gaphor.adapters.propertypages import NamedItemPropertyPage
 
 

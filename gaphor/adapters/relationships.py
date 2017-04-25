@@ -7,6 +7,7 @@ existing relationships on the diagram when a model element is added (e.g.
 by drag and drop).
 """
 
+from __future__ import absolute_import
 from zope import component
 
 

@@ -2,12 +2,13 @@
 Component item.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.classifier import ClassifierItem
 
 class ComponentItem(ClassifierItem):
 
-    __uml__  = UML.Component
+    __uml__  = uml2.Component
     __icon__ = True
 
     __style__ = {

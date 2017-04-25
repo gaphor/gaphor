@@ -1,4 +1,5 @@
 
+from __future__ import absolute_import
 from gaphor.tests import TestCase
 from gaphor.ui.namespace import NamespaceModel
 from gaphor import UML

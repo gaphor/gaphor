@@ -2,9 +2,10 @@
 Classes related (dependency, implementation) adapter connections.
 """
 
+from __future__ import absolute_import
 from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
 from zope import interface, component
-from gaphor import UML
+from gaphor.UML import uml2, modelfactory
 from gaphor.diagram import items
 
 class DependencyConnect(RelationshipConnect):
@@ -19,7 +20,7 @@ class DependencyConnect(RelationshipConnect):
 
         # Element should be a NamedElement
         if not element.subject or \
-                not isinstance(element.subject, UML.NamedElement):
+                not isinstance(element.subject, uml2.NamedElement):
                     return False
 
         return super(DependencyConnect, self).allow(handle, port)
@@ -53,7 +54,7 @@ class DependencyConnect(RelationshipConnect):
             else:
                 client = self.element.subject
                 supplier = self.get_connected(opposite).subject
-            line.dependency_type = UML.model.dependency_type(client, supplier)
+            line.dependency_type = modelfactory.dependency_type(client, supplier)
 
         relation = self.relationship_or_new(line.dependency_type,
                             line.dependency_type.supplier,
@@ -72,14 +73,14 @@ class GeneralizationConnect(RelationshipConnect):
 
 
     def reconnect(self, handle, port):
-        self.reconnect_relationship(handle, UML.Generalization.general, UML.Generalization.specific)
+        self.reconnect_relationship(handle, uml2.Generalization.general, uml2.Generalization.specific)
 
 
     def connect_subject(self, handle):
         log.debug('connect_subject: ' % handle)
-        relation = self.relationship_or_new(UML.Generalization,
-                    UML.Generalization.general,
-                    UML.Generalization.specific)
+        relation = self.relationship_or_new(uml2.Generalization,
+                    uml2.Generalization.general,
+                    uml2.Generalization.specific)
         log.debug('found: ' % relation)
         self.line.subject = relation
 
@@ -97,7 +98,7 @@ class AssociationConnect(UnaryRelationshipConnect):
         element = self.element
 
         # Element should be a Classifier
-        if not isinstance(element.subject, UML.Classifier):
+        if not isinstance(element.subject, uml2.Classifier):
             return None
 
         return super(AssociationConnect, self).allow(handle, port)
@@ -121,7 +122,7 @@ class AssociationConnect(UnaryRelationshipConnect):
                     return
                     
             # Create new association
-            relation = UML.model.create_association(self.element_factory, head_type, tail_type)
+            relation = modelfactory.create_association(self.element_factory, head_type, tail_type)
             relation.package = element.canvas.diagram.namespace
 
             line.head_end.subject = relation.memberEnd[0]
@@ -144,10 +145,10 @@ class AssociationConnect(UnaryRelationshipConnect):
 
         nav = oend.subject.navigability
 
-        UML.model.set_navigability(line.subject, end.subject, None) # clear old data
+        modelfactory.set_navigability(line.subject, end.subject, None) # clear old data
 
         oend.subject.type = c.subject
-        UML.model.set_navigability(line.subject, oend.subject, nav)
+        modelfactory.set_navigability(line.subject, oend.subject, nav)
 
 
     def disconnect_subject(self, handle):
@@ -187,12 +188,12 @@ class ImplementationConnect(RelationshipConnect):
 
         # Element at the head should be an Interface
         if handle is line.head and \
-           not isinstance(element.subject, UML.Interface):
+           not isinstance(element.subject, uml2.Interface):
             return None
 
         # Element at the tail should be a BehavioredClassifier
         if handle is line.tail and \
-           not isinstance(element.subject, UML.BehavioredClassifier):
+           not isinstance(element.subject, uml2.BehavioredClassifier):
             return None
 
         return super(ImplementationConnect, self).allow(handle, port)
@@ -207,16 +208,16 @@ class ImplementationConnect(RelationshipConnect):
         elif handle is line.tail:
             for c in impl.implementatingClassifier:
                 del impl.implementatingClassifier[c]
-        self.reconnect_relationship(handle, UML.Implementation.contract, UML.Implementation.implementatingClassifier)
+        self.reconnect_relationship(handle, uml2.Implementation.contract, uml2.Implementation.implementatingClassifier)
 
 
     def connect_subject(self, handle):
         """
         Perform implementation relationship connection.
         """
-        relation = self.relationship_or_new(UML.Implementation,
-                    UML.Implementation.contract,
-                    UML.Implementation.implementatingClassifier)
+        relation = self.relationship_or_new(uml2.Implementation,
+                    uml2.Implementation.contract,
+                    uml2.Implementation.implementatingClassifier)
         self.line.subject = relation
 
 

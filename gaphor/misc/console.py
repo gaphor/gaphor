@@ -7,13 +7,14 @@
 #
 #import pygtk
 #pygtk.require('2.0')
+from __future__ import absolute_import
 import gtk
 import gtk.gdk
 import code
 import sys
 import pango
 
-import __builtin__
+import six.moves.builtins
 import __main__
 
 banner = """Gaphor Interactive Python Console
@@ -55,7 +56,7 @@ class Completer:
         import keyword
         matches = []
         n = len(text)
-        for list in [keyword.kwlist,__builtin__.__dict__.keys(),__main__.__dict__.keys(), self.locals.keys()]:
+        for list in [keyword.kwlist,list(six.moves.builtins.__dict__.keys()),list(__main__.__dict__.keys()), list(self.locals.keys())]:
             for word in list:
                 if word[:n] == text and word != "__builtins__":
                     matches.append(word)

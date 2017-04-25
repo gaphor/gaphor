@@ -3,15 +3,15 @@ The Sanitize module is dedicated to adapters (stuff) that keeps
 the model clean and in sync with diagrams.
 """
 
+from __future__ import absolute_import
 from zope import interface
 from zope import component
 
 from logging import getLogger
-from gaphor import UML
+from gaphor.UML import uml2, modelfactory
 from gaphor.UML.interfaces import IAssociationDeleteEvent, IAssociationSetEvent
 from gaphor.interfaces import IService
 from gaphor.core import inject
-from gaphor.diagram import items
 
 class SanitizerService(object):
     """
@@ -54,7 +54,7 @@ class SanitizerService(object):
         #self.logger.debug('Element is %s' % event.element)
         #self.logger.debug('Old value is %s' % event.old_value)
         
-        if event.property is UML.Element.presentation:
+        if event.property is uml2.Element.presentation:
             old_presentation = event.old_value
             if old_presentation and not event.element.presentation:
                 event.element.unlink()
@@ -65,7 +65,7 @@ class SanitizerService(object):
         #self.logger.debug('Stereotype is %s' % st)
         #self.logger.debug('Meta is %s' % meta)
                 
-        inst = UML.model.find_instances(self.element_factory, st)
+        inst = modelfactory.find_instances(self.element_factory, st)
 
         for i in list(inst):
             for e in i.extended:
@@ -84,15 +84,15 @@ class SanitizerService(object):
         #self.logger.debug('Element is %s' % event.element)
         #self.logger.debug('Old value is %s' % event.old_value)
         
-        if isinstance(event.element, UML.Extension) and \
-                event.property is UML.Association.memberEnd and \
+        if isinstance(event.element, uml2.Extension) and \
+                event.property is uml2.Association.memberEnd and \
                 event.element.memberEnd:
             p = event.element.memberEnd[0]
             ext = event.old_value
-            if isinstance(p, UML.ExtensionEnd):
+            if isinstance(p, uml2.ExtensionEnd):
                 p, ext = ext, p
             st = ext.type
-            meta = p.type and getattr(UML, p.type.name)
+            meta = p.type and getattr(uml2, p.type.name)
             self.perform_unlink_for_instances(st, meta)
 
 
@@ -104,13 +104,13 @@ class SanitizerService(object):
         #self.logger.debug('Element is %s' % event.element)
         #self.logger.debug('Old value is %s' % event.old_value)
         
-        if event.property is UML.ExtensionEnd.type and event.old_value:
+        if event.property is uml2.ExtensionEnd.type and event.old_value:
             ext = event.element
             p = ext.opposite
             if not p:
                 return
             st = event.old_value
-            meta = getattr(UML, p.type.name)
+            meta = getattr(uml2, p.type.name)
             self.perform_unlink_for_instances(st, meta)
 
 
@@ -125,8 +125,8 @@ class SanitizerService(object):
         #self.logger.debug('Element is %s' % event.element)
         #self.logger.debug('Old value is %s' % event.old_value)
         
-        if event.property is UML.InstanceSpecification.classifier:
-            if isinstance(event.old_value, UML.Stereotype):
+        if event.property is uml2.InstanceSpecification.classifier:
+            if isinstance(event.old_value, uml2.Stereotype):
                 event.element.unlink()
 
 

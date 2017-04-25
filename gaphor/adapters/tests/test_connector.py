@@ -2,6 +2,7 @@
 Test Item connections.
 """
 
+from __future__ import absolute_import
 from gaphor.tests import TestCase
 from zope import component
 from gaphor import UML

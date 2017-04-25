@@ -4,6 +4,7 @@ is a shorthand for importing each module individually.
 """
 
 # Base classes:
+from __future__ import absolute_import
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.diagramline import DiagramLine, NamedLine
 from gaphor.diagram.elementitem import ElementItem

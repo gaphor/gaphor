@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
+from __future__ import absolute_import
+from __future__ import print_function
 import gtk
-from cairo import Matrix
 from zope import component
 from etk.docking import DockItem
 
@@ -9,17 +10,14 @@ from gaphas.view import GtkView
 from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \
                            FocusedItemPainter, ToolPainter, BoundingBoxPainter
 from gaphas.freehand import FreeHandPainter
-from gaphas import segment, guide
-
-from gaphor import UML
-from gaphor.core import _, inject, transactional, action, toggle_action, build_action_group
+from gaphor.UML import uml2
+from gaphor.core import _, inject, transactional, action, build_action_group
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.diagram import get_diagram_item
 from gaphor.diagram.items import DiagramItem
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from gaphor.ui.event import DiagramSelectionChange
-from gaphor.services.properties import IPropertyChangeEvent
 
 class DiagramTab(object):
     
@@ -127,7 +125,7 @@ class DiagramTab(object):
     @component.adapter(IAttributeChangeEvent)
     def _on_element_change(self, event):
         if event.element is self.diagram and \
-                event.property is UML.Diagram.name:
+                event.property is uml2.Diagram.name:
            self.widget.title = self.title
 
 
@@ -227,7 +225,7 @@ class DiagramTab(object):
         confirmation before deletion.
         """
         items = self.view.selected_items
-        last_in_model = filter(lambda i: i.subject and len(i.subject.presentation) == 1, items)
+        last_in_model = [i for i in items if i.subject and len(i.subject.presentation) == 1]
         log.debug('Last in model: %s' % str(last_in_model))
         if last_in_model:
             return self.confirm_deletion_of_items(last_in_model)
@@ -277,7 +275,7 @@ class DiagramTab(object):
 
 
     def _on_drag_drop(self, view, context, x, y, time):
-        print 'drag_drop on', context.targets
+        print('drag_drop on', context.targets)
         if self.VIEW_DND_TARGETS[0][0] in context.targets:
             target = gtk.gdk.atom_intern(self.VIEW_DND_TARGETS[0][0])
             view.drag_get_data(context, target, time)
@@ -292,7 +290,7 @@ class DiagramTab(object):
         """
         Handle data dropped on the canvas.
         """
-        print 'DND data received', view
+        print('DND data received', view)
         if data and data.format == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
             tool = self.toolbox.get_tool(data.data)
             tool.create_item((x, y))
@@ -309,7 +307,7 @@ class DiagramTab(object):
             if p:
                 q = q, p
             item_class = get_diagram_item(q)
-            if isinstance(element, UML.Diagram):
+            if isinstance(element, uml2.Diagram):
                 self.action_manager.execute('OpenModelElement')
             elif item_class:
                 tx = Transaction()

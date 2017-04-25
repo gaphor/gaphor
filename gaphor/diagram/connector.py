@@ -100,8 +100,9 @@ Therefore, code of connector items is written with assumption, that
 interfaces are connectable elements.
 """
 
+from __future__ import absolute_import
 from logging import getLogger
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
@@ -125,7 +126,7 @@ class ConnectorItem(NamedLine):
      _interface
         Interface name, when connector is assembly connector.
     """
-    __uml__        = UML.Connector
+    __uml__        = uml2.Connector
     __style__   = {
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
         'name-outside': True,
@@ -151,7 +152,7 @@ class ConnectorItem(NamedLine):
         """
         try:
             self._interface.text = self.subject.end['it.role', 0].role.name
-        except (IndexError, AttributeError), e:
+        except (IndexError, AttributeError) as e:
             logger.error(e)
             self._interface.text = ''
         else:

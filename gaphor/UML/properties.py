@@ -24,16 +24,18 @@ methods:
     save(save_func):  send the value of the property to save_func(name, value)
 """
 
+from __future__ import absolute_import
+from six.moves import map
 __all__ = [ 'attribute', 'enumeration', 'association', 'derivedunion', 'redefine' ]
 
 from zope import component
-from collection import collection, collectionlist
-from event import AttributeChangeEvent, AssociationSetEvent, \
+from .collection import collection, collectionlist
+from .event import AttributeChangeEvent, AssociationSetEvent, \
                   AssociationAddEvent, AssociationDeleteEvent
-from event import DerivedChangeEvent, DerivedSetEvent, \
+from .event import DerivedChangeEvent, DerivedSetEvent, \
                   DerivedAddEvent, DerivedDeleteEvent
-from event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
-from interfaces import IElementChangeEvent, \
+from .event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
+from .interfaces import IElementChangeEvent, \
                        IAssociationChangeEvent, IAssociationSetEvent, \
                        IAssociationAddEvent, IAssociationDeleteEvent
 
@@ -129,7 +131,7 @@ class attribute(umlproperty):
 
     def _set(self, obj, value):
         if value is not None and not isinstance(value, self.type):
-            raise AttributeError, 'Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type
+            raise AttributeError('Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type)
 
         if value == self._get(obj):
             return
@@ -186,12 +188,12 @@ class enumeration(umlproperty):
 
     def load(self, obj, value):
         if not value in self.values:
-            raise AttributeError, 'Value should be one of %s' % str(self.values)
+            raise AttributeError('Value should be one of %s' % str(self.values))
         setattr(obj, self._name, value)
 
     def _set(self, obj, value):
         if not value in self.values:
-            raise AttributeError, 'Value should be one of %s' % str(self.values)
+            raise AttributeError('Value should be one of %s' % str(self.values))
         old = self._get(obj)
         if value == old:
             return
@@ -238,7 +240,7 @@ class association(umlproperty):
 
     def load(self, obj, value):
         if not isinstance(value, self.type):
-            raise AttributeError, 'Value for %s should be of type %s (%s)' % (self.name, self.type.__name__, type(value).__name__)
+            raise AttributeError('Value for %s should be of type %s (%s)' % (self.name, self.type.__name__, type(value).__name__))
         self._set(obj, value, do_notify=False)
 
     def postload(self, obj):
@@ -253,7 +255,7 @@ class association(umlproperty):
             values = [ values ]
         for value in values:
             if not isinstance(value, self.type):
-                raise AttributeError, 'Error in postload validation for %s: Value %s should be of type %s' % (self.name, value, self.type.__name__)
+                raise AttributeError('Error in postload validation for %s: Value %s should be of type %s' % (self.name, value, self.type.__name__))
 
     def __str__(self):
         if self.lower == self.upper:
@@ -289,7 +291,7 @@ class association(umlproperty):
         #print '__set__', self, obj, value, self._get(obj)
         if not (isinstance(value, self.type) or \
                 (value is None and self.upper == 1)):
-            raise AttributeError, 'Value should be of type %s' % self.type.__name__
+            raise AttributeError('Value should be of type %s' % self.type.__name__)
         # Remove old value only for uni-directional associations
         if self.upper == 1:
             old = self._get(obj)
@@ -348,7 +350,7 @@ class association(umlproperty):
 
         if not value:
             if self.upper > 1:
-                raise Exception, 'Can not delete collections'
+                raise Exception('Can not delete collections')
             old = value = self._get(obj)
             if value is None:
                 return
@@ -419,14 +421,14 @@ class associationstub(umlproperty):
 
     def __get__(self, obj, class_=None):
         if obj:
-            raise AssociationStubError, 'getting values not allowed'
+            raise AssociationStubError('getting values not allowed')
         return self
 
     def __set__(self, obj, value):
-        raise AssociationStubError, 'setting values not allowed'
+        raise AssociationStubError('setting values not allowed')
 
     def __delete__(self, obj, value=None):
-        raise AssociationStubError, 'deleting values not allowed'
+        raise AssociationStubError('deleting values not allowed')
 
     def save(self, obj, save_func):
         pass
@@ -493,7 +495,7 @@ class derived(umlproperty):
 
 
     def load(self, obj, value):
-        raise ValueError, 'Derivedunion: Properties should not be loaded in a derived union %s: %s' % (self.name, value)
+        raise ValueError('Derivedunion: Properties should not be loaded in a derived union %s: %s' % (self.name, value))
 
 
     def postload(self, obj):
@@ -504,13 +506,13 @@ class derived(umlproperty):
 
 
     def __str__(self):
-        return '<derived %s: %s>' % (self.name, str(map(str, self.subsets))[1:-1])
+        return '<derived %s: %s>' % (self.name, str(list(map(str, self.subsets)))[1:-1])
 
     def filter(self, obj):
         """
         Filter should return something iterable.
         """
-        raise NotImplementedError, 'Implement this in the property.'
+        raise NotImplementedError('Implement this in the property.')
 
     def _update(self, obj):
         """
@@ -523,7 +525,7 @@ class derived(umlproperty):
             #if len(u) > 1:
             #    log.warning('Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u)))
             if u:
-                u = iter(u).next()
+                u = next(iter(u))
             else:
                 u = None
 
@@ -544,11 +546,11 @@ class derived(umlproperty):
 
 
     def _set(self, obj, value):
-        raise AttributeError, 'Can not set values on a union'
+        raise AttributeError('Can not set values on a union')
 
 
     def _del(self, obj, value=None):
-        raise AttributeError, 'Can not delete values on a union'
+        raise AttributeError('Can not delete values on a union')
 
     @component.adapter(IElementChangeEvent)
     def _association_changed(self, event):
@@ -669,7 +671,7 @@ class derivedunion(derived):
                         # In an in-between state. Do not emit notifications
                         return
                     if values:
-                        new_value = iter(values).next()
+                        new_value = next(iter(values))
                     self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
             else:        
                 if IAssociationSetEvent.providedBy(event):
@@ -752,7 +754,7 @@ class redefine(umlproperty):
     def __set__(self, obj, value):
         # No longer needed
         if not isinstance(value, self.type):
-            raise AttributeError, 'Value should be of type %s' % self.type.__name__
+            raise AttributeError('Value should be of type %s' % self.type.__name__)
         self.original.__set__(obj, value)
 
 

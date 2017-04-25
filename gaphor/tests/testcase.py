@@ -5,6 +5,7 @@ Everything is about services so the TestCase can define it's required
 services and start off.
 """
 
+from __future__ import absolute_import
 import unittest
 import logging
 from cStringIO import StringIO
@@ -33,8 +34,7 @@ class TestCaseExtras(object):
            operator.
         """
         if first is second:
-            raise self.failureException, \
-                  (msg or '%r is not %r' % (first, second))
+            raise self.failureException(msg or '%r is not %r' % (first, second))
 
     assertNotSame = failIfIdentityEqual
 
@@ -43,8 +43,7 @@ class TestCaseExtras(object):
            operator.
         """
         if first is not second:
-            raise self.failureException, \
-                  (msg or '%r is not %r' % (first, second))
+            raise self.failureException(msg or '%r is not %r' % (first, second))
 
     assertSame = failUnlessIdentityEqual
 

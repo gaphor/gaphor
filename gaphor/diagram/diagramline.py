@@ -2,16 +2,17 @@
 Basic functionality for canvas line based items on a diagram.
 """
 
+from __future__ import absolute_import
 from math import atan2, pi
 
 import gaphas
-from gaphor import UML
-from diagramitem import DiagramItem
-from interfaces import IConnect
+from .diagramitem import DiagramItem
 
 from gaphor.diagram.style import get_text_point_at_line, \
     get_text_point_at_line2, \
     ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
+from six.moves import map
+from six.moves import range
 
 
 class DiagramLine(gaphas.Line, DiagramItem):
@@ -85,7 +86,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
             self.matrix = eval(value)
         elif name == 'points':
             points = eval(value)
-            for x in xrange(len(points) - 2):
+            for x in range(len(points) - 2):
                 h = self._create_handle((0, 0))
                 self._handles.insert(1, h)
             for i, p in enumerate(points):

@@ -2,18 +2,18 @@
 Use case diagram item.
 """
 
-from math import pi
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.classifier import ClassifierItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
-from textelement import text_extents
+from .textelement import text_extents
 from gaphas.util import path_ellipse
 
 class UseCaseItem(ClassifierItem):
     """
     Presentation of gaphor.UML.UseCase.
     """
-    __uml__ = UML.UseCase
+    __uml__ = uml2.UseCase
     __style__ = {
         'min-size':   (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),

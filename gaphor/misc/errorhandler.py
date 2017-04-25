@@ -5,6 +5,7 @@ This module also contains a ErrorHandlerAspect, which can be easely attached
 to a class' method and will raise the error dialog when the method exits with
 an exception.
 """
+from __future__ import absolute_import
 import gtk
 import sys
 import pdb

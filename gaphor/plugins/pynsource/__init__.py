@@ -7,13 +7,14 @@ This plugin uses PyNSource, written by Andy Bulka
 Depends on the Diagram Layout plugin.
 """
 
+from __future__ import absolute_import
 import gobject
 import gtk
 from zope import interface, component
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 
-from engineer import Engineer
+from .engineer import Engineer
 
 
 NAME_COLUMN = 0

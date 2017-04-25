@@ -2,11 +2,12 @@
 Test item styles.
 """
 
+from __future__ import absolute_import
 import unittest
-
 from gaphor.diagram.style import get_text_point, \
     get_text_point_at_line, get_text_point_at_line2, get_min_size, \
     ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT, ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM
+from six.moves import range
 
 
 class StyleTestCase(unittest.TestCase):

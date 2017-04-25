@@ -2,6 +2,7 @@
 Service dedicated to exporting diagrams to a varyity of file formats.
 """
 
+from __future__ import absolute_import
 import os
 import cairo
 
@@ -16,7 +17,6 @@ from gaphor.ui.questiondialog import QuestionDialog
 from gaphas.view import View
 from gaphas.painter import ItemPainter, BoundingBoxPainter
 from gaphas.freehand import FreeHandPainter
-from gaphas.geometry import Rectangle
 
 class DiagramExportManager(object):
     """

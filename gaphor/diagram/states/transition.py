@@ -2,7 +2,8 @@
 State transition implementation.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.core import inject
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
@@ -12,7 +13,7 @@ class TransitionItem(NamedLine):
     """
     Representation of state transition.
     """
-    __uml__ = UML.Transition
+    __uml__ = uml2.Transition
 
     __style__ = {
             'name-align': (ALIGN_RIGHT, ALIGN_TOP),

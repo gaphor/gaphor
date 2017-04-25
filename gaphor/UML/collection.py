@@ -2,8 +2,9 @@
 1:n and n:m relations in the data model are saved using a collection.
 """
 
+from __future__ import absolute_import
 import inspect
-from event import AssociationChangeEvent
+from .event import AssociationChangeEvent
 from gaphor.misc.listmixins import querymixin, recursemixin, recurseproxy, getslicefix
 
 
@@ -60,7 +61,7 @@ class collection(object):
         return len(self.items)
 
     def __setitem__(self, key, value):
-        raise RuntimeError, 'items should not be overwritten.'
+        raise RuntimeError('items should not be overwritten.')
 
     def __delitem__(self, key):
         self.remove(key)
@@ -86,13 +87,13 @@ class collection(object):
         if isinstance(value, self.type):
             self.property._set(self.object, value)
         else:
-            raise TypeError, 'Object is not of type %s' % self.type.__name__
+            raise TypeError('Object is not of type %s' % self.type.__name__)
 
     def remove(self, value):
         if value in self.items:
             self.property.__delete__(self.object, value)
         else:
-            raise ValueError, '%s not in collection' % value
+            raise ValueError('%s not in collection' % value)
 
 
     def index(self, key):
@@ -181,7 +182,7 @@ class collection(object):
             args=[]
             for x in index:
                 args.append(self.items[x])
-            if not apply(f,args):
+            if not f(*args):
                 return False
             c=len(index)-1
             index[c]=index[c]+1
@@ -211,7 +212,7 @@ class collection(object):
             args=[]
             for x in index:
                 args.append(self.items[x])
-            if apply(f,args):
+            if f(*args):
                 return True
             c=len(index)-1
             index[c]=index[c]+1
@@ -241,9 +242,9 @@ class collection(object):
             if factory:
                 factory._handle(AssociationChangeEvent(self.object, self.property))
             return True
-        except IndexError, ex:
+        except IndexError as ex:
             return False
-        except ValueError, ex:
+        except ValueError as ex:
             return False
 
 

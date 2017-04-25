@@ -15,7 +15,8 @@ Function dependency_type in model factory should be used to determine
 type of a dependency in automatic way.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import DiagramLine
 
 
@@ -32,20 +33,20 @@ class DependencyItem(DiagramLine):
     drawn as solid line without arrow head.
     """
 
-    __uml__ = UML.Dependency
+    __uml__ = uml2.Dependency
 
-    # do not use issubclass, because issubclass(UML.Implementation, UML.Realization)
+    # do not use issubclass, because issubclass(uml2.Implementation, uml2.Realization)
     # we need to be very strict here
     __stereotype__ = {
-        'use':        lambda self: self._dependency_type == UML.Usage,
-        'realize':    lambda self: self._dependency_type == UML.Realization,
-        'implements': lambda self: self._dependency_type == UML.Implementation,
+        'use':        lambda self: self._dependency_type == uml2.Usage,
+        'realize':    lambda self: self._dependency_type == uml2.Realization,
+        'implements': lambda self: self._dependency_type == uml2.Implementation,
     }
 
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
 
-        self._dependency_type = UML.Dependency
+        self._dependency_type = uml2.Dependency
         self.auto_dependency = True
         self._solid = False
 

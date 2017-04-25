@@ -2,14 +2,15 @@
 Generalization -- 
 """
 
+from __future__ import absolute_import
 import gobject
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import DiagramLine
 
 class GeneralizationItem(DiagramLine):
 
-    __uml__ = UML.Generalization
+    __uml__ = uml2.Generalization
     __relationship__ = 'general', None, 'specific', 'generalization'
 
     def __init__(self, id=None):

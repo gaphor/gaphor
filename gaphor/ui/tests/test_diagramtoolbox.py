@@ -1,10 +1,9 @@
 
-import gtk
+from __future__ import absolute_import
 from gaphor.tests.testcase import TestCase
-from gaphor.application import Application
 from gaphor.ui.diagramtab import DiagramTab
-from gaphor.ui.diagramtoolbox import DiagramToolbox, TOOLBOX_ACTIONS
-from gaphor import UML
+from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
+from gaphor.UML import uml2
 
 class WindowOwner(object):
     """
@@ -129,11 +128,11 @@ class DiagramToolboxTestCase(TestCase):
 
     def test_placement_object_node(self):
         self._test_placement_action('toolbox-object-node')
-        self.assertEquals(1, len(self.kindof(UML.ObjectNode)))
+        self.assertEquals(1, len(self.kindof(uml2.ObjectNode)))
 
     def test_placement_partition(self):
         self._test_placement_action('toolbox-partition')
-        self.assertEquals(0, len(self.kindof(UML.ActivityPartition)))
+        self.assertEquals(0, len(self.kindof(uml2.ActivityPartition)))
 
     def test_placement_flow(self):
         self._test_placement_action('toolbox-flow')

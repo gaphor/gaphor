@@ -2,6 +2,7 @@
 Metaclass item editors.
 """
 
+from __future__ import absolute_import
 import gtk
 
 from gaphor.core import _, inject, transactional
@@ -9,7 +10,7 @@ from gaphor.ui.interfaces import IPropertyPage
 from zope import interface, component
 from gaphor.diagram import items
 from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
-from gaphor import UML
+from gaphor.UML import uml2
 
 def _issubclass(c, b):
     try:
@@ -30,8 +31,8 @@ class MetaclassNameEditor(object):
 
     NAME_LABEL = _('Name')
 
-    CLASSES = list(sorted(n for n in dir(UML)
-        if _issubclass(getattr(UML, n), UML.Element) and n != 'Stereotype'))
+    CLASSES = list(sorted(n for n in dir(uml2)
+        if _issubclass(getattr(uml2, n), uml2.Element) and n != 'Stereotype'))
 
 
     def __init__(self, item):

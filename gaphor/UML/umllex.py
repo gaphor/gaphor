@@ -7,15 +7,17 @@ The regular expressions are constructed based on a series of
 attribute/operation.
 """
 
+from __future__ import absolute_import
+from six.moves import map
 __all__ = [
         'parse_property', 'parse_operation',
         ]
 
 import re
 from simplegeneric import generic
-
+#from .context import UML
 #from gaphor.UML import uml2 as UML
-import uml2 as UML
+from gaphor.UML import uml2
 
 
 @generic
@@ -199,7 +201,7 @@ def parse_association_end(el, s):
             #        tv.value = t
             #        el.taggedValue = tv
 
-@parse.when_type(UML.Property)
+@parse.when_type(uml2.Property)
 def parse_property(el, s):
     if el.association:
         parse_association_end(el, s)
@@ -207,7 +209,7 @@ def parse_property(el, s):
         parse_attribute(el, s)
 
 
-@parse.when_type(UML.Operation)
+@parse.when_type(uml2.Operation)
 def parse_operation(el, s):
     """
     Parse string s in the operation. Tagged values, parameters and
@@ -217,15 +219,15 @@ def parse_operation(el, s):
     if not m or m.group('garbage'):
         el.name = s
         del el.visibility
-        map(UML.Parameter.unlink, list(el.returnResult))
-        map(UML.Parameter.unlink, list(el.formalParameter))
+        list(map(uml2.Parameter.unlink, list(el.returnResult)))
+        list(map(uml2.Parameter.unlink, list(el.formalParameter)))
     else:
         g = m.group
         create = el._factory.create
         _set_visibility(el, g('vis'))
         el.name = g('name')
         if not el.returnResult:
-            el.returnResult = create(UML.Parameter)
+            el.returnResult = create(uml2.Parameter)
         p = el.returnResult[0]
         p.direction = 'return'
         p.typeValue = g('type')
@@ -238,7 +240,7 @@ def parse_operation(el, s):
         #        tv = create(UML.LiteralSpecification)
         #        tv.value = t
         #        p.taggedValue = tv
-        
+
         pindex = 0
         params = g('params')
         while params:
@@ -249,7 +251,7 @@ def parse_operation(el, s):
             try:
                 p = el.formalParameter[pindex]
             except IndexError:
-                p = create(UML.Parameter)
+                p = create(uml2.Parameter)
             p.direction = g('dir') or 'in'
             p.name = g('name')
             p.typeValue = g('type')
@@ -289,7 +291,7 @@ def parse_lifeline(el, s):
         t = g('type')
         if t:
             el.name += ': ' + t
-        # In the near future the data model should be extended with 
+        # In the near future the data model should be extended with
         # Lifeline.represents: ConnectableElement
 
 
@@ -300,7 +302,7 @@ def render_lifeline(el):
     return el.name
 
 
-@parse.when_type(UML.NamedElement)
+@parse.when_type(uml2.NamedElement)
 def parse_namedelement(el, text):
     """
     Parse named element by simply assigning text to its name.

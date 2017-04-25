@@ -2,6 +2,7 @@
 Top level interface definitions for Gaphor.
 """
 
+from __future__ import absolute_import
 from zope import interface
 
 

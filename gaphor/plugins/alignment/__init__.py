@@ -2,6 +2,7 @@
 This plugin extends Gaphor with XMI alignment actions.
 """
 
+from __future__ import absolute_import
 from zope import interface, component
 from gaphor.core import inject, transactional, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider

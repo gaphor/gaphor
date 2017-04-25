@@ -4,9 +4,11 @@ representation of a UML diagram. Diagrams can be visualized and edited.
 
 The DiagramCanvas class extends the gaphas.Canvas class."""
 
+from __future__ import absolute_import
 import gaphas
 import uuid
-from uml2 import Namespace, PackageableElement
+#from .uml2 import Namespace, PackageableElement
+from six.moves import filter
 
 class DiagramCanvas(gaphas.Canvas):
     """DiagramCanvas extends the gaphas.Canvas class.  Updates to the canvas
@@ -55,10 +57,10 @@ class DiagramCanvas(gaphas.Canvas):
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression."""
         
-        return filter(expression, self.get_all_items())
+        return list(filter(expression, self.get_all_items()))
 
-
-class Diagram(Namespace, PackageableElement):
+# TODO Moved this to uml2, otherwise circular imports
+'''class Diagram(Namespace, PackageableElement):
     """Diagrams may contain model elements and can be owned by a Package.
     A diagram is a Namespace and a PackageableElement."""
 
@@ -103,3 +105,4 @@ class Diagram(Namespace, PackageableElement):
                 pass
 
         super(Diagram, self).unlink()
+'''

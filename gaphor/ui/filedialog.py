@@ -1,6 +1,7 @@
 """This module has a generic FileDialog class that is used to open
 or save files."""
 
+from __future__ import absolute_import
 import gtk
 
 class FileDialog(object):

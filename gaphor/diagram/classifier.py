@@ -2,6 +2,7 @@
 Classifier diagram item.
 """
 
+from __future__ import absolute_import
 from gaphor.diagram.compartment import CompartmentItem
 
 

@@ -2,6 +2,7 @@
 The file service is responsible for loading and saving the user data.
 """
 
+from __future__ import absolute_import
 from logging import getLogger
 
 import gtk
@@ -10,13 +11,14 @@ from zope import interface, component
 from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.storage import storage, verify
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.ui.statuswindow import StatusWindow
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.filedialog import FileDialog
+from six.moves import range
 
 DEFAULT_EXT = '.gaphor'
 MAX_RECENT = 10
@@ -101,7 +103,7 @@ class FileManager(object):
             action.set_property('hide-if-empty', False)
             self.action_group.add_action(action)
 
-        for i in xrange(0, (MAX_RECENT-1)):
+        for i in range(0, (MAX_RECENT-1)):
             action = gtk.Action('file-recent-%d' % i, None, None, None)
             action.set_property('visible', False)
             self.action_group.add_action(action)
@@ -173,7 +175,7 @@ class FileManager(object):
             recent_files = recent_files[0:(MAX_RECENT-1)]
             self.recent_files = recent_files
 
-        for i in xrange(0, (MAX_RECENT-1)):
+        for i in range(0, (MAX_RECENT-1)):
             action = self.action_group.get_action('file-recent-%d' % i)
             action.set_property('visible', False)
 
@@ -369,9 +371,9 @@ class FileManager(object):
                 return
 
         element_factory.flush()
-        model = element_factory.create(UML.Package)
+        model = element_factory.create(uml2.Package)
         model.name = _('New model')
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(uml2.Diagram)
         diagram.package = model
         diagram.name= _('main')
         self.filename = None

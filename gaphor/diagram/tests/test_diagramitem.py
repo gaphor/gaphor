@@ -2,6 +2,7 @@
 Test basic diagram item functionality like styles, etc.
 """
 
+from __future__ import absolute_import
 import unittest
 from gaphor.diagram.diagramitem import DiagramItem
 

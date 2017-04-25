@@ -9,13 +9,14 @@ The layout is done like this:
  - Lines are reconnected to the nodes, so everything looks pretty.
 """
 
+from __future__ import absolute_import
 from zope import interface, component
 from gaphor.core import _, inject, action, build_action_group, transactional
 from gaphor.interfaces import IService, IActionProvider
 
 import random
 from gaphor.diagram import items
-import toposort
+from . import toposort
 
 
 class DiagramLayout(object):
@@ -86,7 +87,7 @@ def layout_diagram(diag):
                 relations.append((item.handles[0].connected_to,
                                   item.handles[-1].connected_to))
                 primary_nodes.extend(relations[-1])
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
         elif isinstance(item, items.DiagramLine):
             # Secondary (associations, dependencies) may be drawn top-down
@@ -96,7 +97,7 @@ def layout_diagram(diag):
                                         item.handles[-1].connected_to))
                 #other_relations.append((item.handles[-1].connected_to,
                 #                        item.handles[0].connected_to))
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
         else:
             nodes.append(item)
@@ -172,7 +173,7 @@ def simple_layout_lines(diag):
             try:
                 lines[item] = (item.handles[0].connected_to,
                                item.handles[-1].connected_to)
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
 
     # Now we have the lines, let's first ensure we only have a begin and an
@@ -201,7 +202,7 @@ def uniq(lst):
     d = {}
     for l in lst:
         d[l] = None
-    return d.keys()
+    return list(d.keys())
 
 
 def find_related_nodes(item, relations):

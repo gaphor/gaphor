@@ -6,3 +6,5 @@ po/gaphor.pot
 html
 *.swp
 *.egg
+env
+*.bak

@@ -2,6 +2,7 @@
 Interfaces related to the user interface.
 """
 
+from __future__ import absolute_import
 from zope import interface
 
 

@@ -2,6 +2,7 @@
 Test if the collection's list supports all trickery.
 """
 
+from __future__ import absolute_import
 import unittest
 from gaphor.UML.collection import collectionlist
 

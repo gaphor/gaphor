@@ -1,4 +1,5 @@
 
+from __future__ import absolute_import
 import unittest
 from gaphor.application import Application
 from gaphor.services.diagramexportmanager import DiagramExportManager

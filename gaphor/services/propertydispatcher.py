@@ -1,6 +1,7 @@
 """
 """
 
+from __future__ import absolute_import
 from zope import interface, component
 
 from logging import getLogger
@@ -76,7 +77,7 @@ class PropertyDispatcher(object):
         for handler in s:
             try:
                 handler(event)
-            except Exception, e:
+            except Exception as e:
                 log.error('problem executing handler %s' % handler, exc_info=True)
 
 

@@ -2,13 +2,13 @@
 """
 
 
+from __future__ import absolute_import
 import gtk
-from zope import interface, component
-
+from zope import component
 from gaphor.core import _, inject
-from gaphor.UML.interfaces import IElementCreateEvent, IAssociationChangeEvent
-from gaphor.UML import Presentation
-from interfaces import IPropertyPage, IDiagramSelectionChange
+from gaphor.UML.interfaces import IAssociationChangeEvent
+from gaphor.UML.uml2 import Presentation
+from .interfaces import IPropertyPage, IDiagramSelectionChange
 
 
 class PropertyEditor(object):
@@ -53,7 +53,7 @@ class PropertyEditor(object):
         for name, adapter in component.getAdapters([item,], IPropertyPage):
             adaptermap[name] = (adapter.order, name, adapter)
 
-        adapters = adaptermap.values()
+        adapters = list(adaptermap.values())
         adapters.sort()
         return adapters
 
@@ -84,7 +84,7 @@ class PropertyEditor(object):
                     expander.connect_after('activate', self.on_expand, name)
                     self.vbox.pack_start(expander, expand=False)
                 page.show_all()
-            except Exception, e:
+            except Exception as e:
                 log.error('Could not construct property page for ' + name, exc_info=True)
         
             

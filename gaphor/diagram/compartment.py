@@ -2,13 +2,15 @@
 Diagram item with compartments.
 """
 
+from __future__ import absolute_import
 import cairo, pango, pangocairo
 from gaphas.state import observed, reversible_property
 
-from gaphor import UML
+from gaphor.UML import uml2, event, modelfactory
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
-from textelement import text_extents, text_align
+from .textelement import text_extents, text_align
+from six.moves import zip
 
 
 class FeatureItem(object):
@@ -73,7 +75,7 @@ class FeatureItem(object):
         """
         Return a rendered feature, as a string.
         """
-        return UML.format(self.subject, pattern=self.pattern) or ''
+        return format(self.subject, pattern=self.pattern) or ''
 
     def draw(self, context):
         cr = context.cairo
@@ -271,9 +273,9 @@ class CompartmentItem(NamedItem):
 
     def on_stereotype_change(self, event):
         if self._show_stereotypes_attrs:
-            if isinstance(event, UML.event.AssociationAddEvent):
+            if isinstance(event, event.AssociationAddEvent):
                 self._create_stereotype_compartment(event.new_value)
-            elif isinstance(event, UML.event.AssociationDeleteEvent):
+            elif isinstance(event, event.AssociationDeleteEvent):
                 self._remove_stereotype_compartment(event.old_value)
 
 
@@ -293,7 +295,7 @@ class CompartmentItem(NamedItem):
                 log.debug('No compartment found for %s' % event.element)
                 return
 
-            if isinstance(event, (UML.event.AssociationAddEvent, UML.event.AssociationDeleteEvent)):
+            if isinstance(event, (event.AssociationAddEvent, event.AssociationDeleteEvent)):
                 self._update_stereotype_compartment(comp, event.element)
 
             self.request_update()
@@ -302,7 +304,7 @@ class CompartmentItem(NamedItem):
     def _create_stereotype_compartment(self, obj):
         st = obj.classifier[0].name
         c = Compartment(st, self, obj)
-        c.title = UML.model.STEREOTYPE_FMT % st
+        c.title = modelfactory.STEREOTYPE_FMT % st
         self._update_stereotype_compartment(c, obj)
         self._compartments.append(c)
         self.request_update()
@@ -333,7 +335,7 @@ class CompartmentItem(NamedItem):
         """
         # remove all stereotype compartments first
         for comp in self._compartments:
-            if isinstance(comp.id, UML.InstanceSpecification):
+            if isinstance(comp.id, uml2.InstanceSpecification):
                 self._compartments.remove(comp)
         if self._show_stereotypes_attrs:
             for obj in self.subject.appliedStereotype:
@@ -413,7 +415,7 @@ class CompartmentItem(NamedItem):
         local_elements = [f.subject for f in compartment]
 
         # map local element with compartment element
-        mapping = dict(zip(local_elements, compartment))
+        mapping = dict(list(zip(local_elements, compartment)))
 
         to_add = [el for el in elements if el not in local_elements]
 

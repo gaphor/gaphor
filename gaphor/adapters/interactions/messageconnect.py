@@ -2,9 +2,10 @@
 Message item connection adapters.
 """
 
+from __future__ import absolute_import
 from gaphor.adapters.connectors import AbstractConnect
 from zope import interface, component
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 
 class MessageLifelineConnect(AbstractConnect):
@@ -33,14 +34,14 @@ class MessageLifelineConnect(AbstractConnect):
         if send:
             message = get_subject()
             if not message.sendEvent:
-                event = self.element_factory.create(UML.MessageOccurrenceSpecification)
+                event = self.element_factory.create(uml2.MessageOccurrenceSpecification)
                 event.sendMessage = message
                 event.covered = send.subject
 
         if received:
             message = get_subject()
             if not message.receiveEvent:
-                event = self.element_factory.create(UML.MessageOccurrenceSpecification)
+                event = self.element_factory.create(uml2.MessageOccurrenceSpecification)
                 event.receiveMessage = message
                 event.covered = received.subject
 

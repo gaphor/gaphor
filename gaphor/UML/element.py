@@ -3,11 +3,12 @@
 Base class for UML model elements.
 """
 
+from __future__ import absolute_import
 __all__ = [ 'Element' ]
 
 import threading
 import uuid
-from properties import umlproperty
+from .properties import umlproperty
 
 
 class Element(object):
@@ -69,9 +70,9 @@ class Element(object):
         """
         try:
             prop = getattr(type(self), name)
-        except AttributeError, e:
-            raise AttributeError, "'%s' has no property '%s'" % \
-                                        (type(self).__name__, name)
+        except AttributeError as e:
+            raise AttributeError("'%s' has no property '%s'" % \
+                                        (type(self).__name__, name))
         else:
             prop.load(self, value)
 

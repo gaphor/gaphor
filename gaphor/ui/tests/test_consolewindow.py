@@ -1,4 +1,5 @@
 
+from __future__ import absolute_import
 from gaphor.ui.consolewindow import ConsoleWindow
 from gaphor.tests.testcase import TestCase
 

@@ -1,6 +1,7 @@
 
+from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IEditor
 from gaphor.adapters.propertypages import AttributesPage, OperationsPage
@@ -18,8 +19,8 @@ class EditorTestCase(TestCase):
         assert adapter._edit is None
 
         # Intermezzo: connect the association between two classes
-        class1 = self.create(items.ClassItem, UML.Class)
-        class2 = self.create(items.ClassItem, UML.Class)
+        class1 = self.create(items.ClassItem, uml2.Class)
+        class2 = self.create(items.ClassItem, uml2.Class)
 
         assoc.handles()[0].pos = 10, 10
         assoc.handles()[-1].pos = 100, 100
@@ -43,7 +44,7 @@ class EditorTestCase(TestCase):
 
         
     def test_objectnode_editor(self):
-        node = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        node = self.create(items.ObjectNodeItem, uml2.ObjectNode)
         self.diagram.canvas.update_now()
 
         adapter = IEditor(node)
@@ -58,16 +59,16 @@ class EditorTestCase(TestCase):
         """
         Test classifier editor
         """
-        klass = self.create(items.ClassItem, UML.Class)
+        klass = self.create(items.ClassItem, uml2.Class)
         klass.subject.name = 'Class1'
 
         self.diagram.canvas.update()
 
-        attr = self.element_factory.create(UML.Property)
+        attr = self.element_factory.create(uml2.Property)
         attr.name = "blah"
         klass.subject.ownedAttribute = attr
 
-        oper = self.element_factory.create(UML.Operation)
+        oper = self.element_factory.create(uml2.Operation)
         oper.name = 'method'
         klass.subject.ownedOperation = oper
 
@@ -97,7 +98,7 @@ class EditorTestCase(TestCase):
 
 
     def test_class_attribute_editor(self):
-        klass = self.create(items.ClassItem, UML.Class)
+        klass = self.create(items.ClassItem, uml2.Class)
         klass.subject.name = 'Class1'
         
         editor = AttributesPage(klass)
@@ -105,7 +106,7 @@ class EditorTestCase(TestCase):
         tree_view = page.get_children()[1]
         self.assertSame(gtk.TreeView, type(tree_view))
 
-        attr = self.element_factory.create(UML.Property)
+        attr = self.element_factory.create(uml2.Property)
         attr.name = "blah"
         klass.subject.ownedAttribute = attr
         
@@ -121,7 +122,7 @@ class EditorTestCase(TestCase):
         page.destroy()
 
     def test_class_operation_editor(self):
-        klass = self.create(items.ClassItem, UML.Class)
+        klass = self.create(items.ClassItem, uml2.Class)
         klass.subject.name = 'Class1'
         
         editor = OperationsPage(klass)
@@ -129,13 +130,13 @@ class EditorTestCase(TestCase):
         tree_view = page.get_children()[1]
         self.assertSame(gtk.TreeView, type(tree_view))
 
-        oper = self.element_factory.create(UML.Operation)
+        oper = self.element_factory.create(uml2.Operation)
         oper.name = 'o'
         klass.subject.ownedOperation = oper
 
         self.assertSame(oper, tree_view.get_model()[0][-1])
         self.assertEquals("+ o()", tree_view.get_model()[0][0])
-        p = self.element_factory.create(UML.Parameter)
+        p = self.element_factory.create(uml2.Parameter)
         p.name = 'blah'
         oper.formalParameter = p
         self.assertEquals("+ o(in blah)", tree_view.get_model()[0][0])

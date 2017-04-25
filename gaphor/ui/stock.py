@@ -1,12 +1,13 @@
 """Icons that are used by Gaphor.
 """
 
+from __future__ import absolute_import
 import os.path
 import pkg_resources
 from xml.sax import handler
 import gtk
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.storage.parser import ParserException
 
 XMLNS='http://gaphor.sourceforge.net/gaphor/stock-icons'
@@ -18,7 +19,7 @@ _uml_to_stock_id_map = { }
 
 def get_stock_id(element, option=None):
     global _uml_to_stock_id_map
-    if issubclass(element, UML.Element):
+    if issubclass(element, uml2.Element):
         t = element, option
         if t in _uml_to_stock_id_map:
             return _uml_to_stock_id_map[t]
@@ -78,7 +79,7 @@ class StockIconLoader(handler.ContentHandler):
             self.element = None
 
         elif name not in ('element', 'option', 'file', 'stock-icons'):
-            raise ParserException, 'Invalid XML: tag <%s> not known' % name
+            raise ParserException('Invalid XML: tag <%s> not known' % name)
 
     def endElement(self, name):
         if name == 'icon':
@@ -88,9 +89,9 @@ class StockIconLoader(handler.ContentHandler):
             self.option = None
         elif name == 'element':
             try:
-                self.element = getattr(UML, self.data)
+                self.element = getattr(uml2, self.data)
             except:
-                raise ParserException, 'No element found with name %s' % self.data
+                raise ParserException('No element found with name %s' % self.data)
         elif name == 'option':
             self.option = self.data
         elif name == 'file':

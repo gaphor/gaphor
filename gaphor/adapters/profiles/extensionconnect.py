@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 from gaphor.adapters.connectors import RelationshipConnect
 from zope import interface, component
-from gaphor import UML
+from gaphor.UML import uml2, modelfactory
 from gaphor.diagram import items
 
 
@@ -17,10 +18,10 @@ class ExtensionConnect(RelationshipConnect):
         if handle is line.head:
             # Element at the head should be a class
             # (implies stereotype as well)
-            allow = isinstance(subject, UML.Class)
+            allow = isinstance(subject, uml2.Class)
         elif handle is line.tail:
             # Element at the tail should be a stereotype
-            allow = isinstance(subject, UML.Stereotype)
+            allow = isinstance(subject, uml2.Stereotype)
 
         return allow and super(ExtensionConnect, self).allow(handle, port)
 
@@ -49,7 +50,7 @@ class ExtensionConnect(RelationshipConnect):
             # Find all associations and determine if the properties on
             # the association ends have a type that points to the class.
             for assoc in self.element_factory.select():
-                if isinstance(assoc, UML.Extension):
+                if isinstance(assoc, uml2.Extension):
                     end1 = assoc.memberEnd[0]
                     end2 = assoc.memberEnd[1]
                     if (end1.type is head_type and end2.type is tail_type) \
@@ -64,7 +65,7 @@ class ExtensionConnect(RelationshipConnect):
                             return
             else:
                 # Create a new Extension relationship
-                relation = UML.model.extend_with_stereotype(self.element_factory,
+                relation = modelfactory.extend_with_stereotype(self.element_factory,
                         head_type,
                         tail_type)
                 line.subject = relation

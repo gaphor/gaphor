@@ -2,7 +2,8 @@
 Module dealing with options (typing) of icons.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from simplegeneric import generic
 
 
@@ -14,13 +15,13 @@ def get_icon_option(element):
     return
 
 
-@get_icon_option.when_type(UML.Class)
+@get_icon_option.when_type(uml2.Class)
 def get_option_class(element):
     if element.extension:
         return 'metaclass'
 
 
-@get_icon_option.when_type(UML.Component)
+@get_icon_option.when_type(uml2.Component)
 def get_option_component(element):
     for p in element.presentation:
         try:
@@ -30,7 +31,7 @@ def get_option_component(element):
             pass
 
 
-@get_icon_option.when_type(UML.Property)
+@get_icon_option.when_type(uml2.Property)
 def get_option_property(element):
     if element.association:
         return 'association-end'

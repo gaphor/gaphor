@@ -4,18 +4,19 @@ Control flow and object flow implementation.
 Contains also implementation to split flows using activity edge connectors.
 """
 
+from __future__ import absolute_import
 from math import atan, pi, sin, cos
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 
 node_classes = {
-    UML.ForkNode:     UML.JoinNode,
-    UML.DecisionNode: UML.MergeNode,
-    UML.JoinNode:     UML.ForkNode,
-    UML.MergeNode:    UML.DecisionNode,
+    uml2.ForkNode:     uml2.JoinNode,
+    uml2.DecisionNode: uml2.MergeNode,
+    uml2.JoinNode:     uml2.ForkNode,
+    uml2.MergeNode:    uml2.DecisionNode,
 }
 
 
@@ -26,7 +27,7 @@ class FlowItem(NamedLine):
     guard. It can be splitted into two flows with activity edge connectors.
     """
 
-    __uml__ = UML.ControlFlow
+    __uml__ = uml2.ControlFlow
 
     __style__ = {
             'name-align': (ALIGN_RIGHT, ALIGN_TOP),
@@ -43,7 +44,7 @@ class FlowItem(NamedLine):
     def postload(self):
         try:
             self._guard.text = self.subject.guard.value
-        except AttributeError, e:
+        except AttributeError as e:
             self._guard.text = ''
         super(FlowItem, self).postload()
 
@@ -52,7 +53,7 @@ class FlowItem(NamedLine):
         subject = self.subject
         try:
             self._guard.text = subject.guard if subject else ''
-        except AttributeError, e:
+        except AttributeError as e:
             self._guard.text = ''
         self.request_update()
 
@@ -139,7 +140,7 @@ class ACItem(object):
 #
 #        self._connector = ACItem('value')
 #
-#        factory = resource(UML.ElementFactory)
+#        factory = resource(uml2.ElementFactory)
 #
 #        self._opposite = None
 #

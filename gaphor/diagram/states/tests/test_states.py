@@ -2,7 +2,8 @@
 Test state items.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.states.state import StateItem
 from gaphor.tests.testcase import TestCase
 
@@ -11,21 +12,21 @@ class StateTestCase(TestCase):
     def test_state(self):
         """Test creation of states
         """
-        self.create(StateItem, UML.State)
+        self.create(StateItem, uml2.State)
 
 
     def test_activities_persistence(self):
         """Test state activities saving/loading
         """
         # all activities
-        s1 = self.create(StateItem, UML.State)
+        s1 = self.create(StateItem, uml2.State)
         s1.subject.name = 's1'
         s1.set_entry('test 1 entry')
         s1.set_exit('test 1 exit')
         s1.set_do_activity('test 1 do')
 
         # not all activities
-        s2 = self.create(StateItem, UML.State)
+        s2 = self.create(StateItem, uml2.State)
         s2.subject.name = 's2'
         s2.set_entry('test 2 entry')
         s2.set_do_activity('test 2 do')

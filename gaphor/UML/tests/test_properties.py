@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import absolute_import
 import unittest
 from zope import component
 from gaphor.application import Application
@@ -85,7 +86,7 @@ class PropertiesTestCase(unittest.TestCase):
         c = C()
         try:
             a.one = c
-        except Exception, e:
+        except Exception as e:
             pass #ok print 'exception caught:', e
         else:
             assert a.one is not c
@@ -339,7 +340,7 @@ class PropertiesTestCase(unittest.TestCase):
         import types
         class A(Element): pass
 
-        A.a = attribute('a', types.StringType, 'default')
+        A.a = attribute('a', bytes, 'default')
 
         a = A()
         assert a.a == 'default', a.a
@@ -382,7 +383,7 @@ class PropertiesTestCase(unittest.TestCase):
                 self.notified = name
 
         A.assoc = association('assoc', A)
-        A.attr = attribute('attr', types.StringType, 'default')
+        A.attr = attribute('attr', bytes, 'default')
         A.enum = enumeration('enum', ('one', 'two'), 'one')
 
         a = A()

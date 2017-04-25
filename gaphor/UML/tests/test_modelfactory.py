@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.UML.modelfactory import STEREOTYPE_FMT as fmt

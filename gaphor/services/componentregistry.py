@@ -6,10 +6,11 @@ Maybe we should split the ComponentRegistry in a Dispatcher (register_handler,
 unregister_handler, handle), a AdapterRegistry and a Subscription registry.
 """
 
+from __future__ import absolute_import
 from zope import interface, component
 from zope.component import registry
-from gaphor.core import inject
 from gaphor.interfaces import IService, IEventFilter
+from six.moves import map
 
 
 class ZopeComponentRegistry(object):
@@ -162,7 +163,7 @@ class ZopeComponentRegistry(object):
         """
         objects = self._filter(events)
         if objects:
-            map(self._components.handle, events)
+            list(map(self._components.handle, events))
 
 
 # vim:sw=4:et:ai

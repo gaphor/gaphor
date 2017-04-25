@@ -6,6 +6,7 @@ This module allows Gaphor to be launched from the command line.
 The main() function sets up the command-line options and arguments and
 passes them to the main Application instance."""
 
+from __future__ import absolute_import
 __all__ = [ 'main' ]
 
 from optparse import OptionParser
@@ -97,8 +98,8 @@ def main():
         launch(model)
 
 # TODO: Remove this.  
-import __builtin__
+import six.moves.builtins
 
-__builtin__.__dict__['log'] = logging.getLogger('Gaphor')
+six.moves.builtins.__dict__['log'] = logging.getLogger('Gaphor')
 
 # vim:sw=4:et:ai

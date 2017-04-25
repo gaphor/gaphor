@@ -1,16 +1,18 @@
 """
 """
 
+from __future__ import absolute_import
 from zope import interface, component
 
 from logging import getLogger
 from gaphor.core import inject
 from gaphor.interfaces import IService
 from gaphor.UML.interfaces import IElementChangeEvent, IModelFactoryEvent
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.UML.interfaces import IAssociationSetEvent,\
                                   IAssociationAddEvent,\
                                   IAssociationDeleteEvent
+import six
 
 class EventWatcher(object):
     """
@@ -58,7 +60,7 @@ class EventWatcher(object):
         dispatcher = self.element_dispatcher
         element = self.element
         
-        for path, handler in self._watched_paths.iteritems():
+        for path, handler in six.iteritems(self._watched_paths):
             
             #self.logger.debug('Path is %s' % path)
             #self.logger.debug('Handler is %s' % handler)
@@ -76,7 +78,7 @@ class EventWatcher(object):
         
         dispatcher = self.element_dispatcher
         
-        for path, handler in self._watched_paths.iteritems():
+        for path, handler in six.iteritems(self._watched_paths):
             
             #self.logger.debug('Path is %s' % path)
             #self.logger.debug('Handler is %s' % handler)
@@ -93,9 +95,9 @@ class ElementDispatcher(object):
     subclass lookups and is pretty specific. As a result this dispatcher is
     tailored for dispatching events from the data model (IElementChangeEvent)
 
-    For example: if you're a TransitionItem (UML.Presentation instance) and
+    For example: if you're a TransitionItem (uml2.Presentation instance) and
     you're interested in the value of the guard attribute of the model element
-    that's represented by this item (gaphor.UML.Transition), you can register
+    that's represented by this item (gaphor.UML.uml2.Transition), you can register
     a handler like this::
 
       dispatcher.register_handler(element,
@@ -140,9 +142,9 @@ class ElementDispatcher(object):
         Given a start element and a path, return a tuple of UML properties
         (association, attribute, etc.) representing the path.
 
-        >>> from gaphor import UML
+        >>> from gaphor.UML import uml2
         >>> dispatcher = ElementDispatcher()
-        >>> map(str, dispatcher._path_to_properties(UML.Class(),
+        >>> map(str, dispatcher._path_to_properties(uml2.Class(),
         ...         'ownedOperation.parameter.name')) # doctest: +NORMALIZE_WHITESPACE
         ['<association ownedOperation: Operation[0..*] <>-> class_>',
         "<derived parameter:
@@ -152,7 +154,7 @@ class ElementDispatcher(object):
 
         Should also work for elements that use subtypes of a certain class:
 
-        >>> map(str, dispatcher._path_to_properties(UML.Transition(),
+        >>> map(str, dispatcher._path_to_properties(uml2.Transition(),
         ...         'guard.specification')) # doctest: +NORMALIZE_WHITESPACE
         ['<association guard: Constraint[0..1]>',
          "<attribute specification: <type 'str'>[0..1] = None>"]
@@ -167,7 +169,7 @@ class ElementDispatcher(object):
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:
-                c = getattr(UML, cname)
+                c = getattr(uml2, cname)
                 assert issubclass(c, prop.type), '%s should be a subclass of %s' % (c, prop.type)
             else:
                 c = prop.type
@@ -300,16 +302,16 @@ class ElementDispatcher(object):
             #    log.debug('    old value: %s' % (event.old_value))
             #if hasattr(event, 'new_value'):
             #    log.debug('    new value: %s' % (event.new_value))
-            for handler in handlers.iterkeys():
+            for handler in six.iterkeys(handlers):
                 try:
                     handler(event)
-                except Exception, e:
+                except Exception as e:
                     self.logger.error('Problem executing handler %s' % handler, e)
         
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
             if IAssociationSetEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in six.iteritems(handlers):
                     if remainders and event.old_value:
                         for remainder in remainders:
                             self._remove_handlers(event.old_value, remainder[0], handler)
@@ -317,11 +319,11 @@ class ElementDispatcher(object):
                         for remainder in remainders:
                             self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationAddEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in six.iteritems(handlers):
                     for remainder in remainders:
                         self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationDeleteEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in six.iteritems(handlers):
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 

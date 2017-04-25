@@ -1,6 +1,7 @@
 """
 """
 
+from __future__ import absolute_import
 import gtk
 from zope import interface, component
 

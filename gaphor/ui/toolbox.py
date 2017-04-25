@@ -2,12 +2,13 @@
 Toolbox.
 """
 
+from __future__ import absolute_import
 import gobject
 import gtk
 
 from gaphor.core import inject
 
-from wrapbox import Wrapbox
+from .wrapbox import Wrapbox
 
 class Toolbox(gtk.VBox):
     """

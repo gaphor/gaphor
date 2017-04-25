@@ -20,15 +20,17 @@ bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.
 """
 
+from __future__ import absolute_import
 from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG
 from gaphas.geometry import distance_line_point, Rectangle
 from gaphas.constraint import LessThanConstraint, EqualsConstraint, CenterConstraint, LineAlignConstraint
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
+from six.moves import map
 
 
 class LifetimePort(LinePort):
@@ -145,7 +147,7 @@ class LifelineItem(NamedItem):
         Check if delete message is connected.
     """
 
-    __uml__      = UML.Lifeline
+    __uml__      = uml2.Lifeline
     __style__ = {
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
     }
@@ -182,12 +184,12 @@ class LifelineItem(NamedItem):
         self.lifetime._c_min_length = LessThanConstraint(top.pos.y, bottom.pos.y, delta=LifetimeItem.MIN_LENGTH)
         self.__constraints = (c1, c2, c3, self.lifetime._c_min_length)
 
-        map(self.canvas.solver.add_constraint, self.__constraints)
+        list(map(self.canvas.solver.add_constraint, self.__constraints))
 
 
     def teardown_canvas(self):
         super(LifelineItem, self).teardown_canvas()
-        map(self.canvas.solver.remove_constraint, self.__constraints)
+        list(map(self.canvas.solver.remove_constraint, self.__constraints))
 
 
     def save(self, save_func):

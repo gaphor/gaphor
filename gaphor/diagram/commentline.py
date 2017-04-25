@@ -3,12 +3,12 @@ CommentLine -- A line that connects a comment to another model element.
 
 """
 
+from __future__ import absolute_import
 import gobject
 from zope import component
-from gaphor import UML
 
-from diagramline import DiagramLine
-from interfaces import IConnect
+from .diagramline import DiagramLine
+from .interfaces import IConnect
 
 
 class CommentLineItem(DiagramLine):

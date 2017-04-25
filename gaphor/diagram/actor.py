@@ -2,9 +2,10 @@
 Actor item classes.
 """
 
+from __future__ import absolute_import
 from math import pi
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 from gaphor.diagram.classifier import ClassifierItem
 
@@ -15,7 +16,7 @@ class ActorItem(ClassifierItem):
     Maybe it should be possible to switch to comparment mode in the future.
     """
 
-    __uml__ = UML.Actor
+    __uml__ = uml2.Actor
 
     HEAD = 11
     ARM  = 19

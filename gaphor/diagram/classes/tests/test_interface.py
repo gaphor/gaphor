@@ -2,9 +2,9 @@
 Test classes.
 """
 
-from zope import component
+from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.classes.interface import InterfaceItem
 
 
@@ -12,8 +12,8 @@ class InterfaceTestCase(TestCase):
     def test_interface_creation(self):
         """Test interface creation
         """
-        iface = self.create(InterfaceItem, UML.Interface)
-        self.assertTrue(isinstance(iface.subject, UML.Interface))
+        iface = self.create(InterfaceItem, uml2.Interface)
+        self.assertTrue(isinstance(iface.subject, uml2.Interface))
 
         self.assertTrue(iface._name.is_visible())
 
@@ -24,7 +24,7 @@ class InterfaceTestCase(TestCase):
     def test_changing_to_icon_mode(self):
         """Test interface changing to icon mode
         """
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, uml2.Interface)
         iface.drawing_style = iface.DRAW_ICON
 
         self.assertEquals(iface.DRAW_ICON, iface.drawing_style)
@@ -46,7 +46,7 @@ class InterfaceTestCase(TestCase):
     def test_changing_to_classifier_mode(self):
         """Test interface changing to classifier mode
         """
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, uml2.Interface)
         iface.drawing_style = iface.DRAW_ICON
 
         iface.drawing_style = iface.DRAW_COMPARTMENT
@@ -63,7 +63,7 @@ class InterfaceTestCase(TestCase):
     def test_assembly_connector_icon_mode(self):
         """Test interface in assembly connector icon mode
         """
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, uml2.Interface)
         assert iface._name.is_visible()
 
         iface.folded = iface.FOLDED_ASSEMBLY
@@ -73,7 +73,7 @@ class InterfaceTestCase(TestCase):
     def test_folded_interface_persistence(self):
         """Test folded interface saving/loading
         """
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, uml2.Interface)
 
         # note: assembly folded mode..
         iface.folded = iface.FOLDED_REQUIRED

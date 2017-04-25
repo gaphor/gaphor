@@ -2,6 +2,7 @@
 Formatting of UML model elements into text tests.
 """
 
+from __future__ import absolute_import
 import unittest
 
 from gaphor.application import Application

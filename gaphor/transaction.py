@@ -2,6 +2,7 @@
 Transation support for Gaphor
 """
 
+from __future__ import absolute_import
 from logging import getLogger
 from zope import interface, component
 from gaphor.interfaces import ITransaction
@@ -21,11 +22,11 @@ def transactional(func):
         tx = Transaction()
         try:
             r = func(*args, **kwargs)
-        except Exception, e:
+        except Exception as e:
             log.error('Transaction terminated due to an exception, performing a rollback', exc_info=True)
             try:
                 tx.rollback()
-            except Exception, e:
+            except Exception as e:
                 log.error('Rollback failed', exc_info=True)
             raise
         else:
@@ -109,10 +110,10 @@ class Transaction(object):
         try:
             last = self._stack.pop()
         except IndexError:
-            raise TransactionError, 'No Transaction on stack.'
+            raise TransactionError('No Transaction on stack.')
         if last is not self:
             self._stack.append(last)
-            raise TransactionError, 'Transaction on stack is not the transaction being closed.'
+            raise TransactionError('Transaction on stack is not the transaction being closed.')
 
     def _handle(self, event):
         try:

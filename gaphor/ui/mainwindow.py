@@ -2,6 +2,7 @@
 The main application window.
 """
 
+from __future__ import absolute_import
 import os.path
 import gobject, gtk
 from logging import getLogger
@@ -9,25 +10,23 @@ from logging import getLogger
 import pkg_resources
 from zope import interface, component
 from gaphor.interfaces import IService, IActionProvider
-from interfaces import IUIComponent
+from .interfaces import IUIComponent
 
-from etk.docking import DockLayout, DockGroup, DockItem
-from etk.docking.docklayout import add_new_group_floating
+from etk.docking import DockLayout
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.core import _, inject, action, toggle_action, open_action, build_action_group, transactional
-from namespace import NamespaceModel, NamespaceView
-from diagramtab import DiagramTab
-from toolbox import Toolbox as _Toolbox
-from diagramtoolbox import TOOLBOX_ACTIONS
+from .namespace import NamespaceModel, NamespaceView
+from .diagramtab import DiagramTab
+from .toolbox import Toolbox as _Toolbox
+from .diagramtoolbox import TOOLBOX_ACTIONS
 from etk.docking import DockItem, DockGroup, add_new_group_left, add_new_group_right, \
         add_new_group_above, add_new_group_below, add_new_group_floating, settings
-from layout import deserialize
+from .layout import deserialize
 
-from interfaces import IDiagramTabChange
-from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
+from .interfaces import IDiagramTabChange
 from gaphor.UML.event import ModelFactoryEvent
-from event import DiagramTabChange, DiagramSelectionChange
+from .event import DiagramTabChange, DiagramSelectionChange
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
@@ -167,7 +166,7 @@ class MainWindow(object):
             log.debug('found entry point uicomponent.%s' % ep.name)
             cls = ep.load()
             if not IUIComponent.implementedBy(cls):
-                raise NameError, 'Entry point %s doesn''t provide IUIComponent' % ep.name
+                raise NameError('Entry point %s doesn''t provide IUIComponent' % ep.name)
             uicomp = cls()
             uicomp.ui_name = ep.name
             component_registry.register_utility(uicomp, IUIComponent, ep.name)
@@ -409,7 +408,7 @@ class MainWindow(object):
 
 
     def get_tabs(self):
-        tabs = map(lambda i: i.diagram_tab, self.layout.get_widgets('diagram-tab'))
+        tabs = [i.diagram_tab for i in self.layout.get_widgets('diagram-tab')]
         return tabs
 
     # Signal callbacks:
@@ -420,7 +419,7 @@ class MainWindow(object):
         Open the toplevel element and load toplevel diagrams.
         """
         # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
-        for diagram in self.element_factory.select(lambda e: e.isKindOf(UML.Diagram) and not (e.namespace and e.namespace.namespace)):
+        for diagram in self.element_factory.select(lambda e: e.isKindOf(uml2.Diagram) and not (e.namespace and e.namespace.namespace)):
             self.show_diagram(diagram)
     
 
@@ -460,7 +459,7 @@ class MainWindow(object):
     def _clear_ui_settings(self):
         try:
             ui_manager = self.ui_manager
-        except component.ComponentLookupError, e:
+        except component.ComponentLookupError as e:
             log.warning('No UI manager service found')
         else:
             if self._tab_ui_settings:
@@ -694,13 +693,13 @@ class Namespace(object):
         Another row is selected, execute a dummy action.
         """
         element = view.get_selected_element()
-        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, UML.Package)
-        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, UML.Package)
+        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, uml2.Package)
+        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, uml2.Package)
 
-        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, UML.Diagram)
-        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, UML.Package) and not element.presentation
+        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, uml2.Diagram)
+        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, uml2.Package) and not element.presentation
 
-        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
+        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, uml2.Diagram)
 
 
     def _on_view_destroyed(self, widget):
@@ -727,7 +726,7 @@ class Namespace(object):
     def tree_view_open_selected(self):
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
-        if isinstance(element, UML.Diagram):
+        if isinstance(element, uml2.Diagram):
             self.main_window.show_diagram(element)
         else:
             log.debug('No action defined for element %s' % type(element).__name__)
@@ -750,7 +749,7 @@ class Namespace(object):
     @transactional
     def tree_view_create_diagram(self):
         element = self._namespace.get_selected_element()
-        diagram = self.element_factory.create(UML.Diagram)
+        diagram = self.element_factory.create(uml2.Diagram)
         diagram.package = element
 
         if element:
@@ -787,7 +786,7 @@ class Namespace(object):
     @transactional
     def tree_view_create_package(self):
         element = self._namespace.get_selected_element()
-        package = self.element_factory.create(UML.Package)
+        package = self.element_factory.create(uml2.Package)
         package.package = element
 
         if element:
@@ -803,7 +802,7 @@ class Namespace(object):
     @transactional
     def tree_view_delete_package(self):
         package = self._namespace.get_selected_element()
-        assert isinstance(package, UML.Package)
+        assert isinstance(package, uml2.Package)
         package.unlink()
 
 

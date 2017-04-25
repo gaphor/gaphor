@@ -1,5 +1,6 @@
 # vim:sw=4:et
 
+from __future__ import absolute_import
 import sys
 from xml.sax.saxutils import escape, quoteattr
 import xml.sax.handler

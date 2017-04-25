@@ -1,11 +1,9 @@
 """
-Unnit tests for simple items.
+Unit tests for simple items.
 """
 
-import unittest
-
+from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
 from gaphor.diagram.simpleitem import Line, Box, Ellipse
 from gaphas import View
 

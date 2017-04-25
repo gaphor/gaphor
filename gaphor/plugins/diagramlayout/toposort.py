@@ -1,3 +1,7 @@
+from __future__ import absolute_import
+from __future__ import print_function
+from six.moves import filter
+from six.moves import range
 class RecursionError( OverflowError, ValueError ):
     '''Unable to calculate result because of recursive structure'''
     
@@ -21,7 +25,7 @@ def sort(nodes, routes, noRecursion=1):
         # some other element!!!
         stage.append( nodes[0])
     taken.extend( stage )
-    nodes = filter ( lambda x, l=stage: x not in l, nodes )
+    nodes = list(filter ( lambda x, l=stage: x not in l, nodes ))
     while nodes:
         previousStageChildren = []
         nodelen = len(nodes)
@@ -50,7 +54,7 @@ def sort(nodes, routes, noRecursion=1):
                 stage.remove( remove )
         stages.append( stage)
         taken.extend( stage )
-        nodes = filter ( lambda x, l=stage: x not in l, nodes )
+        nodes = list(filter ( lambda x, l=stage: x not in l, nodes ))
         if nodelen == len(nodes):
             if noRecursion:
                 raise RecursionError( nodes )
@@ -95,7 +99,7 @@ def toposort (nodes, routes, noRecursion=1):
         try:
             newdependencylevel, object = dependencies.get ( depends, (0, depends))
         except TypeError:
-            print depends
+            print(depends)
             raise
         dependencies[ depends ] = (newdependencylevel + 1,  depends)
         # "dependency (existence) of depended-on"
@@ -108,7 +112,7 @@ def toposort (nodes, routes, noRecursion=1):
     ### Now we do the actual sorting
     # The first task is to create the sortable
     # list of dependency-levels
-    sortinglist = dependencies.values()
+    sortinglist = list(dependencies.values())
     sortinglist.sort ()
     output = []
     while sortinglist:
@@ -152,7 +156,7 @@ def toposort (nodes, routes, noRecursion=1):
             except KeyError:
                 pass
         # need to recreate the sortinglist
-        sortinglist = dependencies.values()
+        sortinglist = list(dependencies.values())
         if not generation:
             output.remove( generation )
         sortinglist.sort ()
@@ -208,34 +212,34 @@ if __name__ == "__main__":
             (3,1),
         ],
     ]
-    print 'sort, no recursion allowed'
+    print('sort, no recursion allowed')
     for index in range(len(testingValues)):
 ##        print '    %s -- %s'%( index, testingValues[index])
         try:
-            print '        ', sort( nodes, testingValues[index] )
+            print('        ', sort( nodes, testingValues[index] ))
         except:
-            print 'exception raised'
-    print 'toposort, no recursion allowed'
+            print('exception raised')
+    print('toposort, no recursion allowed')
     for index in range(len(testingValues)):
 ##        print '    %s -- %s'%( index, testingValues[index])
         try:
-            print '        ', toposort( nodes, testingValues[index] )
+            print('        ', toposort( nodes, testingValues[index] ))
         except:
-            print 'exception raised'
-    print 'sort, recursion allowed'
+            print('exception raised')
+    print('sort, recursion allowed')
     for index in range(len(testingValues)):
 ##        print '    %s -- %s'%( index, testingValues[index])
         try:
-            print '        ', sort( nodes, testingValues[index],0 )
+            print('        ', sort( nodes, testingValues[index],0 ))
         except:
-            print 'exception raised'
-    print 'toposort, recursion allowed'
+            print('exception raised')
+    print('toposort, recursion allowed')
     for index in range(len(testingValues)):
 ##        print '    %s -- %s'%( index, testingValues[index])
         try:
-            print '        ', toposort( nodes, testingValues[index],0 )
+            print('        ', toposort( nodes, testingValues[index],0 ))
         except:
-            print 'exception raised'
+            print('exception raised')
         
         
     

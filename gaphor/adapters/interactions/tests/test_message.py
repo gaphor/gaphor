@@ -2,8 +2,9 @@
 Message connection adapter tests.
 """
 
+from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2, modelfactory
 from gaphor.diagram import items
 
 class BasicMessageConnectionsTestCase(TestCase):
@@ -55,8 +56,8 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertTrue(msg.subject is not None)
         self.assertEquals(msg.subject.messageKind, 'lost')
 
-        messages = self.kindof(UML.Message)
-        occurences = self.kindof(UML.MessageOccurrenceSpecification)
+        messages = self.kindof(uml2.Message)
+        occurences = self.kindof(uml2.MessageOccurrenceSpecification)
 
         self.assertEquals(1, len(messages))
         self.assertEquals(1, len(occurences))
@@ -76,8 +77,8 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertTrue(msg.subject is not None)
         self.assertEquals(msg.subject.messageKind, 'found')
 
-        messages = self.kindof(UML.Message)
-        occurences = self.kindof(UML.MessageOccurrenceSpecification)
+        messages = self.kindof(uml2.Message)
+        occurences = self.kindof(uml2.MessageOccurrenceSpecification)
 
         self.assertEquals(1, len(messages))
         self.assertEquals(1, len(occurences))
@@ -99,8 +100,8 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertTrue(msg.subject is not None)
         self.assertEquals(msg.subject.messageKind, 'complete')
 
-        messages = self.kindof(UML.Message)
-        occurences = self.kindof(UML.MessageOccurrenceSpecification)
+        messages = self.kindof(uml2.Message)
+        occurences = self.kindof(uml2.MessageOccurrenceSpecification)
 
         self.assertEquals(1, len(messages))
         self.assertEquals(2, len(occurences))
@@ -245,19 +246,19 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         assert subject.sendEvent and subject.receiveEvent
 
         # add some more messages
-        m1 = UML.model.create_message(factory, subject)
-        m2 = UML.model.create_message(factory, subject)
+        m1 = modelfactory.create_message(factory, subject)
+        m2 = modelfactory.create_message(factory, subject)
         msg.add_message(m1, False)
         msg.add_message(m2, False)
 
         # add some inverted messages
-        m3 = UML.model.create_message(factory, subject, True)
-        m4 = UML.model.create_message(factory, subject, True)
+        m3 = modelfactory.create_message(factory, subject, True)
+        m4 = modelfactory.create_message(factory, subject, True)
         msg.add_message(m3, True)
         msg.add_message(m4, True)
 
-        messages = list(self.kindof(UML.Message))
-        occurences = set(self.kindof(UML.MessageOccurrenceSpecification))
+        messages = list(self.kindof(uml2.Message))
+        occurences = set(self.kindof(uml2.MessageOccurrenceSpecification))
 
         # verify integrity of messages
         self.assertEquals(5, len(messages))
@@ -278,7 +279,7 @@ class DiagramModeMessageConnectionTestCase(TestCase):
 
         # no message after full disconnection
         self.disconnect(msg, msg.tail)
-        self.assertEquals(0, len(self.kindof(UML.Message)))
+        self.assertEquals(0, len(self.kindof(uml2.Message)))
 
 
 # vim:sw=4:et:ai

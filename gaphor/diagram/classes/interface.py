@@ -68,14 +68,15 @@ follows
 Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
+from __future__ import absolute_import
 from math import pi
 from gaphas.state import observed, reversible_property
 from gaphas.item import NW, NE, SE, SW
 from gaphas.connector import LinePort
 from gaphas.geometry import distance_line_point, distance_point_point
 
-from gaphor import UML
-from klass import ClassItem
+from gaphor.UML import uml2
+from .klass import ClassItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 
@@ -137,7 +138,7 @@ class InterfaceItem(ClassItem):
     When in folded mode, provided (ball) notation is used by default.
     """
 
-    __uml__        = UML.Interface
+    __uml__        = uml2.Interface
     __stereotype__ = {'interface': lambda self: self.drawing_style != self.DRAW_ICON}
     __style__ = {
         'icon-size': (20, 20),

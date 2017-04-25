@@ -2,7 +2,8 @@
 Use case inclusion relationship.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import DiagramLine
 
 class IncludeItem(DiagramLine):
@@ -10,7 +11,7 @@ class IncludeItem(DiagramLine):
     Use case inclusion relationship.
     """
 
-    __uml__ = UML.Include
+    __uml__ = uml2.Include
     __stereotype__ = 'include'
 
     def __init__(self, id=None):

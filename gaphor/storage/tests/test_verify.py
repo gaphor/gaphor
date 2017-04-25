@@ -1,4 +1,5 @@
 
+from __future__ import absolute_import
 from gaphor.tests.testcase import TestCase
 from gaphor.storage.verify import orphan_references
 from gaphor import UML

@@ -3,8 +3,7 @@ Base classes related to items, which represent UML classes deriving
 from NamedElement.
 """
 
-from gaphor import UML
-from gaphor.UML.interfaces import IAttributeChangeEvent
+from __future__ import absolute_import
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 

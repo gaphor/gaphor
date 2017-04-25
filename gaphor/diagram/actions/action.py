@@ -2,14 +2,15 @@
 Action diagram item.
 """
 
+from __future__ import absolute_import
 from math import pi
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 
 class ActionItem(NamedItem):
-    __uml__   = UML.Action
+    __uml__   = uml2.Action
     __style__ = {
         'min-size':   (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
@@ -40,7 +41,7 @@ class ActionItem(NamedItem):
 
 
 class SendSignalActionItem(NamedItem):
-    __uml__   = UML.SendSignalAction
+    __uml__   = uml2.SendSignalAction
     __style__ = {
         'min-size':   (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
@@ -69,7 +70,7 @@ class SendSignalActionItem(NamedItem):
 
 
 class AcceptEventActionItem(NamedItem):
-    __uml__   = UML.SendSignalAction
+    __uml__   = uml2.SendSignalAction
     __style__ = {
         'min-size':   (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),

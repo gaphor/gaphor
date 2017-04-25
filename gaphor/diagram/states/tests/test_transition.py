@@ -2,7 +2,8 @@
 Test transitions.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.states.transition import TransitionItem
 from gaphor.tests.testcase import TestCase
 
@@ -14,10 +15,10 @@ class TransitionTestCase(TestCase):
     def test_transition_guard(self):
         """Test events of transition.guard.
         """
-        item = self.create(TransitionItem, UML.Transition)
+        item = self.create(TransitionItem, uml2.Transition)
         assert item._guard.text == ''
 
-        c = self.element_factory.create(UML.Constraint)
+        c = self.element_factory.create(uml2.Constraint)
         c.specification = 'blah'
         assert item._guard.text == ''
 

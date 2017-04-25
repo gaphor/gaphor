@@ -1,10 +1,9 @@
 
-import gtk
+from __future__ import absolute_import
 import unittest
 
 from gaphor.application import Application
-from gaphor.ui.mainwindow import MainWindow
-from gaphor import UML
+from gaphor.UML import uml2
 
 class MainWindowTestCase(unittest.TestCase):
 
@@ -23,7 +22,7 @@ class MainWindowTestCase(unittest.TestCase):
     def test_show_diagram(self):
         main_w = Application.get_service('main_window')
         element_factory = Application.get_service('element_factory')
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(uml2.Diagram)
         main_w.open()
         self.assertEqual(main_w.get_current_diagram(), None)
 

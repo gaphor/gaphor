@@ -2,15 +2,16 @@
 Package diagram item.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.nameditem import NamedItem
 
 
 class PackageItem(NamedItem):
 
-    __uml__ = UML.Package, UML.Profile
+    __uml__ = uml2.Package, uml2.Profile
     __stereotype__ = {
-        'profile': UML.Profile,
+        'profile': uml2.Profile,
     }
     __style__ = {
         'min-size': (NamedItem.style.min_size[0], 70),

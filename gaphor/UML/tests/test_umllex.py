@@ -2,6 +2,7 @@
 Parsing of UML model elements from string tests.
 """
 
+from __future__ import absolute_import
 import unittest
 from gaphor.application import Application
 from gaphor.UML.elementfactory import ElementFactory

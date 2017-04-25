@@ -4,7 +4,8 @@ Pseudostate diagram items.
 See also gaphor.diagram.states package description.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
 from gaphas.util import path_ellipse
 from gaphor.diagram.textelement import text_center
@@ -15,7 +16,7 @@ class InitialPseudostateItem(VertexItem):
     """
     Initial pseudostate diagram item.
     """
-    __uml__   = UML.Pseudostate
+    __uml__   = uml2.Pseudostate
     __style__ = {
         'min-size':   (20, 20),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
@@ -47,7 +48,7 @@ class HistoryPseudostateItem(VertexItem):
     """
     History pseudostate diagram item.
     """
-    __uml__   = UML.Pseudostate
+    __uml__   = uml2.Pseudostate
     __style__ = {
         'min-size':   (30, 30),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),

@@ -2,15 +2,16 @@
 Test extend item connections.
 """
 
+from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 
 class ExtendItemTestCase(TestCase):
     def test_use_case_glue(self):
         """Test "extend" glueing to use cases
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
         extend = self.create(items.ExtendItem)
 
         glued = self.allow(extend, extend.head, uc1)
@@ -20,8 +21,8 @@ class ExtendItemTestCase(TestCase):
     def test_use_case_connect(self):
         """Test connecting "extend" to use cases
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc2 = self.create(items.UseCaseItem, uml2.UseCase)
         extend = self.create(items.ExtendItem)
 
         self.connect(extend, extend.head, uc1)
@@ -34,9 +35,9 @@ class ExtendItemTestCase(TestCase):
     def test_use_case_connect(self):
         """Test reconnecting use cases with "extend"
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
-        uc3 = self.create(items.UseCaseItem, UML.UseCase)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc2 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc3 = self.create(items.UseCaseItem, uml2.UseCase)
         extend = self.create(items.ExtendItem)
 
         # connect: uc1 -> uc2
@@ -55,8 +56,8 @@ class ExtendItemTestCase(TestCase):
     def test_use_case_disconnect(self):
         """Test disconnecting "extend" from use cases
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
+        uc1 = self.create(items.UseCaseItem, uml2.UseCase)
+        uc2 = self.create(items.UseCaseItem, uml2.UseCase)
         extend = self.create(items.ExtendItem)
 
         self.connect(extend, extend.head, uc1)
