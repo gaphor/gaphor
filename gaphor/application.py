@@ -84,7 +84,7 @@ class _Application(object):
         for name in self.essential_services:
             self.init_service(name)
         while self._uninitialized_services:
-            self.init_service(six.iterkeys(self._uninitialized_services))
+            self.init_service(six.iterkeys(self._uninitialized_services).next())
 
     def init_service(self, name):
         """
