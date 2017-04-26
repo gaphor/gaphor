@@ -3,8 +3,6 @@
 from __future__ import absolute_import
 from unittest import TestCase 
 
-from zope.component.globalregistry import base
-
 from gaphor.application import Application
 from gaphor.transaction import Transaction, transactional, TransactionError
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback

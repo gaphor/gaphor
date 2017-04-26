@@ -5,7 +5,6 @@ import unittest
 
 from zope import component
 
-from gaphor import UML
 from gaphor.application import Application
 from gaphor.interfaces import IService
 

@@ -12,14 +12,10 @@ from cStringIO import StringIO
 from zope import component
 
 from gaphas.aspect import ConnectionSink, Connector
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.application import Application
 from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram.interfaces import IGroup
-
-# For DiagramItemConnector aspect:
-import gaphor.ui.diagramtools
-
 
 # Increment log level
 log.setLevel(logging.WARNING)
@@ -57,7 +53,7 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         Application.init(services=self.services)
         self.element_factory = Application.get_service('element_factory')
         assert len(list(self.element_factory.select())) == 0, list(self.element_factory.select())
-        self.diagram = self.element_factory.create(UML.Diagram)
+        self.diagram = self.element_factory.create(uml2.Diagram)
         assert len(list(self.element_factory.select())) == 1, list(self.element_factory.select())
 
 
@@ -209,7 +205,7 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         storage.load(f, factory=self.element_factory)
         f.close()
         
-        self.diagram = self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
+        self.diagram = self.element_factory.lselect(lambda e: e.isKindOf(uml2.Diagram))[0]
 
 
 main = unittest.main
