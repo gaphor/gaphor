@@ -9,7 +9,7 @@ from gaphas.state import observed, reversible_property
 from gaphor.UML import uml2, event, modelfactory
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
-from .textelement import text_extents, text_align
+from gaphor.diagram.textelement import text_extents, text_align
 from six.moves import zip
 
 
@@ -75,7 +75,7 @@ class FeatureItem(object):
         """
         Return a rendered feature, as a string.
         """
-        return format(self.subject, pattern=self.pattern) or ''
+        return '{}'.format(self.subject) or ''
 
     def draw(self, context):
         cr = context.cairo
