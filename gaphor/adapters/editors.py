@@ -8,7 +8,7 @@ from zope import interface, component
 from gaphas.item import NW, SE
 from gaphas import geometry
 from gaphas import constraint
-from gaphor.UML import uml2
+from gaphor.UML import uml2, umllex
 from gaphor.core import inject
 from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
@@ -153,13 +153,13 @@ class CompartmentItemEditor(object):
         return bool(self._edit and self._edit.subject)
 
     def get_text(self):
-        return uml2.format(editable(self._edit.subject))
+        return format(editable(self._edit.subject))
 
     def get_bounds(self):
         return None
 
     def update_text(self, text):
-        uml2.parse(editable(self._edit.subject), text)
+        umllex.parse(editable(self._edit.subject), text)
 
     def key_pressed(self, pos, key):
         pass

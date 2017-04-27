@@ -1,7 +1,7 @@
 
 from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 from gaphor.core import transactional
 from six.moves import range
@@ -14,10 +14,10 @@ class UndoTest(TestCase):
         factory = self.element_factory
         undo_manager = self.get_service('undo_manager')
 
-        ci1 = self.create(items.ClassItem, UML.Class)
+        ci1 = self.create(items.ClassItem, uml2.Class)
         self.assertEquals(6, len(self.diagram.canvas.solver.constraints))
 
-        ci2 = self.create(items.ClassItem, UML.Class)
+        ci2 = self.create(items.ClassItem, uml2.Class)
         self.assertEquals(12, len(self.diagram.canvas.solver.constraints))
         
         a = self.create(items.AssociationItem)

@@ -64,7 +64,6 @@ class Transaction(object):
     """
 
     interface.implements(ITransaction)
-
     component_registry = application.inject('component_registry')
 
     _stack= []

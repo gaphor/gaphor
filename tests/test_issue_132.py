@@ -2,8 +2,7 @@
 from __future__ import absolute_import
 from gaphor.tests import TestCase
 from gaphor.ui.namespace import NamespaceModel
-from gaphor import UML
-from gaphor.diagram import items
+from gaphor.UML import uml2
 from gaphor.core import transactional
 
 
@@ -18,8 +17,8 @@ class UndoRedoBugTestCase(TestCase):
 
     @transactional
     def create_with_attribute(self):
-        self.class_ = self.element_factory.create(UML.Class)
-        self.attribute = self.element_factory.create(UML.Property)
+        self.class_ = self.element_factory.create(uml2.Class)
+        self.attribute = self.element_factory.create(uml2.Property)
         self.class_.ownedAttribute = self.attribute
 
     # Fix:  Remove operation should be transactional ;)

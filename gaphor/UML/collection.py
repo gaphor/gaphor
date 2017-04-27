@@ -4,8 +4,8 @@
 
 from __future__ import absolute_import
 import inspect
-from .event import AssociationChangeEvent
-from gaphor.misc.listmixins import querymixin, recursemixin, recurseproxy, getslicefix
+from gaphor.UML.event import AssociationChangeEvent
+from gaphor.misc.listmixins import querymixin, recursemixin, getslicefix
 
 
 class collectionlist(recursemixin, querymixin, getslicefix, list):
@@ -19,16 +19,16 @@ class collectionlist(recursemixin, querymixin, getslicefix, list):
 
     It should work with the datamodel too:
 
-    >>> from gaphor.UML import *
-    >>> c = Class()
-    >>> c.ownedOperation = Operation()
+    >>> from gaphor.UML import uml2
+    >>> c = uml2.Class()
+    >>> c.ownedOperation = uml2.Operation()
     >>> c.ownedOperation   # doctest: +ELLIPSIS
     [<gaphor.UML.uml2.Operation object at 0x...>]
     >>> c.ownedOperation[0]   # doctest: +ELLIPSIS
     <gaphor.UML.uml2.Operation object at 0x...>
-    >>> c.ownedOperation = Operation()
-    >>> c.ownedOperation[0].formalParameter = Parameter()
-    >>> c.ownedOperation[0].formalParameter = Parameter()
+    >>> c.ownedOperation = uml2.Operation()
+    >>> c.ownedOperation[0].formalParameter = uml2.Parameter()
+    >>> c.ownedOperation[0].formalParameter = uml2.Parameter()
     >>> c.ownedOperation[0].formalParameter[0].name = 'foo'
     >>> c.ownedOperation[0].formalParameter[0].name
     'foo'

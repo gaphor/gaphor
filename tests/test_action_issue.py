@@ -1,6 +1,6 @@
 
 from __future__ import absolute_import
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.tests import TestCase
 from gaphor.storage import storage
 from gaphor.diagram.items import FlowItem, ActionItem
@@ -14,18 +14,18 @@ class ActionIssueTestCase(TestCase):
         ef = self.element_factory
         storage.load('test-diagrams/action-issue.gaphor', ef)
 
-        actions = ef.lselect(lambda e: e.isKindOf(UML.Action))
-        flows = ef.lselect(lambda e: e.isKindOf(UML.ControlFlow))
+        actions = ef.lselect(lambda e: e.isKindOf(uml2.Action))
+        flows = ef.lselect(lambda e: e.isKindOf(uml2.ControlFlow))
         self.assertEqual(3, len(actions))
         self.assertEqual(3, len(flows))
 
         # Actions live in partitions:
-        partitions = ef.lselect(lambda e: e.isKindOf(UML.ActivityPartition))
+        partitions = ef.lselect(lambda e: e.isKindOf(uml2.ActivityPartition))
         self.assertEquals(2, len(partitions))
 
         # Okay, so far the data model is saved correctly. Now, how do the
         # handles behave?
-        diagrams = ef.lselect(lambda e: e.isKindOf(UML.Diagram))
+        diagrams = ef.lselect(lambda e: e.isKindOf(uml2.Diagram))
         self.assertEquals(1, len(diagrams))
         
         canvas = diagrams[0].canvas

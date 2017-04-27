@@ -18,7 +18,7 @@ to be aware that `AbstractGroup.item` can be null.
 from __future__ import absolute_import
 from zope import interface, component
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IGroup
@@ -108,18 +108,18 @@ class NodeComponentGroup(AbstractGroup):
         component = self.item.subject
 
         # node attribute
-        a1 = self.element_factory.create(UML.Property)
+        a1 = self.element_factory.create(uml2.Property)
         a1.aggregation = 'composite'
         # component attribute
-        a2 = self.element_factory.create(UML.Property)
+        a2 = self.element_factory.create(uml2.Property)
 
-        e1 = self.element_factory.create(UML.ConnectorEnd)
-        e2 = self.element_factory.create(UML.ConnectorEnd)
+        e1 = self.element_factory.create(uml2.ConnectorEnd)
+        e2 = self.element_factory.create(uml2.ConnectorEnd)
 
         # create connection between node and component
         e1.role = a1
         e2.role = a2
-        connector = self.element_factory.create(UML.Connector)
+        connector = self.element_factory.create(uml2.Connector)
         connector.end = e1
         connector.end = e2
 
@@ -158,7 +158,7 @@ class NodeArtifactGroup(AbstractGroup):
         artifact = self.item.subject
 
         # deploy artifact on node
-        deployment = self.element_factory.create(UML.Deployment)
+        deployment = self.element_factory.create(uml2.Deployment)
         node.deployment = deployment
         deployment.deployedArtifact = artifact
 
@@ -209,7 +209,7 @@ class ActivityPartitionsGroup(AbstractGroup):
 
     def group(self):
         p = self.parent.subject
-        sp = self.element_factory.create(UML.ActivityPartition)
+        sp = self.element_factory.create(uml2.ActivityPartition)
         self.item.subject = sp
         sp.name = 'Swimlane'
         if p:

@@ -5,7 +5,6 @@ Test GitHub issue #4. Diagram could not be loaded due to JuggleError
 
 from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
 from gaphor.storage.storage import load
 
 
