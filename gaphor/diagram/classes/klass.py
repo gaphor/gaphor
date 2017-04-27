@@ -15,11 +15,7 @@ class OperationItem(FeatureItem):
     def render(self):
         """Render the OperationItem."""
         
-        return format(self.subject,\
-                          visibility=True,\
-                          type=True,\
-                          multiplicity=True,\
-                          default=True) or ''
+        return '{}'.format(self.subject) or ''
         
 class ClassItem(ClassifierItem):
     """This item visualizes a Class instance.
