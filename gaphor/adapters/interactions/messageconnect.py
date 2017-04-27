@@ -26,7 +26,7 @@ class MessageLifelineConnect(AbstractConnect):
         """
         def get_subject():
             if not line.subject:
-                message = self.element_factory.create(UML.Message)
+                message = self.element_factory.create(uml2.Message)
                 message.name = 'call()'
                 line.subject = message
             return line.subject
