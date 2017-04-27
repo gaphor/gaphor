@@ -19,7 +19,7 @@ import gc
 
 import gaphas
 
-from gaphor import UML
+from gaphor.UML import uml2, modelfactory
 from gaphor.UML.collection import collection
 from gaphor.UML.elementfactory import ElementChangedEventBlocker
 from gaphor import diagram
@@ -108,7 +108,7 @@ def save_generator(writer, factory):
         gaphas.Canvas (which contains canvas items).
         """
         #log.debug('saving element: %s|%s %s' % (name, value, type(value)))
-        if isinstance (value, (UML.Element, gaphas.Item)):
+        if isinstance (value, (uml2.Element, gaphas.Item)):
             save_reference(name, value)
         elif isinstance(value, collection):
             save_collection(name, value)
@@ -141,7 +141,7 @@ def save_generator(writer, factory):
 
             writer.endElement('item')
 
-        elif isinstance(value, UML.Element):
+        elif isinstance(value, uml2.Element):
             save_reference(name, value)
         else:
             save_value(name, value)
@@ -221,7 +221,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         st = update_status_queue()
         if st: yield st
         if isinstance(elem, parser.element):
-            cls = getattr(UML, elem.type)
+            cls = getattr(uml2, elem.type)
             #log.debug('Creating UML element for %s (%s)' % (elem, elem.id))
             elem.element = factory.create_as(cls, id)
             if elem.canvas:
@@ -287,7 +287,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # Data model, loaded from file, is updated automatically, so there is
     # no need for special function.
 
-    for d in factory.select(lambda e: isinstance(e, UML.Diagram)):
+    for d in factory.select(lambda e: isinstance(e, uml2.Diagram)):
         # update_now() is implicitly called when lock is released
         d.canvas.block_updates = False
 
@@ -467,24 +467,24 @@ def version_0_15_0_post(elements, factory, gaphor_version):
         for e in elements.values():
             if hasattr(e, 'taggedvalue'):
                 if not profile:
-                    profile = factory.create(UML.Profile)
+                    profile = factory.create(uml2.Profile)
                     profile.name = 'version 0.15 conversion'
                     update_elements(profile)
                 st = stereotypes.get(e.type)
                 if not st:
-                    st = stereotypes[e.type] = factory.create(UML.Stereotype)
+                    st = stereotypes[e.type] = factory.create(uml2.Stereotype)
                     st.name = 'Tagged'
                     st.package = profile
                     update_elements(st)
-                    cl = factory.create(UML.Class)
+                    cl = factory.create(uml2.Class)
                     cl.name = str(e.type)
                     cl.package = profile
                     update_elements(cl)
-                    ext = UML.model.extend_with_stereotype(factory, cl, st)
+                    ext = modelfactory.extend_with_stereotype(factory, cl, st)
                     update_elements(ext)
                     for me in ext.memberEnd: update_elements(me)
                 # Create instance specification for the stereotype:
-                instspec = UML.model.apply_stereotype(factory, e.element, st)
+                instspec = modelfactory.apply_stereotype(factory, e.element, st)
                 update_elements(instspec)
 
                 def create_slot(key, val):
@@ -492,10 +492,10 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                         if attr.name == key:
                             break
                     else:
-                        attr = st.ownedAttribute = factory.create(UML.Property)
+                        attr = st.ownedAttribute = factory.create(uml2.Property)
                         attr.name = str(key)
                         update_elements(attr)
-                    slot = UML.model.add_slot(factory, instspec, attr)
+                    slot = modelfactory.add_slot(factory, instspec, attr)
                     slot.value.value = str(val)
                     update_elements(slot)
 
@@ -515,7 +515,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                                 key = tv.strip()
                                 val = 'true'
 
-                            # This syntax is used with the UML meta model:
+                            # This syntax is used with the uml2 meta model:
                             if key in ('subsets', 'redefines'):
                                 rest = ', '.join(tviter)
                                 val = ', '.join([val, rest]) if rest else val
@@ -536,11 +536,11 @@ def version_0_15_0_post(elements, factory, gaphor_version):
 
         def update_msg(msg, sl, rl):
             if sl:
-                s = factory.create(UML.MessageOccurrenceSpecification)
+                s = factory.create(uml2.MessageOccurrenceSpecification)
                 s.covered = sl
                 m.sendEvent = s
             if rl:
-                r = factory.create(UML.MessageOccurrenceSpecification)
+                r = factory.create(uml2.MessageOccurrenceSpecification)
                 r.covered = rl
                 m.receiveEvent = r
 
@@ -745,9 +745,9 @@ def version_0_7_1(elements, factory, gaphor_version):
     should not be set.
     """
     def fix(end1, end2):
-        if isinstance(end2.type, UML.Interface):
+        if isinstance(end2.type, uml2.Interface):
             type = end1.interface_
-        else: # isinstance(end2.type, UML.Class):
+        else: # isinstance(end2.type, uml2.Class):
             type = end1.class_
 
         # if the end of association is not navigable (in terms of UML 1.x)

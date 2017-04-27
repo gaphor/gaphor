@@ -5,7 +5,7 @@ Verify the content of an element factory before it is saved.
 """
 
 from __future__ import absolute_import
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.UML.collection import collection
 import gaphas
 
@@ -44,7 +44,7 @@ def orphan_references(factory):
         """
         Store the element id.
         """
-        if isinstance (value, (UML.Element, gaphas.Item)):
+        if isinstance (value, (uml2.Element, gaphas.Item)):
             verify_reference(name, value)
         elif isinstance(value, collection):
             verify_collection(name, value)
@@ -70,7 +70,7 @@ def orphan_references(factory):
             for child in value.canvas.get_children(value):
                 verify_canvasitem(None, child)
 
-        elif isinstance(value, UML.Element):
+        elif isinstance(value, uml2.Element):
             verify_reference(name, value)
 
     for e in factory.values():
