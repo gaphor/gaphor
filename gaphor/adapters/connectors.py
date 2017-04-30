@@ -7,15 +7,14 @@ gaphor.adapter package.
 
 from __future__ import absolute_import
 from __future__ import print_function
-from zope import interface, component
-from logging import getLogger
 
-from gaphas import geometry
+from logging import getLogger
+from zope import interface, component
 
 from gaphor.UML import uml2
 from gaphor.core import inject
-from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 
 logger = getLogger('Connector')
 
@@ -48,29 +47,25 @@ class AbstractConnect(object):
 
     element_factory = inject('element_factory')
 
-
     def __init__(self, element, line):
         self.element = element
         self.line = line
         self.canvas = self.element.canvas
         assert self.canvas == self.element.canvas == self.line.canvas
 
-
     def get_connection(self, handle):
         """
         Get connection information
         """
-        return self.canvas.get_connection(handle) 
-
+        return self.canvas.get_connection(handle)
 
     def get_connected(self, handle):
         """
         Get item connected to a handle.
         """
-        cinfo = self.canvas.get_connection(handle) 
+        cinfo = self.canvas.get_connection(handle)
         if cinfo is not None:
             return cinfo.connected
-
 
     def get_connected_port(self, handle):
         """
@@ -79,7 +74,6 @@ class AbstractConnect(object):
         cinfo = self.canvas.get_connection(handle)
         if cinfo is not None:
             return cinfo.port
-
 
     def allow(self, handle, port):
         """
@@ -98,7 +92,6 @@ class AbstractConnect(object):
             return not count and isinstance(self.line, (items.DependencyItem, items.ImplementationItem))
         return True
 
-
     def connect(self, handle, port):
         """
         Connect to an element. Note that at this point the line may
@@ -109,12 +102,11 @@ class AbstractConnect(object):
         """
         return True
 
-
-#    def reconnect(self, handle, port):
-#        """
-#        UML model reconnection method.
-#        """
-#        raise NotImplementedError('Reconnection not implemented')
+    #    def reconnect(self, handle, port):
+    #        """
+    #        UML model reconnection method.
+    #        """
+    #        raise NotImplementedError('Reconnection not implemented')
 
 
     def disconnect(self, handle):
@@ -122,7 +114,6 @@ class AbstractConnect(object):
         Disconnect UML model level connections.
         """
         pass
-
 
 
 class CommentLineElementConnect(AbstractConnect):
@@ -147,7 +138,7 @@ class CommentLineElementConnect(AbstractConnect):
         # Same goes for subjects:
         if connected_to and \
                 (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
+                and connected_to.subject is element.subject:
             return None
 
         # One end should be connected to a CommentItem:
@@ -159,9 +150,9 @@ class CommentLineElementConnect(AbstractConnect):
         # Do not allow to links between the comment and the element
         if connected_to and element and \
                 ((isinstance(connected_to.subject, uml2.Comment) and \
-                    self.element.subject in connected_to.subject.annotatedElement) or \
-                 (isinstance(self.element.subject, uml2.Comment) and \
-                    connected_to.subject in self.element.subject.annotatedElement)):
+                              self.element.subject in connected_to.subject.annotatedElement) or \
+                         (isinstance(self.element.subject, uml2.Comment) and \
+                                      connected_to.subject in self.element.subject.annotatedElement)):
             return None
 
         return super(CommentLineElementConnect, self).allow(handle, port)
@@ -190,8 +181,9 @@ class CommentLineElementConnect(AbstractConnect):
                     del hct.subject.annotatedElement[oct.subject]
             except ValueError:
                 logger.debug('Invoked CommentLineElementConnect.disconnect() for nonexistant relationship')
-                
+
         super(CommentLineElementConnect, self).disconnect(handle)
+
 
 component.provideAdapter(CommentLineElementConnect)
 
@@ -220,7 +212,7 @@ class CommentLineLineConnect(AbstractConnect):
         # Same goes for subjects:
         if connected_to and \
                 (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
+                and connected_to.subject is element.subject:
             return None
 
         print('Connecting', element, 'with', element.subject)
@@ -254,6 +246,7 @@ class CommentLineLineConnect(AbstractConnect):
                 del c2.subject.annotatedElement[c1.subject]
         super(CommentLineLineConnect, self).disconnect(handle)
 
+
 component.provideAdapter(CommentLineLineConnect)
 
 
@@ -270,7 +263,6 @@ class UnaryRelationshipConnect(AbstractConnect):
     """
 
     element_factory = inject('element_factory')
-
 
     def relationship(self, required_type, head, tail):
         """
@@ -289,8 +281,8 @@ class UnaryRelationshipConnect(AbstractConnect):
 
         # First check if the right subject is already connected:
         if line.subject \
-           and getattr(line.subject, head.name) is head_subject \
-           and getattr(line.subject, tail.name) is tail_subject:
+                and getattr(line.subject, head.name) is head_subject \
+                and getattr(line.subject, tail.name) is tail_subject:
             return line.subject
 
         # Try to find a relationship, that is already created, but not
@@ -298,7 +290,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         for gen in getattr(tail_subject, tail.opposite):
             if not isinstance(gen, required_type):
                 continue
-                
+
             gen_head = getattr(gen, head.name)
             try:
                 if not head_subject in gen_head:
@@ -329,7 +321,6 @@ class UnaryRelationshipConnect(AbstractConnect):
             setattr(relation, tail.name, self.get_connected(line.tail).subject)
         return relation
 
-
     def reconnect_relationship(self, handle, head, tail):
         """
         Reconnect relationship for given handle.
@@ -352,7 +343,6 @@ class UnaryRelationshipConnect(AbstractConnect):
         else:
             raise ValueError('Incorrect handle passed to adapter')
 
-
     def connect_connected_items(self, connections=None):
         """
         Cause items connected to ``line`` to reconnect, allowing them to
@@ -368,7 +358,7 @@ class UnaryRelationshipConnect(AbstractConnect):
             adapter = component.queryMultiAdapter((line, cinfo.connected), IConnect)
             assert adapter
             adapter.connect(cinfo.handle, cinfo.port)
-        
+
     def disconnect_connected_items(self):
         """
         Cause items connected to @line to be disconnected.
@@ -423,7 +413,6 @@ class UnaryRelationshipConnect(AbstractConnect):
                     self.connect_connected_items()
             return True
 
-
     def disconnect(self, handle):
         """
         Disconnect model element.
@@ -432,13 +421,13 @@ class UnaryRelationshipConnect(AbstractConnect):
         opposite = line.opposite(handle)
         oct = self.get_connected(opposite)
         hct = self.get_connected(handle)
-        
+
         if hct and oct:
             # Both sides of line are connected => disconnect
             old = line.subject
-             
+
             connections = self.disconnect_connected_items()
-            
+
             self.disconnect_subject(handle)
             if old:
                 self.connect_connected_items(connections)
@@ -467,10 +456,9 @@ class RelationshipConnect(UnaryRelationshipConnect):
         # Same goes for subjects:
         if connected_to and \
                 (not (connected_to.subject or element.subject)) \
-                 and connected_to.subject is element.subject:
+                and connected_to.subject is element.subject:
             return None
 
         return super(RelationshipConnect, self).allow(handle, port)
-
 
 # vim:sw=4:et:ai
