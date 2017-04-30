@@ -6,7 +6,7 @@
 from __future__ import absolute_import
 from __future__ import print_function
 from zope import component
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 from gaphor.core import inject
 from gaphor.diagram.interfaces import IConnect
@@ -15,6 +15,7 @@ from gaphas.aspect import ConnectionSink, Connector
 from .pynsource import PySourceAsText
 
 BASE_CLASSES = ('object', 'type', 'dict', 'list', 'tuple', 'int', 'float')
+
 
 class Engineer(object):
     """
@@ -28,30 +29,31 @@ class Engineer(object):
     def process(self, files=None):
 
         # these are tuples between class names.
-        #self.associations_generalisation = []
-        #self.associations_composition = []
+        # self.associations_generalisation = []
+        # self.associations_composition = []
 
         p = PySourceAsText()
         self.parser = p
 
         if files:
-            #u = PythonToJava(None, treatmoduleasclass=0, verbose=0)
+            # u = PythonToJava(None, treatmoduleasclass=0, verbose=0)
             for f in files:
                 # Build a shape with all attrs and methods, and prepare association dict
                 p.Parse(f)
 
         print(p)
-        
+
         try:
-            self._root_package = self.element_factory.lselect(lambda e: isinstance(e, UML.Package) and not e.namespace)[0]
+            self._root_package = \
+            self.element_factory.lselect(lambda e: isinstance(e, uml2.Package) and not e.namespace)[0]
         except IndexError:
-            pass # running as test?
+            pass  # running as test?
 
         for m in p.modulemethods:
             print('ModuleMethod:', m)
 
         # Step 0: create a diagram to put the newly created elements on
-        self.diagram = self.element_factory.create(UML.Diagram)
+        self.diagram = self.element_factory.create(uml2.Diagram)
         self.diagram.name = 'New classes'
         self.diagram.package = self._root_package
 
@@ -59,11 +61,11 @@ class Engineer(object):
         for name, clazz in p.classlist.items():
             print(type(clazz), dir(clazz))
             self._create_class(clazz, name)
-            
+
         # Create generalization relationships:
         for name, clazz in p.classlist.items():
             self._create_generalization(clazz)
-        
+
         # Create attributes (and associations) on the classes
         for name, clazz in p.classlist.items():
             self._create_attributes(clazz)
@@ -75,7 +77,7 @@ class Engineer(object):
         self.diagram_layout.layout_diagram(self.diagram)
 
     def _create_class(self, clazz, name):
-        c = self.element_factory.create(UML.Class)
+        c = self.element_factory.create(uml2.Class)
         c.name = name
         c.package = self.diagram.namespace
         ci = self.diagram.create(items.ClassItem)
@@ -93,7 +95,8 @@ class Engineer(object):
                     superclass_item = self.parser.classlist[superclassname].gaphor_class_item
                 except KeyError as e:
                     print('No class found named', superclassname)
-                    others = self.element_factory.lselect(lambda e: isinstance(e, UML.Class) and e.name == superclassname)
+                    others = self.element_factory.lselect(
+                        lambda e: isinstance(e, uml2.Class) and e.name == superclassname)
                     if others:
                         superclass = others[0]
                         print('Found class in factory: %s' % superclass.name)
@@ -103,25 +106,25 @@ class Engineer(object):
                         continue
                 # Finally, create the generalization relationship
                 print('Creating Generalization for %s' % clazz, superclass)
-                #gen = self.element_factory.create(UML.Generalization)
-                #gen.general = superclass
-                #gen.specific = clazz.gaphor_class
+                # gen = self.element_factory.create(uml2.Generalization)
+                # gen.general = superclass
+                # gen.specific = clazz.gaphor_class
                 geni = self.diagram.create(items.GeneralizationItem)
-                #geni.subject = gen
-                
+                # geni.subject = gen
+
                 self.connect(geni, geni.tail, clazz.gaphor_class_item)
                 self.connect(geni, geni.head, superclass_item)
-                
-                #adapter = component.queryMultiAdapter((superclass_item, geni), IConnect)
-                #assert adapter
-                #handle = geni.handles()[0]
-                #adapter.connect(handle)
-                #clazz.gaphor_class_item.connect_handle(geni.handles[-1])
-                #adapter = component.queryMultiAdapter((clazz.gaphor_class_item, geni), IConnect)
-                #assert adapter
-                #handle = geni.handles()[-1]
-                #adapter.connect(handle)
-                
+
+                # adapter = component.queryMultiAdapter((superclass_item, geni), IConnect)
+                # assert adapter
+                # handle = geni.handles()[0]
+                # adapter.connect(handle)
+                # clazz.gaphor_class_item.connect_handle(geni.handles[-1])
+                # adapter = component.queryMultiAdapter((clazz.gaphor_class_item, geni), IConnect)
+                # assert adapter
+                # handle = geni.handles()[-1]
+                # adapter.connect(handle)
+
     def connect(self, line, handle, item, port=None):
         """
         Connect line's handle to an item.
@@ -146,7 +149,7 @@ class Engineer(object):
 
     def _create_methods(self, clazz):
         for adef in clazz.defs:
-            op = self.element_factory.create(UML.Operation)
+            op = self.element_factory.create(uml2.Operation)
             op.name = adef
             clazz.gaphor_class.ownedOperation = op
 
@@ -156,7 +159,7 @@ class Engineer(object):
             superclass_item = self.parser.classlist[classname].gaphor_class_item
         except KeyError as e:
             print('No class found named', classname)
-            others = self.element_factory.lselect(lambda e: isinstance(e, UML.Class) and e.name == classname)
+            others = self.element_factory.lselect(lambda e: isinstance(e, uml2.Class) and e.name == classname)
             if others:
                 superclass = others[0]
                 print('Found class in factory: %s' % superclass.name)
@@ -187,33 +190,33 @@ class Engineer(object):
 
         if tail_type:
             # Create an association:
-            #print "%s %s <@>----> %s" % (attr.attrname, static, str(compositescreated))
+            # print "%s %s <@>----> %s" % (attr.attrname, static, str(compositescreated))
             # The property on the tail of the association (tail_end) is owned
             # by the class connected on the head_end (head_type)
             head_type = clazz.gaphor_class
             head_type_item = clazz.gaphor_class_item
 
-            #relation = self.element_factory.create(UML.Association)
-            #head_end = self.element_factory.create(UML.Property)
-            #head_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
-            #tail_end = self.element_factory.create(UML.Property)
-            #tail_end.name = attr.attrname
-            #tail_end.visibility = self._visibility(attr.attrname)
-            #tail_end.aggregation = 'composite'
-            #tail_end.lowerValue = self.element_factory.create(UML.LiteralSpecification)
-            #relation.package = self.diagram.namespace
-            #relation.memberEnd = head_end
-            #relation.memberEnd = tail_end
-            #head_end.type = head_type
-            #tail_end.type = tail_type
-            #head_type.ownedAttribute = tail_end
-            #tail_type.ownedAttribute = head_end
+            # relation = self.element_factory.create(uml2.Association)
+            # head_end = self.element_factory.create(uml2.Property)
+            # head_end.lowerValue = self.element_factory.create(uml2.LiteralSpecification)
+            # tail_end = self.element_factory.create(uml2.Property)
+            # tail_end.name = attr.attrname
+            # tail_end.visibility = self._visibility(attr.attrname)
+            # tail_end.aggregation = 'composite'
+            # tail_end.lowerValue = self.element_factory.create(uml2.LiteralSpecification)
+            # relation.package = self.diagram.namespace
+            # relation.memberEnd = head_end
+            # relation.memberEnd = tail_end
+            # head_end.type = head_type
+            # tail_end.type = tail_type
+            # head_type.ownedAttribute = tail_end
+            # tail_type.ownedAttribute = head_end
 
-            
+
             # Now the subject
-            #association.subject = relation
-            #association.head_end.subject = head_end
-            #association.tail_end.subject = tail_end
+            # association.subject = relation
+            # association.head_end.subject = head_end
+            # association.tail_end.subject = tail_end
 
             # Create the diagram item:
             association = self.diagram.create(items.AssociationItem)
@@ -236,14 +239,13 @@ class Engineer(object):
             tail_prop.aggregation = 'composite'
         else:
             # Create a simple attribute:
-            #print "%s %s" % (attr.attrname, static)
-            prop = self.element_factory.create(UML.Property)
+            # print "%s %s" % (attr.attrname, static)
+            prop = self.element_factory.create(uml2.Property)
             prop.name = attr.attrname
             prop.visibility = self._visibility(attr.attrname)
             prop.isStatic = static
             clazz.gaphor_class.ownedAttribute = prop
-        #print many
+        # print many
         import pprint
         pprint.pprint(attr)
-        #print dir(attr)
-
+        # print dir(attr)
