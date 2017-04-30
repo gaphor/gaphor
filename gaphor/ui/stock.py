@@ -2,20 +2,23 @@
 """
 
 from __future__ import absolute_import
-import os.path
-import pkg_resources
-from xml.sax import handler
+
 import gtk
+import os.path
+from xml.sax import handler
+
+import pkg_resources
 
 from gaphor.UML import uml2
 from gaphor.storage.parser import ParserException
 
-XMLNS='http://gaphor.sourceforge.net/gaphor/stock-icons'
+XMLNS = 'http://gaphor.sourceforge.net/gaphor/stock-icons'
 
 _icon_factory = gtk.IconFactory()
 _icon_factory.add_default()
 
-_uml_to_stock_id_map = { }
+_uml_to_stock_id_map = {}
+
 
 def get_stock_id(element, option=None):
     global _uml_to_stock_id_map
@@ -25,7 +28,8 @@ def get_stock_id(element, option=None):
             return _uml_to_stock_id_map[t]
         else:
             log.warning('Stock id for %s (%s) not found' % (element, option))
-            return None #STOCK_POINTER
+            return None  # STOCK_POINTER
+
 
 def add_stock_icon(id, icon_dir, icon_files, uml_class=None, option=None):
     global _uml_to_stock_id_map
@@ -101,7 +105,7 @@ class StockIconLoader(handler.ContentHandler):
 
     def startElementNS(self, name, qname, attrs):
         if not name[0] or name[0] == XMLNS:
-            a = { }
+            a = {}
             for key, val in attrs.items():
                 a[key[1]] = val
             self.startElement(name[1], a)
@@ -123,20 +127,21 @@ def load_stock_icons():
     parser = make_parser()
     icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
     log.info('Icon dir: %s' % icon_dir)
-    #icon_dir = 'gaphor/data/pixmaps'
+    # icon_dir = 'gaphor/data/pixmaps'
     loader = StockIconLoader(icon_dir)
 
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    filename = pkg_resources.resource_filename('gaphor.ui', 'icons.xml')
+    filename = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'icons.xml'))
     # Make the filename a full URL
     filename = 'file:' + filename.replace('\\\\', '/')
-    #try:
+    print(filename)
+    # try:
     parser.parse(filename)
-    #except IOError, e:
+    # except IOError, e:
     #    log.error('Unable to load icons', exc_info=True)
 
-#load_stock_icons()
+# load_stock_icons()
 
 # vim:sw=4:et
