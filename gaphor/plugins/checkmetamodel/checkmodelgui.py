@@ -4,12 +4,15 @@ A GUI for the checkmodel plugin.
 
 from __future__ import absolute_import
 from __future__ import print_function
+
 import gobject
 import gtk
-from zope import interface, component
-from gaphor.core import _, inject, action, build_action_group
+from zope import interface
+
+from . import checkmodel
+
+from gaphor.core import inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
-import checkmodel
 
 PYELEMENT_COLUMN = 0
 ELEMENT_COLUMN = 1
