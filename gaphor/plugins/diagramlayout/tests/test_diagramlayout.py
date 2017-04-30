@@ -1,10 +1,8 @@
 
 from __future__ import absolute_import
-import unittest
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
-from gaphor.plugins.diagramlayout import DiagramLayout
 from gaphor.application import Application
 from gaphor.tests.testcase import TestCase
 
@@ -18,9 +16,9 @@ class DiagramLayoutTestCase(TestCase):
         elemfact = Application.get_service('element_factory')
         diagram_layout = Application.get_service('diagram_layout')
 
-        diagram = elemfact.create(UML.Diagram)
-        c1 = diagram.create(items.ClassItem, subject=elemfact.create(UML.Class))
-        c2 = diagram.create(items.ClassItem, subject=elemfact.create(UML.Class))
+        diagram = elemfact.create(uml2.Diagram)
+        c1 = diagram.create(items.ClassItem, subject=elemfact.create(uml2.Class))
+        c2 = diagram.create(items.ClassItem, subject=elemfact.create(uml2.Class))
 
         c2.matrix.translate(100, 100)
         c2.request_update()
