@@ -3,14 +3,14 @@ Test the UndoManager.
 """
 
 from __future__ import absolute_import
-from gaphor.tests.testcase import TestCase
-from gaphor.services.undomanager import UndoManager
-from gaphor.transaction import Transaction
+
 from gaphor.application import Application
+from gaphor.services.undomanager import UndoManager
+from gaphor.tests.testcase import TestCase
+from gaphor.transaction import Transaction
 
 
 class TestUndoManager(TestCase):
-
     def test_transactions(self):
 
         undo_manager = UndoManager()
@@ -18,28 +18,28 @@ class TestUndoManager(TestCase):
 
         assert not undo_manager._current_transaction
 
-        #undo_manager.begin_transaction()
+        # undo_manager.begin_transaction()
         tx = Transaction()
 
-        #assert undo_manager._transaction_depth == 1
+        # assert undo_manager._transaction_depth == 1
         assert undo_manager._current_transaction
 
         current = undo_manager._current_transaction
-        #undo_manager.begin_transaction()
+        # undo_manager.begin_transaction()
         tx2 = Transaction()
-        #assert undo_manager._transaction_depth == 2
-        #assert undo_manager._transaction_depth == 1
+        # assert undo_manager._transaction_depth == 2
+        # assert undo_manager._transaction_depth == 1
         assert undo_manager._current_transaction is current
 
-        #undo_manager.commit_transaction()
+        # undo_manager.commit_transaction()
         tx2.commit()
 
-        #assert undo_manager._transaction_depth == 1
+        # assert undo_manager._transaction_depth == 1
         assert undo_manager._current_transaction is current
 
-        #undo_manager.commit_transaction()
+        # undo_manager.commit_transaction()
         tx.commit()
-        #assert undo_manager._transaction_depth == 0
+        # assert undo_manager._transaction_depth == 0
         assert undo_manager._current_transaction is None
 
         undo_manager.shutdown()
@@ -60,36 +60,36 @@ class TestUndoManager(TestCase):
 
         undo_manager.shutdown()
 
-        
     def test_actions(self):
-        undone = [ 0 ]
+        undone = [0]
+
         def undo_action(undone=undone):
-            #print 'undo_action called'
+            # print 'undo_action called'
             undone[0] = 1
             undo_manager.add_undo_action(redo_action)
 
         def redo_action(undone=undone):
-            #print 'redo_action called'
+            # print 'redo_action called'
             undone[0] = -1
             undo_manager.add_undo_action(undo_action)
 
         undo_manager = UndoManager()
         undo_manager.init(Application)
 
-        #undo_manager.begin_transaction()
+        # undo_manager.begin_transaction()
         tx = Transaction()
         undo_manager.add_undo_action(undo_action)
         assert undo_manager._current_transaction
         assert undo_manager.can_undo()
         assert len(undo_manager._current_transaction._actions) == 1
 
-        #undo_manager.commit_transaction()
+        # undo_manager.commit_transaction()
         tx.commit()
 
         undo_manager.undo_transaction()
         assert not undo_manager.can_undo(), undo_manager._undo_stack
         assert undone[0] == 1, undone
-        
+
         undone[0] = 0
 
         assert undo_manager.can_redo(), undo_manager._redo_stack
@@ -101,9 +101,7 @@ class TestUndoManager(TestCase):
 
         undo_manager.shutdown()
 
-
     def test_undo_attribute(self):
-        import types
         from gaphor.UML.properties import attribute
         from gaphor.UML.element import Element
         undo_manager = UndoManager()
@@ -134,8 +132,11 @@ class TestUndoManager(TestCase):
         undo_manager = UndoManager()
         undo_manager.init(Application)
 
-        class A(Element): pass
-        class B(Element): pass
+        class A(Element):
+            pass
+
+        class B(Element):
+            pass
 
         A.one = association('one', B, 0, 1, opposite='two')
         B.two = association('two', A, 0, 1)
@@ -175,8 +176,9 @@ class TestUndoManager(TestCase):
         from gaphor.UML.element import Element
         undo_manager = UndoManager()
         undo_manager.init(Application)
- 
+
         class A(Element): pass
+
         class B(Element): pass
 
         A.one = association('one', B, lower=0, upper=1, opposite='two')
@@ -187,10 +189,9 @@ class TestUndoManager(TestCase):
         b1 = B()
         b2 = B()
 
-
         undo_manager.begin_transaction()
         b1.two = a1
-        
+
         undo_manager.commit_transaction()
         assert a1 in b1.two
         assert b1 is a1.one
@@ -218,7 +219,6 @@ class TestUndoManager(TestCase):
         assert b1 is a2.one
 
         undo_manager.shutdown()
-
 
     def test_element_factory_undo(self):
         from gaphor.UML.element import Element
@@ -248,9 +248,8 @@ class TestUndoManager(TestCase):
         assert not undo_manager.can_redo()
         assert ef.size() == 1
         assert ef.lselect()[0] is p
-        
-        undo_manager.shutdown()
 
+        undo_manager.shutdown()
 
     def test_element_factory_rollback(self):
         from gaphor.UML.element import Element
@@ -271,16 +270,16 @@ class TestUndoManager(TestCase):
 
         undo_manager.shutdown()
 
-
     def test_uml_associations(self):
 
         from zope import component
         from gaphor.UML.interfaces import IAssociationChangeEvent
         from gaphor.UML.properties import association, derivedunion
-        from gaphor.UML import Element
+        from gaphor.UML.element import Element
 
         class A(Element):
             is_unlinked = False
+
             def unlink(self):
                 self.is_unlinked = True
                 Element.unlink(self)
@@ -295,6 +294,7 @@ class TestUndoManager(TestCase):
         A.derived_b = derivedunion('derived_b', 0, '*', A.b1, A.b2, A.b3)
 
         events = []
+
         @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
@@ -310,7 +310,7 @@ class TestUndoManager(TestCase):
 
             a.a1 = A()
             undo_manager.commit_transaction()
-            
+
             assert len(events) == 1, events
             assert events[0].property is A.a1
             assert undo_manager.can_undo()
@@ -362,7 +362,7 @@ class TestUndoManager(TestCase):
         assert undo_manager.can_redo()
         self.assertEquals(0, len(undo_manager._undo_stack))
         self.assertEquals(2, len(undo_manager._redo_stack))
-        #assert ef.size() == 0
+        # assert ef.size() == 0
 
         undo_manager.redo_transaction()
         self.assertEquals(1, len(undo_manager._undo_stack))
@@ -370,16 +370,14 @@ class TestUndoManager(TestCase):
         assert undo_manager.can_undo()
         assert undo_manager.can_redo()
         assert ef.size() == 1
-        
+
         undo_manager.redo_transaction()
         assert undo_manager.can_undo()
         assert not undo_manager.can_redo()
         assert ef.size() == 2
-        
+
         assert p in ef.lselect()
-        
+
         undo_manager.shutdown()
-
-
 
 # vim:sw=4:et:ai
