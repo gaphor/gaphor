@@ -1,14 +1,15 @@
-
 from __future__ import absolute_import
-from gaphor.tests import TestCase
-from gaphor.UML import uml2
-from gaphor.diagram import items
-from gaphor.diagram.interfaces import IEditor
-from gaphor.adapters.propertypages import AttributesPage, OperationsPage
+
 import gtk
 
-class EditorTestCase(TestCase):
+from gaphor.UML import uml2
+from gaphor.adapters.propertypages import AttributesPage, OperationsPage
+from gaphor.diagram import items
+from gaphor.diagram.interfaces import IEditor
+from gaphor.tests import TestCase
 
+
+class EditorTestCase(TestCase):
     def setUp(self):
         super(EditorTestCase, self).setUp()
 
@@ -37,23 +38,21 @@ class EditorTestCase(TestCase):
         pos = assoc.head_end._name_bounds[:2]
         self.assertTrue(adapter.is_editable(*pos))
         self.assertTrue(adapter._edit is assoc.head_end)
-        
+
         pos = assoc.tail_end._name_bounds[:2]
         self.assertTrue(adapter.is_editable(*pos))
         self.assertTrue(adapter._edit is assoc.tail_end)
 
-        
     def test_objectnode_editor(self):
         node = self.create(items.ObjectNodeItem, uml2.ObjectNode)
         self.diagram.canvas.update_now()
 
         adapter = IEditor(node)
         self.assertTrue(adapter.is_editable(10, 10))
-        #assert not adapter.edit_tag
+        # assert not adapter.edit_tag
 
-        #assert adapter.is_editable(*node.tag_bounds[:2])
-        #assert adapter.edit_tag
-
+        # assert adapter.is_editable(*node.tag_bounds[:2])
+        # assert adapter.edit_tag
 
     def test_classifier_editor(self):
         """
@@ -85,7 +84,7 @@ class EditorTestCase(TestCase):
         self.assertEqual('Class1', edit.get_text())
 
         # The attribute:
-        y = klass._header_size[1] + klass.style.compartment_padding[0] + 3 
+        y = klass._header_size[1] + klass.style.compartment_padding[0] + 3
         self.assertEqual(True, edit.is_editable(4, y))
         self.assertEqual(attr, edit._edit.subject)
         self.assertEqual('+ blah', edit.get_text())
@@ -96,11 +95,10 @@ class EditorTestCase(TestCase):
         self.assertEqual(oper, edit._edit.subject)
         self.assertEqual('+ method()', edit.get_text())
 
-
     def test_class_attribute_editor(self):
         klass = self.create(items.ClassItem, uml2.Class)
         klass.subject.name = 'Class1'
-        
+
         editor = AttributesPage(klass)
         page = editor.construct()
         tree_view = page.get_children()[1]
@@ -109,10 +107,10 @@ class EditorTestCase(TestCase):
         attr = self.element_factory.create(uml2.Property)
         attr.name = "blah"
         klass.subject.ownedAttribute = attr
-        
+
         self.assertSame(attr, tree_view.get_model()[0][-1])
         self.assertEquals("+ blah", tree_view.get_model()[0][0])
-        
+
         attr.name = "foo"
         self.assertEquals("+ foo", tree_view.get_model()[0][0])
         attr.typeValue = 'int'
@@ -124,7 +122,7 @@ class EditorTestCase(TestCase):
     def test_class_operation_editor(self):
         klass = self.create(items.ClassItem, uml2.Class)
         klass.subject.name = 'Class1'
-        
+
         editor = OperationsPage(klass)
         page = editor.construct()
         tree_view = page.get_children()[1]
