@@ -3,10 +3,14 @@ Classes related (dependency, implementation) adapter connections.
 """
 
 from __future__ import absolute_import
-from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
-from zope import interface, component
+
+from zope import component
+
 from gaphor.UML import uml2, modelfactory
+from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
 from gaphor.diagram import items
+import logging
+
 
 class DependencyConnect(RelationshipConnect):
     """
@@ -21,10 +25,9 @@ class DependencyConnect(RelationshipConnect):
         # Element should be a NamedElement
         if not element.subject or \
                 not isinstance(element.subject, uml2.NamedElement):
-                    return False
+            return False
 
         return super(DependencyConnect, self).allow(handle, port)
-
 
     def reconnect(self, handle, port):
         line = self.line
@@ -36,7 +39,6 @@ class DependencyConnect(RelationshipConnect):
             for c in dep.client:
                 del dep.client[c]
         self.reconnect_relationship(handle, line.dependency_type.supplier, line.dependency_type.client)
-
 
     def connect_subject(self, handle):
         """
@@ -57,9 +59,10 @@ class DependencyConnect(RelationshipConnect):
             line.dependency_type = modelfactory.dependency_type(client, supplier)
 
         relation = self.relationship_or_new(line.dependency_type,
-                            line.dependency_type.supplier,
-                            line.dependency_type.client)
+                                            line.dependency_type.supplier,
+                                            line.dependency_type.client)
         line.subject = relation
+
 
 component.provideAdapter(DependencyConnect)
 
@@ -71,21 +74,19 @@ class GeneralizationConnect(RelationshipConnect):
     # FixMe: Both ends of the generalization should be of the same  type?
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
-
     def reconnect(self, handle, port):
         self.reconnect_relationship(handle, uml2.Generalization.general, uml2.Generalization.specific)
 
-
     def connect_subject(self, handle):
-        log.debug('connect_subject: ' % handle)
+        logging.debug('connect_subject: ' % handle)
         relation = self.relationship_or_new(uml2.Generalization,
-                    uml2.Generalization.general,
-                    uml2.Generalization.specific)
-        log.debug('found: ' % relation)
+                                            uml2.Generalization.general,
+                                            uml2.Generalization.specific)
+        logging.debug('found: ' % relation)
         self.line.subject = relation
 
-component.provideAdapter(GeneralizationConnect)
 
+component.provideAdapter(GeneralizationConnect)
 
 
 class AssociationConnect(UnaryRelationshipConnect):
@@ -118,9 +119,9 @@ class AssociationConnect(UnaryRelationshipConnect):
                 end1 = line.subject.memberEnd[0]
                 end2 = line.subject.memberEnd[1]
                 if (end1.type is head_type and end2.type is tail_type) \
-                   or (end2.type is head_type and end1.type is tail_type):
+                        or (end2.type is head_type and end1.type is tail_type):
                     return
-                    
+
             # Create new association
             relation = modelfactory.create_association(self.element_factory, head_type, tail_type)
             relation.package = element.canvas.diagram.namespace
@@ -145,11 +146,10 @@ class AssociationConnect(UnaryRelationshipConnect):
 
         nav = oend.subject.navigability
 
-        modelfactory.set_navigability(line.subject, end.subject, None) # clear old data
+        modelfactory.set_navigability(line.subject, end.subject, None)  # clear old data
 
         oend.subject.type = c.subject
         modelfactory.set_navigability(line.subject, oend.subject, nav)
-
 
     def disconnect_subject(self, handle):
         """
@@ -174,13 +174,11 @@ class AssociationConnect(UnaryRelationshipConnect):
 component.provideAdapter(AssociationConnect)
 
 
-
 class ImplementationConnect(RelationshipConnect):
     """
     Connect Interface and a BehavioredClassifier using an Implementation.
     """
     component.adapts(items.NamedItem, items.ImplementationItem)
-
 
     def allow(self, handle, port):
         line = self.line
@@ -188,16 +186,15 @@ class ImplementationConnect(RelationshipConnect):
 
         # Element at the head should be an Interface
         if handle is line.head and \
-           not isinstance(element.subject, uml2.Interface):
+                not isinstance(element.subject, uml2.Interface):
             return None
 
         # Element at the tail should be a BehavioredClassifier
         if handle is line.tail and \
-           not isinstance(element.subject, uml2.BehavioredClassifier):
+                not isinstance(element.subject, uml2.BehavioredClassifier):
             return None
 
         return super(ImplementationConnect, self).allow(handle, port)
-
 
     def reconnect(self, handle, port):
         line = self.line
@@ -210,14 +207,13 @@ class ImplementationConnect(RelationshipConnect):
                 del impl.implementatingClassifier[c]
         self.reconnect_relationship(handle, uml2.Implementation.contract, uml2.Implementation.implementatingClassifier)
 
-
     def connect_subject(self, handle):
         """
         Perform implementation relationship connection.
         """
         relation = self.relationship_or_new(uml2.Implementation,
-                    uml2.Implementation.contract,
-                    uml2.Implementation.implementatingClassifier)
+                                            uml2.Implementation.contract,
+                                            uml2.Implementation.implementatingClassifier)
         self.line.subject = relation
 
 
