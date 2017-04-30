@@ -3,25 +3,27 @@ State diagram item.
 """
 
 from __future__ import absolute_import
+
 import operator
 
 from gaphor.UML import uml2
-from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP
-from gaphor.diagram.states import VertexItem
+from gaphor.core import inject
 from gaphor.diagram.classifier import CompartmentItem
 from gaphor.diagram.compartment import FeatureItem
-from gaphor.core import inject
+from gaphor.diagram.states import VertexItem
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 
 DX = 15
 DY = 8
 DDX = 0.4 * DX
 DDY = 0.4 * DY
 
+
 class StateItem(CompartmentItem, VertexItem):
     element_factory = inject('element_factory')
-    __uml__   = uml2.State
+    __uml__ = uml2.State
     __style__ = {
-        'min-size':   (50, 30),
+        'min-size': (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_TOP),
         'extra-space': 'compartment',
     }
@@ -37,7 +39,6 @@ class StateItem(CompartmentItem, VertexItem):
         self._entry = FeatureItem(pattern='entry / %s', order=1)
         self._exit = FeatureItem(pattern='exit / %s', order=2)
         self._do_activity = FeatureItem(pattern='do / %s', order=3)
-
 
     def _set_activity(self, act, attr, text):
         if text and act not in self._activities:
@@ -58,18 +59,14 @@ class StateItem(CompartmentItem, VertexItem):
         self._activities.visible = len(self._activities) > 0
         self.request_update()
 
-
     def set_entry(self, text):
         self._set_activity(self._entry, 'entry', text)
-
 
     def set_exit(self, text):
         self._set_activity(self._exit, 'exit', text)
 
-
     def set_do_activity(self, text):
         self._set_activity(self._do_activity, 'doActivity', text)
-
 
     def postload(self):
         super(StateItem, self).postload()
@@ -79,7 +76,6 @@ class StateItem(CompartmentItem, VertexItem):
             self.set_exit(self.subject.exit.name)
         if self.subject.doActivity:
             self.set_do_activity(self.subject.doActivity.name)
-
 
     def draw_compartment_border(self, context):
         """
@@ -93,13 +89,12 @@ class StateItem(CompartmentItem, VertexItem):
         c.curve_to(self.width - DDX, 0, self.width, DDY, self.width, DY)
         c.line_to(self.width, self.height - DY)
         c.curve_to(self.width, self.height - DDY,
-                self.width - DDX, self.height,
-                self.width - DX, self.height)
+                   self.width - DDX, self.height,
+                   self.width - DX, self.height)
         c.line_to(DX, self.height)
         c.curve_to(DDX, self.height, 0, self.height - DDY, 0, self.height - DY)
         c.close_path()
 
         c.stroke()
-
 
 # vim:sw=4:et

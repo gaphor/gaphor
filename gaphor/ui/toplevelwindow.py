@@ -3,12 +3,14 @@ Basic stuff for toplevel windows.
 """
 
 from __future__ import absolute_import
-import os.path
-import pkg_resources
-import gtk
-from zope import interface
-from .interfaces import IUIComponent
 
+import gtk
+import os.path
+from zope import interface
+
+import pkg_resources
+
+from .interfaces import IUIComponent
 
 ICONS = (
     'gaphor-24x24.png',
@@ -17,8 +19,8 @@ ICONS = (
     'gaphor-256x256.png',
 )
 
-class ToplevelWindow(object):
 
+class ToplevelWindow(object):
     interface.implements(IUIComponent)
 
     menubar_path = ''
@@ -45,7 +47,6 @@ class ToplevelWindow(object):
 
         self.window.add_accel_group(self.ui_manager.get_accel_group())
 
-        
         if self.menubar_path or self.toolbar_path:
             # Create a full featured window.
             vbox = gtk.VBox()
@@ -55,7 +56,7 @@ class ToplevelWindow(object):
             menubar = self.ui_manager.get_widget(self.menubar_path)
             if menubar:
                 vbox.pack_start(menubar, expand=False)
-            
+
             toolbar = self.ui_manager.get_widget(self.toolbar_path)
             if toolbar:
                 vbox.pack_start(toolbar, expand=False)
@@ -67,6 +68,5 @@ class ToplevelWindow(object):
             # Create a simple window.
             self.window.add(self.ui_component())
         self.window.show()
-
 
 # vim:sw=4:et:ai

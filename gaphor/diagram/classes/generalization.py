@@ -3,19 +3,18 @@ Generalization --
 """
 
 from __future__ import absolute_import
-import gobject
 
 from gaphor.UML import uml2
 from gaphor.diagram.diagramline import DiagramLine
 
-class GeneralizationItem(DiagramLine):
 
+class GeneralizationItem(DiagramLine):
     __uml__ = uml2.Generalization
     __relationship__ = 'general', None, 'specific', 'generalization'
 
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
-        
+
     def draw_head(self, context):
         cr = context.cairo
         cr.move_to(0, 0)

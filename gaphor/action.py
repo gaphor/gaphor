@@ -44,13 +44,14 @@ class action(object):
     def __call__(self, func):
         func.__action__ = self
         return func
-        
+
 
 class toggle_action(action):
     """
     A toggle button can be switched on and off.
     An extra 'active' attribute is provided than gives the initial status.
     """
+
     def __init__(self, name, label=None, tooltip=None, stock_id=None, accel=None, active=False):
         super(toggle_action, self).__init__(name, label, tooltip, stock_id, accel=accel, active=active)
 
@@ -62,8 +63,10 @@ class radio_action(action):
     The callback function should have an extra value property, which is
     given the index number of the activated radio button action.
     """
+
     def __init__(self, names, labels=None, tooltips=None, stock_ids=None, accels=None, active=0):
-        super(radio_action, self).__init__(names[0], names=names, labels=labels, tooltips=tooltips, stock_ids=stock_ids, accels=accels, active=active)
+        super(radio_action, self).__init__(names[0], names=names, labels=labels, tooltips=tooltips, stock_ids=stock_ids,
+                                           accels=accels, active=active)
 
 
 def open_action(name, label=None, tooltip=None, stock_id=None, accel=None, **kwargs):
@@ -173,7 +176,7 @@ def build_action_group(obj, name=None):
                 activate = act.opening and _action_opening or _action_activate
             except AttributeError:
                 activate = _action_activate
-                
+
             gtkact.connect('activate', activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
 
@@ -210,6 +213,7 @@ def _radio_action_changed(action, current_action, obj, name):
 
 if __name__ == '__main__':
     import doctest
+
     doctest.testmod()
 
 # vim:sw=4:et:ai

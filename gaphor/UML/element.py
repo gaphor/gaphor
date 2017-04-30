@@ -4,7 +4,8 @@ Base class for UML model elements.
 """
 
 from __future__ import absolute_import
-__all__ = [ 'Element' ]
+
+__all__ = ['Element']
 
 import threading
 import uuid
@@ -34,13 +35,10 @@ class Element(object):
         self._factory = factory
         self._unlink_lock = threading.Lock()
 
-
     id = property(lambda self: self._id, doc='Id')
-
 
     factory = property(lambda self: self._factory,
                        doc="The factory that created this element")
-
 
     def umlproperties(self):
         """
@@ -54,14 +52,12 @@ class Element(object):
                 if isinstance(prop, umlprop):
                     yield prop
 
-
     def save(self, save_func):
         """
         Save the state by calling save_func(name, value).
         """
         for prop in self.umlproperties():
             prop.save(self, save_func)
-
 
     def load(self, name, value):
         """
@@ -72,10 +68,9 @@ class Element(object):
             prop = getattr(type(self), name)
         except AttributeError as e:
             raise AttributeError("'%s' has no property '%s'" % \
-                                        (type(self).__name__, name))
+                                 (type(self).__name__, name))
         else:
             prop.load(self, value)
-
 
     def postload(self):
         """
@@ -84,26 +79,22 @@ class Element(object):
         for prop in self.umlproperties():
             prop.postload(self)
 
-
     def unlink(self):
-        
+
         """Unlink the element. All the elements references are destroyed.
         
         The unlink lock is acquired while unlinking this elements properties
         to avoid recursion problems."""
-        
+
         if self._unlink_lock.locked():
-            
             return
-        
+
         with self._unlink_lock:
-            
+
             for prop in self.umlproperties():
-                
                 prop.unlink(self)
-                
+
             if self._factory:
-            
                 self._factory._unlink_element(self)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
@@ -114,13 +105,11 @@ class Element(object):
         """
         return isinstance(self, class_)
 
-
     def isTypeOf(self, other):
         """
         Returns true if the object is of the same type as other.
         """
         return type(self) == type(other)
-
 
     def __getstate__(self):
         d = dict(self.__dict__)
@@ -129,7 +118,6 @@ class Element(object):
         except KeyError:
             pass
         return d
-
 
     def __setstate__(self, state):
         self._factory = None

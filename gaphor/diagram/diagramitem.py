@@ -4,17 +4,18 @@ Such as a modifier 'subject' property and a unique id.
 """
 
 from __future__ import absolute_import
-from zope import component
-from gaphas.state import observed, reversible_property
 
 from logging import getLogger
+
+import six
+from gaphas.state import observed, reversible_property
+
 from gaphor.UML import uml2, modelfactory
-from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.core import inject
 from gaphor.diagram import DiagramItemMeta
-from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
-import six
+from gaphor.diagram.textelement import EditableTextSupport
+from gaphor.services.elementdispatcher import EventWatcher
 
 logger = getLogger('Diagram')
 

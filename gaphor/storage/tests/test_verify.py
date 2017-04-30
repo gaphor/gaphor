@@ -1,12 +1,11 @@
-
 from __future__ import absolute_import
-from gaphor.tests.testcase import TestCase
-from gaphor.storage.verify import orphan_references
+
 from gaphor.UML import uml2
+from gaphor.storage.verify import orphan_references
+from gaphor.tests.testcase import TestCase
 
 
 class VerifyTestCase(TestCase):
-
     def test_verifier(self):
         factory = self.element_factory
         c = factory.create(uml2.Class)
@@ -22,6 +21,5 @@ class VerifyTestCase(TestCase):
         assert m in c.ownedComment
 
         assert orphan_references(factory)
-
 
 # vim:sw=4:et:ai

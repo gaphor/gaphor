@@ -3,6 +3,7 @@ Test state items.
 """
 
 from __future__ import absolute_import
+
 from gaphor.UML import uml2
 from gaphor.diagram.states.state import StateItem
 from gaphor.tests.testcase import TestCase
@@ -13,7 +14,6 @@ class StateTestCase(TestCase):
         """Test creation of states
         """
         self.create(StateItem, uml2.State)
-
 
     def test_activities_persistence(self):
         """Test state activities saving/loading
@@ -55,4 +55,3 @@ class StateTestCase(TestCase):
         self.assertTrue(s2._entry in s2._activities)
         self.assertFalse(s2._exit in s2._activities)
         self.assertTrue(s2._do_activity in s2._activities)
-

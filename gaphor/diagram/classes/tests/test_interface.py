@@ -3,9 +3,10 @@ Test classes.
 """
 
 from __future__ import absolute_import
-from gaphor.tests import TestCase
+
 from gaphor.UML import uml2
 from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.tests import TestCase
 
 
 class InterfaceTestCase(TestCase):
@@ -19,7 +20,6 @@ class InterfaceTestCase(TestCase):
 
         # check style information
         self.assertFalse(iface.style.name_outside)
-
 
     def test_changing_to_icon_mode(self):
         """Test interface changing to icon mode
@@ -42,7 +42,6 @@ class InterfaceTestCase(TestCase):
         # name is visible
         self.assertTrue(iface._name.is_visible())
 
-
     def test_changing_to_classifier_mode(self):
         """Test interface changing to classifier mode
         """
@@ -59,7 +58,6 @@ class InterfaceTestCase(TestCase):
         for h in iface.handles():
             self.assertTrue(h.movable)
 
-
     def test_assembly_connector_icon_mode(self):
         """Test interface in assembly connector icon mode
         """
@@ -68,7 +66,6 @@ class InterfaceTestCase(TestCase):
 
         iface.folded = iface.FOLDED_ASSEMBLY
         self.assertFalse(iface._name.is_visible())
-        
 
     def test_folded_interface_persistence(self):
         """Test folded interface saving/loading
@@ -88,7 +85,5 @@ class InterfaceTestCase(TestCase):
         # recreated later, i.e. required folded mode will be set when
         # implementation connects to the interface
         self.assertEquals(iface.FOLDED_PROVIDED, interfaces[0].folded)
-
-
 
 # vim:sw=4:et:ai

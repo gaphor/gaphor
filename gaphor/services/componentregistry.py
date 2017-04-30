@@ -7,10 +7,13 @@ unregister_handler, handle), a AdapterRegistry and a Subscription registry.
 """
 
 from __future__ import absolute_import
+
 from zope import interface, component
-from zope.component import registry
-from gaphor.interfaces import IService, IEventFilter
+
 from six.moves import map
+from zope.component import registry
+
+from gaphor.interfaces import IService, IEventFilter
 
 
 class ZopeComponentRegistry(object):
@@ -30,34 +33,31 @@ class ZopeComponentRegistry(object):
 
     def init(self, app):
         self._components = registry.Components(
-                               name='component_registry',
-                               bases=(component.getGlobalSiteManager(),))
+            name='component_registry',
+            bases=(component.getGlobalSiteManager(),))
 
         # Make sure component.handle() and query methods works.
         # TODO: eventually all queries should be done through the Application
         # instance.
         # Used in collection.py, transaction.py, diagramtoolbox.py:
         component.handle = self.handle
-        #component.getMultiAdapter = self._components.getMultiAdapter
+        # component.getMultiAdapter = self._components.getMultiAdapter
         # Used all over the place:
         component.queryMultiAdapter = self._components.queryMultiAdapter
-        #component.getAdapter = self._components.getAdapter
-        #component.queryAdapter = self._components.queryAdapter
+        # component.getAdapter = self._components.getAdapter
+        # component.queryAdapter = self._components.queryAdapter
         # Used in propertyeditor.py:
         component.getAdapters = self._components.getAdapters
-        #component.getUtility = self._components.getUtility
+        # component.getUtility = self._components.getUtility
         # Used in test cases (test_application.py)
         component.queryUtility = self._components.queryUtility
-        #component.getUtilitiesFor = self._components.getUtilitiesFor
-
+        # component.getUtilitiesFor = self._components.getUtilitiesFor
 
     def shutdown(self):
         pass
 
-
     def get_service(self, name):
         return self.get_utility(IService, name)
-
 
     # Wrap zope.component's Components methods
 
@@ -95,7 +95,7 @@ class ZopeComponentRegistry(object):
         that adapt to the same interfaces.
         """
         self._components.registerAdapter(factory, adapts, provides,
-                              name, event=False)
+                                         name, event=False)
 
     def unregister_adapter(self, factory=None,
                            required=None, provided=None, name=u''):
@@ -103,7 +103,7 @@ class ZopeComponentRegistry(object):
         Unregister a previously registered adapter.
         """
         self._components.unregisterAdapter(factory,
-                              required, provided, name)
+                                           required, provided, name)
 
     def get_adapter(self, objects, interface):
         """
@@ -121,15 +121,15 @@ class ZopeComponentRegistry(object):
         Register a subscription adapter. See registerAdapter().
         """
         self._components.registerSubscriptionAdapter(factory, adapts,
-                              provides, event=False)
+                                                     provides, event=False)
 
     def unregister_subscription_adapter(self, factory=None,
-                          required=None, provided=None, name=u''):
+                                        required=None, provided=None, name=u''):
         """
         Unregister a previously registered subscription adapter.
         """
         self._components.unregisterSubscriptionAdapter(factory,
-                              required, provided, name)
+                                                       required, provided, name)
 
     def subscribers(self, objects, interface):
         return self._components.subscribers(objects, interface)
@@ -146,7 +146,7 @@ class ZopeComponentRegistry(object):
         Unregister a previously registered handler.
         """
         self._components.unregisterHandler(factory, required)
- 
+
     def _filter(self, objects):
         filtered = list(objects)
         for o in objects:
@@ -164,6 +164,5 @@ class ZopeComponentRegistry(object):
         objects = self._filter(events)
         if objects:
             list(map(self._components.handle, events))
-
 
 # vim:sw=4:et:ai

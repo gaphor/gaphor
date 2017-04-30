@@ -1,13 +1,13 @@
 from __future__ import absolute_import
+
 from gaphor.UML import uml2
 from gaphor.diagram import items
 from gaphor.tests.testcase import TestCase
 
-class ObjectNodeTestCase(TestCase):
 
+class ObjectNodeTestCase(TestCase):
     def test_object_node(self):
         self.create(items.ObjectNodeItem, uml2.ObjectNode)
-
 
     def test_name(self):
         """
@@ -21,13 +21,11 @@ class ObjectNodeTestCase(TestCase):
         node.subject = None
         # Undefined
 
-
     def test_upper_bound(self):
         """
         TODO: Test upper bound
         """
         pass
-
 
     def test_ordering(self):
         """
@@ -42,13 +40,10 @@ class ObjectNodeTestCase(TestCase):
 
         self.assertEquals('{ ordering = unordered }', node._ordering.text)
 
-
     def test_persistence(self):
         """
         TODO: Test connector item saving/loading
         """
         pass
-
-
 
 # vim:sw=4:et:ai

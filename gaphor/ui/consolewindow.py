@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 
 from __future__ import absolute_import
+
 import os
 from zope import interface
+
+from gaphor.action import action, open_action, build_action_group
 from gaphor.core import inject
 from gaphor.interfaces import IActionProvider
-from gaphor.ui.interfaces import IUIComponent
-from gaphor.action import action, open_action, build_action_group
-from gaphor.misc.console import GTKInterpreterConsole
 from gaphor.misc import get_user_data_dir
+from gaphor.misc.console import GTKInterpreterConsole
+from gaphor.ui.interfaces import IUIComponent
+
 
 class ConsoleWindow(object):
-    
     interface.implements(IUIComponent, IActionProvider)
 
     component_registry = inject('component_registry')
@@ -33,7 +35,7 @@ class ConsoleWindow(object):
     def __init__(self):
         self.action_group = build_action_group(self)
         self.console = None
-        self.ui_manager = None # injected
+        self.ui_manager = None  # injected
 
     def load_console_py(self):
         """
@@ -66,8 +68,8 @@ class ConsoleWindow(object):
 
     def construct(self):
         console = GTKInterpreterConsole(locals={
-                'service': self.component_registry.get_service
-                })
+            'service': self.component_registry.get_service
+        })
         console.show()
         self.console = console
         return console

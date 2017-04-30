@@ -4,13 +4,13 @@ Unit tests for AssociationItem.
 
 from __future__ import absolute_import
 from __future__ import print_function
-from gaphor.tests import TestCase
+
 from gaphor.UML import uml2
 from gaphor.diagram.items import AssociationItem, ClassItem
+from gaphor.tests import TestCase
 
 
 class AssociationItemTestCase(TestCase):
-
     services = TestCase.services + ['element_dispatcher']
 
     def setUp(self):
@@ -18,7 +18,6 @@ class AssociationItemTestCase(TestCase):
         self.assoc = self.create(AssociationItem)
         self.class1 = self.create(ClassItem, uml2.Class)
         self.class2 = self.create(ClassItem, uml2.Class)
-
 
     def test_create(self):
         """Test association creation and its basic properties
@@ -35,7 +34,6 @@ class AssociationItemTestCase(TestCase):
         self.assoc.show_direction = True
         self.assertTrue(self.assoc.show_direction)
 
-
     def test_invert_direction(self):
         """Test association direction inverting
         """
@@ -49,7 +47,6 @@ class AssociationItemTestCase(TestCase):
 
         self.assertTrue(head_subject is self.assoc.subject.memberEnd[1])
         self.assertTrue(tail_subject is self.assoc.subject.memberEnd[0])
-
 
     def test_association_end_updates(self):
         """Test association end navigability connected to a class"""
@@ -99,7 +96,7 @@ class AssociationItemTestCase(TestCase):
         try:
             a.orthogonal = True
         except ValueError:
-            pass # Expected, hanve only 2 handles, need 3 or more
+            pass  # Expected, hanve only 2 handles, need 3 or more
         else:
             assert False, 'Can not set line to orthogonal with less than 3 handles'
 

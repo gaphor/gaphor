@@ -3,8 +3,10 @@ Use case inclusion relationship.
 """
 
 from __future__ import absolute_import
+
 from gaphor.UML import uml2
 from gaphor.diagram.diagramline import DiagramLine
+
 
 class IncludeItem(DiagramLine):
     """
@@ -29,6 +31,5 @@ class IncludeItem(DiagramLine):
     def draw(self, context):
         context.cairo.set_dash((7.0, 5.0), 0)
         super(IncludeItem, self).draw(context)
-
 
 # vim:sw=4:et

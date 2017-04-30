@@ -8,15 +8,17 @@ attribute/operation.
 """
 
 from __future__ import absolute_import
+
 from six.moves import map
+
 __all__ = [
-        'parse_property', 'parse_operation',
-        ]
+    'parse_property', 'parse_operation',
+]
 
 import re
 from simplegeneric import generic
-#from .context import UML
-#from gaphor.UML import uml2 as UML
+# from .context import UML
+# from gaphor.UML import uml2 as UML
 from gaphor.UML import uml2
 
 
@@ -26,7 +28,7 @@ def parse(el, text):
     Parser for an UML element.
     """
     raise NotImplementedError('Parsing routine for type %s not implemented yet' \
-            % type(el))
+                              % type(el))
 
 
 # Visibility (optional) ::= '+' | '-' | '#'
@@ -63,16 +65,20 @@ dir_subpat = r'\s*((?P<dir>in|out|inout)\s)?'
 # Some trailing garbage => no valid syntax...
 garbage_subpat = r'\s*(?P<garbage>.*)'
 
+
 def compile(regex):
     return re.compile(regex, re.MULTILINE | re.S)
 
+
 # Attribute:
 #   [+-#] [/] name [: type[\[mult\]]] [= default] [{ tagged values }]
-attribute_pat = compile(r'^' + vis_subpat + derived_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + garbage_subpat)
+attribute_pat = compile(
+    r'^' + vis_subpat + derived_subpat + name_subpat + type_subpat + default_subpat + tags_subpat + garbage_subpat)
 
 # Association end name:
 #   [[+-#] [/] name [\[mult\]]] [{ tagged values }]
-association_end_name_pat = compile(r'^' + '(' + vis_subpat + derived_subpat + name_subpat + mult_subpat + ')?' + tags_subpat + garbage_subpat)
+association_end_name_pat = compile(
+    r'^' + '(' + vis_subpat + derived_subpat + name_subpat + mult_subpat + ')?' + tags_subpat + garbage_subpat)
 
 # Association end multiplicity:
 #   [mult] [{ tagged values }]
@@ -90,6 +96,7 @@ parameter_pat = compile(r'^' + dir_subpat + name_subpat + type_subpat + default_
 #  [name] [: type]
 lifeline_pat = compile('^' + name_subpat + type_subpat + garbage_subpat)
 
+
 def _set_visibility(el, vis):
     if vis == '+':
         el.visibility = 'public'
@@ -104,6 +111,7 @@ def _set_visibility(el, vis):
             del el.visibility
         except AttributeError:
             pass
+
 
 def parse_attribute(el, s):
     """
@@ -134,8 +142,8 @@ def parse_attribute(el, s):
         el.upperValue = g('mult_u')
         el.defaultValue = g('default')
         # Skip tags: should do something with stereotypes?
-        #tags = g('tags')
-        #if tags:
+        # tags = g('tags')
+        # if tags:
         #    for t in map(str.strip, tags.split(',')):
         #        tv = create(UML.LiteralSpecification)
         #        tv.value = t
@@ -166,8 +174,8 @@ def parse_association_end(el, s):
         g = m.group
         el.lowerValue = g('mult_l')
         el.upperValue = g('mult_u')
-        #tags = g('tags')
-        #if tags:
+        # tags = g('tags')
+        # if tags:
         #    for t in map(str.strip, tags.split(',')):
         #        tv = create(UML.LiteralSpecification)
         #        tv.value = t
@@ -192,14 +200,15 @@ def parse_association_end(el, s):
                     el.lowerValue = None
                 el.upperValue = g('mult_u')
 
-            #tags = g('tags')
-            #if tags:
-            #    while el.taggedValue:
-            #        el.taggedValue[0].unlink()
-            #    for t in map(str.strip, tags.split(',')):
-            #        tv = create(UML.LiteralSpecification)
-            #        tv.value = t
-            #        el.taggedValue = tv
+                # tags = g('tags')
+                # if tags:
+                #    while el.taggedValue:
+                #        el.taggedValue[0].unlink()
+                #    for t in map(str.strip, tags.split(',')):
+                #        tv = create(UML.LiteralSpecification)
+                #        tv.value = t
+                #        el.taggedValue = tv
+
 
 @parse.when_type(uml2.Property)
 def parse_property(el, s):
@@ -234,8 +243,8 @@ def parse_operation(el, s):
         p.lowerValue = g('mult_l')
         p.upperValue = g('mult_u')
         # FIXME: Maybe add to Operation.ownedRule?
-        #tags = g('tags')
-        #if tags:
+        # tags = g('tags')
+        # if tags:
         #    for t in map(str.strip, tags.split(',')):
         #        tv = create(UML.LiteralSpecification)
         #        tv.value = t
@@ -258,8 +267,8 @@ def parse_operation(el, s):
             p.lowerValue = g('mult_l')
             p.upperValue = g('mult_u')
             p.defaultValue = g('default')
-            #tags = g('tags')
-            #if tags:
+            # tags = g('tags')
+            # if tags:
             #    for t in map(str.strip, tags.split(',')):
             #        tv = create(UML.LiteralSpecification)
             #        tv.value = t
@@ -273,6 +282,7 @@ def parse_operation(el, s):
         # Remove remaining parameters:
         for fp in el.formalParameter[pindex:]:
             fp.unlink()
+
 
 def parse_lifeline(el, s):
     """
@@ -291,9 +301,8 @@ def parse_lifeline(el, s):
         t = g('type')
         if t:
             el.name += ': ' + t
-        # In the near future the data model should be extended with
-        # Lifeline.represents: ConnectableElement
-
+            # In the near future the data model should be extended with
+            # Lifeline.represents: ConnectableElement
 
 
 def render_lifeline(el):
@@ -308,6 +317,5 @@ def parse_namedelement(el, text):
     Parse named element by simply assigning text to its name.
     """
     el.name = text
-
 
 # vim:sw=4:et:ai

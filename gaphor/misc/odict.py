@@ -1,9 +1,11 @@
 # from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/107747
 from __future__ import absolute_import
+
 from six.moves import map
 from six.moves import zip
-class odict(dict):
 
+
+class odict(dict):
     def __init__(self, dict=()):
         self._keys = []
         super(odict, self).__init__(dict)
@@ -53,7 +55,6 @@ class odict(dict):
 
     def values(self):
         return list(map(self.get, self._keys))
-    
 
     def swap(self, k1, k2):
         """
@@ -62,7 +63,6 @@ class odict(dict):
         i1 = self._keys.index(k1)
         i2 = self._keys.index(k2)
         self._keys[i1], self._keys[i2] = self._keys[i2], self._keys[i1]
-
 
     def __iter__(self):
         for k in self._keys:

@@ -1,12 +1,12 @@
-
 from __future__ import absolute_import
+
 import unittest
 
-from gaphor.application import Application
 from gaphor.UML import uml2
+from gaphor.application import Application
+
 
 class MainWindowTestCase(unittest.TestCase):
-
     def setUp(self):
         Application.init(services=['element_factory', 'properties', 'main_window', 'ui_manager', 'action_manager'])
 
@@ -27,5 +27,5 @@ class MainWindowTestCase(unittest.TestCase):
         self.assertEqual(main_w.get_current_diagram(), None)
 
         main_w.show_diagram(diagram)
-        
+
 # vim:sw=4:et:ai

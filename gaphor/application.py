@@ -10,18 +10,22 @@ All important services are present in the application object:
 """
 
 from __future__ import absolute_import
-import pkg_resources
-from zope import component
 
 from logging import getLogger
-from gaphor.interfaces import IService, IEventFilter
-from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
+from zope import component
+
+import pkg_resources
 import six
+
+from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
+from gaphor.interfaces import IService
 
 logger = getLogger('Application')
 
+
 class NotInitializedError(Exception):
     pass
+
 
 class _Application(object):
     """
@@ -39,12 +43,11 @@ class _Application(object):
 
     # interface.implements(IApplication)
     _ESSENTIAL_SERVICES = ['component_registry']
-    
+
     def __init__(self):
         self._uninitialized_services = {}
         self._event_filter = None
         self.component_registry = None
-
 
     def init(self, services=None):
         """
@@ -53,8 +56,7 @@ class _Application(object):
         self.load_services(services)
         self.init_all_services()
 
-
-    essential_services = property(lambda s: s._ESSENTIAL_SERVICES, doc= """
+    essential_services = property(lambda s: s._ESSENTIAL_SERVICES, doc="""
         Provide an ordered list of services that need to be loaded first.
         """)
 
@@ -68,7 +70,7 @@ class _Application(object):
         # Ensure essential services are always loaded.
         if services:
             for name in self.essential_services:
-               if name not in services:
+                if name not in services:
                     services.append(name)
 
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
@@ -120,11 +122,9 @@ class _Application(object):
         except component.ComponentLookupError:
             return self.init_service(name)
 
-
     def run(self):
         import gtk
         gtk.main()
-
 
     def shutdown(self):
         for name, srv in self.component_registry.get_utilities(IService):
@@ -134,7 +134,6 @@ class _Application(object):
         for name in reversed(self.essential_services):
             self.shutdown_service(name)
             setattr(self, name, None)
-
 
     def shutdown_service(self, name):
         srv = self.component_registry.get_service(name)
@@ -146,6 +145,7 @@ class _Application(object):
 # Make sure there is only one!
 Application = _Application()
 
+
 class inject(object):
     """
     Simple descriptor for dependency injection.
@@ -156,11 +156,11 @@ class inject(object):
     >>> class A(object):
     ...     element_factory = inject('element_factory')
     """
-    
+
     def __init__(self, name):
         self._name = name
-        #self._s = None
-        
+        # self._s = None
+
     def __get__(self, obj, class_=None):
         """
         Resolve a dependency, but only if we're called from an object instance.
@@ -168,8 +168,8 @@ class inject(object):
         if not obj:
             return self
         return Application.get_service(self._name)
-        #if self._s is None:
+        # if self._s is None:
         #    self._s = _Application.get_service(self._name)
-        #return self._s
+        # return self._s
 
 # vim:sw=4:et:ai

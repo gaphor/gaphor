@@ -4,12 +4,15 @@ Command for running gaphor and tests directly from setup.py.
 
 from __future__ import absolute_import
 from __future__ import print_function
-import sys, os.path
+
+import os.path
+import sys
 from distutils.core import Command
+
 from pkg_resources import load_entry_point
 
-class run(Command):
 
+class run(Command):
     description = 'Launch Gaphor from the local directory'
 
     user_options = [
@@ -46,18 +49,17 @@ class run(Command):
 
         for cmd_name in self.get_sub_commands():
             self.run_command(cmd_name)
-        #if self.build_lib not in sys.path:
-            #sys.path.insert(0, self.build_lib)
-        
-        import gaphor
-        #os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
+            # if self.build_lib not in sys.path:
+            # sys.path.insert(0, self.build_lib)
+
+        # os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
         if self.coverage:
             import coverage
             coverage.start()
 
         if self.command:
             print('Executing command: %s...' % self.command)
-            exec(self.command)
+            exec (self.command)
 
         elif self.doctest:
             print('Running doctest cases in module: %s...' % self.doctest)
@@ -70,13 +72,13 @@ class run(Command):
             fp = open(f)
             # Prepend module's package path to sys.path
             pkg = os.path.join(self.build_lib, *self.doctest.split('.')[:-1])
-            #if pkg:
+            # if pkg:
             #    sys.path.insert(0, pkg)
             #    print 'Added', pkg, 'to sys.path'
             # Load the module as local module (without package)
             test_module = imp.load_source(self.doctest.split('.')[-1], f, fp)
             failure, tests = doctest.testmod(test_module, name=self.doctest,
-                 optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
+                                             optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
             if self.coverage:
                 print()
                 print('Coverage report:')
@@ -91,7 +93,7 @@ class run(Command):
             fp = open(self.unittest)
             test_module = imp.load_source('gaphor_test', self.unittest, fp)
             test_suite = unittest.TestLoader().loadTestsFromModule(test_module)
-            #test_suite = unittest.TestLoader().loadTestsFromName(self.unittest)
+            # test_suite = unittest.TestLoader().loadTestsFromName(self.unittest)
             test_runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = test_runner.run(test_suite)
             if self.coverage:
@@ -104,8 +106,8 @@ class run(Command):
             print('Executing file: %s...' % self.file)
             dir, f = os.path.split(self.file)
             print('Extending PYTHONPATH with %s' % dir)
-            #sys.path.append(dir)
-            exec(compile(open(self.file).read(), self.file, 'exec'), {})
+            # sys.path.append(dir)
+            exec (compile(open(self.file).read(), self.file, 'exec'), {})
         else:
             print('Launching Gaphor...')
             del sys.argv[1:]

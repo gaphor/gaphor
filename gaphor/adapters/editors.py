@@ -3,17 +3,16 @@ Adapters
 """
 
 from __future__ import absolute_import
+
 from zope import interface, component
 
-from gaphas.item import NW, SE
-from gaphas import geometry
-from gaphas import constraint
+from simplegeneric import generic
+
 from gaphor.UML import uml2, umllex
 from gaphor.core import inject
-from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IEditor
 from gaphor.misc.rattr import rgetattr, rsetattr
-from simplegeneric import generic
 
 
 @generic
@@ -24,7 +23,7 @@ def editable(el):
     It returns element itself by default.
     """
     return el
-    
+
 
 @editable.when_type(uml2.Slot)
 def editable_slot(el):
@@ -59,6 +58,7 @@ class CommentItemEditor(object):
     def key_pressed(self, pos, key):
         pass
 
+
 component.provideAdapter(CommentItemEditor)
 
 
@@ -89,6 +89,7 @@ class NamedItemEditor(object):
 
     def key_pressed(self, pos, key):
         pass
+
 
 component.provideAdapter(NamedItemEditor)
 
@@ -130,6 +131,7 @@ class DiagramItemTextEditor(object):
     def key_pressed(self, pos, key):
         pass
 
+
 component.provideAdapter(DiagramItemTextEditor)
 
 
@@ -164,8 +166,9 @@ class CompartmentItemEditor(object):
     def key_pressed(self, pos, key):
         pass
 
+
 component.provideAdapter(CompartmentItemEditor)
- 
+
 
 class AssociationItemEditor(object):
     interface.implements(IEditor)
@@ -194,8 +197,9 @@ class AssociationItemEditor(object):
         if self._edit is self._item:
             return self._edit.subject.name
         return format(self._edit.subject, visibility=True,
-                                is_derived=True, type=True,
-                                multiplicity=True, default=True)
+                      is_derived=True, type=True,
+                      multiplicity=True, default=True)
+
     def get_bounds(self):
         return None
 
@@ -205,8 +209,8 @@ class AssociationItemEditor(object):
     def key_pressed(self, pos, key):
         pass
 
+
 component.provideAdapter(AssociationItemEditor)
-    
 
 
 class ForkNodeItemEditor(object):
@@ -245,6 +249,7 @@ class ForkNodeItemEditor(object):
 
     def key_pressed(self, pos, key):
         pass
+
 
 component.provideAdapter(ForkNodeItemEditor)
 

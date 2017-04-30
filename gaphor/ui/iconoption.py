@@ -3,8 +3,10 @@ Module dealing with options (typing) of icons.
 """
 
 from __future__ import absolute_import
-from gaphor.UML import uml2
+
 from simplegeneric import generic
+
+from gaphor.UML import uml2
 
 
 @generic

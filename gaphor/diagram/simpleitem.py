@@ -2,17 +2,18 @@
 Trivial drawing aids (box, line, ellipse).
 """
 
-
 from __future__ import absolute_import
-from gaphas.item import Line as _Line
+
 from gaphas.item import Element, NW
+from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
-from .style import Style
 from six.moves import map
 from six.moves import range
 
-class Line(_Line):
+from .style import Style
 
+
+class Line(_Line):
     __style__ = {
         'line-width': 2,
         'line-color': (0, 0, 0, 1),
@@ -28,16 +29,16 @@ class Line(_Line):
 
     id = property(lambda self: self._id, doc='Id')
 
-    def save (self, save_func):
+    def save(self, save_func):
         save_func('matrix', tuple(self.matrix))
         for prop in ('orthogonal', 'horizontal'):
             save_func(prop, getattr(self, prop))
-        points = [ ]
+        points = []
         for h in self.handles():
             points.append(tuple(map(float, h.pos)))
         save_func('points', points)
 
-    def load (self, name, value):
+    def load(self, name, value):
         if name == 'matrix':
             self.matrix = eval(value)
         elif name == 'points':
@@ -163,6 +164,5 @@ class Ellipse(Element):
         cr.set_source_rgba(*style.border_color)
         cr.set_line_width(style.border_width)
         cr.stroke()
-
 
 # vim:sw=4:et:ai

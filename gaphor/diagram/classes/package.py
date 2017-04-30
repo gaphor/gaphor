@@ -3,12 +3,12 @@ Package diagram item.
 """
 
 from __future__ import absolute_import
+
 from gaphor.UML import uml2
 from gaphor.diagram.nameditem import NamedItem
 
 
 class PackageItem(NamedItem):
-
     __uml__ = uml2.Package, uml2.Profile
     __stereotype__ = {
         'profile': uml2.Profile,
@@ -23,7 +23,6 @@ class PackageItem(NamedItem):
 
     def __init__(self, id=None):
         super(PackageItem, self).__init__(id)
-
 
     def draw(self, context):
         super(PackageItem, self).draw(context)
@@ -42,6 +41,5 @@ class PackageItem(NamedItem):
         cr.line_to(w, y)
         cr.line_to(o, y)
         cr.stroke()
-
 
 # vim:sw=4:et

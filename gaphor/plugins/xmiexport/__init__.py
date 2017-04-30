@@ -3,16 +3,16 @@ This plugin extends Gaphor with XMI export functionality.
 """
 
 from __future__ import absolute_import
-import gtk
-from zope import interface, component
+
+from zope import interface
+
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.filedialog import FileDialog
-
 from . import exportmodel
 
-class XMIExport(object):
 
+class XMIExport(object):
     interface.implements(IService, IActionProvider)
 
     element_factory = inject('element_factory')
@@ -28,7 +28,7 @@ class XMIExport(object):
           </menu>
         </menubar>
       </ui>"""
-    
+
     def __init__(self):
         self.action_group = build_action_group(self)
 
@@ -47,12 +47,12 @@ class XMIExport(object):
         else:
             filename = 'model.xmi'
 
-        file_dialog = FileDialog(_('Export model to XMI file'),\
-                                 action='save',\
+        file_dialog = FileDialog(_('Export model to XMI file'), \
+                                 action='save', \
                                  filename=filename)
-        
+
         filename = file_dialog.selection
-        
+
         if filename and len(filename) > 0:
             log.debug('Exporting XMI model to: %s' % filename)
             export = exportmodel.XMIExport(self.element_factory)
@@ -60,6 +60,5 @@ class XMIExport(object):
                 export.export(filename)
             except Exception as e:
                 log.error('Error while saving model to file %s: %s' % (filename, e))
-
 
 # vim:sw=4:et

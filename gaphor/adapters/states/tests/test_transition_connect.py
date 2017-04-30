@@ -3,12 +3,13 @@ Test transition item and state vertices connections.
 """
 
 from __future__ import absolute_import
-from gaphor.tests import TestCase
+
 from gaphor.UML import uml2
 from gaphor.diagram import items
+from gaphor.tests import TestCase
+
 
 class TransitionConnectorTestCase(TestCase):
-
     services = TestCase.services
 
     def test_vertex_connect(self):
@@ -23,16 +24,15 @@ class TransitionConnectorTestCase(TestCase):
         # connect vertices with transition
         self.connect(t, t.head, v1)
         self.connect(t, t.tail, v2)
-        
+
         self.assertTrue(t.subject is not None)
 
         self.assertEquals(1, len(self.kindof(uml2.Transition)))
-        
+
         self.assertEquals(t.subject, v1.subject.outgoing[0])
         self.assertEquals(t.subject, v2.subject.incoming[0])
         self.assertEquals(t.subject.source, v1.subject)
         self.assertEquals(t.subject.target, v2.subject)
-
 
     def test_vertex_reconnect(self):
         """Test transition to state vertex reconnection
@@ -54,10 +54,10 @@ class TransitionConnectorTestCase(TestCase):
 
         # reconnect: v1 -> v3
         self.connect(t, t.tail, v3)
-        
+
         self.assertSame(s, t.subject)
         self.assertEquals(1, len(self.kindof(uml2.Transition)))
-        
+
         self.assertEquals(t.subject, v1.subject.outgoing[0])
         self.assertEquals(t.subject, v3.subject.incoming[0])
         self.assertEquals(t.subject.source, v1.subject)
@@ -65,7 +65,6 @@ class TransitionConnectorTestCase(TestCase):
 
         self.assertEquals(0, len(v2.subject.incoming))
         self.assertEquals(0, len(v2.subject.outgoing))
-
 
     def test_vertex_disconnect(self):
         """Test transition and state vertices disconnection
@@ -79,7 +78,7 @@ class TransitionConnectorTestCase(TestCase):
         assert t.subject is not None
 
         self.assertEquals(1, len(self.kindof(uml2.Transition)))
-        
+
         # test preconditions
         assert t.subject == v1.subject.outgoing[0]
         assert t.subject == v2.subject.incoming[0]
@@ -89,7 +88,6 @@ class TransitionConnectorTestCase(TestCase):
 
         self.disconnect(t, t.head)
         self.assertTrue(t.subject is None)
-
 
     def test_initial_pseudostate_connect(self):
         """Test transition and initial pseudostate connection
@@ -109,7 +107,7 @@ class TransitionConnectorTestCase(TestCase):
         self.assertTrue(t.subject is not None)
 
         self.assertEquals(1, len(self.kindof(uml2.Transition)))
-        
+
         # test preconditions
         assert t.subject == v1.subject.outgoing[0]
         assert t.subject == v2.subject.incoming[0]
@@ -122,7 +120,6 @@ class TransitionConnectorTestCase(TestCase):
         glued = self.allow(t2, t2.head, v1)
         self.assertFalse(glued)
         self.assertTrue(self.get_connected(t2.head) is None)
-
 
     def test_initial_pseudostate_disconnect(self):
         """Test transition and initial pseudostate disconnection
@@ -141,7 +138,6 @@ class TransitionConnectorTestCase(TestCase):
         self.disconnect(t, t.head)
         self.assertFalse(self.get_connected(t.head))
 
-
     def test_initial_pseudostate_tail_glue(self):
         """Test transition tail and initial pseudostate glueing
         """
@@ -152,7 +148,6 @@ class TransitionConnectorTestCase(TestCase):
         # no tail connection should be possible
         glued = self.allow(t, t.tail, v1)
         self.assertFalse(glued)
-
 
     def test_final_state_connect(self):
         """Test transition to final state connection
@@ -172,12 +167,11 @@ class TransitionConnectorTestCase(TestCase):
         self.assertTrue(t.subject is not None)
 
         self.assertEquals(1, len(self.kindof(uml2.Transition)))
-        
+
         self.assertEquals(t.subject, v1.subject.outgoing[0])
         self.assertEquals(t.subject, v2.subject.incoming[0])
         self.assertEquals(t.subject.source, v1.subject)
         self.assertEquals(t.subject.target, v2.subject)
-
 
     def test_final_state_head_glue(self):
         """Test transition head to final state connection
@@ -187,6 +181,5 @@ class TransitionConnectorTestCase(TestCase):
 
         glued = self.allow(t, t.head, v)
         self.assertFalse(glued)
-
 
 # vim:sw=4:et:ai

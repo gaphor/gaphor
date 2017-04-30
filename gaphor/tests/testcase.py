@@ -6,12 +6,14 @@ services and start off.
 """
 
 from __future__ import absolute_import
-import unittest
+
 import logging
+import unittest
 from cStringIO import StringIO
 from zope import component
 
 from gaphas.aspect import ConnectionSink, Connector
+
 from gaphor.UML import uml2
 from gaphor.application import Application
 from gaphor.diagram.interfaces import IConnect

@@ -2,19 +2,19 @@
 
 from __future__ import absolute_import
 from __future__ import print_function
-import gaphor
-from gaphor.storage import storage
-import gaphor.UML as UML
-
-from gaphas.painter import ItemPainter
-from gaphas.view import View
 
 import cairo
-
 import optparse
 import os
 import re
 import sys
+
+from gaphas.painter import ItemPainter
+from gaphas.view import View
+
+import gaphor.UML as UML
+from gaphor.storage import storage
+
 
 def pkg2dir(package):
     """
@@ -41,17 +41,17 @@ usage = 'usage: %prog [options] file1 file2...'
 parser = optparse.OptionParser(usage=usage)
 
 parser.add_option('-v', '--verbose', dest='verbose', action='store_true',
-    help='verbose output')
+                  help='verbose output')
 parser.add_option('-u', '--use-underscores', dest='underscores', action='store_true',
-    help='use underscores instead of spaces for output filenames')
+                  help='use underscores instead of spaces for output filenames')
 parser.add_option('-d', '--dir', dest='dir', metavar='directory',
-    help='output to directory')
+                  help='output to directory')
 parser.add_option('-f', '--format', dest='format', metavar='format',
-    help='output file format, default pdf', default='pdf',
-    choices=['pdf', 'svg', 'png'])
+                  help='output file format, default pdf', default='pdf',
+                  choices=['pdf', 'svg', 'png'])
 parser.add_option('-r', '--regex', dest='regex', metavar='regex',
-    help='process diagrams which name matches given regular expresion;' \
-    ' name includes package name; regular expressions are case insensitive')
+                  help='process diagrams which name matches given regular expresion;' \
+                       ' name includes package name; regular expressions are case insensitive')
 
 (options, args) = parser.parse_args()
 
@@ -59,9 +59,7 @@ if not args:
     parser.print_help()
     sys.exit(1)
 
-
 factory = UML.ElementFactory()
-
 
 name_re = None
 if options.regex:
@@ -115,7 +113,7 @@ for model in args:
         elif options.format == 'svg':
             surface = cairo.SVGSurface(outfilename, w, h)
         elif options.format == 'png':
-            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w+1), int(h+1))
+            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w + 1), int(h + 1))
         else:
             assert False, 'unknown format %s' % options.format
         cr = cairo.Context(surface)
@@ -128,6 +126,7 @@ for model in args:
 
         surface.flush()
         surface.finish()
+
 
 def main():
     pass

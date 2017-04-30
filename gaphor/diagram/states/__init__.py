@@ -20,7 +20,9 @@ There are separate diagram items for pseudostates
 """
 
 from __future__ import absolute_import
+
 from gaphor.diagram.nameditem import NamedItem
+
 
 class VertexItem(NamedItem):
     """
@@ -28,4 +30,3 @@ class VertexItem(NamedItem):
     from VertexItem, which simplifies transition connection adapters.
     """
     pass
-

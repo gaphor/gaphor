@@ -3,13 +3,14 @@ Unit tests for simple items.
 """
 
 from __future__ import absolute_import
-from gaphor.tests import TestCase
-from gaphor.diagram.simpleitem import Line, Box, Ellipse
+
 from gaphas import View
+
+from gaphor.diagram.simpleitem import Line, Ellipse
+from gaphor.tests import TestCase
 
 
 class SimpleItemTestCase(TestCase):
-
     def setUp(self):
         super(SimpleItemTestCase, self).setUp()
         self.view = View(self.diagram.canvas)
@@ -18,7 +19,7 @@ class SimpleItemTestCase(TestCase):
         """
         """
         self.diagram.create(Line)
-        
+
     def test_box(self):
         """
         """
@@ -28,6 +29,5 @@ class SimpleItemTestCase(TestCase):
         """
         """
         self.diagram.create(Ellipse)
-
 
 # vim:sw=4:et:ai

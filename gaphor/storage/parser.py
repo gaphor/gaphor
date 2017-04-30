@@ -31,8 +31,10 @@ takes a long time. The yielded values are the percentage of the file read.
 """
 
 from __future__ import absolute_import
+
 from six.moves import range
-__all__ = [ 'parse', 'ParserException' ]
+
+__all__ = ['parse', 'ParserException']
 
 import os
 import types
@@ -41,13 +43,14 @@ from cStringIO import InputType
 
 from gaphor.misc.odict import odict
 
+
 class base(object):
     """Simple base class for element, canvas and canvasitem.
     """
 
     def __init__(self):
-        self.values = { }
-        self.references = { }
+        self.values = {}
+        self.references = {}
 
     def __getattr__(self, key):
         return self[key]
@@ -64,22 +67,22 @@ class base(object):
         except:
             return None
 
-class element(base):
 
+class element(base):
     def __init__(self, id, type):
         base.__init__(self)
         self.id = id
         self.type = type
         self.canvas = None
 
-class canvas(base):
 
+class canvas(base):
     def __init__(self):
         base.__init__(self)
         self.canvasitems = []
 
-class canvasitem(base):
 
+class canvasitem(base):
     def __init__(self, id, type):
         base.__init__(self)
         self.id = id
@@ -87,23 +90,26 @@ class canvasitem(base):
         self.canvasitems = []
 
 
-XMLNS='http://gaphor.sourceforge.net/model'
+XMLNS = 'http://gaphor.sourceforge.net/model'
+
 
 class ParserException(Exception):
     pass
 
+
 # Loader state:
-[ ROOT,         # Expect 'gaphor' element
-  GAPHOR,       # Expect UML classes (tag name is the UML class name)
-  ELEMENT,      # Expect properties of UML object
-  DIAGRAM,      # Expect properties of Diagram object + canvas
-  CANVAS,       # Expect canvas properties + <item> tags
-  ITEM,         # Expect item attributes and nested items
-  ATTR,         # Reading contents of an attribute (such as a <val> or <ref>)
-  VAL,          # Redaing contents of a <val> tag
-  REFLIST,      # In a <reflist>
-  REF           # Reading contents of a <ref> tag
-] = range(10)
+[ROOT,  # Expect 'gaphor' element
+ GAPHOR,  # Expect UML classes (tag name is the UML class name)
+ ELEMENT,  # Expect properties of UML object
+ DIAGRAM,  # Expect properties of Diagram object + canvas
+ CANVAS,  # Expect canvas properties + <item> tags
+ ITEM,  # Expect item attributes and nested items
+ ATTR,  # Reading contents of an attribute (such as a <val> or <ref>)
+ VAL,  # Redaing contents of a <val> tag
+ REFLIST,  # In a <reflist>
+ REF  # Reading contents of a <ref> tag
+ ] = range(10)
+
 
 class GaphorLoader(handler.ContentHandler):
     """Create a list of elements. an element may contain a canvas and a
@@ -148,7 +154,7 @@ class GaphorLoader(handler.ContentHandler):
         """
         self.version = None
         self.gaphor_version = None
-        self.elements = odict() # map id: element/canvasitem
+        self.elements = odict()  # map id: element/canvasitem
         self.__stack = []
         self.text = ''
 
@@ -158,14 +164,14 @@ class GaphorLoader(handler.ContentHandler):
 
     def startElement(self, name, attrs):
         self.text = ''
-        
+
         state = self.state()
 
         # Read a element class. The name of the tag is the class name:
         if state == GAPHOR:
             id = attrs['id']
             e = element(id, name)
-            assert id not in list(self.elements.keys()), '%s already defined' % (id)#, self.elements[id])
+            assert id not in list(self.elements.keys()), '%s already defined' % (id)  # , self.elements[id])
             self.elements[id] = e
             self.push(e, name == 'Diagram' and DIAGRAM or ELEMENT)
 
@@ -195,7 +201,7 @@ class GaphorLoader(handler.ContentHandler):
             self.push(self.peek(), REFLIST)
 
         # Reference with multiplicity 1:
-        elif state  == ATTR and name == 'ref':
+        elif state == ATTR and name == 'ref':
             n = self.peek(1)
             # Fetch the element instance from the stack
             r = self.peek(2).references[n] = attrs['refid']
@@ -240,7 +246,7 @@ class GaphorLoader(handler.ContentHandler):
 
     def startElementNS(self, name, qname, attrs):
         if not name[0] or name[0] == XMLNS:
-            a = { }
+            a = {}
             for key, val in attrs.items():
                 a[key[1]] = val
             self.startElement(name[1], a)
@@ -284,13 +290,13 @@ class ProgressGenerator(object):
     and feeding it into an output object.  The supplied file object is neither
     opened not closed by this generator.  The file object is assumed to
     already be opened for reading and that it will be closed elsewhere."""
-    
+
     def __init__(self, input, output, block_size=512):
         """Initialize the progress generator.  The input parameter is a file
         object.  The ouput parameter is usually a SAX parser but can be 
         anything that implements a feed() method.  The block size is the size
         of each block that is read from the input."""
-        
+
         self.input = input
         self.output = output
         self.block_size = block_size
@@ -299,16 +305,16 @@ class ProgressGenerator(object):
         elif isinstance(self.input, InputType):
             self.file_size = len(self.input.getvalue())
             self.input.reset()
-                
+
     def __iter__(self):
         """Return a generator that yields the progress of reading data
         from the input and feeding it into the output.  The progress
         yielded in each iteration is the percentage of data read, relative
         to the to input file size."""
-        
+
         block = self.input.read(self.block_size)
         read_size = len(block)
-        
+
         while block:
             self.output.feed(block)
             block = self.input.read(self.block_size)
@@ -321,20 +327,20 @@ def parse_file(filename, parser):
     should be a GaphorLoader instance.  The filename parameter can be an
     open file descriptor instance or the name of a file.  The progress
     percentage of the parser is yielded."""
-    
+
     is_fd = True
-    
+
     if isinstance(filename, (types.FileType, InputType)):
         file_obj = filename
     else:
         is_fd = False
         file_obj = open(filename, 'rb')
-        
+
     for progress in ProgressGenerator(file_obj, parser):
         yield progress
-    
+
     parser.close()
-    
+
     if not is_fd:
         file_obj.close()
 

@@ -1,13 +1,14 @@
 """
 """
 
-
 from __future__ import absolute_import
+
 import gtk
 from zope import component
-from gaphor.core import _, inject
+
 from gaphor.UML.interfaces import IAssociationChangeEvent
 from gaphor.UML.uml2 import Presentation
+from gaphor.core import _, inject
 from .interfaces import IPropertyPage, IDiagramSelectionChange
 
 
@@ -24,10 +25,10 @@ class PropertyEditor(object):
     def __init__(self):
         super(PropertyEditor, self).__init__()
         self._current_item = None
-        #self._default_tab = _('Properties')
-        #self._last_tab = self._default_tab
-        self._expanded_pages = { _('Properties') : True }
-    
+        # self._default_tab = _('Properties')
+        # self._last_tab = self._default_tab
+        self._expanded_pages = {_('Properties'): True}
+
     def construct(self):
         self.vbox = gtk.VBox()
         self._selection_change()
@@ -35,8 +36,8 @@ class PropertyEditor(object):
         # Make sure we recieve 
         self.component_registry.register_handler(self._selection_change)
         self.component_registry.register_handler(self._element_changed)
-        #self.component_registry.register_handler(self._new_item_on_diagram)
-        
+        # self.component_registry.register_handler(self._new_item_on_diagram)
+
         return self.vbox
 
     def get_adapters(self, item):
@@ -46,11 +47,11 @@ class PropertyEditor(object):
         adaptermap = {}
         try:
             if item.subject:
-                for name, adapter in component.getAdapters([item.subject,], IPropertyPage):
+                for name, adapter in component.getAdapters([item.subject, ], IPropertyPage):
                     adaptermap[name] = (adapter.order, name, adapter)
         except AttributeError:
             pass
-        for name, adapter in component.getAdapters([item,], IPropertyPage):
+        for name, adapter in component.getAdapters([item, ], IPropertyPage):
             adaptermap[name] = (adapter.order, name, adapter)
 
         adapters = list(adaptermap.values())
@@ -86,8 +87,7 @@ class PropertyEditor(object):
                 page.show_all()
             except Exception as e:
                 log.error('Could not construct property page for ' + name, exc_info=True)
-        
-            
+
     def clear_pages(self):
         """
         Remove all tabs from the notebook.
@@ -95,10 +95,8 @@ class PropertyEditor(object):
         for page in self.vbox.get_children():
             page.destroy()
 
-
     def on_expand(self, widget, name):
         self._expanded_pages[name] = widget.get_expanded()
-
 
     @component.adapter(IDiagramSelectionChange)
     def _selection_change(self, event=None):
@@ -130,7 +128,7 @@ class PropertyEditor(object):
                 self.clear_pages()
                 self.create_pages(self._current_item)
 
-    #@component.adapter(Presentation, IElementCreateEvent)
+    # @component.adapter(Presentation, IElementCreateEvent)
     def _new_item_on_diagram(self, item, event):
         if self.notebook.get_n_pages() > 0:
             self.select_tab(self._default_tab)
@@ -138,6 +136,5 @@ class PropertyEditor(object):
             default = page.get_data('default')
             if default:
                 default.grab_focus()
-        
 
 # vim:sw=4:et:ai

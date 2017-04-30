@@ -3,6 +3,7 @@ Interfaces related to the user interface.
 """
 
 from __future__ import absolute_import
+
 from zope import interface
 
 
@@ -13,6 +14,7 @@ class IDiagramTabChange(interface.Interface):
     item = interface.Attribute('The newly selected DockItem')
 
     diagram_tab = interface.Attribute('The newly selected diagram tab')
+
 
 class IDiagramSelectionChange(interface.Interface):
     """
@@ -29,7 +31,7 @@ class IUIComponent(interface.Interface):
     """
     A user interface component.
     """
-    
+
     ui_name = interface.Attribute('The UIComponent name, provided by the loader')
 
     title = interface.Attribute('Title of the component')
@@ -54,7 +56,7 @@ class IPropertyPage(interface.Interface):
     """
     A property page which can display itself in a notebook
     """
-    
+
     order = interface.Attribute('Order number, used for ordered display')
 
     def construct(self):
@@ -68,6 +70,5 @@ class IPropertyPage(interface.Interface):
         """
         Destroy the page and clean up signal handlers and stuff.
         """
-
 
 # vim:sw=4:et:ai

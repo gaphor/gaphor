@@ -10,19 +10,21 @@ use cases diagram.
 """
 
 from __future__ import absolute_import
+
 from gaphor.UML import uml2
+from gaphor.diagram import uml
 from gaphor.diagram.component import ComponentItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
-from gaphor.diagram import uml
+
 
 @uml(uml2.Component, stereotype='subsystem')
 class SubsystemItem(ComponentItem):
-    __style__   = {
+    __style__ = {
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
     }
+
     def __init__(self, id=None):
         super(SubsystemItem, self).__init__(id)
-
 
     def draw(self, context):
         super(SubsystemItem, self).draw(context)
@@ -30,6 +32,5 @@ class SubsystemItem(ComponentItem):
 
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
-
 
 # vim:sw=4:et

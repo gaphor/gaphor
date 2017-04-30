@@ -3,18 +3,17 @@ Test Interfaces.
 """
 
 from __future__ import absolute_import
+
 from gaphor import diagram
 from gaphor.tests import TestCase
 
 
 class InterfacesTestCase(TestCase):
-
     def test_comment(self):
-        #self.assertTrue(diagram.interfaces.ICommentItem.implementedBy(diagram.comment.CommentItem))
+        # self.assertTrue(diagram.interfaces.ICommentItem.implementedBy(diagram.comment.CommentItem))
         item = diagram.comment.CommentItem()
         editor = diagram.interfaces.IEditor(item)
         self.assertTrue(editor)
         self.assertTrue(editor._item is item)
-        
 
 # vim: sw=4:et

@@ -3,20 +3,23 @@ Transation support for Gaphor
 """
 
 from __future__ import absolute_import
+
 from logging import getLogger
 from zope import interface, component
-from gaphor.interfaces import ITransaction
-from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
+
 from gaphor import application
+from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
+from gaphor.interfaces import ITransaction
 
 logger = getLogger('transaction')
+
 
 def transactional(func):
     """The transactional decorator makes a function transactional.  A
     Transaction instance is created before the decorated function is called.
     If calling the function leads to an exception being raised, the transaction
     is rolled-back.  Otherwise, it is committed."""
-    
+
     def _transactional(*args, **kwargs):
         r = None
         tx = Transaction()
@@ -32,12 +35,15 @@ def transactional(func):
         else:
             tx.commit()
         return r
+
     return _transactional
+
 
 class TransactionError(Exception):
     """
     Errors related to the transaction module.
     """
+
 
 class Transaction(object):
     """
@@ -66,12 +72,12 @@ class Transaction(object):
     interface.implements(ITransaction)
     component_registry = application.inject('component_registry')
 
-    _stack= []
+    _stack = []
 
     def __init__(self):
         """Initialize the transaction.  If this is the first transaction in
         the stack, a TransactionBegin event is emited."""
-        
+
         self._need_rollback = False
         if not self._stack:
             self._handle(TransactionBegin())
@@ -81,7 +87,7 @@ class Transaction(object):
         """Commit the transaction.  First, the transaction is closed.
         If it needs to be rolled-back, a TransactionRollback event is emited.
         Otherwise, a TransactionCommit event is emited."""
-        
+
         self._close()
         if not self._stack:
             if self._need_rollback:
@@ -93,7 +99,7 @@ class Transaction(object):
         """Roll-back the transaction.  First, the transaction is closed.
         Every transaction on the stack is then marked for roll-back.  If
         the stack is empty, a TransactionRollback event is emited."""
-        
+
         self._close()
         for tx in self._stack:
             tx._need_rollback = True
@@ -105,7 +111,7 @@ class Transaction(object):
         """Close the transaction.  If the stack is empty, a TransactionError
         is raised.  If the last transaction on the stack isn't this transaction,
         a Transaction error is raised."""
-        
+
         try:
             last = self._stack.pop()
         except IndexError:
@@ -129,7 +135,7 @@ class Transaction(object):
     def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
         """Provide with-statement transaction support.  If an error occured,
         the transaction is rolled back.  Otherwise, it is committed."""
-        
+
         if exc_type:
             self.rollback()
         else:

@@ -3,6 +3,7 @@ Style classes and constants.
 """
 
 from __future__ import absolute_import
+
 import six
 from six.moves import range
 
@@ -16,11 +17,12 @@ ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = -1, 0, 1
 ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = -1, 0, 1
 
 # hint tuples to move text depending on quadrant
-WIDTH_HINT = (0, 0, -1)    # width hint tuple
-R_WIDTH_HINT = (-1, -1, 0)    # width hint tuple
+WIDTH_HINT = (0, 0, -1)  # width hint tuple
+R_WIDTH_HINT = (-1, -1, 0)  # width hint tuple
 PADDING_HINT = (1, 1, -1)  # padding hint tuple
 
 EPSILON = 1e-6
+
 
 class Style(object):
     """
@@ -80,8 +82,8 @@ def get_min_size(width, height, padding):
     @param padding:  padding information as a tuple
         (top, right, bottom, left)
     """
-    width  += padding[PADDING_LEFT] + padding[PADDING_RIGHT]
-    height += padding[PADDING_TOP]  + padding[PADDING_BOTTOM]
+    width += padding[PADDING_LEFT] + padding[PADDING_RIGHT]
+    height += padding[PADDING_TOP] + padding[PADDING_BOTTOM]
     return width, height
 
 
@@ -100,7 +102,7 @@ def get_text_point(extents, width, height, align, padding, outside):
      - padding: text padding
      - outside: should text be put outside containing box
     """
-    #x_bear, y_bear, w, h, x_adv, y_adv = extents
+    # x_bear, y_bear, w, h, x_adv, y_adv = extents
     w, h = extents
 
     halign, valign = align
@@ -116,7 +118,7 @@ def get_text_point(extents, width, height, align, padding, outside):
             assert False
 
         if valign == ALIGN_TOP:
-            y = -h -padding[PADDING_TOP]
+            y = -h - padding[PADDING_TOP]
         elif valign == ALIGN_MIDDLE:
             y = (height - h) / 2
         elif valign == ALIGN_BOTTOM:
@@ -163,16 +165,16 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
 
     dx = float(p2[0]) - float(p1[0])
     dy = float(p2[1]) - float(p1[1])
-    
+
     name_w, name_h = extents
 
     if dy == 0:
-        rc = 1000.0 # quite a lot...
+        rc = 1000.0  # quite a lot...
     else:
         rc = dx / dy
     abs_rc = abs(rc)
-    h = dx > 0 # right side of the box
-    v = dy > 0 # bottom side
+    h = dx > 0  # right side of the box
+    v = dy > 0  # bottom side
 
     if abs_rc > 6:
         # horizontal line
@@ -204,9 +206,8 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
         if align_bottom:
             name_dy = -ofs - name_h
         else:
-            name_dy = ofs 
+            name_dy = ofs
     return p1[0] + name_dx, p1[1] + name_dy
-
 
 
 def get_text_point_at_line2(extents, p1, p2, align, padding):
@@ -242,7 +243,7 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
     halign, valign = align
 
     # move to center and move by delta depending on line angle
-    if d2 < 0.5774: # <0, 30>, <150, 180>, <-180, -150>, <-30, 0>
+    if d2 < 0.5774:  # <0, 30>, <150, 180>, <-180, -150>, <-30, 0>
         # horizontal mode
         w2 = width / 2.0
         hint = w2 * d2
@@ -271,6 +272,5 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
         y = y0 - h2
 
     return x, y
-
 
 # vim:sw=4:et

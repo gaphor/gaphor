@@ -5,25 +5,29 @@ diagram).
 """
 
 from __future__ import absolute_import
-import inspect
-import gobject
+
 import uuid
 
-from gaphor.diagram.style import Style
 import six
 
+from gaphor.diagram.style import Style
+
 # Map UML elements to their (default) representation.
-_uml_to_item_map = { }
+_uml_to_item_map = {}
+
 
 def create(type):
     return create_as(type, str(uuid.uuid1()))
 
+
 def create_as(type, id):
     return type(id)
+
 
 def get_diagram_item(element):
     global _uml_to_item_map
     return _uml_to_item_map.get(element)
+
 
 def set_diagram_item(element, item):
     global _uml_to_item_map
@@ -40,6 +44,7 @@ def uml(uml_class, stereotype=None):
      stereotype
         Stereotype name (i.e. 'subsystem').
     """
+
     def f(item_class):
         t = uml_class
         if stereotype is not None:
@@ -47,8 +52,8 @@ def uml(uml_class, stereotype=None):
             item_class.__stereotype__ = stereotype
         set_diagram_item(t, item_class)
         return item_class
-    return f
 
+    return f
 
 
 class DiagramItemMeta(type):
@@ -67,7 +72,6 @@ class DiagramItemMeta(type):
         self.map_uml_class(data)
         self.set_style(data)
 
-
     def map_uml_class(self, data):
         """
         Map UML class to diagram item.
@@ -83,7 +87,6 @@ class DiagramItemMeta(type):
                     set_diagram_item(c, self)
             else:
                 set_diagram_item(obj, self)
-
 
     def set_style(self, data):
         """
@@ -105,6 +108,5 @@ class DiagramItemMeta(type):
                 style.add(name, value)
 
         self.style = style
-
 
 # vim:sw=4:et

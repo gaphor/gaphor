@@ -3,20 +3,21 @@ Service dedicated to exporting diagrams to a varyity of file formats.
 """
 
 from __future__ import absolute_import
-import os
+
 import cairo
-
-from zope import interface, component
-
+import os
 from logging import getLogger
+from zope import interface
+
+from gaphas.freehand import FreeHandPainter
+from gaphas.painter import ItemPainter, BoundingBoxPainter
+from gaphas.view import View
+
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 
-from gaphas.view import View
-from gaphas.painter import ItemPainter, BoundingBoxPainter
-from gaphas.freehand import FreeHandPainter
 
 class DiagramExportManager(object):
     """
@@ -54,23 +55,23 @@ class DiagramExportManager(object):
         pass
 
     def update(self):
-        
+
         self.logger.info('Updating')
-        
+
         tab = self.get_window().get_current_diagram_tab()
         self.sensitive = tab and True or False
 
     def save_dialog(self, diagram, title, ext):
-        
+
         filename = (diagram.name or 'export') + ext
         file_dialog = FileDialog(title, action='save', filename=filename)
-        
+
         save = False
         while True:
             filename = file_dialog.selection
             if os.path.exists(filename):
-                question = _("The file %s already exists. Do you want to "\
-                             "replace it with the file you are exporting "\
+                question = _("The file %s already exists. Do you want to " \
+                             "replace it with the file you are exporting " \
                              "to?") % filename
                 question_dialog = QuestionDialog(question)
                 answer = question_dialog.answer
@@ -81,21 +82,21 @@ class DiagramExportManager(object):
             else:
                 save = True
                 break
-                
+
         file_dialog.destroy()
-        
+
         if save and filename:
-            return filename                
-        
+            return filename
+
     def update_painters(self, view):
-        
+
         self.logger.info('Updating painters')
         self.logger.debug('View is %s' % view)
-        
+
         sloppiness = self.properties('diagram.sloppiness', 0)
-        
+
         self.logger.debug('Sloppiness is %s' % sloppiness)
-        
+
         if sloppiness:
             view.painter = FreeHandPainter(ItemPainter(), sloppiness)
             view.bounding_box_painter = FreeHandPainter(BoundingBoxPainter(), sloppiness)
@@ -103,10 +104,10 @@ class DiagramExportManager(object):
             view.painter = ItemPainter()
 
     def save_svg(self, filename, canvas):
-        
+
         self.logger.info('Exporting to SVG')
         self.logger.debug('SVG path is %s' % filename)
-        
+
         view = View(canvas)
 
         self.update_painters(view)
@@ -128,12 +129,11 @@ class DiagramExportManager(object):
         surface.flush()
         surface.finish()
 
-
     def save_png(self, filename, canvas):
-        
+
         self.logger.info('Exporting to PNG')
         self.logger.debug('PNG path is %s' % filename)
-        
+
         view = View(canvas)
 
         self.update_painters(view)
@@ -147,7 +147,7 @@ class DiagramExportManager(object):
         tmpsurface.flush()
 
         w, h = view.bounding_box.width, view.bounding_box.height
-        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w+1), int(h+1))
+        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w + 1), int(h + 1))
         cr = cairo.Context(surface)
         view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
         view.paint(cr)
@@ -155,10 +155,10 @@ class DiagramExportManager(object):
         surface.write_to_png(filename)
 
     def save_pdf(self, filename, canvas):
-        
+
         self.logger.info('Exporting to PDF')
         self.logger.debug('PDF path is %s' % filename)
-        
+
         view = View(canvas)
 
         self.update_painters(view)
@@ -190,7 +190,6 @@ class DiagramExportManager(object):
         if filename:
             self.save_svg(filename, diagram.canvas)
 
-
     @action(name='file-export-png', label='Export to PNG',
             tooltip='Export the diagram to PNG')
     def save_png_action(self):
@@ -200,7 +199,6 @@ class DiagramExportManager(object):
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_png(filename, diagram.canvas)
-
 
     @action(name='file-export-pdf', label='Export to PDF',
             tooltip='Export the diagram to PDF')
@@ -212,6 +210,4 @@ class DiagramExportManager(object):
         if filename:
             self.save_pdf(filename, diagram.canvas)
 
-
 # vim:sw=4:et:
-

@@ -3,11 +3,13 @@ Test if the collection's list supports all trickery.
 """
 
 from __future__ import absolute_import
+
 import unittest
+
 from gaphor.UML.collection import collectionlist
 
-class CollectionlistTestCase(unittest.TestCase):
 
+class CollectionlistTestCase(unittest.TestCase):
     def test_listing(self):
         c = collectionlist()
         c.append('a')

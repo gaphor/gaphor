@@ -4,20 +4,21 @@ Factory for and registration of model elements.
 """
 
 from __future__ import absolute_import
-from zope import interface
-from zope import component
+
 import uuid
-from gaphor.core import inject
-from gaphor.misc import odict
-from gaphor.interfaces import IService, IEventFilter
-from gaphor.UML.interfaces import IElementCreateEvent, IElementDeleteEvent, \
-                                  IFlushFactoryEvent, IModelFactoryEvent, \
-                                  IElementChangeEvent, IElementEvent
-from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
-                             FlushFactoryEvent, ModelFactoryEvent
-from gaphor.UML.element import Element
-from gaphor.UML.uml2 import Diagram
+from zope import component
+from zope import interface
+
 import six
+
+from gaphor.UML.element import Element
+from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
+    FlushFactoryEvent, ModelFactoryEvent
+from gaphor.UML.interfaces import IElementChangeEvent
+from gaphor.UML.uml2 import Diagram
+from gaphor.core import inject
+from gaphor.interfaces import IService, IEventFilter
+from gaphor.misc import odict
 
 
 class ElementFactory(object):
@@ -33,6 +34,7 @@ class ElementFactory(object):
     flush - model is flushed: all element are removed from the factory
             (element is None)
     """
+
     def __init__(self):
         self._elements = odict.odict()
         self._observers = list()
@@ -67,7 +69,6 @@ class ElementFactory(object):
 
         element._factory = self
         self._elements[element.id] = element
-        
 
     def size(self):
         """
@@ -75,20 +76,16 @@ class ElementFactory(object):
         """
         return len(self._elements)
 
-
     def lookup(self, id):
         """
         Find element with a specific id.
         """
         return self._elements.get(id)
 
-
     __getitem__ = lookup
-
 
     def __contains__(self, element):
         return self.lookup(element.id) is element
-
 
     def select(self, expression=None):
         """
@@ -102,13 +99,11 @@ class ElementFactory(object):
                 if expression(e):
                     yield e
 
-
     def lselect(self, expression=None):
         """
         Like select(), but returns a list.
         """
         return list(self.select(expression))
-
 
     def keys(self):
         """
@@ -116,13 +111,11 @@ class ElementFactory(object):
         """
         return list(self._elements.keys())
 
-
     def iterkeys(self):
         """
         Return a iterator with all id's in the factory.
         """
         return six.iterkeys(self._elements)
-
 
     def values(self):
         """
@@ -130,13 +123,11 @@ class ElementFactory(object):
         """
         return list(self._elements.values())
 
-
     def itervalues(self):
         """
         Return a iterator with all elements in the factory.
         """
         return six.itervalues(self._elements)
-
 
     def is_empty(self):
         """
@@ -144,19 +135,18 @@ class ElementFactory(object):
         """
         return bool(self._elements)
 
-
     def flush(self):
         """Flush all elements (remove them from the factory). 
         
         Diagram elements are flushed first.  This is so that canvas updates
         are blocked.  The remaining elements are then flushed.
         """
-        
+
         flush_element = self._flush_element
         for element in self.lselect(lambda e: isinstance(e, Diagram)):
             element.canvas.block_updates = True
             flush_element(element)
-                
+
         for element in self.lselect():
             flush_element(element)
 
@@ -173,7 +163,7 @@ class ElementFactory(object):
             pass
 
     def swap_element(self, element, new_class):
-	assert element in list(self._elements.values())
+        assert element in list(self._elements.values())
         if element.__class__ is not new_class:
             element.__class__ = new_class
 
@@ -217,7 +207,7 @@ class ElementFactoryService(ElementFactory):
         are blocked.  The remaining elements are then flushed.  Finally,
         the ElementChangedEventBlocker adapter is unregistered if the factory
         has an application instance."""
-        
+
         self.component_registry.handle(FlushFactoryEvent(self))
         self.component_registry.register_subscription_adapter(ElementChangedEventBlocker)
 
@@ -264,7 +254,5 @@ class ElementChangedEventBlocker(object):
         Returns something that evaluates to `True` so events are blocked.
         """
         return 'Blocked by ElementFactory.flush()'
-
-
 
 # vim:sw=4:et

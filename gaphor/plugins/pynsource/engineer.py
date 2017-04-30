@@ -5,13 +5,15 @@
 
 from __future__ import absolute_import
 from __future__ import print_function
+
 from zope import component
-from gaphor.UML import uml2
-from gaphor.diagram import items
-from gaphor.core import inject
-from gaphor.diagram.interfaces import IConnect
+
 from gaphas.aspect import ConnectionSink, Connector
 
+from gaphor.UML import uml2
+from gaphor.core import inject
+from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 from .pynsource import PySourceAsText
 
 BASE_CLASSES = ('object', 'type', 'dict', 'list', 'tuple', 'int', 'float')
@@ -45,7 +47,7 @@ class Engineer(object):
 
         try:
             self._root_package = \
-            self.element_factory.lselect(lambda e: isinstance(e, uml2.Package) and not e.namespace)[0]
+                self.element_factory.lselect(lambda e: isinstance(e, uml2.Package) and not e.namespace)[0]
         except IndexError:
             pass  # running as test?
 

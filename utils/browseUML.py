@@ -11,9 +11,9 @@ import sys
 
 sys.path.append("..")
 
-from gaphor.UML import *
+done = [object]
 
-done = [ object ]
+
 def print_vars(cls):
     global done
     done.append(cls)
@@ -22,8 +22,9 @@ def print_vars(cls):
     for key in dict.keys():
         print "\t" + key + ":", str(dict[key])
     for base in cls.__bases__:
-	if base not in done:
-	    print_vars(base)
+        if base not in done:
+            print_vars(base)
+
 
 args = sys.argv[1:]
 

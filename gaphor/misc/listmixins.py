@@ -11,9 +11,11 @@ See the documentation on the mixins.
 """
 
 from __future__ import absolute_import
+
 import six
 from six.moves import filter
-__all__ = [ 'querymixin', 'recursemixin', 'getslicefix' ]
+
+__all__ = ['querymixin', 'recursemixin', 'getslicefix']
 
 import sys
 
@@ -55,10 +57,10 @@ class Matcher(object):
 
     def __call__(self, element):
         try:
-            return eval(self.expr, {}, { 'it': element })
+            return eval(self.expr, {}, {'it': element})
         except (AttributeError, NameError):
             # attribute does not (yet) exist
-            #print 'No attribute', expr, d
+            # print 'No attribute', expr, d
             return False
 
 
@@ -155,6 +157,7 @@ class recurseproxy(object):
         """
         Create a new proxy for the attribute.
         """
+
         def mygetattr():
             for e in self.__sequence:
                 try:
@@ -166,6 +169,7 @@ class recurseproxy(object):
                         yield obj
                 except AttributeError:
                     pass
+
         # Create a copy of the proxy type, inclusing a copy of the sequence type
         return type(self)(type(self.__sequence)(mygetattr()))
 

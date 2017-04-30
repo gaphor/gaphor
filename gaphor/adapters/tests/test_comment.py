@@ -3,13 +3,13 @@ Comment and comment line items connection adapters tests.
 """
 
 from __future__ import absolute_import
+
 from gaphor.UML import uml2
 from gaphor.diagram import items
-
 from gaphor.tests import TestCase
 
-class CommentLineTestCase(TestCase):
 
+class CommentLineTestCase(TestCase):
     services = TestCase.services + ['sanitizer']
 
     # NOTE: Still have to test what happens if one Item at the CommentLineItem
@@ -27,7 +27,6 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(self.get_connected(line.head) is not None)
         self.assertFalse(comment.subject.annotatedElement)
 
-
     def test_commentline_same_comment_glue(self):
         """Test comment line item glueing to already connected comment item
         """
@@ -38,7 +37,6 @@ class CommentLineTestCase(TestCase):
         glued = self.allow(line, line.tail, comment)
         self.assertFalse(glued)
 
-
     def test_commentline_element_connect(self):
         """Test comment line connecting to comment and actor items.
         """
@@ -52,7 +50,6 @@ class CommentLineTestCase(TestCase):
         self.assertEquals(1, len(comment.subject.annotatedElement))
         self.assertTrue(ac.subject in comment.subject.annotatedElement)
 
-
     def test_commentline_element_connect(self):
         """Test comment line connecting to comment and actor items.
         """
@@ -65,7 +62,6 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(self.get_connected(line.tail) is ac)
         self.assertEquals(1, len(comment.subject.annotatedElement))
         self.assertTrue(ac.subject in comment.subject.annotatedElement)
-
 
     def test_commentline_element_reconnect(self):
         """Test comment line connecting to comment and actor items.
@@ -81,13 +77,12 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(ac.subject in comment.subject.annotatedElement)
 
         ac2 = self.create(items.ActorItem, uml2.Actor)
-        #ac.canvas.disconnect_item(line, line.tail)
+        # ac.canvas.disconnect_item(line, line.tail)
         self.disconnect(line, line.tail)
         self.connect(line, line.tail, ac2)
         self.assertTrue(self.get_connected(line.tail) is ac2)
         self.assertEquals(1, len(comment.subject.annotatedElement))
         self.assertTrue(ac2.subject in comment.subject.annotatedElement)
-
 
     def test_commentline_element_disconnect(self):
         """Test comment line connecting to comment and disconnecting actor item.
@@ -104,7 +99,6 @@ class CommentLineTestCase(TestCase):
         self.disconnect(line, line.tail)
         self.assertFalse(self.get_connected(line.tail) is ac)
 
-        
     def test_commentline_unlink(self):
         """Test comment line unlinking.
         """
@@ -129,7 +123,6 @@ class CommentLineTestCase(TestCase):
         self.assertFalse(comment.subject in clazz.subject.ownedComment)
         self.assertTrue(len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement)
         self.assertTrue(len(clazz.subject.ownedComment) == 0, clazz.subject.ownedComment)
-
 
     def test_commentline_element_unlink(self):
         """Test comment line unlinking using a class item.
@@ -156,7 +149,6 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(line.canvas)
         self.assertFalse(comment.subject.annotatedElement)
         self.assertTrue(len(clazz_subject.ownedComment) == 0)
-
 
     def test_commentline_relationship_unlink(self):
         """Test comment line to a relationship item connection and unlink.
@@ -189,7 +181,6 @@ class CommentLineTestCase(TestCase):
         self.assertFalse(comment.subject.annotatedElement)
         self.assertTrue(gen.subject is None)
 
-
     def test_commentline_linked_to_same_element_twice(self):
         """
         It is not allowed to create two commentlines between the same elements.
@@ -211,6 +202,5 @@ class CommentLineTestCase(TestCase):
         self.connect(line2, line2.head, comment)
 
         self.assertFalse(self.allow(line2, line2.tail, clazz))
-
 
 # vim: sw=4:et:ai

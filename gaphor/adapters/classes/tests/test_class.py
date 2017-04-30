@@ -3,9 +3,10 @@ Classes related adapter connection tests.
 """
 
 from __future__ import absolute_import
-from gaphor.tests import TestCase
+
 from gaphor.UML import uml2, modelfactory
 from gaphor.diagram import items
+from gaphor.tests import TestCase
 
 
 class DependencyTestCase(TestCase):

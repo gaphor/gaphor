@@ -16,6 +16,7 @@
 # for selftesting
 try:
     import fintl
+
     _ = fintl.gettext
 except ImportError:
     _ = lambda s: s
@@ -155,13 +156,13 @@ Options:
 If `inputfile' is -, standard input is read.
 """)
 
+import getopt
+import operator
 import os
 import sys
 import time
-import getopt
 import token
 import tokenize
-import operator
 
 __version__ = '1.5'
 
@@ -170,8 +171,6 @@ DEFAULTKEYWORDS = ', '.join(default_keywords)
 
 EMPTYSTRING = ''
 
-
-
 # The normal pot-file header. msgmerge and Emacs's po-mode work better if it's
 # there.
 pot_header = _('''\
@@ -193,7 +192,7 @@ msgstr ""
 
 ''')
 
-
+
 def usage(code, msg=''):
     print >> sys.stderr, __doc__ % globals()
     if msg:
@@ -201,8 +200,8 @@ def usage(code, msg=''):
     sys.exit(code)
 
 
-
 escapes = []
+
 
 def make_escapes(pass_iso8859):
     global escapes
@@ -235,7 +234,7 @@ def escape(s):
 
 def safe_eval(s):
     # unwrap quotes, safely
-    return eval(s, {'__builtins__':{}}, {})
+    return eval(s, {'__builtins__': {}}, {})
 
 
 def normalize(s):
@@ -254,7 +253,7 @@ def normalize(s):
         s = '""\n"' + lineterm.join(lines) + '"'
     return s
 
-
+
 def containsAny(str, set):
     """ Check whether 'str' contains ANY of the chars in 'set'
     """
@@ -277,8 +276,8 @@ def _visit_pyfiles(list, dirname, names):
     # add all *.py files to list
     list.extend(
         [os.path.join(dirname, file)
-            for file in names
-                if os.path.splitext(file)[1] == _py_ext])
+         for file in names
+         if os.path.splitext(file)[1] == _py_ext])
 
 
 def _get_modpkg_path(dotted_name, pathlist=None):
@@ -324,7 +323,6 @@ def getFilesForName(name):
     """ Get a list of module files for a filename, a module or package name,
         or a directory.
     """
-    import imp
 
     if not os.path.exists(name):
         # check for glob chars
@@ -352,7 +350,7 @@ def getFilesForName(name):
 
     return []
 
-
+
 class TokenEater:
     def __init__(self, options):
         self.__options = options
@@ -365,9 +363,9 @@ class TokenEater:
 
     def __call__(self, ttype, tstring, stup, etup, line):
         # dispatch
-##        import token
-##        print >> sys.stderr, 'ttype:', token.tok_name[ttype], \
-##              'tstring:', tstring
+        ##        import token
+        ##        print >> sys.stderr, 'ttype:', token.tok_name[ttype], \
+        ##              'tstring:', tstring
         self.__state(ttype, tstring, stup[0])
 
     def __waiting(self, ttype, tstring, lineno):
@@ -426,7 +424,7 @@ class TokenEater:
         elif ttype not in [tokenize.COMMENT, token.INDENT, token.DEDENT,
                            token.NEWLINE, tokenize.NL]:
             # warn if we see anything else than STRING or whitespace
-            print >>sys.stderr, _('*** %(file)s:%(lineno)s: Seen unexpected token "%(token)s"') % {
+            print >> sys.stderr, _('*** %(file)s:%(lineno)s: Seen unexpected token "%(token)s"') % {
                 'token': tstring, 'file': self.__curfile, 'lineno': self.__lineno}
             self.__state = self.__waiting
 
@@ -477,7 +475,7 @@ class TokenEater:
                 elif options.locationstyle == options.SOLARIS:
                     for filename, lineno in v:
                         d = {'filename': filename, 'lineno': lineno}
-                        print >>fp, _(
+                        print >> fp, _(
                             '# File: %(filename)s, line: %(lineno)d') % d
                 elif options.locationstyle == options.GNU:
                     # fit as many locations on one line, as long as the
@@ -499,7 +497,6 @@ class TokenEater:
                 print >> fp, 'msgstr ""\n'
 
 
-
 def main():
     global default_keywords
     try:
@@ -521,7 +518,7 @@ def main():
         GNU = 1
         SOLARIS = 2
         # defaults
-        extractall = 0 # FIXME: currently this option has no effect at all.
+        extractall = 0  # FIXME: currently this option has no effect at all.
         escape = 0
         keywords = []
         outpath = ''
@@ -535,8 +532,8 @@ def main():
         nodocstrings = {}
 
     options = Options()
-    locations = {'gnu' : options.GNU,
-                 'solaris' : options.SOLARIS,
+    locations = {'gnu': options.GNU,
+                 'solaris': options.SOLARIS,
                  }
 
     # parse options
@@ -657,11 +654,10 @@ def main():
         if closep:
             fp.close()
 
-
+
 if __name__ == '__main__':
     main()
     # some more test strings
     _(u'a unicode string')
-    _('*** Seen unexpected token "%(token)s"' % {'token': 'test'}) # this one creates a warning
+    _('*** Seen unexpected token "%(token)s"' % {'token': 'test'})  # this one creates a warning
     _('more' 'than' 'one' 'string')
-

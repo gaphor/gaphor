@@ -3,9 +3,11 @@ Message connection adapter tests.
 """
 
 from __future__ import absolute_import
-from gaphor.tests import TestCase
+
 from gaphor.UML import uml2, modelfactory
 from gaphor.diagram import items
+from gaphor.tests import TestCase
+
 
 class BasicMessageConnectionsTestCase(TestCase):
     def test_head_glue(self):
@@ -19,7 +21,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         glued = self.allow(msg, msg.head, ll, port)
         self.assertTrue(glued)
 
-
     def test_invisible_lifetime_glue(self):
         """Test message to invisible lifetime glue
         """
@@ -31,7 +32,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         assert not ll.lifetime.visible
         self.assertFalse(glued)
 
-
     def test_visible_lifetime_glue(self):
         """Test message to visible lifetime glue
         """
@@ -42,7 +42,6 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         glued = self.allow(msg, msg.head, ll, ll.lifetime.port)
         self.assertTrue(glued)
-
 
     def test_lost_message_connection(self):
         """Test lost message connection
@@ -63,7 +62,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEquals(1, len(occurences))
         self.assertTrue(messages[0] is msg.subject)
         self.assertTrue(occurences[0] is msg.subject.sendEvent)
-        
 
     def test_found_message_connection(self):
         """Test found message connection
@@ -84,7 +82,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEquals(1, len(occurences))
         self.assertTrue(messages[0] is msg.subject)
         self.assertTrue(occurences[0] is msg.subject.receiveEvent)
-        
 
     def test_complete_message_connection(self):
         """Test complete message connection
@@ -109,7 +106,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertTrue(msg.subject.sendEvent in occurences, '%s' % occurences)
         self.assertTrue(msg.subject.receiveEvent in occurences, '%s' % occurences)
 
-
     def test_lifetime_connection(self):
         """Test messages' lifetimes connection
         """
@@ -129,7 +125,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertTrue(msg.subject is not None)
         self.assertEquals(msg.subject.messageKind, 'complete')
 
-
     def test_disconnection(self):
         """Test message disconnection
         """
@@ -148,7 +143,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.disconnect(msg, msg.tail)
         self.assertTrue(msg.subject is None, '%s' % msg.subject)
 
-
     def test_lifetime_connectivity_on_head(self):
         """Test lifeline's lifetime connectivity change on head connection
         """
@@ -166,7 +160,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.disconnect(msg, msg.head)
         self.assertTrue(ll.lifetime.connectable)
         self.assertEquals(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
-
 
     def test_lifetime_connectivity_on_lifetime(self):
         """Test lifeline's lifetime connectivity change on lifetime connection
@@ -189,7 +182,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEquals(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
 
 
-
 class DiagramModeMessageConnectionTestCase(TestCase):
     def test_message_glue_cd(self):
         """Test glueing message on communication diagram
@@ -208,7 +200,6 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         # no connection possible as 2nd lifeline is in sequence diagram
         # mode
         self.assertFalse(glued)
-
 
     def test_message_glue_sd(self):
         """Test glueing message on sequence diagram
@@ -229,7 +220,6 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         # diagram mode
         self.assertFalse(glued)
 
-
     def test_messages_disconnect_cd(self):
         """Test disconnecting messages on communication diagram
         """
@@ -239,7 +229,7 @@ class DiagramModeMessageConnectionTestCase(TestCase):
 
         self.connect(msg, msg.head, ll1)
         self.connect(msg, msg.tail, ll2)
-        
+
         factory = self.element_factory
         subject = msg.subject
 
@@ -280,6 +270,5 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         # no message after full disconnection
         self.disconnect(msg, msg.tail)
         self.assertEquals(0, len(self.kindof(uml2.Message)))
-
 
 # vim:sw=4:et:ai

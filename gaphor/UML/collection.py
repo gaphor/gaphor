@@ -3,7 +3,9 @@
 """
 
 from __future__ import absolute_import
+
 import inspect
+
 from gaphor.UML.event import AssociationChangeEvent
 from gaphor.misc.listmixins import querymixin, recursemixin, getslicefix
 
@@ -81,7 +83,7 @@ class collection(object):
     __repr__ = __str__
 
     def __nonzero__(self):
-        return self.items!=[]
+        return self.items != []
 
     def append(self, value):
         if isinstance(value, self.type):
@@ -95,7 +97,6 @@ class collection(object):
         else:
             raise ValueError('%s not in collection' % value)
 
-
     def index(self, key):
         """
         Given an object, return the position of that object in the
@@ -103,130 +104,128 @@ class collection(object):
         """
         return self.items.index(key)
 
-
     # OCL members (from SMW by Ivan Porres, http://www.abo.fi/~iporres/smw)
 
     def size(self):
         return len(self.items)
 
-    def includes(self,o):
+    def includes(self, o):
         return o in self.items
 
-    def excludes(self,o):
+    def excludes(self, o):
         return not self.includes(o)
 
-    def count(self,o):
-        c=0
+    def count(self, o):
+        c = 0
         for x in self.items:
-            if x==o:
-                c=c+1
+            if x == o:
+                c = c + 1
         return c
 
-    def includesAll(self,c):
+    def includesAll(self, c):
         for o in c:
             if o not in self.items:
                 return 0
         return 1
 
-    def excludesAll(self,c):
+    def excludesAll(self, c):
         for o in c:
             if o in self.items:
                 return 0
         return 1
 
-    def select(self,f):
-        result=list()
+    def select(self, f):
+        result = list()
         for v in self.items:
             if f(v):
                 result.append(v)
         return result
 
-    def reject(self,f):
-        result=list()
+    def reject(self, f):
+        result = list()
         for v in self.items:
             if not f(v):
                 result.append(v)
         return result
 
-    def collect(self,f):
-        result=list()
+    def collect(self, f):
+        result = list()
         for v in self.items:
             result.append(f(v))
         return result
 
     def isEmpty(self):
-        return len(self.items)==0
+        return len(self.items) == 0
 
     def nonEmpty(self):
         return not self.isEmpty()
-    
+
     def sum(self):
-        r=0
+        r = 0
         for o in self.items:
-            r=r+o
+            r = r + o
         return o
-    
-    def forAll(self,f):
+
+    def forAll(self, f):
         if not self.items or not inspect.getargspec(f)[0]:
             return True
 
-        nargs=len(inspect.getargspec(f)[0])
+        nargs = len(inspect.getargspec(f)[0])
         if inspect.getargspec(f)[3]:
-            nargs=nargs-len(inspect.getargspec(f)[3])
-            
-        assert(nargs>0)
-        nitems=len(self.items)
-        index=[0]*nargs
-        
+            nargs = nargs - len(inspect.getargspec(f)[3])
+
+        assert (nargs > 0)
+        nitems = len(self.items)
+        index = [0] * nargs
+
         while 1:
-            args=[]
+            args = []
             for x in index:
                 args.append(self.items[x])
             if not f(*args):
                 return False
-            c=len(index)-1
-            index[c]=index[c]+1
-            while index[c]==nitems:
-                index[c]=0
-                c=c-1
-                if c<0:
+            c = len(index) - 1
+            index[c] = index[c] + 1
+            while index[c] == nitems:
+                index[c] = 0
+                c = c - 1
+                if c < 0:
                     return True
                 else:
-                    index[c]=index[c]+1 
-                if index[c]==nitems-1:
-                    c=c-1
+                    index[c] = index[c] + 1
+                if index[c] == nitems - 1:
+                    c = c - 1
         return False
 
-    def exist(self,f):
+    def exist(self, f):
         if not self.items or not inspect.getargspec(f)[0]:
             return False
 
-        nargs=len(inspect.getargspec(f)[0])
+        nargs = len(inspect.getargspec(f)[0])
         if inspect.getargspec(f)[3]:
-            nargs=nargs-len(inspect.getargspec(f)[3])
-            
-        assert(nargs>0)
-        nitems=len(self.items)
-        index=[0]*nargs
+            nargs = nargs - len(inspect.getargspec(f)[3])
+
+        assert (nargs > 0)
+        nitems = len(self.items)
+        index = [0] * nargs
         while 1:
-            args=[]
+            args = []
             for x in index:
                 args.append(self.items[x])
             if f(*args):
                 return True
-            c=len(index)-1
-            index[c]=index[c]+1
-            while index[c]==nitems:
-                index[c]=0
-                c=c-1
-                if c<0:
+            c = len(index) - 1
+            index[c] = index[c] + 1
+            while index[c] == nitems:
+                index[c] = 0
+                c = c - 1
+                if c < 0:
                     return False
                 else:
-                    index[c]=index[c]+1 
-                if index[c]==nitems-1:
-                    c=c-1
+                    index[c] = index[c] + 1
+                if index[c] == nitems - 1:
+                    c = c - 1
         return False
-
 
     def swap(self, item1, item2):
         """
@@ -246,6 +245,5 @@ class collection(object):
             return False
         except ValueError as ex:
             return False
-
 
 # vi:sw=4:et:ai

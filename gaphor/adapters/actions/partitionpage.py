@@ -2,12 +2,14 @@
 Activity partition property page.
 """
 from __future__ import absolute_import
+
 import gtk
-from gaphor.core import _, inject, transactional
-from gaphor.ui.interfaces import IPropertyPage
-from gaphor.diagram import items
 from zope import interface, component
+
 from gaphor.adapters.propertypages import NamedItemPropertyPage
+from gaphor.core import _, inject, transactional
+from gaphor.diagram import items
+from gaphor.ui.interfaces import IPropertyPage
 
 
 class PartitionPropertyPage(NamedItemPropertyPage):
@@ -34,10 +36,10 @@ class PartitionPropertyPage(NamedItemPropertyPage):
                 page.pack_start(hbox, expand=False)
             else:
                 pass
-                #hbox = gtk.HBox(spacing=12)
-                #button = gtk.CheckButton(_('Dimension'))
-                #button.set_active(item.subject.isDimension)
-                #button.connect('toggled', self._on_dimension_change)
+                # hbox = gtk.HBox(spacing=12)
+                # button = gtk.CheckButton(_('Dimension'))
+                # button.set_active(item.subject.isDimension)
+                # button.connect('toggled', self._on_dimension_change)
 
         return page
 

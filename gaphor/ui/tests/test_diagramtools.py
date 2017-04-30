@@ -1,18 +1,21 @@
-
 from __future__ import absolute_import
+
 import gtk
 import logging
-from gaphor.tests import TestCase
+
+from gaphas.canvas import Context
+
 from gaphor.UML import uml2
 from gaphor.diagram import items
-from gaphas.canvas import Context
+from gaphor.tests import TestCase
 
 Event = Context
 
 logging.basicConfig(level=logging.DEBUG)
 
+
 class DiagramItemConnectorTestCase(TestCase):
-    services = TestCase.services + [ 'main_window', 'ui_manager', 'action_manager', 'properties' ]
+    services = TestCase.services + ['main_window', 'ui_manager', 'action_manager', 'properties']
 
     def setUp(self):
         super(DiagramItemConnectorTestCase, self).setUp()
@@ -23,7 +26,7 @@ class DiagramItemConnectorTestCase(TestCase):
 
     def test_item_reconnect(self):
         # Setting the stage:
-	ci1 = self.create(items.ClassItem, uml2.Class)
+        ci1 = self.create(items.ClassItem, uml2.Class)
         ci2 = self.create(items.ClassItem, uml2.Class)
         a = self.create(items.AssociationItem)
 
@@ -38,7 +41,7 @@ class DiagramItemConnectorTestCase(TestCase):
 
         # The act: perform button press event and button release
         view = self.main_window.get_current_diagram_view()
-        
+
         self.assertSame(self.diagram.canvas, view.canvas)
 
         p = view.get_matrix_i2v(a).transform_point(*a.head.pos)

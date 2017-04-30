@@ -9,17 +9,16 @@ import gobject
 import gtk
 from zope import interface
 
-from . import checkmodel
-
 from gaphor.core import inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
+from . import checkmodel
 
 PYELEMENT_COLUMN = 0
 ELEMENT_COLUMN = 1
 REASON_COLUMN = 2
 
-class CheckModelWindow(object):
 
+class CheckModelWindow(object):
     interface.implements(IService, IActionProvider)
 
     element_factory = inject('element_factory')
@@ -76,7 +75,7 @@ class CheckModelWindow(object):
         treeview.append_column(column)
         treeview.show()
 
-        #self._construct_window(name='checkmodel',
+        # self._construct_window(name='checkmodel',
         #                       title='Check Model',
         #                       size=(400, 400),
         #                       contents=scrolled_window)
@@ -89,8 +88,7 @@ class CheckModelWindow(object):
         self.window.add(scrolled_window)
         self.window.set_size_request(400, 400)
         self.window.show()
-        
-        
+
     def run(self):
         # TODO: Let this run in a Thread(?)
         checkmodel.check_classes(self.element_factory)

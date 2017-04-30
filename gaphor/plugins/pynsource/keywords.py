@@ -389,7 +389,7 @@ __file__
 """
 pythonbuiltinfunctions = pythonbuiltinfunctions_txt.split()
 
-javakeywords_txt =  """
+javakeywords_txt = """
 abstract
 boolean
 break
@@ -445,11 +445,7 @@ strictfp
 """
 javakeywords = javakeywords_txt.split()
 
-
-
-
-
-delphikeywords_txt =  """
+delphikeywords_txt = """
 And
 Array
 As
@@ -507,7 +503,8 @@ With
 Xor
 """
 delphikeywords = delphikeywords_txt.split()
-delphikeywords = [ x.lower() for x in delphikeywords ]  # delphi is case insensitive, so convert everything to lowercase for comparisons
+delphikeywords = [x.lower() for x in
+                  delphikeywords]  # delphi is case insensitive, so convert everything to lowercase for comparisons
 
 # See Token.py in \python2x\Lib
 
@@ -570,4 +567,3 @@ TILDE = 32
 VBAR = 18
 VBAREQUAL = 43
 """
-

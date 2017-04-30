@@ -3,10 +3,13 @@ Message item connection adapters.
 """
 
 from __future__ import absolute_import
-from gaphor.adapters.connectors import AbstractConnect
-from zope import interface, component
+
+from zope import component
+
 from gaphor.UML import uml2
+from gaphor.adapters.connectors import AbstractConnect
 from gaphor.diagram import items
+
 
 class MessageLifelineConnect(AbstractConnect):
     """
@@ -24,6 +27,7 @@ class MessageLifelineConnect(AbstractConnect):
         """
         Always create a new Message with two EventOccurence instances.
         """
+
         def get_subject():
             if not line.subject:
                 message = self.element_factory.create(uml2.Message)
@@ -44,7 +48,6 @@ class MessageLifelineConnect(AbstractConnect):
                 event = self.element_factory.create(uml2.MessageOccurrenceSpecification)
                 event.receiveMessage = message
                 event.covered = received.subject
-
 
     def disconnect_lifelines(self, line):
         """
@@ -81,7 +84,6 @@ class MessageLifelineConnect(AbstractConnect):
                 line.remove_message(message, True)
                 message.unlink()
 
-
     def allow(self, handle, port):
         """
         Glue to lifeline's head or lifetime. If lifeline's lifetime is
@@ -99,7 +101,6 @@ class MessageLifelineConnect(AbstractConnect):
             return not (lifetime.visible ^ opposite_is_visible)
 
         return not (lifetime.visible ^ (port is element.lifetime.port))
-        
 
     def connect(self, handle, port):
         super(MessageLifelineConnect, self).connect(handle, port)
@@ -116,7 +117,6 @@ class MessageLifelineConnect(AbstractConnect):
         else:
             lifetime.visible = False
             lifetime.connectable = False
-
 
     def disconnect(self, handle):
         super(MessageLifelineConnect, self).disconnect(handle)
@@ -141,8 +141,6 @@ class MessageLifelineConnect(AbstractConnect):
             # zero, so allow connections to lifeline's lifetime
             lifetime.connectable = True
             lifetime.min_length = lifetime.MIN_LENGTH
-            
 
 
 component.provideAdapter(MessageLifelineConnect)
-

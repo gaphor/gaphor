@@ -25,18 +25,17 @@ Options:
         Display version information and exit.
 """
 
-import sys
-import os
-import getopt
-import struct
 import array
+import getopt
+import os
+import struct
+import sys
 
 __version__ = "1.1"
 
 MESSAGES = {}
 
 
-
 def usage(code, msg=''):
     print >> sys.stderr, __doc__
     if msg:
@@ -44,7 +43,6 @@ def usage(code, msg=''):
     sys.exit(code)
 
 
-
 def add(id, str, fuzzy):
     "Add a non-fuzzy translation to the dictionary."
     global MESSAGES
@@ -52,7 +50,6 @@ def add(id, str, fuzzy):
         MESSAGES[id] = str
 
 
-
 def generate():
     "Return the generated output."
     global MESSAGES
@@ -71,7 +68,7 @@ def generate():
     # The header is 7 32-bit unsigned integers.  We don't use hash tables, so
     # the keys start right after the index tables.
     # translated string.
-    keystart = 7*4+16*len(keys)
+    keystart = 7 * 4 + 16 * len(keys)
     # and the values start after the keys
     valuestart = keystart + len(ids)
     koffsets = []
@@ -79,23 +76,22 @@ def generate():
     # The string table first has the list of keys, then the list of values.
     # Each entry has first the size of the string, then the file offset.
     for o1, l1, o2, l2 in offsets:
-        koffsets += [l1, o1+keystart]
-        voffsets += [l2, o2+valuestart]
+        koffsets += [l1, o1 + keystart]
+        voffsets += [l2, o2 + valuestart]
     offsets = koffsets + voffsets
     output = struct.pack("Iiiiiii",
-                         0x950412deL,       # Magic
-                         0,                 # Version
-                         len(keys),         # # of entries
-                         7*4,               # start of key index
-                         7*4+len(keys)*8,   # start of value index
-                         0, 0)              # size and offset of hash table
+                         0x950412deL,  # Magic
+                         0,  # Version
+                         len(keys),  # # of entries
+                         7 * 4,  # start of key index
+                         7 * 4 + len(keys) * 8,  # start of value index
+                         0, 0)  # size and offset of hash table
     output += array.array("i", offsets).tostring()
     output += ids
     output += strs
     return output
 
 
-
 def make(filename, outfile):
     ID = 1
     STR = 2
@@ -113,7 +109,7 @@ def make(filename, outfile):
     except IOError, msg:
         print >> sys.stderr, msg
         sys.exit(1)
-    
+
     section = None
     fuzzy = 0
 
@@ -155,7 +151,7 @@ def make(filename, outfile):
             msgstr += l
         else:
             print >> sys.stderr, 'Syntax error on %s:%d' % (infile, lno), \
-                  'before:'
+                'before:'
             print >> sys.stderr, l
             sys.exit(1)
     # Add last entry
@@ -166,12 +162,11 @@ def make(filename, outfile):
     output = generate()
 
     try:
-        open(outfile,"wb").write(output)
-    except IOError,msg:
+        open(outfile, "wb").write(output)
+    except IOError, msg:
         print >> sys.stderr, msg
-                      
 
-
+
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'hVo:',

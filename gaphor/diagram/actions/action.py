@@ -3,19 +3,20 @@ Action diagram item.
 """
 
 from __future__ import absolute_import
+
 from math import pi
 
 from gaphor.UML import uml2
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 
+
 class ActionItem(NamedItem):
-    __uml__   = uml2.Action
+    __uml__ = uml2.Action
     __style__ = {
-        'min-size':   (50, 30),
+        'min-size': (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
     }
-
 
     def draw(self, context):
         """
@@ -41,12 +42,11 @@ class ActionItem(NamedItem):
 
 
 class SendSignalActionItem(NamedItem):
-    __uml__   = uml2.SendSignalAction
+    __uml__ = uml2.SendSignalAction
     __style__ = {
-        'min-size':   (50, 30),
+        'min-size': (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
     }
-
 
     def draw(self, context):
         """
@@ -60,9 +60,9 @@ class SendSignalActionItem(NamedItem):
         w = self.width
         h = self.height
         c.move_to(0, 0)
-        c.line_to(w-d, 0)
-        c.line_to(w, h/2)
-        c.line_to(w-d, h)
+        c.line_to(w - d, 0)
+        c.line_to(w, h / 2)
+        c.line_to(w - d, h)
         c.line_to(0, h)
         c.close_path()
 
@@ -70,12 +70,11 @@ class SendSignalActionItem(NamedItem):
 
 
 class AcceptEventActionItem(NamedItem):
-    __uml__   = uml2.SendSignalAction
+    __uml__ = uml2.SendSignalAction
     __style__ = {
-        'min-size':   (50, 30),
+        'min-size': (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
     }
-
 
     def draw(self, context):
         """
@@ -92,10 +91,9 @@ class AcceptEventActionItem(NamedItem):
         c.line_to(w, 0)
         c.line_to(w, h)
         c.line_to(0, h)
-        c.line_to(d, h/2)
+        c.line_to(d, h / 2)
         c.close_path()
 
         c.stroke()
-
 
 # vim:sw=4:et:ai

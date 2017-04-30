@@ -3,12 +3,13 @@ Interaction diagram item.
 """
 
 from __future__ import absolute_import
+
 from gaphor.UML import uml2
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
 
-class InteractionItem(NamedItem):
 
+class InteractionItem(NamedItem):
     __uml__ = uml2.Interaction
 
     __style__ = {
@@ -28,6 +29,5 @@ class InteractionItem(NamedItem):
         cr.line_to(w, h2)
         cr.line_to(w, 0)
         cr.stroke()
-
 
 # vim:sw=4:et

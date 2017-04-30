@@ -1,18 +1,20 @@
 """About and help services. (help browser anyone?)"""
 
 from __future__ import absolute_import
-from logging import getLogger
-import os
-import pkg_resources
+
 import gtk
+import os
+from logging import getLogger
 from zope import interface
 
+import pkg_resources
+
 from gaphor.application import Application
-from gaphor.interfaces import IService, IActionProvider
 from gaphor.core import _, inject, action, build_action_group
+from gaphor.interfaces import IService, IActionProvider
+
 
 class HelpService(object):
-
     interface.implements(IService, IActionProvider)
 
     menu_xml = """
@@ -42,10 +44,12 @@ class HelpService(object):
 
     @action(name='help-about', stock_id='gtk-about')
     def about(self):
-        logo_file =  os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'ui', 'pixmaps', 'logo.png')
+        logo_file = os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'ui', 'pixmaps',
+                                 'logo.png')
         logo = gtk.gdk.pixbuf_new_from_file(logo_file)
         version = Application.distribution.version
-        about = gtk.Dialog(_('About Gaphor'), self.main_window.window, gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
+        about = gtk.Dialog(_('About Gaphor'), self.main_window.window, gtk.DIALOG_MODAL,
+                           (gtk.STOCK_OK, gtk.RESPONSE_OK))
         about.set_default_response(gtk.RESPONSE_OK)
         vbox = about.vbox
 
@@ -75,7 +79,7 @@ class HelpService(object):
         notebook.append_page(tab_vbox, gtk.Label(_('About')))
 
         tab_vbox = gtk.VBox()
-        
+
         add_label('This software is published\n'
                   'under the terms of the\n'
                   '<span weight="bold">GNU General Public License v2</span>.\n'
@@ -83,7 +87,7 @@ class HelpService(object):
         notebook.append_page(tab_vbox, gtk.Label(_('License')))
 
         tab_vbox = gtk.VBox()
-        
+
         add_label('Gaphor is written by:\n'
                   'Arjan Molenaar\n'
                   'Artur Wroblewski\n'
@@ -94,6 +98,5 @@ class HelpService(object):
         vbox.show_all()
         about.run()
         about.destroy()
-
 
 # vim:sw=4:et:ai

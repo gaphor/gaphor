@@ -1,14 +1,14 @@
-
 from __future__ import absolute_import
-import unittest
-from gaphor.UML import interfaces
-from gaphor.UML import elementfactory
-from gaphor.UML import uml2
+
 import gc
+import unittest
+
+from gaphor.UML import elementfactory
+from gaphor.UML import interfaces
+from gaphor.UML import uml2
 
 
 class ElementFactoryTestCase(unittest.TestCase):
-
     def setUp(self):
         self.factory = elementfactory.ElementFactory()
 
@@ -25,16 +25,15 @@ class ElementFactoryTestCase(unittest.TestCase):
         ef = self.factory
 
         p = ef.create(uml2.Parameter)
-        #wp = weakref.ref(p)
+        # wp = weakref.ref(p)
         assert len(list(ef.values())) == 1
         ef.flush()
         del p
 
         gc.collect()
 
-        #assert wp() is None
+        # assert wp() is None
         assert len(list(ef.values())) == 0, list(ef.values())
-
 
     def testWithoutApplication(self):
         ef = elementfactory.ElementFactory()
@@ -50,7 +49,6 @@ class ElementFactoryTestCase(unittest.TestCase):
 
         p.unlink()
         assert ef.size() == 0, ef.size()
-
 
     def testUnlink(self):
         ef = self.factory
@@ -73,8 +71,6 @@ class ElementFactoryTestCase(unittest.TestCase):
         assert len(list(ef.values())) == 0, list(ef.values())
 
 
-
-
 from zope import component
 from gaphor.application import Application
 
@@ -84,6 +80,7 @@ handled = False
 events = []
 last_event = None
 
+
 @component.adapter(interfaces.IServiceEvent)
 def handler(event):
     global handled, events, last_event
@@ -91,11 +88,11 @@ def handler(event):
     events.append(event)
     last_event = event
 
+
 component.provideHandler(handler)
 
 
 class ElementFactoryServiceTestCase(unittest.TestCase):
-
     def setUp(self):
         Application.init(['element_factory'])
         self.factory = Application.get_service('element_factory')
@@ -108,37 +105,36 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
     def clearEvents(self):
         global handled, events, last_event
         handled = False
-        events = [ ]
+        events = []
         last_event = None
 
     def testCreateEvent(self):
         ef = self.factory
         global handled
         p = ef.create(uml2.Parameter)
-        self.assertTrue(interfaces.IElementCreateEvent.providedBy(last_event) )
+        self.assertTrue(interfaces.IElementCreateEvent.providedBy(last_event))
         self.assertTrue(handled)
 
     def testRemoveEvent(self):
         ef = self.factory
         global handled
         p = ef.create(uml2.Parameter)
-        self.assertTrue(interfaces.IElementCreateEvent.providedBy(last_event) )
+        self.assertTrue(interfaces.IElementCreateEvent.providedBy(last_event))
         self.assertTrue(handled)
         self.clearEvents()
         p.unlink()
-        self.assertTrue(interfaces.IElementDeleteEvent.providedBy(last_event) )
+        self.assertTrue(interfaces.IElementDeleteEvent.providedBy(last_event))
 
     def testModelEvent(self):
         ef = self.factory
         global handled
         ef.notify_model()
-        self.assertTrue(interfaces.IModelFactoryEvent.providedBy(last_event) )
+        self.assertTrue(interfaces.IModelFactoryEvent.providedBy(last_event))
 
     def testFlushEvent(self):
         ef = self.factory
         global handled
         ef.flush()
-        self.assertTrue(interfaces.IFlushFactoryEvent.providedBy(last_event) )
-
+        self.assertTrue(interfaces.IFlushFactoryEvent.providedBy(last_event))
 
 # vim:sw=4:et:ai

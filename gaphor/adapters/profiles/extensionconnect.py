@@ -1,7 +1,9 @@
 from __future__ import absolute_import
-from gaphor.adapters.connectors import RelationshipConnect
-from zope import interface, component
+
+from zope import component
+
 from gaphor.UML import uml2, modelfactory
+from gaphor.adapters.connectors import RelationshipConnect
 from gaphor.diagram import items
 
 
@@ -25,7 +27,6 @@ class ExtensionConnect(RelationshipConnect):
 
         return allow and super(ExtensionConnect, self).allow(handle, port)
 
-
     def connect_subject(self, handle):
         element = self.element
         line = self.line
@@ -41,9 +42,9 @@ class ExtensionConnect(RelationshipConnect):
                 end1 = line.subject.memberEnd[0]
                 end2 = line.subject.memberEnd[1]
                 if (end1.type is head_type and end2.type is tail_type) \
-                   or (end2.type is head_type and end1.type is tail_type):
+                        or (end2.type is head_type and end1.type is tail_type):
                     return
-             
+
             # TODO: make element at head end update!
             c1.request_update()
 
@@ -54,7 +55,7 @@ class ExtensionConnect(RelationshipConnect):
                     end1 = assoc.memberEnd[0]
                     end2 = assoc.memberEnd[1]
                     if (end1.type is head_type and end2.type is tail_type) \
-                       or (end2.type is head_type and end1.type is tail_type):
+                            or (end2.type is head_type and end1.type is tail_type):
                         # check if this entry is not yet in the diagram
                         # Return if the association is not (yet) on the canvas
                         for item in assoc.presentation:
@@ -66,8 +67,8 @@ class ExtensionConnect(RelationshipConnect):
             else:
                 # Create a new Extension relationship
                 relation = modelfactory.extend_with_stereotype(self.element_factory,
-                        head_type,
-                        tail_type)
+                                                               head_type,
+                                                               tail_type)
                 line.subject = relation
 
     def disconnect_subject(self, handle):

@@ -2,17 +2,18 @@
 """
 
 from __future__ import absolute_import
-from zope import interface
-from gaphor.UML.uml2 import Element
-from gaphor.interfaces import IService
-from gaphor.core import inject
 
-# Register application specific picklers:
+import pickle
+from zope import interface
+
+from six.moves import map
+
+from gaphor.UML.uml2 import Element
+from gaphor.core import inject
+from gaphor.interfaces import IService
 from gaphor.misc.latepickle import LatePickler
 
 
-import pickle
-from six.moves import map
 class MyPickler(LatePickler):
     """
     Customize the pickler to only delay instantiations of Element objects.
@@ -34,14 +35,11 @@ class BackupService(object):
     def __init__(self):
         self.tempname = '.backup.gaphor.tmp'
 
-
     def init(self, app):
         pass
 
-
     def shutdown(self):
         pass
-
 
     def backup(self):
         f = open(self.tempname, 'w')
@@ -51,7 +49,6 @@ class BackupService(object):
         finally:
             f.close()
 
-
     def restore(self):
         f = open(self.tempname, 'r')
         try:
@@ -60,6 +57,5 @@ class BackupService(object):
             f.close()
         self.element_factory.flush()
         list(map(self.element_factory.bind, elements))
-
 
 # vim: sw=4:et:ai

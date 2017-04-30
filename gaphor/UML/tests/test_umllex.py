@@ -3,15 +3,19 @@ Parsing of UML model elements from string tests.
 """
 
 from __future__ import absolute_import
+
 import unittest
+
+from gaphor.UML import uml2
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.UML.umllex import attribute_pat, operation_pat, parameter_pat
-from gaphor.UML import uml2
 from gaphor.UML.umllex import parse
+
 
 def dump_prop(prop):
     m = attribute_pat.match(prop)
-    #print m.groupdict()
+    # print m.groupdict()
+
 
 def dump_oper(oper):
     m = operation_pat.match(oper)
@@ -20,14 +24,15 @@ def dump_oper(oper):
     else:
         # set name to oper
         return
-    #print g('vis'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('tags')
+    # print g('vis'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('tags')
     if g('params'):
         params = g('params')
         while params:
             m = parameter_pat.match(params)
             g = m.group
-            #print ' ', g('dir') or 'in', g('name'), g('type'), g('mult_l'), g('mult_u'), g('default'), g('tags')
+            # print ' ', g('dir') or 'in', g('name'), g('type'), g('mult_l'), g('mult_u'), g('default'), g('tags')
             params = g('rest')
+
 
 dump_prop('#/name')
 dump_prop('+ / name : str[1..*] = "aap" { static }')
@@ -37,20 +42,19 @@ dump_oper('myfunc(aap:str = "aap", out two): type')
 dump_oper('   myfunc2 ( ): type')
 dump_oper('myfunc(aap:str[1] = "aap" { tag1, tag2 }, out two {tag3}): type')
 
-
 factory = ElementFactory()
+
 
 class AttributeTestCase(unittest.TestCase):
     """
     Parsing an attribute tests.
     """
+
     def setUp(self):
         pass
 
-
     def tearDown(self):
         factory.flush()
-
 
     def test_parse_property_simple(self):
         """Test simple property parsing
@@ -64,13 +68,12 @@ class AttributeTestCase(unittest.TestCase):
         self.assertTrue(a.upperValue is None, a.upperValue)
         self.assertTrue(a.defaultValue is None, a.defaultValue)
 
-
     def test_parse_property_complex(self):
         """Test complex property parsing
         """
         a = factory.create(uml2.Property)
 
-        parse(a,'+ / name : str[0..*] = "aap" { static }')
+        parse(a, '+ / name : str[0..*] = "aap" { static }')
         self.assertEquals('public', a.visibility)
         self.assertTrue(a.isDerived)
         self.assertEquals('name', a.name)
@@ -78,7 +81,6 @@ class AttributeTestCase(unittest.TestCase):
         self.assertEquals('0', a.lowerValue)
         self.assertEquals('*', a.upperValue)
         self.assertEquals('"aap"', a.defaultValue)
-
 
     def test_parse_property_invalid(self):
         """Test parsing property with invalid syntax
@@ -94,11 +96,11 @@ class AttributeTestCase(unittest.TestCase):
         self.assertTrue(not a.defaultValue)
 
 
-
 class AssociationEndTestCase(unittest.TestCase):
     """
     Parsing association end tests.
     """
+
     def setUp(self):
         pass
 
@@ -119,7 +121,6 @@ class AssociationEndTestCase(unittest.TestCase):
         self.assertTrue(not p.upperValue)
         self.assertTrue(not p.defaultValue)
 
-
     def test_parse_multiplicity(self):
         """Test parsing of multiplicity
         """
@@ -133,7 +134,6 @@ class AssociationEndTestCase(unittest.TestCase):
         self.assertEquals('2', p.upperValue)
         self.assertTrue(not p.defaultValue)
 
-
     def test_parse_multiplicity2(self):
         """Test parsing of multiplicity with multiline constraints
         """
@@ -146,7 +146,6 @@ class AssociationEndTestCase(unittest.TestCase):
         self.assertEquals('0', p.lowerValue)
         self.assertEquals('2', p.upperValue)
         self.assertTrue(not p.defaultValue)
-
 
     def test_parse_derived_end(self):
         """Test parsing derived association end
@@ -184,7 +183,6 @@ class OperationTestCase(unittest.TestCase):
         self.assertTrue(not o.returnResult[0].typeValue)
         self.assertFalse(o.formalParameter)
 
-
     def test_parse_operation_return(self):
         """Test parsing operation with return value
         """
@@ -194,7 +192,6 @@ class OperationTestCase(unittest.TestCase):
         self.assertEquals('int', o.returnResult[0].typeValue)
         self.assertEquals('public', o.visibility)
         self.assertTrue(not o.formalParameter)
-
 
     def test_parse_operation_2_params(self):
         """Test parsing of operation with two parameters
@@ -212,7 +209,6 @@ class OperationTestCase(unittest.TestCase):
         self.assertEquals('int', o.formalParameter[1].typeValue)
         self.assertEquals('3', o.formalParameter[1].defaultValue)
 
-
     def test_parse_operation_1_param(self):
         """Test parsing of operation with one parameter
         """
@@ -226,13 +222,11 @@ class OperationTestCase(unittest.TestCase):
         self.assertEquals('node', o.formalParameter[0].typeValue)
         self.assertTrue(o.formalParameter[0].defaultValue is None)
 
-
     def test_parse_operation_invalid_syntax(self):
         """Test operation parsing with invalid syntax
         """
         o = factory.create(uml2.Operation)
         parse(o, '- myfunc2: myType2')
         self.assertEquals('- myfunc2: myType2', o.name)
-
 
 # vim:sw=4:et:ai

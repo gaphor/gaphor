@@ -1,27 +1,29 @@
 # vim:sw=4:et
 
 from __future__ import absolute_import
+
 import sys
-from xml.sax.saxutils import escape, quoteattr
 import xml.sax.handler
+from xml.sax.saxutils import escape, quoteattr
 
 # See whether the xmlcharrefreplace error handler is
 # supported
 try:
     from codecs import xmlcharrefreplace_errors
+
     _error_handling = "xmlcharrefreplace"
     del xmlcharrefreplace_errors
 except ImportError:
     _error_handling = "strict"
 
-class XMLWriter(xml.sax.handler.ContentHandler):
 
+class XMLWriter(xml.sax.handler.ContentHandler):
     def __init__(self, out=None, encoding=None):
         if out is None:
             out = sys.stdout
         xml.sax.handler.ContentHandler.__init__(self)
         self._out = out
-        self._ns_contexts = [{}] # contains uri -> prefix dicts
+        self._ns_contexts = [{}]  # contains uri -> prefix dicts
         self._current_context = self._ns_contexts[-1]
         self._undeclared_ns_maps = []
         self._encoding = encoding or sys.getdefaultencoding()
@@ -63,7 +65,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
             self._in_start_tag = False
             self._next_newline = True
             return
-            
+
         if isinstance(text, str):
             self._out.write(text)
         else:
@@ -84,7 +86,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
 
     def startDocument(self):
         self._write('<?xml version="1.0" encoding="%s"?>\n' %
-                        self._encoding)
+                    self._encoding)
 
     def startPrefixMapping(self, prefix, uri):
         self._ns_contexts.append(self._current_context.copy())
@@ -143,6 +145,5 @@ class XMLWriter(xml.sax.handler.ContentHandler):
     def endCDATA(self):
         self._write(']]>')
         self._in_cdata = False
-
 
 # vim:sw=4:et:ai
