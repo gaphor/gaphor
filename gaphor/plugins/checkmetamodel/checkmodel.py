@@ -1,7 +1,7 @@
 
 from __future__ import absolute_import
 from __future__ import print_function
-from gaphor import UML
+from gaphor.UML import uml2
 from os import path
 from six.moves import map
 
@@ -30,7 +30,7 @@ def get_superclasses(class_):
 
 
 def check_classes(element_factory):
-    classes = element_factory.select(lambda e: e.isKindOf(UML.Class))
+    classes = element_factory.select(lambda e: e.isKindOf(uml2.Class))
     names = [ c.name for c in classes ]
     for c in classes:
         if names.count(c.name) > 1:
@@ -41,7 +41,7 @@ def check_association_end_subsets(element_factory, end):
     # TODO: don't use Tagged values, use Stereotype values or something
     subsets = get_subsets(end.taggedValue and end.taggedValue[0].value or '')
     opposite_subsets = get_subsets(end.opposite.taggedValue and end.opposite.taggedValue[0].value or '')
-    subset_properties = element_factory.select(lambda e: e.isKindOf(UML.Property) and e.name in subsets)
+    subset_properties = element_factory.select(lambda e: e.isKindOf(uml2.Property) and e.name in subsets)
 
     # TODO: check if properties belong to a superclass of the end's class
 
@@ -66,7 +66,7 @@ def check_association_end(element_factory, end):
     check_association_end_subsets(element_factory, end)
 
 def check_associations(element_factory):
-    for a in element_factory.select(lambda e: e.isKindOf(UML.Association)):
+    for a in element_factory.select(lambda e: e.isKindOf(uml2.Association)):
         assert len(a.memberEnd) == 2
         head = a.memberEnd[0]
         tail = a.memberEnd[1]
@@ -74,7 +74,7 @@ def check_associations(element_factory):
         check_association_end(element_factory, tail)
 
 def check_attributes(element_factory):
-    for a in element_factory.select(lambda e: e.isKindOf(UML.Property) and not e.association):
+    for a in element_factory.select(lambda e: e.isKindOf(uml2.Property) and not e.association):
         if not a.typeValue or not a.typeValue.value:
             report(a,'Attribute has no type: %s' % a.name)
         elif a.typeValue.value.lower() not in ('string', 'boolean', 'integer', 'unlimitednatural'):
@@ -84,7 +84,7 @@ def check_attributes(element_factory):
 def check_UML_module():
     all_classes = list(map(getattr, [UML] * len(dir(UML)), dir(UML)))
     for c in all_classes:
-        if not isinstance(c, UML.Element):
+        if not isinstance(c, uml2.Element):
             continue
         # TODO: check derived unions.
 
