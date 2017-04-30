@@ -6,6 +6,8 @@ into gaphor/UML/uml2.py.
 Also a distutils tool, build_uml, is provided.
 """
 
+from __future__ import absolute_import
+from __future__ import print_function
 import os.path
 from distutils.core import Command
 from distutils.dep_util import newer
@@ -49,12 +51,12 @@ class build_uml(Command):
         if self.force or newer(model, outfile) \
                 or newer(overrides, outfile) \
                 or newer(gen, outfile):
-            print 'generating %s from %s...' % (py_model, model)
-            print '  (warnings can be ignored)'
-            import gen_uml
+            print('generating %s from %s...' % (py_model, model))
+            print('  (warnings can be ignored)')
+            from . import gen_uml
             gen_uml.generate(model, outfile, overrides)
         else:
-            print 'not generating %s (up-to-date)' % py_model
+            print('not generating %s (up-to-date)' % py_model)
         byte_compile([outfile])
 
 # vim:sw=4:et

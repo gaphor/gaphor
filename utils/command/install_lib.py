@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from setuptools.command.install_lib import install_lib as _install_lib
 
 

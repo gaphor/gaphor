@@ -7,6 +7,8 @@
 #
 # Arjan Molenaar.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 
 sys.path.append("..")
@@ -17,10 +19,10 @@ done = [object]
 def print_vars(cls):
     global done
     done.append(cls)
-    print cls.__name__ + ":"
+    print(cls.__name__ + ":")
     dict = cls.__dict__
     for key in dict.keys():
-        print "\t" + key + ":", str(dict[key])
+        print("\t" + key + ":", str(dict[key]))
     for base in cls.__bases__:
         if base not in done:
             print_vars(base)
@@ -32,5 +34,5 @@ if args:
     cls = eval(args[0])
     print_vars(cls)
 else:
-    print "Usage: " + sys.argv[0] + " <UML class name>"
+    print("Usage: " + sys.argv[0] + " <UML class name>")
     sys.exit(1)

@@ -5,11 +5,13 @@ Build a PO template (for i18n) and update the .po files to reflect
 the last changes.
 """
 
+from __future__ import absolute_import
+from __future__ import print_function
 import os.path
 import sys
 from distutils.core import Command
 
-import pygettext
+from . import pygettext
 
 
 # from pygettext.main():
@@ -101,7 +103,7 @@ class build_pot(Command):
             elif self.style == 'solaris':
                 options.locationstyle = self.SOLARIS
             else:
-                raise SystemExit, 'Invalid value for --style: %s' % self.style
+                raise SystemExit('Invalid value for --style: %s' % self.style)
         if not self.output:
             self.output = self.distribution.get_name() + '.pot'
         if not self.output_dir:
@@ -115,7 +117,7 @@ class build_pot(Command):
                 options.toexclude = fp.readlines()
                 fp.close()
             except IOError:
-                raise SystemExit, "Can't read --exclude-file: %s" % self.exclude_file
+                raise SystemExit("Can't read --exclude-file: %s" % self.exclude_file)
         # skip: self.no_docstrings
         if self.all_linguas:
             self.all_linguas = self.all_linguas.split(',')
@@ -148,22 +150,22 @@ class build_pot(Command):
         source_files = []
         for p in self.packages:
             pathlist = p.split('.')
-            path = apply(os.path.join, pathlist)
+            path = os.path.join(*pathlist)
             source_files.extend(glob.glob(os.path.join(path, '*.py')))
 
         # slurp through all the files
         eater = pygettext.TokenEater(self.options)
         for filename in source_files:
             if self.verbose:
-                print 'Working on %s' % filename
+                print('Working on %s' % filename)
             fp = open(filename)
             try:
                 eater.set_filename(filename)
                 try:
                     tokenize.tokenize(fp.readline, eater)
-                except tokenize.TokenError, e:
-                    print '%s: %s, line %d, column %d' % (
-                        e[0], filename, e[1][0], e[1][1])
+                except tokenize.TokenError as e:
+                    print('%s: %s, line %d, column %d' % (
+                        e[0], filename, e[1][0], e[1][1]))
             finally:
                 fp.close()
 
