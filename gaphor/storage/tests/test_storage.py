@@ -3,20 +3,17 @@ Unittest the storage and parser modules
 """
 
 from __future__ import absolute_import
-
 import os
-import os.path
 import re
-from cStringIO import StringIO
-
+import os.path
 import pkg_resources
-from six.moves import map
-
-from gaphor.UML import uml2
-from gaphor.diagram import items
-from gaphor.misc.xmlwriter import XMLWriter
-from gaphor.storage import storage
 from gaphor.tests.testcase import TestCase
+from gaphor.UML import uml2
+from gaphor.storage import storage
+from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.diagram import items
+from cStringIO import StringIO
+from six.moves import map
 
 
 # __module__ = 'test_storage'

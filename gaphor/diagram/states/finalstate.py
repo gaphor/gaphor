@@ -3,18 +3,17 @@ Final state diagram item.
 """
 
 from __future__ import absolute_import
-
+from gaphor.UML import uml2
+from gaphor.diagram.style import ALIGN_RIGHT, ALIGN_BOTTOM
 from gaphas.util import path_ellipse
 
-from gaphor.UML import uml2
 from gaphor.diagram.states import VertexItem
-from gaphor.diagram.style import ALIGN_RIGHT, ALIGN_BOTTOM
 
 
 class FinalStateItem(VertexItem):
-    __uml__ = uml2.FinalState
+    __uml__   = uml2.FinalState
     __style__ = {
-        'min-size': (30, 30),
+        'min-size':   (30, 30),
         'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
         'name-padding': (2, 2, 2, 2),
         'name-outside': True,
@@ -22,7 +21,6 @@ class FinalStateItem(VertexItem):
 
     RADIUS_1 = 10
     RADIUS_2 = 15
-
     def __init__(self, id=None):
         super(FinalStateItem, self).__init__(id)
         for h in self.handles():

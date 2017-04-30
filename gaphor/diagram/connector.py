@@ -101,15 +101,14 @@ interfaces are connectable elements.
 """
 
 from __future__ import absolute_import
-
 from logging import getLogger
-
 from gaphor.UML import uml2
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
-logger = getLogger('Connector')
+from operator import attrgetter
 
+logger = getLogger('Connector')
 
 class ConnectorItem(NamedLine):
     """
@@ -127,8 +126,8 @@ class ConnectorItem(NamedLine):
      _interface
         Interface name, when connector is assembly connector.
     """
-    __uml__ = uml2.Connector
-    __style__ = {
+    __uml__        = uml2.Connector
+    __style__   = {
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
         'name-outside': True,
     }
@@ -140,9 +139,11 @@ class ConnectorItem(NamedLine):
         })
         self.watch('subject<Connector>.end.role.name', self.on_interface_name)
 
+
     def postload(self):
         super(ConnectorItem, self).postload()
         self.on_interface_name(None)
+
 
     def on_interface_name(self, event):
         """
@@ -157,6 +158,7 @@ class ConnectorItem(NamedLine):
         else:
             self.request_update(matrix=False)
 
+
     def draw_tail(self, context):
         cr = context.cairo
         cr.line_to(0, 0)
@@ -165,19 +167,23 @@ class ConnectorItem(NamedLine):
             cr.line_to(0, 0)
             cr.line_to(15, 6)
 
+
     def save(self, save_func):
         super(ConnectorItem, self).save(save_func)
-        # save_func('end', self.end)
+        #save_func('end', self.end)
+
 
     def load(self, name, value):
         if name == 'end':
-            pass  # self.end = value
+            pass #self.end = value
         else:
             super(ConnectorItem, self).load(name, value)
 
 
-            # def on_named_element_name(self, event):
-            #    if isinstance(self.subject, UML.Connector):
-            #        super(ConnectorItem, self).on_named_element_name(event)
+    #def on_named_element_name(self, event):
+    #    if isinstance(self.subject, UML.Connector):
+    #        super(ConnectorItem, self).on_named_element_name(event)
+
+
 
 # vim:sw=4:et:ai

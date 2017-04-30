@@ -3,11 +3,9 @@ Test connections to folded interface.
 """
 
 from __future__ import absolute_import
-
 from gaphor.UML import uml2
 from gaphor.diagram import items
 from gaphor.tests import TestCase
-
 
 class ImplementationTestCase(TestCase):
     def test_folded_interface_connection(self):
@@ -20,6 +18,7 @@ class ImplementationTestCase(TestCase):
         assert not impl._solid
         self.connect(impl, impl.head, iface, iface.ports()[0])
         self.assertTrue(impl._solid)
+
 
     def test_folded_interface_disconnection(self):
         """Test disconnection implementation from folded interface
@@ -50,6 +49,7 @@ class DependencyTestCase(TestCase):
         # at the end, interface folded notation shall be `required' one
         self.assertEquals(iface.folded, iface.FOLDED_REQUIRED)
 
+
     def test_folded_interface_disconnection(self):
         """Test disconnection dependency from folded interface
         """
@@ -65,6 +65,7 @@ class DependencyTestCase(TestCase):
         self.assertTrue(not dep._solid)
         # after disconnection, interface folded notation shall be `provided' one
         self.assertEquals(iface.folded, iface.FOLDED_PROVIDED)
+
 
     def test_unfolded_interface_disconnection(self):
         """Test disconnection dependency from unfolded interface
@@ -83,23 +84,22 @@ class DependencyTestCase(TestCase):
 
 
 LINES = (items.ImplementationItem,
-         items.DependencyItem,
-         items.GeneralizationItem,
-         items.AssociationItem,
-         items.CommentLineItem)
-
+        items.DependencyItem,
+        items.GeneralizationItem,
+        items.AssociationItem,
+        items.CommentLineItem)
 
 class FoldedInterfaceMultipleLinesTestCase(TestCase):
     """
     Test connection of additional diagram lines to folded interface,
     which has already usage depenendency or implementation connected.
     """
-
     def setUp(self):
         super(FoldedInterfaceMultipleLinesTestCase, self).setUp()
 
         self.iface = self.create(items.InterfaceItem, uml2.Interface)
         self.iface.folded = self.iface.FOLDED_PROVIDED
+
 
     def test_interface_with_implementation(self):
         """Test glueing different lines to folded interface with implementation
@@ -112,6 +112,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
             glued = self.allow(line, line.head, self.iface)
             # no additional lines (specified above) can be glued
             self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
+
 
     def test_interface_with_dependency(self):
         """Test glueing different lines to folded interface with dependency
@@ -126,12 +127,12 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
             self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
 
 
+
 class FoldedInterfaceSingleLineTestCase(TestCase):
     """
     Test connection of diagram lines to folded interface. Any lines beside
     implementation and dependency should be forbidden to connect.
     """
-
     def test_interface_with_forbidden_lines(self):
         """Test glueing forbidden lines to folded interface
         """
@@ -143,5 +144,7 @@ class FoldedInterfaceSingleLineTestCase(TestCase):
             glued = self.allow(line, line.head, iface)
             # no additional lines (specified above) can be glued
             self.assertFalse(glued, 'Glueing of %s should not be allowed' % cls)
+
+
 
 # vim:sw=4:et:ai

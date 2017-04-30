@@ -3,11 +3,9 @@ Test transitions.
 """
 
 from __future__ import absolute_import
-
 from gaphor.UML import uml2
 from gaphor.diagram.states.transition import TransitionItem
 from gaphor.tests.testcase import TestCase
-
 
 class TransitionTestCase(TestCase):
     """

@@ -16,7 +16,6 @@ type of a dependency in automatic way.
 """
 
 from __future__ import absolute_import
-
 from gaphor.UML import uml2
 from gaphor.diagram.diagramline import DiagramLine
 
@@ -39,8 +38,8 @@ class DependencyItem(DiagramLine):
     # do not use issubclass, because issubclass(uml2.Implementation, uml2.Realization)
     # we need to be very strict here
     __stereotype__ = {
-        'use': lambda self: self._dependency_type == uml2.Usage,
-        'realize': lambda self: self._dependency_type == uml2.Realization,
+        'use':        lambda self: self._dependency_type == uml2.Usage,
+        'realize':    lambda self: self._dependency_type == uml2.Realization,
         'implements': lambda self: self._dependency_type == uml2.Implementation,
     }
 
@@ -51,15 +50,18 @@ class DependencyItem(DiagramLine):
         self.auto_dependency = True
         self._solid = False
 
+
     def save(self, save_func):
         DiagramLine.save(self, save_func)
         save_func('auto_dependency', self.auto_dependency)
+
 
     def load(self, name, value):
         if name == 'auto_dependency':
             self.auto_dependency = eval(value)
         else:
             DiagramLine.load(self, name, value)
+
 
     def postload(self):
         if self.subject:
@@ -69,11 +71,13 @@ class DependencyItem(DiagramLine):
         else:
             DiagramLine.postload(self)
 
+
     def set_dependency_type(self, dependency_type):
         self._dependency_type = dependency_type
 
     dependency_type = property(lambda s: s._dependency_type,
                                set_dependency_type)
+
 
     def draw_head(self, context):
         cr = context.cairo
@@ -84,10 +88,12 @@ class DependencyItem(DiagramLine):
             cr.line_to(15, 6)
             cr.stroke()
         cr.move_to(0, 0)
+    
 
     def draw(self, context):
         if not self._solid:
             context.cairo.set_dash((7.0, 5.0), 0)
         super(DependencyItem, self).draw(context)
+
 
 # vim:sw=4:et

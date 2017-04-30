@@ -1,12 +1,13 @@
+
+
 from __future__ import absolute_import
-
 import unittest
-
 from gaphor.UML import uml2
 from gaphor.application import Application
-
+import pkg_resources
 
 class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
+
     def setUp(self):
         Application.init()
         element_factory = Application.get_service('element_factory')
@@ -23,7 +24,7 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
 
         # Find all profile instances
         profiles = element_factory.lselect(lambda e: e.isKindOf(uml2.Profile))
-
+        
         # Check there is 1 profile
         self.assertEquals(1, len(profiles))
 
@@ -47,7 +48,7 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
         element_factory = Application.get_service('element_factory')
 
         diagram = element_factory.lselect(lambda e: e.isKindOf(uml2.Diagram) and e.name == 'Stereotypes diagram')[0]
-
+        
         self.assertTrue(diagram)
 
         diagram.unlink()

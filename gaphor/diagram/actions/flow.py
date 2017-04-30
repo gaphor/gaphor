@@ -5,17 +5,20 @@ Contains also implementation to split flows using activity edge connectors.
 """
 
 from __future__ import absolute_import
+from math import atan, pi, sin, cos
 
 from gaphor.UML import uml2
 from gaphor.diagram.diagramline import NamedLine
-from gaphor.diagram.style import ALIGN_RIGHT, ALIGN_TOP
+from gaphor.diagram.style import ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
+
 
 node_classes = {
-    uml2.ForkNode: uml2.JoinNode,
+    uml2.ForkNode:     uml2.JoinNode,
     uml2.DecisionNode: uml2.MergeNode,
-    uml2.JoinNode: uml2.ForkNode,
-    uml2.MergeNode: uml2.DecisionNode,
+    uml2.JoinNode:     uml2.ForkNode,
+    uml2.MergeNode:    uml2.DecisionNode,
 }
+
 
 
 class FlowItem(NamedLine):
@@ -27,15 +30,16 @@ class FlowItem(NamedLine):
     __uml__ = uml2.ControlFlow
 
     __style__ = {
-        'name-align': (ALIGN_RIGHT, ALIGN_TOP),
-        'name-padding': (5, 15, 5, 5),
+            'name-align': (ALIGN_RIGHT, ALIGN_TOP),
+            'name-padding': (5, 15, 5, 5),
     }
 
-    def __init__(self, id=None):
+    def __init__(self, id = None):
         NamedLine.__init__(self, id)
         self._guard = self.add_text('guard.value', editable=True)
         self.watch('subject<ControlFlow>.guard', self.on_control_flow_guard)
         self.watch('subject<ObjectFlow>.guard', self.on_control_flow_guard)
+
 
     def postload(self):
         try:
@@ -43,6 +47,7 @@ class FlowItem(NamedLine):
         except AttributeError as e:
             self._guard.text = ''
         super(FlowItem, self).postload()
+
 
     def on_control_flow_guard(self, event):
         subject = self.subject
@@ -52,6 +57,7 @@ class FlowItem(NamedLine):
             self._guard.text = ''
         self.request_update()
 
+
     def draw_tail(self, context):
         cr = context.cairo
         cr.line_to(0, 0)
@@ -60,32 +66,32 @@ class FlowItem(NamedLine):
         cr.line_to(0, 0)
         cr.line_to(15, 6)
 
-
-# class ACItem(TextElement):
+        
+#class ACItem(TextElement):
 class ACItem(object):
     """
     Activity edge connector. It is a circle with name inside.
     """
 
     RADIUS = 10
-
     def __init__(self, id):
         pass
-        # TextElement.__init__(self, id)
-        # self._circle = diacanvas.shape.Ellipse()
-        # self._circle.set_line_width(2.0)
-        # self._circle.set_fill_color(diacanvas.color(255, 255, 255))
-        # self._circle.set_fill(diacanvas.shape.FILL_SOLID)
-        # self.show_border = False
+        #TextElement.__init__(self, id)
+        #self._circle = diacanvas.shape.Ellipse()
+        #self._circle.set_line_width(2.0)
+        #self._circle.set_fill_color(diacanvas.color(255, 255, 255))
+        #self._circle.set_fill(diacanvas.shape.FILL_SOLID)
+        #self.show_border = False
 
         # set new value notification function to change activity edge
         # connector name globally
-        # vnf = self.on_subject_notify__value
-        # def f(subject, pspec):
+        #vnf = self.on_subject_notify__value
+        #def f(subject, pspec):
         #    vnf(subject, pspec)
         #    if self.parent._opposite:
         #        self.parent._opposite._connector.subject.value = subject.value
-        # self.on_subject_notify__value = f
+        #self.on_subject_notify__value = f
+
 
     def move_center(self, x, y):
         """
@@ -97,6 +103,7 @@ class ACItem(object):
         y -= self.RADIUS
         self.props.affine = (a[0], a[1], a[2], a[3], x, y)
 
+
     def on_update(self, affine):
         """
         Center name of activity edge connector and put a circle around it.
@@ -105,7 +112,7 @@ class ACItem(object):
         x = self.RADIUS
         y = self.RADIUS
 
-        self._circle.ellipse(center=(x, y), width=r, height=r)
+        self._circle.ellipse(center = (x, y), width = r, height = r)
 
         # get label size and move it so it is centered with circle
         w, h = self.get_size()
@@ -117,7 +124,8 @@ class ACItem(object):
 
         self.set_bounds((-1, -1, r + 1, r + 1))
 
-# class CFlowItem(FlowItem):
+
+#class CFlowItem(FlowItem):
 #    """
 #    Abstract class for flows with activity edge connector. Flow with
 #    activity edge connector references other one, which has activity edge
@@ -219,7 +227,7 @@ class ACItem(object):
 #
 #
 #
-# class CFlowItemA(CFlowItem):
+#class CFlowItemA(CFlowItem):
 #    """
 #    * Is used for split flows, as is CFlowItemB *
 #
@@ -257,7 +265,7 @@ class ACItem(object):
 #
 #
 #
-# class CFlowItemB(CFlowItem):
+#class CFlowItemB(CFlowItem):
 #    """
 #    Flow with activity edge connector, which starts from activity edge
 #    connector and points to a node.
@@ -292,7 +300,7 @@ class ACItem(object):
 #        return self.handles[0]
 #
 #
-# def move_collection(src, target, name):
+#def move_collection(src, target, name):
 #    """
 #    Copy collection from one object to another.
 #
@@ -306,14 +314,14 @@ class ACItem(object):
 #        getattr(target, name).append(flow)
 #
 
-# def is_fd(node):
+#def is_fd(node):
 #    """
 #    Check if node is fork or decision node.
 #    """
 #    return isinstance(node, (UML.ForkNode, UML.DecisionNode))
 #
 #
-# def change_node_class(node):
+#def change_node_class(node):
 #    """
 #    If UML constraints for fork, join, decision and merge nodes are not
 #    met, then create new node depending on input node class, i.e. create
@@ -344,7 +352,7 @@ class ACItem(object):
 #    return nn
 #
 #
-# def combine_nodes(node):
+#def combine_nodes(node):
 #    """
 #    Create fork/join (decision/merge) nodes combination as described in UML
 #    specification.
@@ -393,7 +401,7 @@ class ACItem(object):
 #    return source
 #
 #
-# def decombine_nodes(source):
+#def decombine_nodes(source):
 #    """
 #    Create node depending on source argument which denotes combination of
 #    fork/join (decision/merge) nodes as described in UML specification.
@@ -428,7 +436,7 @@ class ACItem(object):
 #    return node
 
 
-# def determine_node_on_connect(el):
+#def determine_node_on_connect(el):
 #    """
 #    Determine classes of nodes depending on amount of incoming
 #    and outgoing edges. This method is called when flow is attached
@@ -457,7 +465,7 @@ class ACItem(object):
 #        check_combining_flow(el)
 
 
-# def determine_node_on_disconnect(el):
+#def determine_node_on_disconnect(el):
 #    """
 #    Determine classes of nodes depending on amount of incoming
 #    and outgoing edges. This method is called when flow is dettached
@@ -490,7 +498,7 @@ class ACItem(object):
 #    change_node_subject(el, new_subject)
 
 
-# def change_node_subject(el, new_subject):
+#def change_node_subject(el, new_subject):
 #    """
 #    Change element's subject if new subject is different than element's
 #    subject. If subject is changed, then old subject is destroyed.
@@ -504,7 +512,7 @@ class ACItem(object):
 #        subject.unlink()
 
 
-# def create_flow(cls, flow):
+#def create_flow(cls, flow):
 #    """
 #    Create new flow of class cls. Flow data from flow argument are copied
 #    to new created flow. Old flow is destroyed.
@@ -517,7 +525,7 @@ class ACItem(object):
 #    return f
 
 
-# def count_object_flows(node, attr):
+#def count_object_flows(node, attr):
 #   """
 #    Count incoming or outgoing object flows.
 #    """
@@ -525,7 +533,7 @@ class ACItem(object):
 #        .select(lambda flow: isinstance(flow, UML.ObjectFlow)))
 #
 #
-# def check_combining_flow(el):
+#def check_combining_flow(el):
 #    """
 #    Set object flow as combining flow when incoming or outgoing flow count
 #    is greater than zero. Otherwise change combining flow to control flow.
@@ -547,7 +555,7 @@ class ACItem(object):
 #        create_flow(UML.ControlFlow, flow)
 #
 
-# def create_connector_end(connector, role):
+#def create_connector_end(connector, role):
 #    """
 #    Create Connector End, set role and attach created end to
 #    connector.
@@ -559,7 +567,7 @@ class ACItem(object):
 #    return end
 #
 
-# def rotate(p1, p2, a, b, x, y):
+#def rotate(p1, p2, a, b, x, y):
 #    """
 #    Rotate point (a, b) by angle, which is determined by line (p1, p2).
 #

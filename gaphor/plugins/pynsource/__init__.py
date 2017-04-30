@@ -8,19 +8,20 @@ Depends on the Diagram Layout plugin.
 """
 
 from __future__ import absolute_import
-
 import gobject
 import gtk
-from zope import interface
-
-from gaphor.core import inject, action, build_action_group
+from zope import interface, component
+from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
+
 from .engineer import Engineer
+
 
 NAME_COLUMN = 0
 
 
 class PyNSource(object):
+
     interface.implements(IService, IActionProvider)
 
     main_window = inject('main_window')
@@ -124,10 +125,10 @@ class PyNSource(object):
         bbox.add(button)
         self.add_button = button
 
-        # button = gtk.Button('Add dir...')
-        # button.connect('clicked', self.on_add_dir_clicked)
-        # bbox.add(button)
-        # self.add_dir_button = button
+        #button = gtk.Button('Add dir...')
+        #button.connect('clicked', self.on_add_dir_clicked)
+        #bbox.add(button)
+        #self.add_dir_button = button
 
         button = gtk.Button(stock='gtk-remove')
         button.connect('clicked', self.on_remove_clicked)
@@ -135,11 +136,11 @@ class PyNSource(object):
         bbox.add(button)
         self.remove_button = button
 
-        # button = gtk.Button(stock='gtk-execute')
-        # button.connect('clicked', self.on_execute_clicked)
-        # button.set_property('sensitive', False)
-        # bbox.add(button)
-        # self.execute_button = button
+        #button = gtk.Button(stock='gtk-execute')
+        #button.connect('clicked', self.on_execute_clicked)
+        #button.set_property('sensitive', False)
+        #bbox.add(button)
+        #self.execute_button = button
 
         hbox.pack_start(bbox, expand=False)
         hbox.show_all()
@@ -184,7 +185,7 @@ class PyNSource(object):
             for pat in pat_list:
                 if fnmatch.fnmatch(name, pat):
                     if os.path.isfile(fullname) or (
-                                return_folders and os.path.isdir(fullname)):
+                            return_folders and os.path.isdir(fullname)):
                         result.append(fullname)
                     continue
 
@@ -192,7 +193,7 @@ class PyNSource(object):
             if recurse:
                 if os.path.isdir(fullname) and not os.path.islink(fullname):
                     result = result + self.Walk(
-                        fullname, recurse, pattern, return_folders)
+                                    fullname, recurse, pattern, return_folders)
 
         return result
 
@@ -202,9 +203,9 @@ class PyNSource(object):
         if not iter:
             self.remove_button.set_property('sensitive', False)
             return
-        # element = filelist.get_value(iter, NAME_COLUMN)
+        #element = filelist.get_value(iter, NAME_COLUMN)
         self.remove_button.set_property('sensitive', True)
-        # self.update_detail(element)
+        #self.update_detail(element)
 
     def on_view_rows_changed(self, view, *args):
         iter = None
@@ -212,11 +213,11 @@ class PyNSource(object):
             iter = view.get_iter('0')
         except ValueError:
             pass
-            # self.execute_button.set_property('sensitive', bool(iter))
+        #self.execute_button.set_property('sensitive', bool(iter))
 
     def on_add_dir_clicked(self, button):
         import os
-
+        
         filesel = gtk.FileChooserDialog(title='Add Source Code',
                                         action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                         buttons=(gtk.STOCK_CANCEL,
@@ -228,7 +229,7 @@ class PyNSource(object):
         filesel.set_filename('~/')
 
         response = filesel.run()
-        selection = filesel.get_filenames()
+        selection = filesel.get_filenames()        
         filesel.destroy()
 
         if response == gtk.RESPONSE_OK:
@@ -251,5 +252,6 @@ class PyNSource(object):
         element = filelist.remove(iter)
 
         self.remove_button.set_property('sensitive', False)
+
 
 # vim:sw=4:et:ai

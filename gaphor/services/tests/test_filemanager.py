@@ -1,16 +1,14 @@
+
 from __future__ import absolute_import
-
 import unittest
-
-from six.moves import range
-
 from gaphor.application import Application
+from six.moves import range
 
 
 class FileManagerTestCase(unittest.TestCase):
+
     def setUp(self):
-        Application.init(
-            services=['file_manager', 'element_factory', 'properties', 'main_window', 'action_manager', 'ui_manager'])
+        Application.init(services=['file_manager', 'element_factory', 'properties', 'main_window', 'action_manager', 'ui_manager'])
         self.recent_files_backup = Application.get_service('properties').get('recent-files')
 
     def tearDown(self):
@@ -38,3 +36,4 @@ class FileManagerTestCase(unittest.TestCase):
             a = fileman.action_group.get_action('file-recent-%d' % i)
             assert a
             assert a.get_property('visible') == False
+

@@ -7,10 +7,8 @@ ExtensionItem -- Graphical representation of an association.
 # tail end and visa versa.
 
 from __future__ import absolute_import
-
 from gaphor.UML import uml2
 from gaphor.diagram.diagramline import NamedLine
-
 
 class ExtensionItem(NamedLine):
     """
@@ -25,6 +23,7 @@ class ExtensionItem(NamedLine):
         NamedLine.__init__(self, id)
         self.watch('subject<Extension>.ownedEnd')
 
+
     def draw_head(self, context):
         cr = context.cairo
         cr.move_to(0, 0)
@@ -34,5 +33,6 @@ class ExtensionItem(NamedLine):
         cr.set_source_rgb(0, 0, 0)
         cr.fill()
         cr.move_to(15, 0)
+
 
 # vim:sw=4:et:ai

@@ -1,13 +1,16 @@
+
 from __future__ import absolute_import
 
 from gaphor.UML import uml2
-from gaphor.application import Application
 from gaphor.diagram import items
+from gaphor.application import Application
 from gaphor.tests.testcase import TestCase
 
 
 class DiagramLayoutTestCase(TestCase):
+
     services = TestCase.services + ['main_window', 'ui_manager', 'properties', 'action_manager', 'diagram_layout']
+
 
     def testDiagramLayout(self):
         elemfact = Application.get_service('element_factory')
@@ -21,5 +24,7 @@ class DiagramLayoutTestCase(TestCase):
         c2.request_update()
 
         diagram_layout.layout_diagram(diagram)
+
+
 
 # vim:sw=4:et:ai

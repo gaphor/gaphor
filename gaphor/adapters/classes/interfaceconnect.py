@@ -7,12 +7,9 @@ for details.
 """
 
 from __future__ import absolute_import
-
-from zope import component
-
-from gaphor.adapters.classes.classconnect import DependencyConnect, ImplementationConnect
+from zope import interface, component
 from gaphor.diagram import items
-
+from gaphor.adapters.classes.classconnect import DependencyConnect, ImplementationConnect
 
 class ImplementationInterfaceConnect(ImplementationConnect):
     """
@@ -30,6 +27,7 @@ class ImplementationInterfaceConnect(ImplementationConnect):
         if handle is self.line.head:
             self.line._solid = self.element.folded != self.element.FOLDED_NONE
 
+
     def disconnect(self, handle):
         """
         If implementation item is no longer connected to an interface, then
@@ -41,6 +39,7 @@ class ImplementationInterfaceConnect(ImplementationConnect):
 
 
 component.provideAdapter(ImplementationInterfaceConnect)
+
 
 
 class DependencyInterfaceConnect(DependencyConnect):
@@ -66,6 +65,7 @@ class DependencyInterfaceConnect(DependencyConnect):
             # required interface will be rotated properly when folded by
             # user
             self.element._angle = port.angle
+
 
     def disconnect(self, handle):
         """

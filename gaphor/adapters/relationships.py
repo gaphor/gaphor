@@ -8,6 +8,7 @@ by drag and drop).
 """
 
 from __future__ import absolute_import
+from zope import component
 
 
 ###class AssociationRelationship(Relationship):

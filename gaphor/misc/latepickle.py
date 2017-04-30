@@ -4,9 +4,8 @@ state machine, so recursion depth can be limited.
 """
 
 from __future__ import absolute_import
+import pickle, types, struct
 
-import pickle
-import types
 
 BUILD = pickle.BUILD
 INST = pickle.INST
@@ -47,7 +46,7 @@ class LatePickler(pickle.Pickler):
         # Use while loop as objects may be added as we save more items:
         while later:
             obj, stuff = later[0]
-
+            
             # First retrieve the object from the memo
             assert id(obj) in memo
             x = memo[id(obj)]
@@ -56,14 +55,16 @@ class LatePickler(pickle.Pickler):
             # Now populate it
             save(stuff)
             write(BUILD)
-
+            
             write(POP)
             del later[0]
 
         self.write(STOP)
 
+
     def save_later(self, obj, stuff):
         self.later.append((obj, stuff))
+
 
     def delay(self, obj):
         """
@@ -78,13 +79,13 @@ class LatePickler(pickle.Pickler):
         """
         cls = obj.__class__
 
-        memo = self.memo
+        memo  = self.memo
         write = self.write
-        save = self.save
+        save  = self.save
 
         if hasattr(obj, '__getinitargs__'):
             args = obj.__getinitargs__()
-            len(args)  # XXX Assert it's a sequence
+            len(args) # XXX Assert it's a sequence
             _keep_alive(args, memo)
         else:
             args = ()
@@ -122,7 +123,7 @@ class LatePickler(pickle.Pickler):
 
     def save_reduce(self, func, args, state=None,
                     listitems=None, dictitems=None, obj=None):
-        # print 'saving reduce', func, args, obj
+        #print 'saving reduce', func, args, obj
 
         # We want to reduce nesting, hence the state should be saved later:
         if obj and state and self.delay(obj):
@@ -130,5 +131,6 @@ class LatePickler(pickle.Pickler):
             state = None
 
         pickle.Pickler.save_reduce(self, func, args, state, listitems, dictitems, obj)
+
 
 # vim:sw=4:et:ai

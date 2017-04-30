@@ -3,7 +3,7 @@ Application wide events are managed here.
 """
 
 from __future__ import absolute_import
-
+from zope import interface
 from gaphor.interfaces import *
 
 
@@ -64,4 +64,6 @@ class ActionExecuted(object):
         self.name = name
         self.action = action
 
+
 # vim:sw=4:et:ai
+

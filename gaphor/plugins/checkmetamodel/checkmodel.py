@@ -1,16 +1,12 @@
+
 from __future__ import absolute_import
 from __future__ import print_function
-
-from os import path
-
-from six.moves import map
-
 from gaphor.UML import uml2
-
+from os import path
+from six.moves import map
 
 def report(element, message):
     print('%s: %s' % (type(element).__name__, message))
-
 
 def get_subsets(tagged_value):
     subsets = []
@@ -20,7 +16,6 @@ def get_subsets(tagged_value):
         subsets = subsets.split(',')
     return subsets
 
-
 def get_redefine(tagged_value):
     redefines = tag[tag.find('redefines') + len('redefines'):]
     # remove all whitespaces and stuff
@@ -29,7 +24,6 @@ def get_redefine(tagged_value):
     assert len(redefines) == 1
     return redefines[0]
 
-
 def get_superclasses(class_):
     for superclass in class_.superClass:
         gen = 1
@@ -37,11 +31,11 @@ def get_superclasses(class_):
 
 def check_classes(element_factory):
     classes = element_factory.select(lambda e: e.isKindOf(uml2.Class))
-    names = [c.name for c in classes]
+    names = [ c.name for c in classes ]
     for c in classes:
         if names.count(c.name) > 1:
             report(c, 'Class name %s used more than once' % c.name)
-
+    
 
 def check_association_end_subsets(element_factory, end):
     # TODO: don't use Tagged values, use Stereotype values or something
@@ -68,10 +62,8 @@ def check_association_end_subsets(element_factory, end):
             elif p.upperValue.value < end.upperValue.value:
                 report(end, 'Association end %s has has a bigger upper value than subse %s' % (end.name, p.name))
 
-
 def check_association_end(element_factory, end):
     check_association_end_subsets(element_factory, end)
-
 
 def check_associations(element_factory):
     for a in element_factory.select(lambda e: e.isKindOf(uml2.Association)):
@@ -81,14 +73,12 @@ def check_associations(element_factory):
         check_association_end(element_factory, head)
         check_association_end(element_factory, tail)
 
-
 def check_attributes(element_factory):
     for a in element_factory.select(lambda e: e.isKindOf(uml2.Property) and not e.association):
         if not a.typeValue or not a.typeValue.value:
-            report(a, 'Attribute has no type: %s' % a.name)
+            report(a,'Attribute has no type: %s' % a.name)
         elif a.typeValue.value.lower() not in ('string', 'boolean', 'integer', 'unlimitednatural'):
             report(a, 'Invalid attribute type: %s' % a.typeValue.value)
-
 
 # TODO: Check the sanity of the generated data model.
 def check_UML_module():
@@ -96,8 +86,7 @@ def check_UML_module():
     for c in all_classes:
         if not isinstance(c, uml2.Element):
             continue
-            # TODO: check derived unions.
-
+        # TODO: check derived unions.
 
 if __name__ == '__main__':
     from gaphor.UML import ElementFactory

@@ -3,25 +3,23 @@ Basic functionality for canvas line based items on a diagram.
 """
 
 from __future__ import absolute_import
-
 from math import atan2, pi
 
 import gaphas
-from six.moves import map
-from six.moves import range
+from .diagramitem import DiagramItem
 
 from gaphor.diagram.style import get_text_point_at_line, \
     get_text_point_at_line2, \
     ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
-from .diagramitem import DiagramItem
+from six.moves import map
+from six.moves import range
 
 
 class DiagramLine(gaphas.Line, DiagramItem):
     """
     Base class for diagram lines.
     """
-
-    def __init__(self, id=None):
+    def __init__(self, id = None):
         gaphas.Line.__init__(self)
         DiagramItem.__init__(self, id)
         self.fuzziness = 2
@@ -29,13 +27,16 @@ class DiagramLine(gaphas.Line, DiagramItem):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
+
     def setup_canvas(self):
         gaphas.Line.setup_canvas(self)
         self.register_handlers()
 
+
     def teardown_canvas(self):
         gaphas.Line.teardown_canvas(self)
         self.unregister_handlers()
+
 
     def pre_update(self, context):
         # first, update stereotype to know its text
@@ -44,18 +45,22 @@ class DiagramLine(gaphas.Line, DiagramItem):
         gaphas.Line.pre_update(self, context)
         DiagramItem.pre_update(self, context)
 
+
     def post_update(self, context):
         gaphas.Line.post_update(self, context)
         DiagramItem.post_update(self, context)
+
 
     def draw(self, context):
         gaphas.Line.draw(self, context)
         DiagramItem.draw(self, context)
 
+
     def point(self, pos):
         d1 = gaphas.Line.point(self, pos)
         d2 = DiagramItem.point(self, pos)
         return min(d1, d2)
+
 
     def save(self, save_func):
         DiagramItem.save(self, save_func)
@@ -74,6 +79,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         c = canvas.get_connection(self.tail)
         if c:
             save_func('tail-connection', c.connected, reference=True)
+
 
     def load(self, name, value):
         if name == 'matrix':
@@ -100,6 +106,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         else:
             DiagramItem.load(self, name, value)
 
+
     def _get_sink(self, handle, item):
         """
         Instant port finder.
@@ -115,12 +122,13 @@ class DiagramLine(gaphas.Line, DiagramItem):
         port = None
         dist = 10e6
         for p in item.ports():
-            pos, d = p.glue(hpos)
+            pos, d = p.glue(hpos)   
             if not port or d < dist:
                 port = p
                 dist = d
-
+                
         return ConnectionSink(item, port)
+
 
     def _postload_connect(self, handle, item):
         """
@@ -133,6 +141,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         sink = self._get_sink(handle, item)
 
         connector.connect(sink)
+
 
     def postload(self):
         if hasattr(self, '_load_orthogonal'):
@@ -159,6 +168,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
 
         DiagramItem.postload(self)
 
+
     def _get_middle_segment(self):
         """
         Get middle line segment.
@@ -167,6 +177,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         m = len(handles) / 2
         assert m - 1 >= 0 and m < len(handles)
         return handles[m - 1], handles[m]
+
 
     def _get_center_pos(self, inverted=False):
         """
@@ -179,6 +190,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         if inverted:
             angle += pi
         return pos, angle
+
 
     def text_align(self, extents, align, padding, outside):
         handles = self._handles
@@ -203,24 +215,28 @@ class DiagramLine(gaphas.Line, DiagramItem):
         return x, y
 
 
+
+
 class NamedLine(DiagramLine):
+
     __style__ = {
-        'name-align': (ALIGN_CENTER, ALIGN_TOP),
-        'name-padding': (5, 5, 5, 5),
-        'name-outside': True,
-        'name-align-str': None,
+            'name-align': (ALIGN_CENTER, ALIGN_TOP),
+            'name-padding': (5, 5, 5, 5),
+            'name-outside': True,
+            'name-align-str': None,
     }
 
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
         self._name = self.add_text('name', style={
-            'text-align': self.style.name_align,
-            'text-padding': self.style.name_padding,
-            'text-outside': self.style.name_outside,
-            'text-align-str': self.style.name_align_str,
-            'text-align-group': 'stereotype',
-        }, editable=True)
+                    'text-align': self.style.name_align,
+                    'text-padding': self.style.name_padding,
+                    'text-outside': self.style.name_outside,
+                    'text-align-str': self.style.name_align_str,
+                    'text-align-group': 'stereotype',
+                }, editable=True)
         self.watch('subject<NamedElement>.name', self.on_named_element_name)
+
 
     def postload(self):
         super(NamedLine, self).postload()
@@ -229,5 +245,6 @@ class NamedLine(DiagramLine):
     def on_named_element_name(self, event):
         self._name.text = self.subject and self.subject.name or ''
         self.request_update()
+
 
 # vim:sw=4:et:ai

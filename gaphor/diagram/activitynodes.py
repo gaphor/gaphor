@@ -4,23 +4,23 @@ Activity control nodes.
 
 from __future__ import absolute_import
 from __future__ import print_function
-
 import math
 
+from gaphas.util import path_ellipse
+from gaphas.state import observed, reversible_property
+from gaphas.item import Handle, Item, LinePort
 from gaphas.constraint import EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
-from gaphas.item import Handle, Item, LinePort
-from gaphas.state import observed, reversible_property
-from gaphas.util import path_ellipse
-from six.moves import map
 
 from gaphor.UML import uml2
 from gaphor.core import inject
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP, \
-    ALIGN_RIGHT, ALIGN_BOTTOM
+        ALIGN_RIGHT, ALIGN_BOTTOM
 from gaphor.diagram.style import get_text_point
+from six.moves import map
+
 
 DEFAULT_JOIN_SPEC = 'and'
 
@@ -29,7 +29,7 @@ class ActivityNodeItem(NamedItem):
     """Basic class for simple activity nodes.
     Simple activity node is not resizable.
     """
-    __style__ = {
+    __style__   = {
         'name-outside': True,
         'name-padding': (2, 2, 2, 2),
     }
@@ -40,18 +40,18 @@ class ActivityNodeItem(NamedItem):
         for h in self._handles:
             h.movable = False
 
-
+        
 class InitialNodeItem(ActivityNodeItem):
     """
     Representation of initial node. Initial node has name which is put near
     top-left side of node.
     """
-    __uml__ = uml2.InitialNode
-    __style__ = {
-        'min-size': (20, 20),
+    __uml__     = uml2.InitialNode
+    __style__   = {
+        'min-size':   (20, 20),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
     }
-
+    
     RADIUS = 10
 
     def draw(self, context):
@@ -61,7 +61,7 @@ class InitialNodeItem(ActivityNodeItem):
         path_ellipse(cr, r, r, d, d)
         cr.set_line_width(0.01)
         cr.fill()
-
+        
         super(InitialNodeItem, self).draw(context)
 
 
@@ -71,8 +71,8 @@ class ActivityFinalNodeItem(ActivityNodeItem):
     """
 
     __uml__ = uml2.ActivityFinalNode
-    __style__ = {
-        'min-size': (30, 30),
+    __style__   = {
+        'min-size':   (30, 30),
         'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
     }
 
@@ -103,8 +103,8 @@ class FlowFinalNodeItem(ActivityNodeItem):
     """
 
     __uml__ = uml2.FlowFinalNode
-    __style__ = {
-        'min-size': (20, 20),
+    __style__   = {
+        'min-size':   (20, 20),
         'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
     }
 
@@ -123,17 +123,18 @@ class FlowFinalNodeItem(ActivityNodeItem):
         cr.move_to(dr, d - dr)
         cr.line_to(d - dr, dr)
         cr.stroke()
-
+        
         super(FlowFinalNodeItem, self).draw(context)
+        
 
 
 class DecisionNodeItem(ActivityNodeItem):
     """
     Representation of decision or merge node.
     """
-    __uml__ = uml2.DecisionNode
-    __style__ = {
-        'min-size': (20, 30),
+    __uml__   = uml2.DecisionNode
+    __style__   = {
+        'min-size':   (20, 30),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
     }
 
@@ -142,7 +143,7 @@ class DecisionNodeItem(ActivityNodeItem):
     def __init__(self, id=None):
         ActivityNodeItem.__init__(self, id)
         self._combined = None
-        # self.set_prop_persistent('combined')
+        #self.set_prop_persistent('combined')
 
     def save(self, save_func):
         if self._combined:
@@ -157,18 +158,18 @@ class DecisionNodeItem(ActivityNodeItem):
 
     @observed
     def _set_combined(self, value):
-        # self.preserve_property('combined')
+        #self.preserve_property('combined')
         self._combined = value
 
     combined = reversible_property(lambda s: s._combined, _set_combined)
-
+        
     def draw(self, context):
         """
         Draw diamond shape, which represents decision and merge nodes.
         """
         cr = context.cairo
         r = self.RADIUS
-        r2 = r * 2 / 3
+        r2 = r * 2/3
 
         cr.move_to(r2, 0)
         cr.line_to(r2 * 2, r)
@@ -180,6 +181,7 @@ class DecisionNodeItem(ActivityNodeItem):
         super(DecisionNodeItem, self).draw(context)
 
 
+
 class ForkNodeItem(Item, DiagramItem):
     """
     Representation of fork and join node.
@@ -187,10 +189,10 @@ class ForkNodeItem(Item, DiagramItem):
 
     element_factory = inject('element_factory')
 
-    __uml__ = uml2.ForkNode
+    __uml__   = uml2.ForkNode
 
     __style__ = {
-        'min-size': (6, 45),
+        'min-size':   (6, 45),
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
         'name-padding': (2, 2, 2, 2),
         'name-outside': True,
@@ -205,7 +207,7 @@ class ForkNodeItem(Item, DiagramItem):
     def __init__(self, id=None):
         Item.__init__(self)
         DiagramItem.__init__(self, id)
-
+        
         h1, h2 = Handle(), Handle()
         self._handles.append(h1)
         self._handles.append(h2)
@@ -214,20 +216,21 @@ class ForkNodeItem(Item, DiagramItem):
         self._combined = None
 
         self._join_spec = self.add_text('joinSpec',
-                                        pattern='{ joinSpec = %s }',
-                                        style=self.STYLE_TOP,
-                                        visible=self.is_join_spec_visible)
+            pattern='{ joinSpec = %s }',
+            style=self.STYLE_TOP,
+            visible=self.is_join_spec_visible)
 
         self._name = self.add_text('name', style={
-            'text-align': self.style.name_align,
-            'text-padding': self.style.name_padding,
-            'text-outside': self.style.name_outside,
-            'text-align-str': self.style.name_align_str,
-            'text-align-group': 'stereotype',
-        }, editable=True)
+                    'text-align': self.style.name_align,
+                    'text-padding': self.style.name_padding,
+                    'text-outside': self.style.name_outside,
+                    'text-align-str': self.style.name_align_str,
+                    'text-align-group': 'stereotype',
+                }, editable=True)
 
-        self.watch('subject<NamedElement>.name', self.on_named_element_name) \
+        self.watch('subject<NamedElement>.name', self.on_named_element_name)\
             .watch('subject<JoinNode>.joinSpec', self.on_join_node_join_spec)
+
 
     def save(self, save_func):
         save_func('matrix', tuple(self.matrix))
@@ -244,7 +247,7 @@ class ForkNodeItem(Item, DiagramItem):
         elif name == 'combined':
             self._combined = value
         else:
-            # DiagramItem.load(self, name, value)
+            #DiagramItem.load(self, name, value)
             super(ForkNodeItem, self).load(name, value)
 
     def postload(self):
@@ -256,7 +259,7 @@ class ForkNodeItem(Item, DiagramItem):
 
     @observed
     def _set_combined(self, value):
-        # self.preserve_property('combined')
+        #self.preserve_property('combined')
         self._combined = value
 
     combined = reversible_property(lambda s: s._combined, _set_combined)
@@ -272,18 +275,21 @@ class ForkNodeItem(Item, DiagramItem):
         self.__constraints = (cadd(c1), cadd(c2))
         list(map(self.canvas.solver.add_constraint, self.__constraints))
 
+
     def teardown_canvas(self):
         super(ForkNodeItem, self).teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
         self.unregister_handlers()
+
 
     def is_join_spec_visible(self):
         """
         Check if join specification should be displayed.
         """
         return isinstance(self.subject, uml2.JoinNode) \
-               and self.subject.joinSpec is not None \
-               and self.subject.joinSpec != DEFAULT_JOIN_SPEC
+            and self.subject.joinSpec is not None \
+            and self.subject.joinSpec != DEFAULT_JOIN_SPEC
+
 
     def text_align(self, extents, align, padding, outside):
         h1, h2 = self._handles
@@ -293,14 +299,17 @@ class ForkNodeItem(Item, DiagramItem):
 
         return x, y
 
+
     def pre_update(self, context):
         self.update_stereotype()
         Item.pre_update(self, context)
         DiagramItem.pre_update(self, context)
 
+
     def post_update(self, context):
         Item.post_update(self, context)
         DiagramItem.post_update(self, context)
+
 
     def draw(self, context):
         """
@@ -319,11 +328,13 @@ class ForkNodeItem(Item, DiagramItem):
 
         cr.stroke()
 
+
     def point(self, pos):
         h1, h2 = self._handles
         d, p = distance_line_point(h1.pos, h2.pos, pos)
         # Substract line_width / 2
         return d - 3
+
 
     def on_named_element_name(self, event):
         print('on_named_element_name', self.subject)

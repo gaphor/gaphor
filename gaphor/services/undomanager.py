@@ -13,23 +13,25 @@ NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
 from __future__ import absolute_import
-
-from logging import getLogger
 from zope import interface, component
 
 from gaphas import state
 
-from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
-    AssociationSetEvent, \
-    AssociationAddEvent, AssociationDeleteEvent
-from gaphor.UML.interfaces import IElementDeleteEvent, \
-    IAttributeChangeEvent, IModelFactoryEvent
-from gaphor.action import action, build_action_group
 from gaphor.core import inject
-from gaphor.event import ActionExecuted
-from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
+from logging import getLogger
 from gaphor.interfaces import IService, IServiceEvent, IActionProvider
+from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 from gaphor.transaction import Transaction, transactional
+
+from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
+                             ModelFactoryEvent, AssociationSetEvent, \
+                             AssociationAddEvent, AssociationDeleteEvent
+from gaphor.UML.interfaces import IElementDeleteEvent, \
+                                  IAttributeChangeEvent, IModelFactoryEvent
+                                  
+
+from gaphor.action import action, build_action_group
+from gaphor.event import ActionExecuted
 
 
 class ActionStack(object):
@@ -103,7 +105,7 @@ class UndoManager(object):
         </toolbar>
       </ui>
     """
-
+    
     component_registry = inject('component_registry')
 
     logger = getLogger('UndoManager')
@@ -115,10 +117,11 @@ class UndoManager(object):
         self._current_transaction = None
         self.action_group = build_action_group(self)
 
+
     def init(self, app):
-
+        
         self.logger.info('Starting')
-
+        
         self.component_registry.register_handler(self.reset)
         self.component_registry.register_handler(self.begin_transaction)
         self.component_registry.register_handler(self.commit_transaction)
@@ -127,10 +130,11 @@ class UndoManager(object):
         self._register_undo_handlers()
         self._action_executed()
 
+
     def shutdown(self):
-
+        
         self.logger.info('Shutting down')
-
+        
         self.component_registry.unregister_handler(self.reset)
         self.component_registry.unregister_handler(self.begin_transaction)
         self.component_registry.unregister_handler(self.commit_transaction)
@@ -138,18 +142,22 @@ class UndoManager(object):
         self.component_registry.unregister_handler(self._action_executed)
         self._unregister_undo_handlers()
 
+
     def clear_undo_stack(self):
         self._undo_stack = []
         self._current_transaction = None
 
+
     def clear_redo_stack(self):
         del self._redo_stack[:]
+    
 
     @component.adapter(IModelFactoryEvent)
     def reset(self, event=None):
         self.clear_redo_stack()
         self.clear_undo_stack()
         self._action_executed()
+
 
     @component.adapter(TransactionBegin)
     def begin_transaction(self, event=None):
@@ -170,6 +178,7 @@ class UndoManager(object):
             # TODO: should this be placed here?
             self._action_executed()
 
+
     @component.adapter(TransactionCommit)
     def commit_transaction(self, event=None):
         assert self._current_transaction
@@ -185,6 +194,7 @@ class UndoManager(object):
 
         self.component_registry.handle(UndoManagerStateChanged(self))
         self._action_executed()
+
 
     @component.adapter(TransactionRollback)
     def rollback_transaction(self, event=None):
@@ -212,12 +222,14 @@ class UndoManager(object):
         self.component_registry.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
+
     def discard_transaction(self):
 
         self._current_transaction = None
 
         self.component_registry.handle(UndoManagerStateChanged(self))
         self._action_executed()
+
 
     @action(name='edit-undo', stock_id='gtk-undo', accel='<Control>z')
     def undo_transaction(self):
@@ -250,6 +262,7 @@ class UndoManager(object):
         self.component_registry.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
+
     @action(name='edit-redo', stock_id='gtk-redo', accel='<Control>y')
     def redo_transaction(self):
         if not self._redo_stack:
@@ -267,14 +280,18 @@ class UndoManager(object):
         self.component_registry.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
+
     def in_transaction(self):
         return self._current_transaction is not None
+
 
     def can_undo(self):
         return bool(self._current_transaction or self._undo_stack)
 
+
     def can_redo(self):
         return bool(self._redo_stack)
+
 
     @component.adapter(ActionExecuted)
     def _action_executed(self, event=None):
@@ -288,10 +305,11 @@ class UndoManager(object):
     def _gaphas_undo_handler(self, event):
         self.add_undo_action(lambda: state.saveapply(*event));
 
+
     def _register_undo_handlers(self):
-
+        
         self.logger.debug('Registering undo handlers')
-
+        
         self.component_registry.register_handler(self.undo_create_event)
         self.component_registry.register_handler(self.undo_delete_event)
         self.component_registry.register_handler(self.undo_attribute_change_event)
@@ -305,10 +323,11 @@ class UndoManager(object):
 
         state.subscribers.add(self._gaphas_undo_handler)
 
+
     def _unregister_undo_handlers(self):
-
+        
         self.logger.debug('Unregistering undo handlers')
-
+        
         self.component_registry.unregister_handler(self.undo_create_event)
         self.component_registry.unregister_handler(self.undo_delete_event)
         self.component_registry.unregister_handler(self.undo_attribute_change_event)
@@ -320,6 +339,7 @@ class UndoManager(object):
 
         state.subscribers.discard(self._gaphas_undo_handler)
 
+
     @component.adapter(ElementCreateEvent)
     def undo_create_event(self, event):
         factory = event.service
@@ -327,15 +347,14 @@ class UndoManager(object):
         if not factory:
             return
         element = event.element
-
         def _undo_create_event():
             try:
                 del factory._elements[element.id]
             except KeyError:
-                pass  # Key was probably already removed in an unlink call
+                pass # Key was probably already removed in an unlink call
             self.component_registry.handle(ElementDeleteEvent(factory, element))
-
         self.add_undo_action(_undo_create_event)
+
 
     @component.adapter(IElementDeleteEvent)
     def undo_delete_event(self, event):
@@ -345,65 +364,62 @@ class UndoManager(object):
             return
         element = event.element
         assert factory, 'No factory defined for %s (%s)' % (element, factory)
-
         def _undo_delete_event():
             factory._elements[element.id] = element
             self.component_registry.handle(ElementCreateEvent(factory, element))
-
         self.add_undo_action(_undo_delete_event)
+
 
     @component.adapter(IAttributeChangeEvent)
     def undo_attribute_change_event(self, event):
         attribute = event.property
         element = event.element
         value = event.old_value
-
+        
         def _undo_attribute_change_event():
             attribute._set(element, value)
-
+            
         self.add_undo_action(_undo_attribute_change_event)
+
 
     @component.adapter(AssociationSetEvent)
     def undo_association_set_event(self, event):
         association = event.property
         element = event.element
         value = event.old_value
-
-        # print 'got new set event', association, element, value
+        #print 'got new set event', association, element, value
         def _undo_association_set_event():
-            # print 'undoing action', element, value
+            #print 'undoing action', element, value
             # Tell the assoctaion it should not need to let the opposite
             # side connect (it has it's own signal)
             association._set(element, value, from_opposite=True)
-
         self.add_undo_action(_undo_association_set_event)
+
 
     @component.adapter(AssociationAddEvent)
     def undo_association_add_event(self, event):
         association = event.property
         element = event.element
         value = event.new_value
-
         def _undo_association_add_event():
-            # print 'undoing action', element, value
+            #print 'undoing action', element, value
             # Tell the assoctaion it should not need to let the opposite
             # side connect (it has it's own signal)
             association._del(element, value, from_opposite=True)
-
         self.add_undo_action(_undo_association_add_event)
+
 
     @component.adapter(AssociationDeleteEvent)
     def undo_association_delete_event(self, event):
         association = event.property
         element = event.element
         value = event.old_value
-
         def _undo_association_delete_event():
-            # print 'undoing action', element, value
+            #print 'undoing action', element, value
             # Tell the assoctaion it should not need to let the opposite
             # side connect (it has it's own signal)
             association._set(element, value, from_opposite=True)
-
         self.add_undo_action(_undo_association_delete_event)
+
 
 # vim:sw=4:et:ai

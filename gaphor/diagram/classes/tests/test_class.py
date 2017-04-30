@@ -3,13 +3,13 @@ Test classes.
 """
 
 from __future__ import absolute_import
-
+from gaphor.tests.testcase import TestCase
 from gaphor.UML import uml2
 from gaphor.diagram.classes.klass import ClassItem
-from gaphor.tests.testcase import TestCase
 
 
 class ClassTestCase(TestCase):
+
     def test_compartments(self):
         """
         Test creation of classes and working of compartments
@@ -22,15 +22,15 @@ class ClassTestCase(TestCase):
         self.assertEqual(0, len(klass._compartments[0]))
         self.assertEqual(0, len(klass._compartments[1]))
         self.assertEqual((10, 10), klass._compartments[0].get_size())
-
+        
         diagram.canvas.update()
 
         self.assertEqual((10, 10), klass._compartments[0].get_size())
-        self.assertEqual(50, float(klass.min_height))  # min_height
+        self.assertEqual(50, float(klass.min_height)) # min_height
         self.assertEqual(100, float(klass.min_width))
 
         attr = element_factory.create(uml2.Property)
-        attr.name = 4 * 'x'  # about 44 pixels
+        attr.name = 4 * 'x' # about 44 pixels
         klass.subject.ownedAttribute = attr
 
         diagram.canvas.update()
@@ -38,18 +38,20 @@ class ClassTestCase(TestCase):
         self.assertEqual((44.0, 20.0), klass._compartments[0].get_size())
 
         oper = element_factory.create(uml2.Operation)
-        oper.name = 4 * 'x'  # about 44 pixels
+        oper.name = 4 * 'x' # about 44 pixels
         klass.subject.ownedOperation = oper
 
         oper = element_factory.create(uml2.Operation)
-        oper.name = 6 * 'x'  # about 66 pixels
+        oper.name = 6 * 'x' # about 66 pixels
         klass.subject.ownedOperation = oper
 
         diagram.canvas.update()
         self.assertEqual(2, len(klass._compartments[1]))
         self.assertEqual((63.0, 34.0), klass._compartments[1].get_size())
 
+
     def test_attribute_removal(self):
+
         element_factory = self.element_factory
         diagram = element_factory.create(uml2.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(uml2.Class))
@@ -74,6 +76,7 @@ class ClassTestCase(TestCase):
 
         diagram.canvas.update()
         self.assertEqual(2, len(klass._compartments[0]))
+
 
     def test_item_at(self):
         """
@@ -109,7 +112,7 @@ class ClassTestCase(TestCase):
         y = name_size[1] + padding[0] + 2
         assert klass.item_at(x, y) is not None, klass.item_at(x, y)
         assert klass.item_at(x, y).subject is attr, klass.item_at(x, y).subject
-
+        
         y = name_size[1] + klass.compartments[0].height + padding[0] + 2
         assert klass.item_at(x, y) is not None, klass.item_at(x, y)
         assert klass.item_at(x, y).subject is oper, klass.item_at(x, y).subject

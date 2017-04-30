@@ -3,7 +3,6 @@ Test messages.
 """
 
 from __future__ import absolute_import
-
 from gaphor.UML import uml2
 from gaphor.diagram.message import MessageItem
 from gaphor.tests.testcase import TestCase
@@ -14,6 +13,7 @@ class MessageTestCase(TestCase):
         """Test creation of messages
         """
         self.create(MessageItem, uml2.Message)
+
 
     def test_adding_message(self):
         """Test adding message on communication diagram
@@ -29,12 +29,14 @@ class MessageTestCase(TestCase):
         self.assertTrue(message not in item._inverted_messages)
         self.assertEquals(item._messages[message].text, 'test-message')
 
+
         message = factory.create(uml2.Message)
         message.name = 'test-inverted-message'
         item.add_message(message, True)
         self.assertTrue(message in item._inverted_messages)
         self.assertTrue(message not in item._messages)
         self.assertEquals(item._inverted_messages[message].text, 'test-inverted-message')
+
 
     def test_changing_message_text(self):
         """Test changing message text
@@ -58,6 +60,7 @@ class MessageTestCase(TestCase):
         item.set_message_text(message, 'test-message-changed', True)
         self.assertEquals(item._inverted_messages[message].text, 'test-message-changed')
 
+
     def test_message_removal(self):
         """Test message removal
         """
@@ -78,6 +81,7 @@ class MessageTestCase(TestCase):
         item.remove_message(message, True)
         self.assertTrue(message not in item._inverted_messages)
 
+
     def test_messages_swapping(self):
         """Test messages swapping
         """
@@ -95,6 +99,7 @@ class MessageTestCase(TestCase):
         item.add_message(m1, True)
         item.add_message(m2, True)
         item.swap_messages(m1, m2, True)
+
 
     def test_message_persistence(self):
         """Test message saving/loading

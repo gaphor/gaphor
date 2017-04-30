@@ -16,10 +16,8 @@ module.
 """
 
 from __future__ import absolute_import
-
 from gaphor.UML import uml2
 from gaphor.diagram.classifier import ClassifierItem
-
 
 class NodeItem(ClassifierItem):
     """
@@ -58,5 +56,6 @@ class NodeItem(ClassifierItem):
         cr.line_to(w + d, -d)
 
         cr.stroke()
+
 
 # vim:sw=4:et

@@ -1,15 +1,14 @@
-from __future__ import absolute_import
 
+from __future__ import absolute_import
+from gaphor.tests import TestCase
+from gaphor.UML import uml2
+from gaphor.diagram import items
+from gaphor.core import transactional
 from six.moves import range
 
-from gaphor.UML import uml2
-from gaphor.core import transactional
-from gaphor.diagram import items
-from gaphor.tests import TestCase
-
-
 class UndoTest(TestCase):
-    services = TestCase.services + ['undo_manager']
+
+    services = TestCase.services + [ 'undo_manager' ]
 
     def test_class_association_undo_redo(self):
         factory = self.element_factory
@@ -20,7 +19,7 @@ class UndoTest(TestCase):
 
         ci2 = self.create(items.ClassItem, uml2.Class)
         self.assertEquals(12, len(self.diagram.canvas.solver.constraints))
-
+        
         a = self.create(items.AssociationItem)
 
         self.connect(a, a.head, ci1)
@@ -46,7 +45,7 @@ class UndoTest(TestCase):
 
         for i in range(3):
             # Diagram, Class
-            # self.assertEquals(2, len(factory.lselect()), factory.lselect())
+            #self.assertEquals(2, len(factory.lselect()), factory.lselect())
 
             self.assertEquals(7, len(self.diagram.canvas.solver.constraints))
 
@@ -58,5 +57,4 @@ class UndoTest(TestCase):
             self.assertEquals(ci2, self.get_connected(a.tail))
 
             undo_manager.redo_transaction()
-
 # vim:sw=4:et:ai

@@ -3,7 +3,6 @@ Top level interface definitions for Gaphor.
 """
 
 from __future__ import absolute_import
-
 from zope import interface
 
 
@@ -83,5 +82,6 @@ class IEventFilter(interface.Interface):
         Return a value (e.g. message/reason) why the event is filtered.
         Returning `None` or `False` will propagate the event.
         """
+
 
 # vim:sw=4:et

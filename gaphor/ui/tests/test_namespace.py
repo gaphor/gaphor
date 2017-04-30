@@ -2,16 +2,14 @@
 
 from __future__ import absolute_import
 from __future__ import print_function
-
-from gaphor.UML import uml2
-from gaphor.application import Application
 from gaphor.tests.testcase import TestCase
+from gaphor.UML import uml2
 from gaphor.ui.namespace import NamespaceModel
+from gaphor.application import Application
 
+class NamespaceTestCase(object): ##TestCase):
 
-class NamespaceTestCase(object):  ##TestCase):
-
-    services = ['element_factory']
+    services = [ 'element_factory' ]
 
     def test_all(self):
         factory = Application.get_service('element_factory')
@@ -65,6 +63,7 @@ class NamespaceTestCase(object):  ##TestCase):
 
         return
 
+
         print('--- del.b.ownedClassifier[c]')
         del b.ownedClassifier[c]
         ns.dump()
@@ -76,7 +75,7 @@ class NamespaceTestCase(object):  ##TestCase):
         try:
             ns.path_from_element(c)
         except AttributeError:
-            pass  # Yes, should raise an exception
+            pass # Yes, should raise an exception
         else:
             assert ns.path_from_element(c) is not None
 
@@ -105,13 +104,13 @@ class NamespaceTestCase(object):  ##TestCase):
         ns.dump()
 
         print('--- a.unlink()')
-        #        def on_unlink(name, element):
-        #            print 'unlink: %s' % element.name
-        #        a.connect('__unlink__', on_unlink, a)
-        #        b.connect('__unlink__', on_unlink, b)
-        #        c.connect('__unlink__', on_unlink, c)
-        #        d.connect('__unlink__', on_unlink, d)
-        #
+#        def on_unlink(name, element):
+#            print 'unlink: %s' % element.name
+#        a.connect('__unlink__', on_unlink, a)
+#        b.connect('__unlink__', on_unlink, b)
+#        c.connect('__unlink__', on_unlink, c)
+#        d.connect('__unlink__', on_unlink, d)
+#
         a.unlink()
         ns.dump()
         print('--- TODO: e.relink()')
@@ -121,10 +120,12 @@ class NamespaceTestCase(object):  ##TestCase):
 
 
 class NewNamespaceTestCase(TestCase):
-    services = ['element_factory']
+
+    services = [ 'element_factory' ]
 
     def tearDown(self):
         pass
+
 
     def test(self):
         factory = Application.get_service('element_factory')
@@ -182,5 +183,4 @@ class NewNamespaceTestCase(TestCase):
 
 if __name__ == '__main__':
     import unittest
-
     unittest.main()

@@ -6,17 +6,15 @@ to a class' method and will raise the error dialog when the method exits with
 an exception.
 """
 from __future__ import absolute_import
-
 import gtk
-import pdb
 import sys
+import pdb
 
 from gaphor.i18n import _
 
-
 def error_handler(message=None, exc_info=None):
     exc_type, exc_value, exc_traceback = exc_info or sys.exc_info()
-
+    
     if not exc_type:
         return
 
@@ -31,9 +29,9 @@ def error_handler(message=None, exc_info=None):
         message += _('\n\nDo you want to debug?\n(Gaphor should have been started from the command line)')
 
     dialog = gtk.MessageDialog(None,
-                               gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                               gtk.MESSAGE_ERROR,
-                               buttons, message)
+                    gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                    gtk.MESSAGE_ERROR,
+                    buttons, message)
     answer = dialog.run()
     dialog.destroy()
     if answer == gtk.RESPONSE_YES:

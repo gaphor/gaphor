@@ -1,10 +1,8 @@
 from __future__ import absolute_import
-
-import unittest
-
 from gaphor.UML import uml2, modelfactory, elementfactory
 from gaphor.UML.modelfactory import STEREOTYPE_FMT as fmt
 
+import unittest
 
 class TestCaseBase(unittest.TestCase):
     def setUp(self):
@@ -12,6 +10,7 @@ class TestCaseBase(unittest.TestCase):
 
 
 class StereotypesTestCase(TestCaseBase):
+
     def test_stereotype_name(self):
         """Test stereotype name
         """
@@ -31,6 +30,7 @@ class StereotypesTestCase(TestCaseBase):
         stereotype.name = None
         self.assertEquals('', modelfactory.stereotype_name(stereotype))
 
+
     def test_stereotypes_conversion(self):
         """Test stereotypes conversion
         """
@@ -48,11 +48,13 @@ class StereotypesTestCase(TestCaseBase):
 
         self.assertEquals(fmt % 's1, s2, s3', modelfactory.stereotypes_str(cls))
 
+
     def test_no_stereotypes(self):
         """Test stereotypes conversion without applied stereotypes
         """
         cls = self.factory.create(uml2.Class)
         self.assertEquals('', modelfactory.stereotypes_str(cls))
+
 
     def test_additional_stereotypes(self):
         """Test additional stereotypes conversion
@@ -72,6 +74,7 @@ class StereotypesTestCase(TestCaseBase):
         result = modelfactory.stereotypes_str(cls, ('test',))
         self.assertEquals(fmt % 'test, s1, s2, s3', result)
 
+
     def test_just_additional_stereotypes(self):
         """Test additional stereotypes conversion without applied stereotypes
         """
@@ -79,6 +82,7 @@ class StereotypesTestCase(TestCaseBase):
 
         result = modelfactory.stereotypes_str(cls, ('test',))
         self.assertEquals(fmt % 'test', result)
+
 
     def test_getting_stereotypes(self):
         """Test getting possible stereotypes
@@ -97,6 +101,7 @@ class StereotypesTestCase(TestCaseBase):
         c1 = self.factory.create(uml2.Class)
         result = tuple(st.name for st in modelfactory.get_stereotypes(self.factory, c1))
         self.assertEquals(('st1', 'st2'), result)
+
 
     def test_getting_stereotypes_unique(self):
         """Test if possible stereotypes are unique
@@ -121,6 +126,7 @@ class StereotypesTestCase(TestCaseBase):
         result = tuple(st.name for st in modelfactory.get_stereotypes(self.factory, c1))
         self.assertEquals(('st1', 'st2'), result)
 
+
     def test_finding_stereotype_instances(self):
         """Test finding stereotype instances
         """
@@ -141,11 +147,11 @@ class StereotypesTestCase(TestCaseBase):
         self.assertFalse('s2' in result, result)
 
 
+
 class AssociationTestCase(TestCaseBase):
     """
     Association tests.
     """
-
     def test_creation(self):
         """Test association creation
         """
@@ -164,11 +170,11 @@ class AssociationTestCase(TestCaseBase):
         self.assertTrue(c2 in types, assoc.memberEnd)
 
 
+
 class AssociationEndNavigabilityTestCase(TestCaseBase):
     """
     Association navigability changes tests.
     """
-
     def test_attribute_navigability(self):
         """Test navigable attribute of a class or an interface
         """
@@ -220,6 +226,7 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         self.assertTrue(end.owner is c2)
         self.assertTrue(end.navigability is True)
 
+
     def test_relationship_navigability(self):
         """Test navigable relationship of a classifier
         """
@@ -262,11 +269,11 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         self.assertTrue(end.navigability is True)
 
 
+
 class DependencyTypeTestCase(TestCaseBase):
     """
     Tests for automatic dependency discovery
     """
-
     def test_usage(self):
         """Test automatic dependency: usage
         """
@@ -274,6 +281,7 @@ class DependencyTypeTestCase(TestCaseBase):
         iface = self.factory.create(uml2.Interface)
         dt = modelfactory.dependency_type(cls, iface)
         self.assertEquals(uml2.Usage, dt)
+
 
     def test_usage_by_component(self):
         """Test automatic dependency: usage (by component)
@@ -284,6 +292,7 @@ class DependencyTypeTestCase(TestCaseBase):
         # it should be usage not realization (interface is classifier as
         # well)
         self.assertEquals(uml2.Usage, dt)
+
 
     def test_realization(self):
         """Test automatic dependency: realization
@@ -298,7 +307,6 @@ class MessageTestCase(TestCaseBase):
     """
     Tests for interaction messages.
     """
-
     def test_create(self):
         """Test message creation
         """
@@ -322,5 +330,6 @@ class MessageTestCase(TestCaseBase):
 
         self.assertTrue(m2.sendEvent.covered is rl)
         self.assertTrue(m2.receiveEvent.covered is sl)
+
 
 # vim:sw=4:et

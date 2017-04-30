@@ -4,17 +4,16 @@ from NamedElement.
 """
 
 from __future__ import absolute_import
-
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 
-
 class NamedItem(ElementItem):
+
     __style__ = {
-        'min-size': (100, 50),
-        'from-font': 'sans 8',
-        'name-font': 'sans 10',
-        'name-align': (ALIGN_CENTER, ALIGN_TOP),
+        'min-size'    : (100, 50),
+        'from-font'   : 'sans 8',
+        'name-font'   : 'sans 10',
+        'name-align'  : (ALIGN_CENTER, ALIGN_TOP),
         'name-padding': (5, 10, 5, 10),
         'name-outside': False,
         'name-align-str': None,
@@ -30,25 +29,26 @@ class NamedItem(ElementItem):
         # create (from ...) text to distinguish diagram items from
         # different namespace
         self._from = self.add_text('from',
-                                   pattern='(from %s)',
-                                   style={'text-align-group': 'stereotype',
-                                          'font': self.style.from_font},
-                                   visible=self.is_namespace_info_visible)
+                pattern='(from %s)',
+                style={'text-align-group': 'stereotype',
+                       'font': self.style.from_font },
+                visible=self.is_namespace_info_visible)
 
         self._name = self.add_text('name', style={
-            'font': self.style.name_font,
-            'text-align': self.style.name_align,
-            'text-padding': self.style.name_padding,
-            'text-outside': self.style.name_outside,
-            'text-rotated': self.style.name_rotated,
-            'text-align-str': self.style.name_align_str,
-            'text-align-group': 'stereotype',
-        }, editable=True)
+                    'font': self.style.name_font,
+                    'text-align': self.style.name_align,
+                    'text-padding': self.style.name_padding,
+                    'text-outside': self.style.name_outside,
+                    'text-rotated': self.style.name_rotated,
+                    'text-align-str': self.style.name_align_str,
+                    'text-align-group': 'stereotype',
+                }, editable=True)
 
         # size of stereotype, namespace and name text
         self._header_size = 0, 0
-        self.watch('subject<NamedElement>.name', self.on_named_element_name) \
+        self.watch('subject<NamedElement>.name', self.on_named_element_name)\
             .watch('subject<Namespace>.namespace', self.on_named_element_namespace)
+
 
     def postload(self):
         self.on_named_element_name(None)
@@ -79,6 +79,7 @@ class NamedItem(ElementItem):
 
         return self._from.text and namespace is not canvas.diagram.namespace
 
+
     def on_named_element_name(self, event):
         """
         Callback to be invoked, when named element name is changed.
@@ -86,6 +87,7 @@ class NamedItem(ElementItem):
         if self.subject:
             self._name.text = self.subject.name
             self.request_update()
+
 
     def on_named_element_namespace(self, event):
         """
@@ -98,6 +100,7 @@ class NamedItem(ElementItem):
         else:
             self._from.text = ''
         self.request_update()
+
 
     def pre_update(self, context):
         """
@@ -118,5 +121,6 @@ class NamedItem(ElementItem):
 
             self.min_width = max(self.style.min_size[0], self._header_size[0])
             self.min_height = max(self.style.min_size[1], self._header_size[1])
+
 
 # vim:sw=4:et:ai

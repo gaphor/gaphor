@@ -1,12 +1,12 @@
+
 from __future__ import absolute_import
-
 from gaphor.UML import uml2
-from gaphor.diagram.items import FlowItem, ActionItem
-from gaphor.storage import storage
 from gaphor.tests import TestCase
-
+from gaphor.storage import storage
+from gaphor.diagram.items import FlowItem, ActionItem
 
 class ActionIssueTestCase(TestCase):
+
     def test_it(self):
         """
         Test an issue when loading a freshly created action diagram.
@@ -27,7 +27,7 @@ class ActionIssueTestCase(TestCase):
         # handles behave?
         diagrams = ef.lselect(lambda e: e.isKindOf(uml2.Diagram))
         self.assertEquals(1, len(diagrams))
-
+        
         canvas = diagrams[0].canvas
         assert 9 == len(canvas.get_all_items())
         # Part, Part, Act, Act, Part, Act, Flow, Flow, Flow
@@ -56,7 +56,7 @@ class ActionIssueTestCase(TestCase):
         # Intermediate element:
         self.assertSame(actions[2].incoming[0], flows[1])
         self.assertSame(actions[2].outgoing[0], flows[2])
-
+        
         cinfo, = canvas.get_connections(handle=flows[1].presentation[0].tail)
         self.assertSame(cinfo.connected, actions[2].presentation[0])
         cinfo, = canvas.get_connections(handle=flows[2].presentation[0].head)
@@ -70,12 +70,13 @@ class ActionIssueTestCase(TestCase):
         self.assertSame(cinfo.connected, actions[0].presentation[0])
         cinfo, = canvas.get_connections(handle=flows[2].presentation[0].tail)
         self.assertSame(cinfo.connected, actions[0].presentation[0])
-
+        
         # Test the parent-child connectivity
         for a in actions:
             p, = a.inPartition
             self.assertTrue(p)
             self.assertTrue(canvas.get_parent(a.presentation[0]))
             self.assertSame(canvas.get_parent(a.presentation[0]), p.presentation[0])
+
 
 # vim:sw=4:et:ai

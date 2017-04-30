@@ -10,17 +10,17 @@ The layout is done like this:
 """
 
 from __future__ import absolute_import
+from zope import interface, component
+from gaphor.core import _, inject, action, build_action_group, transactional
+from gaphor.interfaces import IService, IActionProvider
 
 import random
-from zope import interface
-
-from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.diagram import items
-from gaphor.interfaces import IService, IActionProvider
 from . import toposort
 
 
 class DiagramLayout(object):
+
     interface.implements(IService, IActionProvider)
 
     main_window = inject('main_window')
@@ -59,7 +59,6 @@ class DiagramLayout(object):
 
 MARGIN = 100
 
-
 def layout_diagram(diag):
     """
     So an attempt to layout (order) the items on a diagram. The items
@@ -96,7 +95,7 @@ def layout_diagram(diag):
             try:
                 other_relations.append((item.handles[0].connected_to,
                                         item.handles[-1].connected_to))
-                # other_relations.append((item.handles[-1].connected_to,
+                #other_relations.append((item.handles[-1].connected_to,
                 #                        item.handles[0].connected_to))
             except Exception as e:
                 log.error(e)
@@ -124,7 +123,7 @@ def layout_diagram(diag):
             # Figure out what row(s) they're on
             row = find_row(item, related, sorted[1:])
             if row:
-                # print 'moving', item.subject.name, 'to row', sorted.index(row)
+                #print 'moving', item.subject.name, 'to row', sorted.index(row)
                 sorted[0].remove(item)
                 row.append(item)
 
@@ -229,12 +228,11 @@ def find_row(item, related_items, sorted):
     max_refs = 0
     max_row = None
     for row in sorted:
-        cnt = len([i for i in row if i in related_items])
+        cnt = len([ i for i in row if i in related_items ])
         if cnt > max_refs:
             max_row = row
             max_refs = cnt
     return max_row
-
 
 def find_center(item):
     """

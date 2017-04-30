@@ -9,8 +9,8 @@ These interfaces are:
 
 """
 
-from __future__ import absolute_import
 
+from __future__ import absolute_import
 from zope import interface
 
 
@@ -50,7 +50,6 @@ class IEditor(interface.Interface):
         Called every time a key is pressed. Allows for 'Enter' as escape
         character in single line editing.
         """
-
 
 class IConnect(interface.Interface):
     """
@@ -121,5 +120,6 @@ class IGroup(interface.Interface):
         """
         Perform ungrouping of items.
         """
+
 
 # vim: sw=4:et:ai

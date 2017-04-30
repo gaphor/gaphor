@@ -1,10 +1,9 @@
-from __future__ import absolute_import
 
-from gaphor.UML import uml2
+from __future__ import absolute_import
 from gaphor.tests.testcase import TestCase
 from gaphor.ui.diagramtab import DiagramTab
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
-
+from gaphor.UML import uml2
 
 class WindowOwner(object):
     """
@@ -17,6 +16,7 @@ class WindowOwner(object):
 
 
 class DiagramToolboxTestCase(TestCase):
+
     services = ['element_factory', 'properties', 'element_dispatcher']
 
     def setUp(self):
@@ -31,28 +31,30 @@ class DiagramToolboxTestCase(TestCase):
         TestCase.tearDown(self)
 
     def test_toolbox_actions_shortcut_unique(self):
-
+        
         shortcuts = {}
-
+        
         for category, items in TOOLBOX_ACTIONS:
-
+        
             for action_name, label, stock_id, shortcut in items:
-
+        
                 try:
-
+                    
                     shortcuts[shortcut].append(action_name)
-
+                    
                 except KeyError:
-
+                    
                     shortcuts[shortcut] = [action_name]
 
         for key, val in shortcuts.items():
-
+            
             if key is not None:
+                
                 self.assertEqual(len(val), 1, 'Duplicate toolbox shortcut')
 
+
     def test_standalone_construct_with_diagram(self):
-        pass  # is setUp()
+        pass # is setUp()
 
     def _test_placement_action(self, action):
         self.tab.toolbox.action_group.get_action(action).activate()
@@ -94,7 +96,7 @@ class DiagramToolboxTestCase(TestCase):
         self._test_placement_action('toolbox-implementation')
 
     # Components:
-
+    
     def test_placement_component(self):
         self._test_placement_action('toolbox-component')
 

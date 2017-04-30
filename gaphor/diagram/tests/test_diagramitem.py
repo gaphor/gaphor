@@ -3,11 +3,8 @@ Test basic diagram item functionality like styles, etc.
 """
 
 from __future__ import absolute_import
-
 import unittest
-
 from gaphor.diagram.diagramitem import DiagramItem
-
 
 class ItemTestCase(unittest.TestCase):
     def setUp(self):
@@ -16,7 +13,6 @@ class ItemTestCase(unittest.TestCase):
                 'a-01': 1,
                 'a-02': 2,
             }
-
         self.ItemA = ItemA
 
     def test_style_assign(self):
@@ -29,6 +25,7 @@ class ItemTestCase(unittest.TestCase):
         self.assertEqual(item_a.style.a_01, 1)
         self.assertEqual(item_a.style.a_02, 2)
 
+
     def test_style_override(self):
         """
         Test style override
@@ -40,7 +37,6 @@ class ItemTestCase(unittest.TestCase):
                 'b-02': 4,
                 'a-01': 5,
             }
-
         item_b = ItemB()
         self.assertEqual(ItemB.style.b_01, 3)
         self.assertEqual(ItemB.style.b_02, 4)

@@ -3,11 +3,9 @@ Test implementation (interface realization) item connectors.
 """
 
 from __future__ import absolute_import
-
 from gaphor.UML import uml2
 from gaphor.diagram import items
 from gaphor.tests import TestCase
-
 
 class ImplementationTestCase(TestCase):
     def test_non_interface_glue(self):
@@ -20,6 +18,7 @@ class ImplementationTestCase(TestCase):
         # connecting head to non-interface item is disallowed
         self.assertFalse(glued)
 
+
     def test_interface_glue(self):
         """Test interface glueing with implementation
         """
@@ -29,6 +28,7 @@ class ImplementationTestCase(TestCase):
         glued = self.allow(impl, impl.head, iface)
         self.assertTrue(glued)
 
+
     def test_classifier_glue(self):
         """Test classifier glueing with implementation
         """
@@ -37,6 +37,7 @@ class ImplementationTestCase(TestCase):
 
         glued = self.allow(impl, impl.tail, clazz)
         self.assertTrue(glued)
+
 
     def test_connection(self):
         """Test connection of class and interface with implementation
@@ -55,6 +56,7 @@ class ImplementationTestCase(TestCase):
         self.assertTrue(impl.subject is not None)
         self.assertTrue(impl.subject.contract[0] is iface.subject)
         self.assertTrue(impl.subject.implementatingClassifier[0] is clazz.subject)
+
 
     def test_reconnection(self):
         """Test reconnection of class and interface with implementation
@@ -79,5 +81,7 @@ class ImplementationTestCase(TestCase):
         self.assertTrue(iface.subject in impl.subject.contract)
         self.assertTrue(c2.subject in impl.subject.implementatingClassifier)
         self.assertTrue(c1.subject not in impl.subject.implementatingClassifier, impl.subject.implementatingClassifier)
+
+
 
 # vim:sw=4:et:ai

@@ -3,16 +3,14 @@ Metaclass item editors.
 """
 
 from __future__ import absolute_import
-
 import gtk
-from zope import interface, component
 
-from gaphor.UML import uml2
-from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
-from gaphor.core import _, transactional
-from gaphor.diagram import items
+from gaphor.core import _, inject, transactional
 from gaphor.ui.interfaces import IPropertyPage
-
+from zope import interface, component
+from gaphor.diagram import items
+from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
+from gaphor.UML import uml2
 
 def _issubclass(c, b):
     try:
@@ -34,13 +32,14 @@ class MetaclassNameEditor(object):
     NAME_LABEL = _('Name')
 
     CLASSES = list(sorted(n for n in dir(uml2)
-                          if _issubclass(getattr(uml2, n), uml2.Element) and n != 'Stereotype'))
+        if _issubclass(getattr(uml2, n), uml2.Element) and n != 'Stereotype'))
+
 
     def __init__(self, item):
         self.item = item
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
         self.watcher = EventWatcher(item.subject)
-
+    
     def construct(self):
         page = gtk.VBox()
 
@@ -74,7 +73,6 @@ class MetaclassNameEditor(object):
                 entry.handler_block(changed_id)
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
-
         self.watcher.watch('name', handler) \
             .register_handlers()
         entry.connect('destroy', self.watcher.unregister_handlers)
@@ -84,9 +82,8 @@ class MetaclassNameEditor(object):
     @transactional
     def _on_name_change(self, entry):
         self.item.subject.name = entry.get_text()
-
-
+        
 component.provideAdapter(MetaclassNameEditor,
-                         adapts=[items.MetaclassItem], name='Properties')
+        adapts=[items.MetaclassItem], name='Properties')
 
 # vim:sw=4:et:ai

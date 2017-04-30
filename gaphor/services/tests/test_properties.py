@@ -1,12 +1,10 @@
+
 from __future__ import absolute_import
-
-import tempfile
 from unittest import TestCase
-
 from gaphor.services.properties import Properties, FileBackend
+import tempfile
 
-
-# class MockApplication(object):
+#class MockApplication(object):
 #
 #    def __init__(self):
 #        self.events = []
@@ -16,11 +14,12 @@ from gaphor.services.properties import Properties, FileBackend
 #
 
 class TestProperties(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.mkdtemp()
         backend = FileBackend(self.tmpdir)
         self.properties = Properties(backend)
-        #        self.app = MockApplication()
+#        self.app = MockApplication()
         self.properties.init(self.app)
 
     def shutDown(self):
@@ -28,7 +27,7 @@ class TestProperties(TestCase):
         os.remove(os.path.join(self.tmpdir, FileBackend.RESOURCE_FILE))
         os.rmdir(self.tmpdir)
 
-# def test_properties(self):
+#    def test_properties(self):
 #        prop = self.properties
 #        assert not self.app.events
 #

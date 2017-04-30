@@ -3,10 +3,8 @@ Formatting of UML elements like attributes, operations, stereotypes, etc.
 """
 
 from __future__ import absolute_import
-
 import re
 from cStringIO import StringIO
-
 from simplegeneric import generic
 
 from gaphor.UML import uml2 as UML
@@ -18,7 +16,7 @@ def format(el, pattern=None):
     Format an UML element.
     """
     raise NotImplementedError('Format routine for type %s not implemented yet' \
-                              % type(el))
+            % type(el))
 
 
 @format.when_type(UML.Property)
@@ -47,7 +45,7 @@ vis_map = {
 
 
 def format_attribute(el, visibility=False, is_derived=False, type=False,
-                     multiplicity=False, default=False, tags=False):
+                           multiplicity=False, default=False, tags=False):
     """
     Create a OCL representation of the attribute,
     Returns the attribute as a string.
@@ -68,7 +66,7 @@ def format_attribute(el, visibility=False, is_derived=False, type=False,
 
     # Render all fields if they all are set to False
     if not (visibility or is_derived or type or multiplicity or default):
-        visibility = is_derived = type = multiplicity = default = True
+       visibility = is_derived = type = multiplicity = default = True
 
     s = StringIO()
 
@@ -80,7 +78,7 @@ def format_attribute(el, visibility=False, is_derived=False, type=False,
         if el.isDerived: s.write('/')
 
     s.write(name)
-
+    
     if type and el.typeValue:
         s.write(': %s' % el.typeValue)
 
@@ -141,7 +139,7 @@ def format_association_end(el):
 
 @format.when_type(UML.Operation)
 def format_operation(el, pattern=None, visibility=False, type=False, multiplicity=False,
-                     default=False, tags=False, direction=False):
+                           default=False, tags=False, direction=False):
     """
     Create a OCL representation of the operation,
     Returns the operation as a string.
@@ -154,7 +152,7 @@ def format_operation(el, pattern=None, visibility=False, type=False, multiplicit
 
     # Render all fields if they all are set to False
     if not (visibility or type or multiplicity or default or tags or direction):
-        visibility = type = multiplicity = default = tags = direction = True
+       visibility = type = multiplicity = default = tags = direction = True
 
     s = StringIO()
     if visibility:
@@ -178,7 +176,7 @@ def format_operation(el, pattern=None, visibility=False, type=False, multiplicit
                 s.write('[%s]' % p.upperValue)
         if default and p.defaultValue:
             s.write(' = %s' % p.defaultValue)
-        # if p.taggedValue:
+        #if p.taggedValue:
         #     tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
         #                                      ['value'] * len(p.taggedValue))))
         #     s.write(' { %s }' % tvs)
@@ -196,11 +194,11 @@ def format_operation(el, pattern=None, visibility=False, type=False, multiplicit
                 s.write('[%s..%s]' % (rr.lowerValue, rr.upperValue))
             else:
                 s.write('[%s]' % rr.upperValue)
-                # if rr.taggedValue:
-                #    tvs = ', '.join(filter(None, map(getattr, rr.taggedValue,
-                #                                     ['value'] * len(rr.taggedValue))))
-                #    if tvs:
-                #        s.write(' { %s }' % tvs)
+        #if rr.taggedValue:
+        #    tvs = ', '.join(filter(None, map(getattr, rr.taggedValue,
+        #                                     ['value'] * len(rr.taggedValue))))
+        #    if tvs:
+        #        s.write(' { %s }' % tvs)
     s.reset()
     return s.read()
 
@@ -216,5 +214,6 @@ def format_namedelement(el, pattern='%s'):
     Format named element.
     """
     return pattern % el.name
+
 
 # vim:sw=4:et:ai

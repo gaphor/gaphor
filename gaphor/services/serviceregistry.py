@@ -6,29 +6,30 @@ Our good old NameServicer.
 """
 
 from __future__ import absolute_import
+from zope import interface, component
 
 from logging import getLogger
-from zope import component
-
+from gaphor.interfaces import IService
+from gaphor.core import inject
 import six
 
-from gaphor.core import inject
-from gaphor.interfaces import IService
-
-
 class ServiceRegistry(object):
+
     component_registry = inject('component_registry')
     logger = getLogger('ServiceRegistry')
 
     def __init__(self):
         self._uninitialized_services = {}
 
+
     def init(self, app=None):
         self.logger.info('Starting')
+        
 
     def shutdown(self):
-
+        
         self.logger.info('Shutting down')
+
 
     def load_services(self, services=None):
         """
@@ -37,9 +38,9 @@ class ServiceRegistry(object):
         Services are registered as utilities in zope.component.
         Service should provide an interface gaphor.interfaces.IService.
         """
-
+        
         self.logger.info('Loading services')
-
+        
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
             cls = ep.load()
             if not IService.implementedBy(cls):
@@ -49,9 +50,9 @@ class ServiceRegistry(object):
                 self._uninitialized_services[ep.name] = srv
 
     def init_all_services(self):
-
+        
         self.logger.info('Initializing services')
-
+        
         while self._uninitialized_services:
             self.init_service(six.iterkeys(self._uninitialized_services))
 
@@ -61,10 +62,10 @@ class ServiceRegistry(object):
 
         Raises ComponentLookupError if the service has nor been found
         """
-
+        
         self.logger.info('Initializing service')
         self.logger.debug('Service name is %s' % name)
-
+        
         try:
             srv = self._uninitialized_services.pop(name)
         except KeyError:
@@ -80,5 +81,6 @@ class ServiceRegistry(object):
             return self.component_registry.get_utility(IService, name)
         except component.ComponentLookupError:
             return self.init_service(name)
+
 
 # vim: sw=4:et:ai

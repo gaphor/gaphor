@@ -4,13 +4,13 @@ Test GitHub issue #4. Diagram could not be loaded due to JuggleError
 """
 
 from __future__ import absolute_import
-
-from gaphor.storage.storage import load
 from gaphor.tests import TestCase
+from gaphor.storage.storage import load
 
 
 class CyclicDiagramTestCase(TestCase):
-    # services = TestCase.services + ['undo_manager']
+
+    #services = TestCase.services + ['undo_manager']
 
     def setUp(self):
         super(CyclicDiagramTestCase, self).setUp()
@@ -40,5 +40,6 @@ class CyclicDiagramTestCase(TestCase):
 
         assert gobject.timeout_add(1, handler) > 0
         gtk.main()
+
 
 # vi:sw=4:et:ai

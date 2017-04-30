@@ -14,14 +14,12 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
 
 from __future__ import absolute_import
 from __future__ import print_function
-
-import gobject
 import sys
+import gobject
 import time
-
+import traceback
 import six
 from six.moves import range
-
 
 class GIdleThread(object):
     """This is a pseudo-"thread" for use with the GTK+ main loop.
@@ -96,12 +94,12 @@ class GIdleThread(object):
         return self._idle_id != 0
 
     error = property(lambda self: self._exc_info[0],
-                     doc="Return a possible exception that had occured " \
+                     doc="Return a possible exception that had occured "\
                          "during execution of the generator")
 
     exc_info = property(lambda self: self._exc_info,
-                        doc="Return a exception information as provided by " \
-                            "sys.exc_info()")
+                     doc="Return a exception information as provided by "\
+                         "sys.exc_info()")
 
     def reraise(self):
         """Rethrow the error that occured during execution of the idle process.
@@ -126,7 +124,7 @@ class GIdleThread(object):
             return False
         except:
             self._exc_info = sys.exc_info()
-            # traceback.print_exc()
+            #traceback.print_exc()
             self._idle_id = 0
             return False
 
@@ -181,7 +179,6 @@ if __name__ == '__main__':
         for i in range(max):
             yield i
 
-
     def shower(queue):
         # Never stop reading the queue:
         while True:
@@ -192,12 +189,11 @@ if __name__ == '__main__':
                 pass
             yield None
 
-
     print('Test 1: (should print range 0..22)')
     queue = Queue()
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
-
+    
     main = gobject.main_context_default()
     c.start()
     s.start()
@@ -207,7 +203,7 @@ if __name__ == '__main__':
     queue = Queue(size=1)
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
-
+    
     main = gobject.main_context_default()
     c.start(priority=gobject.PRIORITY_DEFAULT)
     s.start()

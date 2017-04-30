@@ -5,12 +5,9 @@ Verify the content of an element factory before it is saved.
 """
 
 from __future__ import absolute_import
-
-import gaphas
-
 from gaphor.UML import uml2
 from gaphor.UML.collection import collection
-
+import gaphas
 
 def orphan_references(factory):
     """
@@ -41,13 +38,13 @@ def orphan_references(factory):
         """
         for v in value:
             if v.id:
-                refs.add((v.id, v))
+                    refs.add((v.id, v))
 
     def verify_element(name, value):
         """
         Store the element id.
         """
-        if isinstance(value, (uml2.Element, gaphas.Item)):
+        if isinstance (value, (uml2.Element, gaphas.Item)):
             verify_reference(name, value)
         elif isinstance(value, collection):
             verify_collection(name, value)
@@ -59,7 +56,7 @@ def orphan_references(factory):
         Verify attributes and references in a gaphor.diagram.* object.
         The extra attribute reference can be used to force UML 
         """
-        # log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
+        #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
         if isinstance(value, collection) or \
                 (isinstance(value, (list, tuple)) and reference == True):
             verify_collection(name, value)
@@ -82,5 +79,6 @@ def orphan_references(factory):
         e.save(verify_element)
 
     return [r[1] for r in refs if not r[0] in elements]
+
 
 # vim:sw=4:et:ai

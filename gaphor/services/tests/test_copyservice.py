@@ -1,13 +1,14 @@
-from __future__ import absolute_import
 
+from __future__ import absolute_import
 from gaphor.UML import uml2
-from gaphor.application import Application
 from gaphor.diagram import items
 from gaphor.services.copyservice import CopyService
+from gaphor.application import Application
 from gaphor.tests.testcase import TestCase
 
 
 class CopyServiceTestCase(TestCase):
+
     services = TestCase.services + ['main_window', 'action_manager', 'properties', 'undo_manager', 'ui_manager']
 
     def test_init(self):
@@ -24,12 +25,12 @@ class CopyServiceTestCase(TestCase):
         ci = diagram.create(items.CommentItem, subject=ef.create(uml2.Comment))
 
         service.copy([ci])
-        assert diagram.canvas.get_all_items() == [ci]
+        assert diagram.canvas.get_all_items() == [ ci ]
 
         service.paste(diagram)
 
         assert len(diagram.canvas.get_all_items()) == 2, diagram.canvas.get_all_items()
-
+    
     def test_copy_named_item(self):
         service = CopyService()
         service.init(Application)
@@ -49,7 +50,7 @@ class CopyServiceTestCase(TestCase):
         self.assertEquals('Name', i[0]._name.text)
 
         service.copy([c])
-        assert diagram.canvas.get_all_items() == [c]
+        assert diagram.canvas.get_all_items() == [ c ]
 
         service.paste(diagram)
 
@@ -61,6 +62,7 @@ class CopyServiceTestCase(TestCase):
 
         self.assertEquals('Name', i[0]._name.text)
         self.assertEquals('Name', i[1]._name.text)
+
 
     def _skip_test_copy_paste_undo(self):
         """
@@ -103,5 +105,6 @@ class CopyServiceTestCase(TestCase):
 
         self.assertEquals(3, len(self.diagram.canvas.get_all_items()))
         self.assertFalse(orphan_references(self.element_factory))
+
 
 # vim:sw=4:et:ai

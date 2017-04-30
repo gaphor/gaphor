@@ -6,14 +6,12 @@ gaphor.adapter package.
 """
 
 from __future__ import absolute_import
-
 import gtk
-from zope import component
 
-from gaphor.adapters.propertypages import NamedItemPropertyPage, create_hbox_label
 from gaphor.core import _, inject, transactional
 from gaphor.diagram import items
-
+from zope import component
+from gaphor.adapters.propertypages import NamedItemPropertyPage, create_hbox_label
 
 class TransitionPropertyPage(NamedItemPropertyPage):
     """
@@ -74,7 +72,7 @@ class StatePropertyPage(NamedItemPropertyPage):
         page = super(StatePropertyPage, self).construct()
 
         subject = self.subject
-
+ 
         if not subject:
             return page
 
@@ -112,4 +110,6 @@ class StatePropertyPage(NamedItemPropertyPage):
         method(value)
 
 
+
 component.provideAdapter(StatePropertyPage, name='Properties')
+

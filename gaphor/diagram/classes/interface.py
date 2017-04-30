@@ -69,17 +69,16 @@ Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
 from __future__ import absolute_import
-
 from math import pi
-
+from gaphas.state import observed, reversible_property
+from gaphas.item import NW, NE, SE, SW
 from gaphas.connector import LinePort
 from gaphas.geometry import distance_line_point, distance_point_point
-from gaphas.item import NW, NE, SE, SW
-from gaphas.state import observed, reversible_property
 
 from gaphor.UML import uml2
-from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 from .klass import ClassItem
+from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 
 
 class InterfacePort(LinePort):
@@ -112,6 +111,7 @@ class InterfacePort(LinePort):
         self.required = False
         self.provided = False
 
+
     def glue(self, pos):
         """
         Behaves like simple line port, but for folded interface suggests
@@ -129,6 +129,7 @@ class InterfacePort(LinePort):
             return pl, d
 
 
+
 class InterfaceItem(ClassItem):
     """
     Interface item supporting class box, folded notations and assembly
@@ -137,7 +138,7 @@ class InterfaceItem(ClassItem):
     When in folded mode, provided (ball) notation is used by default.
     """
 
-    __uml__ = uml2.Interface
+    __uml__        = uml2.Interface
     __stereotype__ = {'interface': lambda self: self.drawing_style != self.DRAW_ICON}
     __style__ = {
         'icon-size': (20, 20),
@@ -160,13 +161,14 @@ class InterfaceItem(ClassItem):
     RADIUS_REQUIRED = 14
 
     # Non-folded mode.
-    FOLDED_NONE = 0
+    FOLDED_NONE     = 0
     # Folded mode, provided (ball) notation.
     FOLDED_PROVIDED = 1
     # Folded mode, required (socket) notation.
     FOLDED_REQUIRED = 2
     # Folded mode, notation of assembly connector icon mode (ball&socket).
     FOLDED_ASSEMBLY = 3
+
 
     def __init__(self, id=None):
         ClassItem.__init__(self, id)
@@ -193,6 +195,7 @@ class InterfaceItem(ClassItem):
             .watch('subject<Interface>.ownedOperation', self.on_class_owned_operation) \
             .watch('subject<Interface>.supplierDependency')
 
+
     @observed
     def set_drawing_style(self, style):
         """
@@ -201,9 +204,9 @@ class InterfaceItem(ClassItem):
         """
         super(InterfaceItem, self).set_drawing_style(style)
         if self._drawing_style == self.DRAW_ICON:
-            self.folded = self.FOLDED_PROVIDED  # set default folded mode
+            self.folded = self.FOLDED_PROVIDED # set default folded mode
         else:
-            self.folded = self.FOLDED_NONE  # unset default folded mode
+            self.folded = self.FOLDED_NONE # unset default folded mode
 
     drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
 
@@ -229,10 +232,10 @@ class InterfaceItem(ClassItem):
         else:
             if self._folded == self.FOLDED_PROVIDED:
                 icon_size = self.style.icon_size_provided
-            else:  # required interface or assembly icon mode
+            else: # required interface or assembly icon mode
                 icon_size = self.style.icon_size_required
 
-            self.style.icon_size = icon_size
+            self.style.icon_size =  icon_size
             self.min_width, self.min_height = icon_size
             self.width, self.height = icon_size
 
@@ -258,7 +261,8 @@ class InterfaceItem(ClassItem):
         self.request_update()
 
     folded = property(_is_folded, _set_folded,
-                      doc="Check or set folded notation, see FOLDED_* constants.")
+        doc="Check or set folded notation, see FOLDED_* constants.")
+
 
     def draw_icon(self, context):
         cr = context.cairo
@@ -272,8 +276,9 @@ class InterfaceItem(ClassItem):
             cr.restore()
         if provided:
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
-            cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi * 2)
+            cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi*2)
         cr.stroke()
         super(InterfaceItem, self).draw(context)
+
 
 # vim:sw=4:et:ai

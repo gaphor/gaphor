@@ -1,12 +1,12 @@
-from __future__ import absolute_import
 
+from __future__ import absolute_import
+from gaphor.tests import TestCase
 from gaphor.UML import uml2
 from gaphor.diagram import items
-from gaphor.tests import TestCase
-
 
 class GaphasTest(TestCase):
-    services = TestCase.services + ['sanitizer_service', 'undo_manager']
+
+    services = TestCase.services + [ 'sanitizer_service', 'undo_manager' ]
 
     def test_remove_class_with_association(self):
         c1 = self.create(items.ClassItem, uml2.Class)
@@ -23,7 +23,7 @@ class GaphasTest(TestCase):
 
         assert a.subject
         assert self.element_factory.lselect(lambda e: e.isKindOf(uml2.Association))[0] is a.subject
-
+        
         c1.unlink()
 
         self.diagram.canvas.update_now()

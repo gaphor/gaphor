@@ -3,11 +3,9 @@ Flow item adapter connections.
 """
 
 from __future__ import absolute_import
-
-from zope import component
-
+from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
+from zope import interface, component
 from gaphor.UML import uml2
-from gaphor.adapters.connectors import UnaryRelationshipConnect
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
@@ -22,10 +20,11 @@ class FlowConnect(UnaryRelationshipConnect):
         subject = self.element.subject
 
         if handle is line.head and isinstance(subject, uml2.FinalNode) \
-                or handle is line.tail and isinstance(subject, uml2.InitialNode):
+           or handle is line.tail and isinstance(subject, uml2.InitialNode):
             return None
 
         return super(FlowConnect, self).allow(handle, port)
+
 
     def reconnect(self, handle, port):
         line = self.line
@@ -41,7 +40,8 @@ class FlowConnect(UnaryRelationshipConnect):
             if guard_value:
                 relation.guard = guard_value
             log.debug('unlinking old flow instance %s' % old_flow)
-            # old_flow.unlink()
+            #old_flow.unlink()
+
 
     def connect_subject(self, handle):
         line = self.line
@@ -53,18 +53,19 @@ class FlowConnect(UnaryRelationshipConnect):
         c2 = self.get_connected(line.tail)
         if isinstance(c1, items.ObjectNodeItem) or isinstance(c2, items.ObjectNodeItem):
             relation = self.relationship_or_new(uml2.ObjectFlow,
-                                                uml2.ObjectFlow.source,
-                                                uml2.ObjectFlow.target)
+                        uml2.ObjectFlow.source,
+                        uml2.ObjectFlow.target)
         else:
             relation = self.relationship_or_new(uml2.ControlFlow,
-                                                uml2.ControlFlow.source,
-                                                uml2.ControlFlow.target)
+                        uml2.ControlFlow.source,
+                        uml2.ControlFlow.target)
         line.subject = relation
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
         if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
             adapter = component.queryMultiAdapter((otc, line), IConnect)
             adapter.combine_nodes()
+
 
     def disconnect_subject(self, handle):
         log.debug('Performing disconnect for handle %s' % handle)
@@ -75,7 +76,6 @@ class FlowConnect(UnaryRelationshipConnect):
         if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
             adapter = component.queryMultiAdapter((otc, line), IConnect)
             adapter.decombine_nodes()
-
 
 component.provideAdapter(factory=FlowConnect,
                          adapts=(items.ActionItem, items.FlowItem))
@@ -94,16 +94,15 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Abstract class with common behaviour for Fork/Join node and
     Decision/Merge node.
     """
-
     def allow(self, handle, port):
         # No cyclic connect is possible on a Flow/Decision node:
         head, tail = self.line.head, self.line.tail
         subject = self.element.subject
-
+        
         hct = self.get_connected(head)
         tct = self.get_connected(tail)
         if handle is head and tct and tct.subject is subject \
-                or handle is tail and hct and hct.subject is subject:
+           or handle is tail and hct and hct.subject is subject:
             return None
 
         return super(FlowForkDecisionNodeConnect, self).allow(handle, port)
@@ -127,11 +126,11 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             join_node = subject
 
             # determine flow class:
-            if [f for f in join_node.incoming if isinstance(f, uml2.ObjectFlow)]:
+            if [ f for f in join_node.incoming if isinstance(f, uml2.ObjectFlow) ]:
                 flow_class = uml2.ObjectFlow
             else:
                 flow_class = uml2.ControlFlow
-
+            
             self.element_factory.swap_element(join_node, join_node_cls)
             fork_node = self.element_factory.create(fork_node_cls)
             for flow in list(join_node.outgoing):
@@ -152,7 +151,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         element = self.element
         if element.combined:
             join_node = element.subject
-            cflow = join_node.outgoing[0]  # combining flow
+            cflow = join_node.outgoing[0] # combining flow
             fork_node = cflow.target
             assert fork_node is element.combined
             assert isinstance(join_node, join_node_cls)
@@ -196,9 +195,8 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     """
     component.adapts(items.ForkNodeItem, items.FlowItem)
 
-    fork_node_cls = uml2.ForkNode
-    join_node_cls = uml2.JoinNode
-
+    fork_node_cls=uml2.ForkNode
+    join_node_cls=uml2.JoinNode
 
 component.provideAdapter(FlowForkNodeConnect)
 
@@ -211,7 +209,6 @@ class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
 
     fork_node_cls = uml2.DecisionNode
     join_node_cls = uml2.MergeNode
-
 
 component.provideAdapter(FlowDecisionNodeConnect)
 

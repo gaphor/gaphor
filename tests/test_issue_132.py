@@ -1,12 +1,13 @@
-from __future__ import absolute_import
 
-from gaphor.UML import uml2
-from gaphor.core import transactional
+from __future__ import absolute_import
 from gaphor.tests import TestCase
 from gaphor.ui.namespace import NamespaceModel
+from gaphor.UML import uml2
+from gaphor.core import transactional
 
 
 class UndoRedoBugTestCase(TestCase):
+
     services = TestCase.services + ['undo_manager']
 
     def setUp(self):
@@ -25,6 +26,7 @@ class UndoRedoBugTestCase(TestCase):
     def remove_attribute(self):
         self.attribute.unlink()
 
+
     def test_bug_with_attribute(self):
         """
         Does not trigger the error.
@@ -42,5 +44,6 @@ class UndoRedoBugTestCase(TestCase):
         assert self.attribute in self.class_.ownedAttribute
 
         self.undo_manager.redo_transaction()
+
 
 # vi:sw=4:et:ai

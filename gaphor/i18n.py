@@ -4,8 +4,7 @@ Here the _() function is defined that is used to translate text into
 your native language."""
 
 from __future__ import absolute_import
-
-__all__ = ['_']
+__all__ = [ '_' ]
 
 import os
 
@@ -16,11 +15,11 @@ localedir = os.path.join(pkg_resources.get_distribution('gaphor').location, \
                          'gaphor', 'data', 'locale')
 
 try:
-
+    
     catalog = gettext.Catalog('gaphor', localedir=localedir)
     _ = catalog.gettext
-
+    
 except IOError as e:
+    
+    def _(s): return s
 
-    def _(s):
-        return s

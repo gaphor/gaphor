@@ -3,13 +3,12 @@ Toolbox.
 """
 
 from __future__ import absolute_import
-
 import gobject
 import gtk
 
 from gaphor.core import inject
-from .wrapbox import Wrapbox
 
+from .wrapbox import Wrapbox
 
 class Toolbox(gtk.VBox):
     """
@@ -41,6 +40,7 @@ class Toolbox(gtk.VBox):
 
     properties = inject('properties')
 
+
     def __init__(self, toolboxdef):
         """
         Create a new Toolbox instance. Wrapbox objects are generated
@@ -50,6 +50,7 @@ class Toolbox(gtk.VBox):
         self.buttons = []
         self.shortcuts = {}
         self._construct(toolboxdef)
+
 
     def make_wrapbox_decorator(self, title, content):
         """
@@ -61,7 +62,7 @@ class Toolbox(gtk.VBox):
         expander.set_label(title)
 
         prop = 'ui.toolbox.%s' % title.replace(' ', '-').lower()
-
+        
         expanded = self.properties.get(prop, False)
         expander.set_expanded(expanded)
 
@@ -73,10 +74,12 @@ class Toolbox(gtk.VBox):
 
         return expander
 
+
     def on_expander_toggled(self, widget, prop):
         # Save the property (inverse value as handler is called before the
         # action takes place):
         self.properties.set(prop, not widget.get_expanded())
+        
 
     def toolbox_button(self, action_name, stock_id,
                        icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR):
@@ -90,14 +93,15 @@ class Toolbox(gtk.VBox):
         else:
             button.props.label = action_name
         button.action_name = action_name
-
+        
         # Enable DND (behaviour like tree view)
         button.drag_source_set(gtk.gdk.BUTTON1_MASK, self.DND_TARGETS,
-                               gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+                gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
         button.drag_source_set_icon_stock(stock_id)
         button.connect('drag-data-get', self._button_drag_data_get)
 
         return button
+
 
     def _construct(self, toolboxdef):
         shortcuts = self.shortcuts
@@ -118,7 +122,9 @@ class Toolbox(gtk.VBox):
                 self.pack_start(wrapbox, expand=False)
                 wrapbox.show()
 
+
     def _button_drag_data_get(self, button, context, selection_data, info, time):
         selection_data.set(selection_data.target, 8, button.action_name)
+
 
 # vim:sw=4:et:ai

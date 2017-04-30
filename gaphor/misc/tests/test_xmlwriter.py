@@ -1,10 +1,8 @@
-from __future__ import absolute_import
 
+from __future__ import absolute_import
 import sys
 import unittest
-
 from gaphor.misc.xmlwriter import XMLWriter
-
 
 class Writer:
     def __init__(self):
@@ -15,6 +13,7 @@ class Writer:
 
 
 class XMLWriterTestCase(unittest.TestCase):
+
     def test_elements_1(self):
         w = Writer()
         xml_w = XMLWriter(w)
@@ -71,5 +70,6 @@ class XMLWriterTestCase(unittest.TestCase):
 
         xml = """<?xml version="1.0" encoding="%s"?>\n<g:foo xmlns:g="http://gaphor.devjavu.com/schema"/>""" % sys.getdefaultencoding()
         assert w.s == xml, w.s
+
 
 # vim:sw=4:et:ai

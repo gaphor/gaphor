@@ -6,11 +6,11 @@ on the color widget. The standard format is `(red, green, blue, alpha)`.
 """
 
 from __future__ import absolute_import
-
 import gtk
 
 
 class ColorButton(gtk.ColorButton):
+
     __gtype_name__ = 'GaphorColorButton'
 
     def __init__(self, r, g, b, a):

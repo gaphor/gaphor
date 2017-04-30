@@ -7,12 +7,10 @@ gaphor.adapter package.
 """
 
 from __future__ import absolute_import
-
 from zope import component
-
 from gaphor.UML import uml2
-from gaphor.adapters.connectors import RelationshipConnect
 from gaphor.diagram import items
+from gaphor.adapters.connectors import RelationshipConnect
 
 
 class VertexConnect(RelationshipConnect):
@@ -23,13 +21,15 @@ class VertexConnect(RelationshipConnect):
     def reconnect(self, handle, port):
         self.reconnect_relationship(handle, uml2.Transition.source, uml2.Transition.target)
 
+
     def connect_subject(self, handle):
         relation = self.relationship_or_new(uml2.Transition,
-                                            uml2.Transition.source,
-                                            uml2.Transition.target)
+                    uml2.Transition.source,
+                    uml2.Transition.target)
         self.line.subject = relation
         if relation.guard is None:
             relation.guard = self.element_factory.create(uml2.Constraint)
+
 
 
 class TransitionConnect(VertexConnect):
@@ -52,7 +52,6 @@ class TransitionConnect(VertexConnect):
             return super(TransitionConnect, self).allow(handle, port)
         else:
             return None
-
 
 component.provideAdapter(TransitionConnect)
 
@@ -83,9 +82,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         else:
             return None
 
-
 component.provideAdapter(InitialPseudostateTransitionConnect)
-
 
 class HistoryPseudostateTransitionConnect(VertexConnect):
     """
@@ -100,7 +97,6 @@ class HistoryPseudostateTransitionConnect(VertexConnect):
         """
         """
         return super(HistoryPseudostateTransitionConnect, self).allow(handle, port)
-
 
 component.provideAdapter(HistoryPseudostateTransitionConnect)
 

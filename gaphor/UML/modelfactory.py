@@ -9,12 +9,10 @@ Functions collected in this module allow to
 """
 
 from __future__ import absolute_import
-
 from gaphor.UML.uml2 import *
 
 # '<<%s>>'
 STEREOTYPE_FMT = '\xc2\xab%s\xc2\xbb'
-
 
 def stereotypes_str(element, stereotypes=()):
     """
@@ -80,7 +78,7 @@ def find_instances(factory, element):
     Find instance specification which extend classifier `element`.
     """
     return factory.select(lambda e: e.isKindOf(InstanceSpecification) \
-                                    and e.classifier and e.classifier[0] == element)
+            and e.classifier and e.classifier[0] == element)
 
 
 def remove_stereotype(element, stereotype):
@@ -115,7 +113,7 @@ def get_stereotypes(factory, element):
 
     # find stereotypes that extend element class
     classes = factory.select(lambda e: e.isKindOf(Class) and e.name in names)
-
+    
     stereotypes = set(ext.ownedEnd.type for cls in classes for ext in cls.extension)
     return sorted(stereotypes, key=lambda st: st.name)
 
@@ -146,9 +144,7 @@ def create_extension(factory, element, stereotype):
 
     return ext
 
-
 extend_with_stereotype = create_extension
-
 
 def add_slot(factory, instance, definingFeature):
     """
@@ -166,13 +162,11 @@ def create_dependency(factory, supplier, client):
     dep.client = client
     return dep
 
-
 def create_realization(factory, realizingClassifier, abstraction):
     dep = factory.create(Realization)
     dep.realizingClassifier = realizingClassifier
     dep.abstraction = abstraction
     return dep
-
 
 def create_generalization(factory, general, specific):
     gen = factory.create(Generalization)
@@ -180,13 +174,11 @@ def create_generalization(factory, general, specific):
     gen.specific = specific
     return gen
 
-
 def create_implementation(factory, contract, implementatingClassifier):
     impl = factory.create(Implementation)
     impl.contract = contract
     impl.implementatingClassifier = implementatingClassifier
     return impl
-
 
 def create_association(factory, type_a, type_b):
     """
@@ -272,7 +264,7 @@ def set_navigability(assoc, end, nav):
             assoc.navigableOwnedEnd = end
     elif nav is None:
         assoc.ownedEnd = end
-        # elif nav is False, non-navigable
+    # elif nav is False, non-navigable
 
 
 def dependency_type(client, supplier):
@@ -288,7 +280,7 @@ def dependency_type(client, supplier):
     If none of above is detected then standard dependency is determined.
     """
     dt = Dependency
-
+        
     # test interface first as it is a classifier
     if isinstance(supplier, Interface):
         dt = Usage
@@ -327,4 +319,5 @@ def create_message(factory, msg, inverted=False):
         message.receiveEvent = receive
     return message
 
-# vim:sw=4:et:ai
+
+#vim:sw=4:et:ai

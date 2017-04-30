@@ -1,14 +1,13 @@
+
 from __future__ import absolute_import
-
-import gtk
-
-from gaphor.UML import uml2
+from gaphor.tests import TestCase
 from gaphor.adapters.profiles.metaclasseditor import MetaclassNameEditor
 from gaphor.diagram import items
-from gaphor.tests import TestCase
-
+from gaphor.UML import uml2
+import gtk
 
 class MetaclassEditorTest(TestCase):
+
     def test_name_selection(self):
         ci = self.create(items.MetaclassItem, uml2.Class)
         ci.subject.name = 'Class'
@@ -22,5 +21,6 @@ class MetaclassEditorTest(TestCase):
 
         ci.subject.name = 'Blah'
         self.assertEquals('Blah', combo.child.get_text())
+
 
 # vim:sw=4:et:ai

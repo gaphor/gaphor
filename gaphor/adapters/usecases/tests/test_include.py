@@ -3,11 +3,9 @@ Test include item connections.
 """
 
 from __future__ import absolute_import
-
+from gaphor.tests import TestCase
 from gaphor.UML import uml2
 from gaphor.diagram import items
-from gaphor.tests import TestCase
-
 
 class IncludeItemTestCase(TestCase):
     def test_use_case_glue(self):
@@ -18,6 +16,7 @@ class IncludeItemTestCase(TestCase):
 
         glued = self.allow(include, include.head, uc1)
         self.assertTrue(glued)
+
 
     def test_use_case_connect(self):
         """Test connecting "include" to use cases
@@ -31,6 +30,7 @@ class IncludeItemTestCase(TestCase):
 
         self.connect(include, include.tail, uc2)
         self.assertTrue(self.get_connected(include.tail), uc2)
+
 
     def test_use_case_connect(self):
         """Test reconnecting use cases with "include"
@@ -52,6 +52,7 @@ class IncludeItemTestCase(TestCase):
         self.assertSame(include.subject.addition, uc1.subject)
         self.assertSame(include.subject.includingCase, uc3.subject)
 
+
     def test_use_case_disconnect(self):
         """Test disconnecting "include" from use cases
         """
@@ -68,5 +69,7 @@ class IncludeItemTestCase(TestCase):
 
         self.disconnect(include, include.tail)
         self.assertTrue(self.get_connected(include.tail) is None)
+
+
 
 # vim:sw=4:et:ai

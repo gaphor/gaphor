@@ -5,33 +5,31 @@ See also gaphor.diagram.states package description.
 """
 
 from __future__ import absolute_import
-
-from gaphas.util import path_ellipse
-
 from gaphor.UML import uml2
-from gaphor.diagram.states import VertexItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
+from gaphas.util import path_ellipse
 from gaphor.diagram.textelement import text_center
+from gaphor.diagram.states import VertexItem
 
 
 class InitialPseudostateItem(VertexItem):
     """
     Initial pseudostate diagram item.
     """
-    __uml__ = uml2.Pseudostate
+    __uml__   = uml2.Pseudostate
     __style__ = {
-        'min-size': (20, 20),
+        'min-size':   (20, 20),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
         'name-padding': (2, 2, 2, 2),
         'name-outside': True,
     }
 
     RADIUS = 10
-
     def __init__(self, id=None):
         super(InitialPseudostateItem, self).__init__(id)
         for h in self.handles():
             h.movable = False
+
 
     def draw(self, context):
         """
@@ -50,20 +48,20 @@ class HistoryPseudostateItem(VertexItem):
     """
     History pseudostate diagram item.
     """
-    __uml__ = uml2.Pseudostate
+    __uml__   = uml2.Pseudostate
     __style__ = {
-        'min-size': (30, 30),
+        'min-size':   (30, 30),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
         'name-padding': (2, 2, 2, 2),
         'name-outside': True,
     }
 
     RADIUS = 15
-
     def __init__(self, id=None):
         super(HistoryPseudostateItem, self).__init__(id)
         for h in self.handles():
             h.movable = False
+
 
     def draw(self, context):
         """
@@ -74,7 +72,7 @@ class HistoryPseudostateItem(VertexItem):
         r = self.RADIUS
         d = r * 2
         path_ellipse(cr, r, r, d, d)
-        # cr.set_line_width(1)
+        #cr.set_line_width(1)
         cr.stroke()
         text_center(cr, r, r, "H", self.style.name_font)
 
