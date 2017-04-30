@@ -4,12 +4,12 @@ Classes related (dependency, implementation) adapter connections.
 
 from __future__ import absolute_import
 
+import logging
 from zope import component
 
 from gaphor.UML import uml2, modelfactory
 from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
 from gaphor.diagram import items
-import logging
 
 
 class DependencyConnect(RelationshipConnect):
