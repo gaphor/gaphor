@@ -10,42 +10,34 @@ save(filename)
 
 from __future__ import absolute_import
 from __future__ import print_function
-from cStringIO import StringIO, InputType
-from xml.sax.saxutils import escape
-import types
-import sys
-import os.path
+
 import gc
+import os.path
+from cStringIO import InputType
 
 import gaphas
+from six.moves import map
 
+from gaphor import diagram
 from gaphor.UML import uml2, modelfactory
 from gaphor.UML.collection import collection
 from gaphor.UML.elementfactory import ElementChangedEventBlocker
-from gaphor import diagram
-from gaphor.storage import parser
 from gaphor.application import Application, NotInitializedError
 from gaphor.diagram import items
 from gaphor.i18n import _
-#from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.storage import parser
 
-# import gaphor.adapters.connectors package, so diagram items can find
-# their appropriate connectors (i.e. diagram line requires this);
-# this allows external scripts to load diagram properly... or should
-# this be done using services? i.e. request storage service, which should
-# depend on connectors service?
-from gaphor.adapters import connectors
-from six.moves import map
-
-__all__ = [ 'load', 'save' ]
+__all__ = ['load', 'save']
 
 FILE_FORMAT_VERSION = '3.0'
 NAMESPACE_MODEL = 'http://gaphor.sourceforge.net/model'
+
 
 def save(writer=None, factory=None, status_queue=None):
     for status in save_generator(writer, factory):
         if status_queue:
             status_queue(status)
+
 
 def save_generator(writer, factory):
     """
@@ -64,7 +56,7 @@ def save_generator(writer, factory):
         # Save a reference to the object:
         if value.id:
             writer.startElement(name, {})
-            writer.startElement('ref', { 'refid': value.id })
+            writer.startElement('ref', {'refid': value.id})
             writer.endElement('ref')
             writer.endElement(name)
 
@@ -76,9 +68,9 @@ def save_generator(writer, factory):
             writer.startElement(name, {})
             writer.startElement('reflist', {})
             for v in value:
-                #save_reference(name, v)
+                # save_reference(name, v)
                 if v.id:
-                    writer.startElement('ref', { 'refid': v.id })
+                    writer.startElement('ref', {'refid': v.id})
                     writer.endElement('ref')
             writer.endElement('reflist')
             writer.endElement(name)
@@ -107,8 +99,8 @@ def save_generator(writer, factory):
         (which contains a list of references to other UML elements) or a
         gaphas.Canvas (which contains canvas items).
         """
-        #log.debug('saving element: %s|%s %s' % (name, value, type(value)))
-        if isinstance (value, (uml2.Element, gaphas.Item)):
+        # log.debug('saving element: %s|%s %s' % (name, value, type(value)))
+        if isinstance(value, (uml2.Element, gaphas.Item)):
             save_reference(name, value)
         elif isinstance(value, collection):
             save_collection(name, value)
@@ -124,15 +116,15 @@ def save_generator(writer, factory):
         Save attributes and references in a gaphor.diagram.* object.
         The extra attribute reference can be used to force UML 
         """
-        #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
+        # log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
         if isinstance(value, collection) or \
-                (isinstance(value, (list, tuple)) and reference == True):
+                (isinstance(value, (list, tuple)) and reference):
             save_collection(name, value)
         elif reference:
             save_reference(name, value)
         elif isinstance(value, gaphas.Item):
-            writer.startElement('item', { 'id': value.id,
-                                          'type': value.__class__.__name__ })
+            writer.startElement('item', {'id': value.id,
+                                         'type': value.__class__.__name__})
             value.save(save_canvasitem)
 
             # save subitems
@@ -149,15 +141,15 @@ def save_generator(writer, factory):
     writer.startDocument()
     writer.startPrefixMapping('', NAMESPACE_MODEL)
     writer.startElementNS((NAMESPACE_MODEL, 'gaphor'), None,
-            { (NAMESPACE_MODEL, 'version'): FILE_FORMAT_VERSION,
-              (NAMESPACE_MODEL, 'gaphor-version'): Application.distribution.version })
+                          {(NAMESPACE_MODEL, 'version'): FILE_FORMAT_VERSION,
+                           (NAMESPACE_MODEL, 'gaphor-version'): Application.distribution.version})
 
     size = factory.size()
     n = 0
     for e in factory.values():
         clazz = e.__class__.__name__
         assert e.id
-        writer.startElement(clazz, { 'id': str(e.id) })
+        writer.startElement(clazz, {'id': str(e.id)})
         e.save(save_element)
         writer.endElement(clazz)
 
@@ -165,7 +157,7 @@ def save_generator(writer, factory):
         if n % 25 == 0:
             yield (n * 100) / size
 
-    #writer.endElement('gaphor')
+    # writer.endElement('gaphor')
     writer.endElementNS((NAMESPACE_MODEL, 'gaphor'), None)
     writer.endPrefixMapping('')
     writer.endDocument()
@@ -175,6 +167,7 @@ def load_elements(elements, factory, status_queue=None):
     for status in load_elements_generator(elements, factory):
         if status_queue:
             status_queue(status)
+
 
 def load_elements_generator(elements, factory, gaphor_version=None):
     """
@@ -186,12 +179,13 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     # The elements are iterated three times:
     size = len(elements) * 3
+
     def update_status_queue(_n=[0]):
         n = _n[0] = _n[0] + 1
         if n % 30 == 0:
             return (n * 100) / size
 
-    #log.info('0%')
+    # log.info('0%')
 
     # Fix version inconsistencies
     version_0_6_2(elements, factory, gaphor_version)
@@ -201,7 +195,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     version_0_15_0_pre(elements, factory, gaphor_version)
     version_0_17_0(elements, factory, gaphor_version)
 
-    #log.debug("Still have %d elements" % len(elements))
+    # log.debug("Still have %d elements" % len(elements))
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
@@ -219,10 +213,11 @@ def load_elements_generator(elements, factory, gaphor_version=None):
 
     for id, elem in elements.items():
         st = update_status_queue()
-        if st: yield st
+        if st:
+            yield st
         if isinstance(elem, parser.element):
             cls = getattr(uml2, elem.type)
-            #log.debug('Creating UML element for %s (%s)' % (elem, elem.id))
+            # log.debug('Creating UML element for %s (%s)' % (elem, elem.id))
             elem.element = factory.create_as(cls, id)
             if elem.canvas:
                 elem.element.canvas.block_updates = True
@@ -233,7 +228,8 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # load attributes and create references:
     for id, elem in elements.items():
         st = update_status_queue()
-        if st: yield st
+        if st:
+            yield st
         # Ensure that all elements have their element instance ready...
         assert hasattr(elem, 'element')
 
@@ -256,7 +252,8 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                         try:
                             elem.element.load(name, ref.element)
                         except:
-                            log.error('Loading %s.%s with value %s failed' % (type(elem.element).__name__, name, ref.element.id))
+                            log.error('Loading %s.%s with value %s failed' % (
+                                type(elem.element).__name__, name, ref.element.id))
                             raise
             else:
                 try:
@@ -267,7 +264,8 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                     try:
                         elem.element.load(name, ref.element)
                     except:
-                        log.error('Loading %s.%s with value %s failed' % (type(elem.element).__name__, name, ref.element.id))
+                        log.error(
+                            'Loading %s.%s with value %s failed' % (type(elem.element).__name__, name, ref.element.id))
                         raise
 
     # Fix version inconsistencies
@@ -294,7 +292,8 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # do a postload:
     for id, elem in elements.items():
         st = update_status_queue()
-        if st: yield st
+        if st:
+            yield st
         elem.element.postload()
 
     factory.notify_model()
@@ -309,6 +308,7 @@ def load(filename, factory, status_queue=None):
     for status in load_generator(filename, factory):
         if status_queue:
             status_queue(status)
+
 
 def load_generator(filename, factory):
     """
@@ -331,8 +331,8 @@ def load_generator(filename, factory):
                 yield percentage
         elements = loader.elements
         gaphor_version = loader.gaphor_version
-        #elements = parser.parse(filename)
-        #yield 100
+        # elements = parser.parse(filename)
+        # yield 100
     except Exception as e:
         log.error('File could no be parsed', exc_info=True)
         raise
@@ -366,6 +366,7 @@ def load_generator(filename, factory):
         log.info('file %s could not be loaded' % filename)
         raise
 
+
 def version_lower_than(gaphor_version, version):
     """
     if version_lower_than('0.3.0', (0, 15, 0)):
@@ -377,8 +378,8 @@ def version_lower_than(gaphor_version, version):
     except ValueError:
         # We're having a -dev, -pre, -beta, -alpha or whatever version
         parts = parts[:-1]
-        return tuple(map(int, parts)) <= version 
-    
+        return tuple(map(int, parts)) <= version
+
 
 def version_0_15_0_pre(elements, factory, gaphor_version):
     """
@@ -398,9 +399,9 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
     if version_lower_than(gaphor_version, (0, 14, 99)):
         # update associations
         values = (v for v in elements.values()
-                if type(v) is parser.element
-                    and v.type == 'Property'
-                    and 'association' in v.references)
+                  if type(v) is parser.element
+                  and v.type == 'Property'
+                  and 'association' in v.references)
         for et in values:
             # get association
             assoc = elements[et.references['association']]
@@ -434,11 +435,12 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
         # - get rid of tagged values
         for e in elements.values():
             if 'taggedValue' in e.references:
-                taggedvalue = [elements[i].values['value'] for i in e.references['taggedValue'] if elements[i].values.get('value')]
-                #convert_tagged_value(e, elements, factory)
+                taggedvalue = [elements[i].values['value'] for i in e.references['taggedValue'] if
+                               elements[i].values.get('value')]
+                # convert_tagged_value(e, elements, factory)
                 if taggedvalue:
                     e.taggedvalue = taggedvalue
-                
+
                 # Remove obsolete elements
                 for t in e.references['taggedValue']:
                     del elements[t]
@@ -446,8 +448,8 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
 
         # - rename EventOccurrence to MessageOccurrenceSpecification
         values = (v for v in elements.values()
-                if type(v) is parser.element
-                    and v.type == 'EventOccurrence')
+                  if type(v) is parser.element
+                  and v.type == 'EventOccurrence')
         for et in values:
             et.type = 'MessageOccurrenceSpecification'
 
@@ -457,6 +459,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
     Part two: create stereotypes and what more for the elements that have a
     taggedvalue property.
     """
+
     def update_elements(element):
         e = elements[element.id] = parser.element(element.id, element.__class__.__name__)
         e.element = element
@@ -482,7 +485,8 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                     update_elements(cl)
                     ext = modelfactory.extend_with_stereotype(factory, cl, st)
                     update_elements(ext)
-                    for me in ext.memberEnd: update_elements(me)
+                    for me in ext.memberEnd:
+                        update_elements(me)
                 # Create instance specification for the stereotype:
                 instspec = modelfactory.apply_stereotype(factory, e.element, st)
                 update_elements(instspec)
@@ -527,7 +531,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
 
         def find(messages, attr):
             occurrences = set(getattr(m, attr) for m in messages
-                    if hasattr(m, attr) and getattr(m, attr))
+                              if hasattr(m, attr) and getattr(m, attr))
             assert len(occurrences) <= 1
             if occurrences:
                 return occurrences.pop()
@@ -595,7 +599,7 @@ def convert_tagged_value(element, elements, factory):
         w = eval(et.values['width'])
 
         tagged = 'upgrade to stereotype attributes' \
-            ' following tagged values:\n%s' % '\n'.join(t.values['value'] for t in tv)
+                 ' following tagged values:\n%s' % '\n'.join(t.values['value'] for t in tv)
 
         item = parser.canvasitem(str(uuid.uuid1()), 'CommentItem')
         comment = parser.element(str(uuid.uuid1()), 'Comment')
@@ -616,6 +620,7 @@ def convert_tagged_value(element, elements, factory):
                     d.canvas.canvasitems.append(item)
                     break
 
+
 def version_0_17_0(elements, factory, gaphor_version):
     """
     As of version 0.17.0, ValueSpecification and subclasses is dealt
@@ -623,10 +628,10 @@ def version_0_17_0(elements, factory, gaphor_version):
 
     This function is called before the actual elements are constructed.
     """
-    valspec_types = [ 'ValueSpecification', 'OpaqueExpression', 'Expression',
-        'InstanceValue', 'LiteralSpecification', 'LiteralUnlimitedNatural',
-        'LiteralInteger', 'LiteralString', 'LiteralBoolean', 'LiteralNull' ]
-    
+    valspec_types = ['ValueSpecification', 'OpaqueExpression', 'Expression',
+                     'InstanceValue', 'LiteralSpecification', 'LiteralUnlimitedNatural',
+                     'LiteralInteger', 'LiteralString', 'LiteralBoolean', 'LiteralNull']
+
     print('version', gaphor_version)
     if version_lower_than(gaphor_version, (0, 17, 0)):
         valspecs = dict((v.id, v) for v in elements.values() if v.type in valspec_types)
@@ -639,11 +644,11 @@ def version_0_17_0(elements, factory, gaphor_version):
                 # ValueSpecifications are always defined in 1:1 relationships
                 if type(ref) != list and ref in valspecs:
                     del e.references[name]
-                    assert not name in e.values
+                    assert name not in e.values
                     try:
-                        e.values[name] = valspecs[ref].values['value'];
+                        e.values[name] = valspecs[ref].values['value']
                     except KeyError:
-                        pass # Empty LiteralSpecification
+                        pass  # Empty LiteralSpecification
 
 
 def version_0_14_0(elements, factory, gaphor_version):
@@ -704,6 +709,7 @@ def version_0_9_0(elements, factory, gaphor_version):
             except Exception as e:
                 log.error('Error while updating from DiaCanvas2', exc_info=True)
 
+
 def version_0_7_2(elements, factory, gaphor_version):
     """
     Before 0.7.2, only Property and Parameter elements had taggedValues.
@@ -717,13 +723,13 @@ def version_0_7_2(elements, factory, gaphor_version):
         for elem in elements.values():
             try:
                 if type(elem) is parser.element \
-                   and elem.type in ('Property', 'Parameter') \
-                   and elem.taggedValue:
+                        and elem.type in ('Property', 'Parameter') \
+                        and elem.taggedValue:
                     tvlist = []
                     tv = elements[elem.taggedValue]
                     if tv.value:
                         for t in map(str.strip, str(tv.value).split(',')):
-                            #log.debug("Tagged value: %s" % t)
+                            # log.debug("Tagged value: %s" % t)
                             newtv = parser.element(str(uuid.uuid1()),
                                                    'LiteralSpecification')
                             newtv.values['value'] = t
@@ -744,10 +750,11 @@ def version_0_7_1(elements, factory, gaphor_version):
     In case of unknown navigability the Property.owningAssociation
     should not be set.
     """
+
     def fix(end1, end2):
         if isinstance(end2.type, uml2.Interface):
             type = end1.interface_
-        else: # isinstance(end2.type, uml2.Class):
+        else:  # isinstance(end2.type, uml2.Class):
             type = end1.class_
 
         # if the end of association is not navigable (in terms of UML 1.x)
@@ -807,6 +814,5 @@ def version_0_5_2(elements, factory, gaphor_version):
                     a.memberEnd[1].aggregation = agg1
             except Exception as e:
                 log.error('Error while updating Association', exc_info=True)
-
 
 # vim: sw=4:et:ai
