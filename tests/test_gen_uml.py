@@ -3,9 +3,11 @@ Test case that checks the working of the utils/command/gen_uml.py module.
 """
 
 from __future__ import absolute_import
+
 import unittest
 
 from utils.command.gen_uml import generate
+
 
 class PseudoFile(object):
     def __init__(self):
@@ -19,9 +21,7 @@ class PseudoFile(object):
 
 
 class GenUmlTestCase(unittest.TestCase):
-
     def test_loading(self):
-
         model_file = 'tests/test-model.gaphor'
         outfile = PseudoFile()
 
