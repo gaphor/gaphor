@@ -8,15 +8,18 @@ dependencies.
 from __future__ import absolute_import
 VERSION = '0.17.1'
 
-import sys
-
-sys.path.insert(0, '.')
-
-from ez_setup import use_setuptools
-
-use_setuptools()
-
+# Always prefer setuptools over distutils
 from setuptools import setup, find_packages
+# To use a consistent encoding
+from codecs import open
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+
+# Get the long description from the README file
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
+
 # try:
 # from sphinx.setup_command import BuildDoc
 # except ImportError, e:
@@ -49,9 +52,9 @@ build_py_with_sub_commands.sub_commands.append(('build_uml', None))
 setup(
     name='gaphor',
     version=VERSION,
-    url='http://gaphor.sourceforge.net',
-    author='Arjan J. Molenaar',
-    author_email='arjanmol@users.sourceforge.net',
+    url='http://mbse.gitlab.io/gaphor',
+    author='Dan Yeaw',
+    author_email='dan@yeaw.me',
     license='GNU General Public License',
     description='Gaphor is a UML modeling tool',
     long_description="""
@@ -65,7 +68,7 @@ It uses the GTK+ environment for user interaction.
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Information Technology',
-        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX',
@@ -73,11 +76,17 @@ It uses the GTK+ environment for user interaction.
         'Programming Language :: Python',
         'Topic :: Multimedia :: Graphics :: Editors :: Vector-Based',
         'Topic :: Software Development :: Documentation',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
 
-    keywords='model modeling modelling uml diagram python tool',
+    keywords='model modeling modelling uml SysML diagram python tool',
 
-    packages=find_packages(exclude=['ez_setup', 'utils*']),
+    packages=find_packages(exclude=['utils*']),
 
     include_package_data=True,
 

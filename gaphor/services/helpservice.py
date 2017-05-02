@@ -79,7 +79,7 @@ class HelpService(object):
         add_label('This software is published\n'
                   'under the terms of the\n'
                   '<span weight="bold">GNU General Public License v2</span>.\n'
-                  'See the COPYING file for details.', 0, 8)
+                  'See the LICENSE.txt file for details.', 0, 8)
         notebook.append_page(tab_vbox, gtk.Label(_('License')))
 
         tab_vbox = gtk.VBox()
