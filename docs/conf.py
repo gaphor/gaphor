@@ -34,11 +34,11 @@ source_suffix = '.txt'
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'contents'
+master_doc = 'index'
 
 # General information about the project.
 project = u'Gaphor'
-copyright = u'2012, Gaphor development team'
+copyright = u'2012 Arjan Molenaar, 2017 Dan Yeaw'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -174,8 +174,8 @@ htmlhelp_basename = 'Gaphordoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ('contents', 'Gaphor.tex', u'Gaphor Documentation',
-     u'Gaphor development team', 'manual'),
+    ('index', 'Gaphor.tex', u'Gaphor Documentation',
+     u'Dan Yeaw', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -207,6 +207,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('contents', 'gaphor', u'Gaphor Documentation',
-     [u'Gaphor development team'], 1)
+    ('index', 'gaphor', u'Gaphor Documentation',
+     [u'Dan Yeaw and contributors'], 1)
 ]
