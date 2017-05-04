@@ -6,7 +6,7 @@ dependencies.
 """
 
 from __future__ import absolute_import
-VERSION = '0.17.1'
+VERSION = '0.17.2'
 
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
@@ -73,15 +73,18 @@ It uses the GTK+ environment for user interaction.
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX',
         'Operating System :: Unix',
+        'Environment :: X11 Applications :: Gnome',
+        'Environment :: X11 Applications :: GTK',
+        'Environment :: Win32 (MS Windows)',
+        'Environment :: MacOS X',
         'Programming Language :: Python',
         'Topic :: Multimedia :: Graphics :: Editors :: Vector-Based',
         'Topic :: Software Development :: Documentation',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Framework :: Zope3',
     ],
 
     keywords='model modeling modelling uml SysML diagram python tool',
@@ -95,6 +98,7 @@ It uses the GTK+ environment for user interaction.
         'gaphas >= 0.7.2',
         'etk.docking >= 0.2',
         'zope.component >= 3.4.0',  # - won't compile on windows.
+        'six > 1.9.0',
     ],
 
     zip_safe=False,
