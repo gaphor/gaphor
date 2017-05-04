@@ -69,8 +69,8 @@ class HelpService(object):
             tab_vbox.pack_start(label)
 
         add_label('<span weight="bold">version %s</span>' % version)
-        add_label('<span variant="smallcaps">UML Modeling tool for GNOME</span>', 8, 8)
-        add_label('<span size="small">Copyright (c) 2001-2007 Arjan J. Molenaar</span>', 8, 8)
+        add_label('<span variant="smallcaps">The UML and SysML(soon!) Modeling Tool</span>', 8, 8)
+        add_label('<span size="small">Copyright (c) 2001-2007 Arjan J. Molenaar, 2017 Dan Yeaw</span>', 8, 8)
 
         notebook.append_page(tab_vbox, gtk.Label(_('About')))
 
@@ -85,6 +85,7 @@ class HelpService(object):
         tab_vbox = gtk.VBox()
         
         add_label('Gaphor is written by:\n'
+                  'Dan Yeaw\n'
                   'Arjan Molenaar\n'
                   'Artur Wroblewski\n'
                   'Jeroen Vloothuis')
