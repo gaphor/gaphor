@@ -1,23 +1,38 @@
 #!/usr/bin/env python
 
-"""This is Gaphor, a Python+GTK based UML modelling tool.
+# This is Gaphor, a Python+GTK modeling tool
 
-This module allows Gaphor to be launched from the command line.
-The main() function sets up the command-line options and arguments and
-passes them to the main Application instance."""
+# Copyright 2001-2010 Arjan Molenaar, Adam Boduch, 2017 Dan Yeaw
+
+# Gaphor is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# Gaphor is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
+
+"""This script list classes and optionally attributes from UML model created with Gaphor."""
 
 from __future__ import absolute_import
-__all__ = [ 'main' ]
 
-from optparse import OptionParser
 import logging
 import pygtk
+from optparse import OptionParser
+import six.moves.builtins
 
 from gaphor.application import Application
 
 pygtk.require('2.0')
 
 LOG_FORMAT = '%(name)s %(levelname)s %(message)s'
+
+__all__ = ['main']
 
 
 def launch(model=None):
@@ -45,7 +60,8 @@ def launch(model=None):
         file_manager.action_new()
 
     Application.run()
-    
+
+
 def main():
     """Start Gaphor from the command line.  This function creates an option
     parser for retrieving arguments and options from the command line.  This
@@ -57,26 +73,19 @@ def main():
 
     parser = OptionParser()
 
-    parser.add_option('-p',\
-                      '--profiler',\
-                      action='store_true',\
-                      help='Run in profiler')
-    parser.add_option('-q', "--quiet",
-                      dest='quiet', help='Quiet output',
-                      default=False, action='store_true')
-    parser.add_option('-v', '--verbose',
-                      dest='verbose', help='Verbose output',
-                      default=False, action="store_true")
-    
+    parser.add_option('-p', '--profiler', action='store_true', help='Run in profiler')
+    parser.add_option('-q', "--quiet", dest='quiet', help='Quiet output', default=False, action='store_true')
+    parser.add_option('-v', '--verbose', dest='verbose', help='Verbose output', default=False, action="store_true")
+
     options, args = parser.parse_args()
-    
+
     if options.verbose:
         logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
     elif options.quiet:
         logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
     else:
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-    
+
     try:
         model = args[0]
     except IndexError:
@@ -87,18 +96,17 @@ def main():
         import cProfile
         import pstats
 
-        cProfile.run('import gaphor; gaphor.launch()',\
-                     'gaphor.prof')
-        
+        cProfile.run('import gaphor; gaphor.launch()', 'gaphor.prof')
+
         profile_stats = pstats.Stats('gaphor.prof')
         profile_stats.strip_dirs().sort_stats('time').print_stats(50)
 
     else:
-	
+
         launch(model)
 
-# TODO: Remove this.  
-import six.moves.builtins
+
+# TODO: Remove this.
 
 six.moves.builtins.__dict__['log'] = logging.getLogger('Gaphor')
 
