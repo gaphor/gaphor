@@ -1,9 +1,37 @@
-image: alpine
+stages:
+- test
+- build
+- release
+
+before_script:
+- apk --no-cache add py2-pip
+- pip install tox sphinx
+
+python2:
+  image: python:2.7
+  stage: test
+  script: tox -e py27
+
+python34:
+  image: python:3.4
+  stage: test
+  script: tox -e py34
+
+python35:
+  image: python:3.5
+  stage: test
+  script: tox -e py35
+
+python36:
+  image: python:3.6
+  stage: test
+  script: tox -e py36
 
 pages:
+  image: alpine
+  stage: release
   script:
-  - apk --no-cache add py2-pip python-dev
-  - pip install sphinx
+  - apk --no-cache add python-dev
   - apk --no-cache add make
   - sphinx-build -b html docs/ _build/html/
   - mv _build/html/ public/
