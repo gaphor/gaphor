@@ -1,5 +1,9 @@
-[![build status](https://gitlab.com/MBSE/gaphor/badges/master/build.svg)](https://gitlab.com/MBSE/gaphor/commits/master)
-[![coverage report](https://gitlab.com/MBSE/gaphor/badges/master/coverage.svg)](https://gitlab.com/MBSE/gaphor/commits/master)
+.. image:: https://gitlab.com/MBSE/gaphor/badges/master/build.svg
+    :target: https://gitlab.com/MBSE/gaphor/commits/master
+    
+.. image:: https://gitlab.com/MBSE/gaphor/badges/master/coverage.svg
+    :target: https://gitlab.com/MBSE/gaphor/commits/master
+    
 
 Gaphor - The UML and SysML(soon!) Modeling Tool
 ===============================================
