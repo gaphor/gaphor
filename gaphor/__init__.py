@@ -17,7 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 
-"""This script list classes and optionally attributes from UML model created with Gaphor."""
+"""
+This module allows Gaphor to be launched from the command line.
+The main() function sets up the command-line options and arguments and
+passes them to the main Application instance.
+"""
 
 from __future__ import absolute_import
 
