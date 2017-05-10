@@ -11,6 +11,7 @@ from gaphor.UML import uml2, modelfactory
 from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
 from gaphor.diagram import items
 
+log = logging.getLogger(__name__)
 
 class DependencyConnect(RelationshipConnect):
     """
@@ -78,11 +79,11 @@ class GeneralizationConnect(RelationshipConnect):
         self.reconnect_relationship(handle, uml2.Generalization.general, uml2.Generalization.specific)
 
     def connect_subject(self, handle):
-        logging.debug('connect_subject: ' % handle)
+        log.debug('connect_subject: %s' % handle)
         relation = self.relationship_or_new(uml2.Generalization,
                                             uml2.Generalization.general,
                                             uml2.Generalization.specific)
-        logging.debug('found: ' % relation)
+        log.debug('found: %s' % relation)
         self.line.subject = relation
 
 
