@@ -3,13 +3,13 @@ Test classifier stereotypes attributes using component items.
 """
 
 from __future__ import absolute_import
+
 from gaphor.UML import uml2, modelfactory
 from gaphor.diagram.component import ComponentItem
 from gaphor.tests import TestCase
 
 
 class StereotypesAttributesTestCase(TestCase):
-
     def setUp(self):
         """
         Create two stereotypes and extend component UML metaclass using
@@ -49,14 +49,13 @@ class StereotypesAttributesTestCase(TestCase):
         c = self.create(ComponentItem, uml2.Component)
 
         # test precondition
-        assert len(c._compartments) == 0
+        self.assertEqual(0, len(c._compartments))
 
         c.show_stereotypes_attrs = True
 
         modelfactory.apply_stereotype(factory, c.subject, self.st1)
-        self.assertEquals(1, len(c._compartments))
+        self.assertEqual(1, len(c._compartments))
         self.assertFalse(c._compartments[0].visible)
-
 
     def test_adding_slot(self):
         """Test if stereotype attribute information is added when slot is added
@@ -68,14 +67,13 @@ class StereotypesAttributesTestCase(TestCase):
         obj = modelfactory.apply_stereotype(factory, c.subject, self.st1)
 
         # test precondition
-        assert not c._compartments[0].visible
+        self.assertFalse(c._compartments[0].visible)
 
         slot = modelfactory.add_slot(factory, obj, self.st1.ownedAttribute[0])
 
         compartment = c._compartments[0]
         self.assertTrue(compartment.visible)
-        self.assertEquals(1, len(compartment))
-
+        self.assertEqual(1, len(compartment), slot)
 
     def test_removing_last_slot(self):
         """Test removing last slot
@@ -90,11 +88,10 @@ class StereotypesAttributesTestCase(TestCase):
 
         compartment = c._compartments[0]
         # test precondition
-        assert compartment.visible
+        self.assertTrue(compartment.visible)
 
         del obj.slot[slot]
         self.assertFalse(compartment.visible)
-
 
     def test_removing_stereotype(self):
         """Test if stereotype compartment is destroyed when stereotype is removed
@@ -107,14 +104,13 @@ class StereotypesAttributesTestCase(TestCase):
         modelfactory.apply_stereotype(factory, c.subject, self.st1)
 
         # test precondition
-        assert len(c._compartments) == 1
+        self.assertEqual(1, len(c._compartments))
 
         modelfactory.remove_stereotype(c.subject, self.st1)
-        self.assertEquals(0, len(c._compartments))
-
+        self.assertEqual(0, len(c._compartments))
 
     def test_deleting_extension(self):
-        """Test if stereotype is removed when extension is deleteded
+        """Test if stereotype is removed when extension is deleted
         """
         factory = self.element_factory
         c = self.create(ComponentItem, uml2.Component)
@@ -126,16 +122,15 @@ class StereotypesAttributesTestCase(TestCase):
         modelfactory.apply_stereotype(factory, c.subject, st1)
 
         # test precondition
-        assert len(c._compartments) == 1
-        assert len(c.subject.appliedStereotype) == 1
+        self.assertEqual(1, len(c._compartments))
+        self.assertEqual(1, len(c.subject.appliedStereotype))
 
         ext1.unlink()
-        self.assertEquals(0, len(c.subject.appliedStereotype))
-        self.assertEquals(0, len(c._compartments))
-
+        self.assertEqual(0, len(c.subject.appliedStereotype))
+        self.assertEqual(0, len(c._compartments))
 
     def test_deleting_stereotype(self):
-        """Test if stereotype is removed when stereotype is deleteded
+        """Test if stereotype is removed when stereotype is deleted
         """
         factory = self.element_factory
         c = self.create(ComponentItem, uml2.Component)
@@ -146,13 +141,12 @@ class StereotypesAttributesTestCase(TestCase):
         modelfactory.apply_stereotype(factory, c.subject, st1)
 
         # test precondition
-        assert len(c._compartments) == 1
-        assert len(c.subject.appliedStereotype) == 1
+        self.assertEqual(1, len(c._compartments))
+        self.assertEqual(1, len(c.subject.appliedStereotype))
 
         st1.unlink()
-        self.assertEquals(0, len(c.subject.appliedStereotype))
-        self.assertEquals(0, len(c._compartments))
-
+        self.assertEqual(0, len(c.subject.appliedStereotype))
+        self.assertEqual(0, len(c._compartments))
 
     def test_removing_stereotype_attribute(self):
         """Test if stereotype instance specification is destroyed when stereotype attribute is removed
@@ -163,28 +157,27 @@ class StereotypesAttributesTestCase(TestCase):
         c.show_stereotypes_attrs = True
 
         # test precondition
-        assert len(c._compartments) == 0
+        self.assertEqual(0, len(c._compartments))
         obj = modelfactory.apply_stereotype(factory, c.subject, self.st1)
         # test precondition
-        assert len(c._compartments) == 1
+        self.assertEqual(1, len(c._compartments))
 
-        assert len(self.kindof(uml2.Slot)) == 0
+        self.assertEqual(0, len(self.kindof(uml2.Slot)))
 
         attr = self.st1.ownedAttribute[0]
         slot = modelfactory.add_slot(factory, obj, attr)
-        assert len(obj.slot) == 1
-        assert len(self.kindof(uml2.Slot)) == 1
+        self.assertEqual(1, len(obj.slot))
+        self.assertEqual(1, len(self.kindof(uml2.Slot)))
         self.assertTrue(slot.definingFeature)
 
         compartment = c._compartments[0]
-        assert compartment.visible
+        self.assertTrue(compartment.visible)
 
         attr.unlink()
-        self.assertEquals(0, len(obj.slot))
-        self.assertEquals(0, len(self.kindof(uml2.Slot)))
+        self.assertEqual(0, len(obj.slot))
+        self.assertEqual(0, len(self.kindof(uml2.Slot)))
         self.assertFalse(compartment.visible)
 
-    
     def test_stereotype_attributes_status_saving(self):
         """Test stereotype attributes status saving
         """
@@ -205,13 +198,12 @@ class StereotypesAttributesTestCase(TestCase):
 
         item = self.diagram.canvas.select(lambda e: isinstance(e, ComponentItem))[0]
         self.assertTrue(item.show_stereotypes_attrs)
-        self.assertEquals(2, len(item._compartments))
+        self.assertEqual(2, len(item._compartments))
         # first stereotype has no attributes changed, so compartment
         # invisible
         self.assertFalse(item._compartments[0].visible)
         self.assertTrue(item._compartments[1].visible)
 
-    
     def test_saving_stereotype_attributes(self):
         """Test stereotype attributes saving
         """
@@ -223,11 +215,11 @@ class StereotypesAttributesTestCase(TestCase):
         modelfactory.apply_stereotype(factory, c.subject, self.st1)
         modelfactory.apply_stereotype(factory, c.subject, self.st2)
 
-        self.assertEquals(3, len(self.st1.ownedAttribute))
+        self.assertEqual(3, len(self.st1.ownedAttribute))
         attr1, attr2, attr3 = self.st1.ownedAttribute
-        assert attr1.name == 'st1_attr_1', attr1.name
-        assert attr2.name == 'st1_attr_2', attr2.name
-        assert attr3.name == 'baseClass', attr3.name
+        self.assertEqual(attr1.name, 'st1_attr_1', attr1.name)
+        self.assertEqual(attr2.name, 'st1_attr_2', attr2.name)
+        self.assertEqual(attr3.name, 'baseClass', attr3.name)
 
         obj = c.subject.appliedStereotype[0]
         slot = modelfactory.add_slot(self.element_factory, obj, attr1)
@@ -240,23 +232,22 @@ class StereotypesAttributesTestCase(TestCase):
 
         item = self.diagram.canvas.select(lambda e: isinstance(e, ComponentItem))[0]
         el = item.subject
-        self.assertEquals(2, len(el.appliedStereotype))
+        self.assertEqual(2, len(el.appliedStereotype))
 
         # check if stereotypes are properly applied
         names = sorted(obj.classifier[0].name for obj in el.appliedStereotype)
-        self.assertEquals(['st1', 'st2'], names)
+        self.assertEqual(['st1', 'st2'], names)
 
         # two attributes were changed for stereotype st1, so 2 slots
         obj = el.appliedStereotype[0]
-        self.assertEquals(2, len(obj.slot))
-        self.assertEquals('st1_attr_1', obj.slot[0].definingFeature.name)
-        self.assertEquals('st1 test1', obj.slot[0].value)
-        self.assertEquals('st1_attr_2', obj.slot[1].definingFeature.name)
-        self.assertEquals('st1 test2', obj.slot[1].value)
+        self.assertEqual(2, len(obj.slot))
+        self.assertEqual('st1_attr_1', obj.slot[0].definingFeature.name)
+        self.assertEqual('st1 test1', obj.slot[0].value)
+        self.assertEqual('st1_attr_2', obj.slot[1].definingFeature.name)
+        self.assertEqual('st1 test2', obj.slot[1].value)
 
         # no stereotype st2 attribute changes, no slots
         obj = el.appliedStereotype[1]
-        self.assertEquals(0, len(obj.slot))
-
+        self.assertEqual(0, len(obj.slot))
 
 # vim:sw=4:et
