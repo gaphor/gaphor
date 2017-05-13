@@ -1,15 +1,37 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 2 of the License, or (at your option) any later
+# version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Copy / Paste functionality
 """
 
 from __future__ import absolute_import
+
 from zope import interface, component
+
 import gaphas
+
 from gaphor.UML import uml2
 from gaphor.UML.collection import collection
+from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.interfaces import IDiagramSelectionChange
-from gaphor.core import inject, action, build_action_group, transactional
 
 
 class CopyService(object):
@@ -54,7 +76,7 @@ class CopyService(object):
     def init(self, app):
         self.action_group.get_action('edit-copy').props.sensitive = False
         self.action_group.get_action('edit-paste').props.sensitive = False
-        
+
         self.component_registry.register_handler(self._update)
 
     def shutdown(self):
@@ -71,13 +93,13 @@ class CopyService(object):
             self.copy_buffer = set(items)
             self.action_group.get_action('edit-paste').props.sensitive = True
 
-
     def copy_func(self, name, value, reference=False):
         """
         Copy an element, preferbly from the list of new items,
         otherwise from the element factory.
         If it does not exist there, do not copy it!
         """
+
         def load_element():
             item = self._new_items.get(value.id)
             if item:
@@ -108,7 +130,7 @@ class CopyService(object):
         if not canvas:
             return
 
-        copy_items = [ c for c in self.copy_buffer if c.canvas ]
+        copy_items = [c for c in self.copy_buffer if c.canvas]
 
         # Mapping original id -> new item
         self._new_items = {}
@@ -138,7 +160,6 @@ class CopyService(object):
         for item in self._new_items.values():
             item.postload()
 
-
     @action(name='edit-copy', stock_id='gtk-copy')
     def copy_action(self):
         view = self.main_window.get_current_diagram_view()
@@ -162,6 +183,5 @@ class CopyService(object):
 
         for item in self._new_items.values():
             view.select_item(item)
-
 
 # vim:sw=4:et:ai

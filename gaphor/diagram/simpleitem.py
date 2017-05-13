@@ -1,18 +1,38 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 2 of the License, or (at your option) any later
+# version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Trivial drawing aids (box, line, ellipse).
 """
 
-
 from __future__ import absolute_import
-from gaphas.item import Line as _Line
+
 from gaphas.item import Element, NW
+from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
-from .style import Style
 from six.moves import map
 from six.moves import range
 
-class Line(_Line):
+from .style import Style
 
+
+class Line(_Line):
     __style__ = {
         'line-width': 2,
         'line-color': (0, 0, 0, 1),
@@ -28,16 +48,16 @@ class Line(_Line):
 
     id = property(lambda self: self._id, doc='Id')
 
-    def save (self, save_func):
+    def save(self, save_func):
         save_func('matrix', tuple(self.matrix))
         for prop in ('orthogonal', 'horizontal'):
             save_func(prop, getattr(self, prop))
-        points = [ ]
+        points = []
         for h in self.handles():
             points.append(tuple(map(float, h.pos)))
         save_func('points', points)
 
-    def load (self, name, value):
+    def load(self, name, value):
         if name == 'matrix':
             self.matrix = eval(value)
         elif name == 'points':
@@ -163,6 +183,5 @@ class Ellipse(Element):
         cr.set_source_rgba(*style.border_color)
         cr.set_line_width(style.border_width)
         cr.stroke()
-
 
 # vim:sw=4:et:ai

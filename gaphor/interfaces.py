@@ -1,24 +1,22 @@
 #!/usr/bin/env python
 
-# This is Gaphor, a Python+GTK modeling tool
-
-# Copyright 2005 Jeroen Vlootuis, 2007, 2008, 2011 Arjan Molenaar, 2017 Dan Yeaw
-
-# Gaphor is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 2 of the License, or
-# (at your option) any later version.
+# Copyright (C) 2005-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#                         slmm <noreply@example.com>
 #
-# Gaphor is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# This file is part of Gaphor.
 #
-# You should have received a copy of the GNU General Public License
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
-
-"""Top level interface definitions for Gaphor."""
-
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 2 of the License, or (at your option) any later
+# version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import absolute_import
 
 from zope import interface
