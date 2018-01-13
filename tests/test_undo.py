@@ -1,23 +1,45 @@
+#!/usr/bin/env python
 
-from gaphor.tests import TestCase
-from gaphor import UML
-from gaphor.diagram import items
+# Copyright (C) 2010-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import absolute_import
+
+from six.moves import range
+
+from gaphor.UML import uml2
 from gaphor.core import transactional
+from gaphor.diagram import items
+from gaphor.tests import TestCase
+
 
 class UndoTest(TestCase):
-
-    services = TestCase.services + [ 'undo_manager' ]
+    services = TestCase.services + ['undo_manager']
 
     def test_class_association_undo_redo(self):
         factory = self.element_factory
         undo_manager = self.get_service('undo_manager')
 
-        ci1 = self.create(items.ClassItem, UML.Class)
+        ci1 = self.create(items.ClassItem, uml2.Class)
         self.assertEquals(6, len(self.diagram.canvas.solver.constraints))
 
-        ci2 = self.create(items.ClassItem, UML.Class)
+        ci2 = self.create(items.ClassItem, uml2.Class)
         self.assertEquals(12, len(self.diagram.canvas.solver.constraints))
-        
+
         a = self.create(items.AssociationItem)
 
         self.connect(a, a.head, ci1)
@@ -43,7 +65,7 @@ class UndoTest(TestCase):
 
         for i in range(3):
             # Diagram, Class
-            #self.assertEquals(2, len(factory.lselect()), factory.lselect())
+            # self.assertEquals(2, len(factory.lselect()), factory.lselect())
 
             self.assertEquals(7, len(self.diagram.canvas.solver.constraints))
 
@@ -55,4 +77,5 @@ class UndoTest(TestCase):
             self.assertEquals(ci2, self.get_connected(a.tail))
 
             undo_manager.redo_transaction()
+
 # vim:sw=4:et:ai

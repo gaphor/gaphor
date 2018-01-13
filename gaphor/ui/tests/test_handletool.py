@@ -1,11 +1,32 @@
-"""
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
+# more details.
+#
+# You should have received a copy of the GNU Library General Public
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
+""""
 Test handle tool functionality.
 """
 
+from __future__ import absolute_import
 import unittest
 import gtk
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.actor import ActorItem
@@ -24,9 +45,9 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
         self.main_window.init()
         self.main_window.open()
         self.element_factory = Application.get_service('element_factory')
-        self.diagram = self.element_factory.create(UML.Diagram)
+        self.diagram = self.element_factory.create(uml2.Diagram)
         self.comment = self.diagram.create(CommentItem,
-                subject=self.element_factory.create(UML.Comment))
+                subject=self.element_factory.create(uml2.Comment))
         self.commentline = self.diagram.create(CommentLineItem)
         self.view = self.main_window.show_diagram(self.diagram).view
 
@@ -90,13 +111,13 @@ class HandleToolTestCase(unittest.TestCase):
         items.
         """
         element_factory = Application.get_service('element_factory')
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(uml2.Diagram)
 
-        comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
+        comment = diagram.create(CommentItem, subject=element_factory.create(uml2.Comment))
         #assert comment.height == 50
         #assert comment.width == 100
 
-        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
+        actor = diagram.create(ActorItem, subject=element_factory.create(uml2.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
 
@@ -137,10 +158,10 @@ class HandleToolTestCase(unittest.TestCase):
         """Test connect/disconnect on comment and actor using comment-line.
         """
         element_factory = Application.get_service('element_factory')
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(uml2.Diagram)
         #self.main_window.show_diagram(diagram)
-        comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
+        comment = diagram.create(CommentItem, subject=element_factory.create(uml2.Comment))
+        actor = diagram.create(ActorItem, subject=element_factory.create(uml2.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
         line = diagram.create(CommentLineItem)
@@ -203,13 +224,13 @@ class HandleToolTestCase(unittest.TestCase):
         """Test connecting through events (button press/release, motion).
         """
         element_factory = Application.get_service('element_factory')
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(uml2.Diagram)
 
-        comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
+        comment = diagram.create(CommentItem, subject=element_factory.create(uml2.Comment))
         #self.assertEquals(30, comment.height)
         #self.assertEquals(100, comment.width)
 
-        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
+        actor = diagram.create(ActorItem, subject=element_factory.create(uml2.Actor))
         actor.matrix.translate(200, 200)
         diagram.canvas.update_matrix(actor)
         #assert actor.height == 60, actor.height

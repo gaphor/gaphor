@@ -1,8 +1,28 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2010-2017 Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Test state items.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.states.state import StateItem
 from gaphor.tests.testcase import TestCase
 
@@ -11,21 +31,21 @@ class StateTestCase(TestCase):
     def test_state(self):
         """Test creation of states
         """
-        self.create(StateItem, UML.State)
+        self.create(StateItem, uml2.State)
 
 
     def test_activities_persistence(self):
         """Test state activities saving/loading
         """
         # all activities
-        s1 = self.create(StateItem, UML.State)
+        s1 = self.create(StateItem, uml2.State)
         s1.subject.name = 's1'
         s1.set_entry('test 1 entry')
         s1.set_exit('test 1 exit')
         s1.set_do_activity('test 1 do')
 
         # not all activities
-        s2 = self.create(StateItem, UML.State)
+        s2 = self.create(StateItem, uml2.State)
         s2.subject.name = 's2'
         s2.set_entry('test 2 entry')
         s2.set_do_activity('test 2 do')

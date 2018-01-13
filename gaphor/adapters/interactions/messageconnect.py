@@ -1,10 +1,31 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
+# more details.
+#
+# You should have received a copy of the GNU Library General Public
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Message item connection adapters.
 """
 
+from __future__ import absolute_import
 from gaphor.adapters.connectors import AbstractConnect
 from zope import interface, component
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 
 class MessageLifelineConnect(AbstractConnect):
@@ -25,7 +46,7 @@ class MessageLifelineConnect(AbstractConnect):
         """
         def get_subject():
             if not line.subject:
-                message = self.element_factory.create(UML.Message)
+                message = self.element_factory.create(uml2.Message)
                 message.name = 'call()'
                 line.subject = message
             return line.subject
@@ -33,14 +54,14 @@ class MessageLifelineConnect(AbstractConnect):
         if send:
             message = get_subject()
             if not message.sendEvent:
-                event = self.element_factory.create(UML.MessageOccurrenceSpecification)
+                event = self.element_factory.create(uml2.MessageOccurrenceSpecification)
                 event.sendMessage = message
                 event.covered = send.subject
 
         if received:
             message = get_subject()
             if not message.receiveEvent:
-                event = self.element_factory.create(UML.MessageOccurrenceSpecification)
+                event = self.element_factory.create(uml2.MessageOccurrenceSpecification)
                 event.receiveMessage = message
                 event.covered = received.subject
 

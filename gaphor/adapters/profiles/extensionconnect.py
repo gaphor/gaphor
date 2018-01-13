@@ -1,6 +1,27 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import absolute_import
 from gaphor.adapters.connectors import RelationshipConnect
 from zope import interface, component
-from gaphor import UML
+from gaphor.UML import uml2, modelfactory
 from gaphor.diagram import items
 
 
@@ -17,10 +38,10 @@ class ExtensionConnect(RelationshipConnect):
         if handle is line.head:
             # Element at the head should be a class
             # (implies stereotype as well)
-            allow = isinstance(subject, UML.Class)
+            allow = isinstance(subject, uml2.Class)
         elif handle is line.tail:
             # Element at the tail should be a stereotype
-            allow = isinstance(subject, UML.Stereotype)
+            allow = isinstance(subject, uml2.Stereotype)
 
         return allow and super(ExtensionConnect, self).allow(handle, port)
 
@@ -49,7 +70,7 @@ class ExtensionConnect(RelationshipConnect):
             # Find all associations and determine if the properties on
             # the association ends have a type that points to the class.
             for assoc in self.element_factory.select():
-                if isinstance(assoc, UML.Extension):
+                if isinstance(assoc, uml2.Extension):
                     end1 = assoc.memberEnd[0]
                     end2 = assoc.memberEnd[1]
                     if (end1.type is head_type and end2.type is tail_type) \
@@ -64,7 +85,7 @@ class ExtensionConnect(RelationshipConnect):
                             return
             else:
                 # Create a new Extension relationship
-                relation = UML.model.extend_with_stereotype(self.element_factory,
+                relation = modelfactory.extend_with_stereotype(self.element_factory,
                         head_type,
                         tail_type)
                 line.subject = relation

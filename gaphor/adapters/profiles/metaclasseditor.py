@@ -1,7 +1,28 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
+# more details.
+#
+# You should have received a copy of the GNU Library General Public
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Metaclass item editors.
 """
 
+from __future__ import absolute_import
 import gtk
 
 from gaphor.core import _, inject, transactional
@@ -9,7 +30,7 @@ from gaphor.ui.interfaces import IPropertyPage
 from zope import interface, component
 from gaphor.diagram import items
 from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
-from gaphor import UML
+from gaphor.UML import uml2
 
 def _issubclass(c, b):
     try:
@@ -30,8 +51,8 @@ class MetaclassNameEditor(object):
 
     NAME_LABEL = _('Name')
 
-    CLASSES = list(sorted(n for n in dir(UML)
-        if _issubclass(getattr(UML, n), UML.Element) and n != 'Stereotype'))
+    CLASSES = list(sorted(n for n in dir(uml2)
+        if _issubclass(getattr(uml2, n), uml2.Element) and n != 'Stereotype'))
 
 
     def __init__(self, item):

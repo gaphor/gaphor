@@ -1,3 +1,24 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2004-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#                         syt <noreply@example.com>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Interface item implementation. There are several notations supported
 
@@ -68,14 +89,15 @@ follows
 Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
+from __future__ import absolute_import
 from math import pi
 from gaphas.state import observed, reversible_property
 from gaphas.item import NW, NE, SE, SW
 from gaphas.connector import LinePort
 from gaphas.geometry import distance_line_point, distance_point_point
 
-from gaphor import UML
-from klass import ClassItem
+from gaphor.UML import uml2
+from .klass import ClassItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 
@@ -137,7 +159,7 @@ class InterfaceItem(ClassItem):
     When in folded mode, provided (ball) notation is used by default.
     """
 
-    __uml__        = UML.Interface
+    __uml__        = uml2.Interface
     __stereotype__ = {'interface': lambda self: self.drawing_style != self.DRAW_ICON}
     __style__ = {
         'icon-size': (20, 20),

@@ -1,16 +1,36 @@
-"""
-"""
+#!/usr/bin/env python
 
-from zope import interface, component
+# Copyright (C) 2009-2017 Adam Boduch <adam.boduch@gmail.com>
+#                         Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
+# more details.
+#
+# You should have received a copy of the GNU Library General Public
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import absolute_import
 
 from logging import getLogger
+from zope import interface, component
+
+import six
+
+from gaphor.UML import uml2
+from gaphor.UML.interfaces import IAssociationSetEvent, IAssociationAddEvent, IAssociationDeleteEvent
+from gaphor.UML.interfaces import IElementChangeEvent, IModelFactoryEvent
 from gaphor.core import inject
 from gaphor.interfaces import IService
-from gaphor.UML.interfaces import IElementChangeEvent, IModelFactoryEvent
-from gaphor import UML
-from gaphor.UML.interfaces import IAssociationSetEvent,\
-                                  IAssociationAddEvent,\
-                                  IAssociationDeleteEvent
+
 
 class EventWatcher(object):
     """
@@ -37,11 +57,11 @@ class EventWatcher(object):
 
         This interface is fluent(returns self).
         """
-        
-        #self.logger.info('Watching element path')
-        #self.logger.debug('Path is %s' % path)
-        #self.logger.debug('Handler is %s' % handler)
-        
+
+        # self.logger.info('Watching element path')
+        # self.logger.debug('Path is %s' % path)
+        # self.logger.debug('Handler is %s' % handler)
+
         if handler:
             self._watched_paths[path] = handler
         elif self.default_handler:
@@ -50,38 +70,35 @@ class EventWatcher(object):
             raise ValueError('No handler provided for path ' + path)
         return self
 
-
     def register_handlers(self):
-        
-        #self.logger.info('Registering handlers')
-        
+
+        # self.logger.info('Registering handlers')
+
         dispatcher = self.element_dispatcher
         element = self.element
-        
-        for path, handler in self._watched_paths.iteritems():
-            
-            #self.logger.debug('Path is %s' % path)
-            #self.logger.debug('Handler is %s' % handler)
-            
-            dispatcher.register_handler(handler, element, path)
 
+        for path, handler in six.iteritems(self._watched_paths):
+            # self.logger.debug('Path is %s' % path)
+            # self.logger.debug('Handler is %s' % handler)
+
+            dispatcher.register_handler(handler, element, path)
 
     def unregister_handlers(self, *args):
         """
         Unregister handlers. Extra arguments are ignored (makes connecting to
         destroy signals much easier though).
         """
-        
-        #self.logger.info('Unregistering handlers')
-        
+
+        # self.logger.info('Unregistering handlers')
+
         dispatcher = self.element_dispatcher
-        
-        for path, handler in self._watched_paths.iteritems():
-            
-            #self.logger.debug('Path is %s' % path)
-            #self.logger.debug('Handler is %s' % handler)
-            
+
+        for path, handler in six.iteritems(self._watched_paths):
+            # self.logger.debug('Path is %s' % path)
+            # self.logger.debug('Handler is %s' % handler)
+
             dispatcher.unregister_handler(handler)
+
 
 class ElementDispatcher(object):
     """
@@ -93,9 +110,9 @@ class ElementDispatcher(object):
     subclass lookups and is pretty specific. As a result this dispatcher is
     tailored for dispatching events from the data model (IElementChangeEvent)
 
-    For example: if you're a TransitionItem (UML.Presentation instance) and
+    For example: if you're a TransitionItem (uml2.Presentation instance) and
     you're interested in the value of the guard attribute of the model element
-    that's represented by this item (gaphor.UML.Transition), you can register
+    that's represented by this item (gaphor.UML.uml2.Transition), you can register
     a handler like this::
 
       dispatcher.register_handler(element,
@@ -124,25 +141,22 @@ class ElementDispatcher(object):
         # handler: [(element, property), ..]
         self._reverse = dict()
 
-
     def init(self, app):
         self.component_registry.register_handler(self.on_model_loaded)
         self.component_registry.register_handler(self.on_element_change_event)
 
-
     def shutdown(self):
         self.component_registry.unregister_handler(self.on_element_change_event)
         self.component_registry.unregister_handler(self.on_model_loaded)
-
 
     def _path_to_properties(self, element, path):
         """
         Given a start element and a path, return a tuple of UML properties
         (association, attribute, etc.) representing the path.
 
-        >>> from gaphor import UML
+        >>> from gaphor.UML import uml2
         >>> dispatcher = ElementDispatcher()
-        >>> map(str, dispatcher._path_to_properties(UML.Class(),
+        >>> map(str, dispatcher._path_to_properties(uml2.Class(),
         ...         'ownedOperation.parameter.name')) # doctest: +NORMALIZE_WHITESPACE
         ['<association ownedOperation: Operation[0..*] <>-> class_>',
         "<derived parameter:
@@ -152,7 +166,7 @@ class ElementDispatcher(object):
 
         Should also work for elements that use subtypes of a certain class:
 
-        >>> map(str, dispatcher._path_to_properties(UML.Transition(),
+        >>> map(str, dispatcher._path_to_properties(uml2.Transition(),
         ...         'guard.specification')) # doctest: +NORMALIZE_WHITESPACE
         ['<association guard: Constraint[0..1]>',
          "<attribute specification: <type 'str'>[0..1] = None>"]
@@ -167,12 +181,11 @@ class ElementDispatcher(object):
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:
-                c = getattr(UML, cname)
+                c = getattr(uml2, cname)
                 assert issubclass(c, prop.type), '%s should be a subclass of %s' % (c, prop.type)
             else:
                 c = prop.type
         return tuple(tpath)
-
 
     def _add_handlers(self, element, props, handler):
         """
@@ -181,7 +194,7 @@ class ElementDispatcher(object):
         """
         property, remainder = props[0], props[1:]
         key = (element, property)
-        
+
         # Register key
         try:
             handlers = self._handlers[key]
@@ -199,7 +212,7 @@ class ElementDispatcher(object):
 
         # Also add them to the reverse table, easing disconnecting
         try:
-            reverse = self._reverse[handler]       
+            reverse = self._reverse[handler]
         except KeyError:
             reverse = []
             self._reverse[handler] = reverse
@@ -216,7 +229,6 @@ class ElementDispatcher(object):
                 if e and remainder:
                     self._add_handlers(e, remainder, handler)
 
-
     def _remove_handlers(self, element, property, handler):
         """
         Remove the handler of the path of elements.
@@ -229,13 +241,13 @@ class ElementDispatcher(object):
         if property.upper > 1:
             for remainder in handlers.get(handler, ()):
                 for e in property._get(element):
-                    #log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
+                    # log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
         else:
             for remainder in handlers.get(handler, ()):
                 e = property._get(element)
                 if e:
-                    #log.debug('*Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
+                    # log.debug('*Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
         try:
             del handlers[handler]
@@ -245,26 +257,24 @@ class ElementDispatcher(object):
         if not handlers:
             del self._handlers[key]
 
-
     def register_handler(self, handler, element, path):
-        
-        #self.logger.info('Registering handler')
-        #self.logger.debug('Handler is %s' % handler)
-        #self.logger.debug('Element is %s' % element)
-        #self.logger.debug('Path is %s' % path)
-        
+
+        # self.logger.info('Registering handler')
+        # self.logger.debug('Handler is %s' % handler)
+        # self.logger.debug('Element is %s' % element)
+        # self.logger.debug('Path is %s' % path)
+
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
-
 
     def unregister_handler(self, handler):
         """
         Unregister a handler from the registy.
         """
-        
-        #self.logger.info('Unregistering handler')
-        #self.logger.debug('Handler is %s' % handler)
-        
+
+        # self.logger.info('Unregistering handler')
+        # self.logger.debug('Handler is %s' % handler)
+
         try:
             reverse = reversed(self._reverse[handler])
         except KeyError:
@@ -284,32 +294,31 @@ class ElementDispatcher(object):
                     del self._handlers[key]
         del self._reverse[handler]
 
-
     @component.adapter(IElementChangeEvent)
     def on_element_change_event(self, event):
-        
-        #self.logger.info('Handling IElementChangeEvent')
-        #self.logger.debug('Element is %s' % event.element)
-        #self.logger.debug('Property is %s' % event.property)
-        
+
+        # self.logger.info('Handling IElementChangeEvent')
+        # self.logger.debug('Element is %s' % event.element)
+        # self.logger.debug('Property is %s' % event.property)
+
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
-            #log.debug('')
-            #log.debug('Element change for %s %s [%s]' % (str(type(event)), event.element, event.property))
-            #if hasattr(event, 'old_value'):
+            # log.debug('')
+            # log.debug('Element change for %s %s [%s]' % (str(type(event)), event.element, event.property))
+            # if hasattr(event, 'old_value'):
             #    log.debug('    old value: %s' % (event.old_value))
-            #if hasattr(event, 'new_value'):
+            # if hasattr(event, 'new_value'):
             #    log.debug('    new value: %s' % (event.new_value))
-            for handler in handlers.iterkeys():
+            for handler in six.iterkeys(handlers):
                 try:
                     handler(event)
-                except Exception, e:
-                    self.logger.error('Problem executing handler %s' % handler, e)
-        
+                except Exception as e:
+                    self.logger.error("Problem executing handler {0}, {1}".format(handler, e))
+
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
             if IAssociationSetEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in six.iteritems(handlers):
                     if remainders and event.old_value:
                         for remainder in remainders:
                             self._remove_handlers(event.old_value, remainder[0], handler)
@@ -317,26 +326,26 @@ class ElementDispatcher(object):
                         for remainder in remainders:
                             self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationAddEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in six.iteritems(handlers):
                     for remainder in remainders:
                         self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationDeleteEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in six.iteritems(handlers):
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
-
     @component.adapter(IModelFactoryEvent)
     def on_model_loaded(self, event):
-        
-        #self.logger.info('Handling IModelFactoryEvent')
-        #self.logger.debug('Event is %s' % event)
-        
+
+        # self.logger.info('Handling IModelFactoryEvent')
+        # self.logger.debug('Event is %s' % event)
+
         for key, value in self._handlers.items():
             for h, remainders in value.items():
                 for remainder in remainders:
                     self._add_handlers(key[0], (key[1],) + remainder, h)
-#        for h in self._reverse.iterkeys():
+
+# for h in self._reverse.iterkeys():
 #            h(None)
 
 # vim:sw=4:et:ai

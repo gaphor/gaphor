@@ -1,3 +1,23 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Adapters for the Property Editor.
 
@@ -26,6 +46,8 @@ TODO:
  
 """
 
+from __future__ import absolute_import
+from __future__ import print_function
 import gobject
 import gtk
 import math
@@ -34,10 +56,11 @@ from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
 from zope import interface, component
-from gaphor import UML
-from gaphor.UML.interfaces import IAttributeChangeEvent
+from gaphor.UML import uml2, modelfactory
 import gaphas.item
 from gaphas.decorators import async
+from six.moves import range
+from six.moves import zip
 
 class EditableTreeModel(gtk.ListStore):
     """
@@ -198,11 +221,11 @@ class ClassAttributes(EditableTreeModel):
     def _get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
-                yield [UML.format(attr), attr.isStatic, attr]
+                yield [format(attr), attr.isStatic, attr]
 
 
     def _create_object(self):
-        attr = self.element_factory.create(UML.Property)
+        attr = self.element_factory.create(uml2.Property)
         self._item.subject.ownedAttribute = attr
         return attr
 
@@ -211,14 +234,14 @@ class ClassAttributes(EditableTreeModel):
     def _set_object_value(self, row, col, value):
         attr = row[-1]
         if col == 0:
-            UML.parse(attr, value)
-            row[0] = UML.format(attr)
+            parse(attr, value)
+            row[0] = format(attr)
         elif col == 1:
             attr.isStatic = not attr.isStatic
             row[1] = attr.isStatic
         elif col == 2:
             # Value in attribute object changed:
-            row[0] = UML.format(attr)
+            row[0] = format(attr)
             row[1] = attr.isStatic
 
 
@@ -234,11 +257,11 @@ class ClassOperations(EditableTreeModel):
 
     def _get_rows(self):
         for operation in self._item.subject.ownedOperation:
-            yield [UML.format(operation), operation.isAbstract, operation.isStatic, operation]
+            yield [format(operation), operation.isAbstract, operation.isStatic, operation]
 
 
     def _create_object(self):
-        operation = self.element_factory.create(UML.Operation)
+        operation = self.element_factory.create(uml2.Operation)
         self._item.subject.ownedOperation = operation
         return operation
 
@@ -247,8 +270,8 @@ class ClassOperations(EditableTreeModel):
     def _set_object_value(self, row, col, value):
         operation = row[-1]
         if col == 0:
-            UML.parse(operation, value)
-            row[0] = UML.format(operation)
+            parse(operation, value)
+            row[0] = format(operation)
         elif col == 1:
             operation.isAbstract = not operation.isAbstract
             row[1] = operation.isAbstract
@@ -256,7 +279,7 @@ class ClassOperations(EditableTreeModel):
             operation.isStatic = not operation.isStatic
             row[2] = operation.isStatic
         elif col == 3:
-            row[0] = UML.format(operation)
+            row[0] = format(operation)
             row[1] = operation.isAbstract
             row[2] = operation.isStatic
 
@@ -296,7 +319,7 @@ class CommunicationMessageModel(EditableTreeModel):
     def _create_object(self):
         item = self._item
         subject = item.subject
-        message = UML.model.create_message(self.element_factory, subject, self.inverted)
+        message = modelfactory.create_message(self.element_factory, subject, self.inverted)
         item.add_message(message, self.inverted)
         return message
 
@@ -455,7 +478,7 @@ def create_tree_view(model, names, tip='', ro_cols=None):
     tree_view.set_rules_hint(True)
     
     n = model.get_n_columns() - 1
-    for name, i in zip(names, range(n)):
+    for name, i in zip(names, list(range(n))):
         col_type = model.get_column_type(i)
         if col_type == gobject.TYPE_STRING:
             renderer = gtk.CellRendererText()
@@ -491,7 +514,7 @@ class CommentItemPropertyPage(object):
     Property page for Comments
     """
     interface.implements(IPropertyPage)
-    component.adapts(UML.Comment)
+    component.adapts(uml2.Comment)
 
     order = 0
 
@@ -549,14 +572,14 @@ class NamedElementPropertyPage(object):
     """
 
     interface.implements(IPropertyPage)
-    component.adapts(UML.NamedElement)
+    component.adapts(uml2.NamedElement)
 
     order = 10
 
     NAME_LABEL = _('Name')
 
     def __init__(self, subject):
-        assert subject is None or isinstance(subject, UML.NamedElement), '%s' % type(subject)
+        assert subject is None or isinstance(subject, uml2.NamedElement), '%s' % type(subject)
         self.subject = subject
         self.watcher = EventWatcher(subject)
         self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
@@ -611,7 +634,7 @@ class ClassPropertyPage(NamedElementPropertyPage):
     Adapter which shows a property page for a class view.
     """
 
-    component.adapts(UML.Class)
+    component.adapts(uml2.Class)
 
     def __init__(self, subject):
         super(ClassPropertyPage, self).__init__(subject)
@@ -875,10 +898,10 @@ class DependencyPropertyPage(object):
     element_factory = inject('element_factory')
 
     DEPENDENCY_TYPES = (
-        (_('Dependency'), UML.Dependency),
-        (_('Usage'), UML.Usage),
-        (_('Realization'), UML.Realization),
-        (_('Implementation'), UML.Implementation))
+        (_('Dependency'), uml2.Dependency),
+        (_('Usage'), uml2.Usage),
+        (_('Realization'), uml2.Realization),
+        (_('Implementation'), uml2.Implementation))
 
     def __init__(self, item):
         super(DependencyPropertyPage, self).__init__()
@@ -1029,7 +1052,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         for name, adapter in component.getAdapters([item,], IPropertyPage):
             adaptermap[name] = (adapter.order, name, adapter)
 
-        adapters = adaptermap.values()
+        adapters = list(adaptermap.values())
         adapters.sort()
         return adapters
 
@@ -1057,7 +1080,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                     expander.add(page)
                     expander.show_all()
                     vbox.pack_start(expander, expand=False)
-            except Exception, e:
+            except Exception as e:
                 log.error('Could not construct property page for ' + name, exc_info=True)
 
 component.provideAdapter(AssociationPropertyPage, name='Properties')
@@ -1069,7 +1092,7 @@ class AssociationEndPropertyPage(object):
     """
 
     interface.implements(IPropertyPage)
-    component.adapts(UML.Property)
+    component.adapts(uml2.Property)
 
     order = 0
 
@@ -1083,17 +1106,17 @@ class AssociationEndPropertyPage(object):
         vbox = gtk.VBox()
 
         entry = gtk.Entry()
-        #entry.set_text(UML.format(self.subject, visibility=True, is_derived=Truemultiplicity=True) or '')
+        #entry.set_text(format(self.subject, visibility=True, is_derived=Truemultiplicity=True) or '')
 
         # monitor subject attribute (all, cause it contains many children)
         changed_id = entry.connect('changed', self._on_end_name_change)
         def handler(event):
             if not entry.props.has_focus:
                 entry.handler_block(changed_id)
-                entry.set_text(UML.format(self.subject,
+                entry.set_text(format(self.subject,
                                           visibility=True, is_derived=True,
                                           multiplicity=True) or '')
-                #entry.set_text(UML.format(self.subject, multiplicity=True) or '')
+                #entry.set_text(format(self.subject, multiplicity=True) or '')
                 entry.handler_unblock(changed_id)
         handler(None)
 
@@ -1139,12 +1162,12 @@ Enter attribute name and multiplicity, for example
 
     @transactional
     def _on_end_name_change(self, entry):
-        UML.parse(self.subject, entry.get_text())
+        parse(self.subject, entry.get_text())
 
     @transactional
     def _on_navigability_change(self, combo):
         nav = self.NAVIGABILITY[combo.get_active()]
-        UML.model.set_navigability(self.subject.association, self.subject, nav)
+        modelfactory.set_navigability(self.subject.association, self.subject, nav)
 
     @transactional
     def _on_aggregation_change(self, combo):
@@ -1291,7 +1314,7 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         hbox = gtk.HBox()
         page.pack_start(hbox, expand=False)
 
-        if isinstance(subject, UML.JoinNode):
+        if isinstance(subject, uml2.JoinNode):
             hbox = create_hbox_label(self, page, _('Join specification'))
             entry = gtk.Entry()        
             entry.set_text(subject.joinSpec or '')
@@ -1311,7 +1334,7 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_join_spec_change(self, entry):
         value = entry.get_text().strip()
-        print 'new joinspec', value
+        print('new joinspec', value)
         self.subject.joinSpec = value
 
     def _on_horizontal_change(self, button):
@@ -1362,10 +1385,10 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
 # fixme: unify ObjectFlowPropertyPage and ControlFlowPropertyPage
 # after introducing common class for element editors
 class ControlFlowPropertyPage(FlowPropertyPageAbstract):
-    component.adapts(UML.ControlFlow)
+    component.adapts(uml2.ControlFlow)
 
 class ObjectFlowPropertyPage(FlowPropertyPageAbstract):
-    component.adapts(UML.ObjectFlow)
+    component.adapts(uml2.ObjectFlow)
 
 
 component.provideAdapter(ControlFlowPropertyPage, name='Properties')

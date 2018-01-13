@@ -1,3 +1,24 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2006-2017 Adam Boduch <adam.boduch@gmail.com>
+#                         Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Implementation of connector from Composite Structures and Components.
 
@@ -100,8 +121,9 @@ Therefore, code of connector items is written with assumption, that
 interfaces are connectable elements.
 """
 
+from __future__ import absolute_import
 from logging import getLogger
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
@@ -125,7 +147,7 @@ class ConnectorItem(NamedLine):
      _interface
         Interface name, when connector is assembly connector.
     """
-    __uml__        = UML.Connector
+    __uml__        = uml2.Connector
     __style__   = {
         'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
         'name-outside': True,
@@ -151,7 +173,7 @@ class ConnectorItem(NamedLine):
         """
         try:
             self._interface.text = self.subject.end['it.role', 0].role.name
-        except (IndexError, AttributeError), e:
+        except (IndexError, AttributeError) as e:
             logger.error(e)
             self._interface.text = ''
         else:

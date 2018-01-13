@@ -1,6 +1,27 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Adam Boduch <adam.boduch@gmail.com>
+#                         Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """The properties module allows Gaphor properties to be saved to the local
 file system.  These are things like preferences."""
 
+from __future__ import absolute_import
 import sys
 import os
 import pprint
@@ -11,6 +32,7 @@ from logging import getLogger
 from gaphor.interfaces import IService
 from gaphas.decorators import async
 from gaphor.misc import get_user_data_dir
+import six
 
 class IPropertyChangeEvent(interface.Interface):
     
@@ -81,14 +103,14 @@ class Properties(object):
     def _items(self):
         """Return an iterator for all stored properties."""
         
-        return self._resources.iteritems()
+        return six.iteritems(self._resources)
 
     def dump(self, stream=sys.stdout):
         """
         TODO: define resources that are persistent (have to be saved
         and loaded.
         """
-        pprint.pprint(self._resources.items(), stream)
+        pprint.pprint(list(self._resources.items()), stream)
 
     def get(self, key, default=_no_default):
         """Locate a property.
@@ -155,7 +177,7 @@ class FileBackend(object):
             with open(filename) as ifile:
                 data = ifile.read()
                 
-            for key, value in eval(data).iteritems():
+            for key, value in six.iteritems(eval(data)):
                 resource[key] = value
 
     def save(self, resource):

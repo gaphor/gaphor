@@ -1,3 +1,24 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2004-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#                         syt <noreply@example.com>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Node item may represent a node or a device UML metamodel classes.
 
@@ -15,7 +36,8 @@ Node item grouping logic is implemented in `gaphor.adapters.grouping`
 module.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.classifier import ClassifierItem
 
 class NodeItem(ClassifierItem):
@@ -23,9 +45,9 @@ class NodeItem(ClassifierItem):
     Representation of node or device from UML Deployment package.
     """
 
-    __uml__ = UML.Node, UML.Device
+    __uml__ = uml2.Node, uml2.Device
     __stereotype__ = {
-        'device': UML.Device,
+        'device': uml2.Device,
     }
 
     DEPTH = 10

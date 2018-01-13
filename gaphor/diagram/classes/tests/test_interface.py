@@ -1,10 +1,29 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2008-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Test classes.
 """
 
-from zope import component
+from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.classes.interface import InterfaceItem
 
 
@@ -12,8 +31,8 @@ class InterfaceTestCase(TestCase):
     def test_interface_creation(self):
         """Test interface creation
         """
-        iface = self.create(InterfaceItem, UML.Interface)
-        self.assertTrue(isinstance(iface.subject, UML.Interface))
+        iface = self.create(InterfaceItem, uml2.Interface)
+        self.assertTrue(isinstance(iface.subject, uml2.Interface))
 
         self.assertTrue(iface._name.is_visible())
 
@@ -24,7 +43,7 @@ class InterfaceTestCase(TestCase):
     def test_changing_to_icon_mode(self):
         """Test interface changing to icon mode
         """
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, uml2.Interface)
         iface.drawing_style = iface.DRAW_ICON
 
         self.assertEquals(iface.DRAW_ICON, iface.drawing_style)
@@ -46,7 +65,7 @@ class InterfaceTestCase(TestCase):
     def test_changing_to_classifier_mode(self):
         """Test interface changing to classifier mode
         """
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, uml2.Interface)
         iface.drawing_style = iface.DRAW_ICON
 
         iface.drawing_style = iface.DRAW_COMPARTMENT
@@ -63,7 +82,7 @@ class InterfaceTestCase(TestCase):
     def test_assembly_connector_icon_mode(self):
         """Test interface in assembly connector icon mode
         """
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, uml2.Interface)
         assert iface._name.is_visible()
 
         iface.folded = iface.FOLDED_ASSEMBLY
@@ -73,7 +92,7 @@ class InterfaceTestCase(TestCase):
     def test_folded_interface_persistence(self):
         """Test folded interface saving/loading
         """
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, uml2.Interface)
 
         # note: assembly folded mode..
         iface.folded = iface.FOLDED_REQUIRED

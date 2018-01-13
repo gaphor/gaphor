@@ -1,3 +1,24 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2003-2017 Adam Boduch <adam.boduch@gmail.com>
+#                         Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
+# more details.
+#
+# You should have received a copy of the GNU Library General Public
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """Gaphor file reader.
 
 This module contains only one interesting function:
@@ -30,6 +51,8 @@ The generator parse_generator(filename, loader) may be used if the loading
 takes a long time. The yielded values are the percentage of the file read.
 """
 
+from __future__ import absolute_import
+from six.moves import range
 __all__ = [ 'parse', 'ParserException' ]
 
 import os
@@ -101,7 +124,7 @@ class ParserException(Exception):
   VAL,          # Redaing contents of a <val> tag
   REFLIST,      # In a <reflist>
   REF           # Reading contents of a <ref> tag
-] = xrange(10)
+] = range(10)
 
 class GaphorLoader(handler.ContentHandler):
     """Create a list of elements. an element may contain a canvas and a
@@ -152,7 +175,7 @@ class GaphorLoader(handler.ContentHandler):
 
     def endDocument(self):
         if len(self.__stack) != 0:
-            raise ParserException, 'Invalid XML document.'
+            raise ParserException('Invalid XML document.')
 
     def startElement(self, name, attrs):
         self.text = ''
@@ -163,7 +186,7 @@ class GaphorLoader(handler.ContentHandler):
         if state == GAPHOR:
             id = attrs['id']
             e = element(id, name)
-            assert id not in self.elements.keys(), '%s already defined' % (id)#, self.elements[id])
+            assert id not in list(self.elements.keys()), '%s already defined' % (id)#, self.elements[id])
             self.elements[id] = e
             self.push(e, name == 'Diagram' and DIAGRAM or ELEMENT)
 
@@ -177,7 +200,7 @@ class GaphorLoader(handler.ContentHandler):
         elif state in (CANVAS, ITEM) and name == 'item':
             id = attrs['id']
             c = canvasitem(id, attrs['type'])
-            assert id not in self.elements.keys(), '%s already defined' % id
+            assert id not in list(self.elements.keys()), '%s already defined' % id
             self.elements[id] = c
             self.peek().canvasitems.append(c)
             self.push(c, ITEM)
@@ -225,7 +248,7 @@ class GaphorLoader(handler.ContentHandler):
             self.push(None, GAPHOR)
 
         else:
-            raise ParserException, 'Invalid XML: tag <%s> not known (state = %s)' % (name, state)
+            raise ParserException('Invalid XML: tag <%s> not known (state = %s)' % (name, state))
 
     def endElement(self, name):
         # Put the text on the value
