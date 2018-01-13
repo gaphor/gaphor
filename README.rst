@@ -1,7 +1,7 @@
 Gaphor - The UML and SysML(soon!) Modeling Tool
 ===============================================
 
-Gaphor is a free/libre/open source UML modeling tool, written in Python and licensed under the GPLv2.
+Gaphor is a free/libre/open source UML modeling tool, written in Python and licensed under the LGPLv2.
 
 Install gaphor simply using pip:
 
