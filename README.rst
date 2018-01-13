@@ -1,10 +1,3 @@
-.. image:: https://gitlab.com/MBSE/gaphor/badges/master/build.svg
-    :target: https://gitlab.com/MBSE/gaphor/commits/master
-    
-.. image:: https://gitlab.com/MBSE/gaphor/badges/master/coverage.svg
-    :target: https://gitlab.com/MBSE/gaphor/commits/master
-    
-
 Gaphor - The UML and SysML(soon!) Modeling Tool
 ===============================================
 
@@ -14,10 +7,6 @@ Install gaphor simply using pip:
 
   $ pip install gaphor
 
-You can find the sources and issue tracker at GitLab:
-
-  http://gitlab.com/MBSE/gaphor/
-
 For documentation refer to our project website:
 
-  http://mbse.gitlab.io/gaphor/
+  http://gaphor.readthedocs.io
