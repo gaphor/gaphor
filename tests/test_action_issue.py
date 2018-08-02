@@ -1,3 +1,5 @@
+import os
+import pkg_resources
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -11,7 +13,9 @@ class ActionIssueTestCase(TestCase):
         Test an issue when loading a freshly created action diagram.
         """
         ef = self.element_factory
-        storage.load('test-diagrams/action-issue.gaphor', ef)
+        dist = pkg_resources.get_distribution('gaphor')
+        path = os.path.join(dist.location, 'test-diagrams/action-issue.gaphor')
+        storage.load(path, ef)
 
         actions = ef.lselect(lambda e: e.isKindOf(UML.Action))
         flows = ef.lselect(lambda e: e.isKindOf(UML.ControlFlow))

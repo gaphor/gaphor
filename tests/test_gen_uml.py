@@ -2,9 +2,12 @@
 Test case that checks the working of the utils/command/gen_uml.py module.
 """
 
+import os
+import pkg_resources
 import unittest
 
 from utils.command.gen_uml import generate
+
 
 class PseudoFile(object):
     def __init__(self):
@@ -21,7 +24,8 @@ class GenUmlTestCase(unittest.TestCase):
 
     def test_loading(self):
 
-        model_file = 'tests/test-model.gaphor'
+        dist = pkg_resources.get_distribution('gaphor')
+        model_file = os.path.join(dist.location, 'tests/test-model.gaphor')
         outfile = PseudoFile()
 
         generate(model_file, outfile)
