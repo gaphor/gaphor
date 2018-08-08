@@ -304,7 +304,8 @@ class ElementDispatcher(object):
                 try:
                     handler(event)
                 except Exception, e:
-                    self.logger.error('Problem executing handler %s' % handler, e)
+                    self.logger.error('Problem executing handler %s' % handler)
+                    self.logger.error(e)
         
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
