@@ -76,11 +76,11 @@ class GeneralizationConnect(RelationshipConnect):
 
 
     def connect_subject(self, handle):
-        log.debug('connect_subject: ' % handle)
+        log.debug('connect_subject: %s' % (handle,))
         relation = self.relationship_or_new(UML.Generalization,
                     UML.Generalization.general,
                     UML.Generalization.specific)
-        log.debug('found: ' % relation)
+        log.debug('found: %s' % (relation,))
         self.line.subject = relation
 
 component.provideAdapter(GeneralizationConnect)
