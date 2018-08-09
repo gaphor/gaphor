@@ -281,13 +281,13 @@ def parse_association_tags(appliedStereotypes):
             #msg('scanning %s = %s' %  (slot.definingFeature.name, slot.value.value))
 
             if slot.definingFeature.name == 'subsets':
-                value = slot.value
+                value = slot.value.value
                 # remove all whitespaces and stuff
                 value = value.replace(' ', '').replace('\n', '').replace('\r', '')
                 subsets = value.split(',')
 
             if slot.definingFeature.name == 'redefines':
-                value = slot.value
+                value = slot.value.value
                 # remove all whitespaces and stuff
                 redefines = value.replace(' ', '').replace('\n', '').replace('\r', '')
 
