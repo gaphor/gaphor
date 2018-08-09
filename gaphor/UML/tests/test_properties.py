@@ -460,7 +460,7 @@ class PropertiesTestCase(unittest.TestCase):
         a.b[0].name = 'baz'
 
         assert list(a.a[:].name) == ['foo', 'bar']
-        assert list(a.u[:].name) == ['foo', 'bar', 'baz']
+        assert sorted(list(a.u[:].name)) == ['bar', 'baz', 'foo']
 
     def test_composite(self):
         class A(Element):
