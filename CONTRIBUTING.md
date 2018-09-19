@@ -3,31 +3,14 @@ Feel free to hack Gaphor. Patches are welcome.
 Fetching Development Dependencies
 =================================
 
-Gaphor uses Easy Install to manage in easy way its dependencies.
+Gaphor uses pip to manage in easy way its dependencies.
 
-To fetch and install dependencies as non-root user
- 
-1. Create ~/.pydistutils.cfg file
-
-    [install]
-    install_lib = ~/opt/share/python2.5/site-packages
-    install_scripts = ~/opt/bin
-
-2. Create (or extend) PYTHONPATH variable
-
-    export PYTHONPATH=~/opt/share/python2.5/site-packages
-
-3. Run setup.py script to fetch and install dependencies
-
-    python setup.py develop
-
-Prefix ~/opt can be changed to something more suitable for your setup.
-
-
-Above is based on
-
-    http://peak.telecommunity.com/DevCenter/EasyInstall#traditional-pythonpath-based-installation
-
+To fetch and install dependencies as non-root user:
+In Linux recommend using a virtual environment for installation. Since pyGTK doesn't work well with a virtualenv,
+install it outside the virtual environment and then start your the virtualenv using the --system-site-packages option:
+  $ virtualenv --system-site-packages venv
+  $ source venv/bin/activate
+  $ pip install gaphor
 
 Running Tests
 =============
@@ -64,4 +47,3 @@ The user interface. This is where most of the work is to be done.
 misc
 ----
 Some utility stuff, such as Actions and aspects are put in here.
-

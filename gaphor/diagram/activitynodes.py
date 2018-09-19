@@ -1,7 +1,31 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2004-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#                         slmm <noreply@example.com>
+#                         syt <noreply@example.com>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Activity control nodes.
 """
 
+from __future__ import absolute_import
+from __future__ import print_function
 import math
 
 from gaphas.util import path_ellipse
@@ -10,13 +34,14 @@ from gaphas.item import Handle, Item, LinePort
 from gaphas.constraint import EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.core import inject
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP, \
         ALIGN_RIGHT, ALIGN_BOTTOM
 from gaphor.diagram.style import get_text_point
+from six.moves import map
 
 
 DEFAULT_JOIN_SPEC = 'and'
@@ -43,7 +68,7 @@ class InitialNodeItem(ActivityNodeItem):
     Representation of initial node. Initial node has name which is put near
     top-left side of node.
     """
-    __uml__     = UML.InitialNode
+    __uml__     = uml2.InitialNode
     __style__   = {
         'min-size':   (20, 20),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
@@ -67,7 +92,7 @@ class ActivityFinalNodeItem(ActivityNodeItem):
     which is put near right-bottom side of node.
     """
 
-    __uml__ = UML.ActivityFinalNode
+    __uml__ = uml2.ActivityFinalNode
     __style__   = {
         'min-size':   (30, 30),
         'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
@@ -99,7 +124,7 @@ class FlowFinalNodeItem(ActivityNodeItem):
     put near right-bottom side of node.
     """
 
-    __uml__ = UML.FlowFinalNode
+    __uml__ = uml2.FlowFinalNode
     __style__   = {
         'min-size':   (20, 20),
         'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
@@ -129,7 +154,7 @@ class DecisionNodeItem(ActivityNodeItem):
     """
     Representation of decision or merge node.
     """
-    __uml__   = UML.DecisionNode
+    __uml__   = uml2.DecisionNode
     __style__   = {
         'min-size':   (20, 30),
         'name-align': (ALIGN_LEFT, ALIGN_TOP),
@@ -186,7 +211,7 @@ class ForkNodeItem(Item, DiagramItem):
 
     element_factory = inject('element_factory')
 
-    __uml__   = UML.ForkNode
+    __uml__   = uml2.ForkNode
 
     __style__ = {
         'min-size':   (6, 45),
@@ -249,7 +274,7 @@ class ForkNodeItem(Item, DiagramItem):
 
     def postload(self):
         subject = self.subject
-        if subject and isinstance(subject, UML.JoinNode) and subject.joinSpec:
+        if subject and isinstance(subject, uml2.JoinNode) and subject.joinSpec:
             self._join_spec.text = self.subject.joinSpec
         self.on_named_element_name(None)
         super(ForkNodeItem, self).postload()
@@ -270,12 +295,12 @@ class ForkNodeItem(Item, DiagramItem):
         c1 = EqualsConstraint(a=h1.pos.x, b=h2.pos.x)
         c2 = LessThanConstraint(smaller=h1.pos.y, bigger=h2.pos.y, delta=30)
         self.__constraints = (cadd(c1), cadd(c2))
-        map(self.canvas.solver.add_constraint, self.__constraints)
+        list(map(self.canvas.solver.add_constraint, self.__constraints))
 
 
     def teardown_canvas(self):
         super(ForkNodeItem, self).teardown_canvas()
-        map(self.canvas.solver.remove_constraint, self.__constraints)
+        list(map(self.canvas.solver.remove_constraint, self.__constraints))
         self.unregister_handlers()
 
 
@@ -283,7 +308,7 @@ class ForkNodeItem(Item, DiagramItem):
         """
         Check if join specification should be displayed.
         """
-        return isinstance(self.subject, UML.JoinNode) \
+        return isinstance(self.subject, uml2.JoinNode) \
             and self.subject.joinSpec is not None \
             and self.subject.joinSpec != DEFAULT_JOIN_SPEC
 
@@ -334,7 +359,7 @@ class ForkNodeItem(Item, DiagramItem):
 
 
     def on_named_element_name(self, event):
-        print 'on_named_element_name', self.subject
+        print('on_named_element_name', self.subject)
         subject = self.subject
         if subject:
             self._name.text = subject.name
@@ -351,6 +376,6 @@ def is_join_node(subject):
     """
     Check if ``subject`` is join node. 
     """
-    return subject and isinstance(subject, UML.JoinNode)
+    return subject and isinstance(subject, uml2.JoinNode)
 
 # vim:sw=4:et

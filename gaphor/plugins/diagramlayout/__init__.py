@@ -1,5 +1,24 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2004-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
-This module provides a means to automatocally layout diagrams.
+This module provides a means to automatically layout diagrams.
 
 The layout is done like this:
  - First all nodes (Classes, packages, comments) on a digram are determined
@@ -9,17 +28,18 @@ The layout is done like this:
  - Lines are reconnected to the nodes, so everything looks pretty.
 """
 
-from zope import interface, component
-from gaphor.core import _, inject, action, build_action_group, transactional
-from gaphor.interfaces import IService, IActionProvider
+from __future__ import absolute_import
 
 import random
+from zope import interface
+
+from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.diagram import items
-import toposort
+from gaphor.interfaces import IService, IActionProvider
+from . import toposort
 
 
 class DiagramLayout(object):
-
     interface.implements(IService, IActionProvider)
 
     main_window = inject('main_window')
@@ -58,6 +78,7 @@ class DiagramLayout(object):
 
 MARGIN = 100
 
+
 def layout_diagram(diag):
     """
     So an attempt to layout (order) the items on a diagram. The items
@@ -86,7 +107,7 @@ def layout_diagram(diag):
                 relations.append((item.handles[0].connected_to,
                                   item.handles[-1].connected_to))
                 primary_nodes.extend(relations[-1])
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
         elif isinstance(item, items.DiagramLine):
             # Secondary (associations, dependencies) may be drawn top-down
@@ -94,9 +115,9 @@ def layout_diagram(diag):
             try:
                 other_relations.append((item.handles[0].connected_to,
                                         item.handles[-1].connected_to))
-                #other_relations.append((item.handles[-1].connected_to,
+                # other_relations.append((item.handles[-1].connected_to,
                 #                        item.handles[0].connected_to))
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
         else:
             nodes.append(item)
@@ -122,7 +143,7 @@ def layout_diagram(diag):
             # Figure out what row(s) they're on
             row = find_row(item, related, sorted[1:])
             if row:
-                #print 'moving', item.subject.name, 'to row', sorted.index(row)
+                # print 'moving', item.subject.name, 'to row', sorted.index(row)
                 sorted[0].remove(item)
                 row.append(item)
 
@@ -172,7 +193,7 @@ def simple_layout_lines(diag):
             try:
                 lines[item] = (item.handles[0].connected_to,
                                item.handles[-1].connected_to)
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
 
     # Now we have the lines, let's first ensure we only have a begin and an
@@ -201,7 +222,7 @@ def uniq(lst):
     d = {}
     for l in lst:
         d[l] = None
-    return d.keys()
+    return list(d.keys())
 
 
 def find_related_nodes(item, relations):
@@ -227,11 +248,12 @@ def find_row(item, related_items, sorted):
     max_refs = 0
     max_row = None
     for row in sorted:
-        cnt = len([ i for i in row if i in related_items ])
+        cnt = len([i for i in row if i in related_items])
         if cnt > max_refs:
             max_row = row
             max_refs = cnt
     return max_row
+
 
 def find_center(item):
     """

@@ -1,4 +1,7 @@
 # from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/107747
+from __future__ import absolute_import
+from six.moves import map
+from six.moves import zip
 class odict(dict):
 
     def __init__(self, dict=()):
@@ -23,7 +26,7 @@ class odict(dict):
         return dict
 
     def items(self):
-        return zip(self._keys, self.values())
+        return list(zip(self._keys, list(self.values())))
 
     def keys(self):
         return self._keys
@@ -49,7 +52,7 @@ class odict(dict):
             if key not in self._keys: self._keys.append(key)
 
     def values(self):
-        return map(self.get, self._keys)
+        return list(map(self.get, self._keys))
     
 
     def swap(self, k1, k2):

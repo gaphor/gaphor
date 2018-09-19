@@ -1,3 +1,22 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2003-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 This file contains code for loading up an override file.  The override file
 provides implementations of functions where the code generator could not
@@ -6,16 +25,16 @@ do its job correctly.
 This is a simple rip-off of the override script used in PyGTK.
 """
 
+from __future__ import absolute_import
+from __future__ import print_function
+import string
 
-import sys, string
 
 class Overrides:
-
     def __init__(self, filename=None):
         self.overrides = {}
         if filename:
             self.read_overrides(filename)
-
 
     def read_overrides(self, filename):
         """Read a file and return a dictionary of overriden properties
@@ -64,9 +83,9 @@ class Overrides:
                     deps = tuple(words[3:])
                 self.overrides[func] = (deps, string.join(rest, ''), '%d: %s' % (startline, line))
             elif words[0] == 'comment':
-                pass # ignore comments
+                pass  # ignore comments
             else:
-                print "Unknown word: '%s', line %d" (words[0], startline)
+                print("Unknown word: '%s', line %d"(words[0], startline))
                 raise SystemExit
 
     def has_override(self, key):

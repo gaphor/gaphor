@@ -1,3 +1,23 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Basic test case for Gaphor tests.
 
@@ -5,23 +25,21 @@ Everything is about services so the TestCase can define it's required
 services and start off.
 """
 
+from __future__ import absolute_import
 import unittest
 import logging
 from cStringIO import StringIO
 from zope import component
 
 from gaphas.aspect import ConnectionSink, Connector
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.application import Application
 from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram.interfaces import IGroup
 
-# For DiagramItemConnector aspect:
-import gaphor.ui.diagramtools
-
-
 # Increment log level
 log.setLevel(logging.WARNING)
+
 
 class TestCaseExtras(object):
     """
@@ -33,8 +51,7 @@ class TestCaseExtras(object):
            operator.
         """
         if first is second:
-            raise self.failureException, \
-                  (msg or '%r is not %r' % (first, second))
+            raise self.failureException(msg or '%r is not %r' % (first, second))
 
     assertNotSame = failIfIdentityEqual
 
@@ -43,33 +60,28 @@ class TestCaseExtras(object):
            operator.
         """
         if first is not second:
-            raise self.failureException, \
-                  (msg or '%r is not %r' % (first, second))
+            raise self.failureException(msg or '%r is not %r' % (first, second))
 
     assertSame = failUnlessIdentityEqual
 
 
 class TestCase(TestCaseExtras, unittest.TestCase):
-    
     services = ['element_factory', 'adapter_loader',
-            'element_dispatcher', 'sanitizer']
-    
+                'element_dispatcher', 'sanitizer']
+
     def setUp(self):
         Application.init(services=self.services)
         self.element_factory = Application.get_service('element_factory')
         assert len(list(self.element_factory.select())) == 0, list(self.element_factory.select())
-        self.diagram = self.element_factory.create(UML.Diagram)
+        self.diagram = self.element_factory.create(uml2.Diagram)
         assert len(list(self.element_factory.select())) == 1, list(self.element_factory.select())
-
 
     def tearDown(self):
         self.element_factory.shutdown()
         Application.shutdown()
-        
 
     def get_service(self, name):
         return Application.get_service(name)
-
 
     def create(self, item_cls, subject_cls=None, subject=None):
         """
@@ -81,7 +93,6 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         self.diagram.canvas.update()
         return item
 
-
     def allow(self, line, handle, item, port=None):
         """
         Glue line's handle to an item.
@@ -90,11 +101,9 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         """
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
-            
         query = (item, line)
         adapter = component.queryMultiAdapter(query, IConnect)
         return adapter.allow(handle, port)
-
 
     def connect(self, line, handle, item, port=None):
         """
@@ -117,7 +126,6 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         self.assertSame(cinfo.connected, item)
         self.assertSame(cinfo.port, port)
 
-
     def disconnect(self, line, handle):
         """
         Disconnect line's handle.
@@ -128,7 +136,6 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         canvas.disconnect_item(line, handle)
         assert not canvas.get_connection(handle)
 
-
     def get_connected(self, handle):
         """
         Get item connected to line via handle.
@@ -138,13 +145,11 @@ class TestCase(TestCaseExtras, unittest.TestCase):
             return cinfo.connected
         return None
 
-
     def get_connection(self, handle):
         """
         Get connection information.
         """
         return self.diagram.canvas.get_connection(handle)
-
 
     def can_group(self, parent, item):
         """
@@ -153,7 +158,6 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         query = (parent, item)
         adapter = component.queryMultiAdapter(query, IGroup)
         return adapter.can_contain()
-
 
     def group(self, parent, item):
         """
@@ -164,7 +168,6 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         adapter = component.queryMultiAdapter(query, IGroup)
         adapter.group()
 
-
     def ungroup(self, parent, item):
         """
         Remove item from a parent.
@@ -174,14 +177,11 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         adapter.ungroup()
         self.diagram.canvas.reparent(item, None)
 
-
-
     def kindof(self, cls):
         """
         Find UML metaclass instances using element factory.
         """
         return self.element_factory.lselect(lambda e: e.isKindOf(cls))
-
 
     def save(self):
         """
@@ -199,7 +199,6 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         assert not list(self.element_factory.lselect())
         return data
 
-
     def load(self, data):
         """
         Load data from specified string. Update ``TestCase.diagram``
@@ -209,8 +208,8 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         f = StringIO(data)
         storage.load(f, factory=self.element_factory)
         f.close()
-        
-        self.diagram = self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
+
+        self.diagram = self.element_factory.lselect(lambda e: e.isKindOf(uml2.Diagram))[0]
 
 
 main = unittest.main

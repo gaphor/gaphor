@@ -1,6 +1,26 @@
+#!/usr/bin/env python
 
+# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import absolute_import
+from __future__ import print_function
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.application import Application
 from gaphor.services.elementdispatcher import ElementDispatcher
 
@@ -23,17 +43,17 @@ class ElementDispatcherTestCase(TestCase):
 
     def test_register_handler(self):
         dispatcher = self.dispatcher
-        element = UML.Class()
+        element = uml2.Class()
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
         assert len(dispatcher._handlers) == 1
-        assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
+        assert list(dispatcher._handlers.keys())[0] == (element, uml2.Class.ownedOperation)
 
         # Add some properties:
 
         # 1:
-        element.ownedOperation = UML.Operation()
+        element.ownedOperation = uml2.Operation()
         # 2:
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        p = element.ownedOperation[0].formalParameter = uml2.Parameter()
         # 3:
         p.name = 'func'
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
@@ -46,12 +66,12 @@ class ElementDispatcherTestCase(TestCase):
         Multiple registrations have no effect.
         """
         dispatcher = self.dispatcher
-        element = UML.Class()
+        element = uml2.Class()
 
         # Add some properties:
 
-        element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        element.ownedOperation = uml2.Operation()
+        p = element.ownedOperation[0].formalParameter = uml2.Parameter()
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
 
         n_handlers = len(dispatcher._handlers)
@@ -72,21 +92,21 @@ class ElementDispatcherTestCase(TestCase):
 
         # First some setup:
         dispatcher = self.dispatcher
-        element = UML.Class()
-        o = element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        element = uml2.Class()
+        o = element.ownedOperation = uml2.Operation()
+        p = element.ownedOperation[0].formalParameter = uml2.Parameter()
         p.name = 'func'
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
         assert len(dispatcher._handlers) == 3
-        assert dispatcher._handlers[element, UML.Class.ownedOperation]
-        assert dispatcher._handlers[o, UML.Operation.parameter]
-        assert dispatcher._handlers[p, UML.Parameter.name]
+        assert dispatcher._handlers[element, uml2.Class.ownedOperation]
+        assert dispatcher._handlers[o, uml2.Operation.parameter]
+        assert dispatcher._handlers[p, uml2.Parameter.name]
 
         dispatcher.unregister_handler(self._handler)
 
         assert len(dispatcher._handlers) == 0, dispatcher._handlers
         assert len(dispatcher._reverse) == 0, dispatcher._reverse
-        #assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
+        #assert dispatcher._handlers.keys()[0] == (element, uml2.Class.ownedOperation)
         # Should not fail here too:
         dispatcher.unregister_handler(self._handler)
 
@@ -96,15 +116,15 @@ class ElementDispatcherTestCase(TestCase):
         Test notifications with Class object.
         """
         dispatcher = self.dispatcher
-        element = UML.Class()
-        o = element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        element = uml2.Class()
+        o = element.ownedOperation = uml2.Operation()
+        p = element.ownedOperation[0].formalParameter = uml2.Parameter()
         p.name = 'func'
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
-        element.ownedOperation = UML.Operation()
+        element.ownedOperation = uml2.Operation()
         assert len(self.events) == 1, self.events
         assert len(dispatcher._handlers) == 4
         
@@ -120,20 +140,20 @@ class ElementDispatcherTestCase(TestCase):
         Test notifications with Transition object.
         """
         dispatcher = self.dispatcher
-        element = UML.Transition()
-        g = element.guard = UML.Constraint()
+        element = uml2.Transition()
+        g = element.guard = uml2.Constraint()
         dispatcher.register_handler(self._handler, element, 'guard.specification')
         assert len(dispatcher._handlers) == 2
         assert not self.events
-        assert (element.guard, UML.Constraint.specification) in dispatcher._handlers.keys(), dispatcher._handlers.keys()
+        assert (element.guard, uml2.Constraint.specification) in list(dispatcher._handlers.keys()), list(dispatcher._handlers.keys())
 
         g.specification = 'x'
         assert len(self.events) == 1, self.events
 
-        element.guard = UML.Constraint()
+        element.guard = uml2.Constraint()
         assert len(self.events) == 2, self.events
         assert len(dispatcher._handlers) == 2, len(dispatcher._handlers)
-        assert (element.guard, UML.Constraint.specification) in dispatcher._handlers.keys()
+        assert (element.guard, uml2.Constraint.specification) in list(dispatcher._handlers.keys())
 
 
     def test_notification_of_change(self):
@@ -141,8 +161,8 @@ class ElementDispatcherTestCase(TestCase):
         Test notifications with Transition object.
         """
         dispatcher = self.dispatcher
-        element = UML.Transition()
-        g = element.guard = UML.Constraint()
+        element = uml2.Transition()
+        g = element.guard = uml2.Constraint()
         dispatcher.register_handler(self._handler, element, 'guard.specification')
         assert len(dispatcher._handlers) == 2
         assert not self.events
@@ -150,7 +170,7 @@ class ElementDispatcherTestCase(TestCase):
         g.specification = 'x'
         assert len(self.events) == 1, self.events
 
-        element.guard = UML.Constraint()
+        element.guard = uml2.Constraint()
         assert len(self.events) == 2, self.events
         
 
@@ -159,9 +179,9 @@ class ElementDispatcherTestCase(TestCase):
         Test unregister with composition. Use Class.ownedOperation.precondition.
         """
         dispatcher = self.dispatcher
-        element = UML.Class()
-        o = element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].precondition = UML.Constraint()
+        element = uml2.Class()
+        o = element.ownedOperation = uml2.Operation()
+        p = element.ownedOperation[0].precondition = uml2.Constraint()
         p.name = 'func'
         dispatcher.register_handler(self._handler, element, 'ownedOperation.precondition.name')
         assert len(dispatcher._handlers) == 3
@@ -176,12 +196,12 @@ class ElementDispatcherTestCase(TestCase):
         Test unregister with composition. Use Class.ownedOperation.precondition.
         """
         dispatcher = self.dispatcher
-        element = UML.Transition()
-        g = element.guard = UML.Constraint()
+        element = uml2.Transition()
+        g = element.guard = uml2.Constraint()
         dispatcher.register_handler(self._handler, element, 'guard.specification')
         assert len(dispatcher._handlers) == 2
         assert not self.events
-        assert (element.guard, UML.Constraint.specification) in dispatcher._handlers.keys(), dispatcher._handlers.keys()
+        assert (element.guard, uml2.Constraint.specification) in list(dispatcher._handlers.keys()), list(dispatcher._handlers.keys())
 
         g.specification = 'x'
         assert len(self.events) == 1, self.events
@@ -191,7 +211,7 @@ class ElementDispatcherTestCase(TestCase):
 
 
 
-from gaphor.UML import Element
+from gaphor.UML.uml2 import Element
 from gaphor.UML.properties import association
 from gaphor.services.elementdispatcher import EventWatcher
 
@@ -221,15 +241,15 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         Test notifications with Class object.
         """
         dispatcher = self.dispatcher
-        element = UML.Class()
-        o = element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        element = uml2.Class()
+        o = element.ownedOperation = uml2.Operation()
+        p = element.ownedOperation[0].formalParameter = uml2.Parameter()
         p.name = 'func'
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
-        element.ownedOperation = UML.Operation()
+        element.ownedOperation = uml2.Operation()
         assert len(self.events) == 1, self.events
         assert len(dispatcher._handlers) == 4
         
@@ -247,12 +267,12 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         Tricky case where no events are fired.
         """
         dispatcher = self.dispatcher
-        element = UML.Association()
-        p1 = element.memberEnd = UML.Property()
-        p2 = element.memberEnd = UML.Property()
+        element = uml2.Association()
+        p1 = element.memberEnd = uml2.Property()
+        p2 = element.memberEnd = uml2.Property()
 
         assert len(element.memberEnd) == 2
-        print element.memberEnd
+        print(element.memberEnd)
         dispatcher.register_handler(self._handler, element, 'memberEnd.name')
         assert len(dispatcher._handlers) == 3, len(dispatcher._handlers)
         assert not self.events
@@ -275,16 +295,16 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         Tricky case where no events are fired.
         """
         dispatcher = self.dispatcher
-        element = UML.Association()
-        p1 = element.memberEnd = UML.Property()
-        p2 = element.memberEnd = UML.Property()
+        element = uml2.Association()
+        p1 = element.memberEnd = uml2.Property()
+        p2 = element.memberEnd = uml2.Property()
         p1.lowerValue = '0'
         p1.upperValue = '1'
         p2.lowerValue = '1'
         p2.upperValue = '*'
 
         assert len(element.memberEnd) == 2
-        print element.memberEnd
+        print(element.memberEnd)
 
         base = 'memberEnd<Property>.'
         dispatcher.register_handler(self._handler, element, base + 'name')

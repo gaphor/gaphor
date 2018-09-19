@@ -1,5 +1,27 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Adam Boduch <adam.boduch@gmail.com>
+#                         Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """About and help services. (help browser anyone?)"""
 
+from __future__ import absolute_import
 from logging import getLogger
 import os
 import pkg_resources
@@ -68,8 +90,8 @@ class HelpService(object):
             tab_vbox.pack_start(label)
 
         add_label('<span weight="bold">version %s</span>' % version)
-        add_label('<span variant="smallcaps">UML Modeling tool for GNOME</span>', 8, 8)
-        add_label('<span size="small">Copyright (c) 2001-2007 Arjan J. Molenaar</span>', 8, 8)
+        add_label('<span variant="smallcaps">The UML and SysML(soon!) Modeling Tool</span>', 8, 8)
+        add_label('<span size="small">Copyright (c) 2001-2007 Arjan J. Molenaar, 2017 Dan Yeaw</span>', 8, 8)
 
         notebook.append_page(tab_vbox, gtk.Label(_('About')))
 
@@ -78,12 +100,13 @@ class HelpService(object):
         add_label('This software is published\n'
                   'under the terms of the\n'
                   '<span weight="bold">GNU General Public License v2</span>.\n'
-                  'See the COPYING file for details.', 0, 8)
+                  'See the LICENSE.txt file for details.', 0, 8)
         notebook.append_page(tab_vbox, gtk.Label(_('License')))
 
         tab_vbox = gtk.VBox()
         
         add_label('Gaphor is written by:\n'
+                  'Dan Yeaw\n'
                   'Arjan Molenaar\n'
                   'Artur Wroblewski\n'
                   'Jeroen Vloothuis')

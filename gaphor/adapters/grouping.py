@@ -1,3 +1,23 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Grouping functionality allows to nest one item within another item (parent
 item). This is useful in several use cases
@@ -15,9 +35,10 @@ is about to be created. Therefore `AbstractGroup.can_contain` has
 to be aware that `AbstractGroup.item` can be null.
 """
 
+from __future__ import absolute_import
 from zope import interface, component
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IGroup
@@ -52,14 +73,14 @@ class AbstractGroup(object):
         """
         Group an item within parent.
         """
-        raise NotImplemented, 'This is abstract method'
+        raise NotImplemented('This is abstract method')
 
 
     def ungroup(self):
         """
         Remove item from parent.
         """
-        raise NotImplemented, 'This is abstract method'
+        raise NotImplemented('This is abstract method')
 
 
 
@@ -107,18 +128,18 @@ class NodeComponentGroup(AbstractGroup):
         component = self.item.subject
 
         # node attribute
-        a1 = self.element_factory.create(UML.Property)
+        a1 = self.element_factory.create(uml2.Property)
         a1.aggregation = 'composite'
         # component attribute
-        a2 = self.element_factory.create(UML.Property)
+        a2 = self.element_factory.create(uml2.Property)
 
-        e1 = self.element_factory.create(UML.ConnectorEnd)
-        e2 = self.element_factory.create(UML.ConnectorEnd)
+        e1 = self.element_factory.create(uml2.ConnectorEnd)
+        e2 = self.element_factory.create(uml2.ConnectorEnd)
 
         # create connection between node and component
         e1.role = a1
         e2.role = a2
-        connector = self.element_factory.create(UML.Connector)
+        connector = self.element_factory.create(uml2.Connector)
         connector.end = e1
         connector.end = e2
 
@@ -157,7 +178,7 @@ class NodeArtifactGroup(AbstractGroup):
         artifact = self.item.subject
 
         # deploy artifact on node
-        deployment = self.element_factory.create(UML.Deployment)
+        deployment = self.element_factory.create(uml2.Deployment)
         node.deployment = deployment
         deployment.deployedArtifact = artifact
 
@@ -208,7 +229,7 @@ class ActivityPartitionsGroup(AbstractGroup):
 
     def group(self):
         p = self.parent.subject
-        sp = self.element_factory.create(UML.ActivityPartition)
+        sp = self.element_factory.create(uml2.ActivityPartition)
         self.item.subject = sp
         sp.name = 'Swimlane'
         if p:

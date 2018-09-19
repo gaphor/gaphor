@@ -1,3 +1,24 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2002-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#                         syt <noreply@example.com>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
+# more details.
+#
+# You should have received a copy of the GNU Library General Public
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Common dependencies like dependency, usage, implementation and realization.
 
@@ -15,7 +36,8 @@ Function dependency_type in model factory should be used to determine
 type of a dependency in automatic way.
 """
 
-from gaphor import UML
+from __future__ import absolute_import
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import DiagramLine
 
 
@@ -32,20 +54,20 @@ class DependencyItem(DiagramLine):
     drawn as solid line without arrow head.
     """
 
-    __uml__ = UML.Dependency
+    __uml__ = uml2.Dependency
 
-    # do not use issubclass, because issubclass(UML.Implementation, UML.Realization)
+    # do not use issubclass, because issubclass(uml2.Implementation, uml2.Realization)
     # we need to be very strict here
     __stereotype__ = {
-        'use':        lambda self: self._dependency_type == UML.Usage,
-        'realize':    lambda self: self._dependency_type == UML.Realization,
-        'implements': lambda self: self._dependency_type == UML.Implementation,
+        'use':        lambda self: self._dependency_type == uml2.Usage,
+        'realize':    lambda self: self._dependency_type == uml2.Realization,
+        'implements': lambda self: self._dependency_type == uml2.Implementation,
     }
 
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
 
-        self._dependency_type = UML.Dependency
+        self._dependency_type = uml2.Dependency
         self.auto_dependency = True
         self._solid = False
 

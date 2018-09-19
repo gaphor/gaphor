@@ -1,14 +1,31 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Test classes.
 """
 
+from __future__ import absolute_import
 from gaphor.tests.testcase import TestCase
-
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.classes.klass import ClassItem
-from gaphor.diagram.interfaces import IEditor
-
-import gaphor.adapters
 
 
 class ClassTestCase(TestCase):
@@ -18,8 +35,8 @@ class ClassTestCase(TestCase):
         Test creation of classes and working of compartments
         """
         element_factory = self.element_factory
-        diagram = element_factory.create(UML.Diagram)
-        klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        diagram = element_factory.create(uml2.Diagram)
+        klass = diagram.create(ClassItem, subject=element_factory.create(uml2.Class))
 
         self.assertEqual(2, len(klass._compartments))
         self.assertEqual(0, len(klass._compartments[0]))
@@ -32,7 +49,7 @@ class ClassTestCase(TestCase):
         self.assertEqual(50, float(klass.min_height)) # min_height
         self.assertEqual(100, float(klass.min_width))
 
-        attr = element_factory.create(UML.Property)
+        attr = element_factory.create(uml2.Property)
         attr.name = 4 * 'x' # about 44 pixels
         klass.subject.ownedAttribute = attr
 
@@ -40,11 +57,11 @@ class ClassTestCase(TestCase):
         self.assertEqual(1, len(klass._compartments[0]))
         self.assertGreater( klass._compartments[0].get_size(), (44.0, 20.0))
 
-        oper = element_factory.create(UML.Operation)
+        oper = element_factory.create(uml2.Operation)
         oper.name = 4 * 'x' # about 44 pixels
         klass.subject.ownedOperation = oper
 
-        oper = element_factory.create(UML.Operation)
+        oper = element_factory.create(uml2.Operation)
         oper.name = 6 * 'x' # about 66 pixels
         klass.subject.ownedOperation = oper
 
@@ -56,19 +73,19 @@ class ClassTestCase(TestCase):
     def test_attribute_removal(self):
 
         element_factory = self.element_factory
-        diagram = element_factory.create(UML.Diagram)
-        klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        diagram = element_factory.create(uml2.Diagram)
+        klass = diagram.create(ClassItem, subject=element_factory.create(uml2.Class))
         diagram.canvas.update()
 
-        attr = element_factory.create(UML.Property)
+        attr = element_factory.create(uml2.Property)
         attr.name = "blah1"
         klass.subject.ownedAttribute = attr
 
-        attr2 = element_factory.create(UML.Property)
+        attr2 = element_factory.create(uml2.Property)
         attr2.name = "blah2"
         klass.subject.ownedAttribute = attr2
 
-        attr = element_factory.create(UML.Property)
+        attr = element_factory.create(uml2.Property)
         attr.name = "blah3"
         klass.subject.ownedAttribute = attr
 
@@ -86,17 +103,17 @@ class ClassTestCase(TestCase):
         Test working of item_at method
         """
         element_factory = self.element_factory
-        diagram = element_factory.create(UML.Diagram)
-        klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        diagram = element_factory.create(uml2.Diagram)
+        klass = diagram.create(ClassItem, subject=element_factory.create(uml2.Class))
         klass.subject.name = 'Class1'
 
         diagram.canvas.update()
 
-        attr = element_factory.create(UML.Property)
+        attr = element_factory.create(uml2.Property)
         attr.name = "blah"
         klass.subject.ownedAttribute = attr
 
-        oper = element_factory.create(UML.Operation)
+        oper = element_factory.create(uml2.Operation)
         oper.name = 'method'
         klass.subject.ownedOperation = oper
 
@@ -122,17 +139,17 @@ class ClassTestCase(TestCase):
 
     def test_compartment_resizing(self):
         element_factory = self.element_factory
-        diagram = element_factory.create(UML.Diagram)
-        klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        diagram = element_factory.create(uml2.Diagram)
+        klass = diagram.create(ClassItem, subject=element_factory.create(uml2.Class))
         klass.subject.name = 'Class1'
 
         diagram.canvas.update()
 
-        attr = element_factory.create(UML.Property)
+        attr = element_factory.create(uml2.Property)
         attr.name = 'blah'
         klass.subject.ownedAttribute = attr
 
-        oper = element_factory.create(UML.Operation)
+        oper = element_factory.create(uml2.Operation)
         oper.name = 'method'
         klass.subject.ownedOperation = oper
 

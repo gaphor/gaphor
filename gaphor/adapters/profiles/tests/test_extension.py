@@ -1,9 +1,29 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Extension item connection adapter tests.
 """
 
+from __future__ import absolute_import
 from gaphor.tests import TestCase
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram import items
 
 class ExtensionConnectorTestCase(TestCase):
@@ -14,7 +34,7 @@ class ExtensionConnectorTestCase(TestCase):
         """Test extension item glueing to a class
         """
         ext = self.create(items.ExtensionItem)
-        cls = self.create(items.ClassItem, UML.Class)
+        cls = self.create(items.ClassItem, uml2.Class)
 
         # cannot connect extension item tail to a class
         glued = self.allow(ext, ext.tail, cls)
@@ -25,10 +45,10 @@ class ExtensionConnectorTestCase(TestCase):
         """Test extension item glueing to a stereotype
         """
         ext = self.create(items.ExtensionItem)
-        st = self.create(items.ClassItem, UML.Stereotype)
+        st = self.create(items.ClassItem, uml2.Stereotype)
 
         # test precondition
-        assert type(st.subject) is UML.Stereotype
+        assert type(st.subject) is uml2.Stereotype
 
         # can connect extension item head to a Stereotype UML metaclass,
         # because it derives from Class UML metaclass
@@ -40,8 +60,8 @@ class ExtensionConnectorTestCase(TestCase):
         """Test extension item glue
         """
         ext = self.create(items.ExtensionItem)
-        st = self.create(items.ClassItem, UML.Stereotype)
-        cls = self.create(items.ClassItem, UML.Class)
+        st = self.create(items.ClassItem, uml2.Stereotype)
+        cls = self.create(items.ClassItem, uml2.Class)
 
         glued = self.allow(ext, ext.tail, st)
         self.assertTrue(glued)
@@ -56,8 +76,8 @@ class ExtensionConnectorTestCase(TestCase):
         """Test extension item connection
         """
         ext = self.create(items.ExtensionItem)
-        st = self.create(items.ClassItem, UML.Stereotype)
-        cls = self.create(items.ClassItem, UML.Class)
+        st = self.create(items.ClassItem, uml2.Stereotype)
+        cls = self.create(items.ClassItem, uml2.Class)
 
         self.connect(ext, ext.tail, st)
         self.connect(ext, ext.head, cls)

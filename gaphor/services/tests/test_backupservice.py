@@ -1,12 +1,32 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2008-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Test the backup service.
 """
 
-import unittest
+from __future__ import absolute_import
 from StringIO import StringIO
 from gaphor.storage import storage
 from gaphor.application import Application
 from gaphor.misc.xmlwriter import XMLWriter
+from six.moves import map
 
 #class BackupServiceTestCase(unittest.TestCase):
 class BackupServiceTestCase:
@@ -30,14 +50,14 @@ class BackupServiceTestCase:
         
         self.backup_service.backup()
         
-        elements = map(factory.lookup, factory.keys())
+        elements = list(map(factory.lookup, list(factory.keys())))
 
         orig = StringIO()
         storage.save(XMLWriter(orig), factory=self.element_factory)
 
         self.backup_service.restore()
 
-        restored = map(factory.lookup, factory.keys())
+        restored = list(map(factory.lookup, list(factory.keys())))
 
         assert len(elements) == len(restored)
         assert elements != restored

@@ -1,8 +1,25 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2006-2016 Antonin Delpeuch <wetneb@gmail.com>
+#                         Arjan Molenaar <gaphor@gmail.com>
+#                         Encolpe DEGOUTE <encolpe@colpi.org>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
+
 # French Gaphor Translation
-# Copyleft
-# Antonin Delpeuch <wetneb@gmail.com> 2010
-# Note about the translation of the UML vocabulary : I used the translations used here :
-# http://laurent-audibert.developpez.com/Cours-UML/html/
 msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
@@ -11,7 +28,7 @@ msgstr ""
 "Last-Translator: Antonin Delpeuch <wetneb@gmail.com>\n"
 "Language-Team: LANGUAGE <fr@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: UTF-8\n"
 "Generated-By: pygettext.py 1.5\n"
 

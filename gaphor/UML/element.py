@@ -1,13 +1,36 @@
 #!/usr/bin/env python
+
+# Copyright (C) 2001-2017 Adam Boduch <adam.boduch@gmail.com>
+#                         Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#                         syt <noreply@example.com>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Base class for UML model elements.
 """
 
-__all__ = [ 'Element' ]
+from __future__ import absolute_import
 
 import threading
 import uuid
-from properties import umlproperty
+
+from .properties import umlproperty
+
+__all__ = ['Element']
 
 
 class Element(object):
@@ -33,13 +56,10 @@ class Element(object):
         self._factory = factory
         self._unlink_lock = threading.Lock()
 
-
     id = property(lambda self: self._id, doc='Id')
-
 
     factory = property(lambda self: self._factory,
                        doc="The factory that created this element")
-
 
     def umlproperties(self):
         """
@@ -53,14 +73,12 @@ class Element(object):
                 if isinstance(prop, umlprop):
                     yield prop
 
-
     def save(self, save_func):
         """
         Save the state by calling save_func(name, value).
         """
         for prop in self.umlproperties():
             prop.save(self, save_func)
-
 
     def load(self, name, value):
         """
@@ -69,12 +87,10 @@ class Element(object):
         """
         try:
             prop = getattr(type(self), name)
-        except AttributeError, e:
-            raise AttributeError, "'%s' has no property '%s'" % \
-                                        (type(self).__name__, name)
+        except AttributeError as e:
+            raise AttributeError("'%s' has no property '%s'" % (type(self).__name__, name))
         else:
             prop.load(self, value)
-
 
     def postload(self):
         """
@@ -83,26 +99,22 @@ class Element(object):
         for prop in self.umlproperties():
             prop.postload(self)
 
-
     def unlink(self):
-        
+
         """Unlink the element. All the elements references are destroyed.
         
         The unlink lock is acquired while unlinking this elements properties
         to avoid recursion problems."""
-        
+
         if self._unlink_lock.locked():
-            
             return
-        
+
         with self._unlink_lock:
-            
+
             for prop in self.umlproperties():
-                
                 prop.unlink(self)
-                
+
             if self._factory:
-            
                 self._factory._unlink_element(self)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
@@ -113,13 +125,11 @@ class Element(object):
         """
         return isinstance(self, class_)
 
-
     def isTypeOf(self, other):
         """
         Returns true if the object is of the same type as other.
         """
         return type(self) == type(other)
-
 
     def __getstate__(self):
         d = dict(self.__dict__)
@@ -128,7 +138,6 @@ class Element(object):
         except KeyError:
             pass
         return d
-
 
     def __setstate__(self, state):
         self._factory = None

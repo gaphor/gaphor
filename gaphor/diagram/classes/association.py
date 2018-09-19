@@ -1,3 +1,24 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2002-2017 Arjan Molenaar <gaphor@gmail.com>
+#                         Artur Wroblewski <wrobell@pld-linux.org>
+#                         Dan Yeaw <dan@yeaw.me>
+#                         syt <noreply@example.com>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Association item - graphical representation of an association.
 
@@ -11,14 +32,16 @@ Plan:
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
+from __future__ import absolute_import
 from gaphor.diagram.textelement import text_extents, text_multiline
 from gaphas.state import reversible_property
 from gaphas import Item
 from gaphas.geometry import Rectangle, distance_point_point_fast
 from gaphas.geometry import distance_rectangle_point, distance_line_point
 
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.diagram.diagramline import NamedLine
+from six.moves import map
 
 
 class AssociationItem(NamedLine):
@@ -28,7 +51,7 @@ class AssociationItem(NamedLine):
     represents a Property (with Property.association == my association).
     """
 
-    __uml__ = UML.Association
+    __uml__ = uml2.Association
 
     def __init__(self, id=None):
         NamedLine.__init__(self, id)
@@ -372,7 +395,7 @@ class AssociationItem(NamedLine):
         return self
         
         
-class AssociationEnd(UML.Presentation):
+class AssociationEnd(uml2.Presentation):
     """
     An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and
@@ -388,7 +411,7 @@ class AssociationEnd(UML.Presentation):
 
     
     def __init__(self, owner, id=None, end=None):
-        UML.Presentation.__init__(self, id=False) # Transient object
+        uml2.Presentation.__init__(self, id=False) # Transient object
         self._owner = owner
         self._end = end
         
@@ -411,7 +434,7 @@ class AssociationEnd(UML.Presentation):
         """
         if self.subject:
             try:
-                n, m = UML.format(self.subject)
+                n, m = format(self.subject)
             except ValueError:
                 # need more than 0 values to unpack: property was rendered as
                 # attribute while in a UNDO action for example.
@@ -461,8 +484,8 @@ class AssociationEnd(UML.Presentation):
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
         
-        name_w, name_h = map(max, text_extents(cr, self._name, self.font), (10, 10))
-        mult_w, mult_h = map(max, text_extents(cr, self._mult, self.font), (10, 10))
+        name_w, name_h = list(map(max, text_extents(cr, self._name, self.font), (10, 10)))
+        mult_w, mult_h = list(map(max, text_extents(cr, self._mult, self.font), (10, 10)))
 
         if dy == 0:
             rc = 1000.0 # quite a lot...

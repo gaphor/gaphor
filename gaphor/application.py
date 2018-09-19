@@ -1,3 +1,23 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2007-2017 Adam Boduch <adam.boduch@gmail.com>
+#                         Arjan Molenaar <gaphor@gmail.com>
+#                         Dan Yeaw <dan@yeaw.me>
+#
+# This file is part of Gaphor.
+#
+# Gaphor is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Library General Public License as published by the Free
+# Software Foundation, either version 2 of the License, or (at your option)
+# any later version.
+#
+# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# more details.
+#
+# You should have received a copy of the GNU Library General Public 
+# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 The Application object. One application should be available.
 
@@ -9,17 +29,23 @@ All important services are present in the application object:
  - action sets
 """
 
-import pkg_resources
-from zope import component
+from __future__ import absolute_import
 
 from logging import getLogger
-from gaphor.interfaces import IService, IEventFilter
+from zope import component
+
+import pkg_resources
+import six
+
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
+from gaphor.interfaces import IService
 
 logger = getLogger('Application')
 
+
 class NotInitializedError(Exception):
     pass
+
 
 class _Application(object):
     """
@@ -37,12 +63,11 @@ class _Application(object):
 
     # interface.implements(IApplication)
     _ESSENTIAL_SERVICES = ['component_registry']
-    
+
     def __init__(self):
         self._uninitialized_services = {}
         self._event_filter = None
         self.component_registry = None
-
 
     def init(self, services=None):
         """
@@ -51,8 +76,7 @@ class _Application(object):
         self.load_services(services)
         self.init_all_services()
 
-
-    essential_services = property(lambda s: s._ESSENTIAL_SERVICES, doc= """
+    essential_services = property(lambda s: s._ESSENTIAL_SERVICES, doc="""
         Provide an ordered list of services that need to be loaded first.
         """)
 
@@ -66,13 +90,13 @@ class _Application(object):
         # Ensure essential services are always loaded.
         if services:
             for name in self.essential_services:
-               if name not in services:
+                if name not in services:
                     services.append(name)
 
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
             cls = ep.load()
             if not IService.implementedBy(cls):
-                raise NameError, 'Entry point %s doesn''t provide IService' % ep.name
+                raise NameError('Entry point %s doesn''t provide IService' % ep.name)
             if not services or ep.name in services:
                 logger.debug('found service entry point "%s"' % ep.name)
                 srv = cls()
@@ -82,7 +106,7 @@ class _Application(object):
         for name in self.essential_services:
             self.init_service(name)
         while self._uninitialized_services:
-            self.init_service(self._uninitialized_services.iterkeys().next())
+            self.init_service(six.iterkeys(self._uninitialized_services).next())
 
     def init_service(self, name):
         """
@@ -118,11 +142,9 @@ class _Application(object):
         except component.ComponentLookupError:
             return self.init_service(name)
 
-
     def run(self):
         import gtk
         gtk.main()
-
 
     def shutdown(self):
         for name, srv in self.component_registry.get_utilities(IService):
@@ -132,7 +154,6 @@ class _Application(object):
         for name in reversed(self.essential_services):
             self.shutdown_service(name)
             setattr(self, name, None)
-
 
     def shutdown_service(self, name):
         srv = self.component_registry.get_service(name)
@@ -144,6 +165,7 @@ class _Application(object):
 # Make sure there is only one!
 Application = _Application()
 
+
 class inject(object):
     """
     Simple descriptor for dependency injection.
@@ -154,11 +176,11 @@ class inject(object):
     >>> class A(object):
     ...     element_factory = inject('element_factory')
     """
-    
+
     def __init__(self, name):
         self._name = name
-        #self._s = None
-        
+        # self._s = None
+
     def __get__(self, obj, class_=None):
         """
         Resolve a dependency, but only if we're called from an object instance.
@@ -166,8 +188,8 @@ class inject(object):
         if not obj:
             return self
         return Application.get_service(self._name)
-        #if self._s is None:
+        # if self._s is None:
         #    self._s = _Application.get_service(self._name)
-        #return self._s
+        # return self._s
 
 # vim:sw=4:et:ai
