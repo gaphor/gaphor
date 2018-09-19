@@ -21,10 +21,10 @@
 Test GitHub issue #4. Diagram could not be loaded due to JuggleError
 (presumed cyclic resolving of diagram items).
 """
+from __future__ import absolute_import
+
 import os
 import pkg_resources
-
-from __future__ import absolute_import
 
 from gaphor.storage.storage import load
 from gaphor.tests import TestCase

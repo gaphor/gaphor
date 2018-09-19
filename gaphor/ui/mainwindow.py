@@ -36,7 +36,7 @@ from .interfaces import IUIComponent
 
 from etk.docking import DockLayout
 
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.core import _, inject, action, toggle_action, open_action, build_action_group, transactional
 from .namespace import NamespaceModel, NamespaceView
 from .diagramtab import DiagramTab
@@ -441,7 +441,7 @@ class MainWindow(object):
         Open the toplevel element and load toplevel diagrams.
         """
         # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
-        for diagram in self.element_factory.select(lambda e: e.isKindOf(uml2.Diagram) and not (e.namespace and e.namespace.namespace)):
+        for diagram in self.element_factory.select(lambda e: e.isKindOf(UML.Diagram) and not (e.namespace and e.namespace.namespace)):
             self.show_diagram(diagram)
     
 
@@ -715,13 +715,13 @@ class Namespace(object):
         Another row is selected, execute a dummy action.
         """
         element = view.get_selected_element()
-        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, uml2.Package)
-        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, uml2.Package)
+        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, UML.Package)
+        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, UML.Package)
 
-        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, uml2.Diagram)
-        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, uml2.Package) and not element.presentation
+        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, UML.Diagram)
+        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, UML.Package) and not element.presentation
 
-        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, uml2.Diagram)
+        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
 
 
     def _on_view_destroyed(self, widget):
@@ -748,7 +748,7 @@ class Namespace(object):
     def tree_view_open_selected(self):
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
-        if isinstance(element, uml2.Diagram):
+        if isinstance(element, UML.Diagram):
             self.main_window.show_diagram(element)
         else:
             log.debug('No action defined for element %s' % type(element).__name__)
@@ -771,7 +771,7 @@ class Namespace(object):
     @transactional
     def tree_view_create_diagram(self):
         element = self._namespace.get_selected_element()
-        diagram = self.element_factory.create(uml2.Diagram)
+        diagram = self.element_factory.create(UML.Diagram)
         diagram.package = element
 
         if element:
@@ -808,7 +808,7 @@ class Namespace(object):
     @transactional
     def tree_view_create_package(self):
         element = self._namespace.get_selected_element()
-        package = self.element_factory.create(uml2.Package)
+        package = self.element_factory.create(UML.Package)
         package.package = element
 
         if element:
@@ -824,7 +824,7 @@ class Namespace(object):
     @transactional
     def tree_view_delete_package(self):
         package = self._namespace.get_selected_element()
-        assert isinstance(package, uml2.Package)
+        assert isinstance(package, UML.Package)
         package.unlink()
 
 

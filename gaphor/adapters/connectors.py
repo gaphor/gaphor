@@ -32,7 +32,6 @@ from __future__ import print_function
 from logging import getLogger
 from zope import interface, component
 
-from gaphor.UML import uml2
 from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
