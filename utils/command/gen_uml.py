@@ -135,7 +135,7 @@ class Writer:
         if type is None:
             raise ValueError('ERROR! type is not specified for property %s.%s' % (a.class_name, a.name))
 
-        print a.class_name, a.name, 'type is', type
+        # print a.class_name, a.name, 'type is', type
         if type.lower() == 'boolean':
             # FixMe: Should this be a boolean or an integer?
             # Integer is save and compattable with python2.2.
@@ -291,7 +291,7 @@ def parse_association_tags(appliedStereotypes):
                 # remove all whitespaces and stuff
                 redefines = value.replace(' ', '').replace('\n', '').replace('\r', '')
 
-    #print 'found', subsets, redefines
+    # print 'found', subsets, redefines
     return subsets, redefines
 
 def parse_association_end(head, tail):
@@ -317,7 +317,7 @@ def parse_association_end(head, tail):
     if name is None:
         raise ValueError('ERROR! no name, but navigable: %s (%s.%s)' % (head.id, head.class_name, head.name))
 
-    #print head.id, head.lowerValue
+    # print head.id, head.lowerValue
     upper = head.upperValue or '*'
     lower = head.lowerValue or upper
     if lower == '*':
@@ -447,13 +447,13 @@ def generate(filename, outfile=None, overridesfile=None):
             instSpec = all_elements[c.appliedStereotype[0]]
             sType = all_elements[instSpec.classifier[0]]
             c.stereotypeName = sType.name
-            print "  class '%s' has been stereotyped as '%s'" % (c.name, c.stereotypeName)
+            # print "  class '%s' has been stereotyped as '%s'" % (c.name, c.stereotypeName)
             writer.write("# class '%s' has been stereotyped as '%s'\n" % (c.name, c.stereotypeName))
             #c.written = True
             def tag_children(me):
                 for child in me.specialization:
                     child.stereotypeName = sType.name
-                    print "  class '%s' has been stereotyped as '%s' too" % (child.name, child.stereotypeName)
+                    # print "  class '%s' has been stereotyped as '%s' too" % (child.name, child.stereotypeName)
                     writer.write("# class '%s' has been stereotyped as '%s' too\n" % (child.name, child.stereotypeName))
                     #child.written = True
                     tag_children(child)
