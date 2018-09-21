@@ -21,6 +21,7 @@
 Recursive attribute access functions.
 """
 
+
 def rgetattr(obj, attr):
     """
     Get named attribute from an object, i.e. getattr(obj, 'a.a') is
@@ -73,6 +74,5 @@ def rsetattr(obj, attr, val):
         for name in attrs[1:-1]:
             obj = getattr(obj, name)
     setattr(obj, attrs[-1], val)
-
 
 # vim:sw=4:et:ai
