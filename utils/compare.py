@@ -83,7 +83,7 @@ class Compare(object):
         factory = gaphor.UML.ElementFactory()
         try:
             gaphor.storage.load_elements(elements, factory)
-        except Exception, e:
+        except Exception as e:
             self.out('! File %s could not be loaded completely.' % filename)
             self.out('! Trying to diff on parsed elements only.')
             self.out(e)

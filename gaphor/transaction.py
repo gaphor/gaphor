@@ -21,11 +21,11 @@ def transactional(func):
         tx = Transaction()
         try:
             r = func(*args, **kwargs)
-        except Exception, e:
+        except Exception as e:
             log.error('Transaction terminated due to an exception, performing a rollback', exc_info=True)
             try:
                 tx.rollback()
-            except Exception, e:
+            except Exception as e:
                 log.error('Rollback failed', exc_info=True)
             raise
         else:
