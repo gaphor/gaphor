@@ -1,34 +1,18 @@
-#!/usr/bin/env python
+"""
+"""
 
-# Copyright (C) 2008-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import absolute_import
 from zope import interface
-from gaphor.UML.uml2 import Element
-from gaphor.interfaces import IService
-from gaphor.core import inject
+from gaphor.UML import Element
+from gaphor.application import Application
+from gaphor.interfaces import IService, IActionProvider
+from gaphor.core import _, inject
 
 # Register application specific picklers:
+import gaphas.picklers
 from gaphor.misc.latepickle import LatePickler
 
 
 import pickle
-from six.moves import map
 class MyPickler(LatePickler):
     """
     Customize the pickler to only delay instantiations of Element objects.
@@ -75,7 +59,7 @@ class BackupService(object):
         finally:
             f.close()
         self.element_factory.flush()
-        list(map(self.element_factory.bind, elements))
+        map(self.element_factory.bind, elements)
 
 
 # vim: sw=4:et:ai

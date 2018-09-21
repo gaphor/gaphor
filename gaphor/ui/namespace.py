@@ -1,65 +1,41 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2001-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#                         syt <noreply@example.com>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 This is the TreeView that is most common (for example: it is used
 in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 """
 
-from __future__ import absolute_import
-from __future__ import print_function
 import gobject
 import gtk
 import operator
-from . import stock
+import stock
 
 from zope import component
 
 from gaphor.core import inject
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.UML.event import ElementCreateEvent, ModelFactoryEvent, FlushFactoryEvent, DerivedSetEvent
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.transaction import Transaction
-from .iconoption import get_icon_option
-from six.moves import map
+from iconoption import get_icon_option
 
 # The following items will be shown in the treeview, although they
 # are UML.Namespace elements.
 _default_filter_list = (
-    uml2.Class,
-    uml2.Interface,
-    uml2.Package,
-    uml2.Component,
-    uml2.Device,
-    uml2.Node,
-    uml2.Artifact,
-    uml2.Interaction,
-    uml2.UseCase,
-    uml2.Actor,
-    uml2.Diagram,
-    uml2.Profile,
-    uml2.Stereotype,
-    uml2.Property,
-    uml2.Operation
+    UML.Class,
+    UML.Interface,
+    UML.Package,
+    UML.Component,
+    UML.Device,
+    UML.Node,
+    UML.Artifact,
+    UML.Interaction,
+    UML.UseCase,
+    UML.Actor,
+    UML.Diagram,
+    UML.Profile,
+    UML.Stereotype,
+    UML.Property,
+    UML.Operation
     )
 
 # TODO: update tree sorter:
@@ -72,11 +48,11 @@ def catchall(func):
     def catchall_wrapper(*args, **kwargs):
         try:
             func(*args, **kwargs)
-        except Exception as e:
+        except Exception, e:
             log.error('Exception in %s. Try to refresh the entire model' % (func,), exc_info=True)
             try:
                 args[0].refresh()
-            except Exception as e:
+            except Exception, e:
                 log.error('Failed to refresh')
             
     return catchall_wrapper
@@ -168,13 +144,13 @@ class NamespaceModel(gtk.GenericTreeModel):
         if element not in self._nodes:
             return
 
-        if event.property is uml2.Classifier.isAbstract or \
-                event.property is uml2.BehavioralFeature.isAbstract:
+        if event.property is UML.Classifier.isAbstract or \
+                event.property is UML.BehavioralFeature.isAbstract:
             path = self.path_from_element(element)
             if path:
                 self.row_changed(path, self.get_iter(path))
 
-        if event.property is uml2.NamedElement.name:
+        if event.property is UML.NamedElement.name:
             try:
                 path = self.path_from_element(element)
             except KeyError:
@@ -194,9 +170,9 @@ class NamespaceModel(gtk.GenericTreeModel):
             if parent_nodes != original:
                 # reorder the list:
                 self.rows_reordered(parent_path, self.get_iter(parent_path),
-                                    list(map(list.index,
+                                    map(list.index,
                                         [original] * len(parent_nodes),
-                                        parent_nodes)))
+                                        parent_nodes))
 
 
     def _add_elements(self, element):
@@ -216,7 +192,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         self.row_inserted(path, self.get_iter(path))
 
         # Add children
-        if isinstance(element, uml2.Namespace):
+        if isinstance(element, UML.Namespace):
             for e in element.ownedMember:
                 # check if owned member is indeed within parent's namespace
                 # the check is important in case on Node classes
@@ -283,7 +259,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         if type(element) not in self.filter:
             return
 
-        if event.property is uml2.NamedElement.namespace:
+        if event.property is UML.NamedElement.namespace:
             # Check if the element is actually in the element factory:
             if element not in self.factory:
                 return
@@ -291,7 +267,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             old_value, new_value = event.old_value, event.new_value
 
             # Remove entry from old place
-            if old_value in self._nodes:
+            if self._nodes.has_key(old_value):
                 try:
                     path = self.path_from_element(old_value) + (self._nodes[old_value].index(element),)
                 except ValueError:
@@ -306,8 +282,8 @@ class NamespaceModel(gtk.GenericTreeModel):
             # Add to new place. This may fail if the type of the new place is
             # not in the tree model (because it's filtered)
             log.debug('Trying to add %s to %s' % (element, new_value))
-            if new_value in self._nodes:
-                if element in self._nodes:
+            if self._nodes.has_key(new_value):
+                if self._nodes.has_key(element):
                     parent = self._nodes[new_value]
                     parent.append(element)
                     parent.sort(key=_tree_sorter)
@@ -315,7 +291,7 @@ class NamespaceModel(gtk.GenericTreeModel):
                     self.row_inserted(path, self.get_iter(path))
                 else:
                     self._add_elements(element)
-            elif element in self._nodes:
+            elif self._nodes.has_key(element):
                 # Non-existent: remove entirely
                 self._remove_element(element)
 
@@ -334,7 +310,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 
 
     def _build_model(self):
-        toplevel = self.factory.select(lambda e: isinstance(e, uml2.Namespace) and not e.namespace)
+        toplevel = self.factory.select(lambda e: isinstance(e, UML.Namespace) and not e.namespace)
 
         for element in toplevel:
             self._add_elements(element)
@@ -397,7 +373,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             parent = self._nodes[node.namespace]
             index = parent.index(node)
             return parent[index + 1]
-        except (IndexError, ValueError) as e:
+        except (IndexError, ValueError), e:
             return None
 
         
@@ -415,7 +391,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         try:
             return self._nodes[node][0]
-        except KeyError:
+        except (IndexError, KeyError), e:
             pass
 
 
@@ -433,7 +409,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         try:
             nodes = self._nodes[node]
             return nodes[n]
-        except TypeError as e:
+        except TypeError, e:
             return None
 
 
@@ -447,12 +423,12 @@ class NamespaceModel(gtk.GenericTreeModel):
     # TreeDragDest
 
     def row_drop_possible(self, dest_path, selection_data):
-        print('row_drop_possible', dest_path, selection_data)
+        print 'row_drop_possible', dest_path, selection_data
         return True
 
 
     def drag_data_received(self, dest, selection_data):
-        print('drag_data_received', dest_path, selection_data)
+        print 'drag_data_received', dest_path, selection_data
 
 
 class NamespaceView(gtk.TreeView):
@@ -554,10 +530,10 @@ class NamespaceView(gtk.TreeView):
         value = model.get_value(iter, 0)
         text = value and (value.name or '').replace('\n', ' ') or '&lt;None&gt;'
 
-        if isinstance(value, uml2.Diagram):
+        if isinstance(value, UML.Diagram):
             text = '<b>%s</b>' % text
-        elif (isinstance(value, uml2.Classifier)
-                or isinstance(value, uml2.Operation)) and value.isAbstract:
+        elif (isinstance(value, UML.Classifier) 
+                or isinstance(value, UML.Operation)) and value.isAbstract:
             text = '<i>%s</i>' % text
 
         cell.set_property('markup', text)
@@ -576,7 +552,7 @@ class NamespaceView(gtk.TreeView):
             tx = Transaction()
             element.name = new_text
             tx.commit()
-        except Exception as e:
+        except Exception, e:
             log.error('Could not create path from string "%s"' % path_str)
 
 
@@ -680,7 +656,7 @@ class NamespaceView(gtk.TreeView):
                     element.package = dest_element
                 tx.commit()
 
-            except AttributeError as e:
+            except AttributeError, e:
                 #log.info('Unable to drop data', e)
                 context.drop_finish(False, time)
             else:

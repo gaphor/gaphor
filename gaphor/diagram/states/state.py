@@ -1,31 +1,10 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 State diagram item.
 """
 
-from __future__ import absolute_import
 import operator
 
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP
 from gaphor.diagram.states import VertexItem
 from gaphor.diagram.classifier import CompartmentItem
@@ -39,7 +18,7 @@ DDY = 0.4 * DY
 
 class StateItem(CompartmentItem, VertexItem):
     element_factory = inject('element_factory')
-    __uml__   = uml2.State
+    __uml__   = UML.State
     __style__ = {
         'min-size':   (50, 30),
         'name-align': (ALIGN_CENTER, ALIGN_TOP),
@@ -62,7 +41,7 @@ class StateItem(CompartmentItem, VertexItem):
     def _set_activity(self, act, attr, text):
         if text and act not in self._activities:
             self._activities.append(act)
-            act.subject = self.element_factory.create(uml2.Activity)
+            act.subject = self.element_factory.create(UML.Activity)
             act.subject.name = text
             setattr(self.subject, attr, act.subject)
 

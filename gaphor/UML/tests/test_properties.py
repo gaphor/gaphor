@@ -1,23 +1,5 @@
 #!/usr/bin/env python
 
-# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import absolute_import
 import unittest
 from zope import component
 from gaphor.application import Application
@@ -103,7 +85,7 @@ class PropertiesTestCase(unittest.TestCase):
         c = C()
         try:
             a.one = c
-        except Exception as e:
+        except Exception, e:
             pass #ok print 'exception caught:', e
         else:
             assert a.one is not c
@@ -357,7 +339,7 @@ class PropertiesTestCase(unittest.TestCase):
         import types
         class A(Element): pass
 
-        A.a = attribute('a', bytes, 'default')
+        A.a = attribute('a', types.StringType, 'default')
 
         a = A()
         assert a.a == 'default', a.a
@@ -400,7 +382,7 @@ class PropertiesTestCase(unittest.TestCase):
                 self.notified = name
 
         A.assoc = association('assoc', A)
-        A.attr = attribute('attr', bytes, 'default')
+        A.attr = attribute('attr', types.StringType, 'default')
         A.enum = enumeration('enum', ('one', 'two'), 'one')
 
         a = A()
@@ -478,7 +460,7 @@ class PropertiesTestCase(unittest.TestCase):
         a.b[0].name = 'baz'
 
         assert list(a.a[:].name) == ['foo', 'bar']
-        assert list(a.u[:].name) == ['foo', 'bar', 'baz']
+        assert sorted(list(a.u[:].name)) == ['bar', 'baz', 'foo']
 
     def test_composite(self):
         class A(Element):

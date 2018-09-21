@@ -1,34 +1,13 @@
-#!/usr/bin/env python
 
-# Copyright (C) 2003-2017 Adam Boduch <adam.boduch@gmail.com>
-#                         Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import absolute_import
-from __future__ import print_function
 import unittest
 
-from gaphor.UML import uml2, elementfactory, modelfactory, umllex
+import gaphor.UML as UML
 
 class ClassesTestCase(unittest.TestCase):
     
     def setUp(self):
         
-        self.factory = elementfactory.ElementFactory()
+        self.factory = UML.ElementFactory()
 
     def tearDown(self):
         
@@ -40,7 +19,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Association)
+            element = self.factory.create(UML.Association)
             
         except AttributeError:
             
@@ -48,8 +27,8 @@ class ClassesTestCase(unittest.TestCase):
             
         self.assertFalse(element.isDerived, 'The isDerived property should default to False - %s' % element.isDerived)
         
-        property1 = self.factory.create(uml2.Property)
-        property2 = self.factory.create(uml2.Property)
+        property1 = self.factory.create(UML.Property)
+        property2 = self.factory.create(UML.Property)
         
         element.memberEnd = property1
         element.memberEnd = property2
@@ -68,7 +47,7 @@ class ClassesTestCase(unittest.TestCase):
         
 #    def test_association_class(self):
 #        try:
-#            element = self.factory.create(uml2.AssociationClass)
+#            element = self.factory.create(UML.AssociationClass)
 #        except AttributeError:
 #            self.fail('AssociationClass elements are not part of the meta-model')
         
@@ -78,14 +57,14 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Class)
+            element = self.factory.create(UML.Class)
             
         except AttributeError:
             
             self.fail('Class elements are not part of the meta-model')
             
-        property1 = self.factory.create(uml2.Property)
-        operation1 = self.factory.create(uml2.Operation)
+        property1 = self.factory.create(UML.Property)
+        operation1 = self.factory.create(UML.Operation)
         
         element.ownedAttribute = property1
         element.ownedOperation = operation1
@@ -102,7 +81,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Comment)
+            element = self.factory.create(UML.Comment)
             
         except AttributeError:
             
@@ -112,7 +91,7 @@ class ClassesTestCase(unittest.TestCase):
         
         self.assertTrue(element.body == 'Comment body', 'Incorrect comment body - %s' % element.body)
         
-        annotatedElement = self.factory.create(uml2.Class)
+        annotatedElement = self.factory.create(UML.Class)
         
         element.annotatedElement = annotatedElement
         
@@ -124,13 +103,13 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Constraint)
+            element = self.factory.create(UML.Constraint)
             
         except AttributeError:
             
             self.fail('Constraint elements are not part of the meta-model')
             
-        constrainedElement = self.factory.create(uml2.Class)
+        constrainedElement = self.factory.create(UML.Class)
         
         element.constrainedElement = constrainedElement
         element.specification = 'Constraint specification'
@@ -144,26 +123,26 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Dependency)
+            element = self.factory.create(UML.Dependency)
             
         except AttributeError:
             
             self.fail('Dependency elements are not part of the meta-model')
             
-        client = self.factory.create(uml2.Package)
-        supplier = self.factory.create(uml2.Package)
+        client = self.factory.create(UML.Package)
+        supplier = self.factory.create(UML.Package)
         
         element.client = client
         element.supplier = supplier
-        
-        self.assertTrue(client in element.source, 'DirectedRelationship.source does not contain client - %s' % element.client)
-        self.assertTrue(supplier in element.target, 'DirectedRelationship.target does not contain supplier - %s' % element.supplier)
+
+        self.assertTrue(client in element.client, 'Dependency.client does not contain client - %s' % element.client)
+        self.assertTrue(supplier in element.supplier, 'Dependency.supplier does not contain supplier - %s' % element.supplier)
         
     def test_element_import(self):
         
         try:
             
-            element = self.factory.create(uml2.ElementImport)
+            element = self.factory.create(UML.ElementImport)
             
         except AttributeError:
             
@@ -173,7 +152,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Enumeration)
+            element = self.factory.create(UML.Enumeration)
             
         except AttributeError:
             
@@ -183,7 +162,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Generalization)
+            element = self.factory.create(UML.Generalization)
             
         except AttributeError:
             
@@ -193,7 +172,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Interface)
+            element = self.factory.create(UML.Interface)
             
         except AttributeError:
             
@@ -203,7 +182,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Namespace)
+            element = self.factory.create(UML.Namespace)
             
         except AttributeError:
             
@@ -213,7 +192,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Operation)
+            element = self.factory.create(UML.Operation)
             
         except AttributeError:
             
@@ -223,7 +202,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Package)
+            element = self.factory.create(UML.Package)
             
         except AttributeError:
             
@@ -233,7 +212,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Parameter)
+            element = self.factory.create(UML.Parameter)
             
         except AttributeError:
             
@@ -243,7 +222,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Property)
+            element = self.factory.create(UML.Property)
             
         except AttributeError:
             
@@ -253,7 +232,7 @@ class ClassesTestCase(unittest.TestCase):
         
         try:
             
-            element = self.factory.create(uml2.Realization)
+            element = self.factory.create(UML.Realization)
             
         except AttributeError:
             
@@ -263,26 +242,26 @@ class ClassesTestCase(unittest.TestCase):
 class Uml2TestCase(unittest.TestCase):
 
     def test_ids(self):
-        factory = elementfactory.ElementFactory()
-        c = factory.create(uml2.Class)
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
         assert c.id
-        p = factory.create_as(uml2.Class, id=False)
+        p = factory.create_as(UML.Class, id=False)
         assert p.id is False, p.id
 
 
     def test1(self):
-        factory = elementfactory.ElementFactory()
-        c = factory.create(uml2.Class)
-        p = factory.create(uml2.Package)
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
+        p = factory.create(UML.Package)
         c.package = p
         self.assertEquals(c.package, p)
         self.assertEquals(c.namespace, p)
         self.failUnless(c in p.ownedElement)
         
     def testOwnedMember_Unlink(self):
-        factory = elementfactory.ElementFactory()
-        c = factory.create(uml2.Class)
-        p = factory.create(uml2.Package)
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
+        p = factory.create(UML.Package)
         c.package = p
 
         c.unlink()
@@ -312,7 +291,7 @@ class Uml2TestCase(unittest.TestCase):
 #        # TODO: test signal handling
 
     def test_property_is_composite(self):
-        p = uml2.Property()
+        p = UML.Property()
         assert p.isComposite == False, p.isComposite
         p.aggregation = 'shared'
         assert p.isComposite == False, p.isComposite
@@ -321,12 +300,12 @@ class Uml2TestCase(unittest.TestCase):
 
 
     def test_association_endType(self):
-        factory = elementfactory.ElementFactory()
-        c1 = uml2.Class()
-        c2 = uml2.Class()
-        a = uml2.Association()
-        a.memberEnd = uml2.Property()
-        a.memberEnd = uml2.Property()
+        factory = UML.ElementFactory()
+        c1 = UML.Class()
+        c2 = UML.Class()
+        a = UML.Association()
+        a.memberEnd = UML.Property()
+        a.memberEnd = UML.Property()
         a.memberEnd[0].type = c1
         a.memberEnd[1].type = c2
         c1.ownedAttribute = a.memberEnd[0]
@@ -335,7 +314,7 @@ class Uml2TestCase(unittest.TestCase):
         assert c1 in a.endType
         assert c2 in a.endType
 
-        c3 = uml2.Class()
+        c3 = UML.Class()
         a.memberEnd[1].type = c3
 
         assert c1 in a.endType
@@ -344,29 +323,29 @@ class Uml2TestCase(unittest.TestCase):
 
 
     def test_property_navigability(self):
-        factory = elementfactory.ElementFactory()
-        p = factory.create(uml2.Property)
+        factory = UML.ElementFactory()
+        p = factory.create(UML.Property)
         assert p.navigability is None
 
-        c1 = factory.create(uml2.Class)
-        c2 = factory.create(uml2.Class)
-        a = modelfactory.create_association(factory, c1, c2)
+        c1 = factory.create(UML.Class)
+        c2 = factory.create(UML.Class)
+        a = UML.model.create_association(factory, c1, c2)
         assert a.memberEnd[0].navigability is None
         assert a.memberEnd[1].navigability is None
 
-        modelfactory.set_navigability(a, a.memberEnd[0], True)
+        UML.model.set_navigability(a, a.memberEnd[0], True)
         assert a.memberEnd[0].navigability is True
         assert a.memberEnd[1].navigability is None
 
-        modelfactory.set_navigability(a, a.memberEnd[0], False)
+        UML.model.set_navigability(a, a.memberEnd[0], False)
         assert a.memberEnd[0].navigability is False
         assert a.memberEnd[1].navigability is None
 
     def test_namedelement_qualifiedname(self):
-        factory = elementfactory.ElementFactory()
-        p = factory.create(uml2.Package)
+        factory = UML.ElementFactory()
+        p = factory.create(UML.Package)
         p.name = 'Package'
-        c = factory.create(uml2.Class)
+        c = factory.create(UML.Class)
         c.name = 'Class'
 
         self.assertEquals(('Class',), c.qualifiedName)
@@ -377,42 +356,42 @@ class Uml2TestCase(unittest.TestCase):
 
 
     def test_extension_metaclass(self):
-        factory = elementfactory.ElementFactory()
-        c = factory.create(uml2.Class)
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
         c.name = 'Class'
-        s = factory.create(uml2.Stereotype)
+        s = factory.create(UML.Stereotype)
         s.name = 'Stereotype'
 
-        e = modelfactory.create_extension(factory, c, s)
+        e = UML.model.create_extension(factory, c, s)
 
         self.assertEquals(c, e.metaclass)
 
     def test_metaclass_extension(self):
-        factory = elementfactory.ElementFactory()
-        c = factory.create(uml2.Class)
+        factory = UML.ElementFactory()
+        c = factory.create(UML.Class)
         c.name = 'Class'
-        s = factory.create(uml2.Stereotype)
+        s = factory.create(UML.Stereotype)
         s.name = 'Stereotype'
 
         self.assertEquals([], c.extension)
         self.assertEquals([], s.extension)
 
-        e = modelfactory.create_extension(factory, c, s)
+        e = UML.model.create_extension(factory, c, s)
 
-        print(e.memberEnd)
+        print e.memberEnd
         self.assertEquals([e], c.extension)
         self.assertEquals([], s.extension)
         assert e.ownedEnd.type is s
 
     def test_operation_parameter_deletion(self):
-        factory = elementfactory.ElementFactory()
+        factory = UML.ElementFactory()
         self.assertEquals(0, len(factory.lselect()))
 
-        c = factory.create(uml2.Class)
+        c = factory.create(UML.Class)
         c.name = 'Class'
-        o = factory.create(uml2.Operation)
+        o = factory.create(UML.Operation)
         c.ownedOperation = o
-        umllex.parse(o, 'a(x: int, y: int)')
+        UML.parse(o, 'a(x: int, y: int)')
 
         c.unlink()
 

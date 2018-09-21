@@ -1,24 +1,3 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2004-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#                         syt <noreply@example.com>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Lifeline diagram item.
 
@@ -41,17 +20,15 @@ bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.
 """
 
-from __future__ import absolute_import
 from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG
 from gaphas.geometry import distance_line_point, Rectangle
 from gaphas.constraint import LessThanConstraint, EqualsConstraint, CenterConstraint, LineAlignConstraint
 
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
-from six.moves import map
 
 
 class LifetimePort(LinePort):
@@ -168,7 +145,7 @@ class LifelineItem(NamedItem):
         Check if delete message is connected.
     """
 
-    __uml__      = uml2.Lifeline
+    __uml__      = UML.Lifeline
     __style__ = {
         'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
     }
@@ -205,12 +182,12 @@ class LifelineItem(NamedItem):
         self.lifetime._c_min_length = LessThanConstraint(top.pos.y, bottom.pos.y, delta=LifetimeItem.MIN_LENGTH)
         self.__constraints = (c1, c2, c3, self.lifetime._c_min_length)
 
-        list(map(self.canvas.solver.add_constraint, self.__constraints))
+        map(self.canvas.solver.add_constraint, self.__constraints)
 
 
     def teardown_canvas(self):
         super(LifelineItem, self).teardown_canvas()
-        list(map(self.canvas.solver.remove_constraint, self.__constraints))
+        map(self.canvas.solver.remove_constraint, self.__constraints)
 
 
     def save(self, save_func):

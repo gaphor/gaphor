@@ -1,37 +1,14 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2002-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#                         syt <noreply@example.com>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Diagram item with compartments.
 """
 
-from __future__ import absolute_import
 import cairo, pango, pangocairo
 from gaphas.state import observed, reversible_property
 
-from gaphor.UML import uml2, event, modelfactory
+from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.textelement import text_extents, text_align
-from six.moves import zip
+from textelement import text_extents, text_align
 
 
 class FeatureItem(object):
@@ -96,7 +73,7 @@ class FeatureItem(object):
         """
         Return a rendered feature, as a string.
         """
-        return '{}'.format(self.subject) or ''
+        return UML.format(self.subject, pattern=self.pattern) or ''
 
     def draw(self, context):
         cr = context.cairo
@@ -294,9 +271,9 @@ class CompartmentItem(NamedItem):
 
     def on_stereotype_change(self, event):
         if self._show_stereotypes_attrs:
-            if isinstance(event, event.AssociationAddEvent):
+            if isinstance(event, UML.event.AssociationAddEvent):
                 self._create_stereotype_compartment(event.new_value)
-            elif isinstance(event, event.AssociationDeleteEvent):
+            elif isinstance(event, UML.event.AssociationDeleteEvent):
                 self._remove_stereotype_compartment(event.old_value)
 
 
@@ -316,7 +293,7 @@ class CompartmentItem(NamedItem):
                 log.debug('No compartment found for %s' % event.element)
                 return
 
-            if isinstance(event, (event.AssociationAddEvent, event.AssociationDeleteEvent)):
+            if isinstance(event, (UML.event.AssociationAddEvent, UML.event.AssociationDeleteEvent)):
                 self._update_stereotype_compartment(comp, event.element)
 
             self.request_update()
@@ -325,7 +302,7 @@ class CompartmentItem(NamedItem):
     def _create_stereotype_compartment(self, obj):
         st = obj.classifier[0].name
         c = Compartment(st, self, obj)
-        c.title = modelfactory.STEREOTYPE_FMT % st
+        c.title = UML.model.STEREOTYPE_FMT % st
         self._update_stereotype_compartment(c, obj)
         self._compartments.append(c)
         self.request_update()
@@ -356,7 +333,7 @@ class CompartmentItem(NamedItem):
         """
         # remove all stereotype compartments first
         for comp in self._compartments:
-            if isinstance(comp.id, uml2.InstanceSpecification):
+            if isinstance(comp.id, UML.InstanceSpecification):
                 self._compartments.remove(comp)
         if self._show_stereotypes_attrs:
             for obj in self.subject.appliedStereotype:
@@ -436,7 +413,7 @@ class CompartmentItem(NamedItem):
         local_elements = [f.subject for f in compartment]
 
         # map local element with compartment element
-        mapping = dict(list(zip(local_elements, compartment)))
+        mapping = dict(zip(local_elements, compartment))
 
         to_add = [el for el in elements if el not in local_elements]
 

@@ -1,23 +1,3 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Christian Hoff <christian_hoff@gmx.net>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 TODO: Move component information (event handling, and other stuff done by
 zope.component) to this service.
@@ -26,11 +6,10 @@ Maybe we should split the ComponentRegistry in a Dispatcher (register_handler,
 unregister_handler, handle), a AdapterRegistry and a Subscription registry.
 """
 
-from __future__ import absolute_import
 from zope import interface, component
 from zope.component import registry
+from gaphor.core import inject
 from gaphor.interfaces import IService, IEventFilter
-from six.moves import map
 
 
 class ZopeComponentRegistry(object):
@@ -183,7 +162,7 @@ class ZopeComponentRegistry(object):
         """
         objects = self._filter(events)
         if objects:
-            list(map(self._components.handle, events))
+            map(self._components.handle, events)
 
 
 # vim:sw=4:et:ai

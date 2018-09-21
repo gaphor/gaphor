@@ -1,27 +1,10 @@
-#!/usr/bin/env python
 
-# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import absolute_import
 import unittest
 
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.application import Application
+from gaphor.ui.diagramtab import DiagramTab
+from gaphor.ui.mainwindow import MainWindow
 
 
 class DiagramTabTestCase(unittest.TestCase):
@@ -32,7 +15,7 @@ class DiagramTabTestCase(unittest.TestCase):
         main_window.open()
         element_factory = Application.get_service('element_factory')
         self.element_factory = element_factory
-        self.diagram = element_factory.create(uml2.Diagram)
+        self.diagram = element_factory.create(UML.Diagram)
         self.tab = main_window.show_diagram(self.diagram)
         self.assertEquals(self.tab.diagram, self.diagram)
         self.assertEquals(self.tab.view.canvas, self.diagram.canvas)
@@ -60,7 +43,7 @@ class DiagramTabTestCase(unittest.TestCase):
         tab.view.request_update([box])
         
         from gaphor.diagram.comment import CommentItem
-        comment = self.diagram.create(CommentItem, subject=self.element_factory.create(uml2.Comment))
+        comment = self.diagram.create(CommentItem, subject=self.element_factory.create(UML.Comment))
         self.assertEquals(len(self.element_factory.lselect()), 2)
         
 # vim:sw=4:et:ai

@@ -1,25 +1,4 @@
-#!/usr/bin/env python
 
-# Copyright (C) 2004-2017 Adam Boduch <adam.boduch@gmail.com>
-#                         Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#                         slmm <noreply@example.com>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import absolute_import
 from gaphor.misc.xmlwriter import XMLWriter
 
 class XMIExport(object):
@@ -43,9 +22,9 @@ class XMIExport(object):
             handler(xmi, element, idref=idref)
             if not idref:
                 self.handled_ids.append(element.id)
-        except AttributeError as e:
+        except AttributeError, e:
             log.warning('Missing handler for %s:%s'%(element.__class__.__name__,e))
-        except Exception as e:
+        except Exception, e:
             log.error('Failed to handle %s:%s'%(element.__class__.__name__, e))
             
     def handlePackage(self, xmi, element, idref=False):
