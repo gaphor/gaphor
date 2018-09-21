@@ -415,7 +415,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         try:
             return self._nodes[node][0]
-        except KeyError:
+        except (IndexError, KeyError), e:
             pass
 
 

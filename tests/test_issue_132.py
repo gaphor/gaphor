@@ -12,14 +12,14 @@
 #
 # Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
 # more details.
 #
-# You should have received a copy of the GNU Library General Public 
+# You should have received a copy of the GNU Library General Public
 # along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import absolute_import
 
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.core import transactional
 from gaphor.tests import TestCase
 from gaphor.ui.namespace import NamespaceModel
@@ -35,8 +35,8 @@ class UndoRedoBugTestCase(TestCase):
 
     @transactional
     def create_with_attribute(self):
-        self.class_ = self.element_factory.create(uml2.Class)
-        self.attribute = self.element_factory.create(uml2.Property)
+        self.class_ = self.element_factory.create(UML.Class)
+        self.attribute = self.element_factory.create(UML.Property)
         self.class_.ownedAttribute = self.attribute
 
     # Fix:  Remove operation should be transactional ;)
