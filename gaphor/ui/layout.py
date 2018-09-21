@@ -29,7 +29,6 @@ import gtk
 
 from etk.docking import DockFrame, DockPaned, DockGroup, DockItem
 from gaphor.core import _
-from six.moves import map
 
 SERIALIZABLE = ( DockFrame, DockPaned, DockGroup, DockItem )
 
@@ -43,7 +42,7 @@ def serialize(layout):
             sub = SubElement(element, 'widget', attributes(widget))
 
     tree = Element('layout')
-    list(map(_ser, layout.frames, [tree] * len(layout.frames)))
+    map(_ser, layout.frames, [tree] * len(layout.frames))
 
     return tostring(tree, encoding=sys.getdefaultencoding())
 
@@ -66,11 +65,11 @@ def deserialize(layout, container, layoutstr, itemfactory):
             widget = factory(parent=parent_widget, **element.attrib)
             assert widget, 'No widget (%s)' % widget
             if len(element):
-                list(map(_des, element, [widget] * len(element)))
+                map(_des, element, [widget] * len(element))
         return widget
 
     tree = fromstring(layoutstr)
-    list(map(layout.add, list(map(_des, tree, [ container ] * len(tree)))))
+    map(layout.add, map(_des, tree, [ container ] * len(tree)))
 
     return layout
 
@@ -127,7 +126,7 @@ def dock_frame_attributes(widget):
 
     if isinstance(parent, gtk.Window) and parent.get_transient_for():
         d['floating'] = 'true'
-        d['x'], d['y'] = list(map(str, parent.get_position()))
+        d['x'], d['y'] = map(str, parent.get_position())
 
     return d
 
