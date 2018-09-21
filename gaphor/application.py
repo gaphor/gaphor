@@ -72,7 +72,7 @@ class _Application(object):
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
             cls = ep.load()
             if not IService.implementedBy(cls):
-                raise NameError, 'Entry point %s doesn''t provide IService' % ep.name
+                raise NameError('Entry point %s doesn''t provide IService' % ep.name)
             if not services or ep.name in services:
                 logger.debug('found service entry point "%s"' % ep.name)
                 srv = cls()

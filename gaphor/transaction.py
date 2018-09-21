@@ -109,10 +109,10 @@ class Transaction(object):
         try:
             last = self._stack.pop()
         except IndexError:
-            raise TransactionError, 'No Transaction on stack.'
+            raise TransactionError('No Transaction on stack.')
         if last is not self:
             self._stack.append(last)
-            raise TransactionError, 'Transaction on stack is not the transaction being closed.'
+            raise TransactionError('Transaction on stack is not the transaction being closed.')
 
     def _handle(self, event):
         try:
