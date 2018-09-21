@@ -155,9 +155,9 @@ class ClassesTestCase(unittest.TestCase):
         
         element.client = client
         element.supplier = supplier
-        
-        self.assertTrue(client in element.source, 'DirectedRelationship.source does not contain client - %s' % element.client)
-        self.assertTrue(supplier in element.target, 'DirectedRelationship.target does not contain supplier - %s' % element.supplier)
+
+        self.assertTrue(client in element.client, 'Dependency.client does not contain client - %s' % element.client)
+        self.assertTrue(supplier in element.supplier, 'Dependency.supplier does not contain supplier - %s' % element.supplier)
         
     def test_element_import(self):
         
