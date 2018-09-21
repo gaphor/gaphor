@@ -376,6 +376,8 @@ class FileUpgradeTestCase(TestCase):
         profile = profiles[0]
         self.assertEquals('version 0.15 conversion', profile.name)
 
+        # TODO: This test is failing when run with all nosetests, do we need some type of teardown prior to the test?
+
         self.assertEquals(1, len(stereotypes))
         stereotype = stereotypes[0]
         self.assertEquals('Tagged', stereotype.name)
