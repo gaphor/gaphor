@@ -46,7 +46,7 @@ class UndoTest(TestCase):
         self.connect(a, a.tail, ci2)
 
         # Diagram, Association, 2x Class, Property, LiteralSpecification
-        self.assertEquals(8, len(factory.lselect()))
+        self.assertEquals(6, len(factory.lselect()))
         self.assertEquals(14, len(self.diagram.canvas.solver.constraints))
 
         @transactional
