@@ -19,7 +19,7 @@ def print_vars(cls):
     done.append(cls)
     print cls.__name__ + ":"
     dict = cls.__dict__
-    for key in dict.keys():
+    for key in list(dict.keys()):
         print "\t" + key + ":", str(dict[key])
     for base in cls.__bases__:
 	if base not in done:

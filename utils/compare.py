@@ -102,8 +102,8 @@ class Compare(object):
     def check_missing_elements(self):
         """Report elements that exist in one factory, but not in the other.
         """
-        keys1 = self.elements1.keys()
-        keys2 = self.elements2.keys()
+        keys1 = list(self.elements1.keys())
+        keys2 = list(self.elements2.keys())
         for key in keys1:
             if key not in keys2:
                 self.report(self.factory1, self.elements1[key])
@@ -116,8 +116,8 @@ class Compare(object):
         """Report references to other elements that are present in one
         element and not in the other one.
         """
-        keys1 = element1.references.keys()
-        keys2 = element2.references.keys()
+        keys1 = list(element1.references.keys())
+        keys2 = list(element2.references.keys())
         for key in keys1:
             if key not in keys2:
                 self.report(self.factory1, element1, key)
@@ -127,8 +127,8 @@ class Compare(object):
                 self.report(self.factory2, element2, key)
 
     def check_differences_references(self, element1, element2):
-        keys1 = element1.references.keys()
-        keys2 = element2.references.keys()
+        keys1 = list(element1.references.keys())
+        keys2 = list(element2.references.keys())
         for key in keys1:
             if key in keys2:
                 val1 = element1.references.get(key)
@@ -147,8 +147,8 @@ class Compare(object):
                         self.report(self.factory2, element2, key, val2, True)
 
     def check_missing_values(self, element1, element2):
-        keys1 = element1.values.keys()
-        keys2 = element2.values.keys()
+        keys1 = list(element1.values.keys())
+        keys2 = list(element2.values.keys())
         for key in keys1:
             if key not in keys2:
                 self.report(self.factory1, element1, key)
@@ -158,8 +158,8 @@ class Compare(object):
                 self.report(self.factory2, element2, key)
 
     def check_differences_values(self, element1, element2):
-        keys1 = element1.values.keys()
-        keys2 = element2.values.keys()
+        keys1 = list(element1.values.keys())
+        keys2 = list(element2.values.keys())
         for key in keys1:
             if key in keys2:
                 val1 = element1.values.get(key)
