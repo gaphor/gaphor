@@ -1,10 +1,11 @@
 """Icons that are used by Gaphor.
 """
-
+import logging
 import os.path
-import pkg_resources
 from xml.sax import handler
+
 import gtk
+import pkg_resources
 
 from gaphor import UML
 from gaphor.storage.parser import ParserException
@@ -15,6 +16,9 @@ _icon_factory = gtk.IconFactory()
 _icon_factory.add_default()
 
 _uml_to_stock_id_map = { }
+
+log = logging.getLogger(__name__)
+
 
 def get_stock_id(element, option=None):
     global _uml_to_stock_id_map

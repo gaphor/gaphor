@@ -93,12 +93,6 @@ def main():
         profile_stats.strip_dirs().sort_stats('time').print_stats(50)
 
     else:
-	
         launch(model)
-
-# TODO: Remove this.  
-import __builtin__
-
-__builtin__.__dict__['log'] = logging.getLogger('Gaphor')
 
 # vim:sw=4:et:ai

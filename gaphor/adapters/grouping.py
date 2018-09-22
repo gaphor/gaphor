@@ -14,6 +14,7 @@ instance of an item to be grouped is created. This happens when item
 is about to be created. Therefore `AbstractGroup.can_contain` has
 to be aware that `AbstractGroup.item` can be null.
 """
+import logging
 
 from zope import interface, component
 
@@ -21,6 +22,9 @@ from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IGroup
+
+log = logging.getLogger(__name__)
+
 
 class AbstractGroup(object):
     """

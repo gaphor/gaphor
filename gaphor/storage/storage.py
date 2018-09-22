@@ -10,6 +10,7 @@ save(filename)
 
 from cStringIO import StringIO, InputType
 from xml.sax.saxutils import escape
+import logging
 import types
 import sys
 import os.path
@@ -38,6 +39,8 @@ __all__ = [ 'load', 'save' ]
 
 FILE_FORMAT_VERSION = '3.0'
 NAMESPACE_MODEL = 'http://gaphor.sourceforge.net/model'
+
+log = logging.getLogger(__name__)
 
 def save(writer=None, factory=None, status_queue=None):
     for status in save_generator(writer, factory):

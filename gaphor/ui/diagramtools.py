@@ -8,6 +8,7 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 """
 
 import gtk
+import logging
 from zope import component
 
 from gaphas.geometry import distance_point_point, distance_point_point_fast, \
@@ -28,6 +29,8 @@ IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.DIAMOND_CROSS)
 
 # cursor to indicate ungrouping
 OUT_CURSOR = gtk.gdk.Cursor(gtk.gdk.SIZING)
+
+log = logging.getLogger(__name__)
 
 
 @Connector.when_type(DiagramLine)

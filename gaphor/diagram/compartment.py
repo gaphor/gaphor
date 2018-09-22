@@ -1,14 +1,19 @@
 """
 Diagram item with compartments.
 """
+import logging
 
-import cairo, pango, pangocairo
+import cairo
+import pango
+import pangocairo
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
 from textelement import text_extents, text_align
+
+log = logging.getLogger(__name__)
 
 
 class FeatureItem(object):

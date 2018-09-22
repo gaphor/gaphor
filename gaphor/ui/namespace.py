@@ -4,17 +4,18 @@ in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 """
 
+import logging
+import operator
+
 import gobject
 import gtk
-import operator
-import stock
-
 from zope import component
 
-from gaphor.core import inject
+import stock
 from gaphor import UML
 from gaphor.UML.event import ElementCreateEvent, ModelFactoryEvent, FlushFactoryEvent, DerivedSetEvent
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
+from gaphor.core import inject
 from gaphor.transaction import Transaction
 from iconoption import get_icon_option
 
@@ -42,6 +43,8 @@ _default_filter_list = (
 # Diagram before Class & Package.
 # Property before Operation
 _tree_sorter = operator.attrgetter('name')
+
+log = logging.getLogger(__name__)
 
 
 def catchall(func):

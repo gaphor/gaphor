@@ -1,38 +1,34 @@
 """
 The main application window.
 """
-
+import logging
 import os.path
-import gobject, gtk
-from logging import getLogger
 
+import gobject
+import gtk
 import pkg_resources
-from zope import interface, component
-from gaphor.interfaces import IService, IActionProvider
-from interfaces import IUIComponent
-
-from etk.docking import DockLayout, DockGroup, DockItem
-from etk.docking.docklayout import add_new_group_floating
-
-from gaphor import UML
-from gaphor.core import _, inject, action, toggle_action, open_action, build_action_group, transactional
-from namespace import NamespaceModel, NamespaceView
-from diagramtab import DiagramTab
-from toolbox import Toolbox as _Toolbox
-from diagramtoolbox import TOOLBOX_ACTIONS
 from etk.docking import DockItem, DockGroup, add_new_group_left, add_new_group_right, \
-        add_new_group_above, add_new_group_below, add_new_group_floating, settings
-from layout import deserialize
+    add_new_group_above, add_new_group_below, add_new_group_floating, settings
+from etk.docking import DockLayout
+from zope import interface, component
 
-from interfaces import IDiagramTabChange
-from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
-from gaphor.UML.event import ModelFactoryEvent
+from diagramtab import DiagramTab
+from diagramtoolbox import TOOLBOX_ACTIONS
 from event import DiagramTabChange, DiagramSelectionChange
+from gaphor import UML
+from gaphor.UML.event import ModelFactoryEvent
+from gaphor.core import _, inject, action, toggle_action, open_action, build_action_group, transactional
+from gaphor.interfaces import IService, IActionProvider
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
+from interfaces import IDiagramTabChange
+from interfaces import IUIComponent
+from layout import deserialize
+from namespace import NamespaceModel, NamespaceView
+from toolbox import Toolbox as _Toolbox
 
-logger = getLogger(name='MainWindow')
+log = logging.getLogger(__name__)
 
 ICONS = (
     'gaphor-24x24.png',
@@ -324,7 +320,7 @@ class MainWindow(object):
 
         def _factory(name):
             comp = self.component_registry.get_utility(IUIComponent, name)
-            logger.debug('open component %s' % str(comp))
+            log.debug('open component %s' % str(comp))
             return comp.open()
 
         filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')

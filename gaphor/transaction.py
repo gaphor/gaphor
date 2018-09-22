@@ -2,13 +2,16 @@
 Transation support for Gaphor
 """
 
-from logging import getLogger
-from zope import interface, component
-from gaphor.interfaces import ITransaction
-from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor import application
+import logging
 
-logger = getLogger('transaction')
+from zope import interface, component
+
+from gaphor import application
+from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
+from gaphor.interfaces import ITransaction
+
+log = logging.getLogger(__name__)
+
 
 def transactional(func):
     """The transactional decorator makes a function transactional.  A
@@ -118,7 +121,7 @@ class Transaction(object):
         try:
             component_registry = self.component_registry
         except (application.NotInitializedError, component.ComponentLookupError):
-            logger.warning('Could not lookup component_registry. Not emiting events.')
+            log.warning('Could not lookup component_registry. Not emiting events.')
         else:
             component_registry.handle(event)
 

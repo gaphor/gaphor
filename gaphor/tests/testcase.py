@@ -19,8 +19,7 @@ from gaphor.diagram.interfaces import IGroup
 # For DiagramItemConnector aspect:
 import gaphor.ui.diagramtools
 
-
-# Increment log level
+log = logging.getLogger('Gaphor')
 log.setLevel(logging.WARNING)
 
 class TestCaseExtras(object):

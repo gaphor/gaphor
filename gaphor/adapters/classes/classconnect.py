@@ -1,11 +1,16 @@
 """
 Classes related (dependency, implementation) adapter connections.
 """
+import logging
 
-from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
-from zope import interface, component
+from zope import component
+
 from gaphor import UML
+from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
 from gaphor.diagram import items
+
+log = logging.getLogger(__name__)
+
 
 class DependencyConnect(RelationshipConnect):
     """

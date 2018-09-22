@@ -2,11 +2,16 @@
 Flow item adapter connections.
 """
 
-from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
-from zope import interface, component
+import logging
+
+from zope import component
+
 from gaphor import UML
+from gaphor.adapters.connectors import UnaryRelationshipConnect
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
+
+log = logging.getLogger(__name__)
 
 
 class FlowConnect(UnaryRelationshipConnect):
