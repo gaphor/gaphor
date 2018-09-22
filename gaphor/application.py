@@ -9,6 +9,8 @@ All important services are present in the application object:
  - action sets
 """
 
+# TODO: below builtins override causes a test to fail
+# from builtins import next
 import pkg_resources
 from zope import component
 

@@ -1,4 +1,5 @@
 
+from builtins import range
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
