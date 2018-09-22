@@ -9,17 +9,18 @@ All important services are present in the application object:
  - action sets
 """
 
-# TODO: builtins next override causes a test to fail
-# from builtins import next
-from builtins import object
+from logging import getLogger
+
 import pkg_resources
+from builtins import next
+from builtins import object
 from zope import component
 
-from logging import getLogger
-from gaphor.interfaces import IService, IEventFilter
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
+from gaphor.interfaces import IService
 
 logger = getLogger('Application')
+
 
 class NotInitializedError(Exception):
     pass
