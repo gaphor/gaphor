@@ -96,7 +96,7 @@ class Compare(object):
         elements that exist in both files (they have the same id).
         """
         vals = []
-        for key1, val1 in self.elements1.items():
+        for key1, val1 in list(self.elements1.items()):
             val2 = self.elements2.get(key1)
             if val2:
                 yield (val1, val2)

@@ -9,7 +9,7 @@ All important services are present in the application object:
  - action sets
 """
 
-# TODO: below builtins override causes a test to fail
+# TODO: builtins next override causes a test to fail
 # from builtins import next
 from builtins import object
 import pkg_resources
@@ -85,7 +85,7 @@ class _Application(object):
         for name in self.essential_services:
             self.init_service(name)
         while self._uninitialized_services:
-            self.init_service(next(iter(self._uninitialized_services.keys())))
+            self.init_service(next(iter(list(self._uninitialized_services.keys()))))
 
     def init_service(self, name):
         """
