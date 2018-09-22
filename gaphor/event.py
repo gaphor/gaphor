@@ -2,6 +2,7 @@
 Application wide events are managed here.
 """
 
+from builtins import object
 from zope import interface
 from gaphor.interfaces import *
 

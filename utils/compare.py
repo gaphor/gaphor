@@ -9,6 +9,7 @@ This file is part of Gaphor.
 """
 from __future__ import print_function
 
+from builtins import object
 __all__ = ['Compare']
 
 try:

@@ -2,6 +2,7 @@
 Transation support for Gaphor
 """
 
+from builtins import object
 import logging
 
 from zope import interface, component

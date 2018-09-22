@@ -25,6 +25,8 @@ See also gaphor/service/actionmanager.py for the management module.
 
 from __future__ import absolute_import, print_function
 
+# TODO: import object from builtins is causing getattr error in docstring
+# from builtins import object
 from gaphor.application import Application
 
 

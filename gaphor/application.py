@@ -11,6 +11,7 @@ All important services are present in the application object:
 
 # TODO: below builtins override causes a test to fail
 # from builtins import next
+from builtins import object
 import pkg_resources
 from zope import component
 
