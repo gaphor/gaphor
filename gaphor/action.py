@@ -25,8 +25,7 @@ See also gaphor/service/actionmanager.py for the management module.
 
 from __future__ import absolute_import, print_function
 
-# TODO: import object from builtins is causing getattr error in docstring
-# from builtins import object
+from builtins import object
 from gaphor.application import Application
 
 
@@ -45,7 +44,7 @@ class action(object):
     >>> is_action(a.myaction)
     True
     >>> for method in dir(A):
-    ...     if is_action(getattr(A, method)):
+    ...     if is_action(getattr(A, method, None)):
     ...         print(method)
     myaction
     >>> A.myaction.__action__.name
@@ -101,7 +100,7 @@ def open_action(name, label=None, tooltip=None, stock_id=None, accel=None, **kwa
     >>> is_action(a.myaction)
     True
     >>> for method in dir(A):
-    ...     if is_action(getattr(A, method)):
+    ...     if is_action(getattr(A, method, None)):
     ...         print(method)
     myaction
     >>> A.myaction.__action__.name
