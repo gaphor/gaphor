@@ -9,12 +9,13 @@ All important services are present in the application object:
  - action sets
 """
 
-from logging import getLogger
-
-import pkg_resources
 from builtins import next
 from builtins import object
+from logging import getLogger
 from zope import component
+
+import pkg_resources
+from zope.interface import implementer
 
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 from gaphor.interfaces import IService
@@ -25,6 +26,8 @@ logger = getLogger('Application')
 class NotInitializedError(Exception):
     pass
 
+
+# @implementer(IApplication)
 class _Application(object):
     """
     The Gaphor application is started from the Application instance. It behaves
@@ -39,7 +42,6 @@ class _Application(object):
     unregistered on shutdown for example.
     """
 
-    # interface.implements(IApplication)
     _ESSENTIAL_SERVICES = ['component_registry']
     
     def __init__(self):

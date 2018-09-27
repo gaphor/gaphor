@@ -2,15 +2,17 @@
 This plugin extends Gaphor with XMI alignment actions.
 """
 
-from zope import interface, component
+from zope import component
+
+from zope.interface import implementer
+
 from gaphor.core import inject, transactional, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.interfaces import IDiagramSelectionChange
 
 
+@implementer(IService, IActionProvider)
 class Alignment(object):
-
-    interface.implements(IService, IActionProvider)
 
     component_registry = inject('component_registry')
 

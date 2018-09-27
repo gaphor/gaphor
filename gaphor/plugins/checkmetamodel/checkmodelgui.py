@@ -1,22 +1,25 @@
 """
 A GUI for the checkmodel plugin.
 """
+import logging
 
-import sys
 import gobject
 import gtk
-from zope import interface, component
-from gaphor.core import _, inject, action, build_action_group
+from zope.interface import implementer
+
+from gaphor.core import inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
-import checkmodel
+from gaphor.plugins.checkmetamodel import checkmodel
 
 PYELEMENT_COLUMN = 0
 ELEMENT_COLUMN = 1
 REASON_COLUMN = 2
 
-class CheckModelWindow(object):
+log = logging.getLogger(__name__)
 
-    interface.implements(IService, IActionProvider)
+
+@implementer(IService, IActionProvider)
+class CheckModelWindow(object):
 
     element_factory = inject('element_factory')
     main_window = inject('main_window')

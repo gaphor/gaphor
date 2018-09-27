@@ -2,17 +2,20 @@
 This plugin extends Gaphor with XMI export functionality.
 """
 
-import gtk
-from zope import interface, component
+import logging
+
+from zope.interface import implementer
+
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
+from gaphor.plugins.xmiexport import exportmodel
 from gaphor.ui.filedialog import FileDialog
 
-import exportmodel
+log = logging.getLogger(__name__)
 
+
+@implementer(IService, IActionProvider)
 class XMIExport(object):
-
-    interface.implements(IService, IActionProvider)
 
     element_factory = inject('element_factory')
     main_window = inject('main_window')

@@ -4,15 +4,15 @@ from logging import getLogger
 import os
 import pkg_resources
 import gtk
-from zope import interface
+from zope.interface import implementer
 
 from gaphor.application import Application
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.core import _, inject, action, build_action_group
 
-class HelpService(object):
 
-    interface.implements(IService, IActionProvider)
+@implementer(IService, IActionProvider)
+class HelpService(object):
 
     menu_xml = """
       <ui>

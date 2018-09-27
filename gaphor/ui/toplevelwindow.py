@@ -6,9 +6,8 @@ import os.path
 import pkg_resources
 
 import gtk
-from etk.docking import DockGroup, DockItem
 from etk.docking.docklayout import add_new_group_floating
-from zope import interface
+from zope.interface import implementer
 from interfaces import IUIComponent
 from gaphor.core import inject
 
@@ -20,9 +19,9 @@ ICONS = (
     'gaphor-256x256.png',
 )
 
-class ToplevelWindow(object):
 
-    interface.implements(IUIComponent)
+@implementer(IUIComponent)
+class ToplevelWindow(object):
 
     menubar_path = ''
     toolbar_path = ''

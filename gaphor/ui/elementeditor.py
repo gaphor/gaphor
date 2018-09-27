@@ -1,7 +1,7 @@
 """The element editor is a utility window used for editing elements."""
 import logging
 
-from zope import interface
+from zope.interface import implementer
 
 from gaphor.core import _, inject, open_action, build_action_group
 from gaphor.interfaces import IActionProvider
@@ -11,12 +11,13 @@ from gaphor.ui.propertyeditor import PropertyEditor
 log = logging.getLogger(__name__)
 
 
+@implementer(IUIComponent, IActionProvider)
 class ElementEditor(object):
     """The ElementEditor class is a utility window used to edit UML elements.
-    It will display the properties of the currently selected element in the
-    diagram."""
 
-    interface.implements(IUIComponent, IActionProvider)
+    It will display the properties of the currently selected element in the
+    diagram.
+    """
 
     element_factory = inject('element_factory')
     properties = inject('properties')

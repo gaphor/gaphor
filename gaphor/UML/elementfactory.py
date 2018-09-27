@@ -3,7 +3,7 @@
 Factory for and registration of model elements.
 """
 
-from zope import interface
+from zope.interface import implementer
 from zope import component
 import uuid
 from gaphor.core import inject
@@ -59,9 +59,9 @@ class ElementFactory(object):
         The element may not be bound to another factory already.
         """
         if hasattr(element, '_factory') and element._factory:
-            raise AttributeError, "element is already bound"
+            raise AttributeError("element is already bound")
         if self._elements.get(element.id):
-            raise AttributeError, "an element already exists with the same id"
+            raise AttributeError("an element already exists with the same id")
 
         element._factory = self
         self._elements[element.id] = element
@@ -183,11 +183,11 @@ class ElementFactory(object):
         component.handle(event)
 
 
+@implementer(IService)
 class ElementFactoryService(ElementFactory):
     """
     Service version of the ElementFctory.
     """
-    interface.implements(IService)
 
     component_registry = inject('component_registry')
 
@@ -245,6 +245,7 @@ class ElementFactoryService(ElementFactory):
         self.component_registry.handle(event)
 
 
+@implementer(IEventFilter)
 class ElementChangedEventBlocker(object):
     """
     Blocks all events of type IElementChangeEvent.
@@ -252,7 +253,6 @@ class ElementChangedEventBlocker(object):
     This filter is placed when the the element factory flushes it's content.
     """
     component.adapts(IElementChangeEvent)
-    interface.implements(IEventFilter)
 
     def __init__(self, event):
         self._event = event

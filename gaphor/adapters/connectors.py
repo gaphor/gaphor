@@ -5,19 +5,20 @@ To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
-from zope import interface, component
-from logging import getLogger
+import logging
+from zope import component
 
-from gaphas import geometry
+from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.core import inject
-from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 
-logger = getLogger('Connector')
+log = logging.getLogger('Connector')
 
 
+@implementer(IConnect)
 class AbstractConnect(object):
     """
     Connection adapter for Gaphor diagram items.
@@ -42,7 +43,6 @@ class AbstractConnect(object):
     By convention the adapters are registered by (element, line) -- in that order.
 
     """
-    interface.implements(IConnect)
 
     element_factory = inject('element_factory')
 
@@ -180,14 +180,14 @@ class CommentLineElementConnect(AbstractConnect):
         hct = self.get_connected(handle)
 
         if hct and oct:
-            logger.debug('Disconnecting %s and %s' % (hct, oct))
+            log.debug('Disconnecting %s and %s' % (hct, oct))
             try:
                 if hct.subject and isinstance(oct.subject, UML.Comment):
                     del oct.subject.annotatedElement[hct.subject]
                 elif hct.subject and oct.subject:
                     del hct.subject.annotatedElement[oct.subject]
             except ValueError:
-                logger.debug('Invoked CommentLineElementConnect.disconnect() for nonexistant relationship')
+                log.debug('Invoked CommentLineElementConnect.disconnect() for nonexistant relationship')
                 
         super(CommentLineElementConnect, self).disconnect(handle)
 

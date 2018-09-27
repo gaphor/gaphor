@@ -1,15 +1,13 @@
-
-import pkg_resources
-from zope import interface
+from zope.interface import implementer
 from gaphor.interfaces import IService
 
 
+@implementer(IService)
 class AdapterLoader(object):
     """
     Initiate adapters from the gaphor.adapters module.
     """
 
-    interface.implements(IService)
 
     def init(self, app):
         import gaphor.adapters

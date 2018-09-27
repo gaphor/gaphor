@@ -93,14 +93,15 @@ its namespace declaration:::
 
 Here is a stripped version of the hello world class::
 
-    from zope import interface
+    from zope.interface import implementer
+
     from gaphor.interfaces import IService, IActionProvider
     from gaphor.core import _, inject, action, build_action_group
 
 
+    @implementer(IService, IActionProvider)  # 1.
     class HelloWorldPlugin(object):
 
-        interface.implements(IService, IActionProvider)  # 1.
 
         gui_manager = inject('gui_manager')              # 2.
 

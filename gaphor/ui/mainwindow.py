@@ -10,7 +10,8 @@ import pkg_resources
 from etk.docking import DockItem, DockGroup, add_new_group_left, add_new_group_right, \
     add_new_group_above, add_new_group_below, add_new_group_floating, settings
 from etk.docking import DockLayout
-from zope import interface, component
+from zope import component
+from zope.interface import implementer
 
 from diagramtab import DiagramTab
 from diagramtoolbox import TOOLBOX_ACTIONS
@@ -54,13 +55,12 @@ STATIC_MENU_XML = """
 """
 
 
+@implementer(IService, IActionProvider)
 class MainWindow(object):
     """
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
-    interface.implements(IService, IActionProvider)
-
 
     component_registry = inject('component_registry')
     properties = inject('properties')
@@ -564,10 +564,8 @@ class MainWindow(object):
 gtk.accel_map_add_filter('gaphor')
 
 
-
+@implementer(IUIComponent, IActionProvider)
 class Namespace(object):
-
-    interface.implements(IUIComponent, IActionProvider)
 
     title = _('Namespace')
     placement = ('left', 'diagrams')
@@ -809,9 +807,8 @@ class Namespace(object):
 
 
 
+@implementor(IUIComponent, IActionProvider)
 class Toolbox(object):
-
-    interface.implements(IUIComponent, IActionProvider)
 
     title = _('Toolbox')
     placement = ('left', 'diagrams')
