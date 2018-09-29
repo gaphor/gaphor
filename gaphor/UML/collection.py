@@ -80,7 +80,7 @@ class collection(object):
 
     __repr__ = __str__
 
-    def __nonzero__(self):
+    def __bool__(self):
         return self.items!=[]
 
     def append(self, value):
