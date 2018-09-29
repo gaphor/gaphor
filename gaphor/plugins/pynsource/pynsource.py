@@ -690,7 +690,7 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
 
     def _DumpModuleMethods(self):
         if self.modulemethods:
-            self.result += '  ModuleMethods = %s\n' % `self.modulemethods`
+            self.result += '  ModuleMethods = %s\n' % repr(self.modulemethods)
 ##        self.result += '\n'
 
     def __str__(self):
