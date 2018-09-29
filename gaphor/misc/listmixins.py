@@ -10,6 +10,7 @@ See the documentation on the mixins.
 
 """
 
+from past.builtins import basestring
 __all__ = [ 'querymixin', 'recursemixin', 'getslicefix' ]
 
 import sys
