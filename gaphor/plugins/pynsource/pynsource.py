@@ -458,7 +458,7 @@ class HandleComposites(HandleClassAttributes):
         self.dummy2 = [()]
 
     def JustGotASelfAttr(self, selfattrname):
-        assert selfattrname <> 'self'
+        assert selfattrname != 'self'
         self.lastselfattrname = selfattrname
         self.waitingforclassname = 1
         self.waitingforOpenBracket = 0
@@ -704,7 +704,7 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
             classnames.sort()
         else:
             def cmpfunc(a,b):
-                if a.find('Module_') <> -1:
+                if a.find('Module_') != -1:
                     return -1
                 else:
                     if a < b:
@@ -759,7 +759,7 @@ class PySourceAsJava(PySourceAsText):
         Prevent compiler errors on the java side by checking and modifying attribute name
         """
         # only emit the rhs of a multi part name e.g. undo.UndoItem will appear only as UndoItem
-        if attrname.find('.') <> -1:
+        if attrname.find('.') != -1:
             attrname = attrname.split('.')[-1] # take the last
         # Prevent compiler errors on the java side by avoiding the generating of java keywords as attribute names
         if attrname in javakeywords:
@@ -912,7 +912,7 @@ class PySourceAsDelphi(PySourceAsText):
         Prevent compiler errors on the java side by checking and modifying attribute name
         """
         # only emit the rhs of a multi part name e.g. undo.UndoItem will appear only as UndoItem
-        if attrname.find('.') <> -1:
+        if attrname.find('.') != -1:
             attrname = attrname.split('.')[-1] # take the last
 
         # Prevent compiler errors on the Delphi side by avoiding the generating of delphi keywords as attribute names
