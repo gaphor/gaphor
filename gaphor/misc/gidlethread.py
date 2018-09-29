@@ -106,7 +106,7 @@ class GIdleThread(object):
 
     def __generator_executer(self):
         try:
-            result = self._generator.next()
+            result = next(self._generator)
             if self._queue:
                 try:
                     self._queue.put(result)

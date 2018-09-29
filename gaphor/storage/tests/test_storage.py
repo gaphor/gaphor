@@ -414,7 +414,7 @@ class FileUpgradeTestCase(TestCase):
         if l1.subject.name == 'a2':
             l1, l2 = l2, l1
         def find(name):
-            return (m for m in messages if m.name == name).next()
+            return next((m for m in messages if m.name == name))
         m1 = find('call()')
         m2 = find('callx()')
         m3 = find('cally()')

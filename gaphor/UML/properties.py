@@ -530,7 +530,7 @@ class derived(umlproperty):
             #if len(u) > 1:
             #    log.warning('Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u)))
             if u:
-                u = iter(u).next()
+                u = next(iter(u))
             else:
                 u = None
 
@@ -676,7 +676,7 @@ class derivedunion(derived):
                         # In an in-between state. Do not emit notifications
                         return
                     if values:
-                        new_value = iter(values).next()
+                        new_value = next(iter(values))
                     self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
             else:        
                 if IAssociationSetEvent.providedBy(event):
