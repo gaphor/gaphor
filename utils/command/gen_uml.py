@@ -470,7 +470,7 @@ def generate(filename, outfile=None, overridesfile=None):
  
     # create attributes and enumerations
     derivedattributes = { }
-    for c in filter(lambda c: c not in ignored_classes, classes.values()):
+    for c in [c for c in classes.values() if c not in ignored_classes]:
         for p in c.get('ownedAttribute') or []:
             a = properties.get(p)
             # set class_name, since write_attribute depends on it
@@ -545,7 +545,7 @@ def generate(filename, outfile=None, overridesfile=None):
         writer.write_redefine(r)
 
     # create operations
-    for c in filter(lambda c: c not in ignored_classes, classes.values()):
+    for c in [c for c in classes.values() if c not in ignored_classes]:
         for p in c.get('ownedOperation') or ():
             o = operations.get(p)
             o.class_name = c['name']

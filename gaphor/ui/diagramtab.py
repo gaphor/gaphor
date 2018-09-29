@@ -228,7 +228,7 @@ class DiagramTab(object):
         confirmation before deletion.
         """
         items = self.view.selected_items
-        last_in_model = filter(lambda i: i.subject and len(i.subject.presentation) == 1, items)
+        last_in_model = [i for i in items if i.subject and len(i.subject.presentation) == 1]
         log.debug('Last in model: %s' % str(last_in_model))
         if last_in_model:
             return self.confirm_deletion_of_items(last_in_model)

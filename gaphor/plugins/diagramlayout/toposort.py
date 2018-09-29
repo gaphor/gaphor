@@ -22,7 +22,7 @@ def sort(nodes, routes, noRecursion=1):
         # some other element!!!
         stage.append( nodes[0])
     taken.extend( stage )
-    nodes = filter ( lambda x, l=stage: x not in l, nodes )
+    nodes = list(filter(lambda x, l=stage: x not in l, nodes))
     while nodes:
         previousStageChildren = []
         nodelen = len(nodes)
@@ -51,7 +51,7 @@ def sort(nodes, routes, noRecursion=1):
                 stage.remove( remove )
         stages.append( stage)
         taken.extend( stage )
-        nodes = filter ( lambda x, l=stage: x not in l, nodes )
+        nodes = list(filter(lambda x, l=stage: x not in l, nodes))
         if nodelen == len(nodes):
             if noRecursion:
                 raise RecursionError( nodes )

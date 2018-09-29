@@ -59,7 +59,7 @@ class DiagramCanvas(gaphas.Canvas):
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression."""
         
-        return filter(expression, self.get_all_items())
+        return list(filter(expression, self.get_all_items()))
 
 
 class Diagram(Namespace, PackageableElement):
