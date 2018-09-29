@@ -26,22 +26,18 @@ TODO:
  
 """
 
-
-import math
-from zope import component
-
-import gaphas.item
 import gobject
 import gtk
-from gaphas.decorators import
-from zope.interface import implementer
-
-from gaphor import UML
+import math
 from gaphor.core import _, inject, transactional
-from gaphor.diagram import items
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.ui.interfaces import IPropertyPage
-
+from gaphor.diagram import items
+from zope import interface, component
+from gaphor import UML
+from gaphor.UML.interfaces import IAttributeChangeEvent
+import gaphas.item
+from gaphas.decorators import async
 
 class EditableTreeModel(gtk.ListStore):
     """
@@ -494,7 +490,7 @@ class CommentItemPropertyPage(object):
     """
     Property page for Comments
     """
-@implementer(IPropertyPage)
+    interface.implements(IPropertyPage)
     component.adapts(UML.Comment)
 
     order = 0
@@ -552,7 +548,7 @@ class NamedElementPropertyPage(object):
     It also sets up a table view which can be extended.
     """
 
-@implementer(IPropertyPage)
+    interface.implements(IPropertyPage)
     component.adapts(UML.NamedElement)
 
     order = 10
@@ -721,7 +717,7 @@ class AttributesPage(object):
     An editor for attributes associated with classes and interfaces.
     """
 
-@implementer(IPropertyPage)
+    interface.implements(IPropertyPage)
     component.adapts(items.ClassItem)
 
     order = 20
@@ -795,7 +791,7 @@ class OperationsPage(object):
     An editor for operations associated with classes and interfaces.
     """
 
-@implementer(IPropertyPage)
+    interface.implements(IPropertyPage)
     component.adapts(items.ClassItem)
 
     order = 30
@@ -871,7 +867,7 @@ class DependencyPropertyPage(object):
     Dependency item editor.
     """
 
-@implementer(IPropertyPage)
+    interface.implements(IPropertyPage)
     component.adapts(items.DependencyItem)
 
     order = 0
@@ -1072,7 +1068,7 @@ class AssociationEndPropertyPage(object):
     Property page for association end properties.
     """
 
-@implementer(IPropertyPage)
+    interface.implements(IPropertyPage)
     component.adapts(UML.Property)
 
     order = 0
@@ -1156,13 +1152,12 @@ Enter attribute name and multiplicity, for example
 
 component.provideAdapter(AssociationEndPropertyPage, name='Properties')
 
-
-@implementer(IPropertyPage)
 class LineStylePage(object):
     """
     Basic line style properties: color, orthogonal, etc.
     """
 
+    interface.implements(IPropertyPage)
     component.adapts(gaphas.item.Line)
 
     order = 400

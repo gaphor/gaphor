@@ -2,11 +2,10 @@
 The file service is responsible for loading and saving the user data.
 """
 
-import logging
+from logging import getLogger
 
 import gtk
-from zope import component
-from zope.interface import implementer
+from zope import interface, component
 
 from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
@@ -22,29 +21,29 @@ from gaphor.ui.filedialog import FileDialog
 DEFAULT_EXT = '.gaphor'
 MAX_RECENT = 10
 
-log = logging.getLogger(__name__)
-
-
-@implementer(IServiceEvent)
 class FileManagerStateChanged(object):
     """
     Event class used to send state changes on the ndo Manager.
     """
 
+    interface.implements(IServiceEvent)
+
     def __init__(self, service):
         self.service = service
 
 
-@implementer(IService, IActionProvider)
 class FileManager(object):
     """
     The file service, responsible for loading and saving Gaphor models.
     """
 
+    interface.implements(IService, IActionProvider)
+
     component_registry = inject('component_registry')
     element_factory = inject('element_factory')
     main_window = inject('main_window')
     properties = inject('properties')
+    logger = getLogger('FileManager')
 
     menu_xml = """
       <ui>
@@ -113,7 +112,7 @@ class FileManager(object):
     def shutdown(self):
         """Called when shutting down the file manager service."""
 
-        log.info('Shutting down')
+        self.logger.info('Shutting down')
         
     def get_filename(self):
         """Return the current file name.  This method is used by the filename
@@ -125,8 +124,8 @@ class FileManager(object):
         property.  Setting the current filename will update the recent file
         list."""
 
-        log.info('Setting current file')
-        log.debug('Filename is %s' % filename)
+        self.logger.info('Setting current file')
+        self.logger.debug('Filename is %s' % filename)
 
         if filename != self._filename:
             self._filename = filename
@@ -147,8 +146,8 @@ class FileManager(object):
         """Updates the properties service with the supplied list of recent 
         files.  This method is used by the recent_files property."""
         
-        log.info('Storing recent files')
-        log.debug('Recent files are %s' % recent_files)
+        self.logger.info('Storing recent files')
+        self.logger.debug('Recent files are %s' % recent_files)
         
         try:
             self.properties.set('recent-files', recent_files)
@@ -164,8 +163,8 @@ class FileManager(object):
         The default recent file placeholder actions are hidden.  The real
         actions are then built using the recent file list."""
         
-        log.info('Updating recent files')
-        log.debug('New file is %s' % new_filename)
+        self.logger.info('Updating recent files')
+        self.logger.debug('New file is %s' % new_filename)
 
         recent_files = self.recent_files
         
@@ -190,9 +189,9 @@ class FileManager(object):
         a FileManagerStateChanged event.  The recent files are stored in
         the recent_files property."""
         
-        log.info('Loading recent file')
-        log.debug('Action is %s' % action)
-        log.debug('Index is %s' % index)
+        self.logger.info('Loading recent file')
+        self.logger.debug('Action is %s' % action)
+        self.logger.debug('Index is %s' % index)
 
         filename = self.recent_files[index]
 
@@ -206,8 +205,8 @@ class FileManager(object):
         queue.  The loader is passed to a GIdleThread which executes the load
         generator.  If loading is successful, the filename is set."""
 
-        log.info('Loading file')
-        log.debug('Path is %s' % filename)
+        self.logger.info('Loading file')
+        self.logger.debug('Path is %s' % filename)
 
         queue = Queue()
         
@@ -268,8 +267,8 @@ class FileManager(object):
         extension.  If not, the extension is added to the filename
         and returned."""
         
-        log.debug('Verifying file name')
-        log.debug('File name is %s' % filename)
+        self.logger.debug('Verifying file name')
+        self.logger.debug('File name is %s' % filename)
         
         if not filename.endswith(DEFAULT_EXT):
             filename = filename + DEFAULT_EXT
@@ -283,8 +282,8 @@ class FileManager(object):
         extension.  A status window is displayed while the GIdleThread
         is executed.  This thread actually saves the model."""
         
-        log.info('Saving file')
-        log.debug('File name is %s' % filename)
+        self.logger.info('Saving file')
+        self.logger.debug('File name is %s' % filename)
 
         if not filename or not len(filename):
             return

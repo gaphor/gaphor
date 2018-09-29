@@ -1,9 +1,7 @@
 """
 """
-import logging
 
-from zope import component
-from zope.interface import implementer
+from zope import interface, component
 
 from logging import getLogger
 from gaphor.core import inject
@@ -14,17 +12,13 @@ from gaphor.UML.interfaces import IAssociationSetEvent,\
                                   IAssociationAddEvent,\
                                   IAssociationDeleteEvent
 
-
-log = logging.getLogger(__name__)
-
-
-@implementer(IService)
 class EventWatcher(object):
     """
     A helper for easy registering and unregistering event handlers.
     """
 
     element_dispatcher = inject('element_dispatcher')
+    logger = getLogger('EventWatcher')
 
     def __init__(self, element, default_handler=None):
         super(EventWatcher, self).__init__()
@@ -44,9 +38,9 @@ class EventWatcher(object):
         This interface is fluent(returns self).
         """
         
-        # log.info('Watching element path')
-        # log.debug('Path is %s' % path)
-        # log.debug('Handler is %s' % handler)
+        #self.logger.info('Watching element path')
+        #self.logger.debug('Path is %s' % path)
+        #self.logger.debug('Handler is %s' % handler)
         
         if handler:
             self._watched_paths[path] = handler
@@ -59,15 +53,15 @@ class EventWatcher(object):
 
     def register_handlers(self):
         
-        # log.info('Registering handlers')
+        #self.logger.info('Registering handlers')
         
         dispatcher = self.element_dispatcher
         element = self.element
         
         for path, handler in self._watched_paths.iteritems():
             
-            # log.debug('Path is %s' % path)
-            # log.debug('Handler is %s' % handler)
+            #self.logger.debug('Path is %s' % path)
+            #self.logger.debug('Handler is %s' % handler)
             
             dispatcher.register_handler(handler, element, path)
 
@@ -78,14 +72,14 @@ class EventWatcher(object):
         destroy signals much easier though).
         """
         
-        # log.info('Unregistering handlers')
+        #self.logger.info('Unregistering handlers')
         
         dispatcher = self.element_dispatcher
         
         for path, handler in self._watched_paths.iteritems():
             
-            # log.debug('Path is %s' % path)
-            # log.debug('Handler is %s' % handler)
+            #self.logger.debug('Path is %s' % path)
+            #self.logger.debug('Handler is %s' % handler)
             
             dispatcher.unregister_handler(handler)
 
@@ -116,6 +110,7 @@ class ElementDispatcher(object):
     every time).
     """
 
+    interface.implements(IService)
     logger = getLogger('ElementDispatcher')
 
     component_registry = inject('component_registry')
@@ -234,18 +229,18 @@ class ElementDispatcher(object):
         if property.upper > 1:
             for remainder in handlers.get(handler, ()):
                 for e in property._get(element):
-                    # log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
+                    #log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
         else:
             for remainder in handlers.get(handler, ()):
                 e = property._get(element)
                 if e:
-                    # log.debug('*Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
+                    #log.debug('*Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
         try:
             del handlers[handler]
         except KeyError:
-            log.warning('Handler %s is not registered for %s.%s' % (handler, element, property))
+            self.logger.warning('Handler %s is not registered for %s.%s' % (handler, element, property))
 
         if not handlers:
             del self._handlers[key]
@@ -253,10 +248,10 @@ class ElementDispatcher(object):
 
     def register_handler(self, handler, element, path):
         
-        # log.info('Registering handler')
-        # log.debug('Handler is %s' % handler)
-        # log.debug('Element is %s' % element)
-        # log.debug('Path is %s' % path)
+        #self.logger.info('Registering handler')
+        #self.logger.debug('Handler is %s' % handler)
+        #self.logger.debug('Element is %s' % element)
+        #self.logger.debug('Path is %s' % path)
         
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
@@ -267,8 +262,8 @@ class ElementDispatcher(object):
         Unregister a handler from the registy.
         """
         
-        # log.info('Unregistering handler')
-        # log.debug('Handler is %s' % handler)
+        #self.logger.info('Unregistering handler')
+        #self.logger.debug('Handler is %s' % handler)
         
         try:
             reverse = reversed(self._reverse[handler])
@@ -293,24 +288,24 @@ class ElementDispatcher(object):
     @component.adapter(IElementChangeEvent)
     def on_element_change_event(self, event):
         
-        # log.info('Handling IElementChangeEvent')
-        # log.debug('Element is %s' % event.element)
-        # log.debug('Property is %s' % event.property)
+        #self.logger.info('Handling IElementChangeEvent')
+        #self.logger.debug('Element is %s' % event.element)
+        #self.logger.debug('Property is %s' % event.property)
         
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
-            # log.debug('')
-            # log.debug('Element change for %s %s [%s]' % (str(type(event)), event.element, event.property))
-            # if hasattr(event, 'old_value'):
+            #log.debug('')
+            #log.debug('Element change for %s %s [%s]' % (str(type(event)), event.element, event.property))
+            #if hasattr(event, 'old_value'):
             #    log.debug('    old value: %s' % (event.old_value))
-            # if hasattr(event, 'new_value'):
+            #if hasattr(event, 'new_value'):
             #    log.debug('    new value: %s' % (event.new_value))
             for handler in handlers.iterkeys():
                 try:
                     handler(event)
-                except Exception as e:
-                    log.error('Problem executing handler %s' % handler)
-                    log.error(e)
+                except Exception, e:
+                    self.logger.error('Problem executing handler %s' % handler)
+                    self.logger.error(e)
         
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
@@ -335,8 +330,8 @@ class ElementDispatcher(object):
     @component.adapter(IModelFactoryEvent)
     def on_model_loaded(self, event):
         
-        # log.info('Handling IModelFactoryEvent')
-        # log.debug('Event is %s' % event)
+        #self.logger.info('Handling IModelFactoryEvent')
+        #self.logger.debug('Event is %s' % event)
         
         for key, value in self._handlers.items():
             for h, remainders in value.items():

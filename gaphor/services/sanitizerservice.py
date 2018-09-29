@@ -3,24 +3,24 @@ The Sanitize module is dedicated to adapters (stuff) that keeps
 the model clean and in sync with diagrams.
 """
 
-import logging
-from zope.interface import implementer
+from zope import interface
 from zope import component
 
+from logging import getLogger
 from gaphor import UML
 from gaphor.UML.interfaces import IAssociationDeleteEvent, IAssociationSetEvent
 from gaphor.interfaces import IService
 from gaphor.core import inject
+from gaphor.diagram import items
 
-log = logging.getLogger(__name__)
-
-
-@implementer(IService)
 class SanitizerService(object):
     """
     Does some background cleanup jobs, such as removing elements from the
     model that have no presentations (and should have some).
     """
+    interface.implements(IService)
+
+    logger = getLogger('Sanitizer')
 
     component_registry = inject('component_registry')
     element_factory = inject('element_factory')
@@ -49,10 +49,10 @@ class SanitizerService(object):
         subject or the deleted item was the only item currently linked.
         """
         
-        log.debug('Handling IAssociationDeleteEvent')
-        #log.debug('Property is %s' % event.property.name)
-        #log.debug('Element is %s' % event.element)
-        #log.debug('Old value is %s' % event.old_value)
+        self.logger.debug('Handling IAssociationDeleteEvent')
+        #self.logger.debug('Property is %s' % event.property.name)
+        #self.logger.debug('Element is %s' % event.element)
+        #self.logger.debug('Old value is %s' % event.old_value)
         
         if event.property is UML.Element.presentation:
             old_presentation = event.old_value
@@ -61,9 +61,9 @@ class SanitizerService(object):
 
     def perform_unlink_for_instances(self, st, meta):
         
-        log.debug('Performing unlink for instances')
-        #log.debug('Stereotype is %s' % st)
-        #log.debug('Meta is %s' % meta)
+        self.logger.debug('Performing unlink for instances')
+        #self.logger.debug('Stereotype is %s' % st)
+        #self.logger.debug('Meta is %s' % meta)
                 
         inst = UML.model.find_instances(self.element_factory, st)
 
@@ -79,10 +79,10 @@ class SanitizerService(object):
         Remove applied stereotypes when extension is deleted.
         """
         
-        log.debug('Handling IAssociationDeleteEvent')
-        #log.debug('Property is %s' % event.property.name)
-        #log.debug('Element is %s' % event.element)
-        #log.debug('Old value is %s' % event.old_value)
+        self.logger.debug('Handling IAssociationDeleteEvent')
+        #self.logger.debug('Property is %s' % event.property.name)
+        #self.logger.debug('Element is %s' % event.element)
+        #self.logger.debug('Old value is %s' % event.old_value)
         
         if isinstance(event.element, UML.Extension) and \
                 event.property is UML.Association.memberEnd and \
@@ -99,10 +99,10 @@ class SanitizerService(object):
     @component.adapter(IAssociationSetEvent)
     def _disconnect_extension_end(self, event):
         
-        log.debug('Handling IAssociationSetEvent')
-        #log.debug('Property is %s' % event.property.name)
-        #log.debug('Element is %s' % event.element)
-        #log.debug('Old value is %s' % event.old_value)
+        self.logger.debug('Handling IAssociationSetEvent')
+        #self.logger.debug('Property is %s' % event.property.name)
+        #self.logger.debug('Element is %s' % event.element)
+        #self.logger.debug('Old value is %s' % event.old_value)
         
         if event.property is UML.ExtensionEnd.type and event.old_value:
             ext = event.element
@@ -120,10 +120,10 @@ class SanitizerService(object):
         Remove applied stereotypes when stereotype is deleted.
         """
         
-        log.debug('Handling IAssociationDeleteEvent')
-        #log.debug('Property is %s' % event.property)
-        #log.debug('Element is %s' % event.element)
-        #log.debug('Old value is %s' % event.old_value)
+        self.logger.debug('Handling IAssociationDeleteEvent')
+        #self.logger.debug('Property is %s' % event.property)
+        #self.logger.debug('Element is %s' % event.element)
+        #self.logger.debug('Old value is %s' % event.old_value)
         
         if event.property is UML.InstanceSpecification.classifier:
             if isinstance(event.old_value, UML.Stereotype):

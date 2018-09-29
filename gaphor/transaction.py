@@ -2,11 +2,10 @@
 Transation support for Gaphor
 """
 
-import logging
 from builtins import object
-from zope import component
+import logging
 
-from zope.interface import implementer
+from zope import interface, component
 
 from gaphor import application
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
@@ -43,8 +42,6 @@ class TransactionError(Exception):
     Errors related to the transaction module.
     """
 
-
-@implementer(ITransaction)
 class Transaction(object):
     """
     The transaction. On start and end of a transaction an event is emited.
@@ -68,6 +65,8 @@ class Transaction(object):
     >>> with Transaction():
     ...     pass
     """
+
+    interface.implements(ITransaction)
 
     component_registry = application.inject('component_registry')
 

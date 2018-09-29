@@ -9,18 +9,18 @@ The layout is done like this:
  - Lines are reconnected to the nodes, so everything looks pretty.
 """
 
-import random
-
-from gaphor.plugins.diagramlayout import toposort
-from zope.interface import implementer
-
-from gaphor.core import inject, action, build_action_group, transactional
-from gaphor.diagram import items
+from zope import interface, component
+from gaphor.core import _, inject, action, build_action_group, transactional
 from gaphor.interfaces import IService, IActionProvider
 
+import random
+from gaphor.diagram import items
+import toposort
 
-@implementer(IService, IActionProvider)
+
 class DiagramLayout(object):
+
+    interface.implements(IService, IActionProvider)
 
     main_window = inject('main_window')
 

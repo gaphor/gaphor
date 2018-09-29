@@ -4,14 +4,15 @@ Plugin based on the Live Object browser
 It shows the state of the data model at the time the browser is activated.
 """
 
-from zope.interface import implementer
+from zope import interface
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 from browser import Browser
 
 
-@implementer(IService, IActionProvider)
 class LiveObjectBrowser(object):
+
+    interface.implements(IService, IActionProvider)
 
     element_factory = inject('element_factory')
 

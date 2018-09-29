@@ -2,19 +2,15 @@
 Copy / Paste functionality
 """
 
-from zope import component
-
+from zope import interface, component
 import gaphas
-from zope.interface import implementer
-
 from gaphor.UML import Element
 from gaphor.UML.collection import collection
-from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.interfaces import IDiagramSelectionChange
+from gaphor.core import _, inject, action, build_action_group, transactional
 
 
-@implementer(IService, IActionProvider)
 class CopyService(object):
     """
     Copy/Cut/Paste functionality required a lot of thinking:
@@ -30,6 +26,8 @@ class CopyService(object):
       The diagram should act as if we have placed a copy of the removed item
       on the canvas and make the uml element visible again.
     """
+
+    interface.implements(IService, IActionProvider)
 
     component_registry = inject('component_registry')
     element_factory = inject('element_factory')

@@ -2,31 +2,32 @@
 Service dedicated to exporting diagrams to a varyity of file formats.
 """
 
-import logging
 import os
-
 import cairo
-from gaphas.freehand import FreeHandPainter
-from gaphas.painter import ItemPainter, BoundingBoxPainter
-from gaphas.view import View
-from zope.interface import implementer
 
+from zope import interface, component
+
+from logging import getLogger
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 
-log = logging.getLogger(__name__)
+from gaphas.view import View
+from gaphas.painter import ItemPainter, BoundingBoxPainter
+from gaphas.freehand import FreeHandPainter
+from gaphas.geometry import Rectangle
 
-
-@implementer(IService, IActionProvider)
 class DiagramExportManager(object):
     """
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
 
+    interface.implements(IService, IActionProvider)
+
     main_window = inject('main_window')
     properties = inject('properties')
+    logger = getLogger('ExportManager')
 
     menu_xml = """
       <ui>
@@ -54,7 +55,7 @@ class DiagramExportManager(object):
 
     def update(self):
         
-        log.info('Updating')
+        self.logger.info('Updating')
         
         tab = self.get_window().get_current_diagram_tab()
         self.sensitive = tab and True or False
@@ -88,12 +89,12 @@ class DiagramExportManager(object):
         
     def update_painters(self, view):
         
-        log.info('Updating painters')
-        log.debug('View is %s' % view)
+        self.logger.info('Updating painters')
+        self.logger.debug('View is %s' % view)
         
         sloppiness = self.properties('diagram.sloppiness', 0)
         
-        log.debug('Sloppiness is %s' % sloppiness)
+        self.logger.debug('Sloppiness is %s' % sloppiness)
         
         if sloppiness:
             view.painter = FreeHandPainter(ItemPainter(), sloppiness)
@@ -103,8 +104,8 @@ class DiagramExportManager(object):
 
     def save_svg(self, filename, canvas):
         
-        log.info('Exporting to SVG')
-        log.debug('SVG path is %s' % filename)
+        self.logger.info('Exporting to SVG')
+        self.logger.debug('SVG path is %s' % filename)
         
         view = View(canvas)
 
@@ -130,8 +131,8 @@ class DiagramExportManager(object):
 
     def save_png(self, filename, canvas):
         
-        log.info('Exporting to PNG')
-        log.debug('PNG path is %s' % filename)
+        self.logger.info('Exporting to PNG')
+        self.logger.debug('PNG path is %s' % filename)
         
         view = View(canvas)
 
@@ -155,8 +156,8 @@ class DiagramExportManager(object):
 
     def save_pdf(self, filename, canvas):
         
-        log.info('Exporting to PDF')
-        log.debug('PDF path is %s' % filename)
+        self.logger.info('Exporting to PDF')
+        self.logger.debug('PDF path is %s' % filename)
         
         view = View(canvas)
 

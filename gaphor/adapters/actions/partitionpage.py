@@ -1,22 +1,20 @@
 """
 Activity partition property page.
 """
-from zope import component
-
 import gtk
-from zope.interface import implementer
-
-from gaphor.adapters.propertypages import NamedItemPropertyPage
 from gaphor.core import _, inject, transactional
-from gaphor.diagram import items
 from gaphor.ui.interfaces import IPropertyPage
+from gaphor.diagram import items
+from zope import interface, component
+from gaphor import UML
+from gaphor.adapters.propertypages import NamedItemPropertyPage
 
 
-@implementer(IPropertyPage)
 class PartitionPropertyPage(NamedItemPropertyPage):
     """
     Partition property page.
     """
+    interface.implements(IPropertyPage)
     component.adapts(items.PartitionItem)
 
     element_factory = inject('element_factory')
