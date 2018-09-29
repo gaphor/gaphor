@@ -7,7 +7,7 @@ __all__ = [ 'Element' ]
 
 import threading
 import uuid
-from properties import umlproperty
+from gaphor.UML.properties import umlproperty
 
 
 class Element(object):

@@ -1,3 +1,1 @@
-# vim:sw=4:et
-
-from checkmodelgui import CheckModelWindow
+from gaphor.plugins.checkmetamodel.checkmodelgui import CheckModelWindow

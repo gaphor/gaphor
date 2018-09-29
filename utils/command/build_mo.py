@@ -4,10 +4,11 @@
 Generate .mo files from po files.
 """
 
+import os.path
 from distutils.core import Command
 from distutils.dep_util import newer
-import os.path
-import msgfmt
+
+from utils.command import msgfmt
 
 
 class build_mo(Command):

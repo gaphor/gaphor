@@ -2,12 +2,13 @@
 Use case diagram item.
 """
 
-from math import pi
+from gaphas.util import path_ellipse
+
 from gaphor import UML
 from gaphor.diagram.classifier import ClassifierItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
-from textelement import text_extents
-from gaphas.util import path_ellipse
+from gaphor.diagram.textelement import text_extents
+
 
 class UseCaseItem(ClassifierItem):
     """

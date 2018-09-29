@@ -1,20 +1,20 @@
 """
 The main application window.
 """
+
 import logging
 import os.path
 
 import gobject
 import gtk
 import pkg_resources
-from etk.docking import DockItem, DockGroup, add_new_group_left, add_new_group_right, \
-    add_new_group_above, add_new_group_below, add_new_group_floating, settings
+from etk.docking import DockItem, DockGroup
 from etk.docking import DockLayout
+from etk.docking import add_new_group_above, add_new_group_below, add_new_group_floating
+from etk.docking import add_new_group_left, add_new_group_right
+from etk.docking import settings
 from zope import interface, component
 
-from diagramtab import DiagramTab
-from diagramtoolbox import TOOLBOX_ACTIONS
-from event import DiagramTabChange, DiagramSelectionChange
 from gaphor import UML
 from gaphor.UML.event import ModelFactoryEvent
 from gaphor.core import _, inject, action, toggle_action, open_action, build_action_group, transactional
@@ -22,11 +22,14 @@ from gaphor.interfaces import IService, IActionProvider
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
-from interfaces import IDiagramTabChange
-from interfaces import IUIComponent
-from layout import deserialize
-from namespace import NamespaceModel, NamespaceView
-from toolbox import Toolbox as _Toolbox
+from gaphor.ui.diagramtab import DiagramTab
+from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
+from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange
+from gaphor.ui.interfaces import IDiagramTabChange
+from gaphor.ui.interfaces import IUIComponent
+from gaphor.ui.layout import deserialize
+from gaphor.ui.namespace import NamespaceModel, NamespaceView
+from gaphor.ui.toolbox import Toolbox as _Toolbox
 
 log = logging.getLogger(__name__)
 

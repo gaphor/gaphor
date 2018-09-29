@@ -6,13 +6,14 @@ The Toolbox is bound to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
-from zope import component
-from gaphor.UML.event import DiagramItemCreateEvent
-from gaphor import UML
-from gaphor.diagram import items
-from gaphor.core import _, inject, radio_action, build_action_group
-from diagramtools import PlacementTool, GroupPlacementTool, DefaultTool
 from gaphas.item import SE
+from zope import component
+
+from gaphor import UML
+from gaphor.UML.event import DiagramItemCreateEvent
+from gaphor.core import _, inject, radio_action, build_action_group
+from gaphor.diagram import items
+from gaphor.ui.diagramtools import PlacementTool, GroupPlacementTool, DefaultTool
 
 __all__ = [ 'DiagramToolbox', 'TOOLBOX_ACTIONS' ]
 

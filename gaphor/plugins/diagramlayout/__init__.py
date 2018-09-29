@@ -9,13 +9,14 @@ The layout is done like this:
  - Lines are reconnected to the nodes, so everything looks pretty.
 """
 
-from zope import interface, component
-from gaphor.core import _, inject, action, build_action_group, transactional
-from gaphor.interfaces import IService, IActionProvider
-
 import random
+
+from zope import interface
+
+from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.diagram import items
-import toposort
+from gaphor.interfaces import IService, IActionProvider
+from gaphor.plugins.diagramlayout import toposort
 
 
 class DiagramLayout(object):

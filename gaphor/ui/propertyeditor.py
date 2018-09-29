@@ -1,14 +1,13 @@
 """
 """
 
-
 import gtk
-from zope import interface, component
+from zope import component
 
-from gaphor.core import _, inject
-from gaphor.UML.interfaces import IElementCreateEvent, IAssociationChangeEvent
 from gaphor.UML import Presentation
-from interfaces import IPropertyPage, IDiagramSelectionChange
+from gaphor.UML.interfaces import IAssociationChangeEvent
+from gaphor.core import _, inject
+from gaphor.ui.interfaces import IPropertyPage, IDiagramSelectionChange
 
 
 class PropertyEditor(object):

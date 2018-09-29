@@ -26,8 +26,8 @@ Also a distutils tool, build_uml, is provided.
 
 import os.path
 from distutils.core import Command
-from distutils.util import byte_compile
 from distutils.dep_util import newer
+from distutils.util import byte_compile
 
 
 class build_uml(Command):
@@ -52,7 +52,6 @@ class build_uml(Command):
                                        ('force', 'force'))
 
     def run(self):
-        import sys
         #sys.path.insert(0, self.build_lib)
         self.generate_uml2()
 
@@ -71,7 +70,7 @@ class build_uml(Command):
                       or newer(gen, outfile):
             print 'generating %s from %s...' % (py_model, model)
             print '  (warnings can be ignored)'
-            import gen_uml
+            from . import gen_uml
             gen_uml.generate(model, outfile, overrides)
         else:
             print 'not generating %s (up-to-date)' % py_model

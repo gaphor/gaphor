@@ -1,7 +1,11 @@
 """The core UML metamodel events."""
 
-from interfaces import *
 from zope import interface
+
+from gaphor.UML.interfaces import IAssociationAddEvent, IAssociationDeleteEvent, IElementCreateEvent
+from gaphor.UML.interfaces import IAttributeChangeEvent, IAssociationChangeEvent, IAssociationSetEvent
+from gaphor.UML.interfaces import IElementFactoryEvent, IModelFactoryEvent, IElementDeleteEvent, IFlushFactoryEvent
+
 
 class AttributeChangeEvent(object):
     """A UML attribute has changed value."""

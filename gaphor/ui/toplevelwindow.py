@@ -3,15 +3,12 @@ Basic stuff for toplevel windows.
 """
 
 import os.path
-import pkg_resources
 
 import gtk
-from etk.docking import DockGroup, DockItem
-from etk.docking.docklayout import add_new_group_floating
+import pkg_resources
 from zope import interface
-from interfaces import IUIComponent
-from gaphor.core import inject
 
+from gaphor.ui.interfaces import IUIComponent
 
 ICONS = (
     'gaphor-24x24.png',

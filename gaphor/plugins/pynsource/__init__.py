@@ -9,12 +9,11 @@ Depends on the Diagram Layout plugin.
 
 import gobject
 import gtk
-from zope import interface, component
-from gaphor.core import _, inject, action, build_action_group
+from zope import interface
+
+from gaphor.core import inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
-
-from engineer import Engineer
-
+from gaphor.plugins.pynsource.engineer import Engineer
 
 NAME_COLUMN = 0
 

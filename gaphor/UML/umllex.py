@@ -6,6 +6,7 @@ The regular expressions are constructed based on a series of
 "sub-patterns". This makes it easy to identify the autonomy of an
 attribute/operation.
 """
+from __future__ import absolute_import
 
 __all__ = [
         'parse_property', 'parse_operation',
@@ -13,9 +14,7 @@ __all__ = [
 
 import re
 from simplegeneric import generic
-
-#from gaphor.UML import uml2 as UML
-import uml2 as UML
+from gaphor.UML.uml2 import Property, NamedElement, Operation, Parameter
 
 
 @generic
@@ -199,7 +198,7 @@ def parse_association_end(el, s):
             #        tv.value = t
             #        el.taggedValue = tv
 
-@parse.when_type(UML.Property)
+@parse.when_type(Property)
 def parse_property(el, s):
     if el.association:
         parse_association_end(el, s)
@@ -207,7 +206,7 @@ def parse_property(el, s):
         parse_attribute(el, s)
 
 
-@parse.when_type(UML.Operation)
+@parse.when_type(Operation)
 def parse_operation(el, s):
     """
     Parse string s in the operation. Tagged values, parameters and
@@ -217,15 +216,15 @@ def parse_operation(el, s):
     if not m or m.group('garbage'):
         el.name = s
         del el.visibility
-        map(UML.Parameter.unlink, list(el.returnResult))
-        map(UML.Parameter.unlink, list(el.formalParameter))
+        list(map(Parameter.unlink, list(el.returnResult)))
+        list(map(Parameter.unlink, list(el.formalParameter)))
     else:
         g = m.group
         create = el._factory.create
         _set_visibility(el, g('vis'))
         el.name = g('name')
         if not el.returnResult:
-            el.returnResult = create(UML.Parameter)
+            el.returnResult = create(Parameter)
         p = el.returnResult[0]
         p.direction = 'return'
         p.typeValue = g('type')
@@ -249,7 +248,7 @@ def parse_operation(el, s):
             try:
                 p = el.formalParameter[pindex]
             except IndexError:
-                p = create(UML.Parameter)
+                p = create(Parameter)
             p.direction = g('dir') or 'in'
             p.name = g('name')
             p.typeValue = g('type')
@@ -300,7 +299,7 @@ def render_lifeline(el):
     return el.name
 
 
-@parse.when_type(UML.NamedElement)
+@parse.when_type(NamedElement)
 def parse_namedelement(el, text):
     """
     Parse named element by simply assigning text to its name.

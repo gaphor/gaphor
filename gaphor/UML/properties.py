@@ -27,15 +27,16 @@ methods:
 __all__ = [ 'attribute', 'enumeration', 'association', 'derivedunion', 'redefine' ]
 
 from zope import component
-from collection import collection, collectionlist
-from event import AttributeChangeEvent, AssociationSetEvent, \
-                  AssociationAddEvent, AssociationDeleteEvent
-from event import DerivedChangeEvent, DerivedSetEvent, \
-                  DerivedAddEvent, DerivedDeleteEvent
-from event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
-from interfaces import IElementChangeEvent, \
-                       IAssociationChangeEvent, IAssociationSetEvent, \
-                       IAssociationAddEvent, IAssociationDeleteEvent
+
+from gaphor.UML.collection import collection, collectionlist
+from gaphor.UML.event import AssociationAddEvent, AssociationDeleteEvent
+from gaphor.UML.event import AttributeChangeEvent, AssociationSetEvent
+from gaphor.UML.event import DerivedAddEvent, DerivedDeleteEvent
+from gaphor.UML.event import DerivedChangeEvent, DerivedSetEvent
+from gaphor.UML.event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
+from gaphor.UML.interfaces import IAssociationDeleteEvent
+from gaphor.UML.interfaces import IAssociationSetEvent, IAssociationAddEvent
+from gaphor.UML.interfaces import IElementChangeEvent, IAssociationChangeEvent
 
 # Maintains Python 2 compatibility
 try:

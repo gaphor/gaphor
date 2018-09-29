@@ -2,13 +2,13 @@
 A GUI for the checkmodel plugin.
 """
 
-import sys
 import gobject
 import gtk
-from zope import interface, component
-from gaphor.core import _, inject, action, build_action_group
+from zope import interface
+
+from gaphor.core import inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
-import checkmodel
+from gaphor.plugins.checkmetamodel import checkmodel
 
 PYELEMENT_COLUMN = 0
 ELEMENT_COLUMN = 1

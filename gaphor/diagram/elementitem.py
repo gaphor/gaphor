@@ -2,11 +2,10 @@
 Abstract classes for element-like Diagram items.
 """
 
-import gobject
 import cairo
 import gaphas
-from zope import component
-from diagramitem import DiagramItem
+
+from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.style import get_text_point
 
 

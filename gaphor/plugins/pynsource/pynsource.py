@@ -66,12 +66,12 @@ then the command is
 
 """
 
-#import pychecker.checker
-import tokenize, token
-import pprint
 import os
-from keywords import pythonbuiltinfunctions, javakeywords, delphikeywords
+import pprint
+import token
+import tokenize
 
+from gaphor.plugins.pynsource.keywords import pythonbuiltinfunctions, javakeywords, delphikeywords
 
 DEBUG_DUMPTOKENS = False
 

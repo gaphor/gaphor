@@ -1,5 +1,3 @@
-# vim:sw=4:et
-
 """The code reverse engineer.
 """
 
@@ -10,7 +8,7 @@ from gaphor.core import inject
 from gaphor.diagram.interfaces import IConnect
 from gaphas.aspect import ConnectionSink, Connector
 
-from pynsource import PySourceAsText
+from gaphor.plugins.pynsource.pynsource import PySourceAsText
 
 BASE_CLASSES = ('object', 'type', 'dict', 'list', 'tuple', 'int', 'float')
 

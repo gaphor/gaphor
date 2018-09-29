@@ -5,13 +5,11 @@ Basic functionality for canvas line based items on a diagram.
 from math import atan2, pi
 
 import gaphas
-from gaphor import UML
-from diagramitem import DiagramItem
-from interfaces import IConnect
 
-from gaphor.diagram.style import get_text_point_at_line, \
-    get_text_point_at_line2, \
-    ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
+from gaphor.diagram.diagramitem import DiagramItem
+from gaphor.diagram.style import get_text_point_at_line
+from gaphor.diagram.style import get_text_point_at_line2
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 
 class DiagramLine(gaphas.Line, DiagramItem):

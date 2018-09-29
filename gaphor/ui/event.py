@@ -1,5 +1,7 @@
 from zope import interface
-from interfaces import *
+
+from gaphor.ui.interfaces import IDiagramSelectionChange, IDiagramTabChange
+
 
 class DiagramTabChange(object):
 

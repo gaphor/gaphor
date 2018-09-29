@@ -2,11 +2,12 @@
 Trivial drawing aids (box, line, ellipse).
 """
 
-
-from gaphas.item import Line as _Line
 from gaphas.item import Element, NW
+from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
-from style import Style
+
+from gaphor.diagram.style import Style
+
 
 class Line(_Line):
 

@@ -2,10 +2,11 @@
 CommentItem diagram item
 """
 
-from gaphor import UML
-from elementitem import ElementItem
 from gaphas.item import NW
-from textelement import text_multiline, text_extents
+
+from gaphor import UML
+from gaphor.diagram.elementitem import ElementItem
+from gaphor.diagram.textelement import text_multiline, text_extents
 
 
 class CommentItem(ElementItem):

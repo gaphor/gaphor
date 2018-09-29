@@ -1,6 +1,7 @@
 """
 Diagram item with compartments.
 """
+
 import logging
 
 import cairo
@@ -11,7 +12,7 @@ from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
-from textelement import text_extents, text_align
+from gaphor.diagram.textelement import text_extents, text_align
 
 log = logging.getLogger(__name__)
 

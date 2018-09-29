@@ -3,8 +3,9 @@
 """
 
 import inspect
-from event import AssociationChangeEvent
-from gaphor.misc.listmixins import querymixin, recursemixin, recurseproxy, getslicefix
+
+from gaphor.UML.event import AssociationChangeEvent
+from gaphor.misc.listmixins import querymixin, recursemixin, getslicefix
 
 
 class collectionlist(recursemixin, querymixin, getslicefix, list):

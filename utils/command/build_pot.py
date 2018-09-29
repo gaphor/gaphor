@@ -23,10 +23,12 @@ Build a PO template (for i18n) and update the .po files to reflect
 the last changes.
 """
 
+import os.path
+import sys
 from distutils.core import Command
-from commands import getstatus
-import sys, os.path
-import pygettext
+
+from utils.command import pygettext
+
 
 # from pygettext.main():
 class Options:

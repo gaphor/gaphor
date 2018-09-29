@@ -69,14 +69,14 @@ Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
 from math import pi
-from gaphas.state import observed, reversible_property
-from gaphas.item import NW, NE, SE, SW
+
 from gaphas.connector import LinePort
 from gaphas.geometry import distance_line_point, distance_point_point
+from gaphas.item import NW, NE, SE, SW
+from gaphas.state import observed, reversible_property
 
 from gaphor import UML
-from klass import ClassItem
-from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 
 
