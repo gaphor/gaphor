@@ -75,7 +75,7 @@ class AssociationItemTestCase(TestCase):
         assert a.subject.memberEnd[0].name is None
 
         dispatcher = self.get_service('element_dispatcher')
-        print dispatcher._handlers.has_key((a.subject.memberEnd[0], UML.Property.name))
+        print (a.subject.memberEnd[0], UML.Property.name) in dispatcher._handlers
         print '*' * 60
         a.subject.memberEnd[0].name = 'blah'
         print '*' * 60

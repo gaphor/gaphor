@@ -132,7 +132,7 @@ class NewNamespaceTestCase(TestCase):
 
         m = factory.create(UML.Package)
         m.name = 'm'
-        assert ns._nodes.has_key(m)
+        assert m in ns._nodes
         assert ns.path_from_element(m) == (1,)
         assert ns.element_from_path((1,)) is m
 

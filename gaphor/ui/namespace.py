@@ -270,7 +270,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             old_value, new_value = event.old_value, event.new_value
 
             # Remove entry from old place
-            if self._nodes.has_key(old_value):
+            if old_value in self._nodes:
                 try:
                     path = self.path_from_element(old_value) + (self._nodes[old_value].index(element),)
                 except ValueError:
@@ -285,8 +285,8 @@ class NamespaceModel(gtk.GenericTreeModel):
             # Add to new place. This may fail if the type of the new place is
             # not in the tree model (because it's filtered)
             log.debug('Trying to add %s to %s' % (element, new_value))
-            if self._nodes.has_key(new_value):
-                if self._nodes.has_key(element):
+            if new_value in self._nodes:
+                if element in self._nodes:
                     parent = self._nodes[new_value]
                     parent.append(element)
                     parent.sort(key=_tree_sorter)
@@ -294,7 +294,7 @@ class NamespaceModel(gtk.GenericTreeModel):
                     self.row_inserted(path, self.get_iter(path))
                 else:
                     self._add_elements(element)
-            elif self._nodes.has_key(element):
+            elif element in self._nodes:
                 # Non-existent: remove entirely
                 self._remove_element(element)
 
