@@ -2,6 +2,7 @@
 Style classes and constants.
 """
 
+from past.builtins import cmp
 from math import pi
 
 # padding
