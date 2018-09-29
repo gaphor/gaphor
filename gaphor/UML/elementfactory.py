@@ -59,9 +59,9 @@ class ElementFactory(object):
         The element may not be bound to another factory already.
         """
         if hasattr(element, '_factory') and element._factory:
-            raise AttributeError, "element is already bound"
+            raise AttributeError("element is already bound")
         if self._elements.get(element.id):
-            raise AttributeError, "an element already exists with the same id"
+            raise AttributeError("an element already exists with the same id")
 
         element._factory = self
         self._elements[element.id] = element

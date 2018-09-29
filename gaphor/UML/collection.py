@@ -61,7 +61,7 @@ class collection(object):
         return len(self.items)
 
     def __setitem__(self, key, value):
-        raise RuntimeError, 'items should not be overwritten.'
+        raise RuntimeError('items should not be overwritten.')
 
     def __delitem__(self, key):
         self.remove(key)
@@ -87,13 +87,13 @@ class collection(object):
         if isinstance(value, self.type):
             self.property._set(self.object, value)
         else:
-            raise TypeError, 'Object is not of type %s' % self.type.__name__
+            raise TypeError('Object is not of type %s' % self.type.__name__)
 
     def remove(self, value):
         if value in self.items:
             self.property.__delete__(self.object, value)
         else:
-            raise ValueError, '%s not in collection' % value
+            raise ValueError('%s not in collection' % value)
 
 
     def index(self, key):

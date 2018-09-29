@@ -82,7 +82,7 @@ class StockIconLoader(handler.ContentHandler):
             self.element = None
 
         elif name not in ('element', 'option', 'file', 'stock-icons'):
-            raise ParserException, 'Invalid XML: tag <%s> not known' % name
+            raise ParserException('Invalid XML: tag <%s> not known' % name)
 
     def endElement(self, name):
         if name == 'icon':
@@ -94,7 +94,7 @@ class StockIconLoader(handler.ContentHandler):
             try:
                 self.element = getattr(UML, self.data)
             except:
-                raise ParserException, 'No element found with name %s' % self.data
+                raise ParserException('No element found with name %s' % self.data)
         elif name == 'option':
             self.option = self.data
         elif name == 'file':

@@ -56,14 +56,14 @@ class AbstractGroup(object):
         """
         Group an item within parent.
         """
-        raise NotImplemented, 'This is abstract method'
+        raise NotImplemented('This is abstract method')
 
 
     def ungroup(self):
         """
         Remove item from parent.
         """
-        raise NotImplemented, 'This is abstract method'
+        raise NotImplemented('This is abstract method')
 
 
 

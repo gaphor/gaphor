@@ -166,7 +166,7 @@ class MainWindow(object):
             log.debug('found entry point uicomponent.%s' % ep.name)
             cls = ep.load()
             if not IUIComponent.implementedBy(cls):
-                raise NameError, 'Entry point %s doesn''t provide IUIComponent' % ep.name
+                raise NameError('Entry point %s doesn''t provide IUIComponent' % ep.name)
             uicomp = cls()
             uicomp.ui_name = ep.name
             component_registry.register_utility(uicomp, IUIComponent, ep.name)

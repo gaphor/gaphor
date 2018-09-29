@@ -393,7 +393,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         """
         Establish the relationship at model level.
         """
-        raise NotImplementedError, 'Implement connect_subject() in a subclass'
+        raise NotImplementedError('Implement connect_subject() in a subclass')
 
     def disconnect_subject(self, handle):
         """

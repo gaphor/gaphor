@@ -830,7 +830,7 @@ def unique(s):
     else:
           return u.keys()
 
-    raise "uniqueness algorithm failed .. type more of it in please - see http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52560"
+    raise KeyError("uniqueness algorithm failed .. type more of it in please")
 
 class PySourceAsDelphi(PySourceAsText):
     """
@@ -1161,7 +1161,7 @@ if __name__ == '__main__':
         def EnsurePathExists(outdir, outlanguagemsg):
             assert outdir, 'Need to specify output folder for %s output - got %s.'%(outlanguagemsg, outdir)
             if not os.path.exists(outdir):
-                raise RuntimeError, ('Output directory %s for %s file output does not exist.'%(outdir, outlanguagemsg))
+                raise RuntimeError('Output directory %s for %s file output does not exist.'%(outdir, outlanguagemsg))
 
         for optionvaluepair in listofoptionvaluepairs:
             if '-m' == optionvaluepair[0]:

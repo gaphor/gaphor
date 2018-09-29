@@ -152,7 +152,7 @@ class GaphorLoader(handler.ContentHandler):
 
     def endDocument(self):
         if len(self.__stack) != 0:
-            raise ParserException, 'Invalid XML document.'
+            raise ParserException('Invalid XML document.')
 
     def startElement(self, name, attrs):
         self.text = ''
@@ -225,7 +225,7 @@ class GaphorLoader(handler.ContentHandler):
             self.push(None, GAPHOR)
 
         else:
-            raise ParserException, 'Invalid XML: tag <%s> not known (state = %s)' % (name, state)
+            raise ParserException('Invalid XML: tag <%s> not known (state = %s)' % (name, state))
 
     def endElement(self, name):
         # Put the text on the value

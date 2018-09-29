@@ -70,8 +70,8 @@ class Element(object):
         try:
             prop = getattr(type(self), name)
         except AttributeError as e:
-            raise AttributeError, "'%s' has no property '%s'" % \
-                                        (type(self).__name__, name)
+            raise AttributeError("'%s' has no property '%s'" % \
+                                        (type(self).__name__, name))
         else:
             prop.load(self, value)
 

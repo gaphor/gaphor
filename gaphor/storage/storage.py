@@ -229,7 +229,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                 elem.element.canvas.block_updates = True
                 create_canvasitems(elem.element.canvas, elem.canvas.canvasitems)
         elif not isinstance(elem, parser.canvasitem):
-            raise ValueError, 'Item with id "%s" and type %s can not be instantiated' % (id, type(elem))
+            raise ValueError('Item with id "%s" and type %s can not be instantiated' % (id, type(elem)))
 
     # load attributes and create references:
     for id, elem in elements.items():
@@ -252,7 +252,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                     try:
                         ref = elements[refid]
                     except:
-                        raise ValueError, 'Invalid ID for reference (%s) for element %s.%s' % (refid, elem.type, name)
+                        raise ValueError('Invalid ID for reference (%s) for element %s.%s' % (refid, elem.type, name))
                     else:
                         try:
                             elem.element.load(name, ref.element)
@@ -263,7 +263,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                 try:
                     ref = elements[refids]
                 except:
-                    raise ValueError, 'Invalid ID for reference (%s)' % refids
+                    raise ValueError('Invalid ID for reference (%s)' % refids)
                 else:
                     try:
                         elem.element.load(name, ref.element)

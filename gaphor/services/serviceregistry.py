@@ -42,7 +42,7 @@ class ServiceRegistry(object):
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
             cls = ep.load()
             if not IService.implementedBy(cls):
-                raise 'MisConfigurationException', 'Entry point %s doesn''t provide IService' % ep.name
+                raise NameError('Entry point %s doesn''t provide IService' % ep.name)
             if services is None or ep.name in services:
                 srv = cls()
                 self._uninitialized_services[ep.name] = srv

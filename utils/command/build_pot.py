@@ -121,7 +121,7 @@ class build_pot(Command):
 	    elif self.style == 'solaris':
 		options.locationstyle = self.SOLARIS
 	    else:
-		raise SystemExit, 'Invalid value for --style: %s' % self.style
+		raise SystemExit('Invalid value for --style: %s' % self.style)
 	if not self.output:
 	    self.output = self.distribution.get_name() + '.pot'
 	if not self.output_dir:
@@ -135,7 +135,7 @@ class build_pot(Command):
 		options.toexclude = fp.readlines()
 		fp.close()
 	    except IOError:
-		raise SystemExit, "Can't read --exclude-file: %s" % self.exclude_file
+		raise SystemExit("Can't read --exclude-file: %s" % self.exclude_file)
 	# skip: self.no_docstrings
         if self.all_linguas:
             self.all_linguas = self.all_linguas.split(',')
