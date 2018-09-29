@@ -174,9 +174,9 @@ class NamespaceModel(gtk.GenericTreeModel):
             if parent_nodes != original:
                 # reorder the list:
                 self.rows_reordered(parent_path, self.get_iter(parent_path),
-                                    map(list.index,
+                                    list(map(list.index,
                                         [original] * len(parent_nodes),
-                                        parent_nodes))
+                                        parent_nodes)))
 
 
     def _add_elements(self, element):

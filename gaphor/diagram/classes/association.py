@@ -467,8 +467,8 @@ class AssociationEnd(UML.Presentation):
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
         
-        name_w, name_h = map(max, text_extents(cr, self._name, self.font), (10, 10))
-        mult_w, mult_h = map(max, text_extents(cr, self._mult, self.font), (10, 10))
+        name_w, name_h = list(map(max, text_extents(cr, self._name, self.font), (10, 10)))
+        mult_w, mult_h = list(map(max, text_extents(cr, self._mult, self.font), (10, 10)))
 
         if dy == 0:
             rc = 1000.0 # quite a lot...

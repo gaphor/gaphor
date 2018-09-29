@@ -80,7 +80,7 @@ def check_attributes(element_factory):
 
 # TODO: Check the sanity of the generated data model.
 def check_UML_module():
-    all_classes = map(getattr, [UML] * len(dir(UML)), dir(UML))
+    all_classes = list(map(getattr, [UML] * len(dir(UML)), dir(UML)))
     for c in all_classes:
         if not isinstance(c, UML.Element):
             continue

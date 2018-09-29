@@ -408,7 +408,7 @@ class MainWindow(object):
 
 
     def get_tabs(self):
-        tabs = map(lambda i: i.diagram_tab, self.layout.get_widgets('diagram-tab'))
+        tabs = [i.diagram_tab for i in self.layout.get_widgets('diagram-tab')]
         return tabs
 
     # Signal callbacks:

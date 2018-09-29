@@ -511,7 +511,7 @@ class derived(umlproperty):
 
 
     def __str__(self):
-        return '<derived %s: %s>' % (self.name, str(map(str, self.subsets))[1:-1])
+        return '<derived %s: %s>' % (self.name, str(list(map(str, self.subsets)))[1:-1])
 
     def filter(self, obj):
         """

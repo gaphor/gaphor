@@ -59,7 +59,7 @@ class BackupService(object):
         finally:
             f.close()
         self.element_factory.flush()
-        map(self.element_factory.bind, elements)
+        list(map(self.element_factory.bind, elements))
 
 
 # vim: sw=4:et:ai

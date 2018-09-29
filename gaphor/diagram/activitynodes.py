@@ -271,12 +271,12 @@ class ForkNodeItem(Item, DiagramItem):
         c1 = EqualsConstraint(a=h1.pos.x, b=h2.pos.x)
         c2 = LessThanConstraint(smaller=h1.pos.y, bigger=h2.pos.y, delta=30)
         self.__constraints = (cadd(c1), cadd(c2))
-        map(self.canvas.solver.add_constraint, self.__constraints)
+        list(map(self.canvas.solver.add_constraint, self.__constraints))
 
 
     def teardown_canvas(self):
         super(ForkNodeItem, self).teardown_canvas()
-        map(self.canvas.solver.remove_constraint, self.__constraints)
+        list(map(self.canvas.solver.remove_constraint, self.__constraints))
         self.unregister_handlers()
 
 

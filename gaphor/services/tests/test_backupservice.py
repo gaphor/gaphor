@@ -30,14 +30,14 @@ class BackupServiceTestCase:
         
         self.backup_service.backup()
         
-        elements = map(factory.lookup, factory.keys())
+        elements = list(map(factory.lookup, factory.keys()))
 
         orig = StringIO()
         storage.save(XMLWriter(orig), factory=self.element_factory)
 
         self.backup_service.restore()
 
-        restored = map(factory.lookup, factory.keys())
+        restored = list(map(factory.lookup, factory.keys()))
 
         assert len(elements) == len(restored)
         assert elements != restored
