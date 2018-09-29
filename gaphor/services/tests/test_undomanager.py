@@ -109,7 +109,7 @@ class TestUndoManager(TestCase):
         undo_manager.init(Application)
 
         class A(Element):
-            attr = attribute('attr', types.StringType, default='default')
+            attr = attribute('attr', bytes, default='default')
 
         a = A()
         assert a.attr == 'default', a.attr

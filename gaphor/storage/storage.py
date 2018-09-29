@@ -90,7 +90,7 @@ def save_generator(writer, factory):
         if value is not None:
             writer.startElement(name, {})
             writer.startElement('val', {})
-            if isinstance(value, types.StringTypes):
+            if isinstance(value, (str,)):
                 writer.characters(value)
             elif isinstance(value, bool):
                 # Write booleans as 0/1.

@@ -339,7 +339,7 @@ class PropertiesTestCase(unittest.TestCase):
         import types
         class A(Element): pass
 
-        A.a = attribute('a', types.StringType, 'default')
+        A.a = attribute('a', bytes, 'default')
 
         a = A()
         assert a.a == 'default', a.a
@@ -382,7 +382,7 @@ class PropertiesTestCase(unittest.TestCase):
                 self.notified = name
 
         A.assoc = association('assoc', A)
-        A.attr = attribute('attr', types.StringType, 'default')
+        A.attr = attribute('attr', bytes, 'default')
         A.enum = enumeration('enum', ('one', 'two'), 'one')
 
         a = A()
