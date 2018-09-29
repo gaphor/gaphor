@@ -260,7 +260,7 @@ class Writer:
 
 def parse_association_name(name):
     # First remove spaces
-    name = name.replace(' ','')
+    name = name.replace(' ', '')
     derived = False
     # Check if this is a derived union
     while name and not name[0].isalpha():

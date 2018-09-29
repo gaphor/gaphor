@@ -73,7 +73,7 @@ def check_associations(element_factory):
 def check_attributes(element_factory):
     for a in element_factory.select(lambda e: e.isKindOf(UML.Property) and not e.association):
         if not a.typeValue or not a.typeValue.value:
-            report(a,'Attribute has no type: %s' % a.name)
+            report(a, 'Attribute has no type: %s' % a.name)
         elif a.typeValue.value.lower() not in ('string', 'boolean', 'integer', 'unlimitednatural'):
             report(a, 'Invalid attribute type: %s' % a.typeValue.value)
 

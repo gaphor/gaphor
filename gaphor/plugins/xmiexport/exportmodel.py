@@ -23,7 +23,7 @@ class XMIExport(object):
             if not idref:
                 self.handled_ids.append(element.id)
         except AttributeError as e:
-            log.warning('Missing handler for %s:%s'%(element.__class__.__name__,e))
+            log.warning('Missing handler for %s:%s'%(element.__class__.__name__, e))
         except Exception as e:
             log.error('Failed to handle %s:%s'%(element.__class__.__name__, e))
             

@@ -21,7 +21,7 @@ class StereotypeSupport(object):
     Support for stereotypes for every diagram item.
     """
     STEREOTYPE_ALIGN = {
-        'text-align'  : (ALIGN_CENTER, ALIGN_TOP),
+        'text-align': (ALIGN_CENTER, ALIGN_TOP),
         'text-padding': (5, 10, 2, 10),
         'text-outside': False,
         'text-align-group': 'stereotype',

@@ -35,7 +35,7 @@ class build_uml(Command):
     description = "Generate gaphor/UML/uml2.py."
 
     user_options = [
-        ('build-lib=','b', "build directory (where to install from)"),
+        ('build-lib=', 'b', "build directory (where to install from)"),
         ('force', 'f', "force installation (overwrite existing files)"),
         ]
 

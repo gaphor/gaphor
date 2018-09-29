@@ -130,7 +130,7 @@ def download_setuptools(
     `delay` is the number of seconds to pause before an actual download attempt.
     """
     import urllib2, shutil
-    egg_name = "setuptools-%s-py%s.egg" % (version,sys.version[:3])
+    egg_name = "setuptools-%s-py%s.egg" % (version, sys.version[:3])
     url = download_base + egg_name
     saveto = os.path.join(to_dir, egg_name)
     src = dst = None
@@ -159,7 +159,7 @@ and place it in this directory before rerunning this script.)
             # Read/write all in one block, so we don't create a corrupt file
             # if the download is interrupted.
             data = _validate_md5(egg_name, src.read())
-            dst = open(saveto,"wb"); dst.write(data)
+            dst = open(saveto, "wb"); dst.write(data)
         finally:
             if src: src.close()
             if dst: dst.close()
@@ -208,7 +208,7 @@ def main(argv, version=DEFAULT_VERSION):
         egg = None
         try:
             egg = download_setuptools(version, delay=0)
-            sys.path.insert(0,egg)
+            sys.path.insert(0, egg)
             from setuptools.command.easy_install import main
             return main(list(argv)+[egg])   # we're done here
         finally:
@@ -238,7 +238,7 @@ def main(argv, version=DEFAULT_VERSION):
             from setuptools.command.easy_install import main
             main(argv)
         else:
-            print "Setuptools version",version,"or greater has been installed."
+            print "Setuptools version", version, "or greater has been installed."
             print '(Run "ez_setup.py -U setuptools" to reinstall or upgrade.)'
 
 def update_md5(filenames):
@@ -248,7 +248,7 @@ def update_md5(filenames):
 
     for name in filenames:
         base = os.path.basename(name)
-        f = open(name,'rb')
+        f = open(name, 'rb')
         md5_data[base] = md5(f.read()).hexdigest()
         f.close()
 
@@ -265,7 +265,7 @@ def update_md5(filenames):
         sys.exit(2)
 
     src = src[:match.start(1)] + repl + src[match.end(1):]
-    f = open(srcfile,'w')
+    f = open(srcfile, 'w')
     f.write(src)
     f.close()
 

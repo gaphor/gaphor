@@ -108,46 +108,46 @@ class collection(object):
     def size(self):
         return len(self.items)
 
-    def includes(self,o):
+    def includes(self, o):
         return o in self.items
 
-    def excludes(self,o):
+    def excludes(self, o):
         return not self.includes(o)
 
-    def count(self,o):
+    def count(self, o):
         c=0
         for x in self.items:
             if x==o:
                 c=c+1
         return c
 
-    def includesAll(self,c):
+    def includesAll(self, c):
         for o in c:
             if o not in self.items:
                 return 0
         return 1
 
-    def excludesAll(self,c):
+    def excludesAll(self, c):
         for o in c:
             if o in self.items:
                 return 0
         return 1
 
-    def select(self,f):
+    def select(self, f):
         result=list()
         for v in self.items:
             if f(v):
                 result.append(v)
         return result
 
-    def reject(self,f):
+    def reject(self, f):
         result=list()
         for v in self.items:
             if not f(v):
                 result.append(v)
         return result
 
-    def collect(self,f):
+    def collect(self, f):
         result=list()
         for v in self.items:
             result.append(f(v))
@@ -165,7 +165,7 @@ class collection(object):
             r=r+o
         return o
     
-    def forAll(self,f):
+    def forAll(self, f):
         if not self.items or not inspect.getargspec(f)[0]:
             return True
 
@@ -196,7 +196,7 @@ class collection(object):
                     c=c-1
         return False
 
-    def exist(self,f):
+    def exist(self, f):
         if not self.items or not inspect.getargspec(f)[0]:
             return False
 

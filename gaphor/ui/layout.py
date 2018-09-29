@@ -36,7 +36,7 @@ SERIALIZABLE = ( DockFrame, DockPaned, DockGroup, DockItem )
 def serialize(layout):
     def _ser(widget, element):
         if isinstance(widget, SERIALIZABLE):
-            sub = SubElement(element, type(widget).__name__.lower() , attributes(widget))
+            sub = SubElement(element, type(widget).__name__.lower(), attributes(widget))
             widget.foreach(_ser, sub)
         else:
             sub = SubElement(element, 'widget', attributes(widget))

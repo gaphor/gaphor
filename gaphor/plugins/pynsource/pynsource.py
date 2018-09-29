@@ -119,7 +119,7 @@ class AndyBasicParseEngine(object):
             if i+1 < maxtokens:
                 self.nexttokentype, self.nexttoken = self.tokens[i+1]
             else:
-                self.nexttokentype, self.nexttoken = (0,None)
+                self.nexttokentype, self.nexttoken = (0, None)
 
             if self._Isblank():
                 continue
@@ -414,7 +414,7 @@ class HandleClassAttributes(HandleDefs):
             self.waitingfordot = 0
             self.waitingforsubsequentdot = 0
             self.waitingforequalsymbol = 0
-            if self.nexttoken.lower() in ('append','add','insert'):  # Case B
+            if self.nexttoken.lower() in ('append', 'add', 'insert'):  # Case B
                 # keep the class attribute name we have, wait till bracket
                 self.waitforappendopenbracket = 1
             elif self.currvarname in ('__class__',):  # Case C
@@ -703,7 +703,7 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
         if optionAlphabetic:
             classnames.sort()
         else:
-            def cmpfunc(a,b):
+            def cmpfunc(a, b):
                 if a.find('Module_') != -1:
                     return -1
                 else:
@@ -1117,7 +1117,7 @@ implementation
 
 end.
        """
-       return template%(aclass,aclass)
+       return template%(aclass, aclass)
 
 
 def run():
@@ -1160,7 +1160,7 @@ if __name__ == '__main__':
         def EnsurePathExists(outdir, outlanguagemsg):
             assert outdir, 'Need to specify output folder for %s output - got %s.'%(outlanguagemsg, outdir)
             if not os.path.exists(outdir):
-                raise RuntimeError, ('Output directory %s for %s file output does not exist.'%(outdir,outlanguagemsg))
+                raise RuntimeError, ('Output directory %s for %s file output does not exist.'%(outdir, outlanguagemsg))
 
         for optionvaluepair in listofoptionvaluepairs:
             if '-m' == optionvaluepair[0]:

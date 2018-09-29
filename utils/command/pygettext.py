@@ -532,8 +532,8 @@ def main():
         nodocstrings = {}
 
     options = Options()
-    locations = {'gnu' : options.GNU,
-                 'solaris' : options.SOLARIS,
+    locations = {'gnu': options.GNU,
+                 'solaris': options.SOLARIS,
                  }
 
     # parse options

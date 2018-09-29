@@ -165,7 +165,7 @@ def make(filename, outfile):
     output = generate()
 
     try:
-        open(outfile,"wb").write(output)
+        open(outfile, "wb").write(output)
     except IOError as msg:
         print >> sys.stderr, msg
                       

@@ -79,7 +79,7 @@ class Alignment(object):
         target_x= fitem.matrix[4]
         for item in items:
             x = target_x - item.matrix[4]
-            item.matrix.translate(x,0)
+            item.matrix.translate(x, 0)
             item.request_update()
 	
     @action(name='align-center', label='Center',
@@ -93,7 +93,7 @@ class Alignment(object):
 	center_x = fitem.matrix[4] + (fitem.width / 2)
         for item in items:
             x = center_x - (item.width / 2) - item.matrix[4]
-            item.matrix.translate(x,0)
+            item.matrix.translate(x, 0)
             item.request_update()
 	
     @action(name='align-right', label='Right',
@@ -105,7 +105,7 @@ class Alignment(object):
         target_x= fitem.matrix[4] + fitem.width
         for item in items:
             x = target_x - item.width - item.matrix[4]
-            item.matrix.translate(x,0)
+            item.matrix.translate(x, 0)
             item.request_update()
 
     @action(name='align-top', label='Top',
@@ -117,7 +117,7 @@ class Alignment(object):
         target_y = fitem.matrix[5]
         for item in items:
             y = target_y - item.matrix[5]
-            item.matrix.translate(0,y)
+            item.matrix.translate(0, y)
             item.request_update()
 	    
     @action(name='align-middle', label='Middle',
@@ -129,7 +129,7 @@ class Alignment(object):
         middle_y = fitem.matrix[5] + (fitem.height / 2)
         for item in items:
 	    y = middle_y - (item.height / 2) - item.matrix[5]
-            item.matrix.translate(0,y)
+            item.matrix.translate(0, y)
             item.request_update()
 	    
     @action(name='align-bottom', label='Bottom',
@@ -141,7 +141,7 @@ class Alignment(object):
         target_y = fitem.matrix[5] + fitem.height
         for item in items:
             y = target_y - item.height - item.matrix[5]
-            item.matrix.translate(0,y)
+            item.matrix.translate(0, y)
             item.request_update()
 	
 

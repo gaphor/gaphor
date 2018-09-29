@@ -77,7 +77,7 @@ class Browser(object):
         self.window.connect("delete_event", self.delete_event)
 
         # we will store the name, the type name, and the repr 
-        columns = [str,str,str]
+        columns = [str, str, str]
         self.treestore = gtk.TreeStore(*columns)
 
         # the otank tells us what object we put at each node in the tree
