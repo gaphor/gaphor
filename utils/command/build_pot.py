@@ -164,7 +164,7 @@ class build_pot(Command):
 	source_files = []
 	for p in self.packages:
 	    pathlist = p.split('.')
-	    path = apply(os.path.join, pathlist)
+	    path = os.path.join(*pathlist)
 	    source_files.extend(glob.glob(os.path.join(path, '*.py')))
 
 	# slurp through all the files
@@ -177,7 +177,7 @@ class build_pot(Command):
 		eater.set_filename(filename)
 		try:
 		    tokenize.tokenize(fp.readline, eater)
-		except tokenize.TokenError, e:
+		except tokenize.TokenError as e:
 		    print '%s: %s, line %d, column %d' % (
 			e[0], filename, e[1][0], e[1][1])
 	    finally:

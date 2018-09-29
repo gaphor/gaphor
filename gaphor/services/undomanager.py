@@ -57,7 +57,7 @@ class ActionStack(object):
         for action in self._actions:
             try:
                 action()
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while undoing action %s' % action, exc_info=True)
 
 
@@ -211,7 +211,7 @@ class UndoManager(object):
             with Transaction():
                 try:
                     errorous_tx.execute()
-                except Exception, e:
+                except Exception as e:
                     self.logger.error('Could not roolback transaction')
                     self.logger.error(e)
         finally:

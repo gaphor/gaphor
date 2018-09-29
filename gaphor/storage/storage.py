@@ -333,7 +333,7 @@ def load_generator(filename, factory):
         gaphor_version = loader.gaphor_version
         #elements = parser.parse(filename)
         #yield 100
-    except Exception, e:
+    except Exception as e:
         log.error('File could no be parsed', exc_info=True)
         raise
 
@@ -354,7 +354,7 @@ def load_generator(filename, factory):
                     yield percentage / 2 + 50
                 else:
                     yield percentage
-        except Exception, e:
+        except Exception as e:
             raise
         finally:
             if component_registry:
@@ -362,7 +362,7 @@ def load_generator(filename, factory):
 
         gc.collect()
         yield 100
-    except Exception, e:
+    except Exception as e:
         log.info('file %s could not be loaded' % filename)
         raise
 
@@ -522,7 +522,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                                 val = val.replace('\n', ' ')
                                 log.info('Special case: UML metamodel "%s %s"' % (key, val))
                         create_slot(key, val)
-                    except Exception, e:
+                    except Exception as e:
                         log.warning('Unable to process tagged value "%s" as key=value pair' % tv, exc_info=True)
 
         def find(messages, attr):
@@ -677,7 +677,7 @@ def version_0_14_0(elements, factory, gaphor_version):
                     assert len(applied) == len(data)
                     et.references['appliedStereotype'] = applied
 
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating stereotypes', exc_info=True)
 
 
@@ -701,7 +701,7 @@ def version_0_9_0(elements, factory, gaphor_version):
                     if elem.values.get('color'):
                         del elem.values['color']
 
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating from DiaCanvas2', exc_info=True)
 
 def version_0_7_2(elements, factory, gaphor_version):
@@ -730,7 +730,7 @@ def version_0_7_2(elements, factory, gaphor_version):
                             elements[newtv.id] = newtv
                             tvlist.append(newtv.id)
                         elem.references['taggedValue'] = tvlist
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating taggedValues', exc_info=True)
 
 
@@ -766,7 +766,7 @@ def version_0_7_1(elements, factory, gaphor_version):
                     if end1 and end2:
                         fix(end1, end2)
                         fix(end2, end1)
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating Association', exc_info=True)
 
 
@@ -786,7 +786,7 @@ def version_0_6_2(elements, factory, gaphor_version):
                             p.values['drawing-style'] = '0'
                         elif p.type == 'InterfaceItem':
                             p.values['drawing-style'] = '2'
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating InterfaceItems', exc_info=True)
 
 
@@ -805,7 +805,7 @@ def version_0_5_2(elements, factory, gaphor_version):
                     agg2 = a.memberEnd[1].aggregation
                     a.memberEnd[0].aggregation = agg2
                     a.memberEnd[1].aggregation = agg1
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while updating Association', exc_info=True)
 
 

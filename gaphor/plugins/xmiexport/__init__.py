@@ -57,7 +57,7 @@ class XMIExport(object):
             export = exportmodel.XMIExport(self.element_factory)
             try:
                 export.export(filename)
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while saving model to file %s: %s' % (filename, e))
 
 

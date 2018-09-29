@@ -86,7 +86,7 @@ class DiagramItemConnector(Connector.default):
                 adapter = component.queryMultiAdapter((sink.item, item), IConnect)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
-        except Exception, e:
+        except Exception as e:
             log.error('Error during connect', exc_info=True)
 
 

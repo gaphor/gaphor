@@ -456,7 +456,7 @@ class MainWindow(object):
     def _clear_ui_settings(self):
         try:
             ui_manager = self.ui_manager
-        except component.ComponentLookupError, e:
+        except component.ComponentLookupError as e:
             log.warning('No UI manager service found')
         else:
             if self._tab_ui_settings:

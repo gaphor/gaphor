@@ -51,11 +51,11 @@ def catchall(func):
     def catchall_wrapper(*args, **kwargs):
         try:
             func(*args, **kwargs)
-        except Exception, e:
+        except Exception as e:
             log.error('Exception in %s. Try to refresh the entire model' % (func,), exc_info=True)
             try:
                 args[0].refresh()
-            except Exception, e:
+            except Exception as e:
                 log.error('Failed to refresh')
             
     return catchall_wrapper
@@ -376,7 +376,7 @@ class NamespaceModel(gtk.GenericTreeModel):
             parent = self._nodes[node.namespace]
             index = parent.index(node)
             return parent[index + 1]
-        except (IndexError, ValueError), e:
+        except (IndexError, ValueError) as e:
             return None
 
         
@@ -394,7 +394,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         try:
             return self._nodes[node][0]
-        except (IndexError, KeyError), e:
+        except (IndexError, KeyError) as e:
             pass
 
 
@@ -412,7 +412,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         try:
             nodes = self._nodes[node]
             return nodes[n]
-        except TypeError, e:
+        except TypeError as e:
             return None
 
 
@@ -555,7 +555,7 @@ class NamespaceView(gtk.TreeView):
             tx = Transaction()
             element.name = new_text
             tx.commit()
-        except Exception, e:
+        except Exception as e:
             log.error('Could not create path from string "%s"' % path_str)
 
 
@@ -659,7 +659,7 @@ class NamespaceView(gtk.TreeView):
                     element.package = dest_element
                 tx.commit()
 
-            except AttributeError, e:
+            except AttributeError as e:
                 #log.info('Unable to drop data', e)
                 context.drop_finish(False, time)
             else:

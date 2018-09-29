@@ -119,7 +119,7 @@ class run(Command):
                     prof.dump_stats('gaphor.prof')
                     p = pstats.Stats('gaphor.prof')
                     p.strip_dirs().sort_stats('time').print_stats(20)
-                except ImportError, ex:
+                except ImportError as ex:
                     import hotshot, hotshot.stats
                     prof = hotshot.Profile('gaphor.prof')
                     prof.runcall(starter)

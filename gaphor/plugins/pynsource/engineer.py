@@ -89,7 +89,7 @@ class Engineer(object):
                 try:
                     superclass = self.parser.classlist[superclassname].gaphor_class
                     superclass_item = self.parser.classlist[superclassname].gaphor_class_item
-                except KeyError, e:
+                except KeyError as e:
                     print 'No class found named', superclassname
                     others = self.element_factory.lselect(lambda e: isinstance(e, UML.Class) and e.name == superclassname)
                     if others:
@@ -152,7 +152,7 @@ class Engineer(object):
         try:
             superclass = self.parser.classlist[classname].gaphor_class
             superclass_item = self.parser.classlist[classname].gaphor_class_item
-        except KeyError, e:
+        except KeyError as e:
             print 'No class found named', classname
             others = self.element_factory.lselect(lambda e: isinstance(e, UML.Class) and e.name == classname)
             if others:

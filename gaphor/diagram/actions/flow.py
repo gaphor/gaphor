@@ -43,7 +43,7 @@ class FlowItem(NamedLine):
     def postload(self):
         try:
             self._guard.text = self.subject.guard.value
-        except AttributeError, e:
+        except AttributeError as e:
             self._guard.text = ''
         super(FlowItem, self).postload()
 
@@ -52,7 +52,7 @@ class FlowItem(NamedLine):
         subject = self.subject
         try:
             self._guard.text = subject.guard if subject else ''
-        except AttributeError, e:
+        except AttributeError as e:
             self._guard.text = ''
         self.request_update()
 

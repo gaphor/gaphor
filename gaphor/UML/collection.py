@@ -181,7 +181,7 @@ class collection(object):
             args=[]
             for x in index:
                 args.append(self.items[x])
-            if not apply(f,args):
+            if not f(*args):
                 return False
             c=len(index)-1
             index[c]=index[c]+1
@@ -211,7 +211,7 @@ class collection(object):
             args=[]
             for x in index:
                 args.append(self.items[x])
-            if apply(f,args):
+            if f(*args):
                 return True
             c=len(index)-1
             index[c]=index[c]+1
@@ -241,9 +241,9 @@ class collection(object):
             if factory:
                 factory._handle(AssociationChangeEvent(self.object, self.property))
             return True
-        except IndexError, ex:
+        except IndexError as ex:
             return False
-        except ValueError, ex:
+        except ValueError as ex:
             return False
 
 

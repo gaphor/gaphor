@@ -303,7 +303,7 @@ class ElementDispatcher(object):
             for handler in handlers.iterkeys():
                 try:
                     handler(event)
-                except Exception, e:
+                except Exception as e:
                     self.logger.error('Problem executing handler %s' % handler)
                     self.logger.error(e)
         

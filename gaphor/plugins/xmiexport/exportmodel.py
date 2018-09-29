@@ -22,9 +22,9 @@ class XMIExport(object):
             handler(xmi, element, idref=idref)
             if not idref:
                 self.handled_ids.append(element.id)
-        except AttributeError, e:
+        except AttributeError as e:
             log.warning('Missing handler for %s:%s'%(element.__class__.__name__,e))
-        except Exception, e:
+        except Exception as e:
             log.error('Failed to handle %s:%s'%(element.__class__.__name__, e))
             
     def handlePackage(self, xmi, element, idref=False):

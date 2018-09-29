@@ -86,7 +86,7 @@ def layout_diagram(diag):
                 relations.append((item.handles[0].connected_to,
                                   item.handles[-1].connected_to))
                 primary_nodes.extend(relations[-1])
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
         elif isinstance(item, items.DiagramLine):
             # Secondary (associations, dependencies) may be drawn top-down
@@ -96,7 +96,7 @@ def layout_diagram(diag):
                                         item.handles[-1].connected_to))
                 #other_relations.append((item.handles[-1].connected_to,
                 #                        item.handles[0].connected_to))
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
         else:
             nodes.append(item)
@@ -172,7 +172,7 @@ def simple_layout_lines(diag):
             try:
                 lines[item] = (item.handles[0].connected_to,
                                item.handles[-1].connected_to)
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
 
     # Now we have the lines, let's first ensure we only have a begin and an
