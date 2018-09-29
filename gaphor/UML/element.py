@@ -118,7 +118,7 @@ class Element(object):
         """
         Returns true if the object is of the same type as other.
         """
-        return type(self) == type(other)
+        return isinstance(self, type(other))
 
 
     def __getstate__(self):

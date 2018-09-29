@@ -252,8 +252,7 @@ def update_md5(filenames):
         md5_data[base] = md5(f.read()).hexdigest()
         f.close()
 
-    data = ["    %r: %r,\n" % it for it in md5_data.items()]
-    data.sort()
+    data = sorted(["    %r: %r,\n" % it for it in md5_data.items()])
     repl = "".join(data)
 
     import inspect

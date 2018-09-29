@@ -246,7 +246,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                 raise
 
         for name, refids in elem.references.items():
-            if type(refids) == list:
+            if isinstance(refids, list):
                 for refid in refids:
                     try:
                         ref = elements[refid]
@@ -398,7 +398,7 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
     if version_lower_than(gaphor_version, (0, 14, 99)):
         # update associations
         values = (v for v in elements.values()
-                if type(v) is parser.element
+                if isinstance(v, parser.element)
                     and v.type == 'Property'
                     and 'association' in v.references)
         for et in values:
@@ -446,7 +446,7 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
 
         # - rename EventOccurrence to MessageOccurrenceSpecification
         values = (v for v in elements.values()
-                if type(v) is parser.element
+                if isinstance(v, parser.element)
                     and v.type == 'EventOccurrence')
         for et in values:
             et.type = 'MessageOccurrenceSpecification'
@@ -637,7 +637,7 @@ def version_0_17_0(elements, factory, gaphor_version):
         for e in elements.values():
             for name, ref in list(e.references.items()):
                 # ValueSpecifications are always defined in 1:1 relationships
-                if type(ref) != list and ref in valspecs:
+                if not isinstance(ref, list) and ref in valspecs:
                     del e.references[name]
                     assert not name in e.values
                     try:
@@ -656,7 +656,7 @@ def version_0_14_0(elements, factory, gaphor_version):
     """
     import uuid
     if version_lower_than(gaphor_version, (0, 14, 0)):
-        values = (v for v in elements.values() if type(v) is parser.element)
+        values = (v for v in elements.values() if isinstance(v, parser.element))
         for et in values:
             try:
                 if 'appliedStereotype' in et.references:
@@ -692,7 +692,7 @@ def version_0_9_0(elements, factory, gaphor_version):
     if version_lower_than(gaphor_version, (0, 9, 0)):
         for elem in elements.values():
             try:
-                if type(elem) is parser.canvasitem:
+                if isinstance(elem, parser.canvasitem):
                     # Rename affine to matrix
                     if elem.values.get('affine'):
                         elem.values['matrix'] = elem.values['affine']
@@ -716,7 +716,7 @@ def version_0_7_2(elements, factory, gaphor_version):
     if version_lower_than(gaphor_version, (0, 7, 2)):
         for elem in elements.values():
             try:
-                if type(elem) is parser.element \
+                if isinstance(elem, parser.element) \
                    and elem.type in ('Property', 'Parameter') \
                    and elem.taggedValue:
                     tvlist = []
@@ -778,7 +778,7 @@ def version_0_6_2(elements, factory, gaphor_version):
     if version_lower_than(gaphor_version, (0, 6, 2)):
         for elem in elements.values():
             try:
-                if type(elem) is parser.element and elem.type == 'Interface':
+                if isinstance(elem, parser.element) and elem.type == 'Interface':
                     for p_id in elem.presentation:
                         p = elements[p_id]
                         if p.type == 'ClassItem':

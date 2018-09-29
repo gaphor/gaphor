@@ -28,7 +28,7 @@ class ExtensionConnectorTestCase(TestCase):
         st = self.create(items.ClassItem, UML.Stereotype)
 
         # test precondition
-        assert type(st.subject) is UML.Stereotype
+        assert isinstance(st.subject, UML.Stereotype)
 
         # can connect extension item head to a Stereotype UML metaclass,
         # because it derives from Class UML metaclass

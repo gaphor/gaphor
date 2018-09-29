@@ -90,7 +90,7 @@ class querymixin(object):
             return super(querymixin, self).__getitem__(key)
         except TypeError:
             # Nope, try our matcher trick
-            if type(key) is tuple:
+            if isinstance(key, tuple):
                 key, remainder = key[0], key[1:]
             else:
                 remainder = None

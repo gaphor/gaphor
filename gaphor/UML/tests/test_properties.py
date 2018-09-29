@@ -607,15 +607,15 @@ class PropertiesTestCase(unittest.TestCase):
             a.b3 = A()
             assert len(events) == 13, len(events)
             assert events[10].property is A.derived_b
-            assert type(events[10]) is DerivedDeleteEvent, type(events[10])
+            assert isinstance(events[10], DerivedDeleteEvent), type(events[10])
             assert events[11].property is A.derived_b
-            assert type(events[11]) is DerivedAddEvent, type(events[11])
+            assert isinstance(events[11], DerivedAddEvent), type(events[11])
             assert events[12].property is A.b3
 
             del a.b3
             assert len(events) == 15, len(events)
             assert events[13].property is A.derived_b
-            assert type(events[13]) is DerivedDeleteEvent, type(events[10])
+            assert isinstance(events[13], DerivedDeleteEvent), type(events[10])
             assert events[14].property is A.b3
         finally:
             Application.unregister_handler(handler)

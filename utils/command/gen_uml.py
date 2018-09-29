@@ -348,7 +348,7 @@ def generate(filename, outfile=None, overridesfile=None):
             val.references[attr] = None
             return
 
-        if type(refs) is type([]):
+        if isinstance(refs, type([])):
             unrefs = []
             for r in refs:
                 unrefs.append(all_elements[r])

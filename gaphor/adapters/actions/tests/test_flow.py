@@ -341,7 +341,7 @@ class FlowItemDesisionAndForkNodes:
         a3 = self.create(items.ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.fork_node_cls)
 
-        assert type(jn.subject) is self.fork_node_cls
+        assert isinstance(jn.subject, self.fork_node_cls)
 
         # connect actions first
         self.connect(flow1, flow1.head, a1)
@@ -354,7 +354,7 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
 
         # node class changes
-        self.assertTrue(type(jn.subject) is self.join_node_cls)
+        self.assertTrue(isinstance(jn.subject, self.join_node_cls))
 
 
     def test_outgoing_edges(self):
@@ -382,10 +382,10 @@ class FlowItemDesisionAndForkNodes:
 
         # connect to the node
         self.connect(flow1, flow1.tail, jn)
-        self.assertTrue(type(jn.subject) is self.join_node_cls)
+        self.assertTrue(isinstance(jn.subject, self.join_node_cls))
 
         self.connect(flow2, flow2.head, jn)
-        self.assertTrue(type(jn.subject) is self.join_node_cls)
+        self.assertTrue(isinstance(jn.subject, self.join_node_cls))
 
         self.assertEquals(1, len(jn.subject.incoming))
         self.assertEquals(1, len(jn.subject.outgoing))
@@ -395,7 +395,7 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
         self.assertEquals(2, len(jn.subject.outgoing))
 
-        self.assertTrue(type(jn.subject) is self.fork_node_cls,
+        self.assertTrue(isinstance(jn.subject, self.fork_node_cls),
                 '%s' % jn.subject)
 
 
@@ -432,7 +432,7 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
 
         self.connect(flow4, flow4.tail, jn)
-        self.assertTrue(type(jn.subject) is self.join_node_cls)
+        self.assertTrue(isinstance(jn.subject, self.join_node_cls))
         self.assertTrue(jn.combined is not None)
 
         # check node combination

@@ -108,8 +108,7 @@ def toposort (nodes, routes, noRecursion=1):
     ### Now we do the actual sorting
     # The first task is to create the sortable
     # list of dependency-levels
-    sortinglist = dependencies.values()
-    sortinglist.sort ()
+    sortinglist = sorted(dependencies.values())
     output = []
     while sortinglist:
         deletelist = []

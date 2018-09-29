@@ -1029,8 +1029,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         for name, adapter in component.getAdapters([item,], IPropertyPage):
             adaptermap[name] = (adapter.order, name, adapter)
 
-        adapters = adaptermap.values()
-        adapters.sort()
+        adapters = sorted(adaptermap.values())
         return adapters
 
     def create_pages(self, item, vbox):

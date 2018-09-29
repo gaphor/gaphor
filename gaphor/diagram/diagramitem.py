@@ -115,7 +115,7 @@ class StereotypeSupport(object):
 
             ok = True
             if cls:
-                ok = type(subject) is cls #isinstance(subject, cls)
+                ok = isinstance(subject, cls) #isinstance(subject, cls)
             if predicate:
                 ok = predicate(self)
 

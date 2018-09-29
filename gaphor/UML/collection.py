@@ -177,7 +177,7 @@ class collection(object):
         nitems=len(self.items)
         index=[0]*nargs
         
-        while 1:
+        while True:
             args=[]
             for x in index:
                 args.append(self.items[x])
@@ -207,7 +207,7 @@ class collection(object):
         assert(nargs>0)
         nitems=len(self.items)
         index=[0]*nargs
-        while 1:
+        while True:
             args=[]
             for x in index:
                 args.append(self.items[x])
