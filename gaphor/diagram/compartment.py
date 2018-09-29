@@ -419,7 +419,7 @@ class CompartmentItem(NamedItem):
         local_elements = [f.subject for f in compartment]
 
         # map local element with compartment element
-        mapping = dict(zip(local_elements, compartment))
+        mapping = dict(list(zip(local_elements, compartment)))
 
         to_add = [el for el in elements if el not in local_elements]
 

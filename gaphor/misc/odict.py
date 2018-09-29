@@ -23,7 +23,7 @@ class odict(dict):
         return dict
 
     def items(self):
-        return zip(self._keys, self.values())
+        return list(zip(self._keys, self.values()))
 
     def keys(self):
         return self._keys
