@@ -162,6 +162,7 @@ import getopt
 import token
 import tokenize
 import operator
+from functools import reduce
 
 __version__ = '1.5'
 
