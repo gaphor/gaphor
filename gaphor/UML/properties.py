@@ -37,6 +37,12 @@ from interfaces import IElementChangeEvent, \
                        IAssociationChangeEvent, IAssociationSetEvent, \
                        IAssociationAddEvent, IAssociationDeleteEvent
 
+# Maintains Python 2 compatibility
+try:
+    from sys import intern
+except ImportError:
+    pass
+
 
 class umlproperty(object):
     """

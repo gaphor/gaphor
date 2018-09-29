@@ -20,6 +20,12 @@ from gaphas.geometry import distance_rectangle_point, distance_line_point
 from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
 
+# Maintains Python 2 compatibility
+try:
+    from sys import intern
+except ImportError:
+    pass
+
 
 class AssociationItem(NamedLine):
     """
