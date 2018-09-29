@@ -56,7 +56,7 @@ class run(Command):
 
         if self.command:
             print('Executing command: %s...' % self.command)
-            exec self.command
+            exec(self.command)
 
         elif self.doctest:
             print('Running doctest cases in module: %s...' % self.doctest)
