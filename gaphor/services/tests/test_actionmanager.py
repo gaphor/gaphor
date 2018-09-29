@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 import unittest
 
@@ -14,4 +15,4 @@ class ActionManagerTestCase(unittest.TestCase):
         Application.init()
         am = Application.get_service('action_manager')
         ui = am.ui_manager.get_ui()
-        print ui
+        print(ui)

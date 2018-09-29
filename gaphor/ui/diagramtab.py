@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import gtk
 from cairo import Matrix
 from zope import component
@@ -277,7 +278,7 @@ class DiagramTab(object):
 
 
     def _on_drag_drop(self, view, context, x, y, time):
-        print 'drag_drop on', context.targets
+        print('drag_drop on', context.targets)
         if self.VIEW_DND_TARGETS[0][0] in context.targets:
             target = gtk.gdk.atom_intern(self.VIEW_DND_TARGETS[0][0])
             view.drag_get_data(context, target, time)
@@ -292,7 +293,7 @@ class DiagramTab(object):
         """
         Handle data dropped on the canvas.
         """
-        print 'DND data received', view
+        print('DND data received', view)
         if data and data.format == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
             tool = self.toolbox.get_tool(data.data)
             tool.create_item((x, y))

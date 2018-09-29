@@ -4,6 +4,7 @@ Connector adapters.
 To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
+from __future__ import print_function
 
 from zope import interface, component
 from logging import getLogger
@@ -221,7 +222,7 @@ class CommentLineLineConnect(AbstractConnect):
                  and connected_to.subject is element.subject:
             return None
 
-        print 'Connecting', element, 'with', element.subject
+        print('Connecting', element, 'with', element.subject)
 
         # One end should be connected to a CommentItem:
         cls = items.CommentItem

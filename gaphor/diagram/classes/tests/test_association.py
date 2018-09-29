@@ -1,6 +1,7 @@
 """
 Unnit tests for AssociationItem.
 """
+from __future__ import print_function
 
 from zope import component
 from gaphor.diagram.interfaces import IConnect
@@ -75,10 +76,10 @@ class AssociationItemTestCase(TestCase):
         assert a.subject.memberEnd[0].name is None
 
         dispatcher = self.get_service('element_dispatcher')
-        print (a.subject.memberEnd[0], UML.Property.name) in dispatcher._handlers
-        print '*' * 60
+        print((a.subject.memberEnd[0], UML.Property.name) in dispatcher._handlers)
+        print('*' * 60)
         a.subject.memberEnd[0].name = 'blah'
-        print '*' * 60
+        print('*' * 60)
         self.diagram.canvas.update()
 
         assert a.head_end._name == '+ blah', a.head_end.get_name()

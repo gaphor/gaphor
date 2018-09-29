@@ -1,6 +1,7 @@
 """
 A GUI for the checkmodel plugin.
 """
+from __future__ import print_function
 
 import gobject
 import gtk
@@ -106,7 +107,7 @@ class CheckModelWindow(object):
     def on_row_activated(self, treeview, row, column):
         iter = self.model.get_iter(row)
         element = self.model.get_value(iter, PYELEMENT_COLUMN)
-        print 'Looking for element', element
+        print('Looking for element', element)
         if element.presentation:
             main_window = self.main_window
             presentation = element.presentation[0]

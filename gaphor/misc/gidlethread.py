@@ -11,6 +11,7 @@ QueueEmpty - raised when one tried to get a value of an empty queue
 QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
+from __future__ import print_function
 
 import sys
 import gobject
@@ -180,12 +181,12 @@ if __name__ == '__main__':
         while True:
             try:
                 cnt = queue.get()
-                print 'cnt =', cnt
+                print('cnt =', cnt)
             except QueueEmpty:
                 pass
             yield None
 
-    print 'Test 1: (should print range 0..22)'
+    print('Test 1: (should print range 0..22)')
     queue = Queue()
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
@@ -195,7 +196,7 @@ if __name__ == '__main__':
     s.start()
     s.wait(2)
 
-    print 'Test 2: (should only print 22)'
+    print('Test 2: (should only print 22)')
     queue = Queue(size=1)
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))

@@ -1,6 +1,7 @@
 """
 Activity control nodes.
 """
+from __future__ import print_function
 
 import math
 
@@ -334,7 +335,7 @@ class ForkNodeItem(Item, DiagramItem):
 
 
     def on_named_element_name(self, event):
-        print 'on_named_element_name', self.subject
+        print('on_named_element_name', self.subject)
         subject = self.subject
         if subject:
             self._name.text = subject.name

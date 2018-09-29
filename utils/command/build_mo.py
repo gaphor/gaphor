@@ -3,6 +3,7 @@
 
 Generate .mo files from po files.
 """
+from __future__ import print_function
 
 import os.path
 from distutils.core import Command
@@ -51,10 +52,10 @@ class build_mo(Command):
             self.mkpath(outdir)
 	    outfile = os.path.join(outdir, 'gaphor.mo')
 	    if self.force or newer(pofile, outfile):
-                print 'converting %s -> %s' % (pofile, outfile)
+                print('converting %s -> %s' % (pofile, outfile))
 		msgfmt.make(pofile, outfile)
             else:
-                print 'not converting %s (output up-to-date)' % pofile
+                print('not converting %s (output up-to-date)' % pofile)
 
 from distutils.command.build import build
 build.sub_commands.append(('build_mo', None))

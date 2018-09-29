@@ -7,6 +7,7 @@ load(filename)
 save(filename)
     store the current model in a file
 """
+from __future__ import print_function
 
 from cStringIO import StringIO, InputType
 from xml.sax.saxutils import escape
@@ -627,7 +628,7 @@ def version_0_17_0(elements, factory, gaphor_version):
         'InstanceValue', 'LiteralSpecification', 'LiteralUnlimitedNatural',
         'LiteralInteger', 'LiteralString', 'LiteralBoolean', 'LiteralNull' ]
     
-    print 'version', gaphor_version
+    print('version', gaphor_version)
     if version_lower_than(gaphor_version, (0, 17, 0)):
         valspecs = dict((v.id, v) for v in elements.values() if v.type in valspec_types)
 

@@ -1,9 +1,10 @@
+from __future__ import print_function
 
 from gaphor import UML
 from os import path
 
 def report(element, message):
-    print '%s: %s' % (type(element).__name__, message)
+    print('%s: %s' % (type(element).__name__, message))
 
 def get_subsets(tagged_value):
     subsets = []

@@ -24,6 +24,7 @@ do its job correctly.
 
 This is a simple rip-off of the override script used in PyGTK.
 """
+from __future__ import print_function
 
 
 import sys, string
@@ -85,7 +86,7 @@ class Overrides:
             elif words[0] == 'comment':
                 pass # ignore comments
             else:
-                print "Unknown word: '%s', line %d" (words[0], startline)
+                print("Unknown word: '%s', line %d" (words[0], startline))
                 raise SystemExit
 
     def has_override(self, key):

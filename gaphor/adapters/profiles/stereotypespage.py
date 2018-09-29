@@ -1,6 +1,7 @@
 """
 Stereotype property page.
 """
+from __future__ import print_function
 
 import gtk
 from gaphor.core import _, inject, transactional
@@ -66,7 +67,7 @@ class StereotypeAttributes(gtk.TreeStore):
         elif col == 1:
             self.set_slot_value(iter, value)
         else:
-            print 'col', col
+            print('col', col)
 
     def select_stereotype(self, iter):
         """

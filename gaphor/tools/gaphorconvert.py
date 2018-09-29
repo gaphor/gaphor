@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from __future__ import print_function
 import gaphor
 from gaphor.storage import storage
 import gaphor.UML as UML
@@ -31,7 +32,7 @@ def message(msg):
     """
     global options
     if options.verbose:
-        print >> sys.stderr, msg
+        print(msg, file=sys.stderr)
 
 
 usage = 'usage: %prog [options] file1 file2...'

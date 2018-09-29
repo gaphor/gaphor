@@ -3,6 +3,7 @@ This is the TreeView that is most common (for example: it is used
 in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 """
+from __future__ import print_function
 
 import logging
 import operator
@@ -426,12 +427,12 @@ class NamespaceModel(gtk.GenericTreeModel):
     # TreeDragDest
 
     def row_drop_possible(self, dest_path, selection_data):
-        print 'row_drop_possible', dest_path, selection_data
+        print('row_drop_possible', dest_path, selection_data)
         return True
 
 
     def drag_data_received(self, dest, selection_data):
-        print 'drag_data_received', dest_path, selection_data
+        print('drag_data_received', dest_path, selection_data)
 
 
 class NamespaceView(gtk.TreeView):
