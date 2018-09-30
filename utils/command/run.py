@@ -3,9 +3,13 @@ Command for running gaphor and tests directly from setup.py.
 """
 from __future__ import print_function
 
-import sys, os.path
+import os.path
+import sys
 from distutils.core import Command
+
+from past.builtins import execfile
 from pkg_resources import load_entry_point
+
 
 class run(Command):
 
@@ -47,8 +51,7 @@ class run(Command):
             self.run_command(cmd_name)
         #if self.build_lib not in sys.path:
             #sys.path.insert(0, self.build_lib)
-        
-        import gaphor
+
         #os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
         if self.coverage:
             import coverage
