@@ -6,11 +6,13 @@ Plan:
  - for assocation name and direction tag, use the same trick as is used
    for line ends.
 """
+from __future__ import division
 
 # TODO: for Association.postload(): in some cases where the association ends
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
+from past.utils import old_div
 from gaphor.diagram.textelement import text_extents, text_multiline
 from gaphas.state import reversible_property
 from gaphas import Item
@@ -473,7 +475,7 @@ class AssociationEnd(UML.Presentation):
         if dy == 0:
             rc = 1000.0 # quite a lot...
         else:
-            rc = dx / dy
+            rc = old_div(dx, dy)
         abs_rc = abs(rc)
         h = dx > 0 # right side of the box
         v = dy > 0 # bottom side

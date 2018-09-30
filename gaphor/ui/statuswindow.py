@@ -1,7 +1,9 @@
 
 """Defines a status window class for displaying the progress of
 a queue."""
+from __future__ import division
 
+from past.utils import old_div
 import gobject
 import pango
 import gtk
@@ -94,7 +96,7 @@ def progress_idle_handler(progress_bar, queue):
     except QueueEmpty:
         pass
     if percentage:
-        progress_bar.set_fraction(min(percentage / 100.0, 100.0))
+        progress_bar.set_fraction(min(old_div(percentage, 100.0), 100.0))
     return True
 
 def remove_idle_handler(window, idle_id):

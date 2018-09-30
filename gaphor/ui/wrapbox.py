@@ -1,4 +1,6 @@
+from __future__ import division
 
+from past.utils import old_div
 import gobject
 import gtk
 
@@ -29,10 +31,10 @@ class Wrapbox(gtk.Table):
             size_request = c.size_request()
             #print size_request
             max_width = max(max_width, size_request[0])
-        cols = allocation.width / (max_width or 1)
+        cols = old_div(allocation.width, (max_width or 1))
         if cols == 0:
             cols = 1
-        rows = len(children) / cols
+        rows = old_div(len(children), cols)
         if len(children) % cols:
             rows += 1
         return cols, rows

@@ -3,7 +3,9 @@ Control flow and object flow implementation.
 
 Contains also implementation to split flows using activity edge connectors.
 """
+from __future__ import division
 
+from past.utils import old_div
 from math import atan, pi, sin, cos
 
 from gaphor import UML
@@ -115,7 +117,7 @@ class ACItem(object):
 
         # get label size and move it so it is centered with circle
         w, h = self.get_size()
-        x, y = x - w / 2, y - h / 2
+        x, y = x - old_div(w, 2), y - old_div(h, 2)
         self._name.set_pos((x, y))
         self._name_bounds = (x, y, x + w, y + h)
 

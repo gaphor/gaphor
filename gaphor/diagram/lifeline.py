@@ -19,7 +19,9 @@ cannot be supported. Still, destruction event notation is shown at the
 bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.
 """
+from __future__ import division
 
+from past.utils import old_div
 from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG
@@ -46,7 +48,7 @@ class LifetimePort(LinePort):
         # keep message at the same distance from head or bottom of lifetime
         # line depending on situation
         height = self.end.y - self.start.y
-        if y / height < 0.5:
+        if old_div(y, height) < 0.5:
             delta = y - self.start.y
             align = 0
         else:

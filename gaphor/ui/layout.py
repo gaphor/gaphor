@@ -20,6 +20,8 @@
 
 
 from __future__ import absolute_import
+from __future__ import division
+from past.utils import old_div
 import sys
 
 from simplegeneric import generic
@@ -163,7 +165,7 @@ def dock_group_factory(parent, weight=None, name=None):
         group.set_name(name)
 
     if weight is not None:
-        parent.insert_item(group, weight=float(weight) / 100.)
+        parent.insert_item(group, weight=old_div(float(weight), 100.))
     else:
         parent.add(group)
 
@@ -184,7 +186,7 @@ def dock_paned_factory(parent, orientation, weight=None, name=None):
         paned.set_orientation(gtk.ORIENTATION_VERTICAL)
 
     if weight is not None:
-        item = parent.insert_item(paned, weight=float(weight) / 100.)
+        item = parent.insert_item(paned, weight=old_div(float(weight), 100.))
     else:
         parent.add(paned)
 

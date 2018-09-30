@@ -29,7 +29,9 @@ class name in the gaphor.diagram module.
 The generator parse_generator(filename, loader) may be used if the loading
 takes a long time. The yielded values are the percentage of the file read.
 """
+from __future__ import division
 
+from past.utils import old_div
 __all__ = [ 'parse', 'ParserException' ]
 
 import os
@@ -311,7 +313,7 @@ class ProgressGenerator(object):
             self.output.feed(block)
             block = self.input.read(self.block_size)
             read_size += len(block)
-            yield (read_size * 100) / self.file_size
+            yield old_div((read_size * 100), self.file_size)
 
 
 def parse_file(filename, parser):

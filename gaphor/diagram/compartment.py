@@ -1,7 +1,9 @@
 """
 Diagram item with compartments.
 """
+from __future__ import division
 
+from past.utils import old_div
 import logging
 
 import cairo
@@ -179,7 +181,7 @@ class Compartment(list):
         cr.translate(padding[1], padding[0])
         offset = 0
         if self.title:
-            text_align(cr, self.owner.width / 2.0, padding[0],
+            text_align(cr, old_div(self.owner.width, 2.0), padding[0],
                 self.title, font=self.font, align_y=1)
             offset += self.title_height + vspacing
         for item in self:
@@ -579,7 +581,7 @@ class CompartmentItem(NamedItem):
         
         # place offset at top of first comparement
         y -= header_height
-        y += vspacing / 2.0
+        y += old_div(vspacing, 2.0)
         for comp in compartments:
             item = comp.item_at(x, y)
             if item:

@@ -26,7 +26,9 @@ TODO:
  
 """
 from __future__ import print_function
+from __future__ import division
 
+from past.utils import old_div
 import gobject
 import gtk
 import math
@@ -1316,9 +1318,9 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
 
     def _on_horizontal_change(self, button):
         if button.get_active():
-            self.item.matrix.rotate(math.pi/2)
+            self.item.matrix.rotate(old_div(math.pi,2))
         else:
-            self.item.matrix.rotate(-math.pi/2)
+            self.item.matrix.rotate(old_div(-math.pi,2))
         self.item.request_update()
 
 component.provideAdapter(JoinNodePropertyPage, name='Properties')

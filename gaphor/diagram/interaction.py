@@ -1,7 +1,9 @@
 """
 Interaction diagram item.
 """
+from __future__ import division
 
+from past.utils import old_div
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
@@ -21,7 +23,7 @@ class InteractionItem(NamedItem):
         super(InteractionItem, self).draw(context)
         # draw pentagon
         w, h = self._header_size
-        h2 = h / 2.0
+        h2 = old_div(h, 2.0)
         cr.move_to(0, h)
         cr.line_to(w - 4, h)
         cr.line_to(w, h2)

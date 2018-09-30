@@ -1,7 +1,9 @@
 """
 This plugin extends Gaphor with XMI alignment actions.
 """
+from __future__ import division
 
+from past.utils import old_div
 from zope import interface, component
 from gaphor.core import inject, transactional, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
@@ -90,9 +92,9 @@ class Alignment(object):
         fitem = self.get_focused_item()
         min_x=min(self.getXCoordsLeft(items))
 	max_x=max(self.getXCoordsRight(items))
-	center_x = fitem.matrix[4] + (fitem.width / 2)
+	center_x = fitem.matrix[4] + (old_div(fitem.width, 2))
         for item in items:
-            x = center_x - (item.width / 2) - item.matrix[4]
+            x = center_x - (old_div(item.width, 2)) - item.matrix[4]
             item.matrix.translate(x, 0)
             item.request_update()
 	
@@ -126,9 +128,9 @@ class Alignment(object):
     def align_middle(self):
         items = self.get_items()
         fitem = self.get_focused_item()
-        middle_y = fitem.matrix[5] + (fitem.height / 2)
+        middle_y = fitem.matrix[5] + (old_div(fitem.height, 2))
         for item in items:
-	    y = middle_y - (item.height / 2) - item.matrix[5]
+	    y = middle_y - (old_div(item.height, 2)) - item.matrix[5]
             item.matrix.translate(0, y)
             item.request_update()
 	    

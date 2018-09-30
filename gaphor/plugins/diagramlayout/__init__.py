@@ -8,7 +8,9 @@ The layout is done like this:
  - The nodes are moved to their place
  - Lines are reconnected to the nodes, so everything looks pretty.
 """
+from __future__ import division
 
+from past.utils import old_div
 import random
 
 from zope import interface
@@ -137,9 +139,9 @@ def layout_diagram(diag):
                     row.append(other_item)
 
     # Place the nodes on the diagram.
-    y = MARGIN / 2
+    y = old_div(MARGIN, 2)
     for row in sorted:
-        x = MARGIN / 2
+        x = old_div(MARGIN, 2)
         maxy = 0
         for item in row:
             if not item:
@@ -191,7 +193,7 @@ def simple_layout_lines(diag):
             continue
         center0 = find_center(nodes[0])
         center1 = find_center(nodes[1])
-        center = (center0[0] + center1[0]) / 2.0, (center0[1] + center1[1]) / 2.0
+        center = old_div((center0[0] + center1[0]), 2.0), old_div((center0[1] + center1[1]), 2.0)
         line.handles[0].set_pos_w(*center)
         line.handles[-1].set_pos_w(*center)
         nodes[0].connect_handle(line.handles[0])
@@ -238,8 +240,8 @@ def find_center(item):
     """
     Find the center point of the item, in world coordinates
     """
-    x = item.width / 2.0
-    y = item.height / 2.0
+    x = old_div(item.width, 2.0)
+    y = old_div(item.height, 2.0)
     return item.canvas.get_matrix_i2c(item).transform_point(x, y)
 
 # vim:sw=4:et

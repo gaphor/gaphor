@@ -2,7 +2,9 @@
 Support for editable text, a part of a diagram item, i.e. name of named
 item, guard of flow item, etc.
 """
+from __future__ import division
 
+from past.utils import old_div
 import math
 
 import cairo, pango, pangocairo
@@ -67,13 +69,13 @@ def text_align(cr, x, y, text, font, width=-1, height=-1,
     w, h = layout.get_pixel_size()
 
     if align_x == 0:
-        x = 0.5 - (w / 2) + x
+        x = 0.5 - (old_div(w, 2)) + x
     elif align_x < 0:
         x = -w + x - padding_x
     else:
         x = x + padding_x
     if align_y == 0:
-        y = 0.5 - (h / 2) + y
+        y = 0.5 - (old_div(h, 2)) + y
     elif align_y < 0:
         y = -h + y - padding_y
     else:
@@ -288,7 +290,7 @@ class EditableTextSupport(object):
             if max_hint:
                 txt.bounds.x = x + max_hint - txt._hint
             else:
-                txt.bounds.x = x + (dw - width) / 2.0
+                txt.bounds.x = x + old_div((dw - width), 2.0)
             txt.bounds.y = y + dy
             dy += height
 
@@ -354,7 +356,7 @@ class EditableTextSupport(object):
 
         # fixme: do it on per group basis
         if any(txt._style.text_rotated for txt in self._get_visible_texts(self._texts)):
-            cr.rotate(-math.pi/2)
+            cr.rotate(old_div(-math.pi,2))
 
         if self.subject:
             for txt in self._get_visible_texts(self._texts):

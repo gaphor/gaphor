@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+from __future__ import division
+from past.utils import old_div
 import gtk
 from cairo import Matrix
 from zope import component
@@ -157,13 +159,13 @@ class DiagramTab(object):
 
     @action(name='diagram-zoom-out', stock_id='gtk-zoom-out')
     def zoom_out(self):
-        self.view.zoom(1 / 1.2)
+        self.view.zoom(old_div(1, 1.2))
 
 
     @action(name='diagram-zoom-100', stock_id='gtk-zoom-100')
     def zoom_100(self):
         zx = self.view.matrix[0]
-        self.view.zoom(1 / zx)
+        self.view.zoom(old_div(1, zx))
 
 
     @action(name='diagram-select-all', label='_Select all', accel='<Control>a')
