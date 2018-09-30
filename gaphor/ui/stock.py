@@ -126,19 +126,13 @@ def load_stock_icons():
     parser = make_parser()
     icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
     log.info('Icon dir: %s' % icon_dir)
-    #icon_dir = 'gaphor/data/pixmaps'
     loader = StockIconLoader(icon_dir)
 
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    filename = pkg_resources.resource_filename('gaphor.ui', 'icons.xml')
-    # Make the filename a full URL
-    filename = 'file:' + filename.replace('\\\\', '/')
-    #try:
+    filename = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'icons.xml'))
     parser.parse(filename)
-    #except IOError, e:
-    #    log.error('Unable to load icons', exc_info=True)
 
 #load_stock_icons()
 
