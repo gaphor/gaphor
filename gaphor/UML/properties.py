@@ -26,6 +26,8 @@ methods:
 
 __all__ = [ 'attribute', 'enumeration', 'association', 'derivedunion', 'redefine' ]
 
+import logging
+
 from zope import component
 
 from gaphor.UML.collection import collection, collectionlist
@@ -43,6 +45,8 @@ try:
     from sys import intern
 except ImportError:
     pass
+
+log = logging.getLogger(__name__)
 
 
 class umlproperty(object):
