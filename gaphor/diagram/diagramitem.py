@@ -13,6 +13,7 @@ from gaphor.core import inject
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
+from future.utils import with_metaclass
 
 logger = getLogger('Diagram')
 
@@ -125,7 +126,7 @@ class StereotypeSupport(object):
 
 
 
-class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
+class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentation, StereotypeSupport, EditableTextSupport), {}))):
     """
     Basic functionality for all model elements (lines and elements!).
 
@@ -145,8 +146,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
     @cvar style: styles information (derived from DiagramItemMeta)
     """
-
-    __metaclass__ = DiagramItemMeta
 
     dispatcher = inject('element_dispatcher')
 
