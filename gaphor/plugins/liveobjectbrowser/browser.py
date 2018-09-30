@@ -12,6 +12,7 @@ Description:
 Given an object, this tool throws up a gtk tree widget that maps all the references found. It dynamically builds the tree, which means it can handle large amounts of data and circular references.
 """
 
+from builtins import object
 import gtk
 
 class Browser(object):
@@ -109,7 +110,7 @@ def dump( name, value ):
     gtk.main()
 
 def test():
-    class Nil:
+    class Nil(object):
         pass
     a = Nil()
     b = Nil()

@@ -2,6 +2,7 @@
 Flow item connection adapters tests.
 """
 
+from builtins import object
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
@@ -286,7 +287,7 @@ class FlowItemActionTestCase(TestCase):
         self.assertEquals('tguard', flow.subject.guard)
 
 
-class FlowItemDesisionAndForkNodes:
+class FlowItemDesisionAndForkNodes(object):
     """
     Base class for flow connecting to decision and fork nodes.
     

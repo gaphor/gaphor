@@ -24,6 +24,7 @@ the last changes.
 """
 from __future__ import print_function
 
+from builtins import object
 import os.path
 import sys
 from distutils.core import Command
@@ -32,7 +33,7 @@ from utils.command import pygettext
 
 
 # from pygettext.main():
-class Options:
+class Options(object):
     # constants
     GNU = 1
     SOLARIS = 2

@@ -67,6 +67,7 @@ then the command is
 """
 from __future__ import print_function
 
+from builtins import object
 import os
 import pprint
 import token
@@ -167,7 +168,7 @@ class AndyBasicParseEngine(object):
         else:
             return 0
 
-class ClassEntry:
+class ClassEntry(object):
     def __init__(self):
         self.defs = []
         self.attrs = []
@@ -204,7 +205,7 @@ class ClassEntry:
         #if not self.FindAttribute(attrname):
         #    self.attrs.append(Attribute(attrname, attrtype))
 
-class Attribute:
+class Attribute(object):
     def __init__(self, attrname, attrtype='normal'):
         self.attrname = attrname
         self.attrtype = attrtype
@@ -1031,7 +1032,7 @@ class PySourceAsDelphi(PySourceAsText):
         pass
 
 
-class PythonToJava:
+class PythonToJava(object):
     def __init__(self, directories, treatmoduleasclass=0, verbose=0):
         self.directories = directories
         self.optionModuleAsClass = treatmoduleasclass

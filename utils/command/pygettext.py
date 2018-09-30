@@ -15,6 +15,7 @@
 
 # for selftesting
 from __future__ import print_function
+from builtins import object
 try:
     import fintl
     _ = fintl.gettext
@@ -355,7 +356,7 @@ def getFilesForName(name):
     return []
 
 
-class TokenEater:
+class TokenEater(object):
     def __init__(self, options):
         self.__options = options
         self.__messages = {}
@@ -514,7 +515,7 @@ def main():
         usage(1, msg)
 
     # for holding option values
-    class Options:
+    class Options(object):
         # constants
         GNU = 1
         SOLARIS = 2

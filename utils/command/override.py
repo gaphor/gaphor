@@ -27,9 +27,10 @@ This is a simple rip-off of the override script used in PyGTK.
 from __future__ import print_function
 
 
+from builtins import object
 import sys, string
 
-class Overrides:
+class Overrides(object):
 
     def __init__(self, filename=None):
         self.overrides = {}

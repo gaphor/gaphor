@@ -2,6 +2,7 @@
 Test the backup service.
 """
 
+from builtins import object
 import unittest
 from StringIO import StringIO
 from gaphor.storage import storage
@@ -9,7 +10,7 @@ from gaphor.application import Application
 from gaphor.misc.xmlwriter import XMLWriter
 
 #class BackupServiceTestCase(unittest.TestCase):
-class BackupServiceTestCase:
+class BackupServiceTestCase(object):
 
     services = ['element_factory', 'backup_service']
 

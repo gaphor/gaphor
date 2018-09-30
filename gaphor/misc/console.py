@@ -7,6 +7,7 @@
 #
 #import pygtk
 #pygtk.require('2.0')
+from builtins import object
 import gtk
 import gtk.gdk
 import code
@@ -20,7 +21,7 @@ banner = """Gaphor Interactive Python Console
 %s
 """ % sys.version
 
-class Completer:
+class Completer(object):
     """
     Taken from rlcompleter, with readline references stripped, and a
     local dictionary to use.
@@ -100,7 +101,7 @@ def get_class_members(klass):
 
 
 
-class OutputStream:
+class OutputStream(object):
     """
     A Multiplexing output stream.
     It can replace another stream, and tee output to the original stream and too

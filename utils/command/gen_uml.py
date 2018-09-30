@@ -35,6 +35,7 @@ Also a distutils tool, build_uml, is provided.
 # Recreate the model using some very dynamic class, so we can set all
 # attributes and traverse them to generate the data model.
 
+from builtins import object
 import sys
 
 from gaphor.storage.parser import parse, base, element
@@ -83,7 +84,7 @@ def msg(s):
     sys.stderr.flush()
 
 
-class Writer:
+class Writer(object):
 
     def __init__(self, filename, overrides=None):
         self.overrides = overrides
