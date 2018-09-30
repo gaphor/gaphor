@@ -127,14 +127,14 @@ class CopyService(object):
         # move pasted items a bit, so user can see result of his action :)
         # update items' matrix immediately
         # TODO: if it is new canvas, then let's not move, how to do it?
-        for item in self._new_items.values():
+        for item in list(self._new_items.values()):
             item.matrix.translate(10, 10)
             canvas.update_matrix(item)
 
         # solve internal constraints of items immediately as item.postload
         # reconnects items and all handles has to be in place
         canvas.solver.solve()
-        for item in self._new_items.values():
+        for item in list(self._new_items.values()):
             item.postload()
 
 
@@ -159,7 +159,7 @@ class CopyService(object):
 
         view.unselect_all()
 
-        for item in self._new_items.values():
+        for item in list(self._new_items.values()):
             view.select_item(item)
 
 

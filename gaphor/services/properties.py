@@ -81,14 +81,14 @@ class Properties(object):
     def _items(self):
         """Return an iterator for all stored properties."""
         
-        return self._resources.iteritems()
+        return iter(self._resources.items())
 
     def dump(self, stream=sys.stdout):
         """
         TODO: define resources that are persistent (have to be saved
         and loaded.
         """
-        pprint.pprint(self._resources.items(), stream)
+        pprint.pprint(list(self._resources.items()), stream)
 
     def get(self, key, default=_no_default):
         """Locate a property.
@@ -155,7 +155,7 @@ class FileBackend(object):
             with open(filename) as ifile:
                 data = ifile.read()
                 
-            for key, value in eval(data).iteritems():
+            for key, value in eval(data).items():
                 resource[key] = value
 
     def save(self, resource):

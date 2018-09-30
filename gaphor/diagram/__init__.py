@@ -95,11 +95,11 @@ class DiagramItemMeta(type):
         style = Style()
         for c in self.__bases__:
             if hasattr(c, 'style'):
-                for (name, value) in c.style.items():
+                for (name, value) in list(c.style.items()):
                     style.add(name, value)
 
         if '__style__' in data:
-            for (name, value) in data['__style__'].iteritems():
+            for (name, value) in data['__style__'].items():
                 style.add(name, value)
 
         self.style = style

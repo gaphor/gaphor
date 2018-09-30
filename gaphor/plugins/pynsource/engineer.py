@@ -53,20 +53,20 @@ class Engineer(object):
         self.diagram.package = self._root_package
 
         # Step 1: create the classes
-        for name, clazz in p.classlist.items():
+        for name, clazz in list(p.classlist.items()):
             print(type(clazz), dir(clazz))
             self._create_class(clazz, name)
             
         # Create generalization relationships:
-        for name, clazz in p.classlist.items():
+        for name, clazz in list(p.classlist.items()):
             self._create_generalization(clazz)
         
         # Create attributes (and associations) on the classes
-        for name, clazz in p.classlist.items():
+        for name, clazz in list(p.classlist.items()):
             self._create_attributes(clazz)
 
         # Create operations
-        for name, clazz in p.classlist.items():
+        for name, clazz in list(p.classlist.items()):
             self._create_methods(clazz)
 
         self.diagram_layout.layout_diagram(self.diagram)

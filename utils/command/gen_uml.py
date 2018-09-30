@@ -172,12 +172,12 @@ class Writer(object):
         elif eval(a.isDerived or '0'):
             msg('ignoring derived attribute %s.%s: no definition' % (a.class_name, a.name))
         elif type.endswith('Kind') or type.endswith('Sort'):
-            e = filter(lambda e: e['name'] == type, enumerations.values())[0]
+            e = filter(lambda e: e['name'] == type, list(enumerations.values()))[0]
             self.write_property("%s.%s" % (a.class_name, a.name),
                                 "enumeration('%s', %s, '%s')" % (a.name, e.enumerates, default or e.enumerates[0]))
         else:
             if params:
-                attribute = "attribute('%s', %s, %s)" % (a.name, type, ', '.join(map('='.join, params.items())))
+                attribute = "attribute('%s', %s, %s)" % (a.name, type, ', '.join(map('='.join, list(params.items()))))
             else:
                 attribute = "attribute('%s', %s)" % (a.name, type)
             self.write_property("%s.%s" % (a.class_name, a.name), attribute)
@@ -369,7 +369,7 @@ def generate(filename, outfile=None, overridesfile=None):
     properties = { }
     operations = { }
     extensions = { } # for identifying metaclasses
-    for key, val in all_elements.items():
+    for key, val in list(all_elements.items()):
         # Find classes, *Kind (enumerations) are given special treatment
         if isinstance(val, element):
             if val.type == 'Class' and val.get('name'):
@@ -408,7 +408,7 @@ def generate(filename, outfile=None, overridesfile=None):
                 extensions[key] = val
 
     # find inheritance relationships
-    for g in generalizations.values():
+    for g in list(generalizations.values()):
         #assert g.specific and g.general
         specific = g['specific']
         general = g['general']
@@ -416,7 +416,7 @@ def generate(filename, outfile=None, overridesfile=None):
         classes[general].specialization.append(classes[specific])
 
     # add values to enumerations:
-    for e in enumerations.values():
+    for e in list(enumerations.values()):
         values = []
         for key in e['ownedAttribute']:
             values.append(str(properties[key]['name']))
@@ -424,7 +424,7 @@ def generate(filename, outfile=None, overridesfile=None):
 
     # Remove metaclasses from classes dict
     # should check for Extension.memberEnd<Property>.type
-    for e in extensions.values():
+    for e in list(extensions.values()):
         ends = []
         for end in e.memberEnd:
             end = all_elements[end]
@@ -441,7 +441,7 @@ def generate(filename, outfile=None, overridesfile=None):
     writer.write(header)
 
     # Tag classes with appliedStereotype
-    for c in classes.values():
+    for c in list(classes.values()):
         if c.get('appliedStereotype'):
             # Figure out stereotype name through
             # Class.appliedStereotype.classifier.name
@@ -463,7 +463,7 @@ def generate(filename, outfile=None, overridesfile=None):
     ignored_classes = set()
 
     # create class definitions, not for SimpleAttribute
-    for c in classes.values():
+    for c in list(classes.values()):
         if c.stereotypeName == 'SimpleAttribute':
             ignored_classes.add(c)
         else:
@@ -471,7 +471,7 @@ def generate(filename, outfile=None, overridesfile=None):
  
     # create attributes and enumerations
     derivedattributes = { }
-    for c in [c for c in classes.values() if c not in ignored_classes]:
+    for c in [c for c in list(classes.values()) if c not in ignored_classes]:
         for p in c.get('ownedAttribute') or []:
             a = properties.get(p)
             # set class_name, since write_attribute depends on it
@@ -485,7 +485,7 @@ def generate(filename, outfile=None, overridesfile=None):
     # create associations, derivedunions are held back
     derivedunions = { } # indexed by name in stead of id
     redefines = [ ]
-    for a in associations.values():
+    for a in list(associations.values()):
         ends = []
         # Resolve some properties:
         for end in a.memberEnd:
@@ -523,7 +523,7 @@ def generate(filename, outfile=None, overridesfile=None):
 
 
     # create derived unions, first link the association ends to the d
-    for a in (v for v in properties.values() if v.subsets):
+    for a in (v for v in list(properties.values()) if v.subsets):
         for s in a.subsets or ():
             try:
                 if a.type not in ignored_classes:
@@ -535,10 +535,10 @@ def generate(filename, outfile=None, overridesfile=None):
     # TODO: We should do something smart here, since derived attributes (mostly)
     #       may depend on other derived attributes or associations.
 
-    for d in derivedattributes.values():
+    for d in list(derivedattributes.values()):
         writer.write_attribute(d)
 
-    for d in derivedunions.values():
+    for d in list(derivedunions.values()):
         writer.write_derivedunion(d)
 
     for r in redefines or ():
@@ -546,7 +546,7 @@ def generate(filename, outfile=None, overridesfile=None):
         writer.write_redefine(r)
 
     # create operations
-    for c in [c for c in classes.values() if c not in ignored_classes]:
+    for c in [c for c in list(classes.values()) if c not in ignored_classes]:
         for p in c.get('ownedOperation') or ():
             o = operations.get(p)
             o.class_name = c['name']

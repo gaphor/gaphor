@@ -167,7 +167,7 @@ class GaphorLoader(handler.ContentHandler):
         if state == GAPHOR:
             id = attrs['id']
             e = element(id, name)
-            assert id not in self.elements.keys(), '%s already defined' % (id)#, self.elements[id])
+            assert id not in list(self.elements.keys()), '%s already defined' % (id)#, self.elements[id])
             self.elements[id] = e
             self.push(e, name == 'Diagram' and DIAGRAM or ELEMENT)
 
@@ -181,7 +181,7 @@ class GaphorLoader(handler.ContentHandler):
         elif state in (CANVAS, ITEM) and name == 'item':
             id = attrs['id']
             c = canvasitem(id, attrs['type'])
-            assert id not in self.elements.keys(), '%s already defined' % id
+            assert id not in list(self.elements.keys()), '%s already defined' % id
             self.elements[id] = c
             self.peek().canvasitems.append(c)
             self.push(c, ITEM)
@@ -243,7 +243,7 @@ class GaphorLoader(handler.ContentHandler):
     def startElementNS(self, name, qname, attrs):
         if not name[0] or name[0] == XMLNS:
             a = { }
-            for key, val in attrs.items():
+            for key, val in list(attrs.items()):
                 a[key[1]] = val
             self.startElement(name[1], a)
 

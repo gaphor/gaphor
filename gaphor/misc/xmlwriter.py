@@ -96,7 +96,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
 
     def startElement(self, name, attrs):
         self._write(name, start_tag=True)
-        for (name, value) in attrs.items():
+        for (name, value) in list(attrs.items()):
             self._out.write(' %s=%s' % (name, quoteattr(value)))
 
     def endElement(self, name):
@@ -112,7 +112,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
                 self._out.write(' xmlns="%s"' % uri)
         self._undeclared_ns_maps = []
 
-        for (name, value) in attrs.items():
+        for (name, value) in list(attrs.items()):
             self._out.write(' %s=%s' % (self._qname(name), quoteattr(value)))
 
     def endElementNS(self, name, qname):

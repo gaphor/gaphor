@@ -23,7 +23,7 @@ class odict(dict):
         return dict
 
     def items(self):
-        return list(zip(self._keys, self.values()))
+        return list(zip(self._keys, list(self.values())))
 
     def keys(self):
         return self._keys
@@ -45,7 +45,7 @@ class odict(dict):
 
     def update(self, dict):
         dict.update(self, dict)
-        for key in dict.keys():
+        for key in list(dict.keys()):
             if key not in self._keys: self._keys.append(key)
 
     def values(self):

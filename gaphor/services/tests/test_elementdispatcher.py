@@ -27,7 +27,7 @@ class ElementDispatcherTestCase(TestCase):
         element = UML.Class()
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
         assert len(dispatcher._handlers) == 1
-        assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
+        assert list(dispatcher._handlers.keys())[0] == (element, UML.Class.ownedOperation)
 
         # Add some properties:
 
@@ -126,7 +126,7 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher.register_handler(self._handler, element, 'guard.specification')
         assert len(dispatcher._handlers) == 2
         assert not self.events
-        assert (element.guard, UML.Constraint.specification) in dispatcher._handlers.keys(), dispatcher._handlers.keys()
+        assert (element.guard, UML.Constraint.specification) in list(dispatcher._handlers.keys()), list(dispatcher._handlers.keys())
 
         g.specification = 'x'
         assert len(self.events) == 1, self.events
@@ -134,7 +134,7 @@ class ElementDispatcherTestCase(TestCase):
         element.guard = UML.Constraint()
         assert len(self.events) == 2, self.events
         assert len(dispatcher._handlers) == 2, len(dispatcher._handlers)
-        assert (element.guard, UML.Constraint.specification) in dispatcher._handlers.keys()
+        assert (element.guard, UML.Constraint.specification) in list(dispatcher._handlers.keys())
 
 
     def test_notification_of_change(self):
@@ -182,7 +182,7 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher.register_handler(self._handler, element, 'guard.specification')
         assert len(dispatcher._handlers) == 2
         assert not self.events
-        assert (element.guard, UML.Constraint.specification) in dispatcher._handlers.keys(), dispatcher._handlers.keys()
+        assert (element.guard, UML.Constraint.specification) in list(dispatcher._handlers.keys()), list(dispatcher._handlers.keys())
 
         g.specification = 'x'
         assert len(self.events) == 1, self.events

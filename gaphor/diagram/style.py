@@ -63,14 +63,14 @@ class Style(object):
         setattr(self, name, value)
 
     def update(self, style):
-        for name, value in style.items():
+        for name, value in list(style.items()):
             self.add(name, value)
 
     def items(self):
         """
         Return iterator of (name, value) style information items.
         """
-        return self.__dict__.iteritems()
+        return iter(self.__dict__.items())
 
 
 def get_min_size(width, height, padding):

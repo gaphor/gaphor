@@ -105,7 +105,7 @@ class StockIconLoader(handler.ContentHandler):
     def startElementNS(self, name, qname, attrs):
         if not name[0] or name[0] == XMLNS:
             a = { }
-            for key, val in attrs.items():
+            for key, val in list(attrs.items()):
                 a[key[1]] = val
             self.startElement(name[1], a)
 

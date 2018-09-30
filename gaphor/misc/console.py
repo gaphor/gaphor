@@ -56,7 +56,7 @@ class Completer(object):
         import keyword
         matches = []
         n = len(text)
-        for list in [keyword.kwlist, __builtin__.__dict__.keys(), __main__.__dict__.keys(), self.locals.keys()]:
+        for list in [keyword.kwlist, list(__builtin__.__dict__.keys()), list(__main__.__dict__.keys()), list(self.locals.keys())]:
             for word in list:
                 if word[:n] == text and word != "__builtins__":
                     matches.append(word)

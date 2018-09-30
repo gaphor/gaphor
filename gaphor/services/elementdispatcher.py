@@ -58,7 +58,7 @@ class EventWatcher(object):
         dispatcher = self.element_dispatcher
         element = self.element
         
-        for path, handler in self._watched_paths.iteritems():
+        for path, handler in self._watched_paths.items():
             
             #self.logger.debug('Path is %s' % path)
             #self.logger.debug('Handler is %s' % handler)
@@ -76,7 +76,7 @@ class EventWatcher(object):
         
         dispatcher = self.element_dispatcher
         
-        for path, handler in self._watched_paths.iteritems():
+        for path, handler in self._watched_paths.items():
             
             #self.logger.debug('Path is %s' % path)
             #self.logger.debug('Handler is %s' % handler)
@@ -300,7 +300,7 @@ class ElementDispatcher(object):
             #    log.debug('    old value: %s' % (event.old_value))
             #if hasattr(event, 'new_value'):
             #    log.debug('    new value: %s' % (event.new_value))
-            for handler in handlers.iterkeys():
+            for handler in handlers.keys():
                 try:
                     handler(event)
                 except Exception as e:
@@ -310,7 +310,7 @@ class ElementDispatcher(object):
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
             if IAssociationSetEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in handlers.items():
                     if remainders and event.old_value:
                         for remainder in remainders:
                             self._remove_handlers(event.old_value, remainder[0], handler)
@@ -318,11 +318,11 @@ class ElementDispatcher(object):
                         for remainder in remainders:
                             self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationAddEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationDeleteEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
@@ -333,8 +333,8 @@ class ElementDispatcher(object):
         #self.logger.info('Handling IModelFactoryEvent')
         #self.logger.debug('Event is %s' % event)
         
-        for key, value in self._handlers.items():
-            for h, remainders in value.items():
+        for key, value in list(self._handlers.items()):
+            for h, remainders in list(value.items()):
                 for remainder in remainders:
                     self._add_handlers(key[0], (key[1],) + remainder, h)
 #        for h in self._reverse.iterkeys():

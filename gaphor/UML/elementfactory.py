@@ -93,10 +93,10 @@ class ElementFactory(object):
         Iterate elements that comply with expression.
         """
         if expression is None:
-            for e in self._elements.itervalues():
+            for e in self._elements.values():
                 yield e
         else:
-            for e in self._elements.itervalues():
+            for e in self._elements.values():
                 if expression(e):
                     yield e
 
@@ -112,28 +112,28 @@ class ElementFactory(object):
         """
         Return a list with all id's in the factory.
         """
-        return self._elements.keys()
+        return list(self._elements.keys())
 
 
     def iterkeys(self):
         """
         Return a iterator with all id's in the factory.
         """
-        return self._elements.iterkeys()
+        return iter(self._elements.keys())
 
 
     def values(self):
         """
         Return a list with all elements in the factory.
         """
-        return self._elements.values()
+        return list(self._elements.values())
 
 
     def itervalues(self):
         """
         Return a iterator with all elements in the factory.
         """
-        return self._elements.itervalues()
+        return iter(self._elements.values())
 
 
     def is_empty(self):
@@ -171,7 +171,7 @@ class ElementFactory(object):
             pass
 
     def swap_element(self, element, new_class):
-	assert element in self._elements.values()
+	assert element in list(self._elements.values())
         if element.__class__ is not new_class:
             element.__class__ = new_class
 

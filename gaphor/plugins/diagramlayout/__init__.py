@@ -180,14 +180,14 @@ def simple_layout_lines(diag):
 
     # Now we have the lines, let's first ensure we only have a begin and an
     # end handle
-    for line in lines.keys():
+    for line in list(lines.keys()):
         while len(line.handles) > 2:
             line.set_property('del_segment', 0)
 
     # Strategy 1:
     # Now we have nice short lines. Let's move them to a point between
     # both nodes and let the connect() do the work:
-    for line, nodes in lines.items():
+    for line, nodes in list(lines.items()):
         if not nodes[0] or not nodes[1]:
             # loose end
             continue
@@ -204,7 +204,7 @@ def uniq(lst):
     d = {}
     for l in lst:
         d[l] = None
-    return d.keys()
+    return list(d.keys())
 
 
 def find_related_nodes(item, relations):

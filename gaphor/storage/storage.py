@@ -157,7 +157,7 @@ def save_generator(writer, factory):
 
     size = factory.size()
     n = 0
-    for e in factory.values():
+    for e in list(factory.values()):
         clazz = e.__class__.__name__
         assert e.id
         writer.startElement(clazz, { 'id': str(e.id) })
@@ -220,7 +220,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
             assert canvas.get_parent(item.element) is parent
             create_canvasitems(canvas, item.canvasitems, parent=item.element)
 
-    for id, elem in elements.items():
+    for id, elem in list(elements.items()):
         st = update_status_queue()
         if st: yield st
         if isinstance(elem, parser.element):
@@ -234,21 +234,21 @@ def load_elements_generator(elements, factory, gaphor_version=None):
             raise ValueError('Item with id "%s" and type %s can not be instantiated' % (id, type(elem)))
 
     # load attributes and create references:
-    for id, elem in elements.items():
+    for id, elem in list(elements.items()):
         st = update_status_queue()
         if st: yield st
         # Ensure that all elements have their element instance ready...
         assert hasattr(elem, 'element')
 
         # load attributes and references:
-        for name, value in elem.values.items():
+        for name, value in list(elem.values.items()):
             try:
                 elem.element.load(name, value)
             except:
                 log.error('Loading value %s (%s) for element %s failed.' % (name, value, elem.element))
                 raise
 
-        for name, refids in elem.references.items():
+        for name, refids in list(elem.references.items()):
             if isinstance(refids, list):
                 for refid in refids:
                     try:
@@ -295,7 +295,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         d.canvas.block_updates = False
 
     # do a postload:
-    for id, elem in elements.items():
+    for id, elem in list(elements.items()):
         st = update_status_queue()
         if st: yield st
         elem.element.postload()
@@ -400,7 +400,7 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
     ATTRS = set(['class_', 'interface_', 'actor', 'useCase', 'owningAssociation'])
     if version_lower_than(gaphor_version, (0, 14, 99)):
         # update associations
-        values = (v for v in elements.values()
+        values = (v for v in list(elements.values())
                 if isinstance(v, parser.element)
                     and v.type == 'Property'
                     and 'association' in v.references)
@@ -435,7 +435,7 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
                 assoc.references['ownedEnd'].append(et.id)
 
         # - get rid of tagged values
-        for e in elements.values():
+        for e in list(elements.values()):
             if 'taggedValue' in e.references:
                 taggedvalue = [elements[i].values['value'] for i in e.references['taggedValue'] if elements[i].values.get('value')]
                 #convert_tagged_value(e, elements, factory)
@@ -448,7 +448,7 @@ def version_0_15_0_pre(elements, factory, gaphor_version):
                 del e.references['taggedValue']
 
         # - rename EventOccurrence to MessageOccurrenceSpecification
-        values = (v for v in elements.values()
+        values = (v for v in list(elements.values())
                 if isinstance(v, parser.element)
                     and v.type == 'EventOccurrence')
         for et in values:
@@ -467,7 +467,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
     if version_lower_than(gaphor_version, (0, 14, 99)):
         stereotypes = {}
         profile = None
-        for e in elements.values():
+        for e in list(elements.values()):
             if hasattr(e, 'taggedvalue'):
                 if not profile:
                     profile = factory.create(UML.Profile)
@@ -547,20 +547,20 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                 r.covered = rl
                 m.receiveEvent = r
 
-        for e in elements.values():
+        for e in list(elements.values()):
             if e.type == 'MessageItem':
                 msg = e.element
                 send = msg.subject.sendEvent
                 receive = msg.subject.receiveEvent
 
                 if not send:
-                    send = find(msg._messages.keys(), 'sendEvent')
+                    send = find(list(msg._messages.keys()), 'sendEvent')
                 if not receive:
-                    receive = find(msg._messages.keys(), 'receiveEvent')
+                    receive = find(list(msg._messages.keys()), 'receiveEvent')
                 if not send:
-                    send = find(msg._inverted_messages.keys(), 'reveiveEvent')
+                    send = find(list(msg._inverted_messages.keys()), 'reveiveEvent')
                 if not receive:
-                    receive = find(msg._inverted_messages.keys(), 'sendEvent')
+                    receive = find(list(msg._inverted_messages.keys()), 'sendEvent')
 
                 sl = send.covered if send else None
                 rl = receive.covered if receive else None
@@ -588,7 +588,7 @@ def convert_tagged_value(element, elements, factory):
       item -> InstanceSpecification -> Slot -> Attribute -> Stereotype
     """
     import uuid
-    diagrams = [e for e in elements.values() if e.type == 'Diagram']
+    diagrams = [e for e in list(elements.values()) if e.type == 'Diagram']
 
     presentation = element.get('presentation') or []
     tv = [elements[i] for i in element.references['taggedValue']]
@@ -632,12 +632,12 @@ def version_0_17_0(elements, factory, gaphor_version):
     
     print('version', gaphor_version)
     if version_lower_than(gaphor_version, (0, 17, 0)):
-        valspecs = dict((v.id, v) for v in elements.values() if v.type in valspec_types)
+        valspecs = dict((v.id, v) for v in list(elements.values()) if v.type in valspec_types)
 
-        for id in valspecs.keys():
+        for id in list(valspecs.keys()):
             del elements[id]
 
-        for e in elements.values():
+        for e in list(elements.values()):
             for name, ref in list(e.references.items()):
                 # ValueSpecifications are always defined in 1:1 relationships
                 if not isinstance(ref, list) and ref in valspecs:
@@ -659,7 +659,7 @@ def version_0_14_0(elements, factory, gaphor_version):
     """
     import uuid
     if version_lower_than(gaphor_version, (0, 14, 0)):
-        values = (v for v in elements.values() if isinstance(v, parser.element))
+        values = (v for v in list(elements.values()) if isinstance(v, parser.element))
         for et in values:
             try:
                 if 'appliedStereotype' in et.references:
@@ -693,7 +693,7 @@ def version_0_9_0(elements, factory, gaphor_version):
     This function is called before the actual elements are constructed.
     """
     if version_lower_than(gaphor_version, (0, 9, 0)):
-        for elem in elements.values():
+        for elem in list(elements.values()):
             try:
                 if isinstance(elem, parser.canvasitem):
                     # Rename affine to matrix
@@ -717,7 +717,7 @@ def version_0_7_2(elements, factory, gaphor_version):
     import uuid
 
     if version_lower_than(gaphor_version, (0, 7, 2)):
-        for elem in elements.values():
+        for elem in list(elements.values()):
             try:
                 if isinstance(elem, parser.element) \
                    and elem.type in ('Property', 'Parameter') \
@@ -760,7 +760,7 @@ def version_0_7_1(elements, factory, gaphor_version):
 
     if version_lower_than(gaphor_version, (0, 7, 1)):
         log.info('Fix navigability of Associations (file version: %s)' % gaphor_version)
-        for elem in elements.values():
+        for elem in list(elements.values()):
             try:
                 if elem.type == 'Association':
                     asc = elem.element
@@ -779,7 +779,7 @@ def version_0_6_2(elements, factory, gaphor_version):
     a InterfaceItem. Now only InterfaceItems are used.
     """
     if version_lower_than(gaphor_version, (0, 6, 2)):
-        for elem in elements.values():
+        for elem in list(elements.values()):
             try:
                 if isinstance(elem, parser.element) and elem.type == 'Interface':
                     for p_id in elem.presentation:
@@ -800,7 +800,7 @@ def version_0_5_2(elements, factory, gaphor_version):
     """
     if version_lower_than(gaphor_version, (0, 5, 2)):
         log.info('Fix composition on Associations (file version: %s)' % gaphor_version)
-        for elem in elements.values():
+        for elem in list(elements.values()):
             try:
                 if elem.type == 'Association':
                     a = elem.element

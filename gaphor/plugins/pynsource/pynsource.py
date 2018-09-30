@@ -702,7 +702,7 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
         self._DumpModuleMethods()
 
         optionAlphabetic = 0
-        classnames = self.classlist.keys()
+        classnames = list(self.classlist.keys())
         if optionAlphabetic:
             classnames.sort()
         else:
@@ -830,7 +830,7 @@ def unique(s):
     except TypeError:
          del u   # move onto the next record
     else:
-          return u.keys()
+          return list(u.keys())
 
     raise KeyError("uniqueness algorithm failed .. type more of it in please")
 

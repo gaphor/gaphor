@@ -454,7 +454,7 @@ class TokenEater(object):
         # Sort the entries.  First sort each particular entry's keys, then
         # sort all the entries by their first item.
         reverse = {}
-        for k, v in self.__messages.items():
+        for k, v in list(self.__messages.items()):
             keys = sorted(v.keys())
             reverse.setdefault(tuple(keys), []).append((k, v))
         rkeys = sorted(reverse.keys())
@@ -465,7 +465,7 @@ class TokenEater(object):
                 # If the entry was gleaned out of a docstring, then add a
                 # comment stating so.  This is to aid translators who may wish
                 # to skip translating some unimportant docstrings.
-                if reduce(operator.__add__, v.values()):
+                if reduce(operator.__add__, list(v.values())):
                     isdocstring = 1
                 # k is the message string, v is a dictionary-set of (filename,
                 # lineno) tuples.  We want to sort the entries in v first by

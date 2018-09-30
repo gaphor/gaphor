@@ -102,7 +102,7 @@ class StereotypeSupport(object):
 
         subject = self.subject
 
-        for stereotype, condition in data.items():
+        for stereotype, condition in list(data.items()):
             if isinstance(condition, tuple):
                 cls, predicate = condition
             elif isinstance(condition, type):

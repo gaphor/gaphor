@@ -153,7 +153,7 @@ def toposort (nodes, routes, noRecursion=1):
             except KeyError:
                 pass
         # need to recreate the sortinglist
-        sortinglist = dependencies.values()
+        sortinglist = list(dependencies.values())
         if not generation:
             output.remove( generation )
         sortinglist.sort ()

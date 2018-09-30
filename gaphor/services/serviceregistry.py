@@ -52,7 +52,7 @@ class ServiceRegistry(object):
         self.logger.info('Initializing services')
         
         while self._uninitialized_services:
-            self.init_service(next(self._uninitialized_services.iterkeys()))
+            self.init_service(next(iter(self._uninitialized_services.keys())))
 
     def init_service(self, name):
         """
