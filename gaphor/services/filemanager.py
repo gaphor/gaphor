@@ -2,6 +2,7 @@
 The file service is responsible for loading and saving the user data.
 """
 
+from builtins import range
 from logging import getLogger
 
 import gtk
@@ -101,7 +102,7 @@ class FileManager(object):
             action.set_property('hide-if-empty', False)
             self.action_group.add_action(action)
 
-        for i in xrange(0, (MAX_RECENT-1)):
+        for i in range(0, (MAX_RECENT-1)):
             action = gtk.Action('file-recent-%d' % i, None, None, None)
             action.set_property('visible', False)
             self.action_group.add_action(action)
@@ -173,7 +174,7 @@ class FileManager(object):
             recent_files = recent_files[0:(MAX_RECENT-1)]
             self.recent_files = recent_files
 
-        for i in xrange(0, (MAX_RECENT-1)):
+        for i in range(0, (MAX_RECENT-1)):
             action = self.action_group.get_action('file-recent-%d' % i)
             action.set_property('visible', False)
 

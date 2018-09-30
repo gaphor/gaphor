@@ -28,6 +28,7 @@ TODO:
 from __future__ import print_function
 from __future__ import division
 
+from builtins import range
 from past.utils import old_div
 import gobject
 import gtk
@@ -458,7 +459,7 @@ def create_tree_view(model, names, tip='', ro_cols=None):
     tree_view.set_rules_hint(True)
     
     n = model.get_n_columns() - 1
-    for name, i in zip(names, range(n)):
+    for name, i in zip(names, list(range(n))):
         col_type = model.get_column_type(i)
         if col_type == gobject.TYPE_STRING:
             renderer = gtk.CellRendererText()

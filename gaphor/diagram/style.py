@@ -3,12 +3,13 @@ Style classes and constants.
 """
 from __future__ import division
 
+from builtins import range
 from past.utils import old_div
 from past.builtins import cmp
 from math import pi
 
 # padding
-PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = range(4)
+PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = list(range(4))
 
 # horizontal align
 ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = -1, 0, 1

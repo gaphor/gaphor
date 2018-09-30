@@ -3,6 +3,7 @@ Trivial drawing aids (box, line, ellipse).
 """
 from __future__ import division
 
+from builtins import range
 from past.utils import old_div
 from gaphas.item import Element, NW
 from gaphas.item import Line as _Line
@@ -42,7 +43,7 @@ class Line(_Line):
             self.matrix = eval(value)
         elif name == 'points':
             points = eval(value)
-            for x in xrange(len(points) - 2):
+            for x in range(len(points) - 2):
                 h = self._create_handle((0, 0))
                 self._handles.insert(1, h)
             for i, p in enumerate(points):

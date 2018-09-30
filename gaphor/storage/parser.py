@@ -31,6 +31,7 @@ takes a long time. The yielded values are the percentage of the file read.
 """
 from __future__ import division
 
+from builtins import range
 from past.utils import old_div
 __all__ = [ 'parse', 'ParserException' ]
 
@@ -92,18 +93,19 @@ XMLNS='http://gaphor.sourceforge.net/model'
 class ParserException(Exception):
     pass
 
+
 # Loader state:
-[ ROOT,         # Expect 'gaphor' element
-  GAPHOR,       # Expect UML classes (tag name is the UML class name)
-  ELEMENT,      # Expect properties of UML object
-  DIAGRAM,      # Expect properties of Diagram object + canvas
-  CANVAS,       # Expect canvas properties + <item> tags
-  ITEM,         # Expect item attributes and nested items
-  ATTR,         # Reading contents of an attribute (such as a <val> or <ref>)
-  VAL,          # Redaing contents of a <val> tag
-  REFLIST,      # In a <reflist>
-  REF           # Reading contents of a <ref> tag
-] = xrange(10)
+[ROOT,         # Expect 'gaphor' element
+ GAPHOR,       # Expect UML classes (tag name is the UML class name)
+ ELEMENT,      # Expect properties of UML object
+ DIAGRAM,      # Expect properties of Diagram object + canvas
+ CANVAS,       # Expect canvas properties + <item> tags
+ ITEM,         # Expect item attributes and nested items
+ ATTR,         # Reading contents of an attribute (such as a <val> or <ref>)
+ VAL,          # Redaing contents of a <val> tag
+ REFLIST,      # In a <reflist>
+ REF           # Reading contents of a <ref> tag
+ ] = range(10)
 
 class GaphorLoader(handler.ContentHandler):
     """Create a list of elements. an element may contain a canvas and a
@@ -158,7 +160,7 @@ class GaphorLoader(handler.ContentHandler):
 
     def startElement(self, name, attrs):
         self.text = ''
-        
+
         state = self.state()
 
         # Read a element class. The name of the tag is the class name:
@@ -284,13 +286,13 @@ class ProgressGenerator(object):
     and feeding it into an output object.  The supplied file object is neither
     opened not closed by this generator.  The file object is assumed to
     already be opened for reading and that it will be closed elsewhere."""
-    
+
     def __init__(self, input, output, block_size=512):
         """Initialize the progress generator.  The input parameter is a file
         object.  The ouput parameter is usually a SAX parser but can be 
         anything that implements a feed() method.  The block size is the size
         of each block that is read from the input."""
-        
+
         self.input = input
         self.output = output
         self.block_size = block_size
@@ -299,16 +301,16 @@ class ProgressGenerator(object):
         elif isinstance(self.input, InputType):
             self.file_size = len(self.input.getvalue())
             self.input.reset()
-                
+
     def __iter__(self):
         """Return a generator that yields the progress of reading data
         from the input and feeding it into the output.  The progress
         yielded in each iteration is the percentage of data read, relative
         to the to input file size."""
-        
+
         block = self.input.read(self.block_size)
         read_size = len(block)
-        
+
         while block:
             self.output.feed(block)
             block = self.input.read(self.block_size)
@@ -321,20 +323,20 @@ def parse_file(filename, parser):
     should be a GaphorLoader instance.  The filename parameter can be an
     open file descriptor instance or the name of a file.  The progress
     percentage of the parser is yielded."""
-    
+
     is_fd = True
-    
+
     if isinstance(filename, (types.FileType, InputType)):
         file_obj = filename
     else:
         is_fd = False
         file_obj = open(filename, 'rb')
-        
+
     for progress in ProgressGenerator(file_obj, parser):
         yield progress
-    
+
     parser.close()
-    
+
     if not is_fd:
         file_obj.close()
 
