@@ -18,7 +18,7 @@
 #
 # You should have received a copy of the GNU Library General Public 
 # along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
-"""This script list classes and optionally attributes from UML model created with Gaphor."""
+"""This script lists classes and optionally attributes from UML model created with Gaphor."""
 
 from __future__ import absolute_import
 from __future__ import print_function

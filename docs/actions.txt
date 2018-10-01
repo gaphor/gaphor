@@ -12,7 +12,7 @@ The GTK+ structure is like this::
 The do_activate signal is emitted when an action is activated.
 
 Where it should lead:
- * Actions should be coded closer to the object their working on
+ * Actions should be coded closer to the object they are working on
     - main actions - not dependent on GUI components (load/save/new/quit)
     - main actions dependent on GUI component (sub-windows, console)
     - Item actions, act either on a diagram, the selected or focused item
@@ -90,7 +90,7 @@ like that for text around association ends).
 
 Scheme:
 
-1. User selects an item and presses the rigth mouse button: a popup menu
+1. User selects an item and presses the right mouse button: a popup menu
    should be displayed.
 2. Find the actual item (this may be a composite item of the element drawn).
    Use an IItemPicker adapter for that (if no such interface is available,

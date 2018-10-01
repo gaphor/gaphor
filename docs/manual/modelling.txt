@@ -36,14 +36,14 @@ Copy and paste
 
 Items in a diagram can be copied and pasted (in the same diagram or another).
 A paste will create new items in the diagrams, the items they represent (e.g. 
-the Class that's shown in the Naviagtion) is *not* copied (call it a shallow
+the Class that's shown in the Navigation) is *not* copied (call it a shallow
 copy if you like).
 
 Drag and drop
 =============
 
 Adding an existing element to a diagram is simple: drag the element from the
-Navigation section onto a diagram. Not all element that show up in the
+Navigation section onto a diagram. Not all elements that show up in the
 Navigation can be added: Diagrams and attribute/operations of a Class can not
 be added.
 
