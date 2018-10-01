@@ -111,7 +111,7 @@ LINES = (items.ImplementationItem,
 class FoldedInterfaceMultipleLinesTestCase(TestCase):
     """
     Test connection of additional diagram lines to folded interface,
-    which has already usage depenendency or implementation connected.
+    which has already usage dependency or implementation connected.
     """
     def setUp(self):
         super(FoldedInterfaceMultipleLinesTestCase, self).setUp()

@@ -168,7 +168,7 @@ class CommentLineElementConnect(AbstractConnect):
         if connected_to and not glue_ok:
             return None
 
-        # Do not allow to links between the comment and the element
+        # Do not allow links between the comment and the element
         if connected_to and element and \
                 ((isinstance(connected_to.subject, uml2.Comment) and \
                               self.element.subject in connected_to.subject.annotatedElement) or \
@@ -289,7 +289,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         """
         Find an existing relationship in the model that meets the
         required type and is connected to the same model element the head
-        and tail of the line are conncted to.
+        and tail of the line are connected to.
 
         type - the type of relationship we're looking for
         head - tuple (association name on line, association name on element)
@@ -332,7 +332,7 @@ class UnaryRelationshipConnect(AbstractConnect):
 
     def relationship_or_new(self, type, head, tail):
         """
-        Like relation(), but create a new instance of none was found.
+        Like relation(), but create a new instance if none was found.
         """
         relation = self.relationship(type, head, tail)
         if not relation:
@@ -470,7 +470,7 @@ class RelationshipConnect(UnaryRelationshipConnect):
         element = self.element
         connected_to = self.get_connected(opposite)
 
-        # Element can not be a parent for itself.
+        # Element can not be a parent of itself.
         if connected_to is element:
             return None
 

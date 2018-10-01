@@ -31,7 +31,7 @@ Assembly Connector
 To connect two components with assembly connector connect folded interface
 and component items using connector item.
 
-If component is provides or requires connected interface, then assembly
+If component provides or requires connected interface, then assembly
 connection in UML data model will be created and connector item will
 display name of the interface. Otherwise, UML data model is not updated
 and connector item does not display interface name.
@@ -85,7 +85,7 @@ draw assembly connector icon in the middle of a line. The solution is very
 simple in implementation and consistent with the rest of the application
 until multiple components have to be connected with one assembly connector.
 
-UML Specificatiom Issues
+UML Specification Issues
 ========================
 UML specification is not clear about interfaces as connectable elements
 and connector's `kind` attribute.

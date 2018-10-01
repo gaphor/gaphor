@@ -30,7 +30,7 @@ Example: ElementFactory
 A nice example is the ElementFactory. Currently it is tightly bound to the
 gaphor.UML module. A default factory is created in __init__.py.
 
-It depends on the undo_manager. However, on important events events are emited.
+It depends on the undo_manager. However, on important events, events are emitted.
 (That is when an element is created/destroyed).
 
 What you want to do is create an event handler for ElementFactory that stores 
