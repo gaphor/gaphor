@@ -3,6 +3,7 @@ Basic functionality for canvas line based items on a diagram.
 """
 from __future__ import division
 
+from builtins import map
 from builtins import range
 from past.utils import old_div
 from math import atan2, pi

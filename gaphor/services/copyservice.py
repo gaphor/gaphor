@@ -2,6 +2,7 @@
 Copy / Paste functionality
 """
 
+from builtins import str
 from zope import interface, component
 import gaphas
 from gaphor.UML import Element

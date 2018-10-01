@@ -2,6 +2,7 @@
 1:n and n:m relations in the data model are saved using a collection.
 """
 
+from builtins import str
 import inspect
 
 from gaphor.UML.event import AssociationChangeEvent

@@ -1,4 +1,6 @@
 # from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/107747
+from builtins import map
+from builtins import zip
 class odict(dict):
 
     def __init__(self, dict=()):

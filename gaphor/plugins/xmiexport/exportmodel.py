@@ -1,4 +1,5 @@
 
+from builtins import str
 from gaphor.misc.xmlwriter import XMLWriter
 
 class XMIExport(object):

@@ -4,6 +4,7 @@ The diagram package contains items (to be drawn on the diagram), tools
 diagram).
 """
 
+from builtins import str
 import inspect
 import gobject
 import uuid

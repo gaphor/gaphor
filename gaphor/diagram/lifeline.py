@@ -21,6 +21,7 @@ lifeline.
 """
 from __future__ import division
 
+from builtins import map
 from past.utils import old_div
 from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort

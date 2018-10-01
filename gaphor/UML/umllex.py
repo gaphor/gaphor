@@ -8,6 +8,7 @@ attribute/operation.
 """
 from __future__ import absolute_import
 
+from builtins import map
 __all__ = [
         'parse_property', 'parse_operation',
         ]

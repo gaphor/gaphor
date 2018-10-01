@@ -2,6 +2,8 @@
 Unittest the storage and parser modules
 """
 
+from builtins import next
+from builtins import map
 import os, re
 import os.path
 import pkg_resources

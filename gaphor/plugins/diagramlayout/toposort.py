@@ -1,4 +1,5 @@
 from __future__ import print_function
+from builtins import filter
 from builtins import range
 class RecursionError( OverflowError, ValueError ):
     '''Unable to calculate result because of recursive structure'''

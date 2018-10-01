@@ -2,6 +2,7 @@
 Test the backup service.
 """
 
+from builtins import map
 from builtins import object
 import unittest
 from StringIO import StringIO

@@ -3,6 +3,7 @@ Diagram item with compartments.
 """
 from __future__ import division
 
+from builtins import zip
 from past.utils import old_div
 import logging
 

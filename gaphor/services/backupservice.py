@@ -1,6 +1,7 @@
 """
 """
 
+from builtins import map
 from zope import interface
 from gaphor.UML import Element
 from gaphor.application import Application

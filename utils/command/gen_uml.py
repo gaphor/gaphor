@@ -35,6 +35,9 @@ Also a distutils tool, build_uml, is provided.
 # Recreate the model using some very dynamic class, so we can set all
 # attributes and traverse them to generate the data model.
 
+from builtins import filter
+from builtins import str
+from builtins import map
 from builtins import object
 import sys
 
@@ -172,7 +175,7 @@ class Writer(object):
         elif eval(a.isDerived or '0'):
             msg('ignoring derived attribute %s.%s: no definition' % (a.class_name, a.name))
         elif type.endswith('Kind') or type.endswith('Sort'):
-            e = filter(lambda e: e['name'] == type, list(enumerations.values()))[0]
+            e = list(filter(lambda e: e['name'] == type, list(enumerations.values())))[0]
             self.write_property("%s.%s" % (a.class_name, a.name),
                                 "enumeration('%s', %s, '%s')" % (a.name, e.enumerates, default or e.enumerates[0]))
         else:

@@ -5,6 +5,8 @@ a result only classifiers are shown here.
 """
 from __future__ import print_function
 
+from builtins import str
+from builtins import map
 import logging
 import operator
 

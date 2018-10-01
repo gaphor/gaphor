@@ -6,6 +6,7 @@ The Toolbox is bound to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
+from builtins import zip
 from gaphas.item import SE
 from zope import component
 
@@ -110,10 +111,10 @@ class DiagramToolbox(object):
         """
         return getattr(self, tool_name.replace('-', '_'))()
 
-
-    @radio_action(names=zip(*list(itemiter(TOOLBOX_ACTIONS)))[0],
-                  labels=zip(*list(itemiter(TOOLBOX_ACTIONS)))[1],
-                  stock_ids=zip(*list(itemiter(TOOLBOX_ACTIONS)))[2])
+    action_list = list(zip(*list(itemiter(TOOLBOX_ACTIONS))))
+    @radio_action(names=action_list[0],
+                  labels=action_list[1],
+                  stock_ids=action_list[2])
     def _set_toolbox_action(self, id):
         """
         Activate a tool based on its index in the TOOLBOX_ACTIONS list.

@@ -1,8 +1,10 @@
 # vim:sw=4:et
 
 import sys
-from xml.sax.saxutils import escape, quoteattr
 import xml.sax.handler
+from xml.sax.saxutils import escape, quoteattr
+
+from past.builtins import basestring
 
 # See whether the xmlcharrefreplace error handler is
 # supported
@@ -63,7 +65,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
             self._next_newline = True
             return
             
-        if isinstance(text, str):
+        if isinstance(text, basestring):
             self._out.write(text)
         else:
             self._out.write(text.encode(self._encoding, _error_handling))

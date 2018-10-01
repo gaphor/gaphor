@@ -148,14 +148,14 @@ class ElementDispatcher(object):
         "<derived parameter:
             '<association returnResult: Parameter[0..*] <>-> ownerReturnParam>',
             '<association formalParameter: Parameter[0..*] <>-> ownerFormalParam>'>",
-        "<attribute name: <type 'str'>[0..1] = None>"]
+        "<attribute name: <type 'basestring'>[0..1] = None>"]
 
         Should also work for elements that use subtypes of a certain class:
 
         >>> map(str, dispatcher._path_to_properties(UML.Transition(),
         ...         'guard.specification')) # doctest: +NORMALIZE_WHITESPACE
         ['<association guard: Constraint[0..1]>',
-         "<attribute specification: <type 'str'>[0..1] = None>"]
+         "<attribute specification: <type 'basestring'>[0..1] = None>"]
         """
         c = type(element)
         tpath = []

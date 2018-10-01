@@ -3,6 +3,7 @@
 Base class for UML model elements.
 """
 
+from builtins import str
 __all__ = [ 'Element' ]
 
 import threading

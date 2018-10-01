@@ -10,6 +10,8 @@ save(filename)
 from __future__ import print_function
 from __future__ import division
 
+from builtins import map
+from builtins import str
 from past.utils import old_div
 from cStringIO import StringIO, InputType
 from xml.sax.saxutils import escape
@@ -499,7 +501,7 @@ def version_0_15_0_post(elements, factory, gaphor_version):
                         attr.name = str(key)
                         update_elements(attr)
                     slot = UML.model.add_slot(factory, instspec, attr)
-                    slot.value.value = str(val)
+                    slot.value = str(val)
                     update_elements(slot)
 
                 tviter = iter(e.taggedvalue or [])

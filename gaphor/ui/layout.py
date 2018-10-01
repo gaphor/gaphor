@@ -21,6 +21,8 @@
 
 from __future__ import absolute_import
 from __future__ import division
+from builtins import str
+from builtins import map
 from past.utils import old_div
 import sys
 

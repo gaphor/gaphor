@@ -13,6 +13,7 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
 """
 from __future__ import print_function
 
+from builtins import next
 from builtins import range
 import sys
 import gobject

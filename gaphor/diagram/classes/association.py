@@ -12,6 +12,7 @@ from __future__ import division
 # are connected to the same Class, the head_end property is connected to the
 # tail end and visa versa.
 
+from builtins import map
 from past.utils import old_div
 from gaphor.diagram.textelement import text_extents, text_multiline
 from gaphas.state import reversible_property

@@ -28,6 +28,9 @@ __all__ = [ 'attribute', 'enumeration', 'association', 'derivedunion', 'redefine
 
 import logging
 
+from builtins import map
+from builtins import next
+from builtins import str
 from zope import component
 
 from gaphor.UML.collection import collection, collectionlist
@@ -139,8 +142,9 @@ class attribute(umlproperty):
             return self.default
 
     def _set(self, obj, value):
-        if value is not None and not isinstance(value, self.type):
-            raise AttributeError('Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type)
+        if value is not None:
+            if not isinstance(value, self.type) and not isinstance(value, str):
+                raise AttributeError('Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type)
 
         if value == self._get(obj):
             return

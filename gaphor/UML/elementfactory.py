@@ -3,6 +3,7 @@
 Factory for and registration of model elements.
 """
 
+from builtins import str
 from zope import interface
 from zope import component
 import uuid
