@@ -34,7 +34,7 @@ After a successful installation of ``zope.interface`` Gaphor should be installed
 
    C:\>"c:\Program Files\PyGTK\Python\Scripts\easy_install.exe" gaphor
 
-Now you should be able to start Gaphor my executing ``C:\Program Files\PyGTK\Python\Scripts\gaphor.py``. This work from within the explorer.
+Now you should be able to start Gaphor by executing ``C:\Program Files\PyGTK\Python\Scripts\gaphor.py``. This works from within the explorer.
 
 
 If you're a developer and already have Python 2.4 installed you can, as an

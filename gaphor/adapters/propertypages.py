@@ -441,7 +441,7 @@ def create_hbox_label(adapter, page, label):
 
 def create_tree_view(model, names, tip='', ro_cols=None):
     """
-    Create a tree view for a editable tree model.
+    Create a tree view for an editable tree model.
 
     :Parameters:
      model

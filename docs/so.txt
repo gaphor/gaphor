@@ -2,7 +2,7 @@ Service Oriented Architecture
 =============================
 
 Gaphor has a service oriented architecture. What does this mean? Well, Gaphor
-is build as a set of small islands (services). Each island provides a specific
+is built as a set of small islands (services). Each island provides a specific
 piece of functionality. For example: a service is responsible for 
 loading/saving models, another for the menu structure, yet another service
 handles the undo system.

@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
-"""This script list classes and optionally attributes from UML model 
-created with Gaphor."""
+"""This script lists classes and optionally attributes from UML model created
+with Gaphor.
+"""
+
 from __future__ import print_function
 
 import sys

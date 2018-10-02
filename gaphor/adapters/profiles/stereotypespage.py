@@ -128,7 +128,7 @@ class StereotypeAttributes(gtk.TreeStore):
 
 def create_stereotype_tree_view(model):
     """
-    Create a tree view for a editable tree model.
+    Create a tree view for an editable tree model.
 
     :Parameters:
      model

@@ -119,7 +119,7 @@ html_theme = 'default'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+# If not '', a 'Last updated on:' timestamp is inserted at the bottom of every page,
 # using the given strftime format.
 #html_last_updated_fmt = '%b %d, %Y'
 
