@@ -7,7 +7,7 @@ Examples of Gaphor and Gaphas RPM spec files can be found in `PLD Linux <http://
  * http://cvs.pld-linux.org/cgi-bin/cvsweb/SPECS/python-gaphas.spec
  * http://cvs.pld-linux.org/cgi-bin/cvsweb/SPECS/gaphor.spec
 
-Please, do not hesitate to contact us if you need help to create Linux package
+Please, do not hesitate to contact us if you need help to create a Linux package
 for Gaphor or Gaphas.
 
 Dependencies
