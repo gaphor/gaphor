@@ -1,31 +1,10 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Flow item adapter connections.
 """
 
-from __future__ import absolute_import
 from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
 from zope import interface, component
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
@@ -39,8 +18,8 @@ class FlowConnect(UnaryRelationshipConnect):
         line = self.line
         subject = self.element.subject
 
-        if handle is line.head and isinstance(subject, uml2.FinalNode) \
-           or handle is line.tail and isinstance(subject, uml2.InitialNode):
+        if handle is line.head and isinstance(subject, UML.FinalNode) \
+           or handle is line.tail and isinstance(subject, UML.InitialNode):
             return None
 
         return super(FlowConnect, self).allow(handle, port)
@@ -72,13 +51,13 @@ class FlowConnect(UnaryRelationshipConnect):
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
         if isinstance(c1, items.ObjectNodeItem) or isinstance(c2, items.ObjectNodeItem):
-            relation = self.relationship_or_new(uml2.ObjectFlow,
-                        uml2.ObjectFlow.source,
-                        uml2.ObjectFlow.target)
+            relation = self.relationship_or_new(UML.ObjectFlow,
+                        UML.ObjectFlow.source,
+                        UML.ObjectFlow.target)
         else:
-            relation = self.relationship_or_new(uml2.ControlFlow,
-                        uml2.ControlFlow.source,
-                        uml2.ControlFlow.target)
+            relation = self.relationship_or_new(UML.ControlFlow,
+                        UML.ControlFlow.source,
+                        UML.ControlFlow.target)
         line.subject = relation
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
@@ -146,10 +125,10 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             join_node = subject
 
             # determine flow class:
-            if [ f for f in join_node.incoming if isinstance(f, uml2.ObjectFlow) ]:
-                flow_class = uml2.ObjectFlow
+            if [ f for f in join_node.incoming if isinstance(f, UML.ObjectFlow) ]:
+                flow_class = UML.ObjectFlow
             else:
-                flow_class = uml2.ControlFlow
+                flow_class = UML.ControlFlow
             
             self.element_factory.swap_element(join_node, join_node_cls)
             fork_node = self.element_factory.create(fork_node_cls)
@@ -215,8 +194,8 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     """
     component.adapts(items.ForkNodeItem, items.FlowItem)
 
-    fork_node_cls=uml2.ForkNode
-    join_node_cls=uml2.JoinNode
+    fork_node_cls=UML.ForkNode
+    join_node_cls=UML.JoinNode
 
 component.provideAdapter(FlowForkNodeConnect)
 
@@ -227,8 +206,8 @@ class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
     """
     component.adapts(items.DecisionNodeItem, items.FlowItem)
 
-    fork_node_cls = uml2.DecisionNode
-    join_node_cls = uml2.MergeNode
+    fork_node_cls = UML.DecisionNode
+    join_node_cls = UML.MergeNode
 
 component.provideAdapter(FlowDecisionNodeConnect)
 

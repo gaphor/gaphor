@@ -1,32 +1,10 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2002-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#                         syt <noreply@example.com>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Actor item classes.
 """
 
-from __future__ import absolute_import
 from math import pi
 
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 from gaphor.diagram.classifier import ClassifierItem
 
@@ -37,7 +15,7 @@ class ActorItem(ClassifierItem):
     Maybe it should be possible to switch to comparment mode in the future.
     """
 
-    __uml__ = uml2.Actor
+    __uml__ = UML.Actor
 
     HEAD = 11
     ARM  = 19

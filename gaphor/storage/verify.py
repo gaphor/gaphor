@@ -1,33 +1,12 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Verify the content of an element factory before it is saved.
+
+
 """
 
-from __future__ import absolute_import
-
-import gaphas
-
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.UML.collection import collection
-
+import gaphas
 
 def orphan_references(factory):
     """
@@ -58,13 +37,13 @@ def orphan_references(factory):
         """
         for v in value:
             if v.id:
-                refs.add((v.id, v))
+                    refs.add((v.id, v))
 
     def verify_element(name, value):
         """
         Store the element id.
         """
-        if isinstance(value, (uml2.Element, gaphas.Item)):
+        if isinstance (value, (UML.Element, gaphas.Item)):
             verify_reference(name, value)
         elif isinstance(value, collection):
             verify_collection(name, value)
@@ -76,7 +55,7 @@ def orphan_references(factory):
         Verify attributes and references in a gaphor.diagram.* object.
         The extra attribute reference can be used to force UML 
         """
-        # log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
+        #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
         if isinstance(value, collection) or \
                 (isinstance(value, (list, tuple)) and reference == True):
             verify_collection(name, value)
@@ -90,7 +69,7 @@ def orphan_references(factory):
             for child in value.canvas.get_children(value):
                 verify_canvasitem(None, child)
 
-        elif isinstance(value, uml2.Element):
+        elif isinstance(value, UML.Element):
             verify_reference(name, value)
 
     for e in factory.values():
@@ -99,5 +78,6 @@ def orphan_references(factory):
         e.save(verify_element)
 
     return [r[1] for r in refs if not r[0] in elements]
+
 
 # vim:sw=4:et:ai

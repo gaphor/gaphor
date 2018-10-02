@@ -1,37 +1,14 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2004-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 A GUI for the checkmodel plugin.
 """
 
-from __future__ import absolute_import
-from __future__ import print_function
-
+import sys
 import gobject
 import gtk
-from zope import interface
-
-from . import checkmodel
-
-from gaphor.core import inject, action, build_action_group
+from zope import interface, component
+from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
+import checkmodel
 
 PYELEMENT_COLUMN = 0
 ELEMENT_COLUMN = 1
@@ -129,7 +106,7 @@ class CheckModelWindow(object):
     def on_row_activated(self, treeview, row, column):
         iter = self.model.get_iter(row)
         element = self.model.get_value(iter, PYELEMENT_COLUMN)
-        print('Looking for element', element)
+        print 'Looking for element', element
         if element.presentation:
             main_window = self.main_window
             presentation = element.presentation[0]

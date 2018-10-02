@@ -25,16 +25,16 @@ do its job correctly.
 This is a simple rip-off of the override script used in PyGTK.
 """
 
-from __future__ import absolute_import
-from __future__ import print_function
-import string
 
+import sys, string
 
 class Overrides:
+
     def __init__(self, filename=None):
         self.overrides = {}
         if filename:
             self.read_overrides(filename)
+
 
     def read_overrides(self, filename):
         """Read a file and return a dictionary of overriden properties
@@ -83,9 +83,9 @@ class Overrides:
                     deps = tuple(words[3:])
                 self.overrides[func] = (deps, string.join(rest, ''), '%d: %s' % (startline, line))
             elif words[0] == 'comment':
-                pass  # ignore comments
+                pass # ignore comments
             else:
-                print("Unknown word: '%s', line %d"(words[0], startline))
+                print "Unknown word: '%s', line %d" (words[0], startline)
                 raise SystemExit
 
     def has_override(self, key):

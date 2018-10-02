@@ -1,32 +1,13 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
-Unit tests for AssociationItem.
+Unnit tests for AssociationItem.
 """
 
-from __future__ import absolute_import
-from __future__ import print_function
+from zope import component
+from gaphor.diagram.interfaces import IConnect
 from gaphor.tests import TestCase
-from gaphor.UML import uml2
-from gaphor.diagram.items import AssociationItem, ClassItem
+from gaphor import UML
+from gaphor.diagram.items import AssociationItem, ClassItem, InterfaceItem, \
+    UseCaseItem, ActorItem
 
 
 class AssociationItemTestCase(TestCase):
@@ -36,8 +17,8 @@ class AssociationItemTestCase(TestCase):
     def setUp(self):
         super(AssociationItemTestCase, self).setUp()
         self.assoc = self.create(AssociationItem)
-        self.class1 = self.create(ClassItem, uml2.Class)
-        self.class2 = self.create(ClassItem, uml2.Class)
+        self.class1 = self.create(ClassItem, UML.Class)
+        self.class2 = self.create(ClassItem, UML.Class)
 
 
     def test_create(self):
@@ -46,7 +27,7 @@ class AssociationItemTestCase(TestCase):
         self.connect(self.assoc, self.assoc.head, self.class1)
         self.connect(self.assoc, self.assoc.tail, self.class2)
 
-        self.assertTrue(isinstance(self.assoc.subject, uml2.Association))
+        self.assertTrue(isinstance(self.assoc.subject, UML.Association))
         self.assertTrue(self.assoc.head_end.subject is not None)
         self.assertTrue(self.assoc.tail_end.subject is not None)
 
@@ -75,8 +56,8 @@ class AssociationItemTestCase(TestCase):
         """Test association end navigability connected to a class"""
         from gaphas.canvas import Canvas
         canvas = Canvas()
-        c1 = self.create(ClassItem, uml2.Class)
-        c2 = self.create(ClassItem, uml2.Class)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
@@ -94,17 +75,17 @@ class AssociationItemTestCase(TestCase):
         assert a.subject.memberEnd[0].name is None
 
         dispatcher = self.get_service('element_dispatcher')
-        print((a.subject.memberEnd[0], uml2.Property.name) in dispatcher._handlers)
-        print('*' * 60)
+        print dispatcher._handlers.has_key((a.subject.memberEnd[0], UML.Property.name))
+        print '*' * 60
         a.subject.memberEnd[0].name = 'blah'
-        print('*' * 60)
+        print '*' * 60
         self.diagram.canvas.update()
 
         assert a.head_end._name == '+ blah', a.head_end.get_name()
 
     def test_association_orthogonal(self):
-        c1 = self.create(ClassItem, uml2.Class)
-        c2 = self.create(ClassItem, uml2.Class)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)

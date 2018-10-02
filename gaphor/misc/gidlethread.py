@@ -1,23 +1,4 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2004-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
+# vim:sw=4:et:
 """This module contains some helpers that can be used to execute generator
 functions in the GObject main loop.
 
@@ -31,14 +12,10 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
 
-from __future__ import absolute_import
-from __future__ import print_function
 import sys
 import gobject
 import time
 import traceback
-import six
-from six.moves import range
 
 class GIdleThread(object):
     """This is a pseudo-"thread" for use with the GTK+ main loop.
@@ -125,11 +102,11 @@ class GIdleThread(object):
         """
         exc_info = self._exc_info
         if exc_info[0]:
-            six.reraise(exc_info[0], exc_info[1], exc_info[2])
+            raise exc_info[0], exc_info[1], exc_info[2]
 
     def __generator_executer(self):
         try:
-            result = next(self._generator)
+            result = self._generator.next()
             if self._queue:
                 try:
                     self._queue.put(result)
@@ -203,12 +180,12 @@ if __name__ == '__main__':
         while True:
             try:
                 cnt = queue.get()
-                print('cnt =', cnt)
+                print 'cnt =', cnt
             except QueueEmpty:
                 pass
             yield None
 
-    print('Test 1: (should print range 0..22)')
+    print 'Test 1: (should print range 0..22)'
     queue = Queue()
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
@@ -218,7 +195,7 @@ if __name__ == '__main__':
     s.start()
     s.wait(2)
 
-    print('Test 2: (should only print 22)')
+    print 'Test 2: (should only print 22)'
     queue = Queue(size=1)
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))

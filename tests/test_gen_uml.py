@@ -1,28 +1,9 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
-# more details.
-#
-# You should have received a copy of the GNU Library General Public
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Test case that checks the working of the utils/command/gen_uml.py module.
 """
 
-from __future__ import absolute_import
-
+import os
+import pkg_resources
 import unittest
 
 from utils.command.gen_uml import generate
@@ -40,8 +21,11 @@ class PseudoFile(object):
 
 
 class GenUmlTestCase(unittest.TestCase):
+
     def test_loading(self):
-        model_file = 'tests/test-model.gaphor'
+
+        dist = pkg_resources.get_distribution('gaphor')
+        model_file = os.path.join(dist.location, 'tests/test-model.gaphor')
         outfile = PseudoFile()
 
         generate(model_file, outfile)
@@ -58,16 +42,16 @@ class C(object): pass
 class D(C): pass
 class Element(object): pass
 class SubClass(Element): pass
-C.attr = attribute('attr', str)
+C.attr = attribute('attr', 8cb780ba-3f11-11de-9595-00224128e79d, default=8cb7fd1a-3f11-11de-9595-00224128e79d, upper=8cb7df60-3f11-11de-9595-00224128e79d, lower=8cb7c11a-3f11-11de-9595-00224128e79d)
 # 'SubClass.value' is a simple attribute
-SubClass.value = attribute('value', str)
-C.name1 = association('name1', SubClass, opposite='name2')
-SubClass.name2 = association('name2', C, opposite='name1')
-C.base = association('base', SubClass, opposite='abstract')
-D.name3 = association('name3', SubClass, opposite='name4')
-D.subbase = association('subbase', SubClass, opposite='concrete')
-SubClass.concrete = association('concrete', D, opposite='subbase')
-SubClass.abstract = derivedunion('abstract', C, 0, '*', SubClass.concrete)
+SubClass.value = attribute('value', str, lower=f9124094-3f14-11de-9595-00224128e79d)
+C.name1 = association('name1', SubClass, lower=602cb072-3bcb-11de-ac7f-00224128e79d, opposite='name2')
+SubClass.name2 = association('name2', C, lower=602d56c6-3bcb-11de-ac7f-00224128e79d, opposite='name1')
+C.base = association('base', SubClass, lower=e053585e-3bcc-11de-aa0c-00224128e79d, opposite='abstract')
+D.name3 = association('name3', SubClass, lower=1af287dc-3bcd-11de-aa0c-00224128e79d, opposite='name4')
+D.subbase = association('subbase', SubClass, lower=f8d56502-3bcc-11de-aa0c-00224128e79d, opposite='concrete')
+SubClass.concrete = association('concrete', D, lower=f8d5c998-3bcc-11de-aa0c-00224128e79d, upper=1665b18a-3bcd-11de-aa0c-00224128e79d, opposite='subbase')
+SubClass.abstract = derivedunion('abstract', C, e053abd8-3bcc-11de-aa0c-00224128e79d, f48f64a2-3bcc-11de-aa0c-00224128e79d, SubClass.concrete)
 SubClass.name4 = redefine(SubClass, 'name4', D, name2)
 """
 

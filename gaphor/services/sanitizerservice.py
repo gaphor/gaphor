@@ -1,38 +1,17 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2008-2017 Adam Boduch <adam.boduch@gmail.com>
-#                         Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 The Sanitize module is dedicated to adapters (stuff) that keeps
 the model clean and in sync with diagrams.
 """
 
-from __future__ import absolute_import
 from zope import interface
 from zope import component
 
 from logging import getLogger
-from gaphor.UML import uml2, modelfactory
+from gaphor import UML
 from gaphor.UML.interfaces import IAssociationDeleteEvent, IAssociationSetEvent
 from gaphor.interfaces import IService
 from gaphor.core import inject
+from gaphor.diagram import items
 
 class SanitizerService(object):
     """
@@ -75,7 +54,7 @@ class SanitizerService(object):
         #self.logger.debug('Element is %s' % event.element)
         #self.logger.debug('Old value is %s' % event.old_value)
         
-        if event.property is uml2.Element.presentation:
+        if event.property is UML.Element.presentation:
             old_presentation = event.old_value
             if old_presentation and not event.element.presentation:
                 event.element.unlink()
@@ -86,7 +65,7 @@ class SanitizerService(object):
         #self.logger.debug('Stereotype is %s' % st)
         #self.logger.debug('Meta is %s' % meta)
                 
-        inst = modelfactory.find_instances(self.element_factory, st)
+        inst = UML.model.find_instances(self.element_factory, st)
 
         for i in list(inst):
             for e in i.extended:
@@ -105,15 +84,15 @@ class SanitizerService(object):
         #self.logger.debug('Element is %s' % event.element)
         #self.logger.debug('Old value is %s' % event.old_value)
         
-        if isinstance(event.element, uml2.Extension) and \
-                event.property is uml2.Association.memberEnd and \
+        if isinstance(event.element, UML.Extension) and \
+                event.property is UML.Association.memberEnd and \
                 event.element.memberEnd:
             p = event.element.memberEnd[0]
             ext = event.old_value
-            if isinstance(p, uml2.ExtensionEnd):
+            if isinstance(p, UML.ExtensionEnd):
                 p, ext = ext, p
             st = ext.type
-            meta = p.type and getattr(uml2, p.type.name)
+            meta = p.type and getattr(UML, p.type.name)
             self.perform_unlink_for_instances(st, meta)
 
 
@@ -125,13 +104,13 @@ class SanitizerService(object):
         #self.logger.debug('Element is %s' % event.element)
         #self.logger.debug('Old value is %s' % event.old_value)
         
-        if event.property is uml2.ExtensionEnd.type and event.old_value:
+        if event.property is UML.ExtensionEnd.type and event.old_value:
             ext = event.element
             p = ext.opposite
             if not p:
                 return
             st = event.old_value
-            meta = getattr(uml2, p.type.name)
+            meta = getattr(UML, p.type.name)
             self.perform_unlink_for_instances(st, meta)
 
 
@@ -146,8 +125,8 @@ class SanitizerService(object):
         #self.logger.debug('Element is %s' % event.element)
         #self.logger.debug('Old value is %s' % event.old_value)
         
-        if event.property is uml2.InstanceSpecification.classifier:
-            if isinstance(event.old_value, uml2.Stereotype):
+        if event.property is UML.InstanceSpecification.classifier:
+            if isinstance(event.old_value, UML.Stereotype):
                 event.element.unlink()
 
 

@@ -1,25 +1,5 @@
-#!/usr/bin/env python
 
-# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import absolute_import
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.diagram import items
 from gaphor.services.copyservice import CopyService
 from gaphor.application import Application
@@ -40,8 +20,8 @@ class CopyServiceTestCase(TestCase):
         service.init(Application)
 
         ef = self.element_factory
-        diagram = ef.create(uml2.Diagram)
-        ci = diagram.create(items.CommentItem, subject=ef.create(uml2.Comment))
+        diagram = ef.create(UML.Diagram)
+        ci = diagram.create(items.CommentItem, subject=ef.create(UML.Comment))
 
         service.copy([ci])
         assert diagram.canvas.get_all_items() == [ ci ]
@@ -55,8 +35,8 @@ class CopyServiceTestCase(TestCase):
         service.init(Application)
 
         ef = self.element_factory
-        diagram = ef.create(uml2.Diagram)
-        c = diagram.create(items.ClassItem, subject=ef.create(uml2.Class))
+        diagram = ef.create(UML.Diagram)
+        c = diagram.create(items.ClassItem, subject=ef.create(UML.Class))
 
         c.subject.name = 'Name'
 
@@ -93,8 +73,8 @@ class CopyServiceTestCase(TestCase):
         service.init(Application)
 
         # Setting the stage:
-        ci1 = self.create(items.ClassItem, uml2.Class)
-        ci2 = self.create(items.ClassItem, uml2.Class)
+        ci1 = self.create(items.ClassItem, UML.Class)
+        ci2 = self.create(items.ClassItem, UML.Class)
         a = self.create(items.AssociationItem)
 
         self.connect(a, a.head, ci1)

@@ -1,28 +1,7 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2007-2017 Adam Boduch <adam.boduch@gmail.com>
-#                         Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 The file service is responsible for loading and saving the user data.
 """
 
-from __future__ import absolute_import
 from logging import getLogger
 
 import gtk
@@ -31,14 +10,13 @@ from zope import interface, component
 from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.storage import storage, verify
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.ui.statuswindow import StatusWindow
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.filedialog import FileDialog
-from six.moves import range
 
 DEFAULT_EXT = '.gaphor'
 MAX_RECENT = 10
@@ -123,7 +101,7 @@ class FileManager(object):
             action.set_property('hide-if-empty', False)
             self.action_group.add_action(action)
 
-        for i in range(0, (MAX_RECENT-1)):
+        for i in xrange(0, (MAX_RECENT-1)):
             action = gtk.Action('file-recent-%d' % i, None, None, None)
             action.set_property('visible', False)
             self.action_group.add_action(action)
@@ -195,7 +173,7 @@ class FileManager(object):
             recent_files = recent_files[0:(MAX_RECENT-1)]
             self.recent_files = recent_files
 
-        for i in range(0, (MAX_RECENT-1)):
+        for i in xrange(0, (MAX_RECENT-1)):
             action = self.action_group.get_action('file-recent-%d' % i)
             action.set_property('visible', False)
 
@@ -391,9 +369,9 @@ class FileManager(object):
                 return
 
         element_factory.flush()
-        model = element_factory.create(uml2.Package)
+        model = element_factory.create(UML.Package)
         model.name = _('New model')
-        diagram = element_factory.create(uml2.Diagram)
+        diagram = element_factory.create(UML.Diagram)
         diagram.package = model
         diagram.name= _('main')
         self.filename = None
