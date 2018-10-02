@@ -121,8 +121,7 @@ class Transaction(object):
     def _handle(self, event):
         try:
             component_registry = self.component_registry
-        except (application.NotInitialize"""This script lists classes and optionally attributes from UML model created with Gaphor."""
-dError, component.ComponentLookupError):
+        except (application.NotInitializedError, component.ComponentLookupError):
             log.warning('Could not lookup component_registry. Not emitting events.')
         else:
             component_registry.handle(event)
