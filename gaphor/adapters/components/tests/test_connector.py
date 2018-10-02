@@ -257,7 +257,7 @@ class AssemblyConnectorTestCase(TestCase):
     """
     def create_interfaces(self, *args):
         """
-        Generate interfaces with names sepecified by arguments.
+        Generate interfaces with names specified by arguments.
 
         :Paramters:
          args

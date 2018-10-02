@@ -150,7 +150,7 @@ def build_action_group(obj, name=None):
     for attrname in dir(obj):
         try:
             # Fetch the methods from the object's type instead of the object
-            # itself. This prevents some desciptors (mainly gaphor.core.inject)
+            # itself. This prevents some descriptors (mainly gaphor.core.inject)
             # from executing.
             # Otherwise stuff like dependency resolving (=inject) may kick in
             # too early.

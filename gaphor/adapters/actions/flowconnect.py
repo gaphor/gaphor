@@ -108,7 +108,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
 
     def combine_nodes(self):
         """
-        Combine join/fork or decision/methe nodes into one diagram item.
+        Combine join/fork or decision/merge nodes into one diagram item.
         """
         fork_node_cls = self.fork_node_cls
         join_node_cls = self.join_node_cls
@@ -173,7 +173,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         """
         In addition to a subject connect, the subject of the element may 
         be changed.
-        For readability, parameters are named afther the classes used by
+        For readability, parameters are named after the classes used by
         Join/Fork nodes.
         """
         super(FlowForkDecisionNodeConnect, self).connect_subject(handle)

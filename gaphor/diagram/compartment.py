@@ -129,7 +129,7 @@ class Compartment(list):
     def get_size(self):
         """
         Get width, height of the compartment. pre_update should have
-        been called so widthand height have been calculated.
+        been called so width and height have been calculated.
         """
         if self.visible:
             return self.width, self.height
@@ -220,7 +220,7 @@ class CompartmentItem(NamedItem):
     Compartment item has three drawing styles (changed with
     `ClassifierItem.drawing_style` property)
 
-     - the comparttment view - often used by classes
+     - the compartment view - often used by classes
      - a compartment view, but with a little stereotype icon in the right corner
      - an icon - used by actor and interface items
 
@@ -446,7 +446,7 @@ class CompartmentItem(NamedItem):
         """
         Update state for box-style presentation.
 
-        Calculate minimal size, which is based on header and comparments
+        Calculate minimal size, which is based on header and compartment
         sizes.
         """
         super(CompartmentItem, self).pre_update(context)

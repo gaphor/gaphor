@@ -30,10 +30,10 @@ Bidirectional references
 ------------------------
 
 But how, you might wonder, do you handle bidirectional references (object one
-references object two and visa versa)? Well, this is basically the same as the
+references object two and vice versa)? Well, this is basically the same as the
 uni-directional reference. Only now we need to add some extra information to
-the dictionary at class level. We just define and extra field that gives us
-the name of the opposite reference and viola, we can create bi-directional
+the dictionary at class level. We just define an extra field that gives us
+the name of the opposite reference and voila, we can create bi-directional
 references. You should check out the code in ``gaphor/UML/element.py`` for more details.
 
 Implementation
@@ -62,10 +62,10 @@ The datamodel itself code is generated.
 Extensions to the data model
 ----------------------------
 
-A few changes have been made to Gaphors implementation of the metamodel. First
+A few changes have been made to Gaphor's implementation of the metamodel. First
 of all some relationships have to be modified since the same name is used for
 different relationships. Some n:m relationships have been made 1:n. These are
-all small changed and should not restrict the usability of Gaphors model.
+all small changes and should not restrict the usability of Gaphor's model.
 
 The biggest change is the addition of a whole new class: Diagram. Diagram is
 inherited from Namespace and is used to hold a diagram. It contains a

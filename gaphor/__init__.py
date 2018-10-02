@@ -51,7 +51,7 @@ def main():
     includes a Gaphor model to load.
     
     The application is then initialized, passing along the option parser.  This
-    provides and plugins and services with access to the command line options
+    provides plugins and services with access to the command line options
     and may add their own."""
 
     parser = OptionParser()

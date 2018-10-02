@@ -48,7 +48,7 @@ element_factory
   every now and then!
 
   The undo manager is transactional. Actions performed by a user are only
-  stored in a transaction is active. If a transaction is completed (committed)
+  stored if a transaction is active. If a transaction is completed (committed)
   a new undo action is stored. Transactions can also be rolled back, in which
   case all changes are played back directly.
 

@@ -4,8 +4,8 @@ Saving and loading Gaphor diagrams
 Everything interesting is an ancestor of the Gaphor root tag.
 
 The idea is to keep the file format as simple and extensible as possible: UML elements (including Diagram) are at
-toplevel, no nesting. A UML element can have two tags: ``Reference`` and ``Value``. Reference is used to
-point to other UML elements, Value has a value inside (an integer or astring).
+top level, no nesting. A UML element can have two tags: ``Reference`` and ``Value``. Reference is used to
+point to other UML elements, Value has a value inside (an integer or a string).
 
 Diagram is a special case. Since this element contains a diagram canvas inside,
 it may become pretty big (with lots of nested elements).

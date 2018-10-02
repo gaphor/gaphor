@@ -6,7 +6,7 @@ be registered with the application and then be used by other services or other
 objects living within the application.
 
 Since Gaphor already uses the `zope.component` adapters, it seems like a good
-choise to use `zope.interface` too as starting point for services.
+choice to use `zope.interface` too as starting point for services.
 
 Each service should implement the IService interface. This interface defines
 one method::
@@ -30,7 +30,7 @@ Example: ElementFactory
 A nice example is the ElementFactory. Currently it is tightly bound to the
 gaphor.UML module. A default factory is created in __init__.py.
 
-It depends on the undo_manager. However, on important events events are emited.
+It depends on the undo_manager. However, on important events, events are emitted.
 (That is when an element is created/destroyed).
 
 What you want to do is create an event handler for ElementFactory that stores 
