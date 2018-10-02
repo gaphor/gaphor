@@ -1,43 +1,21 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2002-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#                         syt <noreply@example.com>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Control flow and object flow implementation. 
 
 Contains also implementation to split flows using activity edge connectors.
 """
 
-from __future__ import absolute_import
 from math import atan, pi, sin, cos
 
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 
 node_classes = {
-    uml2.ForkNode:     uml2.JoinNode,
-    uml2.DecisionNode: uml2.MergeNode,
-    uml2.JoinNode:     uml2.ForkNode,
-    uml2.MergeNode:    uml2.DecisionNode,
+    UML.ForkNode:     UML.JoinNode,
+    UML.DecisionNode: UML.MergeNode,
+    UML.JoinNode:     UML.ForkNode,
+    UML.MergeNode:    UML.DecisionNode,
 }
 
 
@@ -48,7 +26,7 @@ class FlowItem(NamedLine):
     guard. It can be splitted into two flows with activity edge connectors.
     """
 
-    __uml__ = uml2.ControlFlow
+    __uml__ = UML.ControlFlow
 
     __style__ = {
             'name-align': (ALIGN_RIGHT, ALIGN_TOP),
@@ -65,7 +43,7 @@ class FlowItem(NamedLine):
     def postload(self):
         try:
             self._guard.text = self.subject.guard.value
-        except AttributeError as e:
+        except AttributeError, e:
             self._guard.text = ''
         super(FlowItem, self).postload()
 
@@ -74,7 +52,7 @@ class FlowItem(NamedLine):
         subject = self.subject
         try:
             self._guard.text = subject.guard if subject else ''
-        except AttributeError as e:
+        except AttributeError, e:
             self._guard.text = ''
         self.request_update()
 
@@ -161,7 +139,7 @@ class ACItem(object):
 #
 #        self._connector = ACItem('value')
 #
-#        factory = resource(uml2.ElementFactory)
+#        factory = resource(UML.ElementFactory)
 #
 #        self._opposite = None
 #

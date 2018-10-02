@@ -1,23 +1,3 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2009-2017 Adam Boduch <adam.boduch@gmail.com>
-#                         Arjan Molenaar <gaphor@gmail.com>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 The service registry is the place where services can be registered and
 retrieved.
@@ -25,13 +5,11 @@ retrieved.
 Our good old NameServicer.
 """
 
-from __future__ import absolute_import
 from zope import interface, component
 
 from logging import getLogger
 from gaphor.interfaces import IService
 from gaphor.core import inject
-import six
 
 class ServiceRegistry(object):
 
@@ -64,7 +42,7 @@ class ServiceRegistry(object):
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
             cls = ep.load()
             if not IService.implementedBy(cls):
-                raise MisConfigurationException('Entry point %s doesn''t provide IService' % ep.name)
+                raise 'MisConfigurationException', 'Entry point %s doesn''t provide IService' % ep.name
             if services is None or ep.name in services:
                 srv = cls()
                 self._uninitialized_services[ep.name] = srv
@@ -74,7 +52,7 @@ class ServiceRegistry(object):
         self.logger.info('Initializing services')
         
         while self._uninitialized_services:
-            self.init_service(six.iterkeys(self._uninitialized_services))
+            self.init_service(self._uninitialized_services.iterkeys().next())
 
     def init_service(self, name):
         """

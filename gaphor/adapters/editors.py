@@ -1,34 +1,13 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2007-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Adapters
 """
 
-from __future__ import absolute_import
 from zope import interface, component
 
 from gaphas.item import NW, SE
 from gaphas import geometry
 from gaphas import constraint
-from gaphor.UML import uml2, umllex
+from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
@@ -46,7 +25,7 @@ def editable(el):
     return el
     
 
-@editable.when_type(uml2.Slot)
+@editable.when_type(UML.Slot)
 def editable_slot(el):
     """
     Return editable part of a slot.
@@ -173,13 +152,13 @@ class CompartmentItemEditor(object):
         return bool(self._edit and self._edit.subject)
 
     def get_text(self):
-        return format(editable(self._edit.subject))
+        return UML.format(editable(self._edit.subject))
 
     def get_bounds(self):
         return None
 
     def update_text(self, text):
-        umllex.parse(editable(self._edit.subject), text)
+        UML.parse(editable(self._edit.subject), text)
 
     def key_pressed(self, pos, key):
         pass
@@ -213,14 +192,14 @@ class AssociationItemEditor(object):
     def get_text(self):
         if self._edit is self._item:
             return self._edit.subject.name
-        return format(self._edit.subject, visibility=True,
+        return UML.format(self._edit.subject, visibility=True,
                                 is_derived=True, type=True,
                                 multiplicity=True, default=True)
     def get_bounds(self):
         return None
 
     def update_text(self, text):
-        uml2.parse(self._edit.subject, text)
+        UML.parse(self._edit.subject, text)
 
     def key_pressed(self, pos, key):
         pass

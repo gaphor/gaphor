@@ -1,35 +1,14 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Stereotype property page.
 """
 
-from __future__ import absolute_import
-from __future__ import print_function
 import gtk
 from gaphor.core import _, inject, transactional
 from gaphor.ui.interfaces import IPropertyPage
+from gaphor.diagram import items
 from gaphor.diagram.diagramitem import StereotypeSupport
 from zope import interface, component
-from gaphor.UML import uml2, modelfactory
+from gaphor import UML
 from gaphor.adapters.propertypages import on_text_cell_edited, on_bool_cell_edited
 
 class StereotypeAttributes(gtk.TreeStore):
@@ -47,7 +26,7 @@ class StereotypeAttributes(gtk.TreeStore):
     def refresh(self):
         self.clear()
         subject = self.subject
-        stereotypes = modelfactory.get_stereotypes(self.element_factory, subject)
+        stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
         instances = self.subject.appliedStereotype
 
         # shortcut map stereotype -> slot (InstanceSpecification)
@@ -87,7 +66,7 @@ class StereotypeAttributes(gtk.TreeStore):
         elif col == 1:
             self.set_slot_value(iter, value)
         else:
-            print('col', col)
+            print 'col', col
 
     def select_stereotype(self, iter):
         """
@@ -102,9 +81,9 @@ class StereotypeAttributes(gtk.TreeStore):
 
         subject = self.subject
         if value:
-            modelfactory.apply_stereotype(self.element_factory, subject, stereotype)
+            UML.model.apply_stereotype(self.element_factory, subject, stereotype)
         else:
-            modelfactory.remove_stereotype(subject, stereotype)
+            UML.model.remove_stereotype(subject, stereotype)
 
         row[2] = value
 
@@ -120,7 +99,7 @@ class StereotypeAttributes(gtk.TreeStore):
         path = self.get_path(iter)
         row = self[path]
         name, old_value, is_applied, attr, obj, slot = row
-        if isinstance(attr, uml2.Stereotype):
+        if isinstance(attr, UML.Stereotype):
             return # don't edit stereotype rows
 
         log.debug('editing %s' % list(row))
@@ -129,7 +108,7 @@ class StereotypeAttributes(gtk.TreeStore):
             return # nothing to do and don't create slot without value
 
         if slot is None:
-            slot = modelfactory.add_slot(self.element_factory, obj, attr)
+            slot = UML.model.add_slot(self.element_factory, obj, attr)
 
         assert slot
 
@@ -170,7 +149,7 @@ def create_stereotype_tree_view(model):
         #value = model.get_value(iter, 4)
         #cell.set_property('active', value is not None)
         value = model.get_value(iter, 3)
-        cell.set_property('visible', isinstance(value, uml2.Stereotype))
+        cell.set_property('visible', isinstance(value, UML.Stereotype))
     col.set_cell_data_func(renderer, show_checkbox)
 
     renderer = gtk.CellRendererText()
@@ -218,11 +197,11 @@ class StereotypePage(object):
         if subject is None:
             return None
 
-        stereotypes = modelfactory.get_stereotypes(self.element_factory, subject)
+        stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
         if not stereotypes:
             return None
 
-        #applied = set(modelfactory.get_applied_stereotypes(subject))
+        #applied = set(UML.model.get_applied_stereotypes(subject))
         #for i, stereotype in enumerate(stereotypes):
         #    if (i % 3) == 0:
         #        hbox = gtk.HBox(spacing=20)
@@ -256,9 +235,9 @@ class StereotypePage(object):
     #def _on_stereotype_selected(self, button, stereotype):
     #    subject = self.item.subject
     #    if button.get_active():
-    #        modelfactory.apply_stereotype(self.element_factory, subject, stereotype)
+    #        UML.model.apply_stereotype(self.element_factory, subject, stereotype)
     #    else:
-    #        modelfactory.remove_stereotype(subject, stereotype)
+    #        UML.model.remove_stereotype(subject, stereotype)
     #    self.model.refresh()
 
         
@@ -269,7 +248,7 @@ class StereotypePage(object):
 
         
 component.provideAdapter(StereotypePage,
-        adapts=[uml2.Element],
+        adapts=[UML.Element],
         name='Stereotypes')
 
 

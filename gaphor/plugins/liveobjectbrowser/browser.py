@@ -12,9 +12,7 @@ Description:
 Given an object, this tool throws up a gtk tree widget that maps all the references found. It dynamically builds the tree, which means it can handle large amounts of data and circular references.
 """
 
-from __future__ import absolute_import
 import gtk
-from six.moves import range
 
 class Browser(object):
 
@@ -37,9 +35,9 @@ class Browser(object):
     def make_mapping( self, value, piter ):
         keys = []
         if hasattr( value, "keys" ):
-            keys = list(value.keys())
+            keys = value.keys()
         elif hasattr( value, "__len__"):
-            keys = list(range( len(value)))
+            keys = range( len(value) )
         for key in keys:
             _name = "[%s]"%str(key)
             _piter = self.make_row( piter, _name, value[key] )

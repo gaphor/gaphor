@@ -1,29 +1,8 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2009-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Comment and comment line items connection adapters tests.
 """
 
-from __future__ import absolute_import
-from gaphor.UML import uml2
+from gaphor import UML
 from gaphor.diagram import items
 
 from gaphor.tests import TestCase
@@ -39,7 +18,7 @@ class CommentLineTestCase(TestCase):
     def test_commentline_annotated_element(self):
         """Test comment line item annotated element creation
         """
-        comment = self.create(items.CommentItem, uml2.Comment)
+        comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
 
         self.connect(line, line.head, comment)
@@ -51,7 +30,7 @@ class CommentLineTestCase(TestCase):
     def test_commentline_same_comment_glue(self):
         """Test comment line item glueing to already connected comment item
         """
-        comment = self.create(items.CommentItem, uml2.Comment)
+        comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
 
         self.connect(line, line.head, comment)
@@ -62,9 +41,9 @@ class CommentLineTestCase(TestCase):
     def test_commentline_element_connect(self):
         """Test comment line connecting to comment and actor items.
         """
-        comment = self.create(items.CommentItem, uml2.Comment)
+        comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
-        ac = self.create(items.ActorItem, uml2.Actor)
+        ac = self.create(items.ActorItem, UML.Actor)
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
@@ -76,9 +55,9 @@ class CommentLineTestCase(TestCase):
     def test_commentline_element_connect(self):
         """Test comment line connecting to comment and actor items.
         """
-        comment = self.create(items.CommentItem, uml2.Comment)
+        comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
-        ac = self.create(items.ActorItem, uml2.Actor)
+        ac = self.create(items.ActorItem, UML.Actor)
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
@@ -90,9 +69,9 @@ class CommentLineTestCase(TestCase):
     def test_commentline_element_reconnect(self):
         """Test comment line connecting to comment and actor items.
         """
-        comment = self.create(items.CommentItem, uml2.Comment)
+        comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
-        ac = self.create(items.ActorItem, uml2.Actor)
+        ac = self.create(items.ActorItem, UML.Actor)
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
@@ -100,7 +79,7 @@ class CommentLineTestCase(TestCase):
         self.assertEquals(1, len(comment.subject.annotatedElement))
         self.assertTrue(ac.subject in comment.subject.annotatedElement)
 
-        ac2 = self.create(items.ActorItem, uml2.Actor)
+        ac2 = self.create(items.ActorItem, UML.Actor)
         #ac.canvas.disconnect_item(line, line.tail)
         self.disconnect(line, line.tail)
         self.connect(line, line.tail, ac2)
@@ -112,9 +91,9 @@ class CommentLineTestCase(TestCase):
     def test_commentline_element_disconnect(self):
         """Test comment line connecting to comment and disconnecting actor item.
         """
-        comment = self.create(items.CommentItem, uml2.Comment)
+        comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
-        ac = self.create(items.ActorItem, uml2.Actor)
+        ac = self.create(items.ActorItem, UML.Actor)
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
@@ -128,8 +107,8 @@ class CommentLineTestCase(TestCase):
     def test_commentline_unlink(self):
         """Test comment line unlinking.
         """
-        clazz = self.create(items.ClassItem, uml2.Class)
-        comment = self.create(items.CommentItem, uml2.Comment)
+        clazz = self.create(items.ClassItem, UML.Class)
+        comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
 
         self.connect(line, line.head, comment)
@@ -154,8 +133,8 @@ class CommentLineTestCase(TestCase):
     def test_commentline_element_unlink(self):
         """Test comment line unlinking using a class item.
         """
-        clazz = self.create(items.ClassItem, uml2.Class)
-        comment = self.create(items.CommentItem, uml2.Comment)
+        clazz = self.create(items.ClassItem, UML.Class)
+        comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
 
         self.connect(line, line.head, comment)
@@ -183,8 +162,8 @@ class CommentLineTestCase(TestCase):
 
         Demonstrates defect #103.
         """
-        clazz1 = self.create(items.ClassItem, uml2.Class)
-        clazz2 = self.create(items.ClassItem, uml2.Class)
+        clazz1 = self.create(items.ClassItem, UML.Class)
+        clazz2 = self.create(items.ClassItem, UML.Class)
         gen = self.create(items.GeneralizationItem)
 
         self.connect(gen, gen.head, clazz1)
@@ -193,7 +172,7 @@ class CommentLineTestCase(TestCase):
         assert gen.subject
 
         # now, connect comment to a generalization (relationship)
-        comment = self.create(items.CommentItem, uml2.Comment)
+        comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, gen)
@@ -214,10 +193,10 @@ class CommentLineTestCase(TestCase):
         """
         It is not allowed to create two commentlines between the same elements.
         """
-        clazz = self.create(items.ClassItem, uml2.Class)
+        clazz = self.create(items.ClassItem, UML.Class)
 
         # now, connect comment to a generalization (relationship)
-        comment = self.create(items.CommentItem, uml2.Comment)
+        comment = self.create(items.CommentItem, UML.Comment)
         line1 = self.create(items.CommentLineItem)
         self.connect(line1, line1.head, comment)
         self.connect(line1, line1.tail, clazz)

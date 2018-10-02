@@ -1,38 +1,17 @@
-#!/usr/bin/env python
-
-# Copyright (C) 2003-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
-# more details.
-#
-# You should have received a copy of the GNU Library General Public 
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Basic functionality for canvas line based items on a diagram.
 """
 
-from __future__ import absolute_import
 from math import atan2, pi
 
 import gaphas
-from .diagramitem import DiagramItem
+from gaphor import UML
+from diagramitem import DiagramItem
+from interfaces import IConnect
 
 from gaphor.diagram.style import get_text_point_at_line, \
     get_text_point_at_line2, \
     ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
-from six.moves import map
-from six.moves import range
 
 
 class DiagramLine(gaphas.Line, DiagramItem):
@@ -106,7 +85,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
             self.matrix = eval(value)
         elif name == 'points':
             points = eval(value)
-            for x in range(len(points) - 2):
+            for x in xrange(len(points) - 2):
                 h = self._create_handle((0, 0))
                 self._handles.insert(1, h)
             for i, p in enumerate(points):
