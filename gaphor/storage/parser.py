@@ -29,18 +29,22 @@ class name in the gaphor.diagram module.
 The generator parse_generator(filename, loader) may be used if the loading
 takes a long time. The yielded values are the percentage of the file read.
 """
+
 from __future__ import division
 
-from builtins import range
-from past.utils import old_div
-__all__ = [ 'parse', 'ParserException' ]
+__all__ = ['parse', 'ParserException']
 
+import io
 import os
-import types
 from xml.sax import handler
-from cStringIO import InputType
+
+from future import standard_library
+from past.utils import old_div
 
 from gaphor.misc.odict import odict
+
+standard_library.install_aliases()
+
 
 class base(object):
     """Simple base class for element, canvas and canvasitem.
@@ -105,7 +109,8 @@ class ParserException(Exception):
  VAL,          # Redaing contents of a <val> tag
  REFLIST,      # In a <reflist>
  REF           # Reading contents of a <ref> tag
- ] = range(10)
+ ] = xrange(10)
+
 
 class GaphorLoader(handler.ContentHandler):
     """Create a list of elements. an element may contain a canvas and a
@@ -289,18 +294,19 @@ class ProgressGenerator(object):
 
     def __init__(self, input, output, block_size=512):
         """Initialize the progress generator.  The input parameter is a file
-        object.  The ouput parameter is usually a SAX parser but can be 
+        object.  The output parameter is usually a SAX parser but can be
         anything that implements a feed() method.  The block size is the size
         of each block that is read from the input."""
 
         self.input = input
         self.output = output
         self.block_size = block_size
-        if isinstance(self.input, types.FileType):
-            self.file_size = os.fstat(self.input.fileno())[6]
-        elif isinstance(self.input, InputType):
-            self.file_size = len(self.input.getvalue())
-            self.input.reset()
+        if isinstance(self.input, (file, io.IOBase)):
+            orig_pos = self.input.tell()
+            self.file_size = self.input.seek(0, 2)
+            self.input.seek(orig_pos, os.SEEK_SET)
+        elif isinstance(self.input, str):
+            self.file_size = len(self.input)
 
     def __iter__(self):
         """Return a generator that yields the progress of reading data
@@ -326,11 +332,12 @@ def parse_file(filename, parser):
 
     is_fd = True
 
-    if isinstance(filename, (types.FileType, InputType)):
+    print(filename)
+    if isinstance(filename, (file, io.IOBase)):
         file_obj = filename
     else:
         is_fd = False
-        file_obj = open(filename, 'rb')
+        file_obj = io.open(filename, 'r')
 
     for progress in ProgressGenerator(file_obj, parser):
         yield progress

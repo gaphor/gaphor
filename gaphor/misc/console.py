@@ -5,17 +5,17 @@
 #  See www.python.org/2.2/license.html for
 #  license details.
 #
-#import pygtk
-#pygtk.require('2.0')
-from builtins import object
-import gtk
-import gtk.gdk
+
 import code
 import sys
-import pango
 
-import __builtin__
-import __main__
+import gtk
+import gtk.gdk
+import pango
+from builtins import object
+from future import standard_library
+
+standard_library.install_aliases()
 
 banner = """Gaphor Interactive Python Console
 %s

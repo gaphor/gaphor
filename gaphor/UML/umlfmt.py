@@ -2,11 +2,15 @@
 Formatting of UML elements like attributes, operations, stereotypes, etc.
 """
 
+import io
 import re
-from cStringIO import StringIO
+
+from future import standard_library
 from simplegeneric import generic
 
 from gaphor.UML import uml2 as UML
+
+standard_library.install_aliases()
 
 
 @generic
@@ -67,7 +71,7 @@ def format_attribute(el, visibility=False, is_derived=False, type=False,
     if not (visibility or is_derived or type or multiplicity or default):
        visibility = is_derived = type = multiplicity = default = True
 
-    s = StringIO()
+    s = io.BytesIO()
 
     if visibility:
         s.write(vis_map[el.visibility])
@@ -97,7 +101,7 @@ def format_attribute(el, visibility=False, is_derived=False, type=False,
                 slots.append('%s=%s' % (slot.definingFeature.name, slot.value))
         if slots:
             s.write(' { %s }' % ', '.join(slots))
-    s.reset()
+    s.seek(0)
     return s.read()
 
 
@@ -106,7 +110,7 @@ def format_association_end(el):
     Format association end.
     """
     name = ''
-    n = StringIO()
+    n = io.BytesIO()
     if el.name:
         n.write(vis_map[el.visibility])
         n.write(' ')
@@ -114,10 +118,10 @@ def format_association_end(el):
             n.write('/')
         if el.name:
             n.write(el.name)
-        n.reset()
+        n.seek(0)
         name = n.read()
 
-    m = StringIO()
+    m = io.BytesIO()
     if el.upperValue:
         if el.lowerValue:
             m.write('%s..%s' % (el.lowerValue, el.upperValue))
@@ -130,7 +134,7 @@ def format_association_end(el):
             slots.append('%s=%s' % (slot.definingFeature.name, slot.value))
     if slots:
         m.write(' { %s }' % ',\n'.join(slots))
-    m.reset()
+    m.seek(0)
     mult = m.read()
 
     return name, mult
@@ -153,7 +157,7 @@ def format_operation(el, pattern=None, visibility=False, type=False, multiplicit
     if not (visibility or type or multiplicity or default or tags or direction):
        visibility = type = multiplicity = default = tags = direction = True
 
-    s = StringIO()
+    s = io.BytesIO()
     if visibility:
         s.write(vis_map[el.visibility])
         s.write(' ')
@@ -198,7 +202,7 @@ def format_operation(el, pattern=None, visibility=False, type=False, multiplicit
         #                                     ['value'] * len(rr.taggedValue))))
         #    if tvs:
         #        s.write(' { %s }' % tvs)
-    s.reset()
+    s.seek(0)
     return s.read()
 
 

@@ -2,21 +2,24 @@
 Unittest the storage and parser modules
 """
 
-from builtins import next
-from builtins import map
-import os, re
+import io
+import os
 import os.path
+import re
+from io import StringIO
+
 import pkg_resources
-from gaphor.tests.testcase import TestCase
+from builtins import map
+from builtins import next
+from future import standard_library
+
 from gaphor import UML
-from gaphor.UML.elementfactory import ElementFactory
-from gaphor.application import Application
-from gaphor.storage import storage
-from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import IConnect
-from zope import component
-from cStringIO import StringIO
+from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.storage import storage
+from gaphor.tests.testcase import TestCase
+
+standard_library.install_aliases()
 
 #__module__ = 'test_storage'
 
@@ -162,7 +165,7 @@ class StorageTestCase(TestCase):
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'gaphor/UML/uml2.gaphor')
         
-        with open(path) as ifile:
+        with io.open(path) as ifile:
             
             storage.load(ifile, factory=self.element_factory)
 
@@ -263,7 +266,7 @@ class StorageTestCase(TestCase):
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'test-diagrams/simple-items.gaphor')
         
-        with open(path, 'r') as ifile:
+        with io.open(path, 'r') as ifile:
             
             storage.load(ifile, factory=self.element_factory)
             
@@ -271,13 +274,13 @@ class StorageTestCase(TestCase):
         
         storage.save(XMLWriter(pf), factory=self.element_factory)
 
-        with open(path, 'r') as ifile:
+        with io.open(path, 'r') as ifile:
             
             orig = ifile.read()
             
         copy = pf.data
 
-        with open('tmp.gaphor', 'w') as ofile:
+        with io.open('tmp.gaphor', 'w') as ofile:
             
             ofile.write(copy)
             
@@ -296,7 +299,7 @@ class FileUpgradeTestCase(TestCase):
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'test-diagrams/associations-pre015.gaphor')
         
-        with open(path) as ifile:
+        with io.open(path) as ifile:
             
             storage.load(ifile, factory=self.element_factory)
 
@@ -353,7 +356,7 @@ class FileUpgradeTestCase(TestCase):
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'test-diagrams/taggedvalues-pre015.gaphor')
         
-        with open(path) as ifile:
+        with io.open(path) as ifile:
             
             storage.load(ifile, factory=self.element_factory)
                     
@@ -395,7 +398,7 @@ class FileUpgradeTestCase(TestCase):
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'test-diagrams/lifelines-pre015.gaphor')
         
-        with open(path) as ifile:
+        with io.open(path) as ifile:
             
             storage.load(ifile, factory=self.element_factory)        
 

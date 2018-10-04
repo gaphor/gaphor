@@ -7,31 +7,31 @@ load(filename)
 save(filename)
     store the current model in a file
 """
-from __future__ import print_function
-from __future__ import division
 
-from builtins import map
-from builtins import str
-from past.utils import old_div
-from cStringIO import StringIO, InputType
-from xml.sax.saxutils import escape
-import logging
-import types
-import sys
-import os.path
+from __future__ import division
+from __future__ import print_function
+
+__all__ = ['load', 'save']
+
 import gc
+import logging
+import os.path
+import io
 
 import gaphas
+from builtins import map
+from builtins import str
+from future import standard_library
+from past.utils import old_div
 
 from gaphor import UML
+from gaphor import diagram
 from gaphor.UML.collection import collection
 from gaphor.UML.elementfactory import ElementChangedEventBlocker
-from gaphor import diagram
-from gaphor.storage import parser
 from gaphor.application import Application, NotInitializedError
 from gaphor.diagram import items
 from gaphor.i18n import _
-#from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.storage import parser
 
 # import gaphor.adapters.connectors package, so diagram items can find
 # their appropriate connectors (i.e. diagram line requires this);
@@ -40,12 +40,13 @@ from gaphor.i18n import _
 # depend on connectors service?
 from gaphor.adapters import connectors
 
-__all__ = [ 'load', 'save' ]
+standard_library.install_aliases()
 
 FILE_FORMAT_VERSION = '3.0'
 NAMESPACE_MODEL = 'http://gaphor.sourceforge.net/model'
 
 log = logging.getLogger(__name__)
+
 
 def save(writer=None, factory=None, status_queue=None):
     for status in save_generator(writer, factory):
@@ -321,7 +322,7 @@ def load_generator(filename, factory):
     This function is a generator. It will yield values from 0 to 100 (%)
     to indicate its progression.
     """
-    if isinstance(filename, (file, InputType)):
+    if isinstance(filename, (file, io.IOBase)):
         log.info('Loading file from file descriptor')
     else:
         log.info('Loading file %s' % os.path.basename(filename))

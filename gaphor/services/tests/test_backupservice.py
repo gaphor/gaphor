@@ -2,15 +2,19 @@
 Test the backup service.
 """
 
+from io import StringIO
+
 from builtins import map
 from builtins import object
-import unittest
-from StringIO import StringIO
-from gaphor.storage import storage
+from future import standard_library
+
 from gaphor.application import Application
 from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.storage import storage
 
-#class BackupServiceTestCase(unittest.TestCase):
+standard_library.install_aliases()
+
+
 class BackupServiceTestCase(object):
 
     services = ['element_factory', 'backup_service']
