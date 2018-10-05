@@ -26,18 +26,8 @@ So that:
 <!-- Describe the motivation or the concrete use case. -->
 </code></pre>
 
-## Environment
+## System Information
 <pre><code>
-Browser:
-- [ ] Chrome (desktop) version XX
-- [ ] Chrome (Android) version XX
-- [ ] Chrome (iOS) version XX
-- [ ] Firefox version XX
-- [ ] Safari (desktop) version XX
-- [ ] Safari (iOS) version XX
-- [ ] IE version XX
-- [ ] Edge version XX
-
 OS:
 - [ ] Linux (Please put in notes the specific distro)
 - [ ] MacOS
