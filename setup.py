@@ -87,6 +87,7 @@ It uses the GTK+ environment for user interaction.
         'gaphas >= 0.7.2',
         'etk.docking >= 0.2',
         'zope.component >= 3.4.0', # - won't compile on windows.
+        'future >= 0.16.0',
     ],
 
     zip_safe = False,
