@@ -7,19 +7,20 @@ gaphor.adapter package.
 from __future__ import print_function
 
 from builtins import object
-from zope import interface, component
 from logging import getLogger
+from zope import component
 
-from gaphas import geometry
+from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.core import inject
-from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 
 logger = getLogger('Connector')
 
 
+@implementer(IConnect)
 class AbstractConnect(object):
     """
     Connection adapter for Gaphor diagram items.
@@ -44,7 +45,6 @@ class AbstractConnect(object):
     By convention the adapters are registered by (element, line) -- in that order.
 
     """
-    interface.implements(IConnect)
 
     element_factory = inject('element_factory')
 

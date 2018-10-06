@@ -2,10 +2,11 @@
 The main application window.
 """
 
-from builtins import object
-from builtins import str
 import logging
 import os.path
+from builtins import object
+from builtins import str
+from zope import component
 
 import gobject
 import gtk
@@ -15,7 +16,7 @@ from etk.docking import DockLayout
 from etk.docking import add_new_group_above, add_new_group_below, add_new_group_floating
 from etk.docking import add_new_group_left, add_new_group_right
 from etk.docking import settings
-from zope import interface, component
+from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.UML.event import ModelFactoryEvent
@@ -59,13 +60,12 @@ STATIC_MENU_XML = """
 """
 
 
+@implementer(IService, IActionProvider)
 class MainWindow(object):
     """
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
-    interface.implements(IService, IActionProvider)
-
 
     component_registry = inject('component_registry')
     properties = inject('properties')
@@ -569,10 +569,8 @@ class MainWindow(object):
 gtk.accel_map_add_filter('gaphor')
 
 
-
+@implementer(IUIComponent, IActionProvider)
 class Namespace(object):
-
-    interface.implements(IUIComponent, IActionProvider)
 
     title = _('Namespace')
     placement = ('left', 'diagrams')
@@ -813,10 +811,8 @@ class Namespace(object):
         self._namespace.get_model().refresh()
 
 
-
+@implementer(IUIComponent, IActionProvider)
 class Toolbox(object):
-
-    interface.implements(IUIComponent, IActionProvider)
 
     title = _('Toolbox')
     placement = ('left', 'diagrams')

@@ -2,7 +2,8 @@
 """
 
 from builtins import object
-from zope import interface, component
+from zope.interface import implementer
+from zope import component
 
 from logging import getLogger
 from gaphor.core import inject
@@ -84,6 +85,8 @@ class EventWatcher(object):
             
             dispatcher.unregister_handler(handler)
 
+
+@implementer(IService)
 class ElementDispatcher(object):
     """
     The Element based Dispatcher allows handlers to receive only events
@@ -111,7 +114,6 @@ class ElementDispatcher(object):
     every time).
     """
 
-    interface.implements(IService)
     logger = getLogger('ElementDispatcher')
 
     component_registry = inject('component_registry')

@@ -1,6 +1,7 @@
-from gaphor.adapters.connectors import RelationshipConnect
-from zope import interface, component
+from zope import component
+
 from gaphor import UML
+from gaphor.adapters.connectors import RelationshipConnect
 from gaphor.diagram import items
 
 

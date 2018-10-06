@@ -2,12 +2,12 @@
 Basic stuff for toplevel windows.
 """
 
-from builtins import object
 import os.path
+from builtins import object
 
 import gtk
 import pkg_resources
-from zope import interface
+from zope.interface import implementer
 
 from gaphor.ui.interfaces import IUIComponent
 
@@ -18,9 +18,9 @@ ICONS = (
     'gaphor-256x256.png',
 )
 
-class ToplevelWindow(object):
 
-    interface.implements(IUIComponent)
+@implementer(IUIComponent)
+class ToplevelWindow(object):
 
     menubar_path = ''
     toolbar_path = ''

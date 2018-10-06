@@ -4,9 +4,10 @@ A GUI for the checkmodel plugin.
 from __future__ import print_function
 
 from builtins import object
+
 import gobject
 import gtk
-from zope import interface
+from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
@@ -16,9 +17,9 @@ PYELEMENT_COLUMN = 0
 ELEMENT_COLUMN = 1
 REASON_COLUMN = 2
 
-class CheckModelWindow(object):
 
-    interface.implements(IService, IActionProvider)
+@implementer(IService, IActionProvider)
+class CheckModelWindow(object):
 
     element_factory = inject('element_factory')
     main_window = inject('main_window')

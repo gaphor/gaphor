@@ -8,9 +8,10 @@ Depends on the Diagram Layout plugin.
 """
 
 from builtins import object
+
 import gobject
 import gtk
-from zope import interface
+from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
@@ -19,9 +20,8 @@ from gaphor.plugins.pynsource.engineer import Engineer
 NAME_COLUMN = 0
 
 
+@implementer(IService, IActionProvider)
 class PyNSource(object):
-
-    interface.implements(IService, IActionProvider)
 
     main_window = inject('main_window')
 

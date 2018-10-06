@@ -2,46 +2,46 @@
 The file service is responsible for loading and saving the user data.
 """
 
+import logging
 from builtins import object
 from builtins import range
-import logging
+from zope import component
 
 import gtk
-from zope import interface, component
+from zope.interface import implementer
 
-from gaphor.interfaces import IService, IActionProvider, IServiceEvent
-from gaphor.core import _, inject, action, build_action_group
-from gaphor.storage import storage, verify
 from gaphor import UML
-from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty
+from gaphor.core import _, inject, action, build_action_group
+from gaphor.interfaces import IService, IActionProvider, IServiceEvent
 from gaphor.misc.errorhandler import error_handler
+from gaphor.misc.gidlethread import GIdleThread, Queue
 from gaphor.misc.xmlwriter import XMLWriter
-from gaphor.ui.statuswindow import StatusWindow
-from gaphor.ui.questiondialog import QuestionDialog
+from gaphor.storage import storage, verify
 from gaphor.ui.filedialog import FileDialog
+from gaphor.ui.questiondialog import QuestionDialog
+from gaphor.ui.statuswindow import StatusWindow
 
 DEFAULT_EXT = '.gaphor'
 MAX_RECENT = 10
 
 log = logging.getLogger(__name__)
 
+
+@implementer(IServiceEvent)
 class FileManagerStateChanged(object):
     """
     Event class used to send state changes on the ndo Manager.
     """
 
-    interface.implements(IServiceEvent)
-
     def __init__(self, service):
         self.service = service
 
 
+@implementer(IService, IActionProvider)
 class FileManager(object):
     """
     The file service, responsible for loading and saving Gaphor models.
     """
-
-    interface.implements(IService, IActionProvider)
 
     component_registry = inject('component_registry')
     element_factory = inject('element_factory')

@@ -9,7 +9,6 @@ These interfaces are:
 
 """
 
-
 from zope import interface
 
 

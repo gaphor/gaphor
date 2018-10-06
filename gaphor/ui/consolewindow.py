@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-from builtins import object
 import logging
 import os
+from builtins import object
 
-from zope import interface
+from zope.interface import implementer
 
 from gaphor.action import action, open_action, build_action_group
 from gaphor.core import inject
@@ -16,9 +16,8 @@ from gaphor.ui.interfaces import IUIComponent
 log = logging.getLogger(__name__)
 
 
+@implementer(IUIComponent, IActionProvider)
 class ConsoleWindow(object):
-    
-    interface.implements(IUIComponent, IActionProvider)
 
     component_registry = inject('component_registry')
 

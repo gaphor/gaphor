@@ -1,17 +1,20 @@
 """The properties module allows Gaphor properties to be saved to the local
 file system.  These are things like preferences."""
 
-from builtins import object
-import sys
 import os
 import pprint
+import sys
+from builtins import object
+from logging import getLogger
 from zope import interface
 
-from gaphor.core import inject
-from logging import getLogger
-from gaphor.interfaces import IService
 from gaphas.decorators import async
+from zope.interface import implementer
+
+from gaphor.core import inject
+from gaphor.interfaces import IService
 from gaphor.misc import get_user_data_dir
+
 
 class IPropertyChangeEvent(interface.Interface):
     
@@ -22,12 +25,11 @@ class IPropertyChangeEvent(interface.Interface):
     new_value = interface.Attribute("The property value after the change")
 
 
+@implementer(IPropertyChangeEvent)
 class PropertyChangeEvent(object):
     
     """This event is triggered any time a property is changed.  This event
     holds the property name, the current value, and the new value."""
-    
-    interface.implements(IPropertyChangeEvent)
 
     def __init__(self, name, old_value, new_value):
         self.name = name
@@ -36,12 +38,12 @@ class PropertyChangeEvent(object):
 
 _no_default = object()
 
+
+@implementer(IService)
 class Properties(object):
     """The Properties class holds a collection of application wide properties.
 
     Properties are persisted to the local file system."""
-    
-    interface.implements(IService)
 
     component_registry = inject('component_registry')
 

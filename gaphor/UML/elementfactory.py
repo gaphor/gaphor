@@ -5,7 +5,7 @@ Factory for and registration of model elements.
 
 from builtins import object
 from builtins import str
-from zope import interface
+from zope.interface import implementer
 from zope import component
 import uuid
 from gaphor.core import inject
@@ -173,7 +173,7 @@ class ElementFactory(object):
             pass
 
     def swap_element(self, element, new_class):
-	assert element in list(self._elements.values())
+        assert element in list(self._elements.values())
         if element.__class__ is not new_class:
             element.__class__ = new_class
 
@@ -185,11 +185,11 @@ class ElementFactory(object):
         component.handle(event)
 
 
+@implementer(IService)
 class ElementFactoryService(ElementFactory):
     """
     Service version of the ElementFctory.
     """
-    interface.implements(IService)
 
     component_registry = inject('component_registry')
 
@@ -247,14 +247,15 @@ class ElementFactoryService(ElementFactory):
         self.component_registry.handle(event)
 
 
+@implementer(IEventFilter)
 class ElementChangedEventBlocker(object):
     """
     Blocks all events of type IElementChangeEvent.
 
     This filter is placed when the the element factory flushes it's content.
     """
+
     component.adapts(IElementChangeEvent)
-    interface.implements(IEventFilter)
 
     def __init__(self, event):
         self._event = event

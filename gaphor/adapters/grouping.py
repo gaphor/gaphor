@@ -17,7 +17,8 @@ to be aware that `AbstractGroup.item` can be null.
 from builtins import object
 import logging
 
-from zope import interface, component
+from zope.interface import implementer
+from zope import component
 
 from gaphor import UML
 from gaphor.core import inject
@@ -27,6 +28,7 @@ from gaphor.diagram.interfaces import IGroup
 log = logging.getLogger(__name__)
 
 
+@implementer(IGroup)
 class AbstractGroup(object):
     """
     Base class for grouping UML objects.
@@ -37,7 +39,6 @@ class AbstractGroup(object):
      item
         Item to be grouped.
     """
-    interface.implements(IGroup)
 
     element_factory = inject('element_factory')
 

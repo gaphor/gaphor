@@ -4,22 +4,23 @@ the model clean and in sync with diagrams.
 """
 
 from builtins import object
-from zope import interface
+from logging import getLogger
 from zope import component
 
-from logging import getLogger
+from zope.interface import implementer
+
 from gaphor import UML
 from gaphor.UML.interfaces import IAssociationDeleteEvent, IAssociationSetEvent
-from gaphor.interfaces import IService
 from gaphor.core import inject
-from gaphor.diagram import items
+from gaphor.interfaces import IService
 
+
+@implementer(IService)
 class SanitizerService(object):
     """
     Does some background cleanup jobs, such as removing elements from the
     model that have no presentations (and should have some).
     """
-    interface.implements(IService)
 
     logger = getLogger('Sanitizer')
 

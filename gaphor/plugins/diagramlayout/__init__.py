@@ -10,11 +10,11 @@ The layout is done like this:
 """
 from __future__ import division
 
-from builtins import object
-from past.utils import old_div
 import random
+from builtins import object
 
-from zope import interface
+from past.utils import old_div
+from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.diagram import items
@@ -22,9 +22,8 @@ from gaphor.interfaces import IService, IActionProvider
 from gaphor.plugins.diagramlayout import toposort
 
 
+@implementer(IService, IActionProvider)
 class DiagramLayout(object):
-
-    interface.implements(IService, IActionProvider)
 
     main_window = inject('main_window')
 

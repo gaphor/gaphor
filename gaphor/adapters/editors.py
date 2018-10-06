@@ -3,7 +3,8 @@ Adapters
 """
 
 from builtins import object
-from zope import interface, component
+from zope.interface import implementer
+from zope import component
 
 from gaphas.item import NW, SE
 from gaphas import geometry
@@ -34,11 +35,11 @@ def editable_slot(el):
     return el.value
 
 
+@implementer(IEditor)
 class CommentItemEditor(object):
     """
     Text edit support for Comment item.
     """
-    interface.implements(IEditor)
     component.adapts(items.CommentItem)
 
     def __init__(self, item):
@@ -59,14 +60,15 @@ class CommentItemEditor(object):
     def key_pressed(self, pos, key):
         pass
 
+
 component.provideAdapter(CommentItemEditor)
 
 
+@implementer(IEditor)
 class NamedItemEditor(object):
     """
     Text edit support for Named items.
     """
-    interface.implements(IEditor)
     component.adapts(items.NamedItem)
 
     def __init__(self, item):
@@ -90,14 +92,15 @@ class NamedItemEditor(object):
     def key_pressed(self, pos, key):
         pass
 
+
 component.provideAdapter(NamedItemEditor)
 
 
+@implementer(IEditor)
 class DiagramItemTextEditor(object):
     """
     Text edit support for diagram items containing text elements.
     """
-    interface.implements(IEditor)
     component.adapts(items.DiagramItem)
 
     def __init__(self, item):
@@ -130,14 +133,15 @@ class DiagramItemTextEditor(object):
     def key_pressed(self, pos, key):
         pass
 
+
 component.provideAdapter(DiagramItemTextEditor)
 
 
+@implementer(IEditor)
 class CompartmentItemEditor(object):
     """
     Text editor support for compartment items.
     """
-    interface.implements(IEditor)
     component.adapts(items.CompartmentItem)
 
     def __init__(self, item):
@@ -164,11 +168,12 @@ class CompartmentItemEditor(object):
     def key_pressed(self, pos, key):
         pass
 
-component.provideAdapter(CompartmentItemEditor)
- 
 
+component.provideAdapter(CompartmentItemEditor)
+
+
+@implementer(IEditor)
 class AssociationItemEditor(object):
-    interface.implements(IEditor)
     component.adapts(items.AssociationItem)
 
     def __init__(self, item):
@@ -205,14 +210,14 @@ class AssociationItemEditor(object):
     def key_pressed(self, pos, key):
         pass
 
+
 component.provideAdapter(AssociationItemEditor)
-    
 
 
+@implementer(IEditor)
 class ForkNodeItemEditor(object):
     """Text edit support for fork node join specification.
     """
-    interface.implements(IEditor)
     component.adapts(items.ForkNodeItem)
 
     element_factory = inject('element_factory')

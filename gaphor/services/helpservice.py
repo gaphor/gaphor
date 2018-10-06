@@ -1,19 +1,20 @@
 """About and help services. (help browser anyone?)"""
 
+import os
 from builtins import object
 from logging import getLogger
-import os
-import pkg_resources
+
 import gtk
-from zope import interface
+import pkg_resources
+from zope.interface import implementer
 
 from gaphor.application import Application
-from gaphor.interfaces import IService, IActionProvider
 from gaphor.core import _, inject, action, build_action_group
+from gaphor.interfaces import IService, IActionProvider
 
+
+@implementer(IService, IActionProvider)
 class HelpService(object):
-
-    interface.implements(IService, IActionProvider)
 
     menu_xml = """
       <ui>

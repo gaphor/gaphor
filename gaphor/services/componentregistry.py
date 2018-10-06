@@ -6,14 +6,17 @@ Maybe we should split the ComponentRegistry in a Dispatcher (register_handler,
 unregister_handler, handle), a AdapterRegistry and a Subscription registry.
 """
 
-from builtins import object
 from builtins import map
-from zope import interface, component
+from builtins import object
+from zope import component
+
 from zope.component import registry
-from gaphor.core import inject
+from zope.interface import implementer
+
 from gaphor.interfaces import IService, IEventFilter
 
 
+@implementer(IService)
 class ZopeComponentRegistry(object):
     """
     The ZopeComponentRegistry provides a subset of the
@@ -23,8 +26,6 @@ class ZopeComponentRegistry(object):
     This service should not be called directly, but through more specific
     service such as Dispatcher and AdapterRegistry.
     """
-
-    interface.implements(IService)
 
     def __init__(self):
         pass

@@ -39,7 +39,8 @@ from gaphor.core import _, inject, transactional
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
-from zope import interface, component
+from zope.interface import implementer
+from zope import component
 from gaphor import UML
 from gaphor.UML.interfaces import IAttributeChangeEvent
 import gaphas.item
@@ -491,12 +492,11 @@ Use -/= to move items up or down.\
     return tree_view
 
 
-
+@implementer(IPropertyPage)
 class CommentItemPropertyPage(object):
     """
     Property page for Comments
     """
-    interface.implements(IPropertyPage)
     component.adapts(UML.Comment)
 
     order = 0
@@ -547,6 +547,7 @@ class CommentItemPropertyPage(object):
 component.provideAdapter(CommentItemPropertyPage, name='Properties')
 
 
+@implementer(IPropertyPage)
 class NamedElementPropertyPage(object):
     """
     An adapter which works for any named item view.
@@ -554,7 +555,6 @@ class NamedElementPropertyPage(object):
     It also sets up a table view which can be extended.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(UML.NamedElement)
 
     order = 10
@@ -716,14 +716,12 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 component.provideAdapter(InterfacePropertyPage, name='Properties')
 
 
-
-
+@implementer(IPropertyPage)
 class AttributesPage(object):
     """
     An editor for attributes associated with classes and interfaces.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.ClassItem)
 
     order = 20
@@ -792,12 +790,12 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 component.provideAdapter(AttributesPage, name='Attributes')
 
 
+@implementer(IPropertyPage)
 class OperationsPage(object):
     """
     An editor for operations associated with classes and interfaces.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.ClassItem)
 
     order = 30
@@ -867,13 +865,12 @@ Add and edit class operations according to UML syntax. Operation syntax examples
 component.provideAdapter(OperationsPage, name='Operations')
 
 
-
+@implementer(IPropertyPage)
 class DependencyPropertyPage(object):
     """
     Dependency item editor.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.DependencyItem)
 
     order = 0
@@ -1068,12 +1065,12 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 component.provideAdapter(AssociationPropertyPage, name='Properties')
 
 
+@implementer(IPropertyPage)
 class AssociationEndPropertyPage(object):
     """
     Property page for association end properties.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(UML.Property)
 
     order = 0
@@ -1157,12 +1154,13 @@ Enter attribute name and multiplicity, for example
 
 component.provideAdapter(AssociationEndPropertyPage, name='Properties')
 
+
+@implementer(IPropertyPage)
 class LineStylePage(object):
     """
     Basic line style properties: color, orthogonal, etc.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(gaphas.item.Line)
 
     order = 400
