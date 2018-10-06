@@ -5,6 +5,7 @@ Everything is about services so the TestCase can define it's required
 services and start off.
 """
 
+from builtins import object
 import logging
 import unittest
 from io import StringIO

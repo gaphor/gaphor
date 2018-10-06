@@ -4,6 +4,7 @@ item, guard of flow item, etc.
 """
 from __future__ import division
 
+from builtins import object
 from past.utils import old_div
 import math
 

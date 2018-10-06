@@ -1,6 +1,7 @@
 """The properties module allows Gaphor properties to be saved to the local
 file system.  These are things like preferences."""
 
+from builtins import object
 import sys
 import os
 import pprint

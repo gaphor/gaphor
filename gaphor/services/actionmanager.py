@@ -1,6 +1,7 @@
 """
 """
 
+from builtins import object
 import gtk
 from zope import interface, component
 

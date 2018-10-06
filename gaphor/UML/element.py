@@ -3,11 +3,14 @@
 Base class for UML model elements.
 """
 
-from builtins import str
-__all__ = [ 'Element' ]
+__all__ = ['Element']
 
 import threading
 import uuid
+
+from builtins import object
+from builtins import str
+
 from gaphor.UML.properties import umlproperty
 
 

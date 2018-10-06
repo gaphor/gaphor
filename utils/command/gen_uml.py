@@ -494,9 +494,12 @@ def generate(filename, outfile=None, overridesfile=None):
         for end in a.memberEnd:
             end = properties[end]
             end.type = classes[end['type']]
-            end.class_ = end.get('class_') and classes[end['class_']] or None
+            if end.get('class_'):
+                end.class_ = classes[end['class_']]
+            else:
+                end.class_ = None
             end.is_simple_attribute = False
-            if end.type and end.type.stereotypeName == 'SimpleAttribute':
+            if end.type is not None and end.type.stereotypeName == 'SimpleAttribute':
                 end.is_simple_attribute = True
                 a.asAttribute = end
             ends.append(end)
@@ -505,7 +508,7 @@ def generate(filename, outfile=None, overridesfile=None):
             parse_association_end(e1, e2)
 
         for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
-            if a.asAttribute:
+            if a.asAttribute is not None:
                 if a.asAttribute is e1 and e1.navigable:
                    writer.write("# '%s.%s' is a simple attribute\n" % (e2.type.name, e1.name))
                    e1.class_name = e2.type.name

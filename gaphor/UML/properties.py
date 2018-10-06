@@ -30,6 +30,7 @@ import logging
 
 from builtins import map
 from builtins import next
+from builtins import object
 from builtins import str
 from zope import component
 

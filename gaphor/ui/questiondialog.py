@@ -2,6 +2,7 @@
 """Defines a QuestionDialog class used to get a yes or no answer from the user.
 """
 
+from builtins import object
 import gtk
 
 class QuestionDialog(object):

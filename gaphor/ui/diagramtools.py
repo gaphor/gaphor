@@ -7,6 +7,7 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
  - TextEditTool: should support adapter based edit protocol
 """
 
+from builtins import object
 import gtk
 import logging
 from zope import component

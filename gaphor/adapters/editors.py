@@ -2,6 +2,7 @@
 Adapters
 """
 
+from builtins import object
 from zope import interface, component
 
 from gaphas.item import NW, SE

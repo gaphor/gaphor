@@ -1,5 +1,6 @@
 """The core UML metamodel events."""
 
+from builtins import object
 from zope import interface
 
 from gaphor.UML.interfaces import IAssociationAddEvent, IAssociationDeleteEvent, IElementCreateEvent

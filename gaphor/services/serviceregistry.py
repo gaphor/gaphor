@@ -5,6 +5,7 @@ retrieved.
 Our good old NameServicer.
 """
 
+from builtins import object
 from builtins import next
 from zope import interface, component
 

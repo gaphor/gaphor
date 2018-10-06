@@ -1,6 +1,7 @@
 """
 """
 
+from builtins import object
 from zope import interface, component
 
 from logging import getLogger

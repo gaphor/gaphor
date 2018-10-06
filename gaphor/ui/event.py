@@ -1,3 +1,4 @@
+from builtins import object
 from zope import interface
 
 from gaphor.ui.interfaces import IDiagramSelectionChange, IDiagramTabChange

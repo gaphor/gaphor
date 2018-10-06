@@ -2,6 +2,7 @@
 The file service is responsible for loading and saving the user data.
 """
 
+from builtins import object
 from builtins import range
 import logging
 

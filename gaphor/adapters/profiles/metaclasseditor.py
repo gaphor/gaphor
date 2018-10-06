@@ -2,6 +2,7 @@
 Metaclass item editors.
 """
 
+from builtins import object
 import gtk
 
 from gaphor.core import _, inject, transactional

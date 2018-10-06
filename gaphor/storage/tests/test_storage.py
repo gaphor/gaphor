@@ -2,6 +2,7 @@
 Unittest the storage and parser modules
 """
 
+from builtins import object
 import io
 import os
 import os.path

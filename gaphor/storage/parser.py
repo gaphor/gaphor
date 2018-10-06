@@ -38,6 +38,7 @@ import io
 import os
 from xml.sax import handler
 
+from builtins import object
 from future import standard_library
 from past.utils import old_div
 

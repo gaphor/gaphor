@@ -12,6 +12,7 @@ If None is returned the undo action is considered to be the redo action as well.
 NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
+from builtins import object
 from zope import interface, component
 
 from gaphas import state

@@ -2,6 +2,7 @@
 Basic stuff for toplevel windows.
 """
 
+from builtins import object
 import os.path
 
 import gtk

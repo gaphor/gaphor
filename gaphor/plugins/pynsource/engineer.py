@@ -2,6 +2,7 @@
 """
 from __future__ import print_function
 
+from builtins import object
 from zope import component
 from gaphor import UML
 from gaphor.diagram import items

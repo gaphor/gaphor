@@ -5,6 +5,7 @@ Contains also implementation to split flows using activity edge connectors.
 """
 from __future__ import division
 
+from builtins import object
 from past.utils import old_div
 from math import atan, pi, sin, cos
 

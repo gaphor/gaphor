@@ -3,6 +3,7 @@ The Sanitize module is dedicated to adapters (stuff) that keeps
 the model clean and in sync with diagrams.
 """
 
+from builtins import object
 from zope import interface
 from zope import component
 

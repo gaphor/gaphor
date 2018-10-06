@@ -3,6 +3,7 @@ A GUI for the checkmodel plugin.
 """
 from __future__ import print_function
 
+from builtins import object
 import gobject
 import gtk
 from zope import interface

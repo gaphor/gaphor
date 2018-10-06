@@ -2,6 +2,7 @@
 This plugin extends Gaphor with XMI export functionality.
 """
 
+from builtins import object
 from zope import interface
 
 from gaphor.core import _, inject, action, build_action_group

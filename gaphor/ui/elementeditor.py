@@ -1,4 +1,5 @@
 """The element editor is a utility window used for editing elements."""
+from builtins import object
 import logging
 
 from zope import interface

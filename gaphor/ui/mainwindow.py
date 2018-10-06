@@ -2,6 +2,7 @@
 The main application window.
 """
 
+from builtins import object
 from builtins import str
 import logging
 import os.path

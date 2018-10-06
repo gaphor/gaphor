@@ -3,6 +3,7 @@ Style classes and constants.
 """
 from __future__ import division
 
+from builtins import object
 from builtins import range
 from past.utils import old_div
 from past.builtins import cmp

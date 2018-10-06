@@ -2,6 +2,7 @@
 Service dedicated to exporting diagrams to a varyity of file formats.
 """
 
+from builtins import object
 import os
 import cairo
 

@@ -1,4 +1,5 @@
 
+from builtins import object
 import gtk
 from gaphor.tests.testcase import TestCase
 from gaphor.application import Application

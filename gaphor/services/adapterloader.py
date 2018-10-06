@@ -1,4 +1,5 @@
 
+from builtins import object
 import pkg_resources
 from zope import interface
 from gaphor.interfaces import IService

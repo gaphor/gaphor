@@ -6,6 +6,7 @@ The Toolbox is bound to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
+from builtins import object
 from builtins import zip
 from gaphas.item import SE
 from zope import component

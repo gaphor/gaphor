@@ -3,6 +3,7 @@ Stereotype property page.
 """
 from __future__ import print_function
 
+from builtins import object
 import gtk
 from gaphor.core import _, inject, transactional
 from gaphor.ui.interfaces import IPropertyPage

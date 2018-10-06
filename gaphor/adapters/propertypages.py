@@ -28,6 +28,7 @@ TODO:
 from __future__ import print_function
 from __future__ import division
 
+from builtins import object
 from builtins import zip
 from builtins import range
 from past.utils import old_div
@@ -750,7 +751,7 @@ class AttributesPage(object):
         page.pack_start(hbox, expand=False)
 
         def create_model():
-            return ClassAttributes(self.item, (str, bool, object))
+            return ClassAttributes(self.item, (str, bool, gobject.TYPE_PYOBJECT))
 
         self.model = create_model()
         
@@ -824,7 +825,7 @@ class OperationsPage(object):
         page.pack_start(hbox, expand=False)
 
         def create_model():
-            return ClassOperations(self.item, (str, bool, bool, object))
+            return ClassOperations(self.item, (str, bool, bool, gobject.TYPE_PYOBJECT))
 
         self.model = create_model()
         tip = """\
