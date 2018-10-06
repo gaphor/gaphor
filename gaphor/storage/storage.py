@@ -322,7 +322,7 @@ def load_generator(filename, factory):
     This function is a generator. It will yield values from 0 to 100 (%)
     to indicate its progression.
     """
-    if isinstance(filename, (file, io.IOBase)):
+    if isinstance(filename, io.IOBase):
         log.info('Loading file from file descriptor')
     else:
         log.info('Loading file %s' % os.path.basename(filename))

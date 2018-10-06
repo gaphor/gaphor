@@ -303,7 +303,7 @@ class ProgressGenerator(object):
         self.input = input
         self.output = output
         self.block_size = block_size
-        if isinstance(self.input, (file, io.IOBase)):
+        if isinstance(self.input, io.IOBase):
             orig_pos = self.input.tell()
             self.file_size = self.input.seek(0, 2)
             self.input.seek(orig_pos, os.SEEK_SET)
@@ -335,7 +335,7 @@ def parse_file(filename, parser):
     is_fd = True
 
     print(filename)
-    if isinstance(filename, (file, io.IOBase)):
+    if isinstance(filename, io.IOBase):
         file_obj = filename
     else:
         is_fd = False
