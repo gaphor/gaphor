@@ -39,6 +39,7 @@ import os
 from xml.sax import handler
 
 from builtins import object
+from builtins import range
 from future import standard_library
 from past.utils import old_div
 
@@ -110,7 +111,7 @@ class ParserException(Exception):
  VAL,          # Redaing contents of a <val> tag
  REFLIST,      # In a <reflist>
  REF           # Reading contents of a <ref> tag
- ] = xrange(10)
+ ] = range(10)
 
 
 class GaphorLoader(handler.ContentHandler):
