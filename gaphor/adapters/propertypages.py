@@ -44,7 +44,7 @@ from zope import component
 from gaphor import UML
 from gaphor.UML.interfaces import IAttributeChangeEvent
 import gaphas.item
-from gaphas.decorators import async
+from gaphas.decorators import AsyncIO
 
 class EditableTreeModel(Gtk.ListStore):
     """
@@ -762,7 +762,7 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
         tree_view = create_tree_view(self.model, (_('Attributes'), _('S')), tip)
         page.pack_start(tree_view, True, True, 0)
 
-        @async(single=True)
+        @AsyncIO(single=True)
         def handler(event):
             # Single it's asynchronous, make sure all properties are still there
             if not tree_view.props.has_focus and self.item and self.item.subject:
@@ -835,7 +835,7 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         tree_view = create_tree_view(self.model, (_('Operation'), _('A'), _('S')), tip)
         page.pack_start(tree_view, True, True, 0)
 
-        @async(single=True)
+        @AsyncIO(single=True)
         def handler(event):
             if not tree_view.props.has_focus and self.item and self.item.subject:
                 self.model = create_model()

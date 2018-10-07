@@ -8,7 +8,7 @@ from builtins import object
 from logging import getLogger
 from zope import interface
 
-from gaphas.decorators import async
+from gaphor.decorators import AsyncIO
 from zope.interface import implementer
 
 from gaphor.core import inject
@@ -172,7 +172,7 @@ class FileBackend(object):
         with open(filename, 'w') as ofile:
             pprint.pprint(resource, ofile)
 
-    @async(single=True, timeout=500)
+    @AsyncIO(single=True, timeout=500)
     def update(self, resource, key, value):
         """Update the properties file with any changes in the background."""
         
