@@ -102,11 +102,13 @@ class GIdleThread(object):
                          "sys.exc_info()")
 
     def reraise(self):
-        """Rethrow the error that occured during execution of the idle process.
+        """Rethrow the error that occurred during execution of the idle process.
         """
         exc_info = self._exc_info
-        if exc_info[0]:
-            raise exc_info[0], exc_info[1], exc_info[2]
+
+        exctype, value = exc_info[:2]
+        if exctype:
+            raise exctype(value)
 
     def __generator_executer(self):
         try:
