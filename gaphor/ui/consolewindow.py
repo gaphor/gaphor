@@ -1,19 +1,23 @@
 #!/usr/bin/env python
 
-import sys
+import logging
 import os
-import gtk
-from zope import interface
+from builtins import object
+
+from zope.interface import implementer
+
+from gaphor.action import action, open_action, build_action_group
 from gaphor.core import inject
 from gaphor.interfaces import IActionProvider
-from gaphor.ui.interfaces import IUIComponent
-from gaphor.action import action, open_action, build_action_group
-from gaphor.misc.console import GTKInterpreterConsole
 from gaphor.misc import get_user_data_dir
+from gaphor.misc.console import GTKInterpreterConsole
+from gaphor.ui.interfaces import IUIComponent
 
+log = logging.getLogger(__name__)
+
+
+@implementer(IUIComponent, IActionProvider)
 class ConsoleWindow(object):
-    
-    interface.implements(IUIComponent, IActionProvider)
 
     component_registry = inject('component_registry')
 

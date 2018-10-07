@@ -4,20 +4,23 @@ Connector adapters.
 To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
+from __future__ import print_function
 
-from zope import interface, component
+from builtins import object
 from logging import getLogger
+from zope import component
 
-from gaphas import geometry
+from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.core import inject
-from gaphor.diagram.interfaces import IConnect
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 
 logger = getLogger('Connector')
 
 
+@implementer(IConnect)
 class AbstractConnect(object):
     """
     Connection adapter for Gaphor diagram items.
@@ -42,7 +45,6 @@ class AbstractConnect(object):
     By convention the adapters are registered by (element, line) -- in that order.
 
     """
-    interface.implements(IConnect)
 
     element_factory = inject('element_factory')
 
@@ -221,7 +223,7 @@ class CommentLineLineConnect(AbstractConnect):
                  and connected_to.subject is element.subject:
             return None
 
-        print 'Connecting', element, 'with', element.subject
+        print('Connecting', element, 'with', element.subject)
 
         # One end should be connected to a CommentItem:
         cls = items.CommentItem
@@ -392,7 +394,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         """
         Establish the relationship at model level.
         """
-        raise NotImplementedError, 'Implement connect_subject() in a subclass'
+        raise NotImplementedError('Implement connect_subject() in a subclass')
 
     def disconnect_subject(self, handle):
         """

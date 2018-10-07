@@ -41,13 +41,13 @@ class ComponentItem(ClassifierItem):
 
         color = cr.get_source()
         cr.rectangle(bx, bar_lower_y, self.BAR_WIDTH, self.BAR_HEIGHT)
-        cr.set_source_rgb(1,1,1) # white
+        cr.set_source_rgb(1, 1, 1) # white
         cr.fill_preserve()
         cr.set_source(color)
         cr.stroke()
 
         cr.rectangle(bx, bar_upper_y, self.BAR_WIDTH, self.BAR_HEIGHT)
-        cr.set_source_rgb(1,1,1) # white
+        cr.set_source_rgb(1, 1, 1) # white
         cr.fill_preserve()
         cr.set_source(color)
         cr.stroke()

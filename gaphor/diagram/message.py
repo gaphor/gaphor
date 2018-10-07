@@ -45,7 +45,9 @@ operation information in message's name.
 
 See also ``lifeline`` module documentation.
 """
+from __future__ import division
 
+from past.utils import old_div
 from math import pi
 
 from gaphas.util import path_ellipse
@@ -55,7 +57,7 @@ from gaphor.diagram.diagramline import NamedLine
 from gaphor.misc.odict import odict
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
-PI_2 = pi / 2
+PI_2 = old_div(pi, 2)
 
 class MessageItem(NamedLine):
     """

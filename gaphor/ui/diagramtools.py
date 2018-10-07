@@ -7,7 +7,9 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
  - TextEditTool: should support adapter based edit protocol
 """
 
+from builtins import object
 import gtk
+import logging
 from zope import component
 
 from gaphas.geometry import distance_point_point, distance_point_point_fast, \
@@ -28,6 +30,8 @@ IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.DIAMOND_CROSS)
 
 # cursor to indicate ungrouping
 OUT_CURSOR = gtk.gdk.Cursor(gtk.gdk.SIZING)
+
+log = logging.getLogger(__name__)
 
 
 @Connector.when_type(DiagramLine)
@@ -83,7 +87,7 @@ class DiagramItemConnector(Connector.default):
                 adapter = component.queryMultiAdapter((sink.item, item), IConnect)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
-        except Exception, e:
+        except Exception as e:
             log.error('Error during connect', exc_info=True)
 
 

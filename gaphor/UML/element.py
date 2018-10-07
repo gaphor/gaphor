@@ -3,11 +3,15 @@
 Base class for UML model elements.
 """
 
-__all__ = [ 'Element' ]
+__all__ = ['Element']
 
 import threading
 import uuid
-from properties import umlproperty
+
+from builtins import object
+from builtins import str
+
+from gaphor.UML.properties import umlproperty
 
 
 class Element(object):
@@ -69,9 +73,9 @@ class Element(object):
         """
         try:
             prop = getattr(type(self), name)
-        except AttributeError, e:
-            raise AttributeError, "'%s' has no property '%s'" % \
-                                        (type(self).__name__, name)
+        except AttributeError as e:
+            raise AttributeError("'%s' has no property '%s'" % \
+                                        (type(self).__name__, name))
         else:
             prop.load(self, value)
 
@@ -118,7 +122,7 @@ class Element(object):
         """
         Returns true if the object is of the same type as other.
         """
-        return type(self) == type(other)
+        return isinstance(self, type(other))
 
 
     def __getstate__(self):

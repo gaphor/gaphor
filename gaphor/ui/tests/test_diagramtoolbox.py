@@ -1,4 +1,5 @@
 
+from builtins import object
 import gtk
 from gaphor.tests.testcase import TestCase
 from gaphor.application import Application
@@ -47,7 +48,7 @@ class DiagramToolboxTestCase(TestCase):
                     
                     shortcuts[shortcut] = [action_name]
 
-        for key, val in shortcuts.items():
+        for key, val in list(shortcuts.items()):
             
             if key is not None:
                 

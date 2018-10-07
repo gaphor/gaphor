@@ -2,11 +2,17 @@
 """This module contains a model element Diagram which is the abstract
 representation of a UML diagram. Diagrams can be visualized and edited.
 
-The DiagramCanvas class extends the gaphas.Canvas class."""
+The DiagramCanvas class extends the gaphas.Canvas class.
+"""
+
+from builtins import str
+from builtins import filter
+import uuid
 
 import gaphas
-import uuid
-from uml2 import Namespace, PackageableElement
+
+from gaphor.UML.uml2 import Namespace, PackageableElement
+
 
 class DiagramCanvas(gaphas.Canvas):
     """DiagramCanvas extends the gaphas.Canvas class.  Updates to the canvas
@@ -55,7 +61,7 @@ class DiagramCanvas(gaphas.Canvas):
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression."""
         
-        return filter(expression, self.get_all_items())
+        return list(filter(expression, self.get_all_items()))
 
 
 class Diagram(Namespace, PackageableElement):

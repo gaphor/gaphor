@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 import unittest
 
@@ -378,7 +379,7 @@ class Uml2TestCase(unittest.TestCase):
 
         e = UML.model.create_extension(factory, c, s)
 
-        print e.memberEnd
+        print(e.memberEnd)
         self.assertEquals([e], c.extension)
         self.assertEquals([], s.extension)
         assert e.ownedEnd.type is s

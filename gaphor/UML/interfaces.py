@@ -5,6 +5,7 @@ UML events emited on a change in the data model.
 from zope import interface
 from gaphor.interfaces import IServiceEvent
 
+
 class IElementEvent(interface.Interface):
     """Generic event fired when element state changes.
     """

@@ -3,6 +3,7 @@ DiagramItem provides basic functionality for presentations.
 Such as a modifier 'subject' property and a unique id.
 """
 
+from builtins import object
 from zope import component
 from gaphas.state import observed, reversible_property
 
@@ -13,6 +14,7 @@ from gaphor.core import inject
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
+from future.utils import with_metaclass
 
 logger = getLogger('Diagram')
 
@@ -21,7 +23,7 @@ class StereotypeSupport(object):
     Support for stereotypes for every diagram item.
     """
     STEREOTYPE_ALIGN = {
-        'text-align'  : (ALIGN_CENTER, ALIGN_TOP),
+        'text-align': (ALIGN_CENTER, ALIGN_TOP),
         'text-padding': (5, 10, 2, 10),
         'text-outside': False,
         'text-align-group': 'stereotype',
@@ -101,7 +103,7 @@ class StereotypeSupport(object):
 
         subject = self.subject
 
-        for stereotype, condition in data.items():
+        for stereotype, condition in list(data.items()):
             if isinstance(condition, tuple):
                 cls, predicate = condition
             elif isinstance(condition, type):
@@ -115,7 +117,7 @@ class StereotypeSupport(object):
 
             ok = True
             if cls:
-                ok = type(subject) is cls #isinstance(subject, cls)
+                ok = isinstance(subject, cls) #isinstance(subject, cls)
             if predicate:
                 ok = predicate(self)
 
@@ -125,7 +127,7 @@ class StereotypeSupport(object):
 
 
 
-class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
+class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentation, StereotypeSupport, EditableTextSupport), {}))):
     """
     Basic functionality for all model elements (lines and elements!).
 
@@ -145,8 +147,6 @@ class DiagramItem(UML.Presentation, StereotypeSupport, EditableTextSupport):
 
     @cvar style: styles information (derived from DiagramItemMeta)
     """
-
-    __metaclass__ = DiagramItemMeta
 
     dispatcher = inject('element_dispatcher')
 

@@ -1,12 +1,17 @@
 """
 Trivial drawing aids (box, line, ellipse).
 """
+from __future__ import division
 
-
-from gaphas.item import Line as _Line
+from builtins import map
+from builtins import range
+from past.utils import old_div
 from gaphas.item import Element, NW
+from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
-from style import Style
+
+from gaphor.diagram.style import Style
+
 
 class Line(_Line):
 
@@ -39,7 +44,7 @@ class Line(_Line):
             self.matrix = eval(value)
         elif name == 'points':
             points = eval(value)
-            for x in xrange(len(points) - 2):
+            for x in range(len(points) - 2):
                 h = self._create_handle((0, 0))
                 self._handles.insert(1, h)
             for i, p in enumerate(points):
@@ -150,8 +155,8 @@ class Ellipse(Element):
         nw = self._handles[NW]
         style = self.style
 
-        rx = self.width / 2.
-        ry = self.height / 2.
+        rx = old_div(self.width, 2.)
+        ry = old_div(self.height, 2.)
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)

@@ -1,7 +1,11 @@
 """
 Activity control nodes.
 """
+from __future__ import print_function
+from __future__ import division
 
+from builtins import map
+from past.utils import old_div
 import math
 
 from gaphas.util import path_ellipse
@@ -114,7 +118,7 @@ class FlowFinalNodeItem(ActivityNodeItem):
         path_ellipse(cr, r, r, d, d)
         cr.stroke()
 
-        dr = (1 - math.sin(math.pi / 4)) * r
+        dr = (1 - math.sin(old_div(math.pi, 4))) * r
         cr.move_to(dr, dr)
         cr.line_to(d - dr, d - dr)
         cr.move_to(dr, d - dr)
@@ -270,12 +274,12 @@ class ForkNodeItem(Item, DiagramItem):
         c1 = EqualsConstraint(a=h1.pos.x, b=h2.pos.x)
         c2 = LessThanConstraint(smaller=h1.pos.y, bigger=h2.pos.y, delta=30)
         self.__constraints = (cadd(c1), cadd(c2))
-        map(self.canvas.solver.add_constraint, self.__constraints)
+        list(map(self.canvas.solver.add_constraint, self.__constraints))
 
 
     def teardown_canvas(self):
         super(ForkNodeItem, self).teardown_canvas()
-        map(self.canvas.solver.remove_constraint, self.__constraints)
+        list(map(self.canvas.solver.remove_constraint, self.__constraints))
         self.unregister_handlers()
 
 
@@ -334,7 +338,7 @@ class ForkNodeItem(Item, DiagramItem):
 
 
     def on_named_element_name(self, event):
-        print 'on_named_element_name', self.subject
+        print('on_named_element_name', self.subject)
         subject = self.subject
         if subject:
             self._name.text = subject.name

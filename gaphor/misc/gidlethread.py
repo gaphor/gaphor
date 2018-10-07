@@ -11,7 +11,11 @@ QueueEmpty - raised when one tried to get a value of an empty queue
 QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
+from __future__ import print_function
 
+from builtins import object
+from builtins import next
+from builtins import range
 import sys
 import gobject
 import time
@@ -98,15 +102,17 @@ class GIdleThread(object):
                          "sys.exc_info()")
 
     def reraise(self):
-        """Rethrow the error that occured during execution of the idle process.
+        """Rethrow the error that occurred during execution of the idle process.
         """
         exc_info = self._exc_info
-        if exc_info[0]:
-            raise exc_info[0], exc_info[1], exc_info[2]
+
+        exctype, value = exc_info[:2]
+        if exctype:
+            raise exctype(value)
 
     def __generator_executer(self):
         try:
-            result = self._generator.next()
+            result = next(self._generator)
             if self._queue:
                 try:
                     self._queue.put(result)
@@ -180,12 +186,12 @@ if __name__ == '__main__':
         while True:
             try:
                 cnt = queue.get()
-                print 'cnt =', cnt
+                print('cnt =', cnt)
             except QueueEmpty:
                 pass
             yield None
 
-    print 'Test 1: (should print range 0..22)'
+    print('Test 1: (should print range 0..22)')
     queue = Queue()
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
@@ -195,7 +201,7 @@ if __name__ == '__main__':
     s.start()
     s.wait(2)
 
-    print 'Test 2: (should only print 22)'
+    print('Test 2: (should only print 22)')
     queue = Queue(size=1)
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))

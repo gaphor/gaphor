@@ -3,7 +3,10 @@ Control flow and object flow implementation.
 
 Contains also implementation to split flows using activity edge connectors.
 """
+from __future__ import division
 
+from builtins import object
+from past.utils import old_div
 from math import atan, pi, sin, cos
 
 from gaphor import UML
@@ -43,7 +46,7 @@ class FlowItem(NamedLine):
     def postload(self):
         try:
             self._guard.text = self.subject.guard.value
-        except AttributeError, e:
+        except AttributeError as e:
             self._guard.text = ''
         super(FlowItem, self).postload()
 
@@ -52,7 +55,7 @@ class FlowItem(NamedLine):
         subject = self.subject
         try:
             self._guard.text = subject.guard if subject else ''
-        except AttributeError, e:
+        except AttributeError as e:
             self._guard.text = ''
         self.request_update()
 
@@ -115,7 +118,7 @@ class ACItem(object):
 
         # get label size and move it so it is centered with circle
         w, h = self.get_size()
-        x, y = x - w / 2, y - h / 2
+        x, y = x - old_div(w, 2), y - old_div(h, 2)
         self._name.set_pos((x, y))
         self._name_bounds = (x, y, x + w, y + h)
 

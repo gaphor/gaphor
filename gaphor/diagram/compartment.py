@@ -1,14 +1,24 @@
 """
 Diagram item with compartments.
 """
+from __future__ import division
 
-import cairo, pango, pangocairo
+from builtins import object
+from builtins import zip
+from past.utils import old_div
+import logging
+
+import cairo
+import pango
+import pangocairo
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
-from textelement import text_extents, text_align
+from gaphor.diagram.textelement import text_extents, text_align
+
+log = logging.getLogger(__name__)
 
 
 class FeatureItem(object):
@@ -173,7 +183,7 @@ class Compartment(list):
         cr.translate(padding[1], padding[0])
         offset = 0
         if self.title:
-            text_align(cr, self.owner.width / 2.0, padding[0],
+            text_align(cr, old_div(self.owner.width, 2.0), padding[0],
                 self.title, font=self.font, align_y=1)
             offset += self.title_height + vspacing
         for item in self:
@@ -413,7 +423,7 @@ class CompartmentItem(NamedItem):
         local_elements = [f.subject for f in compartment]
 
         # map local element with compartment element
-        mapping = dict(zip(local_elements, compartment))
+        mapping = dict(list(zip(local_elements, compartment)))
 
         to_add = [el for el in elements if el not in local_elements]
 
@@ -573,7 +583,7 @@ class CompartmentItem(NamedItem):
         
         # place offset at top of first comparement
         y -= header_height
-        y += vspacing / 2.0
+        y += old_div(vspacing, 2.0)
         for comp in compartments:
             item = comp.item_at(x, y)
             if item:

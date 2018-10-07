@@ -14,14 +14,21 @@ instance of an item to be grouped is created. This happens when item
 is about to be created. Therefore `AbstractGroup.can_contain` has
 to be aware that `AbstractGroup.item` can be null.
 """
+from builtins import object
+import logging
 
-from zope import interface, component
+from zope.interface import implementer
+from zope import component
 
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IGroup
 
+log = logging.getLogger(__name__)
+
+
+@implementer(IGroup)
 class AbstractGroup(object):
     """
     Base class for grouping UML objects.
@@ -32,7 +39,6 @@ class AbstractGroup(object):
      item
         Item to be grouped.
     """
-    interface.implements(IGroup)
 
     element_factory = inject('element_factory')
 
@@ -52,14 +58,14 @@ class AbstractGroup(object):
         """
         Group an item within parent.
         """
-        raise NotImplemented, 'This is abstract method'
+        raise NotImplemented('This is abstract method')
 
 
     def ungroup(self):
         """
         Remove item from parent.
         """
-        raise NotImplemented, 'This is abstract method'
+        raise NotImplemented('This is abstract method')
 
 
 

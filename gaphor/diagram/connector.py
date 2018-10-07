@@ -151,7 +151,7 @@ class ConnectorItem(NamedLine):
         """
         try:
             self._interface.text = self.subject.end['it.role', 0].role.name
-        except (IndexError, AttributeError), e:
+        except (IndexError, AttributeError) as e:
             logger.error(e)
             self._interface.text = ''
         else:

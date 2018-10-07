@@ -10,6 +10,9 @@ See the documentation on the mixins.
 
 """
 
+from builtins import object
+from builtins import filter
+from past.builtins import basestring
 __all__ = [ 'querymixin', 'recursemixin', 'getslicefix' ]
 
 import sys
@@ -90,13 +93,13 @@ class querymixin(object):
             return super(querymixin, self).__getitem__(key)
         except TypeError:
             # Nope, try our matcher trick
-            if type(key) is tuple:
+            if isinstance(key, tuple):
                 key, remainder = key[0], key[1:]
             else:
                 remainder = None
 
             matcher = Matcher(key)
-            matched = filter(matcher, self)
+            matched = list(filter(matcher, self))
             if remainder:
                 return type(self)(matched).__getitem__(*remainder)
             else:
@@ -264,8 +267,10 @@ class getslicefix(object):
         ``__getslice__`` is deprecated. Calls are redirected to
         ``__getitem__()``.
         """
-        if a == 0: a = None
-        if b == sys.maxint: b = None
+        if a == 0:
+            a = None
+        if b == sys.maxsize:
+            b = None
         return self.__getitem__(slice(a, b, c))
 
 # vim: sw=4:et:ai

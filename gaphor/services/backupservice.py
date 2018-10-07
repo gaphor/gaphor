@@ -1,7 +1,9 @@
 """
 """
 
-from zope import interface
+from builtins import object
+from builtins import map
+from zope.interface import implementer
 from gaphor.UML import Element
 from gaphor.application import Application
 from gaphor.interfaces import IService, IActionProvider
@@ -22,12 +24,11 @@ class MyPickler(LatePickler):
         return isinstance(obj, Element)
 
 
+@implementer(IService)
 class BackupService(object):
     """
     This service makes backups every *x* minutes.
     """
-
-    interface.implements(IService)
 
     element_factory = inject('element_factory')
 
@@ -59,7 +60,7 @@ class BackupService(object):
         finally:
             f.close()
         self.element_factory.flush()
-        map(self.element_factory.bind, elements)
+        list(map(self.element_factory.bind, elements))
 
 
 # vim: sw=4:et:ai

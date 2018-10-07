@@ -32,7 +32,7 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
 
     def test_aspect_type(self):
         aspect = Connector(self.commentline, self.commentline.handles()[0])
-        assert type(aspect) is DiagramItemConnector
+        assert isinstance(aspect, DiagramItemConnector)
 
     def test_query(self):
         from zope import component

@@ -1,9 +1,11 @@
+from __future__ import print_function
 
+from builtins import map
 from gaphor import UML
 from os import path
 
 def report(element, message):
-    print '%s: %s' % (type(element).__name__, message)
+    print('%s: %s' % (type(element).__name__, message))
 
 def get_subsets(tagged_value):
     subsets = []
@@ -73,13 +75,13 @@ def check_associations(element_factory):
 def check_attributes(element_factory):
     for a in element_factory.select(lambda e: e.isKindOf(UML.Property) and not e.association):
         if not a.typeValue or not a.typeValue.value:
-            report(a,'Attribute has no type: %s' % a.name)
+            report(a, 'Attribute has no type: %s' % a.name)
         elif a.typeValue.value.lower() not in ('string', 'boolean', 'integer', 'unlimitednatural'):
             report(a, 'Invalid attribute type: %s' % a.typeValue.value)
 
 # TODO: Check the sanity of the generated data model.
 def check_UML_module():
-    all_classes = map(getattr, [UML] * len(dir(UML)), dir(UML))
+    all_classes = list(map(getattr, [UML] * len(dir(UML)), dir(UML)))
     for c in all_classes:
         if not isinstance(c, UML.Element):
             continue

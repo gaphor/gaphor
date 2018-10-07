@@ -1,11 +1,14 @@
 """
 Test connector item connectors.
 """
+import logging
 
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.adapters.components.connectorconnect import ConnectorConnectBase
+
+log = logging.getLogger(__name__)
 
 
 class ComponentConnectTestCase(TestCase):

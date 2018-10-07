@@ -1,5 +1,6 @@
 """Unit tests for transactions in Gaphor."""
 
+from builtins import str
 from unittest import TestCase 
 
 from zope.component.globalregistry import base
@@ -122,7 +123,7 @@ class TransactionTestCase(TestCase):
 
         try:
             tx1.commit()
-        except TransactionError, e:
+        except TransactionError as e:
             pass
         else:
             self.fail('Commit should not have succeeded')
@@ -145,7 +146,7 @@ class TransactionTestCase(TestCase):
         try:
             with Transaction():
                 raise TypeError('transaction error')
-        except TypeError, e:
+        except TypeError as e:
             self.assertEquals('transaction error', str(e), 'Transaction context manager did no raise correct exception')
         else:
             self.fail('Transaction context manager did not raise exception when it should have')

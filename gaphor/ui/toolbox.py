@@ -6,8 +6,8 @@ import gobject
 import gtk
 
 from gaphor.core import inject
+from gaphor.ui.wrapbox import Wrapbox
 
-from wrapbox import Wrapbox
 
 class Toolbox(gtk.VBox):
     """

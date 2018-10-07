@@ -2,9 +2,12 @@
 1:n and n:m relations in the data model are saved using a collection.
 """
 
+from builtins import object
+from builtins import str
 import inspect
-from event import AssociationChangeEvent
-from gaphor.misc.listmixins import querymixin, recursemixin, recurseproxy, getslicefix
+
+from gaphor.UML.event import AssociationChangeEvent
+from gaphor.misc.listmixins import querymixin, recursemixin, getslicefix
 
 
 class collectionlist(recursemixin, querymixin, getslicefix, list):
@@ -60,7 +63,7 @@ class collection(object):
         return len(self.items)
 
     def __setitem__(self, key, value):
-        raise RuntimeError, 'items should not be overwritten.'
+        raise RuntimeError('items should not be overwritten.')
 
     def __delitem__(self, key):
         self.remove(key)
@@ -79,20 +82,20 @@ class collection(object):
 
     __repr__ = __str__
 
-    def __nonzero__(self):
+    def __bool__(self):
         return self.items!=[]
 
     def append(self, value):
         if isinstance(value, self.type):
             self.property._set(self.object, value)
         else:
-            raise TypeError, 'Object is not of type %s' % self.type.__name__
+            raise TypeError('Object is not of type %s' % self.type.__name__)
 
     def remove(self, value):
         if value in self.items:
             self.property.__delete__(self.object, value)
         else:
-            raise ValueError, '%s not in collection' % value
+            raise ValueError('%s not in collection' % value)
 
 
     def index(self, key):
@@ -108,46 +111,46 @@ class collection(object):
     def size(self):
         return len(self.items)
 
-    def includes(self,o):
+    def includes(self, o):
         return o in self.items
 
-    def excludes(self,o):
+    def excludes(self, o):
         return not self.includes(o)
 
-    def count(self,o):
+    def count(self, o):
         c=0
         for x in self.items:
             if x==o:
                 c=c+1
         return c
 
-    def includesAll(self,c):
+    def includesAll(self, c):
         for o in c:
             if o not in self.items:
                 return 0
         return 1
 
-    def excludesAll(self,c):
+    def excludesAll(self, c):
         for o in c:
             if o in self.items:
                 return 0
         return 1
 
-    def select(self,f):
+    def select(self, f):
         result=list()
         for v in self.items:
             if f(v):
                 result.append(v)
         return result
 
-    def reject(self,f):
+    def reject(self, f):
         result=list()
         for v in self.items:
             if not f(v):
                 result.append(v)
         return result
 
-    def collect(self,f):
+    def collect(self, f):
         result=list()
         for v in self.items:
             result.append(f(v))
@@ -165,7 +168,7 @@ class collection(object):
             r=r+o
         return o
     
-    def forAll(self,f):
+    def forAll(self, f):
         if not self.items or not inspect.getargspec(f)[0]:
             return True
 
@@ -177,11 +180,11 @@ class collection(object):
         nitems=len(self.items)
         index=[0]*nargs
         
-        while 1:
+        while True:
             args=[]
             for x in index:
                 args.append(self.items[x])
-            if not apply(f,args):
+            if not f(*args):
                 return False
             c=len(index)-1
             index[c]=index[c]+1
@@ -196,7 +199,7 @@ class collection(object):
                     c=c-1
         return False
 
-    def exist(self,f):
+    def exist(self, f):
         if not self.items or not inspect.getargspec(f)[0]:
             return False
 
@@ -207,11 +210,11 @@ class collection(object):
         assert(nargs>0)
         nitems=len(self.items)
         index=[0]*nargs
-        while 1:
+        while True:
             args=[]
             for x in index:
                 args.append(self.items[x])
-            if apply(f,args):
+            if f(*args):
                 return True
             c=len(index)-1
             index[c]=index[c]+1
@@ -241,9 +244,9 @@ class collection(object):
             if factory:
                 factory._handle(AssociationChangeEvent(self.object, self.property))
             return True
-        except IndexError, ex:
+        except IndexError as ex:
             return False
-        except ValueError, ex:
+        except ValueError as ex:
             return False
 
 

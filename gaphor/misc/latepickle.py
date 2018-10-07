@@ -3,6 +3,7 @@ Modified pickler. This version uses forward declarations in the
 state machine, so recursion depth can be limited.
 """
 
+from builtins import chr
 import pickle, types, struct
 
 

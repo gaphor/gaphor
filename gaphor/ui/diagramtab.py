@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+from __future__ import division
+from builtins import object
+from builtins import str
+from past.utils import old_div
 import gtk
 from cairo import Matrix
 from zope import component
@@ -156,13 +161,13 @@ class DiagramTab(object):
 
     @action(name='diagram-zoom-out', stock_id='gtk-zoom-out')
     def zoom_out(self):
-        self.view.zoom(1 / 1.2)
+        self.view.zoom(old_div(1, 1.2))
 
 
     @action(name='diagram-zoom-100', stock_id='gtk-zoom-100')
     def zoom_100(self):
         zx = self.view.matrix[0]
-        self.view.zoom(1 / zx)
+        self.view.zoom(old_div(1, zx))
 
 
     @action(name='diagram-select-all', label='_Select all', accel='<Control>a')
@@ -227,7 +232,7 @@ class DiagramTab(object):
         confirmation before deletion.
         """
         items = self.view.selected_items
-        last_in_model = filter(lambda i: i.subject and len(i.subject.presentation) == 1, items)
+        last_in_model = [i for i in items if i.subject and len(i.subject.presentation) == 1]
         log.debug('Last in model: %s' % str(last_in_model))
         if last_in_model:
             return self.confirm_deletion_of_items(last_in_model)
@@ -277,7 +282,7 @@ class DiagramTab(object):
 
 
     def _on_drag_drop(self, view, context, x, y, time):
-        print 'drag_drop on', context.targets
+        print('drag_drop on', context.targets)
         if self.VIEW_DND_TARGETS[0][0] in context.targets:
             target = gtk.gdk.atom_intern(self.VIEW_DND_TARGETS[0][0])
             view.drag_get_data(context, target, time)
@@ -292,7 +297,7 @@ class DiagramTab(object):
         """
         Handle data dropped on the canvas.
         """
-        print 'DND data received', view
+        print('DND data received', view)
         if data and data.format == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
             tool = self.toolbox.get_tool(data.data)
             tool.create_item((x, y))

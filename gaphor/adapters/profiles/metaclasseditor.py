@@ -2,14 +2,18 @@
 Metaclass item editors.
 """
 
-import gtk
+from builtins import object
+from zope import component
 
-from gaphor.core import _, inject, transactional
-from gaphor.ui.interfaces import IPropertyPage
-from zope import interface, component
-from gaphor.diagram import items
-from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
+import gtk
+from zope.interface import implementer
+
 from gaphor import UML
+from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
+from gaphor.core import _, transactional
+from gaphor.diagram import items
+from gaphor.ui.interfaces import IPropertyPage
+
 
 def _issubclass(c, b):
     try:
@@ -18,13 +22,12 @@ def _issubclass(c, b):
         return False
 
 
+@implementer(IPropertyPage)
 class MetaclassNameEditor(object):
     """
     Metaclass name editor. Provides editable combo box entry with
     predefined list of names of UML classes.
     """
-
-    interface.implements(IPropertyPage)
 
     order = 10
 

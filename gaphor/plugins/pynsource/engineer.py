@@ -1,8 +1,8 @@
-# vim:sw=4:et
-
 """The code reverse engineer.
 """
+from __future__ import print_function
 
+from builtins import object
 from zope import component
 from gaphor import UML
 from gaphor.diagram import items
@@ -10,7 +10,7 @@ from gaphor.core import inject
 from gaphor.diagram.interfaces import IConnect
 from gaphas.aspect import ConnectionSink, Connector
 
-from pynsource import PySourceAsText
+from gaphor.plugins.pynsource.pynsource import PySourceAsText
 
 BASE_CLASSES = ('object', 'type', 'dict', 'list', 'tuple', 'int', 'float')
 
@@ -38,7 +38,7 @@ class Engineer(object):
                 # Build a shape with all attrs and methods, and prepare association dict
                 p.Parse(f)
 
-        print p
+        print(p)
         
         try:
             self._root_package = self.element_factory.lselect(lambda e: isinstance(e, UML.Package) and not e.namespace)[0]
@@ -46,7 +46,7 @@ class Engineer(object):
             pass # running as test?
 
         for m in p.modulemethods:
-            print 'ModuleMethod:', m
+            print('ModuleMethod:', m)
 
         # Step 0: create a diagram to put the newly created elements on
         self.diagram = self.element_factory.create(UML.Diagram)
@@ -54,20 +54,20 @@ class Engineer(object):
         self.diagram.package = self._root_package
 
         # Step 1: create the classes
-        for name, clazz in p.classlist.items():
-            print type(clazz), dir(clazz)
+        for name, clazz in list(p.classlist.items()):
+            print(type(clazz), dir(clazz))
             self._create_class(clazz, name)
             
         # Create generalization relationships:
-        for name, clazz in p.classlist.items():
+        for name, clazz in list(p.classlist.items()):
             self._create_generalization(clazz)
         
         # Create attributes (and associations) on the classes
-        for name, clazz in p.classlist.items():
+        for name, clazz in list(p.classlist.items()):
             self._create_attributes(clazz)
 
         # Create operations
-        for name, clazz in p.classlist.items():
+        for name, clazz in list(p.classlist.items()):
             self._create_methods(clazz)
 
         self.diagram_layout.layout_diagram(self.diagram)
@@ -89,18 +89,18 @@ class Engineer(object):
                 try:
                     superclass = self.parser.classlist[superclassname].gaphor_class
                     superclass_item = self.parser.classlist[superclassname].gaphor_class_item
-                except KeyError, e:
-                    print 'No class found named', superclassname
+                except KeyError as e:
+                    print('No class found named', superclassname)
                     others = self.element_factory.lselect(lambda e: isinstance(e, UML.Class) and e.name == superclassname)
                     if others:
                         superclass = others[0]
-                        print 'Found class in factory: %s' % superclass.name
+                        print('Found class in factory: %s' % superclass.name)
                         superclass_item = self.diagram.create(items.ClassItem)
                         superclass_item.subject = superclass
                     else:
                         continue
                 # Finally, create the generalization relationship
-                print 'Creating Generalization for %s' % clazz, superclass
+                print('Creating Generalization for %s' % clazz, superclass)
                 #gen = self.element_factory.create(UML.Generalization)
                 #gen.general = superclass
                 #gen.specific = clazz.gaphor_class
@@ -152,12 +152,12 @@ class Engineer(object):
         try:
             superclass = self.parser.classlist[classname].gaphor_class
             superclass_item = self.parser.classlist[classname].gaphor_class_item
-        except KeyError, e:
-            print 'No class found named', classname
+        except KeyError as e:
+            print('No class found named', classname)
             others = self.element_factory.lselect(lambda e: isinstance(e, UML.Class) and e.name == classname)
             if others:
                 superclass = others[0]
-                print 'Found class in factory: %s' % superclass.name
+                print('Found class in factory: %s' % superclass.name)
                 superclass_item = self.diagram.create(items.ClassItem)
                 superclass_item.subject = superclass
             else:

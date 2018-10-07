@@ -1,14 +1,13 @@
 """
 Test classes.
 """
-
-from gaphor.tests.testcase import TestCase
+import logging
 
 from gaphor import UML
 from gaphor.diagram.classes.klass import ClassItem
-from gaphor.diagram.interfaces import IEditor
+from gaphor.tests.testcase import TestCase
 
-import gaphor.adapters
+log = logging.getLogger(__name__)
 
 
 class ClassTestCase(TestCase):

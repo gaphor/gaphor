@@ -5,12 +5,15 @@ Everything is about services so the TestCase can define it's required
 services and start off.
 """
 
-import unittest
+from builtins import object
 import logging
-from cStringIO import StringIO
+import unittest
+from io import StringIO
+
+from future import standard_library
+from gaphas.aspect import ConnectionSink, Connector
 from zope import component
 
-from gaphas.aspect import ConnectionSink, Connector
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.diagram.interfaces import IConnect
@@ -19,9 +22,11 @@ from gaphor.diagram.interfaces import IGroup
 # For DiagramItemConnector aspect:
 import gaphor.ui.diagramtools
 
+standard_library.install_aliases()
 
-# Increment log level
+log = logging.getLogger('Gaphor')
 log.setLevel(logging.WARNING)
+
 
 class TestCaseExtras(object):
     """
@@ -33,8 +38,7 @@ class TestCaseExtras(object):
            operator.
         """
         if first is second:
-            raise self.failureException, \
-                  (msg or '%r is not %r' % (first, second))
+            raise self.failureException(msg or '%r is not %r' % (first, second))
 
     assertNotSame = failIfIdentityEqual
 
@@ -43,8 +47,7 @@ class TestCaseExtras(object):
            operator.
         """
         if first is not second:
-            raise self.failureException, \
-                  (msg or '%r is not %r' % (first, second))
+            raise self.failureException(msg or '%r is not %r' % (first, second))
 
     assertSame = failUnlessIdentityEqual
 

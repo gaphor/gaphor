@@ -70,7 +70,7 @@ class AttributeTestCase(unittest.TestCase):
         """
         a = factory.create(UML.Property)
 
-        UML.parse(a,'+ / name : str[0..*] = "aap" { static }')
+        UML.parse(a, '+ / name : str[0..*] = "aap" { static }')
         self.assertEquals('public', a.visibility)
         self.assertTrue(a.isDerived)
         self.assertEquals('name', a.name)

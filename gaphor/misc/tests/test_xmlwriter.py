@@ -1,9 +1,10 @@
 
+from builtins import object
 import sys
 import unittest
 from gaphor.misc.xmlwriter import XMLWriter
 
-class Writer:
+class Writer(object):
     def __init__(self):
         self.s = ''
 

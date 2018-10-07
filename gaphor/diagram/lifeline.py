@@ -19,7 +19,11 @@ cannot be supported. Still, destruction event notation is shown at the
 bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.
 """
+from __future__ import division
 
+from builtins import object
+from builtins import map
+from past.utils import old_div
 from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG
@@ -46,7 +50,7 @@ class LifetimePort(LinePort):
         # keep message at the same distance from head or bottom of lifetime
         # line depending on situation
         height = self.end.y - self.start.y
-        if y / height < 0.5:
+        if old_div(y, height) < 0.5:
             delta = y - self.start.y
             align = 0
         else:
@@ -182,12 +186,12 @@ class LifelineItem(NamedItem):
         self.lifetime._c_min_length = LessThanConstraint(top.pos.y, bottom.pos.y, delta=LifetimeItem.MIN_LENGTH)
         self.__constraints = (c1, c2, c3, self.lifetime._c_min_length)
 
-        map(self.canvas.solver.add_constraint, self.__constraints)
+        list(map(self.canvas.solver.add_constraint, self.__constraints))
 
 
     def teardown_canvas(self):
         super(LifelineItem, self).teardown_canvas()
-        map(self.canvas.solver.remove_constraint, self.__constraints)
+        list(map(self.canvas.solver.remove_constraint, self.__constraints))
 
 
     def save(self, save_func):

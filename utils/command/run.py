@@ -1,10 +1,15 @@
 """
 Command for running gaphor and tests directly from setup.py.
 """
+from __future__ import print_function
 
-import sys, os.path
+import os.path
+import sys
 from distutils.core import Command
+
+from past.builtins import execfile
 from pkg_resources import load_entry_point
+
 
 class run(Command):
 
@@ -37,28 +42,27 @@ class run(Command):
                                    ('build_lib', 'build_lib'))
 
     def run(self):
-        print 'Starting Gaphor...'
+        print('Starting Gaphor...')
 
         if self.model:
-            print 'Starting with model file', self.model
+            print('Starting with model file', self.model)
 
         for cmd_name in self.get_sub_commands():
             self.run_command(cmd_name)
         #if self.build_lib not in sys.path:
             #sys.path.insert(0, self.build_lib)
-        
-        import gaphor
+
         #os.environ['GAPHOR_DATADIR'] = os.path.abspath('data')
         if self.coverage:
             import coverage
             coverage.start()
 
         if self.command:
-            print 'Executing command: %s...' % self.command
-            exec self.command
+            print('Executing command: %s...' % self.command)
+            exec(self.command)
 
         elif self.doctest:
-            print 'Running doctest cases in module: %s...' % self.doctest
+            print('Running doctest cases in module: %s...' % self.doctest)
             import imp
             # use zope's one since it handles coverage right
             from zope.testing import doctest
@@ -76,15 +80,15 @@ class run(Command):
             failure, tests = doctest.testmod(test_module, name=self.doctest,
                  optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
             if self.coverage:
-                print
-                print 'Coverage report:'
+                print()
+                print('Coverage report:')
                 coverage.report(f)
             sys.exit(failure != 0)
 
         elif self.unittest:
             # Running a unit test is done by opening the unit test file
             # as a module and running the tests within that module.
-            print 'Running test cases in unittest file: %s...' % self.unittest
+            print('Running test cases in unittest file: %s...' % self.unittest)
             import imp, unittest
             fp = open(self.unittest)
             test_module = imp.load_source('gaphor_test', self.unittest, fp)
@@ -93,24 +97,24 @@ class run(Command):
             test_runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = test_runner.run(test_suite)
             if self.coverage:
-                print
-                print 'Coverage report:'
+                print()
+                print('Coverage report:')
                 coverage.report(self.unittest)
             sys.exit(not result.wasSuccessful())
 
         elif self.file:
-            print 'Executing file: %s...' % self.file
+            print('Executing file: %s...' % self.file)
             dir, f = os.path.split(self.file)
-            print 'Extending PYTHONPATH with %s' % dir
+            print('Extending PYTHONPATH with %s' % dir)
             #sys.path.append(dir)
             execfile(self.file, {})
         else:
-            print 'Launching Gaphor...'
+            print('Launching Gaphor...')
             del sys.argv[1:]
             starter = load_entry_point('gaphor==%s' % (self.distribution.get_version(),), 'console_scripts', 'gaphor')
 
             if self.profile:
-                print 'Enabling profiling...'
+                print('Enabling profiling...')
                 try:
                     import cProfile
                     import pstats
@@ -119,7 +123,7 @@ class run(Command):
                     prof.dump_stats('gaphor.prof')
                     p = pstats.Stats('gaphor.prof')
                     p.strip_dirs().sort_stats('time').print_stats(20)
-                except ImportError, ex:
+                except ImportError as ex:
                     import hotshot, hotshot.stats
                     prof = hotshot.Profile('gaphor.prof')
                     prof.runcall(starter)

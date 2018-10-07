@@ -3,7 +3,9 @@
 Factory for and registration of model elements.
 """
 
-from zope import interface
+from builtins import object
+from builtins import str
+from zope.interface import implementer
 from zope import component
 import uuid
 from gaphor.core import inject
@@ -59,9 +61,9 @@ class ElementFactory(object):
         The element may not be bound to another factory already.
         """
         if hasattr(element, '_factory') and element._factory:
-            raise AttributeError, "element is already bound"
+            raise AttributeError("element is already bound")
         if self._elements.get(element.id):
-            raise AttributeError, "an element already exists with the same id"
+            raise AttributeError("an element already exists with the same id")
 
         element._factory = self
         self._elements[element.id] = element
@@ -93,10 +95,10 @@ class ElementFactory(object):
         Iterate elements that comply with expression.
         """
         if expression is None:
-            for e in self._elements.itervalues():
+            for e in self._elements.values():
                 yield e
         else:
-            for e in self._elements.itervalues():
+            for e in self._elements.values():
                 if expression(e):
                     yield e
 
@@ -112,28 +114,28 @@ class ElementFactory(object):
         """
         Return a list with all id's in the factory.
         """
-        return self._elements.keys()
+        return list(self._elements.keys())
 
 
     def iterkeys(self):
         """
         Return a iterator with all id's in the factory.
         """
-        return self._elements.iterkeys()
+        return iter(self._elements.keys())
 
 
     def values(self):
         """
         Return a list with all elements in the factory.
         """
-        return self._elements.values()
+        return list(self._elements.values())
 
 
     def itervalues(self):
         """
         Return a iterator with all elements in the factory.
         """
-        return self._elements.itervalues()
+        return iter(self._elements.values())
 
 
     def is_empty(self):
@@ -171,7 +173,7 @@ class ElementFactory(object):
             pass
 
     def swap_element(self, element, new_class):
-	assert element in self._elements.values()
+        assert element in list(self._elements.values())
         if element.__class__ is not new_class:
             element.__class__ = new_class
 
@@ -183,11 +185,11 @@ class ElementFactory(object):
         component.handle(event)
 
 
+@implementer(IService)
 class ElementFactoryService(ElementFactory):
     """
     Service version of the ElementFctory.
     """
-    interface.implements(IService)
 
     component_registry = inject('component_registry')
 
@@ -245,14 +247,15 @@ class ElementFactoryService(ElementFactory):
         self.component_registry.handle(event)
 
 
+@implementer(IEventFilter)
 class ElementChangedEventBlocker(object):
     """
     Blocks all events of type IElementChangeEvent.
 
     This filter is placed when the the element factory flushes it's content.
     """
+
     component.adapts(IElementChangeEvent)
-    interface.implements(IEventFilter)
 
     def __init__(self, event):
         self._event = event

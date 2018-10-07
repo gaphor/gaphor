@@ -3,15 +3,13 @@ Basic stuff for toplevel windows.
 """
 
 import os.path
-import pkg_resources
+from builtins import object
 
 import gtk
-from etk.docking import DockGroup, DockItem
-from etk.docking.docklayout import add_new_group_floating
-from zope import interface
-from interfaces import IUIComponent
-from gaphor.core import inject
+import pkg_resources
+from zope.interface import implementer
 
+from gaphor.ui.interfaces import IUIComponent
 
 ICONS = (
     'gaphor-24x24.png',
@@ -20,9 +18,9 @@ ICONS = (
     'gaphor-256x256.png',
 )
 
-class ToplevelWindow(object):
 
-    interface.implements(IUIComponent)
+@implementer(IUIComponent)
+class ToplevelWindow(object):
 
     menubar_path = ''
     toolbar_path = ''

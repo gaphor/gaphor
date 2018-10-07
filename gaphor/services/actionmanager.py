@@ -1,20 +1,24 @@
 """
 """
 
-import gtk
-from zope import interface, component
-
+from builtins import object
 from logging import getLogger
-from gaphor.core import inject
-from gaphor.interfaces import IService, IActionProvider
-from gaphor.event import ServiceInitializedEvent, ActionExecuted
+from zope import component
 
+import gtk
+from zope.interface import implementer
+
+from gaphor.core import inject
+from gaphor.event import ServiceInitializedEvent, ActionExecuted
+from gaphor.interfaces import IService, IActionProvider
+
+
+@implementer(IService)
 class ActionManager(object):
     """
     This service is responsible for maintaining actions.
     """
 
-    interface.implements(IService)
     logger = getLogger('ActionManager')
 
     component_registry = inject('component_registry')
@@ -95,13 +99,11 @@ class ActionManager(object):
             self.register_action_provider(event.service)
 
 
+@implementer(IService)
 class UIManager(gtk.UIManager):
     """
     Service version of gtk.UIManager.
     """
-
-    interface.implements(IService)
-
 
     def init(self, app=None):
         pass

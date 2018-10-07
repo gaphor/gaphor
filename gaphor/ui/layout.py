@@ -20,6 +20,10 @@
 
 
 from __future__ import absolute_import
+from __future__ import division
+from builtins import str
+from builtins import map
+from past.utils import old_div
 import sys
 
 from simplegeneric import generic
@@ -36,13 +40,13 @@ SERIALIZABLE = ( DockFrame, DockPaned, DockGroup, DockItem )
 def serialize(layout):
     def _ser(widget, element):
         if isinstance(widget, SERIALIZABLE):
-            sub = SubElement(element, type(widget).__name__.lower() , attributes(widget))
+            sub = SubElement(element, type(widget).__name__.lower(), attributes(widget))
             widget.foreach(_ser, sub)
         else:
             sub = SubElement(element, 'widget', attributes(widget))
 
     tree = Element('layout')
-    map(_ser, layout.frames, [tree] * len(layout.frames))
+    list(map(_ser, layout.frames, [tree] * len(layout.frames)))
 
     return tostring(tree, encoding=sys.getdefaultencoding())
 
@@ -65,11 +69,11 @@ def deserialize(layout, container, layoutstr, itemfactory):
             widget = factory(parent=parent_widget, **element.attrib)
             assert widget, 'No widget (%s)' % widget
             if len(element):
-                map(_des, element, [widget] * len(element))
+                list(map(_des, element, [widget] * len(element)))
         return widget
 
     tree = fromstring(layoutstr)
-    map(layout.add, map(_des, tree, [ container ] * len(tree)))
+    list(map(layout.add, list(map(_des, tree, [ container ] * len(tree)))))
 
     return layout
 
@@ -126,7 +130,7 @@ def dock_frame_attributes(widget):
 
     if isinstance(parent, gtk.Window) and parent.get_transient_for():
         d['floating'] = 'true'
-        d['x'], d['y'] = map(str, parent.get_position())
+        d['x'], d['y'] = list(map(str, parent.get_position()))
 
     return d
 
@@ -163,7 +167,7 @@ def dock_group_factory(parent, weight=None, name=None):
         group.set_name(name)
 
     if weight is not None:
-        parent.insert_item(group, weight=float(weight) / 100.)
+        parent.insert_item(group, weight=old_div(float(weight), 100.))
     else:
         parent.add(group)
 
@@ -184,7 +188,7 @@ def dock_paned_factory(parent, orientation, weight=None, name=None):
         paned.set_orientation(gtk.ORIENTATION_VERTICAL)
 
     if weight is not None:
-        item = parent.insert_item(paned, weight=float(weight) / 100.)
+        item = parent.insert_item(paned, weight=old_div(float(weight), 100.))
     else:
         parent.add(paned)
 

@@ -23,11 +23,12 @@ into gaphor/UML/uml2.py.
 
 Also a distutils tool, build_uml, is provided.
 """
+from __future__ import print_function
 
 import os.path
 from distutils.core import Command
-from distutils.util import byte_compile
 from distutils.dep_util import newer
+from distutils.util import byte_compile
 
 
 class build_uml(Command):
@@ -35,7 +36,7 @@ class build_uml(Command):
     description = "Generate gaphor/UML/uml2.py."
 
     user_options = [
-        ('build-lib=','b', "build directory (where to install from)"),
+        ('build-lib=', 'b', "build directory (where to install from)"),
         ('force', 'f', "force installation (overwrite existing files)"),
         ]
 
@@ -52,7 +53,6 @@ class build_uml(Command):
                                        ('force', 'force'))
 
     def run(self):
-        import sys
         #sys.path.insert(0, self.build_lib)
         self.generate_uml2()
 
@@ -69,12 +69,12 @@ class build_uml(Command):
         if self.force or newer(model, outfile) \
                       or newer(overrides, outfile) \
                       or newer(gen, outfile):
-            print 'generating %s from %s...' % (py_model, model)
-            print '  (warnings can be ignored)'
-            import gen_uml
+            print('generating %s from %s...' % (py_model, model))
+            print('  (warnings can be ignored)')
+            from . import gen_uml
             gen_uml.generate(model, outfile, overrides)
         else:
-            print 'not generating %s (up-to-date)' % py_model
+            print('not generating %s (up-to-date)' % py_model)
         byte_compile([outfile])
 
 

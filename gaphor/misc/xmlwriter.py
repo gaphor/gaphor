@@ -1,8 +1,10 @@
 # vim:sw=4:et
 
 import sys
-from xml.sax.saxutils import escape, quoteattr
 import xml.sax.handler
+from xml.sax.saxutils import escape, quoteattr
+
+from past.builtins import basestring
 
 # See whether the xmlcharrefreplace error handler is
 # supported
@@ -36,37 +38,37 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         Only the tag should be marked this way. Other stuff, such as
         namespaces and attributes can be written directly to the file.
         """
+        if not isinstance(text, unicode):
+            text = text.decode(self._encoding, _error_handling)
+
         if self._next_newline:
-            self._out.write('\n')
+            self._out.write(u'\n')
             self._next_newline = False
 
         if start_tag and not self._in_start_tag:
             self._in_start_tag = True
-            self._out.write('<')
+            self._out.write(u'<')
         elif start_tag and self._in_start_tag:
-            self._out.write('>')
-            self._out.write('\n')
-            self._out.write('<')
+            self._out.write(u'>')
+            self._out.write(u'\n')
+            self._out.write(u'<')
         elif end_tag and self._in_start_tag:
-            self._out.write('/>')
+            self._out.write(u'/>')
             self._in_start_tag = False
             self._next_newline = True
             return
         elif not start_tag and self._in_start_tag:
-            self._out.write('>')
+            self._out.write(u'>')
             self._in_start_tag = False
         elif end_tag:
-            self._out.write('</')
+            self._out.write(u'</')
             self._out.write(text)
-            self._out.write('>')
+            self._out.write(u'>')
             self._in_start_tag = False
             self._next_newline = True
             return
             
-        if isinstance(text, str):
-            self._out.write(text)
-        else:
-            self._out.write(text.encode(self._encoding, _error_handling))
+        self._out.write(text)
 
     def _qname(self, name):
         """Builds a qualified name from a (ns_url, localname) pair"""
@@ -82,7 +84,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
     # ContentHandler methods
 
     def startDocument(self):
-        self._write('<?xml version="1.0" encoding="%s"?>\n' %
+        self._write(u'<?xml version="1.0" encoding="%s"?>\n' %
                         self._encoding)
 
     def startPrefixMapping(self, prefix, uri):
@@ -96,8 +98,8 @@ class XMLWriter(xml.sax.handler.ContentHandler):
 
     def startElement(self, name, attrs):
         self._write(name, start_tag=True)
-        for (name, value) in attrs.items():
-            self._out.write(' %s=%s' % (name, quoteattr(value)))
+        for (name, value) in list(attrs.items()):
+            self._out.write(u' %s=%s' % (name, quoteattr(value)))
 
     def endElement(self, name):
         self._write(name, end_tag=True)
@@ -107,20 +109,20 @@ class XMLWriter(xml.sax.handler.ContentHandler):
 
         for prefix, uri in self._undeclared_ns_maps:
             if prefix:
-                self._out.write(' xmlns:%s="%s"' % (prefix, uri))
+                self._out.write(u' xmlns:%s="%s"' % (prefix, uri))
             else:
-                self._out.write(' xmlns="%s"' % uri)
+                self._out.write(u' xmlns="%s"' % uri)
         self._undeclared_ns_maps = []
 
-        for (name, value) in attrs.items():
-            self._out.write(' %s=%s' % (self._qname(name), quoteattr(value)))
+        for (name, value) in list(attrs.items()):
+            self._out.write(u' %s=%s' % (self._qname(name), quoteattr(value)))
 
     def endElementNS(self, name, qname):
-        self._write('%s' % self._qname(name), end_tag=True)
+        self._write(u'%s' % self._qname(name), end_tag=True)
 
     def characters(self, content):
         if self._in_cdata:
-            self._write(content.replace(']]>', '] ]>'))
+            self._write(content.replace(u']]>', u'] ]>'))
         else:
             self._write(escape(content))
 
@@ -128,19 +130,19 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         self._write(content)
 
     def processingInstruction(self, target, data):
-        self._write('<?%s %s?>' % (target, data))
+        self._write(u'<?%s %s?>' % (target, data))
 
     def comment(self, comment):
-        self._write('<!-- ')
-        self._write(comment.replace('-->', '- ->'))
-        self._write(' -->')
+        self._write(u'<!-- ')
+        self._write(comment.replace(u'-->', u'- ->'))
+        self._write(u' -->')
 
     def startCDATA(self):
-        self._write('<![CDATA[')
+        self._write(u'<![CDATA[')
         self._in_cdata = True
 
     def endCDATA(self):
-        self._write(']]>')
+        self._write(u']]>')
         self._in_cdata = False
 
 

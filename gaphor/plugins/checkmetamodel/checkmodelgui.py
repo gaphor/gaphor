@@ -1,22 +1,25 @@
 """
 A GUI for the checkmodel plugin.
 """
+from __future__ import print_function
 
-import sys
+from builtins import object
+
 import gobject
 import gtk
-from zope import interface, component
-from gaphor.core import _, inject, action, build_action_group
+from zope.interface import implementer
+
+from gaphor.core import inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
-import checkmodel
+from gaphor.plugins.checkmetamodel import checkmodel
 
 PYELEMENT_COLUMN = 0
 ELEMENT_COLUMN = 1
 REASON_COLUMN = 2
 
-class CheckModelWindow(object):
 
-    interface.implements(IService, IActionProvider)
+@implementer(IService, IActionProvider)
+class CheckModelWindow(object):
 
     element_factory = inject('element_factory')
     main_window = inject('main_window')
@@ -106,7 +109,7 @@ class CheckModelWindow(object):
     def on_row_activated(self, treeview, row, column):
         iter = self.model.get_iter(row)
         element = self.model.get_value(iter, PYELEMENT_COLUMN)
-        print 'Looking for element', element
+        print('Looking for element', element)
         if element.presentation:
             main_window = self.main_window
             presentation = element.presentation[0]

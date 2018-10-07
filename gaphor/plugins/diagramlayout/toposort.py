@@ -1,3 +1,6 @@
+from __future__ import print_function
+from builtins import filter
+from builtins import range
 class RecursionError( OverflowError, ValueError ):
     '''Unable to calculate result because of recursive structure'''
     
@@ -21,7 +24,7 @@ def sort(nodes, routes, noRecursion=1):
         # some other element!!!
         stage.append( nodes[0])
     taken.extend( stage )
-    nodes = filter ( lambda x, l=stage: x not in l, nodes )
+    nodes = list(filter(lambda x, l=stage: x not in l, nodes))
     while nodes:
         previousStageChildren = []
         nodelen = len(nodes)
@@ -50,7 +53,7 @@ def sort(nodes, routes, noRecursion=1):
                 stage.remove( remove )
         stages.append( stage)
         taken.extend( stage )
-        nodes = filter ( lambda x, l=stage: x not in l, nodes )
+        nodes = list(filter(lambda x, l=stage: x not in l, nodes))
         if nodelen == len(nodes):
             if noRecursion:
                 raise RecursionError( nodes )
@@ -62,7 +65,7 @@ def sort(nodes, routes, noRecursion=1):
 def _buildChildrenLists (routes):
     childrenTable = {}
     parentTable = {}
-    for sourceID,destinationID in routes:
+    for sourceID, destinationID in routes:
         currentChildren = childrenTable.get( sourceID, [])
         currentParents = parentTable.get( destinationID, [])
         if not destinationID in currentChildren:
@@ -95,11 +98,11 @@ def toposort (nodes, routes, noRecursion=1):
         try:
             newdependencylevel, object = dependencies.get ( depends, (0, depends))
         except TypeError:
-            print depends
+            print(depends)
             raise
         dependencies[ depends ] = (newdependencylevel + 1,  depends)
         # "dependency (existence) of depended-on"
-        newdependencylevel,object = dependencies.get ( depended, (0, depended) )
+        newdependencylevel, object = dependencies.get ( depended, (0, depended) )
         dependencies[ depended ] = (newdependencylevel, depended)
         # Inverse dependency set up
         dependencieslist = inversedependencies.get ( depended, [])
@@ -108,8 +111,7 @@ def toposort (nodes, routes, noRecursion=1):
     ### Now we do the actual sorting
     # The first task is to create the sortable
     # list of dependency-levels
-    sortinglist = dependencies.values()
-    sortinglist.sort ()
+    sortinglist = sorted(dependencies.values())
     output = []
     while sortinglist:
         deletelist = []
@@ -144,7 +146,7 @@ def toposort (nodes, routes, noRecursion=1):
                 # hack so that something gets deleted...
 ##                import pdb
 ##                pdb.set_trace()
-                dependencies[sortinglist[0][1]] = (0,sortinglist[0][1])
+                dependencies[sortinglist[0][1]] = (0, sortinglist[0][1])
         # delete the items that were dealt with
         for item in deletelist:
             try:
@@ -152,7 +154,7 @@ def toposort (nodes, routes, noRecursion=1):
             except KeyError:
                 pass
         # need to recreate the sortinglist
-        sortinglist = dependencies.values()
+        sortinglist = list(dependencies.values())
         if not generation:
             output.remove( generation )
         sortinglist.sort ()
@@ -165,77 +167,77 @@ def toposort (nodes, routes, noRecursion=1):
 if __name__ == "__main__":
 
     import pprint, traceback
-    nodes= [ 0,1,2,3,4,5 ]
+    nodes= [ 0, 1, 2, 3, 4, 5 ]
     testingValues = [
-        [ (0,1),(1,2),(2,3),(3,4),(4,5)],
-        [ (0,1),(0,2),(1,2),(3,4),(4,5)],
+        [ (0, 1), (1, 2), (2, 3), (3, 4), (4, 5)],
+        [ (0, 1), (0, 2), (1, 2), (3, 4), (4, 5)],
         [
-        (0,1),
-        (0,2),
-        (0,2),
-                    (2,4),
-                    (2,5),
-                (3,2),
-        (0,3)],
+        (0, 1),
+        (0, 2),
+        (0, 2),
+                    (2, 4),
+                    (2, 5),
+                (3, 2),
+        (0, 3)],
         [
-        (0,1), # 3-element cycle test, no orphan nodes
-        (1,2),
-        (2,0),
-                    (2,4),
-                    (2,5),
-                (3,2),
-        (0,3)],
+        (0, 1), # 3-element cycle test, no orphan nodes
+        (1, 2),
+        (2, 0),
+                    (2, 4),
+                    (2, 5),
+                (3, 2),
+        (0, 3)],
         [
-        (0,1),
-        (1,1),
-        (1,1),
-                (1,4),
-                (1,5),
-                (1,2),
-        (3,1),
-        (2,1),
-        (2,0)],
+        (0, 1),
+        (1, 1),
+        (1, 1),
+                (1, 4),
+                (1, 5),
+                (1, 2),
+        (3, 1),
+        (2, 1),
+        (2, 0)],
         [
-            (0,1),
-            (1,0),
-            (0,2),
-            (0,3),
+            (0, 1),
+            (1, 0),
+            (0, 2),
+            (0, 3),
         ],
         [
-            (0,1),
-            (1,0),
-            (0,2),
-            (3,1),
+            (0, 1),
+            (1, 0),
+            (0, 2),
+            (3, 1),
         ],
     ]
-    print 'sort, no recursion allowed'
+    print('sort, no recursion allowed')
     for index in range(len(testingValues)):
 ##        print '    %s -- %s'%( index, testingValues[index])
         try:
-            print '        ', sort( nodes, testingValues[index] )
+            print('        ', sort( nodes, testingValues[index] ))
         except:
-            print 'exception raised'
-    print 'toposort, no recursion allowed'
+            print('exception raised')
+    print('toposort, no recursion allowed')
     for index in range(len(testingValues)):
 ##        print '    %s -- %s'%( index, testingValues[index])
         try:
-            print '        ', toposort( nodes, testingValues[index] )
+            print('        ', toposort( nodes, testingValues[index] ))
         except:
-            print 'exception raised'
-    print 'sort, recursion allowed'
+            print('exception raised')
+    print('sort, recursion allowed')
     for index in range(len(testingValues)):
 ##        print '    %s -- %s'%( index, testingValues[index])
         try:
-            print '        ', sort( nodes, testingValues[index],0 )
+            print('        ', sort( nodes, testingValues[index], 0 ))
         except:
-            print 'exception raised'
-    print 'toposort, recursion allowed'
+            print('exception raised')
+    print('toposort, recursion allowed')
     for index in range(len(testingValues)):
 ##        print '    %s -- %s'%( index, testingValues[index])
         try:
-            print '        ', toposort( nodes, testingValues[index],0 )
+            print('        ', toposort( nodes, testingValues[index], 0 ))
         except:
-            print 'exception raised'
+            print('exception raised')
         
         
     

@@ -1,15 +1,21 @@
 """
 Stereotype property page.
 """
+from __future__ import print_function
+
+from builtins import object
+from zope import component
 
 import gtk
-from gaphor.core import _, inject, transactional
-from gaphor.ui.interfaces import IPropertyPage
-from gaphor.diagram import items
-from gaphor.diagram.diagramitem import StereotypeSupport
-from zope import interface, component
+from zope.interface import implementer
+
 from gaphor import UML
 from gaphor.adapters.propertypages import on_text_cell_edited, on_bool_cell_edited
+from gaphor.core import _, inject, transactional
+from gaphor.diagram.diagramitem import StereotypeSupport
+from gaphor.diagram import items
+from gaphor.ui.interfaces import IPropertyPage
+
 
 class StereotypeAttributes(gtk.TreeStore):
     """
@@ -66,7 +72,7 @@ class StereotypeAttributes(gtk.TreeStore):
         elif col == 1:
             self.set_slot_value(iter, value)
         else:
-            print 'col', col
+            print('col', col)
 
     def select_stereotype(self, iter):
         """
@@ -178,10 +184,8 @@ def create_stereotype_tree_view(model):
     return tree_view
 
 
-
+@implementer(IPropertyPage)
 class StereotypePage(object):
-
-    interface.implements(IPropertyPage)
 
     order = 40
 

@@ -1,11 +1,16 @@
 """
 Style classes and constants.
 """
+from __future__ import division
 
+from builtins import object
+from builtins import range
+from past.utils import old_div
+from past.builtins import cmp
 from math import pi
 
 # padding
-PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = range(4)
+PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = list(range(4))
 
 # horizontal align
 ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = -1, 0, 1
@@ -59,14 +64,14 @@ class Style(object):
         setattr(self, name, value)
 
     def update(self, style):
-        for name, value in style.items():
+        for name, value in list(style.items()):
             self.add(name, value)
 
     def items(self):
         """
         Return iterator of (name, value) style information items.
         """
-        return self.__dict__.iteritems()
+        return iter(self.__dict__.items())
 
 
 def get_min_size(width, height, padding):
@@ -107,7 +112,7 @@ def get_text_point(extents, width, height, align, padding, outside):
         if halign == ALIGN_LEFT:
             x = -w - padding[PADDING_LEFT]
         elif halign == ALIGN_CENTER:
-            x = (width - w) / 2
+            x = old_div((width - w), 2)
         elif halign == ALIGN_RIGHT:
             x = width + padding[PADDING_RIGHT]
         else:
@@ -116,7 +121,7 @@ def get_text_point(extents, width, height, align, padding, outside):
         if valign == ALIGN_TOP:
             y = -h -padding[PADDING_TOP]
         elif valign == ALIGN_MIDDLE:
-            y = (height - h) / 2
+            y = old_div((height - h), 2)
         elif valign == ALIGN_BOTTOM:
             y = height + padding[PADDING_BOTTOM]
         else:
@@ -126,7 +131,7 @@ def get_text_point(extents, width, height, align, padding, outside):
         if halign == ALIGN_LEFT:
             x = padding[PADDING_LEFT]
         elif halign == ALIGN_CENTER:
-            x = (width - w) / 2 + padding[PADDING_LEFT] - padding[PADDING_RIGHT]
+            x = old_div((width - w), 2) + padding[PADDING_LEFT] - padding[PADDING_RIGHT]
         elif halign == ALIGN_RIGHT:
             x = width - w - padding[PADDING_RIGHT]
         else:
@@ -135,7 +140,7 @@ def get_text_point(extents, width, height, align, padding, outside):
         if valign == ALIGN_TOP:
             y = padding[PADDING_TOP]
         elif valign == ALIGN_MIDDLE:
-            y = (height - h) / 2
+            y = old_div((height - h), 2)
         elif valign == ALIGN_BOTTOM:
             y = height - h - padding[PADDING_BOTTOM]
         else:
@@ -167,7 +172,7 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
     if dy == 0:
         rc = 1000.0 # quite a lot...
     else:
-        rc = dx / dy
+        rc = old_div(dx, dy)
     abs_rc = abs(rc)
     h = dx > 0 # right side of the box
     v = dy > 0 # bottom side
@@ -221,8 +226,8 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
      - align:   text align information (center, top, etc.)
      - padding: text padding
     """
-    x0 = (p1[0] + p2[0]) / 2.0
-    y0 = (p1[1] + p2[1]) / 2.0
+    x0 = old_div((p1[0] + p2[0]), 2.0)
+    y0 = old_div((p1[1] + p2[1]), 2.0)
     dx = p2[0] - p1[0]
     dy = p2[1] - p1[1]
 
@@ -233,7 +238,7 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
         d1 = 0.0
         d2 = 0.0
     else:
-        d1 = dy / dx
+        d1 = old_div(dy, dx)
         d2 = abs(d1)
 
     width, height = extents
@@ -242,7 +247,7 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
     # move to center and move by delta depending on line angle
     if d2 < 0.5774: # <0, 30>, <150, 180>, <-180, -150>, <-30, 0>
         # horizontal mode
-        w2 = width / 2.0
+        w2 = old_div(width, 2.0)
         hint = w2 * d2
 
         x = x0 - w2
@@ -255,12 +260,12 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
 
         # determine quadrant, we are interested in 1 or 3 and 2 or 4
         # see hint tuples below
-        h2 = height / 2.0
+        h2 = old_div(height, 2.0)
         q = cmp(d1, 0)
         if abs(dx) < EPSILON:
             hint = 0
         else:
-            hint = h2 / d2
+            hint = old_div(h2, d2)
 
         if valign == ALIGN_TOP:
             x = x0 + PADDING_HINT[q] * (padding[PADDING_LEFT] + hint) + width * WIDTH_HINT[q]

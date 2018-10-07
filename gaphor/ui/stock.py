@@ -1,10 +1,11 @@
 """Icons that are used by Gaphor.
 """
-
+import logging
 import os.path
-import pkg_resources
 from xml.sax import handler
+
 import gtk
+import pkg_resources
 
 from gaphor import UML
 from gaphor.storage.parser import ParserException
@@ -15,6 +16,9 @@ _icon_factory = gtk.IconFactory()
 _icon_factory.add_default()
 
 _uml_to_stock_id_map = { }
+
+log = logging.getLogger(__name__)
+
 
 def get_stock_id(element, option=None):
     global _uml_to_stock_id_map
@@ -78,7 +82,7 @@ class StockIconLoader(handler.ContentHandler):
             self.element = None
 
         elif name not in ('element', 'option', 'file', 'stock-icons'):
-            raise ParserException, 'Invalid XML: tag <%s> not known' % name
+            raise ParserException('Invalid XML: tag <%s> not known' % name)
 
     def endElement(self, name):
         if name == 'icon':
@@ -90,7 +94,7 @@ class StockIconLoader(handler.ContentHandler):
             try:
                 self.element = getattr(UML, self.data)
             except:
-                raise ParserException, 'No element found with name %s' % self.data
+                raise ParserException('No element found with name %s' % self.data)
         elif name == 'option':
             self.option = self.data
         elif name == 'file':
@@ -101,7 +105,7 @@ class StockIconLoader(handler.ContentHandler):
     def startElementNS(self, name, qname, attrs):
         if not name[0] or name[0] == XMLNS:
             a = { }
-            for key, val in attrs.items():
+            for key, val in list(attrs.items()):
                 a[key[1]] = val
             self.startElement(name[1], a)
 
@@ -122,19 +126,13 @@ def load_stock_icons():
     parser = make_parser()
     icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
     log.info('Icon dir: %s' % icon_dir)
-    #icon_dir = 'gaphor/data/pixmaps'
     loader = StockIconLoader(icon_dir)
 
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    filename = pkg_resources.resource_filename('gaphor.ui', 'icons.xml')
-    # Make the filename a full URL
-    filename = 'file:' + filename.replace('\\\\', '/')
-    #try:
+    filename = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'icons.xml'))
     parser.parse(filename)
-    #except IOError, e:
-    #    log.error('Unable to load icons', exc_info=True)
 
 #load_stock_icons()
 

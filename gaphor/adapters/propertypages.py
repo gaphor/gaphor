@@ -25,7 +25,13 @@ TODO:
      key focuses its associated control.
  
 """
+from __future__ import print_function
+from __future__ import division
 
+from builtins import object
+from builtins import zip
+from builtins import range
+from past.utils import old_div
 import gobject
 import gtk
 import math
@@ -33,7 +39,8 @@ from gaphor.core import _, inject, transactional
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.ui.interfaces import IPropertyPage
 from gaphor.diagram import items
-from zope import interface, component
+from zope.interface import implementer
+from zope import component
 from gaphor import UML
 from gaphor.UML.interfaces import IAttributeChangeEvent
 import gaphas.item
@@ -455,7 +462,7 @@ def create_tree_view(model, names, tip='', ro_cols=None):
     tree_view.set_rules_hint(True)
     
     n = model.get_n_columns() - 1
-    for name, i in zip(names, range(n)):
+    for name, i in zip(names, list(range(n))):
         col_type = model.get_column_type(i)
         if col_type == gobject.TYPE_STRING:
             renderer = gtk.CellRendererText()
@@ -485,12 +492,11 @@ Use -/= to move items up or down.\
     return tree_view
 
 
-
+@implementer(IPropertyPage)
 class CommentItemPropertyPage(object):
     """
     Property page for Comments
     """
-    interface.implements(IPropertyPage)
     component.adapts(UML.Comment)
 
     order = 0
@@ -541,6 +547,7 @@ class CommentItemPropertyPage(object):
 component.provideAdapter(CommentItemPropertyPage, name='Properties')
 
 
+@implementer(IPropertyPage)
 class NamedElementPropertyPage(object):
     """
     An adapter which works for any named item view.
@@ -548,7 +555,6 @@ class NamedElementPropertyPage(object):
     It also sets up a table view which can be extended.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(UML.NamedElement)
 
     order = 10
@@ -710,14 +716,12 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 component.provideAdapter(InterfacePropertyPage, name='Properties')
 
 
-
-
+@implementer(IPropertyPage)
 class AttributesPage(object):
     """
     An editor for attributes associated with classes and interfaces.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.ClassItem)
 
     order = 20
@@ -745,7 +749,7 @@ class AttributesPage(object):
         page.pack_start(hbox, expand=False)
 
         def create_model():
-            return ClassAttributes(self.item, (str, bool, object))
+            return ClassAttributes(self.item, (str, bool, gobject.TYPE_PYOBJECT))
 
         self.model = create_model()
         
@@ -786,12 +790,12 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 component.provideAdapter(AttributesPage, name='Attributes')
 
 
+@implementer(IPropertyPage)
 class OperationsPage(object):
     """
     An editor for operations associated with classes and interfaces.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.ClassItem)
 
     order = 30
@@ -819,7 +823,7 @@ class OperationsPage(object):
         page.pack_start(hbox, expand=False)
 
         def create_model():
-            return ClassOperations(self.item, (str, bool, bool, object))
+            return ClassOperations(self.item, (str, bool, bool, gobject.TYPE_PYOBJECT))
 
         self.model = create_model()
         tip = """\
@@ -861,13 +865,12 @@ Add and edit class operations according to UML syntax. Operation syntax examples
 component.provideAdapter(OperationsPage, name='Operations')
 
 
-
+@implementer(IPropertyPage)
 class DependencyPropertyPage(object):
     """
     Dependency item editor.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(items.DependencyItem)
 
     order = 0
@@ -1029,8 +1032,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         for name, adapter in component.getAdapters([item,], IPropertyPage):
             adaptermap[name] = (adapter.order, name, adapter)
 
-        adapters = adaptermap.values()
-        adapters.sort()
+        adapters = sorted(adaptermap.values())
         return adapters
 
     def create_pages(self, item, vbox):
@@ -1057,18 +1059,18 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                     expander.add(page)
                     expander.show_all()
                     vbox.pack_start(expander, expand=False)
-            except Exception, e:
+            except Exception as e:
                 log.error('Could not construct property page for ' + name, exc_info=True)
 
 component.provideAdapter(AssociationPropertyPage, name='Properties')
 
 
+@implementer(IPropertyPage)
 class AssociationEndPropertyPage(object):
     """
     Property page for association end properties.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(UML.Property)
 
     order = 0
@@ -1152,12 +1154,13 @@ Enter attribute name and multiplicity, for example
 
 component.provideAdapter(AssociationEndPropertyPage, name='Properties')
 
+
+@implementer(IPropertyPage)
 class LineStylePage(object):
     """
     Basic line style properties: color, orthogonal, etc.
     """
 
-    interface.implements(IPropertyPage)
     component.adapts(gaphas.item.Line)
 
     order = 400
@@ -1311,14 +1314,14 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_join_spec_change(self, entry):
         value = entry.get_text().strip()
-        print 'new joinspec', value
+        print('new joinspec', value)
         self.subject.joinSpec = value
 
     def _on_horizontal_change(self, button):
         if button.get_active():
-            self.item.matrix.rotate(math.pi/2)
+            self.item.matrix.rotate(old_div(math.pi,2))
         else:
-            self.item.matrix.rotate(-math.pi/2)
+            self.item.matrix.rotate(old_div(-math.pi,2))
         self.item.request_update()
 
 component.provideAdapter(JoinNodePropertyPage, name='Properties')

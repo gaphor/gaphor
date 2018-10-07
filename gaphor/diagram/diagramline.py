@@ -1,17 +1,19 @@
 """
 Basic functionality for canvas line based items on a diagram.
 """
+from __future__ import division
 
+from builtins import map
+from builtins import range
+from past.utils import old_div
 from math import atan2, pi
 
 import gaphas
-from gaphor import UML
-from diagramitem import DiagramItem
-from interfaces import IConnect
 
-from gaphor.diagram.style import get_text_point_at_line, \
-    get_text_point_at_line2, \
-    ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
+from gaphor.diagram.diagramitem import DiagramItem
+from gaphor.diagram.style import get_text_point_at_line
+from gaphor.diagram.style import get_text_point_at_line2
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 
 class DiagramLine(gaphas.Line, DiagramItem):
@@ -85,7 +87,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
             self.matrix = eval(value)
         elif name == 'points':
             points = eval(value)
-            for x in xrange(len(points) - 2):
+            for x in range(len(points) - 2):
                 h = self._create_handle((0, 0))
                 self._handles.insert(1, h)
             for i, p in enumerate(points):
@@ -173,7 +175,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         Get middle line segment.
         """
         handles = self._handles
-        m = len(handles) / 2
+        m = old_div(len(handles), 2)
         assert m - 1 >= 0 and m < len(handles)
         return handles[m - 1], handles[m]
 
@@ -184,7 +186,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         the middle segment is also returned.
         """
         h0, h1 = self._get_middle_segment()
-        pos = (h0.pos.x + h1.pos.x) / 2, (h0.pos.y + h1.pos.y) / 2
+        pos = old_div((h0.pos.x + h1.pos.x), 2), old_div((h0.pos.y + h1.pos.y), 2)
         angle = atan2(h1.pos.y - h0.pos.y, h1.pos.x - h0.pos.x)
         if inverted:
             angle += pi

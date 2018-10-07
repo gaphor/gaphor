@@ -11,10 +11,10 @@ from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 class NamedItem(ElementItem):
 
     __style__ = {
-        'min-size'    : (100, 50),
-        'from-font'   : 'sans 8',
-        'name-font'   : 'sans 10',
-        'name-align'  : (ALIGN_CENTER, ALIGN_TOP),
+        'min-size': (100, 50),
+        'from-font': 'sans 8',
+        'name-font': 'sans 10',
+        'name-align': (ALIGN_CENTER, ALIGN_TOP),
         'name-padding': (5, 10, 5, 10),
         'name-outside': False,
         'name-align-str': None,

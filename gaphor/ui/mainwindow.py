@@ -2,37 +2,39 @@
 The main application window.
 """
 
+import logging
 import os.path
-import gobject, gtk
-from logging import getLogger
+from builtins import object
+from builtins import str
+from zope import component
 
+import gobject
+import gtk
 import pkg_resources
-from zope import interface, component
-from gaphor.interfaces import IService, IActionProvider
-from interfaces import IUIComponent
-
-from etk.docking import DockLayout, DockGroup, DockItem
-from etk.docking.docklayout import add_new_group_floating
+from etk.docking import DockItem, DockGroup
+from etk.docking import DockLayout
+from etk.docking import add_new_group_above, add_new_group_below, add_new_group_floating
+from etk.docking import add_new_group_left, add_new_group_right
+from etk.docking import settings
+from zope.interface import implementer
 
 from gaphor import UML
-from gaphor.core import _, inject, action, toggle_action, open_action, build_action_group, transactional
-from namespace import NamespaceModel, NamespaceView
-from diagramtab import DiagramTab
-from toolbox import Toolbox as _Toolbox
-from diagramtoolbox import TOOLBOX_ACTIONS
-from etk.docking import DockItem, DockGroup, add_new_group_left, add_new_group_right, \
-        add_new_group_above, add_new_group_below, add_new_group_floating, settings
-from layout import deserialize
-
-from interfaces import IDiagramTabChange
-from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
 from gaphor.UML.event import ModelFactoryEvent
-from event import DiagramTabChange, DiagramSelectionChange
+from gaphor.core import _, inject, action, toggle_action, open_action, build_action_group, transactional
+from gaphor.interfaces import IService, IActionProvider
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
+from gaphor.ui.diagramtab import DiagramTab
+from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
+from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange
+from gaphor.ui.interfaces import IDiagramTabChange
+from gaphor.ui.interfaces import IUIComponent
+from gaphor.ui.layout import deserialize
+from gaphor.ui.namespace import NamespaceModel, NamespaceView
+from gaphor.ui.toolbox import Toolbox as _Toolbox
 
-logger = getLogger(name='MainWindow')
+log = logging.getLogger(__name__)
 
 ICONS = (
     'gaphor-24x24.png',
@@ -58,13 +60,12 @@ STATIC_MENU_XML = """
 """
 
 
+@implementer(IService, IActionProvider)
 class MainWindow(object):
     """
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
-    interface.implements(IService, IActionProvider)
-
 
     component_registry = inject('component_registry')
     properties = inject('properties')
@@ -167,7 +168,7 @@ class MainWindow(object):
             log.debug('found entry point uicomponent.%s' % ep.name)
             cls = ep.load()
             if not IUIComponent.implementedBy(cls):
-                raise NameError, 'Entry point %s doesn''t provide IUIComponent' % ep.name
+                raise NameError('Entry point %s doesn''t provide IUIComponent' % ep.name)
             uicomp = cls()
             uicomp.ui_name = ep.name
             component_registry.register_utility(uicomp, IUIComponent, ep.name)
@@ -324,7 +325,7 @@ class MainWindow(object):
 
         def _factory(name):
             comp = self.component_registry.get_utility(IUIComponent, name)
-            logger.debug('open component %s' % str(comp))
+            log.debug('open component %s' % str(comp))
             return comp.open()
 
         filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
@@ -409,7 +410,7 @@ class MainWindow(object):
 
 
     def get_tabs(self):
-        tabs = map(lambda i: i.diagram_tab, self.layout.get_widgets('diagram-tab'))
+        tabs = [i.diagram_tab for i in self.layout.get_widgets('diagram-tab')]
         return tabs
 
     # Signal callbacks:
@@ -460,7 +461,7 @@ class MainWindow(object):
     def _clear_ui_settings(self):
         try:
             ui_manager = self.ui_manager
-        except component.ComponentLookupError, e:
+        except component.ComponentLookupError as e:
             log.warning('No UI manager service found')
         else:
             if self._tab_ui_settings:
@@ -568,10 +569,8 @@ class MainWindow(object):
 gtk.accel_map_add_filter('gaphor')
 
 
-
+@implementer(IUIComponent, IActionProvider)
 class Namespace(object):
-
-    interface.implements(IUIComponent, IActionProvider)
 
     title = _('Namespace')
     placement = ('left', 'diagrams')
@@ -812,10 +811,8 @@ class Namespace(object):
         self._namespace.get_model().refresh()
 
 
-
+@implementer(IUIComponent, IActionProvider)
 class Toolbox(object):
-
-    interface.implements(IUIComponent, IActionProvider)
 
     title = _('Toolbox')
     placement = ('left', 'diagrams')

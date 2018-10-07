@@ -2,13 +2,18 @@
 Transaction support for Gaphor
 """
 
-from logging import getLogger
-from zope import interface, component
-from gaphor.interfaces import ITransaction
-from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor import application
+from builtins import object
+import logging
 
-logger = getLogger('transaction')
+from zope.interface import implementer
+from zope import component
+
+from gaphor import application
+from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
+from gaphor.interfaces import ITransaction
+
+log = logging.getLogger(__name__)
+
 
 def transactional(func):
     """The transactional decorator makes a function transactional.  A
@@ -21,11 +26,11 @@ def transactional(func):
         tx = Transaction()
         try:
             r = func(*args, **kwargs)
-        except Exception, e:
+        except Exception as e:
             log.error('Transaction terminated due to an exception, performing a rollback', exc_info=True)
             try:
                 tx.rollback()
-            except Exception, e:
+            except Exception as e:
                 log.error('Rollback failed', exc_info=True)
             raise
         else:
@@ -33,11 +38,15 @@ def transactional(func):
         return r
     return _transactional
 
+
 class TransactionError(Exception):
     """
     Errors related to the transaction module.
     """
+    pass
 
+
+@implementer(ITransaction)
 class Transaction(object):
     """
     The transaction. On start and end of a transaction an event is emitted.
@@ -61,8 +70,6 @@ class Transaction(object):
     >>> with Transaction():
     ...     pass
     """
-
-    interface.implements(ITransaction)
 
     component_registry = application.inject('component_registry')
 
@@ -109,16 +116,16 @@ class Transaction(object):
         try:
             last = self._stack.pop()
         except IndexError:
-            raise TransactionError, 'No Transaction on stack.'
+            raise TransactionError('No Transaction on stack.')
         if last is not self:
             self._stack.append(last)
-            raise TransactionError, 'Transaction on stack is not the transaction being closed.'
+            raise TransactionError('Transaction on stack is not the transaction being closed.')
 
     def _handle(self, event):
         try:
             component_registry = self.component_registry
         except (application.NotInitializedError, component.ComponentLookupError):
-            logger.warning('Could not lookup component_registry. Not emitting events.')
+            log.warning('Could not lookup component_registry. Not emitting events.')
         else:
             component_registry.handle(event)
 

@@ -72,7 +72,7 @@ def orphan_references(factory):
         elif isinstance(value, UML.Element):
             verify_reference(name, value)
 
-    for e in factory.values():
+    for e in list(factory.values()):
         assert e.id
         elements.add(e.id)
         e.save(verify_element)

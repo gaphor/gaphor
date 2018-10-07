@@ -4,7 +4,7 @@ comment
   This is a file with custom definitions for Gaphors data model.
 
   Parts are separated by '%%' (no training spaces) on a line.
-  Comment parts start with 'comment' on the line belowe the percentage
+  Comment parts start with 'comment' on the line below the percentage
   symbols, 'override' is used to define a overridden variable. 
 
   Overrides may in their turn derive from other properties, in that case
@@ -14,10 +14,13 @@ comment
   wrt inheritance is done.
 %%
 override Element
-from element import Element
+from gaphor.UML.element import Element
 %%
 override Diagram
-from diagram import Diagram
+from gaphor.UML.diagram import Diagram
+%%
+override Transition
+class Transition(RedefinableElement, NamedElement): pass
 %%
 override MultiplicityElement.lower derives MultiplicityElement.lowerValue
 MultiplicityElement.lower = derived('lower', object, 0, 1, MultiplicityElement.lowerValue)
@@ -160,12 +163,12 @@ override Operation.type
 Operation.type = derivedunion('type', DataType, 0, 1)
 %%
 override Lifeline.parse
-from umllex import parse_lifeline
+from gaphor.UML.umllex import parse_lifeline
 Lifeline.parse = parse_lifeline
 del parse_lifeline
 %%
 override Lifeline.render
-from umllex import render_lifeline
+from gaphor.UML.umllex import render_lifeline
 Lifeline.render = render_lifeline
 del render_lifeline
 %%

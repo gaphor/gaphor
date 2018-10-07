@@ -12,25 +12,24 @@ If None is returned the undo action is considered to be the redo action as well.
 NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
-from zope import interface, component
+from builtins import object
+from logging import getLogger
+from zope import component
 
 from gaphas import state
-
-from gaphor.core import inject
-from logging import getLogger
-from gaphor.interfaces import IService, IServiceEvent, IActionProvider
-from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor.transaction import Transaction, transactional
+from zope.interface import implementer
 
 from gaphor.UML.event import ElementCreateEvent, ElementDeleteEvent, \
-                             ModelFactoryEvent, AssociationSetEvent, \
-                             AssociationAddEvent, AssociationDeleteEvent
+    AssociationSetEvent, \
+    AssociationAddEvent, AssociationDeleteEvent
 from gaphor.UML.interfaces import IElementDeleteEvent, \
-                                  IAttributeChangeEvent, IModelFactoryEvent
-                                  
-
+    IAttributeChangeEvent, IModelFactoryEvent
 from gaphor.action import action, build_action_group
+from gaphor.core import inject
 from gaphor.event import ActionExecuted
+from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
+from gaphor.interfaces import IService, IServiceEvent, IActionProvider
+from gaphor.transaction import Transaction, transactional
 
 
 class ActionStack(object):
@@ -57,20 +56,21 @@ class ActionStack(object):
         for action in self._actions:
             try:
                 action()
-            except Exception, e:
+            except Exception as e:
                 log.error('Error while undoing action %s' % action, exc_info=True)
 
 
+@implementer(IServiceEvent)
 class UndoManagerStateChanged(object):
     """
     Event class used to send state changes on the ndo Manager.
     """
-    interface.implements(IServiceEvent)
 
     def __init__(self, service):
         self.service = service
 
 
+@implementer(IService, IActionProvider)
 class UndoManager(object):
     """
     Simple transaction manager for Gaphor.
@@ -81,8 +81,6 @@ class UndoManager(object):
     If something is returned by an action, that is considered the callable
     to be used to undo or redo the last performed action.
     """
-
-    interface.implements(IService, IActionProvider)
 
     menu_xml = """
       <ui>
@@ -211,7 +209,7 @@ class UndoManager(object):
             with Transaction():
                 try:
                     errorous_tx.execute()
-                except Exception, e:
+                except Exception as e:
                     self.logger.error('Could not roolback transaction')
                     self.logger.error(e)
         finally:

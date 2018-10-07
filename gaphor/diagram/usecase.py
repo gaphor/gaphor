@@ -1,13 +1,16 @@
 """
 Use case diagram item.
 """
+from __future__ import division
 
-from math import pi
+from past.utils import old_div
+from gaphas.util import path_ellipse
+
 from gaphor import UML
 from gaphor.diagram.classifier import ClassifierItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
-from textelement import text_extents
-from gaphas.util import path_ellipse
+from gaphor.diagram.textelement import text_extents
+
 
 class UseCaseItem(ClassifierItem):
     """
@@ -36,8 +39,8 @@ class UseCaseItem(ClassifierItem):
     def draw(self, context):
         cr = context.cairo
 
-        rx = self.width / 2. 
-        ry = self.height / 2.
+        rx = old_div(self.width, 2.) 
+        ry = old_div(self.height, 2.)
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)

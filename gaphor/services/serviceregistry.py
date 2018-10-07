@@ -5,6 +5,8 @@ retrieved.
 Our good old NameServicer.
 """
 
+from builtins import object
+from builtins import next
 from zope import interface, component
 
 from logging import getLogger
@@ -42,7 +44,7 @@ class ServiceRegistry(object):
         for ep in pkg_resources.iter_entry_points('gaphor.services'):
             cls = ep.load()
             if not IService.implementedBy(cls):
-                raise 'MisConfigurationException', 'Entry point %s doesn''t provide IService' % ep.name
+                raise NameError('Entry point %s doesn''t provide IService' % ep.name)
             if services is None or ep.name in services:
                 srv = cls()
                 self._uninitialized_services[ep.name] = srv
@@ -52,7 +54,7 @@ class ServiceRegistry(object):
         self.logger.info('Initializing services')
         
         while self._uninitialized_services:
-            self.init_service(self._uninitialized_services.iterkeys().next())
+            self.init_service(next(iter(self._uninitialized_services.keys())))
 
     def init_service(self, name):
         """

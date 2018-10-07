@@ -1,7 +1,9 @@
 """
 """
 
-from zope import interface, component
+from builtins import object
+from zope.interface import implementer
+from zope import component
 
 from logging import getLogger
 from gaphor.core import inject
@@ -58,7 +60,7 @@ class EventWatcher(object):
         dispatcher = self.element_dispatcher
         element = self.element
         
-        for path, handler in self._watched_paths.iteritems():
+        for path, handler in self._watched_paths.items():
             
             #self.logger.debug('Path is %s' % path)
             #self.logger.debug('Handler is %s' % handler)
@@ -76,13 +78,15 @@ class EventWatcher(object):
         
         dispatcher = self.element_dispatcher
         
-        for path, handler in self._watched_paths.iteritems():
+        for path, handler in self._watched_paths.items():
             
             #self.logger.debug('Path is %s' % path)
             #self.logger.debug('Handler is %s' % handler)
             
             dispatcher.unregister_handler(handler)
 
+
+@implementer(IService)
 class ElementDispatcher(object):
     """
     The Element based Dispatcher allows handlers to receive only events
@@ -110,7 +114,6 @@ class ElementDispatcher(object):
     every time).
     """
 
-    interface.implements(IService)
     logger = getLogger('ElementDispatcher')
 
     component_registry = inject('component_registry')
@@ -142,18 +145,18 @@ class ElementDispatcher(object):
 
         >>> from gaphor import UML
         >>> dispatcher = ElementDispatcher()
-        >>> map(str, dispatcher._path_to_properties(UML.Class(),
-        ...         'ownedOperation.parameter.name')) # doctest: +NORMALIZE_WHITESPACE
+        >>> sorted(map(str, dispatcher._path_to_properties(UML.Class(),
+        ...         'ownedOperation.parameter.name'))) # doctest: +NORMALIZE_WHITESPACE
         ['<association ownedOperation: Operation[0..*] <>-> class_>',
+        "<attribute name: <type 'str'>[0..1] = None>",
         "<derived parameter:
-            '<association returnResult: Parameter[0..*] <>-> ownerReturnParam>',
-            '<association formalParameter: Parameter[0..*] <>-> ownerFormalParam>'>",
-        "<attribute name: <type 'str'>[0..1] = None>"]
+            '<association formalParameter: Parameter[0..*] <>-> ownerFormalParam>',
+            '<association returnResult: Parameter[0..*] <>-> ownerReturnParam>'>"]
 
         Should also work for elements that use subtypes of a certain class:
 
-        >>> map(str, dispatcher._path_to_properties(UML.Transition(),
-        ...         'guard.specification')) # doctest: +NORMALIZE_WHITESPACE
+        >>> sorted(map(str, dispatcher._path_to_properties(UML.Transition(),
+        ...         'guard.specification'))) # doctest: +NORMALIZE_WHITESPACE
         ['<association guard: Constraint[0..1]>',
          "<attribute specification: <type 'str'>[0..1] = None>"]
         """
@@ -300,17 +303,17 @@ class ElementDispatcher(object):
             #    log.debug('    old value: %s' % (event.old_value))
             #if hasattr(event, 'new_value'):
             #    log.debug('    new value: %s' % (event.new_value))
-            for handler in handlers.iterkeys():
+            for handler in handlers.keys():
                 try:
                     handler(event)
-                except Exception, e:
+                except Exception as e:
                     self.logger.error('Problem executing handler %s' % handler)
                     self.logger.error(e)
         
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
             if IAssociationSetEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in handlers.items():
                     if remainders and event.old_value:
                         for remainder in remainders:
                             self._remove_handlers(event.old_value, remainder[0], handler)
@@ -318,11 +321,11 @@ class ElementDispatcher(object):
                         for remainder in remainders:
                             self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationAddEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._add_handlers(event.new_value, remainder, handler)
             elif IAssociationDeleteEvent.providedBy(event):
-                for handler, remainders in handlers.iteritems():
+                for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
@@ -333,8 +336,8 @@ class ElementDispatcher(object):
         #self.logger.info('Handling IModelFactoryEvent')
         #self.logger.debug('Event is %s' % event)
         
-        for key, value in self._handlers.items():
-            for h, remainders in value.items():
+        for key, value in list(self._handlers.items()):
+            for h, remainders in list(value.items()):
                 for remainder in remainders:
                     self._add_handlers(key[0], (key[1],) + remainder, h)
 #        for h in self._reverse.iterkeys():

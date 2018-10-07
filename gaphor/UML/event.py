@@ -1,12 +1,17 @@
 """The core UML metamodel events."""
 
-from interfaces import *
-from zope import interface
+from builtins import object
 
+from zope.interface import implementer
+
+from gaphor.UML.interfaces import IAssociationAddEvent, IAssociationDeleteEvent, IElementCreateEvent
+from gaphor.UML.interfaces import IAttributeChangeEvent, IAssociationChangeEvent, IAssociationSetEvent
+from gaphor.UML.interfaces import IElementFactoryEvent, IModelFactoryEvent, IElementDeleteEvent, IFlushFactoryEvent
+
+
+@implementer(IAttributeChangeEvent)
 class AttributeChangeEvent(object):
     """A UML attribute has changed value."""
-    
-    interface.implements(IAttributeChangeEvent)
 
     def __init__(self, element, attribute, old_value, new_value):
         """Constructor.  The element parameter is the element with the
@@ -20,10 +25,9 @@ class AttributeChangeEvent(object):
         self.new_value = new_value
 
 
+@implementer(IAssociationChangeEvent)
 class AssociationChangeEvent(object):
     """An association UML element has changed."""
-    
-    interface.implements(IAssociationChangeEvent)
 
     def __init__(self, element, association):
         """Constructor.  The element parameter is the element the association
@@ -34,10 +38,9 @@ class AssociationChangeEvent(object):
         self.property = association
 
 
+@implementer(IAssociationSetEvent)
 class AssociationSetEvent(AssociationChangeEvent):
     """An association element has been set."""
-    
-    interface.implements(IAssociationSetEvent)
 
     def __init__(self, element, association, old_value, new_value):
         """Constructor.  The element parameter is the element setting the
@@ -50,10 +53,9 @@ class AssociationSetEvent(AssociationChangeEvent):
         self.new_value = new_value
 
 
+@implementer(IAssociationAddEvent)
 class AssociationAddEvent(AssociationChangeEvent):
     """An association element has been added."""
-
-    interface.implements(IAssociationAddEvent)
 
     def __init__(self, element, association, new_value):
         """Constructor.  The element parameter is the element the association
@@ -64,10 +66,9 @@ class AssociationAddEvent(AssociationChangeEvent):
         self.new_value = new_value
 
 
+@implementer(IAssociationDeleteEvent)
 class AssociationDeleteEvent(AssociationChangeEvent):
     """An association element has been deleted."""
-
-    interface.implements(IAssociationDeleteEvent)
 
     def __init__(self, element, association, old_value):
         """Constructor.  The element parameter is the element the association
@@ -82,10 +83,9 @@ class DerivedChangeEvent(AssociationChangeEvent):
     """A derived property has changed."""
     pass
 
+@implementer(IAssociationSetEvent)
 class DerivedSetEvent(DerivedChangeEvent):
     """A generic derived set event."""
-
-    interface.implements(IAssociationSetEvent)
 
     def __init__(self, element, association, old_value, new_value):
         """Constructor.  The element parameter is the element to which the
@@ -97,10 +97,9 @@ class DerivedSetEvent(DerivedChangeEvent):
         self.new_value = new_value
 
 
+@implementer(IAssociationAddEvent)
 class DerivedAddEvent(DerivedChangeEvent):
     """A derived property has been added."""
-
-    interface.implements(IAssociationAddEvent)
 
     def __init__(self, element, association, new_value):
         """Constructor.  The element parameter is the element to which the
@@ -111,10 +110,9 @@ class DerivedAddEvent(DerivedChangeEvent):
         self.new_value = new_value
 
 
+@implementer(IAssociationDeleteEvent)
 class DerivedDeleteEvent(DerivedChangeEvent):
     """A derived property has been deleted."""
-
-    interface.implements(IAssociationDeleteEvent)
 
     def __init__(self, element, association, old_value):
         """Constructor.  The element parameter is the element to which the
@@ -125,10 +123,9 @@ class DerivedDeleteEvent(DerivedChangeEvent):
         self.old_value = old_value
 
 
+@implementer(IAssociationSetEvent)
 class RedefineSetEvent(AssociationChangeEvent):
     """A redefined property has been set."""
-
-    interface.implements(IAssociationSetEvent)
 
     def __init__(self, element, association, old_value, new_value):
         """Constructor.  The element parameter is the element to which the
@@ -140,10 +137,9 @@ class RedefineSetEvent(AssociationChangeEvent):
         self.new_value = new_value
 
 
+@implementer(IAssociationAddEvent)
 class RedefineAddEvent(AssociationChangeEvent):
     """A redefined property has been added."""
-
-    interface.implements(IAssociationAddEvent)
 
     def __init__(self, element, association, new_value):
         """Constructor.  The element parameter is the element to which the
@@ -154,10 +150,9 @@ class RedefineAddEvent(AssociationChangeEvent):
         self.new_value = new_value
 
 
+@implementer(IAssociationDeleteEvent)
 class RedefineDeleteEvent(AssociationChangeEvent):
     """A redefined property has been deleted."""
-    
-    interface.implements(IAssociationDeleteEvent)
 
     def __init__(self, element, association, old_value):
         """Constructor.  The element parameter is the element to which the
@@ -168,10 +163,9 @@ class RedefineDeleteEvent(AssociationChangeEvent):
         self.old_value = old_value
 
 
+@implementer(IElementCreateEvent)
 class DiagramItemCreateEvent(object):
     """A diagram item has been created."""
-    
-    interface.implements(IElementCreateEvent)
 
     def __init__(self, element):
         """Constructor.  The element parameter is the element being created."""
@@ -179,10 +173,9 @@ class DiagramItemCreateEvent(object):
         self.element = element
 
 
+@implementer(IElementCreateEvent, IElementFactoryEvent)
 class ElementCreateEvent(object):
     """An element has been created."""
-    
-    interface.implements(IElementCreateEvent, IElementFactoryEvent)
 
     def __init__(self, service, element):
         """Constructor.  The service parameter is the service responsible
@@ -193,10 +186,9 @@ class ElementCreateEvent(object):
         self.element = element
 
 
+@implementer(IElementDeleteEvent, IElementFactoryEvent)
 class ElementDeleteEvent(object):
     """An element has been deleted."""
-    
-    interface.implements(IElementDeleteEvent, IElementFactoryEvent)
 
     def __init__(self, service, element):
         """Constructor.  The service parameter is the service responsible for
@@ -207,10 +199,9 @@ class ElementDeleteEvent(object):
         self.element = element
 
 
+@implementer(IModelFactoryEvent)
 class ModelFactoryEvent(object):
     """A generic element factory event."""
-    
-    interface.implements(IModelFactoryEvent)
 
     def __init__(self, service):
         """Constructor.  The service parameter is the service the emitted the
@@ -219,10 +210,9 @@ class ModelFactoryEvent(object):
         self.service = service
 
 
+@implementer(IFlushFactoryEvent)
 class FlushFactoryEvent(object):
     """The element factory has been flushed."""
-    
-    interface.implements(IFlushFactoryEvent)
 
     def __init__(self, service):
         """Constructor.  The service parameter is the service responsible for

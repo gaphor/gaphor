@@ -1,14 +1,18 @@
 """
 """
 
-from zope import interface, component
-
+from builtins import object
 from logging import getLogger
+from zope import component
+
+from zope.interface import implementer
+
+from gaphor.UML.interfaces import IElementChangeEvent
 from gaphor.core import inject
 from gaphor.interfaces import IService
-from gaphor.UML.interfaces import IElementChangeEvent
 
 
+@implementer(IService)
 class PropertyDispatcher(object):
     """
     The Propery Dispatcher allows classes to register on events originated
@@ -19,7 +23,6 @@ class PropertyDispatcher(object):
     originate on a whole lot of classes.
     """
 
-    interface.implements(IService)
     logger = getLogger('PropertyDispatcher')
 
     component_registry = inject('component_registry')
@@ -76,7 +79,7 @@ class PropertyDispatcher(object):
         for handler in s:
             try:
                 handler(event)
-            except Exception, e:
+            except Exception as e:
                 log.error('problem executing handler %s' % handler, exc_info=True)
 
 

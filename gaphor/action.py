@@ -25,6 +25,7 @@ See also gaphor/service/actionmanager.py for the management module.
 
 from __future__ import absolute_import, print_function
 
+from builtins import object
 from gaphor.application import Application
 
 
@@ -43,7 +44,7 @@ class action(object):
     >>> is_action(a.myaction)
     True
     >>> for method in dir(A):
-    ...     if is_action(getattr(A, method)):
+    ...     if is_action(getattr(A, method, None)):
     ...         print(method)
     myaction
     >>> A.myaction.__action__.name
@@ -99,7 +100,7 @@ def open_action(name, label=None, tooltip=None, stock_id=None, accel=None, **kwa
     >>> is_action(a.myaction)
     True
     >>> for method in dir(A):
-    ...     if is_action(getattr(A, method)):
+    ...     if is_action(getattr(A, method, None)):
     ...         print(method)
     myaction
     >>> A.myaction.__action__.name
@@ -201,7 +202,7 @@ def build_action_group(obj, name=None):
             group.add_action_with_accel(gtkact, act.accel)
 
         elif act is not None:
-            raise TypeError, 'Invalid action type: %s' % action
+            raise TypeError('Invalid action type: %s' % action)
     return group
 
 

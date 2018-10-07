@@ -1,18 +1,23 @@
 """The element editor is a utility window used for editing elements."""
 
-import gtk
-from zope import interface
-from gaphor.interfaces import IService, IActionProvider
-from gaphor.core import _, inject, open_action, build_action_group
-from gaphor.ui.propertyeditor import PropertyEditor
-from gaphor.ui.interfaces import IUIComponent
+import logging
+from builtins import object
 
+from zope.interface import implementer
+
+from gaphor.core import _, inject, open_action, build_action_group
+from gaphor.interfaces import IActionProvider
+from gaphor.ui.interfaces import IUIComponent
+from gaphor.ui.propertyeditor import PropertyEditor
+
+log = logging.getLogger(__name__)
+
+
+@implementer(IUIComponent, IActionProvider)
 class ElementEditor(object):
     """The ElementEditor class is a utility window used to edit UML elements.
     It will display the properties of the currently selected element in the
     diagram."""
-
-    interface.implements(IUIComponent, IActionProvider)
 
     element_factory = inject('element_factory')
     properties = inject('properties')

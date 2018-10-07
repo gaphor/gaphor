@@ -1,16 +1,20 @@
 """The properties module allows Gaphor properties to be saved to the local
 file system.  These are things like preferences."""
 
-import sys
 import os
 import pprint
+import sys
+from builtins import object
+from logging import getLogger
 from zope import interface
 
-from gaphor.core import inject
-from logging import getLogger
-from gaphor.interfaces import IService
 from gaphas.decorators import async
+from zope.interface import implementer
+
+from gaphor.core import inject
+from gaphor.interfaces import IService
 from gaphor.misc import get_user_data_dir
+
 
 class IPropertyChangeEvent(interface.Interface):
     
@@ -21,12 +25,11 @@ class IPropertyChangeEvent(interface.Interface):
     new_value = interface.Attribute("The property value after the change")
 
 
+@implementer(IPropertyChangeEvent)
 class PropertyChangeEvent(object):
     
     """This event is triggered any time a property is changed.  This event
     holds the property name, the current value, and the new value."""
-    
-    interface.implements(IPropertyChangeEvent)
 
     def __init__(self, name, old_value, new_value):
         self.name = name
@@ -35,12 +38,12 @@ class PropertyChangeEvent(object):
 
 _no_default = object()
 
+
+@implementer(IService)
 class Properties(object):
     """The Properties class holds a collection of application wide properties.
 
     Properties are persisted to the local file system."""
-    
-    interface.implements(IService)
 
     component_registry = inject('component_registry')
 
@@ -81,14 +84,14 @@ class Properties(object):
     def _items(self):
         """Return an iterator for all stored properties."""
         
-        return self._resources.iteritems()
+        return iter(self._resources.items())
 
     def dump(self, stream=sys.stdout):
         """
         TODO: define resources that are persistent (have to be saved
         and loaded.
         """
-        pprint.pprint(self._resources.items(), stream)
+        pprint.pprint(list(self._resources.items()), stream)
 
     def get(self, key, default=_no_default):
         """Locate a property.
@@ -155,7 +158,7 @@ class FileBackend(object):
             with open(filename) as ifile:
                 data = ifile.read()
                 
-            for key, value in eval(data).iteritems():
+            for key, value in eval(data).items():
                 resource[key] = value
 
     def save(self, resource):

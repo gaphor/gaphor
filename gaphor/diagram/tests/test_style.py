@@ -2,6 +2,7 @@
 Test item styles.
 """
 
+from builtins import range
 import unittest
 
 from gaphor.diagram.style import get_text_point, \

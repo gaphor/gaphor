@@ -8,19 +8,22 @@ The layout is done like this:
  - The nodes are moved to their place
  - Lines are reconnected to the nodes, so everything looks pretty.
 """
-
-from zope import interface, component
-from gaphor.core import _, inject, action, build_action_group, transactional
-from gaphor.interfaces import IService, IActionProvider
+from __future__ import division
 
 import random
+from builtins import object
+
+from past.utils import old_div
+from zope.interface import implementer
+
+from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.diagram import items
-import toposort
+from gaphor.interfaces import IService, IActionProvider
+from gaphor.plugins.diagramlayout import toposort
 
 
+@implementer(IService, IActionProvider)
 class DiagramLayout(object):
-
-    interface.implements(IService, IActionProvider)
 
     main_window = inject('main_window')
 
@@ -86,7 +89,7 @@ def layout_diagram(diag):
                 relations.append((item.handles[0].connected_to,
                                   item.handles[-1].connected_to))
                 primary_nodes.extend(relations[-1])
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
         elif isinstance(item, items.DiagramLine):
             # Secondary (associations, dependencies) may be drawn top-down
@@ -96,7 +99,7 @@ def layout_diagram(diag):
                                         item.handles[-1].connected_to))
                 #other_relations.append((item.handles[-1].connected_to,
                 #                        item.handles[0].connected_to))
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
         else:
             nodes.append(item)
@@ -136,9 +139,9 @@ def layout_diagram(diag):
                     row.append(other_item)
 
     # Place the nodes on the diagram.
-    y = MARGIN / 2
+    y = old_div(MARGIN, 2)
     for row in sorted:
-        x = MARGIN / 2
+        x = old_div(MARGIN, 2)
         maxy = 0
         for item in row:
             if not item:
@@ -172,25 +175,25 @@ def simple_layout_lines(diag):
             try:
                 lines[item] = (item.handles[0].connected_to,
                                item.handles[-1].connected_to)
-            except Exception, e:
+            except Exception as e:
                 log.error(e)
 
     # Now we have the lines, let's first ensure we only have a begin and an
     # end handle
-    for line in lines.keys():
+    for line in list(lines.keys()):
         while len(line.handles) > 2:
             line.set_property('del_segment', 0)
 
     # Strategy 1:
     # Now we have nice short lines. Let's move them to a point between
     # both nodes and let the connect() do the work:
-    for line, nodes in lines.items():
+    for line, nodes in list(lines.items()):
         if not nodes[0] or not nodes[1]:
             # loose end
             continue
         center0 = find_center(nodes[0])
         center1 = find_center(nodes[1])
-        center = (center0[0] + center1[0]) / 2.0, (center0[1] + center1[1]) / 2.0
+        center = old_div((center0[0] + center1[0]), 2.0), old_div((center0[1] + center1[1]), 2.0)
         line.handles[0].set_pos_w(*center)
         line.handles[-1].set_pos_w(*center)
         nodes[0].connect_handle(line.handles[0])
@@ -201,7 +204,7 @@ def uniq(lst):
     d = {}
     for l in lst:
         d[l] = None
-    return d.keys()
+    return list(d.keys())
 
 
 def find_related_nodes(item, relations):
@@ -237,8 +240,8 @@ def find_center(item):
     """
     Find the center point of the item, in world coordinates
     """
-    x = item.width / 2.0
-    y = item.height / 2.0
+    x = old_div(item.width, 2.0)
+    y = old_div(item.height, 2.0)
     return item.canvas.get_matrix_i2c(item).transform_point(x, y)
 
 # vim:sw=4:et

@@ -3,27 +3,26 @@ Service dedicated to exporting diagrams to a varyity of file formats.
 """
 
 import os
-import cairo
-
-from zope import interface, component
-
+from builtins import object
 from logging import getLogger
+
+import cairo
+from gaphas.freehand import FreeHandPainter
+from gaphas.painter import ItemPainter, BoundingBoxPainter
+from gaphas.view import View
+from zope.interface import implementer
+
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 
-from gaphas.view import View
-from gaphas.painter import ItemPainter, BoundingBoxPainter
-from gaphas.freehand import FreeHandPainter
-from gaphas.geometry import Rectangle
 
+@implementer(IService, IActionProvider)
 class DiagramExportManager(object):
     """
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
-
-    interface.implements(IService, IActionProvider)
 
     main_window = inject('main_window')
     properties = inject('properties')
