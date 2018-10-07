@@ -10,11 +10,11 @@ __all__ = [ 'main' ]
 
 from optparse import OptionParser
 import logging
-import pygtk
+import gi
 
 from gaphor.application import Application
 
-pygtk.require('2.0')
+gi.require_version('Gtk', '3.0')
 
 LOG_FORMAT = '%(name)s %(levelname)s %(message)s'
 

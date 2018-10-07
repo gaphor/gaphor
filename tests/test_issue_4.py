@@ -42,10 +42,10 @@ class CyclicDiagramTestCase(TestCase):
                 path = os.path.join(dist.location, 'test-diagrams/diagram-#4.gaphor')
                 load(path, self.element_factory)
             finally:
-                gtk.main_quit()
+                Gtk.main_quit()
 
-        assert gobject.timeout_add(1, handler) > 0
-        gtk.main()
+        assert GObject.timeout_add(1, handler) > 0
+        Gtk.main()
 
 
 # vi:sw=4:et:ai

@@ -10,8 +10,8 @@ from builtins import map
 import logging
 import operator
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 from zope import component
 
 from gaphor import UML
@@ -64,7 +64,7 @@ def catchall(func):
     return catchall_wrapper
 
 
-class NamespaceModel(gtk.GenericTreeModel):
+class NamespaceModel(Gtk.GenericTreeModel):
     """
     The NamespaceModel holds a view on the data model based on namespace
     relationships (such as a Package containing a Class).
@@ -79,7 +79,7 @@ class NamespaceModel(gtk.GenericTreeModel):
 
     def __init__(self, factory):
         # Init parent:
-        gtk.GenericTreeModel.__init__(self)
+        GObject.GObject.__init__(self)
 
         # We own the references to the iterators.
         self.set_property ('leak-references', 0)
@@ -342,7 +342,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         """
         Returns the type of a column in the model.
         """
-        return gobject.TYPE_PYOBJECT
+        return GObject.TYPE_PYOBJECT
 
 
     def on_get_path(self, node):
@@ -437,7 +437,7 @@ class NamespaceModel(gtk.GenericTreeModel):
         print('drag_data_received', dest_path, selection_data)
 
 
-class NamespaceView(gtk.TreeView):
+class NamespaceView(Gtk.TreeView):
 
     TARGET_STRING = 0
     TARGET_ELEMENT_ID = 1
@@ -449,7 +449,7 @@ class NamespaceView(gtk.TreeView):
     def __init__(self, model, factory):
         assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
         self.__gobject_init__()
-        gtk.TreeView.__init__(self, model)
+        GObject.GObject.__init__(self, model)
         self.factory = factory
         self.icon_cache = {}
 
@@ -464,15 +464,15 @@ class NamespaceView(gtk.TreeView):
 
         self.set_rules_hint(True)
         selection = self.get_selection()
-        selection.set_mode(gtk.SELECTION_BROWSE)
-        column = gtk.TreeViewColumn ('')
+        selection.set_mode(Gtk.SelectionMode.BROWSE)
+        column = Gtk.TreeViewColumn ('')
         # First cell in the column is for an image...
-        cell = gtk.CellRendererPixbuf ()
+        cell = Gtk.CellRendererPixbuf ()
         column.pack_start (cell, 0)
         column.set_cell_data_func (cell, self._set_pixbuf, None)
         
         # Second cell if for the name of the object...
-        cell = gtk.CellRendererText ()
+        cell = Gtk.CellRendererText ()
         #cell.set_property ('editable', 1)
         cell.connect('edited', self._text_edited)
         column.pack_start (cell, 0)
@@ -482,16 +482,16 @@ class NamespaceView(gtk.TreeView):
         self.append_column (column)
 
         # drag
-        self.drag_source_set(gtk.gdk.BUTTON1_MASK | gtk.gdk.BUTTON3_MASK,
+        self.drag_source_set(Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
                              NamespaceView.DND_TARGETS,
-                             gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_MOVE)
+                             Gdk.DragAction.COPY | Gdk.DragAction.MOVE)
         self.connect('drag-begin', NamespaceView.on_drag_begin)
         self.connect('drag-data-get', NamespaceView.on_drag_data_get)
         self.connect('drag-data-delete', NamespaceView.on_drag_data_delete)
 
         # drop
-        self.drag_dest_set (gtk.DEST_DEFAULT_ALL, [NamespaceView.DND_TARGETS[-1]],
-                            gtk.gdk.ACTION_MOVE)
+        self.drag_dest_set (Gtk.DestDefaults.ALL, [NamespaceView.DND_TARGETS[-1]],
+                            Gdk.DragAction.MOVE)
         self.connect('drag-motion', NamespaceView.on_drag_motion)
         self.connect('drag-drop', NamespaceView.on_drag_drop)
         self.connect('drag-data-received', NamespaceView.on_drag_data_received)
@@ -522,7 +522,7 @@ class NamespaceView(gtk.TreeView):
         except KeyError:
             stock_id = stock.get_stock_id(t, p)
             if stock_id:
-                icon = self.render_icon(stock_id, gtk.ICON_SIZE_MENU, '')
+                icon = self.render_icon(stock_id, Gtk.IconSize.MENU, '')
             else:
                 icon = None
             self.icon_cache[q] = icon
@@ -598,9 +598,9 @@ class NamespaceView(gtk.TreeView):
             path, pos = self.get_dest_row_at_pos(x, y)
             self.set_drag_dest_row(path, pos)
         except TypeError:
-            self.set_drag_dest_row(len(self.get_model()) - 1, gtk.TREE_VIEW_DROP_AFTER)
+            self.set_drag_dest_row(len(self.get_model()) - 1, Gtk.TreeViewDropPosition.AFTER)
 
-        kind = gtk.gdk.ACTION_COPY
+        kind = Gdk.DragAction.COPY
 
         context.drag_status(kind, time)
         return True
@@ -638,7 +638,7 @@ class NamespaceView(gtk.TreeView):
             assert dest_element
             # Add the item to the parent if it is dropped on the same level,
             # else add it to the item.
-            if position in (gtk.TREE_VIEW_DROP_BEFORE, gtk.TREE_VIEW_DROP_AFTER):
+            if position in (Gtk.TreeViewDropPosition.BEFORE, Gtk.TreeViewDropPosition.AFTER):
                 parent_iter = model.iter_parent(iter)
                 if parent_iter is None:
                     dest_element = None

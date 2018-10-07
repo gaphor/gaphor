@@ -2,7 +2,7 @@
 Generalization -- 
 """
 
-import gobject
+from gi.repository import GObject
 
 from gaphor import UML
 from gaphor.diagram.diagramline import DiagramLine

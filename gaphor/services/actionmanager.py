@@ -5,7 +5,7 @@ from builtins import object
 from logging import getLogger
 from zope import component
 
-import gtk
+from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor.core import inject
@@ -100,9 +100,9 @@ class ActionManager(object):
 
 
 @implementer(IService)
-class UIManager(gtk.UIManager):
+class UIManager(Gtk.UIManager):
     """
-    Service version of gtk.UIManager.
+    Service version of Gtk.UIManager.
     """
 
     def init(self, app=None):

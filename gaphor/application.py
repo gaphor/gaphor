@@ -124,8 +124,8 @@ class _Application(object):
 
 
     def run(self):
-        import gtk
-        gtk.main()
+        from gi.repository import Gtk
+        Gtk.main()
 
 
     def shutdown(self):

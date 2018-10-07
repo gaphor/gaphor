@@ -1,5 +1,5 @@
 
-import gtk
+from gi.repository import Gtk
 import logging
 from gaphor.tests import TestCase
 from gaphor import UML
@@ -42,13 +42,13 @@ class DiagramItemConnectorTestCase(TestCase):
 
         p = view.get_matrix_i2v(a).transform_point(*a.head.pos)
 
-        event = Event(x=p[0], y=p[1], type=gtk.gdk.BUTTON_PRESS, state=0)
+        event = Event(x=p[0], y=p[1], type=Gdk.EventType.BUTTON_PRESS, state=0)
 
         view.do_event(event)
 
         self.assertSame(the_association, a.subject)
 
-        event = Event(x=p[0], y=p[1], type=gtk.gdk.BUTTON_RELEASE, state=0)
+        event = Event(x=p[0], y=p[1], type=Gdk.BUTTON_RELEASE, state=0)
 
         view.do_event(event)
 

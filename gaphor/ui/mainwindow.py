@@ -8,8 +8,8 @@ from builtins import object
 from builtins import str
 from zope import component
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 import pkg_resources
 from etk.docking import DockItem, DockGroup
 from etk.docking import DockLayout
@@ -151,8 +151,8 @@ class MainWindow(object):
         """
         Make sure we have GTK+ >= 2.0
         """
-        import pygtk
-        pygtk.require('2.0')
+        import gi
+        gi.require_version('Gtk', '3.0')
         del pygtk
 
 
@@ -199,7 +199,7 @@ class MainWindow(object):
                             ('tools', '_Tools'),
                             ('window', '_Window'),
                             ('help', '_Help')):
-            a = gtk.Action(name, label, None, None)
+            a = Gtk.Action(name, label, None, None)
             a.set_property('hide-if-empty', False)
             self.action_group.add_action(a)
         self._tab_ui_settings = None
@@ -249,24 +249,24 @@ class MainWindow(object):
         application running or save the model and quit afterwards.
         """
         if self.model_changed:
-            dialog = gtk.MessageDialog(self.window,
-                    gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                    gtk.MESSAGE_WARNING,
-                    gtk.BUTTONS_NONE,
+            dialog = Gtk.MessageDialog(self.window,
+                    Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                    Gtk.MessageType.WARNING,
+                    Gtk.ButtonsType.NONE,
                     _('Save changed to your model before closing?'))
             dialog.format_secondary_text(
                     _('If you close without saving, your changes will be discarded.'))
-            dialog.add_buttons('Close _without saving', gtk.RESPONSE_REJECT,
-                    gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                    gtk.STOCK_SAVE, gtk.RESPONSE_YES)
-            dialog.set_default_response(gtk.RESPONSE_YES)
+            dialog.add_buttons('Close _without saving', Gtk.ResponseType.REJECT,
+                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                    Gtk.STOCK_SAVE, Gtk.ResponseType.YES)
+            dialog.set_default_response(Gtk.ResponseType.YES)
             response = dialog.run()
             dialog.destroy()
 
-            if response == gtk.RESPONSE_YES:
+            if response == Gtk.ResponseType.YES:
                 # On filedialog.cancel, the application should not close.
                 return self.file_manager.action_save()
-            return response == gtk.RESPONSE_REJECT
+            return response == Gtk.ResponseType.REJECT
         return True
 
 
@@ -297,31 +297,31 @@ class MainWindow(object):
 
         load_accel_map()
 
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
         self.window.set_title(self.title)
         self.window.set_size_request(*self.size)
         self.window.set_resizable(self.resizable)
 
         # set default icons of gaphor windows
         icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
-        icons = (gtk.gdk.pixbuf_new_from_file(os.path.join(icon_dir, f)) for f in ICONS)
+        icons = (GdkPixbuf.Pixbuf.new_from_file(os.path.join(icon_dir, f)) for f in ICONS)
         self.window.set_icon_list(*icons)
 
         self.window.add_accel_group(self.ui_manager.get_accel_group())
 
         
         # Create a full featured window.
-        vbox = gtk.VBox()
+        vbox = Gtk.VBox()
         self.window.add(vbox)
         vbox.show()
 
         menubar = self.ui_manager.get_widget(self.menubar_path)
         if menubar:
-            vbox.pack_start(menubar, expand=False)
+            vbox.pack_start(menubar, False, True, 0)
         
         toolbar = self.ui_manager.get_widget(self.toolbar_path)
         if toolbar:
-            vbox.pack_start(toolbar, expand=False)
+            vbox.pack_start(toolbar, False, True, 0)
 
         def _factory(name):
             comp = self.component_registry.get_utility(IUIComponent, name)
@@ -448,8 +448,8 @@ class MainWindow(object):
         Window is destroyed... Quit the application.
         """
         self.window = None
-        if gobject.main_depth() > 0:
-            gtk.main_quit()
+        if GObject.main_depth() > 0:
+            Gtk.main_quit()
         cr = self.component_registry
         cr.unregister_handler(self._on_undo_manager_state_changed)
         cr.unregister_handler(self._on_file_manager_state_changed)
@@ -523,7 +523,7 @@ class MainWindow(object):
     @action(name='file-quit', stock_id='gtk-quit')
     def quit(self):
         # TODO: check for changes (e.g. undo manager), fault-save
-        self.ask_to_close() and gtk.main_quit()
+        self.ask_to_close() and Gtk.main_quit()
         self.shutdown()
 
 
@@ -566,7 +566,7 @@ class MainWindow(object):
         group.show()
 
 
-gtk.accel_map_add_filter('gaphor')
+Gtk.AccelMap.add_filter('gaphor')
 
 
 @implementer(IUIComponent, IActionProvider)
@@ -645,9 +645,9 @@ class Namespace(object):
 
         model = NamespaceModel(self.element_factory)
         view = NamespaceView(model, self.element_factory)
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(view)
         scrolled_window.show()
         view.show()
@@ -676,7 +676,7 @@ class Namespace(object):
         Show a popup menu if button3 was pressed on the TreeView.
         """
         # handle mouse button 3:
-        if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
+        if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
             menu = self.ui_manager.get_widget('/namespace-popup')
             menu.popup(None, None, None, event.button, event.time)
 
@@ -766,13 +766,13 @@ class Namespace(object):
     @transactional
     def tree_view_delete_diagram(self):
         diagram = self._namespace.get_selected_element()
-        m = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_QUESTION,
-                              gtk.BUTTONS_YES_NO,
+        m = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION,
+                              Gtk.ButtonsType.YES_NO,
                               'Do you really want to delete diagram %s?\n\n'
                               'This will possibly delete diagram items\n'
                               'that are not shown in other diagrams.'
                               % (diagram.name or '<None>'))
-        if m.run() == gtk.RESPONSE_YES:
+        if m.run() == Gtk.ResponseType.YES:
             for i in reversed(diagram.canvas.get_all_items()):
                 s = i.subject
                 if s and len(s.presentation) == 1:
@@ -879,9 +879,9 @@ class Toolbox(object):
         """
         Grab top level window events and select the appropriate tool based on the event.
         """
-        if event.state & gtk.gdk.SHIFT_MASK or \
-	        (event.state == 0 or event.state & gtk.gdk.MOD2_MASK):
-            keyval = gtk.gdk.keyval_name(event.keyval)
+        if event.get_state() & Gdk.ModifierType.SHIFT_MASK or \
+	        (event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK):
+            keyval = Gdk.keyval_name(event.keyval)
             self.set_active_tool(shortcut=keyval)
 
 

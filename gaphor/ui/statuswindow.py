@@ -5,9 +5,9 @@ from __future__ import division
 
 from builtins import object
 from past.utils import old_div
-import gobject
-import pango
-import gtk
+from gi.repository import GObject
+from gi.repository import Pango
+from gi.repository import Gtk
 
 from gaphor.misc.gidlethread import QueueEmpty
 
@@ -38,31 +38,31 @@ class StatusWindow(object):
         """Create the window GUI component.  This will set the window and
         progress bar attributes so they can be referenced later."""
         
-        frame = gtk.Frame()
-        vbox = gtk.VBox(spacing=12)
-        label = gtk.Label(self.message)
+        frame = Gtk.Frame()
+        vbox = Gtk.VBox(spacing=12)
+        label = Gtk.Label(label=self.message)
         
-        self.progress_bar = gtk.ProgressBar()
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.progress_bar = Gtk.ProgressBar()
+        self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
         
         self.window.set_title(self.title)
-        self.window.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
-        self.window.set_transient_for(self.parent)
+        self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
+        self.set_transient_for(self.parent)
         self.window.set_modal(True)
         self.window.set_resizable(False)
         self.window.set_decorated(False)
-        self.window.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_SPLASHSCREEN)
+        self.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
         self.window.add(frame)
         
         self.progress_bar.set_size_request(400, -1)
         
-        frame.set_shadow_type(gtk.SHADOW_IN)
+        frame.set_shadow_type(Gtk.ShadowType.IN)
         frame.add(vbox)
         
-        label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
+        label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
         
         vbox.set_border_width(12)
-        vbox.pack_start(label)
+        vbox.pack_start(label, True, True, 0)
         vbox.pack_start(self.progress_bar, expand=False, fill=False, padding=0)
         
     def display(self):
@@ -73,10 +73,10 @@ class StatusWindow(object):
         self.window.show_all()
 
         if self.queue:
-            self.idle_id = gobject.idle_add(progress_idle_handler,\
+            self.idle_id = GObject.idle_add(progress_idle_handler,\
                                             self.progress_bar,\
                                             self.queue,\
-                                            priority=gobject.PRIORITY_LOW)
+                                            priority=GObject.PRIORITY_LOW)
             self.window.connect('destroy', remove_idle_handler, self.idle_id)
                                             
     def destroy(self):
@@ -104,4 +104,4 @@ def remove_idle_handler(window, idle_id):
     """This removes the supplied gobject idle id.  This handle is required
     by StatusWindow when it is destroyed."""
     
-    gobject.source_remove(idle_id)
+    GObject.source_remove(idle_id)

@@ -2,7 +2,7 @@
 """
 
 from builtins import object
-import gtk
+from gi.repository import Gtk
 from zope import component
 
 from gaphor.UML import Presentation
@@ -29,7 +29,7 @@ class PropertyEditor(object):
         self._expanded_pages = { _('Properties') : True }
     
     def construct(self):
-        self.vbox = gtk.VBox()
+        self.vbox = Gtk.VBox()
         self._selection_change()
 
         # Make sure we recieve 
@@ -68,20 +68,20 @@ class PropertyEditor(object):
                 page = adapter.construct()
                 if page is None:
                     continue
-                elif isinstance(page, gtk.Container):
+                elif isinstance(page, Gtk.Container):
                     page.set_border_width(6)
                 if first:
-                    self.vbox.pack_start(page, expand=False)
+                    self.vbox.pack_start(page, False, True, 0)
                     first = False
                 else:
-                    expander = gtk.Expander()
+                    expander = Gtk.Expander()
                     expander.set_use_markup(True)
                     expander.set_label('<b>%s</b>' % name)
                     expander.add(page)
                     expander.show_all()
                     expander.set_expanded(self._expanded_pages.get(name, False))
                     expander.connect_after('activate', self.on_expand, name)
-                    self.vbox.pack_start(expander, expand=False)
+                    self.vbox.pack_start(expander, False, True, 0)
                 page.show_all()
             except Exception as e:
                 log.error('Could not construct property page for ' + name, exc_info=True)
@@ -114,7 +114,7 @@ class PropertyEditor(object):
         self.clear_pages()
 
         if item is None:
-            label = gtk.Label()
+            label = Gtk.Label()
             label.set_markup('<b>No item selected</b>')
             self.vbox.pack_start(label, expand=False, padding=10)
             label.show()

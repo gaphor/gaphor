@@ -4,7 +4,7 @@ import logging
 import os.path
 from xml.sax import handler
 
-import gtk
+from gi.repository import Gtk
 import pkg_resources
 
 from gaphor import UML
@@ -12,7 +12,7 @@ from gaphor.storage.parser import ParserException
 
 XMLNS='http://gaphor.sourceforge.net/gaphor/stock-icons'
 
-_icon_factory = gtk.IconFactory()
+_icon_factory = Gtk.IconFactory()
 _icon_factory.add_default()
 
 _uml_to_stock_id_map = { }
@@ -33,15 +33,15 @@ def get_stock_id(element, option=None):
 def add_stock_icon(id, icon_dir, icon_files, uml_class=None, option=None):
     global _uml_to_stock_id_map
     global _icon_factory
-    set = gtk.IconSet()
+    set = Gtk.IconSet()
     for icon in icon_files:
-        source = gtk.IconSource()
+        source = Gtk.IconSource()
         if icon.find('16') != -1:
-            source.set_size(gtk.ICON_SIZE_MENU)
+            source.set_size(Gtk.IconSize.MENU)
         elif icon.find('24') != -1:
-            source.set_size(gtk.ICON_SIZE_SMALL_TOOLBAR)
+            source.set_size(Gtk.IconSize.SMALL_TOOLBAR)
         elif icon.find('48') != -1:
-            source.set_size(gtk.ICON_SIZE_LARGE_TOOLBAR)
+            source.set_size(Gtk.IconSize.LARGE_TOOLBAR)
         source.set_filename(os.path.join(icon_dir, icon))
         set.add_source(source)
     _icon_factory.add(id, set)

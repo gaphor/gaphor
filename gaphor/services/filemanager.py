@@ -7,7 +7,7 @@ from builtins import object
 from builtins import range
 from zope import component
 
-import gtk
+from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor import UML
@@ -100,12 +100,12 @@ class FileManager(object):
         self.action_group = build_action_group(self)
 
         for name, label in (('file-recent-files', '_Recent files'),):
-            action = gtk.Action(name, label, None, None)
+            action = Gtk.Action(name, label, None, None)
             action.set_property('hide-if-empty', False)
             self.action_group.add_action(action)
 
         for i in range(0, (MAX_RECENT-1)):
-            action = gtk.Action('file-recent-%d' % i, None, None, None)
+            action = Gtk.Action('file-recent-%d' % i, None, None, None)
             action.set_property('visible', False)
             self.action_group.add_action(action)
             action.connect('activate', self.load_recent, i)
@@ -322,20 +322,20 @@ class FileManager(object):
         """Open a file chooser dialog to select a model
         file to open."""
 
-        filesel = gtk.FileChooserDialog(title=title,
-                                        action=gtk.FILE_CHOOSER_ACTION_OPEN,
-                                        buttons=(gtk.STOCK_CANCEL,
-                                                 gtk.RESPONSE_CANCEL,
-                                                 gtk.STOCK_OPEN,
-                                                 gtk.RESPONSE_OK))
+        filesel = Gtk.FileChooserDialog(title=title,
+                                        action=Gtk.FileChooserAction.OPEN,
+                                        buttons=(Gtk.STOCK_CANCEL,
+                                                 Gtk.ResponseType.CANCEL,
+                                                 Gtk.STOCK_OPEN,
+                                                 Gtk.ResponseType.OK))
         filesel.set_transient_for(self.main_window.window)
 
-        filter = gtk.FileFilter()
+        filter = Gtk.FileFilter()
         filter.set_name("Gaphor models")
         filter.add_pattern("*.gaphor")
         filesel.add_filter(filter)
 
-        filter = gtk.FileFilter()
+        filter = Gtk.FileFilter()
         filter.set_name("All files")
         filter.add_pattern("*")
         filesel.add_filter(filter)
@@ -346,7 +346,7 @@ class FileManager(object):
         response = filesel.run()
         filename = filesel.get_filename()
         filesel.destroy()
-        if not filename or response != gtk.RESPONSE_OK:
+        if not filename or response != Gtk.ResponseType.OK:
             return
         return filename
 

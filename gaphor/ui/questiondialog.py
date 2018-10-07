@@ -3,7 +3,7 @@
 """
 
 from builtins import object
-import gtk
+from gi.repository import Gtk
 
 class QuestionDialog(object):
     """A dialog that displays a GTK MessageDialog to get a yes or no answer
@@ -14,10 +14,10 @@ class QuestionDialog(object):
         string to ask the user.  The parent parameter is the parent window
         of the dialog."""
         
-        self.dialog = gtk.MessageDialog(parent,\
-                                        gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,\
-                                        gtk.MESSAGE_QUESTION,\
-                                        gtk.BUTTONS_YES_NO,\
+        self.dialog = Gtk.MessageDialog(parent,\
+                                        Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,\
+                                        Gtk.MessageType.QUESTION,\
+                                        Gtk.ButtonsType.YES_NO,\
                                         question)
                                         
     def get_answer(self):
@@ -26,7 +26,7 @@ class QuestionDialog(object):
         
         answer = self.dialog.run()
         
-        if answer == gtk.RESPONSE_YES:
+        if answer == Gtk.ResponseType.YES:
             return True
             
         return False

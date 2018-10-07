@@ -32,8 +32,8 @@ from builtins import object
 from builtins import zip
 from builtins import range
 from past.utils import old_div
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 import math
 from gaphor.core import _, inject, transactional
 from gaphor.services.elementdispatcher import EventWatcher
@@ -46,7 +46,7 @@ from gaphor.UML.interfaces import IAttributeChangeEvent
 import gaphas.item
 from gaphas.decorators import async
 
-class EditableTreeModel(gtk.ListStore):
+class EditableTreeModel(Gtk.ListStore):
     """
     Editable GTK tree model based on ListStore model.
 
@@ -325,7 +325,7 @@ def remove_on_keypress(tree, event):
     """
     Remove selected items from GTK model on ``backspace`` keypress.
     """
-    k = gtk.gdk.keyval_name(event.keyval).lower()
+    k = Gdk.keyval_name(event.keyval).lower()
     if k == 'backspace' or k == 'kp_delete':
         model, iter = tree.get_selection().get_selected()
         if iter:
@@ -337,7 +337,7 @@ def swap_on_keypress(tree, event):
     """
     Swap selected and previous (or next) items.
     """
-    k = gtk.gdk.keyval_name(event.keyval).lower()
+    k = Gdk.keyval_name(event.keyval).lower()
     if k == 'equal' or k == 'kp_add':
         model, iter = tree.get_selection().get_selected()
         model.swap(iter, model.iter_next(iter))
@@ -366,7 +366,7 @@ def on_bool_cell_edited(renderer, path, model, col):
     model.set_value(iter, col, renderer.get_active())
 
 
-class UMLComboModel(gtk.ListStore):
+class UMLComboModel(Gtk.ListStore):
     """
     UML combo box model.
 
@@ -419,8 +419,8 @@ def create_uml_combo(data, callback):
     Combo box is returned.
     """
     model = UMLComboModel(data)
-    combo = gtk.ComboBox(model)
-    cell = gtk.CellRendererText()
+    combo = Gtk.ComboBox(model)
+    cell = Gtk.CellRendererText()
     combo.pack_start(cell, True)
     combo.add_attribute(cell, 'text', 0)
     combo.connect('changed', callback)
@@ -432,12 +432,12 @@ def create_hbox_label(adapter, page, label):
     Create a HBox with a label for given property page adapter and page
     itself.
     """
-    hbox = gtk.HBox(spacing=12)
-    label = gtk.Label(label)
+    hbox = Gtk.HBox(spacing=12)
+    label = Gtk.Label(label=label)
     label.set_alignment(0.0, 0.5)
     adapter.size_group.add_widget(label)
-    hbox.pack_start(label, expand=False)
-    page.pack_start(hbox, expand=False)
+    hbox.pack_start(label, False, True, 0)
+    page.pack_start(hbox, False, True, 0)
     return hbox
 
 
@@ -458,25 +458,25 @@ def create_tree_view(model, names, tip='', ro_cols=None):
     if ro_cols is None:
         ro_cols = set()
 
-    tree_view = gtk.TreeView(model)
+    tree_view = Gtk.TreeView(model)
     tree_view.set_rules_hint(True)
     
     n = model.get_n_columns() - 1
     for name, i in zip(names, list(range(n))):
         col_type = model.get_column_type(i)
-        if col_type == gobject.TYPE_STRING:
-            renderer = gtk.CellRendererText()
+        if col_type == GObject.TYPE_STRING:
+            renderer = Gtk.CellRendererText()
             renderer.set_property('editable', i not in ro_cols)
             renderer.set_property('is-expanded', True)
             renderer.connect('edited', on_text_cell_edited, model, i)
-            col = gtk.TreeViewColumn(name, renderer, text=i)
+            col = Gtk.TreeViewColumn(name, renderer, text=i)
             col.set_expand(True)
             tree_view.append_column(col)
-        elif col_type == gobject.TYPE_BOOLEAN:
-            renderer = gtk.CellRendererToggle()
+        elif col_type == GObject.TYPE_BOOLEAN:
+            renderer = Gtk.CellRendererToggle()
             renderer.set_property('activatable', i not in ro_cols)
             renderer.connect('toggled', on_bool_cell_edited, model, i)
-            col = gtk.TreeViewColumn(name, renderer, active=i)
+            col = Gtk.TreeViewColumn(name, renderer, active=i)
             col.set_expand(False)
             tree_view.append_column(col)
 
@@ -507,23 +507,23 @@ class CommentItemPropertyPage(object):
 
     def construct(self):
         subject = self.subject
-        page = gtk.VBox()
+        page = Gtk.VBox()
 
         if not subject:
             return page
 
-        label = gtk.Label(_('Comment'))
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        page.pack_start(label, expand=False)
+        label = Gtk.Label(label=_('Comment'))
+        label.set_justify(Gtk.Justification.LEFT)
+        page.pack_start(label, False, True, 0)
 
-        buffer = gtk.TextBuffer()
+        buffer = Gtk.TextBuffer()
         if subject.body:
             buffer.set_text(subject.body)
-        text_view = gtk.TextView()
+        text_view = Gtk.TextView()
         text_view.set_buffer(buffer)
         text_view.show()
         text_view.set_size_request(-1, 100)
-        page.pack_start(text_view)
+        page.pack_start(text_view, True, True, 0)
         page.set_data('default', text_view)
 
         changed_id = buffer.connect('changed', self._on_body_change)
@@ -565,19 +565,19 @@ class NamedElementPropertyPage(object):
         assert subject is None or isinstance(subject, UML.NamedElement), '%s' % type(subject)
         self.subject = subject
         self.watcher = EventWatcher(subject)
-        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
     
     def construct(self):
-        page = gtk.VBox()
+        page = Gtk.VBox()
 
         subject = self.subject
         if not subject:
             return page
 
         hbox = create_hbox_label(self, page, self.NAME_LABEL)
-        entry = gtk.Entry()        
+        entry = Gtk.Entry()        
         entry.set_text(subject and subject.name or '')
-        hbox.pack_start(entry)
+        hbox.pack_start(entry, True, True, 0)
         page.set_data('default', entry)
 
         # monitor subject.name attribute
@@ -629,17 +629,17 @@ class ClassPropertyPage(NamedElementPropertyPage):
             return page
 
         # Abstract toggle
-        hbox = gtk.HBox()
-        label = gtk.Label('')
-        label.set_justify(gtk.JUSTIFY_LEFT)
+        hbox = Gtk.HBox()
+        label = Gtk.Label(label='')
+        label.set_justify(Gtk.Justification.LEFT)
         self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
-        button = gtk.CheckButton(_("Abstract"))
+        hbox.pack_start(label, False, True, 0)
+        button = Gtk.CheckButton(_("Abstract"))
         button.set_active(self.subject.isAbstract)
         
         button.connect('toggled', self._on_abstract_change)
-        hbox.pack_start(button)
-        page.pack_start(hbox, expand=False)
+        hbox.pack_start(button, True, True, 0)
+        page.pack_start(hbox, False, True, 0)
 
         return page
 
@@ -662,13 +662,13 @@ class InterfacePropertyPage(NamedItemPropertyPage):
         item = self.item
 
         # Fold toggle
-        hbox = gtk.HBox()
-        label = gtk.Label('')
-        label.set_justify(gtk.JUSTIFY_LEFT)
+        hbox = Gtk.HBox()
+        label = Gtk.Label(label='')
+        label.set_justify(Gtk.Justification.LEFT)
         self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox.pack_start(label, False, True, 0)
 
-        button = gtk.CheckButton(_("Folded"))
+        button = Gtk.CheckButton(_("Folded"))
         button.set_active(item.folded)
         button.connect('toggled', self._on_fold_change)
 
@@ -678,8 +678,8 @@ class InterfacePropertyPage(NamedItemPropertyPage):
             or len(connected_items) == 1 and isinstance(connected_items[0], allowed)
 
         button.set_sensitive(can_fold)
-        hbox.pack_start(button)
-        page.pack_start(hbox, expand=False)
+        hbox.pack_start(button, True, True, 0)
+        page.pack_start(hbox, False, True, 0)
 
         return page
 
@@ -732,24 +732,24 @@ class AttributesPage(object):
         self.watcher = EventWatcher(item.subject)
         
     def construct(self):
-        page = gtk.VBox()
+        page = Gtk.VBox()
 
         if not self.item.subject:
             return page
 
         # Show attributes toggle
-        hbox = gtk.HBox()
-        label = gtk.Label('')
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        hbox.pack_start(label, expand=False)
-        button = gtk.CheckButton(_('Show attributes'))
+        hbox = Gtk.HBox()
+        label = Gtk.Label(label='')
+        label.set_justify(Gtk.Justification.LEFT)
+        hbox.pack_start(label, False, True, 0)
+        button = Gtk.CheckButton(_('Show attributes'))
         button.set_active(self.item.show_attributes)
         button.connect('toggled', self._on_show_attributes_change)
-        hbox.pack_start(button)
-        page.pack_start(hbox, expand=False)
+        hbox.pack_start(button, True, True, 0)
+        page.pack_start(hbox, False, True, 0)
 
         def create_model():
-            return ClassAttributes(self.item, (str, bool, gobject.TYPE_PYOBJECT))
+            return ClassAttributes(self.item, (str, bool, GObject.TYPE_PYOBJECT))
 
         self.model = create_model()
         
@@ -760,7 +760,7 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 - # /attr: int
 """
         tree_view = create_tree_view(self.model, (_('Attributes'), _('S')), tip)
-        page.pack_start(tree_view)
+        page.pack_start(tree_view, True, True, 0)
 
         @async(single=True)
         def handler(event):
@@ -806,24 +806,24 @@ class OperationsPage(object):
         self.watcher = EventWatcher(item.subject)
         
     def construct(self):
-        page = gtk.VBox()
+        page = Gtk.VBox()
 
         if not self.item.subject:
             return page
 
         # Show operations toggle
-        hbox = gtk.HBox()
-        label = gtk.Label("")
-        label.set_justify(gtk.JUSTIFY_LEFT)
-        hbox.pack_start(label, expand=False)
-        button = gtk.CheckButton(_("Show operations"))
+        hbox = Gtk.HBox()
+        label = Gtk.Label(label="")
+        label.set_justify(Gtk.Justification.LEFT)
+        hbox.pack_start(label, False, True, 0)
+        button = Gtk.CheckButton(_("Show operations"))
         button.set_active(self.item.show_operations)
         button.connect('toggled', self._on_show_operations_change)
-        hbox.pack_start(button)
-        page.pack_start(hbox, expand=False)
+        hbox.pack_start(button, True, True, 0)
+        page.pack_start(hbox, False, True, 0)
 
         def create_model():
-            return ClassOperations(self.item, (str, bool, bool, gobject.TYPE_PYOBJECT))
+            return ClassOperations(self.item, (str, bool, bool, GObject.TYPE_PYOBJECT))
 
         self.model = create_model()
         tip = """\
@@ -833,7 +833,7 @@ Add and edit class operations according to UML syntax. Operation syntax examples
 - # call(a: int: b: str): bool
 """
         tree_view = create_tree_view(self.model, (_('Operation'), _('A'), _('S')), tip)
-        page.pack_start(tree_view)
+        page.pack_start(tree_view, True, True, 0)
 
         @async(single=True)
         def handler(event):
@@ -886,25 +886,25 @@ class DependencyPropertyPage(object):
     def __init__(self, item):
         super(DependencyPropertyPage, self).__init__()
         self.item = item
-        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = EventWatcher(self.item)
 
         
     def construct(self):
-        page = gtk.VBox()
+        page = Gtk.VBox()
 
         hbox = create_hbox_label(self, page, _('Dependency type'))
 
         self.combo = create_uml_combo(self.DEPENDENCY_TYPES,
             self._on_dependency_type_change)
-        hbox.pack_start(self.combo, expand=False)
+        hbox.pack_start(self.combo, False, True, 0)
 
         hbox = create_hbox_label(self, page, '')
 
-        button = gtk.CheckButton(_('Automatic'))
+        button = Gtk.CheckButton(_('Automatic'))
         button.set_active(self.item.auto_dependency)
         button.connect('toggled', self._on_auto_dependency_change)
-        hbox.pack_start(button)
+        hbox.pack_start(button, True, True, 0)
 
         self.watcher.watch('subject', self._on_subject_change).register_handlers()
         button.connect('destroy', self.watcher.unregister_handlers)
@@ -961,9 +961,9 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         if not end.subject:
             return None
 
-        # TODO: use gtk.Frame here
-        frame = gtk.Frame('%s (: %s)' % (title, end.subject.type.name))
-        vbox = gtk.VBox()
+        # TODO: use Gtk.Frame here
+        frame = Gtk.Frame('%s (: %s)' % (title, end.subject.type.name))
+        vbox = Gtk.VBox()
         vbox.set_border_width(6)
         vbox.set_spacing(6)
         frame.add(vbox)
@@ -978,30 +978,30 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         if not self.subject:
             return page
 
-        hbox = gtk.HBox()
-        label = gtk.Label('')
-        label.set_justify(gtk.JUSTIFY_LEFT)
+        hbox = Gtk.HBox()
+        label = Gtk.Label(label='')
+        label.set_justify(Gtk.Justification.LEFT)
         self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox.pack_start(label, False, True, 0)
 
-        button = gtk.CheckButton(_('Show direction'))
+        button = Gtk.CheckButton(_('Show direction'))
         button.set_active(self.item.show_direction)
         button.connect('toggled', self._on_show_direction_change)
-        hbox.pack_start(button)
+        hbox.pack_start(button, True, True, 0)
 
-        button = gtk.Button(_('Invert Direction'))
+        button = Gtk.Button(_('Invert Direction'))
         button.connect('clicked', self._on_invert_direction_change)
-        hbox.pack_start(button)
+        hbox.pack_start(button, True, True, 0)
 
-        page.pack_start(hbox, expand=False)
+        page.pack_start(hbox, False, True, 0)
 
         box = self.construct_end(_('Head'), self.item.head_end)
         if box:
-            page.pack_start(box, expand=False)
+            page.pack_start(box, False, True, 0)
 
         box = self.construct_end(_('Tail'), self.item.tail_end)
         if box:
-            page.pack_start(box, expand=False)
+            page.pack_start(box, False, True, 0)
 
         self.update()
 
@@ -1050,15 +1050,15 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                 if page is None:
                     continue
                 if first:
-                    vbox.pack_start(page, expand=False)
+                    vbox.pack_start(page, False, True, 0)
                     first = False
                 else:
-                    expander = gtk.Expander()
+                    expander = Gtk.Expander()
                     expander.set_use_markup(True)
                     expander.set_label('<b>%s</b>' % name)
                     expander.add(page)
                     expander.show_all()
-                    vbox.pack_start(expander, expand=False)
+                    vbox.pack_start(expander, False, True, 0)
             except Exception as e:
                 log.error('Could not construct property page for ' + name, exc_info=True)
 
@@ -1082,9 +1082,9 @@ class AssociationEndPropertyPage(object):
         self.watcher = EventWatcher(subject)
 
     def construct(self):
-        vbox = gtk.VBox()
+        vbox = Gtk.VBox()
 
-        entry = gtk.Entry()
+        entry = Gtk.Entry()
         #entry.set_text(UML.format(self.subject, visibility=True, is_derived=Truemultiplicity=True) or '')
 
         # monitor subject attribute (all, cause it contains many children)
@@ -1107,7 +1107,7 @@ class AssociationEndPropertyPage(object):
                     .register_handlers()
         entry.connect("destroy", self.watcher.unregister_handlers)
 
-        vbox.pack_start(entry)
+        vbox.pack_start(entry, True, True, 0)
 
         entry.set_tooltip_text("""\
 Enter attribute name and multiplicity, for example
@@ -1118,7 +1118,7 @@ Enter attribute name and multiplicity, for example
 - [1..2]\
 """)
 
-        combo = gtk.combo_box_new_text()
+        combo = Gtk.ComboBoxText()
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
             combo.append_text(t)
         
@@ -1126,16 +1126,16 @@ Enter attribute name and multiplicity, for example
         combo.set_active(self.NAVIGABILITY.index(nav))
 
         combo.connect('changed', self._on_navigability_change)
-        vbox.pack_start(combo, expand=False)
+        vbox.pack_start(combo, False, True, 0)
 
-        combo = gtk.combo_box_new_text()
+        combo = Gtk.ComboBoxText()
         for t in ('No aggregation', 'Shared', 'Composite'):
             combo.append_text(t)
         
         combo.set_active(['none', 'shared', 'composite'].index(self.subject.aggregation))
 
         combo.connect('changed', self._on_aggregation_change)
-        vbox.pack_start(combo, expand=False)
+        vbox.pack_start(combo, False, True, 0)
      
         return vbox
 
@@ -1168,40 +1168,40 @@ class LineStylePage(object):
     def __init__(self, item):
         super(LineStylePage, self).__init__()
         self.item = item
-        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         
     def construct(self):
-        page = gtk.VBox()
+        page = Gtk.VBox()
 
-        hbox = gtk.HBox()
-        label = gtk.Label('')
-        label.set_justify(gtk.JUSTIFY_LEFT)
+        hbox = Gtk.HBox()
+        label = Gtk.Label(label='')
+        label.set_justify(Gtk.Justification.LEFT)
         self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox.pack_start(label, False, True, 0)
 
-        button = gtk.CheckButton(_('Orthogonal'))
+        button = Gtk.CheckButton(_('Orthogonal'))
         button.set_active(self.item.orthogonal)
         button.connect('toggled', self._on_orthogonal_change)
-        hbox.pack_start(button)
+        hbox.pack_start(button, True, True, 0)
 
-        page.pack_start(hbox, expand=False)
+        page.pack_start(hbox, False, True, 0)
 
         if len(self.item.handles()) < 3:
             # Only one segment
             button.props.sensitive = False
 
-        hbox = gtk.HBox()
-        label = gtk.Label('')
-        label.set_justify(gtk.JUSTIFY_LEFT)
+        hbox = Gtk.HBox()
+        label = Gtk.Label(label='')
+        label.set_justify(Gtk.Justification.LEFT)
         self.size_group.add_widget(label)
-        hbox.pack_start(label, expand=False)
+        hbox.pack_start(label, False, True, 0)
 
-        button = gtk.CheckButton(_('Horizontal'))
+        button = Gtk.CheckButton(_('Horizontal'))
         button.set_active(self.item.horizontal)
         button.connect('toggled', self._on_horizontal_change)
-        hbox.pack_start(button)
+        hbox.pack_start(button, True, True, 0)
 
-        page.pack_start(hbox, expand=False)
+        page.pack_start(hbox, False, True, 0)
 
         return page
 
@@ -1233,24 +1233,24 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
             return page
 
         hbox = create_hbox_label(self, page, _('Upper bound'))
-        entry = gtk.Entry()        
+        entry = Gtk.Entry()        
         entry.set_text(subject.upperBound or '')
         entry.connect('changed', self._on_upper_bound_change)
-        hbox.pack_start(entry)
+        hbox.pack_start(entry, True, True, 0)
 
         hbox = create_hbox_label(self, page, '')
-        combo = gtk.combo_box_new_text()
+        combo = Gtk.ComboBoxText()
         for v in self.ORDERING_VALUES:
             combo.append_text(v)
         combo.set_active(self.ORDERING_VALUES.index(subject.ordering))
         combo.connect('changed', self._on_ordering_change)
-        hbox.pack_start(combo, expand=False)
+        hbox.pack_start(combo, False, True, 0)
 
         hbox = create_hbox_label(self, page, '')
-        button = gtk.CheckButton(_('Ordering'))
+        button = Gtk.CheckButton(_('Ordering'))
         button.set_active(self.item.show_ordering)
         button.connect('toggled', self._on_ordering_show_change)
-        hbox.pack_start(button, expand=False)
+        hbox.pack_start(button, False, True, 0)
 
         return page
 
@@ -1291,20 +1291,20 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = gtk.HBox()
-        page.pack_start(hbox, expand=False)
+        hbox = Gtk.HBox()
+        page.pack_start(hbox, False, True, 0)
 
         if isinstance(subject, UML.JoinNode):
             hbox = create_hbox_label(self, page, _('Join specification'))
-            entry = gtk.Entry()        
+            entry = Gtk.Entry()        
             entry.set_text(subject.joinSpec or '')
             entry.connect('changed', self._on_join_spec_change)
-            hbox.pack_start(entry)
+            hbox.pack_start(entry, True, True, 0)
 
-        button = gtk.CheckButton(_('Horizontal'))
+        button = Gtk.CheckButton(_('Horizontal'))
         button.set_active(self.item.matrix[2] != 0)
         button.connect('toggled', self._on_horizontal_change)
-        page.pack_start(button, expand=False)
+        page.pack_start(button, False, True, 0)
 
         return page
 
@@ -1340,10 +1340,10 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
             return page
 
         hbox = create_hbox_label(self, page, _('Guard'))
-        entry = gtk.Entry()        
+        entry = Gtk.Entry()        
         entry.set_text(subject.guard or '')
         changed_id = entry.connect('changed', self._on_guard_change)
-        hbox.pack_start(entry)
+        hbox.pack_start(entry, True, True, 0)
 
         def handler(event):
             entry.handler_block(changed_id)
@@ -1389,13 +1389,13 @@ class ComponentPropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = gtk.HBox()
-        page.pack_start(hbox, expand=False)
+        hbox = Gtk.HBox()
+        page.pack_start(hbox, False, True, 0)
 
-        button = gtk.CheckButton(_('Indirectly instantiated'))
+        button = Gtk.CheckButton(_('Indirectly instantiated'))
         button.set_active(subject.isIndirectlyInstantiated)
         button.connect('toggled', self._on_ii_change)
-        hbox.pack_start(button, expand=False)
+        hbox.pack_start(button, False, True, 0)
 
         return page
 
@@ -1450,16 +1450,16 @@ class MessagePropertyPage(NamedItemPropertyPage):
             self._messages = CommunicationMessageModel(item)
             tree_view = create_tree_view(self._messages, (_('Message'),))
             tree_view.set_headers_visible(False)
-            frame = gtk.Frame(label=_('Additional Messages'))
+            frame = Gtk.Frame(label=_('Additional Messages'))
             frame.add(tree_view)
-            page.pack_start(frame)
+            page.pack_start(frame, True, True, 0)
 
             self._inverted_messages = CommunicationMessageModel(item, inverted=True)
             tree_view = create_tree_view(self._inverted_messages, (_('Message'),))
             tree_view.set_headers_visible(False)
-            frame = gtk.Frame(label=_('Inverted Messages'))
+            frame = Gtk.Frame(label=_('Inverted Messages'))
             frame.add(tree_view)
-            page.pack_end(frame)
+            page.pack_end(frame, True, True, 0)
         else:
             hbox = create_hbox_label(self, page, _('Message sort'))
 
@@ -1478,7 +1478,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
             combo = self.combo = create_uml_combo(sort_data,
                     self._on_message_sort_change)
-            hbox.pack_start(combo, expand=False)
+            hbox.pack_start(combo, False, True, 0)
 
             index = combo.get_model().get_index(subject.messageSort)
             combo.set_active(index)

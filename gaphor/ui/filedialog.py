@@ -2,7 +2,7 @@
 or save files."""
 
 from builtins import object
-import gtk
+from gi.repository import Gtk
 
 class FileDialog(object):
     """This is a file dialog that is used to open or save a file."""
@@ -22,18 +22,18 @@ class FileDialog(object):
         self.multiple = multiple
         
         if action == 'open':
-            action = gtk.FILE_CHOOSER_ACTION_OPEN
-            response_button = gtk.STOCK_OPEN
+            action = Gtk.FileChooserAction.OPEN
+            response_button = Gtk.STOCK_OPEN
         else:
-            action = gtk.FILE_CHOOSER_ACTION_SAVE
-            response_button = gtk.STOCK_SAVE
+            action = Gtk.FileChooserAction.SAVE
+            response_button = Gtk.STOCK_SAVE
             
-        buttons = (gtk.STOCK_CANCEL,\
-                   gtk.RESPONSE_CANCEL,\
+        buttons = (Gtk.STOCK_CANCEL,\
+                   Gtk.ResponseType.CANCEL,\
                    response_button,\
-                   gtk.RESPONSE_OK)
+                   Gtk.ResponseType.OK)
         
-        self.dialog = gtk.FileChooserDialog(title=title,
+        self.dialog = Gtk.FileChooserDialog(title=title,
                                             action=action,
                                             buttons=buttons)
                                             
@@ -44,7 +44,7 @@ class FileDialog(object):
             self.dialog.set_current_name(filename)
             
         for filter in filters:
-            _filter = gtk.FileFilter()
+            _filter = Gtk.FileFilter()
             _filter.set_name(filter['name'])
             _filter.add_pattern(filter['pattern'])
             self.dialog.add_filter(_filter)
@@ -56,7 +56,7 @@ class FileDialog(object):
         response = self.dialog.run()
         selection = None
         
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             
             if self.multiple:
                 selection = self.dialog.get_filenames()

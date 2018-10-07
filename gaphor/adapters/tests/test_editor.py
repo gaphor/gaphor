@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IEditor
 from gaphor.adapters.propertypages import AttributesPage, OperationsPage
-import gtk
+from gi.repository import Gtk
 
 class EditorTestCase(TestCase):
 
@@ -103,7 +103,7 @@ class EditorTestCase(TestCase):
         editor = AttributesPage(klass)
         page = editor.construct()
         tree_view = page.get_children()[1]
-        self.assertSame(gtk.TreeView, type(tree_view))
+        self.assertSame(Gtk.TreeView, type(tree_view))
 
         attr = self.element_factory.create(UML.Property)
         attr.name = "blah"
@@ -127,7 +127,7 @@ class EditorTestCase(TestCase):
         editor = OperationsPage(klass)
         page = editor.construct()
         tree_view = page.get_children()[1]
-        self.assertSame(gtk.TreeView, type(tree_view))
+        self.assertSame(Gtk.TreeView, type(tree_view))
 
         oper = self.element_factory.create(UML.Operation)
         oper.name = 'o'

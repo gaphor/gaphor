@@ -6,7 +6,7 @@ from __future__ import print_function
 from builtins import object
 from zope import component
 
-import gtk
+from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor import UML
@@ -17,7 +17,7 @@ from gaphor.diagram import items
 from gaphor.ui.interfaces import IPropertyPage
 
 
-class StereotypeAttributes(gtk.TreeStore):
+class StereotypeAttributes(Gtk.TreeStore):
     """
     GTK tree model to edit instance specifications of stereotypes.
     """
@@ -25,7 +25,7 @@ class StereotypeAttributes(gtk.TreeStore):
     element_factory = inject('element_factory')
 
     def __init__(self, subject):
-        gtk.TreeStore.__init__(self, str, str, bool, object, object, object)
+        GObject.GObject.__init__(self, str, str, bool, object, object, object)
         self.subject = subject
         self.refresh()
 
@@ -139,17 +139,17 @@ def create_stereotype_tree_view(model):
      model
         Model, for which tree view is created.
     """
-    tree_view = gtk.TreeView(model)
+    tree_view = Gtk.TreeView(model)
     tree_view.set_rules_hint(True)
     
     # Stereotype/Attributes
-    col = gtk.TreeViewColumn('%s / %s' % (_('Stereotype'), _('Attribute')))
+    col = Gtk.TreeViewColumn('%s / %s' % (_('Stereotype'), _('Attribute')))
     col.set_expand(True)
-    renderer = gtk.CellRendererToggle()
+    renderer = Gtk.CellRendererToggle()
     renderer.set_property('active', True)
     renderer.set_property('activatable', True)
     renderer.connect('toggled', on_bool_cell_edited, model, 2)
-    col.pack_start(renderer, expand=False)
+    col.pack_start(renderer, False, True, 0)
     col.add_attribute(renderer, 'active', 2)
     def show_checkbox(column, cell, model, iter):
         #value = model.get_value(iter, 4)
@@ -158,19 +158,19 @@ def create_stereotype_tree_view(model):
         cell.set_property('visible', isinstance(value, UML.Stereotype))
     col.set_cell_data_func(renderer, show_checkbox)
 
-    renderer = gtk.CellRendererText()
+    renderer = Gtk.CellRendererText()
     renderer.set_property('editable', False)
     renderer.set_property('is-expanded', True)
-    col.pack_start(renderer, expand=False)
+    col.pack_start(renderer, False, True, 0)
     col.add_attribute(renderer, 'text', 0)
     tree_view.append_column(col)
 
     # TODO: use col.set_cell_data_func(renderer, func, None) to toggle visibility
     # Value
-    renderer = gtk.CellRendererText()
+    renderer = Gtk.CellRendererText()
     renderer.set_property('is-expanded', True)
     renderer.connect('edited', on_text_cell_edited, model, 1)
-    col = gtk.TreeViewColumn(_('Value'), renderer, text=1)
+    col = Gtk.TreeViewColumn(_('Value'), renderer, text=1)
     col.set_expand(True)
     def set_editable(column, cell, model, iter):
         value = model.get_value(iter, 4)
@@ -193,10 +193,10 @@ class StereotypePage(object):
 
     def __init__(self, item):
         self.item = item
-        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         
     def construct(self):
-        page = gtk.VBox()
+        page = Gtk.VBox()
         subject = self.item.subject
         if subject is None:
             return None
@@ -208,28 +208,28 @@ class StereotypePage(object):
         #applied = set(UML.model.get_applied_stereotypes(subject))
         #for i, stereotype in enumerate(stereotypes):
         #    if (i % 3) == 0:
-        #        hbox = gtk.HBox(spacing=20)
-        #        page.pack_start(hbox, expand=False)
-        #    button = gtk.CheckButton(label=stereotype.name)
+        #        hbox = Gtk.HBox(spacing=20)
+        #        page.pack_start(hbox, False, True, 0)
+        #    button = Gtk.CheckButton(label=stereotype.name)
         #    button.set_active(stereotype in applied)
         #    button.connect('toggled', self._on_stereotype_selected, stereotype)
-        #    hbox.pack_start(button, expand=False)
+        #    hbox.pack_start(button, False, True, 0)
 
         # show stereotypes attributes toggle
         if isinstance(self.item, StereotypeSupport):
-            hbox = gtk.HBox()
-            label = gtk.Label('')
-            hbox.pack_start(label, expand=False)
-            button = gtk.CheckButton(_('Show stereotypes attributes'))
+            hbox = Gtk.HBox()
+            label = Gtk.Label(label='')
+            hbox.pack_start(label, False, True, 0)
+            button = Gtk.CheckButton(_('Show stereotypes attributes'))
             button.set_active(self.item.show_stereotypes_attrs)
             button.connect('toggled', self._on_show_stereotypes_attrs_change)
-            hbox.pack_start(button)
-            page.pack_start(hbox, expand=False)
+            hbox.pack_start(button, True, True, 0)
+            page.pack_start(hbox, False, True, 0)
 
         # stereotype attributes
         self.model = StereotypeAttributes(self.item.subject)
         tree_view = create_stereotype_tree_view(self.model)
-        page.pack_start(tree_view)
+        page.pack_start(tree_view, True, True, 0)
 
         page.show_all()
         return page

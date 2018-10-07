@@ -4,7 +4,7 @@ import os
 from builtins import object
 from logging import getLogger
 
-import gtk
+from gi.repository import Gtk
 import pkg_resources
 from zope.interface import implementer
 
@@ -44,53 +44,53 @@ class HelpService(object):
     @action(name='help-about', stock_id='gtk-about')
     def about(self):
         logo_file =  os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'ui', 'pixmaps', 'logo.png')
-        logo = gtk.gdk.pixbuf_new_from_file(logo_file)
+        logo = GdkPixbuf.Pixbuf.new_from_file(logo_file)
         version = Application.distribution.version
-        about = gtk.Dialog(_('About Gaphor'), self.main_window.window, gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_OK))
-        about.set_default_response(gtk.RESPONSE_OK)
+        about = Gtk.Dialog(_('About Gaphor'), self.main_window.window, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        about.set_default_response(Gtk.ResponseType.OK)
         vbox = about.vbox
 
-        image = gtk.Image()
+        image = Gtk.Image()
         image.set_from_pixbuf(logo)
-        vbox.pack_start(image)
+        vbox.pack_start(image, True, True, 0)
 
-        notebook = gtk.Notebook()
+        notebook = Gtk.Notebook()
         notebook.set_scrollable(True)
         notebook.set_border_width(4)
-        notebook.set_tab_pos(gtk.POS_BOTTOM)
-        vbox.pack_start(notebook)
+        notebook.set_tab_pos(Gtk.PositionType.BOTTOM)
+        vbox.pack_start(notebook, True, True, 0)
 
-        tab_vbox = gtk.VBox()
+        tab_vbox = Gtk.VBox()
 
         def add_label(text, padding_x=0, padding_y=0):
-            label = gtk.Label(text)
+            label = Gtk.Label(label=text)
             label.set_property('use-markup', True)
             label.set_padding(padding_x, padding_y)
-            label.set_justify(gtk.JUSTIFY_CENTER)
-            tab_vbox.pack_start(label)
+            label.set_justify(Gtk.Justification.CENTER)
+            tab_vbox.pack_start(label, True, True, 0)
 
         add_label('<span weight="bold">version %s</span>' % version)
         add_label('<span variant="smallcaps">UML Modeling tool for GNOME</span>', 8, 8)
         add_label('<span size="small">Copyright (c) 2001-2007 Arjan J. Molenaar</span>', 8, 8)
 
-        notebook.append_page(tab_vbox, gtk.Label(_('About')))
+        notebook.append_page(tab_vbox, Gtk.Label(label=_('About')))
 
-        tab_vbox = gtk.VBox()
+        tab_vbox = Gtk.VBox()
         
         add_label('This software is published\n'
                   'under the terms of the\n'
                   '<span weight="bold">GNU General Public License v2</span>.\n'
                   'See the COPYING file for details.', 0, 8)
-        notebook.append_page(tab_vbox, gtk.Label(_('License')))
+        notebook.append_page(tab_vbox, Gtk.Label(label=_('License')))
 
-        tab_vbox = gtk.VBox()
+        tab_vbox = Gtk.VBox()
         
         add_label('Gaphor is written by:\n'
                   'Arjan Molenaar\n'
                   'Artur Wroblewski\n'
                   'Jeroen Vloothuis')
         add_label('')
-        notebook.append_page(tab_vbox, gtk.Label(_('Authors')))
+        notebook.append_page(tab_vbox, Gtk.Label(label=_('Authors')))
 
         vbox.show_all()
         about.run()

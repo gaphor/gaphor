@@ -8,7 +8,7 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 """
 
 from builtins import object
-import gtk
+from gi.repository import Gtk
 import logging
 from zope import component
 
@@ -26,10 +26,10 @@ from gaphor.diagram.elementitem import ElementItem
 
 
 # cursor to indicate grouping
-IN_CURSOR = gtk.gdk.Cursor(gtk.gdk.DIAMOND_CROSS)
+IN_CURSOR = Gdk.Cursor.new(Gdk.DIAMOND_CROSS)
 
 # cursor to indicate ungrouping
-OUT_CURSOR = gtk.gdk.Cursor(gtk.gdk.SIZING)
+OUT_CURSOR = Gdk.Cursor.new(Gdk.SIZING)
 
 log = logging.getLogger(__name__)
 
@@ -145,34 +145,34 @@ class TextEditTool(Tool):
         Create a popup window with some editable text.
         """
         view = self.view
-        window = gtk.Window()
+        window = Gtk.Window()
         window.set_property('decorated', False)
         window.set_property('skip-taskbar-hint', True)
-        window.set_resize_mode(gtk.RESIZE_IMMEDIATE)
+        window.set_resize_mode(Gtk.RESIZE_IMMEDIATE)
         #window.set_modal(True)
         window.set_parent_window(view.window)
-        buffer = gtk.TextBuffer()
+        buffer = Gtk.TextBuffer()
         if text:
             buffer.set_text(text)
             startiter, enditer = buffer.get_bounds()
             buffer.move_mark_by_name('selection_bound', startiter)
             buffer.move_mark_by_name('insert', enditer)
-        text_view = gtk.TextView()
+        text_view = Gtk.TextView()
         text_view.set_buffer(buffer)
         #text_view.set_border_width(2)
         text_view.set_left_margin(2)
         text_view.set_right_margin(2)
         text_view.show()
         
-        frame = gtk.Frame()
-        frame.set_shadow_type(gtk.SHADOW_IN)
+        frame = Gtk.Frame()
+        frame.set_shadow_type(Gtk.ShadowType.IN)
         #frame.set_border_width(1)
         frame.add(text_view)
         frame.show()
 
         window.add(frame)
         #window.set_border_width(1)
-        window.size_allocate(gtk.gdk.Rectangle(int(x), int(y), 50, 50))
+        window.size_allocate((int(x), int(y), 50, 50))
         #window.move(int(x), int(y))
         cursor_pos = view.get_toplevel().get_screen().get_display().get_pointer()
         window.move(cursor_pos[1], cursor_pos[2])
@@ -213,10 +213,10 @@ class TextEditTool(Tool):
                 return True
 
     def _on_key_press_event(self, widget, event, buffer, editor):
-        if event.keyval == gtk.keysyms.Return and \
-                not event.state & (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK):
+        if event.keyval == Gdk.KEY_Return and \
+                not event.get_state() & (Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK):
             self.submit_text(widget, buffer, editor)
-        elif event.keyval == gtk.keysyms.Escape:
+        elif event.keyval == Gdk.KEY_Escape:
             widget.get_toplevel().destroy()
 
     def _on_focus_out_event(self, widget, event, buffer, editor):

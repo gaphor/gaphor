@@ -15,7 +15,7 @@ Given an object, this tool throws up a gtk tree widget that maps all the referen
 from builtins import str
 from builtins import range
 from builtins import object
-import gtk
+from gi.repository import Gtk
 
 class Browser(object):
 
@@ -70,38 +70,38 @@ class Browser(object):
 
 	def delete_event(self, widget, event, data=None):
 	self.window.destroy()
-		#gtk.main_quit()
+		#Gtk.main_quit()
 		return False
 
 	def __init__(self, name, value):
-		self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+		self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
 		self.window.set_title("Browser")
 		self.window.set_size_request(512, 320)
 		self.window.connect("delete_event", self.delete_event)
 
 		# we will store the name, the type name, and the repr
 		columns = [str, str, str]
-		self.treestore = gtk.TreeStore(*columns)
+		self.treestore = Gtk.TreeStore(*columns)
 
 		# the otank tells us what object we put at each node in the tree
 		self.otank = {} # map path -> (name,value)
 		self.make( name, value )
 
-		self.treeview = gtk.TreeView(self.treestore)
+		self.treeview = Gtk.TreeView(self.treestore)
 		self.treeview.connect("row-expanded", self.row_expanded )
 
-		self.tvcolumns = [ gtk.TreeViewColumn() for _type in columns ]
+		self.tvcolumns = [ Gtk.TreeViewColumn() for _type in columns ]
 		i = 0
 		for tvcolumn in self.tvcolumns:
 			self.treeview.append_column(tvcolumn)
-			cell = gtk.CellRendererText()
+			cell = Gtk.CellRendererText()
 			tvcolumn.pack_start(cell, True)
 			tvcolumn.add_attribute(cell, 'text', i)
 			i = i + 1
 
-		scrolled_window = gtk.ScrolledWindow()
-		scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-		scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+		scrolled_window = Gtk.ScrolledWindow()
+		scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+		scrolled_window.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
 		scrolled_window.add(self.treeview)
 
 		self.window.add(scrolled_window)
@@ -109,7 +109,7 @@ class Browser(object):
 
 def dump( name, value ):
 	browser = Browser( name, value )
-	gtk.main()
+	Gtk.main()
 
 def test():
 	class Nil(object):

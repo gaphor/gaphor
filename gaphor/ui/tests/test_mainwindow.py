@@ -1,5 +1,5 @@
 
-import gtk
+from gi.repository import Gtk
 import unittest
 
 from gaphor.application import Application

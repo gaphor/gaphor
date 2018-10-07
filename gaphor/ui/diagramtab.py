@@ -5,7 +5,7 @@ from __future__ import division
 from builtins import object
 from builtins import str
 from past.utils import old_div
-import gtk
+from gi.repository import Gtk
 from cairo import Matrix
 from zope import component
 from etk.docking import DockItem
@@ -102,12 +102,12 @@ class DiagramTab(object):
         assert self.diagram
 
         view = GtkView(canvas=self.diagram.canvas)
-        view.drag_dest_set(gtk.DEST_DEFAULT_MOTION, DiagramTab.VIEW_DND_TARGETS,
-                           gtk.gdk.ACTION_MOVE | gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+        view.drag_dest_set(Gtk.DestDefaults.MOTION, DiagramTab.VIEW_DND_TARGETS,
+                           Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK)
 
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(view)
         scrolled_window.show_all()
 
@@ -247,17 +247,17 @@ class DiagramTab(object):
         for item in last_in_model:
             s += '%s\n' % str(item)
 
-        dialog = gtk.MessageDialog(
+        dialog = Gtk.MessageDialog(
                 None,
-                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                gtk.MESSAGE_WARNING,
-                gtk.BUTTONS_YES_NO,
+                Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                Gtk.MessageType.WARNING,
+                Gtk.ButtonsType.YES_NO,
                 'This will remove the following selected items from the model:\n%s\nAre you sure?' % s
                 )
         dialog.set_transient_for(self.get_toplevel())
         value = dialog.run()
         dialog.destroy()
-        if value == gtk.RESPONSE_YES:
+        if value == Gtk.ResponseType.YES:
             return True
         return False
 
@@ -269,11 +269,11 @@ class DiagramTab(object):
         edit stuff.
         """
         if view.is_focus():
-            if event.keyval == gtk.keysyms.Delete and \
-                    (event.state == 0 or event.state & gtk.gdk.MOD2_MASK):
+            if event.keyval == Gdk.KEY_Delete and \
+                    (event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK):
                 self.delete_selected_items()
-            elif event.keyval == gtk.keysyms.BackSpace and \
-                    (event.state == 0 or event.state & gtk.gdk.MOD2_MASK):
+            elif event.keyval == Gdk.KEY_BackSpace and \
+                    (event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK):
                 self.delete_selected_items()
 
 
@@ -284,11 +284,11 @@ class DiagramTab(object):
     def _on_drag_drop(self, view, context, x, y, time):
         print('drag_drop on', context.targets)
         if self.VIEW_DND_TARGETS[0][0] in context.targets:
-            target = gtk.gdk.atom_intern(self.VIEW_DND_TARGETS[0][0])
+            target = Gdk.atom_intern(self.VIEW_DND_TARGETS[0][0])
             view.drag_get_data(context, target, time)
             return True
         elif self.VIEW_DND_TARGETS[1][0] in context.targets:
-            target = gtk.gdk.atom_intern(self.VIEW_DND_TARGETS[1][0])
+            target = Gdk.atom_intern(self.VIEW_DND_TARGETS[1][0])
             view.drag_get_data(context, target, time)
             return True
         return False

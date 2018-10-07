@@ -4,7 +4,7 @@ main screen and diagram windows.
 """
 
 import os, os.path
-import gtk
+from gi.repository import Gtk
 
 from gaphor.misc import get_user_data_dir
 
@@ -26,7 +26,7 @@ def load_accel_map():
     """
     filename = _get_accel_map_filename()
     if os.path.exists(filename) and os.path.isfile(filename):
-        gtk.accel_map_load(filename)
+        Gtk.AccelMap.load(filename)
 
 
 def save_accel_map():
@@ -34,7 +34,7 @@ def save_accel_map():
     Save the contents of the GtkAccelMap to a file.
     """
     filename = _get_accel_map_filename()
-    gtk.accel_map_save(filename)   
+    Gtk.AccelMap.save(filename)   
 
 
 # vim:sw=4:et:

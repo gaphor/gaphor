@@ -5,7 +5,7 @@ Basic stuff for toplevel windows.
 import os.path
 from builtins import object
 
-import gtk
+from gi.repository import Gtk
 import pkg_resources
 from zope.interface import implementer
 
@@ -34,14 +34,14 @@ class ToplevelWindow(object):
 
     def construct(self):
 
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
         self.window.set_title(self.title)
         self.window.set_size_request(*self.size)
         self.window.set_resizable(self.resizable)
 
         # set default icons of gaphor windows
         icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
-        icons = (gtk.gdk.pixbuf_new_from_file(os.path.join(icon_dir, f)) for f in ICONS)
+        icons = (GdkPixbuf.Pixbuf.new_from_file(os.path.join(icon_dir, f)) for f in ICONS)
         self.window.set_icon_list(*icons)
 
         self.window.add_accel_group(self.ui_manager.get_accel_group())
@@ -49,19 +49,19 @@ class ToplevelWindow(object):
         
         if self.menubar_path or self.toolbar_path:
             # Create a full featured window.
-            vbox = gtk.VBox()
+            vbox = Gtk.VBox()
             self.window.add(vbox)
             vbox.show()
 
             menubar = self.ui_manager.get_widget(self.menubar_path)
             if menubar:
-                vbox.pack_start(menubar, expand=False)
+                vbox.pack_start(menubar, False, True, 0)
             
             toolbar = self.ui_manager.get_widget(self.toolbar_path)
             if toolbar:
-                vbox.pack_start(toolbar, expand=False)
+                vbox.pack_start(toolbar, False, True, 0)
 
-            vbox.pack_end(self.ui_component(), expand=self.resizable)
+            vbox.pack_end(self.ui_component(, True, True, 0), expand=self.resizable)
             vbox.show()
             # TODO: add statusbar
         else:

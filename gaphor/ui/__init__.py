@@ -3,11 +3,11 @@ This module contains user interface related code, such as the
 main screen and diagram windows.
 """
 
-import gtk
+from gi.repository import Gtk
 import pkg_resources
 import os.path
 
-icon_theme = gtk.icon_theme_get_default()
+icon_theme = Gtk.IconTheme.get_default()
 icon_theme.append_search_path(os.path.abspath(
                                 pkg_resources.resource_filename('gaphor.ui', 'pixmaps')))
 

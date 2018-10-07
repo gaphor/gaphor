@@ -3,7 +3,7 @@ from gaphor.tests import TestCase
 from gaphor.adapters.profiles.metaclasseditor import MetaclassNameEditor
 from gaphor.diagram import items
 from gaphor import UML
-import gtk
+from gi.repository import Gtk
 
 class MetaclassEditorTest(TestCase):
 
@@ -14,12 +14,12 @@ class MetaclassEditorTest(TestCase):
         page = editor.construct()
         self.assertTrue(page)
         combo = page.get_children()[0].get_children()[1]
-        self.assertSame(gtk.ComboBoxEntry, type(combo))
+        self.assertSame(Gtk.ComboBoxEntry, type(combo))
 
-        self.assertEquals("Class", combo.child.get_text())
+        self.assertEquals("Class", combo.get_child().get_text())
 
         ci.subject.name = 'Blah'
-        self.assertEquals('Blah', combo.child.get_text())
+        self.assertEquals('Blah', combo.get_child().get_text())
 
 
 # vim:sw=4:et:ai

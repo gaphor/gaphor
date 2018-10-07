@@ -3,7 +3,7 @@ Activity partition property page.
 """
 from zope import component
 
-import gtk
+from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor import UML
@@ -31,16 +31,16 @@ class PartitionPropertyPage(NamedItemPropertyPage):
 
         if item.subject:
             if not item._toplevel:
-                hbox = gtk.HBox(spacing=12)
-                button = gtk.CheckButton(_('External'))
+                hbox = Gtk.HBox(spacing=12)
+                button = Gtk.CheckButton(_('External'))
                 button.set_active(item.subject.isExternal)
                 button.connect('toggled', self._on_external_change)
-                hbox.pack_start(button)
-                page.pack_start(hbox, expand=False)
+                hbox.pack_start(button, True, True, 0)
+                page.pack_start(hbox, False, True, 0)
             else:
                 pass
-                #hbox = gtk.HBox(spacing=12)
-                #button = gtk.CheckButton(_('Dimension'))
+                #hbox = Gtk.HBox(spacing=12)
+                #button = Gtk.CheckButton(_('Dimension'))
                 #button.set_active(item.subject.isDimension)
                 #button.connect('toggled', self._on_dimension_change)
 

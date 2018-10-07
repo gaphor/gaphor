@@ -5,7 +5,7 @@ Metaclass item editors.
 from builtins import object
 from zope import component
 
-import gtk
+from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor import UML
@@ -39,32 +39,32 @@ class MetaclassNameEditor(object):
 
     def __init__(self, item):
         self.item = item
-        self.size_group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = EventWatcher(item.subject)
     
     def construct(self):
-        page = gtk.VBox()
+        page = Gtk.VBox()
 
         subject = self.item.subject
         if not subject:
             return page
 
         hbox = create_hbox_label(self, page, self.NAME_LABEL)
-        model = gtk.ListStore(str)
+        model = Gtk.ListStore(str)
         for c in self.CLASSES:
             model.append([c])
 
-        cb = gtk.ComboBoxEntry(model, 0)
+        cb = Gtk.ComboBoxEntry(model, 0)
 
-        completion = gtk.EntryCompletion()
+        completion = Gtk.EntryCompletion()
         completion.set_model(model)
         completion.set_minimum_key_length(1)
         completion.set_text_column(0)
-        cb.child.set_completion(completion)
+        cb.get_child().set_completion(completion)
 
-        entry = cb.child
+        entry = cb.get_child()
         entry.set_text(subject and subject.name or '')
-        hbox.pack_start(cb)
+        hbox.pack_start(cb, True, True, 0)
         page.set_data('default', entry)
 
         # monitor subject.name attribute

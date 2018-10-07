@@ -5,8 +5,8 @@ from __future__ import print_function
 
 from builtins import object
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
@@ -50,28 +50,28 @@ class CheckModelWindow(object):
         self.run()
 
     def construct(self):
-        model = gtk.ListStore(gobject.TYPE_PYOBJECT,
-                              gobject.TYPE_STRING,
-                              gobject.TYPE_STRING)
+        model = Gtk.ListStore(GObject.TYPE_PYOBJECT,
+                              GObject.TYPE_STRING,
+                              GObject.TYPE_STRING)
 
-        treeview = gtk.TreeView(model)
+        treeview = Gtk.TreeView(model)
         treeview.connect('row-activated', self.on_row_activated)
         selection = treeview.get_selection()
         selection.set_mode('single')
         treeview.set_size_request(200, -1)
 
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(treeview)
         scrolled_window.show()
 
-        cell = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("Element", cell, text=ELEMENT_COLUMN)
+        cell = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn("Element", cell, text=ELEMENT_COLUMN)
         treeview.append_column(column)
 
-        cell = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("Reason", cell, text=REASON_COLUMN)
+        cell = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn("Reason", cell, text=REASON_COLUMN)
         treeview.append_column(column)
         treeview.show()
 
@@ -82,7 +82,7 @@ class CheckModelWindow(object):
         self.model = model
         self.treeview = treeview
 
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
         self.window.connect('destroy', self.on_destroy)
         self.window.set_title('Gaphor - Check Model')
         self.window.add(scrolled_window)
@@ -103,7 +103,7 @@ class CheckModelWindow(object):
         model.set_value(iter, PYELEMENT_COLUMN, element)
         model.set_value(iter, ELEMENT_COLUMN, type(element).__name__)
         model.set_value(iter, REASON_COLUMN, message)
-        main = gobject.main_context_default()
+        main = GObject.main_context_default()
         main.iteration(False)
 
     def on_row_activated(self, treeview, row, column):

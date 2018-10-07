@@ -5,7 +5,7 @@ To register property pages implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
-import gtk
+from gi.repository import Gtk
 
 from gaphor.core import _, inject, transactional
 from gaphor import UML
@@ -30,12 +30,12 @@ class TransitionPropertyPage(NamedItemPropertyPage):
             return page
 
         hbox = create_hbox_label(self, page, _('Guard'))
-        entry = gtk.Entry()
+        entry = Gtk.Entry()
         v = subject.guard.specification
         entry.set_text(v if v else '')
         entry.connect('changed', self._on_guard_change)
         changed_id = entry.connect('changed', self._on_guard_change)
-        hbox.pack_start(entry)
+        hbox.pack_start(entry, True, True, 0)
 
         def handler(event):
             entry.handler_block(changed_id)
@@ -77,25 +77,25 @@ class StatePropertyPage(NamedItemPropertyPage):
             return page
 
         hbox = create_hbox_label(self, page, _('Entry'))
-        entry = gtk.Entry()
+        entry = Gtk.Entry()
         if self.item._entry.subject:
             entry.set_text(self.item._entry.subject.name)
         entry.connect('changed', self._on_text_change, self.item.set_entry)
-        hbox.pack_start(entry)
+        hbox.pack_start(entry, True, True, 0)
 
         hbox = create_hbox_label(self, page, _('Exit'))
-        entry = gtk.Entry()
+        entry = Gtk.Entry()
         if self.item._exit.subject:
             entry.set_text(self.item._exit.subject.name)
         entry.connect('changed', self._on_text_change, self.item.set_exit)
-        hbox.pack_start(entry)
+        hbox.pack_start(entry, True, True, 0)
 
         hbox = create_hbox_label(self, page, _('Do Activity'))
-        entry = gtk.Entry()
+        entry = Gtk.Entry()
         if self.item._do_activity.subject:
             entry.set_text(self.item._do_activity.subject.name)
         entry.connect('changed', self._on_text_change, self.item.set_do_activity)
-        hbox.pack_start(entry)
+        hbox.pack_start(entry, True, True, 0)
 
         page.show_all()
 

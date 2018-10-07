@@ -119,7 +119,7 @@ def is_action(func):
 
 def build_action_group(obj, name=None):
     """
-    Build actions and a gtk.ActionGroup for each Action instance found in obj()
+    Build actions and a Gtk.ActionGroup for each Action instance found in obj()
     (that's why Action is a class ;) ). This function requires GTK+.
 
     >>> class A(object):
@@ -144,8 +144,8 @@ def build_action_group(obj, name=None):
     >>> group.get_action('baz').activate()
     Say 0 baz
     """
-    import gtk
-    group = gtk.ActionGroup(name or obj)
+    from gi.repository import Gtk
+    group = Gtk.ActionGroup(name or obj)
     objtype = type(obj)
 
     for attrname in dir(obj):
@@ -174,7 +174,7 @@ def build_action_group(obj, name=None):
             assert len(act.names) == len(act.stock_ids)
             assert len(act.names) == len(act.accels)
             for i, n in enumerate(act.names):
-                gtkact = gtk.RadioAction(n, act.labels[i], act.tooltips[i], act.stock_ids[i], value=i)
+                gtkact = Gtk.RadioAction(n, act.labels[i], act.tooltips[i], act.stock_ids[i], value=i)
 
                 if not actgroup:
                     actgroup = gtkact
@@ -186,13 +186,13 @@ def build_action_group(obj, name=None):
             actgroup.set_current_value(act.active)
 
         elif isinstance(act, toggle_action):
-            gtkact = gtk.ToggleAction(act.name, act.label, act.tooltip, act.stock_id)
+            gtkact = Gtk.ToggleAction(act.name, act.label, act.tooltip, act.stock_id)
             gtkact.set_property('active', act.active)
             gtkact.connect('activate', _toggle_action_activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
 
         elif isinstance(act, action):
-            gtkact = gtk.Action(act.name, act.label, act.tooltip, act.stock_id)
+            gtkact = Gtk.Action(act.name, act.label, act.tooltip, act.stock_id)
             try:
                 activate = act.opening and _action_opening or _action_activate
             except AttributeError:

@@ -58,9 +58,9 @@ class IPropertyPage(interface.Interface):
 
     def construct(self):
         """
-        Create the page (gtk.Widget) that belongs to the Property page.
+        Create the page (Gtk.Widget) that belongs to the Property page.
 
-        Returns the page's toplevel widget (gtk.Widget).
+        Returns the page's toplevel widget (Gtk.Widget).
         """
 
     def destroy(self):

@@ -1,6 +1,6 @@
 
 from builtins import object
-import gtk
+from gi.repository import Gtk
 from gaphor.tests.testcase import TestCase
 from gaphor.application import Application
 from gaphor.ui.diagramtab import DiagramTab

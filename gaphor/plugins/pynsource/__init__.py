@@ -9,8 +9,8 @@ Depends on the Diagram Layout plugin.
 
 from builtins import object
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
@@ -52,7 +52,7 @@ class PyNSource(object):
         dialog = self.create_dialog()
         response = dialog.run()
 
-        if response != gtk.RESPONSE_OK:
+        if response != Gtk.ResponseType.OK:
             dialog.destroy()
             self.reset()
             return
@@ -78,70 +78,70 @@ class PyNSource(object):
         main_window.show_diagram(engineer.diagram)
 
     def create_dialog(self):
-        dialog = gtk.Dialog("Import Python files",
+        dialog = Gtk.Dialog("Import Python files",
                             self.main_window.window,
-                            gtk.DIALOG_MODAL,
-                            (gtk.STOCK_OK, gtk.RESPONSE_OK,
-                             gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
-        dialog.set_default_response(gtk.RESPONSE_OK)
+                            Gtk.DialogFlags.MODAL,
+                            (Gtk.STOCK_OK, Gtk.ResponseType.OK,
+                             Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL))
+        dialog.set_default_response(Gtk.ResponseType.OK)
 
-        filelist = gtk.ListStore(gobject.TYPE_STRING)
+        filelist = Gtk.ListStore(GObject.TYPE_STRING)
         filelist.connect('row-inserted', self.on_view_rows_changed)
         filelist.connect('row-deleted', self.on_view_rows_changed)
 
-        hbox = gtk.HBox()
+        hbox = Gtk.HBox()
 
-        frame = gtk.Frame('Files to reverse-engineer')
+        frame = Gtk.Frame('Files to reverse-engineer')
         frame.set_border_width(8)
         frame.set_size_request(500, 300)
         frame.show()
-        hbox.pack_start(frame, expand=True)
+        hbox.pack_start(frame, True, True, 0)
 
-        treeview = gtk.TreeView(filelist)
+        treeview = Gtk.TreeView(filelist)
         treeview.set_property('headers-visible', False)
         selection = treeview.get_selection()
         selection.set_mode('single')
         treeview.set_size_request(200, -1)
         treeview.connect_after('cursor_changed', self.on_view_cursor_changed)
 
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.set_border_width(4)
         scrolled_window.add(treeview)
         frame.add(scrolled_window)
         scrolled_window.show()
 
-        cell = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("Filename", cell, text=NAME_COLUMN)
+        cell = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn("Filename", cell, text=NAME_COLUMN)
         treeview.append_column(column)
 
-        bbox = gtk.VButtonBox()
-        bbox.set_layout(gtk.BUTTONBOX_SPREAD)
+        bbox = Gtk.VButtonBox()
+        bbox.set_layout(Gtk.ButtonBoxStyle.SPREAD)
         bbox.set_border_width(10)
-        button = gtk.Button(stock='gtk-add')
+        button = Gtk.Button(stock='gtk-add')
         button.connect('clicked', self.on_add_dir_clicked)
         bbox.add(button)
         self.add_button = button
 
-        #button = gtk.Button('Add dir...')
+        #button = Gtk.Button('Add dir...')
         #button.connect('clicked', self.on_add_dir_clicked)
         #bbox.add(button)
         #self.add_dir_button = button
 
-        button = gtk.Button(stock='gtk-remove')
+        button = Gtk.Button(stock='gtk-remove')
         button.connect('clicked', self.on_remove_clicked)
         button.set_property('sensitive', False)
         bbox.add(button)
         self.remove_button = button
 
-        #button = gtk.Button(stock='gtk-execute')
+        #button = Gtk.Button(stock='gtk-execute')
         #button.connect('clicked', self.on_execute_clicked)
         #button.set_property('sensitive', False)
         #bbox.add(button)
         #self.execute_button = button
 
-        hbox.pack_start(bbox, expand=False)
+        hbox.pack_start(bbox, False, True, 0)
         hbox.show_all()
 
         dialog.vbox.pack_start(hbox, True, True, 0)
@@ -217,12 +217,12 @@ class PyNSource(object):
     def on_add_dir_clicked(self, button):
         import os
         
-        filesel = gtk.FileChooserDialog(title='Add Source Code',
-                                        action=gtk.FILE_CHOOSER_ACTION_OPEN,
-                                        buttons=(gtk.STOCK_CANCEL,
-                                                 gtk.RESPONSE_CANCEL,
-                                                 gtk.STOCK_OPEN,
-                                                 gtk.RESPONSE_OK))
+        filesel = Gtk.FileChooserDialog(title='Add Source Code',
+                                        action=Gtk.FileChooserAction.OPEN,
+                                        buttons=(Gtk.STOCK_CANCEL,
+                                                 Gtk.ResponseType.CANCEL,
+                                                 Gtk.STOCK_OPEN,
+                                                 Gtk.ResponseType.OK))
 
         filesel.set_select_multiple(True)
         filesel.set_filename('~/')
@@ -231,7 +231,7 @@ class PyNSource(object):
         selection = filesel.get_filenames()        
         filesel.destroy()
 
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             for filename in selection:
                 if os.path.isdir(filename):
                     list = self.Walk(filename, 1, '*.py', 1)

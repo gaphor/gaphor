@@ -2,14 +2,14 @@
 Toolbox.
 """
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 
 from gaphor.core import inject
 from gaphor.ui.wrapbox import Wrapbox
 
 
-class Toolbox(gtk.VBox):
+class Toolbox(Gtk.VBox):
     """
     A toolbox is a widget that contains a set of buttons (a Wrapbox widget)
     with a name above it. When the user clicks on the name the box's content
@@ -21,20 +21,20 @@ class Toolbox(gtk.VBox):
     ('name', ('boxAction1', 'boxAction2',...), 'name2', ('BoxActionN',...))
 
     1 Create action pool for placement actions
-    2 Create gtk.RadioButtons for each item.
+    2 Create Gtk.RadioButtons for each item.
     3 connect to action
     """
 
     TARGET_STRING = 0
     TARGET_TOOLBOX_ACTION = 1
     DND_TARGETS = [
-        ('STRING', gtk.TARGET_SAME_APP, TARGET_STRING),
-        ('text/plain', gtk.TARGET_SAME_APP, TARGET_STRING),
-        ('gaphor/toolbox-action', gtk.TARGET_SAME_APP, TARGET_TOOLBOX_ACTION)]
+        ('STRING', Gtk.TargetFlags.SAME_APP, TARGET_STRING),
+        ('text/plain', Gtk.TargetFlags.SAME_APP, TARGET_STRING),
+        ('gaphor/toolbox-action', Gtk.TargetFlags.SAME_APP, TARGET_TOOLBOX_ACTION)]
 
     __gsignals__ = {
-        'toggled': (gobject.SIGNAL_RUN_FIRST,
-                    gobject.TYPE_NONE, (gobject.TYPE_STRING, gobject.TYPE_INT))
+        'toggled': (GObject.SignalFlags.RUN_FIRST,
+                    None, (GObject.TYPE_STRING, GObject.TYPE_INT))
     }
 
     properties = inject('properties')
@@ -53,10 +53,10 @@ class Toolbox(gtk.VBox):
 
     def make_wrapbox_decorator(self, title, content):
         """
-        Create a gtk.VBox with in the top compartment a label that can be
+        Create a Gtk.VBox with in the top compartment a label that can be
         clicked to show/hide the lower compartment.
         """
-        expander = gtk.Expander()
+        expander = Gtk.Expander()
 
         expander.set_label(title)
 
@@ -81,11 +81,11 @@ class Toolbox(gtk.VBox):
         
 
     def toolbox_button(self, action_name, stock_id,
-                       icon_size=gtk.ICON_SIZE_LARGE_TOOLBAR):
-        button = gtk.ToggleButton()
-        button.set_relief(gtk.RELIEF_NONE)
+                       icon_size=Gtk.IconSize.LARGE_TOOLBAR):
+        button = Gtk.ToggleButton()
+        button.set_relief(Gtk.ReliefStyle.NONE)
         if stock_id:
-            icon = gtk.Image()
+            icon = Gtk.Image()
             icon.set_from_stock(stock_id, icon_size)
             button.add(icon)
             icon.show()
@@ -94,8 +94,8 @@ class Toolbox(gtk.VBox):
         button.action_name = action_name
         
         # Enable DND (behaviour like tree view)
-        button.drag_source_set(gtk.gdk.BUTTON1_MASK, self.DND_TARGETS,
-                gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_LINK)
+        button.drag_source_set(Gdk.ModifierType.BUTTON1_MASK, self.DND_TARGETS,
+                Gdk.DragAction.COPY | Gdk.DragAction.LINK)
         button.drag_source_set_icon_stock(stock_id)
         button.connect('drag-data-get', self._button_drag_data_get)
 
@@ -116,9 +116,9 @@ class Toolbox(gtk.VBox):
                 shortcuts[shortcut] = action_name
             if title:
                 wrapbox_dec = self.make_wrapbox_decorator(title, wrapbox)
-                self.pack_start(wrapbox_dec, expand=False)
+                self.pack_start(wrapbox_dec, False, True, 0)
             else:
-                self.pack_start(wrapbox, expand=False)
+                self.pack_start(wrapbox, False, True, 0)
                 wrapbox.show()
 
 
