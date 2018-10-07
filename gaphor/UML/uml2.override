@@ -163,12 +163,12 @@ override Operation.type
 Operation.type = derivedunion('type', DataType, 0, 1)
 %%
 override Lifeline.parse
-from umllex import parse_lifeline
+from gaphor.UML.umllex import parse_lifeline
 Lifeline.parse = parse_lifeline
 del parse_lifeline
 %%
 override Lifeline.render
-from umllex import render_lifeline
+from gaphor.UML.umllex import render_lifeline
 Lifeline.render = render_lifeline
 del render_lifeline
 %%
