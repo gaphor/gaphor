@@ -8,7 +8,7 @@ from builtins import object
 from logging import getLogger
 from zope import interface
 
-from gaphor.decorators import AsyncIO
+from gaphas.decorators import AsyncIO
 from zope.interface import implementer
 
 from gaphor.core import inject
