@@ -7,29 +7,27 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
  - TextEditTool: should support adapter based edit protocol
 """
 
-from builtins import object
-from gi.repository import Gtk
 import logging
+from builtins import object
 from zope import component
 
-from gaphas.geometry import distance_point_point, distance_point_point_fast, \
-                            distance_line_point, distance_rectangle_point
-from gaphas.tool import Tool, HandleTool, PlacementTool as _PlacementTool, \
-    ToolChain, HoverTool, ItemTool, RubberbandTool, ConnectHandleTool
 from gaphas.aspect import Connector, InMotion
 from gaphas.guide import GuidedItemInMotion
-from gaphor.core import inject, Transaction, transactional
+from gaphas.tool import Tool, PlacementTool as _PlacementTool, \
+    ToolChain, HoverTool, ItemTool, RubberbandTool, ConnectHandleTool
+from gi.repository import Gdk
+from gi.repository import Gtk
 
-from gaphor.diagram.interfaces import IEditor, IConnect, IGroup
+from gaphor.core import Transaction, transactional
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.elementitem import ElementItem
-
+from gaphor.diagram.interfaces import IEditor, IConnect, IGroup
 
 # cursor to indicate grouping
-IN_CURSOR = Gdk.Cursor.new(Gdk.DIAMOND_CROSS)
+IN_CURSOR = Gdk.CursorType.DIAMOND_CROSS
 
 # cursor to indicate ungrouping
-OUT_CURSOR = Gdk.Cursor.new(Gdk.SIZING)
+OUT_CURSOR = Gdk.CursorType.SIZING
 
 log = logging.getLogger(__name__)
 
