@@ -5,10 +5,14 @@ a result only classifiers are shown here.
 """
 from __future__ import print_function
 
-from builtins import str
-from builtins import map
 import logging
 import operator
+from builtins import map
+from builtins import str
+
+from gi import pygtkcompat
+pygtkcompat.enable()
+pygtkcompat.enable_gtk('3.0')
 
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -83,7 +87,7 @@ class NamespaceModel(Gtk.GenericTreeModel):
         GObject.GObject.__init__(self)
 
         # We own the references to the iterators.
-        self.set_property ('leak-references', 0)
+        self.set_property('leak-references', 0)
 
         self.factory = factory
 
