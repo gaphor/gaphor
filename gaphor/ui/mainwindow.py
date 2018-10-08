@@ -142,19 +142,9 @@ class MainWindow(object):
 
 
     def init(self, app=None):
-        #self.init_pygtk()
         self.init_stock_icons()
         self.init_action_group()
         self.init_ui_components()
-
-
-    def init_pygtk(self):
-        """
-        Make sure we have GTK+ >= 2.0
-        """
-        import gi
-        gi.require_version('Gtk', '3.0')
-        del pygtk
 
 
     def init_stock_icons(self):
@@ -306,7 +296,7 @@ class MainWindow(object):
         # set default icons of gaphor windows
         icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
         icons = (GdkPixbuf.Pixbuf.new_from_file(os.path.join(icon_dir, f)) for f in ICONS)
-        self.window.set_icon_list(*icons)
+        self.window.set_icon_list(list(icons))
 
         self.window.add_accel_group(self.ui_manager.get_accel_group())
 
