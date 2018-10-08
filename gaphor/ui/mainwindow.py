@@ -11,11 +11,11 @@ from zope import component
 from gi.repository import GObject
 from gi.repository import Gtk
 import pkg_resources
-from etk.docking import DockItem, DockGroup
-from etk.docking import DockLayout
-from etk.docking import add_new_group_above, add_new_group_below, add_new_group_floating
-from etk.docking import add_new_group_left, add_new_group_right
-from etk.docking import settings
+from etkdocking import DockItem, DockGroup
+from etkdocking import DockLayout
+from etkdocking.docklayout import add_new_group_above, add_new_group_below, add_new_group_floating
+from etkdocking.docklayout import add_new_group_left, add_new_group_right
+from etkdocking import settings
 from zope.interface import implementer
 
 from gaphor import UML

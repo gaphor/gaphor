@@ -8,7 +8,7 @@ from past.utils import old_div
 from gi.repository import Gtk
 from cairo import Matrix
 from zope import component
-from etk.docking import DockItem
+from etkdocking import DockItem
 
 from gaphas.view import GtkView
 from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \

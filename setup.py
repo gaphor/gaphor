@@ -83,9 +83,10 @@ It uses the GTK+ environment for user interaction.
     include_package_data = True,
 
     install_requires = [
-        # 'PyGTK >= 2.8.0', - Exclude, since it will not build anyway
+        'pycairo >= 1.17.0',
+        'PyGObject >= 3.30.0',
         'gaphas >= 0.7.2',
-        'etk.docking >= 0.2',
+        'etkdocking >= 0.2',
         'zope.component >= 3.4.0', # - won't compile on windows.
         'future >= 0.16.0',
     ],
