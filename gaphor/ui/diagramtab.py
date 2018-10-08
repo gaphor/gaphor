@@ -1,30 +1,30 @@
 #!/usr/bin/env python
 
-from __future__ import print_function
 from __future__ import division
+from __future__ import print_function
+
 from builtins import object
 from builtins import str
-from past.utils import old_div
-from gi.repository import Gtk
-from cairo import Matrix
 from zope import component
-from etkdocking import DockItem
 
-from gaphas.view import GtkView
-from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \
-                           FocusedItemPainter, ToolPainter, BoundingBoxPainter
+from etkdocking import DockItem
 from gaphas.freehand import FreeHandPainter
-from gaphas import segment, guide
+from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \
+    FocusedItemPainter, ToolPainter, BoundingBoxPainter
+from gaphas.view import GtkView
+from gi.repository import Gdk
+from gi.repository import Gtk
+from past.utils import old_div
 
 from gaphor import UML
-from gaphor.core import _, inject, transactional, action, toggle_action, build_action_group
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
+from gaphor.core import _, inject, transactional, action, build_action_group
 from gaphor.diagram import get_diagram_item
 from gaphor.diagram.items import DiagramItem
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from gaphor.ui.event import DiagramSelectionChange
-from gaphor.services.properties import IPropertyChangeEvent
+
 
 class DiagramTab(object):
     

@@ -3,6 +3,7 @@ Toolbox.
 """
 
 from gi.repository import GObject
+from gi.repository import Gdk
 from gi.repository import Gtk
 
 from gaphor.core import inject

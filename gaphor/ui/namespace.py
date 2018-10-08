@@ -12,6 +12,7 @@ import operator
 
 from gi.repository import GObject
 from gi.repository import Gtk
+from gi.repository import Gdk
 from zope import component
 
 from gaphor import UML

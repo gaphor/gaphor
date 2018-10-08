@@ -10,6 +10,7 @@ from zope import component
 
 from gi.repository import GObject
 from gi.repository import Gtk
+from gi.repository import GdkPixbuf
 import pkg_resources
 from etkdocking import DockItem, DockGroup
 from etkdocking import DockLayout
