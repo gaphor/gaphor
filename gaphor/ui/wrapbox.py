@@ -16,7 +16,7 @@ class Wrapbox(Gtk.Table):
     """
 
     def __init__(self):
-        self.__gobject_init__()
+        GObject.GObject.__init__(self)
         self.resize_idle_id = 0
         self.rows = 1
         self.cols = 1

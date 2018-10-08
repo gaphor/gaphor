@@ -452,9 +452,8 @@ class NamespaceView(Gtk.TreeView):
         ('gaphor/element-id', 0, TARGET_ELEMENT_ID)]
 
     def __init__(self, model, factory):
-        assert isinstance (model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
-        self.__gobject_init__()
-        GObject.GObject.__init__(self, model)
+        assert isinstance(model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
+        GObject.GObject.__init__(self)
         self.factory = factory
         self.icon_cache = {}
 

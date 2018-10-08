@@ -40,17 +40,15 @@ class Toolbox(Gtk.VBox):
 
     properties = inject('properties')
 
-
     def __init__(self, toolboxdef):
         """
         Create a new Toolbox instance. Wrapbox objects are generated
         using the menu_factory and based on the toolboxdef definition.
         """
-        self.__gobject_init__()
+        GObject.GObject.__init__(self)
         self.buttons = []
         self.shortcuts = {}
         self._construct(toolboxdef)
-
 
     def make_wrapbox_decorator(self, title, content):
         """
