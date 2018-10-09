@@ -69,8 +69,8 @@ class DiagramTab(object):
     VIEW_TARGET_ELEMENT_ID = 1
     VIEW_TARGET_TOOLBOX_ACTION = 2
     VIEW_DND_TARGETS = [
-        ('gaphor/element-id', 0, VIEW_TARGET_ELEMENT_ID),
-        ('gaphor/toolbox-action', 0, VIEW_TARGET_TOOLBOX_ACTION)]
+        Gtk.TargetEntry('gaphor/element-id', 0, VIEW_TARGET_ELEMENT_ID),
+        Gtk.TargetEntry('gaphor/toolbox-action', 0, VIEW_TARGET_TOOLBOX_ACTION)]
 
 
     def __init__(self, diagram):

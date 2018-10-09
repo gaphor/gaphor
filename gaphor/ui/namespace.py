@@ -447,9 +447,10 @@ class NamespaceView(Gtk.TreeView):
     TARGET_STRING = 0
     TARGET_ELEMENT_ID = 1
     DND_TARGETS = [
-        ('STRING', 0, TARGET_STRING),
-        ('text/plain', 0, TARGET_STRING),
-        ('gaphor/element-id', 0, TARGET_ELEMENT_ID)]
+        Gtk.TargetEntry.new('STRING', 0, TARGET_STRING),
+        Gtk.TargetEntry.new('text/plain', 0, TARGET_STRING),
+        Gtk.TargetEntry.new('gaphor/element-id', 0, TARGET_ELEMENT_ID)
+    ]
 
     def __init__(self, model, factory):
         assert isinstance(model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
