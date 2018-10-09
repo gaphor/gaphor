@@ -483,7 +483,6 @@ class NamespaceView(Gtk.TreeView):
         column.pack_start (cell, 0)
         column.set_cell_data_func (cell, self._set_text, None)
 
-        assert len (column.get_cell_renderers()) == 2
         self.append_column (column)
 
         # drag
